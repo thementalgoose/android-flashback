@@ -1,0 +1,4 @@
+include ':repo-firebase'
+include ':repo'
+include ':app'
+rootProject.name = "F1 Stats"
