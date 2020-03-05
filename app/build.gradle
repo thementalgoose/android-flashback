@@ -2,6 +2,8 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-android-extensions'
+    id 'kotlin-kapt'
+    id 'koin'
 }
 android {
     compileSdkVersion 29
@@ -23,25 +25,30 @@ android {
         }
     }
 
-    flavorDimensions 'version'
-    productFlavors {
-        sand {
-            applicationIdSuffix '.test'
-            versionNameSuffix '-test'
-            dimension 'version'
-        }
-
-        live {
-            dimension 'version'
-        }
-    }
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+
+    flavorDimensions 'version'
+    productFlavors {
+        sand {
+            dimension 'version'
+            applicationIdSuffix '.sand'
+            versionNameSuffix '-sand'
+
+            buildConfigField "int", "ENVIRONMENT", '0'
+        }
+
+        live {
+            dimension 'version'
+
+            buildConfigField "int", "ENVIRONMENT", '0'
+        }
     }
 }
 
@@ -56,6 +63,21 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
+    // Koin
+    implementation "org.koin:koin-android:2.1.3"
+    implementation "org.koin:koin-android-scope:2.1.3"
+    implementation "org.koin:koin-android-viewmodel:2.1.3"
+    implementation "org.koin:koin-android-ext:2.1.3"
+
+    // TMG dependencies
     implementation 'com.github.thementalgoose:android-components:0.2.0'
     implementation 'com.github.thementalgoose:android-utilities:1.0.1'
+
+    // ViewPager2
+    implementation "androidx.viewpager2:viewpager2:1.0.0"
+
+    // ThreeTen
+    implementation 'com.jakewharton.threetenabp:threetenabp:1.2.2'
 }
+
+apply plugin: 'com.google.gms.google-services'

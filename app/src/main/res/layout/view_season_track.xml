@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="@dimen/paddingMedium"
+    android:paddingBottom="@dimen/paddingMedium"
+    android:orientation="vertical">
+
+    <TextView
+        style="@style/Text.Season.Track.Header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="AUS" />
+
+    <TextView
+        android:paddingTop="@dimen/paddingSmall"
+        style="@style/Text.Season.Track.Year"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Albert Park" />
+
+</LinearLayout>

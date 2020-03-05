@@ -9,4 +9,7 @@ java {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+    // ThreeTen
+    implementation 'com.jakewharton.threetenabp:threetenabp:1.2.2'
 }

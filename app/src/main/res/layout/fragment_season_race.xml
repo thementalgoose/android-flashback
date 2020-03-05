@@ -4,8 +4,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <FrameLayout
-        android:id="@+id/flContainer"
+    <TextView
+        android:gravity="center"
+        android:text="TESTING"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
