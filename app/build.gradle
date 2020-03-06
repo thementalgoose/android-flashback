@@ -63,6 +63,9 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
+    // ConstraintLayout
+    implementation "androidx.constraintlayout:constraintlayout:2.0.0-beta4"
+
     // Koin
     implementation "org.koin:koin-android:2.1.3"
     implementation "org.koin:koin-android-scope:2.1.3"
@@ -78,6 +81,9 @@ dependencies {
 
     // ThreeTen
     implementation 'com.jakewharton.threetenabp:threetenabp:1.2.2'
+
+    // Bottom bar
+    implementation 'com.github.ibrahimsn98:SmoothBottomBar:1.7'
 }
 
 apply plugin: 'com.google.gms.google-services'

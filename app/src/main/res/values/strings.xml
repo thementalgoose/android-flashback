@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">F1 Stats</string>
+
+    <string name="nav_drivers">Drivers</string>
+    <string name="nav_constructors">Constructors</string>
+    <string name="nav_gallery">Gallery</string>
 </resources>

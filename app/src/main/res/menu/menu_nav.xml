@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_drivers"
+        android:title="@string/nav_drivers"
+        android:icon="@drawable/nav_driver"/>
+
+    <item
+        android:id="@+id/nav_constructors"
+        android:title="@string/nav_constructors"
+        android:icon="@drawable/nav_constructor"/>
+
+    <item
+        android:id="@+id/nav_gallery"
+        android:title="@string/nav_gallery"
+        android:icon="@drawable/nav_gallery"/>
+
+</menu>
