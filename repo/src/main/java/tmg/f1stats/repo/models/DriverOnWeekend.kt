@@ -2,7 +2,7 @@ package tmg.f1stats.repo.models
 
 import java.time.LocalDate
 
-open class Driver(
+data class DriverOnWeekend(
     val driverId: String,
     val driverNumber: String,
     val driverCode: String,
@@ -10,5 +10,6 @@ open class Driver(
     val name: String,
     val surname: String,
     val dateOfBirth: LocalDate,
-    val nationality: String
+    val nationality: String,
+    val constructor: Constructor
 )

@@ -10,7 +10,7 @@ class HomeActivity: BaseActivity() {
     override fun layoutId(): Int = R.layout.activity_home
 
     override fun initViews() {
-        loadFragment(SeasonFragment(), R.id.flContainer, "MAIN")
+        loadFragment(SeasonFragment.newInstance(2019), R.id.flContainer, "MAIN")
     }
 
     override fun observeViewModel() {

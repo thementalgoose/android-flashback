@@ -1,9 +1,9 @@
 package tmg.f1stats.repo.models
 
-data class Circuits(
+data class Circuit(
     val circuitId: String,
     val wikiUrl: String,
-    val photoUrl: String,
+    val circuitName: String,
     val locationLat: Double,
     val locationLng: Double,
     val locality: String,
