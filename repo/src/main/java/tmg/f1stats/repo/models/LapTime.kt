@@ -1,41 +1,42 @@
 package tmg.f1stats.repo.models
 
-import kotlin.IllegalArgumentException
+import org.threeten.bp.LocalTime
+import tmg.f1stats.repo.utils.toLocalTime
+import kotlin.math.floor
 
 // TODO: Clean up the internals of this class!
 data class LapTime(
+    val hours: Int,
     val mins: Int,
     val seconds: Int,
     val millis: Int
 ) {
-    constructor(time: String): this(
-        mins = time.split(":")[0].toIntOrNull() ?: 0,
-        seconds = time.split(":")[1].split(".")[0].toIntOrNull() ?: 0,
-        millis = time.split(".")[1].toIntOrNull() ?: 0
+
+    constructor(millis: Int): this(
+        LocalTime.ofNanoOfDay(millis * 1_000_000L).hour,
+        LocalTime.ofNanoOfDay(millis * 1_000_000L).minute,
+        LocalTime.ofNanoOfDay(millis * 1_000_000L).second,
+        LocalTime.ofNanoOfDay(millis * 1_000_000L).nano / 1_000_000
     )
 
-    init {
-        if (!checkLapTime(time)) {
-            println("Lap time $time is considered invalid!")
-            throw IllegalArgumentException("Lap time $time is considered invalid!")
-        }
-    }
+    val totalMillis: Int
+        get() = (hours * 1000 * 60 * 60) +
+                (mins * 1000 * 60) +
+                (seconds * 1000) +
+                millis
 
     val time: String
-        get() = "$mins:${seconds.extendTo(2)}.${millis.extendTo(3)}"
-
-    private fun Int.extendTo(characters: Int = 2): String {
-        var returnString: String = "";
-        for (x in this.toString().length until characters) {
-            returnString += "0"
+        get() = if (hours == 0) {
+            "${hours}:${mins}:${seconds.extendTo(2)}.${millis.extendTo(3)}"
+        } else {
+            "${mins}:${seconds.extendTo(2)}.${millis.extendTo(3)}"
         }
-        return returnString + this
-    }
+}
 
-    companion object {
-        fun checkLapTime(time: String): Boolean {
-            return !(!time.contains(":") || time.split(":").size != 2 ||
-                    !time.contains(".") || time.split(".").size != 2)
-        }
+private fun Int.extendTo(toCharacters: Int = 2): String {
+    var chars: String = ""
+    for (i in this.toString().length..toCharacters) {
+        chars += "0"
     }
+    return "$chars$this"
 }

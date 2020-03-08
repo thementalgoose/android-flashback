@@ -4,8 +4,8 @@ data class Circuit(
     val circuitId: String,
     val wikiUrl: String,
     val circuitName: String,
-    val locationLat: Double,
-    val locationLng: Double,
+    val locationLat: Double?,
+    val locationLng: Double?,
     val locality: String,
     val country: String
 )

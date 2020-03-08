@@ -8,5 +8,5 @@ data class RaceResult(
     val status: RaceStatus,
     val finishPosition: Int,
     val finishPositionText: String,
-    val time: LapTime
+    val time: LapTime?
 )

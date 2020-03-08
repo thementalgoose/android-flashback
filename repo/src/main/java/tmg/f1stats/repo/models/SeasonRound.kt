@@ -3,7 +3,7 @@ package tmg.f1stats.repo.models
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
 
-data class Weekend(
+data class SeasonRound(
     val wikiUrl: String,
     val raceName: String,
     val date: LocalDate,
