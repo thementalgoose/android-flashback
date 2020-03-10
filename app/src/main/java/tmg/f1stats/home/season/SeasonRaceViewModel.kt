@@ -1,11 +1,12 @@
 package tmg.f1stats.home.season
 
+import io.reactivex.rxjava3.subjects.BehaviorSubject
 import tmg.f1stats.base.BaseViewModel
 
 //region Inputs
 
 interface SeasonRaceViewModelInputs {
-
+    fun initialise(season: Int, round: Int)
 }
 
 //endregion
@@ -20,6 +21,8 @@ interface SeasonRaceViewModelOutputs {
 
 class SeasonRaceViewModel: BaseViewModel(), SeasonRaceViewModelInputs, SeasonRaceViewModelOutputs {
 
+    private var seasonRound: BehaviorSubject<Pair<Int, Int>> = BehaviorSubject.create()
+
     var inputs: SeasonRaceViewModelInputs = this
     var outputs: SeasonRaceViewModelOutputs = this
 
@@ -28,6 +31,10 @@ class SeasonRaceViewModel: BaseViewModel(), SeasonRaceViewModelInputs, SeasonRac
     }
 
     //region Inputs
+
+    override fun initialise(season: Int, round: Int) {
+        seasonRound.onNext(Pair(season, round))
+    }
 
     //endregion
 

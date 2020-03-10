@@ -1,6 +1,6 @@
 package tmg.f1stats.repo.models
 
-import java.time.LocalDate
+import org.threeten.bp.LocalDate
 
 open class Driver(
     val driverId: String,
