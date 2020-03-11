@@ -1,4 +1,4 @@
-package tmg.f1stats.home.season
+package tmg.f1stats.season
 
 data class SeasonAdapterModel(
     val season: Int,

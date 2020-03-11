@@ -2,7 +2,7 @@ package tmg.f1stats.home
 
 import tmg.f1stats.R
 import tmg.f1stats.base.BaseActivity
-import tmg.f1stats.home.season.SeasonFragment
+import tmg.f1stats.season.SeasonFragment
 import tmg.utilities.extensions.loadFragment
 
 class HomeActivity: BaseActivity() {

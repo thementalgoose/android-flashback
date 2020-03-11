@@ -1,4 +1,4 @@
-package tmg.f1stats.home.season.race
+package tmg.f1stats.season.race
 
 import android.os.Bundle
 import org.koin.android.viewmodel.ext.android.viewModel

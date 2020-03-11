@@ -2,12 +2,24 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">#6200EE</item>
+        <item name="colorPrimaryDark">#3700B3</item>
+        <item name="colorAccent">#03DAC5</item>
+
+        <item name="f1TextPrimary">#181818</item>
+        <item name="f1TextSecondary">#383838</item>
+        <item name="f1TextTertiary">#585858</item>
+        <item name="f1BackgroundPrimary">#FBFBFB</item>
+
+        <item name="f1TextInversePrimary">#F8F8F8</item>
+        <item name="f1TextInverseSecondary">#E8E8E8</item>
+        <item name="f1TextInverseTertiary">#D8D8D8</item>
+        <item name="f1BackgroundInversePrimary">#181818</item>
     </style>
 
-    <style name="Text" />
+    <style name="Text">
+        <item name="android:textColor">?attr/f1TextPrimary</item>
+    </style>
     <style name="Text.Season" />
     <style name="Text.Season.Track" />
     <style name="Text.Season.Track.Header" parent="Text.Season.Track">

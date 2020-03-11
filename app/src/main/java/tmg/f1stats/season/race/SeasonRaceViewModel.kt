@@ -1,4 +1,4 @@
-package tmg.f1stats.home.season.race
+package tmg.f1stats.season.race
 
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import tmg.f1stats.base.BaseViewModel

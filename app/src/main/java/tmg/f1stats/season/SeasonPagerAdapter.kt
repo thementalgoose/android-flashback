@@ -1,8 +1,8 @@
-package tmg.f1stats.home.season
+package tmg.f1stats.season
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import tmg.f1stats.home.season.race.SeasonRaceFragment
+import tmg.f1stats.season.race.SeasonRaceFragment
 
 class SeasonPagerAdapter(parent: Fragment): FragmentStateAdapter(parent) {
 

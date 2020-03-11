@@ -1,4 +1,4 @@
-package tmg.f1stats.home.season
+package tmg.f1stats.season
 
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.subjects.BehaviorSubject

@@ -4,4 +4,5 @@
     <string name="nav_drivers">Drivers</string>
     <string name="nav_constructors">Constructors</string>
     <string name="nav_gallery">Gallery</string>
+    <string name="nav_settings">Settings</string>
 </resources>

@@ -1,4 +1,4 @@
-package tmg.f1stats.home.season
+package tmg.f1stats.season
 
 import android.os.Bundle
 import kotlinx.android.synthetic.main.fragment_season.*
@@ -60,7 +60,7 @@ class SeasonFragment: BaseFragment() {
     companion object {
 
         private const val seasonTrackScreenAlpha = 0.4f
-        private const val seasonTrackScreenMultiplier = 2 / 5f
+        private const val seasonTrackScreenMultiplier = 1 / 2f
         private const val keyYear: String = "keyYear"
 
         fun newInstance(year: Int): SeasonFragment {
