@@ -17,11 +17,23 @@ fun LapTime.addDelta(time: String?): LapTime {
     if (time == null) {
         return this
     }
-    return addDelta(
-        mins = time.split(":")[0].toIntOrNull() ?: 0,
-        seconds = time.split(":")[1].split(".")[0].toIntOrNull() ?: 0,
-        millis = time.split(".")[1].toIntOrNull() ?: 0
-    )
+    return when (time.split(":").size) {
+        3 -> addDelta(
+            hours = time.split(":")[0].toIntOrNull() ?: 0,
+            mins = time.split(":")[1].toIntOrNull() ?: 0,
+            seconds = time.split(":")[2].split(".")[0].toIntOrNull() ?: 0,
+            millis = time.split(".")[1].toIntOrNull() ?: 0
+        )
+        2 -> addDelta(
+            mins = time.split(":")[1].toIntOrNull() ?: 0,
+            seconds = time.split(":")[1].split(".")[0].toIntOrNull() ?: 0,
+            millis = time.split(".")[1].toIntOrNull() ?: 0
+        )
+        else -> addDelta(
+            seconds = time.split(".")[0].toIntOrNull() ?: 0,
+            millis = time.split(".")[1].toIntOrNull() ?: 0
+        )
+    }
 }
 
 fun String.toLocalTime(): LocalTime {

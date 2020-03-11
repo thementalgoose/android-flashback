@@ -11,4 +11,6 @@ data class FSync(
     val season: Int,
     val round: Int?,
     val completedAt: String?
-)
+) {
+    constructor() : this("", "", null, -1, -1, null)
+}

@@ -1,4 +1,4 @@
-package tmg.f1stats.home.season
+package tmg.f1stats.home.season.race
 
 import android.os.Bundle
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -32,7 +32,8 @@ class SeasonRaceFragment: BaseFragment() {
         private const val keyRound: String = "keyRound"
 
         fun instance(season: Int, round: Int): SeasonRaceFragment {
-            val instance: SeasonRaceFragment = SeasonRaceFragment()
+            val instance: SeasonRaceFragment =
+                SeasonRaceFragment()
             val bundle: Bundle = Bundle()
             bundle.putInt(keySeason, season)
             bundle.putInt(keyRound, round)

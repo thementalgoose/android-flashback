@@ -82,7 +82,6 @@ inline fun <T, reified E> getDocuments(firebaseClass: Class<E>, collectionPath: 
                             val firebaseObj = it.toObject(firebaseClass)!!
                             return@map convertTo(firebaseObj, it.id)
                         }
-                        ?.filterNotNull()
                         ?: listOf()
                 )
             }

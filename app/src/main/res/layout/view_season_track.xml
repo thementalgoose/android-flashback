@@ -1,25 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:paddingTop="@dimen/paddingMedium"
-    android:paddingBottom="@dimen/paddingMedium"
-    android:orientation="vertical">
+    android:paddingBottom="@dimen/paddingMedium">
 
     <TextView
+        android:id="@+id/tvTitle"
         style="@style/Text.Season.Track.Header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="AUS" />
+        android:paddingStart="@dimen/paddingSmall"
+        android:paddingEnd="@dimen/paddingSmall"
+        tools:text="AUS"/>
 
     <TextView
-        android:paddingTop="@dimen/paddingSmall"
+        android:id="@+id/tvCircuit"
         style="@style/Text.Season.Track.Year"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Albert Park" />
+        android:paddingTop="@dimen/paddingSmall"
+        android:paddingEnd="@dimen/paddingSmall"
+        android:paddingStart="@dimen/paddingSmall"
+        tools:text="Albert Park" />
 
 </LinearLayout>

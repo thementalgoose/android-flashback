@@ -1,12 +1,12 @@
 package tmg.f1stats.home.season
 
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import tmg.f1stats.home.season.race.SeasonRaceFragment
 
-class SeasonRacePagerAdapter(parent: Fragment): FragmentStateAdapter(parent) {
+class SeasonPagerAdapter(parent: Fragment): FragmentStateAdapter(parent) {
 
-    var list: List<SeasonRaceModel> = listOf()
+    var list: List<SeasonAdapterModel> = listOf()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -15,6 +15,6 @@ class SeasonRacePagerAdapter(parent: Fragment): FragmentStateAdapter(parent) {
     override fun getItemCount(): Int = list.size
 
     override fun createFragment(position: Int): Fragment {
-        return SeasonRaceFragment(list[position])
+        return SeasonRaceFragment.instance(list[position].season, list[position].round)
     }
 }

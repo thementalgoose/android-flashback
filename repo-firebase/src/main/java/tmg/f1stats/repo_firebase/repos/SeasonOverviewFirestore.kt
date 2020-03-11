@@ -76,8 +76,10 @@ class SeasonOverviewFirestore: SeasonOverviewDB {
     }
 
     private fun getSeason(season: Int): Observable<List<SeasonRound>> {
-        return getDocumentMap(FSeasonOverview::class.java, "season/$season") { model ->
+        return getDocumentMap(FSeasonOverview::class.java, "seasonOverview/$season") { model ->
             model.toModel()
+        }.map { seasonList ->
+            seasonList.sortedBy { it.round }
         }
     }
 

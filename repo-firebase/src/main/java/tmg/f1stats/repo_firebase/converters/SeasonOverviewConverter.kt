@@ -87,9 +87,9 @@ fun FSeasonOverviewConstructor.toModel(): Constructor {
 fun FSeasonOverviewRaces.toModel(drivers: Map<String, FSeasonOverviewDriver>, constructors: Map<String, FSeasonOverviewConstructor>, winner: FSeasonOverviewRaces?): RaceResult {
     return RaceResult(
             driver = drivers[this.driverId].let { driver -> driver!!.toModel(constructors) },
-            gridPosition = this.gridPos,
+            gridPosition = this.gridPos.toIntOrNull() ?: -1,
             status = fromStatus(this.status),
-            finishPosition = this.finishPos,
+            finishPosition = this.finishPos.toIntOrNull() ?: -1,
             finishPositionText = this.finishPosText,
             time = if (winner != null && winner.driverId != this.driverId) {
                 winner.time?.toLapTime()?.addDelta(this.time)
