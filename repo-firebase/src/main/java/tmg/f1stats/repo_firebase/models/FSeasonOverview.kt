@@ -15,7 +15,7 @@ data class FSeasonOverview(
     val wikiUrl: String = ""
 )  {
     val winner: FSeasonOverviewRaces?
-        get() = raceResults?.entries?.minBy { it.value.finishPos }!!.value
+        get() = raceResults?.entries?.minBy { it.value.finishPos ?: Int.MAX_VALUE }!!.value
 }
 
 data class FSeasonOverviewCircuit(
@@ -32,7 +32,8 @@ data class FSeasonOverviewConstructor(
     val constructorId: String = "",
     val name: String = "",
     val nationality: String = "",
-    val wikiUrl: String = ""
+    val wikiUrl: String = "",
+    val color: String = ""
 )
 
 data class FSeasonOverviewDriver(
@@ -62,9 +63,9 @@ data class FSeasonOverviewQualifyingResult(
 data class FSeasonOverviewRaces(
     val driverId: String = "",
     val fastestLap: FSeasonOverviewRacesFastestLap = FSeasonOverviewRacesFastestLap(),
-    val finishPos: String = "",
+    val finishPos: Int? = -1,
     val finishPosText: String = "",
-    val gridPos: String = "",
+    val gridPos: Int = -1,
     val status: String = "",
     val time: String? = null
 )

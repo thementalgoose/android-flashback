@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:paddingTop="@dimen/paddingMedium"
     android:paddingBottom="@dimen/paddingMedium">
@@ -15,7 +15,7 @@
         android:gravity="center"
         android:paddingStart="@dimen/paddingSmall"
         android:paddingEnd="@dimen/paddingSmall"
-        tools:text="AUS"/>
+        tools:text="AUS" />
 
     <TextView
         android:id="@+id/tvCircuit"
@@ -23,9 +23,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:paddingTop="@dimen/paddingSmall"
-        android:paddingEnd="@dimen/paddingSmall"
         android:paddingStart="@dimen/paddingSmall"
+        android:paddingTop="@dimen/paddingXSmall"
+        android:paddingEnd="@dimen/paddingSmall"
         tools:text="Albert Park" />
 
 </LinearLayout>

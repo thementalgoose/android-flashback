@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <attr name="f1BackgroundPrimary" format="color" />
+    <attr name="f1BackgroundSecondary" format="color" />
     <attr name="f1BackgroundInversePrimary" format="color" />
+    <attr name="f1BackgroundInverseSecondary" format="color" />
     <attr name="f1TextPrimary" format="color" />
     <attr name="f1TextSecondary" format="color" />
     <attr name="f1TextTertiary" format="color" />

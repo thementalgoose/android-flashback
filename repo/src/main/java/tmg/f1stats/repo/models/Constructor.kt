@@ -4,5 +4,6 @@ data class Constructor(
     val constructorId: String,
     val wikiUrl: String,
     val name: String,
-    val nationality: String
+    val nationality: String,
+    val color: String
 )

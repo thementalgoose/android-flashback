@@ -10,11 +10,13 @@
         <item name="f1TextSecondary">#383838</item>
         <item name="f1TextTertiary">#585858</item>
         <item name="f1BackgroundPrimary">#FBFBFB</item>
+        <item name="f1BackgroundSecondary">#E8E8E8</item>
 
         <item name="f1TextInversePrimary">#F8F8F8</item>
         <item name="f1TextInverseSecondary">#E8E8E8</item>
         <item name="f1TextInverseTertiary">#D8D8D8</item>
         <item name="f1BackgroundInversePrimary">#181818</item>
+        <item name="f1BackgroundInverseSecondary">#383838</item>
     </style>
 
     <style name="Text">
@@ -29,6 +31,26 @@
     </style>
     <style name="Text.Season.Track.Year" parent="Text.Season.Track">
         <item name="android:textSize">16sp</item>
+    </style>
+    <style name="Text.Season.Race" parent="Text.Season" />
+    <style name="Text.Season.Race.Qualifying" parent="Text.Season.Race" />
+    <style name="Text.Season.Race.Qualifying.Time" parent="Text.Season.Race.Qualifying">
+        <item name="android:textSize">13sp</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">start</item>
+        <item name="android:textColor">?attr/f1TextSecondary</item>
+    </style>
+    <style name="Text.Season.Race.Qualifying.Driver" parent="Text.Season.Race.Qualifying">
+        <item name="android:textSize">14sp</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textColor">?attr/f1TextSecondary</item>
+    </style>
+    <style name="Text.Season.Race.Qualifying.Constructor" parent="Text.Season.Race.Qualifying">
+        <item name="android:textSize">12sp</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textColor">?attr/f1TextSecondary</item>
     </style>
 
 </resources>

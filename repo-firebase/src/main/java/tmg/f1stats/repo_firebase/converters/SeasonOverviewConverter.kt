@@ -80,16 +80,17 @@ fun FSeasonOverviewConstructor.toModel(): Constructor {
             constructorId = this.constructorId,
             wikiUrl = this.wikiUrl,
             name = this.name,
-            nationality = this.nationality
+            nationality = this.nationality,
+            color = this.color
     )
 }
 
 fun FSeasonOverviewRaces.toModel(drivers: Map<String, FSeasonOverviewDriver>, constructors: Map<String, FSeasonOverviewConstructor>, winner: FSeasonOverviewRaces?): RaceResult {
     return RaceResult(
             driver = drivers[this.driverId].let { driver -> driver!!.toModel(constructors) },
-            gridPosition = this.gridPos.toIntOrNull() ?: -1,
+            gridPosition = this.gridPos,
             status = fromStatus(this.status),
-            finishPosition = this.finishPos.toIntOrNull() ?: -1,
+            finishPosition = this.finishPos ?: -1,
             finishPositionText = this.finishPosText,
             time = if (winner != null && winner.driverId != this.driverId) {
                 winner.time?.toLapTime()?.addDelta(this.time)
