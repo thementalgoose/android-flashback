@@ -9,8 +9,12 @@ import kotlin.math.ceil
 
 class SeasonRaceAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private var viewType: SeasonRaceAdapterType = SeasonRaceAdapterType.RACE
-    private var list: List<SeasonRaceModel> = emptyList()
+    private var _viewType: SeasonRaceAdapterType = SeasonRaceAdapterType.RACE
+    val viewType: SeasonRaceAdapterType
+        get() = _viewType
+    private var _list: List<SeasonRaceModel> = emptyList()
+    val list: List<SeasonRaceModel>
+        get() = _list
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val viewHolderType: SeasonRaceAdapterViewHolderType? = viewType.toEnum<SeasonRaceAdapterViewHolderType>()
@@ -44,8 +48,26 @@ class SeasonRaceAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     fun update(type: SeasonRaceAdapterType, list: List<SeasonRaceModel>) {
-        this.viewType = type
-        this.list = list
+        val beforeState = this.viewType
+        val beforeListSize = this.list.size
+        this._viewType = type
+        this._list = list
+
+        if (beforeListSize == 0) {
+            for (x in list.indices) {
+                notifyItemInserted(x)
+            }
+        }
+        else {
+            notifyDataSetChanged()
+        }
+
+//        if (type != this._viewType) {
+//            notifyDataSetChanged()
+//        }
+//        else {
+//
+//        }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {

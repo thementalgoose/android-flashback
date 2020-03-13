@@ -5,7 +5,7 @@ data class FSeasonOverview(
     val constructors: Map<String, FSeasonOverviewConstructor> = emptyMap(),
     val date: String = "",
     val drivers: Map<String, FSeasonOverviewDriver> = emptyMap(),
-    val qualifyingResult: FSeasonOverviewQualifying = FSeasonOverviewQualifying(),
+    val qualifyingResults: FSeasonOverviewQualifying = FSeasonOverviewQualifying(),
     val raceKey: String = "",
     val raceName: String = "",
     val raceResults: Map<String, FSeasonOverviewRaces>? = null,
@@ -56,7 +56,7 @@ data class FSeasonOverviewQualifying(
 
 data class FSeasonOverviewQualifyingResult(
     val driverId: String = "",
-    val position: String = "",
+    val position: Int = -1,
     val time: String = ""
 )
 

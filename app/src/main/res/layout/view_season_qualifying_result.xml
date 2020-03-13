@@ -25,7 +25,7 @@
         app:layout_constraintEnd_toEndOf="@id/guideline"
         app:layout_constraintStart_toEndOf="@id/vConstructorColor"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Sebastian Vettel" />
+        android:text="Sebastian Vettel" />
 
     <TextView
         android:id="@+id/tvConstructor"
@@ -38,7 +38,7 @@
         app:layout_constraintEnd_toEndOf="@id/guideline"
         app:layout_constraintStart_toEndOf="@id/vConstructorColor"
         app:layout_constraintTop_toBottomOf="@id/tvDriver"
-        tools:text="Ferrari" />
+        android:text="Ferrari" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
@@ -68,7 +68,7 @@
         app:layout_constraintStart_toEndOf="@id/guideline"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_percent="0.2"
-        tools:text="1:24.203" />
+        android:text="1:24.203" />
 
     <View
         android:layout_width="1dp"
@@ -90,7 +90,7 @@
         app:layout_constraintStart_toEndOf="@id/q1Time"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_percent="0.2"
-        tools:text="1:23.203" />
+        android:text="1:23.203" />
 
     <View
         android:layout_width="1dp"
@@ -112,6 +112,6 @@
         app:layout_constraintStart_toEndOf="@id/q2Time"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_percent="0.2"
-        tools:text="1:23.102" />
+        android:text="1:23.102" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

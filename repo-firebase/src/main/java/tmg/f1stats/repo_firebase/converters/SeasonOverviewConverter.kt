@@ -37,13 +37,13 @@ fun FSeasonOverview.toModel(): SeasonRound {
                                 driver = drivers[it.driverId].let { driver -> driver!!.toModel(constructors) }
                         )
                     } ?: listOf(),
-            q1Results = qualifyingResult.q1?.toModels {
+            q1Results = qualifyingResults.q1?.toModels {
                 it.toModel(drivers, constructors)
             } ?: listOf(),
-            q2Results = qualifyingResult.q2?.toModels {
+            q2Results = qualifyingResults.q2?.toModels {
                 it.toModel(drivers, constructors)
             } ?: listOf(),
-            q3Results = qualifyingResult.q3?.toModels {
+            q3Results = qualifyingResults.q3?.toModels {
                 it.toModel(drivers, constructors)
             } ?: listOf()
     )
@@ -104,6 +104,6 @@ fun FSeasonOverviewQualifyingResult.toModel(drivers: Map<String, FSeasonOverview
     return QualifyingResult(
             driver = drivers[this.driverId].let { driver -> driver!!.toModel(constructors) },
             time = time.toLapTime(),
-            position = position.toIntOrNull() ?: -1
+            position = position
     )
 }

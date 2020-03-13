@@ -3,6 +3,7 @@ package tmg.f1stats.season.race
 import android.view.View
 import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.view_season_qualifying_result.view.*
 import tmg.f1stats.R
 
 enum class SeasonRaceAdapterViewHolderType(
@@ -28,7 +29,13 @@ class SeasonRaceRaceResultViewHolder(itemView: View): RecyclerView.ViewHolder(it
 
 class SeasonRaceQualifyingResultViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
     fun bind(driver: SeasonRaceModel) {
-
+        itemView.apply {
+            tvDriver.text = "${driver.driver.name} ${driver.driver.surname}"
+            tvConstructor.text = driver.driver.constructor.name
+            q1Time.text = driver.q1.time
+            q2Time.text = driver.q2?.time ?: ""
+            q3Time.text = driver.q3?.time ?: ""
+        }
     }
 }
 

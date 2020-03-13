@@ -15,7 +15,7 @@ import tmg.f1stats.settings.SettingsViewModel
 var f1Module = module {
     viewModel { HomeViewModel() }
     viewModel { SeasonViewModel(get()) }
-    viewModel { SeasonRaceViewModel() }
+    viewModel { SeasonRaceViewModel(get()) }
     viewModel { SettingsViewModel() }
     viewModel { GalleryViewModel() }
 

@@ -1,9 +1,12 @@
 package tmg.f1stats.season.race
 
 import android.os.Bundle
+import androidx.recyclerview.widget.LinearLayoutManager
+import kotlinx.android.synthetic.main.fragment_season_race.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.f1stats.R
 import tmg.f1stats.base.BaseFragment
+import tmg.utilities.extensions.subscribeNoError
 
 class SeasonRaceFragment: BaseFragment() {
 
@@ -11,6 +14,8 @@ class SeasonRaceFragment: BaseFragment() {
     private var round: Int = -1
 
     private val viewModel: SeasonRaceViewModel by viewModel()
+
+    private lateinit var adapter: SeasonRaceAdapter
 
     override fun layoutId(): Int = R.layout.fragment_season_race
 
@@ -22,8 +27,27 @@ class SeasonRaceFragment: BaseFragment() {
         }
     }
 
+    override fun initViews() {
+        adapter = SeasonRaceAdapter()
+        rvList.adapter = adapter
+        rvList.layoutManager = LinearLayoutManager(context)
+
+        viewModel.inputs.initialise(season, round)
+    }
+
     override fun observeViewModel() {
 
+        viewModel.outputs
+            .drivers()
+            .subscribeNoError {
+                adapter.update(adapter.viewType, it)
+            }
+
+        viewModel.outputs
+            .viewType()
+            .subscribeNoError {
+                adapter.update(it, adapter.list)
+            }
     }
 
     companion object {

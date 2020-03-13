@@ -12,12 +12,22 @@ data class LapTime(
     val millis: Int
 ) {
 
+    constructor(): this(
+        -1,
+        -1,
+        -1,
+        -1
+    )
+
     constructor(millis: Int): this(
         LocalTime.ofNanoOfDay(millis * 1_000_000L).hour,
         LocalTime.ofNanoOfDay(millis * 1_000_000L).minute,
         LocalTime.ofNanoOfDay(millis * 1_000_000L).second,
         LocalTime.ofNanoOfDay(millis * 1_000_000L).nano / 1_000_000
     )
+
+    val noTime: Boolean
+        get() = hours == -1 && mins == -1 && seconds == -1 && millis == -1
 
     val totalMillis: Int
         get() = (hours * 1000 * 60 * 60) +
@@ -26,16 +36,22 @@ data class LapTime(
                 millis
 
     val time: String
-        get() = if (hours == 0) {
-            "${hours}:${mins}:${seconds.extendTo(2)}.${millis.extendTo(3)}"
-        } else {
-            "${mins}:${seconds.extendTo(2)}.${millis.extendTo(3)}"
+        get() = when {
+            noTime -> {
+                "No time"
+            }
+            hours != 0 -> {
+                "${hours}:${mins}:${seconds.extendTo(2)}.${millis.extendTo(3)}"
+            }
+            else -> {
+                "${mins}:${seconds.extendTo(2)}.${millis.extendTo(3)}"
+            }
         }
 }
 
 private fun Int.extendTo(toCharacters: Int = 2): String {
     var chars: String = ""
-    for (i in this.toString().length..toCharacters) {
+    for (i in this.toString().length until toCharacters) {
         chars += "0"
     }
     return "$chars$this"
