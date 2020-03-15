@@ -74,7 +74,7 @@ class SeasonRaceAdapter(
                     newType = type
             ))
             result.dispatchUpdatesTo(this)
-        } else {
+        } else if (beforeList.size != list.size) {
             notifyDataSetChanged()
         }
     }
@@ -113,7 +113,7 @@ class SeasonRaceAdapter(
 
         override fun getNewListSize(): Int = newList.size
 
-        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean = newType == oldType
+        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean = false
     }
 
     //endregion
