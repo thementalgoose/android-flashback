@@ -68,12 +68,12 @@ class SeasonRaceViewModel(
         .combineWithPair(viewType)
         .map { (list, viewType) ->
             when (viewType) {
-                SeasonRaceAdapterType.RACE -> list.sortedByDescending { it.racePos }
-                SeasonRaceAdapterType.QUALIFYING_POS_1 -> list.sortedByDescending { it.q1Pos }
-                SeasonRaceAdapterType.QUALIFYING_POS_2 -> list.sortedByDescending { it.q2Pos }
-                SeasonRaceAdapterType.QUALIFYING_POS_3 -> list.sortedByDescending { it.q3Pos }
+                SeasonRaceAdapterType.RACE -> list.sortedBy { it.racePos }
+                SeasonRaceAdapterType.QUALIFYING_POS_1 -> list.sortedBy { it.q1Pos }
+                SeasonRaceAdapterType.QUALIFYING_POS_2 -> list.sortedBy { it.q2Pos ?: it.q1Pos }
+                SeasonRaceAdapterType.QUALIFYING_POS_3 -> list.sortedBy { it.q3Pos ?: it.q2Pos ?: it.q1Pos }
                 SeasonRaceAdapterType.QUALIFYING_POS,
-                SeasonRaceAdapterType.QUALIFYING_GRID -> list.sortedByDescending { it.q3Pos }
+                SeasonRaceAdapterType.QUALIFYING_GRID -> list.sortedBy { it.qualiGridPos }
                 else -> list
             }
         }
@@ -117,8 +117,8 @@ class SeasonRaceViewModel(
     private fun List<QualifyingResult>.getQualyResult(driverId: String): Pair<LapTime, Int>? {
         return this
             .firstOrNull { it.driver.driverId == driverId }
-            ?.let {
-                Pair(it.time, this.sortedByDescending { it.time.totalMillis }.indexOfFirst { it.driver.driverId == driverId })
+            ?.let { result ->
+                Pair(result.time, this.sortedBy { it.time.totalMillis }.indexOfFirst { it.driver.driverId == driverId } + 1)
             }
     }
 }

@@ -42,7 +42,7 @@ class SeasonRaceQualifyingResultViewHolder(
     fun bind(driver: SeasonRaceModel) {
         itemView.apply {
             tvDriver.text = "${driver.driver.name} ${driver.driver.surname}"
-            tvConstructor.text = driver.driver.constructor.name
+            tvConstructor.text = driver.driver.constructor.name + " " + driver.qualiGridPos
             q1Time.text = driver.q1.time
             q2Time.text = driver.q2?.time ?: ""
             q3Time.text = driver.q3?.time ?: ""
