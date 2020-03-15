@@ -8,7 +8,7 @@ import tmg.f1stats.R
 import tmg.f1stats.base.BaseFragment
 import tmg.utilities.extensions.subscribeNoError
 
-class SeasonRaceFragment: BaseFragment() {
+class SeasonRaceFragment: BaseFragment(), SeasonRaceAdapterCallback {
 
     private var season: Int = -1
     private var round: Int = -1
@@ -28,7 +28,7 @@ class SeasonRaceFragment: BaseFragment() {
     }
 
     override fun initViews() {
-        adapter = SeasonRaceAdapter()
+        adapter = SeasonRaceAdapter(this)
         rvList.adapter = adapter
         rvList.layoutManager = LinearLayoutManager(context)
 
@@ -49,6 +49,14 @@ class SeasonRaceFragment: BaseFragment() {
                 adapter.update(it, adapter.list)
             }
     }
+
+    //region SeasonRaceAdapterCallback
+
+    override fun orderBy(adapterType: SeasonRaceAdapterType) {
+        viewModel.inputs.orderBy(adapterType)
+    }
+
+    //endregion
 
     companion object {
 

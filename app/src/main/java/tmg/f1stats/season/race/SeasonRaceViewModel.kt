@@ -8,12 +8,14 @@ import tmg.f1stats.repo.enums.RaceStatus
 import tmg.f1stats.repo.models.LapTime
 import tmg.f1stats.repo.models.QualifyingResult
 import tmg.f1stats.repo.models.RaceResult
+import tmg.utilities.extensions.combineWithPair
 import tmg.utilities.extensions.filterMap
 
 //region Inputs
 
 interface SeasonRaceViewModelInputs {
     fun initialise(season: Int, round: Int)
+    fun orderBy(seasonRaceAdapterType: SeasonRaceAdapterType)
 }
 
 //endregion
@@ -63,6 +65,18 @@ class SeasonRaceViewModel(
                 )
             }
         }
+        .combineWithPair(viewType)
+        .map { (list, viewType) ->
+            when (viewType) {
+                SeasonRaceAdapterType.RACE -> list.sortedByDescending { it.racePos }
+                SeasonRaceAdapterType.QUALIFYING_POS_1 -> list.sortedByDescending { it.q1Pos }
+                SeasonRaceAdapterType.QUALIFYING_POS_2 -> list.sortedByDescending { it.q2Pos }
+                SeasonRaceAdapterType.QUALIFYING_POS_3 -> list.sortedByDescending { it.q3Pos }
+                SeasonRaceAdapterType.QUALIFYING_POS,
+                SeasonRaceAdapterType.QUALIFYING_GRID -> list.sortedByDescending { it.q3Pos }
+                else -> list
+            }
+        }
 
     var inputs: SeasonRaceViewModelInputs = this
     var outputs: SeasonRaceViewModelOutputs = this
@@ -75,6 +89,10 @@ class SeasonRaceViewModel(
 
     override fun initialise(season: Int, round: Int) {
         seasonRound.onNext(Pair(season, round))
+    }
+
+    override fun orderBy(seasonRaceAdapterType: SeasonRaceAdapterType) {
+        viewType.onNext(seasonRaceAdapterType)
     }
 
     //endregion

@@ -18,4 +18,16 @@ open class SeasonRaceModel(
     val racePos: Int,
     val gridPos: Int,
     val status: RaceStatus
-)
+) {
+    val qualiGridPos: Int
+        get() {
+            if (q3Pos ?: Int.MAX_VALUE >= 15) {
+
+            }
+        }
+
+    val qualiGridTime: Int
+        get() {
+
+        }
+}

@@ -1,44 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <View
-        android:id="@+id/vConstructorColor"
-        android:layout_width="2dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="@dimen/paddingSmall"
-        app:layout_constraintBottom_toBottomOf="@id/tvConstructor"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/guideline"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/tvDriver"
-        style="@style/Text.Season.Race.Qualifying.Driver"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:paddingStart="@dimen/paddingXSmall"
-        android:paddingTop="@dimen/paddingXSmall"
-        android:paddingEnd="@dimen/paddingXSmall"
-        app:layout_constraintEnd_toEndOf="@id/guideline"
-        app:layout_constraintStart_toEndOf="@id/vConstructorColor"
-        app:layout_constraintTop_toTopOf="parent"
-        android:text="Sebastian Vettel" />
+        <View
+            android:id="@+id/vConstructorColor"
+            android:layout_width="2dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/paddingSmall"
+            app:layout_constraintBottom_toBottomOf="@id/tvConstructor"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tvConstructor"
-        style="@style/Text.Season.Race.Qualifying.Constructor"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:paddingStart="@dimen/paddingXSmall"
-        android:paddingEnd="@dimen/paddingXSmall"
-        android:paddingBottom="@dimen/paddingXSmall"
-        app:layout_constraintEnd_toEndOf="@id/guideline"
-        app:layout_constraintStart_toEndOf="@id/vConstructorColor"
-        app:layout_constraintTop_toBottomOf="@id/tvDriver"
-        android:text="Ferrari" />
+        <TextView
+            android:id="@+id/tvDriver"
+            style="@style/Text.Season.Race.Qualifying.Driver"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/paddingXSmall"
+            android:paddingTop="@dimen/paddingXSmall"
+            android:paddingEnd="@dimen/paddingXSmall"
+            android:text="Sebastian Vettel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/vConstructorColor"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvConstructor"
+            style="@style/Text.Season.Race.Qualifying.Constructor"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/paddingXSmall"
+            android:paddingEnd="@dimen/paddingXSmall"
+            android:paddingBottom="@dimen/paddingXSmall"
+            android:text="Ferrari"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/vConstructorColor"
+            app:layout_constraintTop_toBottomOf="@id/tvDriver" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
@@ -62,13 +72,13 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="@id/tvConstructor"
+        android:text="1:24.203"
+        app:layout_constraintBottom_toBottomOf="@id/container"
         app:layout_constraintEnd_toStartOf="@id/q2Time"
         app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintStart_toEndOf="@id/guideline"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.2"
-        android:text="1:24.203" />
+        app:layout_constraintWidth_percent="0.2" />
 
     <View
         android:layout_width="1dp"
@@ -85,12 +95,12 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="@id/tvConstructor"
+        android:text="1:23.203"
+        app:layout_constraintBottom_toBottomOf="@id/container"
         app:layout_constraintEnd_toStartOf="@id/q3Time"
         app:layout_constraintStart_toEndOf="@id/q1Time"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.2"
-        android:text="1:23.203" />
+        app:layout_constraintWidth_percent="0.2" />
 
     <View
         android:layout_width="1dp"
@@ -107,11 +117,11 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="@id/tvConstructor"
+        android:text="1:23.102"
+        app:layout_constraintBottom_toBottomOf="@id/container"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/q2Time"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.2"
-        android:text="1:23.102" />
+        app:layout_constraintWidth_percent="0.2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
