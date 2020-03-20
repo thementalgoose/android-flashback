@@ -5,10 +5,11 @@ import tmg.f1stats.repo.enums.SyncType
 import tmg.f1stats.repo.models.Sync
 import tmg.f1stats.repo_firebase.models.FSync
 
-fun FSync.toModel(): Sync {
+fun FSync.toModel(documentId: String): Sync {
     return Sync(
-        type = SyncType.values().first { it.type == this.type },
-        progress = SyncProgress.values().first { it.type == this.progress },
+        id = documentId,
+        type = SyncType.values().firstOrNull { it.type == this.type } ?: SyncType.SEASON_OVERVIEW,
+        progress = SyncProgress.values().firstOrNull { it.type == this.progress } ?: SyncProgress.NEW,
         errorMsg = this.errorMsg,
         season = this.season,
         round = this.round,

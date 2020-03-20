@@ -20,6 +20,8 @@
 
         <activity android:name=".onboarding.OnboardingActivity" />
 
+        <activity android:name=".settings.sync.SettingsSyncActivity" />
+
         <activity android:name=".home.HomeActivity" />
 
     </application>

@@ -23,6 +23,6 @@ class SyncFirestore: SyncDB {
     }
 
     override fun allSyncItems(): Observable<List<Sync>> {
-        return getDocuments(FSync::class.java, "seasonOverview") { model, id -> model.toModel() }
+        return getDocuments(FSync::class.java, "sync") { model, id -> model.toModel(id) }
     }
 }

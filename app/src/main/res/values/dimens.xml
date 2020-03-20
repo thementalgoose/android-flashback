@@ -3,10 +3,10 @@
 
     <dimen name="navHeight">60dp</dimen>
 
-    <dimen name="gridWidth">120dp</dimen>
+    <dimen name="gridWidth">90dp</dimen>
     <dimen name="gridHeight">22dp</dimen>
 
-    <dimen name="gridOffset">72dp</dimen>
+    <dimen name="gridOffset">64dp</dimen>
 
     <dimen name="qualifyingGridConstructorIndicator">12dp</dimen>
 

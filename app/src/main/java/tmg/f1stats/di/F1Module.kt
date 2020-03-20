@@ -11,13 +11,16 @@ import tmg.f1stats.repo.db.SyncDB
 import tmg.f1stats.repo_firebase.repos.SeasonOverviewFirestore
 import tmg.f1stats.repo_firebase.repos.SyncFirestore
 import tmg.f1stats.settings.SettingsViewModel
+import tmg.f1stats.settings.sync.SettingsSyncViewModel
 
 var f1Module = module {
     viewModel { HomeViewModel() }
     viewModel { SeasonViewModel(get()) }
     viewModel { SeasonRaceViewModel(get()) }
-    viewModel { SettingsViewModel() }
     viewModel { GalleryViewModel() }
+
+    viewModel { SettingsViewModel() }
+    viewModel { SettingsSyncViewModel(get()) }
 
     single<SeasonOverviewDB> { SeasonOverviewFirestore() }
     single<SyncDB> { SyncFirestore() }
