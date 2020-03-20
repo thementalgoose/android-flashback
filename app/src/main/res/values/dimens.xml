@@ -3,7 +3,15 @@
 
     <dimen name="navHeight">60dp</dimen>
 
+    <dimen name="gridWidth">120dp</dimen>
+    <dimen name="gridHeight">22dp</dimen>
+
+    <dimen name="gridOffset">72dp</dimen>
+
+    <dimen name="qualifyingGridConstructorIndicator">12dp</dimen>
+
     <dimen name="paddingLarge">32dp</dimen>
+    <dimen name="paddingMedLarge">24dp</dimen>
     <dimen name="paddingMedium">16dp</dimen>
     <dimen name="paddingSmall">8dp</dimen>
     <dimen name="paddingXSmall">4dp</dimen>

@@ -25,32 +25,54 @@
     <style name="Text.Season" />
     <style name="Text.Season.Track" />
     <style name="Text.Season.Track.Header" parent="Text.Season.Track">
-        <item name="android:textSize">34sp</item>
+        <item name="android:textSize">30sp</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:fontFamily">@font/virgo</item>
+        <item name="android:fontFamily">@font/goodtimes</item>
     </style>
-    <style name="Text.Season.Track.Year" parent="Text.Season.Track">
-        <item name="android:textSize">16sp</item>
+    <style name="Text.Season.Track.Circuit" parent="Text.Season.Track">
+        <item name="android:textSize">12sp</item>
     </style>
+
     <style name="Text.Season.Race" parent="Text.Season" />
-    <style name="Text.Season.Race.Qualifying" parent="Text.Season.Race" />
-    <style name="Text.Season.Race.Qualifying.Time" parent="Text.Season.Race.Qualifying">
+    <style name="Text.Season.Race.QualifyingList" parent="Text.Season.Race" />
+    <style name="Text.Season.Race.QualifyingList.Time" parent="Text.Season.Race.QualifyingList">
         <item name="android:textSize">13sp</item>
         <item name="android:maxLines">1</item>
         <item name="android:ellipsize">start</item>
         <item name="android:textColor">?attr/f1TextSecondary</item>
     </style>
-    <style name="Text.Season.Race.Qualifying.Driver" parent="Text.Season.Race.Qualifying">
+    <style name="Text.Season.Race.QualifyingList.Driver" parent="Text.Season.Race.QualifyingList">
         <item name="android:textSize">14sp</item>
         <item name="android:maxLines">1</item>
         <item name="android:ellipsize">end</item>
         <item name="android:textColor">?attr/f1TextSecondary</item>
     </style>
-    <style name="Text.Season.Race.Qualifying.Constructor" parent="Text.Season.Race.Qualifying">
+    <style name="Text.Season.Race.QualifyingList.Constructor" parent="Text.Season.Race.QualifyingList">
         <item name="android:textSize">12sp</item>
         <item name="android:maxLines">1</item>
         <item name="android:ellipsize">end</item>
         <item name="android:textColor">?attr/f1TextSecondary</item>
+    </style>
+
+    <style name="Text.Season.Race.QualifyingGrid" parent="Text.Season.Race">
+        <item name="android:textColor">?attr/f1TextInversePrimary</item>
+    </style>
+    <style name="Text.Season.Race.QualifyingGrid.Position" parent="Text.Season.Race.QualifyingGrid">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/goodtimes</item>
+    </style>
+    <style name="Text.Season.Race.QualifyingGrid.Driver" parent="Text.Season.Race.QualifyingGrid">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">?attr/f1TextInverseSecondary</item>
+    </style>
+    <style name="Text.Season.Race.QualifyingGrid.Constructor" parent="Text.Season.Race.QualifyingGrid">
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">?attr/f1TextInverseTertiary</item>
+    </style>
+    <style name="Text.Season.Race.QualifyingGrid.Time" parent="Text.Season.Race.QualifyingGrid">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">?attr/f1TextInverseTertiary</item>
     </style>
 
 </resources>

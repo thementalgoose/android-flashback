@@ -58,7 +58,6 @@ class SeasonRaceAdapter(
     fun update(type: SeasonRaceAdapterType, list: List<SeasonRaceModel>) {
         val beforeList = this.list
         val beforeState = this.viewType
-        println("UPDATE $beforeState $type - ${beforeList.size} ${list.size}")
         this._viewType = type
         this._list = list
 

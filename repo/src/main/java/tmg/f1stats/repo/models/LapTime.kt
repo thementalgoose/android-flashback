@@ -47,6 +47,10 @@ data class LapTime(
                 "${mins}:${seconds.extendTo(2)}.${millis.extendTo(3)}"
             }
         }
+
+    override fun toString(): String {
+        return time
+    }
 }
 
 private fun Int.extendTo(toCharacters: Int = 2): String {

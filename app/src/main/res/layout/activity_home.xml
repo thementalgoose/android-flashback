@@ -27,4 +27,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/menu_nav" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/paddingMedium"
+        android:layout_marginBottom="@dimen/paddingMedium"
+        android:src="@drawable/ic_switch_qualifying"
+        app:layout_constraintBottom_toTopOf="@id/bnvNavigation"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

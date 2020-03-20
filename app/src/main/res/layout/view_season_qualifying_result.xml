@@ -24,7 +24,7 @@
 
         <TextView
             android:id="@+id/tvDriver"
-            style="@style/Text.Season.Race.Qualifying.Driver"
+            style="@style/Text.Season.Race.QualifyingList.Driver"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:paddingStart="@dimen/paddingXSmall"
@@ -37,7 +37,7 @@
 
         <TextView
             android:id="@+id/tvConstructor"
-            style="@style/Text.Season.Race.Qualifying.Constructor"
+            style="@style/Text.Season.Race.QualifyingList.Constructor"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:paddingStart="@dimen/paddingXSmall"
@@ -68,7 +68,7 @@
 
     <TextView
         android:id="@+id/q1Time"
-        style="@style/Text.Season.Race.Qualifying.Time"
+        style="@style/Text.Season.Race.QualifyingList.Time"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:gravity="center"
@@ -91,7 +91,7 @@
 
     <TextView
         android:id="@+id/q2Time"
-        style="@style/Text.Season.Race.Qualifying.Time"
+        style="@style/Text.Season.Race.QualifyingList.Time"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:gravity="center"
@@ -113,7 +113,7 @@
 
     <TextView
         android:id="@+id/q3Time"
-        style="@style/Text.Season.Race.Qualifying.Time"
+        style="@style/Text.Season.Race.QualifyingList.Time"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:gravity="center"

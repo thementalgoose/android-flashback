@@ -19,7 +19,7 @@
 
     <TextView
         android:id="@+id/tvCircuit"
-        style="@style/Text.Season.Track.Year"
+        style="@style/Text.Season.Track.Circuit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"

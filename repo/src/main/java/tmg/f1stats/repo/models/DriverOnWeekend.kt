@@ -12,4 +12,7 @@ data class DriverOnWeekend(
     val dateOfBirth: LocalDate,
     val nationality: String,
     val constructor: Constructor
-)
+) {
+    val fullName: String
+        get() = "$name $surname"
+}

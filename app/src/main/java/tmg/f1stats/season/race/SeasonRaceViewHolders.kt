@@ -2,7 +2,10 @@ package tmg.f1stats.season.race
 
 import android.view.View
 import androidx.annotation.LayoutRes
+import androidx.core.graphics.toColorInt
+import androidx.core.view.isGone
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.view_season_qualifying_grid.view.*
 import kotlinx.android.synthetic.main.view_season_qualifying_result.view.*
 import tmg.f1stats.R
 
@@ -41,7 +44,7 @@ class SeasonRaceQualifyingResultViewHolder(
     }
     fun bind(driver: SeasonRaceModel) {
         itemView.apply {
-            tvDriver.text = "${driver.driver.name} ${driver.driver.surname}"
+            tvDriver.text = driver.driver.fullName
             tvConstructor.text = driver.driver.constructor.name + " " + driver.qualiGridPos
             q1Time.text = driver.q1.time
             q2Time.text = driver.q2?.time ?: ""
@@ -61,7 +64,35 @@ class SeasonRaceQualifyingResultViewHolder(
 
 class SeasonRaceQualifyingGridViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
     fun bind(driver1: SeasonRaceModel, driver2: SeasonRaceModel?) {
+        bindDriverFirst(driver1)
+        bindDriverSecond(driver2)
+    }
 
+    private fun bindDriverFirst(driver: SeasonRaceModel) {
+        itemView.firstPosLabel.text = driver.gridPos.toString()
+        itemView.firstQualifyingLapTime.text = driver.qualiGridTime.toString()
+        itemView.firstDriver.text = driver.driver.fullName
+        itemView.firstConstructor.text = driver.driver.constructor.name
+        println("F1STATS " + driver.driver.constructor.name + " is " + driver.driver.constructor.color)
+        itemView.firstConstructorImage.setBackgroundColor(driver.driver.constructor.color.toColorInt())
+    }
+
+    private fun bindDriverSecond(driver: SeasonRaceModel?) {
+        driver?.let {
+            itemView.secondPosLabel.text = driver.gridPos.toString()
+            itemView.secondQualifyingLapTime.text = driver.qualiGridTime.toString()
+            itemView.secondDriver.text = driver.driver.fullName
+            itemView.secondConstructor.text = driver.driver.constructor.name
+            println("F1STATS " + driver.driver.constructor.name + " is " + driver.driver.constructor.color)
+            itemView.secondConstructorImage.setBackgroundColor(driver.driver.constructor.color.toColorInt())
+        }
+
+        itemView.secondPosLabel.isGone = driver == null
+        itemView.secondPos.isGone = driver == null
+        itemView.secondQualifyingLapTime.isGone = driver == null
+        itemView.secondDriver.isGone = driver == null
+        itemView.secondConstructor.isGone = driver == null
+        itemView.secondConstructorImage.isGone = driver == null
     }
 }
 
