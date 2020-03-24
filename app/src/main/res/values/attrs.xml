@@ -10,4 +10,10 @@
     <attr name="f1TextInversePrimary" format="color" />
     <attr name="f1TextInverseSecondary" format="color" />
     <attr name="f1TextInverseTertiary" format="color" />
+
+    <attr name="f1PurpleSector" format="color" />
+
+    <attr name="f1Pos1" format="color" />
+    <attr name="f1Pos2" format="color" />
+    <attr name="f1Pos3" format="color" />
 </resources>

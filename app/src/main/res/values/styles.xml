@@ -17,6 +17,12 @@
         <item name="f1TextInverseTertiary">#D8D8D8</item>
         <item name="f1BackgroundInversePrimary">#181818</item>
         <item name="f1BackgroundInverseSecondary">#383838</item>
+
+        <item name="f1PurpleSector">#7B1BA1</item>
+
+        <item name="f1Pos1">#D3BC4D</item>
+        <item name="f1Pos2">#D8D8D8</item>
+        <item name="f1Pos3">#D29342</item>
     </style>
 
     <style name="Text">
@@ -33,46 +39,94 @@
         <item name="android:textSize">12sp</item>
     </style>
 
-    <style name="Text.Season.Race" parent="Text.Season" />
-    <style name="Text.Season.Race.QualifyingList" parent="Text.Season.Race" />
-    <style name="Text.Season.Race.QualifyingList.Time" parent="Text.Season.Race.QualifyingList">
-        <item name="android:textSize">13sp</item>
-        <item name="android:maxLines">1</item>
-        <item name="android:ellipsize">start</item>
-        <item name="android:textColor">?attr/f1TextSecondary</item>
-    </style>
-    <style name="Text.Season.Race.QualifyingList.Driver" parent="Text.Season.Race.QualifyingList">
-        <item name="android:textSize">14sp</item>
-        <item name="android:maxLines">1</item>
-        <item name="android:ellipsize">end</item>
-        <item name="android:textColor">?attr/f1TextSecondary</item>
-    </style>
-    <style name="Text.Season.Race.QualifyingList.Constructor" parent="Text.Season.Race.QualifyingList">
+    <!-- Driver -->
+
+    <style name="Text.Driver" parent="Text">
         <item name="android:textSize">12sp</item>
-        <item name="android:maxLines">1</item>
-        <item name="android:ellipsize">end</item>
-        <item name="android:textColor">?attr/f1TextSecondary</item>
+    </style>
+    <style name="Text.Driver.Name" parent="Text.Driver">
+
+    </style>
+    <style name="Text.Driver.Number" parent="Text.Driver">
+
     </style>
 
-    <style name="Text.Season.Race.QualifyingGrid" parent="Text.Season.Race">
-        <item name="android:textColor">?attr/f1TextInversePrimary</item>
+    <!-- Podium -->
+
+    <style name="Text.Podium" parent="Text">
+
     </style>
-    <style name="Text.Season.Race.QualifyingGrid.Position" parent="Text.Season.Race.QualifyingGrid">
-        <item name="android:textSize">16sp</item>
+    <style name="Text.Podium.Position" parent="Text.Podium">
+        <item name="android:textSize">20sp</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:fontFamily">@font/goodtimes</item>
     </style>
-    <style name="Text.Season.Race.QualifyingGrid.Driver" parent="Text.Season.Race.QualifyingGrid">
-        <item name="android:textSize">14sp</item>
-        <item name="android:textColor">?attr/f1TextInverseSecondary</item>
+    <style name="Text.Podium.Driver" parent="Text.Podium">
+
     </style>
-    <style name="Text.Season.Race.QualifyingGrid.Constructor" parent="Text.Season.Race.QualifyingGrid">
-        <item name="android:textSize">10sp</item>
-        <item name="android:textColor">?attr/f1TextInverseTertiary</item>
+    <style name="Text.Podium.Number" parent="Text.Podium">
+
     </style>
-    <style name="Text.Season.Race.QualifyingGrid.Time" parent="Text.Season.Race.QualifyingGrid">
+    <style name="Text.Podium.Constructor" parent="Text.Podium">
         <item name="android:textSize">12sp</item>
-        <item name="android:textColor">?attr/f1TextInverseTertiary</item>
     </style>
+    <style name="Text.Podium.Grid" parent="Text.Podium">
+
+    </style>
+    <style name="Text.Podium.Position.Absolute" parent="Text.Podium">
+        <item name="android:textSize">12sp</item>
+    </style>
+    <style name="Text.Podium.Position.Relative" parent="Text.Podium">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="Text.Podium.Points" parent="Text.Podium">
+        <item name="android:textSize">11sp</item>
+    </style>
+
+    <!-- Qualifying layout -->
+
+    <style name="Text.Qualifying" parent="Text" />
+    <style name="Text.Qualifying.Header" parent="Text.Qualifying">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:maxLines">1</item>
+    </style>
+    <style name="Text.Qualifying.Position" parent="Text.Qualifying">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:maxLines">1</item>
+    </style>
+    <style name="Text.Qualifying.Constructor" parent="Text.Qualifying">
+        <item name="android:textSize">11sp</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+    <style name="Text.Qualifying.Points" parent="Text.Qualifying">
+        <item name="android:textStyle">bold</item>
+        <item name="android:maxLines">1</item>
+    </style>
+    <style name="Text.Qualifying.Position.Absolute" parent="Text.Qualifying">
+        <item name="android:textStyle">bold</item>
+        <item name="android:maxLines">1</item>
+    </style>
+    <style name="Text.Qualifying.Position.Relative" parent="Text.Qualifying">
+        <item name="android:textSize">12sp</item>
+        <item name="android:maxLines">1</item>
+    </style>
+    <style name="Text.Qualifying.Time" parent="Text.Qualifying">
+        <item name="android:maxLines">1</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <!-- Qualifying time -->
+
+    <style name="Text.QualifyingTime" parent="Text" />
+    <style name="Text.QualifyingTime.Time" parent="Text.QualifyingTime">
+        <item name="android:textSize">12sp</item>
+    </style>
+    <style name="Text.QualifyingTime.Delta" parent="Text.QualifyingTime">
+        <item name="android:textSize">10sp</item>
+    </style>
+
 
 </resources>

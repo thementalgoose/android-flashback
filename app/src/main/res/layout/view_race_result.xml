@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="@dimen/paddingSmall"
+    android:paddingTop="@dimen/paddingXSmall"
+    android:paddingEnd="@dimen/paddingSmall"
+    android:paddingBottom="@dimen/paddingXSmall">
+
+    <TextView
+        android:id="@+id/tvPosition"
+        style="@style/Text.Qualifying.Position"
+        android:layout_width="@dimen/qualifyingListPositionWidth"
+        android:layout_height="0dp"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="@id/tvConstructor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="1" />
+
+    <include
+        android:id="@+id/layoutDriver"
+        layout="@layout/layout_driver"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/paddingSmall"
+        app:layout_constraintStart_toEndOf="@id/tvPosition"
+        app:layout_constraintTop_toTopOf="@id/tvPosition" />
+
+    <TextView
+        android:id="@+id/tvConstructor"
+        style="@style/Text.Qualifying.Constructor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/layoutDriver"
+        app:layout_constraintTop_toBottomOf="@id/layoutDriver"
+        tools:text="Mercedes" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <LinearLayout
+        android:id="@+id/llPoints"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/llPosition"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toStartOf="@id/guideline"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            style="@style/Text.Qualifying.Points"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="15" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llPosition"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/llTime"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toEndOf="@id/llPoints"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            style="@style/Text.Qualifying.Position.Absolute"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="12th" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_pos_up" />
+
+        <TextView
+            style="@style/Text.Qualifying.Position.Relative"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="11" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llTime"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="end|center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toEndOf="@id/llPosition"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="UseCompoundDrawables">
+
+        <TextView
+            style="@style/Text.Qualifying.Time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="+1.123" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/paddingXSmall"
+            android:src="@drawable/ic_fastest_lap"
+            app:layout_constraintBottom_toBottomOf="@id/llTime"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/llTime" />
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

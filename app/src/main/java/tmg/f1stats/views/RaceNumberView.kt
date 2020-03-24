@@ -28,7 +28,11 @@ class RaceNumberView: TextView {
     private val verticalPadding: Int = 6f.dpToPx(context.resources).roundToInt()
 
     @ColorInt
-    private var colorHighlight: Int = Color.BLUE
+    var colorHighlight: Int = Color.BLUE
+        set(value) {
+            setShadowLayer(8f, 0f, 0f, colorHighlight)
+            field = value
+        }
 
     private fun initView(attributeSet: AttributeSet?, defStyleAttr: Int = -1) {
         context.theme
@@ -41,7 +45,6 @@ class RaceNumberView: TextView {
                 }
             }
         typeface = ResourcesCompat.getFont(context, R.font.yukarimobil)
-        setShadowLayer(8f, 0f, 0f, colorHighlight)
         setPadding(horizontalPadding, verticalPadding, horizontalPadding, verticalPadding)
     }
 }
