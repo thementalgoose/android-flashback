@@ -35,7 +35,7 @@ class SeasonRaceViewModel(
     SeasonRaceViewModelInputs,
     SeasonRaceViewModelOutputs {
 
-    private var viewType: BehaviorSubject<SeasonRaceAdapterType> = BehaviorSubject.createDefault(SeasonRaceAdapterType.QUALIFYING_GRID)
+    private var viewType: BehaviorSubject<SeasonRaceAdapterType> = BehaviorSubject.createDefault(SeasonRaceAdapterType.QUALIFYING_POS)
     private var seasonRound: BehaviorSubject<Pair<Int, Int>> = BehaviorSubject.create()
 
     private var seasonRaceModelObservable: Observable<List<SeasonRaceModel>> = seasonRound
@@ -71,8 +71,7 @@ class SeasonRaceViewModel(
                 SeasonRaceAdapterType.QUALIFYING_POS_1 -> list.sortedBy { it.q1Pos }
                 SeasonRaceAdapterType.QUALIFYING_POS_2 -> list.sortedBy { it.q2Pos ?: it.q1Pos }
                 SeasonRaceAdapterType.QUALIFYING_POS_3 -> list.sortedBy { it.q3Pos ?: it.q2Pos ?: it.q1Pos }
-                SeasonRaceAdapterType.QUALIFYING_POS,
-                SeasonRaceAdapterType.QUALIFYING_GRID -> list.sortedBy { it.qualiGridPos }
+                SeasonRaceAdapterType.QUALIFYING_POS -> list.sortedBy { it.qualiGridPos }
                 else -> list
             }
         }

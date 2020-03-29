@@ -30,7 +30,6 @@ class SeasonRaceAdapter(
             SeasonRaceAdapterViewHolderType.RACE_PODIUM -> SeasonRaceRacePodiumViewHolder(view)
             SeasonRaceAdapterViewHolderType.RACE_RESULT -> SeasonRaceRaceResultViewHolder(view)
             SeasonRaceAdapterViewHolderType.QUALIFYING_RESULT -> SeasonRaceQualifyingResultViewHolder(callback, view)
-            SeasonRaceAdapterViewHolderType.QUALIFYING_GRID -> SeasonRaceQualifyingGridViewHolder(view)
             null -> throw Error("View type not implemented")
         }
     }
@@ -41,7 +40,6 @@ class SeasonRaceAdapter(
         SeasonRaceAdapterType.QUALIFYING_POS_1 -> list.size
         SeasonRaceAdapterType.QUALIFYING_POS_2 -> list.size
         SeasonRaceAdapterType.QUALIFYING_POS_3 -> list.size
-        SeasonRaceAdapterType.QUALIFYING_GRID -> ceil(list.size / 2f).toInt()
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -51,7 +49,6 @@ class SeasonRaceAdapter(
             SeasonRaceAdapterType.QUALIFYING_POS_1 -> SeasonRaceAdapterViewHolderType.QUALIFYING_RESULT.ordinal
             SeasonRaceAdapterType.QUALIFYING_POS_2 -> SeasonRaceAdapterViewHolderType.QUALIFYING_RESULT.ordinal
             SeasonRaceAdapterType.QUALIFYING_POS_3 -> SeasonRaceAdapterViewHolderType.QUALIFYING_RESULT.ordinal
-            SeasonRaceAdapterType.QUALIFYING_GRID -> SeasonRaceAdapterViewHolderType.QUALIFYING_GRID.ordinal
         }
     }
 
@@ -89,11 +86,6 @@ class SeasonRaceAdapter(
             SeasonRaceAdapterViewHolderType.QUALIFYING_RESULT -> {
                 (holder as? SeasonRaceQualifyingResultViewHolder)?.bind(list[position])
             }
-            SeasonRaceAdapterViewHolderType.QUALIFYING_GRID -> {
-                val driver1: SeasonRaceModel = list[position * 2]
-                val driver2: SeasonRaceModel? = list.getOrNull((position * 2) + 1)
-                (holder as? SeasonRaceQualifyingGridViewHolder)?.bind(driver1, driver2)
-            }
         }
     }
 
@@ -125,7 +117,6 @@ enum class SeasonRaceAdapterType {
     QUALIFYING_POS_2,
     QUALIFYING_POS_3,
     QUALIFYING_POS,
-    QUALIFYING_GRID
 }
 
 interface SeasonRaceAdapterCallback {

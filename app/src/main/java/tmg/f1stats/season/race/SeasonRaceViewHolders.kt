@@ -14,7 +14,6 @@ enum class SeasonRaceAdapterViewHolderType(
     RACE_PODIUM(R.layout.view_race_podium),
     RACE_RESULT(R.layout.view_race_result),
     QUALIFYING_RESULT(R.layout.view_qualifying_result),
-//    QUALIFYING_GRID(R.layout.view_season_qualifying_grid);
 }
 
 class SeasonRaceRacePodiumViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

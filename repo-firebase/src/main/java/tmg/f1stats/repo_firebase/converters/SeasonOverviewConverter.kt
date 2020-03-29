@@ -1,109 +1,78 @@
 package tmg.f1stats.repo_firebase.converters
 
-import tmg.f1stats.repo.enums.RaceStatus.Companion.fromStatus
+import tmg.f1stats.repo.enums.RaceStatus
 import tmg.f1stats.repo.models.*
-import tmg.f1stats.repo.utils.addDelta
 import tmg.f1stats.repo.utils.toLapTime
 import tmg.f1stats.repo_firebase.models.*
 
-fun FSeasonOverview.toModel(): SeasonRound {
-    return SeasonRound(
-            wikiUrl = wikiUrl,
-            raceName = raceName,
-            date = fromDate(date),
-            time = fromTime(time),
-            season = season,
-            round = round,
-            raceKey = raceKey,
-            drivers = drivers.toModels {
-                it.toModel(constructors)
-            },
-            circuit = circuit.toModel(),
-            constructors = constructors.toModels {
-                it.toModel()
-            },
-            raceResults = raceResults?.toModels {
-                it.toModel(drivers, constructors, winner)
-            } ?: listOf(),
-            fastestLaps = raceResults?.entries
-                    ?.map { it.value }
-                    ?.sortedByDescending { it.fastestLap.rank }
-                    ?.map {
-                        RaceResultFastestLap(
-                                lapNumber = it.fastestLap.lapNumber,
-                                rank = it.fastestLap.rank,
-                                averageSpeed = it.fastestLap.averageSpeed,
-                                time = it.time?.toLapTime(),
-                                driver = drivers[it.driverId].let { driver -> driver!!.toModel(constructors) }
-                        )
-                    } ?: listOf(),
-            q1Results = qualifyingResults.q1?.toModels {
-                it.toModel(drivers, constructors)
-            } ?: listOf(),
-            q2Results = qualifyingResults.q2?.toModels {
-                it.toModel(drivers, constructors)
-            } ?: listOf(),
-            q3Results = qualifyingResults.q3?.toModels {
-                it.toModel(drivers, constructors)
-            } ?: listOf()
-    )
-}
-
-fun FSeasonOverviewDriver.toModel(constructors: Map<String, FSeasonOverviewConstructor>): DriverOnWeekend {
-    return DriverOnWeekend(
-            driverId = this.driverId,
-            driverNumber = this.driverNumber,
-            driverCode = this.driverCode,
-            wikiUrl = this.wikiUrl,
-            name = this.firstName,
-            surname = this.lastName,
-            dateOfBirth = fromDate(this.dateOfBirth),
-            nationality = this.nationality,
-            constructor = constructors[this.seasonConstructor].let { constructor -> constructor!!.toModel() }
-    )
-}
-
-fun FSeasonOverviewCircuit.toModel(): Circuit {
-    return Circuit(
-            circuitId = this.circuitId,
-            wikiUrl = this.wikiUrl,
-            circuitName = this.circuitName,
-            locationLat = this.locationLat.toDoubleOrNull(),
-            locationLng = this.locationLng.toDoubleOrNull(),
-            locality = this.locality,
-            country = this.country
-    )
-}
-
-fun FSeasonOverviewConstructor.toModel(): Constructor {
-    return Constructor(
-            constructorId = this.constructorId,
-            wikiUrl = this.wikiUrl,
-            name = this.name,
-            nationality = this.nationality,
-            color = this.color
-    )
-}
-
-fun FSeasonOverviewRaces.toModel(drivers: Map<String, FSeasonOverviewDriver>, constructors: Map<String, FSeasonOverviewConstructor>, winner: FSeasonOverviewRaces?): RaceResult {
-    return RaceResult(
-            driver = drivers[this.driverId].let { driver -> driver!!.toModel(constructors) },
-            gridPosition = this.gridPos,
-            status = fromStatus(this.status),
-            finishPosition = this.finishPos ?: -1,
-            finishPositionText = this.finishPosText,
-            time = if (winner != null && winner.driverId != this.driverId) {
-                winner.time?.toLapTime()?.addDelta(this.time)
-            } else {
-                this.time?.toLapTime()
+fun FSeason.convert(): Season {
+    return Season(
+        drivers = (this.drivers ?: mapOf())
+            .values
+            .map { it.convert() },
+        constructors = (this.constructors ?: mapOf())
+            .values
+            .map { it.convert() },
+        rounds = (this.race ?: mapOf())
+            .values
+            .map {
+                it.convert(this.drivers ?: mapOf(), this.constructors ?: mapOf())
             }
     )
 }
 
-fun FSeasonOverviewQualifyingResult.toModel(drivers: Map<String, FSeasonOverviewDriver>, constructors: Map<String, FSeasonOverviewConstructor>): QualifyingResult {
-    return QualifyingResult(
-            driver = drivers[this.driverId].let { driver -> driver!!.toModel(constructors) },
-            time = time.toLapTime(),
-            position = position
+fun FRound.convert(
+    drivers: Map<String, FSeasonOverviewDriver>,
+    constructors: Map<String, FSeasonOverviewConstructor>
+): Round {
+    return Round(
+        season = season,
+        round = round,
+        date = fromDate(date),
+        time = fromTime(time),
+        name = name,
+        circuit = circuit.convert(),
+        q1 = qualifying.onResult(drivers, constructors) { it.q1 },
+        q2 = qualifying.onResult(drivers, constructors) { it.q2 },
+        q3 = qualifying.onResult(drivers, constructors) { it.q3 },
+        race = (race ?: mapOf())
+            .map { (driverId, raceResult) ->
+                driverId to RoundRaceResult(
+                    driver = drivers.values.first { it.id == driverId }.convert(constructors),
+                    time = raceResult.time?.toLapTime(),
+                    points = raceResult.points ?: 0,
+                    grid = raceResult.grid ?: 0,
+                    finish = raceResult.result ?: 0,
+                    status = RaceStatus.fromStatus(raceResult.status ?: RaceStatus.RETIRED.statusCode),
+                    fastestLap = raceResult.fastestLap?.convert()
+                )
+            }
+            .toMap()
+    )
+}
+private fun Map<String, FSeasonOverviewRaceQualifying>?.onResult(
+    drivers: Map<String, FSeasonOverviewDriver>,
+    constructors: Map<String, FSeasonOverviewConstructor>,
+    callback: (race: FSeasonOverviewRaceQualifying) -> String?
+): Map<String, RoundQualifyingResult> {
+    return (this ?: mapOf())
+        .map { (driverId, qualiResult) ->
+            val lapTime: LapTime? = callback(qualiResult)?.toLapTime()
+            return@map driverId to RoundQualifyingResult(
+                driver = drivers.values.first { it.id == driverId }.convert(constructors),
+                time = lapTime,
+                position = (this ?: mapOf())
+                    .map { (driverId, res) -> driverId to res.q1?.toLapTime() }
+                    .sortedBy { it.second?.totalMillis ?: Int.MAX_VALUE }
+                    .indexOfFirst { it.first == driverId }
+            )
+        }
+        .toMap()
+}
+private fun FSeasonOverviewRaceRaceFastestLap.convert(): FastestLap {
+    return FastestLap(
+        rank = pos,
+        lap = lap,
+        lapTime = time.toLapTime()
     )
 }

@@ -6,12 +6,10 @@ import tmg.f1stats.repo.db.SeasonOverviewDB
 import tmg.f1stats.repo.models.Circuit
 import tmg.f1stats.repo.models.Constructor
 import tmg.f1stats.repo.models.DriverOnWeekend
-import tmg.f1stats.repo.models.SeasonRound
+import tmg.f1stats.repo.models.Round
 import tmg.f1stats.repo.utils.mapOptionalValue
-import tmg.f1stats.repo_firebase.converters.toModel
-import tmg.f1stats.repo_firebase.firebase.getDocument
 import tmg.f1stats.repo_firebase.firebase.getDocumentMap
-import tmg.f1stats.repo_firebase.models.FSeasonOverview
+import tmg.f1stats.repo_firebase.models.FSeason
 
 class SeasonOverviewFirestore: SeasonOverviewDB {
     override fun getCircuits(season: Int): Observable<List<Circuit>> {
@@ -58,25 +56,25 @@ class SeasonOverviewFirestore: SeasonOverviewDB {
             }
     }
 
-    override fun getSeasonOverview(season: Int): Observable<List<SeasonRound>> {
+    override fun getSeasonOverview(season: Int): Observable<List<Round>> {
         return getSeason(season)
     }
 
-    override fun getLastWeekend(season: Int): Observable<Optional<SeasonRound>> {
+    override fun getLastWeekend(season: Int): Observable<Optional<Round>> {
         TODO("Not yet implemented")
     }
 
-    override fun getNextWeekend(season: Int): Observable<Optional<SeasonRound>> {
+    override fun getNextWeekend(season: Int): Observable<Optional<Round>> {
         TODO("Not yet implemented")
     }
 
-    override fun getSeasonRound(season: Int, round: Int): Observable<Optional<SeasonRound>> {
+    override fun getSeasonRound(season: Int, round: Int): Observable<Optional<Round>> {
         return getSeason(season)
             .map { seasonRound -> Optional(seasonRound.firstOrNull { it.round == round }) }
     }
 
-    private fun getSeason(season: Int): Observable<List<SeasonRound>> {
-        return getDocumentMap(FSeasonOverview::class.java, "seasonOverview/$season") { model ->
+    private fun getSeason(season: Int): Observable<List<Round>> {
+        return getDocumentMap(FSeason::class.java, "seasonOverview/$season") { model ->
             model.toModel()
         }.map { seasonList ->
             seasonList.sortedBy { it.round }

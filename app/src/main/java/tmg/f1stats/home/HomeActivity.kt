@@ -25,7 +25,6 @@ class HomeActivity: BaseActivity() {
             when (it.itemId) {
                 R.id.nav_drivers -> viewModel.clickTab(HomeTabOption.DRIVERS)
                 R.id.nav_constructors -> viewModel.clickTab(HomeTabOption.CONSTRUCTORS)
-                R.id.nav_gallery -> viewModel.clickTab(HomeTabOption.GALLERY)
                 R.id.nav_settings -> {
                     startActivity(Intent(this, SettingsSyncActivity::class.java))
                     viewModel.clickTab(HomeTabOption.SETTINGS)

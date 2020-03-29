@@ -1,9 +1,13 @@
 package tmg.f1stats.repo.models
 
-data class Constructor(
-    val constructorId: String,
-    val wikiUrl: String,
+/**
+ * Data class for a specific constructor
+ */
+open class Constructor(
+    val id: String,
     val name: String,
+    val wikiUrl: String,
     val nationality: String,
-    val color: String
+    val nationalityISO: String,
+    val color: Int
 )

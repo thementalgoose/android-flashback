@@ -1,13 +1,11 @@
 package tmg.f1stats.season.race
 
 import tmg.f1stats.repo.enums.RaceStatus
-import tmg.f1stats.repo.models.Driver
-import tmg.f1stats.repo.models.DriverOnWeekend
 import tmg.f1stats.repo.models.LapTime
-import tmg.f1stats.repo.models.QualifyingResult
+import tmg.f1stats.repo.models.RoundDriver
 
 open class SeasonRaceModel(
-    val driver: DriverOnWeekend,
+    val driver: RoundDriver,
     val q1: LapTime,
     val q1Pos: Int,
     val q2: LapTime?,
@@ -19,15 +17,6 @@ open class SeasonRaceModel(
     val gridPos: Int,
     val status: RaceStatus
 ) {
-    val qualiGridPos: Int?
-        get() {
-            return when {
-                q3 != null -> q3Pos
-                q2 != null -> q2Pos
-                else -> q1Pos
-            }
-        }
-
     val qualiGridTime: LapTime?
         get() {
             return when {
