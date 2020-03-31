@@ -3,22 +3,18 @@ package tmg.f1stats.repo_firebase.repos
 import io.reactivex.rxjava3.core.Observable
 import tmg.f1stats.repo.Optional
 import tmg.f1stats.repo.db.SeasonOverviewDB
-import tmg.f1stats.repo.models.Circuit
-import tmg.f1stats.repo.models.Constructor
-import tmg.f1stats.repo.models.DriverOnWeekend
-import tmg.f1stats.repo.models.Round
+import tmg.f1stats.repo.models.*
 import tmg.f1stats.repo.utils.mapOptionalValue
+import tmg.f1stats.repo.utils.mapToOptional
+import tmg.f1stats.repo_firebase.converters.convert
+import tmg.f1stats.repo_firebase.firebase.getDocument
 import tmg.f1stats.repo_firebase.firebase.getDocumentMap
 import tmg.f1stats.repo_firebase.models.FSeason
 
-class SeasonOverviewFirestore: SeasonOverviewDB {
+class SeasonOverviewFirestore : SeasonOverviewDB {
     override fun getCircuits(season: Int): Observable<List<Circuit>> {
         return getSeason(season)
-            .map { seasonValue ->
-                seasonValue.map {
-                    it.circuit
-                }
-            }
+            .map { it.circuits }
     }
 
     override fun getCircuit(season: Int, round: Int): Observable<Optional<Circuit>> {
@@ -31,36 +27,26 @@ class SeasonOverviewFirestore: SeasonOverviewDB {
         constructorId: String
     ): Observable<Optional<Constructor>> {
         return getSeason(season)
-            .map { seasonValue ->
-                Optional(seasonValue.map { it.constructors }
-                    .flatten()
-                    .firstOrNull { it.constructorId == constructorId })
-            }
+            .map { it.constructors }
+            .mapToOptional { constructors -> constructors.firstOrNull { it.id == constructorId } }
     }
 
-    override fun getDriver(season: Int, driver: String): Observable<Optional<DriverOnWeekend>> {
+    override fun getDriver(season: Int, driver: String): Observable<Optional<Driver>> {
         return getSeason(season)
-            .map { seasonValue ->
-                Optional(seasonValue.map { it.drivers }
-                    .flatten()
-                    .firstOrNull { it.driverId == driver })
-            }
+            .map { it.drivers }
+            .mapToOptional { drivers -> drivers.firstOrNull { it.id == driver } }
     }
 
     override fun getAllConstructors(season: Int): Observable<List<Constructor>> {
         return getSeason(season)
-            .map { seasonValue ->
-                seasonValue.map { it.constructors }
-                    .flatten()
-                    .distinctBy { it.constructorId }
-            }
+            .map { it.constructors }
     }
 
     override fun getSeasonOverview(season: Int): Observable<List<Round>> {
-        return getSeason(season)
+        return getRounds(season)
     }
 
-    override fun getLastWeekend(season: Int): Observable<Optional<Round>> {
+    override fun getPreviousWeekend(season: Int): Observable<Optional<Round>> {
         TODO("Not yet implemented")
     }
 
@@ -69,17 +55,19 @@ class SeasonOverviewFirestore: SeasonOverviewDB {
     }
 
     override fun getSeasonRound(season: Int, round: Int): Observable<Optional<Round>> {
-        return getSeason(season)
-            .map { seasonRound -> Optional(seasonRound.firstOrNull { it.round == round }) }
+        return getRounds(season)
+            .mapToOptional { rounds -> rounds.firstOrNull { it.round == round } }
     }
 
-    private fun getSeason(season: Int): Observable<List<Round>> {
-        return getDocumentMap(FSeason::class.java, "seasonOverview/$season") { model ->
-            model.toModel()
-        }.map { seasonList ->
-            seasonList.sortedBy { it.round }
+    private fun getSeason(season: Int): Observable<Season> {
+        return getDocument(FSeason::class.java, "season/$season") { model, _ ->
+            model.convert(season)
         }
     }
 
+    private fun getRounds(season: Int): Observable<List<Round>> {
+        return getSeason(season)
+            .map { it.rounds }
+    }
 
 }

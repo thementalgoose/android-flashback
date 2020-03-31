@@ -5,8 +5,9 @@ import tmg.f1stats.repo.models.*
 import tmg.f1stats.repo.utils.toLapTime
 import tmg.f1stats.repo_firebase.models.*
 
-fun FSeason.convert(): Season {
+fun FSeason.convert(season: Int): Season {
     return Season(
+        season = season,
         drivers = (this.drivers ?: mapOf())
             .values
             .map { it.convert() },

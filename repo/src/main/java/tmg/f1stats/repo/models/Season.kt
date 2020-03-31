@@ -1,6 +1,7 @@
 package tmg.f1stats.repo.models
 
 data class Season(
+    val season: Int,
     val drivers: List<Driver>,
     val constructors: List<Constructor>,
     val rounds: List<Round>

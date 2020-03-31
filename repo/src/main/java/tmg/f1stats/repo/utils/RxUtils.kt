@@ -13,3 +13,9 @@ fun <T, E> Observable<Optional<T>>.mapOptionalValue(mapMethod: (model: T) -> E):
         }
     }
 }
+
+fun <T, E> Observable<T>.mapToOptional(mapMethod: (model: T) -> E?): Observable<Optional<E>> {
+    return this.map {
+        Optional(mapMethod(it))
+    }
+}
