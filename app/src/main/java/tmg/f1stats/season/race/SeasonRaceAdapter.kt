@@ -98,7 +98,7 @@ class SeasonRaceAdapter(
             private val newType: SeasonRaceAdapterType
     ) : DiffUtil.Callback() {
 
-        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean = oldList[oldItemPosition].driver.driverId == newList[newItemPosition].driver.driverId
+        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean = oldList[oldItemPosition].driver.id == newList[newItemPosition].driver.id
 
         override fun getOldListSize(): Int = oldList.size
 

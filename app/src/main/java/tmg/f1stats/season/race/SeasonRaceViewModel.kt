@@ -6,8 +6,6 @@ import tmg.f1stats.base.BaseViewModel
 import tmg.f1stats.repo.db.SeasonOverviewDB
 import tmg.f1stats.repo.enums.RaceStatus
 import tmg.f1stats.repo.models.LapTime
-import tmg.f1stats.repo.models.QualifyingResult
-import tmg.f1stats.repo.models.RaceResult
 import tmg.utilities.extensions.combineWithPair
 import tmg.utilities.extensions.filterMap
 

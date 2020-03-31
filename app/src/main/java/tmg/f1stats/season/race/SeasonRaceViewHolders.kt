@@ -41,9 +41,9 @@ class SeasonRaceQualifyingResultViewHolder(
     fun bind(season: SeasonRaceModel) {
         itemView.apply {
             this.tvPosition.text = season.racePos.toString()
-            this.layoutDriver.tvName.text = season.driver.fullName
-            this.layoutDriver.tvNumber.text = season.driver.driverCode
-            this.layoutDriver.tvNumber.colorHighlight = season.driver.constructor.color.toColorInt()
+            this.layoutDriver.tvName.text = season.driver.name
+            this.layoutDriver.tvNumber.text = season.driver.code
+            this.layoutDriver.tvNumber.colorHighlight = season.driver.constructor.color
             this.layoutDriver.imgFlag.setBackgroundResource(R.drawable.gb)
         }
     }

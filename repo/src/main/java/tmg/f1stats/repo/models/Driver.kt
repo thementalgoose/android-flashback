@@ -30,6 +30,9 @@ open class Driver(
             constructor = constructor
         )
     }
+
+    val name: String
+        get() = "$firstName $lastName"
 }
 
 /**
