@@ -19,3 +19,9 @@ fun <T, E> Observable<T>.mapToOptional(mapMethod: (model: T) -> E?): Observable<
         Optional(mapMethod(it))
     }
 }
+
+fun <T> Observable<Optional<T>>.filterNotNull(): Observable<T> {
+    return this
+        .filter { !it.isNull }
+        .map { it.value!! }
+}

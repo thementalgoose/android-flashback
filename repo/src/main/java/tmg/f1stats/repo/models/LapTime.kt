@@ -53,6 +53,8 @@ data class LapTime(
     }
 }
 
+val noTime: LapTime = LapTime()
+
 private fun Int.extendTo(toCharacters: Int = 2): String {
     var chars: String = ""
     for (i in this.toString().length until toCharacters) {

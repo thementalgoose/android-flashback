@@ -60,7 +60,7 @@ class SeasonOverviewFirestore : SeasonOverviewDB {
     }
 
     private fun getSeason(season: Int): Observable<Season> {
-        return getDocument(FSeason::class.java, "season/$season") { model, _ ->
+        return getDocument(FSeason::class.java, "seasons/$season") { model, _ ->
             model.convert(season)
         }
     }

@@ -38,16 +38,11 @@ class SeasonRaceFragment: BaseFragment(), SeasonRaceAdapterCallback {
     override fun observeViewModel() {
 
         viewModel.outputs
-            .drivers()
+            .items()
             .subscribeNoError {
-                adapter.update(adapter.viewType, it)
+                adapter.update(SeasonRaceAdapterType.RACE, it)
             }
-
-        viewModel.outputs
-            .viewType()
-            .subscribeNoError {
-                adapter.update(it, adapter.list)
-            }
+            .autoDispose()
     }
 
     //region SeasonRaceAdapterCallback

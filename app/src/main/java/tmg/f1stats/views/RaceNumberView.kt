@@ -24,8 +24,8 @@ class RaceNumberView: TextView {
         initView(attrs, defStyleAttr)
     }
 
-    private val horizontalPadding: Int = 12f.dpToPx(context.resources).roundToInt()
-    private val verticalPadding: Int = 6f.dpToPx(context.resources).roundToInt()
+    private val horizontalPadding: Int = 2f.dpToPx(context.resources).roundToInt()
+    private val verticalPadding: Int = 2f.dpToPx(context.resources).roundToInt()
 
     @ColorInt
     var colorHighlight: Int = Color.BLUE

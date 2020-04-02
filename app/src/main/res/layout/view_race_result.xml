@@ -15,10 +15,11 @@
         android:layout_width="@dimen/qualifyingListPositionWidth"
         android:layout_height="0dp"
         android:gravity="center"
+        android:maxLength="2"
         app:layout_constraintBottom_toBottomOf="@id/tvConstructor"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="1" />
+        tools:text="88" />
 
     <include
         android:id="@+id/layoutDriver"
@@ -58,6 +59,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
+            android:id="@+id/tvPoints"
             style="@style/Text.Qualifying.Points"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -80,15 +82,18 @@
         <TextView
             style="@style/Text.Qualifying.Position.Absolute"
             android:layout_width="wrap_content"
+            android:id="@+id/tvStartedAbsolute"
             android:layout_height="wrap_content"
             tools:text="12th" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/imgStarted"
             android:src="@drawable/ic_pos_up" />
 
         <TextView
+            android:id="@+id/tvStartedRelative"
             style="@style/Text.Qualifying.Position.Relative"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -112,10 +117,12 @@
         <TextView
             style="@style/Text.Qualifying.Time"
             android:layout_width="wrap_content"
+            android:id="@+id/tvTime"
             android:layout_height="wrap_content"
             tools:text="+1.123" />
 
         <ImageView
+            android:id="@+id/imgFastestLap"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/paddingXSmall"

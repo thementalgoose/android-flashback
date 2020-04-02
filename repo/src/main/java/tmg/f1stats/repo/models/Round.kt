@@ -21,6 +21,15 @@ data class Round(
             return race.values.map { it.driver }
         }
 
+    fun driverOverview(driverId: String): RoundDriverOverview {
+        return RoundDriverOverview(
+            q1 = q1[driverId],
+            q2 = q2[driverId],
+            q3 = q3[driverId],
+            race = race.getValue(driverId)
+        )
+    }
+
     val constructor: List<Constructor>
         get() {
             return race.values
@@ -28,6 +37,13 @@ data class Round(
                 .distinctBy { it.id }
         }
 }
+
+data class RoundDriverOverview(
+    val q1: RoundQualifyingResult?,
+    val q2: RoundQualifyingResult?,
+    val q3: RoundQualifyingResult?,
+    val race: RoundRaceResult
+)
 
 data class RoundQualifyingResult(
     val driver: RoundDriver,

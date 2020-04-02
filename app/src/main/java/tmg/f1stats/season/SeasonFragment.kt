@@ -47,7 +47,6 @@ class SeasonFragment: BaseFragment() {
 
         viewModel.outputs.seasonRounds()
             .subscribeNoError {
-                println(it)
                 raceAdapter.list = it
                 trackAdapter.list = it
             }

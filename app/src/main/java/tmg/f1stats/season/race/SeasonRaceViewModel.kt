@@ -6,6 +6,8 @@ import tmg.f1stats.base.BaseViewModel
 import tmg.f1stats.repo.db.SeasonOverviewDB
 import tmg.f1stats.repo.enums.RaceStatus
 import tmg.f1stats.repo.models.LapTime
+import tmg.f1stats.repo.models.RoundDriver
+import tmg.f1stats.repo.utils.filterNotNull
 import tmg.utilities.extensions.combineWithPair
 import tmg.utilities.extensions.filterMap
 
@@ -21,58 +23,48 @@ interface SeasonRaceViewModelInputs {
 //region Outputs
 
 interface SeasonRaceViewModelOutputs {
-    fun drivers(): Observable<List<SeasonRaceModel>>
-    fun viewType(): Observable<SeasonRaceAdapterType>
+    fun items(): Observable<List<SeasonRaceModel>>
 }
 
 //endregion
 
 class SeasonRaceViewModel(
-    private val seasonOverviewDB: SeasonOverviewDB
-) : BaseViewModel(),
-    SeasonRaceViewModelInputs,
-    SeasonRaceViewModelOutputs {
+        private val seasonOverviewDB: SeasonOverviewDB
+) : BaseViewModel(), SeasonRaceViewModelInputs, SeasonRaceViewModelOutputs {
 
-    private var viewType: BehaviorSubject<SeasonRaceAdapterType> = BehaviorSubject.createDefault(SeasonRaceAdapterType.QUALIFYING_POS)
+    private var viewType: BehaviorSubject<SeasonRaceAdapterType> = BehaviorSubject.createDefault(SeasonRaceAdapterType.RACE)
     private var seasonRound: BehaviorSubject<Pair<Int, Int>> = BehaviorSubject.create()
 
-    private var seasonRaceModelObservable: Observable<List<SeasonRaceModel>> = seasonRound
-        .switchMap { (season, round) ->
-            seasonOverviewDB.getSeasonRound(season, round)
-        }
-        .filterMap { it.value }
-        .map { round ->
-            round.drivers.map {
-                val q1: Pair<LapTime, Int> = round.q1Results.getQualyResult(it.driverId) ?: Pair(LapTime(), -1)
-                val q2: Pair<LapTime, Int>? = round.q2Results.getQualyResult(it.driverId)
-                val q3: Pair<LapTime, Int>? = round.q3Results.getQualyResult(it.driverId)
-                val race = round.raceResults.getRaceResult(it.driverId)
-                SeasonRaceModel(
-                    driver = it,
-                    q1 = q1.first,
-                    q1Pos = q1.second,
-                    q2 = q2?.first,
-                    q2Pos = q2?.second,
-                    q3 = q3?.first,
-                    q3Pos = q3?.second,
-                    raceResult = race?.time ?: LapTime(),
-                    racePos = race?.finishPosition ?: -1,
-                    gridPos = race?.gridPosition ?: -1,
-                    status = race?.status ?: RaceStatus.RETIRED
-                )
+    private var listObservable: Observable<List<SeasonRaceModel>> = seasonRound
+            .switchMap { (season, round) -> seasonOverviewDB.getSeasonRound(season, round) }
+            .filterNotNull()
+            .map { round ->
+                round.drivers.map { driver ->
+                    val overview = round.driverOverview(driver.id)
+                    SeasonRaceModel(
+                        driver = driver,
+                        q1 = overview.q1,
+                        q2 = overview.q2,
+                        q3 = overview.q3,
+                        raceResult = overview.race.time ?: LapTime(),
+                        racePos = overview.race.finish,
+                        gridPos = overview.race.grid,
+                        racePoints = overview.race.points,
+                        status = overview.race.status
+                    )
+                }
             }
-        }
-        .combineWithPair(viewType)
-        .map { (list, viewType) ->
-            when (viewType) {
-                SeasonRaceAdapterType.RACE -> list.sortedBy { it.racePos }
-                SeasonRaceAdapterType.QUALIFYING_POS_1 -> list.sortedBy { it.q1Pos }
-                SeasonRaceAdapterType.QUALIFYING_POS_2 -> list.sortedBy { it.q2Pos ?: it.q1Pos }
-                SeasonRaceAdapterType.QUALIFYING_POS_3 -> list.sortedBy { it.q3Pos ?: it.q2Pos ?: it.q1Pos }
-                SeasonRaceAdapterType.QUALIFYING_POS -> list.sortedBy { it.qualiGridPos }
-                else -> list
+            .combineWithPair(viewType)
+            .map { (seasonModels, viewType) ->
+                @Suppress("WHEN_ENUM_CAN_BE_NULL_IN_JAVA")
+                return@map when (viewType) {
+                    SeasonRaceAdapterType.RACE -> seasonModels.sortedBy { it.racePos }
+                    SeasonRaceAdapterType.QUALIFYING_POS_1 -> seasonModels.sortedBy { it.q1?.position ?: Int.MAX_VALUE }
+                    SeasonRaceAdapterType.QUALIFYING_POS_2 -> seasonModels.sortedBy { it.q2?.position ?: Int.MAX_VALUE }
+                    SeasonRaceAdapterType.QUALIFYING_POS_3 -> seasonModels.sortedBy { it.q3?.position ?: Int.MAX_VALUE }
+                    SeasonRaceAdapterType.QUALIFYING_POS -> seasonModels.sortedBy { it.gridPos }
+                }
             }
-        }
 
     var inputs: SeasonRaceViewModelInputs = this
     var outputs: SeasonRaceViewModelOutputs = this
@@ -95,26 +87,10 @@ class SeasonRaceViewModel(
 
     //region Outputs
 
-    override fun drivers(): Observable<List<SeasonRaceModel>> {
-        return seasonRaceModelObservable
-    }
-
-    override fun viewType(): Observable<SeasonRaceAdapterType> {
-        return viewType
+    override fun items(): Observable<List<SeasonRaceModel>> {
+        return listObservable
     }
 
     //endregion
 
-    private fun List<RaceResult>.getRaceResult(driverId: String): RaceResult? {
-        return this
-            .firstOrNull { it.driver.driverId == driverId }
-    }
-
-    private fun List<QualifyingResult>.getQualyResult(driverId: String): Pair<LapTime, Int>? {
-        return this
-            .firstOrNull { it.driver.driverId == driverId }
-            ?.let { result ->
-                Pair(result.time, this.sortedBy { it.time.totalMillis }.indexOfFirst { it.driver.driverId == driverId } + 1)
-            }
-    }
 }

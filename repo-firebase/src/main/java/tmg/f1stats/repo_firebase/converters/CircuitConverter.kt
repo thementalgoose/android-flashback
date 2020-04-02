@@ -11,7 +11,7 @@ fun FSeasonOverviewRaceCircuit.convert(): Circuit {
         locality = locality,
         country = country,
         countryISO = countryISO,
-        locationLat = location.lat,
-        locationLng = location.lng
+        locationLat = location.lat.toDoubleOrNull() ?: 0.0,
+        locationLng = location.lng.toDoubleOrNull() ?: 0.0
     )
 }

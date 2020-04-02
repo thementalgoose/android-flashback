@@ -6,9 +6,11 @@
     <string name="nav_gallery">Gallery</string>
     <string name="nav_settings">Settings</string>
 
-    <string name="nationality_AUS">🇿🇼</string>
-
     <string name="sync_type_overview">Season Overview</string>
     <string name="sync_type_laps">Laps</string>
     <string name="sync_season">season</string>
+
+    <string name="round_podium_started">Started %s</string>
+
+    <string name="round_podium_points">%d points</string>
 </resources>

@@ -5,6 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import tmg.f1stats.season.race.viewholders.RacePodiumViewHolder
+import tmg.f1stats.season.race.viewholders.RaceResultViewHolder
 import tmg.utilities.extensions.toEnum
 import kotlin.math.ceil
 
@@ -27,18 +29,18 @@ class SeasonRaceAdapter(
             View(parent.context)
         }
         return when (viewHolderType) {
-            SeasonRaceAdapterViewHolderType.RACE_PODIUM -> SeasonRaceRacePodiumViewHolder(view)
-            SeasonRaceAdapterViewHolderType.RACE_RESULT -> SeasonRaceRaceResultViewHolder(view)
-            SeasonRaceAdapterViewHolderType.QUALIFYING_RESULT -> SeasonRaceQualifyingResultViewHolder(callback, view)
-            null -> throw Error("View type not implemented")
+            SeasonRaceAdapterViewHolderType.RACE_PODIUM -> RacePodiumViewHolder(view)
+            SeasonRaceAdapterViewHolderType.RACE_RESULT -> RaceResultViewHolder(view)
+//            SeasonRaceAdapterViewHolderType.QUALIFYING_RESULT -> SeasonRaceQualifyingResultViewHolder(callback, view)
+            else -> throw Error("View type not implemented")
         }
     }
 
     override fun getItemCount(): Int = when (viewType) {
         SeasonRaceAdapterType.RACE -> list.size - 2
-        SeasonRaceAdapterType.QUALIFYING_POS -> list.size
-        SeasonRaceAdapterType.QUALIFYING_POS_1 -> list.size
-        SeasonRaceAdapterType.QUALIFYING_POS_2 -> list.size
+        SeasonRaceAdapterType.QUALIFYING_POS,
+        SeasonRaceAdapterType.QUALIFYING_POS_1,
+        SeasonRaceAdapterType.QUALIFYING_POS_2,
         SeasonRaceAdapterType.QUALIFYING_POS_3 -> list.size
     }
 
@@ -78,13 +80,10 @@ class SeasonRaceAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (getItemViewType(position).toEnum<SeasonRaceAdapterViewHolderType>()) {
             SeasonRaceAdapterViewHolderType.RACE_PODIUM -> {
-                (holder as? SeasonRaceRacePodiumViewHolder)?.bind(list[0], list[1], list[2])
+                (holder as? RacePodiumViewHolder)?.bind(list[0], list[1], list[2])
             }
             SeasonRaceAdapterViewHolderType.RACE_RESULT -> {
-                (holder as? SeasonRaceRaceResultViewHolder)?.bind(list[position + 2])
-            }
-            SeasonRaceAdapterViewHolderType.QUALIFYING_RESULT -> {
-                (holder as? SeasonRaceQualifyingResultViewHolder)?.bind(list[position])
+                (holder as? RaceResultViewHolder)?.bind(list[position + 2])
             }
         }
     }
