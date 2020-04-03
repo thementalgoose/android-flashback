@@ -50,7 +50,8 @@ class SeasonRaceViewModel(
                         racePos = overview.race.finish,
                         gridPos = overview.race.grid,
                         racePoints = overview.race.points,
-                        status = overview.race.status
+                        status = overview.race.status,
+                        fastestLap = overview.race.fastestLap?.rank == 1
                     )
                 }
             }

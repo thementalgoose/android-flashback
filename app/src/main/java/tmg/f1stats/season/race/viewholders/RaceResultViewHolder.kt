@@ -3,27 +3,20 @@ package tmg.f1stats.season.race.viewholders
 import android.graphics.Color
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.jwang123.flagkit.FlagKit
 import kotlinx.android.synthetic.main.layout_driver.view.*
-import kotlinx.android.synthetic.main.layout_driver.view.tvNumber
-import kotlinx.android.synthetic.main.layout_podium.view.*
 import kotlinx.android.synthetic.main.view_race_result.view.*
-import kotlinx.android.synthetic.main.view_race_result.view.imgFastestLap
-import kotlinx.android.synthetic.main.view_race_result.view.imgStarted
-import kotlinx.android.synthetic.main.view_race_result.view.tvConstructor
-import kotlinx.android.synthetic.main.view_race_result.view.tvPosition
-import kotlinx.android.synthetic.main.view_race_result.view.tvStartedAbsolute
-import kotlinx.android.synthetic.main.view_race_result.view.tvStartedRelative
-import kotlinx.android.synthetic.main.view_race_result.view.tvTime
 import tmg.f1stats.R
+import tmg.f1stats.extensions.iconRes
+import tmg.f1stats.extensions.stringRes
+import tmg.f1stats.extensions.toEmptyIfZero
 import tmg.f1stats.season.race.SeasonRaceModel
 import tmg.f1stats.utils.getFlagResourceAlpha3
 import tmg.f1stats.utils.position
-import tmg.f1stats.utils.positionStarted
 import tmg.utilities.extensions.views.gone
+import tmg.utilities.extensions.views.visible
 import kotlin.math.abs
 
-class RaceResultViewHolder(view: View): RecyclerView.ViewHolder(view) {
+class RaceResultViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     fun bind(model: SeasonRaceModel) {
         itemView.apply {
@@ -33,7 +26,8 @@ class RaceResultViewHolder(view: View): RecyclerView.ViewHolder(view) {
             layoutDriver.tvNumber.colorHighlight = model.driver.constructor.color
             layoutDriver.imgFlag.setImageResource(context.getFlagResourceAlpha3(model.driver.nationalityISO))
             tvConstructor.text = model.driver.constructor.name
-            tvPoints.text = model.racePoints.toString()
+
+            tvPoints.text = model.racePoints.toEmptyIfZero()
 
             tvStartedAbsolute.text = model.gridPos.position()
             val diff = model.gridPos - model.racePos
@@ -56,8 +50,20 @@ class RaceResultViewHolder(view: View): RecyclerView.ViewHolder(view) {
                 }
             }
 
-            tvTime.text = model.status.statusCode
-            imgFastestLap.gone()
+            tvTime.text = model.raceResult.toString()
+            if (!model.raceResult.noTime) {
+                tvTime.text = context.getString(R.string.race_time_delta, model.raceResult)
+            }
+            else {
+                tvTime.setText(model.status.stringRes)
+            }
+            imgStatus.setImageResource(model.status.iconRes)
+
+            if (model.fastestLap) {
+                imgFastestLap.visible()
+            } else {
+                imgFastestLap.gone()
+            }
         }
     }
 }

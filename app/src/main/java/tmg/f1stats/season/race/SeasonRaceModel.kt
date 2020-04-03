@@ -14,5 +14,6 @@ open class SeasonRaceModel(
     val raceResult: LapTime,
     val racePos: Int,
     val gridPos: Int,
-    val status: RaceStatus
+    val status: RaceStatus,
+    val fastestLap: Boolean
 )

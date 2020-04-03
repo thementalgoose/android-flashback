@@ -13,4 +13,54 @@
     <string name="round_podium_started">Started %s</string>
 
     <string name="round_podium_points">%d points</string>
+
+    <string name="race_time_delta">+%s</string>
+
+    <string name="race_status_finished">Finished</string>
+    <string name="race_status_lap_1">+1 laps</string>
+    <string name="race_status_lap_2">+2 laps</string>
+    <string name="race_status_lap_3">+3 laps</string>
+    <string name="race_status_lap_4">+4 laps</string>
+    <string name="race_status_lap_5">+5 laps</string>
+    <string name="race_status_lap_6">+6 laps</string>
+    <string name="race_status_lap_7">+7 laps</string>
+    <string name="race_status_lap_8">+8 laps</string>
+    <string name="race_status_lap_9">+9 laps</string>
+    <string name="race_status_damage">Damage</string>
+    <string name="race_status_driveshaft">Driveshaft</string>
+    <string name="race_status_fuel_pressure">Fuel pressure</string>
+    <string name="race_status_wheel">Wheel</string>
+    <string name="race_status_engine">Engine</string>
+    <string name="race_status_suspension">Suspension</string>
+    <string name="race_status_retired">Retired</string>
+    <string name="race_status_steering">Steering</string>
+    <string name="race_status_brakes">Brakes</string>
+    <string name="race_status_vibrations">Vibrations</string>
+    <string name="race_status_power_unit">Power unit</string>
+    <string name="race_status_hydraulics">Hydraulics</string>
+    <string name="race_status_water_leak">Water leak</string>
+    <string name="race_status_mechanical">Mechanical</string>
+    <string name="race_status_collision">Collision</string>
+    <string name="race_status_power_loss">Power loss</string>
+    <string name="race_status_withdrew">Retired</string>
+    <string name="race_status_accident">Accident</string>
+    <string name="race_status_disqualified">Disqualified</string>
+    <string name="race_status_oil_pressure">Oil pressure</string>
+    <string name="race_status_ers">ERS</string>
+    <string name="race_status_puncture">Puncture</string>
+    <string name="race_status_electrical">Electrical</string>
+    <string name="race_status_turbo">Turbo</string>
+    <string name="race_status_spun_off">Spun off</string>
+    <string name="race_status_fuel_system">Fuel system</string>
+    <string name="race_status_gearbox">Gearbox</string>
+    <string name="race_status_transmission">Transmission</string>
+    <string name="race_status_clutch">Clutch</string>
+    <string name="race_status_oil_leak">Oil leak</string>
+    <string name="race_status_exhaust">Exhaust</string>
+    <string name="race_status_drivetrain">Drive train</string>
+    <string name="race_status_rear_wing">Rear wing</string>
+    <string name="race_status_water_pressure">Water pressure</string>
+    <string name="race_status_seat">Seat</string>
+    <string name="race_status_battery">Battery</string>
+    <string name="race_status_front_wing">Front wing</string>
 </resources>

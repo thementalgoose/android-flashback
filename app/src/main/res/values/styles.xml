@@ -57,11 +57,11 @@
 
     </style>
     <style name="Text.Podium.Position" parent="Text.Podium">
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">18sp</item>
         <item name="android:textStyle">bold</item>
     </style>
     <style name="Text.Podium.Driver" parent="Text.Podium">
-
+        <item name="android:textSize">16sp</item>
     </style>
     <style name="Text.Podium.Number" parent="Text.Podium">
 
@@ -79,48 +79,65 @@
         <item name="android:textSize">12sp</item>
     </style>
 
+    <style name="Text.Podium.Time" parent="Text.Podium">
+        <item name="android:textSize">10sp</item>
+    </style>
+
     <style name="Text.Podium.Points" parent="Text.Podium">
-        <item name="android:textSize">11sp</item>
+        <item name="android:textSize">12sp</item>
     </style>
 
     <!-- Qualifying layout -->
 
-    <style name="Text.Qualifying" parent="Text" />
-    <style name="Text.Qualifying.Header" parent="Text.Qualifying">
+    <style name="Text.RaceResult" parent="Text" />
+    <style name="Text.RaceResult.Position" parent="Text.RaceResult">
         <item name="android:textSize">18sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:maxLines">1</item>
     </style>
-    <style name="Text.Qualifying.Position" parent="Text.Qualifying">
-        <item name="android:textSize">18sp</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:maxLines">1</item>
-    </style>
-    <style name="Text.Qualifying.Constructor" parent="Text.Qualifying">
+    <style name="Text.RaceResult.Constructor" parent="Text.RaceResult">
         <item name="android:textSize">11sp</item>
         <item name="android:maxLines">1</item>
         <item name="android:ellipsize">end</item>
     </style>
-    <style name="Text.Qualifying.Points" parent="Text.Qualifying">
+    <style name="Text.RaceResult.Points" parent="Text.RaceResult">
         <item name="android:textStyle">bold</item>
         <item name="android:maxLines">1</item>
     </style>
-    <style name="Text.Qualifying.Position.Absolute" parent="Text.Qualifying">
-        <item name="android:textStyle">bold</item>
+    <style name="Text.RaceResult.Position.Absolute" parent="Text.RaceResult">
         <item name="android:maxLines">1</item>
     </style>
-    <style name="Text.Qualifying.Position.Relative" parent="Text.Qualifying">
+    <style name="Text.RaceResult.Position.Relative" parent="Text.RaceResult">
         <item name="android:textSize">12sp</item>
         <item name="android:maxLines">1</item>
     </style>
-    <style name="Text.Qualifying.Time" parent="Text.Qualifying">
+    <style name="Text.RaceResult.Time" parent="Text.RaceResult">
         <item name="android:maxLines">1</item>
         <item name="android:textSize">12sp</item>
+    </style>
+    <style name="Text.RaceResult.Status" parent="Text.RaceResult">
+        <item name="android:maxLines">1</item>
+        <item name="android:textSize">10sp</item>
     </style>
 
     <!-- Qualifying time -->
 
     <style name="Text.QualifyingTime" parent="Text" />
+    <style name="Text.QualifyingTime.Header" parent="Text.QualifyingTime">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:maxLines">1</item>
+    </style>
+    <style name="Text.QualifyingTime.Constructor" parent="Text.QualifyingTime">
+        <item name="android:textSize">11sp</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+    <style name="Text.QualifyingTime.Position" parent="Text.QualifyingTime">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:maxLines">1</item>
+    </style>
     <style name="Text.QualifyingTime.Time" parent="Text.QualifyingTime">
         <item name="android:textSize">12sp</item>
     </style>

@@ -43,8 +43,11 @@ data class LapTime(
             hours != 0 -> {
                 "${hours}:${mins}:${seconds.extendTo(2)}.${millis.extendTo(3)}"
             }
-            else -> {
+            mins != 0 -> {
                 "${mins}:${seconds.extendTo(2)}.${millis.extendTo(3)}"
+            }
+            else -> {
+                "${seconds.extendTo(2)}.${millis.extendTo(3)}"
             }
         }
 

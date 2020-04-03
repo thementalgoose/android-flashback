@@ -11,7 +11,7 @@
 
     <TextView
         android:id="@+id/tvPosition"
-        style="@style/Text.Qualifying.Position"
+        style="@style/Text.QualifyingTime.Position"
         android:layout_width="@dimen/qualifyingListPositionWidth"
         android:layout_height="0dp"
         android:gravity="center"
@@ -31,7 +31,7 @@
 
     <TextView
         android:id="@+id/tvConstructor"
-        style="@style/Text.Qualifying.Constructor"
+        style="@style/Text.QualifyingTime.Constructor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="@id/layoutDriver"

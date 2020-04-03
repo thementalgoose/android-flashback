@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:paddingBottom="@dimen/paddingSmall"
     android:layout_height="wrap_content">
 
     <include
@@ -20,7 +21,7 @@
         layout="@layout/layout_podium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/paddingSmall"
+        android:layout_marginBottom="@dimen/paddingXSmall"
         app:layout_constraintBottom_toTopOf="@id/imgSilver"
         app:layout_constraintEnd_toEndOf="@id/imgSilver"
         app:layout_constraintStart_toStartOf="@id/imgSilver" />
@@ -30,7 +31,7 @@
         layout="@layout/layout_podium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/paddingSmall"
+        android:layout_marginBottom="@dimen/paddingXSmall"
         app:layout_constraintBottom_toTopOf="@id/imgBronze"
         app:layout_constraintEnd_toEndOf="@id/imgBronze"
         app:layout_constraintStart_toStartOf="@id/imgBronze" />
@@ -40,7 +41,7 @@
         android:layout_width="0dp"
         android:layout_height="@dimen/podium1"
         android:layout_marginStart="@dimen/paddingSmall"
-        android:layout_marginTop="@dimen/paddingSmall"
+        android:layout_marginTop="@dimen/paddingXSmall"
         android:layout_marginEnd="@dimen/paddingSmall"
         android:background="?attr/f1Pos1"
         app:layout_constraintBottom_toBottomOf="parent"

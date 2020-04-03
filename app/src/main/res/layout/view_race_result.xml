@@ -5,13 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingStart="@dimen/paddingSmall"
-    android:paddingTop="@dimen/paddingXSmall"
+    android:paddingTop="@dimen/paddingSmall"
     android:paddingEnd="@dimen/paddingSmall"
-    android:paddingBottom="@dimen/paddingXSmall">
+    android:paddingBottom="@dimen/paddingSmall">
 
     <TextView
         android:id="@+id/tvPosition"
-        style="@style/Text.Qualifying.Position"
+        style="@style/Text.RaceResult.Position"
         android:layout_width="@dimen/qualifyingListPositionWidth"
         android:layout_height="0dp"
         android:gravity="center"
@@ -32,7 +32,7 @@
 
     <TextView
         android:id="@+id/tvConstructor"
-        style="@style/Text.Qualifying.Constructor"
+        style="@style/Text.RaceResult.Constructor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="@id/layoutDriver"
@@ -46,67 +46,70 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.5" />
 
-    <LinearLayout
-        android:id="@+id/llPoints"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:gravity="center"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/llPosition"
-        app:layout_constraintHorizontal_chainStyle="spread"
+    <TextView
+        android:id="@+id/tvPoints"
+        style="@style/Text.RaceResult.Points"
+        android:layout_width="@dimen/raceResultPointsWidth"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/paddingSmall"
+        android:paddingEnd="@dimen/paddingSmall"
+        app:layout_constraintBottom_toBottomOf="@id/tvConstructor"
         app:layout_constraintStart_toStartOf="@id/guideline"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="@id/layoutDriver"
+        tools:text="15" />
 
-        <TextView
-            android:id="@+id/tvPoints"
-            style="@style/Text.Qualifying.Points"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="15" />
-
-    </LinearLayout>
-
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/llPosition"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginStart="@dimen/paddingSmall"
         android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/llTime"
         app:layout_constraintHorizontal_chainStyle="spread"
-        app:layout_constraintStart_toEndOf="@id/llPoints"
+        app:layout_constraintStart_toEndOf="@id/tvPoints"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            style="@style/Text.Qualifying.Position.Absolute"
-            android:layout_width="wrap_content"
             android:id="@+id/tvStartedAbsolute"
+            style="@style/Text.RaceResult.Position.Absolute"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/paddingSmall"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/imgStarted"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:text="12th" />
 
         <ImageView
+            android:id="@+id/imgStarted"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/imgStarted"
-            android:src="@drawable/ic_pos_up" />
+            android:src="@drawable/ic_pos_up"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tvStartedRelative"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tvStartedRelative"
-            style="@style/Text.Qualifying.Position.Relative"
+            style="@style/Text.RaceResult.Position.Relative"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:text="11" />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
         android:id="@+id/llTime"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:gravity="end|center"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_chainStyle="spread"
@@ -114,22 +117,48 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="UseCompoundDrawables">
 
-        <TextView
-            style="@style/Text.Qualifying.Time"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:id="@+id/tvTime"
             android:layout_height="wrap_content"
-            tools:text="+1.123" />
+            android:gravity="end|center"
+            android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/imgFastestLap"
+            <ImageView
+                android:id="@+id/imgFastestLap"
+                android:layout_width="@dimen/fastestLapSize"
+                android:layout_height="@dimen/fastestLapSize"
+                android:src="@drawable/ic_fastest_lap" />
+
+            <TextView
+                android:id="@+id/tvTime"
+                style="@style/Text.RaceResult.Time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="1dp"
+                tools:text="+1.123" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/paddingXSmall"
-            android:src="@drawable/ic_fastest_lap"
-            app:layout_constraintBottom_toBottomOf="@id/llTime"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/llTime" />
+            android:gravity="end|center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imgStatus"
+                android:layout_width="@dimen/raceStatusSize"
+                android:layout_height="@dimen/raceStatusSize" />
+
+            <TextView
+                android:id="@+id/tvStatus"
+                style="@style/Text.RaceResult.Status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="1dp"
+                tools:text="Rear Wing" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

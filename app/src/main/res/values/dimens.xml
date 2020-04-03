@@ -9,6 +9,10 @@
     <dimen name="gridOffset">64dp</dimen>
 
     <dimen name="qualifyingListPositionWidth">24dp</dimen>
+    <dimen name="raceResultPointsWidth">24dp</dimen>
+
+    <dimen name="raceStatusSize">12dp</dimen>
+    <dimen name="fastestLapSize">12dp</dimen>
 
     <dimen name="driverFlagSize">16dp</dimen>
     <dimen name="driverFlagPodiumSize">40dp</dimen>

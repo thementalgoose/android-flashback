@@ -43,7 +43,13 @@ enum class RaceStatus(
     TRANSMISSION("TRANSMISSION"),
     CLUTCH("CLUTCH"),
     OIL_LEAK("OIL_LEAK"),
-    EXHAUST("EXHAUST");
+    EXHAUST("EXHAUST"),
+    DRIVETRAIN("DRIVETRAIN"),
+    REAR_WING("REAR_WING"),
+    WATER_PRESSURE("WATER_PRESSURE"),
+    SEAT("SEAT"),
+    BATTERY("BATTERY"),
+    FRONT_WING("FRONT_WING");
 
     companion object {
         fun fromStatus(status: String): RaceStatus {

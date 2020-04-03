@@ -3,7 +3,6 @@ package tmg.f1stats.season.race.viewholders
 import android.graphics.Color
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.jwang123.flagkit.FlagKit
 import kotlinx.android.synthetic.main.layout_podium.view.*
 import kotlinx.android.synthetic.main.layout_podium.view.imgFastestLap
 import kotlinx.android.synthetic.main.layout_podium.view.imgStarted
@@ -13,17 +12,18 @@ import kotlinx.android.synthetic.main.layout_podium.view.tvStartedAbsolute
 import kotlinx.android.synthetic.main.layout_podium.view.tvStartedRelative
 import kotlinx.android.synthetic.main.layout_podium.view.tvTime
 import kotlinx.android.synthetic.main.view_race_podium.view.*
+import kotlinx.android.synthetic.main.view_race_result.view.*
 import tmg.f1stats.R
+import tmg.f1stats.extensions.stringRes
 import tmg.f1stats.season.race.SeasonRaceModel
 import tmg.f1stats.utils.getFlagResourceAlpha3
 import tmg.f1stats.utils.podium
 import tmg.f1stats.utils.positionStarted
-import tmg.f1stats.utils.toAlpha2ISO
-import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.views.gone
+import tmg.utilities.extensions.views.visible
 import kotlin.math.abs
 
-class RacePodiumViewHolder(view: View): RecyclerView.ViewHolder(view) {
+class RacePodiumViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     fun bind(first: SeasonRaceModel, second: SeasonRaceModel, third: SeasonRaceModel) {
         bind(first, itemView.layoutFirst)
@@ -70,8 +70,23 @@ class RacePodiumViewHolder(view: View): RecyclerView.ViewHolder(view) {
             imgNationality.setImageResource(context.getFlagResourceAlpha3(model.driver.nationalityISO))
 
             // Time
-            tvTime.text = model.raceResult.toString()
-            imgFastestLap.gone()
+            if (model.racePos == 1) {
+                tvTime.text = model.raceResult.toString()
+            }
+            else {
+                if (!model.raceResult.noTime) {
+                    tvTime.text = context.getString(R.string.race_time_delta, model.raceResult)
+                }
+                else {
+                    tvTime.setText(model.status.stringRes)
+                }
+            }
+
+            if (model.fastestLap) {
+                imgFastestLap.visible()
+            } else {
+                imgFastestLap.gone()
+            }
         }
     }
 }
