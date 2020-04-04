@@ -1,4 +1,4 @@
-package tmg.f1stats.season
+package tmg.f1stats.season.swiper
 
 import android.os.Bundle
 import kotlinx.android.synthetic.main.fragment_season.*
@@ -10,9 +10,9 @@ import tmg.utilities.extensions.views.setPageWidth
 import tmg.utilities.extensions.views.syncScrolling
 import kotlin.math.abs
 
-class SeasonFragment: BaseFragment() {
+class SeasonSwiperFragment: BaseFragment() {
 
-    private lateinit var raceAdapter: SeasonPagerAdapter
+    private lateinit var raceAdapterSwiper: SeasonSwiperPagerAdapter
     private lateinit var trackAdapter: SeasonTrackAdapter
     private var season: Int = -1
 
@@ -28,14 +28,17 @@ class SeasonFragment: BaseFragment() {
     }
 
     override fun initViews() {
-        raceAdapter = SeasonPagerAdapter(this)
-        vpRace.adapter = raceAdapter
+        raceAdapterSwiper =
+            SeasonSwiperPagerAdapter(this)
+        vpRace.adapter = raceAdapterSwiper
 
         trackAdapter = SeasonTrackAdapter()
         vpTracks.adapter = trackAdapter
         vpTracks.setPageWidth(seasonTrackScreenMultiplier)
 
-        vpTracks.syncScrolling(vpRace, seasonTrackScreenMultiplier)
+        vpTracks.syncScrolling(vpRace,
+            seasonTrackScreenMultiplier
+        )
         vpRace.syncScrolling(vpTracks, 1 / seasonTrackScreenMultiplier)
 
         vpTracks.setPageTransformer { page, position ->
@@ -47,7 +50,7 @@ class SeasonFragment: BaseFragment() {
 
         viewModel.outputs.seasonRounds()
             .subscribeNoError {
-                raceAdapter.list = it
+                raceAdapterSwiper.list = it
                 trackAdapter.list = it
             }
             .autoDispose()
@@ -62,10 +65,11 @@ class SeasonFragment: BaseFragment() {
         private const val seasonTrackScreenMultiplier = 1 / 2f
         private const val keyYear: String = "keyYear"
 
-        fun newInstance(year: Int): SeasonFragment {
+        fun newInstance(year: Int): SeasonSwiperFragment {
             val bundle: Bundle = Bundle()
             bundle.putInt(keyYear, year)
-            val instance: SeasonFragment = SeasonFragment()
+            val instance: SeasonSwiperFragment =
+                SeasonSwiperFragment()
             instance.arguments = bundle
             return instance
         }

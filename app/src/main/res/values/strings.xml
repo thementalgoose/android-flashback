@@ -11,6 +11,8 @@
     <string name="sync_type_laps">Laps</string>
     <string name="sync_season">season</string>
 
+
+
     <string name="round_podium_started">Started %s</string>
 
     <string name="round_podium_points">%d points</string>
@@ -19,6 +21,15 @@
 
     <string name="race_result_grid">Grid</string>
     <string name="race_result_status">Status</string>
+
+    <string name="datepicker_pick_year">Pick year</string>
+
+    <!-- View Type -->
+
+    <string name="view_type_swiping">Swiping</string>
+    <string name="view_type_static">Static</string>
+
+    <!-- Race Status -->
 
     <string name="race_status_finished">Finished</string>
     <string name="race_status_lap_1">+1 laps</string>
@@ -67,5 +78,38 @@
     <string name="race_status_seat">Seat</string>
     <string name="race_status_battery">Battery</string>
     <string name="race_status_front_wing">Front wing</string>
-    <string name="datepicker_pick_year">Pick year</string>
+
+    <!-- Settings -->
+
+    <string name="settings_customisation">Defaults</string>
+
+    <string name="settings_customisation_year_title">Year to be displayed</string>
+    <string name="settings_customisation_year_description">Select which year you would like the app to open up on (currently %d)</string>
+    <string name="settings_defaults_year_dialog_title">Season</string>
+    <string name="settings_defaults_year_dialog_confirm">Confirm</string>
+    <string name="settings_defaults_year_dialog_cancel">Cancel</string>
+    <string name="settings_customisation_view_type_title">View type</string>
+    <string name="settings_customisation_view_type_description">Select the view type that you want to view race information in</string>
+
+    <string name="settings_help">Help and support</string>
+
+    <string name="settings_help_about_title">About this app</string>
+    <string name="settings_help_about_description">About the application and the developer</string>
+    <string name="settings_help_crash_reporting_title">Crash Reporting</string>
+    <string name="settings_help_crash_reporting_description">Send device information and crash stack traces to the developer</string>
+    <string name="settings_help_crash_reporting_after_app_restart">Your crash reporting preference will be applied once the app has restarted</string>
+    <string name="settings_help_shake_to_report_title">Shake the app to report a bug or a feature?</string>
+    <string name="settings_help_shake_to_report_description">Shake the app at any time to screenshot and send me any bugs, issues, or suggestions you may have for this app!</string>
+    <string name="settings_help_shake_to_report_after_app_restart">Your shake to report preference will be applied once the app has restarted</string>
+
+    <!-- About -->
+
+    <string name="about_name">Jordan Fisher</string>
+    <string name="about_desc">Mobile App Developer</string>
+    <string name="dependency_thank_you">A big thank you to everyone listed below for helping make this app possible! :)</string>
+    <string name="about_additional">Special thanks to\n
+    - Icons made by Freepik from www.flaticon.com\n
+    - Icons made by Vitaly Gorbachev from www.flaticon.com\n\n
+    If i\'ve missed anyone or anything please let me know</string>
+
 </resources>

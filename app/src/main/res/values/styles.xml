@@ -38,6 +38,17 @@
 
 
 
+    <style name="Text.HomeStatic" parent="Text" />
+    <style name="Text.HomeStatic.Country" parent="Text.HomeStatic">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/goodtimes</item>
+    </style>
+    <style name="Text.HomeStatic.TrackName" parent="Text.HomeStatic">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+
 
 
 
@@ -51,14 +62,17 @@
     <style name="Text">
         <item name="android:textColor">?attr/f1TextPrimary</item>
     </style>
-    <style name="Text.Season" />
-    <style name="Text.Season.Track" />
-    <style name="Text.Season.Track.Header" parent="Text.Season.Track">
+
+    <!-- Swiper -->
+
+    <style name="Text.Swiper" />
+    <style name="Text.Swiper.Track" />
+    <style name="Text.Swiper.Track.Header" parent="Text.Swiper.Track">
         <item name="android:textSize">26sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:fontFamily">@font/goodtimes</item>
     </style>
-    <style name="Text.Season.Track.Circuit" parent="Text.Season.Track">
+    <style name="Text.Swiper.Track.Circuit" parent="Text.Swiper.Track">
         <item name="android:textSize">12sp</item>
     </style>
 
@@ -172,11 +186,24 @@
         <item name="android:textSize">10sp</item>
     </style>
 
-    <!-- Date Picker -->
+    <!-- Picker -->
 
     <style name="Text.DatePicker" parent="Text" />
     <style name="Text.DatePicker.Header" parent="Text.DatePicker">
         <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Text.TrackPicker" parent="Text" />
+    <style name="Text.TrackPicker.Year" parent="Text.TrackPicker">
+
+    </style>
+    <style name="Text.TrackPicker.TrackCountry" parent="Text.TrackPicker">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/goodtimes</item>
+    </style>
+    <style name="Text.TrackPicker.TrackName" parent="Text.TrackPicker">
+
     </style>
 
 </resources>

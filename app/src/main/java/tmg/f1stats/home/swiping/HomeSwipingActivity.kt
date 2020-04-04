@@ -1,30 +1,25 @@
-package tmg.f1stats.home
+package tmg.f1stats.home.swiping
 
-import android.content.Intent
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_home.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.f1stats.R
 import tmg.f1stats.base.BaseActivity
-import tmg.f1stats.gallery.GalleryFragment
 import tmg.f1stats.home.datepicker.DatePickerBottomSheetDialogFragment
-import tmg.f1stats.season.SeasonFragment
+import tmg.f1stats.season.swiper.SeasonSwiperFragment
 import tmg.f1stats.settings.SettingsFragment
-import tmg.f1stats.settings.sync.SettingsSyncActivity
 import tmg.utilities.extensions.initToolbar
 import tmg.utilities.extensions.loadFragment
 import tmg.utilities.extensions.subscribeNoError
 
-class HomeActivity: BaseActivity() {
+class HomeSwipingActivity: BaseActivity() {
 
-    private val viewModel: HomeViewModel by viewModel()
+    private val viewModel: HomeSwipingViewModel by viewModel()
 
     override fun layoutId(): Int = R.layout.activity_home
 
     override fun initViews() {
-        loadFragment(SeasonFragment.newInstance(2019), R.id.flContainer, "SEASON")
 
         initToolbar(R.id.toolbar)
         supportActionBar?.title = "2019"
@@ -34,7 +29,6 @@ class HomeActivity: BaseActivity() {
                 R.id.nav_drivers -> viewModel.clickTab(HomeTabOption.DRIVERS)
                 R.id.nav_constructors -> viewModel.clickTab(HomeTabOption.CONSTRUCTORS)
                 R.id.nav_settings -> {
-                    startActivity(Intent(this, SettingsSyncActivity::class.java))
                     viewModel.clickTab(HomeTabOption.SETTINGS)
                 }
             }
@@ -68,9 +62,19 @@ class HomeActivity: BaseActivity() {
             .autoDispose()
 
         viewModel.outputs
-            .showSeason()
+            .showScreen()
             .subscribeNoError {
-                // LOAD TAB
+                when (it) {
+                    is Screen.Drivers -> {
+                        loadFragment(SeasonSwiperFragment.newInstance(it.season), R.id.flContainer, "DRIVERS")
+                    }
+                    is Screen.Constructor -> {
+                        loadFragment(SeasonSwiperFragment.newInstance(it.season), R.id.flContainer, "CONSTRUCTORS")
+                    }
+                    Screen.Settings -> {
+                        loadFragment(SettingsFragment(), R.id.flContainer, "SETTINGS")
+                    }
+                }
             }
             .autoDispose()
 

@@ -5,7 +5,7 @@ import tmg.f1stats.repo.models.LapTime
 import tmg.f1stats.repo.models.RoundDriver
 import tmg.f1stats.repo.models.RoundQualifyingResult
 
-open class SeasonRaceModel(
+open class RaceModel(
     val driver: RoundDriver,
     val q1: RoundQualifyingResult?,
     val q2: RoundQualifyingResult?,

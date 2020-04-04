@@ -5,6 +5,7 @@ import com.google.firebase.firestore.*
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.ObservableEmitter
 import io.reactivex.rxjava3.disposables.Disposable
+import tmg.f1stats.repo.Optional
 import tmg.f1stats.repo.errors.DoesntExistError
 import tmg.f1stats.repo.errors.PermissionError
 import tmg.f1stats.repo.errors.RecordAlreadyExistsError
@@ -25,15 +26,20 @@ fun <T, E : Any> addDocument(collectionPath: String, model: T, toModel: (model: 
             .add(toModel(model))
 }
 
-inline fun <T, reified E> getDocument(zClass: Class<E>, documentPath: String, crossinline convertTo: (firebaseModel: E, id: String) -> T): Observable<T> {
+inline fun <T, reified E> getDocument(zClass: Class<E>, documentPath: String, crossinline convertTo: (firebaseModel: E, id: String) -> T): Observable<Optional<T>> {
     return Observable.create { emitter ->
-        val snapshotListener: EventListener<DocumentSnapshot> = EventListener<DocumentSnapshot> { snapshot, exception ->
+        val snapshotListener: EventListener<DocumentSnapshot> = EventListener { snapshot, exception ->
             if (exception != null) {
                 emitter.handleFirebaseError(exception, documentPath)
             }
             else {
-                val firebaseObj = snapshot?.toObject(zClass)!!
-                emitter.onNext(convertTo(firebaseObj, snapshot.id))
+                if (snapshot?.data != null) {
+                    val firebaseObj = snapshot?.toObject(zClass)!!
+                    emitter.onNext(Optional(convertTo(firebaseObj, snapshot.id)))
+                }
+                else {
+                    emitter.onNext(Optional())
+                }
             }
         }
 

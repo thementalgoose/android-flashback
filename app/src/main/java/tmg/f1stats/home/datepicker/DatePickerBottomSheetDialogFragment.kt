@@ -1,5 +1,6 @@
 package tmg.f1stats.home.datepicker
 
+import android.content.Context
 import android.os.Bundle
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,6 +14,7 @@ import tmg.utilities.lifecycle.rx.RxBottomSheetFragment
 class DatePickerBottomSheetDialogFragment : RxBottomSheetFragment() {
 
     private lateinit var adapter: TextAdapter
+    private var callback: DatePickerCallback? = null
 
     private val viewModel: DatePickerViewModel by viewModel()
 
@@ -21,6 +23,13 @@ class DatePickerBottomSheetDialogFragment : RxBottomSheetFragment() {
     override fun arguments(bundle: Bundle) {
 
         viewModel.inputs.initialYear(bundle.getInt(keyYear))
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is DatePickerCallback) {
+            this.callback = context
+        }
     }
 
     override fun initViews() {
@@ -45,8 +54,8 @@ class DatePickerBottomSheetDialogFragment : RxBottomSheetFragment() {
         viewModel.outputs
             .selectionMade()
             .subscribeNoError {
-                Toast.makeText(context, "Selection too $it", Toast.LENGTH_LONG).show()
                 this.dismiss()
+                callback?.yearSelected(it)
             }
             .autoDispose()
     }

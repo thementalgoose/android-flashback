@@ -4,7 +4,6 @@ import android.graphics.Color
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.layout_podium.view.*
 import kotlinx.android.synthetic.main.layout_podium.view.imgFastestLap
 import kotlinx.android.synthetic.main.layout_podium.view.imgStarted
@@ -14,10 +13,9 @@ import kotlinx.android.synthetic.main.layout_podium.view.tvStartedAbsolute
 import kotlinx.android.synthetic.main.layout_podium.view.tvStartedRelative
 import kotlinx.android.synthetic.main.layout_podium.view.tvTime
 import kotlinx.android.synthetic.main.view_race_podium.view.*
-import kotlinx.android.synthetic.main.view_race_result.view.*
 import tmg.f1stats.R
 import tmg.f1stats.extensions.stringRes
-import tmg.f1stats.season.race.SeasonRaceModel
+import tmg.f1stats.season.race.RaceModel
 import tmg.f1stats.utils.getFlagResourceAlpha3
 import tmg.f1stats.utils.podium
 import tmg.f1stats.utils.positionStarted
@@ -27,7 +25,7 @@ import kotlin.math.abs
 
 class RacePodiumViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-    fun bind(first: SeasonRaceModel, second: SeasonRaceModel, third: SeasonRaceModel) {
+    fun bind(first: RaceModel, second: RaceModel, third: RaceModel) {
         bind(first, itemView.layoutFirst)
         bind(second, itemView.layoutSecond)
         bind(third, itemView.layoutThird)
@@ -37,7 +35,7 @@ class RacePodiumViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         itemView.tvPoints3.text = itemView.context.getString(R.string.round_podium_points, third.racePoints)
     }
 
-    private fun bind(model: SeasonRaceModel, layout: View) {
+    private fun bind(model: RaceModel, layout: View) {
         layout.apply {
 
             tvPosition.text = model.racePos.podium()
@@ -46,7 +44,6 @@ class RacePodiumViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             tvNumber.colorHighlight = model.driver.constructor.color
             tvConstructor.text = model.driver.constructor.name
 
-            println("Model driver photo url is ${model.driver.photoUrl}")
             model.driver.photoUrl?.let {
                 Glide.with(imgDriver)
                     .load(it)

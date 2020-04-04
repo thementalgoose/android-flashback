@@ -4,44 +4,41 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import tmg.f1stats.base.BaseViewModel
 import tmg.f1stats.repo.db.SeasonOverviewDB
-import tmg.f1stats.repo.enums.RaceStatus
 import tmg.f1stats.repo.models.LapTime
-import tmg.f1stats.repo.models.RoundDriver
 import tmg.f1stats.repo.utils.filterNotNull
 import tmg.utilities.extensions.combineWithPair
-import tmg.utilities.extensions.filterMap
 
 //region Inputs
 
-interface SeasonRaceViewModelInputs {
+interface RaceViewModelInputs {
     fun initialise(season: Int, round: Int)
-    fun orderBy(seasonRaceAdapterType: SeasonRaceAdapterType)
+    fun orderBy(seasonRaceAdapterType: RaceAdapterType)
 }
 
 //endregion
 
 //region Outputs
 
-interface SeasonRaceViewModelOutputs {
-    fun items(): Observable<List<SeasonRaceModel>>
+interface RaceViewModelOutputs {
+    fun items(): Observable<List<RaceModel>>
 }
 
 //endregion
 
-class SeasonRaceViewModel(
+class RaceViewModel(
         private val seasonOverviewDB: SeasonOverviewDB
-) : BaseViewModel(), SeasonRaceViewModelInputs, SeasonRaceViewModelOutputs {
+) : BaseViewModel(), RaceViewModelInputs, RaceViewModelOutputs {
 
-    private var viewType: BehaviorSubject<SeasonRaceAdapterType> = BehaviorSubject.createDefault(SeasonRaceAdapterType.RACE)
+    private var viewType: BehaviorSubject<RaceAdapterType> = BehaviorSubject.createDefault(RaceAdapterType.RACE)
     private var seasonRound: BehaviorSubject<Pair<Int, Int>> = BehaviorSubject.create()
 
-    private var listObservable: Observable<List<SeasonRaceModel>> = seasonRound
+    private var listObservable: Observable<List<RaceModel>> = seasonRound
             .switchMap { (season, round) -> seasonOverviewDB.getSeasonRound(season, round) }
             .filterNotNull()
             .map { round ->
                 round.drivers.map { driver ->
                     val overview = round.driverOverview(driver.id)
-                    SeasonRaceModel(
+                    RaceModel(
                         driver = driver,
                         q1 = overview.q1,
                         q2 = overview.q2,
@@ -59,16 +56,16 @@ class SeasonRaceViewModel(
             .map { (seasonModels, viewType) ->
                 @Suppress("WHEN_ENUM_CAN_BE_NULL_IN_JAVA")
                 return@map when (viewType) {
-                    SeasonRaceAdapterType.RACE -> seasonModels.sortedBy { it.racePos }
-                    SeasonRaceAdapterType.QUALIFYING_POS_1 -> seasonModels.sortedBy { it.q1?.position ?: Int.MAX_VALUE }
-                    SeasonRaceAdapterType.QUALIFYING_POS_2 -> seasonModels.sortedBy { it.q2?.position ?: Int.MAX_VALUE }
-                    SeasonRaceAdapterType.QUALIFYING_POS_3 -> seasonModels.sortedBy { it.q3?.position ?: Int.MAX_VALUE }
-                    SeasonRaceAdapterType.QUALIFYING_POS -> seasonModels.sortedBy { it.gridPos }
+                    RaceAdapterType.RACE -> seasonModels.sortedBy { it.racePos }
+                    RaceAdapterType.QUALIFYING_POS_1 -> seasonModels.sortedBy { it.q1?.position ?: Int.MAX_VALUE }
+                    RaceAdapterType.QUALIFYING_POS_2 -> seasonModels.sortedBy { it.q2?.position ?: Int.MAX_VALUE }
+                    RaceAdapterType.QUALIFYING_POS_3 -> seasonModels.sortedBy { it.q3?.position ?: Int.MAX_VALUE }
+                    RaceAdapterType.QUALIFYING_POS -> seasonModels.sortedBy { it.gridPos }
                 }
             }
 
-    var inputs: SeasonRaceViewModelInputs = this
-    var outputs: SeasonRaceViewModelOutputs = this
+    var inputs: RaceViewModelInputs = this
+    var outputs: RaceViewModelOutputs = this
 
     init {
 
@@ -80,7 +77,7 @@ class SeasonRaceViewModel(
         seasonRound.onNext(Pair(season, round))
     }
 
-    override fun orderBy(seasonRaceAdapterType: SeasonRaceAdapterType) {
+    override fun orderBy(seasonRaceAdapterType: RaceAdapterType) {
         viewType.onNext(seasonRaceAdapterType)
     }
 
@@ -88,7 +85,7 @@ class SeasonRaceViewModel(
 
     //region Outputs
 
-    override fun items(): Observable<List<SeasonRaceModel>> {
+    override fun items(): Observable<List<RaceModel>> {
         return listObservable
     }
 

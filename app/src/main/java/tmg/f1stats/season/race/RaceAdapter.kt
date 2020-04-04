@@ -3,63 +3,64 @@ package tmg.f1stats.season.race
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import tmg.f1stats.R
 import tmg.f1stats.season.race.viewholders.RacePodiumViewHolder
 import tmg.f1stats.season.race.viewholders.RaceResultHeaderViewHolder
 import tmg.f1stats.season.race.viewholders.RaceResultViewHolder
 import tmg.utilities.extensions.toEnum
-import kotlin.math.ceil
 
-class SeasonRaceAdapter(
-    private val callback: SeasonRaceAdapterCallback
+class RaceAdapter(
+    private val callback: RaceAdapterCallback
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private var _viewType: SeasonRaceAdapterType = SeasonRaceAdapterType.RACE
-    val viewType: SeasonRaceAdapterType
+    private var _viewType: RaceAdapterType = RaceAdapterType.RACE
+    val viewType: RaceAdapterType
         get() = _viewType
-    private var _list: List<SeasonRaceModel> = emptyList()
-    val list: List<SeasonRaceModel>
+    private var _list: List<RaceModel> = emptyList()
+    val list: List<RaceModel>
         get() = _list
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val viewHolderType: SeasonRaceAdapterViewHolderType? = viewType.toEnum<SeasonRaceAdapterViewHolderType>()
+        val viewHolderType: RaceAdapterViewHolderType? = viewType.toEnum<RaceAdapterViewHolderType>()
         val view = if (viewHolderType != null) {
             LayoutInflater.from(parent.context).inflate(viewHolderType.viewHolderRes, parent, false)
         } else {
             View(parent.context)
         }
         return when (viewHolderType) {
-            SeasonRaceAdapterViewHolderType.RACE_PODIUM -> RacePodiumViewHolder(view)
-            SeasonRaceAdapterViewHolderType.RACE_RESULT -> RaceResultViewHolder(view)
-            SeasonRaceAdapterViewHolderType.RACE_RESULT_HEADER -> RaceResultHeaderViewHolder(view)
+            RaceAdapterViewHolderType.RACE_PODIUM -> RacePodiumViewHolder(view)
+            RaceAdapterViewHolderType.RACE_RESULT -> RaceResultViewHolder(view)
+            RaceAdapterViewHolderType.RACE_RESULT_HEADER -> RaceResultHeaderViewHolder(view)
             else -> throw Error("View type not implemented")
         }
     }
 
     override fun getItemCount(): Int = when (viewType) {
-        SeasonRaceAdapterType.RACE -> list.size - 1
-        SeasonRaceAdapterType.QUALIFYING_POS,
-        SeasonRaceAdapterType.QUALIFYING_POS_1,
-        SeasonRaceAdapterType.QUALIFYING_POS_2,
-        SeasonRaceAdapterType.QUALIFYING_POS_3 -> list.size
+        RaceAdapterType.RACE -> list.size - 1
+        RaceAdapterType.QUALIFYING_POS,
+        RaceAdapterType.QUALIFYING_POS_1,
+        RaceAdapterType.QUALIFYING_POS_2,
+        RaceAdapterType.QUALIFYING_POS_3 -> list.size
     }
 
     override fun getItemViewType(position: Int): Int {
         return when (viewType) {
-            SeasonRaceAdapterType.RACE -> when (position) {
-                0 -> SeasonRaceAdapterViewHolderType.RACE_PODIUM.ordinal
-                1 -> SeasonRaceAdapterViewHolderType.RACE_RESULT_HEADER.ordinal
-                else -> SeasonRaceAdapterViewHolderType.RACE_RESULT.ordinal
+            RaceAdapterType.RACE -> when (position) {
+                0 -> RaceAdapterViewHolderType.RACE_PODIUM.ordinal
+                1 -> RaceAdapterViewHolderType.RACE_RESULT_HEADER.ordinal
+                else -> RaceAdapterViewHolderType.RACE_RESULT.ordinal
             }
-            SeasonRaceAdapterType.QUALIFYING_POS -> SeasonRaceAdapterViewHolderType.QUALIFYING_RESULT.ordinal
-            SeasonRaceAdapterType.QUALIFYING_POS_1 -> SeasonRaceAdapterViewHolderType.QUALIFYING_RESULT.ordinal
-            SeasonRaceAdapterType.QUALIFYING_POS_2 -> SeasonRaceAdapterViewHolderType.QUALIFYING_RESULT.ordinal
-            SeasonRaceAdapterType.QUALIFYING_POS_3 -> SeasonRaceAdapterViewHolderType.QUALIFYING_RESULT.ordinal
+            RaceAdapterType.QUALIFYING_POS -> RaceAdapterViewHolderType.QUALIFYING_RESULT.ordinal
+            RaceAdapterType.QUALIFYING_POS_1 -> RaceAdapterViewHolderType.QUALIFYING_RESULT.ordinal
+            RaceAdapterType.QUALIFYING_POS_2 -> RaceAdapterViewHolderType.QUALIFYING_RESULT.ordinal
+            RaceAdapterType.QUALIFYING_POS_3 -> RaceAdapterViewHolderType.QUALIFYING_RESULT.ordinal
         }
     }
 
-    fun update(type: SeasonRaceAdapterType, list: List<SeasonRaceModel>) {
+    fun update(type: RaceAdapterType, list: List<RaceModel>) {
         val beforeList = this.list
         val beforeState = this.viewType
         this._viewType = type
@@ -83,11 +84,11 @@ class SeasonRaceAdapter(
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        when (getItemViewType(position).toEnum<SeasonRaceAdapterViewHolderType>()) {
-            SeasonRaceAdapterViewHolderType.RACE_PODIUM -> {
+        when (getItemViewType(position).toEnum<RaceAdapterViewHolderType>()) {
+            RaceAdapterViewHolderType.RACE_PODIUM -> {
                 (holder as? RacePodiumViewHolder)?.bind(list[0], list[1], list[2])
             }
-            SeasonRaceAdapterViewHolderType.RACE_RESULT -> {
+            RaceAdapterViewHolderType.RACE_RESULT -> {
                 (holder as? RaceResultViewHolder)?.bind(list[position + 1])
             }
             else -> {}
@@ -97,10 +98,10 @@ class SeasonRaceAdapter(
     //region Diff calculator
 
     inner class DiffCalculator(
-            private val oldList: List<SeasonRaceModel>,
-            private val newList: List<SeasonRaceModel>,
-            private val oldType: SeasonRaceAdapterType,
-            private val newType: SeasonRaceAdapterType
+        private val oldList: List<RaceModel>,
+        private val newList: List<RaceModel>,
+        private val oldType: RaceAdapterType,
+        private val newType: RaceAdapterType
     ) : DiffUtil.Callback() {
 
         override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean = oldList[oldItemPosition].driver.id == newList[newItemPosition].driver.id
@@ -116,7 +117,7 @@ class SeasonRaceAdapter(
 }
 
 
-enum class SeasonRaceAdapterType {
+enum class RaceAdapterType {
     RACE,
     QUALIFYING_POS_1,
     QUALIFYING_POS_2,
@@ -124,6 +125,16 @@ enum class SeasonRaceAdapterType {
     QUALIFYING_POS,
 }
 
-interface SeasonRaceAdapterCallback {
-    fun orderBy(adapterType: SeasonRaceAdapterType)
+enum class RaceAdapterViewHolderType(
+    @LayoutRes val viewHolderRes: Int
+) {
+    RACE_PODIUM(R.layout.view_race_podium),
+    RACE_RESULT(R.layout.view_race_result),
+    RACE_RESULT_HEADER(R.layout.view_race_header),
+    QUALIFYING_RESULT_HEADER(R.layout.view_qualifying_header),
+    QUALIFYING_RESULT(R.layout.view_qualifying_result),
+}
+
+interface RaceAdapterCallback {
+    fun orderBy(adapterType: RaceAdapterType)
 }

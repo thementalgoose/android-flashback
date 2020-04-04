@@ -9,7 +9,7 @@ import tmg.f1stats.R
 import tmg.f1stats.extensions.iconRes
 import tmg.f1stats.extensions.stringRes
 import tmg.f1stats.extensions.toEmptyIfZero
-import tmg.f1stats.season.race.SeasonRaceModel
+import tmg.f1stats.season.race.RaceModel
 import tmg.f1stats.utils.getFlagResourceAlpha3
 import tmg.f1stats.utils.position
 import tmg.utilities.extensions.views.gone
@@ -18,7 +18,7 @@ import kotlin.math.abs
 
 class RaceResultViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-    fun bind(model: SeasonRaceModel) {
+    fun bind(model: RaceModel) {
         itemView.apply {
             tvPosition.text = model.racePos.toString()
             layoutDriver.tvName.text = model.driver.name

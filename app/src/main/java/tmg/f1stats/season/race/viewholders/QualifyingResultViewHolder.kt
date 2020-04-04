@@ -8,12 +8,12 @@ import kotlinx.android.synthetic.main.view_qualifying_result.view.*
 import tmg.f1stats.R
 import tmg.f1stats.repo.models.RoundQualifyingResult
 import tmg.f1stats.repo.models.noTime
-import tmg.f1stats.season.race.SeasonRaceModel
+import tmg.f1stats.season.race.RaceModel
 import tmg.utilities.extensions.views.gone
 
 class QualifyingResultViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-    fun bind(model: SeasonRaceModel) {
+    fun bind(model: RaceModel) {
         itemView.apply {
 
             tvPosition.text = model.gridPos.toString()

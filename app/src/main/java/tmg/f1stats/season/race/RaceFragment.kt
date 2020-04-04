@@ -8,14 +8,14 @@ import tmg.f1stats.R
 import tmg.f1stats.base.BaseFragment
 import tmg.utilities.extensions.subscribeNoError
 
-class SeasonRaceFragment: BaseFragment(), SeasonRaceAdapterCallback {
+class RaceFragment: BaseFragment(), RaceAdapterCallback {
 
     private var season: Int = -1
     private var round: Int = -1
 
-    private val viewModel: SeasonRaceViewModel by viewModel()
+    private val viewModel: RaceViewModel by viewModel()
 
-    private lateinit var adapter: SeasonRaceAdapter
+    private lateinit var adapter: RaceAdapter
 
     override fun layoutId(): Int = R.layout.fragment_season_race
 
@@ -28,7 +28,7 @@ class SeasonRaceFragment: BaseFragment(), SeasonRaceAdapterCallback {
     }
 
     override fun initViews() {
-        adapter = SeasonRaceAdapter(this)
+        adapter = RaceAdapter(this)
         rvList.adapter = adapter
         rvList.layoutManager = LinearLayoutManager(context)
 
@@ -40,14 +40,14 @@ class SeasonRaceFragment: BaseFragment(), SeasonRaceAdapterCallback {
         viewModel.outputs
             .items()
             .subscribeNoError {
-                adapter.update(SeasonRaceAdapterType.RACE, it)
+                adapter.update(RaceAdapterType.RACE, it)
             }
             .autoDispose()
     }
 
     //region SeasonRaceAdapterCallback
 
-    override fun orderBy(adapterType: SeasonRaceAdapterType) {
+    override fun orderBy(adapterType: RaceAdapterType) {
         viewModel.inputs.orderBy(adapterType)
     }
 
@@ -58,9 +58,9 @@ class SeasonRaceFragment: BaseFragment(), SeasonRaceAdapterCallback {
         private const val keySeason: String = "keySeason"
         private const val keyRound: String = "keyRound"
 
-        fun instance(season: Int, round: Int): SeasonRaceFragment {
-            val instance: SeasonRaceFragment =
-                SeasonRaceFragment()
+        fun instance(season: Int, round: Int): RaceFragment {
+            val instance: RaceFragment =
+                RaceFragment()
             val bundle: Bundle = Bundle()
             bundle.putInt(keySeason, season)
             bundle.putInt(keyRound, round)

@@ -24,8 +24,12 @@
 
         <activity android:name=".settings.sync.SettingsSyncActivity" />
 
+        <activity android:name=".home.swiping.HomeSwipingActivity" />
+
+        <activity android:name=".home.static.HomeStaticActivity" />
+
         <activity
-            android:name=".home.HomeActivity"
+            android:name="tmg.components.about.AboutThisAppActivity"
             android:label="" />
 
     </application>

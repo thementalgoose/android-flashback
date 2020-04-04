@@ -4,6 +4,7 @@ import io.reactivex.rxjava3.core.Observable
 import tmg.f1stats.repo.Optional
 import tmg.f1stats.repo.db.SeasonOverviewDB
 import tmg.f1stats.repo.models.*
+import tmg.f1stats.repo.utils.filterNotNull
 import tmg.f1stats.repo.utils.mapOptionalValue
 import tmg.f1stats.repo.utils.mapToOptional
 import tmg.f1stats.repo_firebase.converters.convert
@@ -60,9 +61,8 @@ class SeasonOverviewFirestore : SeasonOverviewDB {
     }
 
     private fun getSeason(season: Int): Observable<Season> {
-        return getDocument(FSeason::class.java, "seasons/$season") { model, _ ->
-            model.convert(season)
-        }
+        return getDocument(FSeason::class.java, "seasons/$season") { model, _ -> model.convert(season) }
+            .filterNotNull()
     }
 
     private fun getRounds(season: Int): Observable<List<Round>> {

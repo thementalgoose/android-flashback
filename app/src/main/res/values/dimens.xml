@@ -30,5 +30,13 @@
     <dimen name="paddingMedium">16dp</dimen>
     <dimen name="paddingSmall">8dp</dimen>
     <dimen name="paddingXSmall">4dp</dimen>
+
     <dimen name="boxPadding">6dp</dimen>
+
+    <dimen name="swiperHeaderCountrySize">30dp</dimen>
+
+    <dimen name="trackPickerCountrySize">24dp</dimen>
+
+    <dimen name="homeDisplayCountrySize">36dp</dimen>
+
 </resources>

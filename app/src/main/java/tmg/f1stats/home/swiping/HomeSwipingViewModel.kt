@@ -1,24 +1,22 @@
-package tmg.f1stats.home
+package tmg.f1stats.home.swiping
 
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.PublishSubject
-import org.koin.core.definition.indexKey
-import org.threeten.bp.Year
 import tmg.f1stats.base.BaseViewModel
-import tmg.f1stats.minimumSupportedYear
 import tmg.f1stats.repo.db.PrefsDB
-import tmg.f1stats.supportedYears
-import tmg.f1stats.utils.RxUtils
-import tmg.f1stats.utils.Selected
 import tmg.utilities.extensions.combineWithPair
 import tmg.utilities.extensions.takeWhen
-import tmg.utilities.extensions.withLatest
-import tmg.utilities.utils.ongoing
+
+sealed class Screen {
+    class Drivers(val season: Int) : Screen()
+    class Constructor(val season: Int) : Screen()
+    object Settings : Screen()
+}
 
 //region Inputs
 
-interface HomeViewModelInputs {
+interface HomeSwipingViewModelInputs {
     fun clickTab(tabOption: HomeTabOption)
     fun clickCalendar()
     fun yearChangedToo(year: Int)
@@ -28,17 +26,18 @@ interface HomeViewModelInputs {
 
 //region Outputs
 
-interface HomeViewModelOutputs {
+interface HomeSwipingViewModelOutputs {
 
-    fun showSeason(): Observable<Int>
+    fun showScreen(): Observable<Screen>
     fun showCalendarPicker(): Observable<Int>
 }
 
 //endregion
 
-class HomeViewModel(
+class HomeSwipingViewModel(
     prefs: PrefsDB
-) : BaseViewModel(), HomeViewModelInputs, HomeViewModelOutputs {
+) : BaseViewModel(), HomeSwipingViewModelInputs,
+    HomeSwipingViewModelOutputs {
 
     private var tabSelectedEvent: BehaviorSubject<HomeTabOption> =
         BehaviorSubject.createDefault(HomeTabOption.DRIVERS)
@@ -46,8 +45,8 @@ class HomeViewModel(
     private val showCalendarEvent: PublishSubject<Boolean> = PublishSubject.create()
     private val selectedYearEvent: BehaviorSubject<Int> = BehaviorSubject.createDefault(prefs.selectedYear)
 
-    var inputs: HomeViewModelInputs = this
-    var outputs: HomeViewModelOutputs = this
+    var inputs: HomeSwipingViewModelInputs = this
+    var outputs: HomeSwipingViewModelOutputs = this
 
     init {
 
@@ -71,8 +70,21 @@ class HomeViewModel(
 
     //region Outputs
 
-    override fun showSeason(): Observable<Int> {
-        return selectedYearEvent
+    override fun showScreen(): Observable<Screen> {
+        return tabSelectedEvent
+            .combineWithPair(selectedYearEvent)
+            .map { (tab, year) ->
+                @Suppress("WHEN_ENUM_CAN_BE_NULL_IN_JAVA")
+                return@map when (tab) {
+                    HomeTabOption.DRIVERS -> Screen.Drivers(
+                        year
+                    )
+                    HomeTabOption.CONSTRUCTORS -> Screen.Constructor(
+                        year
+                    )
+                    HomeTabOption.SETTINGS -> Screen.Settings
+                }
+            }
     }
 
     override fun showCalendarPicker(): Observable<Int> {
@@ -87,6 +99,5 @@ class HomeViewModel(
 enum class HomeTabOption {
     DRIVERS,
     CONSTRUCTORS,
-    GALLERY,
     SETTINGS
 }

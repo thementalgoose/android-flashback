@@ -1,6 +1,6 @@
-package tmg.f1stats.season
+package tmg.f1stats.season.swiper
 
-data class SeasonAdapterModel(
+data class SeasonSwiperAdapterModel(
     val season: Int,
     val round: Int,
     val raceKey: String,

@@ -1,4 +1,4 @@
-package tmg.f1stats.season
+package tmg.f1stats.season.swiper
 
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.subjects.BehaviorSubject
@@ -16,14 +16,15 @@ interface SeasonViewModelInputs {
 //region Outputs
 
 interface SeasonViewModelOutputs {
-    fun seasonRounds(): Observable<List<SeasonAdapterModel>>
+    fun seasonRounds(): Observable<List<SeasonSwiperAdapterModel>>
 }
 
 //endregion
 
 class SeasonViewModel(
     val seasonOverviewDB: SeasonOverviewDB
-): BaseViewModel(), SeasonViewModelInputs, SeasonViewModelOutputs {
+): BaseViewModel(), SeasonViewModelInputs,
+    SeasonViewModelOutputs {
 
     private var seasonEvent: BehaviorSubject<Int> = BehaviorSubject.create()
 
@@ -44,12 +45,20 @@ class SeasonViewModel(
     
     //region Outputs
 
-    override fun seasonRounds(): Observable<List<SeasonAdapterModel>> {
+    override fun seasonRounds(): Observable<List<SeasonSwiperAdapterModel>> {
         return seasonEvent
             .switchMap { seasonOverviewDB.getSeasonOverview(it) }
             .map { rounds ->
                 rounds
-                    .map { SeasonAdapterModel(it.season, it.round, "KEY", it.name, it.circuit.name) }
+                    .map {
+                        SeasonSwiperAdapterModel(
+                            it.season,
+                            it.round,
+                            it.circuit.countryISO,
+                            it.name,
+                            it.circuit.name
+                        )
+                    }
                     .sortedBy { it.round }
             }
     }
