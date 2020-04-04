@@ -14,6 +14,7 @@ fun FSeasonOverviewDriver.convert(): Driver {
         code = code,
         number = number ?: 0,
         wikiUrl = wikiUrl,
+        photoUrl = photoUrl,
         dateOfBirth = fromDate(dob),
         nationality = nationality,
         nationalityISO = nationalityISO
@@ -28,6 +29,7 @@ fun FSeasonOverviewDriver.convert(constructors: Map<String, FSeasonOverviewConst
         code = code,
         number = number ?: 0,
         wikiUrl = wikiUrl,
+        photoUrl = photoUrl,
         dateOfBirth = fromDate(dob),
         nationality = nationality,
         nationalityISO = nationalityISO,

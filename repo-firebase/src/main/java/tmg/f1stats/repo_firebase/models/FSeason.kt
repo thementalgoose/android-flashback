@@ -15,6 +15,7 @@ class FSeasonOverviewDriver(
     val code: String? = null,
     val number: Int? = null,
     val wikiUrl: String = "",
+    val photoUrl: String? = null,
     val dob: String = "",
     val nationality: String = "",
     val nationalityISO: String = "",

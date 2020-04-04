@@ -12,6 +12,7 @@ open class Driver(
     val code: String?,
     val number: Int,
     val wikiUrl: String,
+    val photoUrl: String?,
     val dateOfBirth: LocalDate,
     val nationality: String,
     val nationalityISO: String
@@ -24,6 +25,7 @@ open class Driver(
             code = code,
             number = number,
             wikiUrl = wikiUrl,
+            photoUrl = photoUrl,
             dateOfBirth = dateOfBirth,
             nationality = nationality,
             nationalityISO = nationalityISO,
@@ -46,6 +48,7 @@ class RoundDriver(
     code: String?,
     number: Int,
     wikiUrl: String,
+    photoUrl: String?,
     dateOfBirth: LocalDate,
     nationality: String,
     nationalityISO: String,
@@ -57,6 +60,7 @@ class RoundDriver(
     code,
     number,
     wikiUrl,
+    photoUrl,
     dateOfBirth,
     nationality,
     nationalityISO

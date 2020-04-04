@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingTop="@dimen/paddingMedium"
-    android:paddingBottom="@dimen/paddingMedium">
+    android:paddingTop="@dimen/paddingSmall"
+    android:paddingBottom="@dimen/paddingSmall">
 
     <TextView
         android:id="@+id/tvTitle"

@@ -8,19 +8,19 @@ import tmg.utilities.extensions.fromHtml
 
 fun Int.position(podiumOnly: Boolean = false): Spanned {
     return when (this) {
-        1 -> "1<sup>st</sup>".fromHtml()
-        2 -> "2<sup>nd</sup>".fromHtml()
-        3 -> "3<sup>rd</sup>".fromHtml()
-        else -> if (podiumOnly) "".fromHtml() else "$this<sup>th</sup>".fromHtml()
+        1 -> "1st".fromHtml()
+        2 -> "2nd".fromHtml()
+        3 -> "3rd".fromHtml()
+        else -> if (podiumOnly) "".fromHtml() else "${this}th".fromHtml()
     }
 }
 
 fun Int.podium(): Spanned {
     return when (this) {
-        1 -> "1<sup>st</sup>".fromHtml()
-        2 -> "2<sup>nd</sup>".fromHtml()
-        3 -> "3<sup>rd</sup>".fromHtml()
-        else -> "$this<sup>th</sup>".fromHtml()
+        1 -> "1st".fromHtml()
+        2 -> "2nd".fromHtml()
+        3 -> "3rd".fromHtml()
+        else -> "${this}th".fromHtml()
     }
 }
 

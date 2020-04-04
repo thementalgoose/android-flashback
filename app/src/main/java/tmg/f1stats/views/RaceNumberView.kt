@@ -46,5 +46,6 @@ class RaceNumberView: TextView {
             }
         typeface = ResourcesCompat.getFont(context, R.font.yukarimobil)
         setPadding(horizontalPadding, verticalPadding, horizontalPadding, verticalPadding)
+        setTextColor(Color.WHITE)
     }
 }

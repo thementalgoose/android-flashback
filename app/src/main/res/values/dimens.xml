@@ -17,15 +17,18 @@
     <dimen name="driverFlagSize">16dp</dimen>
     <dimen name="driverFlagPodiumSize">40dp</dimen>
 
-    <dimen name="podium1">108dp</dimen>
+    <dimen name="podium1">120dp</dimen>
     <dimen name="podium2">72dp</dimen>
     <dimen name="podium3">36dp</dimen>
+    <dimen name="podiumDriverImage">80dp</dimen>
 
     <dimen name="qualifyingGridConstructorIndicator">12dp</dimen>
 
+    <dimen name="paddingXLarge">64dp</dimen>
     <dimen name="paddingLarge">32dp</dimen>
     <dimen name="paddingMedLarge">24dp</dimen>
     <dimen name="paddingMedium">16dp</dimen>
     <dimen name="paddingSmall">8dp</dimen>
     <dimen name="paddingXSmall">4dp</dimen>
+    <dimen name="boxPadding">6dp</dimen>
 </resources>

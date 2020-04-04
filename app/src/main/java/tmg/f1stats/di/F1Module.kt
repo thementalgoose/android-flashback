@@ -4,6 +4,9 @@ import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import tmg.f1stats.gallery.GalleryViewModel
 import tmg.f1stats.home.HomeViewModel
+import tmg.f1stats.home.datepicker.DatePickerViewModel
+import tmg.f1stats.prefs.SharedPrefsDB
+import tmg.f1stats.repo.db.PrefsDB
 import tmg.f1stats.season.race.SeasonRaceViewModel
 import tmg.f1stats.season.SeasonViewModel
 import tmg.f1stats.repo.db.SeasonOverviewDB
@@ -14,7 +17,8 @@ import tmg.f1stats.settings.SettingsViewModel
 import tmg.f1stats.settings.sync.SettingsSyncViewModel
 
 var f1Module = module {
-    viewModel { HomeViewModel() }
+    viewModel { HomeViewModel(get()) }
+    viewModel { DatePickerViewModel() }
     viewModel { SeasonViewModel(get()) }
     viewModel { SeasonRaceViewModel(get()) }
     viewModel { GalleryViewModel() }
@@ -24,4 +28,5 @@ var f1Module = module {
 
     single<SeasonOverviewDB> { SeasonOverviewFirestore() }
     single<SyncDB> { SyncFirestore() }
+    single<PrefsDB> { SharedPrefsDB(get()) }
 }

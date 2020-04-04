@@ -13,6 +13,8 @@
 
     <attr name="f1PurpleSector" format="color" />
 
+    <attr name="f1Selected" format="color" />
+
     <attr name="f1Pos1" format="color" />
     <attr name="f1Pos2" format="color" />
     <attr name="f1Pos3" format="color" />

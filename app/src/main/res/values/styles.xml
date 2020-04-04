@@ -6,6 +6,8 @@
         <item name="colorPrimaryDark">#3700B3</item>
         <item name="colorAccent">#03DAC5</item>
 
+        <item name="f1Selected">#4403DAC5</item>
+
         <item name="f1TextPrimary">#181818</item>
         <item name="f1TextSecondary">#383838</item>
         <item name="f1TextTertiary">#585858</item>
@@ -25,13 +27,34 @@
         <item name="f1Pos3">#D29342</item>
     </style>
 
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <style name="Text">
         <item name="android:textColor">?attr/f1TextPrimary</item>
     </style>
     <style name="Text.Season" />
     <style name="Text.Season.Track" />
     <style name="Text.Season.Track.Header" parent="Text.Season.Track">
-        <item name="android:textSize">30sp</item>
+        <item name="android:textSize">26sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:fontFamily">@font/goodtimes</item>
     </style>
@@ -67,7 +90,7 @@
 
     </style>
     <style name="Text.Podium.Constructor" parent="Text.Podium">
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">10sp</item>
     </style>
     <style name="Text.Podium.Grid" parent="Text.Podium">
 
@@ -101,6 +124,10 @@
         <item name="android:ellipsize">end</item>
     </style>
     <style name="Text.RaceResult.Points" parent="Text.RaceResult">
+        <item name="android:textStyle">bold</item>
+        <item name="android:maxLines">1</item>
+    </style>
+    <style name="Text.RaceResult.Header" parent="Text.RaceResult">
         <item name="android:textStyle">bold</item>
         <item name="android:maxLines">1</item>
     </style>
@@ -145,5 +172,11 @@
         <item name="android:textSize">10sp</item>
     </style>
 
+    <!-- Date Picker -->
+
+    <style name="Text.DatePicker" parent="Text" />
+    <style name="Text.DatePicker.Header" parent="Text.DatePicker">
+        <item name="android:textStyle">bold</item>
+    </style>
 
 </resources>

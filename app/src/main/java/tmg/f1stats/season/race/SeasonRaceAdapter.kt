@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import tmg.f1stats.season.race.viewholders.RacePodiumViewHolder
+import tmg.f1stats.season.race.viewholders.RaceResultHeaderViewHolder
 import tmg.f1stats.season.race.viewholders.RaceResultViewHolder
 import tmg.utilities.extensions.toEnum
 import kotlin.math.ceil
@@ -31,13 +32,13 @@ class SeasonRaceAdapter(
         return when (viewHolderType) {
             SeasonRaceAdapterViewHolderType.RACE_PODIUM -> RacePodiumViewHolder(view)
             SeasonRaceAdapterViewHolderType.RACE_RESULT -> RaceResultViewHolder(view)
-//            SeasonRaceAdapterViewHolderType.QUALIFYING_RESULT -> SeasonRaceQualifyingResultViewHolder(callback, view)
+            SeasonRaceAdapterViewHolderType.RACE_RESULT_HEADER -> RaceResultHeaderViewHolder(view)
             else -> throw Error("View type not implemented")
         }
     }
 
     override fun getItemCount(): Int = when (viewType) {
-        SeasonRaceAdapterType.RACE -> list.size - 2
+        SeasonRaceAdapterType.RACE -> list.size - 1
         SeasonRaceAdapterType.QUALIFYING_POS,
         SeasonRaceAdapterType.QUALIFYING_POS_1,
         SeasonRaceAdapterType.QUALIFYING_POS_2,
@@ -46,7 +47,11 @@ class SeasonRaceAdapter(
 
     override fun getItemViewType(position: Int): Int {
         return when (viewType) {
-            SeasonRaceAdapterType.RACE -> if (position == 0) SeasonRaceAdapterViewHolderType.RACE_PODIUM.ordinal else SeasonRaceAdapterViewHolderType.RACE_RESULT.ordinal
+            SeasonRaceAdapterType.RACE -> when (position) {
+                0 -> SeasonRaceAdapterViewHolderType.RACE_PODIUM.ordinal
+                1 -> SeasonRaceAdapterViewHolderType.RACE_RESULT_HEADER.ordinal
+                else -> SeasonRaceAdapterViewHolderType.RACE_RESULT.ordinal
+            }
             SeasonRaceAdapterType.QUALIFYING_POS -> SeasonRaceAdapterViewHolderType.QUALIFYING_RESULT.ordinal
             SeasonRaceAdapterType.QUALIFYING_POS_1 -> SeasonRaceAdapterViewHolderType.QUALIFYING_RESULT.ordinal
             SeasonRaceAdapterType.QUALIFYING_POS_2 -> SeasonRaceAdapterViewHolderType.QUALIFYING_RESULT.ordinal
@@ -83,8 +88,9 @@ class SeasonRaceAdapter(
                 (holder as? RacePodiumViewHolder)?.bind(list[0], list[1], list[2])
             }
             SeasonRaceAdapterViewHolderType.RACE_RESULT -> {
-                (holder as? RaceResultViewHolder)?.bind(list[position + 2])
+                (holder as? RaceResultViewHolder)?.bind(list[position + 1])
             }
+            else -> {}
         }
     }
 

@@ -48,7 +48,9 @@ class SeasonViewModel(
         return seasonEvent
             .switchMap { seasonOverviewDB.getSeasonOverview(it) }
             .map { rounds ->
-                rounds.map { SeasonAdapterModel(it.season, it.round, "KEY", it.name, it.circuit.name) }
+                rounds
+                    .map { SeasonAdapterModel(it.season, it.round, "KEY", it.name, it.circuit.name) }
+                    .sortedBy { it.round }
             }
     }
     

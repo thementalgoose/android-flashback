@@ -3,6 +3,8 @@ package tmg.f1stats.season.race.viewholders
 import android.graphics.Color
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.layout_podium.view.*
 import kotlinx.android.synthetic.main.layout_podium.view.imgFastestLap
 import kotlinx.android.synthetic.main.layout_podium.view.imgStarted
@@ -43,6 +45,13 @@ class RacePodiumViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             tvNumber.text = model.driver.number.toString()
             tvNumber.colorHighlight = model.driver.constructor.color
             tvConstructor.text = model.driver.constructor.name
+
+            println("Model driver photo url is ${model.driver.photoUrl}")
+            model.driver.photoUrl?.let {
+                Glide.with(imgDriver)
+                    .load(it)
+                    .into(imgDriver)
+            }
 
             // Starting Position
             tvStartedAbsolute.text = model.gridPos.positionStarted(context)

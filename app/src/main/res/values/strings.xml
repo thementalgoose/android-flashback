@@ -5,6 +5,7 @@
     <string name="nav_constructors">Constructors</string>
     <string name="nav_gallery">Gallery</string>
     <string name="nav_settings">Settings</string>
+    <string name="nav_calendar">Calendar</string>
 
     <string name="sync_type_overview">Season Overview</string>
     <string name="sync_type_laps">Laps</string>
@@ -15,6 +16,9 @@
     <string name="round_podium_points">%d points</string>
 
     <string name="race_time_delta">+%s</string>
+
+    <string name="race_result_grid">Grid</string>
+    <string name="race_result_status">Status</string>
 
     <string name="race_status_finished">Finished</string>
     <string name="race_status_lap_1">+1 laps</string>
@@ -63,4 +67,5 @@
     <string name="race_status_seat">Seat</string>
     <string name="race_status_battery">Battery</string>
     <string name="race_status_front_wing">Front wing</string>
+    <string name="datepicker_pick_year">Pick year</string>
 </resources>
