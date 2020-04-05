@@ -34,7 +34,7 @@ inline fun <T, reified E> getDocument(zClass: Class<E>, documentPath: String, cr
             }
             else {
                 if (snapshot?.data != null) {
-                    val firebaseObj = snapshot?.toObject(zClass)!!
+                    val firebaseObj = snapshot.toObject(zClass)!!
                     emitter.onNext(Optional(convertTo(firebaseObj, snapshot.id)))
                 }
                 else {

@@ -1,22 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bsTrackPicker"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="?attr/f1BackgroundPrimary"
+    android:elevation="8dp"
+    android:orientation="vertical"
+    android:overScrollMode="never"
+    app:behavior_hideable="true"
+    app:layout_behavior="@string/bottom_sheet_behavior">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
-            style="@style/Text.DatePicker.Header"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingStart="@dimen/paddingMedium"
-            android:paddingTop="@dimen/paddingSmall"
-            android:paddingEnd="@dimen/paddingMedium"
-            android:paddingBottom="@dimen/paddingSmall"
-            android:text="@string/datepicker_pick_year" />
+            android:layout_height="wrap_content">
+
+            <TextView
+                style="@style/Text.DatePicker.Header"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/paddingMedium"
+                android:paddingTop="@dimen/paddingSmall"
+                android:paddingEnd="@dimen/paddingMedium"
+                android:paddingBottom="@dimen/paddingSmall"
+                android:text="@string/trackpicker_select"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/imgbtnClose"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/imgbtnClose"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="@dimen/paddingMedium"
+                android:background="@null"
+                android:src="@drawable/ic_icon_close"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvSeasons"
@@ -28,6 +57,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
+            android:nestedScrollingEnabled="false"
+            android:overScrollMode="never"
             android:paddingBottom="@dimen/paddingXLarge" />
 
     </LinearLayout>

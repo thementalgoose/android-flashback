@@ -47,6 +47,9 @@
     <style name="Text.HomeStatic.TrackName" parent="Text.HomeStatic">
         <item name="android:textSize">12sp</item>
     </style>
+    <style name="Text.HomeStatic.Date" parent="Text.HomeStatic">
+        <item name="android:textSize">12sp</item>
+    </style>
 
 
 
@@ -191,6 +194,7 @@
     <style name="Text.DatePicker" parent="Text" />
     <style name="Text.DatePicker.Header" parent="Text.DatePicker">
         <item name="android:textStyle">bold</item>
+        <item name="android:textSize">16sp</item>
     </style>
 
     <style name="Text.TrackPicker" parent="Text" />
@@ -198,7 +202,7 @@
 
     </style>
     <style name="Text.TrackPicker.TrackCountry" parent="Text.TrackPicker">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">13sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:fontFamily">@font/goodtimes</item>
     </style>

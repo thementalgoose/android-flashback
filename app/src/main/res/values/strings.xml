@@ -22,7 +22,7 @@
     <string name="race_result_grid">Grid</string>
     <string name="race_result_status">Status</string>
 
-    <string name="datepicker_pick_year">Pick year</string>
+    <string name="trackpicker_select">Browse</string>
 
     <!-- View Type -->
 

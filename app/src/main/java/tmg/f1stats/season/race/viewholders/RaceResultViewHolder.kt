@@ -18,7 +18,7 @@ import kotlin.math.abs
 
 class RaceResultViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-    fun bind(model: RaceModel) {
+    fun bind(model: RaceModel.Single) {
         itemView.apply {
             tvPosition.text = model.racePos.toString()
             layoutDriver.tvName.text = model.driver.name

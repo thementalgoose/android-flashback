@@ -56,6 +56,7 @@ data class RoundRaceResult(
     val time: LapTime?,
     val points: Int,
     val grid: Int,
+    val qualified: Int,
     val finish: Int,
     val status: RaceStatus,
     val fastestLap: FastestLap?

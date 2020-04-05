@@ -43,6 +43,7 @@ fun FRound.convert(
                     time = raceResult.time?.toLapTime(),
                     points = raceResult.points ?: 0,
                     grid = raceResult.grid ?: 0,
+                    qualified = raceResult.qualified ?: 0,
                     finish = raceResult.result ?: 0,
                     status = RaceStatus.fromStatus(raceResult.status ?: RaceStatus.RETIRED.statusCode),
                     fastestLap = raceResult.fastestLap?.convert()
@@ -63,7 +64,7 @@ private fun Map<String, FSeasonOverviewRaceQualifying>?.onResult(
                 driver = drivers.values.first { it.id == driverId }.convert(constructors),
                 time = lapTime,
                 position = (this ?: mapOf())
-                    .map { (driverId, res) -> driverId to res.q1?.toLapTime() }
+                    .map { (driverId, res) -> driverId to callback(res)?.toLapTime() }
                     .sortedBy { it.second?.totalMillis ?: Int.MAX_VALUE }
                     .indexOfFirst { it.first == driverId }
             )

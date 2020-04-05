@@ -8,7 +8,7 @@ data class FSeason(
     val race: Map<String, FRound>? = null
 )
 
-class FSeasonOverviewDriver(
+data class FSeasonOverviewDriver(
     val id: String = "",
     val firstName: String = "",
     val lastName: String = "",
@@ -78,6 +78,7 @@ data class FSeasonOverviewRaceRace(
     val result: Int? = null,
     val grid: Int? = null,
     val resultText: String = "",
+    val qualified: Int? = null,
     val status: String? = null,
     val points: Int? = null,
     val time: String? = null,

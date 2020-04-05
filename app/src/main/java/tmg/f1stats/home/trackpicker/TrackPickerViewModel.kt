@@ -1,6 +1,8 @@
 package tmg.f1stats.home.trackpicker
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.schedulers.Schedulers
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import io.reactivex.rxjava3.subjects.PublishSubject
 import tmg.f1stats.base.BaseViewModel
@@ -52,15 +54,18 @@ class TrackPickerViewModel(
         .switchMap { season ->
             seasonDB.getSeasonOverview(season)
         }
+        .share()
         .map {
             return@map it.map { race ->
-                Selected(TrackModel(race.round, race.circuit.name, race.circuit.country, race.circuit.countryISO))
+                Selected(TrackModel(race.season, race.round, race.circuit.name, race.circuit.country, race.circuit.countryISO))
             }
         }
         .combineWithPair(initialRound)
         .map { (models, selectedRound) ->
             models.map { Selected(it.value, selectedRound == it.value.round)}
         }
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
 
     var inputs: TrackPickerViewModelInputs = this
     var outputs: TrackPickerViewModelOutputs = this

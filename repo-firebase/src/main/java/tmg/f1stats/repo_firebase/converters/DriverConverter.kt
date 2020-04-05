@@ -1,6 +1,5 @@
 package tmg.f1stats.repo_firebase.converters
 
-import tmg.f1stats.repo.models.Constructor
 import tmg.f1stats.repo.models.Driver
 import tmg.f1stats.repo.models.RoundDriver
 import tmg.f1stats.repo_firebase.models.FSeasonOverviewConstructor

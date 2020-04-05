@@ -39,8 +39,8 @@ class RaceFragment: BaseFragment(), RaceAdapterCallback {
 
         viewModel.outputs
             .items()
-            .subscribeNoError {
-                adapter.update(RaceAdapterType.RACE, it)
+            .subscribeNoError { (adapterType, list) ->
+                adapter.update(adapterType, list)
             }
             .autoDispose()
     }

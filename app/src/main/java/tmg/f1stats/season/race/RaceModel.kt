@@ -5,15 +5,26 @@ import tmg.f1stats.repo.models.LapTime
 import tmg.f1stats.repo.models.RoundDriver
 import tmg.f1stats.repo.models.RoundQualifyingResult
 
-open class RaceModel(
-    val driver: RoundDriver,
-    val q1: RoundQualifyingResult?,
-    val q2: RoundQualifyingResult?,
-    val q3: RoundQualifyingResult?,
-    val racePoints: Int,
-    val raceResult: LapTime,
-    val racePos: Int,
-    val gridPos: Int,
-    val status: RaceStatus,
-    val fastestLap: Boolean
-)
+sealed class RaceModel {
+    class Podium(
+        val driverFirst: Single,
+        val driverSecond: Single,
+        val driverThird: Single
+    ) : RaceModel()
+
+    class Single(
+        val season: Int,
+        val round: Int,
+        val driver: RoundDriver,
+        val q1: RoundQualifyingResult?,
+        val q2: RoundQualifyingResult?,
+        val q3: RoundQualifyingResult?,
+        val racePoints: Int,
+        val raceResult: LapTime,
+        val racePos: Int,
+        val gridPos: Int,
+        val qualified: Int,
+        val status: RaceStatus,
+        val fastestLap: Boolean
+    ) : RaceModel()
+}

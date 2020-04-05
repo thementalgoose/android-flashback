@@ -25,7 +25,7 @@ import kotlin.math.abs
 
 class RacePodiumViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-    fun bind(first: RaceModel, second: RaceModel, third: RaceModel) {
+    fun bind(first: RaceModel.Single, second: RaceModel.Single, third: RaceModel.Single) {
         bind(first, itemView.layoutFirst)
         bind(second, itemView.layoutSecond)
         bind(third, itemView.layoutThird)
@@ -35,7 +35,7 @@ class RacePodiumViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         itemView.tvPoints3.text = itemView.context.getString(R.string.round_podium_points, third.racePoints)
     }
 
-    private fun bind(model: RaceModel, layout: View) {
+    private fun bind(model: RaceModel.Single, layout: View) {
         layout.apply {
 
             tvPosition.text = model.racePos.podium()
