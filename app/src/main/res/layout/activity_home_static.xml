@@ -82,14 +82,28 @@
         android:paddingBottom="@dimen/paddingXLarge"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabTrackList"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginEnd="@dimen/paddingMedium"
-        android:layout_marginBottom="@dimen/paddingMedium"
-        android:src="@drawable/ic_track_icon" />
+        android:layout_gravity="bottom"
+        android:orientation="vertical">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabTrackList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="@dimen/paddingMedium"
+            android:layout_marginBottom="@dimen/paddingMedium"
+            android:src="@drawable/ic_track_icon" />
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:background="?attr/f1BackgroundPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:menu="@menu/menu_static" />
+
+    </LinearLayout>
 
     <View
         android:id="@+id/vBackground"

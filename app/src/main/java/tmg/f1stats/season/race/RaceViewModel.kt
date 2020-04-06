@@ -36,7 +36,7 @@ class RaceViewModel(
         private val seasonOverviewDB: SeasonOverviewDB
 ) : BaseViewModel(), RaceViewModelInputs, RaceViewModelOutputs {
 
-    private var viewType: BehaviorSubject<RaceAdapterType> = BehaviorSubject.createDefault(RaceAdapterType.QUALIFYING_POS)
+    private var viewType: BehaviorSubject<RaceAdapterType> = BehaviorSubject.createDefault(RaceAdapterType.RACE)
     private var seasonRound: BehaviorSubject<Pair<Int, Int>> = BehaviorSubject.create()
 
     private var seasonRoundObservable: Observable<Round> = seasonRound

@@ -6,6 +6,8 @@
     <string name="nav_gallery">Gallery</string>
     <string name="nav_settings">Settings</string>
     <string name="nav_calendar">Calendar</string>
+    <string name="nav_race">Race</string>
+    <string name="nav_qualifying">Qualifying</string>
 
     <string name="sync_type_overview">Season Overview</string>
     <string name="sync_type_laps">Laps</string>
