@@ -100,6 +100,7 @@
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:background="?attr/f1BackgroundPrimary"
             android:layout_width="match_parent"
+            android:id="@+id/bnvNavigation"
             android:layout_height="wrap_content"
             app:menu="@menu/menu_static" />
 

@@ -1,7 +1,12 @@
 package tmg.f1stats.home.static
 
+import android.view.View
+import android.view.animation.Animation
+import android.view.animation.ScaleAnimation
+import android.view.animation.TranslateAnimation
 import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.activity_home_static.*
 import kotlinx.android.synthetic.main.bottom_sheet_track_picker.*
@@ -16,7 +21,9 @@ import tmg.f1stats.season.race.RaceAdapterCallback
 import tmg.f1stats.season.race.RaceAdapterType
 import tmg.f1stats.season.race.RaceViewModel
 import tmg.f1stats.utils.BottomSheetFader
+import tmg.f1stats.utils.RecyclerViewScrollListener
 import tmg.f1stats.utils.getFlagResourceAlpha3
+import tmg.f1stats.utils.onScroll
 import tmg.utilities.extensions.*
 
 class HomeStaticActivity : BaseActivity(), RaceAdapterCallback {
@@ -40,6 +47,15 @@ class HomeStaticActivity : BaseActivity(), RaceAdapterCallback {
         raceAdapter = RaceAdapter(this)
         rvData.adapter = raceAdapter
         rvData.layoutManager = LinearLayoutManager(this)
+
+        rvData.onScroll {
+            if (it && !fabTrackList.isOrWillBeShown) {
+                fabTrackList.show()
+            }
+            else if (!it && !fabTrackList.isOrWillBeHidden) {
+                fabTrackList.hide()
+            }
+        }
 
         // Bottom Sheet
 
@@ -84,6 +100,26 @@ class HomeStaticActivity : BaseActivity(), RaceAdapterCallback {
                 viewModel.inputs.closeTrackList()
             }
             .autoDispose()
+
+        bnvNavigation
+            .setOnNavigationItemSelectedListener {
+                when (it.itemId) {
+                    R.id.nav_race -> {
+                        raceViewModel.inputs.orderBy(RaceAdapterType.RACE)
+                        return@setOnNavigationItemSelectedListener true
+                    }
+                    R.id.nav_qualifying -> {
+                        raceViewModel.inputs.orderBy(RaceAdapterType.QUALIFYING_POS)
+                        return@setOnNavigationItemSelectedListener true
+                    }
+                    R.id.nav_settings -> {
+                        return@setOnNavigationItemSelectedListener false
+                    }
+                    else -> { }
+                }
+                return@setOnNavigationItemSelectedListener false
+
+            }
 
         // Outputs
 

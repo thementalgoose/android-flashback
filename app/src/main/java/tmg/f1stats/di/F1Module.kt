@@ -8,11 +8,13 @@ import tmg.f1stats.home.datepicker.DatePickerViewModel
 import tmg.f1stats.home.static.HomeStaticViewModel
 import tmg.f1stats.home.trackpicker.TrackPickerViewModel
 import tmg.f1stats.prefs.SharedPrefsDB
+import tmg.f1stats.repo.db.CircuitDB
 import tmg.f1stats.repo.db.HistoryDB
 import tmg.f1stats.repo.db.PrefsDB
 import tmg.f1stats.season.race.RaceViewModel
 import tmg.f1stats.season.swiper.SeasonViewModel
 import tmg.f1stats.repo.db.SeasonOverviewDB
+import tmg.f1stats.repo_firebase.repos.CircuitFirestore
 import tmg.f1stats.repo_firebase.repos.HistoryFirestore
 import tmg.f1stats.repo_firebase.repos.SeasonOverviewFirestore
 import tmg.f1stats.settings.SettingsViewModel
@@ -32,4 +34,5 @@ var f1Module = module {
     single<SeasonOverviewDB> { SeasonOverviewFirestore() }
     single<HistoryDB> { HistoryFirestore() }
     single<PrefsDB> { SharedPrefsDB(get()) }
+    single<CircuitDB> { CircuitFirestore() }
 }
