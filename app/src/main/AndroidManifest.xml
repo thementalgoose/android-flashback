@@ -22,7 +22,7 @@
 
         <activity android:name=".onboarding.OnboardingActivity" />
 
-        <activity android:name=".settings.sync.SettingsSyncActivity" />
+        <activity android:name=".settings.SettingsActivity" />
 
         <activity android:name=".home.swiping.HomeSwipingActivity" />
 

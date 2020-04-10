@@ -1,5 +1,6 @@
 package tmg.f1stats.home.static
 
+import android.content.Intent
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.ScaleAnimation
@@ -20,6 +21,7 @@ import tmg.f1stats.season.race.RaceAdapter
 import tmg.f1stats.season.race.RaceAdapterCallback
 import tmg.f1stats.season.race.RaceAdapterType
 import tmg.f1stats.season.race.RaceViewModel
+import tmg.f1stats.settings.SettingsActivity
 import tmg.f1stats.utils.BottomSheetFader
 import tmg.f1stats.utils.RecyclerViewScrollListener
 import tmg.f1stats.utils.getFlagResourceAlpha3
@@ -113,6 +115,7 @@ class HomeStaticActivity : BaseActivity(), RaceAdapterCallback {
                         return@setOnNavigationItemSelectedListener true
                     }
                     R.id.nav_settings -> {
+                        startActivity(Intent(applicationContext, SettingsActivity::class.java))
                         return@setOnNavigationItemSelectedListener false
                     }
                     else -> { }
