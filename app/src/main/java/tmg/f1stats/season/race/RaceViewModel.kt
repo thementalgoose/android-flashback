@@ -2,6 +2,9 @@ package tmg.f1stats.season.race
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
 import tmg.f1stats.base.BaseViewModel
@@ -52,7 +55,7 @@ class RaceViewModel(
         this.season = -1
         this.round = -1
 
-        async {
+        viewModelScope.launch(Dispatchers.IO) {
             roundData = seasonOverviewDB.getSeasonRound(season, round)
             this@RaceViewModel.season = season
             this@RaceViewModel.round = round
@@ -66,7 +69,7 @@ class RaceViewModel(
 
         viewType = seasonRaceAdapterType
         if (season != -1 && round != -1) {
-            async {
+            viewModelScope.launch(Dispatchers.IO) {
                 roundData?.let {
                     updateModel(it, seasonRaceAdapterType)
                 }
@@ -77,8 +80,8 @@ class RaceViewModel(
     //endregion
 
     private fun updateModel(roundData: Round, withType: RaceAdapterType) {
-        date.value = roundData.date
-        time.value = roundData.time
+        date.postValue(roundData.date)
+        time.postValue(roundData.time)
 
         val driverIds: List<String> = roundData
             .race
@@ -118,7 +121,7 @@ class RaceViewModel(
             }
         }
 
-        items.value = Pair(withType, list)
+        items.postValue(Pair(withType, list))
     }
 
     private fun getDriverModel(round: Round, driverId: String): RaceModel.Single {

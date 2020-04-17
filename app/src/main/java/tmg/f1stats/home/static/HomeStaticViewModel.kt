@@ -1,6 +1,9 @@
 package tmg.f1stats.home.static
 
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import tmg.f1stats.base.BaseViewModel
 import tmg.f1stats.home.trackpicker.TrackModel
 import tmg.f1stats.repo.db.HistoryDB
@@ -95,21 +98,21 @@ class HomeStaticViewModel(
     //endregion
 
     private fun updateCircuitInfo() {
-        async {
+        viewModelScope.launch(Dispatchers.IO) {
             seasonDB.getSeasonRound(season, round)?.let {
-                circuitInfo.value = TrackModel(
+                circuitInfo.postValue(TrackModel(
                     season = it.season,
                     round = it.round,
                     circuitName = it.circuit.name,
                     country = it.circuit.country,
                     countryKey = it.circuit.countryISO
-                )
+                ))
             }
         }
     }
 
     private fun updateSheet() {
-        async {
+        viewModelScope.launch(Dispatchers.IO) {
             if (historyList.isEmpty()) {
                 val history = historyDB.allHistory()
                 historyList = history
@@ -121,18 +124,18 @@ class HomeStaticViewModel(
     }
 
     private fun processTrackList() {
-        switchTrackList.value = historyList
+        switchTrackList.postValue(historyList
             .firstOrNull { it.season == season }
             ?.rounds
             ?.map {
                 Selected(TrackModel(season, it.round, it.raceName, it.country, it.countryISO), isSelected = it.round == round && it.season == season)
             }
-            ?.sortedBy { it.value.round }
+            ?.sortedBy { it.value.round } ?: emptyList())
     }
 
     private fun processYearList() {
-        switchYearList.value = historyList
+        switchYearList.postValue(historyList
             .map { Selected(it.season.toString(), isSelected = it.season == browsingSeason) }
-            .sortedByDescending { it.value }
+            .sortedByDescending { it.value })
     }
 }

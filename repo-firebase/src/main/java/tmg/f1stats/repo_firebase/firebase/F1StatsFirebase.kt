@@ -24,9 +24,10 @@ fun <T, E : Any> addDocument(collectionPath: String, model: T, toModel: (model: 
             .add(toModel(model))
 }
 
-suspend inline fun <T, reified E> getDocument(zClass: Class<E>, documentPath: String, crossinline convertTo: (firebaseModel: E, id: String) -> T): T? {
+suspend inline fun <T, reified E> getDocument(zClass: Class<E>, documentPath: String, convertTo: (firebaseModel: E, id: String) -> T): T? {
     return try {
         val snapshot = document(documentPath).get().await()
+        println(snapshot)
         convertTo(snapshot?.toObject(zClass)!!, snapshot.id)
     }
     catch (e: FirebaseFirestoreException) {
@@ -35,7 +36,7 @@ suspend inline fun <T, reified E> getDocument(zClass: Class<E>, documentPath: St
     }
 }
 
-suspend inline fun <T, reified E> getDocumentMap(zClass: Class<E>, documentPath: String, crossinline convertTo: (firebaseModel: E) -> T): List<T> {
+suspend inline fun <T, reified E> getDocumentMap(zClass: Class<E>, documentPath: String, convertTo: (firebaseModel: E) -> T): List<T> {
     return try {
         val snapshot = document(documentPath).get().await()
         val keys = snapshot?.data?.keys
@@ -47,7 +48,7 @@ suspend inline fun <T, reified E> getDocumentMap(zClass: Class<E>, documentPath:
     }
 }
 
-suspend inline fun <T, reified E> getDocuments(firebaseClass: Class<E>, collectionPath: String, crossinline convertTo: (firebaseModel: E, id: String) -> T): List<T> {
+suspend inline fun <T, reified E> getDocuments(firebaseClass: Class<E>, collectionPath: String, convertTo: (firebaseModel: E, id: String) -> T): List<T> {
     return try {
         val snapshot = collection(collectionPath).get().await()
         snapshot?.documents

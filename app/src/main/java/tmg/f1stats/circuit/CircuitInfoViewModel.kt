@@ -3,7 +3,9 @@ package tmg.f1stats.circuit
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.koin.experimental.property.inject
 import tmg.f1stats.base.BaseViewModel
 import tmg.f1stats.repo.db.CircuitDB
 import tmg.f1stats.repo.models.Circuit
@@ -44,9 +46,9 @@ class CircuitInfoViewModel(
     override fun circuitId(circuitId: String) {
         this.circuitId = circuitId
 
-        async {
+        viewModelScope.launch(Dispatchers.IO) {
             val result = circuitDB.getCircuit(circuitId)
-            circuitInfo.value = result
+            circuitInfo.postValue(result)
         }
     }
 

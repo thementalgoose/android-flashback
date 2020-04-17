@@ -5,9 +5,4 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-abstract class BaseViewModel: ViewModel() {
-
-    fun async(block: suspend CoroutineScope.() -> Unit) {
-        viewModelScope.launch(block = block)
-    }
-}
+abstract class BaseViewModel: ViewModel()

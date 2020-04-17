@@ -1,6 +1,9 @@
 package tmg.f1stats.season.swiper
 
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import tmg.f1stats.base.BaseViewModel
 import tmg.f1stats.repo.db.SeasonOverviewDB
 
@@ -41,9 +44,9 @@ class SeasonViewModel(
     override fun initialise(season: Int) {
         this.season = season
 
-        async {
+        viewModelScope.launch(Dispatchers.IO) {
             val result = seasonOverviewDB.getSeasonOverview(season)
-            seasonRounds.value = result
+            seasonRounds.postValue(result
                 .map {
                     SeasonSwiperAdapterModel(
                         it.season,
@@ -53,7 +56,7 @@ class SeasonViewModel(
                         it.circuit.name
                     )
                 }
-                .sortedBy { it.round }
+                .sortedBy { it.round })
         }
     }
 
