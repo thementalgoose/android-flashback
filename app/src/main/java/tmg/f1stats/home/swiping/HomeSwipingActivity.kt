@@ -25,13 +25,13 @@ class HomeSwipingActivity: BaseActivity() {
         supportActionBar?.title = "2019"
 
         bnvNavigation.setOnNavigationItemSelectedListener {
-            when (it.itemId) {
-                R.id.nav_drivers -> viewModel.clickTab(HomeTabOption.DRIVERS)
-                R.id.nav_constructors -> viewModel.clickTab(HomeTabOption.CONSTRUCTORS)
-                R.id.nav_settings -> {
-                    viewModel.clickTab(HomeTabOption.SETTINGS)
-                }
-            }
+//            when (it.itemId) {
+//                R.id.nav_drivers -> viewModel.clickTab(HomeTabOption.DRIVERS)
+//                R.id.nav_constructors -> viewModel.clickTab(HomeTabOption.CONSTRUCTORS)
+//                R.id.nav_settings -> {
+//                    viewModel.clickTab(HomeTabOption.SETTINGS)
+//                }
+//            }
             return@setOnNavigationItemSelectedListener true
         }
     }
@@ -44,39 +44,39 @@ class HomeSwipingActivity: BaseActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_calendar -> {
-                viewModel.inputs.clickCalendar()
+//                viewModel.inputs.clickCalendar()
             }
         }
         return super.onOptionsItemSelected(item)
     }
 
-    override fun observeViewModel() {
+//    override fun observeViewModel() {
 
-        viewModel.outputs
-            .showCalendarPicker()
-            .subscribeNoError { year ->
-                DatePickerBottomSheetDialogFragment
-                    .instance(year)
-                    .show(supportFragmentManager, "DatePicker")
-            }
-            .autoDispose()
+//        viewModel.outputs
+//            .showCalendarPicker()
+//            .subscribeNoError { year ->
+//                DatePickerBottomSheetDialogFragment
+//                    .instance(year)
+//                    .show(supportFragmentManager, "DatePicker")
+//            }
+//            .autoDispose()
 
-        viewModel.outputs
-            .showScreen()
-            .subscribeNoError {
-                when (it) {
-                    is Screen.Drivers -> {
-                        loadFragment(SeasonSwiperFragment.newInstance(it.season), R.id.flContainer, "DRIVERS")
-                    }
-                    is Screen.Constructor -> {
-                        loadFragment(SeasonSwiperFragment.newInstance(it.season), R.id.flContainer, "CONSTRUCTORS")
-                    }
-                    Screen.Settings -> {
-                        loadFragment(SettingsFragment(), R.id.flContainer, "SETTINGS")
-                    }
-                }
-            }
-            .autoDispose()
+//        viewModel.outputs
+//            .showScreen()
+//            .subscribeNoError {
+//                when (it) {
+//                    is Screen.Drivers -> {
+//                        loadFragment(SeasonSwiperFragment.newInstance(it.season), R.id.flContainer, "DRIVERS")
+//                    }
+//                    is Screen.Constructor -> {
+//                        loadFragment(SeasonSwiperFragment.newInstance(it.season), R.id.flContainer, "CONSTRUCTORS")
+//                    }
+//                    Screen.Settings -> {
+//                        loadFragment(SettingsFragment(), R.id.flContainer, "SETTINGS")
+//                    }
+//                }
+//            }
+//            .autoDispose()
 
-    }
+//    }
 }

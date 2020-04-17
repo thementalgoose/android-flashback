@@ -1,7 +1,9 @@
 package tmg.f1stats.circuit
 
-import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.subjects.BehaviorSubject
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 import tmg.f1stats.base.BaseViewModel
 import tmg.f1stats.repo.db.CircuitDB
 import tmg.f1stats.repo.models.Circuit
@@ -17,7 +19,7 @@ interface CircuitInfoViewModelInputs {
 //region Outputs
 
 interface CircuitInfoViewModelOutputs {
-    fun circuitInfo(): Observable<Circuit>
+    val circuitInfo: LiveData<Circuit>
 }
 
 //endregion
@@ -26,10 +28,9 @@ class CircuitInfoViewModel(
     private val circuitDB: CircuitDB
 ): BaseViewModel(), CircuitInfoViewModelInputs, CircuitInfoViewModelOutputs {
 
-    private val circuitIdEvent: BehaviorSubject<String> = BehaviorSubject.create()
+    private lateinit var circuitId: String
 
-    private val circuitInfoObservable: Observable<Circuit> = circuitIdEvent
-        .switchMap { circuitDB.getCircuit(it) }
+    override val circuitInfo: MutableLiveData<Circuit> = MutableLiveData()
 
     var inputs: CircuitInfoViewModelInputs = this
     var outputs: CircuitInfoViewModelOutputs = this
@@ -41,16 +42,17 @@ class CircuitInfoViewModel(
     //region Inputs
 
     override fun circuitId(circuitId: String) {
-        circuitIdEvent.onNext(circuitId)
+        this.circuitId = circuitId
+
+        async {
+            val result = circuitDB.getCircuit(circuitId)
+            circuitInfo.value = result
+        }
     }
 
     //endregion
 
     //region Outputs
-
-    override fun circuitInfo(): Observable<Circuit> {
-        return circuitInfoObservable
-    }
 
     //endregion
 }

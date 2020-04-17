@@ -10,7 +10,7 @@ import tmg.f1stats.repo.enums.ViewTypePref
 
 class SplashActivity: BaseActivity() {
 
-    val prefsDB: PrefsDB by inject()
+    private val prefsDB: PrefsDB by inject()
 
     override fun layoutId(): Int = R.layout.activity_splash
 
@@ -27,9 +27,4 @@ class SplashActivity: BaseActivity() {
             }
         }
     }
-
-    override fun observeViewModel() {
-
-    }
-
 }

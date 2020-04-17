@@ -22,10 +22,7 @@ import tmg.f1stats.season.race.RaceAdapterCallback
 import tmg.f1stats.season.race.RaceAdapterType
 import tmg.f1stats.season.race.RaceViewModel
 import tmg.f1stats.settings.SettingsActivity
-import tmg.f1stats.utils.BottomSheetFader
-import tmg.f1stats.utils.RecyclerViewScrollListener
-import tmg.f1stats.utils.getFlagResourceAlpha3
-import tmg.f1stats.utils.onScroll
+import tmg.f1stats.utils.*
 import tmg.utilities.extensions.*
 
 class HomeStaticActivity : BaseActivity(), RaceAdapterCallback {
@@ -83,25 +80,21 @@ class HomeStaticActivity : BaseActivity(), RaceAdapterCallback {
         }
         rvRounds.adapter = roundAdapter
         rvRounds.layoutManager = LinearLayoutManager(this)
+
+        observeViewModel()
     }
 
-    override fun observeViewModel() {
+    fun observeViewModel() {
 
         // Inputs
 
-        fabTrackList
-            .click()
-            .subscribeNoError {
-                viewModel.inputs.clickTrackList()
-            }
-            .autoDispose()
+        fabTrackList.setOnClickListener {
+            viewModel.inputs.clickTrackList()
+        }
 
-        imgbtnClose
-            .click()
-            .subscribeNoError {
-                viewModel.inputs.closeTrackList()
-            }
-            .autoDispose()
+        imgbtnClose.setOnClickListener {
+            viewModel.inputs.closeTrackList()
+        }
 
         bnvNavigation
             .setOnNavigationItemSelectedListener {
@@ -126,68 +119,43 @@ class HomeStaticActivity : BaseActivity(), RaceAdapterCallback {
 
         // Outputs
 
-        viewModel.outputs
-            .openTrackList()
-            .subscribeNoError {
-                if (it) {
-                    trackBottomSheetBehavior.state = BottomSheetBehavior.STATE_HALF_EXPANDED
-                } else {
-                    trackBottomSheetBehavior.hidden()
-                }
+        observeEvent(viewModel.outputs.openTrackList) {
+            if (it) {
+                trackBottomSheetBehavior.state = BottomSheetBehavior.STATE_HALF_EXPANDED
+            } else {
+                trackBottomSheetBehavior.hidden()
             }
+        }
 
-        viewModel.outputs
-            .circuitInfo()
-            .subscribeNoError {
-                imgCountry.setImageResource(getFlagResourceAlpha3(it.countryKey))
-                tvCountry.text = it.country
-                tvTrackName.text = it.circuitName
-            }
-            .autoDispose()
+        observe(viewModel.outputs.circuitInfo) {
+            imgCountry.setImageResource(getFlagResourceAlpha3(it.countryKey))
+            tvCountry.text = it.country
+            tvTrackName.text = it.circuitName
+        }
 
-        viewModel.outputs
-            .loadSeasonRound()
-            .subscribeNoError { (season, round) ->
-                raceViewModel.inputs.initialise(season, round)
-            }
-            .autoDispose()
+        observe(viewModel.outputs.switchYearList) {
+            seasonAdapter.list = it
+        }
 
-        viewModel.outputs
-            .switchYearList()
-            .subscribeNoError {
-                seasonAdapter.list = it
-            }
-            .autoDispose()
+        observe(viewModel.outputs.switchTrackList) {
+            roundAdapter.list = it
+        }
 
-        viewModel.outputs
-            .switchTrackList()
-            .subscribeNoError {
-                roundAdapter.list = it
-            }
-            .autoDispose()
+        observe(viewModel.outputs.showSeasonRound) { (season, round) ->
+            raceViewModel.inputs.initialise(season, round)
+        }
 
-        // TODO: Think about this - Race view model reuse
+        observe(raceViewModel.outputs.items) { (adapterType, list) ->
+            raceAdapter.update(adapterType, list)
+        }
 
-        raceViewModel.outputs
-            .items()
-            .subscribeNoError { (adapterType, list) ->
-                raceAdapter.update(adapterType, list)
-            }
-            .autoDispose()
+        observe(raceViewModel.outputs.date) {
+            tvDate.text = it.format(DateTimeFormatter.ofPattern("dd MMM yyyy"))
+        }
 
-        raceViewModel.outputs
-            .date()
-            .subscribeNoError {
-                tvDate.text = it.format(DateTimeFormatter.ofPattern("dd MMM yyyy"))
-            }
-            .autoDispose()
-
-        raceViewModel.outputs
-            .time()
-            .subscribeNoError {
-
-            }
-            .autoDispose()
+        observe(raceViewModel.outputs.time) {
+            // TODO: Do something with the date
+        }
     }
 
     //region RaceAdapterCallback

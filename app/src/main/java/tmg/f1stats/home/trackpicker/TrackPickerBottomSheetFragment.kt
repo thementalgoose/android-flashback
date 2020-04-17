@@ -36,19 +36,19 @@ class TrackPickerBottomSheetFragment: RxBottomSheetFragment() {
 
     override fun observeViewModel() {
 
-        viewModel.outputs
-            .yearList()
-            .subscribeNoError {
-                seasonAdapter.list = it
-            }
-            .autoDispose()
-
-        viewModel.outputs
-            .trackList()
-            .subscribeNoError {
-                roundAdapter.list = it
-            }
-            .autoDispose()
+//        viewModel.outputs
+//            .yearList()
+//            .subscribeNoError {
+//                seasonAdapter.list = it
+//            }
+//            .autoDispose()
+//
+//        viewModel.outputs
+//            .trackList()
+//            .subscribeNoError {
+//                roundAdapter.list = it
+//            }
+//            .autoDispose()
 
     }
 

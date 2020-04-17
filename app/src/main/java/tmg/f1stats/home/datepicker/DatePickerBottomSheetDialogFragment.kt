@@ -22,7 +22,7 @@ class DatePickerBottomSheetDialogFragment : RxBottomSheetFragment() {
 
     override fun arguments(bundle: Bundle) {
 
-        viewModel.inputs.initialYear(bundle.getInt(keyYear))
+//        viewModel.inputs.initialYear(bundle.getInt(keyYear))
     }
 
     override fun onAttach(context: Context) {
@@ -36,7 +36,7 @@ class DatePickerBottomSheetDialogFragment : RxBottomSheetFragment() {
 
         adapter = TextAdapter()
         adapter.itemClicked = { year ->
-            year.toIntOrNull()?.let { viewModel.inputs.selectYear(it) }
+            year.toIntOrNull()?.let {  /* viewModel.inputs.selectYear(it) */ }
         }
         rvTexts.layoutManager = LinearLayoutManager(context)
         rvTexts.adapter = adapter
@@ -44,20 +44,20 @@ class DatePickerBottomSheetDialogFragment : RxBottomSheetFragment() {
 
     override fun observeViewModel() {
 
-        viewModel.outputs
-            .showCalendarWithOptions()
-            .subscribeNoError {
-                adapter.list = it
-            }
-            .autoDispose()
-
-        viewModel.outputs
-            .selectionMade()
-            .subscribeNoError {
-                this.dismiss()
-                callback?.yearSelected(it)
-            }
-            .autoDispose()
+//        viewModel.outputs
+//            .showCalendarWithOptions()
+//            .subscribeNoError {
+//                adapter.list = it
+//            }
+//            .autoDispose()
+//
+//        viewModel.outputs
+//            .selectionMade()
+//            .subscribeNoError {
+//                this.dismiss()
+//                callback?.yearSelected(it)
+//            }
+//            .autoDispose()
     }
 
     companion object {

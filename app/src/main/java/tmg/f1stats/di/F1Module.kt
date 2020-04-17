@@ -17,19 +17,16 @@ import tmg.f1stats.repo.db.SeasonOverviewDB
 import tmg.f1stats.repo_firebase.repos.CircuitFirestore
 import tmg.f1stats.repo_firebase.repos.HistoryFirestore
 import tmg.f1stats.repo_firebase.repos.SeasonOverviewFirestore
-import tmg.f1stats.settings.SettingsViewModel
 
 var f1Module = module {
     viewModel { HomeSwipingViewModel(get()) }
-    viewModel { HomeStaticViewModel(get(), get()) }
+    viewModel { HomeStaticViewModel(get(), get(), get()) }
 
     viewModel { DatePickerViewModel() }
     viewModel { TrackPickerViewModel(get()) }
     viewModel { SeasonViewModel(get()) }
     viewModel { RaceViewModel(get()) }
     viewModel { GalleryViewModel() }
-
-    viewModel { SettingsViewModel() }
 
     single<SeasonOverviewDB> { SeasonOverviewFirestore() }
     single<HistoryDB> { HistoryFirestore() }

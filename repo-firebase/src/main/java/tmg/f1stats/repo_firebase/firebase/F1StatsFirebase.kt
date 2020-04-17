@@ -1,19 +1,13 @@
 package tmg.f1stats.repo_firebase.firebase
 
+import android.util.Log
+import com.google.android.gms.tasks.Task
 import com.google.firebase.FirebaseApp
 import com.google.firebase.firestore.*
-import io.reactivex.rxjava3.annotations.NonNull
-import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.core.ObservableEmitter
-import io.reactivex.rxjava3.core.ObservableOnSubscribe
-import io.reactivex.rxjava3.core.Scheduler
-import io.reactivex.rxjava3.disposables.Disposable
-import io.reactivex.rxjava3.schedulers.Schedulers
-import tmg.f1stats.repo.Optional
-import tmg.f1stats.repo.errors.DoesntExistError
-import tmg.f1stats.repo.errors.PermissionError
-import tmg.f1stats.repo.errors.RecordAlreadyExistsError
-import tmg.f1stats.repo.errors.UnauthenticatedError
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlinx.coroutines.tasks.await
+import kotlin.coroutines.resumeWithException
 
 val firebaseApp: FirebaseApp = FirebaseApp.getInstance()
 
@@ -30,90 +24,55 @@ fun <T, E : Any> addDocument(collectionPath: String, model: T, toModel: (model: 
             .add(toModel(model))
 }
 
-inline fun <T, reified E> getDocument(zClass: Class<E>, documentPath: String, crossinline convertTo: (firebaseModel: E, id: String) -> T): Observable<Optional<T>> {
-    return Observable.create { emitter ->
-        val snapshotListener: EventListener<DocumentSnapshot> = EventListener { snapshot, exception ->
-            if (exception != null) {
-                emitter.handleFirebaseError(exception, documentPath)
-            }
-            else {
-                if (snapshot?.data != null) {
-                    val firebaseObj = snapshot.toObject(zClass)!!
-                    emitter.onNext(Optional(convertTo(firebaseObj, snapshot.id)))
-                }
-                else {
-                    emitter.onNext(Optional())
-                }
-            }
-        }
-
-        val registration = document(documentPath)
-                .addSnapshotListener(snapshotListener)
-
-        emitter.setDisposable(Disposable.fromAction {
-            registration.remove()
-        })
+suspend inline fun <T, reified E> getDocument(zClass: Class<E>, documentPath: String, crossinline convertTo: (firebaseModel: E, id: String) -> T): T? {
+    return try {
+        val snapshot = document(documentPath).get().await()
+        convertTo(snapshot?.toObject(zClass)!!, snapshot.id)
+    }
+    catch (e: FirebaseFirestoreException) {
+        handleError(e)
+        null
     }
 }
 
-inline fun <T, reified E> getDocumentMap(zClass: Class<E>, documentPath: String, crossinline convertTo: (firebaseModel: E) -> T): Observable<List<T>> {
-    return Observable.create { emitter ->
-        val snapshotListener: EventListener<DocumentSnapshot> = EventListener { snapshot, exception ->
-            if (exception != null) {
-                emitter.handleFirebaseError(exception, documentPath)
-            }
-            else {
-                val keys = snapshot?.data?.keys
-                emitter.onNext(keys
-                        ?.map { convertTo(snapshot.get(it, zClass)!!) }
-                        ?: emptyList()
-                )
-            }
-        }
-
-        val registration = document(documentPath)
-                .addSnapshotListener(snapshotListener)
-
-        emitter.setDisposable(Disposable.fromAction {
-            registration.remove()
-        })
+suspend inline fun <T, reified E> getDocumentMap(zClass: Class<E>, documentPath: String, crossinline convertTo: (firebaseModel: E) -> T): List<T> {
+    return try {
+        val snapshot = document(documentPath).get().await()
+        val keys = snapshot?.data?.keys
+        keys?.map { convertTo(snapshot.get(it, zClass)!!) } ?: emptyList()
+    }
+    catch (e: FirebaseFirestoreException) {
+        handleError(e)
+        emptyList()
     }
 }
 
-inline fun <T, reified E> getDocuments(firebaseClass: Class<E>, collectionPath: String, crossinline convertTo: (firebaseModel: E, id: String) -> T): Observable<List<T>> {
-    return Observable.create { emitter ->
-        val snapshotListener: EventListener<QuerySnapshot> = EventListener { snapshot, exception ->
-            if (exception != null) {
-                emitter.handleFirebaseError(exception, collectionPath)
-            } else {
-                emitter.onNext(snapshot?.documents
-                        ?.filter { it.data != null }
-                        ?.map {
-                            val firebaseObj = it.toObject(firebaseClass)!!
-                            return@map convertTo(firebaseObj, it.id)
-                        }
-                        ?: listOf()
-                )
+suspend inline fun <T, reified E> getDocuments(firebaseClass: Class<E>, collectionPath: String, crossinline convertTo: (firebaseModel: E, id: String) -> T): List<T> {
+    return try {
+        val snapshot = collection(collectionPath).get().await()
+        snapshot?.documents
+            ?.filter { it.data != null }
+            ?.map {
+                val firebaseObj = it.toObject(firebaseClass)!!
+                return@map convertTo(firebaseObj, it.id)
             }
-        }
-
-        val registration = collection(collectionPath)
-                .addSnapshotListener(snapshotListener)
-
-        emitter.setDisposable(Disposable.fromAction {
-            registration.remove()
-        })
+            ?: listOf()
+    }
+    catch (e: FirebaseFirestoreException) {
+        handleError(e)
+        emptyList()
     }
 }
 
-fun <T> ObservableEmitter<T>.handleFirebaseError(exception: FirebaseFirestoreException, debugData: String) {
+fun handleError(exception: FirebaseFirestoreException) {
+    exception.printStackTrace()
     when (exception.code) {
         FirebaseFirestoreException.Code.OK -> {}
         FirebaseFirestoreException.Code.CANCELLED -> {}
-        FirebaseFirestoreException.Code.NOT_FOUND -> this.onError(DoesntExistError(debugData))
-        FirebaseFirestoreException.Code.ALREADY_EXISTS -> this.onError(RecordAlreadyExistsError(debugData))
-        FirebaseFirestoreException.Code.PERMISSION_DENIED -> this.onError(PermissionError(debugData))
-        FirebaseFirestoreException.Code.UNAUTHENTICATED -> this.onError(UnauthenticatedError(debugData))
-        else -> this.onError(Error("Error occurred ${exception.code}"))
+        FirebaseFirestoreException.Code.NOT_FOUND -> {} // this.onError(DoesntExistError(debugData))
+        FirebaseFirestoreException.Code.ALREADY_EXISTS -> {} // this.onError(RecordAlreadyExistsError(debugData))
+        FirebaseFirestoreException.Code.PERMISSION_DENIED -> {} // this.onError(PermissionError(debugData))
+        FirebaseFirestoreException.Code.UNAUTHENTICATED -> {} // this.onError(UnauthenticatedError(debugData))
+        else -> {} // this.onError(Error("Error occurred ${exception.code}"))
     }
 }

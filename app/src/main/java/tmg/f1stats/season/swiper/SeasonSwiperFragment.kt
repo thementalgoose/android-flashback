@@ -5,6 +5,7 @@ import kotlinx.android.synthetic.main.fragment_season.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.f1stats.R
 import tmg.f1stats.base.BaseFragment
+import tmg.f1stats.utils.observe
 import tmg.utilities.extensions.subscribeNoError
 import tmg.utilities.extensions.views.setPageWidth
 import tmg.utilities.extensions.views.syncScrolling
@@ -44,19 +45,13 @@ class SeasonSwiperFragment: BaseFragment() {
         vpTracks.setPageTransformer { page, position ->
             page.alpha = 1 - abs(position * seasonTrackScreenAlpha)
         }
-    }
-
-    override fun observeViewModel() {
-
-        viewModel.outputs.seasonRounds()
-            .subscribeNoError {
-                raceAdapterSwiper.list = it
-                trackAdapter.list = it
-            }
-            .autoDispose()
 
         viewModel.inputs.initialise(season)
 
+        observe(viewModel.outputs.seasonRounds) {
+            raceAdapterSwiper.list = it
+            trackAdapter.list = it
+        }
     }
 
     companion object {

@@ -1,23 +1,15 @@
 package tmg.f1stats.home.static
 
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.schedulers.Schedulers
-import io.reactivex.rxjava3.subjects.BehaviorSubject
-import io.reactivex.rxjava3.subjects.PublishSubject
-import org.threeten.bp.LocalDate
-import org.threeten.bp.LocalTime
+import androidx.lifecycle.MutableLiveData
 import tmg.f1stats.base.BaseViewModel
 import tmg.f1stats.home.trackpicker.TrackModel
 import tmg.f1stats.repo.db.HistoryDB
+import tmg.f1stats.repo.db.PrefsDB
 import tmg.f1stats.repo.db.SeasonOverviewDB
 import tmg.f1stats.repo.models.History
-import tmg.f1stats.repo.utils.filterNotNull
-import tmg.f1stats.season.race.RaceAdapterType
-import tmg.f1stats.utils.SeasonRound
+import tmg.f1stats.utils.DataEvent
+import tmg.f1stats.utils.Event
 import tmg.f1stats.utils.Selected
-import tmg.utilities.extensions.combineWithPair
-import tmg.utilities.extensions.combineWithTriple
 
 //region Inputs
 
@@ -33,101 +25,114 @@ interface HomeStaticViewModelInputs {
 //region Outputs
 
 interface HomeStaticViewModelOutputs {
-    fun openTrackList(): Observable<Boolean>
-    fun switchYearList(): Observable<List<Selected<String>>>
-    fun switchTrackList(): Observable<List<Selected<TrackModel>>>
-    fun loadSeasonRound(): Observable<SeasonRound>
-    fun circuitInfo(): Observable<TrackModel>
+    val showSeasonRound: MutableLiveData<Pair<Int, Int>>
+    val openTrackList: MutableLiveData<DataEvent<Boolean>>
+    val switchYearList: MutableLiveData<List<Selected<String>>>
+    val switchTrackList: MutableLiveData<List<Selected<TrackModel>>>
+    val circuitInfo: MutableLiveData<TrackModel>
 }
 
 //endregion
 
 class HomeStaticViewModel(
     private val seasonDB: SeasonOverviewDB,
-    private val historyDB: HistoryDB
+    private val historyDB: HistoryDB,
+    prefsDB: PrefsDB
 ): BaseViewModel(), HomeStaticViewModelInputs, HomeStaticViewModelOutputs {
 
-    private val trackListEvent: PublishSubject<Boolean> = PublishSubject.create()
-    private val selectedRound: BehaviorSubject<SeasonRound> = BehaviorSubject.createDefault(Pair(2019, 1)) // Season, Round
-    private val browsingSeason: BehaviorSubject<Int> = BehaviorSubject.createDefault(2019) // Season
+    private val initialSeason: Int = prefsDB.selectedYear
 
-    private val allHistory: Observable<List<History>> = historyDB
-        .allHistory()
-        .share()
-    private val circuitInfo: Observable<TrackModel> = selectedRound
-        .switchMap { (season, round) -> seasonDB.getSeasonRound(season, round) }
-        .share()
-        .filterNotNull()
-        .map { TrackModel(
-            season = it.season,
-            round = it.round,
-            circuitName = it.circuit.name,
-            country = it.circuit.country,
-            countryKey = it.circuit.countryISO
-        )}
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
+    private var season: Int = initialSeason
+    private var round: Int = 1
+
+    private var browsingSeason: Int = initialSeason
+
+    override val showSeasonRound: MutableLiveData<Pair<Int, Int>> = MutableLiveData()
+    override val openTrackList: MutableLiveData<DataEvent<Boolean>> = MutableLiveData()
+    override val switchTrackList: MutableLiveData<List<Selected<TrackModel>>> = MutableLiveData()
+    override val switchYearList: MutableLiveData<List<Selected<String>>> = MutableLiveData()
+    override val circuitInfo: MutableLiveData<TrackModel> = MutableLiveData()
+
+    private var historyList: List<History> = emptyList()
 
     var inputs: HomeStaticViewModelInputs = this
     var outputs: HomeStaticViewModelOutputs = this
 
+    init {
+        select(prefsDB.selectedYear, 1)
+    }
+
     //region Inputs
 
-    override fun clickTrackList() {
-        trackListEvent.onNext(true)
-    }
-
-    override fun closeTrackList() {
-        trackListEvent.onNext(false)
-    }
-
     override fun select(season: Int, round: Int?) {
-        selectedRound.onNext(Pair(season, round ?: 1))
-        browsingSeason.onNext(season)
+
+        this.season = season
+        this.round = round ?: 1
+
+        showSeasonRound.value = Pair(this.season, this.round)
+
+        updateSheet()
+        updateCircuitInfo()
     }
 
     override fun browse(season: Int) {
-        browsingSeason.onNext(season)
+
+        this.season = season
+
+        processYearList()
+    }
+
+    override fun clickTrackList() {
+
+        openTrackList.value = DataEvent(true)
+    }
+
+    override fun closeTrackList() {
+
+        openTrackList.value = DataEvent(false)
     }
 
     //endregion
 
-    //region Outputs
-
-    override fun openTrackList(): Observable<Boolean> {
-        return trackListEvent
-    }
-
-    override fun loadSeasonRound(): Observable<SeasonRound> {
-        return selectedRound
-    }
-
-    override fun circuitInfo(): Observable<TrackModel> {
-        return circuitInfo
-    }
-
-    override fun switchTrackList(): Observable<List<Selected<TrackModel>>> {
-        return allHistory
-            .combineWithTriple(selectedRound, browsingSeason)
-            .map { (history, selectedRound, season) ->
-                history.firstOrNull { it.season == season }
-                    ?.round
-                    ?.map {
-                        Selected(TrackModel(season, it.round, it.raceName, it.country, it.countryISO), isSelected = it.round == selectedRound.second && it.season == selectedRound.first)
-                    }
-                    ?.sortedBy { it.value.round }
+    private fun updateCircuitInfo() {
+        async {
+            seasonDB.getSeasonRound(season, round)?.let {
+                circuitInfo.value = TrackModel(
+                    season = it.season,
+                    round = it.round,
+                    circuitName = it.circuit.name,
+                    country = it.circuit.country,
+                    countryKey = it.circuit.countryISO
+                )
             }
+        }
     }
 
-    override fun switchYearList(): Observable<List<Selected<String>>> {
-        return allHistory
-            .combineWithPair(browsingSeason)
-            .map { (history, season) ->
-                history
-                    .map { Selected(it.season.toString(), isSelected = it.season == season) }
-                    .sortedByDescending { it.value }
+    private fun updateSheet() {
+        async {
+            if (historyList.isEmpty()) {
+                val history = historyDB.allHistory()
+                historyList = history
             }
+
+            processTrackList()
+            processYearList()
+        }
     }
 
-    //endregion
+    private fun processTrackList() {
+        switchTrackList.value = historyList
+            .firstOrNull { it.season == season }
+            ?.rounds
+            ?.map {
+                Selected(TrackModel(season, it.round, it.raceName, it.country, it.countryISO), isSelected = it.round == round && it.season == season)
+            }
+            ?.sortedBy { it.value.round }
+    }
+
+    private fun processYearList() {
+        switchYearList.value = historyList
+            .map { Selected(it.season.toString(), isSelected = it.season == browsingSeason) }
+            .sortedByDescending { it.value }
+    }
 }

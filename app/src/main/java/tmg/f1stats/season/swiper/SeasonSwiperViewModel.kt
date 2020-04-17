@@ -1,7 +1,6 @@
 package tmg.f1stats.season.swiper
 
-import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.subjects.BehaviorSubject
+import androidx.lifecycle.MutableLiveData
 import tmg.f1stats.base.BaseViewModel
 import tmg.f1stats.repo.db.SeasonOverviewDB
 
@@ -16,52 +15,47 @@ interface SeasonViewModelInputs {
 //region Outputs
 
 interface SeasonViewModelOutputs {
-    fun seasonRounds(): Observable<List<SeasonSwiperAdapterModel>>
+    val seasonRounds: MutableLiveData<List<SeasonSwiperAdapterModel>>
 }
 
 //endregion
 
 class SeasonViewModel(
-    val seasonOverviewDB: SeasonOverviewDB
-): BaseViewModel(), SeasonViewModelInputs,
+    private val seasonOverviewDB: SeasonOverviewDB
+) : BaseViewModel(), SeasonViewModelInputs,
     SeasonViewModelOutputs {
 
-    private var seasonEvent: BehaviorSubject<Int> = BehaviorSubject.create()
+    private var season: Int = -1
+
+    override val seasonRounds: MutableLiveData<List<SeasonSwiperAdapterModel>> = MutableLiveData()
 
     var inputs: SeasonViewModelInputs = this
     var outputs: SeasonViewModelOutputs = this
-    
-    init { 
-        
+
+    init {
+
     }
-    
+
     //region Inputs
 
     override fun initialise(season: Int) {
-        seasonEvent.onNext(season)
-    }
-    
-    //endregion
-    
-    //region Outputs
+        this.season = season
 
-    override fun seasonRounds(): Observable<List<SeasonSwiperAdapterModel>> {
-        return seasonEvent
-            .switchMap { seasonOverviewDB.getSeasonOverview(it) }
-            .map { rounds ->
-                rounds
-                    .map {
-                        SeasonSwiperAdapterModel(
-                            it.season,
-                            it.round,
-                            it.circuit.countryISO,
-                            it.name,
-                            it.circuit.name
-                        )
-                    }
-                    .sortedBy { it.round }
-            }
+        async {
+            val result = seasonOverviewDB.getSeasonOverview(season)
+            seasonRounds.value = result
+                .map {
+                    SeasonSwiperAdapterModel(
+                        it.season,
+                        it.round,
+                        it.circuit.countryISO,
+                        it.name,
+                        it.circuit.name
+                    )
+                }
+                .sortedBy { it.round }
+        }
     }
-    
+
     //endregion
 }

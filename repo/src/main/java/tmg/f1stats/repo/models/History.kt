@@ -2,7 +2,7 @@ package tmg.f1stats.repo.models
 
 data class History(
     val season: Int,
-    val round: List<HistoryRound>
+    val rounds: List<HistoryRound>
 )
 
 data class HistoryRound(

@@ -14,8 +14,6 @@ class SettingsActivity: BaseActivity() {
         initToolbar(R.id.toolbar, true)
     }
 
-    override fun observeViewModel() { }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
             finish()

@@ -6,6 +6,7 @@ import kotlinx.android.synthetic.main.fragment_season_race.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.f1stats.R
 import tmg.f1stats.base.BaseFragment
+import tmg.f1stats.utils.observe
 import tmg.utilities.extensions.subscribeNoError
 
 class RaceFragment: BaseFragment(), RaceAdapterCallback {
@@ -33,16 +34,10 @@ class RaceFragment: BaseFragment(), RaceAdapterCallback {
         rvList.layoutManager = LinearLayoutManager(context)
 
         viewModel.inputs.initialise(season, round)
-    }
 
-    override fun observeViewModel() {
-
-        viewModel.outputs
-            .items()
-            .subscribeNoError { (adapterType, list) ->
-                adapter.update(adapterType, list)
-            }
-            .autoDispose()
+        observe(viewModel.outputs.items) { (adapterType, list) ->
+            adapter.update(adapterType, list)
+        }
     }
 
     //region SeasonRaceAdapterCallback
