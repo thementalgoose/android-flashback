@@ -10,6 +10,7 @@ import tmg.f1stats.base.BaseViewModel
 import tmg.f1stats.repo.db.SeasonOverviewDB
 import tmg.f1stats.repo.models.LapTime
 import tmg.f1stats.repo.models.Round
+import tmg.f1stats.repo.utils.backgroundScheduler
 import tmg.f1stats.repo.utils.filterNotNull
 import tmg.utilities.extensions.combineWithPair
 
@@ -40,13 +41,16 @@ class RaceViewModel(
     private var seasonRound: BehaviorSubject<Pair<Int, Int>> = BehaviorSubject.create()
 
     private var seasonRoundObservable: Observable<Round> = seasonRound
-            .switchMap { (season, round) -> seasonOverviewDB.getSeasonRound(season, round) }
+            .switchMap { (season, round) -> seasonOverviewDB
+                .getSeasonRound(season, round)
+                .subscribeOn(backgroundScheduler)
+            }
             .filterNotNull()
+            .subscribeOn(backgroundScheduler)
             .share()
 
     private var listObservable: Observable<Pair<RaceAdapterType, List<RaceModel>>> = seasonRoundObservable
             .combineWithPair(viewType)
-            .subscribeOn(Schedulers.io())
             .map { (round, viewType) ->
                 val driverIds: List<String> = round.race
                     .values
@@ -80,11 +84,13 @@ class RaceViewModel(
                     RaceAdapterType.QUALIFYING_POS_1,
                     RaceAdapterType.QUALIFYING_POS_2,
                     RaceAdapterType.QUALIFYING_POS -> {
+                        list.add(RaceModel.QualifyingHeader)
                         list.addAll(driverIds.map { getDriverModel(round, it) })
                     }
                 }
                 return@map Pair(viewType, list)
             }
+            .subscribeOn(backgroundScheduler)
             .observeOn(AndroidSchedulers.mainThread())
             .map { it }
 

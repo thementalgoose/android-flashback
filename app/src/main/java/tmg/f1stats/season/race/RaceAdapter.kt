@@ -7,22 +7,17 @@ import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import tmg.f1stats.R
-import tmg.f1stats.season.race.viewholders.QualifyingResultViewHolder
-import tmg.f1stats.season.race.viewholders.RacePodiumViewHolder
-import tmg.f1stats.season.race.viewholders.RaceResultHeaderViewHolder
-import tmg.f1stats.season.race.viewholders.RaceResultViewHolder
+import tmg.f1stats.season.race.viewholders.*
 import tmg.utilities.extensions.toEnum
 
 class RaceAdapter(
     private val callback: RaceAdapterCallback
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private var _viewType: RaceAdapterType = RaceAdapterType.RACE
-    val viewType: RaceAdapterType
-        get() = _viewType
-    private var _list: List<RaceModel> = emptyList()
-    val list: List<RaceModel>
-        get() = _list
+    var viewType: RaceAdapterType = RaceAdapterType.RACE
+        private set
+    var list: List<RaceModel> = emptyList()
+        private set
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val viewHolderType: RaceAdapterViewHolderType? = viewType.toEnum<RaceAdapterViewHolderType>()
@@ -35,6 +30,7 @@ class RaceAdapter(
             RaceAdapterViewHolderType.RACE_PODIUM -> RacePodiumViewHolder(view)
             RaceAdapterViewHolderType.RACE_RESULT -> RaceResultViewHolder(view)
             RaceAdapterViewHolderType.RACE_RESULT_HEADER -> RaceResultHeaderViewHolder(view)
+            RaceAdapterViewHolderType.QUALIFYING_RESULT_HEADER -> QualifyingHeaderViewHolder(view, callback)
             RaceAdapterViewHolderType.QUALIFYING_RESULT -> QualifyingResultViewHolder(view, callback)
             else -> throw Error("View type not implemented")
         }
@@ -53,22 +49,31 @@ class RaceAdapter(
                 0 -> RaceAdapterViewHolderType.RACE_PODIUM.ordinal
                 else -> RaceAdapterViewHolderType.RACE_RESULT.ordinal
             }
-            RaceAdapterType.QUALIFYING_POS -> RaceAdapterViewHolderType.QUALIFYING_RESULT.ordinal
-            RaceAdapterType.QUALIFYING_POS_1 -> RaceAdapterViewHolderType.QUALIFYING_RESULT.ordinal
-            RaceAdapterType.QUALIFYING_POS_2 -> RaceAdapterViewHolderType.QUALIFYING_RESULT.ordinal
+            RaceAdapterType.QUALIFYING_POS,
+            RaceAdapterType.QUALIFYING_POS_1,
+            RaceAdapterType.QUALIFYING_POS_2 -> when {
+                list[position] is RaceModel.QualifyingHeader -> {
+                    RaceAdapterViewHolderType.QUALIFYING_RESULT_HEADER.ordinal
+                }
+                else -> {
+                    RaceAdapterViewHolderType.QUALIFYING_RESULT.ordinal
+                }
+            }
         }
     }
 
     fun update(type: RaceAdapterType, list: List<RaceModel>) {
 
-        val result = DiffUtil.calculateDiff(DiffCalculator(
-            oldList = this.list,
-            newList = list,
-            oldType = this._viewType,
-            newType = type
-        ))
-        this._viewType = type
-        this._list = list
+        val result = DiffUtil.calculateDiff(
+            DiffCalculator(
+                oldList = this.list,
+                newList = list,
+                oldType = this.viewType,
+                newType = type
+            )
+        )
+        this.viewType = type
+        this.list = list
         result.dispatchUpdatesTo(this)
     }
 
@@ -83,9 +88,13 @@ class RaceAdapter(
                 val viewHolder = holder as RaceResultViewHolder
                 viewHolder.bind(list[position] as RaceModel.Single)
             }
+            RaceAdapterViewHolderType.QUALIFYING_RESULT_HEADER -> {
+                val viewHolder = holder as QualifyingHeaderViewHolder
+                viewHolder.bind(viewType)
+            }
             RaceAdapterViewHolderType.QUALIFYING_RESULT -> {
                 val viewHolder = holder as QualifyingResultViewHolder
-                viewHolder.bind(list[position] as RaceModel.Single)
+                viewHolder.bind(list[position] as RaceModel.Single, viewType)
             }
             else -> {}
         }

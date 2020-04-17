@@ -2,9 +2,13 @@ package tmg.f1stats.repo_firebase.firebase
 
 import com.google.firebase.FirebaseApp
 import com.google.firebase.firestore.*
+import io.reactivex.rxjava3.annotations.NonNull
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.ObservableEmitter
+import io.reactivex.rxjava3.core.ObservableOnSubscribe
+import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.disposables.Disposable
+import io.reactivex.rxjava3.schedulers.Schedulers
 import tmg.f1stats.repo.Optional
 import tmg.f1stats.repo.errors.DoesntExistError
 import tmg.f1stats.repo.errors.PermissionError
@@ -54,7 +58,7 @@ inline fun <T, reified E> getDocument(zClass: Class<E>, documentPath: String, cr
 
 inline fun <T, reified E> getDocumentMap(zClass: Class<E>, documentPath: String, crossinline convertTo: (firebaseModel: E) -> T): Observable<List<T>> {
     return Observable.create { emitter ->
-        val snapshotListener: EventListener<DocumentSnapshot> = EventListener<DocumentSnapshot> { snapshot, exception ->
+        val snapshotListener: EventListener<DocumentSnapshot> = EventListener { snapshot, exception ->
             if (exception != null) {
                 emitter.handleFirebaseError(exception, documentPath)
             }
@@ -78,7 +82,7 @@ inline fun <T, reified E> getDocumentMap(zClass: Class<E>, documentPath: String,
 
 inline fun <T, reified E> getDocuments(firebaseClass: Class<E>, collectionPath: String, crossinline convertTo: (firebaseModel: E, id: String) -> T): Observable<List<T>> {
     return Observable.create { emitter ->
-        val snapshotListener: EventListener<QuerySnapshot> = EventListener<QuerySnapshot> { snapshot, exception ->
+        val snapshotListener: EventListener<QuerySnapshot> = EventListener { snapshot, exception ->
             if (exception != null) {
                 emitter.handleFirebaseError(exception, collectionPath)
             } else {

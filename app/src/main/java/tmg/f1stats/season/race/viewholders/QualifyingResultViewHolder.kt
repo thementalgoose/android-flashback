@@ -3,23 +3,18 @@ package tmg.f1stats.season.race.viewholders
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.layout_driver.view.*
-import kotlinx.android.synthetic.main.layout_driver.view.tvNumber
-import kotlinx.android.synthetic.main.layout_podium.view.*
 import kotlinx.android.synthetic.main.layout_qualifying_time.view.*
 import kotlinx.android.synthetic.main.view_qualifying_result.view.*
-import kotlinx.android.synthetic.main.view_qualifying_result.view.tvConstructor
-import kotlinx.android.synthetic.main.view_qualifying_result.view.tvPosition
 import tmg.f1stats.R
 import tmg.f1stats.repo.models.RoundQualifyingResult
-import tmg.f1stats.repo.models.noTime
 import tmg.f1stats.season.race.RaceAdapterCallback
 import tmg.f1stats.season.race.RaceAdapterType
-import tmg.f1stats.season.race.RaceAdapterViewHolderType
 import tmg.f1stats.season.race.RaceModel
 import tmg.f1stats.utils.getFlagResourceAlpha3
 import tmg.utilities.extensions.views.gone
 
-class QualifyingResultViewHolder(view: View, val updateAdapterType: RaceAdapterCallback) : RecyclerView.ViewHolder(view), View.OnClickListener {
+class QualifyingResultViewHolder(view: View, private val updateAdapterType: RaceAdapterCallback) :
+    RecyclerView.ViewHolder(view), View.OnClickListener {
 
     init {
         itemView.layoutQ1.setOnClickListener(this)
@@ -28,7 +23,7 @@ class QualifyingResultViewHolder(view: View, val updateAdapterType: RaceAdapterC
         itemView.filterQuali.setOnClickListener(this)
     }
 
-    fun bind(model: RaceModel.Single) {
+    fun bind(model: RaceModel.Single, type: RaceAdapterType) {
         itemView.apply {
 
             tvPosition.text = model.qualified.toString()
@@ -45,15 +40,18 @@ class QualifyingResultViewHolder(view: View, val updateAdapterType: RaceAdapterC
             bind(model.q1, layoutQ1)
             bind(model.q2, layoutQ2)
             bind(model.q3, layoutQ3)
+
+            itemView.layoutQ1.setBackgroundResource(if (type == RaceAdapterType.QUALIFYING_POS_1) R.drawable.background_qualifying_item else 0)
+            itemView.layoutQ2.setBackgroundResource(if (type == RaceAdapterType.QUALIFYING_POS_2) R.drawable.background_qualifying_item else 0)
+            itemView.layoutQ3.setBackgroundResource(if (type == RaceAdapterType.QUALIFYING_POS) R.drawable.background_qualifying_item else 0)
         }
     }
 
-    private fun bind(qualifying: RoundQualifyingResult?, layout: View) {
-        layout.apply {
-
-            tvQualifyingTime.text = qualifying?.time?.toString() ?: ""
-            tvQualifyingDelta.gone()
-        }
+    private fun bind(qualifying: RoundQualifyingResult?, layout: View): Boolean {
+        val label = qualifying?.time?.toString() ?: ""
+        layout.tvQualifyingTime.text = label
+        layout.tvQualifyingDelta.gone()
+        return label.isNotEmpty()
     }
 
     override fun onClick(p0: View?) {

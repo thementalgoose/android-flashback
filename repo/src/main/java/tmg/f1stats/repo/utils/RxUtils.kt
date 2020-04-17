@@ -1,7 +1,11 @@
 package tmg.f1stats.repo.utils
 
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Scheduler
+import io.reactivex.rxjava3.schedulers.Schedulers
 import tmg.f1stats.repo.Optional
+
+val backgroundScheduler: Scheduler = Schedulers.io()
 
 fun <T, E> Observable<Optional<T>>.mapOptionalValue(mapMethod: (model: T) -> E): Observable<Optional<E>> {
     return this.map {

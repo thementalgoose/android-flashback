@@ -4,6 +4,7 @@ import io.reactivex.rxjava3.core.Observable
 import tmg.f1stats.repo.Optional
 import tmg.f1stats.repo.db.HistoryDB
 import tmg.f1stats.repo.models.History
+import tmg.f1stats.repo.utils.backgroundScheduler
 import tmg.f1stats.repo.utils.filterNotNull
 import tmg.f1stats.repo.utils.firstOrOptional
 import tmg.f1stats.repo_firebase.converters.convert
@@ -26,5 +27,6 @@ class HistoryFirestore: HistoryDB {
     private fun getHistory(): Observable<List<History>> {
         return getDocument(FHistorySeason::class.java, "history/season") { model, _ -> model.convert() }
             .filterNotNull()
+            .subscribeOn(backgroundScheduler)
     }
 }

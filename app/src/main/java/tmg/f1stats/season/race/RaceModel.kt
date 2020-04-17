@@ -6,13 +6,13 @@ import tmg.f1stats.repo.models.RoundDriver
 import tmg.f1stats.repo.models.RoundQualifyingResult
 
 sealed class RaceModel {
-    class Podium(
+    data class Podium(
         val driverFirst: Single,
         val driverSecond: Single,
         val driverThird: Single
     ) : RaceModel()
 
-    class Single(
+    data class Single(
         val season: Int,
         val round: Int,
         val driver: RoundDriver,
@@ -27,4 +27,6 @@ sealed class RaceModel {
         val status: RaceStatus,
         val fastestLap: Boolean
     ) : RaceModel()
+
+    object QualifyingHeader : RaceModel()
 }

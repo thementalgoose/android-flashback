@@ -4,6 +4,7 @@ import io.reactivex.rxjava3.core.Observable
 import tmg.f1stats.repo.Optional
 import tmg.f1stats.repo.db.SeasonOverviewDB
 import tmg.f1stats.repo.models.*
+import tmg.f1stats.repo.utils.backgroundScheduler
 import tmg.f1stats.repo.utils.filterNotNull
 import tmg.f1stats.repo.utils.mapOptionalValue
 import tmg.f1stats.repo.utils.mapToOptional
@@ -60,14 +61,15 @@ class SeasonOverviewFirestore : SeasonOverviewDB {
             .mapToOptional { rounds -> rounds.firstOrNull { it.round == round } }
     }
 
-    private fun getSeason(season: Int): Observable<Season> {
-        return getDocument(FSeason::class.java, "seasons/$season") { model, _ -> model.convert(season) }
-            .filterNotNull()
-    }
-
     private fun getRounds(season: Int): Observable<List<Round>> {
         return getSeason(season)
             .map { it.rounds }
+    }
+
+    private fun getSeason(season: Int): Observable<Season> {
+        return getDocument(FSeason::class.java, "seasons/$season") { model, _ -> model.convert(season) }
+            .filterNotNull()
+            .subscribeOn(backgroundScheduler)
     }
 
 }
