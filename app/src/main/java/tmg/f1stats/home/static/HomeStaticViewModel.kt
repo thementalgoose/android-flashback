@@ -71,6 +71,7 @@ class HomeStaticViewModel(
 
         this.season = season
         this.round = round ?: 1
+        this.browsingSeason = season
 
         showSeasonRound.value = Pair(this.season, this.round)
 
@@ -80,9 +81,10 @@ class HomeStaticViewModel(
 
     override fun browse(season: Int) {
 
-        this.season = season
+        this.browsingSeason = season
 
         processYearList()
+        processTrackList()
     }
 
     override fun clickTrackList() {
@@ -125,10 +127,10 @@ class HomeStaticViewModel(
 
     private fun processTrackList() {
         switchTrackList.postValue(historyList
-            .firstOrNull { it.season == season }
+            .firstOrNull { it.season == browsingSeason }
             ?.rounds
             ?.map {
-                Selected(TrackModel(season, it.round, it.raceName, it.country, it.countryISO), isSelected = it.round == round && it.season == season)
+                Selected(TrackModel(browsingSeason, it.round, it.raceName, it.country, it.countryISO), isSelected = it.round == round && it.season == season)
             }
             ?.sortedBy { it.value.round } ?: emptyList())
     }

@@ -1,5 +1,12 @@
 <resources>
+
+
     <string name="app_name">F1 Stats</string>
+
+    <!-- Release notes -->
+    <string name="release_1"><![CDATA[<b>[1.0.0]</b> Initial release!
+        <br/>- See the results for all F1 races dating back to 2000
+        <br/>- See the qualifying results for Q1, Q2 and Q3 for all races]]></string>
 
     <string name="nav_drivers">Drivers</string>
     <string name="nav_constructors">Constructors</string>
@@ -101,6 +108,8 @@
 
     <string name="settings_help_about_title">About this app</string>
     <string name="settings_help_about_description">About the application and the developer</string>
+    <string name="settings_help_release_notes_title">Release notes</string>
+    <string name="settings_help_release_notes_description">See the release notes history</string>
     <string name="settings_help_crash_reporting_title">Crash Reporting</string>
     <string name="settings_help_crash_reporting_description">Send device information and crash stack traces to the developer</string>
     <string name="settings_help_crash_reporting_after_app_restart">Your crash reporting preference will be applied once the app has restarted</string>

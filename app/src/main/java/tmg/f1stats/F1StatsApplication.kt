@@ -9,11 +9,18 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import tmg.f1stats.di.f1Module
 import tmg.f1stats.prefs.SharedPrefsDB
+import tmg.f1stats.repo.db.CrashReporter
 import tmg.f1stats.repo.db.PrefsDB
+
+val releaseNotes: Map<Int, Int> = mapOf(
+    1 to R.string.release_1
+)
 
 class F1StatsApplication: Application() {
 
     private val prefs: PrefsDB by inject()
+
+    private val crashReporter: CrashReporter by inject()
 
     override fun onCreate() {
         super.onCreate()
@@ -37,5 +44,8 @@ class F1StatsApplication: Application() {
                 .assemble()
                 .start()
         }
+
+        // Crash Reporting
+        crashReporter.initialise()
     }
 }

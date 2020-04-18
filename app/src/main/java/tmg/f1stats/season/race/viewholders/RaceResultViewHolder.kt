@@ -10,6 +10,7 @@ import tmg.f1stats.extensions.iconRes
 import tmg.f1stats.extensions.stringRes
 import tmg.f1stats.extensions.toEmptyIfZero
 import tmg.f1stats.season.race.RaceModel
+import tmg.f1stats.utils.getColor
 import tmg.f1stats.utils.getFlagResourceAlpha3
 import tmg.f1stats.utils.position
 import tmg.utilities.extensions.views.gone
@@ -35,8 +36,8 @@ class RaceResultViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             when {
                 diff == 0 -> { // Equal
                     imgStarted.setImageResource(R.drawable.ic_pos_neutral)
-                    imgStarted.setColorFilter(Color.BLACK)
-                    tvStartedRelative.setTextColor(Color.BLACK)
+                    imgStarted.setColorFilter(context.theme.getColor(R.attr.f1TextPrimary))
+                    tvStartedRelative.setTextColor(context.theme.getColor(R.attr.f1TextPrimary))
                 }
                 diff > 0 -> { // Gained
                     imgStarted.setImageResource(R.drawable.ic_pos_up)

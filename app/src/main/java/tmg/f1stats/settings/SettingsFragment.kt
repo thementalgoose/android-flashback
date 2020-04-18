@@ -1,5 +1,6 @@
 package tmg.f1stats.settings
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -15,6 +16,7 @@ import tmg.f1stats.currentYear
 import tmg.f1stats.extensions.label
 import tmg.f1stats.repo.db.PrefsDB
 import tmg.f1stats.repo.enums.ViewTypePref
+import tmg.f1stats.settings.release.ReleaseActivity
 import tmg.f1stats.supportedYears
 
 class SettingsFragment : PreferenceFragmentCompat() {
@@ -25,6 +27,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         const val keyPreferenceCustomisationYear: String = "prefs_customisation_year"
         const val keyPreferenceCustomisationViewType: String = "prefs_customisation_view_type"
         const val keyPreferenceHelpAbout: String = "prefs_help_about"
+        const val keyPreferenceHelpReleaseNotes: String = "prefs_help_release_notes"
         const val keyPreferenceHelpCrashReporting: String = "prefs_help_crash_reporting"
         const val keyPreferenceHelpShakeToReport: String = "prefs_help_shake_to_report"
     }
@@ -36,6 +39,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         viewType()
 
         about()
+        releaseNotes()
         crashReporting()
         shakeToReport()
     }
@@ -65,14 +69,19 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     private fun viewType() {
         findPreference<Preference>(keyPreferenceCustomisationViewType)?.let { pref ->
+            pref.isEnabled = BuildConfig.DEBUG
             pref.setOnPreferenceClickListener {
                 activity?.let { activity ->
-                    val items: Array<CharSequence> = ViewTypePref.values().map { activity.getString(it.label) }.toTypedArray()
+                    var selected: Int = -1
+                    val items: Array<CharSequence> = ViewTypePref.values().mapIndexed { index, data ->
+                        if (data == prefs.viewType) {
+                            selected = index
+                        }
+                        activity.getString(data.label)
+                    }.toTypedArray()
                     AlertDialog.Builder(activity)
                         .setTitle(R.string.settings_customisation_view_type_title)
-                        .setSingleChoiceItems(items, items
-                            .indexOfFirst { it == prefs.selectedYear.toString() }
-                        ) { dialog, index ->
+                        .setSingleChoiceItems(items, selected) { dialog, index ->
                             prefs.viewType = ViewTypePref.values()[index]
                             dialog.dismiss()
                         }
@@ -87,7 +96,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private fun about() {
         findPreference<Preference>(keyPreferenceHelpAbout)?.let { pref ->
             pref.setOnPreferenceClickListener {
-                startActivity(AboutThisAppActivity.intent(context!!,
+                startActivity(AboutThisAppActivity.intent(requireContext(),
                         isDarkMode = false,
                         name = requireContext().getString(R.string.about_name),
                         nameDesc = requireContext().getString(R.string.about_desc),
@@ -108,25 +117,11 @@ class SettingsFragment : PreferenceFragmentCompat() {
                                         imageUrl = "https://avatars2.githubusercontent.com/u/1335026"
                                 ),
                                 AboutThisAppDependency(
-                                        order = 2,
-                                        dependencyName = "RxJava3",
-                                        author = "ReactiveX",
-                                        url = "http://reactivex.io/",
-                                        imageUrl = "https://avatars3.githubusercontent.com/u/6407041"
-                                ),
-                                AboutThisAppDependency(
                                         order = 3,
                                         dependencyName = "Glide",
                                         author = "Bump Technologies",
                                         url = "https://github.com/bumptech/glide",
                                         imageUrl = "https://lh3.googleusercontent.com/OOjYcooPxIC4PHWxKGg5tfVm5qbJB4m2IMvhmXCOMl9Ps4T6dvmcA66UscrkML0lU6WR0IfswAL9QNpEL63mpLvrtDMiLnOMYCT8rhkC-eIXjhDNk6wGlx-nMJeZzyrvairQOD48KnxhY9vc-tahh7rgKoJeR1mwfoJIVfBNRwlNTSrLkrDZFAU15fvGofmKCrrvlUgUka6tpD80A1-Dm3KRE9knS0m1UHssQ6-KOFdGSndZ70ayGV5pY-n-zDsMYAzDNQMwvb2AhUddiO6VOViXztUqiYuVX5eqCnL7z-bndTcDAqfyohvw8txH5bvc1VR0XcQPjGzJ6EVkdZso2T4b5NoFufzlIP3DPjoFE37VKEGmnI-QMhz9m_IwuJ2U0WXBP9Q4pJkVPqwbIZzm-g338ZETis17D3r52v4hDsq5mN7vzV5KcRHs5l1uivdS5Wj5SQ0t96xmndOEOUISyIxGWeeDGIVSImnK6GuLEfrO4Vsi9gc4Qi8KU5aDBZ0rsbTM-hgNObqBTs-AebwR9gspWCqW7Cigfnezbf1bHAyvPjoLaJ_2IxjoF9KZxjPieYRuXMoDpdhvT5_0cfEsUQF8HjR1qBPku_asce3UtQGvIhMikw=s0"
-                                ),
-                                AboutThisAppDependency(
-                                        order = 4,
-                                        dependencyName = "RxBinding",
-                                        author = "Jake Wharton",
-                                        url = "https://github.com/JakeWharton/RxBinding",
-                                        imageUrl = "https://avatars2.githubusercontent.com/u/66577?s=88&v=4"
                                 ),
                                 AboutThisAppDependency(
                                         order = 5,
@@ -164,6 +159,15 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
     }
 
+    private fun releaseNotes() {
+        findPreference<Preference>(keyPreferenceHelpReleaseNotes)?.let { pref ->
+            pref.setOnPreferenceClickListener {
+                startActivity(Intent(context, ReleaseActivity::class.java))
+                return@setOnPreferenceClickListener true
+            }
+        }
+    }
+
     private fun crashReporting() {
         val initialValue = prefs.crashReporting
         findPreference<SwitchPreference>(keyPreferenceHelpCrashReporting)?.let { pref ->
@@ -172,7 +176,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 val value = newValue as Boolean
                 pref.isChecked = value
                 prefs.crashReporting = value
-                Toast.makeText(context!!, getString(R.string.settings_help_crash_reporting_after_app_restart), Toast.LENGTH_LONG)
+                Toast.makeText(requireContext(), getString(R.string.settings_help_crash_reporting_after_app_restart), Toast.LENGTH_LONG)
                         .show()
                 return@setOnPreferenceChangeListener true
             }
@@ -187,7 +191,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 val value = newValue as Boolean
                 pref.isChecked = value
                 prefs.shakeToReport = value
-                Toast.makeText(context!!, getString(R.string.settings_help_shake_to_report_after_app_restart), Toast.LENGTH_LONG)
+                Toast.makeText(requireContext(), getString(R.string.settings_help_shake_to_report_after_app_restart), Toast.LENGTH_LONG)
                         .show()
                 return@setOnPreferenceChangeListener true
             }

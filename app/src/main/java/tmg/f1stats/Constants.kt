@@ -2,6 +2,6 @@ package tmg.f1stats
 
 import org.threeten.bp.Year
 
-const val minimumSupportedYear = 1950
+const val minimumSupportedYear = 2000
 val currentYear = Year.now().value
 val supportedYears: List<Int> = List(currentYear - minimumSupportedYear + 1) { minimumSupportedYear + it }

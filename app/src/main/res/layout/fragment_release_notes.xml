@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/paddingSmall">
+
+        <TextView
+            style="@style/Text.ReleaseNotes.Header"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/paddingMedium"
+            android:paddingTop="@dimen/paddingSmall"
+            android:paddingEnd="@dimen/paddingMedium"
+            android:paddingBottom="@dimen/paddingSmall"
+            android:text="@string/settings_help_release_notes_title"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/imgbtnClose"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/imgbtnClose"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="@dimen/paddingMedium"
+            android:background="@null"
+            android:src="@drawable/ic_icon_close"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/tvReleaseNotesDescription"
+        style="@style/Text.ReleaseNotes.Content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/paddingMedium"
+        android:paddingTop="@dimen/paddingXSmall"
+        android:paddingEnd="@dimen/paddingMedium"
+        android:paddingBottom="@dimen/paddingMedium"
+        tools:text="Initial release!" />
+
+</LinearLayout>

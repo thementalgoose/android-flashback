@@ -30,4 +30,19 @@ interface PrefsDB {
      */
     var shakeToReport: Boolean
 
+    /**
+     * Last booted version
+     */
+    var lastAppVersion: Int
+
+    /**
+     * Are we starting the app up in a new version
+     */
+    val isCurrentAppVersionNew: Boolean
+
+    /**
+     * Get a unique identifier for the device
+     */
+    var deviceUdid: String
+
 }

@@ -1,6 +1,7 @@
 package tmg.f1stats.home.static
 
 import android.content.Intent
+import android.util.Log
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.ScaleAnimation
@@ -75,6 +76,7 @@ class HomeStaticActivity : BaseActivity(), RaceAdapterCallback {
 
         roundAdapter = TrackPickerRoundAdapter()
         roundAdapter.addListener { model ->
+            Log.i("F1", "Selecting ${model.season} / ${model.round}")
             viewModel.inputs.select(model.season, model.round)
             trackBottomSheetBehavior.hidden()
         }

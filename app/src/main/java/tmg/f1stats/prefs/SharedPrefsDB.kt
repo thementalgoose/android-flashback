@@ -3,12 +3,14 @@ package tmg.f1stats.prefs
 import android.content.Context
 import org.threeten.bp.Year
 import org.threeten.bp.ZoneId
+import tmg.f1stats.BuildConfig
 import tmg.f1stats.currentYear
 import tmg.f1stats.repo.db.PrefsDB
 import tmg.f1stats.repo.enums.ThemePref
 import tmg.f1stats.repo.enums.ViewTypePref
 import tmg.utilities.extensions.toEnum
 import tmg.utilities.utils.SharedPreferencesUtils
+import java.util.*
 
 class SharedPrefsDB(val context: Context) : PrefsDB {
 
@@ -17,6 +19,8 @@ class SharedPrefsDB(val context: Context) : PrefsDB {
     private val keyViewType: String = "VIEW_TYPE"
     private val keyCrashReporting: String = "CRASH_REPORTING"
     private val keyShakeToReport: String = "SHAKE_TO_REPORT"
+    private val keyReleaseNotes: String = "RELEASE_NOTES"
+    private val keyDeviceUDID: String = "UDID"
     private val keyTheme: String = "THEME"
 
     override var theme: ThemePref
@@ -47,6 +51,28 @@ class SharedPrefsDB(val context: Context) : PrefsDB {
         get() = getBoolean(keyShakeToReport)
         set(value) {
             value.save(keyShakeToReport)
+        }
+    override var lastAppVersion: Int
+        get() = getInt(keyReleaseNotes, 0)
+        set(value) {
+            value.save(keyReleaseNotes)
+        }
+
+    override val isCurrentAppVersionNew: Boolean
+        get() = BuildConfig.VERSION_CODE > lastAppVersion
+
+    override var deviceUdid: String
+        set(value) {
+            value.save(keyDeviceUDID)
+        }
+        get() {
+            var key = getString(keyDeviceUDID, "")
+            if (key.isEmpty()) {
+                val newKey = UUID.randomUUID().toString()
+                deviceUdid = newKey
+                key = newKey
+            }
+            return key
         }
 
     //region Utils

@@ -5,6 +5,7 @@
     android:id="@+id/main_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/f1BackgroundPrimary"
     android:fitsSystemWindows="true">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -97,10 +98,12 @@
             android:src="@drawable/ic_track_icon" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:background="?attr/f1BackgroundPrimary"
-            android:layout_width="match_parent"
             android:id="@+id/bnvNavigation"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="?attr/f1BackgroundPrimary"
+            app:itemIconTint="@drawable/selector_bottom_nav_color"
+            app:itemTextColor="@drawable/selector_bottom_nav_color"
             app:menu="@menu/menu_static" />
 
     </LinearLayout>

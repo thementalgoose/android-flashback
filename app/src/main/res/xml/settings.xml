@@ -22,6 +22,11 @@
             android:summary="@string/settings_help_about_description"
             android:title="@string/settings_help_about_title" />
 
+        <Preference
+            android:key="prefs_help_release_notes"
+            android:summary="@string/settings_help_release_notes_description"
+            android:title="@string/settings_help_release_notes_title" />
+
         <SwitchPreference
             android:key="prefs_help_crash_reporting"
             android:summary="@string/settings_help_crash_reporting_description"

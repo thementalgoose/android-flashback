@@ -18,7 +18,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/paddingSmall">
 
             <TextView
                 style="@style/Text.DatePicker.Header"
@@ -49,6 +50,8 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvSeasons"
+            android:paddingTop="@dimen/paddingSmall"
+            android:paddingBottom="@dimen/paddingSmall"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

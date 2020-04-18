@@ -1,12 +1,15 @@
 package tmg.f1stats.repo_firebase.repos
 
+import tmg.f1stats.repo.db.CrashReporter
 import tmg.f1stats.repo.db.SeasonOverviewDB
 import tmg.f1stats.repo.models.*
 import tmg.f1stats.repo_firebase.converters.convert
 import tmg.f1stats.repo_firebase.firebase.getDocument
 import tmg.f1stats.repo_firebase.models.FSeason
 
-class SeasonOverviewFirestore : SeasonOverviewDB {
+class SeasonOverviewFirestore(
+    private val crashReporter: CrashReporter
+) : SeasonOverviewDB {
     override suspend fun getCircuits(season: Int): List<Circuit> {
         return getSeason(season)?.circuits ?: emptyList()
     }
@@ -57,9 +60,7 @@ class SeasonOverviewFirestore : SeasonOverviewDB {
 
     private suspend fun getSeason(season: Int): Season? {
         return getDocument(FSeason::class.java, "seasons/$season") { model, _ ->
-            model.convert(
-                season
-            )
+            model.convert(season)
         }
     }
 }
