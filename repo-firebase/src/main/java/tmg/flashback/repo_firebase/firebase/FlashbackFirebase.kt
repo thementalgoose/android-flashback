@@ -1,7 +1,10 @@
 package tmg.flashback.repo_firebase.firebase
 
+import com.google.android.gms.tasks.Task
 import com.google.firebase.FirebaseApp
 import com.google.firebase.firestore.*
+import kotlinx.coroutines.CompletableDeferred
+import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.tasks.await
 import tmg.flashback.repo.db.CrashReporter
 

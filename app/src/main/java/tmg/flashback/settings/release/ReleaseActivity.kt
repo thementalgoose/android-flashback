@@ -14,7 +14,7 @@ class ReleaseActivity: BaseActivity() {
 
     override fun initViews() {
 
-        initToolbar(R.id.toolbar, true)
+        initToolbar(R.id.toolbar, true, indicator = R.drawable.ic_back)
 
         val list = releaseNotes
             .toList()

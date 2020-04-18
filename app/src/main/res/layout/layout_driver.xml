@@ -26,7 +26,6 @@
         app:layout_constraintBottom_toBottomOf="@id/tvName"
         app:layout_constraintStart_toEndOf="@id/tvName"
         app:layout_constraintTop_toTopOf="@id/tvName"
-        app:numberColor="@color/colorPrimary"
         tools:text="44" />
 
     <ImageView

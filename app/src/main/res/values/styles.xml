@@ -2,9 +2,9 @@
     <!-- Base application theme. -->
     <style name="LightTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">#2196F3</item>
-        <item name="colorPrimaryDark">#1976D2</item>
-        <item name="colorAccent">#FF9800</item>
+        <item name="colorPrimary">#4A34B6</item>
+        <item name="colorPrimaryDark">#4A34B6</item>
+        <item name="colorAccent">#E61582</item>
 
         <item name="f1Selected">#4403DAC5</item>
 
@@ -27,8 +27,8 @@
         <item name="f1Pos3">#D29342</item>
     </style>
 
-    <style name="LightTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
-    <style name="LightTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+    <style name="LightTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.ActionBar"/>
+    <style name="LightTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark"/>
 
 
 
@@ -71,7 +71,9 @@
 
 
 
-    <style name="Text.HomeStatic" parent="Text" />
+    <style name="Text.HomeStatic" parent="Text">
+        <item name="android:textColor">?attr/f1TextInversePrimary</item>
+    </style>
     <style name="Text.HomeStatic.Country" parent="Text.HomeStatic">
         <item name="android:textSize">16sp</item>
         <item name="android:textStyle">bold</item>

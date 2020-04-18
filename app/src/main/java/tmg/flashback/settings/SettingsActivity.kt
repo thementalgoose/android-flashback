@@ -11,7 +11,7 @@ class SettingsActivity: BaseActivity() {
 
     override fun initViews() {
 
-        initToolbar(R.id.toolbar, true)
+        initToolbar(R.id.toolbar, true, indicator = R.drawable.ic_back)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
