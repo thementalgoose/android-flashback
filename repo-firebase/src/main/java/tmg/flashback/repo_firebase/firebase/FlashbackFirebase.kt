@@ -5,6 +5,11 @@ import com.google.firebase.FirebaseApp
 import com.google.firebase.firestore.*
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.tasks.asDeferred
 import kotlinx.coroutines.tasks.await
 import tmg.flashback.repo.db.CrashReporter
 
@@ -23,20 +28,44 @@ fun <T, E : Any> addDocument(collectionPath: String, model: T, toModel: (model: 
             .add(toModel(model))
 }
 
-suspend inline fun <T, reified E> getDocument(zClass: Class<E>, documentPath: String, crashReporter: CrashReporter? = null, convertTo: (firebaseModel: E, id: String) -> T): T? {
-    return try {
-        val snapshot = document(documentPath).get().await()
-        println(snapshot)
-        convertTo(snapshot?.toObject(zClass)!!, snapshot.id)
+
+
+suspend inline fun <reified E, T> getDocument(documentPath: String, crashReporter: CrashReporter? = null, default: T, crossinline convertTo: (firebaseModel: E, id: String) -> T): Flow<T> = callbackFlow {
+    val subscription = document(documentPath).addSnapshotListener { documentSnapshot, exception ->
+        when {
+            exception != null -> {
+                handleError(exception, crashReporter, "Document $documentPath")
+
+            }
+            documentSnapshot != null -> {
+                val result = convertTo(documentSnapshot.toObject(E::class.java)!!, documentSnapshot.id)
+                offer(result)
+            }
+            else -> {
+                offer(default)
+            }
+        }
     }
-    catch (e: NullPointerException) {
-        null
-    }
-    catch (e: FirebaseFirestoreException) {
-        handleError(e, crashReporter, "Document $documentPath")
-        null
+
+    awaitClose {
+        subscription.remove()
     }
 }
+
+//suspend inline fun <T, reified E> getDocument(zClass: Class<E>, documentPath: String, crashReporter: CrashReporter? = null, convertTo: (firebaseModel: E, id: String) -> T): T? {
+//    return try {
+//        val snapshot = document(documentPath).get().await()
+//        println(snapshot)
+//        convertTo(snapshot?.toObject(zClass)!!, snapshot.id)
+//    }
+//    catch (e: NullPointerException) {
+//        null
+//    }
+//    catch (e: FirebaseFirestoreException) {
+//        handleError(e, crashReporter, "Document $documentPath")
+//        null
+//    }
+//}
 
 suspend inline fun <T, reified E> getDocumentMap(zClass: Class<E>, documentPath: String, crashReporter: CrashReporter? = null, convertTo: (firebaseModel: E) -> T): List<T> {
     return try {

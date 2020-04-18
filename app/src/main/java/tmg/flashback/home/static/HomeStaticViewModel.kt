@@ -1,5 +1,6 @@
 package tmg.flashback.home.static
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
@@ -83,10 +84,13 @@ class HomeStaticViewModel(
 
         viewModelScope.launch(Dispatchers.IO) {
             dataDB.appLockout().collect {
-                if (it.show) {
+                Log.i("Flashback", "App lockout status update received (${it?.show})")
+                if (it?.show == true) {
                     showAppLockoutMessage.postValue(DataEvent(it))
                 }
             }
+
+
         }
     }
 
@@ -126,8 +130,8 @@ class HomeStaticViewModel(
 
     private fun updateCircuitInfo() {
         viewModelScope.launch(Dispatchers.IO) {
-            val round = seasonDB.getSeasonRound(season, round)
-            if (round != null) {
+            val round = seasonDB.getSeasonRound(season, round).collect { round ->
+                if ()
                 circuitInfo.postValue(TrackModel(
                     season = round.season,
                     round = round.round,
@@ -135,6 +139,9 @@ class HomeStaticViewModel(
                     country = round.circuit.country,
                     countryKey = round.circuit.countryISO
                 ))
+            }
+            if (round != null) {
+
             }
             else {
                 // TODO: Show some kind of placeholder that we cannot get the round
@@ -145,7 +152,9 @@ class HomeStaticViewModel(
     private fun updateSheet() {
         viewModelScope.launch(Dispatchers.IO) {
             if (historyList.isEmpty()) {
-                val history = historyDB.allHistory()
+                val history = historyDB.allHistory().collect {
+
+                }
                 historyList = history
             }
 

@@ -1,27 +1,34 @@
 package tmg.flashback.repo_firebase.repos
 
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.flatMapConcat
+import kotlinx.coroutines.flow.map
 import tmg.flashback.repo.db.CrashReporter
 import tmg.flashback.repo.db.HistoryDB
 import tmg.flashback.repo.models.History
 import tmg.flashback.repo_firebase.converters.convert
+import tmg.flashback.repo_firebase.firebase.FirebaseRepo
 import tmg.flashback.repo_firebase.firebase.getDocument
 import tmg.flashback.repo_firebase.models.FHistorySeason
 import tmg.flashback.repo_firebase.version
 
 class HistoryFirestore(
-    private val crashReporter: CrashReporter
-): HistoryDB {
+    crashReporter: CrashReporter
+): FirebaseRepo(crashReporter), HistoryDB {
 
-    override suspend fun allHistory(): List<History> {
+    override suspend fun allHistory(): Flow<List<History>> {
         return getHistory()
     }
 
-    override suspend fun historyFor(season: Int): History? {
+    override suspend fun historyFor(season: Int): Flow<History?> {
         return getHistory()
-            .firstOrNull { history -> history.season == season }
+            .map { list -> list.firstOrNull { it.season == season } }
     }
 
-    private suspend fun getHistory(): List<History> {
-        return getDocument(FHistorySeason::class.java, "version/$version/history/season") { model, _ -> model.convert() } ?: emptyList()
+    private suspend fun getHistory(): Flow<List<History>> {
+        return document("version/$version/history/season")
+            .getDoc<FHistorySeason>()
+            .convertModel { it?.convert() ?: emptyList() }
     }
 }
