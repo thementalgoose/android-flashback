@@ -10,7 +10,7 @@ android {
     compileSdkVersion 29
 
     defaultConfig {
-        applicationId "tmg.f1stats"
+        applicationId "tmg.flashback"
         minSdkVersion 21
         targetSdkVersion 29
         versionCode 1

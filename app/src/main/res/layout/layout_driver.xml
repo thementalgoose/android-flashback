@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Lewis Hamilton" />
 
-    <tmg.f1stats.views.RaceNumberView
+    <tmg.flashback.views.RaceNumberView
         android:id="@+id/tvNumber"
         style="@style/Text.Driver.Number"
         android:layout_width="wrap_content"

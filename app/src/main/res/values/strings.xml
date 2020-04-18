@@ -1,13 +1,11 @@
 <resources>
 
-
-    <string name="app_name">F1 Stats</string>
-
     <!-- Release notes -->
     <string name="release_1"><![CDATA[<b>[1.0.0]</b> Initial release!
         <br/>- See the results for all F1 races dating back to 2000
         <br/>- See the qualifying results for Q1, Q2 and Q3 for all races]]></string>
 
+    <!-- Navigation -->
     <string name="nav_drivers">Drivers</string>
     <string name="nav_constructors">Constructors</string>
     <string name="nav_gallery">Gallery</string>
@@ -16,14 +14,12 @@
     <string name="nav_race">Race</string>
     <string name="nav_qualifying">Qualifying</string>
 
+    <!-- Synchronisation -->
     <string name="sync_type_overview">Season Overview</string>
     <string name="sync_type_laps">Laps</string>
     <string name="sync_season">season</string>
 
-
-
     <string name="round_podium_started">Started %s</string>
-
     <string name="round_podium_points">%d points</string>
 
     <string name="qualifying_q1">Q1</string>

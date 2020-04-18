@@ -1,0 +1,17 @@
+package tmg.flashback.repo_firebase.converters
+
+import tmg.flashback.repo.models.Circuit
+import tmg.flashback.repo_firebase.models.FSeasonOverviewRaceCircuit
+
+fun FSeasonOverviewRaceCircuit.convert(): Circuit {
+    return Circuit(
+        id = id,
+        name = name,
+        wikiUrl = wikiUrl,
+        locality = locality,
+        country = country,
+        countryISO = countryISO,
+        locationLat = location.lat.toDoubleOrNull() ?: 0.0,
+        locationLng = location.lng.toDoubleOrNull() ?: 0.0
+    )
+}

@@ -49,7 +49,7 @@
         app:layout_constraintTop_toBottomOf="@id/tvConstructor"
         tools:src="@drawable/gb" />
 
-    <tmg.f1stats.views.RaceNumberView
+    <tmg.flashback.views.RaceNumberView
         android:id="@+id/tvNumber"
         style="@style/Text.Podium.Number"
         android:layout_width="wrap_content"

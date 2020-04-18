@@ -1,10 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="tmg.f1stats">
+    package="tmg.flashback">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".F1StatsApplication"
+        android:name="tmg.flashback.FlashbackApplication"
         android:allowBackup="true"
         android:fullBackupContent="false"
         android:icon="@mipmap/ic_launcher"
@@ -13,22 +13,22 @@
         android:supportsRtl="true"
         android:theme="@style/LightTheme">
 
-        <activity android:name=".SplashActivity">
+        <activity android:name="tmg.flashback.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".onboarding.OnboardingActivity" />
+        <activity android:name="tmg.flashback.onboarding.OnboardingActivity" />
 
-        <activity android:name=".settings.SettingsActivity" />
+        <activity android:name="tmg.flashback.settings.SettingsActivity" />
 
-        <activity android:name=".settings.release.ReleaseActivity" />
+        <activity android:name="tmg.flashback.settings.release.ReleaseActivity" />
 
-        <activity android:name=".home.swiping.HomeSwipingActivity" />
+        <activity android:name="tmg.flashback.home.swiping.HomeSwipingActivity" />
 
-        <activity android:name=".home.static.HomeStaticActivity" />
+        <activity android:name="tmg.flashback.home.static.HomeStaticActivity" />
 
         <activity
             android:name="tmg.components.about.AboutThisAppActivity"

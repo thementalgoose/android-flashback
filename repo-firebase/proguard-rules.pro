@@ -20,4 +20,4 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
--keep class tmg.f1stats.repo_firebase.models.*
+-keep class tmg.flashback.repo_firebase.models.*
