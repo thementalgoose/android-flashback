@@ -5,6 +5,9 @@
         <br/>- See the results for all F1 races dating back to 2000
         <br/>- See the qualifying results for Q1, Q2 and Q3 for all races]]></string>
 
+    <!-- App Lockout -->
+    <string name="app_lockout_title">App lockout</string>
+
     <!-- Navigation -->
     <string name="nav_drivers">Drivers</string>
     <string name="nav_constructors">Constructors</string>

@@ -6,6 +6,7 @@ import tmg.flashback.repo.models.*
 import tmg.flashback.repo_firebase.converters.convert
 import tmg.flashback.repo_firebase.firebase.getDocument
 import tmg.flashback.repo_firebase.models.FSeason
+import tmg.flashback.repo_firebase.version
 
 class SeasonOverviewFirestore(
     private val crashReporter: CrashReporter
@@ -59,7 +60,7 @@ class SeasonOverviewFirestore(
     }
 
     private suspend fun getSeason(season: Int): Season? {
-        return getDocument(FSeason::class.java, "seasons/$season") { model, _ ->
+        return getDocument(FSeason::class.java, "version/$version/seasons/$season") { model, _ ->
             model.convert(season)
         }
     }

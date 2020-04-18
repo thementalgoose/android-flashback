@@ -2,6 +2,7 @@ package tmg.flashback.home.static
 
 import android.content.Intent
 import android.util.Log
+import android.widget.Toast
 import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.faltenreich.skeletonlayout.Skeleton
@@ -11,11 +12,13 @@ import kotlinx.android.synthetic.main.bottom_sheet_track_picker.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.R
+import tmg.flashback.admin.lockout.LockoutActivity
 import tmg.flashback.base.BaseActivity
 import tmg.flashback.home.trackpicker.TrackPickerBottomSheetFragment
 import tmg.flashback.home.trackpicker.TrackPickerCallback
 import tmg.flashback.home.trackpicker.TrackPickerRoundAdapter
 import tmg.flashback.home.trackpicker.TrackPickerYearAdapter
+import tmg.flashback.repo.models.AppLockout
 import tmg.flashback.season.race.RaceAdapter
 import tmg.flashback.season.race.RaceAdapterCallback
 import tmg.flashback.season.race.RaceAdapterType
@@ -168,11 +171,13 @@ class HomeStaticActivity : BaseActivity(), RaceAdapterCallback, TrackPickerCallb
         observeEvent(raceViewModel.outputs.loading) {
             if (it) {
                 progressBar.visible()
-//                skeleton.showSkeleton()
             } else {
                 progressBar.invisible()
-//                skeleton.showOriginal()
             }
+        }
+
+        observeEvent(viewModel.outputs.showAppLockoutMessage) {
+            startActivityClearStack(Intent(this, LockoutActivity::class.java))
         }
     }
 

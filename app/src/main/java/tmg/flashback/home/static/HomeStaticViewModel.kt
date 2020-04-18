@@ -3,12 +3,15 @@ package tmg.flashback.home.static
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import tmg.flashback.base.BaseViewModel
 import tmg.flashback.home.trackpicker.TrackModel
+import tmg.flashback.repo.db.DataDB
 import tmg.flashback.repo.db.HistoryDB
 import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.db.SeasonOverviewDB
+import tmg.flashback.repo.models.AppLockout
 import tmg.flashback.repo.models.History
 import tmg.flashback.utils.DataEvent
 import tmg.flashback.utils.Event
@@ -35,6 +38,8 @@ interface HomeStaticViewModelOutputs {
     val switchTrackList: MutableLiveData<List<Selected<TrackModel>>>
     val circuitInfo: MutableLiveData<TrackModel>
 
+    val showAppLockoutMessage: MutableLiveData<DataEvent<AppLockout>>
+
     val showReleaseNotes: MutableLiveData<Event>
 }
 
@@ -43,7 +48,8 @@ interface HomeStaticViewModelOutputs {
 class HomeStaticViewModel(
     private val seasonDB: SeasonOverviewDB,
     private val historyDB: HistoryDB,
-    prefsDB: PrefsDB
+    prefsDB: PrefsDB,
+    private val dataDB: DataDB
 ): BaseViewModel(), HomeStaticViewModelInputs, HomeStaticViewModelOutputs {
 
     private val initialSeason: Int = prefsDB.selectedYear
@@ -60,6 +66,7 @@ class HomeStaticViewModel(
     override val switchYearList: MutableLiveData<List<Selected<String>>> = MutableLiveData()
     override val circuitInfo: MutableLiveData<TrackModel> = MutableLiveData()
 
+    override val showAppLockoutMessage: MutableLiveData<DataEvent<AppLockout>> = MutableLiveData()
     override val showReleaseNotes: MutableLiveData<Event> = MutableLiveData()
 
     private var historyList: List<History> = emptyList()
@@ -72,6 +79,14 @@ class HomeStaticViewModel(
 
         if (prefsDB.isCurrentAppVersionNew) {
             showReleaseNotes.value = Event()
+        }
+
+        viewModelScope.launch(Dispatchers.IO) {
+            dataDB.appLockout().collect {
+                if (it.show) {
+                    showAppLockoutMessage.postValue(DataEvent(it))
+                }
+            }
         }
     }
 

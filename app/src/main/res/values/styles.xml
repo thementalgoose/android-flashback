@@ -112,6 +112,17 @@
 
     </style>
 
+    <!-- App Lockout -->
+
+    <style name="Text.Lockout" parent="Text" />
+    <style name="Text.Lockout.Text" parent="Text">
+
+    </style>
+    <style name="Text.Lockout.Button" parent="Text">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
     <!-- Swiper -->
 
     <style name="Text.Swiper" />
