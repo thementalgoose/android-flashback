@@ -9,6 +9,9 @@ import android.view.animation.TranslateAnimation
 import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.faltenreich.skeletonlayout.Skeleton
+import com.faltenreich.skeletonlayout.SkeletonLayout
+import com.faltenreich.skeletonlayout.applySkeleton
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.activity_home_static.*
 import kotlinx.android.synthetic.main.bottom_sheet_track_picker.*
@@ -23,8 +26,11 @@ import tmg.f1stats.season.race.RaceAdapterCallback
 import tmg.f1stats.season.race.RaceAdapterType
 import tmg.f1stats.season.race.RaceViewModel
 import tmg.f1stats.settings.SettingsActivity
+import tmg.f1stats.settings.release.ReleaseBottomSheetFragment
 import tmg.f1stats.utils.*
 import tmg.utilities.extensions.*
+import tmg.utilities.extensions.views.invisible
+import tmg.utilities.extensions.views.visible
 
 class HomeStaticActivity : BaseActivity(), RaceAdapterCallback {
 
@@ -36,6 +42,8 @@ class HomeStaticActivity : BaseActivity(), RaceAdapterCallback {
     private lateinit var trackBottomSheetBehavior: BottomSheetBehavior<NestedScrollView>
     private lateinit var seasonAdapter: TrackPickerYearAdapter
     private lateinit var roundAdapter: TrackPickerRoundAdapter
+
+    private lateinit var skeleton: Skeleton
 
     override fun layoutId(): Int = R.layout.activity_home_static
 
@@ -83,6 +91,11 @@ class HomeStaticActivity : BaseActivity(), RaceAdapterCallback {
         rvRounds.adapter = roundAdapter
         rvRounds.layoutManager = LinearLayoutManager(this)
 
+        // Skeleton Views
+
+//        skeleton = rvData.applySkeleton(R.layout.skeleton_race, 1, cornerRadius = 2f.dpToPx(resources))
+//        skeleton.showSkeleton()
+
         observeViewModel()
     }
 
@@ -121,6 +134,11 @@ class HomeStaticActivity : BaseActivity(), RaceAdapterCallback {
 
         // Outputs
 
+        observeEvent(viewModel.outputs.showReleaseNotes) {
+            val instance = ReleaseBottomSheetFragment()
+            instance.show(supportFragmentManager, "Release Notes")
+        }
+
         observeEvent(viewModel.outputs.openTrackList) {
             if (it) {
                 trackBottomSheetBehavior.state = BottomSheetBehavior.STATE_HALF_EXPANDED
@@ -155,8 +173,14 @@ class HomeStaticActivity : BaseActivity(), RaceAdapterCallback {
             tvDate.text = it.format(DateTimeFormatter.ofPattern("dd MMM yyyy"))
         }
 
-        observe(raceViewModel.outputs.time) {
-            // TODO: Do something with the date
+        observeEvent(raceViewModel.outputs.loading) {
+            if (it) {
+                progressBar.visible()
+//                skeleton.showSkeleton()
+            } else {
+                progressBar.invisible()
+//                skeleton.showOriginal()
+            }
         }
     }
 

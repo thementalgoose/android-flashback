@@ -9,6 +9,7 @@
     android:fitsSystemWindows="true">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/f1BackgroundPrimary"
@@ -27,7 +28,6 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/paddingMedium"
             app:layout_scrollFlags="scroll|enterAlways">
 
             <ImageView
@@ -69,6 +69,20 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="23rd May 2020" />
+
+            <me.zhanghai.android.materialprogressbar.MaterialProgressBar
+                android:id="@+id/progressBar"
+                style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal.NoPadding"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/paddingXSmall"
+                android:layout_marginTop="@dimen/paddingSmall"
+                android:indeterminate="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvTrackName"
+                app:mpb_useIntrinsicPadding="false"
+                app:mpb_progressStyle="horizontal" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

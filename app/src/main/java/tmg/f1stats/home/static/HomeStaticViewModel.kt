@@ -33,6 +33,8 @@ interface HomeStaticViewModelOutputs {
     val switchYearList: MutableLiveData<List<Selected<String>>>
     val switchTrackList: MutableLiveData<List<Selected<TrackModel>>>
     val circuitInfo: MutableLiveData<TrackModel>
+
+    val showReleaseNotes: MutableLiveData<Event>
 }
 
 //endregion
@@ -56,6 +58,8 @@ class HomeStaticViewModel(
     override val switchYearList: MutableLiveData<List<Selected<String>>> = MutableLiveData()
     override val circuitInfo: MutableLiveData<TrackModel> = MutableLiveData()
 
+    override val showReleaseNotes: MutableLiveData<Event> = MutableLiveData()
+
     private var historyList: List<History> = emptyList()
 
     var inputs: HomeStaticViewModelInputs = this
@@ -63,6 +67,10 @@ class HomeStaticViewModel(
 
     init {
         select(prefsDB.selectedYear, 1)
+
+        if (prefsDB.isCurrentAppVersionNew) {
+            showReleaseNotes.value = Event()
+        }
     }
 
     //region Inputs
@@ -75,8 +83,8 @@ class HomeStaticViewModel(
 
         showSeasonRound.value = Pair(this.season, this.round)
 
-        updateSheet()
         updateCircuitInfo()
+        updateSheet()
     }
 
     override fun browse(season: Int) {

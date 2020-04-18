@@ -11,6 +11,7 @@ import tmg.f1stats.base.BaseViewModel
 import tmg.f1stats.repo.db.SeasonOverviewDB
 import tmg.f1stats.repo.models.LapTime
 import tmg.f1stats.repo.models.Round
+import tmg.f1stats.utils.DataEvent
 
 //region Inputs
 
@@ -27,6 +28,8 @@ interface RaceViewModelOutputs {
     val items: MutableLiveData<Pair<RaceAdapterType, List<RaceModel>>>
     val date: MutableLiveData<LocalDate>
     val time: MutableLiveData<LocalTime>
+
+    val loading: MutableLiveData<DataEvent<Boolean>>
 }
 
 //endregion
@@ -45,6 +48,8 @@ class RaceViewModel(
     override val date: MutableLiveData<LocalDate> = MutableLiveData()
     override val time: MutableLiveData<LocalTime> = MutableLiveData()
 
+    override val loading: MutableLiveData<DataEvent<Boolean>> = MutableLiveData()
+
     var inputs: RaceViewModelInputs = this
     var outputs: RaceViewModelOutputs = this
 
@@ -54,6 +59,8 @@ class RaceViewModel(
 
         this.season = -1
         this.round = -1
+
+        loading.value = DataEvent(true)
 
         viewModelScope.launch(Dispatchers.IO) {
             roundData = seasonOverviewDB.getSeasonRound(season, round)
@@ -122,6 +129,7 @@ class RaceViewModel(
         }
 
         items.postValue(Pair(withType, list))
+        loading.postValue(DataEvent(false))
     }
 
     private fun getDriverModel(round: Round, driverId: String): RaceModel.Single {
