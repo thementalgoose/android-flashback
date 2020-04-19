@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="colorTheme">#4A34B6</color>
+
     <color name="logo_gradient_1">#745BE9</color>
     <color name="logo_gradient_2">#4A34B6</color>
 

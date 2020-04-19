@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.util.AttributeSet
 import android.widget.TextView
 import androidx.annotation.ColorInt
+import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import tmg.flashback.R
 import tmg.utilities.extensions.dpToPx
@@ -23,14 +24,15 @@ class RaceNumberView: TextView {
         initView(attrs, defStyleAttr)
     }
 
-    private val horizontalPadding: Int = 2f.dpToPx(context.resources).roundToInt()
+    private val horizontalPadding: Int = 3f.dpToPx(context.resources).roundToInt()
     private val verticalPadding: Int = 2f.dpToPx(context.resources).roundToInt()
 
     @ColorInt
-    var colorHighlight: Int = Color.BLUE
+    var colorHighlight: Int = ContextCompat.getColor(context, R.color.colorTheme)
         set(value) {
-            setShadowLayer(8f, 0f, 0f, colorHighlight)
             field = value
+            setShadowLayer(10f, 0f, 0f, value)
+            invalidate()
         }
 
     private fun initView(attributeSet: AttributeSet?, defStyleAttr: Int = -1) {
