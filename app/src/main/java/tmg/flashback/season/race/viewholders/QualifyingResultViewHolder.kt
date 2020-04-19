@@ -27,7 +27,7 @@ class QualifyingResultViewHolder(view: View, private val updateAdapterType: Race
         itemView.filterQuali.setOnClickListener(this)
     }
 
-    fun bind(model: RaceModel.Single, type: RaceAdapterType, top: RaceModel.Single?) {
+    fun bind(model: RaceModel.Single, type: RaceAdapterType) {
         itemView.apply {
 
             tvPosition.text = model.qualified.toString()
@@ -41,9 +41,9 @@ class QualifyingResultViewHolder(view: View, private val updateAdapterType: Race
 
             imgFlag.setImageResource(context.getFlagResourceAlpha3(model.driver.nationalityISO))
 
-            bind(model.q1, layoutQ1, top?.q1Delta)
-            bind(model.q2, layoutQ2, top?.q2Delta)
-            bind(model.q3, layoutQ3, top?.q3Delta)
+            bind(model.q1, layoutQ1, model.q1Delta)
+            bind(model.q2, layoutQ2, model.q2Delta)
+            bind(model.q3, layoutQ3, model.q3Delta)
 
             itemView.layoutQ1.setBackgroundResource(if (type == RaceAdapterType.QUALIFYING_POS_1) R.drawable.background_qualifying_item else 0)
             itemView.layoutQ2.setBackgroundResource(if (type == RaceAdapterType.QUALIFYING_POS_2) R.drawable.background_qualifying_item else 0)

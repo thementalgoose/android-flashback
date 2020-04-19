@@ -15,6 +15,7 @@ import tmg.flashback.extensions.then
 import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.db.SeasonOverviewDB
 import tmg.flashback.repo.models.*
+import tmg.flashback.repo.utils.toMaxIfZero
 import tmg.flashback.utils.DataEvent
 import tmg.flashback.utils.SeasonRound
 import tmg.flashback.utils.localLog
@@ -65,10 +66,11 @@ class RaceViewModel(
                 .race
                 .values
                 .sortedBy {
+                    val driverOverview: RoundDriverOverview = roundData.driverOverview(it.driver.id)
                     when (viewType) {
                         RaceAdapterType.RACE -> it.finish
-                        RaceAdapterType.QUALIFYING_POS_1 -> roundData.driverOverview(it.driver.id).q1?.position ?: Int.MAX_VALUE
-                        RaceAdapterType.QUALIFYING_POS_2 -> roundData.driverOverview(it.driver.id).q2?.position ?: Int.MAX_VALUE
+                        RaceAdapterType.QUALIFYING_POS_1 -> driverOverview.q1?.position
+                        RaceAdapterType.QUALIFYING_POS_2 -> driverOverview.q2?.position
                         RaceAdapterType.QUALIFYING_POS -> it.qualified
                     }
                 }
@@ -153,9 +155,9 @@ class RaceViewModel(
             racePoints = overview.race.points,
             status = overview.race.status,
             fastestLap = overview.race.fastestLap?.rank == 1,
-            q1Delta = if (prefsDB.showQualifyingDelta) overview.q1?.time?.deltaTo(round.q1.getTopLapTime()) else null,
-            q2Delta = if (prefsDB.showQualifyingDelta) overview.q2?.time?.deltaTo(round.q2.getTopLapTime()) else null,
-            q3Delta = if (prefsDB.showQualifyingDelta) overview.q3?.time?.deltaTo(round.q3.getTopLapTime()) else null
+            q1Delta = if (prefsDB.showQualifyingDelta) round.q1.getTopLapTime()?.deltaTo(overview.q1?.time) else null,
+            q2Delta = if (prefsDB.showQualifyingDelta) round.q2.getTopLapTime()?.deltaTo(overview.q2?.time) else null,
+            q3Delta = if (prefsDB.showQualifyingDelta) round.q3.getTopLapTime()?.deltaTo(overview.q3?.time) else null
         )
     }
 

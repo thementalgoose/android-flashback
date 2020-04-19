@@ -94,7 +94,7 @@ class RaceAdapter(
             }
             RaceAdapterViewHolderType.QUALIFYING_RESULT -> {
                 val viewHolder = holder as QualifyingResultViewHolder
-                viewHolder.bind(list[position] as RaceModel.Single, viewType, list.firstOrNull { it::class == RaceModel.Single::class} as RaceModel.Single)
+                viewHolder.bind(list[position] as RaceModel.Single, viewType)
             }
             else -> {}
         }

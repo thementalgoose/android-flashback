@@ -3,6 +3,7 @@ package tmg.flashback.repo.utils
 import org.threeten.bp.LocalTime
 import tmg.flashback.repo.enums.LapTimeFormats
 import tmg.flashback.repo.models.LapTime
+import tmg.flashback.repo.models.noTime
 
 fun LapTime.addDelta(hours: Int = 0, mins: Int = 0, seconds: Int = 0, millis: Int = 0): LapTime {
     val lapMillis: Int = LapTime(hours, mins, seconds, millis).totalMillis
@@ -36,7 +37,7 @@ fun LapTime.addDelta(time: String?): LapTime {
     }
 }
 
-fun String.toLocalTime(): LocalTime {
+fun String.toLocalTime(): LocalTime? {
     val time = if (this.contains("+")) {
         this.replace("+", "")
     }
@@ -61,15 +62,20 @@ fun String.toLocalTime(): LocalTime {
         val millis = time.split(".")[1].toIntOrNull() ?: 0
         return LocalTime.of(hours, mins, seconds, millis * 1_000_000)
     }
-    return LocalTime.of(0, 0, 0, 0)
+    return null
 }
 
 fun String.toLapTime(): LapTime {
     val localTime = this.toLocalTime()
-    return LapTime(
-        hours = localTime.hour,
-        mins = localTime.minute,
-        seconds = localTime.second,
-        millis = localTime.nano / 1_000_000
-    )
+    return if (localTime != null) {
+        LapTime(
+            hours = localTime.hour,
+            mins = localTime.minute,
+            seconds = localTime.second,
+            millis = localTime.nano / 1_000_000
+        )
+    }
+    else {
+        noTime
+    }
 }

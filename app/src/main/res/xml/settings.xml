@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory android:title="@string/settings_customisation">
 
@@ -11,7 +12,8 @@
         <SwitchPreference
             android:key="prefs_customisation_qualifying_delta"
             android:summary="@string/settings_customisation_qualifying_delta_description"
-            android:title="@string/settings_customisation_qualifying_delta_title" />
+            android:title="@string/settings_customisation_qualifying_delta_title"
+            app:isPreferenceVisible="false" />
 
         <Preference
             android:key="prefs_customisation_view_type"

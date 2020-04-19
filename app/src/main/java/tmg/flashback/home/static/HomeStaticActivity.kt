@@ -1,9 +1,7 @@
 package tmg.flashback.home.static
 
 import android.content.Intent
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.faltenreich.skeletonlayout.Skeleton
 import kotlinx.android.synthetic.main.activity_home_static.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.threeten.bp.format.DateTimeFormatter
@@ -29,9 +27,10 @@ class HomeStaticActivity : BaseActivity(), RaceAdapterCallback, TrackPickerCallb
     private val viewModel: HomeStaticViewModel by viewModel()
     private val raceViewModel: RaceViewModel by viewModel()
 
-    private lateinit var raceAdapter: RaceAdapter
+    private val RECYCLER_ALPHA: Float = 0.5f
+    private val RECYCLER_VIEW_DURATION: Long = 200
 
-    private lateinit var skeleton: Skeleton
+    private lateinit var raceAdapter: RaceAdapter
 
     override fun layoutId(): Int = R.layout.activity_home_static
 
@@ -53,10 +52,7 @@ class HomeStaticActivity : BaseActivity(), RaceAdapterCallback, TrackPickerCallb
             }
         }
 
-        // Skeleton Views
-
-//        skeleton = rvData.applySkeleton(R.layout.skeleton_race, 1, cornerRadius = 2f.dpToPx(resources))
-//        skeleton.showSkeleton()
+        // VM
 
         observeViewModel()
     }
@@ -124,8 +120,16 @@ class HomeStaticActivity : BaseActivity(), RaceAdapterCallback, TrackPickerCallb
         observe(raceViewModel.outputs.loading) {
             if (it) {
                 progressBar.visible()
+                rvData.animate()
+                    .alpha(RECYCLER_ALPHA)
+                    .setDuration(RECYCLER_VIEW_DURATION)
+                    .start()
             } else {
                 progressBar.invisible()
+                rvData.animate()
+                    .alpha(1.0f)
+                    .setDuration(RECYCLER_VIEW_DURATION)
+                    .start()
             }
         }
 

@@ -27,7 +27,7 @@
         <item name="f1Pos3">#D29342</item>
 
         <item name="f1DeltaPositive">#f44336</item>
-        <item name="f1DeltaNeutral">?attr/f1TextInverseSecondary</item>
+        <item name="f1DeltaNeutral">?attr/f1TextSecondary</item>
         <item name="f1DeltaNegative">#4CAF50</item>
     </style>
 
@@ -64,7 +64,7 @@
         <item name="f1Pos3">#D29342</item>
 
         <item name="f1DeltaPositive">#f44336</item>
-        <item name="f1DeltaNeutral">?attr/f1TextInverseSecondary</item>
+        <item name="f1DeltaNeutral">?attr/f1TextSecondary</item>
         <item name="f1DeltaNegative">#4CAF50</item>
     </style>
 
