@@ -14,6 +14,9 @@ class CrashReporterFirebase(
     val context: Context
 ): CrashReporter {
 
+    override val isDebug: Boolean
+        get() = BuildConfig.DEBUG
+
     private val keyDeviceUuid: String = "uuid"
     private val keyModel: String = "model"
     private val keyManufacturer: String = "manufacturer"

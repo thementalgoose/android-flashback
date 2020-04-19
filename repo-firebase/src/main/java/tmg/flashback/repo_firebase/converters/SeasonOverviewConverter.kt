@@ -1,6 +1,7 @@
 package tmg.flashback.repo_firebase.converters
 
 import tmg.flashback.repo.enums.RaceStatus
+import tmg.flashback.repo.enums.raceStatusUnknown
 import tmg.flashback.repo.models.*
 import tmg.flashback.repo.utils.toLapTime
 import tmg.flashback.repo_firebase.models.*
@@ -45,7 +46,7 @@ fun FRound.convert(
                     grid = raceResult.grid ?: 0,
                     qualified = raceResult.qualified ?: 0,
                     finish = raceResult.result ?: 0,
-                    status = RaceStatus.fromStatus(raceResult.status ?: RaceStatus.RETIRED.statusCode),
+                    status = raceResult.status ?: raceStatusUnknown,
                     fastestLap = raceResult.fastestLap?.convert()
                 )
             }

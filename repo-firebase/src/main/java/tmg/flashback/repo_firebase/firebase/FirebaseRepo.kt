@@ -23,7 +23,7 @@ open class FirebaseRepo(
 
     //#endregion
 
-    suspend inline fun <reified E> CollectionReference.getDocuments(default: List<E> = emptyList(), crossinline query: (ref: CollectionReference) -> Query): Flow<List<E>> = callbackFlow {
+    inline fun <reified E> CollectionReference.getDocuments(default: List<E> = emptyList(), crossinline query: (ref: CollectionReference) -> Query): Flow<List<E>> = callbackFlow {
         val subscription = query(this@getDocuments).addSnapshotListener { snapshot, exception ->
             when {
                 exception != null -> {
@@ -45,7 +45,7 @@ open class FirebaseRepo(
         }
     }
 
-    suspend inline fun <reified E> DocumentReference.getDoc(): Flow<E?> = callbackFlow {
+    inline fun <reified E> DocumentReference.getDoc(): Flow<E?> = callbackFlow {
         val subscription = addSnapshotListener { snapshot, exception ->
             when {
                 exception != null -> {

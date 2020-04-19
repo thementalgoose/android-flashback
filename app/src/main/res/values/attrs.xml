@@ -18,4 +18,8 @@
     <attr name="f1Pos1" format="color" />
     <attr name="f1Pos2" format="color" />
     <attr name="f1Pos3" format="color" />
+
+    <attr name="f1DeltaPositive" format="color" />
+    <attr name="f1DeltaNegative" format="color" />
+    <attr name="f1DeltaNeutral" format="color" />
 </resources>

@@ -25,6 +25,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     companion object {
         const val keyPreferenceCustomisationYear: String = "prefs_customisation_year"
+        const val keyPreferenceCustomisationQualifyingDelta: String = "prefs_customisation_qualifying_delta"
         const val keyPreferenceCustomisationViewType: String = "prefs_customisation_view_type"
         const val keyPreferenceHelpAbout: String = "prefs_help_about"
         const val keyPreferenceHelpReleaseNotes: String = "prefs_help_release_notes"
@@ -36,6 +37,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         setPreferencesFromResource(R.xml.settings, rootKey)
 
         year()
+        qualifyingDelta()
         viewType()
 
         about()
@@ -69,6 +71,19 @@ class SettingsFragment : PreferenceFragmentCompat() {
                         .show()
                 }
                 return@setOnPreferenceClickListener true
+            }
+        }
+    }
+
+    private fun qualifyingDelta() {
+        val initialValue = prefs.showQualifyingDelta
+        findPreference<SwitchPreference>(keyPreferenceCustomisationQualifyingDelta)?.let { pref ->
+            pref.isChecked = initialValue
+            pref.setOnPreferenceChangeListener { _, newValue ->
+                val value = newValue as Boolean
+                pref.isChecked = value
+                prefs.showQualifyingDelta = value
+                return@setOnPreferenceChangeListener true
             }
         }
     }
@@ -202,7 +217,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         val initialValue = prefs.crashReporting
         findPreference<SwitchPreference>(keyPreferenceHelpCrashReporting)?.let { pref ->
             pref.isChecked = initialValue
-            pref.setOnPreferenceChangeListener { preference, newValue ->
+            pref.setOnPreferenceChangeListener { _, newValue ->
                 val value = newValue as Boolean
                 pref.isChecked = value
                 prefs.crashReporting = value
@@ -221,7 +236,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         val initialValue = prefs.shakeToReport
         findPreference<SwitchPreference>(keyPreferenceHelpShakeToReport)?.let { pref ->
             pref.isChecked = initialValue
-            pref.setOnPreferenceChangeListener { preference, newValue ->
+            pref.setOnPreferenceChangeListener { _, newValue ->
                 val value = newValue as Boolean
                 pref.isChecked = value
                 prefs.shakeToReport = value

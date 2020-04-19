@@ -133,6 +133,4 @@
         android:focusable="true"
         android:visibility="gone" />
 
-    <include layout="@layout/bottom_sheet_track_picker" />
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

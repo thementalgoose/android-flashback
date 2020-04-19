@@ -14,7 +14,6 @@ import kotlinx.android.synthetic.main.layout_podium.view.tvStartedRelative
 import kotlinx.android.synthetic.main.layout_podium.view.tvTime
 import kotlinx.android.synthetic.main.view_race_podium.view.*
 import tmg.flashback.R
-import tmg.flashback.extensions.stringRes
 import tmg.flashback.season.race.RaceModel
 import tmg.flashback.utils.getColor
 import tmg.flashback.utils.getFlagResourceAlpha3
@@ -58,18 +57,18 @@ class RacePodiumViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             when {
                 diff == 0 -> { // Equal
                     imgStarted.setImageResource(R.drawable.ic_pos_neutral)
-                    imgStarted.setColorFilter(context.theme.getColor(R.attr.f1TextPrimary))
-                    tvStartedRelative.setTextColor(context.theme.getColor(R.attr.f1TextPrimary))
+                    imgStarted.setColorFilter(context.theme.getColor(R.attr.f1DeltaNeutral))
+                    tvStartedRelative.setTextColor(context.theme.getColor(R.attr.f1DeltaNeutral))
                 }
                 diff > 0 -> { // Gained
                     imgStarted.setImageResource(R.drawable.ic_pos_up)
-                    imgStarted.setColorFilter(Color.GREEN)
-                    tvStartedRelative.setTextColor(Color.GREEN)
+                    imgStarted.setColorFilter(context.theme.getColor(R.attr.f1DeltaNegative))
+                    tvStartedRelative.setTextColor(context.theme.getColor(R.attr.f1DeltaNegative))
                 }
                 else -> { // Lost
                     imgStarted.setImageResource(R.drawable.ic_pos_down)
-                    imgStarted.setColorFilter(Color.RED)
-                    tvStartedRelative.setTextColor(Color.RED)
+                    imgStarted.setColorFilter(context.theme.getColor(R.attr.f1DeltaPositive))
+                    tvStartedRelative.setTextColor(context.theme.getColor(R.attr.f1DeltaPositive))
                 }
             }
 
@@ -85,7 +84,7 @@ class RacePodiumViewHolder(view: View) : RecyclerView.ViewHolder(view) {
                     tvTime.text = context.getString(R.string.race_time_delta, model.raceResult)
                 }
                 else {
-                    tvTime.setText(model.status.stringRes)
+                    tvTime.text = model.status
                 }
             }
 

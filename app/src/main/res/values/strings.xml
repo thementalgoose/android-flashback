@@ -43,15 +43,19 @@
 
     <!-- Race Status -->
 
+    <string name="race_status_retired">DNF</string>
+
     <!-- Settings -->
 
-    <string name="settings_customisation">Defaults</string>
+    <string name="settings_customisation">Customisation</string>
 
     <string name="settings_customisation_year_title">Year to be displayed</string>
     <string name="settings_customisation_year_description">Select which year you would like the app to open up on (currently %d)</string>
     <string name="settings_defaults_year_dialog_title">Season</string>
     <string name="settings_defaults_year_dialog_confirm">Confirm</string>
     <string name="settings_defaults_year_dialog_cancel">Cancel</string>
+    <string name="settings_customisation_qualifying_delta_title">Show delta on qualifying</string>
+    <string name="settings_customisation_qualifying_delta_description">Show the delta alongside the qualifying time</string>
     <string name="settings_customisation_view_type_title">View type</string>
     <string name="settings_customisation_view_type_description">Select the view type that you want to view race information in</string>
 

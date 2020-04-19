@@ -38,9 +38,10 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.2.0'
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation project(path: ':repo')
-    testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    testImplementation "org.junit.jupiter:junit-jupiter-engine:$junit"
+    testImplementation "org.junit.jupiter:junit-jupiter-params:$junit"
 
     // Firebase
     implementation 'com.google.firebase:firebase-analytics:17.3.0'

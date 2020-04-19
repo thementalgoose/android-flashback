@@ -17,16 +17,16 @@ class HistoryFirestore(
     crashReporter: CrashReporter
 ): FirebaseRepo(crashReporter), HistoryDB {
 
-    override suspend fun allHistory(): Flow<List<History>> {
+    override fun allHistory(): Flow<List<History>> {
         return getHistory()
     }
 
-    override suspend fun historyFor(season: Int): Flow<History?> {
+    override fun historyFor(season: Int): Flow<History?> {
         return getHistory()
             .map { list -> list.firstOrNull { it.season == season } }
     }
 
-    private suspend fun getHistory(): Flow<List<History>> {
+    private fun getHistory(): Flow<List<History>> {
         return document("version/$version/history/season")
             .getDoc<FHistorySeason>()
             .convertModel { it?.convert() ?: emptyList() }

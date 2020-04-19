@@ -16,7 +16,7 @@ class DataFirestore(
     crashReporter: CrashReporter
 ): FirebaseRepo(crashReporter), DataDB {
 
-    override suspend fun appLockout(): Flow<AppLockout?> {
+    override fun appLockout(): Flow<AppLockout?> {
         return document("data/app-lockout")
             .getDoc<FAppLockout>()
             .convertModel { it?.convert() }

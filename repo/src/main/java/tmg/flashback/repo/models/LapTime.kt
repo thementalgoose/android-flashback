@@ -1,13 +1,14 @@
 package tmg.flashback.repo.models
 
 import org.threeten.bp.LocalTime
+import kotlin.math.abs
 
 // TODO: Clean up the internals of this class!
 data class LapTime(
-    val hours: Int,
-    val mins: Int,
-    val seconds: Int,
-    val millis: Int
+    val hours: Int = 0,
+    val mins: Int = 0,
+    val seconds: Int = 0,
+    val millis: Int = 0
 ) {
 
     constructor(): this(
@@ -28,7 +29,7 @@ data class LapTime(
         get() = hours == -1 && mins == -1 && seconds == -1 && millis == -1
 
     val totalMillis: Int
-        get() = (hours * 1000 * 60 * 60) +
+        get() = if (noTime) 0 else (hours * 1000 * 60 * 60) +
                 (mins * 1000 * 60) +
                 (seconds * 1000) +
                 millis
@@ -39,15 +40,27 @@ data class LapTime(
                 "No time"
             }
             hours != 0 -> {
-                "${hours}:${mins}:${seconds.extendTo(2)}.${millis.extendTo(3)}"
+                "${hours}:${mins.extendTo(2)}:${seconds.extendTo(2)}.${millis.extendTo(3)}"
             }
             mins != 0 -> {
                 "${mins}:${seconds.extendTo(2)}.${millis.extendTo(3)}"
             }
             else -> {
-                "${seconds.extendTo(2)}.${millis.extendTo(3)}"
+                "${seconds}.${millis.extendTo(3)}"
             }
         }
+
+    fun deltaTo(lapTime: LapTime?): String? {
+        if (lapTime == null) {
+            return null
+        }
+        val diff = lapTime.totalMillis - this.totalMillis
+        if (diff == 0) {
+            return null
+        }
+        val newTime = LapTime(abs(diff))
+        return "${if (diff < 0) "-" else "+"}$newTime"
+    }
 
     override fun toString(): String {
         return time

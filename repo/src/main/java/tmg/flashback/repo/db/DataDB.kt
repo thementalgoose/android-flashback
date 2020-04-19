@@ -4,5 +4,5 @@ import kotlinx.coroutines.flow.Flow
 import tmg.flashback.repo.models.AppLockout
 
 interface DataDB {
-    suspend fun appLockout(): Flow<AppLockout?>
+    fun appLockout(): Flow<AppLockout?>
 }

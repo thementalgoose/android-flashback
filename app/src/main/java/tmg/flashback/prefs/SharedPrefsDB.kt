@@ -14,6 +14,7 @@ class SharedPrefsDB(val context: Context) : PrefsDB {
 
     private val prefsKey: String = "Flashback"
     private val keySelectedYear: String = "SELECTED_YEAR"
+    private val keyShowQualifyingDelta: String = "SHOW_QUALIFYING_DELTA"
     private val keyViewType: String = "VIEW_TYPE"
     private val keyCrashReporting: String = "CRASH_REPORTING"
     private val keyShakeToReport: String = "SHAKE_TO_REPORT"
@@ -31,6 +32,12 @@ class SharedPrefsDB(val context: Context) : PrefsDB {
         get() = getInt(keySelectedYear, currentYear)
         set(value) {
             value.save(keySelectedYear)
+        }
+
+    override var showQualifyingDelta: Boolean
+        get() = getBoolean(keyShowQualifyingDelta)
+        set(value) {
+            value.save(keyShowQualifyingDelta)
         }
 
     override var viewType: ViewTypePref

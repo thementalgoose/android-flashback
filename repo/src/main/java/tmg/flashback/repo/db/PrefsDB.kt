@@ -16,6 +16,11 @@ interface PrefsDB {
     var viewType: ViewTypePref
 
     /**
+     * Show the qualifying delta in the layout
+     */
+    var showQualifyingDelta: Boolean
+
+    /**
      * Currently selected year that the app will display when it is opened
      */
     var selectedYear: Int

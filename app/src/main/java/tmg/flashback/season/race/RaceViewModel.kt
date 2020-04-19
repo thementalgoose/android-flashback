@@ -1,16 +1,23 @@
 package tmg.flashback.season.race
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.channels.ConflatedBroadcastChannel
+import kotlinx.coroutines.flow.*
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
 import tmg.flashback.base.BaseViewModel
+import tmg.flashback.extensions.combinePair
+import tmg.flashback.extensions.then
+import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.db.SeasonOverviewDB
-import tmg.flashback.repo.models.LapTime
-import tmg.flashback.repo.models.Round
+import tmg.flashback.repo.models.*
 import tmg.flashback.utils.DataEvent
+import tmg.flashback.utils.SeasonRound
+import tmg.flashback.utils.localLog
 
 //region Inputs
 
@@ -24,112 +31,111 @@ interface RaceViewModelInputs {
 //region Outputs
 
 interface RaceViewModelOutputs {
-    val items: MutableLiveData<Pair<RaceAdapterType, List<RaceModel>>>
-    val date: MutableLiveData<LocalDate>
-    val time: MutableLiveData<LocalTime>
+    val items: LiveData<Pair<RaceAdapterType, List<RaceModel>>>
+    val date: LiveData<LocalDate>
+    val time: LiveData<LocalTime>
 
-    val loading: MutableLiveData<DataEvent<Boolean>>
+    val loading: MutableLiveData<Boolean>
 }
 
 //endregion
 
 class RaceViewModel(
-        private val seasonOverviewDB: SeasonOverviewDB
+    private val seasonOverviewDB: SeasonOverviewDB,
+    private val prefsDB: PrefsDB
 ) : BaseViewModel(), RaceViewModelInputs, RaceViewModelOutputs {
 
-    private var viewType: RaceAdapterType = RaceAdapterType.RACE
-    private var season: Int = -1
-    private var round: Int = -1
+    private val seasonRound: ConflatedBroadcastChannel<SeasonRound> = ConflatedBroadcastChannel()
+    private var viewType: ConflatedBroadcastChannel<RaceAdapterType> = ConflatedBroadcastChannel()
 
-    private var roundData: Round? = null
+    override val loading: MutableLiveData<Boolean> = MutableLiveData()
 
-    override val items: MutableLiveData<Pair<RaceAdapterType, List<RaceModel>>> = MutableLiveData()
-    override val date: MutableLiveData<LocalDate> = MutableLiveData()
-    override val time: MutableLiveData<LocalTime> = MutableLiveData()
+    private val roundFlow: Flow<Round> = seasonRound
+        .asFlow()
+        .flatMapLatest { (season, round) -> seasonOverviewDB.getSeasonRound(season, round) }
+        .filter { it != null }
+        .map { it!! }
+        .flowOn(Dispatchers.IO)
 
-    override val loading: MutableLiveData<DataEvent<Boolean>> = MutableLiveData()
+    override val items: LiveData<Pair<RaceAdapterType, List<RaceModel>>> = roundFlow
+        .combinePair(viewType.asFlow())
+        .map { (roundData, viewType) ->
+            localLog("Combining view type with race model data")
+            val driverIds: List<String> = roundData
+                .race
+                .values
+                .sortedBy {
+                    when (viewType) {
+                        RaceAdapterType.RACE -> it.finish
+                        RaceAdapterType.QUALIFYING_POS_1 -> roundData.driverOverview(it.driver.id).q1?.position ?: Int.MAX_VALUE
+                        RaceAdapterType.QUALIFYING_POS_2 -> roundData.driverOverview(it.driver.id).q2?.position ?: Int.MAX_VALUE
+                        RaceAdapterType.QUALIFYING_POS -> it.qualified
+                    }
+                }
+                .map { it.driver.id }
+            val list: MutableList<RaceModel> = mutableListOf()
+            when (viewType) {
+                RaceAdapterType.RACE -> {
+                    var startIndex = 0
+                    if (driverIds.size >= 3) {
+                        list.add(
+                            RaceModel.Podium(
+                                driverFirst = getDriverModel(roundData, driverIds[0]),
+                                driverSecond = getDriverModel(roundData, driverIds[1]),
+                                driverThird = getDriverModel(roundData, driverIds[2])
+                            )
+                        )
+                        startIndex = 3
+                    }
+                    for (i in startIndex until driverIds.size) {
+                        list.add(getDriverModel(roundData, driverIds[i]))
+                    }
+                }
+                RaceAdapterType.QUALIFYING_POS_1,
+                RaceAdapterType.QUALIFYING_POS_2,
+                RaceAdapterType.QUALIFYING_POS -> {
+                    list.add(RaceModel.QualifyingHeader)
+                    list.addAll(driverIds.map { getDriverModel(roundData, it) })
+                }
+            }
+
+            localLog("List constructed")
+            return@map Pair(viewType, list)
+        }
+        .then {
+            loading.postValue(false)
+        }
+        .asLiveData(viewModelScope.coroutineContext)
+
+    override val date: LiveData<LocalDate> = roundFlow
+        .map { it.date }
+        .asLiveData(viewModelScope.coroutineContext)
+
+    override val time: LiveData<LocalTime> = roundFlow
+        .map { it.time }
+        .asLiveData(viewModelScope.coroutineContext)
 
     var inputs: RaceViewModelInputs = this
     var outputs: RaceViewModelOutputs = this
+
+    init {
+        viewType.offer(RaceAdapterType.RACE)
+    }
 
     //region Inputs
 
     override fun initialise(season: Int, round: Int) {
 
-        this.season = -1
-        this.round = -1
-
-        loading.value = DataEvent(true)
-
-        viewModelScope.launch(Dispatchers.IO) {
-            roundData = seasonOverviewDB.getSeasonRound(season, round)
-            this@RaceViewModel.season = season
-            this@RaceViewModel.round = round
-            roundData?.let {
-                updateModel(it, viewType)
-            }
-        }
+        loading.value = true
+        seasonRound.offer(SeasonRound(season, round))
     }
 
     override fun orderBy(seasonRaceAdapterType: RaceAdapterType) {
 
-        viewType = seasonRaceAdapterType
-        if (season != -1 && round != -1) {
-            viewModelScope.launch(Dispatchers.IO) {
-                roundData?.let {
-                    updateModel(it, seasonRaceAdapterType)
-                }
-            }
-        }
+        viewType.offer(seasonRaceAdapterType)
     }
 
     //endregion
-
-    private fun updateModel(roundData: Round, withType: RaceAdapterType) {
-        date.postValue(roundData.date)
-        time.postValue(roundData.time)
-
-        val driverIds: List<String> = roundData
-            .race
-            .values
-            .sortedBy {
-                when (viewType) {
-                    RaceAdapterType.RACE -> it.finish
-                    RaceAdapterType.QUALIFYING_POS_1 -> roundData.driverOverview(it.driver.id).q1?.position ?: Int.MAX_VALUE
-                    RaceAdapterType.QUALIFYING_POS_2 -> roundData.driverOverview(it.driver.id).q2?.position ?: Int.MAX_VALUE
-                    RaceAdapterType.QUALIFYING_POS -> it.qualified
-                }
-            }
-            .map { it.driver.id }
-        val list: MutableList<RaceModel> = mutableListOf()
-        when (viewType) {
-            RaceAdapterType.RACE -> {
-                var startIndex = 0
-                if (driverIds.size >= 3) {
-                    list.add(
-                        RaceModel.Podium(
-                            driverFirst = getDriverModel(roundData, driverIds[0]),
-                            driverSecond = getDriverModel(roundData, driverIds[1]),
-                            driverThird = getDriverModel(roundData, driverIds[2])
-                        )
-                    )
-                    startIndex = 3
-                }
-                for (i in startIndex until driverIds.size) {
-                    list.add(getDriverModel(roundData, driverIds[i]))
-                }
-            }
-            RaceAdapterType.QUALIFYING_POS_1,
-            RaceAdapterType.QUALIFYING_POS_2,
-            RaceAdapterType.QUALIFYING_POS -> {
-                list.add(RaceModel.QualifyingHeader)
-                list.addAll(driverIds.map { getDriverModel(roundData, it) })
-            }
-        }
-
-        items.postValue(Pair(withType, list))
-        loading.postValue(DataEvent(false))
-    }
 
     private fun getDriverModel(round: Round, driverId: String): RaceModel.Single {
         val overview = round.driverOverview(driverId)
@@ -146,7 +152,19 @@ class RaceViewModel(
             qualified = overview.race.qualified,
             racePoints = overview.race.points,
             status = overview.race.status,
-            fastestLap = overview.race.fastestLap?.rank == 1
+            fastestLap = overview.race.fastestLap?.rank == 1,
+            q1Delta = if (prefsDB.showQualifyingDelta) overview.q1?.time?.deltaTo(round.q1.getTopLapTime()) else null,
+            q2Delta = if (prefsDB.showQualifyingDelta) overview.q2?.time?.deltaTo(round.q2.getTopLapTime()) else null,
+            q3Delta = if (prefsDB.showQualifyingDelta) overview.q3?.time?.deltaTo(round.q3.getTopLapTime()) else null
         )
+    }
+
+    private fun Map<String, RoundQualifyingResult>.getTopLapTime(): LapTime? {
+        return this
+            .toSortedMap()
+            .toList()
+            .minBy { it.second.position }!!
+            .second
+            .time
     }
 }

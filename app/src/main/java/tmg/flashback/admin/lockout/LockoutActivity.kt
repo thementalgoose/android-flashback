@@ -1,9 +1,11 @@
 package tmg.flashback.admin.lockout
 
+import android.content.Intent
 import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_lockout.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.R
+import tmg.flashback.SplashActivity
 import tmg.flashback.base.BaseActivity
 import tmg.flashback.utils.observe
 import tmg.flashback.utils.observeEvent
@@ -43,6 +45,11 @@ class LockoutActivity: BaseActivity() {
 
         observeEvent(viewModel.outputs.openLinkEvent) {
             viewUrl(it)
+        }
+
+        observeEvent(viewModel.outputs.returnToHome) {
+            finish()
+            startActivity(Intent(this, SplashActivity::class.java))
         }
     }
 

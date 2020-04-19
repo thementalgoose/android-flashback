@@ -25,6 +25,10 @@
         <item name="f1Pos1">#D3BC4D</item>
         <item name="f1Pos2">#D8D8D8</item>
         <item name="f1Pos3">#D29342</item>
+
+        <item name="f1DeltaPositive">#f44336</item>
+        <item name="f1DeltaNeutral">?attr/f1TextInverseSecondary</item>
+        <item name="f1DeltaNegative">#4CAF50</item>
     </style>
 
     <style name="LightTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.ActionBar"/>
@@ -58,6 +62,10 @@
         <item name="f1Pos1">#D3BC4D</item>
         <item name="f1Pos2">#D8D8D8</item>
         <item name="f1Pos3">#D29342</item>
+
+        <item name="f1DeltaPositive">#f44336</item>
+        <item name="f1DeltaNeutral">?attr/f1TextInverseSecondary</item>
+        <item name="f1DeltaNegative">#4CAF50</item>
     </style>
 
     <style name="DarkTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
@@ -243,7 +251,9 @@
         <item name="android:textSize">12sp</item>
     </style>
     <style name="Text.QualifyingTime.Delta" parent="Text.QualifyingTime">
-        <item name="android:textSize">10sp</item>
+        <item name="android:textSize">9sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?attr/f1DeltaPositive</item>
     </style>
 
     <!-- Picker -->

@@ -62,7 +62,6 @@ class TrackPickerBottomSheetFragment: RxBottomSheetFragment() {
 
         observeEvent(viewModel.outputs.selected) { (season, round) ->
             trackPickerCallback?.updateSelected(season, round)
-            Toast.makeText(context, "SELECTED $season / $round", Toast.LENGTH_LONG).show()
             dismiss()
         }
     }

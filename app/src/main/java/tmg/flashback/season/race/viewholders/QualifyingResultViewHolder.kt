@@ -6,12 +6,16 @@ import kotlinx.android.synthetic.main.layout_driver.view.*
 import kotlinx.android.synthetic.main.layout_qualifying_time.view.*
 import kotlinx.android.synthetic.main.view_qualifying_result.view.*
 import tmg.flashback.R
+import tmg.flashback.repo.models.LapTime
 import tmg.flashback.repo.models.RoundQualifyingResult
 import tmg.flashback.season.race.RaceAdapterCallback
 import tmg.flashback.season.race.RaceAdapterType
 import tmg.flashback.season.race.RaceModel
 import tmg.flashback.utils.getFlagResourceAlpha3
 import tmg.utilities.extensions.views.gone
+import tmg.utilities.extensions.views.hide
+import tmg.utilities.extensions.views.invisible
+import tmg.utilities.extensions.views.show
 
 class QualifyingResultViewHolder(view: View, private val updateAdapterType: RaceAdapterCallback) :
     RecyclerView.ViewHolder(view), View.OnClickListener {
@@ -23,7 +27,7 @@ class QualifyingResultViewHolder(view: View, private val updateAdapterType: Race
         itemView.filterQuali.setOnClickListener(this)
     }
 
-    fun bind(model: RaceModel.Single, type: RaceAdapterType) {
+    fun bind(model: RaceModel.Single, type: RaceAdapterType, top: RaceModel.Single?) {
         itemView.apply {
 
             tvPosition.text = model.qualified.toString()
@@ -37,9 +41,9 @@ class QualifyingResultViewHolder(view: View, private val updateAdapterType: Race
 
             imgFlag.setImageResource(context.getFlagResourceAlpha3(model.driver.nationalityISO))
 
-            bind(model.q1, layoutQ1)
-            bind(model.q2, layoutQ2)
-            bind(model.q3, layoutQ3)
+            bind(model.q1, layoutQ1, top?.q1Delta)
+            bind(model.q2, layoutQ2, top?.q2Delta)
+            bind(model.q3, layoutQ3, top?.q3Delta)
 
             itemView.layoutQ1.setBackgroundResource(if (type == RaceAdapterType.QUALIFYING_POS_1) R.drawable.background_qualifying_item else 0)
             itemView.layoutQ2.setBackgroundResource(if (type == RaceAdapterType.QUALIFYING_POS_2) R.drawable.background_qualifying_item else 0)
@@ -47,10 +51,22 @@ class QualifyingResultViewHolder(view: View, private val updateAdapterType: Race
         }
     }
 
-    private fun bind(qualifying: RoundQualifyingResult?, layout: View): Boolean {
+    private fun bind(qualifying: RoundQualifyingResult?, layout: View, fastestLap: String?): Boolean {
         val label = qualifying?.time?.toString() ?: ""
         layout.tvQualifyingTime.text = label
-        layout.tvQualifyingDelta.gone()
+        val hasTime: Boolean = label.isNotEmpty()
+        if (hasTime) {
+            if (fastestLap != null) {
+                layout.tvQualifyingDelta.text = fastestLap
+                layout.tvQualifyingTime.show()
+            }
+            else {
+                layout.tvQualifyingDelta.hide()
+            }
+        }
+        else {
+            layout.tvQualifyingDelta.hide()
+        }
         return label.isNotEmpty()
     }
 

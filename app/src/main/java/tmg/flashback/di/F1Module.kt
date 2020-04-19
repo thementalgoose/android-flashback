@@ -21,12 +21,12 @@ import tmg.flashback.repo_firebase.repos.SeasonOverviewFirestore
 var f1Module = module {
 
     viewModel { HomeSwipingViewModel(get()) }
-    viewModel { HomeStaticViewModel(get(), get(), get(), get()) }
+    viewModel { HomeStaticViewModel(get(), get(), get()) }
 
     viewModel { DatePickerViewModel() }
     viewModel { TrackPickerViewModel(get()) }
     viewModel { SeasonViewModel(get()) }
-    viewModel { RaceViewModel(get()) }
+    viewModel { RaceViewModel(get(), get()) }
     viewModel { GalleryViewModel() }
     viewModel { LockoutViewModel(get()) }
 
@@ -35,5 +35,5 @@ var f1Module = module {
     single<PrefsDB> { SharedPrefsDB(get()) }
     single<CircuitDB> { CircuitFirestore() }
     single<CrashReporter> { CrashReporterFirebase(get(), get()) }
-    single<DataDB> { DataFirestore() }
+    single<DataDB> { DataFirestore(get()) }
 }

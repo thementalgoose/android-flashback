@@ -44,20 +44,20 @@ class SeasonViewModel(
     override fun initialise(season: Int) {
         this.season = season
 
-        viewModelScope.launch(Dispatchers.IO) {
-            val result = seasonOverviewDB.getSeasonOverview(season)
-            seasonRounds.postValue(result
-                .map {
-                    SeasonSwiperAdapterModel(
-                        it.season,
-                        it.round,
-                        it.circuit.countryISO,
-                        it.name,
-                        it.circuit.name
-                    )
-                }
-                .sortedBy { it.round })
-        }
+//        viewModelScope.launch(Dispatchers.IO) {
+//            val result = seasonOverviewDB.getSeasonOverview(season)
+//            seasonRounds.postValue(result
+//                .map {
+//                    SeasonSwiperAdapterModel(
+//                        it.season,
+//                        it.round,
+//                        it.circuit.countryISO,
+//                        it.name,
+//                        it.circuit.name
+//                    )
+//                }
+//                .sortedBy { it.round })
+//        }
     }
 
     //endregion
