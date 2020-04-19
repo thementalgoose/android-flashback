@@ -27,7 +27,7 @@ class HomeStaticActivity : BaseActivity(), RaceAdapterCallback, TrackPickerCallb
     private val viewModel: HomeStaticViewModel by viewModel()
     private val raceViewModel: RaceViewModel by viewModel()
 
-    private val RECYCLER_ALPHA: Float = 0.5f
+    private val RECYCLER_ALPHA: Float = 0.3f
     private val RECYCLER_VIEW_DURATION: Long = 200
 
     private lateinit var raceAdapter: RaceAdapter

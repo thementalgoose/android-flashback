@@ -11,8 +11,8 @@
 
     <color name="transparent">#00ffffff</color>
 
-    <color name="aboutThisApp_headerDark">#FF045962</color>
-    <color name="aboutThisApp_headerLight">#FF045962</color>
+    <color name="aboutThisApp_headerDark">@color/colorTheme</color>
+    <color name="aboutThisApp_headerLight">@color/colorTheme</color>
 
     <color name="aboutThisApp_backgroundLight">#FBFBFB</color>
     <color name="aboutThisApp_backgroundDark">#181818</color>
