@@ -39,5 +39,7 @@
     <dimen name="trackPickerCountrySize">24dp</dimen>
 
     <dimen name="homeDisplayCountrySize">36dp</dimen>
+    <dimen name="loadingSize">250dp</dimen>
+    <dimen name="loadingMargin">60dp</dimen>
 
 </resources>

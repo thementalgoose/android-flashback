@@ -195,6 +195,13 @@ class SettingsFragment : PreferenceFragmentCompat() {
                                 author = "Faltenreich",
                                 url = "https://github.com/Faltenreich/SkeletonLayout",
                                 imageUrl = "https://avatars3.githubusercontent.com/u/7239950"
+                            ),
+                            AboutThisAppDependency(
+                                order = 12,
+                                dependencyName = "Lottie",
+                                author = "AirBnB",
+                                url = "https://github.com/airbnb/lottie-android",
+                                imageUrl = "https://avatars2.githubusercontent.com/u/698437"
                             )
                         )
                     )

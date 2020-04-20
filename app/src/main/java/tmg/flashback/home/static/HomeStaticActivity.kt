@@ -1,7 +1,13 @@
 package tmg.flashback.home.static
 
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.ColorFilter
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.airbnb.lottie.LottieProperty
+import com.airbnb.lottie.SimpleColorFilter
+import com.airbnb.lottie.model.KeyPath
+import com.airbnb.lottie.value.LottieValueCallback
 import kotlinx.android.synthetic.main.activity_home_static.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.threeten.bp.format.DateTimeFormatter
@@ -19,6 +25,7 @@ import tmg.flashback.settings.release.ReleaseBottomSheetFragment
 import tmg.flashback.utils.*
 import tmg.utilities.extensions.initToolbar
 import tmg.utilities.extensions.startActivityClearStack
+import tmg.utilities.extensions.views.gone
 import tmg.utilities.extensions.views.invisible
 import tmg.utilities.extensions.views.visible
 
@@ -27,7 +34,7 @@ class HomeStaticActivity : BaseActivity(), RaceAdapterCallback, TrackPickerCallb
     private val viewModel: HomeStaticViewModel by viewModel()
     private val raceViewModel: RaceViewModel by viewModel()
 
-    private val RECYCLER_ALPHA: Float = 0.3f
+    private val RECYCLER_ALPHA: Float = 0.15f
     private val RECYCLER_VIEW_DURATION: Long = 200
 
     private lateinit var raceAdapter: RaceAdapter
@@ -52,7 +59,7 @@ class HomeStaticActivity : BaseActivity(), RaceAdapterCallback, TrackPickerCallb
             }
         }
 
-        // VM
+        initialiseLottie()
 
         observeViewModel()
     }
@@ -119,23 +126,53 @@ class HomeStaticActivity : BaseActivity(), RaceAdapterCallback, TrackPickerCallb
 
         observe(raceViewModel.outputs.loading) {
             if (it) {
-                progressBar.visible()
-                rvData.animate()
-                    .alpha(RECYCLER_ALPHA)
-                    .setDuration(RECYCLER_VIEW_DURATION)
-                    .start()
+                showLoading()
             } else {
-                progressBar.invisible()
-                rvData.animate()
-                    .alpha(1.0f)
-                    .setDuration(RECYCLER_VIEW_DURATION)
-                    .start()
+                hideLoading()
             }
         }
 
         observeEvent(viewModel.outputs.showAppLockoutMessage) {
             startActivityClearStack(Intent(this, LockoutActivity::class.java))
         }
+    }
+
+    private fun showError() {
+
+        progressBar.gone()
+    }
+
+    private fun showLoading() {
+
+        progressBar.visible()
+        clLoading.visible()
+        clLoading.animate()
+            .alpha(1.0f)
+            .setDuration(RECYCLER_VIEW_DURATION)
+            .start()
+        rvData.animate()
+            .alpha(RECYCLER_ALPHA)
+            .setDuration(RECYCLER_VIEW_DURATION)
+            .start()
+    }
+
+    private fun hideLoading() {
+
+        progressBar.invisible()
+        clLoading.gone()
+        clLoading.alpha = 0.0f
+        rvData.animate()
+            .alpha(1.0f)
+            .setDuration(RECYCLER_VIEW_DURATION)
+            .start()
+    }
+
+    private fun initialiseLottie() {
+
+        val colorFilter: SimpleColorFilter = SimpleColorFilter(theme.getColor(R.attr.f1Loading))
+        val keyPath: KeyPath = KeyPath("**")
+        val callback = LottieValueCallback<ColorFilter>(colorFilter)
+        lottieLoading.addValueCallback(keyPath, LottieProperty.COLOR_FILTER, callback)
     }
 
     //region RaceAdapterCallback

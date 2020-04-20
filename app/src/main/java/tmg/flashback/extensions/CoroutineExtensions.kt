@@ -37,3 +37,9 @@ fun <T> Flow<List<T>>.filterNotEmpty(): Flow<List<T>> {
     return this
         .filter { it.isNotEmpty() }
 }
+
+fun <T> Flow<T?>.filterNull(): Flow<Unit> {
+    return this
+        .filter { it == null }
+        .map { Unit }
+}

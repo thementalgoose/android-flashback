@@ -20,6 +20,8 @@
         <item name="f1BackgroundInversePrimary">#181818</item>
         <item name="f1BackgroundInverseSecondary">#383838</item>
 
+        <item name="f1Loading">#a8a8a8</item>
+
         <item name="f1PurpleSector">#673AB7</item>
 
         <item name="f1Pos1">#D3BC4D</item>
@@ -56,6 +58,8 @@
         <item name="f1TextTertiary">#D8D8D8</item>
         <item name="f1BackgroundPrimary">#181818</item>
         <item name="f1BackgroundSecondary">#383838</item>
+
+        <item name="f1Loading">#a8a8a8</item>
 
         <item name="f1PurpleSector">#7B1BA1</item>
 
@@ -107,6 +111,13 @@
 
     <style name="Text">
         <item name="android:textColor">?attr/f1TextPrimary</item>
+    </style>
+
+    <!-- Loading -->
+
+    <style name="Text.Loading">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">?attr/f1Loading</item>
     </style>
 
     <!-- Release Notes -->

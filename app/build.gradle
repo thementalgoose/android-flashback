@@ -115,6 +115,9 @@ dependencies {
 
     // Skeleton view
     implementation 'com.faltenreich:skeletonlayout:2.0.1'
+
+    // Lifecycle
+    implementation 'com.airbnb.android:lottie:3.4.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

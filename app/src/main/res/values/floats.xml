@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <fraction name="gridPos">0.3</fraction>
+
+    <fraction name="loadingPos">0.8</fraction>
+
 </resources>

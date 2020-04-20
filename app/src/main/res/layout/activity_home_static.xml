@@ -97,6 +97,78 @@
         android:paddingBottom="@dimen/paddingXLarge"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clLoading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="bottom"
+        app:layout_anchor="@id/appBarLayout"
+        app:layout_anchorGravity="bottom">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottieLoading"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/loadingSize"
+            android:layout_marginBottom="@dimen/loadingMargin"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/loading"
+            app:lottie_scale="1.5" />
+
+        <TextView
+            android:id="@+id/tvLoading"
+            style="@style/Text.Loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/paddingSmall"
+            android:paddingBottom="@dimen/paddingSmall"
+            android:text="@string/app_loading_message"
+            app:layout_constraintBottom_toBottomOf="@id/lottieLoading"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/lottieLoading"
+            app:layout_constraintVertical_bias="@fraction/loadingPos" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--        android:id="@+id/clTryAgain"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_gravity="bottom"-->
+<!--        app:layout_anchor="@id/appBarLayout"-->
+<!--        app:layout_anchorGravity="bottom">-->
+
+<!--        <View-->
+<!--            android:id="@+id/view"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="@dimen/loadingSize"-->
+<!--            android:layout_marginBottom="@dimen/loadingMargin"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/tvTryAgain"-->
+<!--            style="@style/Text.Loading"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:paddingStart="@dimen/paddingMedium"-->
+<!--            android:paddingTop="@dimen/paddingSmall"-->
+<!--            android:paddingEnd="@dimen/paddingMedium"-->
+<!--            android:paddingBottom="@dimen/paddingSmall"-->
+<!--            android:text="@string/app_network_try_again"-->
+<!--            app:layout_constraintBottom_toBottomOf="@id/view"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="@id/view"-->
+<!--            app:layout_constraintVertical_bias="@fraction/loadingPos" />-->
+
+<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

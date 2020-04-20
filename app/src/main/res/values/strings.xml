@@ -8,6 +8,9 @@
     <!-- App Lockout -->
     <string name="app_lockout_title">App lockout</string>
 
+    <!-- Loading -->
+    <string name="app_loading_message">Grabbing statistics…</string>
+
     <!-- Navigation -->
     <string name="nav_drivers">Drivers</string>
     <string name="nav_constructors">Constructors</string>
@@ -81,5 +84,6 @@
     - Icons made by Freepik from www.flaticon.com\n
     - Icons made by Vitaly Gorbachev from www.flaticon.com\n\n
     If i\'ve missed anyone or anything please let me know</string>
+    <string name="app_network_try_again">Try again</string>
 
 </resources>
