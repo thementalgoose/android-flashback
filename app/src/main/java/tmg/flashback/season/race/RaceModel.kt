@@ -31,5 +31,9 @@ sealed class RaceModel {
         val q3Delta: String?
     ) : RaceModel()
 
+    object RaceHeader : RaceModel()
+
     object QualifyingHeader : RaceModel()
+
+    object RacePlaceholder : RaceModel()
 }

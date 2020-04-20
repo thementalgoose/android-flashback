@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:paddingBottom="@dimen/paddingSmall"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_home_static_header"
+    android:paddingBottom="@dimen/paddingSmall">
 
     <include
         android:id="@+id/layoutFirst"
         layout="@layout/layout_podium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/paddingMedium"
+        android:layout_marginTop="@dimen/paddingLarge"
         app:layout_constraintEnd_toEndOf="@id/imgGold"
         app:layout_constraintStart_toStartOf="@id/imgGold"
         app:layout_constraintTop_toTopOf="parent" />
@@ -43,22 +43,23 @@
         android:layout_marginStart="@dimen/paddingSmall"
         android:layout_marginTop="@dimen/paddingXSmall"
         android:layout_marginEnd="@dimen/paddingSmall"
-        android:background="?attr/f1Pos1"
+        android:background="@drawable/background_podium_1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/imgBronze"
         app:layout_constraintStart_toEndOf="@id/imgSilver"
         app:layout_constraintTop_toBottomOf="@id/layoutFirst" />
 
     <TextView
-        android:id="@+id/tvPoints1"
-        style="@style/Text.Podium.Points"
+        android:id="@+id/tvPodium1"
+        style="@style/Text.Podium.Position"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/paddingXSmall"
         android:gravity="center"
+        android:text="@string/round_podium_first"
         app:layout_constraintEnd_toEndOf="@id/imgGold"
         app:layout_constraintStart_toStartOf="@id/imgGold"
-        app:layout_constraintTop_toTopOf="@id/imgGold"
-        tools:text="26 points" />
+        app:layout_constraintTop_toTopOf="@id/imgGold" />
 
     <ImageView
         android:id="@+id/imgSilver"
@@ -66,21 +67,22 @@
         android:layout_height="@dimen/podium2"
         android:layout_marginStart="@dimen/paddingMedium"
         android:layout_marginEnd="@dimen/paddingSmall"
-        android:background="?attr/f1Pos2"
+        android:background="@drawable/background_podium_2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/imgGold"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/tvPoints2"
-        style="@style/Text.Podium.Points"
+        android:id="@+id/tvPodium2"
+        style="@style/Text.Podium.Position"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/paddingXSmall"
         android:gravity="center"
+        android:text="@string/round_podium_second"
         app:layout_constraintEnd_toEndOf="@id/imgSilver"
         app:layout_constraintStart_toStartOf="@id/imgSilver"
-        app:layout_constraintTop_toTopOf="@id/imgSilver"
-        tools:text="18 points" />
+        app:layout_constraintTop_toTopOf="@id/imgSilver" />
 
     <ImageView
         android:id="@+id/imgBronze"
@@ -88,20 +90,21 @@
         android:layout_height="@dimen/podium3"
         android:layout_marginStart="@dimen/paddingSmall"
         android:layout_marginEnd="@dimen/paddingMedium"
-        android:background="?attr/f1Pos3"
+        android:background="@drawable/background_podium_3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/imgGold" />
 
     <TextView
-        android:id="@+id/tvPoints3"
-        style="@style/Text.Podium.Points"
+        android:id="@+id/tvPodium3"
+        style="@style/Text.Podium.Position"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/paddingXSmall"
         android:gravity="center"
+        android:text="@string/round_podium_third"
         app:layout_constraintEnd_toEndOf="@id/imgBronze"
         app:layout_constraintStart_toStartOf="@id/imgBronze"
-        app:layout_constraintTop_toTopOf="@id/imgBronze"
-        tools:text="15 points" />
+        app:layout_constraintTop_toTopOf="@id/imgBronze" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="?attr/f1BackgroundPrimary"
     android:paddingStart="@dimen/paddingSmall"
     android:paddingTop="@dimen/paddingSmall"
     android:paddingEnd="@dimen/paddingSmall"
@@ -30,12 +31,35 @@
         app:layout_constraintStart_toEndOf="@id/tvPosition"
         app:layout_constraintTop_toTopOf="@id/tvPosition" />
 
+    <ImageView
+        android:id="@+id/imgDriverFlag"
+        android:layout_width="@dimen/driverFlagSize"
+        android:layout_height="@dimen/driverFlagSize"
+        app:layout_constraintBottom_toBottomOf="@id/tvDriverNumber"
+        app:layout_constraintStart_toStartOf="@id/layoutDriver"
+        app:layout_constraintTop_toTopOf="@id/tvDriverNumber"
+        tools:src="@drawable/gb" />
+
+    <tmg.flashback.views.RaceNumberView
+        android:id="@+id/tvDriverNumber"
+        style="@style/Text.Driver.Number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/paddingXSmall"
+        app:layout_constraintStart_toEndOf="@id/imgDriverFlag"
+        app:layout_constraintTop_toBottomOf="@id/layoutDriver"
+        tools:text="44" />
+
     <TextView
         android:id="@+id/tvConstructor"
         style="@style/Text.RaceResult.Constructor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@id/layoutDriver"
+        android:layout_marginStart="@dimen/paddingSmall"
+        android:drawableStart="@drawable/ic_small_constructor"
+        android:drawablePadding="@dimen/paddingXSmall"
+        app:layout_constraintBottom_toBottomOf="@id/tvDriverNumber"
+        app:layout_constraintStart_toEndOf="@id/tvDriverNumber"
         app:layout_constraintTop_toBottomOf="@id/layoutDriver"
         tools:text="Mercedes" />
 
@@ -51,9 +75,12 @@
         style="@style/Text.RaceResult.Points"
         android:layout_width="@dimen/raceResultPointsWidth"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/paddingSmall"
+        android:layout_marginStart="@dimen/paddingMedium"
+        android:gravity="end"
+        android:paddingStart="0dp"
         android:paddingEnd="@dimen/paddingSmall"
         app:layout_constraintBottom_toBottomOf="@id/tvConstructor"
+        app:layout_constraintEnd_toStartOf="@id/llPosition"
         app:layout_constraintStart_toStartOf="@id/guideline"
         app:layout_constraintTop_toTopOf="@id/layoutDriver"
         tools:text="15" />
@@ -71,14 +98,21 @@
         app:layout_constraintStart_toEndOf="@id/tvPoints"
         app:layout_constraintTop_toTopOf="parent">
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/posGuideline"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
         <TextView
             android:id="@+id/tvStartedAbsolute"
             style="@style/Text.RaceResult.Position.Absolute"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/paddingSmall"
+            android:gravity="end"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/imgStarted"
+            app:layout_constraintEnd_toStartOf="@id/posGuideline"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="12th" />
@@ -87,9 +121,10 @@
             android:id="@+id/imgStarted"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
             android:src="@drawable/ic_pos_up"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/tvStartedRelative"
+            app:layout_constraintStart_toEndOf="@id/posGuideline"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -98,7 +133,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/imgStarted"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="11" />
 
@@ -118,10 +153,10 @@
         tools:ignore="UseCompoundDrawables">
 
         <LinearLayout
+            android:id="@+id/layoutTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="end|center"
-            android:id="@+id/layoutTime"
             android:orientation="horizontal">
 
             <ImageView
@@ -140,9 +175,9 @@
 
             <ImageView
                 android:id="@+id/imgStatus"
-                android:layout_marginStart="3dp"
                 android:layout_width="@dimen/raceStatusSize"
-                android:layout_height="@dimen/raceStatusSize" />
+                android:layout_height="@dimen/raceStatusSize"
+                android:layout_marginStart="3dp" />
 
         </LinearLayout>
 

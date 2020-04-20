@@ -1,115 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/f1BackgroundPrimary"
     android:fitsSystemWindows="true">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
+    <include
+        android:id="@+id/layoutHeader"
+        layout="@layout/layout_header" />
+
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/f1BackgroundPrimary"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:layout_scrollFlags="scroll|enterAlways"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:titleTextColor="?attr/f1TextInversePrimary" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|enterAlways">
-
-            <ImageView
-                android:id="@+id/imgCountry"
-                android:layout_width="@dimen/homeDisplayCountrySize"
-                android:layout_height="@dimen/homeDisplayCountrySize"
-                android:layout_marginStart="@dimen/paddingMedium"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:src="@drawable/au" />
-
-            <TextView
-                android:id="@+id/tvCountry"
-                style="@style/Text.HomeStatic.Country"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/paddingSmall"
-                app:layout_constraintBottom_toTopOf="@id/tvTrackName"
-                app:layout_constraintStart_toEndOf="@id/imgCountry"
-                app:layout_constraintTop_toTopOf="@id/imgCountry"
-                tools:text="Australia" />
-
-            <TextView
-                android:id="@+id/tvTrackName"
-                style="@style/Text.HomeStatic.TrackName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="@id/imgCountry"
-                app:layout_constraintStart_toStartOf="@id/tvCountry"
-                app:layout_constraintTop_toBottomOf="@id/tvCountry"
-                tools:text="Albert Park Race Circuit" />
-
-            <TextView
-                android:id="@+id/tvDate"
-                style="@style/Text.HomeStatic.Date"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginEnd="@dimen/paddingMedium"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="23rd May 2020" />
-
-            <me.zhanghai.android.materialprogressbar.MaterialProgressBar
-                android:id="@+id/progressBar"
-                style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal.NoPadding"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/paddingXSmall"
-                android:layout_marginTop="@dimen/paddingSmall"
-                android:indeterminate="true"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvTrackName"
-                app:mpb_progressStyle="horizontal"
-                app:mpb_useIntrinsicPadding="false" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </com.google.android.material.appbar.AppBarLayout>
+        android:layout_height="24dp"
+        android:background="?attr/colorPrimary"
+        android:src="@drawable/background_home_static_header"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layoutHeader" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvData"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:clipToPadding="false"
-        android:paddingBottom="@dimen/paddingXLarge"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_constraintBottom_toTopOf="@id/bnvNavigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/fabTrackList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="@dimen/paddingMedium"
+        android:layout_marginBottom="@dimen/paddingMedium"
+        android:background="@drawable/background_fab_default"
+        android:elevation="8dp"
+        android:foreground="@drawable/rounded_ripple"
+        android:paddingStart="@dimen/paddingMedium"
+        android:paddingTop="@dimen/paddingMedium"
+        android:paddingEnd="@dimen/paddingMedium"
+        android:paddingBottom="@dimen/paddingMedium"
+        android:src="@drawable/ic_track_icon"
+        android:tint="?attr/colorAccent"
+        app:layout_constraintBottom_toTopOf="@id/bnvNavigation"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bnvNavigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/f1BackgroundPrimary"
+        app:itemIconTint="@drawable/selector_bottom_nav_color"
+        app:itemTextColor="@drawable/selector_bottom_nav_color"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/menu_static" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clLoading"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="bottom"
-        app:layout_anchor="@id/appBarLayout"
-        app:layout_anchorGravity="bottom">
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/rvData"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/rvData">
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/lottieLoading"
             android:layout_width="match_parent"
             android:layout_height="@dimen/loadingSize"
-            android:layout_marginBottom="@dimen/loadingMargin"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -123,86 +88,64 @@
             style="@style/Text.Loading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/paddingLarge"
             android:paddingTop="@dimen/paddingSmall"
             android:paddingBottom="@dimen/paddingSmall"
             android:text="@string/app_loading_message"
             app:layout_constraintBottom_toBottomOf="@id/lottieLoading"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/lottieLoading"
-            app:layout_constraintVertical_bias="@fraction/loadingPos" />
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--        android:id="@+id/clTryAgain"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:layout_gravity="bottom"-->
-<!--        app:layout_anchor="@id/appBarLayout"-->
-<!--        app:layout_anchorGravity="bottom">-->
-
-<!--        <View-->
-<!--            android:id="@+id/view"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="@dimen/loadingSize"-->
-<!--            android:layout_marginBottom="@dimen/loadingMargin"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/tvTryAgain"-->
-<!--            style="@style/Text.Loading"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:paddingStart="@dimen/paddingMedium"-->
-<!--            android:paddingTop="@dimen/paddingSmall"-->
-<!--            android:paddingEnd="@dimen/paddingMedium"-->
-<!--            android:paddingBottom="@dimen/paddingSmall"-->
-<!--            android:text="@string/app_network_try_again"-->
-<!--            app:layout_constraintBottom_toBottomOf="@id/view"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="@id/view"-->
-<!--            app:layout_constraintVertical_bias="@fraction/loadingPos" />-->
-
-<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
-
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clTryAgain"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:orientation="vertical">
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/rvData"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/rvData">
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fabTrackList"
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/tryAgainView"
+            android:layout_width="match_parent"
+            android:layout_height="110dp"
+            app:layout_constraintBottom_toTopOf="@id/tvTryAgainDesc"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:lottie_rawRes="@raw/cloud_error" />
+
+        <TextView
+            android:id="@+id/tvTryAgainDesc"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/paddingLarge"
+            android:layout_marginEnd="@dimen/paddingLarge"
+            android:gravity="center"
+            style="@style/Text.Error"
+            android:text="@string/network_connection_issue"
+            app:layout_constraintBottom_toTopOf="@id/tvTryAgain"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/tvTryAgain"
+            style="@style/Text.Error.Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_marginEnd="@dimen/paddingMedium"
-            android:layout_marginBottom="@dimen/paddingMedium"
-            android:src="@drawable/ic_track_icon" />
+            android:layout_marginBottom="@dimen/paddingLarge"
+            android:clickable="true"
+            android:focusable="true"
+            android:paddingStart="@dimen/paddingMedium"
+            android:paddingTop="@dimen/paddingSmall"
+            android:paddingEnd="@dimen/paddingMedium"
+            android:paddingBottom="@dimen/paddingSmall"
+            android:text="@string/app_network_try_again"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bnvNavigation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/f1BackgroundPrimary"
-            app:itemIconTint="@drawable/selector_bottom_nav_color"
-            app:itemTextColor="@drawable/selector_bottom_nav_color"
-            app:menu="@menu/menu_static" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </LinearLayout>
-
-    <View
-        android:id="@+id/vBackground"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/fadedBackground"
-        android:clickable="true"
-        android:elevation="4dp"
-        android:focusable="true"
-        android:visibility="gone" />
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -32,6 +32,7 @@ class RaceAdapter(
             RaceAdapterViewHolderType.RACE_RESULT_HEADER -> RaceResultHeaderViewHolder(view)
             RaceAdapterViewHolderType.QUALIFYING_RESULT_HEADER -> QualifyingHeaderViewHolder(view, callback)
             RaceAdapterViewHolderType.QUALIFYING_RESULT -> QualifyingResultViewHolder(view, callback)
+            RaceAdapterViewHolderType.RACE_PLACEHOLDER -> RacePlaceholderViewHolder(view)
             else -> throw Error("View type not implemented")
         }
     }
@@ -46,12 +47,15 @@ class RaceAdapter(
     override fun getItemViewType(position: Int): Int {
         return when (viewType) {
             RaceAdapterType.RACE -> when (position) {
-                0 -> RaceAdapterViewHolderType.RACE_PODIUM.ordinal
+                0 -> RaceAdapterViewHolderType.RACE_PLACEHOLDER.ordinal
+                1 -> RaceAdapterViewHolderType.RACE_PODIUM.ordinal
+                2 -> RaceAdapterViewHolderType.RACE_RESULT_HEADER.ordinal
                 else -> RaceAdapterViewHolderType.RACE_RESULT.ordinal
             }
             RaceAdapterType.QUALIFYING_POS,
             RaceAdapterType.QUALIFYING_POS_1,
             RaceAdapterType.QUALIFYING_POS_2 -> when {
+                position == 0 -> RaceAdapterViewHolderType.RACE_PLACEHOLDER.ordinal
                 list[position] is RaceModel.QualifyingHeader -> {
                     RaceAdapterViewHolderType.QUALIFYING_RESULT_HEADER.ordinal
                 }
@@ -79,6 +83,7 @@ class RaceAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (getItemViewType(position).toEnum<RaceAdapterViewHolderType>()) {
+            RaceAdapterViewHolderType.RACE_PLACEHOLDER -> {}
             RaceAdapterViewHolderType.RACE_PODIUM -> {
                 val viewHolder = holder as RacePodiumViewHolder
                 val model = list[position] as RaceModel.Podium
@@ -132,6 +137,7 @@ enum class RaceAdapterType {
 enum class RaceAdapterViewHolderType(
     @LayoutRes val viewHolderRes: Int
 ) {
+    RACE_PLACEHOLDER(R.layout.layout_header),
     RACE_PODIUM(R.layout.view_race_podium),
     RACE_RESULT(R.layout.view_race_result),
     RACE_RESULT_HEADER(R.layout.view_race_header),

@@ -8,7 +8,6 @@ import kotlinx.android.synthetic.main.layout_podium.view.*
 import kotlinx.android.synthetic.main.layout_podium.view.imgFastestLap
 import kotlinx.android.synthetic.main.layout_podium.view.imgStarted
 import kotlinx.android.synthetic.main.layout_podium.view.tvConstructor
-import kotlinx.android.synthetic.main.layout_podium.view.tvPosition
 import kotlinx.android.synthetic.main.layout_podium.view.tvStartedAbsolute
 import kotlinx.android.synthetic.main.layout_podium.view.tvStartedRelative
 import kotlinx.android.synthetic.main.layout_podium.view.tvTime
@@ -29,16 +28,12 @@ class RacePodiumViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         bind(first, itemView.layoutFirst)
         bind(second, itemView.layoutSecond)
         bind(third, itemView.layoutThird)
-
-        itemView.tvPoints1.text = itemView.context.getString(R.string.round_podium_points, first.racePoints)
-        itemView.tvPoints2.text = itemView.context.getString(R.string.round_podium_points, second.racePoints)
-        itemView.tvPoints3.text = itemView.context.getString(R.string.round_podium_points, third.racePoints)
     }
 
     private fun bind(model: RaceModel.Single, layout: View) {
         layout.apply {
 
-            tvPosition.text = model.racePos.podium()
+//            tvPoints.text = itemView.context.getString(R.string.round_podium_points, model.racePoints)
             tvDriver.text = model.driver.name
             tvNumber.text = model.driver.number.toString()
             tvNumber.colorHighlight = model.driver.constructor.color

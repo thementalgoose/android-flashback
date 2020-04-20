@@ -5,62 +5,70 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/imgDriver"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
         android:layout_width="@dimen/podiumDriverImage"
         android:layout_height="@dimen/podiumDriverImage"
+        app:cardCornerRadius="@dimen/radiusMedium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imgDriver"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            style="@style/Text.Podium.Position"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:background="@color/whiteTranslucent"
+            android:paddingStart="@dimen/paddingSmall"
+            android:paddingTop="@dimen/paddingXSmall"
+            android:paddingEnd="@dimen/paddingSmall"
+            android:paddingBottom="@dimen/paddingXSmall"
+            app:layout_constraintBottom_toBottomOf="@id/cardView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <tmg.flashback.views.RaceNumberView
+            android:id="@+id/tvNumber"
+            style="@style/Text.Podium.Number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|start"
+            android:layout_marginStart="@dimen/paddingSmall"
+            android:layout_marginBottom="@dimen/paddingXSmall"
+            tools:text="44" />
+
+        <ImageView
+            android:id="@+id/imgNationality"
+            android:layout_width="@dimen/driverFlagPodiumSize"
+            android:layout_height="@dimen/driverFlagPodiumSize"
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="@dimen/paddingXSmall"
+            app:layout_constraintBottom_toBottomOf="@id/cardView"
+            app:layout_constraintEnd_toEndOf="@id/cardView"
+            tools:src="@drawable/gb" />
+
+    </androidx.cardview.widget.CardView>
 
     <TextView
-        android:layout_marginTop="@dimen/paddingXSmall"
         android:id="@+id/tvDriver"
         style="@style/Text.Podium.Driver"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/paddingSmall"
+        android:layout_marginTop="@dimen/paddingXSmall"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imgDriver"
+        app:layout_constraintTop_toBottomOf="@id/cardView"
         tools:text="Lewis Hamilton" />
 
-    <TextView
-        android:id="@+id/tvPosition"
-        style="@style/Text.Podium.Position"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/paddingSmall"
-        app:layout_constraintBottom_toBottomOf="@id/imgNationality"
-        app:layout_constraintEnd_toStartOf="@id/imgNationality"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/imgNationality"
-        tools:text="1st" />
-
-    <ImageView
-        android:id="@+id/imgNationality"
-        android:layout_width="@dimen/driverFlagPodiumSize"
-        android:layout_height="@dimen/driverFlagPodiumSize"
-        app:layout_constraintEnd_toStartOf="@id/tvNumber"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toEndOf="@id/tvPosition"
-        app:layout_constraintTop_toBottomOf="@id/tvConstructor"
-        tools:src="@drawable/gb" />
-
-    <tmg.flashback.views.RaceNumberView
-        android:id="@+id/tvNumber"
-        style="@style/Text.Podium.Number"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/paddingSmall"
-        app:layout_constraintBottom_toBottomOf="@id/imgNationality"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toEndOf="@id/imgNationality"
-        app:layout_constraintTop_toTopOf="@id/imgNationality"
-        tools:text="44" />
 
     <TextView
         android:id="@+id/tvConstructor"
@@ -68,6 +76,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvDriver"
         tools:text="Mercedes" />
@@ -77,12 +86,12 @@
         style="@style/Text.Podium.Position.Absolute"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/paddingXSmall"
+        android:layout_marginTop="@dimen/paddingSmall"
         android:layout_marginEnd="@dimen/paddingSmall"
         app:layout_constraintEnd_toStartOf="@id/imgStarted"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imgNationality"
+        app:layout_constraintTop_toBottomOf="@id/tvConstructor"
         tools:text="Started 8th" />
 
     <ImageView

@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.view_swiper_track.view.*
+//import kotlinx.android.synthetic.main.view_swiper_track.view.*
 import tmg.flashback.R
 import tmg.flashback.utils.getFlagResourceAlpha3
 
@@ -19,7 +19,7 @@ class SeasonTrackAdapter: RecyclerView.Adapter<SeasonTrackViewHolder>() {
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SeasonTrackViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.view_swiper_track, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(0, parent, false)
         return SeasonTrackViewHolder(view)
     }
 
@@ -28,9 +28,9 @@ class SeasonTrackAdapter: RecyclerView.Adapter<SeasonTrackViewHolder>() {
     override fun onBindViewHolder(holder: SeasonTrackViewHolder, position: Int) {
         val item = list[position]
         holder.itemView.apply {
-            imgCountry.setImageResource(context.getFlagResourceAlpha3(item.raceKey))
-            tvTitle.text = item.raceKey
-            tvCircuit.text = item.circuitName
+//            imgCountry.setImageResource(context.getFlagResourceAlpha3(item.raceKey))
+//            tvTitle.text = item.raceKey
+//            tvCircuit.text = item.circuitName
         }
     }
 }

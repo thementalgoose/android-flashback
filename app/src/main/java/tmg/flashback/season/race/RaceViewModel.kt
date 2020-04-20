@@ -1,5 +1,6 @@
 package tmg.flashback.season.race
 
+import androidx.constraintlayout.widget.Placeholder
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
@@ -75,7 +76,9 @@ class RaceViewModel(
                     }
                 }
                 .map { it.driver.id }
-            val list: MutableList<RaceModel> = mutableListOf()
+            val list: MutableList<RaceModel> = mutableListOf(
+                RaceModel.RacePlaceholder
+            )
             when (viewType) {
                 RaceAdapterType.RACE -> {
                     var startIndex = 0
@@ -88,6 +91,7 @@ class RaceViewModel(
                             )
                         )
                         startIndex = 3
+                        list.add(RaceModel.RaceHeader)
                     }
                     for (i in startIndex until driverIds.size) {
                         list.add(getDriverModel(roundData, driverIds[i]))

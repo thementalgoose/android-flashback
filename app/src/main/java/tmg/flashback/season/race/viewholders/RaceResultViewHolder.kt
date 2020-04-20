@@ -30,9 +30,11 @@ class RaceResultViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnC
         itemView.apply {
             tvPosition.text = model.racePos.toString()
             layoutDriver.tvName.text = model.driver.name
-            layoutDriver.tvNumber.text = model.driver.number.toString()
-            layoutDriver.tvNumber.colorHighlight = model.driver.constructor.color
-            layoutDriver.imgFlag.setImageResource(context.getFlagResourceAlpha3(model.driver.nationalityISO))
+            layoutDriver.tvNumber.gone()
+            layoutDriver.imgFlag.gone()
+            tvDriverNumber.text = model.driver.number.toString()
+            tvDriverNumber.colorHighlight = model.driver.constructor.color
+            imgDriverFlag.setImageResource(context.getFlagResourceAlpha3(model.driver.nationalityISO))
             tvConstructor.text = model.driver.constructor.name
 
             tvPoints.text = model.racePoints.toEmptyIfZero()

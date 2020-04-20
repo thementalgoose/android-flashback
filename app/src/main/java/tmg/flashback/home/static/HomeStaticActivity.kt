@@ -4,11 +4,13 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.ColorFilter
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieProperty
 import com.airbnb.lottie.SimpleColorFilter
 import com.airbnb.lottie.model.KeyPath
 import com.airbnb.lottie.value.LottieValueCallback
 import kotlinx.android.synthetic.main.activity_home_static.*
+import kotlinx.android.synthetic.main.layout_header.view.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.R
@@ -43,23 +45,14 @@ class HomeStaticActivity : BaseActivity(), RaceAdapterCallback, TrackPickerCallb
 
     override fun initViews() {
 
-        initToolbar(R.id.toolbar)
-        supportActionBar?.title = getString(R.string.app_name)
-
         raceAdapter = RaceAdapter(this)
         rvData.adapter = raceAdapter
         rvData.layoutManager = LinearLayoutManager(this)
 
-        rvData.onScroll {
-            if (it && !fabTrackList.isOrWillBeShown) {
-                fabTrackList.show()
-            }
-            else if (!it && !fabTrackList.isOrWillBeHidden) {
-                fabTrackList.hide()
-            }
-        }
+        initialiseLottie(lottieLoading)
+        initialiseLottie(tryAgainView)
 
-        initialiseLottie()
+        layoutHeader.tvTitle.text = getString(R.string.app_name)
 
         observeViewModel()
     }
@@ -106,9 +99,9 @@ class HomeStaticActivity : BaseActivity(), RaceAdapterCallback, TrackPickerCallb
         }
 
         observe(viewModel.outputs.circuitInfo) {
-            imgCountry.setImageResource(getFlagResourceAlpha3(it.countryKey))
-            tvCountry.text = it.country
-            tvTrackName.text = it.circuitName
+            layoutHeader.imgCountry.setImageResource(getFlagResourceAlpha3(it.countryKey))
+            layoutHeader.tvCountry.text = it.country
+            layoutHeader.tvTrackName.text = it.circuitName
         }
 
         observe(viewModel.outputs.showSeasonRound) { (season, round) ->
@@ -121,14 +114,14 @@ class HomeStaticActivity : BaseActivity(), RaceAdapterCallback, TrackPickerCallb
         }
 
         observe(raceViewModel.outputs.date) {
-            tvDate.text = it.format(DateTimeFormatter.ofPattern("dd MMM yyyy"))
+            layoutHeader.tvDate.text = it.format(DateTimeFormatter.ofPattern("dd MMM yyyy"))
         }
 
         observe(raceViewModel.outputs.loading) {
             if (it) {
                 showLoading()
             } else {
-                hideLoading()
+                showData()
             }
         }
 
@@ -139,40 +132,61 @@ class HomeStaticActivity : BaseActivity(), RaceAdapterCallback, TrackPickerCallb
 
     private fun showError() {
 
-        progressBar.gone()
+        animateRv(false)
+        animateLoading(false)
+        animateTryAgain(true)
     }
 
     private fun showLoading() {
+        animateRv(false)
+        animateLoading(true)
+        animateTryAgain(false)
+    }
 
-        progressBar.visible()
-        clLoading.visible()
-        clLoading.animate()
-            .alpha(1.0f)
-            .setDuration(RECYCLER_VIEW_DURATION)
-            .start()
+    private fun showData() {
+        animateRv(true)
+        animateLoading(false)
+        animateTryAgain(false)
+    }
+
+    private fun animateTryAgain(into: Boolean) {
+        if (into) {
+            clTryAgain.visible()
+            tryAgainView.playAnimation()
+        }
+        else {
+            clTryAgain.gone()
+            tryAgainView.progress = 0.0f
+        }
+    }
+
+    private fun animateLoading(into: Boolean) {
+        if (into) {
+            clLoading.visible()
+            clLoading.animate()
+                .alpha(1.0f)
+                .setDuration(RECYCLER_VIEW_DURATION)
+                .start()
+        }
+        else {
+            clLoading.gone()
+            clLoading.alpha = 0.0f
+        }
+    }
+
+    private fun animateRv(into: Boolean) {
         rvData.animate()
-            .alpha(RECYCLER_ALPHA)
+            .alpha(if (into) 1.0f else RECYCLER_ALPHA)
             .setDuration(RECYCLER_VIEW_DURATION)
             .start()
     }
 
-    private fun hideLoading() {
-
-        progressBar.invisible()
-        clLoading.gone()
-        clLoading.alpha = 0.0f
-        rvData.animate()
-            .alpha(1.0f)
-            .setDuration(RECYCLER_VIEW_DURATION)
-            .start()
-    }
-
-    private fun initialiseLottie() {
+    private fun initialiseLottie(lottieView: LottieAnimationView) {
 
         val colorFilter: SimpleColorFilter = SimpleColorFilter(theme.getColor(R.attr.f1Loading))
         val keyPath: KeyPath = KeyPath("**")
         val callback = LottieValueCallback<ColorFilter>(colorFilter)
-        lottieLoading.addValueCallback(keyPath, LottieProperty.COLOR_FILTER, callback)
+        lottieView.addValueCallback(keyPath, LottieProperty.COLOR_FILTER, callback)
     }
 
     //region RaceAdapterCallback

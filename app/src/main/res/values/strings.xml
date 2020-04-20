@@ -75,6 +75,12 @@
     <string name="settings_help_shake_to_report_description">Shake the app at any time to screenshot and send me any bugs, issues, or suggestions you may have for this app!</string>
     <string name="settings_help_shake_to_report_after_app_restart">Your shake to report preference will be applied once the app has restarted</string>
 
+    <!-- Network connection -->
+
+    <string name="network_connection_issue">An error occurred. Please check you are connected to the internet and try again</string>
+    <string name="race_not_round">We don\'t have any statistics for this race at the moment, probably because the race hasn\'t started yet or is currently in progress. Please check back after the race.</string>
+    <string name="race_not_synced">We don\'t have any statistics for this race at the moment, but the race has ran already. Click \'Find\' below to try and pull this race information</string>
+
     <!-- About -->
 
     <string name="about_name">Jordan Fisher</string>
@@ -85,5 +91,8 @@
     - Icons made by Vitaly Gorbachev from www.flaticon.com\n\n
     If i\'ve missed anyone or anything please let me know</string>
     <string name="app_network_try_again">Try again</string>
+    <string name="round_podium_first">1st</string>
+    <string name="round_podium_second">2nd</string>
+    <string name="round_podium_third">3rd</string>
 
 </resources>
