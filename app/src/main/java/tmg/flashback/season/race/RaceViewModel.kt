@@ -91,7 +91,7 @@ class RaceViewModel(
                             )
                         )
                         startIndex = 3
-                        list.add(RaceModel.RaceHeader)
+                        list.add(RaceModel.RaceHeader(roundData.season, roundData.round))
                     }
                     for (i in startIndex until driverIds.size) {
                         list.add(getDriverModel(roundData, driverIds[i]))

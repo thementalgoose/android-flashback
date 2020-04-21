@@ -31,7 +31,10 @@ sealed class RaceModel {
         val q3Delta: String?
     ) : RaceModel()
 
-    object RaceHeader : RaceModel()
+    data class RaceHeader(
+        val season: Int,
+        val round: Int
+    ) : RaceModel()
 
     object QualifyingHeader : RaceModel()
 

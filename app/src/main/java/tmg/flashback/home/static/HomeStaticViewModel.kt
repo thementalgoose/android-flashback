@@ -9,6 +9,7 @@ import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import tmg.flashback.base.BaseViewModel
+import tmg.flashback.extensions.combinePair
 import tmg.flashback.extensions.filterNotEmpty
 import tmg.flashback.extensions.filterNotNull
 import tmg.flashback.home.trackpicker.TrackModel
@@ -37,6 +38,8 @@ interface HomeStaticViewModelOutputs {
     val openTrackList: LiveData<DataEvent<Pair<Int, Int>>>
     val closeTrackList: LiveData<Event>
     val circuitInfo: LiveData<TrackModel>
+
+    val showError: LiveData<Event>
 
     val showAppLockoutMessage: LiveData<DataEvent<AppLockout>>
     val showReleaseNotes: LiveData<Event>
@@ -103,6 +106,12 @@ class HomeStaticViewModel(
                 countryKey = round.countryISO
             )
         }
+        .flowOn(Dispatchers.IO)
+        .asLiveData(viewModelScope.coroutineContext)
+
+    override val showError: LiveData<Event> = historyDB.allHistory()
+        .filter { it.isEmpty() }
+        .map { Event() }
         .flowOn(Dispatchers.IO)
         .asLiveData(viewModelScope.coroutineContext)
 

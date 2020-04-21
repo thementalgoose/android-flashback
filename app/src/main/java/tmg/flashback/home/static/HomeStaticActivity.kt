@@ -29,6 +29,7 @@ import tmg.utilities.extensions.initToolbar
 import tmg.utilities.extensions.startActivityClearStack
 import tmg.utilities.extensions.views.gone
 import tmg.utilities.extensions.views.invisible
+import tmg.utilities.extensions.views.show
 import tmg.utilities.extensions.views.visible
 
 class HomeStaticActivity : BaseActivity(), RaceAdapterCallback, TrackPickerCallback {
@@ -38,6 +39,35 @@ class HomeStaticActivity : BaseActivity(), RaceAdapterCallback, TrackPickerCallb
 
     private val RECYCLER_ALPHA: Float = 0.15f
     private val RECYCLER_VIEW_DURATION: Long = 200
+
+    private var screenState: HomeStaticScreenState = HomeStaticScreenState.LOADING
+        private set(value) {
+            when (value) {
+                HomeStaticScreenState.ERROR -> {
+                    animateRv(false)
+                    animateLoading(false)
+                    animateTryAgain(true)
+                    fabTrackList.gone()
+                    fabTrackList.isEnabled = false
+                }
+                HomeStaticScreenState.LOADING -> {
+                    animateRv(false)
+                    animateLoading(true)
+                    animateTryAgain(false)
+                    fabTrackList.visible()
+                    fabTrackList.isEnabled = true
+                }
+                HomeStaticScreenState.DATA -> {
+                    animateRv(true)
+                    animateLoading(false)
+                    animateTryAgain(false)
+                    fabTrackList.visible()
+                    fabTrackList.isEnabled = true
+                }
+            }
+            field = value
+        }
+
 
     private lateinit var raceAdapter: RaceAdapter
 
@@ -99,6 +129,7 @@ class HomeStaticActivity : BaseActivity(), RaceAdapterCallback, TrackPickerCallb
         }
 
         observe(viewModel.outputs.circuitInfo) {
+
             layoutHeader.imgCountry.setImageResource(getFlagResourceAlpha3(it.countryKey))
             layoutHeader.tvCountry.text = it.country
             layoutHeader.tvTrackName.text = it.circuitName
@@ -118,35 +149,20 @@ class HomeStaticActivity : BaseActivity(), RaceAdapterCallback, TrackPickerCallb
         }
 
         observe(raceViewModel.outputs.loading) {
-            if (it) {
-                showLoading()
+            screenState = if (it) {
+                HomeStaticScreenState.LOADING
             } else {
-                showData()
+                HomeStaticScreenState.DATA
             }
         }
 
         observeEvent(viewModel.outputs.showAppLockoutMessage) {
             startActivityClearStack(Intent(this, LockoutActivity::class.java))
         }
-    }
 
-    private fun showError() {
-
-        animateRv(false)
-        animateLoading(false)
-        animateTryAgain(true)
-    }
-
-    private fun showLoading() {
-        animateRv(false)
-        animateLoading(true)
-        animateTryAgain(false)
-    }
-
-    private fun showData() {
-        animateRv(true)
-        animateLoading(false)
-        animateTryAgain(false)
+        observeEvent(viewModel.outputs.showError) {
+            screenState = HomeStaticScreenState.ERROR
+        }
     }
 
     private fun animateTryAgain(into: Boolean) {
