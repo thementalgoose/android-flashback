@@ -42,27 +42,32 @@ class HomeStaticActivity : BaseActivity(), RaceAdapterCallback, TrackPickerCallb
 
     private var screenState: HomeStaticScreenState = HomeStaticScreenState.LOADING
         private set(value) {
-            when (value) {
-                HomeStaticScreenState.ERROR -> {
-                    animateRv(false)
-                    animateLoading(false)
-                    animateTryAgain(true)
-                    fabTrackList.gone()
-                    fabTrackList.isEnabled = false
-                }
-                HomeStaticScreenState.LOADING -> {
-                    animateRv(false)
-                    animateLoading(true)
-                    animateTryAgain(false)
-                    fabTrackList.visible()
-                    fabTrackList.isEnabled = true
-                }
-                HomeStaticScreenState.DATA -> {
-                    animateRv(true)
-                    animateLoading(false)
-                    animateTryAgain(false)
-                    fabTrackList.visible()
-                    fabTrackList.isEnabled = true
+            if (value != field) {
+                when (value) {
+                    HomeStaticScreenState.ERROR -> {
+                        animateRv(false)
+                        animateLoading(false)
+                        animateTryAgain(true)
+                        fabTrackList.gone()
+                        fabTrackList.isEnabled = false
+                    }
+                    HomeStaticScreenState.LOADING -> {
+                        animateRv(false)
+                        animateLoading(true)
+                        animateTryAgain(false)
+                        fabTrackList.visible()
+                        fabTrackList.isEnabled = true
+                    }
+                    HomeStaticScreenState.DATA -> {
+                        animateRv(true)
+                        animateLoading(false)
+                        animateTryAgain(false)
+                        fabTrackList.visible()
+                        fabTrackList.isEnabled = true
+                    }
+                    HomeStaticScreenState.DATA_UNAVAILABLE -> {
+
+                    }
                 }
             }
             field = value
@@ -136,7 +141,6 @@ class HomeStaticActivity : BaseActivity(), RaceAdapterCallback, TrackPickerCallb
         }
 
         observe(viewModel.outputs.showSeasonRound) { (season, round) ->
-            localLog("Showing season round $season $round")
             raceViewModel.inputs.initialise(season, round)
         }
 
@@ -153,6 +157,14 @@ class HomeStaticActivity : BaseActivity(), RaceAdapterCallback, TrackPickerCallb
                 HomeStaticScreenState.LOADING
             } else {
                 HomeStaticScreenState.DATA
+            }
+        }
+
+        observe(raceViewModel.outputs.raceDataFound) {
+            screenState = if (it) {
+                HomeStaticScreenState.DATA
+            } else {
+                HomeStaticScreenState.DATA_UNAVAILABLE
             }
         }
 

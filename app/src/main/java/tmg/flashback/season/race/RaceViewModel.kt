@@ -18,6 +18,7 @@ import tmg.flashback.repo.db.SeasonOverviewDB
 import tmg.flashback.repo.models.*
 import tmg.flashback.repo.utils.toMaxIfZero
 import tmg.flashback.utils.DataEvent
+import tmg.flashback.utils.Event
 import tmg.flashback.utils.SeasonRound
 import tmg.flashback.utils.localLog
 
@@ -33,9 +34,11 @@ interface RaceViewModelInputs {
 //region Outputs
 
 interface RaceViewModelOutputs {
-    val items: LiveData<Pair<RaceAdapterType, List<RaceModel>>>
+    val items: LiveData<Triple<RaceAdapterType, List<RaceModel>, SeasonRound>>
     val date: LiveData<LocalDate>
     val time: LiveData<LocalTime>
+
+    val raceDataFound: LiveData<Boolean>
 
     val loading: MutableLiveData<Boolean>
 }
@@ -52,14 +55,21 @@ class RaceViewModel(
 
     override val loading: MutableLiveData<Boolean> = MutableLiveData()
 
-    private val roundFlow: Flow<Round> = seasonRound
+    private val seasonOverviewRound: Flow<Round?> = seasonRound
         .asFlow()
+        .flowOn(Dispatchers.IO)
         .flatMapLatest { (season, round) -> seasonOverviewDB.getSeasonRound(season, round) }
+
+    private val roundFlow: Flow<Round> = seasonOverviewRound
         .filter { it != null }
         .map { it!! }
         .flowOn(Dispatchers.IO)
 
-    override val items: LiveData<Pair<RaceAdapterType, List<RaceModel>>> = roundFlow
+    override val raceDataFound: LiveData<Boolean> = seasonOverviewRound
+        .map { it != null }
+        .asLiveData(viewModelScope.coroutineContext)
+
+    override val items: LiveData<Triple<RaceAdapterType, List<RaceModel>, SeasonRound>> = roundFlow
         .combinePair(viewType.asFlow())
         .map { (roundData, viewType) ->
             localLog("Combining view type with race model data")
@@ -106,7 +116,7 @@ class RaceViewModel(
             }
 
             localLog("List constructed")
-            return@map Pair(viewType, list)
+            return@map Triple(viewType, list, SeasonRound(roundData.season, roundData.round))
         }
         .then {
             loading.postValue(false)
