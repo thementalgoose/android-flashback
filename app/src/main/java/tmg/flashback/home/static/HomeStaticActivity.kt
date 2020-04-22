@@ -1,7 +1,6 @@
 package tmg.flashback.home.static
 
 import android.content.Intent
-import android.graphics.Color
 import android.graphics.ColorFilter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.airbnb.lottie.LottieAnimationView
@@ -21,21 +20,16 @@ import tmg.flashback.home.trackpicker.TrackPickerCallback
 import tmg.flashback.season.race.RaceAdapter
 import tmg.flashback.season.race.RaceAdapterCallback
 import tmg.flashback.season.race.RaceAdapterType
-import tmg.flashback.season.race.RaceViewModel
 import tmg.flashback.settings.SettingsActivity
 import tmg.flashback.settings.release.ReleaseBottomSheetFragment
 import tmg.flashback.utils.*
-import tmg.utilities.extensions.initToolbar
 import tmg.utilities.extensions.startActivityClearStack
 import tmg.utilities.extensions.views.gone
-import tmg.utilities.extensions.views.invisible
-import tmg.utilities.extensions.views.show
 import tmg.utilities.extensions.views.visible
 
 class HomeStaticActivity : BaseActivity(), RaceAdapterCallback, TrackPickerCallback {
 
     private val viewModel: HomeStaticViewModel by viewModel()
-    private val raceViewModel: RaceViewModel by viewModel()
 
     private val RECYCLER_ALPHA: Float = 0.15f
     private val RECYCLER_VIEW_DURATION: Long = 200
@@ -43,33 +37,16 @@ class HomeStaticActivity : BaseActivity(), RaceAdapterCallback, TrackPickerCallb
     private var screenState: HomeStaticScreenState = HomeStaticScreenState.LOADING
         private set(value) {
             if (value != field) {
-                when (value) {
-                    HomeStaticScreenState.ERROR -> {
-                        animateRv(false)
-                        animateLoading(false)
-                        animateTryAgain(true)
-                        fabTrackList.gone()
-                        fabTrackList.isEnabled = false
-                    }
-                    HomeStaticScreenState.LOADING -> {
-                        animateRv(false)
-                        animateLoading(true)
-                        animateTryAgain(false)
-                        fabTrackList.visible()
-                        fabTrackList.isEnabled = true
-                    }
-                    HomeStaticScreenState.DATA -> {
-                        animateRv(true)
-                        animateLoading(false)
-                        animateTryAgain(false)
-                        fabTrackList.visible()
-                        fabTrackList.isEnabled = true
-                    }
-                    HomeStaticScreenState.DATA_UNAVAILABLE -> {
+                animateRv(value == HomeStaticScreenState.DATA)
+                animateLoading(value == HomeStaticScreenState.LOADING)
+                animateError(value == HomeStaticScreenState.ERROR)
+                animateRaceData(value == HomeStaticScreenState.NOT_AVAILABLE)
 
-                    }
+                if (value == HomeStaticScreenState.LOADING) {
+                    rvData.smoothScrollToPosition(0)
                 }
             }
+            localLog("HomeStaticActivity: Changing state to $value")
             field = value
         }
 
@@ -85,7 +62,7 @@ class HomeStaticActivity : BaseActivity(), RaceAdapterCallback, TrackPickerCallb
         rvData.layoutManager = LinearLayoutManager(this)
 
         initialiseLottie(lottieLoading)
-        initialiseLottie(tryAgainView)
+        initialiseLottie(lottieTryAgain)
 
         layoutHeader.tvTitle.text = getString(R.string.app_name)
 
@@ -104,11 +81,11 @@ class HomeStaticActivity : BaseActivity(), RaceAdapterCallback, TrackPickerCallb
             .setOnNavigationItemSelectedListener {
                 when (it.itemId) {
                     R.id.nav_race -> {
-                        raceViewModel.inputs.orderBy(RaceAdapterType.RACE)
+                        viewModel.inputs.orderBy(RaceAdapterType.RACE)
                         return@setOnNavigationItemSelectedListener true
                     }
                     R.id.nav_qualifying -> {
-                        raceViewModel.inputs.orderBy(RaceAdapterType.QUALIFYING_POS)
+                        viewModel.inputs.orderBy(RaceAdapterType.QUALIFYING_POS)
                         return@setOnNavigationItemSelectedListener true
                     }
                     R.id.nav_settings -> {
@@ -138,53 +115,48 @@ class HomeStaticActivity : BaseActivity(), RaceAdapterCallback, TrackPickerCallb
             layoutHeader.imgCountry.setImageResource(getFlagResourceAlpha3(it.countryKey))
             layoutHeader.tvCountry.text = it.country
             layoutHeader.tvTrackName.text = it.circuitName
+            layoutHeader.tvRound.text = getString(R.string.round_number, it.round)
         }
 
-        observe(viewModel.outputs.showSeasonRound) { (season, round) ->
-            raceViewModel.inputs.initialise(season, round)
-        }
-
-        observe(raceViewModel.outputs.items) { (adapterType, list) ->
-            raceAdapter.update(adapterType, list)
-        }
-
-        observe(raceViewModel.outputs.date) {
-            layoutHeader.tvDate.text = it.format(DateTimeFormatter.ofPattern("dd MMM yyyy"))
-        }
-
-        observe(raceViewModel.outputs.loading) {
-            screenState = if (it) {
-                HomeStaticScreenState.LOADING
-            } else {
-                HomeStaticScreenState.DATA
-            }
-        }
-
-        observe(raceViewModel.outputs.raceDataFound) {
-            screenState = if (it) {
-                HomeStaticScreenState.DATA
-            } else {
-                HomeStaticScreenState.DATA_UNAVAILABLE
-            }
+        observe(viewModel.outputs.homeScreenState) {
+            screenState = it
         }
 
         observeEvent(viewModel.outputs.showAppLockoutMessage) {
             startActivityClearStack(Intent(this, LockoutActivity::class.java))
         }
 
-        observeEvent(viewModel.outputs.showError) {
-            screenState = HomeStaticScreenState.ERROR
+        observe(viewModel.outputs.items) { (adapterType, list) ->
+            raceAdapter.update(adapterType, list)
+        }
+
+        observe(viewModel.outputs.date) {
+            layoutHeader.tvDate.text = it.format(DateTimeFormatter.ofPattern("dd MMM yyyy"))
+        }
+
+        observe(viewModel.outputs.homeScreenState) {
+            screenState = it
         }
     }
 
-    private fun animateTryAgain(into: Boolean) {
+    private fun initialiseLottie(lottieView: LottieAnimationView) {
+
+        val colorFilter = SimpleColorFilter(theme.getColor(R.attr.f1Loading))
+        val keyPath = KeyPath("**")
+        val callback = LottieValueCallback<ColorFilter>(colorFilter)
+        lottieView.addValueCallback(keyPath, LottieProperty.COLOR_FILTER, callback)
+    }
+
+    //region View animations
+
+    private fun animateError(into: Boolean) {
         if (into) {
             clTryAgain.visible()
-            tryAgainView.playAnimation()
+            lottieTryAgain.playAnimation()
         }
         else {
             clTryAgain.gone()
-            tryAgainView.progress = 0.0f
+            lottieTryAgain.progress = 0.0f
         }
     }
 
@@ -209,18 +181,23 @@ class HomeStaticActivity : BaseActivity(), RaceAdapterCallback, TrackPickerCallb
             .start()
     }
 
-    private fun initialiseLottie(lottieView: LottieAnimationView) {
-
-        val colorFilter: SimpleColorFilter = SimpleColorFilter(theme.getColor(R.attr.f1Loading))
-        val keyPath: KeyPath = KeyPath("**")
-        val callback = LottieValueCallback<ColorFilter>(colorFilter)
-        lottieView.addValueCallback(keyPath, LottieProperty.COLOR_FILTER, callback)
+    private fun animateRaceData(into: Boolean) {
+        if (into) {
+            clNoData.visible()
+            lottieTryAgain.playAnimation()
+        }
+        else {
+            clNoData.gone()
+            lottieTryAgain.progress = 0.0f
+        }
     }
+
+    //endregion
 
     //region RaceAdapterCallback
 
     override fun orderBy(adapterType: RaceAdapterType) {
-        raceViewModel.inputs.orderBy(adapterType)
+        viewModel.inputs.orderBy(adapterType)
     }
 
     //endregion

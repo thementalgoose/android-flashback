@@ -24,6 +24,7 @@
         android:id="@+id/rvData"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:paddingBottom="@dimen/paddingVLarge"
         android:clipToPadding="false"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layout_constraintBottom_toTopOf="@id/bnvNavigation"
@@ -102,13 +103,14 @@
         android:id="@+id/clTryAgain"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/rvData"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/rvData">
 
         <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/tryAgainView"
+            android:id="@+id/lottieTryAgain"
             android:layout_width="match_parent"
             android:layout_height="110dp"
             app:layout_constraintBottom_toTopOf="@id/tvTryAgainDesc"
@@ -159,7 +161,7 @@
         app:layout_constraintTop_toTopOf="@id/rvData">
 
         <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/lottoeNoData"
+            android:id="@+id/lottieNoData"
             android:layout_width="match_parent"
             android:layout_height="110dp"
             app:layout_constraintBottom_toTopOf="@id/tvNoDataDesc"

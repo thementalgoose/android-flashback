@@ -19,7 +19,7 @@ import tmg.flashback.repo_firebase.repos.SeasonOverviewFirestore
 
 var f1Module = module {
 
-    viewModel { HomeStaticViewModel(get(), get(), get()) }
+    viewModel { HomeStaticViewModel(get(), get(), get(), get()) }
 
     viewModel { DatePickerViewModel() }
     viewModel { TrackPickerViewModel(get()) }

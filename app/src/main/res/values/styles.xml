@@ -20,6 +20,8 @@
         <item name="f1BackgroundInversePrimary">#181818</item>
         <item name="f1BackgroundInverseSecondary">#383838</item>
 
+        <item name="f1BackgroundOverlay">#44FBFBFB</item>
+
         <item name="f1Loading">#a8a8a8</item>
 
         <item name="f1PurpleSector">#673AB7</item>
@@ -98,6 +100,9 @@
     </style>
     <style name="Text.HomeStatic.TrackName" parent="Text.HomeStatic">
         <item name="android:textSize">12sp</item>
+    </style>
+    <style name="Text.HomeStatic.Round" parent="Text.HomeStatic">
+        <item name="android:textSize">10sp</item>
     </style>
     <style name="Text.HomeStatic.Date" parent="Text.HomeStatic">
         <item name="android:textSize">12sp</item>

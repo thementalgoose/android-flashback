@@ -11,6 +11,8 @@
     <attr name="f1TextInverseSecondary" format="color" />
     <attr name="f1TextInverseTertiary" format="color" />
 
+    <attr name="f1BackgroundOverlay" format="color" />
+
     <attr name="f1Loading" format="color" />
 
     <attr name="f1PurpleSector" format="color" />

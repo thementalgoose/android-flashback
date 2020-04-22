@@ -11,5 +11,6 @@ data class HistoryRound(
     val raceName: String,
     val circuitName: String,
     val country: String,
-    val countryISO: String
+    val countryISO: String,
+    val hasResults: Boolean
 )

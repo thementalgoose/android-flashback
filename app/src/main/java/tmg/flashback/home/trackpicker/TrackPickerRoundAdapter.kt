@@ -9,6 +9,7 @@ import kotlinx.android.synthetic.main.view_track_picker_track.view.*
 import tmg.flashback.R
 import tmg.flashback.utils.Selected
 import tmg.flashback.utils.getFlagResourceAlpha3
+import tmg.flashback.utils.localLog
 
 class TrackPickerRoundAdapter: RecyclerView.Adapter<TrackPickerRoundAdapter.ViewHolder>() {
 
@@ -46,12 +47,14 @@ class TrackPickerRoundAdapter: RecyclerView.Adapter<TrackPickerRoundAdapter.View
 
         fun bind(model: TrackModel, isSelected: Boolean) {
             this.trackModel = model
+            localLog("Binding ${trackModel.country} to be ${trackModel.season} / ${trackModel.round}")
             itemView.imgCountry.setImageResource(itemView.context.getFlagResourceAlpha3(model.countryKey))
             itemView.clItem.isSelected = isSelected
             itemView.tvCountry.text = model.country
         }
 
         override fun onClick(p0: View?) {
+            localLog("Clicking ${trackModel.season} / ${trackModel.round}")
             listeners.forEach { it(trackModel) }
         }
     }
@@ -71,7 +74,9 @@ class TrackPickerRoundAdapter: RecyclerView.Adapter<TrackPickerRoundAdapter.View
 
         override fun getNewListSize(): Int = newList.size
 
-        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean = areItemsTheSame(oldItemPosition, newItemPosition)
+        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean = areItemsTheSame(oldItemPosition, newItemPosition) &&
+                oldList[oldItemPosition].value.season == newList[newItemPosition].value.season &&
+                oldList[oldItemPosition].value.round == newList[newItemPosition].value.round
 
     }
 }

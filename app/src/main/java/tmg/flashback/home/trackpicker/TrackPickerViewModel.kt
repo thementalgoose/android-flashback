@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.map
 import tmg.flashback.base.BaseViewModel
 import tmg.flashback.extensions.combinePair
+import tmg.flashback.extensions.filterNotNull
 import tmg.flashback.extensions.toDataEvent
 import tmg.flashback.repo.db.HistoryDB
 import tmg.flashback.supportedYears
@@ -57,9 +58,12 @@ class TrackPickerViewModel(
     override val trackList: LiveData<List<Selected<TrackModel>>> = historyDB
         .allHistory()
         .combinePair(pickSeason.asFlow())
-        .map { (all, season) -> all.first { it.season == season } }
+        .map { (all, season) -> all.firstOrNull { it.season == season } }
         .combinePair(seasonRound.asFlow())
         .map { (season, currentSeasonRound) ->
+            if (season == null) {
+                return@map emptyList<Selected<TrackModel>>()
+            }
             season.rounds
                 .map { race ->
                     Selected(

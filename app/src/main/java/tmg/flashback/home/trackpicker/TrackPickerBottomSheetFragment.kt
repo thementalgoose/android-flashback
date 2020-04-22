@@ -49,6 +49,10 @@ class TrackPickerBottomSheetFragment: RxBottomSheetFragment() {
         }
         rvRounds.adapter = roundAdapter
         rvRounds.layoutManager = LinearLayoutManager(context)
+
+        imgbtnClose.setOnClickListener {
+            dismiss()
+        }
     }
 
     override fun observeViewModel() {

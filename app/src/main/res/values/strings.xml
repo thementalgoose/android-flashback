@@ -20,6 +20,9 @@
     <string name="nav_race">Race</string>
     <string name="nav_qualifying">Qualifying</string>
 
+    <!-- Home screen -->
+    <string name="round_number">Round %d</string>
+
     <!-- Synchronisation -->
     <string name="sync_type_overview">Season Overview</string>
     <string name="sync_type_laps">Laps</string>

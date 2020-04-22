@@ -1,7 +1,7 @@
 package tmg.flashback.home.static
 
 enum class HomeStaticScreenState {
-    DATA_UNAVAILABLE,
+    NOT_AVAILABLE,
     ERROR,
     LOADING,
     DATA

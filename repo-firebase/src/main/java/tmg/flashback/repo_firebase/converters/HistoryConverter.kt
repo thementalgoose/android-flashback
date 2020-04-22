@@ -31,7 +31,8 @@ fun FHistorySeasonRound.convert(): Pair<Int, HistoryRound> {
             raceName = this.raceName,
             country = this.country,
             countryISO = this.countryISO,
-            circuitName = this.circuit
+            circuitName = this.circuit,
+            hasResults = this.hasResults ?: false
         )
     )
 }

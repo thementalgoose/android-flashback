@@ -38,8 +38,6 @@ interface RaceViewModelOutputs {
     val date: LiveData<LocalDate>
     val time: LiveData<LocalTime>
 
-    val raceDataFound: LiveData<Boolean>
-
     val loading: MutableLiveData<Boolean>
 }
 
@@ -55,24 +53,17 @@ class RaceViewModel(
 
     override val loading: MutableLiveData<Boolean> = MutableLiveData()
 
-    private val seasonOverviewRound: Flow<Round?> = seasonRound
+    private val roundFlow: Flow<Round> = seasonRound
         .asFlow()
         .flowOn(Dispatchers.IO)
         .flatMapLatest { (season, round) -> seasonOverviewDB.getSeasonRound(season, round) }
-
-    private val roundFlow: Flow<Round> = seasonOverviewRound
         .filter { it != null }
         .map { it!! }
         .flowOn(Dispatchers.IO)
 
-    override val raceDataFound: LiveData<Boolean> = seasonOverviewRound
-        .map { it != null }
-        .asLiveData(viewModelScope.coroutineContext)
-
     override val items: LiveData<Triple<RaceAdapterType, List<RaceModel>, SeasonRound>> = roundFlow
         .combinePair(viewType.asFlow())
         .map { (roundData, viewType) ->
-            localLog("Combining view type with race model data")
             val driverIds: List<String> = roundData
                 .race
                 .values
@@ -114,8 +105,6 @@ class RaceViewModel(
                     list.addAll(driverIds.map { getDriverModel(roundData, it) })
                 }
             }
-
-            localLog("List constructed")
             return@map Triple(viewType, list, SeasonRound(roundData.season, roundData.round))
         }
         .then {
