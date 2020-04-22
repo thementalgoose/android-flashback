@@ -1,21 +1,19 @@
 package tmg.flashback
 
 import android.content.Intent
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import org.koin.android.ext.android.inject
 import tmg.flashback.base.BaseActivity
 import tmg.flashback.home.static.HomeStaticActivity
+import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.enums.ViewTypePref
 
-class SplashActivity: BaseActivity() {
+class SplashActivity: AppCompatActivity() {
 
-    override fun layoutId(): Int = R.layout.activity_splash
-
-    override fun initViews() {
-
-        when (prefsDB.viewType) {
-            ViewTypePref.STATIC -> {
-                startActivity(Intent(this, HomeStaticActivity::class.java))
-                finish()
-            }
-        }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        startActivity(Intent(this, HomeStaticActivity::class.java))
+        finish()
     }
 }

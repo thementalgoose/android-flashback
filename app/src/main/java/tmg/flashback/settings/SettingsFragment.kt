@@ -26,7 +26,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
     companion object {
         const val keyPreferenceCustomisationYear: String = "prefs_customisation_year"
         const val keyPreferenceCustomisationQualifyingDelta: String = "prefs_customisation_qualifying_delta"
-        const val keyPreferenceCustomisationViewType: String = "prefs_customisation_view_type"
         const val keyPreferenceHelpAbout: String = "prefs_help_about"
         const val keyPreferenceHelpReleaseNotes: String = "prefs_help_release_notes"
         const val keyPreferenceHelpCrashReporting: String = "prefs_help_crash_reporting"
@@ -38,7 +37,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         year()
         qualifyingDelta()
-        viewType()
 
         about()
         releaseNotes()
@@ -84,33 +82,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 pref.isChecked = value
                 prefs.showQualifyingDelta = value
                 return@setOnPreferenceChangeListener true
-            }
-        }
-    }
-
-    private fun viewType() {
-        findPreference<Preference>(keyPreferenceCustomisationViewType)?.let { pref ->
-            pref.isEnabled = BuildConfig.DEBUG
-            pref.setOnPreferenceClickListener {
-                activity?.let { activity ->
-                    var selected: Int = -1
-                    val items: Array<CharSequence> =
-                        ViewTypePref.values().mapIndexed { index, data ->
-                            if (data == prefs.viewType) {
-                                selected = index
-                            }
-                            activity.getString(data.label)
-                        }.toTypedArray()
-                    AlertDialog.Builder(activity)
-                        .setTitle(R.string.settings_customisation_view_type_title)
-                        .setSingleChoiceItems(items, selected) { dialog, index ->
-                            prefs.viewType = ViewTypePref.values()[index]
-                            dialog.dismiss()
-                        }
-                        .create()
-                        .show()
-                }
-                return@setOnPreferenceClickListener true
             }
         }
     }

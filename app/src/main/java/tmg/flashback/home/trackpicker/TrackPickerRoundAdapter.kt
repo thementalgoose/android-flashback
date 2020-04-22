@@ -47,14 +47,12 @@ class TrackPickerRoundAdapter: RecyclerView.Adapter<TrackPickerRoundAdapter.View
 
         fun bind(model: TrackModel, isSelected: Boolean) {
             this.trackModel = model
-            localLog("Binding ${trackModel.country} to be ${trackModel.season} / ${trackModel.round}")
             itemView.imgCountry.setImageResource(itemView.context.getFlagResourceAlpha3(model.countryKey))
             itemView.clItem.isSelected = isSelected
             itemView.tvCountry.text = model.country
         }
 
         override fun onClick(p0: View?) {
-            localLog("Clicking ${trackModel.season} / ${trackModel.round}")
             listeners.forEach { it(trackModel) }
         }
     }

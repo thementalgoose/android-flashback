@@ -82,6 +82,16 @@
 
 
 
+    <style name="LightTheme.Launcher" parent="LightTheme">
+        <item name="android:windowBackground">@drawable/launch_screen</item>
+    </style>
+
+
+
+
+
+
+
 
 
 

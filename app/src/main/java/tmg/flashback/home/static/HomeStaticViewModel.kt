@@ -1,16 +1,17 @@
 package tmg.flashback.home.static
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.liveData
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.Channel.Factory.BUFFERED
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.*
-import org.threeten.bp.LocalDate
-import org.threeten.bp.LocalTime
+import kotlinx.coroutines.launch
 import tmg.flashback.base.BaseViewModel
 import tmg.flashback.dateFormatter
-import tmg.flashback.extensions.combinePair
 import tmg.flashback.extensions.combineTriple
 import tmg.flashback.extensions.filterNotNull
 import tmg.flashback.extensions.then
@@ -22,7 +23,6 @@ import tmg.flashback.repo.db.SeasonOverviewDB
 import tmg.flashback.repo.models.*
 import tmg.flashback.season.race.RaceAdapterType
 import tmg.flashback.season.race.RaceModel
-import tmg.flashback.timeFormatter
 import tmg.flashback.utils.DataEvent
 import tmg.flashback.utils.Event
 import tmg.flashback.utils.SeasonRound
@@ -47,7 +47,6 @@ interface HomeStaticViewModelOutputs {
 
     val circuitInfo: LiveData<TrackModel>
     val date: LiveData<String>
-    val time: LiveData<String>
 
     val items: LiveData<Triple<RaceAdapterType, List<RaceModel>, SeasonRound>>
 
@@ -71,39 +70,37 @@ class HomeStaticViewModel(
     private val openTrackEvent: BroadcastChannel<Unit> = BroadcastChannel(BUFFERED)
     private val closedTrackEvent: ConflatedBroadcastChannel<Unit> = ConflatedBroadcastChannel()
 
-    private var viewType: ConflatedBroadcastChannel<RaceAdapterType> = ConflatedBroadcastChannel(RaceAdapterType.RACE)
-    private val homeScreenStateEvent: ConflatedBroadcastChannel<HomeStaticScreenState> = ConflatedBroadcastChannel(HomeStaticScreenState.LOADING)
+    private var viewType: ConflatedBroadcastChannel<RaceAdapterType> =
+        ConflatedBroadcastChannel(RaceAdapterType.RACE)
+    private val homeScreenStateEvent: ConflatedBroadcastChannel<HomeStaticScreenState> =
+        ConflatedBroadcastChannel(HomeStaticScreenState.LOADING)
 
     /**
      * Getting the round based on the selection
      */
-    private val roundFlow: Flow<Round?> = seasonRound
-            .asFlow()
-            .flatMapLatest { (season, round) -> seasonOverviewDB.getSeasonRound(season, round) }
-            .flowOn(Dispatchers.IO)
+    private val roundValue: ConflatedBroadcastChannel<Round?> = ConflatedBroadcastChannel()
 
     /**
      * Flow to Represent the currently selected history round model
      */
     private val selectionFlow: Flow<HistoryRound?> = historyDB.allHistory()
-            .combine(seasonRound.asFlow()) { list, seasonRound ->
+        .combine(seasonRound.asFlow()) { list, seasonRound ->
 
-                if (list.isEmpty()) {
-                    homeScreenStateEvent.offer(HomeStaticScreenState.ERROR)
-                }
-
-                val historyRound: HistoryRound? = list.firstOrNull { it.season == seasonRound.first }
-                        ?.rounds
-                        ?.firstOrNull { it.round == seasonRound.second }
-
-                if (list.isNotEmpty() && historyRound == null) {
-                    homeScreenStateEvent.offer(HomeStaticScreenState.NOT_AVAILABLE)
-                }
-                else if (historyRound?.hasResults == false) {
-                    homeScreenStateEvent.offer(HomeStaticScreenState.NOT_AVAILABLE)
-                }
-                return@combine historyRound
+            if (list.isEmpty()) {
+                homeScreenStateEvent.offer(HomeStaticScreenState.ERROR)
             }
+
+            val historyRound: HistoryRound? = list.firstOrNull { it.season == seasonRound.first }
+                ?.rounds
+                ?.firstOrNull { it.round == seasonRound.second }
+
+            if (list.isNotEmpty() && historyRound == null) {
+                homeScreenStateEvent.offer(HomeStaticScreenState.NOT_AVAILABLE)
+            } else if (historyRound?.hasResults == false) {
+                homeScreenStateEvent.offer(HomeStaticScreenState.NOT_AVAILABLE)
+            }
+            return@combine historyRound
+        }
 
 
     //region Track list
@@ -160,70 +157,68 @@ class HomeStaticViewModel(
         .flowOn(Dispatchers.IO)
         .asLiveData(viewModelScope.coroutineContext)
 
-    override val date: LiveData<String> = roundFlow
-            .map { it?.date?.format(dateFormatter) ?: "" }
-            .asLiveData(viewModelScope.coroutineContext)
-
-    override val time: LiveData<String> = roundFlow
-            .map { it?.time?.format(timeFormatter) ?: "" }
-            .asLiveData(viewModelScope.coroutineContext)
+    override val date: LiveData<String> = roundValue
+        .asFlow()
+        .map { it?.date?.format(dateFormatter) ?: "" }
+        .asLiveData(viewModelScope.coroutineContext)
 
     //endregion
 
     //region Home Screen State
 
     override val homeScreenState: LiveData<HomeStaticScreenState> = homeScreenStateEvent
-            .asFlow()
-            .asLiveData(viewModelScope.coroutineContext)
+        .asFlow()
+        .asLiveData(viewModelScope.coroutineContext)
 
     //endregion
 
     //region Race items
 
-    override val items: LiveData<Triple<RaceAdapterType, List<RaceModel>, SeasonRound>> = roundFlow
-            .combineTriple(viewType.asFlow(), seasonRound.asFlow())
-            .map { (roundData, viewType, seasonRoundValue) ->
-                val driverIds: List<String> = getOrderedDriverIds(roundData, viewType)
+    override val items: LiveData<Triple<RaceAdapterType, List<RaceModel>, SeasonRound>> = roundValue
+        .asFlow()
+        .combineTriple(viewType.asFlow(), seasonRound.asFlow())
+        .filter { (roundData, _, sr) -> sr.first == roundData?.season && sr.second == roundData.round }
+        .map { (roundData, viewType, seasonRoundValue) ->
+            val driverIds: List<String> = getOrderedDriverIds(roundData, viewType)
 
-                if (roundData == null) {
-                    return@map Triple(viewType, emptyList<RaceModel>(), seasonRoundValue)
-                }
+            if (roundData == null) {
+                return@map Triple(viewType, emptyList<RaceModel>(), seasonRoundValue)
+            }
 
-                val list: MutableList<RaceModel> = mutableListOf(RaceModel.RacePlaceholder)
-                when (viewType) {
-                    RaceAdapterType.RACE -> {
-                        var startIndex = 0
-                        if (driverIds.size >= 3) {
-                            list.add(
-                                    RaceModel.Podium(
-                                            driverFirst = getDriverModel(roundData, driverIds[0]),
-                                            driverSecond = getDriverModel(roundData, driverIds[1]),
-                                            driverThird = getDriverModel(roundData, driverIds[2])
-                                    )
+            val list: MutableList<RaceModel> = mutableListOf(RaceModel.RacePlaceholder)
+            when (viewType) {
+                RaceAdapterType.RACE -> {
+                    var startIndex = 0
+                    if (driverIds.size >= 3) {
+                        list.add(
+                            RaceModel.Podium(
+                                driverFirst = getDriverModel(roundData, driverIds[0]),
+                                driverSecond = getDriverModel(roundData, driverIds[1]),
+                                driverThird = getDriverModel(roundData, driverIds[2])
                             )
-                            startIndex = 3
-                            list.add(RaceModel.RaceHeader(roundData.season, roundData.round))
-                        }
-                        for (i in startIndex until driverIds.size) {
-                            list.add(getDriverModel(roundData, driverIds[i]))
-                        }
+                        )
+                        startIndex = 3
+                        list.add(RaceModel.RaceHeader(roundData.season, roundData.round))
                     }
-                    RaceAdapterType.QUALIFYING_POS_1,
-                    RaceAdapterType.QUALIFYING_POS_2,
-                    RaceAdapterType.QUALIFYING_POS -> {
-                        list.add(RaceModel.QualifyingHeader)
-                        list.addAll(driverIds.map { getDriverModel(roundData, it) })
+                    for (i in startIndex until driverIds.size) {
+                        list.add(getDriverModel(roundData, driverIds[i]))
                     }
                 }
-                return@map Triple(viewType, list, SeasonRound(roundData.season, roundData.round))
-            }
-            .then {
-                localLog(" >> History Round: Data loaded, DATA")
-                if (it.second.isNotEmpty()) {
-                    homeScreenStateEvent.offer(HomeStaticScreenState.DATA)
+                RaceAdapterType.QUALIFYING_POS_1,
+                RaceAdapterType.QUALIFYING_POS_2,
+                RaceAdapterType.QUALIFYING_POS -> {
+                    list.add(RaceModel.QualifyingHeader)
+                    list.addAll(driverIds.map { getDriverModel(roundData, it) })
                 }
             }
-            .asLiveData(viewModelScope.coroutineContext)
+            return@map Triple(viewType, list, SeasonRound(roundData.season, roundData.round))
+        }
+        .then {
+            if (it.second.isNotEmpty()) {
+                homeScreenStateEvent.offer(HomeStaticScreenState.DATA)
+            }
+        }
+        .asLiveData(viewModelScope.coroutineContext)
 
     //endregion
 
@@ -231,6 +226,16 @@ class HomeStaticViewModel(
     var outputs: HomeStaticViewModelOutputs = this
 
     init {
+        viewModelScope.launch {
+            seasonRound
+                .asFlow()
+                .flatMapLatest { (season, round) -> seasonOverviewDB.getSeasonRound(season, round) }
+                .flowOn(Dispatchers.IO)
+                .collect {
+                    roundValue.send(it)
+                }
+        }
+
         select(prefsDB.selectedYear, 1)
     }
 
@@ -243,7 +248,6 @@ class HomeStaticViewModel(
 
     override fun select(season: Int, round: Int) {
 
-        localLog(" >> Selecting $season $round so setting state to LOADING")
         homeScreenStateEvent.offer(HomeStaticScreenState.LOADING)
         seasonRound.offer(SeasonRound(season, round))
     }
@@ -288,22 +292,22 @@ class HomeStaticViewModel(
     private fun getDriverModel(round: Round, driverId: String): RaceModel.Single {
         val overview = round.driverOverview(driverId)
         return RaceModel.Single(
-                season = round.season,
-                round = round.round,
-                driver = round.drivers.first { it.id == driverId },
-                q1 = overview.q1,
-                q2 = overview.q2,
-                q3 = overview.q3,
-                raceResult = overview.race.time ?: LapTime(),
-                racePos = overview.race.finish,
-                gridPos = overview.race.grid,
-                qualified = overview.race.qualified,
-                racePoints = overview.race.points,
-                status = overview.race.status,
-                fastestLap = overview.race.fastestLap?.rank == 1,
-                q1Delta = if (prefsDB.showQualifyingDelta) round.q1.getTopLapTime()?.deltaTo(overview.q1?.time) else null,
-                q2Delta = if (prefsDB.showQualifyingDelta) round.q2.getTopLapTime()?.deltaTo(overview.q2?.time) else null,
-                q3Delta = if (prefsDB.showQualifyingDelta) round.q3.getTopLapTime()?.deltaTo(overview.q3?.time) else null
+            season = round.season,
+            round = round.round,
+            driver = round.drivers.first { it.id == driverId },
+            q1 = overview.q1,
+            q2 = overview.q2,
+            q3 = overview.q3,
+            raceResult = overview.race.time ?: LapTime(),
+            racePos = overview.race.finish,
+            gridPos = overview.race.grid,
+            qualified = overview.race.qualified,
+            racePoints = overview.race.points,
+            status = overview.race.status,
+            fastestLap = overview.race.fastestLap?.rank == 1,
+            q1Delta = if (prefsDB.showQualifyingDelta) round.q1.getTopLapTime()?.deltaTo(overview.q1?.time) else null,
+            q2Delta = if (prefsDB.showQualifyingDelta) round.q2.getTopLapTime()?.deltaTo(overview.q2?.time) else null,
+            q3Delta = if (prefsDB.showQualifyingDelta) round.q3.getTopLapTime()?.deltaTo(overview.q3?.time) else null
         )
     }
 
@@ -312,10 +316,10 @@ class HomeStaticViewModel(
      */
     private fun Map<String, RoundQualifyingResult>.getTopLapTime(): LapTime? {
         return this
-                .toSortedMap()
-                .toList()
-                .minBy { it.second.position }!!
-                .second
-                .time
+            .toSortedMap()
+            .toList()
+            .minBy { it.second.position }!!
+            .second
+            .time
     }
 }

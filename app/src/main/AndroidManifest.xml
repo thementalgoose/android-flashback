@@ -13,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/LightTheme">
 
-        <activity android:name="tmg.flashback.SplashActivity">
+        <activity android:name="tmg.flashback.SplashActivity"
+            android:theme="@style/LightTheme.Launcher">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

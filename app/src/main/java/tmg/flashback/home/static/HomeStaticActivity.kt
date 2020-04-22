@@ -46,7 +46,6 @@ class HomeStaticActivity : BaseActivity(), RaceAdapterCallback, TrackPickerCallb
                     rvData.smoothScrollToPosition(0)
                 }
             }
-            localLog("HomeStaticActivity: Changing state to $value")
             field = value
         }
 
@@ -116,10 +115,6 @@ class HomeStaticActivity : BaseActivity(), RaceAdapterCallback, TrackPickerCallb
             layoutHeader.tvCountry.text = it.country
             layoutHeader.tvTrackName.text = it.circuitName
             layoutHeader.tvRound.text = getString(R.string.round_number, it.round)
-        }
-
-        observe(viewModel.outputs.homeScreenState) {
-            screenState = it
         }
 
         observeEvent(viewModel.outputs.showAppLockoutMessage) {
