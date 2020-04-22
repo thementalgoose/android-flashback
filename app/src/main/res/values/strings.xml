@@ -81,8 +81,7 @@
     <!-- Network connection -->
 
     <string name="network_connection_issue">An error occurred. Please check you are connected to the internet and try again</string>
-    <string name="race_not_started">We don\'t have any statistics for this race at the moment, probably because the race hasn\'t started yet or is currently in progress. Please check back after the race.</string>
-    <string name="race_not_synced">We don\'t have any statistics for this race at the moment, but the race has ran already. Click \'Find\' below to try and pull this race information</string>
+    <string name="race_not_started">This race hasn\'t started yet or is currently unavailable. Please check back after the race.</string>
 
     <!-- About -->
 

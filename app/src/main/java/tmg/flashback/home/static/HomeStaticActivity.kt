@@ -10,6 +10,9 @@ import com.airbnb.lottie.model.KeyPath
 import com.airbnb.lottie.value.LottieValueCallback
 import kotlinx.android.synthetic.main.activity_home_static.*
 import kotlinx.android.synthetic.main.layout_header.view.*
+import kotlinx.android.synthetic.main.layout_home_error.view.*
+import kotlinx.android.synthetic.main.layout_home_loading.view.*
+import kotlinx.android.synthetic.main.layout_home_unavailable.view.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.R
@@ -40,7 +43,7 @@ class HomeStaticActivity : BaseActivity(), RaceAdapterCallback, TrackPickerCallb
                 animateRv(value == HomeStaticScreenState.DATA)
                 animateLoading(value == HomeStaticScreenState.LOADING)
                 animateError(value == HomeStaticScreenState.ERROR)
-                animateRaceData(value == HomeStaticScreenState.NOT_AVAILABLE)
+                animateUnavailable(value == HomeStaticScreenState.NOT_AVAILABLE)
 
                 if (value == HomeStaticScreenState.LOADING) {
                     rvData.smoothScrollToPosition(0)
@@ -60,8 +63,9 @@ class HomeStaticActivity : BaseActivity(), RaceAdapterCallback, TrackPickerCallb
         rvData.adapter = raceAdapter
         rvData.layoutManager = LinearLayoutManager(this)
 
-        initialiseLottie(lottieLoading)
-        initialiseLottie(lottieTryAgain)
+        initialiseLottie(layoutLoading.lottieLoading)
+        initialiseLottie(layoutError.lottieTryAgain)
+        initialiseLottie(layoutUnavailable.lottieNoData)
 
         layoutHeader.tvTitle.text = getString(R.string.app_name)
 
@@ -146,26 +150,26 @@ class HomeStaticActivity : BaseActivity(), RaceAdapterCallback, TrackPickerCallb
 
     private fun animateError(into: Boolean) {
         if (into) {
-            clTryAgain.visible()
-            lottieTryAgain.playAnimation()
+            layoutError.visible()
+            layoutError.lottieTryAgain.playAnimation()
         }
         else {
-            clTryAgain.gone()
-            lottieTryAgain.progress = 0.0f
+            layoutError.gone()
+            layoutError.lottieTryAgain.progress = 0.0f
         }
     }
 
     private fun animateLoading(into: Boolean) {
         if (into) {
-            clLoading.visible()
-            clLoading.animate()
+            layoutLoading.visible()
+            layoutLoading.animate()
                 .alpha(1.0f)
                 .setDuration(RECYCLER_VIEW_DURATION)
                 .start()
         }
         else {
-            clLoading.gone()
-            clLoading.alpha = 0.0f
+            layoutLoading.gone()
+            layoutLoading.alpha = 0.0f
         }
     }
 
@@ -176,14 +180,14 @@ class HomeStaticActivity : BaseActivity(), RaceAdapterCallback, TrackPickerCallb
             .start()
     }
 
-    private fun animateRaceData(into: Boolean) {
+    private fun animateUnavailable(into: Boolean) {
         if (into) {
-            clNoData.visible()
-            lottieTryAgain.playAnimation()
+            layoutUnavailable.visible()
+            layoutUnavailable.lottieNoData.playAnimation()
         }
         else {
-            clNoData.gone()
-            lottieTryAgain.progress = 0.0f
+            layoutUnavailable.gone()
+            layoutUnavailable.lottieNoData.progress = 0.0f
         }
     }
 

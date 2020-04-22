@@ -24,8 +24,8 @@
         android:id="@+id/rvData"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:paddingBottom="@dimen/paddingVLarge"
         android:clipToPadding="false"
+        android:paddingBottom="@dimen/paddingXLarge"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layout_constraintBottom_toTopOf="@id/bnvNavigation"
         app:layout_constraintEnd_toEndOf="parent"
@@ -63,142 +63,36 @@
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/menu_static" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/clLoading"
+    <include
+        android:id="@+id/layoutLoading"
+        layout="@layout/layout_home_loading"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="@id/rvData"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/rvData">
+        app:layout_constraintTop_toTopOf="@id/rvData" />
 
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/lottieLoading"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/loadingSize"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:lottie_autoPlay="true"
-            app:lottie_loop="true"
-            app:lottie_rawRes="@raw/loading"
-            app:lottie_scale="1.5" />
-
-        <TextView
-            android:id="@+id/tvLoading"
-            style="@style/Text.Loading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/paddingLarge"
-            android:paddingTop="@dimen/paddingSmall"
-            android:paddingBottom="@dimen/paddingSmall"
-            android:text="@string/app_loading_message"
-            app:layout_constraintBottom_toBottomOf="@id/lottieLoading"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/clTryAgain"
+    <include
+        android:id="@+id/layoutError"
+        layout="@layout/layout_home_error"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/rvData"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/rvData">
+        app:layout_constraintTop_toTopOf="@id/rvData" />
 
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/lottieTryAgain"
-            android:layout_width="match_parent"
-            android:layout_height="110dp"
-            app:layout_constraintBottom_toTopOf="@id/tvTryAgainDesc"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:lottie_rawRes="@raw/cloud_error" />
-
-        <TextView
-            android:id="@+id/tvTryAgainDesc"
-            style="@style/Text.Error"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/paddingLarge"
-            android:layout_marginEnd="@dimen/paddingLarge"
-            android:gravity="center"
-            android:text="@string/network_connection_issue"
-            app:layout_constraintBottom_toTopOf="@id/tvTryAgain"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <TextView
-            android:id="@+id/tvTryAgain"
-            style="@style/Text.Error.Button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/paddingLarge"
-            android:clickable="true"
-            android:focusable="true"
-            android:paddingStart="@dimen/paddingMedium"
-            android:paddingTop="@dimen/paddingSmall"
-            android:paddingEnd="@dimen/paddingMedium"
-            android:paddingBottom="@dimen/paddingSmall"
-            android:text="@string/app_network_try_again"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/clNoData"
+    <include
+        android:id="@+id/layoutUnavailable"
+        layout="@layout/layout_home_unavailable"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/rvData"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/rvData">
-
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/lottieNoData"
-            android:layout_width="match_parent"
-            android:layout_height="110dp"
-            app:layout_constraintBottom_toTopOf="@id/tvNoDataDesc"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:lottie_rawRes="@raw/cloud_error" />
-
-        <TextView
-            android:id="@+id/tvNoDataDesc"
-            style="@style/Text.Error"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/paddingLarge"
-            android:layout_marginEnd="@dimen/paddingLarge"
-            android:gravity="center"
-            android:text="@string/race_not_started"
-            app:layout_constraintBottom_toTopOf="@id/tvNoDataButton"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <TextView
-            android:id="@+id/tvNoDataButton"
-            style="@style/Text.Error.Button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/paddingLarge"
-            android:clickable="true"
-            android:focusable="true"
-            android:paddingStart="@dimen/paddingMedium"
-            android:paddingTop="@dimen/paddingSmall"
-            android:paddingEnd="@dimen/paddingMedium"
-            android:paddingBottom="@dimen/paddingSmall"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        app:layout_constraintTop_toTopOf="@id/rvData" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
