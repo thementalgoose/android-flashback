@@ -118,7 +118,7 @@ class HomeStaticActivity : BaseActivity(), RaceAdapterCallback, TrackPickerCallb
             layoutHeader.imgCountry.setImageResource(getFlagResourceAlpha3(it.countryKey))
             layoutHeader.tvCountry.text = it.country
             layoutHeader.tvTrackName.text = it.circuitName
-            layoutHeader.tvRound.text = getString(R.string.round_number, it.round)
+            layoutHeader.tvRound.text = getString(R.string.round_number, it.season, it.round)
         }
 
         observeEvent(viewModel.outputs.showAppLockoutMessage) {
@@ -135,6 +135,11 @@ class HomeStaticActivity : BaseActivity(), RaceAdapterCallback, TrackPickerCallb
 
         observe(viewModel.outputs.homeScreenState) {
             screenState = it
+
+            // TODO: This is not the place to fix this bug, look into why `items` output is not being fired
+            if (it == HomeStaticScreenState.NOT_AVAILABLE) {
+                raceAdapter.update(raceAdapter.viewType, emptyList())
+            }
         }
     }
 

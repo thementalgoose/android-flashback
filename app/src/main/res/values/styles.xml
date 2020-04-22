@@ -27,7 +27,7 @@
         <item name="f1PurpleSector">#673AB7</item>
 
         <item name="f1Pos1">#D3BC4D</item>
-        <item name="f1Pos2">#D8D8D8</item>
+        <item name="f1Pos2">#C2C2C2</item>
         <item name="f1Pos3">#D29342</item>
 
         <item name="f1DeltaPositive">#f44336</item>
@@ -233,7 +233,7 @@
 
     <style name="Text.Podium.Points" parent="Text.Podium">
         <item name="android:textSize">12sp</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?attr/f1TextInversePrimary</item>
     </style>
 
     <!-- Qualifying layout -->

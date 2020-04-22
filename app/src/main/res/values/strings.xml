@@ -21,7 +21,7 @@
     <string name="nav_qualifying">Qualifying</string>
 
     <!-- Home screen -->
-    <string name="round_number">Round %d</string>
+    <string name="round_number">%d - Round %d</string>
 
     <!-- Synchronisation -->
     <string name="sync_type_overview">Season Overview</string>

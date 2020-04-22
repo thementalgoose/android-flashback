@@ -18,8 +18,8 @@
     <dimen name="driverFlagPodiumSize">28dp</dimen>
 
     <dimen name="podium1">140dp</dimen>
-    <dimen name="podium2">90dp</dimen>
-    <dimen name="podium3">42dp</dimen>
+    <dimen name="podium2">95dp</dimen>
+    <dimen name="podium3">60dp</dimen>
     <dimen name="podiumDriverImage">96dp</dimen>
 
     <dimen name="qualifyingGridConstructorIndicator">12dp</dimen>

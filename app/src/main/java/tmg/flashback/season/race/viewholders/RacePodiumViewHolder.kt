@@ -2,6 +2,7 @@ package tmg.flashback.season.race.viewholders
 
 import android.graphics.Color
 import android.view.View
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.layout_podium.view.*
@@ -25,15 +26,15 @@ import kotlin.math.abs
 class RacePodiumViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     fun bind(first: RaceModel.Single, second: RaceModel.Single, third: RaceModel.Single) {
-        bind(first, itemView.layoutFirst)
-        bind(second, itemView.layoutSecond)
-        bind(third, itemView.layoutThird)
+        bind(first, itemView.layoutFirst, itemView.tvPoint1)
+        bind(second, itemView.layoutSecond, itemView.tvPoints2)
+        bind(third, itemView.layoutThird, itemView.tvPoints3)
     }
 
-    private fun bind(model: RaceModel.Single, layout: View) {
+    private fun bind(model: RaceModel.Single, layout: View, pointsLayout: TextView) {
         layout.apply {
 
-//            tvPoints.text = itemView.context.getString(R.string.round_podium_points, model.racePoints)
+            pointsLayout.text = itemView.context.getString(R.string.round_podium_points, model.racePoints)
             tvDriver.text = model.driver.name
             tvNumber.text = model.driver.number.toString()
             tvNumber.colorHighlight = model.driver.constructor.color
