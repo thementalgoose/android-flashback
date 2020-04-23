@@ -4,6 +4,7 @@ import tmg.flashback.repo.enums.RaceStatus
 import tmg.flashback.repo.enums.raceStatusUnknown
 import tmg.flashback.repo.models.*
 import tmg.flashback.repo.utils.toLapTime
+import tmg.flashback.repo.utils.toMaxIfZero
 import tmg.flashback.repo_firebase.models.*
 
 fun FSeason.convert(season: Int): Season {
@@ -44,7 +45,7 @@ fun FRound.convert(
                     time = raceResult.time?.toLapTime(),
                     points = raceResult.points ?: 0,
                     grid = raceResult.grid ?: 0,
-                    qualified = raceResult.qualified ?: 0,
+                    qualified = getQualified(raceResult),
                     finish = raceResult.result ?: 0,
                     status = raceResult.status ?: raceStatusUnknown,
                     fastestLap = raceResult.fastestLap?.convert()
@@ -53,21 +54,33 @@ fun FRound.convert(
             .toMap()
     )
 }
+
+private fun getQualified(raceResult: FSeasonOverviewRaceRace): Int? {
+    if (raceResult.qualified != -1 && raceResult.qualified != 0) {
+        return raceResult.qualified
+    }
+    if (raceResult.grid != null && raceResult.grid != -1 && raceResult.grid != 0) {
+        return raceResult.grid
+    }
+    return null
+}
+
 private fun Map<String, FSeasonOverviewRaceQualifying>?.onResult(
     drivers: Map<String, FSeasonOverviewDriver>,
     constructors: Map<String, FSeasonOverviewConstructor>,
     callback: (race: FSeasonOverviewRaceQualifying) -> String?
 ): Map<String, RoundQualifyingResult> {
     return (this ?: mapOf())
-        .map { (driverId, qualiResult) ->
-            val lapTime: LapTime? = callback(qualiResult)?.toLapTime()
-            return@map driverId to RoundQualifyingResult(
+        .toSortedMap()
+        .toList()
+        .map { Triple(it.first, it.second, callback(it.second)?.toLapTime()) }
+        .sortedBy { (_, _, lapTime) -> lapTime?.totalMillis.toMaxIfZero() }
+        .mapIndexed { index, triplet ->
+            val (driverId, item, lapTime) = triplet
+            return@mapIndexed driverId to RoundQualifyingResult(
                 driver = drivers.values.first { it.id == driverId }.convert(constructors),
                 time = lapTime,
-                position = (this ?: mapOf())
-                    .map { (driverId, res) -> driverId to callback(res)?.toLapTime() }
-                    .sortedBy { it.second?.totalMillis ?: Int.MAX_VALUE }
-                    .indexOfFirst { it.first == driverId }
+                position = index + 1
             )
         }
         .toMap()

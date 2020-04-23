@@ -4,7 +4,6 @@ import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import tmg.flashback.admin.lockout.LockoutViewModel
 import tmg.flashback.gallery.GalleryViewModel
-import tmg.flashback.home.datepicker.DatePickerViewModel
 import tmg.flashback.home.static.HomeStaticViewModel
 import tmg.flashback.home.trackpicker.TrackPickerViewModel
 import tmg.flashback.prefs.SharedPrefsDB
@@ -21,7 +20,6 @@ var f1Module = module {
 
     viewModel { HomeStaticViewModel(get(), get(), get(), get()) }
 
-    viewModel { DatePickerViewModel() }
     viewModel { TrackPickerViewModel(get()) }
     viewModel { SeasonViewModel(get()) }
     viewModel { RaceViewModel(get(), get()) }

@@ -62,6 +62,14 @@ data class LapTime(
         return "${if (diff < 0) "-" else "+"}$newTime"
     }
 
+    override fun equals(other: Any?): Boolean {
+        return this.time == (other as? LapTime)?.time
+    }
+
+    override fun hashCode(): Int {
+        return this.time.hashCode()
+    }
+
     override fun toString(): String {
         return time
     }

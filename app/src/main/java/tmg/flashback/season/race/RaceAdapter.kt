@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.R
 import tmg.flashback.season.race.viewholders.*
 import tmg.utilities.extensions.toEnum
+import kotlin.reflect.KClass
 
 class RaceAdapter(
     private val callback: RaceAdapterCallback
@@ -114,13 +115,13 @@ class RaceAdapter(
         private val newType: RaceAdapterType
     ) : DiffUtil.Callback() {
 
-        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean = oldList[oldItemPosition] == newList[newItemPosition]
+        override fun areItemsTheSame(old: Int, new: Int): Boolean = oldList[old] == newList[new]
 
         override fun getOldListSize(): Int = oldList.size
 
         override fun getNewListSize(): Int = newList.size
 
-        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean = false
+        override fun areContentsTheSame(o: Int, n: Int): Boolean = areItemsTheSame(o, n) && oldType == newType
     }
 
     //endregion

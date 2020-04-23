@@ -26,7 +26,6 @@ import tmg.flashback.season.race.RaceModel
 import tmg.flashback.utils.DataEvent
 import tmg.flashback.utils.Event
 import tmg.flashback.utils.SeasonRound
-import tmg.flashback.utils.localLog
 
 //region Inputs
 
@@ -208,7 +207,7 @@ class HomeStaticViewModel(
                 RaceAdapterType.QUALIFYING_POS_2,
                 RaceAdapterType.QUALIFYING_POS -> {
                     list.add(RaceModel.QualifyingHeader)
-                    list.addAll(driverIds.map { getDriverModel(roundData, it) })
+                    list.addAll(driverIds.mapIndexed { _, driverId -> getDriverModel(roundData, driverId) })
                 }
             }
             return@map Triple(viewType, list, SeasonRound(roundData.season, roundData.round))
@@ -278,9 +277,9 @@ class HomeStaticViewModel(
                 val driverOverview: RoundDriverOverview = roundData.driverOverview(it.driver.id)
                 when (viewType) {
                     RaceAdapterType.RACE -> it.finish
-                    RaceAdapterType.QUALIFYING_POS_1 -> driverOverview.q1?.position
-                    RaceAdapterType.QUALIFYING_POS_2 -> driverOverview.q2?.position
-                    RaceAdapterType.QUALIFYING_POS -> it.qualified
+                    RaceAdapterType.QUALIFYING_POS_1 -> driverOverview.q1?.position ?: driverOverview.race.qualified ?: driverOverview.race.grid
+                    RaceAdapterType.QUALIFYING_POS_2 -> driverOverview.q2?.position ?: driverOverview.race.qualified ?: driverOverview.race.grid
+                    RaceAdapterType.QUALIFYING_POS -> driverOverview.race.qualified ?: driverOverview.race.grid
                 }
             }
             .map { it.driver.id }
@@ -305,21 +304,10 @@ class HomeStaticViewModel(
             racePoints = overview.race.points,
             status = overview.race.status,
             fastestLap = overview.race.fastestLap?.rank == 1,
-            q1Delta = if (prefsDB.showQualifyingDelta) round.q1.getTopLapTime()?.deltaTo(overview.q1?.time) else null,
-            q2Delta = if (prefsDB.showQualifyingDelta) round.q2.getTopLapTime()?.deltaTo(overview.q2?.time) else null,
-            q3Delta = if (prefsDB.showQualifyingDelta) round.q3.getTopLapTime()?.deltaTo(overview.q3?.time) else null
+            q1Delta = if (prefsDB.showQualifyingDelta) round.q1FastestLap?.deltaTo(overview.q1?.time) else null,
+            q2Delta = if (prefsDB.showQualifyingDelta) round.q2FastestLap?.deltaTo(overview.q2?.time) else null,
+            q3Delta = if (prefsDB.showQualifyingDelta) round.q3FastestLap?.deltaTo(overview.q3?.time) else null,
+            showQualifyingDeltas = prefsDB.showQualifyingDelta
         )
-    }
-
-    /**
-     * Get the top lap time for a map of qualifying results
-     */
-    private fun Map<String, RoundQualifyingResult>.getTopLapTime(): LapTime? {
-        return this
-            .toSortedMap()
-            .toList()
-            .minBy { it.second.position }!!
-            .second
-            .time
     }
 }

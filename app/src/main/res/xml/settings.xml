@@ -12,8 +12,7 @@
         <SwitchPreference
             android:key="prefs_customisation_qualifying_delta"
             android:summary="@string/settings_customisation_qualifying_delta_description"
-            android:title="@string/settings_customisation_qualifying_delta_title"
-            app:isPreferenceVisible="false" />
+            android:title="@string/settings_customisation_qualifying_delta_title" />
 
     </PreferenceCategory>
 

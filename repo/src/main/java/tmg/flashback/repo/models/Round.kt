@@ -30,11 +30,25 @@ data class Round(
         )
     }
 
+    val q1FastestLap: LapTime?
+        get() = q1.fastest()
+    val q2FastestLap: LapTime?
+        get() = q2.fastest()
+    val q3FastestLap: LapTime?
+        get() = q3.fastest()
+
     val constructor: List<Constructor>
         get() {
             return race.values
                 .map { it.driver.constructor }
                 .distinctBy { it.id }
+        }
+
+    private fun Map<String, RoundQualifyingResult>.fastest(): LapTime? = this
+        .map { it.value.time }
+        .filter { it != null && !it.noTime && it.totalMillis != 0 }
+        .minBy {
+            it?.totalMillis ?: Int.MAX_VALUE
         }
 }
 
@@ -56,7 +70,7 @@ data class RoundRaceResult(
     val time: LapTime?,
     val points: Int,
     val grid: Int,
-    val qualified: Int,
+    val qualified: Int?,
     val finish: Int,
     val status: RaceStatus,
     val fastestLap: FastestLap?

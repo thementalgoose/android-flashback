@@ -23,12 +23,13 @@ sealed class RaceModel {
         val raceResult: LapTime,
         val racePos: Int,
         val gridPos: Int,
-        val qualified: Int,
+        val qualified: Int?,
         val status: RaceStatus,
         val fastestLap: Boolean,
         val q1Delta: String?,
         val q2Delta: String?,
-        val q3Delta: String?
+        val q3Delta: String?,
+        val showQualifyingDeltas: Boolean
     ) : RaceModel()
 
     data class RaceHeader(

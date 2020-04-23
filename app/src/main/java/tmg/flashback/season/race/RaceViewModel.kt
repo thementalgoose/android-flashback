@@ -160,7 +160,8 @@ class RaceViewModel(
             fastestLap = overview.race.fastestLap?.rank == 1,
             q1Delta = if (prefsDB.showQualifyingDelta) round.q1.getTopLapTime()?.deltaTo(overview.q1?.time) else null,
             q2Delta = if (prefsDB.showQualifyingDelta) round.q2.getTopLapTime()?.deltaTo(overview.q2?.time) else null,
-            q3Delta = if (prefsDB.showQualifyingDelta) round.q3.getTopLapTime()?.deltaTo(overview.q3?.time) else null
+            q3Delta = if (prefsDB.showQualifyingDelta) round.q3.getTopLapTime()?.deltaTo(overview.q3?.time) else null,
+            showQualifyingDeltas = prefsDB.showQualifyingDelta
         )
     }
 
