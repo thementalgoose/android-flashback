@@ -53,6 +53,12 @@
 
     <!-- Settings -->
 
+
+    <string name="settings_tutorial">Tutorial</string>
+
+    <string name="settings_tutorial_onboarding_title">Onboarding</string>
+    <string name="settings_tutorial_onboarding_description">View the app intro screens again</string>
+
     <string name="settings_customisation">Customisation</string>
 
     <string name="settings_customisation_year_title">Year to be displayed</string>
@@ -74,6 +80,8 @@
     <string name="settings_help_crash_reporting_title">Crash Reporting</string>
     <string name="settings_help_crash_reporting_description">Send device information and crash stack traces to the developer</string>
     <string name="settings_help_crash_reporting_after_app_restart">Your crash reporting preference will be applied once the app has restarted</string>
+        <string name="settings_help_suggestions_title">Have a suggestion?</string>
+    <string name="settings_help_suggestions_description">Send the developer an email with any suggestions you may have. Alternately turn on shake to report and shake your device</string>
     <string name="settings_help_shake_to_report_title">Shake the app to report a bug or a feature?</string>
     <string name="settings_help_shake_to_report_description">Shake the app at any time to screenshot and send me any bugs, issues, or suggestions you may have for this app!</string>
     <string name="settings_help_shake_to_report_after_app_restart">Your shake to report preference will be applied once the app has restarted</string>
@@ -96,5 +104,6 @@
     <string name="round_podium_first">1st</string>
     <string name="round_podium_second">2nd</string>
     <string name="round_podium_third">3rd</string>
+    <string name="send_email">Send email</string>
 
 </resources>

@@ -11,9 +11,7 @@ import tmg.flashback.season.race.RaceAdapterCallback
 import tmg.flashback.season.race.RaceAdapterType
 import tmg.flashback.season.race.RaceModel
 import tmg.flashback.utils.getFlagResourceAlpha3
-import tmg.flashback.utils.localLog
 import tmg.utilities.extensions.views.gone
-import tmg.utilities.extensions.views.hide
 import tmg.utilities.extensions.views.show
 
 class QualifyingResultViewHolder(view: View, private val updateAdapterType: RaceAdapterCallback) :
@@ -45,9 +43,9 @@ class QualifyingResultViewHolder(view: View, private val updateAdapterType: Race
 
             imgFlag.setImageResource(context.getFlagResourceAlpha3(model.driver.nationalityISO))
 
-            bind(1, model.q1, layoutQ1, model.q1Delta, model.showQualifyingDeltas)
-            bind(2, model.q2, layoutQ2, model.q2Delta, model.showQualifyingDeltas)
-            bind(3, model.q3, layoutQ3, model.q3Delta, model.showQualifyingDeltas)
+            bind(1, model.q1, layoutQ1, model.q1Delta, model.showQualifying.deltas)
+            bind(2, model.q2, layoutQ2, model.q2Delta, model.showQualifying.deltas)
+            bind(3, model.q3, layoutQ3, model.q3Delta, model.showQualifying.deltas)
 
             itemView.layoutQ1.setBackgroundResource(if (type == RaceAdapterType.QUALIFYING_POS_1) R.drawable.background_qualifying_item else 0)
             itemView.layoutQ2.setBackgroundResource(if (type == RaceAdapterType.QUALIFYING_POS_2) R.drawable.background_qualifying_item else 0)

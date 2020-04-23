@@ -29,7 +29,7 @@ sealed class RaceModel {
         val q1Delta: String?,
         val q2Delta: String?,
         val q3Delta: String?,
-        val showQualifyingDeltas: Boolean
+        val showQualifying: ShowQualifying
     ) : RaceModel()
 
     data class RaceHeader(
@@ -37,7 +37,16 @@ sealed class RaceModel {
         val round: Int
     ) : RaceModel()
 
-    object QualifyingHeader : RaceModel()
+    data class QualifyingHeader(
+        val showQualifyingDeltas: ShowQualifying
+    ) : RaceModel()
 
     object RacePlaceholder : RaceModel()
 }
+
+data class ShowQualifying(
+    val q1: Boolean,
+    val q2: Boolean,
+    val q3: Boolean,
+    val deltas: Boolean
+)

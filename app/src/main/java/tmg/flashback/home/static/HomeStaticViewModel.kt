@@ -23,6 +23,7 @@ import tmg.flashback.repo.db.SeasonOverviewDB
 import tmg.flashback.repo.models.*
 import tmg.flashback.season.race.RaceAdapterType
 import tmg.flashback.season.race.RaceModel
+import tmg.flashback.season.race.ShowQualifying
 import tmg.flashback.utils.DataEvent
 import tmg.flashback.utils.Event
 import tmg.flashback.utils.SeasonRound
@@ -206,7 +207,14 @@ class HomeStaticViewModel(
                 RaceAdapterType.QUALIFYING_POS_1,
                 RaceAdapterType.QUALIFYING_POS_2,
                 RaceAdapterType.QUALIFYING_POS -> {
-                    list.add(RaceModel.QualifyingHeader)
+                    list.add(RaceModel.QualifyingHeader(
+                        ShowQualifying(
+                            q1 = true,
+                            q2 = true,
+                            q3 = true,
+                            deltas = prefsDB.showQualifyingDelta
+                        )
+                    ))
                     list.addAll(driverIds.mapIndexed { _, driverId -> getDriverModel(roundData, driverId) })
                 }
             }
@@ -307,7 +315,12 @@ class HomeStaticViewModel(
             q1Delta = if (prefsDB.showQualifyingDelta) round.q1FastestLap?.deltaTo(overview.q1?.time) else null,
             q2Delta = if (prefsDB.showQualifyingDelta) round.q2FastestLap?.deltaTo(overview.q2?.time) else null,
             q3Delta = if (prefsDB.showQualifyingDelta) round.q3FastestLap?.deltaTo(overview.q3?.time) else null,
-            showQualifyingDeltas = prefsDB.showQualifyingDelta
+            showQualifying = ShowQualifying(
+                q1 = true,
+                q2 = true,
+                q3 = true,
+                deltas = prefsDB.showQualifyingDelta
+            )
         )
     }
 }

@@ -14,26 +14,32 @@ import tmg.flashback.BuildConfig
 import tmg.flashback.R
 import tmg.flashback.currentYear
 import tmg.flashback.extensions.label
+import tmg.flashback.onboarding.OnboardingActivity
 import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.enums.ViewTypePref
 import tmg.flashback.settings.release.ReleaseActivity
 import tmg.flashback.supportedYears
+import tmg.utilities.utils.DeviceUtils
 
 class SettingsFragment : PreferenceFragmentCompat() {
 
     private val prefs: PrefsDB by inject()
 
     companion object {
+        const val keyPreferenceTutorialOnboarding: String = "prefs_tutorial_onboarding"
         const val keyPreferenceCustomisationYear: String = "prefs_customisation_year"
         const val keyPreferenceCustomisationQualifyingDelta: String = "prefs_customisation_qualifying_delta"
         const val keyPreferenceHelpAbout: String = "prefs_help_about"
         const val keyPreferenceHelpReleaseNotes: String = "prefs_help_release_notes"
         const val keyPreferenceHelpCrashReporting: String = "prefs_help_crash_reporting"
+        const val keyPreferenceHelpSuggestions: String = "prefs_help_suggestions"
         const val keyPreferenceHelpShakeToReport: String = "prefs_help_shake_to_report"
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.settings, rootKey)
+
+        onboarding()
 
         year()
         qualifyingDelta()
@@ -41,7 +47,17 @@ class SettingsFragment : PreferenceFragmentCompat() {
         about()
         releaseNotes()
         crashReporting()
+        suggestions()
         shakeToReport()
+    }
+
+    private fun onboarding() {
+        findPreference<Preference>(keyPreferenceTutorialOnboarding)?.let { pref ->
+            pref.setOnPreferenceClickListener {
+                startActivity(Intent(requireContext(), OnboardingActivity::class.java))
+                return@setOnPreferenceClickListener true
+            }
+        }
     }
 
     private fun year() {
@@ -206,6 +222,21 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 )
                     .show()
                 return@setOnPreferenceChangeListener true
+            }
+        }
+    }
+
+    private fun suggestions() {
+        findPreference<Preference>(keyPreferenceHelpSuggestions)?.let { pref ->
+            pref.setOnPreferenceClickListener {
+                activity?.let {
+                    val intent = Intent(Intent.ACTION_SEND)
+                    intent.type = "text/html"
+                    intent.putExtra(Intent.EXTRA_EMAIL, "thementalgoose@gmail.com")
+                    intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name))
+                    startActivity(Intent.createChooser(intent, getString(R.string.send_email)))
+                }
+                return@setOnPreferenceClickListener true
             }
         }
     }

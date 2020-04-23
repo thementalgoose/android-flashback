@@ -9,7 +9,6 @@ import tmg.flashback.home.trackpicker.TrackPickerViewModel
 import tmg.flashback.prefs.SharedPrefsDB
 import tmg.flashback.repo.db.*
 import tmg.flashback.repo_firebase.CrashReporterFirebase
-import tmg.flashback.season.race.RaceViewModel
 import tmg.flashback.season.swiper.SeasonViewModel
 import tmg.flashback.repo_firebase.repos.CircuitFirestore
 import tmg.flashback.repo_firebase.repos.DataFirestore
@@ -22,7 +21,6 @@ var f1Module = module {
 
     viewModel { TrackPickerViewModel(get()) }
     viewModel { SeasonViewModel(get()) }
-    viewModel { RaceViewModel(get(), get()) }
     viewModel { GalleryViewModel() }
     viewModel { LockoutViewModel(get()) }
 

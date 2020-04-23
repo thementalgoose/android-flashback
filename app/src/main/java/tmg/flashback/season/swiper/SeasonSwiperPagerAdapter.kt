@@ -2,7 +2,6 @@ package tmg.flashback.season.swiper
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import tmg.flashback.season.race.RaceFragment
 
 class SeasonSwiperPagerAdapter(parent: Fragment): FragmentStateAdapter(parent) {
 
@@ -15,6 +14,6 @@ class SeasonSwiperPagerAdapter(parent: Fragment): FragmentStateAdapter(parent) {
     override fun getItemCount(): Int = list.size
 
     override fun createFragment(position: Int): Fragment {
-        return RaceFragment.instance(list[position].season, list[position].round)
+        return Fragment()
     }
 }

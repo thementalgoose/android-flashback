@@ -8,7 +8,7 @@ data class Round(
     val season: Int,
     val round: Int,
     val date: LocalDate,
-    val time: LocalTime,
+    val time: LocalTime?,
     val name: String,
     val circuit: Circuit,
     val q1: Map<String, RoundQualifyingResult>,
