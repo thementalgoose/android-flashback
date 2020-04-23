@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.map
 import tmg.flashback.repo.db.CrashReporter
 
 open class FirebaseRepo(
-    private val crashReporter: CrashReporter
+    val crashReporter: CrashReporter
 ) {
 
     //#region References
@@ -23,7 +23,10 @@ open class FirebaseRepo(
 
     //#endregion
 
-    inline fun <reified E> CollectionReference.getDocuments(default: List<E> = emptyList(), crossinline query: (ref: CollectionReference) -> Query): Flow<List<E>> = callbackFlow {
+    inline fun <reified E> CollectionReference.getDocuments(
+        default: List<E> = emptyList(),
+        crossinline query: (ref: CollectionReference) -> Query
+    ): Flow<List<E>> = callbackFlow {
         val subscription = query(this@getDocuments).addSnapshotListener { snapshot, exception ->
             when {
                 exception != null -> {
@@ -31,9 +34,18 @@ open class FirebaseRepo(
                     offer(emptyList())
                 }
                 snapshot != null -> {
-                    val list: List<E?> = snapshot.documents.map { it.toObject(E::class.java) }
-                    @Suppress("SimplifiableCall")
-                    offer(list.filter { it != null }.map { it as E })
+                    try {
+                        val list: List<E?> = snapshot.documents.map { it.toObject(E::class.java) }
+                        @Suppress("SimplifiableCall")
+                        offer(list.filter { it != null }.map { it as E })
+                    } catch (e: RuntimeException) {
+                        if (BuildConfig.DEBUG) {
+                            throw e
+                        } else {
+                            handleError(e, "getDocuments under $path failed to parse")
+                            offer(emptyList())
+                        }
+                    }
                 }
                 else -> {
                     offer(emptyList())
@@ -53,8 +65,17 @@ open class FirebaseRepo(
                     offer(null)
                 }
                 snapshot != null -> {
-                    val item: E? = snapshot.toObject(E::class.java)
-                    offer(item)
+                    try {
+                        val item: E? = snapshot.toObject(E::class.java)
+                        offer(item)
+                    } catch (e: RuntimeException) {
+                        if (BuildConfig.DEBUG) {
+                            throw e
+                        } else {
+                            handleError(e, "getDocuments under $path failed to parse")
+                            offer(null)
+                        }
+                    }
                 }
                 else -> {
                     offer(null)
@@ -78,11 +99,22 @@ open class FirebaseRepo(
         return this.map { convert(it) }
     }
 
-    protected fun handleError(exception: FirebaseFirestoreException, path: String) {
+    fun handleError(exception: Exception, path: String) {
+        if (exception is FirebaseFirestoreException) {
+            handleFirebaseError(exception, path)
+        } else {
+            crashReporter.logError(
+                exception,
+                "Error thrown that isn't a firebase error ${exception::class.simpleName} - Path $path"
+            )
+        }
+    }
+
+    private fun handleFirebaseError(exception: FirebaseFirestoreException, path: String) {
         exception.printStackTrace()
         when (exception.code) {
-            FirebaseFirestoreException.Code.OK -> {}
-            FirebaseFirestoreException.Code.CANCELLED -> {}
+            FirebaseFirestoreException.Code.OK -> { }
+            FirebaseFirestoreException.Code.CANCELLED -> { }
             FirebaseFirestoreException.Code.NOT_FOUND -> {
                 crashReporter.logError(exception, "Accessing $path resulted in not found")
             } // this.onError(DoesntExistError(debugData))

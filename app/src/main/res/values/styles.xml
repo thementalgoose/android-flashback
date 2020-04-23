@@ -100,7 +100,6 @@
     </style>
     <style name="Text.HomeStatic.Header" parent="Text.HomeStatic">
         <item name="android:textSize">26sp</item>
-        <item name="android:fontFamily">@font/opensans_semibold</item>
         <item name="android:textStyle">bold</item>
     </style>
     <style name="Text.HomeStatic.Country" parent="Text.HomeStatic">
