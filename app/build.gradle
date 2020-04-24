@@ -65,6 +65,9 @@ dependencies {
     testImplementation "org.junit.jupiter:junit-jupiter-engine:$junit"
     testImplementation "org.junit.jupiter:junit-jupiter-params:$junit"
 
+    // Coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.5"
+
     // Lifecycle
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0-alpha01"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.3.0-alpha01"
@@ -85,8 +88,8 @@ dependencies {
     implementation "org.koin:koin-android-ext:2.1.3"
 
     // TMG dependencies
-    implementation 'com.github.thementalgoose:android-components:0.2.2'
-    implementation 'com.github.thementalgoose:android-utilities:1.0.3'
+    implementation 'com.github.thementalgoose:android-components:1.0.0'
+    implementation 'com.github.thementalgoose:android-utilities:1.1.0'
 
     // ViewPager2
     implementation "androidx.viewpager2:viewpager2:1.0.0"
@@ -107,16 +110,10 @@ dependencies {
     // BugShaker
     implementation 'com.github.stkent:bugshaker:1.4.1'
 
-    // Coroutines
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.5"
-
     // Progress Bar
     implementation 'me.zhanghai.android.materialprogressbar:library:1.6.1'
 
-    // Skeleton view
-    implementation 'com.faltenreich:skeletonlayout:2.0.1'
-
-    // Lifecycle
+    // Lottie
     implementation 'com.airbnb.android:lottie:3.4.0'
 }
 

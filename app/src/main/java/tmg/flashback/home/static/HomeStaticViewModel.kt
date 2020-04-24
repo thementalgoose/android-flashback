@@ -12,9 +12,6 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import tmg.flashback.base.BaseViewModel
 import tmg.flashback.dateFormatter
-import tmg.flashback.extensions.combineTriple
-import tmg.flashback.extensions.filterNotNull
-import tmg.flashback.extensions.then
 import tmg.flashback.home.trackpicker.TrackModel
 import tmg.flashback.repo.db.DataDB
 import tmg.flashback.repo.db.HistoryDB
@@ -24,9 +21,11 @@ import tmg.flashback.repo.models.*
 import tmg.flashback.season.race.RaceAdapterType
 import tmg.flashback.season.race.RaceModel
 import tmg.flashback.season.race.ShowQualifying
-import tmg.flashback.utils.DataEvent
-import tmg.flashback.utils.Event
 import tmg.flashback.utils.SeasonRound
+import tmg.utilities.extensions.combineTriple
+import tmg.utilities.extensions.then
+import tmg.utilities.lifecycle.DataEvent
+import tmg.utilities.lifecycle.Event
 
 //region Inputs
 

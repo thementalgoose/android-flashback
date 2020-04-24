@@ -5,7 +5,7 @@ import kotlinx.android.synthetic.main.fragment_season.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.R
 import tmg.flashback.base.BaseFragment
-import tmg.flashback.utils.observe
+import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.views.setPageWidth
 import tmg.utilities.extensions.views.syncScrolling
 import kotlin.math.abs

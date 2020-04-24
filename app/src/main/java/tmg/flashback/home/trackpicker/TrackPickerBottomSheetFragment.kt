@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.bottom_sheet_track_picker.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.R
-import tmg.flashback.utils.observe
-import tmg.flashback.utils.observeEvent
+import tmg.utilities.extensions.observe
+import tmg.utilities.extensions.observeEvent
 import tmg.utilities.lifecycle.rx.RxBottomSheetFragment
 
 class TrackPickerBottomSheetFragment: RxBottomSheetFragment() {

@@ -8,14 +8,13 @@ import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.map
 import tmg.flashback.base.BaseViewModel
-import tmg.flashback.extensions.combinePair
-import tmg.flashback.extensions.filterNotNull
 import tmg.flashback.extensions.toDataEvent
 import tmg.flashback.repo.db.HistoryDB
 import tmg.flashback.supportedYears
-import tmg.flashback.utils.DataEvent
 import tmg.flashback.utils.SeasonRound
 import tmg.flashback.utils.Selected
+import tmg.utilities.extensions.combinePair
+import tmg.utilities.lifecycle.DataEvent
 
 //region Inputs
 

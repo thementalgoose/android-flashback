@@ -7,11 +7,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.R
 import tmg.flashback.SplashActivity
 import tmg.flashback.base.BaseActivity
-import tmg.flashback.utils.observe
-import tmg.flashback.utils.observeEvent
-import tmg.utilities.extensions.fromHtml
-import tmg.utilities.extensions.initToolbar
-import tmg.utilities.extensions.viewUrl
+import tmg.utilities.extensions.*
 import tmg.utilities.extensions.views.gone
 import tmg.utilities.extensions.views.visible
 

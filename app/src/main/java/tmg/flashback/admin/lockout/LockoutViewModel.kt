@@ -10,11 +10,10 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import tmg.flashback.base.BaseViewModel
-import tmg.flashback.extensions.combinePair
 import tmg.flashback.repo.db.DataDB
 import tmg.flashback.repo.models.AppLockout
-import tmg.flashback.utils.DataEvent
-import tmg.flashback.utils.Event
+import tmg.utilities.lifecycle.DataEvent
+import tmg.utilities.lifecycle.Event
 
 //region Inputs
 

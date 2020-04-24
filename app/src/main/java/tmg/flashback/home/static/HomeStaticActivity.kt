@@ -26,6 +26,8 @@ import tmg.flashback.season.race.RaceAdapterType
 import tmg.flashback.settings.SettingsActivity
 import tmg.flashback.settings.release.ReleaseBottomSheetFragment
 import tmg.flashback.utils.*
+import tmg.utilities.extensions.observe
+import tmg.utilities.extensions.observeEvent
 import tmg.utilities.extensions.startActivityClearStack
 import tmg.utilities.extensions.views.gone
 import tmg.utilities.extensions.views.visible

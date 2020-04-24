@@ -4,7 +4,7 @@ import android.widget.Toast
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.R
 import tmg.flashback.base.BaseActivity
-import tmg.flashback.utils.observe
+import tmg.utilities.extensions.observe
 
 class CircuitInfoActivity: BaseActivity() {
 
