@@ -21,20 +21,18 @@ import tmg.flashback.settings.release.ReleaseActivity
 import tmg.flashback.supportedYears
 import tmg.utilities.utils.DeviceUtils
 
+private const val keyPreferenceTutorialOnboarding: String = "prefs_tutorial_onboarding"
+private const val keyPreferenceCustomisationYear: String = "prefs_customisation_year"
+private const val keyPreferenceCustomisationQualifyingDelta: String = "prefs_customisation_qualifying_delta"
+private const val keyPreferenceHelpAbout: String = "prefs_help_about"
+private const val keyPreferenceHelpReleaseNotes: String = "prefs_help_release_notes"
+private const val keyPreferenceHelpCrashReporting: String = "prefs_help_crash_reporting"
+private const val keyPreferenceHelpSuggestions: String = "prefs_help_suggestions"
+private const val keyPreferenceHelpShakeToReport: String = "prefs_help_shake_to_report"
+
 class SettingsFragment : PreferenceFragmentCompat() {
 
     private val prefs: PrefsDB by inject()
-
-    companion object {
-        const val keyPreferenceTutorialOnboarding: String = "prefs_tutorial_onboarding"
-        const val keyPreferenceCustomisationYear: String = "prefs_customisation_year"
-        const val keyPreferenceCustomisationQualifyingDelta: String = "prefs_customisation_qualifying_delta"
-        const val keyPreferenceHelpAbout: String = "prefs_help_about"
-        const val keyPreferenceHelpReleaseNotes: String = "prefs_help_release_notes"
-        const val keyPreferenceHelpCrashReporting: String = "prefs_help_crash_reporting"
-        const val keyPreferenceHelpSuggestions: String = "prefs_help_suggestions"
-        const val keyPreferenceHelpShakeToReport: String = "prefs_help_shake_to_report"
-    }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.settings, rootKey)
