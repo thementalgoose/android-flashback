@@ -78,10 +78,11 @@ private fun Map<String, FSeasonOverviewRaceQualifying>?.onResult(
         .sortedBy { (_, _, lapTime) -> lapTime?.totalMillis.toMaxIfZero() }
         .mapIndexed { index, triplet ->
             val (driverId, item, lapTime) = triplet
+            val driver = drivers.values.first { it.id == driverId }.convert(constructors, driverOverrideMap.toList().firstOrNull { it.first == driverId }?.second)
             return@mapIndexed driverId to RoundQualifyingResult(
-                driver = drivers.values.first { it.id == driverId }.convert(constructors, driverOverrideMap.toList().firstOrNull { it.first == driverId }?.second),
+                driver = driver,
                 time = lapTime,
-                position = index + 1
+                position = (if (lapTime == null) (item.pos) else null) ?: (index + 1)
             )
         }
         .toMap()

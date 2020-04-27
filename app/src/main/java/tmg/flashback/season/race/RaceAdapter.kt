@@ -96,7 +96,7 @@ class RaceAdapter(
             }
             RaceAdapterViewHolderType.QUALIFYING_RESULT_HEADER -> {
                 val viewHolder = holder as QualifyingHeaderViewHolder
-                viewHolder.bind(viewType)
+                viewHolder.bind((list[position] as RaceModel.QualifyingHeader).showQualifyingDeltas, viewType)
             }
             RaceAdapterViewHolderType.QUALIFYING_RESULT -> {
                 val viewHolder = holder as QualifyingResultViewHolder

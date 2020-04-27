@@ -6,12 +6,15 @@ import kotlinx.android.synthetic.main.layout_driver.view.*
 import kotlinx.android.synthetic.main.layout_qualifying_time.view.*
 import kotlinx.android.synthetic.main.view_qualifying_result.view.*
 import tmg.flashback.R
+import tmg.flashback.extensions.show
 import tmg.flashback.repo.models.RoundQualifyingResult
 import tmg.flashback.season.race.RaceAdapterCallback
 import tmg.flashback.season.race.RaceAdapterType
 import tmg.flashback.season.race.RaceModel
+import tmg.flashback.season.race.ShowQualifying
 import tmg.flashback.utils.getFlagResourceAlpha3
 import tmg.utilities.extensions.views.gone
+import tmg.utilities.extensions.views.invisible
 import tmg.utilities.extensions.views.show
 
 class QualifyingResultViewHolder(view: View, private val updateAdapterType: RaceAdapterCallback) :
@@ -43,9 +46,11 @@ class QualifyingResultViewHolder(view: View, private val updateAdapterType: Race
 
             imgFlag.setImageResource(context.getFlagResourceAlpha3(model.driver.nationalityISO))
 
-            bind(1, model.q1, layoutQ1, model.q1Delta, model.showQualifying.deltas)
-            bind(2, model.q2, layoutQ2, model.q2Delta, model.showQualifying.deltas)
-            bind(3, model.q3, layoutQ3, model.q3Delta, model.showQualifying.deltas)
+            applyTo(model.showQualifying, type) { q1, q2, q3 ->
+                bind(model.q1, q1, model.q1Delta, model.showQualifying)
+                bind(model.q2, q2, model.q2Delta, model.showQualifying)
+                bind(model.q3, q3, model.q3Delta, model.showQualifying)
+            }
 
             itemView.layoutQ1.setBackgroundResource(if (type == RaceAdapterType.QUALIFYING_POS_1) R.drawable.background_qualifying_item else 0)
             itemView.layoutQ2.setBackgroundResource(if (type == RaceAdapterType.QUALIFYING_POS_2) R.drawable.background_qualifying_item else 0)
@@ -53,11 +58,12 @@ class QualifyingResultViewHolder(view: View, private val updateAdapterType: Race
         }
     }
 
-    private fun bind(q: Int, qualifying: RoundQualifyingResult?, layout: View, delta: String?, showQualifyingDelta: Boolean): Boolean {
+    private fun bind(qualifying: RoundQualifyingResult?, layout: View?, delta: String?, showQualifying: ShowQualifying): Boolean {
+        if (layout == null) return false
         val label = qualifying?.time?.toString() ?: ""
         layout.tvQualifyingTime.text = label
 
-        if (showQualifyingDelta) {
+        if (showQualifying.deltas) {
             layout.tvQualifyingDelta.show()
         }
         else {
@@ -70,6 +76,39 @@ class QualifyingResultViewHolder(view: View, private val updateAdapterType: Race
         return label.isNotEmpty()
     }
 
+    private fun applyTo(showQualifying: ShowQualifying, type: RaceAdapterType, callback: (q1: View, q2: View?, q3: View?) -> Unit) {
+        if (showQualifying.q1 && !showQualifying.q2 && !showQualifying.q3) {
+            callback(itemView.layoutQ3, null, null)
+            itemView.layoutQ1.show(false, isGone = false)
+            itemView.layoutQ2.show(false, isGone = false)
+            itemView.layoutQ3.show(true, isGone = false)
+            itemView.layoutQ1.setBackgroundResource(0)
+            itemView.layoutQ2.setBackgroundResource(0)
+            itemView.layoutQ3.setBackgroundResource(R.drawable.background_qualifying_item)
+            return
+        }
+        if (showQualifying.q1 && showQualifying.q2 && !showQualifying.q3) {
+            callback(itemView.layoutQ3, itemView.layoutQ2, null)
+            itemView.layoutQ1.show(false, isGone = false)
+            itemView.layoutQ2.show(true, isGone = false)
+            itemView.layoutQ3.show(true, isGone = false)
+            itemView.layoutQ1.setBackgroundResource(0)
+            itemView.layoutQ2.setBackgroundResource(if (type == RaceAdapterType.QUALIFYING_POS_2) R.drawable.background_qualifying_item else 0)
+            itemView.layoutQ3.setBackgroundResource(if (type != RaceAdapterType.QUALIFYING_POS_2) R.drawable.background_qualifying_item else 0)
+            return
+        }
+        callback(itemView.layoutQ1, itemView.layoutQ2, itemView.layoutQ3)
+        itemView.layoutQ1.show(true, isGone = false)
+        itemView.layoutQ2.show(true, isGone = false)
+        itemView.layoutQ3.show(true, isGone = false)
+        itemView.layoutQ1.setBackgroundResource(if (type == RaceAdapterType.QUALIFYING_POS_1) R.drawable.background_qualifying_item else 0)
+        itemView.layoutQ2.setBackgroundResource(if (type == RaceAdapterType.QUALIFYING_POS_2) R.drawable.background_qualifying_item else 0)
+        itemView.layoutQ3.setBackgroundResource(if (type == RaceAdapterType.QUALIFYING_POS) R.drawable.background_qualifying_item else 0)
+        return
+    }
+
+    //region View.OnClickListener
+
     override fun onClick(p0: View?) {
         when (p0) {
             itemView.layoutQ1 -> updateAdapterType.orderBy(RaceAdapterType.QUALIFYING_POS_1)
@@ -78,4 +117,6 @@ class QualifyingResultViewHolder(view: View, private val updateAdapterType: Race
             itemView.filterQuali -> updateAdapterType.orderBy(RaceAdapterType.QUALIFYING_POS)
         }
     }
+
+    //endregion
 }

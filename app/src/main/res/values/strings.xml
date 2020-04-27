@@ -2,6 +2,7 @@
 
     <!-- Release notes -->
     <string name="release_1"><![CDATA[<b>[1.0.0]</b> Initial release!
+        <br/>- View a season overview
         <br/>- See the results for all F1 races dating back to 2000
         <br/>- See the qualifying results for Q1, Q2 and Q3 for all races]]></string>
 

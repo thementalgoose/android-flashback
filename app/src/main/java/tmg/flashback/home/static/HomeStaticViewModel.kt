@@ -22,6 +22,7 @@ import tmg.flashback.season.race.RaceAdapterType
 import tmg.flashback.season.race.RaceModel
 import tmg.flashback.season.race.ShowQualifying
 import tmg.flashback.utils.SeasonRound
+import tmg.flashback.utils.localLog
 import tmg.utilities.extensions.combineTriple
 import tmg.utilities.extensions.then
 import tmg.utilities.lifecycle.DataEvent
@@ -179,42 +180,40 @@ class HomeStaticViewModel(
         .filter { (roundData, _, sr) -> sr.first == roundData?.season && sr.second == roundData.round }
         .map { (roundData, viewType, seasonRoundValue) ->
             val driverIds: List<String> = getOrderedDriverIds(roundData, viewType)
-
             if (roundData == null) {
                 return@map Triple(viewType, emptyList<RaceModel>(), seasonRoundValue)
             }
-
             val list: MutableList<RaceModel> = mutableListOf(RaceModel.RacePlaceholder)
+            val showQualifying: ShowQualifying = ShowQualifying(
+                q1 = roundData.q1.count { it.value.time != null } > 0,
+                q2 = roundData.q2.count { it.value.time != null } > 0,
+                q3 = roundData.q3.count { it.value.time != null } > 0,
+                deltas = prefsDB.showQualifyingDelta
+            )
+
             when (viewType) {
                 RaceAdapterType.RACE -> {
                     var startIndex = 0
                     if (driverIds.size >= 3) {
                         list.add(
                             RaceModel.Podium(
-                                driverFirst = getDriverModel(roundData, driverIds[0]),
-                                driverSecond = getDriverModel(roundData, driverIds[1]),
-                                driverThird = getDriverModel(roundData, driverIds[2])
+                                driverFirst = getDriverModel(roundData, driverIds[0], showQualifying),
+                                driverSecond = getDriverModel(roundData, driverIds[1], showQualifying),
+                                driverThird = getDriverModel(roundData, driverIds[2], showQualifying)
                             )
                         )
                         startIndex = 3
                         list.add(RaceModel.RaceHeader(roundData.season, roundData.round))
                     }
                     for (i in startIndex until driverIds.size) {
-                        list.add(getDriverModel(roundData, driverIds[i]))
+                        list.add(getDriverModel(roundData, driverIds[i], showQualifying))
                     }
                 }
                 RaceAdapterType.QUALIFYING_POS_1,
                 RaceAdapterType.QUALIFYING_POS_2,
                 RaceAdapterType.QUALIFYING_POS -> {
-                    list.add(RaceModel.QualifyingHeader(
-                        ShowQualifying(
-                            q1 = true,
-                            q2 = true,
-                            q3 = true,
-                            deltas = prefsDB.showQualifyingDelta
-                        )
-                    ))
-                    list.addAll(driverIds.mapIndexed { _, driverId -> getDriverModel(roundData, driverId) })
+                    list.add(RaceModel.QualifyingHeader(showQualifying))
+                    list.addAll(driverIds.mapIndexed { _, driverId -> getDriverModel(roundData, driverId, showQualifying) })
                 }
             }
             return@map Triple(viewType, list, SeasonRound(roundData.season, roundData.round))
@@ -277,6 +276,7 @@ class HomeStaticViewModel(
         if (roundData == null) {
             return emptyList()
         }
+        localLog(" === Driver Ids filtering === ")
         return roundData
             .race
             .values
@@ -284,8 +284,16 @@ class HomeStaticViewModel(
                 val driverOverview: RoundDriverOverview = roundData.driverOverview(it.driver.id)
                 when (viewType) {
                     RaceAdapterType.RACE -> it.finish
-                    RaceAdapterType.QUALIFYING_POS_1 -> driverOverview.q1?.position ?: driverOverview.race.qualified ?: driverOverview.race.grid
-                    RaceAdapterType.QUALIFYING_POS_2 -> driverOverview.q2?.position ?: driverOverview.race.qualified ?: driverOverview.race.grid
+                    RaceAdapterType.QUALIFYING_POS_1 -> {
+                        val result = driverOverview.q1?.position ?: driverOverview.q2?.position ?: driverOverview.race.qualified ?: driverOverview.race.grid
+                        localLog("$result for ${it.driver.id} ::::: (${driverOverview.q1?.position}) ?: ${driverOverview.q2?.position} ?: ${driverOverview.race.qualified} ?: ${driverOverview.race.grid}")
+                        return@sortedBy result
+                    }
+                    RaceAdapterType.QUALIFYING_POS_2 -> {
+                        val result = driverOverview.q2?.position ?: driverOverview.race.qualified ?: driverOverview.race.grid
+                        localLog("$result for ${it.driver.id} ::::: (${driverOverview.q2?.position}) ?: ${driverOverview.race.qualified} ?: ${driverOverview.race.grid}")
+                        return@sortedBy result
+                    }
                     RaceAdapterType.QUALIFYING_POS -> driverOverview.race.qualified ?: driverOverview.race.grid
                 }
             }
@@ -295,7 +303,7 @@ class HomeStaticViewModel(
     /**
      * Get a [RaceModel.Single] instance for a given driver
      */
-    private fun getDriverModel(round: Round, driverId: String): RaceModel.Single {
+    private fun getDriverModel(round: Round, driverId: String, showQualifying: ShowQualifying): RaceModel.Single {
         val overview = round.driverOverview(driverId)
         return RaceModel.Single(
             season = round.season,
@@ -314,12 +322,7 @@ class HomeStaticViewModel(
             q1Delta = if (prefsDB.showQualifyingDelta) round.q1FastestLap?.deltaTo(overview.q1?.time) else null,
             q2Delta = if (prefsDB.showQualifyingDelta) round.q2FastestLap?.deltaTo(overview.q2?.time) else null,
             q3Delta = if (prefsDB.showQualifyingDelta) round.q3FastestLap?.deltaTo(overview.q3?.time) else null,
-            showQualifying = ShowQualifying(
-                q1 = true,
-                q2 = true,
-                q3 = true,
-                deltas = prefsDB.showQualifyingDelta
-            )
+            showQualifying = showQualifying
         )
     }
 }
