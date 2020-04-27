@@ -13,7 +13,8 @@ import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.settings.planned.PlannedItems
 
 val releaseNotes: Map<Int, Int> = mapOf(
-    1 to R.string.release_1
+    1 to R.string.release_1,
+    2 to R.string.release_2
 )
 
 val planned: List<PlannedItems> = listOf(
