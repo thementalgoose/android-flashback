@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="tmg.flashback.onboarding.OnboardingActivity" />
+        <activity android:name=".settings.planned.PlannedActivity" />
 
         <activity android:name="tmg.flashback.settings.SettingsActivity" />
 

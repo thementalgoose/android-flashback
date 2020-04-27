@@ -35,13 +35,13 @@ fun FRound.convert(
         time = fromTime(time),
         name = name,
         circuit = circuit.convert(),
-        q1 = qualifying.onResult(drivers, constructors) { it.q1 },
-        q2 = qualifying.onResult(drivers, constructors) { it.q2 },
-        q3 = qualifying.onResult(drivers, constructors) { it.q3 },
+        q1 = qualifying.onResult(drivers, constructors, driverCon ?: emptyMap()) { it.q1 },
+        q2 = qualifying.onResult(drivers, constructors, driverCon ?: emptyMap()) { it.q2 },
+        q3 = qualifying.onResult(drivers, constructors, driverCon ?: emptyMap()) { it.q3 },
         race = (race ?: mapOf())
             .map { (driverId, raceResult) ->
                 driverId to RoundRaceResult(
-                    driver = drivers.values.first { it.id == driverId }.convert(constructors),
+                    driver = drivers.values.first { it.id == driverId }.convert(constructors, driverCon?.toList()?.firstOrNull { it.first == driverId }?.second),
                     time = raceResult.time?.toLapTime(),
                     points = raceResult.points ?: 0,
                     grid = raceResult.grid ?: 0,
@@ -68,6 +68,7 @@ private fun getQualified(raceResult: FSeasonOverviewRaceRace): Int? {
 private fun Map<String, FSeasonOverviewRaceQualifying>?.onResult(
     drivers: Map<String, FSeasonOverviewDriver>,
     constructors: Map<String, FSeasonOverviewConstructor>,
+    driverOverrideMap: Map<String, String>,
     callback: (race: FSeasonOverviewRaceQualifying) -> String?
 ): Map<String, RoundQualifyingResult> {
     return (this ?: mapOf())
@@ -78,7 +79,7 @@ private fun Map<String, FSeasonOverviewRaceQualifying>?.onResult(
         .mapIndexed { index, triplet ->
             val (driverId, item, lapTime) = triplet
             return@mapIndexed driverId to RoundQualifyingResult(
-                driver = drivers.values.first { it.id == driverId }.convert(constructors),
+                driver = drivers.values.first { it.id == driverId }.convert(constructors, driverOverrideMap.toList().firstOrNull { it.first == driverId }?.second),
                 time = lapTime,
                 position = index + 1
             )

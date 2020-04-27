@@ -47,6 +47,7 @@ data class FRound(
     val name: String = "",
     val date: String = "",
     val time: String = "",
+    val driverCon: Map<String, String>? = null,
     val circuit: FSeasonOverviewRaceCircuit = FSeasonOverviewRaceCircuit(),
     val qualifying: Map<String, FSeasonOverviewRaceQualifying>? = null,
     val race: Map<String, FSeasonOverviewRaceRace>? = null

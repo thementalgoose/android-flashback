@@ -13,18 +13,15 @@ import tmg.components.about.AboutThisAppDependency
 import tmg.flashback.BuildConfig
 import tmg.flashback.R
 import tmg.flashback.currentYear
-import tmg.flashback.extensions.label
-import tmg.flashback.onboarding.OnboardingActivity
 import tmg.flashback.repo.db.PrefsDB
-import tmg.flashback.repo.enums.ViewTypePref
+import tmg.flashback.settings.planned.PlannedActivity
 import tmg.flashback.settings.release.ReleaseActivity
 import tmg.flashback.supportedYears
-import tmg.utilities.utils.DeviceUtils
 
-private const val keyPreferenceTutorialOnboarding: String = "prefs_tutorial_onboarding"
 private const val keyPreferenceCustomisationYear: String = "prefs_customisation_year"
 private const val keyPreferenceCustomisationQualifyingDelta: String = "prefs_customisation_qualifying_delta"
 private const val keyPreferenceHelpAbout: String = "prefs_help_about"
+private const val keyPreferenceHelpPlanned: String = "prefs_help_planned"
 private const val keyPreferenceHelpReleaseNotes: String = "prefs_help_release_notes"
 private const val keyPreferenceHelpCrashReporting: String = "prefs_help_crash_reporting"
 private const val keyPreferenceHelpSuggestions: String = "prefs_help_suggestions"
@@ -37,25 +34,15 @@ class SettingsFragment : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.settings, rootKey)
 
-        onboarding()
-
         year()
         qualifyingDelta()
 
         about()
+        planned()
         releaseNotes()
         crashReporting()
         suggestions()
         shakeToReport()
-    }
-
-    private fun onboarding() {
-        findPreference<Preference>(keyPreferenceTutorialOnboarding)?.let { pref ->
-            pref.setOnPreferenceClickListener {
-                startActivity(Intent(requireContext(), OnboardingActivity::class.java))
-                return@setOnPreferenceClickListener true
-            }
-        }
     }
 
     private fun year() {
@@ -99,6 +86,13 @@ class SettingsFragment : PreferenceFragmentCompat() {
             }
         }
     }
+
+
+
+
+
+
+
 
     private fun about() {
         findPreference<Preference>(keyPreferenceHelpAbout)?.let { pref ->
@@ -191,6 +185,15 @@ class SettingsFragment : PreferenceFragmentCompat() {
                         )
                     )
                 )
+                return@setOnPreferenceClickListener true
+            }
+        }
+    }
+
+    private fun planned() {
+        findPreference<Preference>(keyPreferenceHelpPlanned)?.let { pref ->
+            pref.setOnPreferenceClickListener {
+                startActivity(Intent(context, PlannedActivity::class.java))
                 return@setOnPreferenceClickListener true
             }
         }

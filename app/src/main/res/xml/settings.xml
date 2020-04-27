@@ -2,17 +2,6 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory
-        android:title="@string/settings_tutorial"
-        app:isPreferenceVisible="false">
-
-        <Preference
-            android:key="prefs_tutorial_onboarding"
-            android:summary="@string/settings_tutorial_onboarding_description"
-            android:title="@string/settings_tutorial_onboarding_title" />
-
-    </PreferenceCategory>
-
     <PreferenceCategory android:title="@string/settings_customisation">
 
         <Preference
@@ -38,6 +27,11 @@
             android:key="prefs_help_release_notes"
             android:summary="@string/settings_help_release_notes_description"
             android:title="@string/settings_help_release_notes_title" />
+
+        <Preference
+            android:key="prefs_help_planned"
+            android:summary="@string/settings_help_planned_description"
+            android:title="@string/settings_help_planned_title" />
 
         <SwitchPreference
             android:key="prefs_help_crash_reporting"

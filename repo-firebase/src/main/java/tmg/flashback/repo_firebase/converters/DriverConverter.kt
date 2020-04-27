@@ -20,7 +20,7 @@ fun FSeasonOverviewDriver.convert(): Driver {
     )
 }
 
-fun FSeasonOverviewDriver.convert(constructors: Map<String, FSeasonOverviewConstructor>): RoundDriver {
+fun FSeasonOverviewDriver.convert(constructors: Map<String, FSeasonOverviewConstructor>, overrideConstructorId: String?): RoundDriver {
     return RoundDriver(
         id = id,
         firstName = firstName,
@@ -32,6 +32,6 @@ fun FSeasonOverviewDriver.convert(constructors: Map<String, FSeasonOverviewConst
         dateOfBirth = fromDate(dob),
         nationality = nationality,
         nationalityISO = nationalityISO,
-        constructor = constructors.values.first { it.id == constructorId }.convert()
+        constructor = constructors.values.first { it.id == overrideConstructorId ?: constructorId }.convert()
     )
 }

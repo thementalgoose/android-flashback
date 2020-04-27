@@ -10,9 +10,22 @@ import org.koin.core.context.startKoin
 import tmg.flashback.di.f1Module
 import tmg.flashback.repo.db.CrashReporter
 import tmg.flashback.repo.db.PrefsDB
+import tmg.flashback.settings.planned.PlannedItems
 
 val releaseNotes: Map<Int, Int> = mapOf(
     1 to R.string.release_1
+)
+
+val planned: List<PlannedItems> = listOf(
+    PlannedItems(R.string.planned_0, true),
+    PlannedItems(R.string.planned_1, true),
+    PlannedItems(R.string.planned_2, true),
+    PlannedItems(R.string.planned_3, false),
+    PlannedItems(R.string.planned_4, false),
+    PlannedItems(R.string.planned_5, false),
+    PlannedItems(R.string.planned_6, false),
+    PlannedItems(R.string.planned_7, false),
+    PlannedItems(R.string.planned_8, false)
 )
 
 class FlashbackApplication: Application() {

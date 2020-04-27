@@ -161,6 +161,9 @@
 
     </style>
 
+    <style name="Text.Planned" parent="Text">
+    </style>
+
     <!-- App Lockout -->
 
     <style name="Text.Lockout" parent="Text" />
