@@ -22,7 +22,6 @@ import tmg.flashback.season.race.RaceAdapterType
 import tmg.flashback.season.race.RaceModel
 import tmg.flashback.season.race.ShowQualifying
 import tmg.flashback.utils.SeasonRound
-import tmg.flashback.utils.localLog
 import tmg.utilities.extensions.combineTriple
 import tmg.utilities.extensions.then
 import tmg.utilities.lifecycle.DataEvent
@@ -276,7 +275,6 @@ class HomeStaticViewModel(
         if (roundData == null) {
             return emptyList()
         }
-        localLog(" === Driver Ids filtering === ")
         return roundData
             .race
             .values
@@ -285,14 +283,10 @@ class HomeStaticViewModel(
                 when (viewType) {
                     RaceAdapterType.RACE -> it.finish
                     RaceAdapterType.QUALIFYING_POS_1 -> {
-                        val result = driverOverview.q1?.position ?: driverOverview.q2?.position ?: driverOverview.race.qualified ?: driverOverview.race.grid
-                        localLog("$result for ${it.driver.id} ::::: (${driverOverview.q1?.position}) ?: ${driverOverview.q2?.position} ?: ${driverOverview.race.qualified} ?: ${driverOverview.race.grid}")
-                        return@sortedBy result
+                        return@sortedBy driverOverview.q1?.position ?: driverOverview.q2?.position ?: driverOverview.race.qualified ?: driverOverview.race.grid
                     }
                     RaceAdapterType.QUALIFYING_POS_2 -> {
-                        val result = driverOverview.q2?.position ?: driverOverview.race.qualified ?: driverOverview.race.grid
-                        localLog("$result for ${it.driver.id} ::::: (${driverOverview.q2?.position}) ?: ${driverOverview.race.qualified} ?: ${driverOverview.race.grid}")
-                        return@sortedBy result
+                        return@sortedBy driverOverview.q2?.position ?: driverOverview.race.qualified ?: driverOverview.race.grid
                     }
                     RaceAdapterType.QUALIFYING_POS -> driverOverview.race.qualified ?: driverOverview.race.grid
                 }

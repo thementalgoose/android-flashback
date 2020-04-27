@@ -7,12 +7,13 @@ import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.enums.ThemePref
 import tmg.flashback.repo.enums.ViewTypePref
 import tmg.utilities.extensions.toEnum
+import tmg.utilities.prefs.SharedPrefManager
 import tmg.utilities.utils.SharedPreferencesUtils
 import java.util.*
 
-class SharedPrefsDB(val context: Context) : PrefsDB {
+class SharedPrefsDB(context: Context): SharedPrefManager(context), PrefsDB {
 
-    private val prefsKey: String = "Flashback"
+    override val prefsKey: String = "Flashback"
     private val keySelectedYear: String = "SELECTED_YEAR"
     private val keyShowQualifyingDelta: String = "SHOW_QUALIFYING_DELTA"
     private val keyViewType: String = "VIEW_TYPE"
@@ -31,36 +32,36 @@ class SharedPrefsDB(val context: Context) : PrefsDB {
     override var selectedYear: Int
         get() = getInt(keySelectedYear, currentYear)
         set(value) {
-            value.save(keySelectedYear)
+            save(keySelectedYear, value)
         }
 
     override var showQualifyingDelta: Boolean
         get() = getBoolean(keyShowQualifyingDelta)
         set(value) {
-            value.save(keyShowQualifyingDelta)
+            save(keyShowQualifyingDelta, value)
         }
 
     override var viewType: ViewTypePref
-        get() = getString(keyViewType, ViewTypePref.STATIC.key).toEnum<ViewTypePref> { it.key } ?: ViewTypePref.STATIC
+        get() = getString(keyViewType, ViewTypePref.STATIC.key)?.toEnum<ViewTypePref> { it.key } ?: ViewTypePref.STATIC
         set(value) {
-            value.key.save(keyViewType)
+            save(keyViewType, value.key)
         }
 
     override var crashReporting: Boolean
-        get() = getBoolean(keyCrashReporting)
+        get() = getBoolean(keyCrashReporting, true)
         set(value) {
-            value.save(keyCrashReporting)
+            save(keyCrashReporting, value)
         }
 
     override var shakeToReport: Boolean
-        get() = getBoolean(keyShakeToReport)
+        get() = getBoolean(keyShakeToReport, true)
         set(value) {
-            value.save(keyShakeToReport)
+            save(keyShakeToReport, value)
         }
     override var lastAppVersion: Int
         get() = getInt(keyReleaseNotes, 0)
         set(value) {
-            value.save(keyReleaseNotes)
+            save(keyReleaseNotes, value)
         }
 
     override val isCurrentAppVersionNew: Boolean
@@ -68,46 +69,15 @@ class SharedPrefsDB(val context: Context) : PrefsDB {
 
     override var deviceUdid: String
         set(value) {
-            value.save(keyDeviceUDID)
+            save(keyDeviceUDID, value)
         }
         get() {
             var key = getString(keyDeviceUDID, "")
-            if (key.isEmpty()) {
+            if (key.isNullOrEmpty()) {
                 val newKey = UUID.randomUUID().toString()
                 deviceUdid = newKey
                 key = newKey
             }
             return key
         }
-
-    //region Utils
-
-    private fun Int.save(key: String) {
-        SharedPreferencesUtils.save(context, key, this, prefsKey)
-    }
-
-    private fun Boolean.save(key: String) {
-        SharedPreferencesUtils.save(context, key, this, prefsKey)
-    }
-
-    private fun String.save(key: String) {
-        SharedPreferencesUtils.save(context, key, this, prefsKey)
-    }
-
-    private fun getInt(key: String, default: Int = -1): Int {
-        val value = SharedPreferencesUtils.getInt(context, key, prefsKey = prefsKey)
-        return if (value == -1) default
-        else value
-    }
-
-
-    private fun getString(key: String, default: String): String {
-        return SharedPreferencesUtils.getString(context, key, default, prefsKey = prefsKey)
-    }
-
-    private fun getBoolean(key: String): Boolean {
-        return SharedPreferencesUtils.getBoolean(context, key, prefsKey = prefsKey)
-    }
-
-    //endregion
 }

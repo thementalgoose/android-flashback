@@ -9,7 +9,6 @@ import kotlinx.android.synthetic.main.view_track_picker_track.view.*
 import tmg.flashback.R
 import tmg.flashback.utils.Selected
 import tmg.flashback.utils.getFlagResourceAlpha3
-import tmg.flashback.utils.localLog
 
 class TrackPickerRoundAdapter: RecyclerView.Adapter<TrackPickerRoundAdapter.ViewHolder>() {
 

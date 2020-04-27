@@ -12,7 +12,7 @@ import tmg.utilities.lifecycle.common.CommonActivity
 
 abstract class BaseActivity : CommonActivity() {
 
-    val prefsDB: PrefsDB by inject()
+    private val prefsDB: PrefsDB by inject()
 
     val crashReporter: CrashReporter by inject()
 
@@ -20,7 +20,7 @@ abstract class BaseActivity : CommonActivity() {
         when (prefsDB.theme) {
             ThemePref.DAY -> setTheme(R.style.LightTheme)
             ThemePref.AUTO -> setTheme(R.style.LightTheme)
-            ThemePref.NIGHT -> setTheme(R.style.DarkTheme)
+            ThemePref.NIGHT -> setTheme(R.style.LightTheme)
         }
         super.onCreate(savedInstanceState)
     }
