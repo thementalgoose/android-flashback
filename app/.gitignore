@@ -1,3 +1,5 @@
 /build
 /src/sand/google-services.json
 /src/live/google-services.json
+live/release
+sand/release
