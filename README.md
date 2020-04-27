@@ -1,14 +1,13 @@
-# Flashback - F1 statistics
+# Flashback - Android
 
-#### Credits / Attributions
+[![Google Play](https://i.imgur.com/gSfLc4N.png)](https://play.google.com/store/apps/details?id=tmg.flashback)
 
-- Some icons: https://www.flaticon.com/packs/car-engine-17
-- Rear Wing: https://www.flaticon.com/free-icon/spoiler_1205305
+![Flashback](res/feature.png)
 
-- Lottie Animations:
-    - https://lottiefiles.com/9598-world-icon World icon
-    - https://lottiefiles.com/12108-error-in-cloud
-    - https://lottiefiles.com/15342-utkansh20
-    - https://lottiefiles.com/15344-world-travel
+Flashback is a Formula 1 statistics app!
 
-    - https://lottiefiles.com/IsionIndustries
+- MVVM
+- Koin
+- Firebase
+- Kotlin Coroutines
+- LiveData
