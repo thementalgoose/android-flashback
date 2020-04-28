@@ -7,6 +7,14 @@
     android:layout_height="wrap_content"
     android:background="?attr/colorPrimary">
 
+    <Button
+        android:id="@+id/btnClick"
+        android:text="CLICK"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
     <TextView
         android:id="@+id/tvTitle"
         style="@style/Text.HomeStatic.Header"

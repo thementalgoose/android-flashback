@@ -2,6 +2,7 @@ package tmg.flashback.home.static
 
 import android.content.Intent
 import android.graphics.ColorFilter
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieProperty
@@ -9,6 +10,7 @@ import com.airbnb.lottie.SimpleColorFilter
 import com.airbnb.lottie.model.KeyPath
 import com.airbnb.lottie.value.LottieValueCallback
 import kotlinx.android.synthetic.main.activity_home_static.*
+import kotlinx.android.synthetic.main.layout_header.*
 import kotlinx.android.synthetic.main.layout_header.view.*
 import kotlinx.android.synthetic.main.layout_home_error.view.*
 import kotlinx.android.synthetic.main.layout_home_loading.view.*
@@ -70,6 +72,10 @@ class HomeStaticActivity : BaseActivity(), RaceAdapterCallback, TrackPickerCallb
         initialiseLottie(layoutUnavailable.lottieNoData)
 
         layoutHeader.tvTitle.text = getString(R.string.app_name)
+
+        btnClick.setOnClickListener {
+            Toast.makeText(this, "CLICK TIME", Toast.LENGTH_LONG).show()
+        }
 
         observeViewModel()
     }
@@ -138,7 +144,6 @@ class HomeStaticActivity : BaseActivity(), RaceAdapterCallback, TrackPickerCallb
         observe(viewModel.outputs.homeScreenState) {
             screenState = it
 
-            // TODO: This is not the place to fix this bug, look into why `items` output is not being fired
             if (it == HomeStaticScreenState.NOT_AVAILABLE) {
                 raceAdapter.update(raceAdapter.viewType, emptyList())
             }
