@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_qualifying"
+        android:icon="@drawable/nav_qualifying"
+        android:title="@string/nav_qualifying" />
+
+    <item
+        android:id="@+id/nav_race"
+        android:icon="@drawable/nav_race"
+        android:title="@string/nav_race" />
+
+    <item
+        android:id="@+id/nav_constructor"
+        android:icon="@drawable/nav_constructor"
+        android:title="@string/nav_constructors" />
+
+</menu>
