@@ -48,6 +48,27 @@
 
 
 
+    <style name="Text">
+        <item name="android:textColor">?attr/f1TextPrimary</item>
+    </style>
+    <style name="Text.Dashboard.Header" parent="Text">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -84,9 +105,6 @@
 
 
 
-    <style name="Text">
-        <item name="android:textColor">?attr/f1TextPrimary</item>
-    </style>
 
     <!-- Loading -->
 

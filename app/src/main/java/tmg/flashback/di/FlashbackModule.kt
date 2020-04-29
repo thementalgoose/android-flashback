@@ -3,6 +3,8 @@ package tmg.flashback.di
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import tmg.flashback.admin.lockout.LockoutViewModel
+import tmg.flashback.dashboard.DashboardViewModel
+import tmg.flashback.dashboard.season.DashboardSeasonViewModel
 import tmg.flashback.gallery.GalleryViewModel
 import tmg.flashback.home.static.HomeStaticViewModel
 import tmg.flashback.home.trackpicker.TrackPickerViewModel
@@ -15,7 +17,10 @@ import tmg.flashback.repo_firebase.repos.DataFirestore
 import tmg.flashback.repo_firebase.repos.HistoryFirestore
 import tmg.flashback.repo_firebase.repos.SeasonOverviewFirestore
 
-var f1Module = module {
+var flashbackModule = module {
+
+    viewModel { DashboardViewModel() }
+    viewModel { DashboardSeasonViewModel(get()) }
 
     viewModel { HomeStaticViewModel(get(), get(), get(), get()) }
 

@@ -24,6 +24,27 @@
 
     <dimen name="qualifyingGridConstructorIndicator">12dp</dimen>
 
+
+    <dimen name="trackPickerCountrySize">24dp</dimen>
+
+    <dimen name="homeDisplayCountrySize">36dp</dimen>
+    <dimen name="loadingSize">250dp</dimen>
+    <dimen name="loadingMargin">60dp</dimen>
+
+
+
+
+
+    <!-- Text sizes -->
+
+    <dimen name="textSizeXLarge">16sp</dimen>
+    <dimen name="textSizeLarge">16sp</dimen>
+    <dimen name="textSizeMedium">14sp</dimen>
+    <dimen name="textSizeSmall">12sp</dimen>
+    <dimen name="textSizeXSmall">10sp</dimen>
+
+    <!-- Padding -->
+
     <dimen name="paddingXLarge">64dp</dimen>
     <dimen name="paddingVLarge">48dp</dimen>
     <dimen name="paddingLarge">32dp</dimen>
@@ -33,22 +54,18 @@
     <dimen name="paddingSmall">8dp</dimen>
     <dimen name="paddingXSmall">4dp</dimen>
 
+    <!-- Radius -->
+
     <dimen name="radiusLarge">24dp</dimen>
     <dimen name="radiusMedium">12dp</dimen>
     <dimen name="radiusSmall">6dp</dimen>
 
-    <dimen name="trackPickerCountrySize">24dp</dimen>
+    <!-- Headers -->
 
-    <dimen name="homeDisplayCountrySize">36dp</dimen>
-    <dimen name="loadingSize">250dp</dimen>
-    <dimen name="loadingMargin">60dp</dimen>
+    <dimen name="headerHeight">48dp</dimen>
 
-    <!-- Text sizes -->
+    <!-- Dashboard -->
 
-    <dimen name="textSizeXLarge">16sp</dimen>
-    <dimen name="textSizeLarge">16sp</dimen>
-    <dimen name="textSizeMedium">14sp</dimen>
-    <dimen name="textSizeSmall">12sp</dimen>
-    <dimen name="textSizeXSmall">10sp</dimen>
+    <dimen name="dashboardYearSelectorHeight">42dp</dimen>
 
 </resources>
