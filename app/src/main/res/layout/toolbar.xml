@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
-    android:layout_height="20dp"
+    android:layout_height="?attr/actionBarSize"
     android:background="?attr/f1BackgroundPrimary"
     app:popupTheme="@style/LightTheme.PopupOverlay"
     app:theme="@style/LightTheme"
