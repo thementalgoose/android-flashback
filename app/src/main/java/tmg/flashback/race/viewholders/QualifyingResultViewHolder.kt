@@ -1,4 +1,4 @@
-package tmg.flashback.season.race.viewholders
+package tmg.flashback.race.viewholders
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
@@ -8,13 +8,12 @@ import kotlinx.android.synthetic.main.view_qualifying_result.view.*
 import tmg.flashback.R
 import tmg.flashback.extensions.show
 import tmg.flashback.repo.models.RoundQualifyingResult
-import tmg.flashback.season.race.RaceAdapterCallback
-import tmg.flashback.season.race.RaceAdapterType
-import tmg.flashback.season.race.RaceModel
-import tmg.flashback.season.race.ShowQualifying
+import tmg.flashback.race.RaceAdapterCallback
+import tmg.flashback.race.RaceAdapterType
+import tmg.flashback.race.RaceAdapterModel
+import tmg.flashback.race.ShowQualifying
 import tmg.flashback.utils.getFlagResourceAlpha3
 import tmg.utilities.extensions.views.gone
-import tmg.utilities.extensions.views.invisible
 import tmg.utilities.extensions.views.show
 
 class QualifyingResultViewHolder(view: View, private val updateAdapterType: RaceAdapterCallback) :
@@ -27,7 +26,7 @@ class QualifyingResultViewHolder(view: View, private val updateAdapterType: Race
         itemView.filterQuali.setOnClickListener(this)
     }
 
-    fun bind(model: RaceModel.Single, type: RaceAdapterType) {
+    fun bind(model: RaceAdapterModel.Single, type: RaceAdapterType) {
         itemView.apply {
 
             when (model.qualified) {

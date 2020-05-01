@@ -51,6 +51,9 @@
     <style name="Text">
         <item name="android:textColor">?attr/f1TextPrimary</item>
     </style>
+
+    <!-- Dashboard -->
+
     <style name="Text.Dashboard.Header" parent="Text">
         <item name="android:textSize">24sp</item>
         <item name="android:textStyle">bold</item>
@@ -58,6 +61,18 @@
     <style name="Text.Dashboard.Track.Title" parent="Text">
         <item name="android:textSize">16sp</item>
         <item name="android:textStyle">bold</item>
+    </style>
+    <style name="Text.Dashboard.Track.TrackName" parent="Text">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <!-- Race -->
+
+    <style name="Text.Race.Header" parent="Text">
+        <item name="android:textSize">14sp</item>
+    </style>
+    <style name="Text.Race.Round" parent="Text">
+        <item name="android:textSize">12sp</item>
     </style>
 
 

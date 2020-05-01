@@ -15,6 +15,7 @@ fun FHistorySeason.convert(): List<History> {
                 round.convert()
             }
             .map { it.value.second }
+            .sortedBy { it.round }
 
         if (season != -1) {
             list.add(History(season, historyRounds))

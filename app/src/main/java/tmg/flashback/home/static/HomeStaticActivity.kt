@@ -22,9 +22,9 @@ import tmg.flashback.admin.lockout.LockoutActivity
 import tmg.flashback.base.BaseActivity
 import tmg.flashback.home.trackpicker.TrackPickerBottomSheetFragment
 import tmg.flashback.home.trackpicker.TrackPickerCallback
-import tmg.flashback.season.race.RaceAdapter
-import tmg.flashback.season.race.RaceAdapterCallback
-import tmg.flashback.season.race.RaceAdapterType
+import tmg.flashback.race.RaceAdapter
+import tmg.flashback.race.RaceAdapterCallback
+import tmg.flashback.race.RaceAdapterType
 import tmg.flashback.settings.SettingsActivity
 import tmg.flashback.settings.release.ReleaseBottomSheetFragment
 import tmg.flashback.utils.*
@@ -34,7 +34,8 @@ import tmg.utilities.extensions.startActivityClearStack
 import tmg.utilities.extensions.views.gone
 import tmg.utilities.extensions.views.visible
 
-class HomeStaticActivity : BaseActivity(), RaceAdapterCallback, TrackPickerCallback {
+class HomeStaticActivity : BaseActivity(),
+    RaceAdapterCallback, TrackPickerCallback {
 
     private val viewModel: HomeStaticViewModel by viewModel()
 
@@ -84,70 +85,70 @@ class HomeStaticActivity : BaseActivity(), RaceAdapterCallback, TrackPickerCallb
 
         // Inputs
 
-        fabTrackList.setOnClickListener {
-            viewModel.inputs.clickTrackList()
-        }
-
-        bnvNavigation
-            .setOnNavigationItemSelectedListener {
-                when (it.itemId) {
-                    R.id.nav_race -> {
-                        viewModel.inputs.orderBy(RaceAdapterType.RACE)
-                        return@setOnNavigationItemSelectedListener true
-                    }
-                    R.id.nav_qualifying -> {
-                        viewModel.inputs.orderBy(RaceAdapterType.QUALIFYING_POS)
-                        return@setOnNavigationItemSelectedListener true
-                    }
-                    R.id.nav_settings -> {
-                        startActivity(Intent(applicationContext, SettingsActivity::class.java))
-                        return@setOnNavigationItemSelectedListener false
-                    }
-                    else -> { }
-                }
-                return@setOnNavigationItemSelectedListener false
-
-            }
-
-        // Outputs
-
-        observeEvent(viewModel.outputs.showReleaseNotes) {
-            val instance = ReleaseBottomSheetFragment()
-            instance.show(supportFragmentManager, "Release Notes")
-        }
-
-        observeEvent(viewModel.outputs.openTrackList) { (season, round) ->
-            val bsFragment = TrackPickerBottomSheetFragment.instance(season, round)
-            bsFragment.show(supportFragmentManager, "TRACK LIST")
-        }
-
-        observe(viewModel.outputs.circuitInfo) {
-
-            layoutHeader.imgCountry.setImageResource(getFlagResourceAlpha3(it.countryKey))
-            layoutHeader.tvCountry.text = it.country
-            layoutHeader.tvTrackName.text = it.circuitName
-            layoutHeader.tvRound.text = getString(R.string.round_number, it.season, it.round)
-        }
-
-        observeEvent(viewModel.outputs.showAppLockoutMessage) {
-            startActivityClearStack(Intent(this, LockoutActivity::class.java))
-        }
-
-        observe(viewModel.outputs.items) { (adapterType, list) ->
-            raceAdapter.update(adapterType, list)
-        }
-
-        observe(viewModel.outputs.date) {
-            layoutHeader.tvDate.text = it.format(DateTimeFormatter.ofPattern("dd MMM yyyy"))
-        }
-
-        observe(viewModel.outputs.homeScreenState) {
-            screenState = it
-
-            if (it == HomeStaticScreenState.NOT_AVAILABLE) {
-                raceAdapter.update(raceAdapter.viewType, emptyList())
-            }
-        }
+//        fabTrackList.setOnClickListener {
+//            viewModel.inputs.clickTrackList()
+//        }
+//
+//        bnvNavigation
+//            .setOnNavigationItemSelectedListener {
+//                when (it.itemId) {
+//                    R.id.nav_race -> {
+//                        viewModel.inputs.orderBy(RaceAdapterType.RACE)
+//                        return@setOnNavigationItemSelectedListener true
+//                    }
+//                    R.id.nav_qualifying -> {
+//                        viewModel.inputs.orderBy(RaceAdapterType.QUALIFYING_POS)
+//                        return@setOnNavigationItemSelectedListener true
+//                    }
+//                    R.id.nav_settings -> {
+//                        startActivity(Intent(applicationContext, SettingsActivity::class.java))
+//                        return@setOnNavigationItemSelectedListener false
+//                    }
+//                    else -> { }
+//                }
+//                return@setOnNavigationItemSelectedListener false
+//
+//            }
+//
+//        // Outputs
+//
+//        observeEvent(viewModel.outputs.showReleaseNotes) {
+//            val instance = ReleaseBottomSheetFragment()
+//            instance.show(supportFragmentManager, "Release Notes")
+//        }
+//
+//        observeEvent(viewModel.outputs.openTrackList) { (season, round) ->
+//            val bsFragment = TrackPickerBottomSheetFragment.instance(season, round)
+//            bsFragment.show(supportFragmentManager, "TRACK LIST")
+//        }
+//
+//        observe(viewModel.outputs.circuitInfo) {
+//
+//            layoutHeader.imgCountry.setImageResource(getFlagResourceAlpha3(it.countryKey))
+//            layoutHeader.tvCountry.text = it.country
+//            layoutHeader.tvTrackName.text = it.circuitName
+//            layoutHeader.tvRound.text = getString(R.string.race_round_format, it.season.toString(), it.round.toString())
+//        }
+//
+//        observeEvent(viewModel.outputs.showAppLockoutMessage) {
+//            startActivityClearStack(Intent(this, LockoutActivity::class.java))
+//        }
+//
+//        observe(viewModel.outputs.items) { (adapterType, list) ->
+//            raceAdapter.update(adapterType, list)
+//        }
+//
+//        observe(viewModel.outputs.date) {
+//            layoutHeader.tvDate.text = it.format(DateTimeFormatter.ofPattern("dd MMM yyyy"))
+//        }
+//
+//        observe(viewModel.outputs.homeScreenState) {
+//            screenState = it
+//
+//            if (it == HomeStaticScreenState.NOT_AVAILABLE) {
+//                raceAdapter.update(raceAdapter.viewType, emptyList())
+//            }
+//        }
     }
 
     private fun initialiseLottie(lottieView: LottieAnimationView) {
@@ -208,7 +209,7 @@ class HomeStaticActivity : BaseActivity(), RaceAdapterCallback, TrackPickerCallb
     //region RaceAdapterCallback
 
     override fun orderBy(adapterType: RaceAdapterType) {
-        viewModel.inputs.orderBy(adapterType)
+//        viewModel.inputs.orderBy(adapterType)
     }
 
     //endregion
@@ -216,7 +217,7 @@ class HomeStaticActivity : BaseActivity(), RaceAdapterCallback, TrackPickerCallb
     //region TrackPickerCallback
 
     override fun updateSelected(season: Int, round: Int) {
-        viewModel.inputs.select(season, round)
+//        viewModel.inputs.select(season, round)
     }
 
     //endregion

@@ -1,4 +1,4 @@
-package tmg.flashback.season.race
+package tmg.flashback.race
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,17 +7,17 @@ import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.R
-import tmg.flashback.season.race.viewholders.*
+import tmg.flashback.race.viewholders.*
 import tmg.utilities.extensions.toEnum
-import kotlin.reflect.KClass
 
 class RaceAdapter(
     private val callback: RaceAdapterCallback
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    var viewType: RaceAdapterType = RaceAdapterType.RACE
+    var viewType: RaceAdapterType =
+        RaceAdapterType.RACE
         private set
-    var list: List<RaceModel> = emptyList()
+    var list: List<RaceAdapterModel> = emptyList()
         private set
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -33,7 +33,6 @@ class RaceAdapter(
             RaceAdapterViewHolderType.RACE_RESULT_HEADER -> RaceResultHeaderViewHolder(view)
             RaceAdapterViewHolderType.QUALIFYING_RESULT_HEADER -> QualifyingHeaderViewHolder(view, callback)
             RaceAdapterViewHolderType.QUALIFYING_RESULT -> QualifyingResultViewHolder(view, callback)
-            RaceAdapterViewHolderType.RACE_PLACEHOLDER -> RacePlaceholderViewHolder(view)
             else -> throw Error("View type not implemented")
         }
     }
@@ -48,16 +47,14 @@ class RaceAdapter(
     override fun getItemViewType(position: Int): Int {
         return when (viewType) {
             RaceAdapterType.RACE -> when (position) {
-                0 -> RaceAdapterViewHolderType.RACE_PLACEHOLDER.ordinal
-                1 -> RaceAdapterViewHolderType.RACE_PODIUM.ordinal
-                2 -> RaceAdapterViewHolderType.RACE_RESULT_HEADER.ordinal
+                0 -> RaceAdapterViewHolderType.RACE_PODIUM.ordinal
+                1 -> RaceAdapterViewHolderType.RACE_RESULT_HEADER.ordinal
                 else -> RaceAdapterViewHolderType.RACE_RESULT.ordinal
             }
             RaceAdapterType.QUALIFYING_POS,
             RaceAdapterType.QUALIFYING_POS_1,
             RaceAdapterType.QUALIFYING_POS_2 -> when {
-                position == 0 -> RaceAdapterViewHolderType.RACE_PLACEHOLDER.ordinal
-                list[position] is RaceModel.QualifyingHeader -> {
+                list[position] is RaceAdapterModel.QualifyingHeader -> {
                     RaceAdapterViewHolderType.QUALIFYING_RESULT_HEADER.ordinal
                 }
                 else -> {
@@ -67,7 +64,7 @@ class RaceAdapter(
         }
     }
 
-    fun update(type: RaceAdapterType, list: List<RaceModel>) {
+    fun update(type: RaceAdapterType, list: List<RaceAdapterModel>) {
 
         val result = DiffUtil.calculateDiff(
             DiffCalculator(
@@ -84,23 +81,22 @@ class RaceAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (getItemViewType(position).toEnum<RaceAdapterViewHolderType>()) {
-            RaceAdapterViewHolderType.RACE_PLACEHOLDER -> {}
             RaceAdapterViewHolderType.RACE_PODIUM -> {
                 val viewHolder = holder as RacePodiumViewHolder
-                val model = list[position] as RaceModel.Podium
+                val model = list[position] as RaceAdapterModel.Podium
                 viewHolder.bind(model.driverFirst, model.driverSecond, model.driverThird)
             }
             RaceAdapterViewHolderType.RACE_RESULT -> {
                 val viewHolder = holder as RaceResultViewHolder
-                viewHolder.bind(list[position] as RaceModel.Single)
+                viewHolder.bind(list[position] as RaceAdapterModel.Single)
             }
             RaceAdapterViewHolderType.QUALIFYING_RESULT_HEADER -> {
                 val viewHolder = holder as QualifyingHeaderViewHolder
-                viewHolder.bind((list[position] as RaceModel.QualifyingHeader).showQualifyingDeltas, viewType)
+                viewHolder.bind((list[position] as RaceAdapterModel.QualifyingHeader).showQualifyingDeltas, viewType)
             }
             RaceAdapterViewHolderType.QUALIFYING_RESULT -> {
                 val viewHolder = holder as QualifyingResultViewHolder
-                viewHolder.bind(list[position] as RaceModel.Single, viewType)
+                viewHolder.bind(list[position] as RaceAdapterModel.Single, viewType)
             }
             else -> {}
         }
@@ -109,8 +105,8 @@ class RaceAdapter(
     //region Diff calculator
 
     inner class DiffCalculator(
-        private val oldList: List<RaceModel>,
-        private val newList: List<RaceModel>,
+        private val oldList: List<RaceAdapterModel>,
+        private val newList: List<RaceAdapterModel>,
         private val oldType: RaceAdapterType,
         private val newType: RaceAdapterType
     ) : DiffUtil.Callback() {
@@ -138,7 +134,6 @@ enum class RaceAdapterType {
 enum class RaceAdapterViewHolderType(
     @LayoutRes val viewHolderRes: Int
 ) {
-    RACE_PLACEHOLDER(R.layout.layout_header),
     RACE_PODIUM(R.layout.view_race_podium),
     RACE_RESULT(R.layout.view_race_result),
     RACE_RESULT_HEADER(R.layout.view_race_header),

@@ -1,16 +1,16 @@
-package tmg.flashback.season.race
+package tmg.flashback.race
 
 import tmg.flashback.repo.enums.RaceStatus
 import tmg.flashback.repo.models.LapTime
 import tmg.flashback.repo.models.RoundDriver
 import tmg.flashback.repo.models.RoundQualifyingResult
 
-sealed class RaceModel {
+sealed class RaceAdapterModel {
     data class Podium(
         val driverFirst: Single,
         val driverSecond: Single,
         val driverThird: Single
-    ) : RaceModel()
+    ) : RaceAdapterModel()
 
     data class Single(
         val season: Int,
@@ -30,18 +30,16 @@ sealed class RaceModel {
         val q2Delta: String?,
         val q3Delta: String?,
         val showQualifying: ShowQualifying
-    ) : RaceModel()
+    ) : RaceAdapterModel()
 
     data class RaceHeader(
         val season: Int,
         val round: Int
-    ) : RaceModel()
+    ) : RaceAdapterModel()
 
     data class QualifyingHeader(
         val showQualifyingDeltas: ShowQualifying
-    ) : RaceModel()
-
-    object RacePlaceholder : RaceModel()
+    ) : RaceAdapterModel()
 }
 
 data class ShowQualifying(

@@ -69,4 +69,8 @@
     <dimen name="dashboardYearSelectorHeight">42dp</dimen>
     <dimen name="dashboardTrackImageSize">28dp</dimen>
 
+    <!-- Race -->
+
+    <dimen name="raceImageSize">42dp</dimen>
+
 </resources>

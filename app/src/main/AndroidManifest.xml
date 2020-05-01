@@ -24,6 +24,13 @@
 
         <activity android:name=".dashboard.DashboardActivity" />
 
+        <activity android:name=".race.RaceActivity" />
+
+
+
+
+
+
         <activity android:name=".settings.planned.PlannedActivity" />
 
         <activity android:name="tmg.flashback.settings.SettingsActivity" />

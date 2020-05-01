@@ -18,12 +18,6 @@ class DashboardFragmentAdapter: FragmentStateAdapter {
     constructor(fragmentActivity: FragmentActivity) : super(fragmentActivity)
     constructor(fragment: Fragment) : super(fragment)
 
-//    override fun getCount(): Int = 2
-//
-//    override fun getItem(position: Int): Fragment {
-//        return DashboardSeasonFragment.instance(2019 - position)
-//    }
-
     override fun getItemCount(): Int = 19
 
     override fun createFragment(position: Int): Fragment {

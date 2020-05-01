@@ -1,6 +1,5 @@
-package tmg.flashback.season.race.viewholders
+package tmg.flashback.race.viewholders
 
-import android.graphics.Color
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
@@ -10,7 +9,7 @@ import tmg.flashback.R
 import tmg.flashback.extensions.iconRes
 import tmg.flashback.extensions.toEmptyIfZero
 import tmg.flashback.repo.enums.isStatusFinished
-import tmg.flashback.season.race.RaceModel
+import tmg.flashback.race.RaceAdapterModel
 import tmg.flashback.utils.getColor
 import tmg.flashback.utils.getFlagResourceAlpha3
 import tmg.flashback.utils.position
@@ -26,7 +25,7 @@ class RaceResultViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnC
 
     private var status: String = ""
 
-    fun bind(model: RaceModel.Single) {
+    fun bind(model: RaceAdapterModel.Single) {
         itemView.apply {
             tvPosition.text = model.racePos.toString()
             layoutDriver.tvName.text = model.driver.name

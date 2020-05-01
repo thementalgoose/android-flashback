@@ -9,6 +9,7 @@ import tmg.flashback.gallery.GalleryViewModel
 import tmg.flashback.home.static.HomeStaticViewModel
 import tmg.flashback.home.trackpicker.TrackPickerViewModel
 import tmg.flashback.prefs.SharedPrefsDB
+import tmg.flashback.race.RaceViewModel
 import tmg.flashback.repo.db.*
 import tmg.flashback.repo_firebase.CrashReporterFirebase
 import tmg.flashback.season.swiper.SeasonViewModel
@@ -19,8 +20,15 @@ import tmg.flashback.repo_firebase.repos.SeasonOverviewFirestore
 
 var flashbackModule = module {
 
-    viewModel { DashboardViewModel() }
+    viewModel { DashboardViewModel(get(), get()) }
     viewModel { DashboardSeasonViewModel(get()) }
+
+    viewModel { RaceViewModel(get(), get()) }
+
+
+
+
+
 
     viewModel { HomeStaticViewModel(get(), get(), get(), get()) }
 

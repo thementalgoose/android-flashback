@@ -1,13 +1,13 @@
-package tmg.flashback.season.race.viewholders
+package tmg.flashback.race.viewholders
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.view_qualifying_header.view.*
 import tmg.flashback.R
 import tmg.flashback.extensions.show
-import tmg.flashback.season.race.RaceAdapterCallback
-import tmg.flashback.season.race.RaceAdapterType
-import tmg.flashback.season.race.ShowQualifying
+import tmg.flashback.race.RaceAdapterCallback
+import tmg.flashback.race.RaceAdapterType
+import tmg.flashback.race.ShowQualifying
 
 class QualifyingHeaderViewHolder(view: View, private val updateAdapterType: RaceAdapterCallback) : RecyclerView.ViewHolder(view), View.OnClickListener {
     init {

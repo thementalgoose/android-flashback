@@ -6,7 +6,9 @@ import kotlinx.android.synthetic.main.fragment_dashboard_season.*
 import org.koin.android.ext.android.inject
 import tmg.flashback.R
 import tmg.flashback.base.BaseFragment
+import tmg.flashback.race.RaceActivity
 import tmg.utilities.extensions.observe
+import tmg.utilities.extensions.observeEvent
 
 class DashboardSeasonFragment: BaseFragment() {
 
@@ -22,12 +24,20 @@ class DashboardSeasonFragment: BaseFragment() {
 
     override fun initViews() {
 
-        adapter = DashboardSeasonAdapter()
+        adapter = DashboardSeasonAdapter(
+            itemClickedCallback = viewModel.inputs::clickRace
+        )
         rvDashboardSeason.adapter = adapter
         rvDashboardSeason.layoutManager = LinearLayoutManager(context)
 
         observe(viewModel.outputs.list) {
             adapter.list = it
+        }
+
+        observeEvent(viewModel.outputs.goToRace) { (season, round) ->
+            context?.let {
+                startActivity(RaceActivity.intent(it, season, round))
+            }
         }
     }
 

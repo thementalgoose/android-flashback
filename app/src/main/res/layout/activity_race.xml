@@ -1,6 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/bnvType"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include
+                android:id="@+id/toolbarLayout"
+                layout="@layout/toolbar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/paddingMedium">
+
+                <ImageView
+                    android:id="@+id/imgCountry"
+                    android:layout_width="@dimen/raceImageSize"
+                    android:layout_height="@dimen/raceImageSize"
+                    android:layout_marginStart="@dimen/paddingMedium"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@drawable/au" />
+
+                <TextView
+                    android:id="@+id/tvCircuitName"
+                    style="@style/Text.Race.Header"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/paddingMedium"
+                    android:layout_marginEnd="@dimen/paddingMedium"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/imgCountry"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Albert Park Grand Prix Circuit" />
+
+                <TextView
+                    android:id="@+id/tvRoundInfo"
+                    style="@style/Text.Race.Round"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@id/tvCircuitName"
+                    app:layout_constraintStart_toStartOf="@id/tvCircuitName"
+                    app:layout_constraintTop_toBottomOf="@id/tvCircuitName"
+                    tools:text="2019 » Round 2" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvContent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:nestedScrollingEnabled="false"
+                tools:listitem="@layout/view_qualifying_result" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bnvType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/f1BackgroundPrimary"
+        app:itemIconTint="@drawable/selector_bottom_nav_color"
+        app:itemTextColor="@drawable/selector_bottom_nav_color"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/menu_race" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

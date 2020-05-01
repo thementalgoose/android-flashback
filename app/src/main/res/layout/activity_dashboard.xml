@@ -24,38 +24,23 @@
                 android:layout_height="wrap_content">
 
                 <include
-                    android:id="@+id/toolbar"
+                    android:id="@+id/toolbarLayout"
                     layout="@layout/toolbar"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/tvTitle"
-                    style="@style/Text.Dashboard.Header"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="@dimen/paddingMedium"
-                    android:paddingTop="@dimen/paddingXSmall"
-                    android:paddingEnd="@dimen/paddingMedium"
-                    android:paddingBottom="@dimen/paddingMedium"
-                    android:text="@string/app_name"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/toolbar" />
-
-                <androidx.viewpager2.widget.ViewPager2
-                    android:id="@+id/vpAll"
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tlMain"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dashboardYearSelectorHeight"
-                    android:background="@color/logo_gradient_1"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+                    app:layout_constraintTop_toBottomOf="@id/toolbarLayout"
+                    app:tabMode="scrollable" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
@@ -65,7 +50,6 @@
         android:id="@+id/vpSeason"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/logo_gradient_2"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <!--    <com.google.android.material.bottomnavigation.BottomNavigationView-->

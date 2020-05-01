@@ -9,9 +9,12 @@ import tmg.flashback.dashboard.season.DashboardSeasonViewType.*
 import tmg.flashback.dashboard.season.viewholders.DashboardSeasonConstructorViewHolder
 import tmg.flashback.dashboard.season.viewholders.DashboardSeasonDriversViewHolder
 import tmg.flashback.dashboard.season.viewholders.DashboardSeasonTrackViewHolder
+import tmg.flashback.utils.SeasonRound
 import tmg.utilities.extensions.toEnum
 
-class DashboardSeasonAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class DashboardSeasonAdapter(
+    val itemClickedCallback: (seasonRound: SeasonRound) -> Unit
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var list: List<DashboardSeasonAdapterItem> = emptyList()
         set(value) {
@@ -22,7 +25,8 @@ class DashboardSeasonAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType.toEnum<DashboardSeasonViewType>()) {
-            TRACK -> DashboardSeasonDriversViewHolder(
+            TRACK -> DashboardSeasonTrackViewHolder(
+                itemClickedCallback,
                 LayoutInflater
                     .from(parent.context)
                     .inflate(R.layout.view_dashboard_season_track, parent, false)
@@ -37,7 +41,7 @@ class DashboardSeasonAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                     .from(parent.context)
                     .inflate(R.layout.view_dashboard_season_constructor, parent, false)
             )
-            else -> throw NullPointerException("Cannot create view with view type $viewType")
+            else -> throw Throwable("Cannot create view with view type $viewType")
         }
     }
 
@@ -59,7 +63,7 @@ class DashboardSeasonAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 (holder as? DashboardSeasonConstructorViewHolder)
                     ?.bind(list[position] as DashboardSeasonAdapterItem.Constructor)
             }
-            else -> throw NullPointerException("Cannot bind view of view type $type")
+            else -> throw Throwable("Cannot bind view of view type $type")
         }
     }
 
