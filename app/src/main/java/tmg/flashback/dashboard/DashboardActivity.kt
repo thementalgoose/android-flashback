@@ -36,7 +36,6 @@ class DashboardActivity: BaseActivity() {
         when (item.itemId) {
             R.id.nav_settings -> Toast.makeText(this, "Settings", Toast.LENGTH_LONG).show()
             R.id.nav_all -> Toast.makeText(this, "All", Toast.LENGTH_LONG).show()
-            R.id.nav_date_select -> Toast.makeText(this, "Date select", Toast.LENGTH_LONG).show()
         }
         return super.onOptionsItemSelected(item)
     }

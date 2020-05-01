@@ -17,7 +17,10 @@ class QualifyingHeaderViewHolder(view: View, private val updateAdapterType: Race
         itemView.tvQ3.setOnClickListener(this)
     }
 
+    private lateinit var showQualifying: ShowQualifying
+
     fun bind(showQualifying: ShowQualifying, type: RaceAdapterType) {
+        this.showQualifying = showQualifying
         when {
             showQualifying.q1 && !showQualifying.q2 && !showQualifying.q3 -> {
                 itemView.tvQ1.show(false, isGone = false)
@@ -33,8 +36,8 @@ class QualifyingHeaderViewHolder(view: View, private val updateAdapterType: Race
                 itemView.tvQ2.show(true, isGone = false)
                 itemView.tvQ3.show(true, isGone = false)
                 itemView.tvQ1.setBackgroundResource(0)
-                itemView.tvQ2.setBackgroundResource(if (type == RaceAdapterType.QUALIFYING_POS_2) R.drawable.background_qualifying_header else 0)
-                itemView.tvQ3.setBackgroundResource(if (type != RaceAdapterType.QUALIFYING_POS_2) R.drawable.background_qualifying_header else 0)
+                itemView.tvQ2.setBackgroundResource(if (type == RaceAdapterType.QUALIFYING_POS_1) R.drawable.background_qualifying_header else 0)
+                itemView.tvQ3.setBackgroundResource(if (type == RaceAdapterType.QUALIFYING_POS_2) R.drawable.background_qualifying_header else 0)
                 itemView.tvQ2.text = itemView.context.getString(R.string.qualifying_q1)
                 itemView.tvQ3.text = itemView.context.getString(R.string.qualifying_q2)
             }
@@ -53,11 +56,20 @@ class QualifyingHeaderViewHolder(view: View, private val updateAdapterType: Race
     }
 
     override fun onClick(p0: View?) {
-        when (p0) {
-            itemView.vOther -> updateAdapterType.orderBy(RaceAdapterType.QUALIFYING_POS)
-            itemView.tvQ1 -> updateAdapterType.orderBy(RaceAdapterType.QUALIFYING_POS_1)
-            itemView.tvQ2 -> updateAdapterType.orderBy(RaceAdapterType.QUALIFYING_POS_2)
-            itemView.tvQ3 -> updateAdapterType.orderBy(RaceAdapterType.QUALIFYING_POS)
+        if (showQualifying.q1 && showQualifying.q2 && !showQualifying.q3) {
+            when (p0) {
+                itemView.vOther -> updateAdapterType.orderBy(RaceAdapterType.QUALIFYING_POS)
+                itemView.tvQ2 -> updateAdapterType.orderBy(RaceAdapterType.QUALIFYING_POS_1)
+                itemView.tvQ3 -> updateAdapterType.orderBy(RaceAdapterType.QUALIFYING_POS_2)
+            }
+        }
+        else {
+            when (p0) {
+                itemView.vOther -> updateAdapterType.orderBy(RaceAdapterType.QUALIFYING_POS)
+                itemView.tvQ1 -> updateAdapterType.orderBy(RaceAdapterType.QUALIFYING_POS_1)
+                itemView.tvQ2 -> updateAdapterType.orderBy(RaceAdapterType.QUALIFYING_POS_2)
+                itemView.tvQ3 -> updateAdapterType.orderBy(RaceAdapterType.QUALIFYING_POS)
+            }
         }
     }
 }

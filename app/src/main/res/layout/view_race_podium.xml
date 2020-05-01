@@ -12,7 +12,7 @@
         layout="@layout/layout_podium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/paddingLarge"
+        android:layout_marginTop="@dimen/paddingSmall"
         app:layout_constraintEnd_toEndOf="@id/imgGold"
         app:layout_constraintStart_toStartOf="@id/imgGold"
         app:layout_constraintTop_toTopOf="parent" />

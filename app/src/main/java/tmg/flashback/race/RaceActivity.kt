@@ -69,6 +69,8 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
         observe(viewModel.outputs.raceItems) { (adapterType, list) ->
             raceAdapter.update(adapterType, list)
         }
+
+        bnvType.selectedItemId = R.id.nav_race
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

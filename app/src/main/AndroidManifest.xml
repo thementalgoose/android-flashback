@@ -22,14 +22,13 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".dashboard.DashboardActivity" />
+        <activity
+            android:name=".dashboard.DashboardActivity"
+            android:label="" />
 
-        <activity android:name=".race.RaceActivity" />
-
-
-
-
-
+        <activity
+            android:name=".race.RaceActivity"
+            android:label="" />
 
         <activity android:name=".settings.planned.PlannedActivity" />
 

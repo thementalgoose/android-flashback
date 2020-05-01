@@ -7,9 +7,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.*
 import tmg.flashback.base.BaseViewModel
-import tmg.flashback.dateFormatter
-import tmg.flashback.home.static.HomeStaticScreenState
-import tmg.flashback.home.trackpicker.TrackModel
 import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.db.SeasonOverviewDB
 import tmg.flashback.repo.models.LapTime
@@ -17,7 +14,6 @@ import tmg.flashback.repo.models.Round
 import tmg.flashback.repo.models.RoundDriverOverview
 import tmg.flashback.utils.SeasonRound
 import tmg.utilities.extensions.combineTriple
-import tmg.utilities.extensions.then
 
 //region Inputs
 
@@ -47,8 +43,8 @@ class RaceViewModel(
     var outputs: RaceViewModelOutputs = this
 
     private val seasonRound: ConflatedBroadcastChannel<SeasonRound> = ConflatedBroadcastChannel()
-    private var viewType: ConflatedBroadcastChannel<RaceAdapterType> =
-        ConflatedBroadcastChannel(RaceAdapterType.RACE)
+    private var viewType: ConflatedBroadcastChannel<RaceAdapterType> = ConflatedBroadcastChannel()
+
     private val seasonRoundFlow: Flow<Round?> = seasonRound
             .asFlow()
             .flatMapLatest { (season, round) -> seasonOverviewDB.getSeasonRound(season, round) }
