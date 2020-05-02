@@ -13,7 +13,7 @@ import tmg.flashback.utils.SeasonRound
 import tmg.utilities.extensions.toEnum
 
 class DashboardSeasonAdapter(
-    val itemClickedCallback: (seasonRound: SeasonRound) -> Unit
+    val itemClickedCallback: (seasonRound: DashboardSeasonAdapterItem.Track) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var list: List<DashboardSeasonAdapterItem> = emptyList()

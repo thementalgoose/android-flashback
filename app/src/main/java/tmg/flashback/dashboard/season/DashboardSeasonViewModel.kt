@@ -19,7 +19,7 @@ interface DashboardSeasonViewModelInputs {
     fun load(season: Int)
     fun switchType(type: DashboardSeasonViewType)
 
-    fun clickRace(seasonRound: SeasonRound)
+    fun clickRace(seasonRound: DashboardSeasonAdapterItem.Track)
 }
 
 //endregion
@@ -28,7 +28,7 @@ interface DashboardSeasonViewModelInputs {
 
 interface DashboardSeasonViewModelOutputs {
     val list: LiveData<List<DashboardSeasonAdapterItem>>
-    val goToRace: MutableLiveData<DataEvent<SeasonRound>>
+    val goToRace: MutableLiveData<DataEvent<DashboardSeasonAdapterItem.Track>>
 }
 
 //endregion
@@ -58,7 +58,7 @@ class DashboardSeasonViewModel(
             }
         }
         .asLiveData(viewModelScope.coroutineContext)
-    override val goToRace: MutableLiveData<DataEvent<SeasonRound>> = MutableLiveData()
+    override val goToRace: MutableLiveData<DataEvent<DashboardSeasonAdapterItem.Track>> = MutableLiveData()
 
     //region Inputs
 
@@ -70,7 +70,7 @@ class DashboardSeasonViewModel(
         // TODO
     }
 
-    override fun clickRace(seasonRound: SeasonRound) {
+    override fun clickRace(seasonRound: DashboardSeasonAdapterItem.Track) {
         goToRace.value = DataEvent(seasonRound)
     }
 

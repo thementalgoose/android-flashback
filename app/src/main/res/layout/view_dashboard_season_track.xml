@@ -17,8 +17,9 @@
         android:id="@+id/imgCountry"
         android:layout_width="@dimen/dashboardTrackImageSize"
         android:layout_height="@dimen/dashboardTrackImageSize"
+        app:layout_constraintBottom_toBottomOf="@id/tvRaceName"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tvCountry"
         tools:src="@drawable/au" />
 
     <TextView
@@ -29,8 +30,7 @@
         android:layout_marginStart="@dimen/paddingMedium"
         android:layout_marginEnd="@dimen/paddingMedium"
         android:gravity="center|start"
-        app:layout_constraintBottom_toBottomOf="@id/imgCountry"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/tvRound"
         app:layout_constraintStart_toEndOf="@id/imgCountry"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Australia" />
@@ -45,5 +45,23 @@
         app:layout_constraintStart_toStartOf="@id/tvCountry"
         app:layout_constraintTop_toBottomOf="@id/tvCountry"
         tools:text="Albert Park Circuit" />
+
+    <TextView
+        android:id="@+id/tvRound"
+        style="@style/Text.Dashboard.Track.Round"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="2" />
+
+    <TextView
+        android:id="@+id/tvDate"
+        style="@style/Text.Dashboard.Track.Round"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvRound"
+        tools:text="21st Jan" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

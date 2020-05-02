@@ -1,5 +1,6 @@
 package tmg.flashback.dashboard
 
+import android.content.Intent
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -10,6 +11,8 @@ import org.koin.android.ext.android.inject
 import tmg.flashback.R
 import tmg.flashback.base.BaseActivity
 import tmg.flashback.currentYear
+import tmg.flashback.race.RaceActivity
+import tmg.flashback.settings.SettingsActivity
 import tmg.utilities.extensions.initToolbar
 
 class DashboardActivity: BaseActivity() {
@@ -34,7 +37,7 @@ class DashboardActivity: BaseActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.nav_settings -> Toast.makeText(this, "Settings", Toast.LENGTH_LONG).show()
+            R.id.nav_settings -> startActivity(Intent(this, SettingsActivity::class.java))
             R.id.nav_all -> Toast.makeText(this, "All", Toast.LENGTH_LONG).show()
         }
         return super.onOptionsItemSelected(item)

@@ -1,12 +1,15 @@
 package tmg.flashback.race
 
+import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.*
 import tmg.flashback.base.BaseViewModel
+import tmg.flashback.race.RaceDisplayMode.*
 import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.db.SeasonOverviewDB
 import tmg.flashback.repo.models.LapTime
@@ -14,6 +17,7 @@ import tmg.flashback.repo.models.Round
 import tmg.flashback.repo.models.RoundDriverOverview
 import tmg.flashback.utils.SeasonRound
 import tmg.utilities.extensions.combineTriple
+import tmg.utilities.extensions.then
 
 //region Inputs
 
@@ -30,6 +34,7 @@ interface RaceViewModelOutputs {
     val circuitInfo: LiveData<Round>
     val raceItems: LiveData<Triple<RaceAdapterType, List<RaceAdapterModel>, SeasonRound>>
     val seasonRoundData: LiveData<SeasonRound>
+    val raceDisplayMode: MutableLiveData<RaceDisplayMode>
 }
 
 //endregion
@@ -54,6 +59,11 @@ class RaceViewModel(
         .asLiveData()
 
     override val circuitInfo: LiveData<Round> = seasonRoundFlow
+        .then {
+            if (it == null) {
+                raceDisplayMode.postValue(NOT_FOUND)
+            }
+        }
         .filterNotNull()
         .flowOn(Dispatchers.IO)
         .asLiveData(viewModelScope.coroutineContext)
@@ -120,9 +130,19 @@ class RaceViewModel(
                         })
                     }
                 }
+                Log.i("Flashback", "Returning triple")
                 return@map Triple(viewType, list, SeasonRound(roundData.season, roundData.round))
             }
+            .then {
+                raceDisplayMode.postValue(LIST)
+            }
             .asLiveData(viewModelScope.coroutineContext)
+
+    override val raceDisplayMode: MutableLiveData<RaceDisplayMode> = MutableLiveData(LOADING)
+
+    init {
+
+    }
 
     //region Inputs
 

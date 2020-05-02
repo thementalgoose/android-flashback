@@ -6,6 +6,7 @@
     android:layout_height="match_parent">
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/nsvMain"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@id/bnvType"
@@ -75,6 +76,34 @@
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
+
+    <include
+        android:id="@+id/skeleton"
+        layout="@layout/skeleton_race"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/nsvMain"
+        app:layout_constraintEnd_toEndOf="@id/nsvMain"
+        app:layout_constraintStart_toStartOf="@id/nsvMain"
+        app:layout_constraintTop_toTopOf="@id/nsvMain" />
+
+    <include layout="@layout/layout_race_network"
+        android:id="@+id/networkError"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/nsvMain"
+        app:layout_constraintEnd_toEndOf="@id/nsvMain"
+        app:layout_constraintStart_toStartOf="@id/nsvMain"
+        app:layout_constraintTop_toTopOf="@id/nsvMain" />
+
+    <include layout="@layout/layout_race_not_found"
+        android:id="@+id/notFound"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/nsvMain"
+        app:layout_constraintEnd_toEndOf="@id/nsvMain"
+        app:layout_constraintStart_toStartOf="@id/nsvMain"
+        app:layout_constraintTop_toTopOf="@id/nsvMain" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bnvType"

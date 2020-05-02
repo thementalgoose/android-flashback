@@ -84,8 +84,10 @@
     <string name="dashboard_header">@string/app_name</string>
 
     <!-- Race -->
+    <string name="race_round" formatted="false">Round %d</string>
     <string name="race_round_format" formatted="false"><b>%s</b> » round %s</string>
-
+    <string name="race_network_error">Cannot connect, please check you are connected to the internet and try again</string>
+    <string name="race_not_found">Race data not available.</string>
 
     <!-- Synchronisation -->
     <string name="sync_type_overview">Season Overview</string>
@@ -110,10 +112,4 @@
 
     <!-- Race Status -->
     <string name="race_status_retired">DNF</string>
-
-    <!-- Network connection -->
-    <string name="network_connection_issue">An error occurred. Please check you are connected to the internet and try again</string>
-    <string name="race_not_started">This race hasn\'t started yet or is currently unavailable. Please check back after the race.</string>
-    <string name="app_network_try_again">Try again</string>
-
 </resources>

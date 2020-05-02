@@ -34,9 +34,16 @@ class DashboardSeasonFragment: BaseFragment() {
             adapter.list = it
         }
 
-        observeEvent(viewModel.outputs.goToRace) { (season, round) ->
+        observeEvent(viewModel.outputs.goToRace) { track ->
             context?.let {
-                startActivity(RaceActivity.intent(it, season, round))
+                startActivity(RaceActivity.intent(
+                    context = it,
+                    season = track.season,
+                    round = track.round,
+                    country = track.trackNationality,
+                    trackName = track.trackName,
+                    countryISO = track.trackISO
+                ))
             }
         }
     }

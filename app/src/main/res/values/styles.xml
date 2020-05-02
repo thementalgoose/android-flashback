@@ -65,6 +65,13 @@
     <style name="Text.Dashboard.Track.TrackName" parent="Text">
         <item name="android:textSize">12sp</item>
     </style>
+    <style name="Text.Dashboard.Track.Round" parent="Text">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="Text.Dashboard.Track.Date" parent="Text">
+        <item name="android:textSize">12sp</item>
+    </style>
 
     <!-- Race -->
 
@@ -73,6 +80,13 @@
     </style>
     <style name="Text.Race.Round" parent="Text">
         <item name="android:textSize">12sp</item>
+    </style>
+    <style name="Text.Race.Error.NotFound" parent="Text">
+        <item name="android:textSize">12sp</item>
+    </style>
+    <style name="Text.Race.Error.Network" parent="Text">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">?attr/f1TextTertiary</item>
     </style>
 
 
