@@ -7,24 +7,41 @@
     android:background="?attr/f1BackgroundPrimary">
 
     <include
-        android:id="@+id/toolbar"
+        android:id="@+id/toolbarLayout"
         layout="@layout/toolbar" />
 
-    <TextView
-        android:id="@+id/tvMessage"
-        style="@style/Text.Lockout.Text"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:gravity="start|top"
-        android:paddingStart="@dimen/paddingMedium"
-        android:paddingTop="@dimen/paddingMedium"
-        android:paddingEnd="@dimen/paddingMedium"
-        android:paddingBottom="@dimen/paddingMedium"
         app:layout_constraintBottom_toTopOf="@id/btnLink"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-        tools:text="Something went wrong with the application, and I can explain it here. Basically, you need to fix something" />
+        app:layout_constraintTop_toBottomOf="@id/toolbarLayout">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvMessage"
+                style="@style/Text.Lockout.Text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start|top"
+                android:paddingStart="@dimen/paddingMedium"
+                android:paddingTop="@dimen/paddingMedium"
+                android:paddingEnd="@dimen/paddingMedium"
+                android:paddingBottom="@dimen/paddingMedium"
+                app:layout_constraintBottom_toTopOf="@id/btnLink"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/toolbarLayout"
+                tools:text="Something went wrong with the application, and I can explain it here. Basically, you need to fix something" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
     <TextView
         android:id="@+id/btnLink"

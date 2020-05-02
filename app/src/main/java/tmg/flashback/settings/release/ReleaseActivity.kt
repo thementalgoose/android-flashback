@@ -2,6 +2,7 @@ package tmg.flashback.settings.release
 
 import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_release_notes.*
+import kotlinx.android.synthetic.main.toolbar.view.*
 import tmg.flashback.R
 import tmg.flashback.base.BaseActivity
 import tmg.flashback.releaseNotes
@@ -15,6 +16,7 @@ class ReleaseActivity: BaseActivity() {
     override fun initViews() {
 
         initToolbar(R.id.toolbar, true, indicator = R.drawable.ic_back)
+        toolbarLayout.header.text = getString(R.string.app_lockout_title)
 
         val list = releaseNotes
             .toList()

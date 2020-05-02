@@ -1,14 +1,14 @@
 <resources>
 
     <!-- Release notes -->
-    <string name="release_1"><![CDATA[<b>[1.0.0]</b>
-        <br/>Initial release!
-        <br/>- View a season overview
-        <br/>- See the results for all F1 races dating back to 2000
-        <br/>- See the qualifying results for Q1, Q2 and Q3 for all races]]></string>
-    <string name="release_2"><![CDATA[<b>[1.0.1]</b>
-        <br/>- Updated dependencies
-        <br/>- Minor bug fixes with different seasons]]></string>
+    <string name="release_1"><![CDATA[<b>1.0.0</b> - Initial release!
+        <br/>• View a season overview
+        <br/>• See the results for all F1 races from 2019 dating back to 2000
+        <br/>• See the qualifying results for Q1, Q2 and Q3 for all races
+        <br/>• As of May 2020 it is unclear what the 2020 season will look like, so I cannot guarantee that new races will be updated live]]></string>
+    <string name="release_2"><![CDATA[<b>1.0.2</b> - Tidying up
+        <br/>• Changed app flow to default to the season overview screens rather than the 2019 season
+        <br/>• Changed theme throughout so it can be more customisable down the road]]></string>
 
     <!-- Planning -->
     <string name="planned_0">Season overview</string>
@@ -25,6 +25,7 @@
     <string name="app_lockout_title">App lockout</string>
 
     <!-- Settings -->
+    <string name="settings_title">Settings</string>
     <string name="settings_tutorial">Tutorial</string>
     <string name="settings_tutorial_onboarding_title">Onboarding</string>
     <string name="settings_tutorial_onboarding_description">View the app intro screens again</string>
@@ -47,13 +48,13 @@
     <string name="settings_help_release_notes_description">See the release notes history</string>
     <string name="settings_help_crash_reporting_title">Crash Reporting</string>
     <string name="settings_help_crash_reporting_description">Send device information and crash stack traces to the developer</string>
-    <string name="settings_help_crash_reporting_after_app_restart">Your crash reporting preference will be applied once the app has restarted</string>
+    <string name="settings_help_crash_reporting_notify">Your crash reporting preference will be applied once the app has restarted</string>
     <string name="settings_help_suggestions_title">Have a suggestion?</string>
     <string name="settings_help_suggestions_description">Send the developer an email with any suggestions you may have. Alternately turn on shake to report and shake your device</string>
     <string name="send_email">Send email</string>
     <string name="settings_help_shake_to_report_title">Shake the app to report a bug or a feature?</string>
     <string name="settings_help_shake_to_report_description">Shake the app at any time to screenshot and send me any bugs, issues, or suggestions you may have for this app!</string>
-    <string name="settings_help_shake_to_report_after_app_restart">Your shake to report preference will be applied once the app has restarted</string>
+    <string name="settings_help_shake_to_report_notify">Your shake to report preference will be applied once the app has restarted</string>
 
     <!-- About -->
     <string name="about_name">Jordan Fisher</string>

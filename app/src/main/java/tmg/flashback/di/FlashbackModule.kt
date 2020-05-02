@@ -16,6 +16,7 @@ import tmg.flashback.repo_firebase.repos.HistoryFirestore
 import tmg.flashback.repo_firebase.repos.SeasonOverviewFirestore
 import tmg.flashback.settings.ConnectivityManager
 import tmg.flashback.settings.NetworkConnectivityManager
+import tmg.flashback.settings.SettingsViewModel
 
 var flashbackModule = module {
 
@@ -23,6 +24,8 @@ var flashbackModule = module {
     viewModel { DashboardSeasonViewModel(get()) }
 
     viewModel { RaceViewModel(get(), get(), get()) }
+
+    viewModel { SettingsViewModel(get(), get()) }
 
     viewModel { GalleryViewModel() }
     viewModel { LockoutViewModel(get()) }

@@ -31,17 +31,18 @@
             android:name=".race.RaceActivity"
             android:label="" />
 
-        <activity android:name=".settings.planned.PlannedActivity" />
+        <activity android:name=".settings.planned.PlannedActivity"
+            android:label="" />
 
-        <activity android:name="tmg.flashback.settings.SettingsActivity" />
+        <activity android:name="tmg.flashback.settings.SettingsActivity"
+            android:label="" />
 
-        <activity android:name="tmg.flashback.settings.release.ReleaseActivity" />
+        <activity android:name="tmg.flashback.settings.release.ReleaseActivity"
+            android:label="" />
 
         <activity
             android:name=".admin.lockout.LockoutActivity"
-            android:label="@string/app_lockout_title" />
-
-        <activity android:name="tmg.flashback.home.static.HomeStaticActivity" />
+            android:label="" />
 
         <activity
             android:name="tmg.components.about.AboutThisAppActivity"

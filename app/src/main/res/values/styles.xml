@@ -4,7 +4,7 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">#4A34B6</item>
         <item name="colorPrimaryDark">#4A34B6</item>
-        <item name="colorAccent">#e53935</item>
+        <item name="colorAccent">@color/logo_gradient_1</item>
 
         <item name="f1Selected">#4403DAC5</item>
 
@@ -35,17 +35,13 @@
         <item name="f1DeltaNegative">#4CAF50</item>
     </style>
 
-    <style name="LightTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.ActionBar"/>
-    <style name="LightTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark"/>
+    <style name="LightTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.ActionBar" />
+
+    <style name="LightTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark" />
 
     <style name="LightTheme.Launcher" parent="LightTheme">
         <item name="android:windowBackground">@drawable/launch_screen</item>
     </style>
-
-
-
-
-
 
 
     <style name="Text">
@@ -59,17 +55,21 @@
         <item name="android:fontFamily">@font/opensans</item>
         <item name="android:textStyle">bold</item>
     </style>
+
     <style name="Text.Dashboard.Track.Title" parent="Text">
         <item name="android:textSize">16sp</item>
         <item name="android:textStyle">bold</item>
     </style>
+
     <style name="Text.Dashboard.Track.TrackName" parent="Text">
         <item name="android:textSize">12sp</item>
     </style>
+
     <style name="Text.Dashboard.Track.Round" parent="Text">
         <item name="android:textSize">12sp</item>
         <item name="android:textStyle">bold</item>
     </style>
+
     <style name="Text.Dashboard.Track.Date" parent="Text">
         <item name="android:textSize">12sp</item>
     </style>
@@ -79,66 +79,35 @@
     <style name="Text.Race.Header" parent="Text">
         <item name="android:textSize">14sp</item>
     </style>
+
     <style name="Text.Race.Round" parent="Text">
         <item name="android:textSize">12sp</item>
     </style>
+
     <style name="Text.Race.Error.NotFound" parent="Text">
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">?attr/f1TextTertiary</item>
     </style>
+
     <style name="Text.Race.Error.Network" parent="Text">
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">?attr/f1TextTertiary</item>
     </style>
 
+    <!-- Settings -->
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <style name="Text.HomeStatic" parent="Text">
-        <item name="android:textColor">?attr/f1TextInversePrimary</item>
-    </style>
-    <style name="Text.HomeStatic.Header" parent="Text.HomeStatic">
-        <item name="android:textSize">26sp</item>
+    <style name="Text.Settings.Category" parent="Text">
+        <item name="android:textColor">@color/logo_gradient_1</item>
         <item name="android:textStyle">bold</item>
     </style>
-    <style name="Text.HomeStatic.Country" parent="Text.HomeStatic">
+
+    <style name="Text.Settings.Preference.Title" parent="Text">
         <item name="android:textSize">16sp</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:fontFamily">@font/goodtimes</item>
-    </style>
-    <style name="Text.HomeStatic.TrackName" parent="Text.HomeStatic">
-        <item name="android:textSize">12sp</item>
-    </style>
-    <style name="Text.HomeStatic.Round" parent="Text.HomeStatic">
-        <item name="android:textSize">10sp</item>
-    </style>
-    <style name="Text.HomeStatic.Date" parent="Text.HomeStatic">
-        <item name="android:textSize">12sp</item>
     </style>
 
+    <style name="Text.Settings.Preference.Description" parent="Text">
 
-
-
-
-
-
-
-
-
-
+    </style>
 
 
     <!-- Loading -->
@@ -162,39 +131,29 @@
     <!-- Release Notes -->
 
     <style name="Text.ReleaseNotes" parent="Text" />
+
     <style name="Text.ReleaseNotes.Header" parent="Text">
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">16sp</item>
     </style>
+
     <style name="Text.ReleaseNotes.Content" parent="Text">
 
     </style>
 
-    <style name="Text.Planned" parent="Text">
-    </style>
+    <style name="Text.Planned" parent="Text"></style>
 
     <!-- App Lockout -->
 
     <style name="Text.Lockout" parent="Text" />
+
     <style name="Text.Lockout.Text" parent="Text">
 
     </style>
+
     <style name="Text.Lockout.Button" parent="Text">
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">16sp</item>
-    </style>
-
-    <!-- Swiper -->
-
-    <style name="Text.Swiper" />
-    <style name="Text.Swiper.Track" />
-    <style name="Text.Swiper.Track.Header" parent="Text.Swiper.Track">
-        <item name="android:textSize">26sp</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:fontFamily">@font/goodtimes</item>
-    </style>
-    <style name="Text.Swiper.Track.Circuit" parent="Text.Swiper.Track">
-        <item name="android:textSize">12sp</item>
     </style>
 
     <!-- Driver -->
@@ -202,9 +161,11 @@
     <style name="Text.Driver" parent="Text">
         <item name="android:textSize">14sp</item>
     </style>
+
     <style name="Text.Driver.Name" parent="Text.Driver">
 
     </style>
+
     <style name="Text.Driver.Number" parent="Text.Driver">
         <item name="android:textSize">12sp</item>
     </style>
@@ -214,27 +175,34 @@
     <style name="Text.Podium" parent="Text">
 
     </style>
+
     <style name="Text.Podium.Position" parent="Text.Podium">
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">?attr/f1TextInversePrimary</item>
         <item name="android:textStyle">bold</item>
     </style>
+
     <style name="Text.Podium.Driver" parent="Text.Podium">
         <item name="android:textSize">16sp</item>
     </style>
+
     <style name="Text.Podium.Number" parent="Text.Podium">
         <item name="android:textSize">16sp</item>
     </style>
+
     <style name="Text.Podium.Constructor" parent="Text.Podium">
         <item name="android:textSize">12sp</item>
         <item name="android:textStyle">italic</item>
     </style>
+
     <style name="Text.Podium.Grid" parent="Text.Podium">
 
     </style>
+
     <style name="Text.Podium.Position.Absolute" parent="Text.Podium">
         <item name="android:textSize">12sp</item>
     </style>
+
     <style name="Text.Podium.Position.Relative" parent="Text.Podium">
         <item name="android:textSize">12sp</item>
     </style>
@@ -251,36 +219,44 @@
     <!-- Qualifying layout -->
 
     <style name="Text.RaceResult" parent="Text" />
+
     <style name="Text.RaceResult.Position" parent="Text.RaceResult">
         <item name="android:textSize">18sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:maxLines">1</item>
     </style>
+
     <style name="Text.RaceResult.Constructor" parent="Text.RaceResult">
         <item name="android:textSize">12sp</item>
         <item name="android:maxLines">1</item>
         <item name="android:ellipsize">end</item>
         <item name="android:textStyle">italic</item>
     </style>
+
     <style name="Text.RaceResult.Points" parent="Text.RaceResult">
         <item name="android:textStyle">bold</item>
         <item name="android:maxLines">1</item>
     </style>
+
     <style name="Text.RaceResult.Header" parent="Text.RaceResult">
         <item name="android:textStyle">bold</item>
         <item name="android:maxLines">1</item>
     </style>
+
     <style name="Text.RaceResult.Position.Absolute" parent="Text.RaceResult">
         <item name="android:maxLines">1</item>
     </style>
+
     <style name="Text.RaceResult.Position.Relative" parent="Text.RaceResult">
         <item name="android:textSize">12sp</item>
         <item name="android:maxLines">1</item>
     </style>
+
     <style name="Text.RaceResult.Time" parent="Text.RaceResult">
         <item name="android:maxLines">1</item>
         <item name="android:textSize">12sp</item>
     </style>
+
     <style name="Text.RaceResult.Status" parent="Text.RaceResult">
         <item name="android:maxLines">1</item>
         <item name="android:textSize">10sp</item>
@@ -289,50 +265,34 @@
     <!-- Qualifying time -->
 
     <style name="Text.QualifyingTime" parent="Text" />
+
     <style name="Text.QualifyingTime.Header" parent="Text.QualifyingTime">
         <item name="android:textSize">18sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:maxLines">1</item>
     </style>
+
     <style name="Text.QualifyingTime.Constructor" parent="Text.QualifyingTime">
         <item name="android:textSize">12sp</item>
         <item name="android:maxLines">1</item>
         <item name="android:ellipsize">end</item>
         <item name="android:textStyle">italic</item>
     </style>
+
     <style name="Text.QualifyingTime.Position" parent="Text.QualifyingTime">
         <item name="android:textSize">18sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:maxLines">1</item>
     </style>
+
     <style name="Text.QualifyingTime.Time" parent="Text.QualifyingTime">
         <item name="android:textSize">12sp</item>
     </style>
+
     <style name="Text.QualifyingTime.Delta" parent="Text.QualifyingTime">
         <item name="android:textSize">9sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">?attr/f1DeltaPositive</item>
-    </style>
-
-    <!-- Picker -->
-
-    <style name="Text.DatePicker" parent="Text" />
-    <style name="Text.DatePicker.Header" parent="Text.DatePicker">
-        <item name="android:textStyle">bold</item>
-        <item name="android:textSize">16sp</item>
-    </style>
-
-    <style name="Text.TrackPicker" parent="Text" />
-    <style name="Text.TrackPicker.Year" parent="Text.TrackPicker">
-
-    </style>
-    <style name="Text.TrackPicker.TrackCountry" parent="Text.TrackPicker">
-        <item name="android:textSize">13sp</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:fontFamily">@font/goodtimes</item>
-    </style>
-    <style name="Text.TrackPicker.TrackName" parent="Text.TrackPicker">
-
     </style>
 
 </resources>

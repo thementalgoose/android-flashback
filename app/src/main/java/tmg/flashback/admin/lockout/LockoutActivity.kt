@@ -3,6 +3,7 @@ package tmg.flashback.admin.lockout
 import android.content.Intent
 import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_lockout.*
+import kotlinx.android.synthetic.main.toolbar.view.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.R
 import tmg.flashback.SplashActivity
@@ -20,6 +21,7 @@ class LockoutActivity: BaseActivity() {
     override fun initViews() {
 
         initToolbar(R.id.toolbar, true, R.drawable.ic_back)
+        toolbarLayout.header.text = getString(R.string.app_lockout_title)
 
         btnLink.setOnClickListener {
             viewModel.inputs.clickLink()
