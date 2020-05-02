@@ -85,9 +85,10 @@
 
     <!-- Race -->
     <string name="race_round" formatted="false">Round %d</string>
-    <string name="race_round_format" formatted="false"><b>%s</b> » round %s</string>
+    <string name="race_round_format" formatted="false"><![CDATA[<b>%s</b> / %s]]></string>
     <string name="race_network_error">Cannot connect, please check you are connected to the internet and try again</string>
-    <string name="race_not_found">Race data not available.</string>
+    <string name="race_not_found">We cannot find the stats on this race right now. Please check back again soon</string>
+    <string name="race_qualifying_no_data">Not found</string>
 
     <!-- Synchronisation -->
     <string name="sync_type_overview">Season Overview</string>

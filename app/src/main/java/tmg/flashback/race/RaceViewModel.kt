@@ -15,6 +15,7 @@ import tmg.flashback.repo.db.SeasonOverviewDB
 import tmg.flashback.repo.models.LapTime
 import tmg.flashback.repo.models.Round
 import tmg.flashback.repo.models.RoundDriverOverview
+import tmg.flashback.settings.ConnectivityManager
 import tmg.flashback.utils.SeasonRound
 import tmg.utilities.extensions.combineTriple
 import tmg.utilities.extensions.then
@@ -41,7 +42,8 @@ interface RaceViewModelOutputs {
 
 class RaceViewModel(
     seasonOverviewDB: SeasonOverviewDB,
-    private val prefsDB: PrefsDB
+    private val prefsDB: PrefsDB,
+    private val connectivityManager: ConnectivityManager
 ) : BaseViewModel(), RaceViewModelInputs, RaceViewModelOutputs {
 
     var inputs: RaceViewModelInputs = this
@@ -138,7 +140,7 @@ class RaceViewModel(
             }
             .asLiveData(viewModelScope.coroutineContext)
 
-    override val raceDisplayMode: MutableLiveData<RaceDisplayMode> = MutableLiveData(LOADING)
+    override val raceDisplayMode: MutableLiveData<RaceDisplayMode> = MutableLiveData(if (connectivityManager.isConnected) LOADING else NO_NETWORK)
 
     init {
 

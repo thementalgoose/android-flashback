@@ -6,26 +6,27 @@
 
     <TextView
         android:id="@+id/tvLabel"
-        style="@style/Text.Race.Error.NotFound"
+        style="@style/Text.Race.Error.Network"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/paddingLarge"
         android:layout_marginEnd="@dimen/paddingLarge"
         android:layout_marginBottom="@dimen/paddingLarge"
         android:gravity="center"
-        android:text="@string/race_not_found"
+        android:text="@string/race_network_error"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/lottieNoData"
+        android:id="@+id/lottieNetwork"
         android:layout_width="match_parent"
         android:layout_height="110dp"
         app:layout_constraintBottom_toTopOf="@id/tvLabel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:lottie_loop="true"
-        app:lottie_rawRes="@raw/race_unavailable" />
+        app:lottie_autoPlay="true"
+        app:lottie_rawRes="@raw/cloud_error_dark" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

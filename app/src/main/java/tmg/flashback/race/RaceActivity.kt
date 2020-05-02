@@ -2,19 +2,29 @@ package tmg.flashback.race
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.ColorFilter
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.airbnb.lottie.LottieAnimationView
+import com.airbnb.lottie.LottieProperty
+import com.airbnb.lottie.SimpleColorFilter
+import com.airbnb.lottie.model.KeyPath
+import com.airbnb.lottie.value.LottieValueCallback
 import com.faltenreich.skeletonlayout.SkeletonLayout
 import kotlinx.android.synthetic.main.activity_race.*
+import kotlinx.android.synthetic.main.layout_race_network.view.*
+import kotlinx.android.synthetic.main.layout_race_not_found.view.*
 import kotlinx.android.synthetic.main.toolbar.view.*
 import org.koin.android.ext.android.inject
 import tmg.flashback.R
 import tmg.flashback.base.BaseActivity
 import tmg.flashback.race.RaceDisplayMode.*
+import tmg.flashback.utils.getColor
 import tmg.flashback.utils.getFlagResourceAlpha3
+import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.initToolbar
 import tmg.utilities.extensions.observe
 
@@ -71,11 +81,16 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
 
     override fun initViews() {
 
+        // Setup
+
         initToolbar(R.id.toolbar, true, R.drawable.ic_back)
 
         raceAdapter = RaceAdapter(this)
         rvContent.adapter = raceAdapter
         rvContent.layoutManager = LinearLayoutManager(this)
+
+        notFound.alpha = 0.0f
+        networkError.alpha = 0.0f
 
         toolbarLayout.header.text = initialCountry
         tvCircuitName.text = initialTrackName
@@ -85,6 +100,8 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
 
         val layout = findViewById<SkeletonLayout>(R.id.skeleton)
         layout.showSkeleton()
+
+        initialiseLottie(notFound.lottieNoData)
 
         bnvType.setOnNavigationItemSelectedListener {
             when (it.itemId) {
@@ -104,14 +121,14 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
             }
         }
 
+        // Observe
+
         observe(viewModel.outputs.raceDisplayMode) {
-            Log.i("Flashback", "Binding display mode to $it")
             updateDisplay(it)
         }
 
         observe(viewModel.outputs.seasonRoundData) { (season, round) ->
-            tvRoundInfo.text =
-                getString(R.string.race_round_format, season.toString(), round.toString())
+            tvRoundInfo.text = getString(R.string.race_round_format, season.toString(), round.toString()).fromHtml()
         }
 
         observe(viewModel.outputs.circuitInfo) {
@@ -134,8 +151,14 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun updateDisplay(raceMode: RaceDisplayMode) {
+    private fun initialiseLottie(lottieView: LottieAnimationView) {
+        val colorFilter = SimpleColorFilter(theme.getColor(R.attr.f1Loading))
+        val keyPath = KeyPath("**")
+        val callback = LottieValueCallback<ColorFilter>(colorFilter)
+        lottieView.addValueCallback(keyPath, LottieProperty.COLOR_FILTER, callback)
+    }
 
+    private fun updateDisplay(raceMode: RaceDisplayMode) {
         animate(networkError, raceMode == NO_NETWORK)
         animate(notFound, raceMode == NOT_FOUND)
         animate(skeleton, raceMode == LOADING)

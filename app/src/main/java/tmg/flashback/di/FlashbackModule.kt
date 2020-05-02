@@ -14,13 +14,15 @@ import tmg.flashback.repo_firebase.repos.CircuitFirestore
 import tmg.flashback.repo_firebase.repos.DataFirestore
 import tmg.flashback.repo_firebase.repos.HistoryFirestore
 import tmg.flashback.repo_firebase.repos.SeasonOverviewFirestore
+import tmg.flashback.settings.ConnectivityManager
+import tmg.flashback.settings.NetworkConnectivityManager
 
 var flashbackModule = module {
 
     viewModel { DashboardViewModel(get(), get()) }
     viewModel { DashboardSeasonViewModel(get()) }
 
-    viewModel { RaceViewModel(get(), get()) }
+    viewModel { RaceViewModel(get(), get(), get()) }
 
     viewModel { GalleryViewModel() }
     viewModel { LockoutViewModel(get()) }
@@ -31,4 +33,5 @@ var flashbackModule = module {
     single<CircuitDB> { CircuitFirestore() }
     single<CrashReporter> { CrashReporterFirebase(get(), get()) }
     single<DataDB> { DataFirestore(get()) }
+    single<ConnectivityManager> { NetworkConnectivityManager(get()) }
 }

@@ -38,6 +38,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/toolbarLayout"
+                    app:tabIndicatorColor="@color/logo_gradient_1"
+                    app:tabIndicator="@drawable/indicator_dashboard"
                     app:tabMode="scrollable" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

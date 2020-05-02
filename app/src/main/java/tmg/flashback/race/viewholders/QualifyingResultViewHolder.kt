@@ -57,6 +57,10 @@ class QualifyingResultViewHolder(view: View, private val updateAdapterType: Race
                 bind(model.q2, q2, model.q2Delta, model.showQualifying)
                 bind(model.q3, q3, model.q3Delta, model.showQualifying)
             }
+
+            if (model.showQualifying.none) {
+                itemView.layoutQ3.tvQualifyingTime.text = itemView.context.getString(R.string.race_qualifying_no_data)
+            }
         }
     }
 

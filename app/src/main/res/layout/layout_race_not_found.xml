@@ -13,7 +13,7 @@
         android:layout_marginEnd="@dimen/paddingLarge"
         android:layout_marginBottom="@dimen/paddingLarge"
         android:gravity="center"
-        android:text="@string/race_network_error"
+        android:text="@string/race_not_found"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -25,6 +25,7 @@
         app:layout_constraintBottom_toTopOf="@id/tvLabel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:lottie_autoPlay="true"
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/race_unavailable" />
 

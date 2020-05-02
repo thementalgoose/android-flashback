@@ -23,8 +23,7 @@ class DashboardActivity: BaseActivity() {
     override fun layoutId(): Int = R.layout.activity_dashboard
 
     override fun initViews() {
-
-        initToolbar(R.id.toolbar, true, R.drawable.ic_status_flash)
+        initToolbar(R.id.toolbar)
         toolbarLayout.header.text = getString(R.string.app_name)
 
         setupViewPagers()

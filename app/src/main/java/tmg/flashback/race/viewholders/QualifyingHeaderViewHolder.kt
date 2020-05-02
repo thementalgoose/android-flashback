@@ -22,7 +22,7 @@ class QualifyingHeaderViewHolder(view: View, private val updateAdapterType: Race
     fun bind(showQualifying: ShowQualifying, type: RaceAdapterType) {
         this.showQualifying = showQualifying
         when {
-            showQualifying.q1 && !showQualifying.q2 && !showQualifying.q3 -> {
+            !showQualifying.q2 && !showQualifying.q3 -> {
                 itemView.tvQ1.show(false, isGone = false)
                 itemView.tvQ2.show(false, isGone = false)
                 itemView.tvQ3.show(true, isGone = false)
