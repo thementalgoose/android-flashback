@@ -9,14 +9,14 @@ import tmg.flashback.releaseNotes
 import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.initToolbar
 
-class ReleaseActivity: BaseActivity() {
+class ReleaseActivity : BaseActivity() {
 
     override fun layoutId(): Int = R.layout.activity_release_notes
 
     override fun initViews() {
 
         initToolbar(R.id.toolbar, true, indicator = R.drawable.ic_back)
-        toolbarLayout.header.text = getString(R.string.app_lockout_title)
+        toolbarLayout.header.text = getString(R.string.settings_help_release_notes_title)
 
         val list = releaseNotes
             .toList()

@@ -19,6 +19,7 @@ import kotlinx.android.synthetic.main.layout_race_network.view.*
 import kotlinx.android.synthetic.main.layout_race_not_found.view.*
 import kotlinx.android.synthetic.main.toolbar.view.*
 import org.koin.android.ext.android.inject
+import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.R
 import tmg.flashback.base.BaseActivity
 import tmg.flashback.race.RaceDisplayMode.*
@@ -128,7 +129,7 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
         }
 
         observe(viewModel.outputs.seasonRoundData) { (season, round) ->
-            tvRoundInfo.text = getString(R.string.race_round_format, season.toString(), round.toString()).fromHtml()
+            tvRoundInfo.text = getString(R.string.race_round_format, round.toString(), season.toString()).fromHtml()
         }
 
         observe(viewModel.outputs.circuitInfo) {

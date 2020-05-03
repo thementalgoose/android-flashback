@@ -83,6 +83,9 @@
     <style name="Text.Race.Round" parent="Text">
         <item name="android:textSize">12sp</item>
     </style>
+    <style name="Text.Race.Date" parent="Text">
+        <item name="android:textSize">12sp</item>
+    </style>
 
     <style name="Text.Race.Error.NotFound" parent="Text">
         <item name="android:textSize">12sp</item>

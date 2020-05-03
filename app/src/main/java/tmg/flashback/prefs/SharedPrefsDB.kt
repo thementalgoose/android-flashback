@@ -3,6 +3,7 @@ package tmg.flashback.prefs
 import android.content.Context
 import tmg.flashback.BuildConfig
 import tmg.flashback.currentYear
+import tmg.flashback.releaseNotes
 import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.enums.ThemePref
 import tmg.flashback.repo.enums.ViewTypePref
@@ -64,8 +65,8 @@ class SharedPrefsDB(context: Context): SharedPrefManager(context), PrefsDB {
             save(keyReleaseNotes, value)
         }
 
-    override val isCurrentAppVersionNew: Boolean
-        get() = BuildConfig.VERSION_CODE > lastAppVersion
+    override val shouldShowReleaseNotes: Boolean
+        get() = BuildConfig.VERSION_CODE > lastAppVersion && releaseNotes.keys.count { it > lastAppVersion} > 0
 
     override var deviceUdid: String
         set(value) {

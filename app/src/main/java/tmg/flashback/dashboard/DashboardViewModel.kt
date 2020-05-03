@@ -46,7 +46,7 @@ class DashboardViewModel(
         .asLiveData(viewModelScope.coroutineContext)
 
     override val showReleaseNotes: LiveData<Event> = liveData {
-        if (prefsDB.isCurrentAppVersionNew) {
+        if (prefsDB.shouldShowReleaseNotes) {
             emit(Event())
         }
     }

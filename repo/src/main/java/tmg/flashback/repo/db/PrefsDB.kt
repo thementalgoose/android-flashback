@@ -43,7 +43,7 @@ interface PrefsDB {
     /**
      * Are we starting the app up in a new version
      */
-    val isCurrentAppVersionNew: Boolean
+    val shouldShowReleaseNotes: Boolean
 
     /**
      * Get a unique identifier for the device
