@@ -10,10 +10,6 @@ enum class SettingsOptions(
     @StringRes val title: Int,
     @StringRes val description: Int
 ) {
-//    YEAR("year",
-//        title = R.string.settings_customisation_year_title,
-//        description = R.string.settings_customisation_year_description
-//    ),
     QUALIFYING_DELTAS("qualifyingDeltas",
         title = R.string.settings_customisation_qualifying_delta_title,
         description = R.string.settings_customisation_qualifying_delta_description
@@ -26,10 +22,6 @@ enum class SettingsOptions(
         title = R.string.settings_help_release_notes_title,
         description = R.string.settings_help_release_notes_description
     ),
-//    PLANNED("planned",
-//        title = R.string.settings_help_planned_title,
-//        description = R.string.settings_help_planned_description
-//    ),
     CRASH("crash",
         title = R.string.settings_help_crash_reporting_title,
         description = R.string.settings_help_crash_reporting_description

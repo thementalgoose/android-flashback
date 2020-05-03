@@ -139,6 +139,7 @@ enum class RaceAdapterViewHolderType(
     RACE_RESULT_HEADER(R.layout.view_race_header),
     QUALIFYING_RESULT_HEADER(R.layout.view_qualifying_header),
     QUALIFYING_RESULT(R.layout.view_qualifying_result),
+    CONSTRUCTOR_STANDINGS(R.layout.view_race_constructor_standings)
 }
 
 interface RaceAdapterCallback {

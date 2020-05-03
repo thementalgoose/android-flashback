@@ -1,6 +1,7 @@
 package tmg.flashback.race
 
 import tmg.flashback.repo.enums.RaceStatus
+import tmg.flashback.repo.models.Constructor
 import tmg.flashback.repo.models.LapTime
 import tmg.flashback.repo.models.RoundDriver
 import tmg.flashback.repo.models.RoundQualifyingResult
@@ -39,6 +40,10 @@ sealed class RaceAdapterModel {
 
     data class QualifyingHeader(
         val showQualifyingDeltas: ShowQualifying
+    ) : RaceAdapterModel()
+
+    data class ConstructorStandings(
+        val constructor: Constructor
     ) : RaceAdapterModel()
 }
 

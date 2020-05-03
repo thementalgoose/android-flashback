@@ -44,6 +44,26 @@ data class Round(
                 .distinctBy { it.id }
         }
 
+    val constructorStandings: List<ConstructorStandings>
+        get() {
+            val standings: MutableMap<String, Int> = mutableMapOf()
+            for ((driverId, raceResult) in race) {
+                var previousPoints = standings.getOrPut(raceResult.driver.constructor.id) { 0 }
+                previousPoints += raceResult.points
+                standings[raceResult.driver.constructor.id] = previousPoints
+            }
+            return constructor.map {
+                ConstructorStandings(standings.getOrElse(it.id) { 0 }, it)
+            }
+        }
+
+    val driverStandings: List<DriverStandings>
+        get() {
+            return race.map { (key, value) ->
+                DriverStandings(value.points, value.driver)
+            }
+        }
+
     private fun Map<String, RoundQualifyingResult>.fastest(): LapTime? = this
         .map { it.value.time }
         .filter { it != null && !it.noTime && it.totalMillis != 0 }
