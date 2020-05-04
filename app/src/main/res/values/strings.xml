@@ -39,13 +39,14 @@
     <string name="settings_customisation_qualifying_delta_description">Show the delta alongside the qualifying time</string>
     <string name="settings_customisation_view_type_title">View type</string>
     <string name="settings_customisation_view_type_description">Select the view type that you want to view race information in</string>
-    <string name="settings_help">Help and support</string>
+    <string name="settings_help">About</string>
     <string name="settings_help_about_title">About this app</string>
     <string name="settings_help_about_description">About the application and the developer</string>
     <string name="settings_help_planned_title">Planned</string>
     <string name="settings_help_planned_description">What I want to add to this app in the future</string>
     <string name="settings_help_release_notes_title">Release notes</string>
     <string name="settings_help_release_notes_description">See the release notes history</string>
+    <string name="settings_feedback">Feedback</string>
     <string name="settings_help_crash_reporting_title">Crash Reporting</string>
     <string name="settings_help_crash_reporting_description">Send device information and crash stack traces to the developer</string>
     <string name="settings_help_crash_reporting_notify">Your crash reporting preference will be applied once the app has restarted</string>

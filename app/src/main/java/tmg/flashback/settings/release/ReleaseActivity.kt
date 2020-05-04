@@ -20,7 +20,7 @@ class ReleaseActivity : BaseActivity() {
 
         val list = releaseNotes
             .toList()
-            .sortedBy { it.first }
+            .sortedByDescending { it.first }
             .map { it.second }
 
         tvReleaseNotes.text = list.map { getString(it) }.joinToString("<br/><br/>").fromHtml()

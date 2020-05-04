@@ -49,6 +49,7 @@ class SettingsViewModel(
             AppPreferencesItem.Category(applicationContext.getString(R.string.settings_help)),
             SettingsOptions.ABOUT.toPref(applicationContext),
             SettingsOptions.RELEASE.toPref(applicationContext),
+            AppPreferencesItem.Category(applicationContext.getString(R.string.settings_feedback)),
             SettingsOptions.CRASH.toSwitch(applicationContext, prefDB.crashReporting),
             SettingsOptions.SUGGESTION.toPref(applicationContext),
             SettingsOptions.SHAKE.toSwitch(applicationContext, prefDB.shakeToReport)
