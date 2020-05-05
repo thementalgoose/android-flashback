@@ -33,12 +33,14 @@ class RaceAdapter(
             RaceAdapterViewHolderType.RACE_RESULT_HEADER -> RaceResultHeaderViewHolder(view)
             RaceAdapterViewHolderType.QUALIFYING_RESULT_HEADER -> QualifyingHeaderViewHolder(view, callback)
             RaceAdapterViewHolderType.QUALIFYING_RESULT -> QualifyingResultViewHolder(view, callback)
+            RaceAdapterViewHolderType.CONSTRUCTOR_STANDINGS -> ConstructorStandingsViewholder(view)
             else -> throw Error("View type not implemented")
         }
     }
 
     override fun getItemCount(): Int = when (viewType) {
         RaceAdapterType.RACE -> list.size
+        RaceAdapterType.CONSTRUCTOR_STANDINGS,
         RaceAdapterType.QUALIFYING_POS,
         RaceAdapterType.QUALIFYING_POS_1,
         RaceAdapterType.QUALIFYING_POS_2 -> list.size
@@ -61,6 +63,7 @@ class RaceAdapter(
                     RaceAdapterViewHolderType.QUALIFYING_RESULT.ordinal
                 }
             }
+            RaceAdapterType.CONSTRUCTOR_STANDINGS -> RaceAdapterViewHolderType.CONSTRUCTOR_STANDINGS.ordinal
         }
     }
 
@@ -98,6 +101,10 @@ class RaceAdapter(
                 val viewHolder = holder as QualifyingResultViewHolder
                 viewHolder.bind(list[position] as RaceAdapterModel.Single, viewType)
             }
+            RaceAdapterViewHolderType.CONSTRUCTOR_STANDINGS -> {
+                val viewHolder = holder as ConstructorStandingsViewholder
+                viewHolder.bind(list[position] as RaceAdapterModel.ConstructorStandings)
+            }
             else -> {}
         }
     }
@@ -129,6 +136,7 @@ enum class RaceAdapterType {
     QUALIFYING_POS_1,
     QUALIFYING_POS_2,
     QUALIFYING_POS,
+    CONSTRUCTOR_STANDINGS
 }
 
 enum class RaceAdapterViewHolderType(

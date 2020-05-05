@@ -43,7 +43,8 @@ sealed class RaceAdapterModel {
     ) : RaceAdapterModel()
 
     data class ConstructorStandings(
-        val constructor: Constructor
+        val constructor: Constructor,
+        val points: Int
     ) : RaceAdapterModel()
 }
 
