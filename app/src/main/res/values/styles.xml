@@ -298,4 +298,18 @@
         <item name="android:textColor">?attr/f1DeltaPositive</item>
     </style>
 
+    <!-- Constructor Standings item -->
+
+    <style name="Text.ConstructorStandings.Title" parent="Text">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Text.ConstructorStandings.Driver.Name" parent="Text">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="Text.ConstructorStandings.Driver.Number" parent="Text">
+        <item name="android:textSize">12sp</item>
+    </style>
+
 </resources>

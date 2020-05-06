@@ -103,10 +103,17 @@ class RaceAdapter(
             }
             RaceAdapterViewHolderType.CONSTRUCTOR_STANDINGS -> {
                 val viewHolder = holder as ConstructorStandingsViewholder
-                viewHolder.bind(list[position] as RaceAdapterModel.ConstructorStandings)
+                viewHolder.bind(list[position] as RaceAdapterModel.ConstructorStandings, maxPointsByAnyTeam = maxPointsByAnyTeam())
             }
             else -> {}
         }
+    }
+
+    private fun maxPointsByAnyTeam(): Int {
+        val defaultPoints: Int = 20
+        return list
+            .map { (it as? RaceAdapterModel.ConstructorStandings)?.points ?: defaultPoints }
+            .max() ?: defaultPoints
     }
 
     //region Diff calculator

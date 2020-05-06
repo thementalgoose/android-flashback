@@ -1,10 +1,7 @@
 package tmg.flashback.race
 
 import tmg.flashback.repo.enums.RaceStatus
-import tmg.flashback.repo.models.Constructor
-import tmg.flashback.repo.models.LapTime
-import tmg.flashback.repo.models.RoundDriver
-import tmg.flashback.repo.models.RoundQualifyingResult
+import tmg.flashback.repo.models.*
 
 sealed class RaceAdapterModel {
     data class Podium(
@@ -44,7 +41,8 @@ sealed class RaceAdapterModel {
 
     data class ConstructorStandings(
         val constructor: Constructor,
-        val points: Int
+        val points: Int,
+        val driver: List<Pair<Driver, Int>>
     ) : RaceAdapterModel()
 }
 

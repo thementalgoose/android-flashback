@@ -115,8 +115,8 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
                     true
                 }
                 R.id.nav_constructor -> {
-
-                    false
+                    viewModel.inputs.orderBy(RaceAdapterType.CONSTRUCTOR_STANDINGS)
+                    true
                 }
                 else -> false
             }
