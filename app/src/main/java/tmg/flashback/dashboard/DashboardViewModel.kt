@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.map
 import tmg.flashback.base.BaseViewModel
 import tmg.flashback.repo.db.DataDB
 import tmg.flashback.repo.db.PrefsDB
+import tmg.flashback.repo.models.AppBanner
 import tmg.flashback.repo.models.AppLockout
 import tmg.utilities.lifecycle.DataEvent
 import tmg.utilities.lifecycle.Event
@@ -25,6 +26,7 @@ interface DashboardViewModelInputs {
 
 interface DashboardViewModelOutputs {
 
+    val showAppBanner: LiveData<DataEvent<AppBanner>>
     val showAppLockoutMessage: LiveData<DataEvent<AppLockout>>
     val showReleaseNotes: LiveData<Event>
 }
@@ -41,6 +43,12 @@ class DashboardViewModel(
 
     override val showAppLockoutMessage: LiveData<DataEvent<AppLockout>> = dataDB
         .appLockout()
+        .filter { it != null && it.show }
+        .map { DataEvent(it!!) }
+        .asLiveData(viewModelScope.coroutineContext)
+
+    override val showAppBanner: LiveData<DataEvent<AppBanner>> = dataDB
+        .appBanner()
         .filter { it != null && it.show }
         .map { DataEvent(it!!) }
         .asLiveData(viewModelScope.coroutineContext)

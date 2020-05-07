@@ -312,4 +312,9 @@
         <item name="android:textSize">12sp</item>
     </style>
 
+    <style name="Text.ConstructorStandings.Driver.Summary" parent="Text">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+
 </resources>

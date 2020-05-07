@@ -6,10 +6,12 @@ import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.flow
 import tmg.flashback.repo.db.CrashReporter
 import tmg.flashback.repo.db.DataDB
+import tmg.flashback.repo.models.AppBanner
 import tmg.flashback.repo.models.AppLockout
 import tmg.flashback.repo_firebase.converters.convert
 import tmg.flashback.repo_firebase.firebase.FirebaseRepo
 import tmg.flashback.repo_firebase.firebase.getDocument
+import tmg.flashback.repo_firebase.models.FAppBanner
 import tmg.flashback.repo_firebase.models.FAppLockout
 
 class DataFirestore(
@@ -19,6 +21,12 @@ class DataFirestore(
     override fun appLockout(): Flow<AppLockout?> {
         return document("data/app-lockout")
             .getDoc<FAppLockout>()
+            .convertModel { it?.convert() }
+    }
+
+    override fun appBanner(): Flow<AppBanner?> {
+        return document("data/app-banner")
+            .getDoc<FAppBanner>()
             .convertModel { it?.convert() }
     }
 }

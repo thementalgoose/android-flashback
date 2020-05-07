@@ -6,6 +6,7 @@ import androidx.annotation.ColorInt
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.layout_constructor_driver.view.*
 import kotlinx.android.synthetic.main.view_race_constructor_standings.view.*
+import tmg.flashback.R
 import tmg.flashback.extensions.show
 import tmg.flashback.race.RaceAdapterModel
 import tmg.flashback.repo.models.Driver
@@ -47,9 +48,8 @@ class ConstructorStandingsViewholder(itemView: View): RecyclerView.ViewHolder(it
     }
 
     private fun setDriver(layout: View, driver: Driver, points: Int, @ColorInt constructorColor: Int) {
-        layout.tvName.text = "${driver.name} - $points"
-        layout.tvNumber.colorHighlight = constructorColor
+        layout.tvName.text = driver.name
+        layout.tvNumber.text = layout.context.resources.getQuantityString(R.plurals.race_points, points, points)
         layout.imgFlag.setImageResource(layout.context.getFlagResourceAlpha3(driver.nationalityISO))
-        layout.tvNumber.text = driver.number.toString()
     }
 }

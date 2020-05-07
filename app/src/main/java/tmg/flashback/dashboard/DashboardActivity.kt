@@ -17,6 +17,7 @@ import tmg.flashback.settings.SettingsActivity
 import tmg.flashback.settings.release.ReleaseBottomSheetFragment
 import tmg.utilities.extensions.initToolbar
 import tmg.utilities.extensions.observeEvent
+import tmg.utilities.extensions.showAsSnackbar
 import tmg.utilities.extensions.startActivityClearStack
 
 class DashboardActivity: BaseActivity() {
@@ -32,6 +33,10 @@ class DashboardActivity: BaseActivity() {
 
         observeEvent(viewModel.outputs.showAppLockoutMessage) {
             startActivityClearStack(Intent(this, LockoutActivity::class.java))
+        }
+
+        observeEvent(viewModel.outputs.showAppBanner) {
+            it.message?.showAsSnackbar(toolbarLayout)
         }
 
         observeEvent(viewModel.outputs.showReleaseNotes) {

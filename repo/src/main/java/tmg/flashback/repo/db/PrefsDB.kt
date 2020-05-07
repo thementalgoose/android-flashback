@@ -21,6 +21,11 @@ interface PrefsDB {
     var showQualifyingDelta: Boolean
 
     /**
+     * Show the drivers breakdown behind a constructor
+     */
+    var showDriversBehindConstructor: Boolean
+
+    /**
      * Currently selected year that the app will display when it is opened
      */
     var selectedYear: Int

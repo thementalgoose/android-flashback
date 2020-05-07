@@ -79,11 +79,18 @@ class RaceViewModel(
                     return@map Triple(viewType, emptyList<RaceAdapterModel>(), seasonRoundValue)
                 }
 
+                // Constructor standings, models are constructors
                 if (viewType == RaceAdapterType.CONSTRUCTOR_STANDINGS) {
                     val list: List<RaceAdapterModel.ConstructorStandings> = roundData
                         .constructorStandings
                         .map {
-                            RaceAdapterModel.ConstructorStandings(it.constructor, it.points, getDriverFromConstructor(roundData, it.constructor.id))
+                            val drivers: List<Pair<Driver, Int>> = if (prefsDB.showDriversBehindConstructor) {
+                                getDriverFromConstructor(roundData, it.constructor.id)
+                            }
+                            else {
+                                emptyList()
+                            }
+                            RaceAdapterModel.ConstructorStandings(it.constructor, it.points, drivers)
                         }
                         .sortedByDescending { it.points }
 
@@ -92,7 +99,9 @@ class RaceViewModel(
                         list,
                         SeasonRound(roundData.season, roundData.round)
                     )
-                } else {
+                }
+                // Race or qualifying - Models are driver models
+                else {
                     val driverIds: List<String> = getOrderedDriverIds(roundData, viewType)
                     val list: MutableList<RaceAdapterModel> = mutableListOf()
                     val showQualifying = ShowQualifying(
@@ -183,7 +192,8 @@ class RaceViewModel(
         return round
             .drivers
             .filter { it.constructor.id == constructorId }
-            .map { Pair(it, round.race[it.id]?.points ?: 0)}
+            .map { Pair(it, round.race[it.id]?.points ?: 0) }
+            .sortedByDescending { it.second }
     }
 
     /**

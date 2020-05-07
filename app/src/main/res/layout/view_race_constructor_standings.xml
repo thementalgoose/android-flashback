@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5" />
+        app:layout_constraintGuide_percent="0.6" />
 
     <TextView
         android:id="@+id/tvTitle"
@@ -57,9 +57,12 @@
     <tmg.flashback.views.LabelledProgressView
         android:id="@+id/lpvProgress"
         android:layout_width="0dp"
-        android:layout_height="@dimen/constructorStandingsSize"
+        android:layout_height="0dp"
+        android:minHeight="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/guideline"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:lpv_backgroundColour="?attr/f1BackgroundPrimary" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

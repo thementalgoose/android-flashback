@@ -14,6 +14,10 @@ enum class SettingsOptions(
         title = R.string.settings_customisation_qualifying_delta_title,
         description = R.string.settings_customisation_qualifying_delta_description
     ),
+    SHOW_DRIVERS_POINTS_IN_CONSTRUCTORS("showDriversInConstructorStandings",
+        title = R.string.settings_customisation_driver_in_constructor_title,
+        description = R.string.settings_customisation_driver_in_constructor_description
+    ),
     ABOUT("about",
         title = R.string.settings_help_about_title,
         description = R.string.settings_help_about_description

@@ -124,7 +124,7 @@ class LabelledProgressView : View, ValueAnimator.AnimatorUpdateListener, Animato
     }
 
     private fun initVariables() {
-        radiusPxToDp = 0.pxToDp(context.resources)
+        radiusPxToDp = 6.dpToPx(context.resources)
         canvasWidth = width.toFloat()
         canvasHeight = height.toFloat()
 

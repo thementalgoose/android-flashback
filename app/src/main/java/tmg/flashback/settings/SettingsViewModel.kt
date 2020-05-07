@@ -46,6 +46,7 @@ class SettingsViewModel(
         settings.value = listOf(
             AppPreferencesItem.Category(applicationContext.getString(R.string.settings_customisation)),
             SettingsOptions.QUALIFYING_DELTAS.toSwitch(applicationContext, prefDB.showQualifyingDelta),
+            SettingsOptions.SHOW_DRIVERS_POINTS_IN_CONSTRUCTORS.toSwitch(applicationContext, prefDB.showDriversBehindConstructor),
             AppPreferencesItem.Category(applicationContext.getString(R.string.settings_help)),
             SettingsOptions.ABOUT.toPref(applicationContext),
             SettingsOptions.RELEASE.toPref(applicationContext),
@@ -61,6 +62,7 @@ class SettingsViewModel(
     override fun preferenceClicked(pref: SettingsOptions?, value: Boolean?) {
         when (pref) {
             SettingsOptions.QUALIFYING_DELTAS -> prefDB.showQualifyingDelta = value ?: false
+            SettingsOptions.SHOW_DRIVERS_POINTS_IN_CONSTRUCTORS -> prefDB.showDriversBehindConstructor = value ?: true
             SettingsOptions.ABOUT -> openAbout.value = Event()
             SettingsOptions.RELEASE -> openRelease.value = Event()
             SettingsOptions.CRASH -> prefDB.crashReporting = value ?: true
