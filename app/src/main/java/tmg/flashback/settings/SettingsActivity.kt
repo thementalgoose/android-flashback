@@ -88,12 +88,11 @@ class SettingsActivity : BaseActivity() {
                 isDarkMode = false,
                 name = getString(R.string.about_name),
                 nameDesc = getString(R.string.about_desc),
-                imageUrl = "https://avatars1.githubusercontent.com/u/5982159",
+                imageUrl = "https://lh3.googleusercontent.com/l7T59nmp3joS3CUWEw-_mfmZAwXMHmiikR6uvQLFTXGy1-BlUICXxJZ9UCcvQlWhvQ",
                 thankYou = getString(R.string.dependency_thank_you),
                 footnote = getString(R.string.about_additional),
                 appVersion = BuildConfig.VERSION_NAME,
                 appName = getString(R.string.app_name),
-                website = "https://jordanfisher.io",
                 email = "thementalgoose@gmail.com",
                 play = "https://play.google.com/store/apps/details?id=tmg.flashback",
                 dependencies = listOf(

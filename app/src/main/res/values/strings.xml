@@ -60,15 +60,15 @@
     <string name="settings_help_shake_to_report_notify">Your shake to report preference will be applied once the app has restarted</string>
 
     <!-- About -->
-    <string name="about_name">Jordan Fisher</string>
-    <string name="about_desc">Mobile App Developer</string>
-    <string name="dependency_thank_you">A big thank you to everyone listed below for helping make this app possible! :)</string>
+    <string name="about_name">Flashback</string>
+    <string name="about_desc">Formula 1 statistics</string>
+    <string name="dependency_thank_you">A big thank you to everyone listed below for helping make this app possible!</string>
     <string name="about_additional">Special thanks to\n
     - Icons made by Freepik from www.flaticon.com\n
     - Icons made by Vitaly Gorbachev from www.flaticon.com\n
     - Animations made by LottieFiles from www.lottiefiles.com\n
     - Animations made by Abhishek Kaushal from www.lottiefiles.com\n\n
-    If i\'ve missed anyone or anything please let me know</string>
+    If we\'ve missed anyone or anything please let me know</string>
 
     <!-- Loading -->
     <string name="app_loading_message">Grabbing statistics…</string>
