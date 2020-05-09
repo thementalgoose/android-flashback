@@ -8,9 +8,10 @@ data class FHistorySeasonRound(
     val date: String = "",
     val r: Int = -1,
     val s: Int = -1,
+    val circuitId: String = "",
     val country: String = "",
     val countryISO: String = "",
     val circuit: String = "",
-    val raceName: String = "",
+    val name: String = "",
     val hasResults: Boolean? = false
 )

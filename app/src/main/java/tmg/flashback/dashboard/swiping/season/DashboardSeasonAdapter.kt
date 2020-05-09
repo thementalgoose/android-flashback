@@ -8,11 +8,13 @@ import tmg.flashback.R
 import tmg.flashback.dashboard.swiping.season.DashboardSeasonViewType.*
 import tmg.flashback.dashboard.swiping.season.viewholders.DashboardSeasonConstructorViewHolder
 import tmg.flashback.dashboard.swiping.season.viewholders.DashboardSeasonDriversViewHolder
+import tmg.flashback.dashboard.swiping.season.viewholders.DashboardSeasonHeaderViewHolder
 import tmg.flashback.dashboard.swiping.season.viewholders.DashboardSeasonTrackViewHolder
 import tmg.utilities.extensions.toEnum
 
 class DashboardSeasonAdapter(
-    val itemClickedCallback: (seasonRound: DashboardSeasonAdapterItem.Track) -> Unit
+    val itemClickedCallback: (seasonRound: DashboardSeasonAdapterItem.Track) -> Unit,
+    val listClosed: () -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var list: List<DashboardSeasonAdapterItem> = emptyList()
@@ -24,6 +26,12 @@ class DashboardSeasonAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType.toEnum<DashboardSeasonViewType>()) {
+            HEADER -> DashboardSeasonHeaderViewHolder(
+                listClosed,
+                LayoutInflater
+                    .from(parent.context)
+                    .inflate(R.layout.view_dashboard_season_header, parent, false)
+            )
             TRACK -> DashboardSeasonTrackViewHolder(
                 itemClickedCallback,
                 LayoutInflater
@@ -44,12 +52,12 @@ class DashboardSeasonAdapter(
         }
     }
 
-    override fun getItemViewType(position: Int): Int {
-        return list[position].viewType.ordinal
-    }
-
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (val type = getItemViewType(position).toEnum<DashboardSeasonViewType>()) {
+            HEADER -> {
+                (holder as? DashboardSeasonHeaderViewHolder)
+                    ?.bind(list[position] as DashboardSeasonAdapterItem.Header)
+            }
             TRACK -> {
                 (holder as? DashboardSeasonTrackViewHolder)
                     ?.bind(list[position] as DashboardSeasonAdapterItem.Track)
@@ -66,6 +74,8 @@ class DashboardSeasonAdapter(
         }
     }
 
+    override fun getItemViewType(position: Int) = list[position].viewType.ordinal
+
     override fun getItemCount(): Int = list.size
 
     //region Comparator
@@ -78,11 +88,27 @@ class DashboardSeasonAdapter(
             oldList[oldItemPosition] == newList[newItemPosition]
 
         override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
-            areItemsTheSame(oldItemPosition, newItemPosition)
+            areItemsTheSame(oldItemPosition, newItemPosition) &&
+                    isHeaderDataTheSame(oldList[oldItemPosition], newList[newItemPosition]) &&
+                    isTrackDataTheSame(oldList[oldItemPosition], newList[newItemPosition])
 
         override fun getOldListSize(): Int = oldList.size
 
         override fun getNewListSize(): Int = newList.size
+
+        private fun isHeaderDataTheSame(i1: DashboardSeasonAdapterItem, i2: DashboardSeasonAdapterItem): Boolean {
+            if (i1 is DashboardSeasonAdapterItem.Header && i2 is DashboardSeasonAdapterItem.Header) {
+                return i1.year == i2.year
+            }
+            return true
+        }
+
+        private fun isTrackDataTheSame(i1: DashboardSeasonAdapterItem, i2: DashboardSeasonAdapterItem): Boolean {
+            if (i1 is DashboardSeasonAdapterItem.Track && i2 is DashboardSeasonAdapterItem.Track) {
+                return i1.season == i2.season && i1.round == i2.round
+            }
+            return true
+        }
     }
 
     //endregion

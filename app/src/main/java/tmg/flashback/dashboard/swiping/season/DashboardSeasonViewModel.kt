@@ -49,7 +49,8 @@ class DashboardSeasonViewModel(
                 DashboardSeasonAdapterItem.Track(
                     it.season,
                     it.round,
-                    "PLACEHOLDER", // TODO
+                    it.date,
+                    it.circuitId,// TODO
                     it.circuitName,
                     it.country,
                     it.countryISO

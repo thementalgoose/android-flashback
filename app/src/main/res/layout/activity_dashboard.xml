@@ -29,14 +29,10 @@
                 android:orientation="vertical">
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:layout_width="match_parent"
-                    android:layout_height="400dp"
-                    android:nestedScrollingEnabled="false" />
-
-                <TextView
+                    android:id="@+id/seasonList"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="Something\nSomething\nSomething\nSomething\nSomething\nSomething\nSomething\nSomething\nSomething\nSomething\nSomething\nSomething\nSomething\nSomething\nSomething\nSomething\nSomething\nSomething\nSomething\nSomething\nSomething\nSomething\nSomething\nSomething\nSomething\nSomething" />
+                    android:nestedScrollingEnabled="false" />
 
             </LinearLayout>
 

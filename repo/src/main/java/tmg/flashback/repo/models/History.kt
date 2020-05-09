@@ -12,6 +12,7 @@ data class HistoryRound(
     val season: Int,
     val round: Int,
     val raceName: String,
+    val circuitId: String,
     val circuitName: String,
     val country: String,
     val countryISO: String,

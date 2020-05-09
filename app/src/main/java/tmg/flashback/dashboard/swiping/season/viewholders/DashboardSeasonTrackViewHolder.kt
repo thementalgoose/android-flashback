@@ -3,6 +3,7 @@ package tmg.flashback.dashboard.swiping.season.viewholders
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.view_dashboard_season_track.view.*
+import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.R
 import tmg.flashback.dashboard.swiping.season.DashboardSeasonAdapterItem
 import tmg.flashback.utils.getFlagResourceAlpha3
@@ -24,6 +25,7 @@ class DashboardSeasonTrackViewHolder(
         itemView.tvRaceName.text = item.trackName
         itemView.imgCountry.setImageResource(itemView.context.getFlagResourceAlpha3(item.trackISO))
         itemView.tvRound.text = itemView.context.getString(R.string.race_round, item.round)
+        itemView.tvDate.text = item.date.format(DateTimeFormatter.ofPattern("dd MMMM"))
     }
 
     override fun onClick(p0: View?) {

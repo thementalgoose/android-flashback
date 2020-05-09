@@ -123,4 +123,5 @@
     <!-- Race Status -->
     <string name="race_status_retired">DNF</string>
     <string name="ellipsis">…</string>
+    <string name="close">Close</string>
 </resources>

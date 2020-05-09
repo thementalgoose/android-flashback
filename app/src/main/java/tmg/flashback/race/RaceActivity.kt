@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.ColorFilter
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,13 +14,14 @@ import com.airbnb.lottie.model.KeyPath
 import com.airbnb.lottie.value.LottieValueCallback
 import com.faltenreich.skeletonlayout.SkeletonLayout
 import kotlinx.android.synthetic.main.activity_race.*
-import kotlinx.android.synthetic.main.layout_race_network.view.*
 import kotlinx.android.synthetic.main.layout_race_not_found.view.*
 import kotlinx.android.synthetic.main.toolbar.view.*
 import org.koin.android.ext.android.inject
+import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.R
 import tmg.flashback.base.BaseActivity
+import tmg.flashback.dashboard.swiping.season.DashboardSeasonAdapterItem
 import tmg.flashback.race.RaceDisplayMode.*
 import tmg.flashback.utils.getColor
 import tmg.flashback.utils.getFlagResourceAlpha3
@@ -30,6 +30,7 @@ import tmg.utilities.extensions.initToolbar
 import tmg.utilities.extensions.observe
 
 private const val duration: Long = 200L
+private const val dateFormat: String = "yyyy/MM/dd"
 
 class RaceActivity : BaseActivity(), RaceAdapterCallback {
 
@@ -39,6 +40,7 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
     private var initialCountry: String = ""
     private var initialCountryISO: String = ""
     private var initialTrackName: String = ""
+    private var initialDate: LocalDate? = null
 
     companion object {
 
@@ -48,6 +50,18 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
         private const val keyCountry: String = "keyCountry"
         private const val keyTrackName: String = "keyTrackName"
         private const val keyCountryISO: String = "keyCountryISO"
+        private const val keyDate: String = "keyDate"
+
+        fun intent(context: Context, trackModel: DashboardSeasonAdapterItem.Track): Intent {
+            return Intent(context, RaceActivity::class.java).apply {
+                putExtra(keySeason, trackModel.season)
+                putExtra(keyRound, trackModel.round)
+                putExtra(keyTrackName, trackModel.trackName)
+                putExtra(keyCountry, trackModel.trackNationality)
+                putExtra(keyCountryISO, trackModel.trackISO)
+                putExtra(keyDate, trackModel.date.format(DateTimeFormatter.ofPattern(dateFormat)))
+            }
+        }
 
         fun intent(
             context: Context,
@@ -55,7 +69,8 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
             round: Int,
             country: String? = null,
             trackName: String? = null,
-            countryISO: String? = null
+            countryISO: String? = null,
+            date: String? = null
         ): Intent {
             return Intent(context, RaceActivity::class.java).apply {
                 putExtra(keySeason, season)
@@ -63,6 +78,7 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
                 putExtra(keyCountry, country)
                 putExtra(keyTrackName, trackName)
                 putExtra(keyCountryISO, countryISO)
+                putExtra(keyDate, date)
             }
         }
     }
@@ -78,6 +94,10 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
         initialCountry = bundle.getString(keyCountry, "")
         initialCountryISO = bundle.getString(keyCountryISO, "")
         initialTrackName = bundle.getString(keyTrackName, "")
+        val date = bundle.getString(keyDate, "")
+        if (date.isNotEmpty()) {
+            initialDate = LocalDate.parse(date, DateTimeFormatter.ofPattern(dateFormat))
+        }
     }
 
     override fun initViews() {
@@ -97,6 +117,9 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
         tvCircuitName.text = initialTrackName
         if (initialCountryISO.isNotEmpty()) {
             imgCountry.setImageResource(getFlagResourceAlpha3(initialCountryISO))
+        }
+        initialDate?.let {
+            tvDate.text = it.format(DateTimeFormatter.ofPattern("dd MMMM"))
         }
 
         val layout = findViewById<SkeletonLayout>(R.id.skeleton)
@@ -129,13 +152,18 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
         }
 
         observe(viewModel.outputs.seasonRoundData) { (season, round) ->
-            tvRoundInfo.text = getString(R.string.race_round_format, round.toString(), season.toString()).fromHtml()
+            tvRoundInfo.text = getString(
+                R.string.race_round_format,
+                round.toString(),
+                season.toString()
+            ).fromHtml()
         }
 
         observe(viewModel.outputs.circuitInfo) {
             imgCountry.setImageResource(getFlagResourceAlpha3(it.circuit.countryISO))
             tvCircuitName.text = it.circuit.name
             toolbarLayout.header.text = it.circuit.country
+            tvDate.text = it.date.format(DateTimeFormatter.ofPattern("dd MMMM"))
         }
 
         observe(viewModel.outputs.raceItems) { (adapterType, list) ->

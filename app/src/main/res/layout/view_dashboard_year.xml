@@ -4,10 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/clMain"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="@drawable/ripple"
+    android:paddingStart="@dimen/paddingMedium"
+    android:paddingTop="@dimen/paddingSmall"
+    android:paddingEnd="@dimen/paddingMedium"
+    android:paddingBottom="@dimen/paddingSmall">
 
     <TextView
         android:id="@+id/tvYear"
+        style="@style/Text.Dashboard.Year"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"

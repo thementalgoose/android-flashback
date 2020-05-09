@@ -23,7 +23,7 @@ var flashbackModule = module {
 
     viewModel { DashboardSwipingViewModel(get(), get()) }
     viewModel { DashboardSeasonViewModel(get()) }
-    viewModel { DashboardViewModel() }
+    viewModel { DashboardViewModel(get()) }
 
     viewModel { RaceViewModel(get(), get(), get()) }
 
