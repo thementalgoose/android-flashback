@@ -1,11 +1,14 @@
 package tmg.flashback.repo.models
 
+import org.threeten.bp.LocalDate
+
 data class History(
     val season: Int,
     val rounds: List<HistoryRound>
 )
 
 data class HistoryRound(
+    val date: LocalDate,
     val season: Int,
     val round: Int,
     val raceName: String,

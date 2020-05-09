@@ -1,4 +1,4 @@
-package tmg.flashback.dashboard.season
+package tmg.flashback.dashboard.swiping.season
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,7 +9,6 @@ import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.map
 import tmg.flashback.base.BaseViewModel
 import tmg.flashback.repo.db.HistoryDB
-import tmg.flashback.utils.SeasonRound
 import tmg.utilities.extensions.combinePair
 import tmg.utilities.lifecycle.DataEvent
 

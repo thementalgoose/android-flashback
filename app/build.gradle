@@ -118,6 +118,12 @@ dependencies {
 
     // Skeleton Layout
     implementation 'com.faltenreich:skeletonlayout:2.0.1'
+
+    // Inbox Recycler View
+    implementation 'me.saket:inboxrecyclerview:2.0.0-beta3'
+
+    // Indicator Fast scroll
+    implementation 'com.reddit:indicator-fast-scroll:1.2.1'
 }
 
 apply plugin: 'com.google.gms.google-services'

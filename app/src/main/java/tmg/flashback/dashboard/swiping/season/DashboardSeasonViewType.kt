@@ -1,4 +1,4 @@
-package tmg.flashback.dashboard.season
+package tmg.flashback.dashboard.swiping.season
 
 enum class DashboardSeasonViewType {
     TRACK,

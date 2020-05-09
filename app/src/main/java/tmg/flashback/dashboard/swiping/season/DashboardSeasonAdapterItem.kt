@@ -1,6 +1,6 @@
-package tmg.flashback.dashboard.season
+package tmg.flashback.dashboard.swiping.season
 
-import tmg.flashback.dashboard.season.DashboardSeasonViewType.*
+import tmg.flashback.dashboard.swiping.season.DashboardSeasonViewType.*
 
 sealed class DashboardSeasonAdapterItem(
     val viewType: DashboardSeasonViewType

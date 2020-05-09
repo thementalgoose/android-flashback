@@ -5,8 +5,9 @@ data class FHistorySeason(
 )
 
 data class FHistorySeasonRound(
-    val round: Int = -1,
-    val season: Int = -1,
+    val date: String = "",
+    val r: Int = -1,
+    val s: Int = -1,
     val country: String = "",
     val countryISO: String = "",
     val circuit: String = "",

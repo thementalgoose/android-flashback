@@ -11,7 +11,7 @@ fun FHistorySeason.convert(): List<History> {
         var season: Int = -1
         val historyRounds = rounds
             .mapValues { (_, round) ->
-                season = round.season
+                season = round.s
                 round.convert()
             }
             .map { it.value.second }
@@ -26,9 +26,10 @@ fun FHistorySeason.convert(): List<History> {
 
 fun FHistorySeasonRound.convert(): Pair<Int, HistoryRound> {
     return Pair(
-        this.season, HistoryRound(
-            season = this.season,
-            round = this.round,
+        this.s, HistoryRound(
+            date = fromDate(this.date),
+            season = this.s,
+            round = this.r,
             raceName = this.raceName,
             country = this.country,
             countryISO = this.countryISO,

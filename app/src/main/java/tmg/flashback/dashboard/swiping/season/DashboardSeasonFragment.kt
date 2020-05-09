@@ -1,6 +1,7 @@
-package tmg.flashback.dashboard.season
+package tmg.flashback.dashboard.swiping.season
 
 import android.os.Bundle
+import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_dashboard_season.*
 import org.koin.android.ext.android.inject
@@ -20,6 +21,8 @@ class DashboardSeasonFragment: BaseFragment() {
     override fun arguments(bundle: Bundle) {
         val season: Int = bundle.getInt(keySeason, 0)
         viewModel.inputs.load(season)
+
+        Log.i("Flashback", "Season initialised to $season")
     }
 
     override fun initViews() {

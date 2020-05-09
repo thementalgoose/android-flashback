@@ -1,14 +1,15 @@
-package tmg.flashback.dashboard
+package tmg.flashback.dashboard.swiping
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import tmg.flashback.dashboard.season.DashboardSeasonFragment
+import tmg.flashback.currentYear
+import tmg.flashback.dashboard.swiping.season.DashboardSeasonFragment
+import tmg.flashback.minimumSupportedYear
 
-class DashboardFragmentAdapter: FragmentStateAdapter {
+class DashboardSwipingFragmentAdapter: FragmentStateAdapter {
 
     constructor(fragmentManager: FragmentManager, lifecycle: Lifecycle) : super(
         fragmentManager,
@@ -18,9 +19,9 @@ class DashboardFragmentAdapter: FragmentStateAdapter {
     constructor(fragmentActivity: FragmentActivity) : super(fragmentActivity)
     constructor(fragment: Fragment) : super(fragment)
 
-    override fun getItemCount(): Int = 19
+    override fun getItemCount(): Int = (currentYear + 1) - minimumSupportedYear
 
     override fun createFragment(position: Int): Fragment {
-        return DashboardSeasonFragment.instance(2019 - position)
+        return DashboardSeasonFragment.instance(currentYear - position)
     }
 }

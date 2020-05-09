@@ -1,66 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:layout_height="match_parent">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@null"
-        android:fitsSystemWindows="true"
-        app:elevation="0dp">
-
-        <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fitsSystemWindows="true"
-            android:minHeight="@dimen/dashboardYearSelectorHeight"
-            app:layout_scrollFlags="exitUntilCollapsed|scroll">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <include
-                    android:id="@+id/toolbarLayout"
-                    layout="@layout/toolbar"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <com.google.android.material.tabs.TabLayout
-                    android:id="@+id/tlMain"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dashboardYearSelectorHeight"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/toolbarLayout"
-                    app:tabIndicatorColor="@color/logo_gradient_1"
-                    app:tabIndicator="@drawable/indicator_dashboard"
-                    app:tabMode="scrollable" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
-
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/vpSeason"
+    <me.saket.inboxrecyclerview.InboxRecyclerView
+        android:id="@+id/irvMain"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        android:clipToPadding="false"
+        tools:layoutManager="LinearLayoutManager"
+        tools:listitem="@layout/view_dashboard_season_track" />
 
-    <!--    <com.google.android.material.bottomnavigation.BottomNavigationView-->
-    <!--        android:id="@+id/bnvDashboard"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:visibility="gone"-->
-    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent" />-->
+    <me.saket.inboxrecyclerview.page.ExpandablePageLayout
+        android:id="@+id/eplMain"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nsvMain"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="400dp"
+                    android:nestedScrollingEnabled="false" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Something\nSomething\nSomething\nSomething\nSomething\nSomething\nSomething\nSomething\nSomething\nSomething\nSomething\nSomething\nSomething\nSomething\nSomething\nSomething\nSomething\nSomething\nSomething\nSomething\nSomething\nSomething\nSomething\nSomething\nSomething\nSomething" />
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </me.saket.inboxrecyclerview.page.ExpandablePageLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

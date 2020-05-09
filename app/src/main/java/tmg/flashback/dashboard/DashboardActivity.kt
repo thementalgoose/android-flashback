@@ -1,71 +1,58 @@
 package tmg.flashback.dashboard
 
-import android.content.Intent
-import android.view.Menu
-import android.view.MenuItem
-import android.widget.Toast
-import com.google.android.material.tabs.TabLayoutMediator
+import android.graphics.Color
+import android.os.Bundle
+import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_dashboard.*
-import kotlinx.android.synthetic.main.toolbar.view.*
-import org.koin.android.ext.android.inject
+import me.saket.inboxrecyclerview.dimming.TintPainter
+import me.saket.inboxrecyclerview.page.InterceptResult
+import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.R
-import tmg.flashback.admin.lockout.LockoutActivity
 import tmg.flashback.base.BaseActivity
-import tmg.flashback.currentYear
-import tmg.flashback.race.RaceActivity
-import tmg.flashback.settings.SettingsActivity
-import tmg.flashback.settings.release.ReleaseBottomSheetFragment
-import tmg.utilities.extensions.initToolbar
-import tmg.utilities.extensions.observeEvent
-import tmg.utilities.extensions.showAsSnackbar
-import tmg.utilities.extensions.startActivityClearStack
+import tmg.flashback.dashboard.swiping.season.DashboardSeasonFragment
+import tmg.flashback.dashboard.year.DashboardYearAdapter
+import tmg.utilities.extensions.loadFragment
+import tmg.utilities.extensions.observe
 
-class DashboardActivity: BaseActivity() {
+class DashboardActivity : BaseActivity() {
 
-    private val viewModel: DashboardViewModel by inject()
-    private val seasonAdapter: DashboardFragmentAdapter = DashboardFragmentAdapter(this)
+    private val viewModel: DashboardViewModel by viewModel()
+
+    private lateinit var adapter: DashboardYearAdapter
 
     override fun layoutId(): Int = R.layout.activity_dashboard
 
-    override fun initViews() {
-        initToolbar(R.id.toolbar)
-        toolbarLayout.header.text = getString(R.string.app_name)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-        observeEvent(viewModel.outputs.showAppLockoutMessage) {
-            startActivityClearStack(Intent(this, LockoutActivity::class.java))
+        irvMain.expandablePage = eplMain
+        irvMain.tintPainter = TintPainter.uncoveredArea(Color.WHITE, opacity = 0.65f)
+
+        adapter = DashboardYearAdapter(
+            itemClicked = { model, itemId ->
+                irvMain.expandItem(itemId)
+            }
+        )
+        irvMain.layoutManager = LinearLayoutManager(this)
+        irvMain.adapter = adapter
+
+        observe(viewModel.outputs.years) {
+            adapter.list = it
         }
 
-        observeEvent(viewModel.outputs.showAppBanner) {
-            it.message?.showAsSnackbar(toolbarLayout)
+        eplMain.pullToCollapseInterceptor = { downX, downY, upwardPull ->
+            val directionInt = if (upwardPull) +1 else -1
+            val canScrollFurther = nsvMain.canScrollVertically(directionInt)
+            if (canScrollFurther) InterceptResult.INTERCEPTED else InterceptResult.IGNORED
         }
-
-        observeEvent(viewModel.outputs.showReleaseNotes) {
-            val instance = ReleaseBottomSheetFragment()
-            instance.show(supportFragmentManager, "Release Notes")
-        }
-
-        setupViewPagers()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_dashboard, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.nav_settings -> startActivity(Intent(this, SettingsActivity::class.java))
-            R.id.nav_all -> Toast.makeText(this, "All", Toast.LENGTH_LONG).show()
+    override fun onBackPressed() {
+        if (eplMain.isExpandedOrExpanding) {
+            irvMain.collapse()
+        } else {
+            super.onBackPressed()
         }
-        return super.onOptionsItemSelected(item)
-    }
-
-    private fun setupViewPagers() {
-
-        vpSeason.adapter = seasonAdapter
-
-        TabLayoutMediator(tlMain, vpSeason) { tab, position ->
-            tab.text = (currentYear - position).toString()
-        }.attach()
     }
 }
