@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.R
 import tmg.flashback.dashboard.year.viewholders.DashboardHeaderViewHolder
+import tmg.flashback.dashboard.year.viewholders.DashboardSkeletonViewHolder
 import tmg.flashback.dashboard.year.viewholders.DashboardYearViewHolder
 import tmg.utilities.extensions.toEnum
 
@@ -26,13 +27,17 @@ class DashboardYearAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return when (viewType.toEnum<DashboardViewType>()) {
+        val dashboardViewType = viewType.toEnum<DashboardViewType>()!!
+        val view = LayoutInflater.from(parent.context).inflate(dashboardViewType.layoutId, parent, false)
+        return when (dashboardViewType) {
             DashboardViewType.SEASON -> {
-                val layout = LayoutInflater.from(parent.context).inflate(R.layout.view_dashboard_year, parent, false)
-                DashboardYearViewHolder(layout, itemClicked)
+                DashboardYearViewHolder(view, itemClicked)
             }
             DashboardViewType.HEADER -> {
-                DashboardHeaderViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.view_dashboard_header, parent, false), settingsClicked)
+                DashboardHeaderViewHolder(view, settingsClicked)
+            }
+            DashboardViewType.PLACEHOLDER -> {
+                DashboardSkeletonViewHolder(view)
             }
             null -> throw Error("View type not supported")
         }
@@ -47,6 +52,7 @@ class DashboardYearAdapter(
 
     override fun getItemViewType(position: Int) = when (list[position]) {
         is DashboardYearItem.Season -> DashboardViewType.SEASON.ordinal
+        DashboardYearItem.Placeholder -> DashboardViewType.PLACEHOLDER.ordinal
         DashboardYearItem.Header -> DashboardViewType.HEADER.ordinal
     }
 

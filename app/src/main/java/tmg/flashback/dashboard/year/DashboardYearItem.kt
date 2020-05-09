@@ -10,11 +10,14 @@ sealed class DashboardYearItem {
     ): DashboardYearItem()
 
     object Header: DashboardYearItem()
+
+    object Placeholder: DashboardYearItem()
 }
 
 enum class DashboardViewType(
     @LayoutRes val layoutId: Int
 ) {
-    SEASON(R.layout.view_dashboard_header),
-    HEADER(R.layout.view_dashboard_year),
+    SEASON(R.layout.view_dashboard_year),
+    HEADER(R.layout.view_dashboard_header),
+    PLACEHOLDER(R.layout.view_dashboard_skeleton)
 }

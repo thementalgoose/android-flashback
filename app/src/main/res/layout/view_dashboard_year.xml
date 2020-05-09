@@ -16,11 +16,73 @@
     <TextView
         android:id="@+id/tvYear"
         style="@style/Text.Dashboard.Year"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="2019" />
+
+<!--    <ImageView-->
+<!--        android:id="@+id/imgTrack"-->
+<!--        android:layout_width="@dimen/dashboardYearIconSize"-->
+<!--        android:layout_height="@dimen/dashboardYearIconSize"-->
+<!--        android:src="@drawable/ic_track_icon"-->
+<!--        android:tint="?attr/f1TextSecondary"-->
+<!--        app:layout_constraintBottom_toBottomOf="@id/tvTrackCount"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="@id/tvTrackCount" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/tvTrackCount"-->
+<!--        style="@style/Text.Dashboard.TrackCount"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="@dimen/paddingSmall"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toEndOf="@id/imgTrack"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/tvYear"-->
+<!--        tools:text="21" />-->
+
+<!--    <ImageView-->
+<!--        android:id="@+id/imgConstructor"-->
+<!--        android:layout_width="@dimen/dashboardYearIconSize"-->
+<!--        android:layout_height="@dimen/dashboardYearIconSize"-->
+<!--        android:src="@drawable/nav_constructor"-->
+<!--        android:tint="?attr/f1TextSecondary"-->
+<!--        app:layout_constraintBottom_toBottomOf="@id/tvConstructor"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="@id/tvConstructor" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/tvConstructor"-->
+<!--        style="@style/Text.Dashboard.Constructor"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="@dimen/paddingSmall"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toEndOf="@id/imgTrack"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/tvTrackCount"-->
+<!--        tools:text="McLaren" />-->
+
+<!--    <ImageView-->
+<!--        android:id="@+id/imgDriver"-->
+<!--        android:layout_width="@dimen/dashboardYearIconSize"-->
+<!--        android:layout_height="@dimen/dashboardYearIconSize"-->
+<!--        android:src="@drawable/nav_driver"-->
+<!--        android:tint="?attr/f1TextSecondary"-->
+<!--        app:layout_constraintBottom_toBottomOf="@id/tvDriver"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="@id/tvDriver" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/tvDriver"-->
+<!--        style="@style/Text.Dashboard.Driver"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="@dimen/paddingSmall"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toEndOf="@id/imgTrack"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/tvConstructor"-->
+<!--        tools:text="Jenson Button (McLaren)" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

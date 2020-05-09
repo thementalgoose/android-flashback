@@ -58,6 +58,17 @@
 
     <style name="Text.Dashboard.Year" parent="Text">
         <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Text.Dashboard.TrackCount" parent="Text">
+        <item name="android:textSize">12sp</item>
+    </style>
+    <style name="Text.Dashboard.Constructor" parent="Text">
+        <item name="android:textSize">12sp</item>
+    </style>
+    <style name="Text.Dashboard.Driver" parent="Text">
+        <item name="android:textSize">12sp</item>
     </style>
 
     <style name="Text.Dashboard.Track.Title" parent="Text">

@@ -6,20 +6,22 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_dashboard.*
+import kotlinx.android.synthetic.main.activity_dashboard_swiping.*
 import me.saket.inboxrecyclerview.dimming.TintPainter
 import me.saket.inboxrecyclerview.page.InterceptResult
 import me.saket.inboxrecyclerview.page.PullToCollapseListener
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.R
+import tmg.flashback.admin.lockout.LockoutActivity
 import tmg.flashback.base.BaseActivity
 import tmg.flashback.dashboard.swiping.season.DashboardSeasonAdapter
 import tmg.flashback.dashboard.swiping.season.DashboardSeasonFragment
 import tmg.flashback.dashboard.year.DashboardYearAdapter
+import tmg.flashback.dashboard.year.DashboardYearItem
 import tmg.flashback.race.RaceActivity
 import tmg.flashback.settings.SettingsActivity
-import tmg.utilities.extensions.loadFragment
-import tmg.utilities.extensions.observe
-import tmg.utilities.extensions.observeEvent
+import tmg.flashback.settings.release.ReleaseBottomSheetFragment
+import tmg.utilities.extensions.*
 
 class DashboardActivity : BaseActivity() {
 
@@ -39,6 +41,10 @@ class DashboardActivity : BaseActivity() {
                 viewModel.inputs.clickSeason(model.year)
             },
             settingsClicked = viewModel.inputs::clickSettings
+        )
+        adapter.list = listOf(
+            DashboardYearItem.Header,
+            DashboardYearItem.Placeholder
         )
         irvMain.expandablePage = eplMain
         irvMain.tintPainter = TintPainter.uncoveredArea(Color.WHITE, opacity = 0.65f)
@@ -66,6 +72,20 @@ class DashboardActivity : BaseActivity() {
 
         observeEvent(viewModel.outputs.openSettings) {
             startActivity(Intent(this, SettingsActivity::class.java))
+        }
+
+
+        observeEvent(viewModel.outputs.showAppLockoutMessage) {
+            startActivityClearStack(Intent(this, LockoutActivity::class.java))
+        }
+
+        observeEvent(viewModel.outputs.showAppBanner) {
+            it.message?.showAsSnackbar(irvMain)
+        }
+
+        observeEvent(viewModel.outputs.showReleaseNotes) {
+            val instance = ReleaseBottomSheetFragment()
+            instance.show(supportFragmentManager, "Release Notes")
         }
 
         eplMain.pullToCollapseInterceptor = { downX, downY, upwardPull ->

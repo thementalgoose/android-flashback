@@ -8,7 +8,7 @@ import tmg.flashback.dashboard.year.DashboardYearItem
 class DashboardYearViewHolder(
     itemView: View,
     val itemClicked: (model: DashboardYearItem.Season, itemId: Long) -> Unit
-): RecyclerView.ViewHolder(itemView), View.OnClickListener {
+) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
     private lateinit var item: DashboardYearItem.Season
     private var itemPosId: Long = -1L
@@ -17,10 +17,15 @@ class DashboardYearViewHolder(
         itemView.clMain.setOnClickListener(this)
     }
 
-    fun bind(year: DashboardYearItem.Season, itemId: Long) {
-        this.item = year
+    fun bind(season: DashboardYearItem.Season, itemId: Long) {
+        this.item = season
         this.itemPosId = itemId
-        itemView.tvYear.text = year.year.toString()
+        itemView.tvYear.text = season.year.toString()
+//        season.numberOfRaces?.let {
+//            itemView.tvTrackCount.text = itemView.context.resources.getQuantityString(R.plurals.dashboard_track_count, it, it)
+//        }
+//        itemView.tvConstructor.text = itemView.context.getString(R.string.dashboard_constructor_champion, "Mercedes").fromHtml()
+//        itemView.tvDriver.text = itemView.context.getString(R.string.dashboard_drivers_champion, "Lewis Hamilton", "Mercedes").fromHtml()
     }
 
     override fun onClick(p0: View?) {

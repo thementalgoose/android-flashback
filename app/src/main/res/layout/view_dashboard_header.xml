@@ -25,10 +25,10 @@
         android:layout_marginTop="@dimen/paddingXSmall"
         android:layout_marginEnd="@dimen/paddingXSmall"
         android:background="@null"
+        android:contentDescription="@string/settings_title"
         android:padding="@dimen/paddingSmall"
         android:src="@drawable/nav_settings"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="@string/settings_title" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -73,5 +73,6 @@
 
     <dimen name="raceImageSize">42dp</dimen>
     <dimen name="constructorStandingsSize">40dp</dimen>
+    <dimen name="dashboardYearIconSize">14dp</dimen>
 
 </resources>
