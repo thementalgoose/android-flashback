@@ -87,11 +87,14 @@
     <!-- Home screen -->
     <string name="dashboard_header">@string/app_name</string>
     <plurals name="dashboard_track_count">
-        <item quantity="one">%d rounds in the season</item>
-        <item quantity="other">%d rounds in the season</item>
+        <item quantity="one"><![CDATA[<b>%d</b> races]]></item>
+        <item quantity="other"><![CDATA[<b>%d</b> races]]></item>
     </plurals>
     <string name="dashboard_constructor_champion"><![CDATA[Constructor champion: <b>%s</b>]]></string>
     <string name="dashboard_drivers_champion"><![CDATA[Drivers champion: <b>%s</b> (%s)]]></string>
+    <string name="dashboard_menu_track_list">Track list</string>
+    <string name="dashboard_menu_drivers">Drivers championship standings</string>
+    <string name="dashboard_menu_constructors">Constructors standings</string>
 
     <!-- Race -->
     <string name="race_round" formatted="false">Round %d</string>

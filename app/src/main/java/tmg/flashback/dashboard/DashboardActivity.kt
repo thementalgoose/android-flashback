@@ -3,17 +3,25 @@ package tmg.flashback.dashboard
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.view.MenuItem
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.activity_dashboard.*
 import kotlinx.android.synthetic.main.activity_dashboard_swiping.*
+import kotlinx.android.synthetic.main.bottom_sheet_view_type.*
+import kotlinx.android.synthetic.main.view_dashboard_menu_item.*
 import me.saket.inboxrecyclerview.dimming.TintPainter
 import me.saket.inboxrecyclerview.page.InterceptResult
+import me.saket.inboxrecyclerview.page.PageStateChangeCallbacks
 import me.saket.inboxrecyclerview.page.PullToCollapseListener
 import org.koin.android.viewmodel.ext.android.viewModel
+import tmg.flashback.BuildConfig
 import tmg.flashback.R
 import tmg.flashback.admin.lockout.LockoutActivity
 import tmg.flashback.base.BaseActivity
+import tmg.flashback.dashboard.menu.DashboardMenuAdapter
 import tmg.flashback.dashboard.swiping.season.DashboardSeasonAdapter
 import tmg.flashback.dashboard.swiping.season.DashboardSeasonFragment
 import tmg.flashback.dashboard.year.DashboardYearAdapter
@@ -21,6 +29,7 @@ import tmg.flashback.dashboard.year.DashboardYearItem
 import tmg.flashback.race.RaceActivity
 import tmg.flashback.settings.SettingsActivity
 import tmg.flashback.settings.release.ReleaseBottomSheetFragment
+import tmg.utilities.bottomsheet.BottomSheetFader
 import tmg.utilities.extensions.*
 
 class DashboardActivity : BaseActivity() {
@@ -29,11 +38,80 @@ class DashboardActivity : BaseActivity() {
 
     private lateinit var adapter: DashboardYearAdapter
     private lateinit var seasonAdapter: DashboardSeasonAdapter
+    private lateinit var menuAdapter: DashboardMenuAdapter
+    private lateinit var bottomSheet: BottomSheetBehavior<LinearLayout>
 
     override fun layoutId(): Int = R.layout.activity_dashboard
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        initToolbar(R.id.bottombar, true, R.drawable.ic_menu)
+
+        setupYearListAndDetails()
+
+        setupBottomSheetMenu()
+
+
+
+        observe(viewModel.outputs.years) {
+            adapter.list = it
+        }
+
+        observe(viewModel.outputs.seasonList) {
+            seasonAdapter.list = it
+        }
+
+        observe(viewModel.outputs.menuList) {
+            menuAdapter.list = it
+        }
+
+
+
+        observeEvent(viewModel.outputs.openMenu) {
+            bottomSheet.expand()
+        }
+
+        observeEvent(viewModel.outputs.openSettings) {
+            startActivity(Intent(this, SettingsActivity::class.java))
+        }
+
+
+
+        observeEvent(viewModel.outputs.showAppLockoutMessage) {
+            startActivityClearStack(Intent(this, LockoutActivity::class.java))
+        }
+
+        observeEvent(viewModel.outputs.showReleaseNotes) {
+            val instance = ReleaseBottomSheetFragment()
+            instance.show(supportFragmentManager, "Release Notes")
+        }
+
+        observeEvent(viewModel.outputs.showAppBanner) {
+            // TODO: Move this over to something inline
+//            it.message?.showAsSnackbar(irvMain)
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            viewModel.inputs.clickMenu()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onBackPressed() {
+        if (eplMain.isExpandedOrExpanding) {
+            irvMain.collapse()
+            seasonAdapter.list = emptyList()
+        } else {
+            super.onBackPressed()
+        }
+    }
+
+
+
+    private fun setupYearListAndDetails() {
 
         adapter = DashboardYearAdapter(
             itemClicked = { model, itemId ->
@@ -47,7 +125,7 @@ class DashboardActivity : BaseActivity() {
             DashboardYearItem.Placeholder
         )
         irvMain.expandablePage = eplMain
-        irvMain.tintPainter = TintPainter.uncoveredArea(Color.WHITE, opacity = 0.65f)
+        irvMain.tintPainter = TintPainter.uncoveredArea(Color.WHITE, opacity = 0.8f)
         irvMain.layoutManager = LinearLayoutManager(this)
         irvMain.adapter = adapter
 
@@ -62,45 +140,56 @@ class DashboardActivity : BaseActivity() {
         seasonList.adapter = seasonAdapter
         seasonList.layoutManager = LinearLayoutManager(this)
 
-        observe(viewModel.outputs.years) {
-            adapter.list = it
-        }
-
-        observe(viewModel.outputs.seasonList) {
-            seasonAdapter.list = it
-        }
-
-        observeEvent(viewModel.outputs.openSettings) {
-            startActivity(Intent(this, SettingsActivity::class.java))
-        }
-
-
-        observeEvent(viewModel.outputs.showAppLockoutMessage) {
-            startActivityClearStack(Intent(this, LockoutActivity::class.java))
-        }
-
-        observeEvent(viewModel.outputs.showAppBanner) {
-            it.message?.showAsSnackbar(irvMain)
-        }
-
-        observeEvent(viewModel.outputs.showReleaseNotes) {
-            val instance = ReleaseBottomSheetFragment()
-            instance.show(supportFragmentManager, "Release Notes")
-        }
-
         eplMain.pullToCollapseInterceptor = { downX, downY, upwardPull ->
             val directionInt = if (upwardPull) +1 else -1
             val canScrollFurther = nsvMain.canScrollVertically(directionInt)
             if (canScrollFurther) InterceptResult.INTERCEPTED else InterceptResult.IGNORED
         }
+
+        eplMain.addStateChangeCallbacks(object : PageStateChangeCallbacks {
+            override fun onPageExpanded() {
+
+            }
+
+            override fun onPageAboutToCollapse(collapseAnimDuration: Long) {
+                bottombar.animate()
+                    .alpha(1.0f)
+                    .setDuration(collapseAnimDuration)
+                    .start()
+            }
+
+            override fun onPageAboutToExpand(expandAnimDuration: Long) {
+                bottombar.animate()
+                    .alpha(0.0f)
+                    .setDuration(expandAnimDuration)
+                    .start()
+            }
+
+            override fun onPageCollapsed() {
+
+            }
+        })
     }
 
-    override fun onBackPressed() {
-        if (eplMain.isExpandedOrExpanding) {
-            irvMain.collapse()
-            seasonAdapter.list = emptyList()
-        } else {
-            super.onBackPressed()
+    private fun setupBottomSheetMenu() {
+        menuSubtitle.text = getString(R.string.app_version_version_name, BuildConfig.VERSION_NAME)
+
+        bottomSheet = BottomSheetBehavior.from(viewTypeLayout)
+        bottomSheet.isHideable = true
+        bottomSheet.hidden()
+        bottomSheet.addBottomSheetCallback(BottomSheetFader(cover, "cover"))
+        cover.setOnClickListener { bottomSheet.hidden() }
+
+        menuAdapter = DashboardMenuAdapter(
+            menuItemClicked = viewModel.inputs::clickMenuItem
+        )
+        viewTypeList.adapter = menuAdapter
+        viewTypeList.layoutManager = LinearLayoutManager(this)
+
+        container.setOnClickListener {
+            viewModel.inputs.clickSettings()
         }
+        menuItemIcon.setImageResource(R.drawable.nav_settings)
+        menuItemLabel.setText(R.string.settings_title)
     }
 }

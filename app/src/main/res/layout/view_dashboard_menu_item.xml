@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/paddingSmall"
+        android:layout_marginTop="@dimen/paddingXSmall"
+        android:layout_marginEnd="@dimen/paddingSmall"
+        android:layout_marginBottom="@dimen/paddingXSmall"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="@drawable/rounded_ripple">
+
+        <ImageView
+            android:id="@+id/menuItemIcon"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_marginStart="@dimen/paddingSmall"
+            app:layout_constraintBottom_toBottomOf="@id/menuItemLabel"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/menuItemLabel" />
+
+        <TextView
+            android:id="@+id/menuItemLabel"
+            style="@style/Text.Dashboard.Menu.Subtitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/paddingXSmall"
+            android:layout_marginBottom="@dimen/paddingXSmall"
+            android:paddingStart="@dimen/paddingSmall"
+            android:paddingTop="@dimen/paddingXSmall"
+            android:paddingEnd="@dimen/paddingSmall"
+            android:paddingBottom="@dimen/paddingXSmall"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/menuItemIcon"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Race breakdown" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</LinearLayout>

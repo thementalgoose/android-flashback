@@ -17,5 +17,6 @@
     <color name="aboutThisApp_backgroundLight">#FBFBFB</color>
     <color name="aboutThisApp_backgroundDark">#181818</color>
     <color name="whiteTranslucent">#88000000</color>
+    <color name="overlay">#88000000</color>
 
 </resources>

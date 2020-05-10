@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.*
 import tmg.flashback.base.BaseViewModel
 import tmg.flashback.currentYear
 import tmg.flashback.dashboard.swiping.season.DashboardSeasonAdapterItem
+import tmg.flashback.dashboard.year.DashboardMenuItem
 import tmg.flashback.dashboard.year.DashboardYearItem
 import tmg.flashback.minimumSupportedYear
 import tmg.flashback.repo.db.DataDB
@@ -14,6 +15,7 @@ import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.models.AppBanner
 import tmg.flashback.repo.models.AppLockout
 import tmg.flashback.repo.models.History
+import tmg.flashback.utils.Selected
 import tmg.utilities.extensions.combinePair
 import tmg.utilities.lifecycle.DataEvent
 import tmg.utilities.lifecycle.Event
@@ -23,6 +25,8 @@ import tmg.utilities.lifecycle.Event
 interface DashboardViewModelInputs {
     fun clickSeason(year: Int)
     fun clickSettings()
+    fun clickMenu()
+    fun clickMenuItem(menuItem: DashboardMenuItem)
 }
 
 //endregion
@@ -32,6 +36,9 @@ interface DashboardViewModelInputs {
 interface DashboardViewModelOutputs {
     val years: LiveData<List<DashboardYearItem>>
     val seasonList: LiveData<List<DashboardSeasonAdapterItem>>
+    val menuList: LiveData<List<Selected<DashboardMenuItem>>>
+
+    val openMenu: MutableLiveData<Event>
     val openSettings: MutableLiveData<Event>
 
     val showAppBanner: LiveData<DataEvent<AppBanner>>
@@ -48,9 +55,11 @@ class DashboardViewModel(
 ) : BaseViewModel(), DashboardViewModelInputs, DashboardViewModelOutputs {
 
     private val selectedSeason: ConflatedBroadcastChannel<Int> = ConflatedBroadcastChannel(currentYear)
+    private val selectedMenuItem: ConflatedBroadcastChannel<DashboardMenuItem> = ConflatedBroadcastChannel(DashboardMenuItem.TRACK_LIST)
     private val historyFlow: Flow<List<History>> = historyDB.allHistory()
 
     override val openSettings: MutableLiveData<Event> = MutableLiveData()
+    override val openMenu: MutableLiveData<Event> = MutableLiveData()
 
     override val showAppLockoutMessage: LiveData<DataEvent<AppLockout>> = dataDB
         .appLockout()
@@ -70,6 +79,18 @@ class DashboardViewModel(
         }
     }
 
+    override val menuList: LiveData<List<Selected<DashboardMenuItem>>> = selectedMenuItem
+        .asFlow()
+        .map { selected ->
+            DashboardMenuItem.values().map {
+                Selected(it, selected == it)
+            }
+        }
+        .asLiveData(viewModelScope.coroutineContext)
+
+    /**
+     * Year list that's shown on the initial app load
+     */
     override val years: LiveData<List<DashboardYearItem>> = historyFlow
         .map { list ->
             val itemList = mutableListOf<DashboardYearItem>(DashboardYearItem.Header)
@@ -81,6 +102,9 @@ class DashboardViewModel(
         }
         .asLiveData(viewModelScope.coroutineContext)
 
+    /**
+     * List of all the tracks in a given season
+     */
     override val seasonList: LiveData<List<DashboardSeasonAdapterItem>> = historyFlow
         .map { historyList ->
             historyList.map { history ->
@@ -124,6 +148,14 @@ class DashboardViewModel(
 
     override fun clickSettings() {
         openSettings.value = Event()
+    }
+
+    override fun clickMenuItem(menuItem: DashboardMenuItem) {
+        selectedMenuItem.offer(menuItem)
+    }
+
+    override fun clickMenu() {
+        openMenu.value = Event()
     }
 
     //endregion
