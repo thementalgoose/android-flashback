@@ -31,10 +31,8 @@ class SharedPrefsDB(context: Context): SharedPrefManager(context), PrefsDB {
     private val keyTheme: String = "THEME"
 
     override var theme: ThemePref
-        get() = ThemePref.DAY
-        set(value) {
-            // TODO
-        }
+        get() = getString(keyTheme)?.toEnum<ThemePref> { it.key } ?: ThemePref.AUTO
+        set(value) = save(keyTheme, value.key)
 
     override var selectedYear: Int
         get() = getInt(keySelectedYear, currentYear)

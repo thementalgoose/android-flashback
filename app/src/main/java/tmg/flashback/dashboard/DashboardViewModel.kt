@@ -16,6 +16,7 @@ import tmg.flashback.repo.models.AppBanner
 import tmg.flashback.repo.models.AppLockout
 import tmg.flashback.repo.models.History
 import tmg.flashback.utils.Selected
+import tmg.flashback.utils.bottomsheet.BottomSheetItem
 import tmg.utilities.extensions.combinePair
 import tmg.utilities.lifecycle.DataEvent
 import tmg.utilities.lifecycle.Event
@@ -36,7 +37,7 @@ interface DashboardViewModelInputs {
 interface DashboardViewModelOutputs {
     val years: LiveData<List<DashboardYearItem>>
     val seasonList: LiveData<List<DashboardSeasonAdapterItem>>
-    val menuList: LiveData<List<Selected<DashboardMenuItem>>>
+    val menuList: LiveData<List<Selected<BottomSheetItem>>>
 
     val openMenu: MutableLiveData<Event>
     val openSettings: MutableLiveData<Event>
@@ -79,11 +80,13 @@ class DashboardViewModel(
         }
     }
 
-    override val menuList: LiveData<List<Selected<DashboardMenuItem>>> = selectedMenuItem
+    override val menuList: LiveData<List<Selected<BottomSheetItem>>> = selectedMenuItem
         .asFlow()
         .map { selected ->
             DashboardMenuItem.values().map {
-                Selected(it, selected == it)
+                Selected(
+                    BottomSheetItem(it.ordinal, it.icon, it.msg), selected == it
+                )
             }
         }
         .asLiveData(viewModelScope.coroutineContext)

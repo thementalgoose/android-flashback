@@ -1,28 +1,27 @@
-package tmg.flashback.dashboard.menu
+package tmg.flashback.utils.bottomsheet
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.view_dashboard_menu_item.view.*
+import kotlinx.android.synthetic.main.view_bottom_sheet_item.view.*
 import tmg.flashback.R
-import tmg.flashback.dashboard.year.DashboardMenuItem
 import tmg.flashback.utils.Selected
 
-class DashboardMenuViewHolder(
-        itemView: View,
-        val menuItemClicked: (menuItem: DashboardMenuItem) -> Unit
+class BottomSheetViewHolder(
+    itemView: View,
+    val menuItemClicked: (menuItem: BottomSheetItem) -> Unit
 ): RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
-    private lateinit var currentItem: DashboardMenuItem
+    private lateinit var currentItem: BottomSheetItem
 
     init {
         itemView.container.setOnClickListener(this)
     }
 
-    fun bind(selected: Selected<DashboardMenuItem>) {
+    fun bind(selected: Selected<BottomSheetItem>) {
         this.currentItem = selected.value
         itemView.apply {
-            menuItemIcon.setImageResource(selected.value.icon)
-            menuItemLabel.setText(selected.value.msg)
+            menuItemIcon.setImageResource(selected.value.image)
+            menuItemLabel.setText(selected.value.text)
 
             if (selected.isSelected) {
                 container.setBackgroundResource(R.drawable.background_selected)

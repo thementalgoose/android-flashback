@@ -10,6 +10,10 @@ enum class SettingsOptions(
     @StringRes val title: Int,
     @StringRes val description: Int
 ) {
+    THEME("theme",
+        title = R.string.settings_theme_theme_title,
+        description = R.string.settings_theme_theme_description
+    ),
     QUALIFYING_DELTAS("qualifyingDeltas",
         title = R.string.settings_customisation_qualifying_delta_title,
         description = R.string.settings_customisation_qualifying_delta_description

@@ -1,7 +1,9 @@
 package tmg.flashback.repo.enums
 
-enum class ThemePref {
-    DAY,
-    AUTO,
-    NIGHT
+enum class ThemePref(
+    val key: String
+) {
+    DAY("DAY"),
+    AUTO("AUTO"),
+    NIGHT("NIGHT");
 }

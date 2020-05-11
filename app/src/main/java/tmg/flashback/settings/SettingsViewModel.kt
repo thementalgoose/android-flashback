@@ -5,13 +5,19 @@ import androidx.lifecycle.MutableLiveData
 import tmg.components.prefs.AppPreferencesItem
 import tmg.flashback.R
 import tmg.flashback.base.BaseViewModel
+import tmg.flashback.extensions.icon
+import tmg.flashback.extensions.label
 import tmg.flashback.repo.db.PrefsDB
+import tmg.flashback.repo.enums.ThemePref
+import tmg.flashback.utils.Selected
+import tmg.flashback.utils.bottomsheet.BottomSheetItem
 import tmg.utilities.lifecycle.Event
 
 //region Inputs
 
 interface SettingsViewModelInputs {
     fun preferenceClicked(pref: SettingsOptions?, value: Boolean?)
+    fun pickTheme(theme: ThemePref)
 }
 
 //endregion
@@ -21,6 +27,10 @@ interface SettingsViewModelInputs {
 interface SettingsViewModelOutputs {
     val settings: MutableLiveData<List<AppPreferencesItem>>
 
+    val themePreferences: MutableLiveData<List<Selected<BottomSheetItem>>>
+
+    val themeChanged: MutableLiveData<Event>
+    val openThemePicker: MutableLiveData<Event>
     val openAbout: MutableLiveData<Event>
     val openRelease: MutableLiveData<Event>
     val openSuggestions: MutableLiveData<Event>
@@ -38,12 +48,19 @@ class SettingsViewModel(
 
     override val settings: MutableLiveData<List<AppPreferencesItem>> = MutableLiveData()
 
+    override val themeChanged: MutableLiveData<Event> = MutableLiveData()
+
+    override val openThemePicker: MutableLiveData<Event> = MutableLiveData()
     override val openAbout: MutableLiveData<Event> = MutableLiveData()
     override val openRelease: MutableLiveData<Event> = MutableLiveData()
     override val openSuggestions: MutableLiveData<Event> = MutableLiveData()
 
+    override val themePreferences: MutableLiveData<List<Selected<BottomSheetItem>>> = MutableLiveData()
+
     init {
         settings.value = listOf(
+//            AppPreferencesItem.Category(applicationContext.getString(R.string.settings_theme)),
+//            SettingsOptions.THEME.toPref(applicationContext),
             AppPreferencesItem.Category(applicationContext.getString(R.string.settings_customisation)),
             SettingsOptions.QUALIFYING_DELTAS.toSwitch(applicationContext, prefDB.showQualifyingDelta),
             SettingsOptions.SHOW_DRIVERS_POINTS_IN_CONSTRUCTORS.toSwitch(applicationContext, prefDB.showDriversBehindConstructor),
@@ -55,12 +72,15 @@ class SettingsViewModel(
             SettingsOptions.SUGGESTION.toPref(applicationContext),
             SettingsOptions.SHAKE.toSwitch(applicationContext, prefDB.shakeToReport)
         )
+
+        updateThemeList()
     }
 
     //region Inputs
 
     override fun preferenceClicked(pref: SettingsOptions?, value: Boolean?) {
         when (pref) {
+            SettingsOptions.THEME -> openThemePicker.value = Event()
             SettingsOptions.QUALIFYING_DELTAS -> prefDB.showQualifyingDelta = value ?: false
             SettingsOptions.SHOW_DRIVERS_POINTS_IN_CONSTRUCTORS -> prefDB.showDriversBehindConstructor = value ?: true
             SettingsOptions.ABOUT -> openAbout.value = Event()
@@ -71,6 +91,19 @@ class SettingsViewModel(
         }
     }
 
+    override fun pickTheme(theme: ThemePref) {
+        prefDB.theme = theme
+        updateThemeList()
+        themeChanged.value = Event()
+    }
+
     //endregion
+
+    private fun updateThemeList() {
+        themePreferences.value = ThemePref.values()
+            .map {
+                Selected(BottomSheetItem(it.ordinal, it.icon, it.label), it == prefDB.theme)
+            }
+    }
 
 }

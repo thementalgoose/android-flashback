@@ -35,6 +35,12 @@
     <string name="settings_defaults_year_dialog_title">Season</string>
     <string name="settings_defaults_year_dialog_confirm">Confirm</string>
     <string name="settings_defaults_year_dialog_cancel">Cancel</string>
+    <string name="settings_theme">Theme</string>
+    <string name="settings_theme_theme_title">App theme</string>
+    <string name="settings_theme_theme_description">Pick your app theme preference</string>
+    <string name="settings_theme_theme_follow_system">Follow system preferences</string>
+    <string name="settings_theme_theme_light">Light mode</string>
+    <string name="settings_theme_theme_dark">Dark mode</string>
     <string name="settings_customisation_qualifying_delta_title">Show qualifying delta</string>
     <string name="settings_customisation_qualifying_delta_description">Show the lap time delta alongside the qualifying time when displaying qualifying results</string>
     <string name="settings_customisation_driver_in_constructor_title">Show constructor drivers</string>

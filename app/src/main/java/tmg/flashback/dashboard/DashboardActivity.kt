@@ -5,30 +5,27 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.LinearLayout
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.activity_dashboard.*
-import kotlinx.android.synthetic.main.activity_dashboard_swiping.*
 import kotlinx.android.synthetic.main.bottom_sheet_view_type.*
-import kotlinx.android.synthetic.main.view_dashboard_menu_item.*
+import kotlinx.android.synthetic.main.view_bottom_sheet_item.*
 import me.saket.inboxrecyclerview.dimming.TintPainter
 import me.saket.inboxrecyclerview.page.InterceptResult
 import me.saket.inboxrecyclerview.page.PageStateChangeCallbacks
-import me.saket.inboxrecyclerview.page.PullToCollapseListener
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.BuildConfig
 import tmg.flashback.R
 import tmg.flashback.admin.lockout.LockoutActivity
 import tmg.flashback.base.BaseActivity
-import tmg.flashback.dashboard.menu.DashboardMenuAdapter
 import tmg.flashback.dashboard.swiping.season.DashboardSeasonAdapter
-import tmg.flashback.dashboard.swiping.season.DashboardSeasonFragment
+import tmg.flashback.dashboard.year.DashboardMenuItem
 import tmg.flashback.dashboard.year.DashboardYearAdapter
 import tmg.flashback.dashboard.year.DashboardYearItem
 import tmg.flashback.race.RaceActivity
 import tmg.flashback.settings.SettingsActivity
 import tmg.flashback.settings.release.ReleaseBottomSheetFragment
+import tmg.flashback.utils.bottomsheet.BottomSheetAdapter
 import tmg.utilities.bottomsheet.BottomSheetFader
 import tmg.utilities.extensions.*
 
@@ -38,7 +35,7 @@ class DashboardActivity : BaseActivity() {
 
     private lateinit var adapter: DashboardYearAdapter
     private lateinit var seasonAdapter: DashboardSeasonAdapter
-    private lateinit var menuAdapter: DashboardMenuAdapter
+    private lateinit var menuAdapter: BottomSheetAdapter
     private lateinit var bottomSheet: BottomSheetBehavior<LinearLayout>
 
     override fun layoutId(): Int = R.layout.activity_dashboard
@@ -101,11 +98,17 @@ class DashboardActivity : BaseActivity() {
     }
 
     override fun onBackPressed() {
-        if (eplMain.isExpandedOrExpanding) {
-            irvMain.collapse()
-            seasonAdapter.list = emptyList()
-        } else {
-            super.onBackPressed()
+        when {
+            bottomSheet.state != BottomSheetBehavior.STATE_HIDDEN -> {
+                bottomSheet.hidden()
+            }
+            eplMain.isExpandedOrExpanding -> {
+                irvMain.collapse()
+                seasonAdapter.list = emptyList()
+            }
+            else -> {
+                super.onBackPressed()
+            }
         }
     }
 
@@ -180,8 +183,10 @@ class DashboardActivity : BaseActivity() {
         bottomSheet.addBottomSheetCallback(BottomSheetFader(cover, "cover"))
         cover.setOnClickListener { bottomSheet.hidden() }
 
-        menuAdapter = DashboardMenuAdapter(
-            menuItemClicked = viewModel.inputs::clickMenuItem
+        menuAdapter = BottomSheetAdapter(
+            itemClicked = {
+                viewModel.inputs.clickMenuItem(DashboardMenuItem.values()[it.id])
+            }
         )
         viewTypeList.adapter = menuAdapter
         viewTypeList.layoutManager = LinearLayoutManager(this)
