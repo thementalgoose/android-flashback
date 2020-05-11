@@ -2,6 +2,7 @@ package tmg.flashback.base
 
 import android.os.Bundle
 import android.util.Log
+import androidx.annotation.LayoutRes
 import org.koin.android.ext.android.inject
 import tmg.flashback.BuildConfig
 import tmg.flashback.R

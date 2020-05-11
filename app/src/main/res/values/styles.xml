@@ -44,6 +44,16 @@
         <item name="android:windowBackground">@drawable/launch_screen</item>
     </style>
 
+    <style name="LightTheme.PullToRefresh" parent="LightTheme">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+    </style>
+
+    <style name="TransparentBack">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+    </style>
+
 
     <style name="Text">
         <item name="android:textColor">?attr/f1TextPrimary</item>

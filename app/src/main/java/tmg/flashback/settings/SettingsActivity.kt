@@ -215,6 +215,13 @@ class SettingsActivity : BaseActivity() {
                         author = "Jordan Fisher",
                         url = "https://github.com/thementalgoose/android-components",
                         imageUrl = "https://avatars1.githubusercontent.com/u/5982159"
+                    ),
+                    AboutThisAppDependency(
+                        order = 12,
+                        dependencyName = "Pull to dismiss",
+                        author = "Fatih Sokmen",
+                        url = "https://github.com/fatihsokmen/pull-to-dismiss",
+                        imageUrl = "https://avatars2.githubusercontent.com/u/2427299"
                     )
                 )
             )

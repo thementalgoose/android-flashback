@@ -100,7 +100,8 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
         }
     }
 
-    override fun initViews() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
         // Setup
 
