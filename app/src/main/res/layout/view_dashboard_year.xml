@@ -13,65 +13,54 @@
     android:paddingEnd="@dimen/paddingMedium"
     android:paddingBottom="@dimen/paddingSmall">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
-        android:layout_width="@dimen/dashboardYearIconSize"
-        android:layout_height="@dimen/dashboardYearIconSize"
-        android:layout_marginTop="2dp"
-        android:elevation="0dp"
-        app:cardCornerRadius="6dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/icon"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:alpha="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/shortname"
-            style="@style/Text.Dashboard.Icon"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            app:layout_constraintBottom_toBottomOf="@id/cardView"
-            app:layout_constraintEnd_toEndOf="@id/cardView"
-            app:layout_constraintStart_toStartOf="@id/cardView"
-            app:layout_constraintTop_toTopOf="@id/cardView"
-            tools:text="19" />
-
-    </androidx.cardview.widget.CardView>
-
     <TextView
         android:id="@+id/year"
         style="@style/Text.Dashboard.Year"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/paddingNSmall"
-        app:layout_constraintStart_toEndOf="@id/cardView"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="2019" />
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/pill"
+        android:layout_width="24dp"
+        android:layout_height="4dp"
+        android:layout_marginTop="4dp"
+        app:cardCornerRadius="4dp"
+        app:cardElevation="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/year" />
+
     <TextView
-        android:id="@+id/races"
-        style="@style/Text.Dashboard.TrackCount"
+        android:id="@+id/season"
+        style="@style/Text.Dashboard.Subtitles"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="1dp"
-        app:layout_constraintStart_toStartOf="@id/year"
-        app:layout_constraintTop_toBottomOf="@id/year"
-        tools:text="21 races in this season" />
+        android:layout_marginTop="4dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/pill"
+        tools:text="Formula 1's 70th season" />
 
-    <tmg.flashback.views.LabelledProgressView
-        android:id="@+id/progressView"
-        android:layout_width="@dimen/dashboardProgressBarWidth"
-        android:layout_height="@dimen/dashboardProgressBarHeight"
-        android:layout_marginTop="@dimen/paddingXSmall"
+    <TextView
+        android:id="@+id/races"
+        style="@style/Text.Dashboard.Subtitles"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/season"
+        tools:text="21 races completed" />
+
+    <tmg.flashback.views.ArcView
+        android:id="@+id/arcView"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="@dimen/dashboardYearIconSize"
+        android:layout_height="@dimen/dashboardYearIconSize"
+        android:layout_marginTop="@dimen/paddingSmall"
+        android:indeterminate="false"
+        app:av_barSize="4dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:lpv_textSize="5sp" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

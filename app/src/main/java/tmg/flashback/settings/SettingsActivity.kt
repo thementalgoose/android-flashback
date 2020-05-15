@@ -133,6 +133,13 @@ class SettingsActivity : BaseActivity() {
                 play = "https://play.google.com/store/apps/details?id=tmg.flashback",
                 dependencies = listOf(
                     AboutThisAppDependency(
+                        order = -1,
+                        dependencyName = "Ergast API",
+                        author = "Ergast",
+                        url = "https://ergast.com/mrd/",
+                        imageUrl = "https://pbs.twimg.com/profile_images/204468195/logo_400x400.png"
+                    ),
+                    AboutThisAppDependency(
                         order = 0,
                         dependencyName = "Firebase",
                         author = "Google",

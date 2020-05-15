@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.R
+import tmg.flashback.dashboard.year.viewholders.DashboardBannerViewHolder
 import tmg.flashback.dashboard.year.viewholders.DashboardHeaderViewHolder
 import tmg.flashback.dashboard.year.viewholders.DashboardSkeletonViewHolder
 import tmg.flashback.dashboard.year.viewholders.DashboardYearViewHolder
@@ -39,6 +40,9 @@ class DashboardYearAdapter(
             DashboardViewType.PLACEHOLDER -> {
                 DashboardSkeletonViewHolder(view)
             }
+            DashboardViewType.BANNER -> {
+                DashboardBannerViewHolder(view)
+            }
             null -> throw Error("View type not supported")
         }
     }
@@ -46,12 +50,14 @@ class DashboardYearAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (getItemViewType(position).toEnum<DashboardViewType>()) {
             DashboardViewType.SEASON -> (holder as? DashboardYearViewHolder)?.bind(list[position] as DashboardYearItem.Season, getItemId(position))
+            DashboardViewType.BANNER -> (holder as? DashboardBannerViewHolder)?.bind((list[position] as DashboardYearItem.Banner).message)
             DashboardViewType.HEADER -> {}
         }
     }
 
     override fun getItemViewType(position: Int) = when (list[position]) {
         is DashboardYearItem.Season -> DashboardViewType.SEASON.ordinal
+        is DashboardYearItem.Banner -> DashboardViewType.BANNER.ordinal
         DashboardYearItem.Placeholder -> DashboardViewType.PLACEHOLDER.ordinal
         DashboardYearItem.Header -> DashboardViewType.HEADER.ordinal
     }

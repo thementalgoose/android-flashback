@@ -95,8 +95,12 @@ class DashboardViewModel(
      * Year list that's shown on the initial app load
      */
     override val years: LiveData<List<DashboardYearItem>> = historyFlow
-        .map { list ->
+        .combinePair(dataDB.appBanner())
+        .map { (list, banner) ->
             val itemList = mutableListOf<DashboardYearItem>(DashboardYearItem.Header)
+            if (banner?.show == true && banner.message != null) {
+                itemList.add(DashboardYearItem.Banner(banner.message ?: ""))
+            }
             itemList.addAll(list
                 .filter { it.season <= currentYear }
                 .map { DashboardYearItem.Season(it.season, it.rounds.size) }

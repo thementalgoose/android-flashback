@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ArcView">
+        <attr name="av_barColour" format="color" />
+        <attr name="av_backgroundColour" format="color" />
+        <attr name="av_barSize" format="dimension" />
+    </declare-styleable>
+</resources>

@@ -7,7 +7,6 @@ import kotlinx.android.synthetic.main.layout_driver.view.*
 import kotlinx.android.synthetic.main.layout_qualifying_time.view.*
 import kotlinx.android.synthetic.main.view_qualifying_result.view.*
 import tmg.flashback.R
-import tmg.flashback.extensions.show
 import tmg.flashback.repo.models.RoundQualifyingResult
 import tmg.flashback.race.RaceAdapterCallback
 import tmg.flashback.race.RaceAdapterType

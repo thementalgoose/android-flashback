@@ -1,17 +1,15 @@
 package tmg.flashback.race.viewholders
 
-import android.util.Log
 import android.view.View
 import androidx.annotation.ColorInt
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.layout_constructor_driver.view.*
 import kotlinx.android.synthetic.main.view_race_constructor_standings.view.*
 import tmg.flashback.R
-import tmg.flashback.extensions.show
 import tmg.flashback.race.RaceAdapterModel
 import tmg.flashback.repo.models.Driver
-import tmg.flashback.repo.models.RoundDriver
 import tmg.flashback.utils.getFlagResourceAlpha3
+import tmg.utilities.extensions.views.show
 import kotlin.math.roundToInt
 
 class ConstructorStandingsViewholder(itemView: View): RecyclerView.ViewHolder(itemView) {
@@ -33,10 +31,9 @@ class ConstructorStandingsViewholder(itemView: View): RecyclerView.ViewHolder(it
                 setDriver(layoutDriver3, model.driver[2].first, model.driver[2].second, model.constructor.color)
             }
 
-
             lpvProgress.progressColour = model.constructor.color
             val progress = model.points.toFloat() / maxPointsByAnyTeam.toFloat()
-            lpvProgress.setProgress(progress) {
+            lpvProgress.animateProgress(progress) {
                 if (progress != 0.0f) {
                     ((it / progress) * model.points).roundToInt().toString()
                 }

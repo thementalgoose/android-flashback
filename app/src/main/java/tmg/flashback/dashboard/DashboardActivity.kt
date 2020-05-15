@@ -7,6 +7,7 @@ import android.view.MenuItem
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.reddit.indicatorfastscroll.FastScrollItemIndicator
 import kotlinx.android.synthetic.main.activity_dashboard.*
 import kotlinx.android.synthetic.main.bottom_sheet_view_type.*
 import kotlinx.android.synthetic.main.view_bottom_sheet_item.*
@@ -18,6 +19,7 @@ import tmg.flashback.BuildConfig
 import tmg.flashback.R
 import tmg.flashback.admin.lockout.LockoutActivity
 import tmg.flashback.base.BaseActivity
+import tmg.flashback.currentYear
 import tmg.flashback.dashboard.swiping.season.DashboardSeasonAdapter
 import tmg.flashback.dashboard.year.DashboardMenuItem
 import tmg.flashback.dashboard.year.DashboardYearAdapter
@@ -70,6 +72,7 @@ class DashboardActivity : BaseActivity() {
         }
 
         observeEvent(viewModel.outputs.openSettings) {
+            bottomSheet.hidden()
             startActivity(Intent(this, SettingsActivity::class.java))
         }
 
@@ -150,10 +153,6 @@ class DashboardActivity : BaseActivity() {
         }
 
         eplMain.addStateChangeCallbacks(object : PageStateChangeCallbacks {
-            override fun onPageExpanded() {
-
-            }
-
             override fun onPageAboutToCollapse(collapseAnimDuration: Long) {
                 bottombar.animate()
                     .alpha(1.0f)
@@ -168,9 +167,9 @@ class DashboardActivity : BaseActivity() {
                     .start()
             }
 
-            override fun onPageCollapsed() {
+            override fun onPageExpanded() { }
 
-            }
+            override fun onPageCollapsed() { }
         })
     }
 

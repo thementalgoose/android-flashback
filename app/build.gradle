@@ -87,9 +87,13 @@ dependencies {
     implementation "org.koin:koin-android-viewmodel:$koin_version"
     implementation "org.koin:koin-android-ext:$koin_version"
 
+    // Progress bar
+    implementation 'com.aswin:CustomArc:1.0.2'
+
     // TMG dependencies
     implementation 'com.github.thementalgoose:android-components:2.0.0'
-    implementation 'com.github.thementalgoose:android-utilities:1.1.0'
+    implementation 'com.github.thementalgoose:android-utilities:1.1.1'
+    implementation 'com.github.thementalgoose:android-labelled-progress-bar:1.0.1'
 
     // ViewPager2
     implementation "androidx.viewpager2:viewpager2:1.0.0"
@@ -110,8 +114,8 @@ dependencies {
     // BugShaker
     implementation 'com.github.stkent:bugshaker:1.4.1'
 
-    // Labelled Progress Bar
-    implementation 'com.github.thementalgoose:android-labelled-progress-bar:1.0.0'
+    // Indicator scroller
+    implementation 'com.reddit:indicator-fast-scroll:1.3.0'
 
     // Lottie
     implementation 'com.airbnb.android:lottie:3.4.0'

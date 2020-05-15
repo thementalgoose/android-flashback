@@ -66,16 +66,24 @@
         <item name="android:fontFamily">@font/opensans</item>
         <item name="android:textStyle">bold</item>
     </style>
+    <style name="Text.Dashboard.Header.Subtitle" parent="Text">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/opensans</item>
+        <item name="android:textColor">?attr/f1TextSecondary</item>
+    </style>
 
     <style name="Text.Dashboard.Year" parent="Text">
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:fontFamily">@font/opensans</item>
+        <item name="android:textStyle">bold</item>
     </style>
     <style name="Text.Dashboard.Icon" parent="Text">
         <item name="android:textSize">14sp</item>
         <item name="android:textStyle">bold</item>
     </style>
-    <style name="Text.Dashboard.TrackCount" parent="Text">
+    <style name="Text.Dashboard.Subtitles" parent="Text">
         <item name="android:textSize">12sp</item>
+        <item name="android:textColor">?attr/f1TextSecondary</item>
     </style>
 
     <!-- Dashboard - Menu -->
