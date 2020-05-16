@@ -5,21 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/tvTitle"
-        style="@style/Text.Dashboard.Header"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/paddingVLarge"
-        android:paddingStart="@dimen/paddingMedium"
-        android:paddingTop="@dimen/paddingSmall"
-        android:paddingEnd="@dimen/paddingMedium"
-        android:paddingBottom="@dimen/paddingSmall"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="2019" />
-
     <ImageButton
         android:id="@+id/ibtnClose"
         android:layout_width="wrap_content"
@@ -33,5 +18,58 @@
         android:src="@drawable/ic_icon_close"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        style="@style/Text.Dashboard.Header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/paddingVLarge"
+        android:paddingStart="@dimen/paddingMedium"
+        android:paddingTop="@dimen/paddingSmall"
+        android:paddingEnd="@dimen/paddingMedium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="2019" />
+
+    <TextView
+        android:id="@+id/season"
+        style="@style/Text.Dashboard.Subtitles"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:paddingStart="@dimen/paddingMedium"
+        android:paddingEnd="@dimen/paddingMedium"
+        app:layout_constraintEnd_toEndOf="@id/tvTitle"
+        app:layout_constraintStart_toStartOf="@id/tvTitle"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        tools:text="Formula 1's 70th season" />
+
+    <TextView
+        android:id="@+id/races"
+        style="@style/Text.Dashboard.Subtitles"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:paddingStart="@dimen/paddingMedium"
+        android:paddingEnd="@dimen/paddingMedium"
+        app:layout_constraintEnd_toEndOf="@id/tvTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/season"
+        tools:text="21 races completed" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/pill"
+        android:layout_width="24dp"
+        android:layout_height="4dp"
+        android:layout_marginStart="@dimen/paddingMedium"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="@dimen/paddingSmall"
+        app:cardCornerRadius="4dp"
+        app:cardElevation="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/races" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -116,7 +116,7 @@ class DashboardViewModel(
         .map { historyList ->
             historyList.map { history ->
                 val list: MutableList<DashboardSeasonAdapterItem> = mutableListOf()
-                list.add(DashboardSeasonAdapterItem.Header(history.season))
+                list.add(DashboardSeasonAdapterItem.Header(history.season, (history.season - minimumSupportedYear) + 1, history.rounds.size))
                 list.addAll(history.rounds
                     .filter { it.season <= currentYear }
                     .map {

@@ -7,7 +7,9 @@ sealed class DashboardSeasonAdapterItem(
     val viewType: DashboardSeasonViewType
 ) {
     data class Header(
-        val year: Int
+        val year: Int,
+        val season: Int,
+        val raceRound: Int
     ) : DashboardSeasonAdapterItem(HEADER) {
         override fun equals(other: Any?) = other is Header
         override fun hashCode(): Int = 37
