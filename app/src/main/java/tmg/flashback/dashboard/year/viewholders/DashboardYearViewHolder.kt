@@ -50,7 +50,7 @@ class DashboardYearViewHolder(
 
         itemView.arcView.backgroundColour = itemView.context.theme.getColor(R.attr.f1BackgroundPrimary)
         itemView.arcView.barColour = lighten(itemView.context.theme.getColor(R.attr.colorPrimary))
-        itemView.arcView.animateProgress(1.0f)
+        itemView.arcView.animateProgress(season.completed.toFloat() / (season.scheduled.toFloat() + season.completed.toFloat()))
     }
 
     override fun onClick(p0: View?) {
