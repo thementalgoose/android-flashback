@@ -124,8 +124,9 @@ class DashboardViewModel(
                             season = it.season,
                             round = it.round,
                             date = it.date,
+                            raceName = it.raceName,
                             circuitId = it.circuitId,
-                            trackName = it.raceName,
+                            trackName = it.circuitName,
                             trackNationality = it.country,
                             trackISO = it.countryISO
                         )

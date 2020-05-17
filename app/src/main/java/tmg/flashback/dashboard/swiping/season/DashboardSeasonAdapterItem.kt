@@ -1,6 +1,8 @@
 package tmg.flashback.dashboard.swiping.season
 
+import androidx.core.graphics.toColorInt
 import org.threeten.bp.LocalDate
+import tmg.flashback.colours
 import tmg.flashback.dashboard.swiping.season.DashboardSeasonViewType.*
 
 sealed class DashboardSeasonAdapterItem(
@@ -20,6 +22,7 @@ sealed class DashboardSeasonAdapterItem(
         val round: Int,
         val date: LocalDate,
         val circuitId: String,
+        val raceName: String,
         val trackName: String,
         val trackNationality: String,
         val trackISO: String

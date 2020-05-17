@@ -39,6 +39,7 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
 
     private var initialCountry: String = ""
     private var initialCountryISO: String = ""
+    private var initialRaceName: String = ""
     private var initialTrackName: String = ""
     private var initialDate: LocalDate? = null
 
@@ -48,6 +49,7 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
         private const val keyRound: String = "round"
 
         private const val keyCountry: String = "keyCountry"
+        private const val keyRaceName: String = "keyRaceName"
         private const val keyTrackName: String = "keyTrackName"
         private const val keyCountryISO: String = "keyCountryISO"
         private const val keyDate: String = "keyDate"
@@ -57,6 +59,7 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
                 putExtra(keySeason, trackModel.season)
                 putExtra(keyRound, trackModel.round)
                 putExtra(keyTrackName, trackModel.trackName)
+                putExtra(keyRaceName, trackModel.raceName)
                 putExtra(keyCountry, trackModel.trackNationality)
                 putExtra(keyCountryISO, trackModel.trackISO)
                 putExtra(keyDate, trackModel.date.format(DateTimeFormatter.ofPattern(dateFormat)))
@@ -68,6 +71,7 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
             season: Int,
             round: Int,
             country: String? = null,
+            raceName: String? = null,
             trackName: String? = null,
             countryISO: String? = null,
             date: String? = null
@@ -76,6 +80,7 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
                 putExtra(keySeason, season)
                 putExtra(keyRound, round)
                 putExtra(keyCountry, country)
+                putExtra(keyRaceName, raceName)
                 putExtra(keyTrackName, trackName)
                 putExtra(keyCountryISO, countryISO)
                 putExtra(keyDate, date)
@@ -93,6 +98,7 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
 
         initialCountry = bundle.getString(keyCountry, "")
         initialCountryISO = bundle.getString(keyCountryISO, "")
+        initialRaceName = bundle.getString(keyRaceName, "")
         initialTrackName = bundle.getString(keyTrackName, "")
         val date = bundle.getString(keyDate, "")
         if (date.isNotEmpty()) {
@@ -114,8 +120,8 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
         notFound.alpha = 0.0f
         networkError.alpha = 0.0f
 
-        toolbarLayout.header.text = initialCountry
-        tvCircuitName.text = initialTrackName
+        toolbarLayout.header.text = initialRaceName
+        tvCircuitName.text = "$initialTrackName\n$initialCountry"
         if (initialCountryISO.isNotEmpty()) {
             imgCountry.setImageResource(getFlagResourceAlpha3(initialCountryISO))
         }
@@ -162,8 +168,8 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
 
         observe(viewModel.outputs.circuitInfo) {
             imgCountry.setImageResource(getFlagResourceAlpha3(it.circuit.countryISO))
-            tvCircuitName.text = it.circuit.name
-            toolbarLayout.header.text = it.circuit.country
+            tvCircuitName.text = "${it.circuit.name}\n${it.circuit.country}"
+            toolbarLayout.header.text = it.name
             tvDate.text = it.date.format(DateTimeFormatter.ofPattern("dd MMMM"))
         }
 

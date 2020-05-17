@@ -51,6 +51,7 @@ class DashboardSeasonViewModel(
                     it.round,
                     it.date,
                     it.circuitId,
+                    it.raceName,
                     it.circuitName,
                     it.country,
                     it.countryISO

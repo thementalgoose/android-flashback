@@ -22,7 +22,7 @@ class DashboardSeasonTrackViewHolder(
     fun bind(item: DashboardSeasonAdapterItem.Track) {
         seasonRound = item
         itemView.tvCountry.text = item.trackNationality
-        itemView.tvRaceName.text = item.trackName
+        itemView.tvRaceName.text = item.raceName
         itemView.imgCountry.setImageResource(itemView.context.getFlagResourceAlpha3(item.trackISO))
         itemView.tvRound.text = itemView.context.getString(R.string.race_round, item.round)
         itemView.tvDate.text = item.date.format(DateTimeFormatter.ofPattern("dd MMMM"))

@@ -37,8 +37,7 @@ class DashboardYearViewHolder(
         val countdown = ((season.year - minimumSupportedYear) + 1)
         itemView.season.text = itemView.context.getString(R.string.dashboard_season_th, countdown.toString()).fromHtml()
 
-        val (light, dark) = colours.random()
-        itemView.pill.setBackgroundColor(dark.toColorInt())
+        itemView.pill.setBackgroundColor(season.colour)
 
         itemView.arcView.backgroundColour = itemView.context.theme.getColor(R.attr.f1BackgroundPrimary)
         itemView.arcView.barColour = lighten(itemView.context.theme.getColor(R.attr.colorPrimary))
