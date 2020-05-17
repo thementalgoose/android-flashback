@@ -76,7 +76,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.2.0-alpha06'
 
     // ConstraintLayout
-    implementation "androidx.constraintlayout:constraintlayout:2.0.0-beta5"
+    implementation "androidx.constraintlayout:constraintlayout:2.0.0-beta6"
 
     // Circle Image View
     implementation 'com.mikhaellopez:circularimageview:4.2.0'
@@ -91,7 +91,7 @@ dependencies {
     implementation 'com.aswin:CustomArc:1.0.2'
 
     // TMG dependencies
-    implementation 'com.github.thementalgoose:android-components:2.0.0'
+    implementation 'com.github.thementalgoose:android-components:2.0.1'
     implementation 'com.github.thementalgoose:android-utilities:1.1.1'
     implementation 'com.github.thementalgoose:android-labelled-progress-bar:1.0.1'
 

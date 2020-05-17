@@ -13,7 +13,8 @@
         <br/>• Overhauled UI for viewing the history of F1
         <br/>• Flashback now supports all races from 1950 to 2019
         <br/>• See a breakdown of the constructor standings per race
-        <br/>• Fixed some blank spaces in 2017 race data]]></string>
+        <br/>• Fixed some blank spaces in 2017 race data
+        <br/>• Updated components to 2.0.1]]></string>
 
     <!-- Planning -->
     <string name="planned_0">Season overview</string>
