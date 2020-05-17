@@ -9,6 +9,11 @@
     <string name="release_2"><![CDATA[<b>1.0.2</b> - Tidying up
         <br/>• Changed app flow to default to the season overview screens rather than the 2019 season
         <br/>• Changed theme throughout so it can be more customisable down the road]]></string>
+    <string name="release_4"><![CDATA[<b>2.0.0</b> - Back to the beginning
+        <br/>• Overhauled UI for viewing the history of F1
+        <br/>• Flashback now supports all races from 1950 to 2019
+        <br/>• See a breakdown of the constructor standings per race
+        <br/>• Fixed some blank spaces in 2017 race data]]></string>
 
     <!-- Planning -->
     <string name="planned_0">Season overview</string>
