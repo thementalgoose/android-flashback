@@ -1,5 +1,6 @@
 package tmg.flashback.settings.planned
 
+import android.os.Bundle
 import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_planned.*
@@ -14,7 +15,8 @@ class PlannedActivity: BaseActivity() {
 
     override fun layoutId(): Int = R.layout.activity_planned
 
-    override fun initViews() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
         initToolbar(R.id.toolbar, true, R.drawable.ic_back)
 

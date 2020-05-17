@@ -1,6 +1,7 @@
 package tmg.flashback.settings
 
 import android.content.Intent
+import android.os.Bundle
 import android.view.MenuItem
 import android.widget.LinearLayout
 import android.widget.Toast
@@ -32,7 +33,8 @@ class SettingsActivity : BaseActivity() {
 
     override fun layoutId(): Int = R.layout.activity_settings
 
-    override fun initViews() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
         setupSettings()
         setupBottomSheet()

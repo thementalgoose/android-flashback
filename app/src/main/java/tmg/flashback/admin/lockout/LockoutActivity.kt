@@ -1,6 +1,7 @@
 package tmg.flashback.admin.lockout
 
 import android.content.Intent
+import android.os.Bundle
 import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_lockout.*
 import kotlinx.android.synthetic.main.toolbar.view.*
@@ -18,7 +19,8 @@ class LockoutActivity: BaseActivity() {
 
     override fun layoutId(): Int = R.layout.activity_lockout
 
-    override fun initViews() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
         initToolbar(R.id.toolbar, true, R.drawable.ic_back)
         toolbarLayout.header.text = getString(R.string.app_lockout_title)

@@ -26,7 +26,6 @@ class DashboardSeasonFragment: BaseFragment() {
     }
 
     override fun initViews() {
-
         adapter = DashboardSeasonAdapter(
             itemClickedCallback = viewModel.inputs::clickRace,
             listClosed = {

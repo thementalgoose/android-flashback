@@ -1,5 +1,6 @@
 package tmg.flashback.settings.release
 
+import android.os.Bundle
 import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_release_notes.*
 import kotlinx.android.synthetic.main.toolbar.view.*
@@ -13,7 +14,8 @@ class ReleaseActivity : BaseActivity() {
 
     override fun layoutId(): Int = R.layout.activity_release_notes
 
-    override fun initViews() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
         initToolbar(R.id.toolbar, true, indicator = R.drawable.ic_back)
         toolbarLayout.header.text = getString(R.string.settings_help_release_notes_title)
