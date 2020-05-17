@@ -26,11 +26,6 @@ interface PrefsDB {
     var showDriversBehindConstructor: Boolean
 
     /**
-     * Currently selected year that the app will display when it is opened
-     */
-    var selectedYear: Int
-
-    /**
      * Automatic crash reporting functionality
      */
     var crashReporting: Boolean

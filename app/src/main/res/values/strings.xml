@@ -109,10 +109,7 @@
     <string name="dashboard_menu_drivers">Drivers championship standings</string>
     <string name="dashboard_menu_constructors">Constructors standings</string>
 
-    <string name="dashboard_season_st"><![CDATA[Formula 1\'s <b>%sst</b> season]]></string>
-    <string name="dashboard_season_nd"><![CDATA[Formula 1\'s <b>%snd</b> season]]></string>
-    <string name="dashboard_season_rd"><![CDATA[Formula 1\'s <b>%srd</b> season]]></string>
-    <string name="dashboard_season_th"><![CDATA[Formula 1\'s <b>%sth</b> season]]></string>
+    <string name="dashboard_season"><![CDATA[Formula 1\'s <b>%s</b> season]]></string>
 
     <string name="dashboard_race_completed"><![CDATA[<b>%s</b> races completed]]></string>
     <string name="dashboard_race_not_started"><![CDATA[<b>%s</b> races scheduled]]></string>

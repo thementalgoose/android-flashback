@@ -21,7 +21,7 @@ import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.R
 import tmg.flashback.base.BaseActivity
-import tmg.flashback.dashboard.swiping.season.DashboardSeasonAdapterItem
+import tmg.flashback.dashboard.season.DashboardSeasonAdapterItem
 import tmg.flashback.race.RaceDisplayMode.*
 import tmg.flashback.utils.getColor
 import tmg.flashback.utils.getFlagResourceAlpha3

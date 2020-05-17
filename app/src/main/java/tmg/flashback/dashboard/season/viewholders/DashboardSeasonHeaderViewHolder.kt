@@ -1,10 +1,11 @@
-package tmg.flashback.dashboard.swiping.season.viewholders
+package tmg.flashback.dashboard.season.viewholders
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.view_dashboard_season_header.view.*
 import tmg.flashback.R
-import tmg.flashback.dashboard.swiping.season.DashboardSeasonAdapterItem
+import tmg.flashback.dashboard.season.DashboardSeasonAdapterItem
+import tmg.flashback.extensions.ordinalAbbreviation
 import tmg.utilities.extensions.fromHtml
 
 class DashboardSeasonHeaderViewHolder(
@@ -19,7 +20,7 @@ class DashboardSeasonHeaderViewHolder(
     fun bind(item: DashboardSeasonAdapterItem.Header) {
 
         itemView.tvTitle.text = item.year.toString()
-        itemView.season.text = itemView.context.getString(R.string.dashboard_season_th, item.season.toString()).fromHtml()
+        itemView.season.text = itemView.context.getString(R.string.dashboard_season, item.season.ordinalAbbreviation).fromHtml()
         itemView.races.text = itemView.context.getString(R.string.dashboard_race_completed, item.raceRound.toString()).fromHtml()
 
 //        itemView.pill.setBackgroundColor()

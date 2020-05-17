@@ -8,8 +8,11 @@ import tmg.flashback.colours
 sealed class DashboardYearItem {
     data class Season(
         val year: Int,
-        val numberOfRaces: Int? = null
+        val completed: Int,
+        val scheduled: Int
     ): DashboardYearItem() {
+        val numberOfRaces: Int
+            get() = completed + scheduled
         val colour: Int = colours.random().second.toColorInt()
     }
 

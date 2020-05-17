@@ -1,11 +1,11 @@
-package tmg.flashback.dashboard.swiping.season.viewholders
+package tmg.flashback.dashboard.season.viewholders
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.view_dashboard_season_track.view.*
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.R
-import tmg.flashback.dashboard.swiping.season.DashboardSeasonAdapterItem
+import tmg.flashback.dashboard.season.DashboardSeasonAdapterItem
 import tmg.flashback.utils.getFlagResourceAlpha3
 
 class DashboardSeasonTrackViewHolder(

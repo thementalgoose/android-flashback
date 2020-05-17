@@ -1,4 +1,4 @@
-package tmg.flashback.dashboard.swiping.season
+package tmg.flashback.dashboard.season
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -34,7 +34,9 @@ interface DashboardSeasonViewModelOutputs {
 
 class DashboardSeasonViewModel(
     private val historyDB: HistoryDB
-): BaseViewModel(), DashboardSeasonViewModelInputs, DashboardSeasonViewModelOutputs {
+): BaseViewModel(),
+    DashboardSeasonViewModelInputs,
+    DashboardSeasonViewModelOutputs {
 
     var inputs: DashboardSeasonViewModelInputs = this
     var outputs: DashboardSeasonViewModelOutputs = this

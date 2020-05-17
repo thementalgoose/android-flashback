@@ -4,8 +4,7 @@ import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import tmg.flashback.admin.lockout.LockoutViewModel
 import tmg.flashback.dashboard.DashboardViewModel
-import tmg.flashback.dashboard.swiping.DashboardSwipingViewModel
-import tmg.flashback.dashboard.swiping.season.DashboardSeasonViewModel
+import tmg.flashback.dashboard.season.DashboardSeasonViewModel
 import tmg.flashback.gallery.GalleryViewModel
 import tmg.flashback.prefs.SharedPrefsDB
 import tmg.flashback.race.RaceViewModel
@@ -21,7 +20,6 @@ import tmg.flashback.settings.SettingsViewModel
 
 var flashbackModule = module {
 
-    viewModel { DashboardSwipingViewModel(get(), get()) }
     viewModel { DashboardSeasonViewModel(get()) }
     viewModel { DashboardViewModel(get(), get(), get()) }
 

@@ -1,4 +1,4 @@
-package tmg.flashback.dashboard.swiping.season
+package tmg.flashback.dashboard.season
 
 import android.os.Bundle
 import android.util.Log
@@ -59,7 +59,8 @@ class DashboardSeasonFragment: BaseFragment() {
         private const val keySeason: String = "season"
 
         fun instance(season: Int): DashboardSeasonFragment {
-            val instance: DashboardSeasonFragment = DashboardSeasonFragment()
+            val instance: DashboardSeasonFragment =
+                DashboardSeasonFragment()
             instance.arguments = Bundle().apply {
                 putInt(keySeason, season)
             }

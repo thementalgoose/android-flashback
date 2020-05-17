@@ -7,7 +7,6 @@ import android.view.MenuItem
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.reddit.indicatorfastscroll.FastScrollItemIndicator
 import kotlinx.android.synthetic.main.activity_dashboard.*
 import kotlinx.android.synthetic.main.bottom_sheet_view_type.*
 import kotlinx.android.synthetic.main.view_bottom_sheet_item.*
@@ -19,8 +18,7 @@ import tmg.flashback.BuildConfig
 import tmg.flashback.R
 import tmg.flashback.admin.lockout.LockoutActivity
 import tmg.flashback.base.BaseActivity
-import tmg.flashback.currentYear
-import tmg.flashback.dashboard.swiping.season.DashboardSeasonAdapter
+import tmg.flashback.dashboard.season.DashboardSeasonAdapter
 import tmg.flashback.dashboard.year.DashboardMenuItem
 import tmg.flashback.dashboard.year.DashboardYearAdapter
 import tmg.flashback.dashboard.year.DashboardYearItem
@@ -85,11 +83,6 @@ class DashboardActivity : BaseActivity() {
         observeEvent(viewModel.outputs.showReleaseNotes) {
             val instance = ReleaseBottomSheetFragment()
             instance.show(supportFragmentManager, "Release Notes")
-        }
-
-        observeEvent(viewModel.outputs.showAppBanner) {
-            // TODO: Move this over to something inline
-//            it.message?.showAsSnackbar(irvMain)
         }
     }
 

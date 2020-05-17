@@ -4,8 +4,7 @@ import androidx.lifecycle.*
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.*
 import tmg.flashback.base.BaseViewModel
-import tmg.flashback.currentYear
-import tmg.flashback.dashboard.swiping.season.DashboardSeasonAdapterItem
+import tmg.flashback.dashboard.season.DashboardSeasonAdapterItem
 import tmg.flashback.dashboard.year.DashboardMenuItem
 import tmg.flashback.dashboard.year.DashboardYearItem
 import tmg.flashback.minimumSupportedYear
@@ -42,7 +41,6 @@ interface DashboardViewModelOutputs {
     val openMenu: MutableLiveData<Event>
     val openSettings: MutableLiveData<Event>
 
-    val showAppBanner: LiveData<DataEvent<AppBanner>>
     val showAppLockoutMessage: LiveData<DataEvent<AppLockout>>
     val showReleaseNotes: LiveData<Event>
 }
@@ -55,7 +53,7 @@ class DashboardViewModel(
     prefsDB: PrefsDB
 ) : BaseViewModel(), DashboardViewModelInputs, DashboardViewModelOutputs {
 
-    private val selectedSeason: ConflatedBroadcastChannel<Int> = ConflatedBroadcastChannel(currentYear)
+    private val selectedSeason: ConflatedBroadcastChannel<Int> = ConflatedBroadcastChannel()
     private val selectedMenuItem: ConflatedBroadcastChannel<DashboardMenuItem> = ConflatedBroadcastChannel(DashboardMenuItem.TRACK_LIST)
     private val historyFlow: Flow<List<History>> = historyDB.allHistory()
 
@@ -68,7 +66,7 @@ class DashboardViewModel(
         .map { DataEvent(it!!) }
         .asLiveData(viewModelScope.coroutineContext)
 
-    override val showAppBanner: LiveData<DataEvent<AppBanner>> = dataDB
+    private val showAppBanner: LiveData<DataEvent<AppBanner>> = dataDB
         .appBanner()
         .filter { it != null && it.show }
         .map { DataEvent(it!!) }
@@ -102,8 +100,7 @@ class DashboardViewModel(
                 itemList.add(DashboardYearItem.Banner(banner.message ?: ""))
             }
             itemList.addAll(list
-                .filter { it.season <= currentYear }
-                .map { DashboardYearItem.Season(it.season, it.rounds.size) }
+                .map { DashboardYearItem.Season(it.season, it.completed, it.upcoming) }
                 .sortedByDescending { it.year })
             itemList
         }
@@ -118,7 +115,6 @@ class DashboardViewModel(
                 val list: MutableList<DashboardSeasonAdapterItem> = mutableListOf()
                 list.add(DashboardSeasonAdapterItem.Header(history.season, (history.season - minimumSupportedYear) + 1, history.rounds.size))
                 list.addAll(history.rounds
-                    .filter { it.season <= currentYear }
                     .map {
                         DashboardSeasonAdapterItem.Track(
                             season = it.season,

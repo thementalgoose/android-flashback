@@ -1,15 +1,15 @@
-package tmg.flashback.dashboard.swiping.season
+package tmg.flashback.dashboard.season
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.R
-import tmg.flashback.dashboard.swiping.season.DashboardSeasonViewType.*
-import tmg.flashback.dashboard.swiping.season.viewholders.DashboardSeasonConstructorViewHolder
-import tmg.flashback.dashboard.swiping.season.viewholders.DashboardSeasonDriversViewHolder
-import tmg.flashback.dashboard.swiping.season.viewholders.DashboardSeasonHeaderViewHolder
-import tmg.flashback.dashboard.swiping.season.viewholders.DashboardSeasonTrackViewHolder
+import tmg.flashback.dashboard.season.DashboardSeasonViewType.*
+import tmg.flashback.dashboard.season.viewholders.DashboardSeasonConstructorViewHolder
+import tmg.flashback.dashboard.season.viewholders.DashboardSeasonDriversViewHolder
+import tmg.flashback.dashboard.season.viewholders.DashboardSeasonHeaderViewHolder
+import tmg.flashback.dashboard.season.viewholders.DashboardSeasonTrackViewHolder
 import tmg.utilities.extensions.toEnum
 
 class DashboardSeasonAdapter(

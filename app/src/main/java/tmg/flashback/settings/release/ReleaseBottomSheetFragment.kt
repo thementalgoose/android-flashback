@@ -24,6 +24,7 @@ class ReleaseBottomSheetFragment: BaseBottomSheetFragment() {
         val list = releaseNotes
             .filterKeys { it > prefsDB.lastAppVersion }
             .toList()
+            .reversed()
             .sortedBy { it.first }
             .map { it.second }
 

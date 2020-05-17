@@ -5,7 +5,14 @@ import org.threeten.bp.LocalDate
 data class History(
     val season: Int,
     val rounds: List<HistoryRound>
-)
+) {
+    val completed: Int
+        get() = rounds.count { it.date < LocalDate.now() }
+    val upcoming: Int
+        get() = rounds.count { it.date >= LocalDate.now() }
+    val scheduledToday: Int
+        get() = rounds.count { it.date == LocalDate.now() }
+}
 
 data class HistoryRound(
     val date: LocalDate,

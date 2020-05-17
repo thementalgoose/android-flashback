@@ -1,9 +1,7 @@
-package tmg.flashback.dashboard.swiping.season
+package tmg.flashback.dashboard.season
 
-import androidx.core.graphics.toColorInt
 import org.threeten.bp.LocalDate
-import tmg.flashback.colours
-import tmg.flashback.dashboard.swiping.season.DashboardSeasonViewType.*
+import tmg.flashback.dashboard.season.DashboardSeasonViewType.*
 
 sealed class DashboardSeasonAdapterItem(
     val viewType: DashboardSeasonViewType

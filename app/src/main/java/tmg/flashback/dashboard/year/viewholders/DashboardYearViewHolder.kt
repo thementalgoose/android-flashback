@@ -7,6 +7,7 @@ import kotlinx.android.synthetic.main.view_dashboard_year.view.*
 import tmg.flashback.R
 import tmg.flashback.colours
 import tmg.flashback.dashboard.year.DashboardYearItem
+import tmg.flashback.extensions.ordinalAbbreviation
 import tmg.flashback.minimumSupportedYear
 import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.getColor
@@ -30,12 +31,20 @@ class DashboardYearViewHolder(
         this.itemPosId = itemId
         val year: String = season.year.toString()
         itemView.year.text = year
-        season.numberOfRaces?.let {
-            itemView.races.text = itemView.context.getString(R.string.dashboard_race_completed, it.toString()).fromHtml()
+        when {
+            season.scheduled == 0 -> {
+                itemView.races.text = itemView.context.getString(R.string.dashboard_race_completed, season.completed.toString()).fromHtml()
+            }
+            season.scheduled != 0 && season.completed != 0 -> {
+                itemView.races.text = itemView.context.getString(R.string.dashboard_race_mid, season.completed.toString(), season.scheduled.toString()).fromHtml()
+            }
+            else -> {
+                itemView.races.text = itemView.context.getString(R.string.dashboard_race_not_started, season.scheduled.toString()).fromHtml()
+            }
         }
 
         val countdown = ((season.year - minimumSupportedYear) + 1)
-        itemView.season.text = itemView.context.getString(R.string.dashboard_season_th, countdown.toString()).fromHtml()
+        itemView.season.text = itemView.context.getString(R.string.dashboard_season, countdown.ordinalAbbreviation).fromHtml()
 
         itemView.pill.setBackgroundColor(season.colour)
 

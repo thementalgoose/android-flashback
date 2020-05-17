@@ -2,7 +2,6 @@ package tmg.flashback.prefs
 
 import android.content.Context
 import tmg.flashback.BuildConfig
-import tmg.flashback.currentYear
 import tmg.flashback.releaseNotes
 import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.enums.ThemePref
@@ -33,10 +32,6 @@ class SharedPrefsDB(context: Context): SharedPrefManager(context), PrefsDB {
     override var theme: ThemePref
         get() = getString(keyTheme)?.toEnum<ThemePref> { it.key } ?: ThemePref.AUTO
         set(value) = save(keyTheme, value.key)
-
-    override var selectedYear: Int
-        get() = getInt(keySelectedYear, currentYear)
-        set(value) = save(keySelectedYear, value)
 
     override var showQualifyingDelta: Boolean
         get() = getBoolean(keyShowQualifyingDelta, defaultShowQualifying)
