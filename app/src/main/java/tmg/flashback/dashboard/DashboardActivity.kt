@@ -25,9 +25,11 @@ import tmg.flashback.dashboard.year.DashboardYearItem
 import tmg.flashback.race.RaceActivity
 import tmg.flashback.settings.SettingsActivity
 import tmg.flashback.settings.release.ReleaseBottomSheetFragment
+import tmg.flashback.utils.AnimatorListener
 import tmg.flashback.utils.bottomsheet.BottomSheetAdapter
 import tmg.utilities.bottomsheet.BottomSheetFader
 import tmg.utilities.extensions.*
+import tmg.utilities.extensions.views.show
 
 class DashboardActivity : BaseActivity() {
 
@@ -147,23 +149,44 @@ class DashboardActivity : BaseActivity() {
 
         eplMain.addStateChangeCallbacks(object : PageStateChangeCallbacks {
             override fun onPageAboutToCollapse(collapseAnimDuration: Long) {
-                bottombar.animate()
-                    .alpha(1.0f)
-                    .setDuration(collapseAnimDuration)
-                    .start()
+                animateBottomBarIn(collapseAnimDuration)
             }
 
             override fun onPageAboutToExpand(expandAnimDuration: Long) {
-                bottombar.animate()
-                    .alpha(0.0f)
-                    .setDuration(expandAnimDuration)
-                    .start()
+                animateBottomBarOut(expandAnimDuration)
             }
 
             override fun onPageExpanded() { }
 
             override fun onPageCollapsed() { }
         })
+    }
+
+    private fun animateBottomBarIn(duration: Long) {
+        bottombar.animate()
+            .alpha(1.0f)
+            .setDuration(duration)
+            .setListener(AnimatorListener(
+                start = {
+                    bottombar.show(true)
+                }
+            ))
+            .start()
+    }
+
+    private fun animateBottomBarOut(duration: Long) {
+        bottombar.animate()
+            .alpha(0.0f)
+            .setDuration(duration)
+            .setListener(AnimatorListener(
+                start = {
+                    bottombar.show(true)
+                },
+                end = {
+                    bottombar.show(false)
+                }
+            ))
+            .start()
     }
 
     private fun setupBottomSheetMenu() {
