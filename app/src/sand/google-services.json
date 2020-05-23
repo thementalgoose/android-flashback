@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "342122976517",
+    "firebase_url": "https://f1stats-sand.firebaseio.com",
+    "project_id": "f1stats-sand",
+    "storage_bucket": "f1stats-sand.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:342122976517:android:5619cd0b4611314e18936c",
+        "android_client_info": {
+          "package_name": "tmg.flashback.sand"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "342122976517-jas203co1266dsk4uqfqc4ojvb0apufo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXcMHz6NWbJ11xqt7aDO7Q0pcZrViIxlo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "342122976517-jas203co1266dsk4uqfqc4ojvb0apufo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
