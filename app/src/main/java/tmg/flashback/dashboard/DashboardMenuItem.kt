@@ -1,4 +1,4 @@
-package tmg.flashback.dashboard.year
+package tmg.flashback.dashboard
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
@@ -9,6 +9,6 @@ enum class DashboardMenuItem(
     @StringRes val msg: Int
 ) {
     TRACK_LIST(R.drawable.ic_menu_tracks, R.string.dashboard_menu_track_list);
-//    DRIVERS_CHAMPIONSHIP(R.drawable.ic_menu_drivers, R.string.dashboard_menu_drivers),
-//    CONSTRUCTORS_CHAMPIONSHIP(R.drawable.ic_menu_constructors, R.string.dashboard_menu_constructors)
+//    DRIVERS_CHAMPIONSHIP(R.drawable.ic_menu_drivers, R.string.dashboard_menu_drivers);
+//    CONSTRUCTORS_CHAMPIONSHIP(R.drawable.ic_menu_constructors, R.string.dashboard_menu_constructors);
 }

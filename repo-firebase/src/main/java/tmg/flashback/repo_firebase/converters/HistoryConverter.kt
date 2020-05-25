@@ -1,13 +1,15 @@
 package tmg.flashback.repo_firebase.converters
 
+import androidx.core.graphics.toColorInt
 import tmg.flashback.repo.models.History
 import tmg.flashback.repo.models.HistoryRound
-import tmg.flashback.repo_firebase.models.FHistorySeason
-import tmg.flashback.repo_firebase.models.FHistorySeasonRound
+import tmg.flashback.repo.models.HistoryWinConstructor
+import tmg.flashback.repo.models.HistoryWinDriver
+import tmg.flashback.repo_firebase.models.*
 
 fun FHistorySeason.convert(): List<History> {
     val list: MutableList<History> = mutableListOf()
-    for ((_, rounds) in this.all) {
+    for ((key, rounds) in this.all) {
         var season: Int = -1
         val historyRounds = rounds
             .mapValues { (_, round) ->
@@ -18,7 +20,13 @@ fun FHistorySeason.convert(): List<History> {
             .sortedBy { it.round }
 
         if (season != -1) {
-            list.add(History(season, historyRounds))
+            val (constructors, drivers) = this.win?.get(key)?.convert() ?: Pair(null, emptyList())
+            list.add(History(
+                season = season,
+                rounds = historyRounds,
+                driversChampion = drivers,
+                constructorsChampion = constructors
+            ))
         }
     }
     return list
@@ -37,5 +45,30 @@ fun FHistorySeasonRound.convert(): Pair<Int, HistoryRound> {
             circuitName = this.circuit,
             hasResults = this.hasResults ?: false
         )
+    )
+}
+
+fun FHistorySeasonWin.convert(): Pair<HistoryWinConstructor?, List<HistoryWinDriver>> {
+    return Pair(
+        this.const?.convert(),
+        this.driver?.map { it.convert() } ?: emptyList()
+    )
+}
+
+fun FHistorySeasonWinDriver.convert(): HistoryWinDriver {
+    return HistoryWinDriver(
+        id = this.id,
+        name = this.name,
+        photoUrl = this.img,
+        points = this.p
+    )
+}
+
+fun FHistorySeasonWinConstructor.convert(): HistoryWinConstructor {
+    return HistoryWinConstructor(
+        id = this.id,
+        name = this.name,
+        color = this.color,
+        points = this.p
     )
 }

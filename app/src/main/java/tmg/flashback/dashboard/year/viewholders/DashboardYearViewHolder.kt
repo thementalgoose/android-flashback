@@ -48,7 +48,7 @@ class DashboardYearViewHolder(
 
         itemView.pill.setBackgroundColor(season.colour)
 
-        itemView.arcView.backgroundColour = itemView.context.theme.getColor(R.attr.f1BackgroundPrimary)
+        itemView.arcView.backgroundColour = itemView.context.theme.getColor(R.attr.f1BackgroundSecondary)
         itemView.arcView.barColour = lighten(itemView.context.theme.getColor(R.attr.colorPrimary))
         itemView.arcView.animateProgress(season.completed.toFloat() / (season.scheduled.toFloat() + season.completed.toFloat()))
     }

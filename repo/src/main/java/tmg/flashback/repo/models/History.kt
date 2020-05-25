@@ -4,7 +4,9 @@ import org.threeten.bp.LocalDate
 
 data class History(
     val season: Int,
-    val rounds: List<HistoryRound>
+    val rounds: List<HistoryRound>,
+    val driversChampion: List<HistoryWinDriver>,
+    val constructorsChampion: HistoryWinConstructor?
 ) {
     val completed: Int
         get() = rounds.count { it.date < LocalDate.now() }
@@ -24,4 +26,18 @@ data class HistoryRound(
     val country: String,
     val countryISO: String,
     val hasResults: Boolean
+)
+
+data class HistoryWinDriver(
+    val id: String,
+    val name: String,
+    val photoUrl: String,
+    val points: Int
+)
+
+data class HistoryWinConstructor(
+    val id: String,
+    val name: String,
+    val color: String,
+    val points: Int
 )
