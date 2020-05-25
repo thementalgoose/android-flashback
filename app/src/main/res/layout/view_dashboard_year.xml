@@ -52,6 +52,26 @@
         app:layout_constraintTop_toBottomOf="@id/season"
         tools:text="21 races completed" />
 
+<!--    <TextView-->
+<!--        android:id="@+id/drivers"-->
+<!--        style="@style/Text.Dashboard.Subtitles"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="2dp"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/races"-->
+<!--        tools:text="Drivers champion: Lewis Hamilton" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/constructors"-->
+<!--        style="@style/Text.Dashboard.Subtitles"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="2dp"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/drivers"-->
+<!--        tools:text="Constructors championship: " />-->
+
     <tmg.flashback.views.ArcView
         android:id="@+id/arcView"
         style="?android:attr/progressBarStyle"
