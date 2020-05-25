@@ -5,7 +5,6 @@ import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.*
 import tmg.flashback.base.BaseViewModel
 import tmg.flashback.dashboard.season.DashboardSeasonAdapterItem
-import tmg.flashback.dashboard.year.DashboardMenuItem
 import tmg.flashback.dashboard.year.DashboardYearItem
 import tmg.flashback.minimumSupportedYear
 import tmg.flashback.repo.db.DataDB
