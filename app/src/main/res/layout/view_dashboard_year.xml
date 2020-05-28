@@ -52,35 +52,51 @@
         app:layout_constraintTop_toBottomOf="@id/season"
         tools:text="21 races completed" />
 
-<!--    <TextView-->
-<!--        android:id="@+id/drivers"-->
-<!--        style="@style/Text.Dashboard.Subtitles"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="2dp"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/races"-->
-<!--        tools:text="Drivers champion: Lewis Hamilton" />-->
-
-<!--    <TextView-->
-<!--        android:id="@+id/constructors"-->
-<!--        style="@style/Text.Dashboard.Subtitles"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="2dp"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/drivers"-->
-<!--        tools:text="Constructors championship: " />-->
-
-    <tmg.flashback.views.ArcView
-        android:id="@+id/arcView"
-        style="?android:attr/progressBarStyle"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/constructorCard"
         android:layout_width="@dimen/dashboardYearIconSize"
         android:layout_height="@dimen/dashboardYearIconSize"
         android:layout_marginTop="@dimen/paddingSmall"
-        android:indeterminate="false"
-        app:av_barSize="4dp"
+        android:layout_marginEnd="2dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/constructorText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:lines="1"
+            android:maxLines="1" />
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/driverCard"
+        android:layout_width="@dimen/dashboardYearIconSize"
+        android:layout_height="@dimen/dashboardYearIconSize"
+        android:layout_marginTop="@dimen/paddingSmall"
+        android:layout_marginEnd="@dimen/paddingSmall"
+        app:layout_constraintEnd_toStartOf="@id/constructorCard"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/driverImg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop" />
+
+    </androidx.cardview.widget.CardView>
+
+    <tmg.labelledprogressbar.LabelledProgressBar
+        android:id="@+id/labelledBar"
+        android:layout_width="@dimen/dashboardProgressBarWidth"
+        android:layout_height="@dimen/dashboardProgressBarHeight"
+        android:layout_marginTop="@dimen/paddingSmall"
+        android:layout_marginEnd="2dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/driverCard"
+        app:lpb_radius="2dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

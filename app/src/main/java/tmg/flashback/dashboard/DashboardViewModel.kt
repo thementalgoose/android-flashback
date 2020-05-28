@@ -99,7 +99,7 @@ class DashboardViewModel(
                 itemList.add(DashboardYearItem.Banner(banner.message ?: ""))
             }
             itemList.addAll(list
-                .map { DashboardYearItem.Season(it.season, it.completed, it.upcoming) }
+                .map { DashboardYearItem.Season(it.season, it.completed, it.upcoming, it.driversChampion.firstOrNull(), it.constructorsChampion) }
                 .sortedByDescending { it.year })
             itemList
         }
