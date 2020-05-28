@@ -20,7 +20,7 @@ fun FHistorySeason.convert(): List<History> {
             .sortedBy { it.round }
 
         if (season != -1) {
-            val (constructors, drivers) = this.win?.get(key)?.convert() ?: Pair(null, emptyList())
+            val (constructors, drivers) = this.win?.get(key)?.convert() ?: Pair(emptyList(), emptyList())
             list.add(History(
                 season = season,
                 rounds = historyRounds,
@@ -48,9 +48,9 @@ fun FHistorySeasonRound.convert(): Pair<Int, HistoryRound> {
     )
 }
 
-fun FHistorySeasonWin.convert(): Pair<HistoryWinConstructor?, List<HistoryWinDriver>> {
+fun FHistorySeasonWin.convert(): Pair<List<HistoryWinConstructor>, List<HistoryWinDriver>> {
     return Pair(
-        this.const?.convert(),
+        this.constr?.map { it.convert() } ?: emptyList(),
         this.driver?.map { it.convert() } ?: emptyList()
     )
 }
