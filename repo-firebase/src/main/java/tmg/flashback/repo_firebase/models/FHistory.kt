@@ -19,7 +19,7 @@ data class FHistorySeasonRound(
 
 data class FHistorySeasonWin(
     val s: Int = 0, // Season
-    val const: FHistorySeasonWinConstructor? = null,
+    val constr: List<FHistorySeasonWinConstructor>? = emptyList(),
     val driver: List<FHistorySeasonWinDriver>? = emptyList()
 )
 

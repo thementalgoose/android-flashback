@@ -6,7 +6,7 @@ data class History(
     val season: Int,
     val rounds: List<HistoryRound>,
     val driversChampion: List<HistoryWinDriver>,
-    val constructorsChampion: HistoryWinConstructor?
+    val constructorsChampion: List<HistoryWinConstructor>
 ) {
     val completed: Int
         get() = rounds.count { it.date < LocalDate.now() }
