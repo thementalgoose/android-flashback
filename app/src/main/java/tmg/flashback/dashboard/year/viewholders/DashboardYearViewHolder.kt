@@ -50,6 +50,7 @@ class DashboardYearViewHolder(
 
         itemView.pill.setBackgroundColor(season.colour)
 
+        Glide.with(itemView.context).clear(itemView.driverImg)
         season.winnerDriver?.let {
             Glide.with(itemView.context)
                 .load(it.photoUrl)
