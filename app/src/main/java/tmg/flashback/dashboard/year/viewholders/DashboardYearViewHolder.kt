@@ -3,6 +3,7 @@ package tmg.flashback.dashboard.year.viewholders
 import android.view.View
 import androidx.core.graphics.toColorInt
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.view_dashboard_year.view.*
 import tmg.flashback.R
 import tmg.flashback.colours
@@ -11,6 +12,7 @@ import tmg.flashback.extensions.ordinalAbbreviation
 import tmg.flashback.minimumSupportedYear
 import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.getColor
+import tmg.utilities.extensions.views.show
 import tmg.utilities.utils.ColorUtils
 import tmg.utilities.utils.ColorUtils.Companion.lighten
 
@@ -48,9 +50,19 @@ class DashboardYearViewHolder(
 
         itemView.pill.setBackgroundColor(season.colour)
 
-        itemView.arcView.backgroundColour = itemView.context.theme.getColor(R.attr.f1BackgroundSecondary)
-        itemView.arcView.barColour = lighten(itemView.context.theme.getColor(R.attr.colorPrimary))
-        itemView.arcView.animateProgress(season.completed.toFloat() / (season.scheduled.toFloat() + season.completed.toFloat()))
+        season.winnerDriver?.let {
+            Glide.with(itemView.context)
+                .load(it.photoUrl)
+                .into(itemView.driverImg)
+        }
+        season.winnerConstructor?.let {
+            itemView.constructorText.text = it.name
+            itemView.constructorText.setBackgroundColor(it.color.toColorInt())
+        }
+
+        itemView.labelledBar.backgroundColour = itemView.context.theme.getColor(R.attr.f1BackgroundSecondary)
+        itemView.labelledBar.progressColour = lighten(itemView.context.theme.getColor(R.attr.colorPrimary))
+        itemView.labelledBar.animateProgress(season.completed.toFloat() / (season.scheduled.toFloat() + season.completed.toFloat())) { "" }
     }
 
     override fun onClick(p0: View?) {

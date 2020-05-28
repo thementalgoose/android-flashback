@@ -70,8 +70,8 @@
     <dimen name="dashboardTrackImageSize">28dp</dimen>
     <dimen name="dashboardYearIconSize">32dp</dimen>
 
-    <dimen name="dashboardProgressBarHeight">16dp</dimen>
-    <dimen name="dashboardProgressBarWidth">60dp</dimen>
+    <dimen name="dashboardProgressBarHeight">12dp</dimen>
+    <dimen name="dashboardProgressBarWidth">90dp</dimen>
 
     <!-- Race -->
 
