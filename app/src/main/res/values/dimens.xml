@@ -68,13 +68,15 @@
 
     <dimen name="dashboardYearSelectorHeight">42dp</dimen>
     <dimen name="dashboardTrackImageSize">28dp</dimen>
-    <dimen name="dashboardYearIconSize">32dp</dimen>
+    <dimen name="dashboardYearImageSize">16dp</dimen>
+    <dimen name="dashboardYearIconSize">16dp</dimen>
 
     <dimen name="dashboardProgressBarHeight">12dp</dimen>
     <dimen name="dashboardProgressBarWidth">90dp</dimen>
-
+    
     <!-- Race -->
-
+    
+    <dimen name="raceSeasonImageSize">42dp</dimen>
     <dimen name="raceImageSize">42dp</dimen>
     <dimen name="constructorStandingsSize">40dp</dimen>
 

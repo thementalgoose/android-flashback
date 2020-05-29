@@ -20,7 +20,6 @@ class DashboardSeasonHeaderViewHolder(
     fun bind(item: DashboardSeasonAdapterItem.Header) {
 
         itemView.tvTitle.text = item.year.toString()
-        itemView.season.text = itemView.context.getString(R.string.dashboard_season, item.season.ordinalAbbreviation).fromHtml()
         itemView.races.text = itemView.context.getString(R.string.dashboard_race_completed, item.raceRound.toString()).fromHtml()
 
 //        itemView.pill.setBackgroundColor()

@@ -9,9 +9,9 @@
     android:focusable="true"
     android:foreground="@drawable/ripple"
     android:paddingStart="@dimen/paddingMedium"
-    android:paddingTop="@dimen/paddingSmall"
+    android:paddingTop="10dp"
     android:paddingEnd="@dimen/paddingMedium"
-    android:paddingBottom="@dimen/paddingSmall">
+    android:paddingBottom="10dp">
 
     <TextView
         android:id="@+id/year"
@@ -22,9 +22,9 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="2019" />
 
-    <androidx.cardview.widget.CardView
+    <tmg.labelledprogressbar.LabelledProgressBar
         android:id="@+id/pill"
-        android:layout_width="24dp"
+        android:layout_width="96dp"
         android:layout_height="4dp"
         android:layout_marginTop="4dp"
         app:cardCornerRadius="4dp"
@@ -33,33 +33,71 @@
         app:layout_constraintTop_toBottomOf="@id/year" />
 
     <TextView
-        android:id="@+id/season"
-        style="@style/Text.Dashboard.Subtitles"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/pill"
-        tools:text="Formula 1's 70th season" />
-
-    <TextView
         android:id="@+id/races"
         style="@style/Text.Dashboard.Subtitles"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="@dimen/paddingXSmall"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/season"
+        app:layout_constraintTop_toBottomOf="@id/pill"
         tools:text="21 races completed" />
+
+    <ImageView
+        android:id="@+id/imgPodium"
+        android:layout_width="@dimen/dashboardYearIconSize"
+        android:layout_height="@dimen/dashboardYearIconSize"
+        android:layout_marginTop="@dimen/paddingXSmall"
+        android:src="@drawable/ic_menu_drivers"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/races" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/driverCard"
+        android:layout_width="@dimen/dashboardYearIconSize"
+        android:layout_height="@dimen/dashboardYearIconSize"
+        android:layout_marginStart="@dimen/paddingXSmall"
+        app:cardCornerRadius="@dimen/radiusSmall"
+        app:layout_constraintBottom_toBottomOf="@id/imgPodium"
+        app:layout_constraintStart_toEndOf="@id/imgPodium"
+        app:layout_constraintTop_toTopOf="@id/imgPodium">
+
+        <ImageView
+            android:id="@+id/driverImg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop" />
+
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/driver"
+        style="@style/Text.Dashboard.Subtitles"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/paddingXSmall"
+        app:layout_constraintBottom_toBottomOf="@id/imgPodium"
+        app:layout_constraintStart_toEndOf="@id/driverCard"
+        app:layout_constraintTop_toTopOf="@id/imgPodium"
+        tools:text="Lewis Hamilton with 413 points" />
+
+    <ImageView
+        android:id="@+id/imgConstructor"
+        android:layout_width="@dimen/dashboardYearIconSize"
+        android:layout_height="@dimen/dashboardYearIconSize"
+        android:layout_marginTop="@dimen/paddingXSmall"
+        android:src="@drawable/ic_menu_constructors"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imgPodium" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/constructorCard"
         android:layout_width="@dimen/dashboardYearIconSize"
         android:layout_height="@dimen/dashboardYearIconSize"
-        android:layout_marginTop="@dimen/paddingSmall"
-        android:layout_marginEnd="2dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_marginStart="@dimen/paddingXSmall"
+        app:cardCornerRadius="@dimen/radiusSmall"
+        app:layout_constraintBottom_toBottomOf="@id/imgConstructor"
+        app:layout_constraintStart_toEndOf="@id/imgConstructor"
+        app:layout_constraintTop_toTopOf="@id/imgConstructor">
 
         <TextView
             android:id="@+id/constructorText"
@@ -72,31 +110,29 @@
 
     </androidx.cardview.widget.CardView>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/driverCard"
-        android:layout_width="@dimen/dashboardYearIconSize"
-        android:layout_height="@dimen/dashboardYearIconSize"
-        android:layout_marginTop="@dimen/paddingSmall"
-        android:layout_marginEnd="@dimen/paddingSmall"
-        app:layout_constraintEnd_toStartOf="@id/constructorCard"
-        app:layout_constraintTop_toTopOf="parent">
+    <TextView
+        android:id="@+id/constructor"
+        style="@style/Text.Dashboard.Subtitles"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/paddingXSmall"
+        app:layout_constraintBottom_toBottomOf="@id/imgConstructor"
+        app:layout_constraintStart_toEndOf="@id/constructorCard"
+        app:layout_constraintTop_toTopOf="@id/imgConstructor"
+        tools:text="Mercedes with 312 points" />
 
-        <ImageView
-            android:id="@+id/driverImg"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop" />
-
-    </androidx.cardview.widget.CardView>
-
-    <tmg.labelledprogressbar.LabelledProgressBar
-        android:id="@+id/labelledBar"
-        android:layout_width="@dimen/dashboardProgressBarWidth"
-        android:layout_height="@dimen/dashboardProgressBarHeight"
-        android:layout_marginTop="@dimen/paddingSmall"
-        android:layout_marginEnd="2dp"
+    <TextView
+        android:id="@+id/relative"
+        android:background="@color/colorTheme"
+        style="@style/Text.Dashboard.Relative"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/paddingXSmall"
+        android:paddingTop="2dp"
+        android:paddingEnd="@dimen/paddingXSmall"
+        android:paddingBottom="2dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/driverCard"
-        app:lpb_radius="2dp" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="70th season" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
