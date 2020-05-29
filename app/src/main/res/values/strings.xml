@@ -98,18 +98,18 @@
 
     <!-- Home screen -->
     <string name="dashboard_header">@string/app_name</string>
-    <string name="dashboard_subtitle">Welcome to Flashback! See the results of all the Formula 1 race results up to 2019.</string>
+    <string name="dashboard_subtitle">Formula 1 statistics app</string>
     <plurals name="dashboard_track_count">
         <item quantity="one"><![CDATA[Races]]></item>
         <item quantity="other"><![CDATA[Races]]></item>
     </plurals>
-    <string name="dashboard_constructor_champion"><![CDATA[Constructor champion: <b>%s</b>]]></string>
-    <string name="dashboard_drivers_champion"><![CDATA[Drivers champion: <b>%s</b> (%s)]]></string>
+    <string name="dashboard_constructor_champion"><![CDATA[<b>%s</b> with <b>%s</b> points]]></string>
+    <string name="dashboard_drivers_champion"><![CDATA[<b>%s</b> with <b>%s</b> points]]></string>
     <string name="dashboard_menu_track_list">Track list</string>
     <string name="dashboard_menu_drivers">Drivers championship standings</string>
     <string name="dashboard_menu_constructors">Constructors standings</string>
 
-    <string name="dashboard_season"><![CDATA[Formula 1\'s <b>%s</b> season]]></string>
+    <string name="dashboard_season"><![CDATA[<b>%s</b>]]></string>
 
     <string name="dashboard_race_completed"><![CDATA[<b>%s</b> races completed]]></string>
     <string name="dashboard_race_not_started"><![CDATA[<b>%s</b> races scheduled]]></string>
@@ -126,6 +126,8 @@
         <item quantity="one">%d point</item>
         <item quantity="other">%d points</item>
     </plurals>
+    <string name="race_standings">Standings</string>
+    <string name="race_circuit_info">Circuit\ninfo</string>
 
     <!-- Synchronisation -->
     <string name="sync_type_overview">Season Overview</string>

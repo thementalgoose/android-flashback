@@ -7,6 +7,7 @@ import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.view_dashboard_year.view.*
 import tmg.flashback.R
 import tmg.flashback.colours
+import tmg.flashback.coloursDecade
 import tmg.flashback.dashboard.year.DashboardYearItem
 import tmg.flashback.extensions.ordinalAbbreviation
 import tmg.flashback.minimumSupportedYear
@@ -46,24 +47,38 @@ class DashboardYearViewHolder(
         }
 
         val countdown = ((season.year - minimumSupportedYear) + 1)
-        itemView.season.text = itemView.context.getString(R.string.dashboard_season, countdown.ordinalAbbreviation).fromHtml()
+        itemView.relative.text = countdown.ordinalAbbreviation
+        coloursDecade["${season.year.toString().substring(0, 3)}0"]?.let {
+            itemView.relative.setBackgroundColor(it.toColorInt())
+        }
 
         itemView.pill.setBackgroundColor(season.colour)
 
-        Glide.with(itemView.context).clear(itemView.driverImg)
-        season.winnerDriver?.let {
+        if (season.winnerDriver != null) {
             Glide.with(itemView.context)
-                .load(it.photoUrl)
+                .load(season.winnerDriver.photoUrl)
                 .into(itemView.driverImg)
+            itemView.driver.text = itemView.context.getString(R.string.dashboard_drivers_champion, season.winnerDriver.name, season.winnerDriver.points.toString()).fromHtml()
         }
-        season.winnerConstructor?.let {
-            itemView.constructorText.text = it.name
-            itemView.constructorText.setBackgroundColor(it.color.toColorInt())
+        else {
+            Glide.with(itemView.context).clear(itemView.driverImg)
+            itemView.driver.text = "..."
         }
 
-        itemView.labelledBar.backgroundColour = itemView.context.theme.getColor(R.attr.f1BackgroundSecondary)
-        itemView.labelledBar.progressColour = lighten(itemView.context.theme.getColor(R.attr.colorPrimary))
-        itemView.labelledBar.animateProgress(season.completed.toFloat() / (season.scheduled.toFloat() + season.completed.toFloat())) { "" }
+        if (season.winnerConstructor != null) {
+            itemView.constructor.text = itemView.context.getString(R.string.dashboard_drivers_champion, season.winnerConstructor.name, season.winnerConstructor.points.toString()).fromHtml()
+            itemView.constructorText.setBackgroundColor(season.winnerConstructor.color.toColorInt())
+        }
+        else {
+            itemView.constructor.text = "..."
+            itemView.constructorText.setBackgroundColor(itemView.context.theme.getColor(R.attr.f1BackgroundSecondary))
+        }
+
+        val (light, dark) = colours.random()
+        itemView.pill.progressColour = dark.toColorInt()
+        itemView.pill.backgroundColour = itemView.context.theme.getColor(R.attr.f1BackgroundSecondary)
+        itemView.pill.timeLimit = 400
+        itemView.pill.animateProgress(season.completed.toFloat() / (season.scheduled.toFloat() + season.completed.toFloat())) { "" }
     }
 
     override fun onClick(p0: View?) {
