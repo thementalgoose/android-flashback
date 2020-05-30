@@ -38,6 +38,7 @@
         style="@style/Text.Dashboard.Subtitles"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
         android:paddingStart="@dimen/paddingMedium"
         android:paddingEnd="@dimen/paddingMedium"
         app:layout_constraintEnd_toEndOf="@id/tvTitle"
@@ -51,8 +52,8 @@
         android:layout_width="92dp"
         android:layout_height="4dp"
         android:layout_marginStart="@dimen/paddingMedium"
-        android:layout_marginTop="6dp"
-        android:layout_marginBottom="@dimen/paddingSmall"
+        android:layout_marginTop="@dimen/paddingSmall"
+        android:layout_marginBottom="@dimen/paddingNSmall"
         app:cardBackgroundColor="?attr/colorPrimary"
         app:cardCornerRadius="0dp"
         app:cardElevation="0dp"
@@ -84,10 +85,14 @@
     </LinearLayout>
 
     <LinearLayout
+        android:clickable="true"
+        android:focusable="true"
+        android:background="@drawable/rounded_ripple"
         android:id="@+id/standings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/paddingSmall"
+        android:layout_marginEnd="@dimen/paddingSmall"
+        android:layout_marginBottom="@dimen/paddingMedium"
         android:gravity="center"
         android:orientation="vertical"
         android:paddingStart="@dimen/paddingSmall"
@@ -98,11 +103,11 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <ImageView
-            android:background="@drawable/background_circle_button"
             android:layout_width="@dimen/raceSeasonImageSize"
             android:layout_height="@dimen/raceSeasonImageSize"
-            android:layout_marginBottom="@dimen/paddingSmall"
-            android:padding="10dp"
+            android:layout_marginBottom="@dimen/paddingXSmall"
+            android:background="@drawable/background_circle_button"
+            android:padding="8dp"
             android:src="@drawable/ic_standings" />
 
         <TextView

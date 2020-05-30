@@ -13,9 +13,6 @@ import tmg.flashback.extensions.ordinalAbbreviation
 import tmg.flashback.minimumSupportedYear
 import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.getColor
-import tmg.utilities.extensions.views.show
-import tmg.utilities.utils.ColorUtils
-import tmg.utilities.utils.ColorUtils.Companion.lighten
 
 class DashboardYearViewHolder(
     itemView: View,
@@ -56,7 +53,7 @@ class DashboardYearViewHolder(
 
         if (season.winnerDriver != null) {
             Glide.with(itemView.context)
-                .load(season.winnerDriver.photoUrl)
+                .load(season.winnerDriver.image)
                 .into(itemView.driverImg)
             itemView.driver.text = itemView.context.getString(R.string.dashboard_drivers_champion, season.winnerDriver.name, season.winnerDriver.points.toString()).fromHtml()
         }

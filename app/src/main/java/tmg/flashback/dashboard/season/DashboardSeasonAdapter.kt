@@ -6,8 +6,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.R
 import tmg.flashback.dashboard.season.DashboardSeasonViewType.*
-import tmg.flashback.dashboard.season.viewholders.DashboardSeasonConstructorViewHolder
-import tmg.flashback.dashboard.season.viewholders.DashboardSeasonDriversViewHolder
 import tmg.flashback.dashboard.season.viewholders.DashboardSeasonHeaderViewHolder
 import tmg.flashback.dashboard.season.viewholders.DashboardSeasonTrackViewHolder
 import tmg.utilities.extensions.toEnum
@@ -38,16 +36,6 @@ class DashboardSeasonAdapter(
                     .from(parent.context)
                     .inflate(R.layout.view_dashboard_season_track, parent, false)
             )
-            DRIVER -> DashboardSeasonDriversViewHolder(
-                LayoutInflater
-                    .from(parent.context)
-                    .inflate(R.layout.view_dashboard_season_driver, parent, false)
-            )
-            CONSTRUCTOR -> DashboardSeasonDriversViewHolder(
-                LayoutInflater
-                    .from(parent.context)
-                    .inflate(R.layout.view_dashboard_season_constructor, parent, false)
-            )
             else -> throw Throwable("Cannot create view with view type $viewType")
         }
     }
@@ -61,14 +49,6 @@ class DashboardSeasonAdapter(
             TRACK -> {
                 (holder as? DashboardSeasonTrackViewHolder)
                     ?.bind(list[position] as DashboardSeasonAdapterItem.Track)
-            }
-            DRIVER -> {
-                (holder as? DashboardSeasonDriversViewHolder)
-                    ?.bind(list[position] as DashboardSeasonAdapterItem.Drivers)
-            }
-            CONSTRUCTOR -> {
-                (holder as? DashboardSeasonConstructorViewHolder)
-                    ?.bind(list[position] as DashboardSeasonAdapterItem.Constructor)
             }
             else -> throw Throwable("Cannot bind view of view type $type")
         }

@@ -105,7 +105,7 @@
     </plurals>
     <string name="dashboard_constructor_champion"><![CDATA[<b>%s</b> with <b>%s</b> points]]></string>
     <string name="dashboard_drivers_champion"><![CDATA[<b>%s</b> with <b>%s</b> points]]></string>
-    <string name="dashboard_menu_track_list">Track list</string>
+    <string name="dashboard_menu_seasons">Seasons</string>
     <string name="dashboard_menu_drivers">Drivers championship standings</string>
     <string name="dashboard_menu_constructors">Constructors standings</string>
 

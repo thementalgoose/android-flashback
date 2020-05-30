@@ -47,7 +47,10 @@ class CrashReporterFirebase(
     }
 
     override fun logError(error: Exception, context: String) {
-        Log.e("Flashback", "Logging ERROR to crashlytics \"${context}\"")
+        if (BuildConfig.DEBUG) {
+            Log.e("Flashback", "Logging ERROR to crashlytics \"${context}\"")
+            error.printStackTrace()
+        }
         Crashlytics.log(Log.ERROR, "Flashback", context)
         Crashlytics.logException(error)
     }
