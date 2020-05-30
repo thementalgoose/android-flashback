@@ -13,9 +13,11 @@ import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.models.AppBanner
 import tmg.flashback.repo.models.AppLockout
 import tmg.flashback.repo.models.History
+import tmg.flashback.repo.models.WinnerSeason
 import tmg.flashback.utils.Selected
 import tmg.flashback.utils.bottomsheet.BottomSheetItem
 import tmg.utilities.extensions.combinePair
+import tmg.utilities.extensions.combineTriple
 import tmg.utilities.lifecycle.DataEvent
 import tmg.utilities.lifecycle.Event
 
@@ -53,8 +55,9 @@ class DashboardViewModel(
 ) : BaseViewModel(), DashboardViewModelInputs, DashboardViewModelOutputs {
 
     private val selectedSeason: ConflatedBroadcastChannel<Int> = ConflatedBroadcastChannel()
-    private val selectedMenuItem: ConflatedBroadcastChannel<DashboardMenuItem> = ConflatedBroadcastChannel(DashboardMenuItem.TRACK_LIST)
+    private val selectedMenuItem: ConflatedBroadcastChannel<DashboardMenuItem> = ConflatedBroadcastChannel(DashboardMenuItem.SEASONS)
     private val historyFlow: Flow<List<History>> = historyDB.allHistory()
+    private val winnerFlow: Flow<List<WinnerSeason>> = historyDB.allWinners()
 
     override val openSettings: MutableLiveData<Event> = MutableLiveData()
     override val openMenu: MutableLiveData<Event> = MutableLiveData()
@@ -92,14 +95,17 @@ class DashboardViewModel(
      * Year list that's shown on the initial app load
      */
     override val years: LiveData<List<DashboardYearItem>> = historyFlow
-        .combinePair(dataDB.appBanner())
-        .map { (list, banner) ->
+        .combineTriple(winnerFlow, dataDB.appBanner())
+        .map { (list, winner, banner) ->
             val itemList = mutableListOf<DashboardYearItem>(DashboardYearItem.Header)
             if (banner?.show == true && banner.message != null) {
                 itemList.add(DashboardYearItem.Banner(banner.message ?: ""))
             }
             itemList.addAll(list
-                .map { DashboardYearItem.Season(it.season, it.completed, it.upcoming, it.driversChampion.firstOrNull(), it.constructorsChampion.firstOrNull()) }
+                .map {
+                    val winnerSeason = winner.getWinner(it.season)
+                    DashboardYearItem.Season(it.season, it.completed, it.upcoming, winnerSeason?.driver?.firstOrNull(), winnerSeason?.constructor?.firstOrNull())
+                }
                 .sortedByDescending { it.year })
             itemList
         }
@@ -112,7 +118,7 @@ class DashboardViewModel(
         .map { historyList ->
             historyList.map { history ->
                 val list: MutableList<DashboardSeasonAdapterItem> = mutableListOf()
-                list.add(DashboardSeasonAdapterItem.Header(history.season, (history.season - minimumSupportedYear) + 1, history.rounds.size))
+                list.add(DashboardSeasonAdapterItem.Header(history.season, (history.season - minimumSupportedYear) + 1, history.completed, history.upcoming))
                 list.addAll(history.rounds
                     .map {
                         DashboardSeasonAdapterItem.Track(
@@ -163,7 +169,7 @@ class DashboardViewModel(
 
     //endregion
 
-    //region Outputs
-
-    //endregion
+    private fun List<WinnerSeason>.getWinner(season: Int): WinnerSeason? {
+        return this.firstOrNull { it.season == season }
+    }
 }

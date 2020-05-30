@@ -9,7 +9,8 @@ sealed class DashboardSeasonAdapterItem(
     data class Header(
         val year: Int,
         val season: Int,
-        val raceRound: Int
+        val raceCompleted: Int,
+        val raceScheduled: Int
     ) : DashboardSeasonAdapterItem(HEADER) {
         override fun equals(other: Any?) = other is Header
         override fun hashCode(): Int = 37
@@ -45,23 +46,9 @@ sealed class DashboardSeasonAdapterItem(
             return result
         }
     }
-
-    data class Constructor(
-        val season: Int,
-        val round: Int,
-        val constructorId: String
-    ) : DashboardSeasonAdapterItem(CONSTRUCTOR)
-
-    data class Drivers(
-        val season: Int,
-        val round: Int,
-        val driverId: String
-    ) : DashboardSeasonAdapterItem(DRIVER)
 }
 
 enum class DashboardSeasonViewType {
     HEADER,
-    TRACK,
-    DRIVER,
-    CONSTRUCTOR
+    TRACK
 }

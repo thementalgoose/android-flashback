@@ -21,5 +21,5 @@ data class FWinnerSeasonConstructor(
     val id: String = "",
     val name: String = "",
     val color: String? = null,
-    val p: Int
+    val p: Int = 0
 )

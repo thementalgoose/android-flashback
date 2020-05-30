@@ -76,7 +76,7 @@
     
     <!-- Race -->
     
-    <dimen name="raceSeasonImageSize">42dp</dimen>
+    <dimen name="raceSeasonImageSize">36dp</dimen>
     <dimen name="raceImageSize">42dp</dimen>
     <dimen name="constructorStandingsSize">40dp</dimen>
 

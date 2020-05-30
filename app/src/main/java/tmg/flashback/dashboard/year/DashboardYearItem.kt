@@ -4,16 +4,16 @@ import androidx.annotation.LayoutRes
 import androidx.core.graphics.toColorInt
 import tmg.flashback.R
 import tmg.flashback.colours
-import tmg.flashback.repo.models.HistoryWinConstructor
-import tmg.flashback.repo.models.HistoryWinDriver
+import tmg.flashback.repo.models.WinnerSeasonConstructor
+import tmg.flashback.repo.models.WinnerSeasonDriver
 
 sealed class DashboardYearItem {
     data class Season(
         val year: Int,
         val completed: Int,
         val scheduled: Int,
-        val winnerDriver: HistoryWinDriver?,
-        val winnerConstructor: HistoryWinConstructor?
+        val winnerDriver: WinnerSeasonDriver?,
+        val winnerConstructor: WinnerSeasonConstructor?
     ): DashboardYearItem() {
         val numberOfRaces: Int
             get() = completed + scheduled

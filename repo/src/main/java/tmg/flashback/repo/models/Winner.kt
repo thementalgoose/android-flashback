@@ -9,13 +9,13 @@ data class WinnerSeason(
 data class WinnerSeasonDriver(
     val id: String,
     val name: String,
-    val img: String,
-    val p: Int
+    val image: String,
+    val points: Int
 )
 
 data class WinnerSeasonConstructor(
     val id: String,
     val name: String,
     val color: String,
-    val p: Int
+    val points: Int
 )
