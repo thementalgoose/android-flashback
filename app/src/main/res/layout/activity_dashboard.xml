@@ -12,7 +12,7 @@
         android:clipToPadding="false"
         tools:itemCount="3"
         tools:layoutManager="LinearLayoutManager"
-        tools:listitem="@layout/view_dashboard_season_track" />
+        tools:listitem="@layout/view_season_track" />
 
     <me.saket.inboxrecyclerview.page.ExpandablePageLayout
         android:id="@+id/eplMain"

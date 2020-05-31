@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.layout_podium.view.tvConstructor
 import kotlinx.android.synthetic.main.layout_podium.view.tvStartedAbsolute
 import kotlinx.android.synthetic.main.layout_podium.view.tvStartedRelative
 import kotlinx.android.synthetic.main.layout_podium.view.tvTime
-import kotlinx.android.synthetic.main.view_race_podium.view.*
+import kotlinx.android.synthetic.main.view_race_race_podium.view.*
 import tmg.flashback.R
 import tmg.flashback.race.RaceAdapterModel
 import tmg.flashback.utils.getColor

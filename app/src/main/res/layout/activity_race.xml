@@ -83,7 +83,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:nestedScrollingEnabled="false"
-                tools:listitem="@layout/view_qualifying_result" />
+                tools:listitem="@layout/view_race_qualifying_result" />
 
         </LinearLayout>
 
