@@ -58,7 +58,14 @@ class SharedPrefsDB(context: Context): SharedPrefManager(context), PrefsDB {
         set(value) = save(keyReleaseNotes, value)
 
     override val shouldShowReleaseNotes: Boolean
-        get() = BuildConfig.VERSION_CODE > lastAppVersion && releaseNotes.keys.count { it > lastAppVersion} > 0
+        get() {
+            return if (lastAppVersion == 0) {
+                lastAppVersion = BuildConfig.VERSION_CODE
+                false
+            } else {
+                BuildConfig.VERSION_CODE > lastAppVersion && releaseNotes.keys.count { it > lastAppVersion} > 0
+            }
+        }
 
     override var deviceUdid: String
         set(value) = save(keyDeviceUDID, value)
