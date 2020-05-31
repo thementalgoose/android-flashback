@@ -15,7 +15,8 @@ open class Driver(
     val photoUrl: String?,
     val dateOfBirth: LocalDate,
     val nationality: String,
-    val nationalityISO: String
+    val nationalityISO: String,
+    val constructorAtEndOfSeason: Constructor
 ) {
     fun forRound(constructor: Constructor): RoundDriver {
         return RoundDriver(
@@ -29,7 +30,8 @@ open class Driver(
             dateOfBirth = dateOfBirth,
             nationality = nationality,
             nationalityISO = nationalityISO,
-            constructor = constructor
+            constructor = constructor,
+            constructorAtEndOfSeason = constructorAtEndOfSeason
         )
     }
 
@@ -52,7 +54,8 @@ class RoundDriver(
     dateOfBirth: LocalDate,
     nationality: String,
     nationalityISO: String,
-    val constructor: Constructor
+    val constructor: Constructor,
+    constructorAtEndOfSeason: Constructor
 ): Driver(
     id,
     firstName,
@@ -63,5 +66,6 @@ class RoundDriver(
     photoUrl,
     dateOfBirth,
     nationality,
-    nationalityISO
+    nationalityISO,
+    constructorAtEndOfSeason
 )

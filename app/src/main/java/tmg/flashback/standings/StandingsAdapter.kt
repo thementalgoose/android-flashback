@@ -9,9 +9,12 @@ import tmg.flashback.standings.StandingsItemType.*
 import tmg.flashback.standings.viewholder.StandingsConstructorViewHolder
 import tmg.flashback.standings.viewholder.StandingsDriverViewHolder
 import tmg.flashback.standings.viewholder.StandingsHeaderViewHolder
+import tmg.flashback.standings.viewholder.StandingsSkeletonViewHolder
 import tmg.utilities.extensions.toEnum
 
-class StandingsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class StandingsAdapter(
+    private val closed: () -> Unit
+): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var list: List<StandingsItem> = emptyList()
         set(value) {
@@ -23,6 +26,10 @@ class StandingsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (val type = viewType.toEnum<StandingsItemType>() ?: HEADER) {
             HEADER -> StandingsHeaderViewHolder(
+                closed,
+                LayoutInflater.from(parent.context).inflate(type.layoutId, parent, false)
+            )
+            SKELETON -> StandingsSkeletonViewHolder(
                 LayoutInflater.from(parent.context).inflate(type.layoutId, parent, false)
             )
             DRIVER -> StandingsDriverViewHolder(
@@ -37,8 +44,12 @@ class StandingsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (getItemViewType(position).toEnum<StandingsItemType>()) {
             HEADER -> (holder as? StandingsHeaderViewHolder)?.bind(list[position] as StandingsItem.Header)
-            DRIVER -> (holder as? StandingsDriverViewHolder)?.bind(list[position] as StandingsItem.Driver)
-            CONSTRUCTOR -> (holder as? StandingsConstructorViewHolder)?.bind(list[position] as StandingsItem.Constructor)
+            DRIVER -> {
+                val driver = list[position] as StandingsItem.Driver
+                (holder as? StandingsDriverViewHolder)?.bind(driver, getMaxDriverPoints(), list.indexOfFirst { (it as? StandingsItem.Driver)?.driver?.id == driver.driver.id })
+            }
+            CONSTRUCTOR -> (holder as? StandingsConstructorViewHolder)?.bind(list[position] as StandingsItem.Constructor, getMaxConstructorPoints())
+            SKELETON -> {}
         }
     }
 
@@ -47,10 +58,25 @@ class StandingsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             is StandingsItem.Header -> HEADER.ordinal
             is StandingsItem.Driver -> DRIVER.ordinal
             is StandingsItem.Constructor -> CONSTRUCTOR.ordinal
+            StandingsItem.Skeleton -> SKELETON.ordinal
         }
     }
 
     override fun getItemCount(): Int = list.size
+
+    private fun getMaxConstructorPoints(): Int {
+        return list
+            .filterIsInstance<StandingsItem.Constructor>()
+            .maxBy { it.points }
+            ?.points ?: 0
+    }
+
+    private fun getMaxDriverPoints(): Int {
+        return list
+            .filterIsInstance<StandingsItem.Driver>()
+            .maxBy { it.points }
+            ?.points ?: 0
+    }
 
     //region Comparator
 

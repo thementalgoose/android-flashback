@@ -24,6 +24,7 @@ import tmg.flashback.dashboard.year.DashboardYearItem
 import tmg.flashback.race.RaceActivity
 import tmg.flashback.settings.SettingsActivity
 import tmg.flashback.settings.release.ReleaseBottomSheetFragment
+import tmg.flashback.standings.StandingsActivity
 import tmg.flashback.utils.AnimatorListener
 import tmg.flashback.utils.bottomsheet.BottomSheetAdapter
 import tmg.utilities.bottomsheet.BottomSheetFader
@@ -75,6 +76,10 @@ class DashboardActivity : BaseActivity() {
             startActivity(Intent(this, SettingsActivity::class.java))
         }
 
+
+        observeEvent(viewModel.outputs.showStandings) {
+            startActivity(StandingsActivity.intent(this, it))
+        }
 
 
         observeEvent(viewModel.outputs.showAppLockoutMessage) {
@@ -133,6 +138,7 @@ class DashboardActivity : BaseActivity() {
             itemClickedCallback = {
                 startActivity(RaceActivity.intent(this, it))
             },
+            standingsClickedCallback = viewModel.inputs::clickStandings,
             listClosed = {
                 irvMain.collapse()
             }

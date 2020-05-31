@@ -12,6 +12,7 @@ import tmg.utilities.extensions.toEnum
 
 class DashboardSeasonAdapter(
     val itemClickedCallback: (seasonRound: DashboardSeasonAdapterItem.Track) -> Unit,
+    val standingsClickedCallback: (season: Int) -> Unit,
     val listClosed: () -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -25,8 +26,9 @@ class DashboardSeasonAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType.toEnum<DashboardSeasonViewType>()) {
             HEADER -> DashboardSeasonHeaderViewHolder(
-                listClosed,
-                LayoutInflater
+                listClosed = listClosed,
+                standings = standingsClickedCallback,
+                itemView = LayoutInflater
                     .from(parent.context)
                     .inflate(R.layout.view_season_header, parent, false)
             )

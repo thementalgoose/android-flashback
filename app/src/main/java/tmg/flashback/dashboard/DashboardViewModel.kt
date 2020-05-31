@@ -26,6 +26,7 @@ import tmg.utilities.lifecycle.Event
 interface DashboardViewModelInputs {
     fun clickSeason(year: Int)
     fun clickSettings()
+    fun clickStandings(year: Int)
     fun clickMenu()
     fun clickMenuItem(menuItem: DashboardMenuItem)
 }
@@ -42,6 +43,7 @@ interface DashboardViewModelOutputs {
     val openMenu: MutableLiveData<Event>
     val openSettings: MutableLiveData<Event>
 
+    val showStandings: MutableLiveData<DataEvent<Int>>
     val showAppLockoutMessage: LiveData<DataEvent<AppLockout>>
     val showReleaseNotes: LiveData<Event>
 }
@@ -61,6 +63,7 @@ class DashboardViewModel(
 
     override val openSettings: MutableLiveData<Event> = MutableLiveData()
     override val openMenu: MutableLiveData<Event> = MutableLiveData()
+    override val showStandings: MutableLiveData<DataEvent<Int>> = MutableLiveData()
 
     override val showAppLockoutMessage: LiveData<DataEvent<AppLockout>> = dataDB
         .appLockout()
@@ -118,7 +121,7 @@ class DashboardViewModel(
         .map { historyList ->
             historyList.map { history ->
                 val list: MutableList<DashboardSeasonAdapterItem> = mutableListOf()
-                list.add(DashboardSeasonAdapterItem.Header(history.season, (history.season - minimumSupportedYear) + 1, history.completed, history.upcoming))
+                list.add(DashboardSeasonAdapterItem.Header(history.season, (history.season - minimumSupportedYear) + 1, history.completed, history.upcoming, history.completed != 0))
                 list.addAll(history.rounds
                     .map {
                         DashboardSeasonAdapterItem.Track(
@@ -165,6 +168,10 @@ class DashboardViewModel(
 
     override fun clickMenu() {
         openMenu.value = Event()
+    }
+
+    override fun clickStandings(year: Int) {
+        showStandings.value = DataEvent(year)
     }
 
     //endregion

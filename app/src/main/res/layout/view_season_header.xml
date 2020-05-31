@@ -85,6 +85,8 @@
     </LinearLayout>
 
     <LinearLayout
+        android:alpha="0.5"
+        android:enabled="false"
         android:clickable="true"
         android:focusable="true"
         android:background="@drawable/rounded_ripple"
