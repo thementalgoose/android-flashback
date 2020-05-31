@@ -13,6 +13,7 @@ import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.settings.planned.PlannedItems
 
 val releaseNotes: Map<Int, Int> = mapOf(
+    6 to R.string.release_6,
     4 to R.string.release_4,
     2 to R.string.release_2,
     1 to R.string.release_1
