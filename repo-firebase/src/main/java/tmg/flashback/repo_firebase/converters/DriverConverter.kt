@@ -1,11 +1,12 @@
 package tmg.flashback.repo_firebase.converters
 
+import tmg.flashback.repo.models.Constructor
 import tmg.flashback.repo.models.Driver
 import tmg.flashback.repo.models.RoundDriver
 import tmg.flashback.repo_firebase.models.FSeasonOverviewConstructor
 import tmg.flashback.repo_firebase.models.FSeasonOverviewDriver
 
-fun FSeasonOverviewDriver.convert(): Driver {
+fun FSeasonOverviewDriver.convert(constructorAtEndOfSeason: Constructor): Driver {
     return Driver(
         id = id,
         firstName = firstName,
@@ -16,11 +17,12 @@ fun FSeasonOverviewDriver.convert(): Driver {
         photoUrl = photoUrl,
         dateOfBirth = fromDate(dob),
         nationality = nationality,
-        nationalityISO = nationalityISO
+        nationalityISO = nationalityISO,
+        constructorAtEndOfSeason = constructorAtEndOfSeason
     )
 }
 
-fun FSeasonOverviewDriver.convert(constructors: Map<String, FSeasonOverviewConstructor>, overrideConstructorId: String?): RoundDriver {
+fun FSeasonOverviewDriver.convert(constructors: Map<String, FSeasonOverviewConstructor>, overrideConstructorId: String?, constructorAtEndOfSeason: Constructor): RoundDriver {
     return RoundDriver(
         id = id,
         firstName = firstName,
@@ -32,6 +34,7 @@ fun FSeasonOverviewDriver.convert(constructors: Map<String, FSeasonOverviewConst
         dateOfBirth = fromDate(dob),
         nationality = nationality,
         nationalityISO = nationalityISO,
-        constructor = constructors.values.first { it.id == overrideConstructorId ?: constructorId }.convert()
+        constructor = constructors.values.first { it.id == overrideConstructorId ?: constructorId }.convert(),
+        constructorAtEndOfSeason = constructorAtEndOfSeason
     )
 }

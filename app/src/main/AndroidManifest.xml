@@ -24,10 +24,6 @@
         </activity>
 
         <activity
-            android:name=".dashboard.swiping.DashboardSwipingActivity"
-            android:label="" />
-
-        <activity
             android:name=".dashboard.DashboardActivity"
             android:label="" />
 
@@ -35,13 +31,20 @@
             android:name=".race.RaceActivity"
             android:label="" />
 
-        <activity android:name=".settings.planned.PlannedActivity"
+        <activity
+            android:name=".settings.planned.PlannedActivity"
             android:label="" />
 
-        <activity android:name="tmg.flashback.settings.SettingsActivity"
+        <activity
+            android:name=".standings.StandingsActivity"
             android:label="" />
 
-        <activity android:name="tmg.flashback.settings.release.ReleaseActivity"
+        <activity
+            android:name="tmg.flashback.settings.SettingsActivity"
+            android:label="" />
+
+        <activity
+            android:name="tmg.flashback.settings.release.ReleaseActivity"
             android:label="" />
 
         <activity

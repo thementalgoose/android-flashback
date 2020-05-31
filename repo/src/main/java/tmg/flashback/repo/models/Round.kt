@@ -96,10 +96,57 @@ data class RoundRaceResult(
     val fastestLap: FastestLap?
 )
 
-fun List<Round>.standingsConstructor(): Map<Constructor, Int> {
+val List<Round>.completed: Int
+    get() = this.count { it.date < LocalDate.now() }
 
+val List<Round>.upcoming: Int
+    get() = this.count { it.date >= LocalDate.now() }
+
+fun List<Round>.standingsConstructor(): Map<String, Pair<Constructor, Map<String, Pair<Driver, Int>>>> {
+    val returnMap: MutableMap<String, Pair<Constructor, MutableMap<String, Pair<Driver, Int>>>> = mutableMapOf()
+    this.forEach { round ->
+        round.constructor.forEach {
+            if (!returnMap.containsKey(it.id)) {
+                returnMap[it.id] = Pair(it, mutableMapOf())
+            }
+
+            val (constructor, listOfDrivers) = returnMap[it.id]!!
+
+            val driversInRoundForConstructor = round.drivers
+                .filter { roundDriver -> roundDriver.constructor.id == it.id }
+                .map { it to (round.race[it.id]?.points ?: 0) }
+
+            driversInRoundForConstructor.forEach { (roundDriver, points) ->
+                if (listOfDrivers[roundDriver.id] == null) {
+                    listOfDrivers[roundDriver.id] = Pair(roundDriver, 0)
+                }
+
+                val existing = listOfDrivers[roundDriver.id]!!
+
+                listOfDrivers[roundDriver.id] = Pair(existing.first, existing.second + points)
+            }
+
+            returnMap[it.id] = Pair(constructor, listOfDrivers)
+        }
+    }
+
+    return returnMap
 }
 
-fun List<Round>.standingsDriver(): Map<String, Pair<Driver, Int>> {
-    val returnMap:
+fun List<Round>.standingsDriver(): Map<String, Pair<RoundDriver, Int>> {
+    val returnMap: MutableMap<String, Pair<RoundDriver, Int>> = mutableMapOf()
+    this.forEach { round ->
+        round.drivers.forEach {
+            if (!returnMap.containsKey(it.id)) {
+                returnMap[it.id] = Pair(it, 0)
+            }
+
+            val (driver, points) = returnMap[it.id]!!
+            returnMap[it.id] = Pair(driver, points + (round.race[it.id]?.points ?: 0))
+        }
+    }
+
+    return returnMap
 }
+
+fun Map<String, Pair<Driver, Int>>.allPoints(): Int = this.map { it.value.second }.sum()

@@ -12,21 +12,20 @@ fun FSeason.convert(season: Int): Season {
         season = season,
         drivers = (this.drivers ?: mapOf())
             .values
-            .map { it.convert() },
+            .map { it.convert(this.constructorAtEndOfSeason(it.id)) },
         constructors = (this.constructors ?: mapOf())
             .values
             .map { it.convert() },
         rounds = (this.race ?: mapOf())
             .values
             .map {
-                it.convert(this.drivers ?: mapOf(), this.constructors ?: mapOf())
+                it.convert(this)
             }
     )
 }
 
 fun FRound.convert(
-    drivers: Map<String, FSeasonOverviewDriver>,
-    constructors: Map<String, FSeasonOverviewConstructor>
+    fSeason: FSeason
 ): Round {
     return Round(
         season = season,
@@ -35,13 +34,13 @@ fun FRound.convert(
         time = fromTime(time),
         name = name,
         circuit = circuit.convert(),
-        q1 = qualifying.onResult(drivers, constructors, driverCon ?: emptyMap()) { it.q1 },
-        q2 = qualifying.onResult(drivers, constructors, driverCon ?: emptyMap()) { it.q2 },
-        q3 = qualifying.onResult(drivers, constructors, driverCon ?: emptyMap()) { it.q3 },
+        q1 = qualifying.onResult(fSeason,driverCon ?: emptyMap()) { it.q1 },
+        q2 = qualifying.onResult(fSeason,driverCon ?: emptyMap()) { it.q2 },
+        q3 = qualifying.onResult(fSeason,driverCon ?: emptyMap()) { it.q3 },
         race = (race ?: mapOf())
             .map { (driverId, raceResult) ->
                 driverId to RoundRaceResult(
-                    driver = drivers.values.first { it.id == driverId }.convert(constructors, driverCon?.toList()?.firstOrNull { it.first == driverId }?.second),
+                    driver = (fSeason.drivers ?: emptyMap()).values.first { it.id == driverId }.convert(fSeason.constructors ?: emptyMap(), driverCon?.toList()?.firstOrNull { it.first == driverId }?.second, fSeason.constructorAtEndOfSeason(driverId)),
                     time = raceResult.time?.toLapTime(),
                     points = raceResult.points ?: 0,
                     grid = raceResult.grid ?: 0,
@@ -66,11 +65,13 @@ private fun getQualified(raceResult: FSeasonOverviewRaceRace): Int? {
 }
 
 private fun Map<String, FSeasonOverviewRaceQualifying>?.onResult(
-    drivers: Map<String, FSeasonOverviewDriver>,
-    constructors: Map<String, FSeasonOverviewConstructor>,
+    season: FSeason,
     driverOverrideMap: Map<String, String>,
     callback: (race: FSeasonOverviewRaceQualifying) -> String?
 ): Map<String, RoundQualifyingResult> {
+
+    val drivers: Map<String, FSeasonOverviewDriver> = season.drivers ?: emptyMap()
+    val constructors: Map<String, FSeasonOverviewConstructor> = season.constructors ?: emptyMap()
     return (this ?: mapOf())
         .toSortedMap()
         .toList()
@@ -78,7 +79,7 @@ private fun Map<String, FSeasonOverviewRaceQualifying>?.onResult(
         .sortedBy { (_, _, lapTime) -> lapTime?.totalMillis.toMaxIfZero() }
         .mapIndexed { index, triplet ->
             val (driverId, item, lapTime) = triplet
-            val driver = drivers.values.first { it.id == driverId }.convert(constructors, driverOverrideMap.toList().firstOrNull { it.first == driverId }?.second)
+            val driver = drivers.values.first { it.id == driverId }.convert(constructors, driverOverrideMap.toList().firstOrNull { it.first == driverId }?.second, season.constructorAtEndOfSeason(driverId))
             return@mapIndexed driverId to RoundQualifyingResult(
                 driver = driver,
                 time = lapTime,
@@ -87,10 +88,20 @@ private fun Map<String, FSeasonOverviewRaceQualifying>?.onResult(
         }
         .toMap()
 }
+
 private fun FSeasonOverviewRaceRaceFastestLap.convert(): FastestLap {
     return FastestLap(
         rank = pos,
         lap = lap,
         lapTime = time.toLapTime()
     )
+}
+
+private fun FSeason.constructorAtEndOfSeason(driverId: String): Constructor {
+    val constructorId: String? = this.race
+        ?.filter { it.value.driverCon?.get(driverId) != null }
+        ?.maxBy { it.value.round }
+        ?.value
+        ?.driverCon?.get(driverId)
+    return this.constructors?.get(constructorId)!!.convert()
 }
