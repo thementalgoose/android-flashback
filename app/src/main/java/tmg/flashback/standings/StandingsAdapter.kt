@@ -1,9 +1,15 @@
 package tmg.flashback.standings
 
+import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.dashboard.year.DashboardYearItem
+import tmg.flashback.standings.StandingsItemType.*
+import tmg.flashback.standings.viewholder.StandingsConstructorViewHolder
+import tmg.flashback.standings.viewholder.StandingsDriverViewHolder
+import tmg.flashback.standings.viewholder.StandingsHeaderViewHolder
+import tmg.utilities.extensions.toEnum
 
 class StandingsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -13,12 +19,35 @@ class StandingsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             field = value
             result.dispatchUpdatesTo(this)
         }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return when (val type = viewType.toEnum<StandingsItemType>() ?: HEADER) {
+            HEADER -> StandingsHeaderViewHolder(
+                LayoutInflater.from(parent.context).inflate(type.layoutId, parent, false)
+            )
+            DRIVER -> StandingsDriverViewHolder(
+                LayoutInflater.from(parent.context).inflate(type.layoutId, parent, false)
+            )
+            CONSTRUCTOR -> StandingsConstructorViewHolder(
+                LayoutInflater.from(parent.context).inflate(type.layoutId, parent, false)
+            )
+        }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        when (getItemViewType(position).toEnum<StandingsItemType>()) {
+            HEADER -> (holder as? StandingsHeaderViewHolder)?.bind(list[position] as StandingsItem.Header)
+            DRIVER -> (holder as? StandingsDriverViewHolder)?.bind(list[position] as StandingsItem.Driver)
+            CONSTRUCTOR -> (holder as? StandingsConstructorViewHolder)?.bind(list[position] as StandingsItem.Constructor)
+        }
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return when (list[position]) {
+            is StandingsItem.Header -> HEADER.ordinal
+            is StandingsItem.Driver -> DRIVER.ordinal
+            is StandingsItem.Constructor -> CONSTRUCTOR.ordinal
+        }
     }
 
     override fun getItemCount(): Int = list.size

@@ -4,7 +4,7 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.toColorInt
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.view_dashboard_season_header.view.*
+import kotlinx.android.synthetic.main.view_season_header.view.*
 import tmg.flashback.R
 import tmg.flashback.colours
 import tmg.flashback.dashboard.season.DashboardSeasonAdapterItem

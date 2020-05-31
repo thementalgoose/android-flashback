@@ -4,7 +4,7 @@ import android.view.View
 import androidx.annotation.ColorInt
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.layout_constructor_driver.view.*
-import kotlinx.android.synthetic.main.view_race_constructor_standings.view.*
+import kotlinx.android.synthetic.main.view_race_constructor.view.*
 import tmg.flashback.R
 import tmg.flashback.race.RaceAdapterModel
 import tmg.flashback.repo.models.Driver

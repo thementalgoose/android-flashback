@@ -2,7 +2,7 @@ package tmg.flashback.race.viewholders
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.view_qualifying_header.view.*
+import kotlinx.android.synthetic.main.view_race_qualifying_header.view.*
 import tmg.flashback.R
 import tmg.flashback.race.RaceAdapterCallback
 import tmg.flashback.race.RaceAdapterType

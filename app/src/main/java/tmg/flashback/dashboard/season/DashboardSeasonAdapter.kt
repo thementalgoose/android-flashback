@@ -28,13 +28,13 @@ class DashboardSeasonAdapter(
                 listClosed,
                 LayoutInflater
                     .from(parent.context)
-                    .inflate(R.layout.view_dashboard_season_header, parent, false)
+                    .inflate(R.layout.view_season_header, parent, false)
             )
             TRACK -> DashboardSeasonTrackViewHolder(
                 itemClickedCallback,
                 LayoutInflater
                     .from(parent.context)
-                    .inflate(R.layout.view_dashboard_season_track, parent, false)
+                    .inflate(R.layout.view_season_track, parent, false)
             )
             else -> throw Throwable("Cannot create view with view type $viewType")
         }

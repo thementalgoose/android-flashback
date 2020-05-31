@@ -4,7 +4,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.layout_driver.view.*
-import kotlinx.android.synthetic.main.view_race_result.view.*
+import kotlinx.android.synthetic.main.view_race_race_result.view.*
 import tmg.flashback.R
 import tmg.flashback.extensions.iconRes
 import tmg.flashback.extensions.toEmptyIfZero

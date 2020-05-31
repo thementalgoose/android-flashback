@@ -95,3 +95,11 @@ data class RoundRaceResult(
     val status: RaceStatus,
     val fastestLap: FastestLap?
 )
+
+fun List<Round>.standingsConstructor(): Map<Constructor, Int> {
+
+}
+
+fun List<Round>.standingsDriver(): Map<String, Pair<Driver, Int>> {
+    val returnMap:
+}

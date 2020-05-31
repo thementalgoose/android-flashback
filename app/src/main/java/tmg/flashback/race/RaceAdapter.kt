@@ -149,12 +149,12 @@ enum class RaceAdapterType {
 enum class RaceAdapterViewHolderType(
     @LayoutRes val viewHolderRes: Int
 ) {
-    RACE_PODIUM(R.layout.view_race_podium),
-    RACE_RESULT(R.layout.view_race_result),
-    RACE_RESULT_HEADER(R.layout.view_race_header),
-    QUALIFYING_RESULT_HEADER(R.layout.view_qualifying_header),
-    QUALIFYING_RESULT(R.layout.view_qualifying_result),
-    CONSTRUCTOR_STANDINGS(R.layout.view_race_constructor_standings)
+    RACE_PODIUM(R.layout.view_race_race_podium),
+    RACE_RESULT(R.layout.view_race_race_result),
+    RACE_RESULT_HEADER(R.layout.view_race_race_header),
+    QUALIFYING_RESULT_HEADER(R.layout.view_race_qualifying_header),
+    QUALIFYING_RESULT(R.layout.view_race_qualifying_result),
+    CONSTRUCTOR_STANDINGS(R.layout.view_race_constructor)
 }
 
 interface RaceAdapterCallback {
