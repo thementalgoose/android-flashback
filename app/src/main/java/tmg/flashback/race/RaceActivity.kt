@@ -136,14 +136,14 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
 
         bnvType.setOnNavigationItemSelectedListener {
             when (it.itemId) {
-                R.id.nav_qualifying -> {
-                    viewModel.inputs.orderBy(RaceAdapterType.QUALIFYING_POS)
-                    true
-                }
-                R.id.nav_race -> {
-                    viewModel.inputs.orderBy(RaceAdapterType.RACE)
-                    true
-                }
+//                R.id.nav_qualifying -> {
+//                    viewModel.inputs.orderBy(RaceAdapterType.QUALIFYING_POS)
+//                    true
+//                }
+//                R.id.nav_race -> {
+//                    viewModel.inputs.orderBy(RaceAdapterType.RACE)
+//                    true
+//                }
                 R.id.nav_constructor -> {
                     viewModel.inputs.orderBy(RaceAdapterType.CONSTRUCTOR_STANDINGS)
                     true
@@ -177,7 +177,7 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
             raceAdapter.update(adapterType, list)
         }
 
-        bnvType.selectedItemId = R.id.nav_race
+//        bnvType.selectedItemId = R.id.nav_race
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

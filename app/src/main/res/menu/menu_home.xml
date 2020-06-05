@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/nav_calendar"
+        android:icon="@drawable/nav_calendar"
+        android:title="@string/nav_calendar"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/nav_drivers"
+        android:icon="@drawable/nav_driver"
+        android:title="@string/nav_drivers"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/nav_constructor"
+        android:icon="@drawable/nav_constructor"
+        android:title="@string/nav_constructors"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/nav_seasons"
+        android:icon="@drawable/nav_seasons"
+        android:title="@string/nav_seasons"
+        app:showAsAction="always" />
+</menu>

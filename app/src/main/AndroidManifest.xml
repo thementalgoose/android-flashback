@@ -32,7 +32,7 @@
             android:label="" />
 
         <activity
-            android:name=".settings.planned.PlannedActivity"
+            android:name=".home.HomeActivity"
             android:label="" />
 
         <activity
