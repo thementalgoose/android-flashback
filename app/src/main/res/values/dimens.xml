@@ -1,7 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <dimen name="navHeight">60dp</dimen>
+    <dimen name="toolbarSettingsIcon">36dp</dimen>
+
+    <!-- Text sizes -->
+
+    <dimen name="textSizeXLarge">20sp</dimen>
+    <dimen name="textSizeLarge">16sp</dimen>
+    <dimen name="textSizeMedium">14sp</dimen>
+    <dimen name="textSizeSmall">12sp</dimen>
+    <dimen name="textSizeXSmall">10sp</dimen>
+
+    <!-- Padding -->
+
+    <dimen name="paddingXLarge">64dp</dimen>
+    <dimen name="paddingVLarge">48dp</dimen>
+    <dimen name="paddingLarge">32dp</dimen>
+    <dimen name="paddingMedLarge">24dp</dimen>
+    <dimen name="paddingMedium">16dp</dimen>
+    <dimen name="paddingNSmall">16dp</dimen>
+    <dimen name="paddingSmall">8dp</dimen>
+    <dimen name="paddingXSmall">4dp</dimen>
+
+    <!-- Radius -->
+
+    <dimen name="radiusLarge">24dp</dimen>
+    <dimen name="radiusMedium">12dp</dimen>
+    <dimen name="radiusSmall">6dp</dimen>
+
+    <!--==================================-->
+
+    <!--==================================-->
+
+    <!--==================================-->
+
+    <!--==================================-->
+
+    <!--==================================-->
+
+    <!--==================================-->
+
+    <!--==================================-->
+
+    <!--==================================-->
+
+    <!--==================================-->
+
+    <!--==================================-->
+
+    <!--==================================-->
+
 
     <dimen name="gridWidth">90dp</dimen>
     <dimen name="gridHeight">22dp</dimen>
@@ -32,50 +80,21 @@
     <dimen name="loadingMargin">60dp</dimen>
 
 
-
-
-
-    <!-- Text sizes -->
-
-    <dimen name="textSizeXLarge">16sp</dimen>
-    <dimen name="textSizeLarge">16sp</dimen>
-    <dimen name="textSizeMedium">14sp</dimen>
-    <dimen name="textSizeSmall">12sp</dimen>
-    <dimen name="textSizeXSmall">10sp</dimen>
-
-    <!-- Padding -->
-
-    <dimen name="paddingXLarge">64dp</dimen>
-    <dimen name="paddingVLarge">48dp</dimen>
-    <dimen name="paddingLarge">32dp</dimen>
-    <dimen name="paddingMedLarge">24dp</dimen>
-    <dimen name="paddingMedium">16dp</dimen>
-    <dimen name="paddingNSmall">16dp</dimen>
-    <dimen name="paddingSmall">8dp</dimen>
-    <dimen name="paddingXSmall">4dp</dimen>
-
-    <!-- Radius -->
-
-    <dimen name="radiusLarge">24dp</dimen>
-    <dimen name="radiusMedium">12dp</dimen>
-    <dimen name="radiusSmall">6dp</dimen>
-
     <!-- Headers -->
 
     <dimen name="headerHeight">48dp</dimen>
 
     <!-- Dashboard -->
 
-    <dimen name="dashboardYearSelectorHeight">42dp</dimen>
     <dimen name="dashboardTrackImageSize">28dp</dimen>
     <dimen name="dashboardYearImageSize">16dp</dimen>
     <dimen name="dashboardYearIconSize">16dp</dimen>
 
     <dimen name="dashboardProgressBarHeight">12dp</dimen>
     <dimen name="dashboardProgressBarWidth">90dp</dimen>
-    
+
     <!-- Race -->
-    
+
     <dimen name="raceSeasonImageSize">36dp</dimen>
     <dimen name="raceImageSize">42dp</dimen>
 

@@ -41,7 +41,7 @@ class StandingsActivity: BaseActivity() {
 
         nav.setOnNavigationItemSelectedListener {
             when (it.itemId) {
-                R.id.nav_driver -> viewModel.inputs.clickType(DRIVER)
+//                R.id.nav_driver -> viewModel.inputs.clickType(DRIVER)
                 R.id.nav_constructor -> viewModel.inputs.clickType(CONSTRUCTOR)
             }
             return@setOnNavigationItemSelectedListener true
