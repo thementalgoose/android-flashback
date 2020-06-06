@@ -50,4 +50,9 @@ interface PrefsDB {
      */
     var deviceUdid: String
 
+    /**
+     * Favourited seasons in the list
+     */
+    var favouriteSeasons: Set<Int>
+
 }

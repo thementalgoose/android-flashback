@@ -28,6 +28,7 @@ class SharedPrefsDB(context: Context): SharedPrefManager(context), PrefsDB {
     private val keyReleaseNotes: String = "RELEASE_NOTES"
     private val keyDeviceUDID: String = "UDID"
     private val keyTheme: String = "THEME"
+    private val keyFavouriteSeasons: String = "FAVOURITE_SEASONS"
 
     override var theme: ThemePref
         get() = getString(keyTheme)?.toEnum<ThemePref> { it.key } ?: ThemePref.AUTO
@@ -77,5 +78,14 @@ class SharedPrefsDB(context: Context): SharedPrefManager(context), PrefsDB {
                 key = newKey
             }
             return key
+        }
+
+    override var favouriteSeasons: Set<Int>
+        set(value) = save(keyFavouriteSeasons, value.map { it.toString() }.toSet())
+        get() {
+            val value = getSet(keyFavouriteSeasons, setOf())
+            return value
+                .mapNotNull { it.toIntOrNull() }
+                .toSet()
         }
 }

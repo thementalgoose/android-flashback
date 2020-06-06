@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.map
 import tmg.flashback.base.BaseViewModel
 import tmg.flashback.home.list.HomeItem
 import tmg.flashback.repo.db.SeasonOverviewDB
+import tmg.flashback.repo.models.*
 import tmg.utilities.extensions.combinePair
 import tmg.utilities.lifecycle.Event
 
@@ -28,6 +29,7 @@ interface HomeViewModelInputs {
 interface HomeViewModelOutputs {
     val list: LiveData<List<HomeItem>>
     val openSeasonList: MutableLiveData<Event>
+    val currentSeason: LiveData<Int>
 }
 
 //endregion
@@ -39,6 +41,9 @@ class HomeViewModel(
     private val currentTab: ConflatedBroadcastChannel<HomeMenuItem> =
         ConflatedBroadcastChannel(HomeMenuItem.CALENDAR)
     private val season: ConflatedBroadcastChannel<Int> = ConflatedBroadcastChannel(2019)
+    override val currentSeason: LiveData<Int> = season
+        .asFlow()
+        .asLiveData(viewModelScope.coroutineContext)
 
     override val openSeasonList: MutableLiveData<Event> = MutableLiveData()
 
@@ -66,12 +71,37 @@ class HomeViewModel(
                         })
                 }
                 HomeMenuItem.DRIVERS -> {
-//                    list.addAll(rounds.standingsDriver().map {
-//
-//                    })
+                    val driverStandings = rounds.standingsDriver()
+                    list.addAll(driverStandings
+                        .values
+                        .sortedByDescending { it.second }
+                        .toList()
+                        .mapIndexed { index: Int, pair: Pair<RoundDriver, Int> ->
+                            val (roundDriver, points) = pair
+                            HomeItem.Driver(
+                                driver = roundDriver,
+                                points = points,
+                                position = index + 1,
+                                maxPointsInSeason = driverStandings.maxDriverPointsInSeason()
+                            )
+                        })
                 }
                 HomeMenuItem.CONSTRUCTORS -> {
-
+                    val constructorStandings = rounds.standingsConstructor()
+                    list.addAll(constructorStandings
+                        .values
+                        .sortedByDescending { it.second.allPoints() }
+                        .toList()
+                        .mapIndexed { index: Int, pair: Pair<Constructor, Map<String, Pair<Driver, Int>>> ->
+                            val (constructor, driverPoints) = pair
+                            HomeItem.Constructor(
+                                position = index + 1,
+                                constructor = constructor,
+                                driver = driverPoints.values.sortedByDescending { it.second },
+                                points = driverPoints.allPoints(),
+                                maxPointsInSeason = constructorStandings.maxConstructorPointsInSeason()
+                            )
+                        })
                 }
                 else -> {
                 }

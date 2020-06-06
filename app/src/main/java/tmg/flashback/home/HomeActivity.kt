@@ -37,11 +37,11 @@ class HomeActivity: BaseActivity() {
                     true
                 }
                 R.id.nav_constructor -> {
-                    viewModel.inputs.clickItem(HomeMenuItem.DRIVERS)
+                    viewModel.inputs.clickItem(HomeMenuItem.CONSTRUCTORS)
                     true
                 }
                 R.id.nav_seasons -> {
-                    viewModel.inputs.clickItem(HomeMenuItem.DRIVERS)
+                    viewModel.inputs.clickItem(HomeMenuItem.SEASONS)
                     false
                 }
                 else -> false
@@ -52,6 +52,10 @@ class HomeActivity: BaseActivity() {
 
         observe(viewModel.outputs.list) {
             adapter.list = it
+        }
+
+        observe(viewModel.outputs.currentSeason) {
+            season.text = it.toString()
         }
 
         observeEvent(viewModel.outputs.openSeasonList) {

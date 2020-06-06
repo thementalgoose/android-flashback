@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="false">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -23,6 +24,7 @@
                 android:layout_height="?attr/actionBarSize">
 
                 <TextView
+                    android:id="@+id/season"
                     style="@style/Text.Toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -51,7 +53,9 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/dataList"
         android:layout_width="match_parent"
+        android:fitsSystemWindows="false"
         android:layout_height="match_parent"
+        android:overScrollMode="never"
         android:paddingBottom="?attr/actionBarSize"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
 
