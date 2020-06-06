@@ -2,6 +2,8 @@
     <!-- Base application theme. -->
     <style name="LightTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowIsTranslucent">false</item>
         <item name="colorPrimary">#4A34B6</item>
         <item name="colorPrimaryDark">#4A34B6</item>
         <item name="colorAccent">@color/logo_gradient_1</item>
@@ -44,9 +46,8 @@
         <item name="android:windowBackground">@drawable/launch_screen</item>
     </style>
 
-    <style name="LightTheme.PullToRefresh" parent="LightTheme">
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:colorBackgroundCacheHint">@null</item>
+    <style name="TransparentBottomSheet" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
     </style>
 
     <style name="TransparentBack">
@@ -64,6 +65,22 @@
     <style name="Text.Toolbar" parent="Text">
         <item name="android:textSize">@dimen/textSizeXLarge</item>
         <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Text.BottomSheet.Title" parent="Text">
+        <item name="android:textSize">@dimen/textSizeLarge</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Text.BottomSheet.Item" parent="Text">
+        <item name="android:textSize">@dimen/textSizeMedium</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Text.BottomSheet.Header" parent="Text">
+        <item name="android:textSize">@dimen/textSizeSmall</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?attr/f1TextTertiary</item>
     </style>
 
     <!--======================================-->

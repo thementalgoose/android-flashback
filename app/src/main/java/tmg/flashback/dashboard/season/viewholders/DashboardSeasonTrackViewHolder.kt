@@ -2,7 +2,7 @@ package tmg.flashback.dashboard.season.viewholders
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.view_season_track.view.*
+import kotlinx.android.synthetic.main.view_legacy_season_track.view.*
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.R
 import tmg.flashback.dashboard.season.DashboardSeasonAdapterItem
