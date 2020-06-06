@@ -8,6 +8,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.R
 import tmg.flashback.base.BaseActivity
 import tmg.flashback.home.list.HomeAdapter
+import tmg.flashback.home.season.SeasonBottomSheetFragment
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 
@@ -59,7 +60,7 @@ class HomeActivity: BaseActivity() {
         }
 
         observeEvent(viewModel.outputs.openSeasonList) {
-            Toast.makeText(this, "Open season list", Toast.LENGTH_SHORT).show()
+            SeasonBottomSheetFragment().show(supportFragmentManager, "SEASON")
         }
     }
 

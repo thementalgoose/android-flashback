@@ -3,7 +3,7 @@ package tmg.flashback.dashboard.season.viewholders
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.view_season_header.view.*
+import kotlinx.android.synthetic.main.view_legacy_season_header.view.*
 import tmg.flashback.R
 import tmg.flashback.dashboard.season.DashboardSeasonAdapterItem
 import tmg.utilities.extensions.fromHtml

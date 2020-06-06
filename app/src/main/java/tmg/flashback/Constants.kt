@@ -4,6 +4,10 @@ import org.threeten.bp.Year
 import org.threeten.bp.format.DateTimeFormatter
 
 const val minimumSupportedYear = 1950
+val currentYear: Int
+    get() = Year.now().value
+val allYears: List<Int>
+    get() = (minimumSupportedYear..currentYear).map { it }
 
 val dateFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("dd MMMM yyyy")
 val timeFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm")

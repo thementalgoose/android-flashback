@@ -6,6 +6,7 @@ import tmg.flashback.admin.lockout.LockoutViewModel
 import tmg.flashback.dashboard.DashboardViewModel
 import tmg.flashback.dashboard.season.DashboardSeasonViewModel
 import tmg.flashback.home.HomeViewModel
+import tmg.flashback.home.season.SeasonViewModel
 import tmg.flashback.prefs.SharedPrefsDB
 import tmg.flashback.race.RaceViewModel
 import tmg.flashback.repo.db.*
@@ -23,8 +24,8 @@ var flashbackModule = module {
     viewModel { DashboardSeasonViewModel(get()) }
     viewModel { DashboardViewModel(get(), get(), get()) }
 
-
     viewModel { HomeViewModel(get()) }
+    viewModel { SeasonViewModel(get()) }
 
     viewModel { RaceViewModel(get(), get(), get()) }
 
