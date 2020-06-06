@@ -24,7 +24,6 @@ import tmg.flashback.dashboard.year.DashboardYearItem
 import tmg.flashback.race.RaceActivity
 import tmg.flashback.settings.SettingsActivity
 import tmg.flashback.settings.release.ReleaseBottomSheetFragment
-import tmg.flashback.standings.StandingsActivity
 import tmg.flashback.utils.AnimatorListener
 import tmg.flashback.utils.bottomsheet.BottomSheetAdapter
 import tmg.utilities.bottomsheet.BottomSheetFader
@@ -78,7 +77,7 @@ class DashboardActivity : BaseActivity() {
 
 
         observeEvent(viewModel.outputs.showStandings) {
-            startActivity(StandingsActivity.intent(this, it))
+//            startActivity(StandingsActivity.intent(this, it))
         }
 
 

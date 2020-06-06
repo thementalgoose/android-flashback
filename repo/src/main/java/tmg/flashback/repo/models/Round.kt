@@ -96,12 +96,21 @@ data class RoundRaceResult(
     val fastestLap: FastestLap?
 )
 
+/**
+ * Get the number of races that have been completed (accurate to the nearest day)
+ */
 val List<Round>.completed: Int
     get() = this.count { it.date < LocalDate.now() }
 
+/**
+ * Get the number of races that have been upcoming (accurate to the nearest day)
+ */
 val List<Round>.upcoming: Int
     get() = this.count { it.date >= LocalDate.now() }
 
+/**
+ * Get the constructor standings for the season
+ */
 fun List<Round>.standingsConstructor(): Map<String, Pair<Constructor, Map<String, Pair<Driver, Int>>>> {
     val returnMap: MutableMap<String, Pair<Constructor, MutableMap<String, Pair<Driver, Int>>>> = mutableMapOf()
     this.forEach { round ->
@@ -133,6 +142,25 @@ fun List<Round>.standingsConstructor(): Map<String, Pair<Constructor, Map<String
     return returnMap
 }
 
+/**
+ * Get the maximum points that a team has scored in the season
+ * (ie. Points that the constructors champion has scored)
+ */
+fun Map<String, Pair<Constructor, Map<String, Pair<Driver, Int>>>>.maxConstructorPointsInSeason(): Int {
+    return this.values.maxBy { it.second.allPoints() }?.second?.allPoints() ?: 0
+}
+
+/**
+ * Get the maximum points that a driver has scores in the season
+ * (ie. Points that the drivers champion has scored)
+ */
+fun Map<String, Pair<RoundDriver, Int>>.maxDriverPointsInSeason(): Int {
+    return this.values.maxBy { it.second }?.second ?: 0
+}
+
+/**
+ * Get the driver standings for the season
+ */
 fun List<Round>.standingsDriver(): Map<String, Pair<RoundDriver, Int>> {
     val returnMap: MutableMap<String, Pair<RoundDriver, Int>> = mutableMapOf()
     this.forEach { round ->
@@ -149,4 +177,7 @@ fun List<Round>.standingsDriver(): Map<String, Pair<RoundDriver, Int>> {
     return returnMap
 }
 
+/**
+ * Get all the points that drivers in a constructor has achieved
+ */
 fun Map<String, Pair<Driver, Int>>.allPoints(): Int = this.map { it.value.second }.sum()

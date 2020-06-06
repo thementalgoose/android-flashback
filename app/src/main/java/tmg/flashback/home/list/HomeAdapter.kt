@@ -60,7 +60,7 @@ class HomeAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
         private fun areTracksTheSame(old: Int, new: Int): Boolean {
             val oldItem = oldList[old] as? HomeItem.Track
-            val newItem = newList[old] as? HomeItem.Track
+            val newItem = newList[new] as? HomeItem.Track
             if (oldItem != null && newItem != null) {
                 return oldItem.raceName == newItem.raceName &&
                         oldItem.raceCountryISO == newItem.raceCountryISO
