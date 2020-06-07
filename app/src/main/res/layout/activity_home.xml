@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@null"
+        app:layout_behavior=".utils.AppBarLockableBehavior"
         app:elevation="0dp">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
@@ -68,7 +69,8 @@
         android:fitsSystemWindows="false"
         android:overScrollMode="never"
         android:paddingBottom="?attr/actionBarSize"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+        tools:listitem="@layout/view_home_track" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/menu"
@@ -80,5 +82,20 @@
         app:itemTextColor="@drawable/selector_bottom_nav_color"
         app:labelVisibilityMode="labeled"
         app:menu="@menu/menu_home" />
+
+    <View
+        android:clickable="true"
+        android:focusable="true"
+        android:id="@+id/overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/overlay"
+        android:visibility="gone" />
+
+    <include
+        android:id="@+id/bottomSheet"
+        layout="@layout/bottom_sheet_season"
+        android:elevation="8dp"
+        tools:visibility="gone" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

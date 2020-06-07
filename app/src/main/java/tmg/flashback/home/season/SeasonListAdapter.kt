@@ -60,7 +60,6 @@ class SeasonListAdapter(
         position: Int,
         payloads: MutableList<Any>
     ) {
-        Log.i("Flashback", "Binding position $position with payload $payloads")
         when (getItemViewType(position)) {
             viewTypeSeason -> (holder as SeasonViewHolder).bind(list[position] as SeasonListItem.Season, payloads.isNotEmpty(), toggle)
             viewTypeHeader -> (holder as HeaderViewHolder).bind(list[position] as SeasonListItem.Header, payloads.isNotEmpty(), toggle)
@@ -68,7 +67,6 @@ class SeasonListAdapter(
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        Log.i("Flashback", "Binding position $position with no payload")
         this.onBindViewHolder(holder, position, mutableListOf())
     }
 
