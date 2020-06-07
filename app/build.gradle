@@ -72,7 +72,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.3.0-alpha03"
 
     // Material components
-    implementation 'com.google.android.material:material:1.2.0-alpha06'
+    implementation 'com.google.android.material:material:1.3.0-alpha01'
 
     // ConstraintLayout
     implementation "androidx.constraintlayout:constraintlayout:2.0.0-beta6"
@@ -88,6 +88,9 @@ dependencies {
 
     // Progress bar
     implementation 'com.aswin:CustomArc:1.0.2'
+
+    // Fast indicator
+    implementation 'com.reddit:indicator-fast-scroll:1.3.0'
 
     // TMG dependencies
     implementation 'com.github.thementalgoose:android-components:2.0.1'

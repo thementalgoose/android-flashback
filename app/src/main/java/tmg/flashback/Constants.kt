@@ -9,6 +9,8 @@ val currentYear: Int
 val allYears: List<Int>
     get() = (minimumSupportedYear..currentYear).map { it }
 
+const val bottomSheetFastScrollDuration = 800
+
 val dateFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("dd MMMM yyyy")
 val timeFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm")
 

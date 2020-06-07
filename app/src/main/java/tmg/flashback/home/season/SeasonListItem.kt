@@ -6,10 +6,12 @@ import tmg.flashback.R
 
 sealed class SeasonListItem {
 
+    object Top: SeasonListItem()
+
     data class Season(
         val season: Int,
         val isFavourited: Boolean,
-        val fixed: String? = null
+        val fixed: HeaderType
     ): SeasonListItem()
 
     data class Header(
