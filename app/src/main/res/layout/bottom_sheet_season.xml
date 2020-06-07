@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bottomSheetContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/transparent">
+    android:elevation="8dp"
+    android:background="@drawable/background_bottom_sheet"
+    app:layout_behavior="@string/bottom_sheet_behavior">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/optionsList"
@@ -17,18 +20,18 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.reddit.indicatorfastscroll.FastScrollerView
-        android:paddingTop="@dimen/paddingMedium"
-        android:paddingBottom="@dimen/paddingMedium"
         android:id="@+id/fastscroller"
         android:layout_width="@dimen/bottomSheetFastScrollWidth"
         android:layout_height="wrap_content"
         android:elevation="4dp"
+        android:paddingTop="@dimen/paddingMedium"
+        android:paddingBottom="@dimen/paddingMedium"
         android:textColor="?attr/f1TextTertiary"
         app:iconColor="?attr/f1TextTertiary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:textPadding="@dimen/paddingXSmall" />
+        app:textPadding="@dimen/paddingSmall" />
 
     <com.reddit.indicatorfastscroll.FastScrollerThumbView
         android:id="@+id/fastscrollerThumb"
@@ -37,11 +40,11 @@
         android:layout_alignTop="@+id/fastscroller"
         android:layout_marginEnd="16dp"
         android:clipToPadding="false"
-        app:thumbColor="?attr/f1BackgroundSecondary"
-        app:iconColor="?attr/f1TextTertiary"
         android:textColor="?attr/f1TextTertiary"
+        app:iconColor="?attr/f1TextTertiary"
         app:layout_constraintBottom_toBottomOf="@id/fastscroller"
         app:layout_constraintEnd_toStartOf="@id/fastscroller"
-        app:layout_constraintTop_toTopOf="@id/fastscroller" />
+        app:layout_constraintTop_toTopOf="@id/fastscroller"
+        app:thumbColor="?attr/f1BackgroundSecondary" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

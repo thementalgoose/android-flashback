@@ -31,8 +31,6 @@ class QualifyingResultViewHolder(view: View, private val updateAdapterType: Race
     fun bind(model: RaceAdapterModel.Single, type: RaceAdapterType) {
         this.showQualifying = model.showQualifying
 
-        Log.i("Flashback", "Binding adapter type $type - ${model.showQualifying}")
-
         itemView.apply {
 
             when (model.qualified) {

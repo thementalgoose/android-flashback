@@ -6,6 +6,7 @@
     <dimen name="bottomSheetPillHeight">4dp</dimen>
     <dimen name="bottomSheetIconSize">20dp</dimen>
     <dimen name="bottomSheetFastScrollWidth">28dp</dimen>
+    <dimen name="bottomSheetPeekHeight">350dp</dimen>
 
     <!-- Text sizes -->
 

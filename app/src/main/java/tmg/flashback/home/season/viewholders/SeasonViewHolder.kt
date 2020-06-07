@@ -30,11 +30,8 @@ class SeasonViewHolder(
         currentSeason = season.season
         isFavourited = season.isFavourited
 
-//        itemView.season.setBackgroundColor(colours.random().first.toColorInt())
         itemView.label.text = season.season.toString()
         itemView.favourite.setImageResource(if (season.isFavourited) R.drawable.ic_star_filled_coloured else R.drawable.ic_star_outline)
-
-        Log.i("Flashback", "Indent is visible $isCurrentlyOnScreen")
 
         if (isCurrentlyOnScreen) {
             if (indentState) { // true = indent it!
