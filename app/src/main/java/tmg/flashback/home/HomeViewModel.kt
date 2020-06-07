@@ -12,7 +12,9 @@ import tmg.flashback.base.BaseViewModel
 import tmg.flashback.home.list.HomeItem
 import tmg.flashback.repo.db.SeasonOverviewDB
 import tmg.flashback.repo.models.*
+import tmg.flashback.utils.SeasonRound
 import tmg.utilities.extensions.combinePair
+import tmg.utilities.lifecycle.DataEvent
 import tmg.utilities.lifecycle.Event
 
 //region Inputs
@@ -20,6 +22,7 @@ import tmg.utilities.lifecycle.Event
 interface HomeViewModelInputs {
     fun clickItem(item: HomeMenuItem)
     fun selectSeason(season: Int)
+    fun clickTrack(season: Int, round: Int)
 }
 
 //endregion
@@ -29,6 +32,7 @@ interface HomeViewModelInputs {
 interface HomeViewModelOutputs {
     val list: LiveData<List<HomeItem>>
     val openSeasonList: MutableLiveData<Event>
+    val openRace: MutableLiveData<DataEvent<SeasonRound>>
     val currentSeason: LiveData<Int>
 }
 
@@ -46,6 +50,7 @@ class HomeViewModel(
         .asLiveData(viewModelScope.coroutineContext)
 
     override val openSeasonList: MutableLiveData<Event> = MutableLiveData()
+    override val openRace: MutableLiveData<DataEvent<SeasonRound>> = MutableLiveData()
 
     override val list: LiveData<List<HomeItem>> = season
         .asFlow()
@@ -125,6 +130,10 @@ class HomeViewModel(
 
     override fun selectSeason(season: Int) {
         this.season.offer(season)
+    }
+
+    override fun clickTrack(season: Int, round: Int) {
+        this.openRace.value = DataEvent(SeasonRound(season, round))
     }
 
     //endregion

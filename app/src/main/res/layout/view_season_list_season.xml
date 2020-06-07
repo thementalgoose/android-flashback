@@ -11,9 +11,11 @@
 
     <ImageView
         android:id="@+id/season"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="@dimen/bottomSheetBoxSize"
+        android:layout_height="@dimen/bottomSheetBoxSize"
         android:layout_marginStart="@dimen/paddingMedium"
+        android:layout_marginTop="@dimen/paddingSmall"
+        android:layout_marginBottom="@dimen/paddingSmall"
         android:background="@color/colorTheme"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

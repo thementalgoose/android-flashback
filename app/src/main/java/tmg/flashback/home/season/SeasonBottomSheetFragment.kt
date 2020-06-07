@@ -1,12 +1,18 @@
 package tmg.flashback.home.season
 
 import android.app.Dialog
+import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.View
+import android.widget.Toast
+import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.reddit.indicatorfastscroll.FastScrollItemIndicator
 import kotlinx.android.synthetic.main.bottom_sheet_season.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -16,18 +22,33 @@ import tmg.flashback.bottomSheetFastScrollDuration
 import tmg.flashback.extensions.dimensionPx
 import tmg.flashback.minimumSupportedYear
 import tmg.utilities.extensions.observe
+import tmg.utilities.extensions.observeEvent
 
 
 class SeasonBottomSheetFragment: BaseBottomSheetFragment() {
 
     private lateinit var adapter: SeasonListAdapter
+    private var callback: SeasonRequestedCallback? = null
 
     private val viewModel: SeasonViewModel by viewModel()
 
     override fun layoutId(): Int = R.layout.bottom_sheet_season
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        return super.onCreateDialog(savedInstanceState) as BottomSheetDialog
+        val dialog =  super.onCreateDialog(savedInstanceState) as BottomSheetDialog
+
+        if(dialog.window != null) {
+            dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        }
+
+        return dialog
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is SeasonRequestedCallback) {
+            callback = context
+        }
     }
 
     override fun initViews() {
@@ -44,10 +65,6 @@ class SeasonBottomSheetFragment: BaseBottomSheetFragment() {
         )
         optionsList.adapter = adapter
         optionsList.layoutManager = LinearLayoutManager(context)
-
-        observe(viewModel.outputs.list) {
-            adapter.list = it
-        }
 
         fastscroller.setupWithRecyclerView(optionsList, {
             when (val item = adapter.list[it]) {
@@ -80,13 +97,18 @@ class SeasonBottomSheetFragment: BaseBottomSheetFragment() {
         fastscroller.translationX = requireContext().dimensionPx(R.dimen.bottomSheetFastScrollWidth)
 
         behavior.addBottomSheetCallback(SeasonBottomSheetCallback(
-            expanded = {
-                expand()
-            },
-            collapsed = {
-                collapse()
-            }
+            expanded = { expand() },
+            collapsed = { collapse() }
         ))
+
+        observe(viewModel.outputs.list) {
+            adapter.list = it
+        }
+
+        observeEvent(viewModel.outputs.showSeasonEvent) {
+            callback?.seasonRequested(it)
+            dismiss()
+        }
     }
 
     private fun expand() {
