@@ -1,6 +1,9 @@
 package tmg.flashback.home
 
+import android.graphics.Color
 import android.os.Bundle
+import android.view.WindowManager
+import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_home.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -12,6 +15,7 @@ import tmg.flashback.home.season.SeasonRequestedCallback
 import tmg.flashback.race.RaceActivity
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
+
 
 class HomeActivity : BaseActivity(), SeasonRequestedCallback {
 
@@ -54,6 +58,8 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback {
             return@setOnNavigationItemSelectedListener shouldUpdateTab
         }
 
+        setupLayout()
+
         observe(viewModel.outputs.list) {
             adapter.list = it
         }
@@ -67,7 +73,25 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback {
         }
 
         observeEvent(viewModel.outputs.openRace) { (season, round) ->
-            startActivity(RaceActivity.intent(this, season, round))
+            startActivity(RaceActivity.intent(this, season,  round))
+        }
+    }
+
+    private fun setupLayout() {
+
+        // Make the status bar transparent
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
+        window.statusBarColor = Color.TRANSPARENT
+        window.navigationBarColor = Color.TRANSPARENT
+
+        // Set the status bar padding
+        ViewCompat.setOnApplyWindowInsetsListener(container) { view, insets ->
+            titlebar.setPadding(0, insets.systemWindowInsetTop, 0, 0)
+            menu.setPadding(0, 0, 0, insets.systemWindowInsetBottom)
+            dataList.setPadding(0, 0, 0, insets.systemWindowInsetBottom)
+            insets
         }
     }
 

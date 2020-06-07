@@ -71,22 +71,22 @@ class SeasonBottomSheetFragment: BaseBottomSheetFragment() {
                 SeasonListItem.Top -> null
                 is SeasonListItem.Season -> {
                     when (item.fixed) {
-                        HeaderType.CURRENT -> FastScrollItemIndicator.Icon(R.drawable.ic_status_finished)
-                        HeaderType.FAVOURITED -> FastScrollItemIndicator.Icon(R.drawable.ic_star_filled)
+                        HeaderType.CURRENT -> FastScrollItemIndicator.Icon(R.drawable.ic_bottom_sheet_current)
+                        HeaderType.FAVOURITED -> FastScrollItemIndicator.Icon(R.drawable.ic_bottom_sheet_favourite)
                         HeaderType.ALL -> {
                             if (item.season != minimumSupportedYear) {
-                                FastScrollItemIndicator.Text("${item.season.toString().substring(2, 3)}0")
+                                FastScrollItemIndicator.Text("${item.season.toString().substring(2, 3)}")
                             }
                             else {
-                                FastScrollItemIndicator.Icon(R.drawable.ic_play)
+                                FastScrollItemIndicator.Icon(R.drawable.ic_bottom_sheet_start)
                             }
                         }
                     }
                 }
                 is SeasonListItem.Header -> {
                     when (item.type) {
-                        HeaderType.CURRENT -> FastScrollItemIndicator.Icon(R.drawable.ic_status_finished)
-                        HeaderType.FAVOURITED -> FastScrollItemIndicator.Icon(R.drawable.ic_star_filled)
+                        HeaderType.CURRENT -> FastScrollItemIndicator.Icon(R.drawable.ic_bottom_sheet_current)
+                        HeaderType.FAVOURITED -> FastScrollItemIndicator.Icon(R.drawable.ic_bottom_sheet_favourite)
                         HeaderType.ALL -> null
                     }
                 }
