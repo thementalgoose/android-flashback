@@ -70,6 +70,5 @@ class SeasonViewHolder(
                 favouriteToggled?.invoke(currentSeason)
             }
         }
-        Toast.makeText(p0?.context, "CLICKED CELL", Toast.LENGTH_SHORT).show()
     }
 }

@@ -2,33 +2,43 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/f1BackgroundPrimary"
     android:fitsSystemWindows="false">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@null"
-        android:fitsSystemWindows="true"
         app:elevation="0dp">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/collapsingtoolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fitsSystemWindows="true"
             app:layout_scrollFlags="exitUntilCollapsed|scroll|enterAlways">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/titlebar"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize">
+                android:layout_height="wrap_content"
+                android:background="?attr/f1BackgroundPrimary"
+                android:fitsSystemWindows="false">
 
                 <TextView
                     android:id="@+id/season"
                     style="@style/Text.Toolbar"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fitsSystemWindows="true"
                     android:gravity="center"
+                    android:paddingTop="@dimen/paddingMedium"
+                    android:paddingBottom="@dimen/paddingMedium"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
                     tools:text="2020" />
 
                 <ImageButton
@@ -40,9 +50,9 @@
                     android:scaleType="fitCenter"
                     android:src="@drawable/logo_foreground"
                     android:tint="?attr/f1TextPrimary"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@id/season"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="@id/season" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -54,6 +64,7 @@
         android:id="@+id/dataList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:clipToPadding="false"
         android:fitsSystemWindows="false"
         android:overScrollMode="never"
         android:paddingBottom="?attr/actionBarSize"
@@ -64,6 +75,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
+        android:fitsSystemWindows="true"
         app:itemIconTint="@drawable/selector_bottom_nav_color"
         app:itemTextColor="@drawable/selector_bottom_nav_color"
         app:labelVisibilityMode="labeled"

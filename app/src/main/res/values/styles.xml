@@ -1,12 +1,17 @@
 <resources>
     <!-- Base application theme. -->
     <style name="LightTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="android:windowLightStatusBar">false</item>
-        <item name="android:windowIsTranslucent">false</item>
         <item name="colorPrimary">#4A34B6</item>
         <item name="colorPrimaryDark">#4A34B6</item>
         <item name="colorAccent">@color/logo_gradient_1</item>
+
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">false</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/white</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
 
         <item name="f1Selected">#4403DAC5</item>
 
