@@ -2,6 +2,7 @@ package tmg.flashback.settings.release
 
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.core.view.WindowInsetsCompat
 import kotlinx.android.synthetic.main.activity_release_notes.*
 import kotlinx.android.synthetic.main.toolbar.view.*
 import tmg.flashback.R
@@ -17,8 +18,7 @@ class ReleaseActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        initToolbar(R.id.toolbar, true, indicator = R.drawable.ic_back)
-        toolbarLayout.header.text = getString(R.string.settings_help_release_notes_title)
+        header.text = getString(R.string.settings_help_release_notes_title)
 
         val list = releaseNotes
             .toList()
@@ -26,6 +26,10 @@ class ReleaseActivity : BaseActivity() {
             .map { it.second }
 
         tvReleaseNotes.text = list.map { getString(it) }.joinToString("<br/><br/>").fromHtml()
+    }
+
+    override fun setInsets(insets: WindowInsetsCompat) {
+        titlebar.setPadding(0, insets.systemWindowInsetTop, 0, 0)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

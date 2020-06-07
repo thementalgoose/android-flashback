@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.activity_settings.*
@@ -39,6 +40,8 @@ class SettingsActivity : BaseActivity() {
         setupSettings()
         setupBottomSheet()
 
+        back.setOnClickListener { finish() }
+
         observe(viewModel.outputs.settings) {
             adapter.list = it
         }
@@ -68,6 +71,10 @@ class SettingsActivity : BaseActivity() {
         }
     }
 
+    override fun setInsets(insets: WindowInsetsCompat) {
+        titlebar.setPadding(0, insets.systemWindowInsetTop, 0, 0)
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
             finish()
@@ -77,8 +84,7 @@ class SettingsActivity : BaseActivity() {
 
     private fun setupSettings() {
 
-        initToolbar(R.id.toolbar, true, indicator = R.drawable.ic_back)
-        toolbarLayout.header.text = getString(R.string.settings_title)
+        header.text = getString(R.string.settings_title)
 
         adapter = SettingsAdapter(
             prefClicked = { key ->
