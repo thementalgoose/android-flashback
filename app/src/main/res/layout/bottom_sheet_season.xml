@@ -1,47 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_bottom_sheet">
 
-    <LinearLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/optionsList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:overScrollMode="never"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <View
-            android:id="@+id/pill"
-            android:layout_width="@dimen/bottomSheetPillWidth"
-            android:layout_height="@dimen/bottomSheetPillHeight"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/paddingSmall"
-            android:background="?attr/f1BackgroundSecondary" />
+    <com.reddit.indicatorfastscroll.FastScrollerView
+        android:id="@+id/fastscroller"
+        android:layout_width="@dimen/bottomSheetFastScrollWidth"
+        android:layout_height="wrap_content"
+        android:background="@color/colorTheme"
+        android:elevation="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/title"
-            style="@style/Text.BottomSheet.Title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/paddingSmall"
-            android:gravity="center"
-            android:text="@string/nav_seasons" />
+    <com.reddit.indicatorfastscroll.FastScrollerThumbView
+        android:id="@+id/fastscrollerThumb"
+        android:layout_width="40dp"
+        android:layout_height="0dp"
+        android:layout_alignTop="@+id/fastscroller"
+        android:layout_marginEnd="16dp"
+        android:clipToPadding="false"
+        app:layout_constraintBottom_toBottomOf="@id/fastscroller"
+        app:layout_constraintEnd_toStartOf="@id/fastscroller"
+        app:layout_constraintTop_toTopOf="@id/fastscroller" />
 
-        <View
-            android:id="@+id/divider"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="@dimen/paddingSmall"
-            android:layout_marginBottom="@dimen/paddingSmall"
-            android:background="?attr/f1BackgroundSecondary" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/optionsList"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:nestedScrollingEnabled="false"
-            android:overScrollMode="never" />
-
-    </LinearLayout>
-
-</androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

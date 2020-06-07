@@ -42,7 +42,6 @@ class SeasonViewModel(
     override val list: MutableLiveData<List<SeasonListItem>> = MutableLiveData(buildList(favouriteSeasons, headers))
     override val showSeasonEvent: MutableLiveData<DataEvent<Int>> = MutableLiveData()
 
-
     var inputs: SeasonViewModelInputs = this
     var outputs: SeasonViewModelOutputs = this
 
@@ -58,8 +57,6 @@ class SeasonViewModel(
     }
 
     override fun toggleFavourite(season: Int) {
-        Log.i("Flashback", "Toggle favourite $season")
-        Log.i("Flashback", "Favourite set $favouriteSeasons")
         if (favouriteSeasons.contains(season)) {
             favouriteSeasons.remove(season)
         }
@@ -81,16 +78,14 @@ class SeasonViewModel(
         expandedState: Headers
     ): List<SeasonListItem> {
 
-        Log.i("Flashback", "Favourite buildList set $favouritedSet")
-
-        val list: MutableList<SeasonListItem> = mutableListOf()
+        val list: MutableList<SeasonListItem> = mutableListOf(SeasonListItem.Top)
 
         // Current
         list.add(SeasonListItem.Header(HeaderType.CURRENT, null))
         list.add(SeasonListItem.Season(
             season = currentYear,
             isFavourited = favouritedSet.contains(currentYear),
-            fixed = "current"
+            fixed = HeaderType.CURRENT
         ))
 
         // Favourites
@@ -108,7 +103,7 @@ class SeasonViewModel(
                     SeasonListItem.Season(
                         season = it,
                         isFavourited = true,
-                        fixed = "featured"
+                        fixed = HeaderType.FAVOURITED
                     )
                 }
             )
@@ -122,14 +117,12 @@ class SeasonViewModel(
                     SeasonListItem.Season(
                         season = it,
                         isFavourited = favouritedSet.contains(it),
-                        fixed = "all"
+                        fixed = HeaderType.ALL
                     )
                 }
                 .sortedByDescending { it.season }
             )
         }
-
-        Log.i("Flashback", "List $list")
 
         return list
     }
