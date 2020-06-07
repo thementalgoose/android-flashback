@@ -25,6 +25,10 @@
         tools:text="Header" />
 
     <ImageView
+        android:paddingTop="@dimen/paddingSmall"
+        android:paddingBottom="@dimen/paddingSmall"
+        android:paddingStart="@dimen/paddingSmall"
+        android:paddingEnd="@dimen/paddingSmall"
         android:id="@+id/arrow"
         android:layout_width="@dimen/bottomSheetIconSize"
         android:layout_height="@dimen/bottomSheetIconSize"

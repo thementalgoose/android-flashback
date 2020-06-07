@@ -5,6 +5,11 @@
         <item name="colorPrimaryDark">#4A34B6</item>
         <item name="colorAccent">@color/logo_gradient_1</item>
 
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+
         <item name="f1Selected">#4403DAC5</item>
 
         <item name="f1TextPrimary">#181818</item>
@@ -76,6 +81,11 @@
     <style name="Text.BottomSheet.Item" parent="Text">
         <item name="android:textSize">@dimen/textSizeMedium</item>
         <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Text.BottomSheet.Label" parent="Text">
+        <item name="android:textSize">@dimen/textSizeSmall</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="Text.BottomSheet.Header" parent="Text">

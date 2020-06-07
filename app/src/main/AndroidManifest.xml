@@ -24,19 +24,11 @@
         </activity>
 
         <activity
-            android:name=".dashboard.DashboardActivity"
-            android:label="" />
-
-        <activity
-            android:name=".race.RaceActivity"
-            android:label="" />
-
-        <activity
             android:name=".home.HomeActivity"
             android:label="" />
 
         <activity
-            android:name=".standings.StandingsActivity"
+            android:name=".race.RaceActivity"
             android:label="" />
 
         <activity

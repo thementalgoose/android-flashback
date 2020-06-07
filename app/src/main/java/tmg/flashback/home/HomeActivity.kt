@@ -1,8 +1,14 @@
 package tmg.flashback.home
 
 import android.content.Context
+import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
+import android.view.View
+import android.view.WindowManager
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -18,7 +24,9 @@ import tmg.flashback.home.list.HomeAdapter
 import tmg.flashback.home.season.*
 import tmg.flashback.minimumSupportedYear
 import tmg.flashback.race.RaceActivity
+import tmg.flashback.settings.SettingsActivity
 import tmg.utilities.bottomsheet.BottomSheetFader
+import tmg.utilities.extensions.collapse
 import tmg.utilities.extensions.hidden
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
@@ -65,12 +73,14 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback {
                 }
                 else -> false
             }
-
             return@setOnNavigationItemSelectedListener shouldUpdateTab
         }
 
         setupBottomSheet()
-        setupLayout()
+
+        settings.setOnClickListener {
+            startActivity(Intent(this, SettingsActivity::class.java))
+        }
 
         overlay.setOnClickListener {
             bottomSheetBehavior.hidden()
@@ -103,13 +113,20 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback {
         }
 
         observeEvent(seasonViewModel.outputs.showSeasonEvent) {
-            bottomSheetBehavior.hidden()
-            optionsList.scrollToPosition(0)
+            bottomSheetBehavior.hide()
             viewModel.inputs.selectSeason(it)
         }
 
         //endregion
+    }
 
+    override fun onBackPressed() {
+        if (bottomSheetBehavior.state != BottomSheetBehavior.STATE_HIDDEN) {
+            bottomSheetBehavior.hide()
+        }
+        else {
+            super.onBackPressed()
+        }
     }
 
     private fun setupBottomSheet() {
@@ -184,13 +201,10 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback {
         seasonAdapter.setToggle(false)
     }
 
-    private fun setupLayout() {
-        val appBarBehavior = (appbar.layoutParams as? CoordinatorLayout.LayoutParams)?.behavior as? AppBarLayout.Behavior
-        appBarBehavior?.setDragCallback(object : AppBarLayout.Behavior.DragCallback() {
-            override fun canDrag(appBarLayout: AppBarLayout): Boolean {
-                return bottomSheetBehavior.state == BottomSheetBehavior.STATE_HIDDEN
-            }
-        })
+    override fun setInsets(insets: WindowInsetsCompat) {
+        titlebar.setPadding(0, insets.systemWindowInsetTop, 0, 0)
+        menu.setPadding(0, 0, 0, insets.systemWindowInsetBottom)
+        dataList.setPadding(0, 0, 0, insets.systemWindowInsetBottom)
     }
 
     //region SeasonRequestedCallback
@@ -208,5 +222,11 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback {
         override fun canScrollVertically(): Boolean {
             return canScrollVertical()
         }
+    }
+
+    fun BottomSheetBehavior<*>.hide() {
+        this.hidden()
+        optionsList.scrollToPosition(0)
+        seasonCollapse()
     }
 }
