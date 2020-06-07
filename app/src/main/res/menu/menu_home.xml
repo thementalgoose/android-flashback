@@ -5,24 +5,20 @@
     <item
         android:id="@+id/nav_calendar"
         android:icon="@drawable/nav_calendar"
-        android:title="@string/nav_calendar"
-        app:showAsAction="always" />
+        android:title="@string/nav_calendar"/>
 
     <item
         android:id="@+id/nav_drivers"
         android:icon="@drawable/nav_driver"
-        android:title="@string/nav_drivers"
-        app:showAsAction="always" />
+        android:title="@string/nav_drivers"/>
 
     <item
         android:id="@+id/nav_constructor"
         android:icon="@drawable/nav_constructor"
-        android:title="@string/nav_constructors"
-        app:showAsAction="always" />
+        android:title="@string/nav_constructors"/>
 
     <item
         android:id="@+id/nav_seasons"
         android:icon="@drawable/nav_seasons"
-        android:title="@string/nav_seasons"
-        app:showAsAction="always" />
+        android:title="@string/nav_seasons"/>
 </menu>

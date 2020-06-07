@@ -10,6 +10,7 @@ import tmg.flashback.utils.SeasonRound
 import tmg.flashback.utils.getFlagResourceAlpha3
 
 class TrackViewHolder(
+    val trackClicked: (season: Int, round: Int) -> Unit,
     itemView: View
 ): RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
@@ -32,6 +33,6 @@ class TrackViewHolder(
     }
 
     override fun onClick(p0: View?) {
-
+        trackClicked(data.first, data.second)
     }
 }

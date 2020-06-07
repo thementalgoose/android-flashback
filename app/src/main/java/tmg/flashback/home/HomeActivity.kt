@@ -1,7 +1,6 @@
 package tmg.flashback.home
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_home.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -9,10 +8,12 @@ import tmg.flashback.R
 import tmg.flashback.base.BaseActivity
 import tmg.flashback.home.list.HomeAdapter
 import tmg.flashback.home.season.SeasonBottomSheetFragment
+import tmg.flashback.home.season.SeasonRequestedCallback
+import tmg.flashback.race.RaceActivity
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 
-class HomeActivity: BaseActivity() {
+class HomeActivity : BaseActivity(), SeasonRequestedCallback {
 
     private val viewModel: HomeViewModel by viewModel()
 
@@ -23,7 +24,9 @@ class HomeActivity: BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        adapter = HomeAdapter()
+        adapter = HomeAdapter(
+            trackClicked = viewModel.inputs::clickTrack
+        )
         dataList.adapter = adapter
         dataList.layoutManager = LinearLayoutManager(this)
 
@@ -62,6 +65,18 @@ class HomeActivity: BaseActivity() {
         observeEvent(viewModel.outputs.openSeasonList) {
             SeasonBottomSheetFragment().show(supportFragmentManager, "SEASON")
         }
+
+        observeEvent(viewModel.outputs.openRace) { (season, round) ->
+            startActivity(RaceActivity.intent(this, season, round))
+        }
     }
+
+    //region SeasonRequestedCallback
+
+    override fun seasonRequested(season: Int) {
+        viewModel.inputs.selectSeason(season)
+    }
+
+    //endregion
 
 }

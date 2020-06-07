@@ -177,7 +177,7 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
             raceAdapter.update(adapterType, list)
         }
 
-//        bnvType.selectedItemId = R.id.nav_race
+        bnvType.selectedItemId = R.id.nav_race
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

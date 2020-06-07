@@ -4,8 +4,8 @@
     <dimen name="toolbarSettingsIcon">36dp</dimen>
     <dimen name="bottomSheetPillWidth">36dp</dimen>
     <dimen name="bottomSheetPillHeight">4dp</dimen>
-    <dimen name="bottomSheetIconSize">16dp</dimen>
-    <dimen name="bottomSheetFastScrollWidth">32dp</dimen>
+    <dimen name="bottomSheetIconSize">20dp</dimen>
+    <dimen name="bottomSheetFastScrollWidth">28dp</dimen>
 
     <!-- Text sizes -->
 
@@ -104,5 +104,6 @@
 
     <dimen name="standingsDriverSize">32dp</dimen>
     <dimen name="constructorStandingsSize">40dp</dimen>
+    <dimen name="bottomSheetBoxSize">32dp</dimen>
 
 </resources>
