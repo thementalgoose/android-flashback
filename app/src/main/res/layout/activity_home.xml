@@ -13,8 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@null"
-        app:layout_behavior=".utils.AppBarLockableBehavior"
-        app:elevation="0dp">
+        app:elevation="0dp"
+        app:layout_behavior=".utils.AppBarLockableBehavior">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/collapsingtoolbar"
@@ -43,13 +43,13 @@
                     tools:text="2020" />
 
                 <ImageButton
+                    android:id="@+id/settings"
                     android:layout_width="@dimen/toolbarSettingsIcon"
                     android:layout_height="@dimen/toolbarSettingsIcon"
                     android:layout_marginEnd="@dimen/paddingMedium"
-                    android:background="@null"
+                    android:background="@drawable/rounded_ripple"
                     android:contentDescription="@string/settings_title"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/logo_foreground"
+                    android:src="@drawable/nav_settings"
                     android:tint="?attr/f1TextPrimary"
                     app:layout_constraintBottom_toBottomOf="@id/season"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -65,10 +65,10 @@
         android:id="@+id/dataList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="?attr/actionBarSize"
         android:clipToPadding="false"
         android:fitsSystemWindows="false"
         android:overScrollMode="never"
-        android:paddingBottom="?attr/actionBarSize"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
         tools:listitem="@layout/view_home_track" />
 
@@ -84,12 +84,12 @@
         app:menu="@menu/menu_home" />
 
     <View
-        android:clickable="true"
-        android:focusable="true"
         android:id="@+id/overlay"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/overlay"
+        android:clickable="true"
+        android:focusable="true"
         android:visibility="gone" />
 
     <include

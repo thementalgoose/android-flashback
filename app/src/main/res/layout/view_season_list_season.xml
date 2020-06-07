@@ -9,17 +9,32 @@
     android:focusable="true"
     android:foreground="@drawable/ripple">
 
-    <ImageView
-        android:id="@+id/season"
-        android:layout_width="@dimen/bottomSheetBoxSize"
-        android:layout_height="@dimen/bottomSheetBoxSize"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/paddingMedium"
         android:layout_marginTop="@dimen/paddingSmall"
         android:layout_marginBottom="@dimen/paddingSmall"
-        android:background="@color/colorTheme"
+        app:cardCornerRadius="18dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/season"
+            style="@style/Text.BottomSheet.Label"
+            android:layout_width="@dimen/bottomSheetBoxSize"
+            android:layout_height="@dimen/bottomSheetBoxSize"
+            android:background="@color/colorTheme"
+            android:gravity="center"
+            android:paddingStart="@dimen/paddingXSmall"
+            android:paddingTop="@dimen/paddingXSmall"
+            android:paddingEnd="@dimen/paddingXSmall"
+            android:paddingBottom="@dimen/paddingXSmall"
+            tools:text="71st" />
+
+    </androidx.cardview.widget.CardView>
 
     <TextView
         android:id="@+id/label"
@@ -27,17 +42,23 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:paddingStart="@dimen/paddingMedium"
-        android:paddingTop="@dimen/paddingSmall"
+        android:paddingTop="@dimen/paddingNSmall"
         android:paddingEnd="0dp"
-        android:paddingBottom="@dimen/paddingSmall"
+        android:paddingBottom="@dimen/paddingNSmall"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/favourite"
-        app:layout_constraintStart_toEndOf="@id/season"
+        app:layout_constraintStart_toEndOf="@id/cardview"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="2019" />
 
-    <ImageView
+    <ImageButton
+        android:background="@drawable/rounded_ripple"
+        tools:src="@drawable/ic_star_filled"
         android:id="@+id/favourite"
+        android:paddingTop="@dimen/paddingSmall"
+        android:paddingBottom="@dimen/paddingSmall"
+        android:paddingStart="@dimen/paddingSmall"
+        android:paddingEnd="@dimen/paddingSmall"
         android:layout_width="@dimen/bottomSheetIconSize"
         android:layout_height="@dimen/bottomSheetIconSize"
         android:layout_marginEnd="@dimen/paddingMedium"

@@ -6,6 +6,8 @@ import android.graphics.ColorFilter
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieProperty
@@ -15,18 +17,15 @@ import com.airbnb.lottie.value.LottieValueCallback
 import com.faltenreich.skeletonlayout.SkeletonLayout
 import kotlinx.android.synthetic.main.activity_race.*
 import kotlinx.android.synthetic.main.layout_race_not_found.view.*
-import kotlinx.android.synthetic.main.toolbar.view.*
 import org.koin.android.ext.android.inject
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.R
 import tmg.flashback.base.BaseActivity
-import tmg.flashback.dashboard.season.DashboardSeasonAdapterItem
 import tmg.flashback.race.RaceDisplayMode.*
 import tmg.flashback.utils.getColor
 import tmg.flashback.utils.getFlagResourceAlpha3
 import tmg.utilities.extensions.fromHtml
-import tmg.utilities.extensions.initToolbar
 import tmg.utilities.extensions.observe
 
 private const val duration: Long = 200L
@@ -53,18 +52,6 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
         private const val keyTrackName: String = "keyTrackName"
         private const val keyCountryISO: String = "keyCountryISO"
         private const val keyDate: String = "keyDate"
-
-        fun intent(context: Context, trackModel: DashboardSeasonAdapterItem.Track): Intent {
-            return Intent(context, RaceActivity::class.java).apply {
-                putExtra(keySeason, trackModel.season)
-                putExtra(keyRound, trackModel.round)
-                putExtra(keyTrackName, trackModel.trackName)
-                putExtra(keyRaceName, trackModel.raceName)
-                putExtra(keyCountry, trackModel.trackNationality)
-                putExtra(keyCountryISO, trackModel.trackISO)
-                putExtra(keyDate, trackModel.date.format(DateTimeFormatter.ofPattern(dateFormat)))
-            }
-        }
 
         fun intent(
             context: Context,
@@ -111,8 +98,6 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
 
         // Setup
 
-        initToolbar(R.id.toolbar, true, R.drawable.ic_back)
-
         raceAdapter = RaceAdapter(this)
         rvContent.adapter = raceAdapter
         rvContent.layoutManager = LinearLayoutManager(this)
@@ -120,7 +105,7 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
         notFound.alpha = 0.0f
         networkError.alpha = 0.0f
 
-        toolbarLayout.header.text = initialRaceName
+        grandprix.text = initialRaceName
         tvCircuitName.text = "$initialTrackName\n$initialCountry"
         if (initialCountryISO.isNotEmpty()) {
             imgCountry.setImageResource(getFlagResourceAlpha3(initialCountryISO))
@@ -131,10 +116,8 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
 
         val layout = findViewById<SkeletonLayout>(R.id.skeleton)
         layout.showSkeleton()
-
         initialiseLottie(notFound.lottieNoData)
-
-        bnvType.setOnNavigationItemSelectedListener {
+        menu.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.nav_qualifying -> {
                     viewModel.inputs.orderBy(RaceAdapterType.QUALIFYING_POS)
@@ -151,6 +134,7 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
                 else -> false
             }
         }
+        back.setOnClickListener { finish() }
 
         // Observe
 
@@ -169,7 +153,7 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
         observe(viewModel.outputs.circuitInfo) {
             imgCountry.setImageResource(getFlagResourceAlpha3(it.circuit.countryISO))
             tvCircuitName.text = "${it.circuit.name}\n${it.circuit.country}"
-            toolbarLayout.header.text = it.name
+            grandprix.text = it.name
             tvDate.text = it.date.format(DateTimeFormatter.ofPattern("dd MMMM"))
         }
 
@@ -177,7 +161,7 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
             raceAdapter.update(adapterType, list)
         }
 
-        bnvType.selectedItemId = R.id.nav_race
+        menu.selectedItemId = R.id.nav_race
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -206,6 +190,12 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
             .setDuration(duration)
             .alpha(if (animateIn) 1.0f else 0.0f)
             .start()
+    }
+
+    override fun setInsets(insets: WindowInsetsCompat) {
+        titlebar.setPadding(0, insets.systemWindowInsetTop, 0, 0)
+        menu.setPadding(0, 0, 0, insets.systemWindowInsetBottom)
+        rvContent.setPadding(0, 0, 0, insets.systemWindowInsetBottom)
     }
 
     //region RaceAdapterCallback
