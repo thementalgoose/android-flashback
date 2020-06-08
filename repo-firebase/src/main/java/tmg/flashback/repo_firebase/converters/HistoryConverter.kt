@@ -9,17 +9,20 @@ fun FHistorySeason.convert(): List<History> {
     for ((key, rounds) in this.all) {
         var season: Int = -1
         val historyRounds = rounds
-            .mapValues { (_, round) ->
-                season = round.s
-                round.convert()
+            ?.mapValues { (_, round) ->
+                if (round != null) {
+                    season = round.s
+                }
+                round?.convert()
             }
-            .map { it.value.second }
-            .sortedBy { it.round }
+            ?.map { it.value?.second }
+            ?.filterNotNull()
+            ?.sortedBy { it.round }
 
         if (season != -1) {
             list.add(History(
                 season = season,
-                rounds = historyRounds
+                rounds = historyRounds ?: listOf()
             ))
         }
     }

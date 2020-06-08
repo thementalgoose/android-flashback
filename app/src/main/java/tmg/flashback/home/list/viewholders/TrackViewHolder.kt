@@ -10,18 +10,18 @@ import tmg.flashback.utils.SeasonRound
 import tmg.flashback.utils.getFlagResourceAlpha3
 
 class TrackViewHolder(
-    val trackClicked: (season: Int, round: Int) -> Unit,
+    val trackClicked: (HomeItem.Track) -> Unit,
     itemView: View
 ): RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
-    private lateinit var data: SeasonRound
+    private lateinit var data: HomeItem.Track
 
     init {
         itemView.container.setOnClickListener(this)
     }
 
     fun bind(item: HomeItem.Track) {
-        data = SeasonRound(item.season, item.round)
+        data = item
         itemView.apply {
             country.setImageResource(context.getFlagResourceAlpha3(item.raceCountryISO))
             raceName.text = item.raceName
@@ -33,6 +33,6 @@ class TrackViewHolder(
     }
 
     override fun onClick(p0: View?) {
-        trackClicked(data.first, data.second)
+        trackClicked(data)
     }
 }

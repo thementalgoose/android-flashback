@@ -6,14 +6,20 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import tmg.flashback.base.BaseViewModel
+import tmg.flashback.currentYear
 import tmg.flashback.home.list.HomeItem
+import tmg.flashback.home.list.viewholders.NoDataViewHolder
+import tmg.flashback.repo.db.DataDB
+import tmg.flashback.repo.db.HistoryDB
 import tmg.flashback.repo.db.SeasonOverviewDB
 import tmg.flashback.repo.models.*
+import tmg.flashback.settings.ConnectivityManager
 import tmg.flashback.utils.SeasonRound
-import tmg.utilities.extensions.combinePair
+import tmg.utilities.extensions.combineTriple
 import tmg.utilities.lifecycle.DataEvent
 import tmg.utilities.lifecycle.Event
 
@@ -22,7 +28,6 @@ import tmg.utilities.lifecycle.Event
 interface HomeViewModelInputs {
     fun clickItem(item: HomeMenuItem)
     fun selectSeason(season: Int)
-    fun clickTrack(season: Int, round: Int)
 }
 
 //endregion
@@ -32,46 +37,65 @@ interface HomeViewModelInputs {
 interface HomeViewModelOutputs {
     val list: LiveData<List<HomeItem>>
     val openSeasonList: MutableLiveData<Event>
-    val openRace: MutableLiveData<DataEvent<SeasonRound>>
     val currentSeason: LiveData<Int>
+
+    val openAppLockout: LiveData<Event>
 }
 
 //endregion
 
 class HomeViewModel(
-    private val seasonOverviewDB: SeasonOverviewDB
+    private val seasonOverviewDB: SeasonOverviewDB,
+    private val historyDB: HistoryDB,
+    private val dataDB: DataDB,
+    private val connectivityManager: ConnectivityManager
 ) : BaseViewModel(), HomeViewModelInputs, HomeViewModelOutputs {
 
     private val currentTab: ConflatedBroadcastChannel<HomeMenuItem> =
         ConflatedBroadcastChannel(HomeMenuItem.CALENDAR)
-    private val season: ConflatedBroadcastChannel<Int> = ConflatedBroadcastChannel(2019)
+    private val season: ConflatedBroadcastChannel<Int> = ConflatedBroadcastChannel(currentYear)
     override val currentSeason: LiveData<Int> = season
         .asFlow()
         .asLiveData(viewModelScope.coroutineContext)
 
     override val openSeasonList: MutableLiveData<Event> = MutableLiveData()
-    override val openRace: MutableLiveData<DataEvent<SeasonRound>> = MutableLiveData()
+
+    override val openAppLockout: LiveData<Event> = dataDB
+        .appLockout()
+        .map {
+            if (it?.show == true) {
+                Event()
+            } else {
+                null
+            }
+        }
+        .filterNotNull()
+        .asLiveData(viewModelScope.coroutineContext)
 
     override val list: LiveData<List<HomeItem>> = season
         .asFlow()
         .flatMapLatest { seasonOverviewDB.getSeasonOverview(it) }
-        .combinePair(currentTab.asFlow())
-        .map { (rounds, menuItemType) ->
+        .combineTriple(
+            currentTab.asFlow(),
+            historyDB.allHistory()
+        ) // TODO: Convert this to use a summary document
+        .map { (seasonAndRounds, menuItemType, historyList) ->
+            val (season, rounds) = seasonAndRounds
             val list: MutableList<HomeItem> = mutableListOf()
             when (menuItemType) {
                 HomeMenuItem.CALENDAR -> {
-                    list.addAll(rounds
+                    list.addAll((historyList
+                        .firstOrNull { it.season == season }?.rounds ?: emptyList())
                         .sortedBy { it.round }
                         .map {
                             HomeItem.Track(
                                 season = it.season,
                                 round = it.round,
-                                raceName = it.name,
-                                circuitName = it.circuit.name,
-                                raceCountry = it.circuit.country,
-                                raceCountryISO = it.circuit.countryISO,
-                                date = it.date,
-                                time = it.time
+                                raceName = it.raceName,
+                                circuitName = it.circuitName,
+                                raceCountry = it.country,
+                                raceCountryISO = it.countryISO,
+                                date = it.date
                             )
                         })
                 }
@@ -111,6 +135,14 @@ class HomeViewModel(
                 else -> {
                 }
             }
+            if (list.isEmpty()) {
+                if (connectivityManager.isConnected || season == currentYear) {
+                    list.add(HomeItem.NoData)
+                }
+                else {
+                    list.add(HomeItem.NoNetwork)
+                }
+            }
             return@map list
         }
         .asLiveData(viewModelScope.coroutineContext)
@@ -130,10 +162,6 @@ class HomeViewModel(
 
     override fun selectSeason(season: Int) {
         this.season.offer(season)
-    }
-
-    override fun clickTrack(season: Int, round: Int) {
-        this.openRace.value = DataEvent(SeasonRound(season, round))
     }
 
     //endregion

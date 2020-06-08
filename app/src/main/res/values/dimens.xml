@@ -9,6 +9,10 @@
     <dimen name="bottomSheetFastScrollWidth">28dp</dimen>
     <dimen name="bottomSheetPeekHeight">350dp</dimen>
 
+    <!-- Home -->
+
+    <dimen name="homeSkeletonHeight">36dp</dimen>
+
     <!-- Text sizes -->
 
     <dimen name="textSizeXLarge">20sp</dimen>

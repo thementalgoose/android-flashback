@@ -43,8 +43,8 @@ class SeasonOverviewFirestore(
             .map { it?.constructors ?: emptyList() }
     }
 
-    override suspend fun getSeasonOverview(season: Int): Flow<List<Round>> {
-        return getRounds(season)
+    override suspend fun getSeasonOverview(season: Int): Flow<Pair<Int, List<Round>>> {
+        return getSeasonWithRounds(season)
     }
 
     override suspend fun getPreviousWeekend(season: Int): Flow<Round?> {
@@ -63,6 +63,11 @@ class SeasonOverviewFirestore(
     private suspend fun getRounds(season: Int): Flow<List<Round>> {
         return getSeason(season)
             .map { it?.rounds ?: emptyList() }
+    }
+
+    private suspend fun getSeasonWithRounds(season: Int): Flow<Pair<Int, List<Round>>> {
+        return getSeason(season)
+            .map { Pair(season, it?.rounds ?: emptyList()) }
     }
 
     private suspend fun getSeason(season: Int): Flow<Season?> {

@@ -8,6 +8,7 @@ fun FAppLockout.convert(): AppLockout {
         show = show ?: false,
         message = message ?: "",
         linkText = linkText,
-        link = link
+        link = link,
+        title = title ?: "App lockout"
     )
 }

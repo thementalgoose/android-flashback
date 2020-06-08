@@ -26,7 +26,7 @@ interface LockoutViewModelInputs {
 //region Outputs
 
 interface LockoutViewModelOutputs {
-    val data: LiveData<String>
+    val data: LiveData<Pair<String, String>>
     val showLink: LiveData<String>
 
     val returnToHome: LiveData<Event>
@@ -51,8 +51,8 @@ class LockoutViewModel(
         }
         .flowOn(Dispatchers.IO)
 
-    override val data: LiveData<String> = appLockedData
-        .map { it.message }
+    override val data: LiveData<Pair<String, String>> = appLockedData // Title, Message
+        .map { Pair(it.title, it.message) }
         .asLiveData(viewModelScope.coroutineContext)
 
     override val showLink: LiveData<String> = appLockedData

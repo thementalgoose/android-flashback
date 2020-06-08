@@ -4,16 +4,20 @@
     android:id="@+id/bottomSheetContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/transparent"
+    android:clipToPadding="false"
     android:elevation="8dp"
-    android:background="@drawable/background_bottom_sheet"
+    android:fitsSystemWindows="true"
     app:layout_behavior="@string/bottom_sheet_behavior">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/optionsList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/transparent"
+        android:background="@drawable/background_bottom_sheet"
+        android:clipToPadding="false"
         android:overScrollMode="never"
+        android:paddingBottom="84dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

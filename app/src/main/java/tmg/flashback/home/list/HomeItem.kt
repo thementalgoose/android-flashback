@@ -16,7 +16,6 @@ sealed class HomeItem(
         val raceCountry: String,
         val raceCountryISO: String,
         val date: LocalDate,
-        val time: LocalTime?,
         val round: Int
     ): HomeItem(R.layout.view_home_track)
 
@@ -36,4 +35,12 @@ sealed class HomeItem(
         val points: Int,
         val maxPointsInSeason: Int
     ): HomeItem(R.layout.view_home_constructor)
+
+    data class Loading(
+        val id: Int
+    ): HomeItem(R.layout.view_home_loading)
+
+    object NoData: HomeItem(R.layout.view_home_no_data)
+
+    object NoNetwork: HomeItem(R.layout.view_home_no_network)
 }

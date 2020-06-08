@@ -4,19 +4,55 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:background="?attr/f1BackgroundPrimary">
 
-    <include
-        android:id="@+id/toolbarLayout"
-        layout="@layout/toolbar" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/titlebar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/f1BackgroundPrimary"
+        android:fitsSystemWindows="false">
+
+        <TextView
+            android:id="@+id/header"
+            style="@style/Text.Toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            android:gravity="center"
+            android:paddingTop="@dimen/paddingMedium"
+            android:paddingBottom="@dimen/paddingMedium"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <ImageButton
+            android:id="@+id/settings"
+
+            android:layout_width="@dimen/toolbarSettingsIcon"
+            android:layout_height="@dimen/toolbarSettingsIcon"
+            android:layout_marginEnd="@dimen/paddingMedium"
+            android:background="@drawable/rounded_ripple"
+            android:contentDescription="@string/settings_title"
+            android:src="@drawable/nav_settings"
+            android:tint="?attr/f1TextPrimary"
+            app:layout_constraintBottom_toBottomOf="@id/header"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/header" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.core.widget.NestedScrollView
+        app:layout_constraintTop_toBottomOf="@id/titlebar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btnLink"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/btnLink"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbarLayout">
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -33,10 +69,6 @@
                 android:paddingTop="@dimen/paddingMedium"
                 android:paddingEnd="@dimen/paddingMedium"
                 android:paddingBottom="@dimen/paddingMedium"
-                app:layout_constraintBottom_toTopOf="@id/btnLink"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/toolbarLayout"
                 tools:text="Something went wrong with the application, and I can explain it here. Basically, you need to fix something" />
 
         </LinearLayout>

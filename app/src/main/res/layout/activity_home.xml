@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:background="@null"
         app:elevation="0dp"
-        app:layout_behavior=".utils.AppBarLockableBehavior">
+        app:layout_behavior="tmg.flashback.utils.AppBarLockableBehavior">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/collapsingtoolbar"
@@ -77,6 +77,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
+        android:background="?attr/f1BackgroundPrimary"
         android:fitsSystemWindows="true"
         app:itemIconTint="@drawable/selector_bottom_nav_color"
         app:itemTextColor="@drawable/selector_bottom_nav_color"

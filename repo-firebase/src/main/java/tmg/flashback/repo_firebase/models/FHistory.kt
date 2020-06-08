@@ -1,7 +1,7 @@
 package tmg.flashback.repo_firebase.models
 
 data class FHistorySeason(
-    val all: Map<String, Map<String, FHistorySeasonRound>> = mapOf(),
+    val all: Map<String, Map<String, FHistorySeasonRound?>?> = mapOf(),
     val win: Map<String, FHistorySeasonWin>? = null
 )
 

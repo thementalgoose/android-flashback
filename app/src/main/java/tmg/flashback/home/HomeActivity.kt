@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -16,7 +17,9 @@ import com.reddit.indicatorfastscroll.FastScrollItemIndicator
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.bottom_sheet_season.*
 import org.koin.android.viewmodel.ext.android.viewModel
+import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.R
+import tmg.flashback.admin.lockout.LockoutActivity
 import tmg.flashback.base.BaseActivity
 import tmg.flashback.bottomSheetFastScrollDuration
 import tmg.flashback.extensions.dimensionPx
@@ -48,7 +51,21 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback {
         super.onCreate(savedInstanceState)
 
         adapter = HomeAdapter(
-            trackClicked = viewModel.inputs::clickTrack
+            trackClicked = { track ->
+                dataList.alpha = 0.5f
+
+                val intent = RaceActivity.intent(
+                    context = this,
+                    season = track.season,
+                    round = track.round,
+                    country = track.raceCountry,
+                    raceName = track.raceName,
+                    trackName = track.circuitName,
+                    countryISO = track.raceCountryISO,
+                    date = track.date
+                )
+                startActivity(intent)
+            }
         )
         dataList.adapter = adapter
         dataList.layoutManager = LinearLayoutManager(this)
@@ -56,14 +73,17 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback {
         menu.setOnNavigationItemSelectedListener {
             val shouldUpdateTab = when (it.itemId) {
                 R.id.nav_calendar -> {
+                    dataList.alpha = 0.5f
                     viewModel.inputs.clickItem(HomeMenuItem.CALENDAR)
                     true
                 }
                 R.id.nav_drivers -> {
+                    dataList.alpha = 0.5f
                     viewModel.inputs.clickItem(HomeMenuItem.DRIVERS)
                     true
                 }
                 R.id.nav_constructor -> {
+                    dataList.alpha = 0.5f
                     viewModel.inputs.clickItem(HomeMenuItem.CONSTRUCTORS)
                     true
                 }
@@ -89,6 +109,7 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback {
         //region HomeViewModel
 
         observe(viewModel.outputs.list) {
+            dataList.alpha = 1.0f
             adapter.list = it
         }
 
@@ -100,8 +121,9 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback {
             bottomSheetBehavior.state = BottomSheetBehavior.STATE_HALF_EXPANDED
         }
 
-        observeEvent(viewModel.outputs.openRace) { (season, round) ->
-            startActivity(RaceActivity.intent(this, season,  round))
+        observeEvent(viewModel.outputs.openAppLockout) {
+            startActivity(Intent(this, LockoutActivity::class.java))
+            finishAffinity()
         }
 
         //endregion
@@ -120,6 +142,11 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback {
         //endregion
     }
 
+    override fun onResume() {
+        super.onResume()
+        dataList.alpha = 1.0f
+    }
+
     override fun onBackPressed() {
         if (bottomSheetBehavior.state != BottomSheetBehavior.STATE_HIDDEN) {
             bottomSheetBehavior.hide()
@@ -133,7 +160,7 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback {
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
         bottomSheetBehavior.isHideable = true
         bottomSheetBehavior.hidden()
-        bottomSheetBehavior.halfExpandedRatio = 0.4f
+        bottomSheetBehavior.halfExpandedRatio = 0.6f
         bottomSheetBehavior.addBottomSheetCallback(BottomSheetFader(overlay, "seasons"))
         bottomSheetBehavior.addBottomSheetCallback(SeasonBottomSheetCallback(
                 expanded = { seasonExpand() },
@@ -156,7 +183,7 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback {
 
         fastscroller.setupWithRecyclerView(optionsList, {
             when (val item = seasonAdapter.list[it]) {
-                SeasonListItem.Top -> null
+                SeasonListItem.Top -> FastScrollItemIndicator.Icon(R.drawable.ic_bottom_sheet_current)
                 is SeasonListItem.Season -> {
                     when (item.fixed) {
                         HeaderType.CURRENT -> FastScrollItemIndicator.Icon(R.drawable.ic_bottom_sheet_current)
@@ -203,6 +230,7 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback {
 
     override fun setInsets(insets: WindowInsetsCompat) {
         titlebar.setPadding(0, insets.systemWindowInsetTop, 0, 0)
+        bottomSheet.setPadding(0, insets.systemWindowInsetTop, 0, 0)
         menu.setPadding(0, 0, 0, insets.systemWindowInsetBottom)
         dataList.setPadding(0, 0, 0, insets.systemWindowInsetBottom)
     }
