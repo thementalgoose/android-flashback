@@ -19,13 +19,11 @@ import tmg.flashback.settings.SettingsViewModel
 
 var flashbackModule = module {
 
-    viewModel { HomeViewModel(get()) }
+    viewModel { HomeViewModel(get(), get(), get(), get()) }
     viewModel { SeasonViewModel(get()) }
 
     viewModel { RaceViewModel(get(), get(), get()) }
-
     viewModel { SettingsViewModel(get(), get()) }
-
     viewModel { LockoutViewModel(get()) }
 
     single<SeasonOverviewDB> { SeasonOverviewFirestore(get()) }

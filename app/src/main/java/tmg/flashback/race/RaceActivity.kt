@@ -36,6 +36,9 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
     private val viewModel: RaceViewModel by inject()
     private lateinit var raceAdapter: RaceAdapter
 
+    var season: Int = -1
+    var round: Int = -1
+
     private var initialCountry: String = ""
     private var initialCountryISO: String = ""
     private var initialRaceName: String = ""
@@ -61,7 +64,7 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
             raceName: String? = null,
             trackName: String? = null,
             countryISO: String? = null,
-            date: String? = null
+            date: LocalDate? = null
         ): Intent {
             return Intent(context, RaceActivity::class.java).apply {
                 putExtra(keySeason, season)
@@ -70,7 +73,7 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
                 putExtra(keyRaceName, raceName)
                 putExtra(keyTrackName, trackName)
                 putExtra(keyCountryISO, countryISO)
-                putExtra(keyDate, date)
+                putExtra(keyDate, date?.format(DateTimeFormatter.ofPattern(dateFormat)))
             }
         }
     }
@@ -78,8 +81,8 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
     override fun layoutId(): Int = R.layout.activity_race
 
     override fun arguments(bundle: Bundle) {
-        val season = bundle.getInt(keySeason)
-        val round = bundle.getInt(keyRound)
+        season = bundle.getInt(keySeason)
+        round = bundle.getInt(keyRound)
 
         viewModel.inputs.initialise(season, round)
 
@@ -105,7 +108,7 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
         notFound.alpha = 0.0f
         networkError.alpha = 0.0f
 
-        grandprix.text = initialRaceName
+        grandprix.text = "$season $initialRaceName"
         tvCircuitName.text = "$initialTrackName\n$initialCountry"
         if (initialCountryISO.isNotEmpty()) {
             imgCountry.setImageResource(getFlagResourceAlpha3(initialCountryISO))
@@ -153,7 +156,7 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
         observe(viewModel.outputs.circuitInfo) {
             imgCountry.setImageResource(getFlagResourceAlpha3(it.circuit.countryISO))
             tvCircuitName.text = "${it.circuit.name}\n${it.circuit.country}"
-            grandprix.text = it.name
+            grandprix.text = "${it.season} ${it.name}"
             tvDate.text = it.date.format(DateTimeFormatter.ofPattern("dd MMMM"))
         }
 

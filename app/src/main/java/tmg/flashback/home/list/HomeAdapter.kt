@@ -5,15 +5,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.R
-import tmg.flashback.home.list.viewholders.ConstructorViewHolder
-import tmg.flashback.home.list.viewholders.DriverViewHolder
-import tmg.flashback.home.list.viewholders.TrackViewHolder
+import tmg.flashback.home.list.viewholders.*
 
 class HomeAdapter(
-    val trackClicked: (season: Int, round: Int) -> Unit
+    val trackClicked: (track: HomeItem.Track) -> Unit
 ): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    var list: List<HomeItem> = emptyList()
+    var list: List<HomeItem> = List(5) { HomeItem.Loading(it) }
         set(value) {
             val result = DiffUtil.calculateDiff(DiffCallback(field, value))
             field = value
@@ -30,6 +28,15 @@ class HomeAdapter(
                 LayoutInflater.from(parent.context).inflate(viewType, parent, false)
             )
             R.layout.view_home_constructor -> ConstructorViewHolder(
+                LayoutInflater.from(parent.context).inflate(viewType, parent, false)
+            )
+            R.layout.view_home_loading -> LoadingViewHolder(
+                LayoutInflater.from(parent.context).inflate(viewType, parent, false)
+            )
+            R.layout.view_home_no_data -> NoDataViewHolder(
+                LayoutInflater.from(parent.context).inflate(viewType, parent, false)
+            )
+            R.layout.view_home_no_network -> NoNetworkViewHolder(
                 LayoutInflater.from(parent.context).inflate(viewType, parent, false)
             )
             else -> throw Exception("Type in HomeItem is not implemented on onCreateViewHolder")

@@ -25,11 +25,14 @@ class ReleaseActivity : BaseActivity() {
             .sortedByDescending { it.first }
             .map { it.second }
 
+        back.setOnClickListener { finish() }
+
         tvReleaseNotes.text = list.map { getString(it) }.joinToString("<br/><br/>").fromHtml()
     }
 
     override fun setInsets(insets: WindowInsetsCompat) {
         titlebar.setPadding(0, insets.systemWindowInsetTop, 0, 0)
+        scrollview.setPadding(0, 0, 0, insets.systemWindowInsetBottom)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

@@ -1,14 +1,16 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="LightTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="LightTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">#4A34B6</item>
         <item name="colorPrimaryDark">#4A34B6</item>
         <item name="colorAccent">@color/logo_gradient_1</item>
 
         <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@color/white</item>
         <item name="android:windowTranslucentStatus">false</item>
         <item name="android:windowTranslucentNavigation">true</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:isLightTheme">true</item>
 
         <item name="f1Selected">#4403DAC5</item>
 
@@ -91,6 +93,11 @@
     <style name="Text.BottomSheet.Header" parent="Text">
         <item name="android:textSize">@dimen/textSizeSmall</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?attr/f1TextTertiary</item>
+    </style>
+
+    <style name="Text.Home.Placeholder" parent="Text">
+        <item name="android:textSize">@dimen/textSizeMedium</item>
         <item name="android:textColor">?attr/f1TextTertiary</item>
     </style>
 

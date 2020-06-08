@@ -22,9 +22,6 @@ class LockoutActivity: BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        initToolbar(R.id.toolbar, true, R.drawable.ic_back)
-        toolbarLayout.header.text = getString(R.string.app_lockout_title)
-
         btnLink.setOnClickListener {
             viewModel.inputs.clickLink()
         }
@@ -39,8 +36,9 @@ class LockoutActivity: BaseActivity() {
             }
         }
 
-        observe(viewModel.outputs.data) {
-            tvMessage.text = it.fromHtml()
+        observe(viewModel.outputs.data) { (title, content) ->
+            header.text = title
+            tvMessage.text = content.fromHtml()
         }
 
         observeEvent(viewModel.outputs.openLinkEvent) {
