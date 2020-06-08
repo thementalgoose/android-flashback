@@ -32,7 +32,10 @@ class SeasonViewModel(
     private val prefDB: PrefsDB
 ) : BaseViewModel(), SeasonViewModelInputs, SeasonViewModelOutputs {
 
-    var headers: Headers = Headers()
+    var headers: Headers = Headers(
+        favourited = prefDB.showBottomSheetAll,
+        all = prefDB.showBottomSheetFavourited
+    )
     data class Headers( // TODO: Move these to settings
         var favourited: Boolean = true,
         var all: Boolean = true

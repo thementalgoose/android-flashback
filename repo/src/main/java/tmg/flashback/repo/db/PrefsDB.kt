@@ -26,6 +26,16 @@ interface PrefsDB {
     var showDriversBehindConstructor: Boolean
 
     /**
+     * Show the favourited bottom sheet section expanded by default
+     */
+    var showBottomSheetFavourited: Boolean
+
+    /**
+     * Show the all bottom sheet section expanded by default
+     */
+    var showBottomSheetAll: Boolean
+
+    /**
      * Automatic crash reporting functionality
      */
     var crashReporting: Boolean

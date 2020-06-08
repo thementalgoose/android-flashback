@@ -55,6 +55,11 @@
     <string name="settings_customisation_qualifying_delta_description">Show the lap time delta alongside the qualifying time when displaying qualifying results</string>
     <string name="settings_customisation_driver_in_constructor_title">Show constructor drivers</string>
     <string name="settings_customisation_driver_in_constructor_description">Show the drivers of a constructor alongside the constructor points scored per race</string>
+    <string name="settings_season_list">Season list</string>
+    <string name="settings_customisation_season_favourited_expanded_title">Expand favourites by default</string>
+    <string name="settings_customisation_season_favourited_expanded_description">Toggle if the bottom sheet favourites section is expanded by default</string>
+    <string name="settings_customisation_season_all_expanded_title">Expand all by default</string>
+    <string name="settings_customisation_season_all_expanded_description">Toggle if the bottom sheet all seasons section is expanded by default</string>
     <string name="settings_customisation_view_type_title">View type</string>
     <string name="settings_customisation_view_type_description">Select the view type that you want to view race information in</string>
     <string name="settings_help">About</string>
