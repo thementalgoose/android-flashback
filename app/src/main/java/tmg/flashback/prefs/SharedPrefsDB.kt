@@ -22,6 +22,8 @@ class SharedPrefsDB(context: Context): SharedPrefManager(context), PrefsDB {
     private val keySelectedYear: String = "SELECTED_YEAR"
     private val keyShowQualifyingDelta: String = "SHOW_QUALIFYING_DELTA"
     private val keyShowDriversInConstructorStandings: String = "SHOW_DRIVERS_IN_CONSTRUCTOR_STANDINGS"
+    private val keyBottomSheetAll: String = "BOTTOM_SHEET_ALL"
+    private val keyBottomSheetFavourited: String = "BOTTOM_SHEET_FAVOURITED"
     private val keyViewType: String = "VIEW_TYPE"
     private val keyCrashReporting: String = "CRASH_REPORTING"
     private val keyShakeToReport: String = "SHAKE_TO_REPORT"
@@ -41,6 +43,14 @@ class SharedPrefsDB(context: Context): SharedPrefManager(context), PrefsDB {
     override var showDriversBehindConstructor: Boolean
         get() = getBoolean(keyShowDriversInConstructorStandings, defaultShowDriversInConstructors)
         set(value) = save(keyShowDriversInConstructorStandings, value)
+
+    override var showBottomSheetFavourited: Boolean
+        get() = getBoolean(keyBottomSheetFavourited, true)
+        set(value) = save(keyBottomSheetFavourited, value)
+
+    override var showBottomSheetAll: Boolean
+        get() = getBoolean(keyBottomSheetAll, true)
+        set(value) = save(keyBottomSheetAll, value)
 
     override var viewType: ViewTypePref
         get() = getString(keyViewType, ViewTypePref.STATIC.key)?.toEnum<ViewTypePref> { it.key } ?: ViewTypePref.STATIC

@@ -22,6 +22,14 @@ enum class SettingsOptions(
         title = R.string.settings_customisation_driver_in_constructor_title,
         description = R.string.settings_customisation_driver_in_constructor_description
     ),
+    SEASON_BOTTOM_SHEET_FAVOURITED("bottomSheetFavourited",
+        title = R.string.settings_customisation_season_favourited_expanded_title,
+        description = R.string.settings_customisation_season_favourited_expanded_description
+    ),
+    SEASON_BOTTOM_SHEET_ALL("bottomSheetAll",
+        title = R.string.settings_customisation_season_all_expanded_title,
+        description = R.string.settings_customisation_season_all_expanded_description
+    ),
     ABOUT("about",
         title = R.string.settings_help_about_title,
         description = R.string.settings_help_about_description

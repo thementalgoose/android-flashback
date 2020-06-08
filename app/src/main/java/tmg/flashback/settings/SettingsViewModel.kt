@@ -64,6 +64,9 @@ class SettingsViewModel(
             AppPreferencesItem.Category(applicationContext.getString(R.string.settings_customisation)),
             SettingsOptions.QUALIFYING_DELTAS.toSwitch(applicationContext, prefDB.showQualifyingDelta),
             SettingsOptions.SHOW_DRIVERS_POINTS_IN_CONSTRUCTORS.toSwitch(applicationContext, prefDB.showDriversBehindConstructor),
+//            AppPreferencesItem.Category(applicationContext.getString(R.string.settings_season_list)),
+//            SettingsOptions.SEASON_BOTTOM_SHEET_FAVOURITED.toSwitch(applicationContext, prefDB.showBottomSheetFavourited),
+//            SettingsOptions.SEASON_BOTTOM_SHEET_ALL.toSwitch(applicationContext, prefDB.showBottomSheetAll),
             AppPreferencesItem.Category(applicationContext.getString(R.string.settings_help)),
             SettingsOptions.ABOUT.toPref(applicationContext),
             SettingsOptions.RELEASE.toPref(applicationContext),
@@ -83,6 +86,8 @@ class SettingsViewModel(
             SettingsOptions.THEME -> openThemePicker.value = Event()
             SettingsOptions.QUALIFYING_DELTAS -> prefDB.showQualifyingDelta = value ?: false
             SettingsOptions.SHOW_DRIVERS_POINTS_IN_CONSTRUCTORS -> prefDB.showDriversBehindConstructor = value ?: true
+            SettingsOptions.SEASON_BOTTOM_SHEET_FAVOURITED -> prefDB.showBottomSheetFavourited = value ?: true
+            SettingsOptions.SEASON_BOTTOM_SHEET_ALL -> prefDB.showBottomSheetAll = value ?: true
             SettingsOptions.ABOUT -> openAbout.value = Event()
             SettingsOptions.RELEASE -> openRelease.value = Event()
             SettingsOptions.CRASH -> prefDB.crashReporting = value ?: true
