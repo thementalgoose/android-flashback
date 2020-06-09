@@ -13,6 +13,7 @@ import tmg.flashback.race.RaceAdapterType
 import tmg.flashback.race.RaceAdapterModel
 import tmg.flashback.race.ShowQualifying
 import tmg.flashback.utils.getFlagResourceAlpha3
+import tmg.utilities.extensions.views.getString
 import tmg.utilities.extensions.views.gone
 import tmg.utilities.extensions.views.show
 
@@ -46,6 +47,15 @@ class QualifyingResultViewHolder(view: View, private val updateAdapterType: Race
             tvConstructor.text = model.driver.constructor.name
             tvNumber.text = model.driver.number.toString()
             tvNumber.colorHighlight = model.driver.constructor.color
+
+
+            if (model.qualified != null && model.qualified != model.gridPos && model.gridPos > model.qualified) {
+                penalty.show(true)
+                penalty.text = getString(R.string.qualifying_grid_penalty, model.gridPos - model.qualified)
+            }
+            else {
+                penalty.show(false)
+            }
 
             imgFlag.setImageResource(context.getFlagResourceAlpha3(model.driver.nationalityISO))
 
