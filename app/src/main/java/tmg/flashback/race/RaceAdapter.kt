@@ -17,7 +17,7 @@ class RaceAdapter(
     var viewType: RaceAdapterType =
         RaceAdapterType.RACE
         private set
-    var list: List<RaceAdapterModel> = emptyList()
+    var list: List<RaceAdapterModel> = List(5) { RaceAdapterModel.Loading(it) }
         private set
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -34,6 +34,9 @@ class RaceAdapter(
             RaceAdapterViewHolderType.QUALIFYING_RESULT_HEADER -> QualifyingHeaderViewHolder(view, callback)
             RaceAdapterViewHolderType.QUALIFYING_RESULT -> QualifyingResultViewHolder(view, callback)
             RaceAdapterViewHolderType.CONSTRUCTOR_STANDINGS -> ConstructorStandingsViewholder(view)
+            RaceAdapterViewHolderType.LOADING -> LoadingViewHolder(view)
+            RaceAdapterViewHolderType.NO_DATA -> NoDataViewHolder(view)
+            RaceAdapterViewHolderType.NO_NETWORK -> NoNetworkViewHolder(view)
             else -> throw Error("View type not implemented")
         }
     }
@@ -47,6 +50,15 @@ class RaceAdapter(
     }
 
     override fun getItemViewType(position: Int): Int {
+        if (list[position] is RaceAdapterModel.Loading) {
+            return RaceAdapterViewHolderType.LOADING.ordinal
+        }
+        if (list[position] is RaceAdapterModel.NoData) {
+            return RaceAdapterViewHolderType.NO_DATA.ordinal
+        }
+        if(list[position] is RaceAdapterModel.NoNetwork) {
+            return RaceAdapterViewHolderType.NO_NETWORK.ordinal
+        }
         return when (viewType) {
             RaceAdapterType.RACE -> when (position) {
                 0 -> RaceAdapterViewHolderType.RACE_PODIUM.ordinal
@@ -83,34 +95,43 @@ class RaceAdapter(
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        when (getItemViewType(position).toEnum<RaceAdapterViewHolderType>()) {
-            RaceAdapterViewHolderType.RACE_PODIUM -> {
-                val viewHolder = holder as RacePodiumViewHolder
-                val model = list[position] as RaceAdapterModel.Podium
-                viewHolder.bind(model.driverFirst, model.driverSecond, model.driverThird)
+        if (!(holder is LoadingViewHolder)) {
+            when (getItemViewType(position).toEnum<RaceAdapterViewHolderType>()) {
+                RaceAdapterViewHolderType.RACE_PODIUM -> {
+                    val viewHolder = holder as RacePodiumViewHolder
+                    val model = list[position] as RaceAdapterModel.Podium
+                    viewHolder.bind(model.driverFirst, model.driverSecond, model.driverThird)
+                }
+                RaceAdapterViewHolderType.RACE_RESULT -> {
+                    val viewHolder = holder as RaceResultViewHolder
+                    viewHolder.bind(list[position] as RaceAdapterModel.Single)
+                }
+                RaceAdapterViewHolderType.QUALIFYING_RESULT_HEADER -> {
+                    val viewHolder = holder as QualifyingHeaderViewHolder
+                    viewHolder.bind((list[position] as RaceAdapterModel.QualifyingHeader).showQualifyingDeltas, viewType)
+                }
+                RaceAdapterViewHolderType.QUALIFYING_RESULT -> {
+                    val viewHolder = holder as QualifyingResultViewHolder
+                    viewHolder.bind(list[position] as RaceAdapterModel.Single, viewType)
+                }
+                RaceAdapterViewHolderType.CONSTRUCTOR_STANDINGS -> {
+                    val viewHolder = holder as ConstructorStandingsViewholder
+                    viewHolder.bind(list[position] as RaceAdapterModel.ConstructorStandings,
+                        maxPointsByAnyTeam = maxPointsByAnyTeam()
+                    )
+                }
+                RaceAdapterViewHolderType.NO_DATA -> {
+                    val viewHolder = holder as NoDataViewHolder
+                    viewHolder.bind((list[position] as RaceAdapterModel.NoData).pastRaceDate)
+                }
+                else -> {
+                }
             }
-            RaceAdapterViewHolderType.RACE_RESULT -> {
-                val viewHolder = holder as RaceResultViewHolder
-                viewHolder.bind(list[position] as RaceAdapterModel.Single)
-            }
-            RaceAdapterViewHolderType.QUALIFYING_RESULT_HEADER -> {
-                val viewHolder = holder as QualifyingHeaderViewHolder
-                viewHolder.bind((list[position] as RaceAdapterModel.QualifyingHeader).showQualifyingDeltas, viewType)
-            }
-            RaceAdapterViewHolderType.QUALIFYING_RESULT -> {
-                val viewHolder = holder as QualifyingResultViewHolder
-                viewHolder.bind(list[position] as RaceAdapterModel.Single, viewType)
-            }
-            RaceAdapterViewHolderType.CONSTRUCTOR_STANDINGS -> {
-                val viewHolder = holder as ConstructorStandingsViewholder
-                viewHolder.bind(list[position] as RaceAdapterModel.ConstructorStandings, maxPointsByAnyTeam = maxPointsByAnyTeam())
-            }
-            else -> {}
         }
     }
 
     private fun maxPointsByAnyTeam(): Int {
-        val defaultPoints: Int = 20
+        val defaultPoints = 20
         return list
             .map { (it as? RaceAdapterModel.ConstructorStandings)?.points ?: defaultPoints }
             .max() ?: defaultPoints
@@ -154,7 +175,10 @@ enum class RaceAdapterViewHolderType(
     RACE_RESULT_HEADER(R.layout.view_race_race_header),
     QUALIFYING_RESULT_HEADER(R.layout.view_race_qualifying_header),
     QUALIFYING_RESULT(R.layout.view_race_qualifying_result),
-    CONSTRUCTOR_STANDINGS(R.layout.view_race_constructor)
+    CONSTRUCTOR_STANDINGS(R.layout.view_race_constructor),
+    LOADING(R.layout.view_race_loading),
+    NO_DATA(R.layout.view_race_no_data),
+    NO_NETWORK(R.layout.view_race_no_network),
 }
 
 interface RaceAdapterCallback {

@@ -93,8 +93,8 @@ dependencies {
     implementation 'com.reddit:indicator-fast-scroll:1.3.0'
 
     // TMG dependencies
-    implementation 'com.github.thementalgoose:android-components:2.0.1'
-    implementation 'com.github.thementalgoose:android-utilities:1.1.1'
+    implementation 'com.github.thementalgoose:android-components:2.1.0'
+    implementation 'com.github.thementalgoose:android-utilities:2.0.1'
     implementation 'com.github.thementalgoose:android-labelled-progress-bar:1.0.1'
 
     // ViewPager2

@@ -6,7 +6,6 @@ import android.graphics.ColorFilter
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
-import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.airbnb.lottie.LottieAnimationView
@@ -16,13 +15,11 @@ import com.airbnb.lottie.model.KeyPath
 import com.airbnb.lottie.value.LottieValueCallback
 import com.faltenreich.skeletonlayout.SkeletonLayout
 import kotlinx.android.synthetic.main.activity_race.*
-import kotlinx.android.synthetic.main.layout_race_not_found.view.*
 import org.koin.android.ext.android.inject
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.R
 import tmg.flashback.base.BaseActivity
-import tmg.flashback.race.RaceDisplayMode.*
 import tmg.flashback.utils.getColor
 import tmg.flashback.utils.getFlagResourceAlpha3
 import tmg.utilities.extensions.fromHtml
@@ -84,8 +81,6 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
         season = bundle.getInt(keySeason)
         round = bundle.getInt(keyRound)
 
-        viewModel.inputs.initialise(season, round)
-
         initialCountry = bundle.getString(keyCountry, "")
         initialCountryISO = bundle.getString(keyCountryISO, "")
         initialRaceName = bundle.getString(keyRaceName, "")
@@ -94,6 +89,8 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
         if (date.isNotEmpty()) {
             initialDate = LocalDate.parse(date, DateTimeFormatter.ofPattern(dateFormat))
         }
+
+        viewModel.inputs.initialise(season, round, initialDate)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -105,9 +102,6 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
         rvContent.adapter = raceAdapter
         rvContent.layoutManager = LinearLayoutManager(this)
 
-        notFound.alpha = 0.0f
-        networkError.alpha = 0.0f
-
         grandprix.text = "$season $initialRaceName"
         tvCircuitName.text = "$initialTrackName\n$initialCountry"
         if (initialCountryISO.isNotEmpty()) {
@@ -117,9 +111,6 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
             tvDate.text = it.format(DateTimeFormatter.ofPattern("dd MMMM"))
         }
 
-        val layout = findViewById<SkeletonLayout>(R.id.skeleton)
-        layout.showSkeleton()
-        initialiseLottie(notFound.lottieNoData)
         menu.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.nav_qualifying -> {
@@ -140,10 +131,6 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
         back.setOnClickListener { finish() }
 
         // Observe
-
-        observe(viewModel.outputs.raceDisplayMode) {
-            updateDisplay(it)
-        }
 
         observe(viewModel.outputs.seasonRoundData) { (season, round) ->
             tvRoundInfo.text = getString(
@@ -179,13 +166,6 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
         val keyPath = KeyPath("**")
         val callback = LottieValueCallback<ColorFilter>(colorFilter)
         lottieView.addValueCallback(keyPath, LottieProperty.COLOR_FILTER, callback)
-    }
-
-    private fun updateDisplay(raceMode: RaceDisplayMode) {
-        animate(networkError, raceMode == NO_NETWORK)
-        animate(notFound, raceMode == NOT_FOUND)
-        animate(skeleton, raceMode == LOADING)
-        animate(rvContent, raceMode == LIST)
     }
 
     private fun animate(layout: View, animateIn: Boolean) {

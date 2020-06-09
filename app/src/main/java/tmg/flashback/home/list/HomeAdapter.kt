@@ -48,6 +48,7 @@ class HomeAdapter(
             is HomeItem.Track -> (holder as TrackViewHolder).bind(item)
             is HomeItem.Driver -> (holder as DriverViewHolder).bind(item)
             is HomeItem.Constructor -> (holder as ConstructorViewHolder).bind(item)
+            is HomeItem.NoData -> (holder as NoDataViewHolder).bind(item.hasSeasonStarted)
         }
     }
 

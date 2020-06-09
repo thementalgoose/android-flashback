@@ -8,8 +8,9 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.*
+import org.threeten.bp.LocalDate
 import tmg.flashback.base.BaseViewModel
-import tmg.flashback.race.RaceDisplayMode.*
+import tmg.flashback.home.list.HomeItem
 import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.db.SeasonOverviewDB
 import tmg.flashback.repo.models.*
@@ -21,7 +22,7 @@ import tmg.utilities.extensions.then
 //region Inputs
 
 interface RaceViewModelInputs {
-    fun initialise(season: Int, round: Int)
+    fun initialise(season: Int, round: Int, date: LocalDate?)
     fun orderBy(seasonRaceAdapterType: RaceAdapterType)
 }
 
@@ -33,7 +34,6 @@ interface RaceViewModelOutputs {
     val circuitInfo: LiveData<Round>
     val raceItems: LiveData<Triple<RaceAdapterType, List<RaceAdapterModel>, SeasonRound>>
     val seasonRoundData: LiveData<SeasonRound>
-    val raceDisplayMode: MutableLiveData<RaceDisplayMode>
 }
 
 //endregion
@@ -47,6 +47,7 @@ class RaceViewModel(
     var inputs: RaceViewModelInputs = this
     var outputs: RaceViewModelOutputs = this
 
+    private var roundDate: LocalDate? = null
     private val seasonRound: ConflatedBroadcastChannel<SeasonRound> = ConflatedBroadcastChannel()
     private var viewType: ConflatedBroadcastChannel<RaceAdapterType> = ConflatedBroadcastChannel()
 
@@ -59,11 +60,6 @@ class RaceViewModel(
         .asLiveData()
 
     override val circuitInfo: LiveData<Round> = seasonRoundFlow
-        .then {
-            if (it == null) {
-                raceDisplayMode.postValue(NOT_FOUND)
-            }
-        }
         .filterNotNull()
         .flowOn(Dispatchers.IO)
         .asLiveData(viewModelScope.coroutineContext)
@@ -73,10 +69,22 @@ class RaceViewModel(
             .asFlow()
             .flatMapLatest { (season, round) -> seasonOverviewDB.getSeasonRound(season, round) }
             .combineTriple(viewType.asFlow(), seasonRound.asFlow())
-            .filter { (roundData, _, sr) -> sr.first == roundData?.season && sr.second == roundData.round }
             .map { (roundData, viewType, seasonRoundValue) ->
+
                 if (roundData == null) {
-                    return@map Triple(viewType, emptyList<RaceAdapterModel>(), seasonRoundValue)
+                    val list = mutableListOf<RaceAdapterModel>()
+                    if (!connectivityManager.isConnected) {
+                        list.add(RaceAdapterModel.NoNetwork)
+                    }
+                    else {
+                        if (roundDate != null) {
+                            list.add(RaceAdapterModel.NoData(roundDate!! < LocalDate.now()))
+                        }
+                        else {
+                            list.add(RaceAdapterModel.NoData(true))
+                        }
+                    }
+                    return@map Triple(viewType, list, seasonRoundValue)
                 }
 
                 // Constructor standings, models are constructors
@@ -168,17 +176,12 @@ class RaceViewModel(
                     )
                 }
             }
-            .then {
-                raceDisplayMode.postValue(LIST)
-            }
             .asLiveData(viewModelScope.coroutineContext)
-
-    override val raceDisplayMode: MutableLiveData<RaceDisplayMode> =
-        MutableLiveData(if (connectivityManager.isConnected) LOADING else NO_NETWORK)
 
     //region Inputs
 
-    override fun initialise(season: Int, round: Int) {
+    override fun initialise(season: Int, round: Int, date: LocalDate?) {
+        roundDate = date
         seasonRound.offer(SeasonRound(season, round))
     }
 
