@@ -82,10 +82,12 @@ class HomeViewModel(
         .map { (seasonAndRounds, menuItemType, historyList) ->
             val (season, rounds) = seasonAndRounds
             val list: MutableList<HomeItem> = mutableListOf()
+            val history = historyList
+                .firstOrNull { it.season == season }
+            val historyRounds = history?.rounds ?: emptyList()
             when (menuItemType) {
                 HomeMenuItem.CALENDAR -> {
-                    list.addAll((historyList
-                        .firstOrNull { it.season == season }?.rounds ?: emptyList())
+                    list.addAll(historyRounds
                         .sortedBy { it.round }
                         .map {
                             HomeItem.Track(
@@ -136,11 +138,15 @@ class HomeViewModel(
                 }
             }
             if (list.isEmpty()) {
-                if (connectivityManager.isConnected || season == currentYear) {
-                    list.add(HomeItem.NoData)
+                if (!connectivityManager.isConnected) {
+                    list.add(HomeItem.NoNetwork)
                 }
                 else {
-                    list.add(HomeItem.NoNetwork)
+                    if (history?.completed == 0 || history == null) {
+                        list.add(HomeItem.NoData(false))
+                    } else {
+                        list.add(HomeItem.NoData(true))
+                    }
                 }
             }
             return@map list

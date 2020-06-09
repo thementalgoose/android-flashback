@@ -44,6 +44,16 @@ sealed class RaceAdapterModel {
         val points: Int,
         val driver: List<Pair<Driver, Int>>
     ) : RaceAdapterModel()
+
+    data class Loading(
+        val id: Int
+    ) : RaceAdapterModel()
+
+    data class NoData(
+        val pastRaceDate: Boolean
+    ) : RaceAdapterModel()
+
+    object NoNetwork : RaceAdapterModel()
 }
 
 data class ShowQualifying(

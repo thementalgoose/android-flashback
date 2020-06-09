@@ -140,24 +140,6 @@
 
     </androidx.core.widget.NestedScrollView>
 
-    <include
-        android:id="@+id/skeleton"
-        layout="@layout/skeleton_race"
-        android:layout_width="0dp"
-        android:layout_height="0dp" />
-
-    <include
-        android:id="@+id/networkError"
-        layout="@layout/layout_race_network"
-        android:layout_width="0dp"
-        android:layout_height="0dp" />
-
-    <include
-        android:id="@+id/notFound"
-        layout="@layout/layout_race_not_found"
-        android:layout_width="0dp"
-        android:layout_height="0dp" />
-
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/menu"
         android:layout_width="match_parent"

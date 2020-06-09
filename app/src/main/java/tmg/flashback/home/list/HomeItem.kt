@@ -40,7 +40,9 @@ sealed class HomeItem(
         val id: Int
     ): HomeItem(R.layout.view_home_loading)
 
-    object NoData: HomeItem(R.layout.view_home_no_data)
+    data class NoData(
+        val hasSeasonStarted: Boolean
+    ): HomeItem(R.layout.view_home_no_data)
 
     object NoNetwork: HomeItem(R.layout.view_home_no_network)
 }

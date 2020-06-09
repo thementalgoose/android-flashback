@@ -137,7 +137,9 @@
     <string name="race_round_format" formatted="false"><![CDATA[Round <b>%s</b> /// %s]]></string>
     <string name="race_network_error">Cannot connect, please check you are connected to the internet and try again</string>
     <string name="race_not_found">We cannot find the stats on this race right now. Please check back again soon</string>
+    <string name="race_not_started">This race hasn\'t happened yet, please check back after the race where we will try to get some statistics!</string>
     <string name="season_not_found">We don\'t have any data on this season at the moment. We will try to get some season information as soon as possible!</string>
+    <string name="season_not_started">This season hasn\'t started yet, please check back after the first race to see some statistics</string>
     <string name="season_network_error">We can\'t find the statistics on this right now, please check you have an active internet connection</string>
     <string name="race_qualifying_no_data">Not found</string>
     <string name="race_standings_driver_result"><![CDATA[Finished <b>%s</b>, scored <b>%s</b> points]]></string>
