@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.view_home_track.view.*
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.R
+import tmg.flashback.extensions.ordinalAbbreviation
 import tmg.flashback.home.list.HomeItem
 import tmg.flashback.utils.SeasonRound
 import tmg.flashback.utils.getFlagResourceAlpha3
@@ -28,7 +29,7 @@ class TrackViewHolder(
             circuitName.text = item.circuitName
             raceCountry.text = item.raceCountry
             round.text = context.getString(R.string.race_round, item.round)
-            date.text = item.date.format(DateTimeFormatter.ofPattern("dd MMMM"))
+            date.text = "${item.date.dayOfMonth.ordinalAbbreviation} ${item.date.format(DateTimeFormatter.ofPattern("MMMM yy"))}"
         }
     }
 

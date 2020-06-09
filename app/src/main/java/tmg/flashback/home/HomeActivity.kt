@@ -13,6 +13,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.snackbar.Snackbar
 import com.reddit.indicatorfastscroll.FastScrollItemIndicator
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.bottom_sheet_season.*
@@ -124,6 +125,15 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback {
         observeEvent(viewModel.outputs.openAppLockout) {
             startActivity(Intent(this, LockoutActivity::class.java))
             finishAffinity()
+        }
+
+        observe(viewModel.outputs.openAppBanner) { banner ->
+            banner?.let {
+                Snackbar
+                    .make(dataList, it, 5000)
+                    .setAnchorView(menu)
+                    .show()
+            }
         }
 
         //endregion
