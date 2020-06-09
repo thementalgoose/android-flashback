@@ -40,6 +40,7 @@ interface HomeViewModelOutputs {
     val currentSeason: LiveData<Int>
 
     val openAppLockout: LiveData<Event>
+    val openAppBanner: LiveData<String?>
 }
 
 //endregion
@@ -70,6 +71,17 @@ class HomeViewModel(
             }
         }
         .filterNotNull()
+        .asLiveData(viewModelScope.coroutineContext)
+
+    override val openAppBanner: LiveData<String?> = dataDB
+        .appBanner()
+        .map {
+            if (it?.show == true) {
+                it.message
+            } else {
+                null
+            }
+        }
         .asLiveData(viewModelScope.coroutineContext)
 
     override val list: LiveData<List<HomeItem>> = season
