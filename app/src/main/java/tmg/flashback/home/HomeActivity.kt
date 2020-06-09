@@ -29,6 +29,7 @@ import tmg.flashback.home.season.*
 import tmg.flashback.minimumSupportedYear
 import tmg.flashback.race.RaceActivity
 import tmg.flashback.settings.SettingsActivity
+import tmg.flashback.settings.release.ReleaseBottomSheetFragment
 import tmg.utilities.bottomsheet.BottomSheetFader
 import tmg.utilities.extensions.collapse
 import tmg.utilities.extensions.hidden
@@ -134,6 +135,11 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback {
                     .setAnchorView(menu)
                     .show()
             }
+        }
+
+        observeEvent(viewModel.outputs.openReleaseNotes) {
+            ReleaseBottomSheetFragment()
+                .show(supportFragmentManager, "RELEASE_NOTES")
         }
 
         //endregion

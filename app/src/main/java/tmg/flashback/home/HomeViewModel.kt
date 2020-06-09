@@ -15,6 +15,7 @@ import tmg.flashback.home.list.HomeItem
 import tmg.flashback.home.list.viewholders.NoDataViewHolder
 import tmg.flashback.repo.db.DataDB
 import tmg.flashback.repo.db.HistoryDB
+import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.db.SeasonOverviewDB
 import tmg.flashback.repo.models.*
 import tmg.flashback.settings.ConnectivityManager
@@ -41,6 +42,8 @@ interface HomeViewModelOutputs {
 
     val openAppLockout: LiveData<Event>
     val openAppBanner: LiveData<String?>
+
+    val openReleaseNotes: MutableLiveData<Event>
 }
 
 //endregion
@@ -49,6 +52,7 @@ class HomeViewModel(
     private val seasonOverviewDB: SeasonOverviewDB,
     private val historyDB: HistoryDB,
     private val dataDB: DataDB,
+    private val prefDB: PrefsDB,
     private val connectivityManager: ConnectivityManager
 ) : BaseViewModel(), HomeViewModelInputs, HomeViewModelOutputs {
 
@@ -60,7 +64,6 @@ class HomeViewModel(
         .asLiveData(viewModelScope.coroutineContext)
 
     override val openSeasonList: MutableLiveData<Event> = MutableLiveData()
-
     override val openAppLockout: LiveData<Event> = dataDB
         .appLockout()
         .map {
@@ -72,7 +75,6 @@ class HomeViewModel(
         }
         .filterNotNull()
         .asLiveData(viewModelScope.coroutineContext)
-
     override val openAppBanner: LiveData<String?> = dataDB
         .appBanner()
         .map {
@@ -83,6 +85,7 @@ class HomeViewModel(
             }
         }
         .asLiveData(viewModelScope.coroutineContext)
+    override val openReleaseNotes: MutableLiveData<Event> = MutableLiveData()
 
     override val list: LiveData<List<HomeItem>> = season
         .asFlow()
@@ -167,6 +170,12 @@ class HomeViewModel(
 
     var inputs: HomeViewModelInputs = this
     var outputs: HomeViewModelOutputs = this
+
+    init {
+        if (prefDB.shouldShowReleaseNotes) {
+            openReleaseNotes.value = Event()
+        }
+    }
 
     //region Inputs
 

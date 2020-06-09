@@ -19,6 +19,10 @@
         <br/>• Added championship standings options to all seasons
         <br/>• Added daily sync for current
         <br/>• Updated firebase dependencies]]></string>
+    <string name="release_7"><![CDATA[<b>4.0.0</b> - New look and feel
+        <br/>• Shifted app design over to a Material Design 2 inspired UI
+        <br/>• Improved network state management
+        <br/>• The usual disclaimer of general data patching and bug fixes]]></string>
 
     <!-- Planning -->
     <string name="planned_0">Season overview</string>
