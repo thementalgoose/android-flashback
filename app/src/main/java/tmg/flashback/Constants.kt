@@ -98,13 +98,6 @@ val dependencies = listOf(
         imageUrl = "https://avatars1.githubusercontent.com/u/38280958"
     ),
     AboutThisAppDependency(
-        order = 3,
-        dependencyName = "InboxRecyclerView",
-        author = "Saket Narayan",
-        url = "https://github.com/saket/InboxRecyclerView",
-        imageUrl = "https://avatars0.githubusercontent.com/u/2387680"
-    ),
-    AboutThisAppDependency(
         order = 4,
         dependencyName = "FlagKit",
         author = "WANG Jie",
@@ -157,14 +150,14 @@ val dependencies = listOf(
         order = 11,
         dependencyName = "Components + Utilities",
         author = "Jordan Fisher",
-        url = "https://github.com/thementalgoose/android-components",
+        url = "https://github.com/thementalgoose/android-utilities",
         imageUrl = "https://avatars1.githubusercontent.com/u/5982159"
     ),
     AboutThisAppDependency(
         order = 12,
-        dependencyName = "Pull to dismiss",
-        author = "Fatih Sokmen",
-        url = "https://github.com/fatihsokmen/pull-to-dismiss",
-        imageUrl = "https://avatars2.githubusercontent.com/u/2427299"
+        dependencyName = "IndicatorFastScroll",
+        author = "Reddit",
+        url = "https://github.com/reddit/IndicatorFastScroll",
+        imageUrl = "https://avatars3.githubusercontent.com/u/14248"
     )
 )
