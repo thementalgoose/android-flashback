@@ -20,34 +20,43 @@
         tools:text="1" />
 
     <include
-        android:layout_marginTop="@dimen/paddingXSmall"
         android:id="@+id/layoutDriver"
         layout="@layout/layout_driver"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/paddingSmall"
+        android:layout_marginTop="@dimen/paddingXSmall"
         app:layout_constraintStart_toEndOf="@id/tvPosition"
         app:layout_constraintTop_toTopOf="@id/tvPosition" />
 
     <TextView
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="@dimen/paddingXSmall"
         android:id="@+id/tvConstructor"
         style="@style/Text.QualifyingTime.Constructor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/paddingXSmall"
         app:layout_constraintStart_toStartOf="@id/layoutDriver"
         app:layout_constraintTop_toBottomOf="@id/layoutDriver"
         tools:text="Mercedes" />
 
+    <TextView
+        style="@style/Text.QualifyingTime.Delta"
+        android:layout_width="wrap_content"
+        android:id="@+id/penalty"
+        android:layout_height="wrap_content"
+        android:text="@string/qualifying_grid_penalty"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@id/tvConstructor"
+        app:layout_constraintTop_toBottomOf="@id/tvConstructor" />
+
     <View
         android:id="@+id/filterQuali"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/guideline"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_width="0dp"
-        android:layout_height="0dp" />
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
@@ -61,10 +70,10 @@
         layout="@layout/layout_qualifying_time"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintHorizontal_chainStyle="spread"
-        app:layout_constraintStart_toEndOf="@id/layoutQ2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toEndOf="@id/layoutQ2"
         app:layout_constraintTop_toTopOf="parent" />
 
     <include
@@ -72,10 +81,10 @@
         layout="@layout/layout_qualifying_time"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintStart_toEndOf="@id/layoutQ1"
-        app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/layoutQ3"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toEndOf="@id/layoutQ1"
         app:layout_constraintTop_toTopOf="parent" />
 
     <include
@@ -83,9 +92,9 @@
         layout="@layout/layout_qualifying_time"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/layoutQ2"
+        app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintStart_toStartOf="@id/guideline"
         app:layout_constraintTop_toTopOf="parent" />
 
