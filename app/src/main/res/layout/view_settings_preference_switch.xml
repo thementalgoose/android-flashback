@@ -38,6 +38,7 @@
         tools:text="Preference" />
 
     <CheckBox
+        android:buttonTint="?attr/f1TextSecondary"
         android:id="@+id/checkbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

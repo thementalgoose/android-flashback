@@ -51,6 +51,7 @@
         tools:text="44" />
 
     <TextView
+        android:drawableTint="?attr/f1TextSecondary"
         android:id="@+id/tvConstructor"
         style="@style/Text.RaceResult.Constructor"
         android:layout_width="wrap_content"
@@ -174,6 +175,7 @@
                 tools:text="+1.123" />
 
             <ImageView
+                android:tint="?attr/f1TextSecondary"
                 android:id="@+id/imgStatus"
                 android:layout_width="@dimen/raceStatusSize"
                 android:layout_height="@dimen/raceStatusSize"

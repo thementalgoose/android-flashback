@@ -6,7 +6,7 @@
         <item name="colorAccent">@color/logo_gradient_1</item>
 
         <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:navigationBarColor">@color/white</item>
+        <item name="android:navigationBarColor">?attr/f1BackgroundPrimary</item>
         <item name="android:windowTranslucentStatus">false</item>
         <item name="android:windowTranslucentNavigation">true</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
@@ -41,6 +41,61 @@
         <item name="f1DeltaNeutral">?attr/f1TextSecondary</item>
         <item name="f1DeltaNegative">#4CAF50</item>
     </style>
+
+
+
+
+
+
+
+    <style name="DarkTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">#6A54D6</item>
+        <item name="colorPrimaryDark">#6A54D6</item>
+        <item name="colorAccent">@color/logo_gradient_1</item>
+
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">?attr/f1BackgroundPrimary</item>
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:isLightTheme">false</item>
+
+        <item name="f1Selected">#4403DAC5</item>
+        <item name="f1BackgroundHighlighted">#334A34B6</item>
+
+        <item name="f1TextPrimary">#F8F8F8</item>
+        <item name="f1TextSecondary">#E8E8E8</item>
+        <item name="f1TextTertiary">#D8D8D8</item>
+        <item name="f1BackgroundPrimary">#282828</item>
+        <item name="f1BackgroundSecondary">#383838</item>
+
+        <item name="f1TextInversePrimary">#181818</item>
+        <item name="f1TextInverseSecondary">#383838</item>
+        <item name="f1TextInverseTertiary">#585858</item>
+        <item name="f1BackgroundInversePrimary">#FBFBFB</item>
+        <item name="f1BackgroundInverseSecondary">#E8E8E8</item>
+
+        <item name="f1BackgroundOverlay">#44FBFBFB</item>
+
+        <item name="f1Loading">#a8a8a8</item>
+
+        <item name="f1PurpleSector">#673AB7</item>
+
+        <item name="f1Pos1">#D3BC4D</item>
+        <item name="f1Pos2">#C2C2C2</item>
+        <item name="f1Pos3">#D29342</item>
+
+        <item name="f1DeltaPositive">#f44336</item>
+        <item name="f1DeltaNeutral">?attr/f1TextSecondary</item>
+        <item name="f1DeltaNegative">#4CAF50</item>
+    </style>
+
+
+
+
+
+
+
 
     <style name="LightTheme.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.ActionBar" />
 
@@ -433,5 +488,4 @@
         <item name="android:textSize">12sp</item>
         <item name="android:textStyle">italic</item>
     </style>
-
 </resources>

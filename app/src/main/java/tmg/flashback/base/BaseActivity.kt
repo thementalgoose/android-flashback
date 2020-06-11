@@ -14,6 +14,7 @@ import tmg.flashback.R
 import tmg.flashback.repo.db.CrashReporter
 import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.enums.ThemePref
+import tmg.utilities.extensions.isInDayMode
 import tmg.utilities.lifecycle.common.CommonActivity
 
 abstract class BaseActivity : CommonActivity() {
@@ -22,18 +23,26 @@ abstract class BaseActivity : CommonActivity() {
 
     val crashReporter: CrashReporter by inject()
 
+    protected var isLightTheme: Boolean = true
+
     override fun onCreate(savedInstanceState: Bundle?) {
-        when (prefsDB.theme) {
-            ThemePref.DAY -> setTheme(R.style.LightTheme)
-            ThemePref.AUTO -> setTheme(R.style.LightTheme)
-            ThemePref.NIGHT -> setTheme(R.style.LightTheme)
+        isLightTheme = prefsDB.theme == ThemePref.DAY || (prefsDB.theme == ThemePref.AUTO && isInDayMode())
+        if (isLightTheme) {
+            setTheme(R.style.LightTheme)
+        } else {
+            setTheme(R.style.DarkTheme)
         }
+
         super.onCreate(savedInstanceState)
 
         window.statusBarColor = Color.TRANSPARENT
 
         window.apply {
-            decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+            if (isLightTheme) {
+                decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+            } else {
+                decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+            }
         }
 
         findViewById<View>(R.id.container)?.let {

@@ -59,8 +59,8 @@ class SettingsViewModel(
 
     init {
         settings.value = listOf(
-//            AppPreferencesItem.Category(applicationContext.getString(R.string.settings_theme)),
-//            SettingsOptions.THEME.toPref(applicationContext),
+            AppPreferencesItem.Category(applicationContext.getString(R.string.settings_theme)),
+            SettingsOptions.THEME.toPref(applicationContext),
             AppPreferencesItem.Category(applicationContext.getString(R.string.settings_customisation)),
             SettingsOptions.QUALIFYING_DELTAS.toSwitch(applicationContext, prefDB.showQualifyingDelta),
             SettingsOptions.SHOW_DRIVERS_POINTS_IN_CONSTRUCTORS.toSwitch(applicationContext, prefDB.showDriversBehindConstructor),

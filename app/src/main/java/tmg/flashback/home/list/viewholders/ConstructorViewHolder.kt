@@ -10,6 +10,7 @@ import tmg.flashback.home.list.HomeItem
 import tmg.flashback.repo.models.Driver
 import tmg.flashback.utils.getColor
 import tmg.flashback.utils.getFlagResourceAlpha3
+import tmg.utilities.extensions.views.context
 import tmg.utilities.extensions.views.show
 
 class ConstructorViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
@@ -30,8 +31,9 @@ class ConstructorViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         item.driver.getOrNull(2)?.let { setDriver(itemView.layoutDriver3, it) }
         item.driver.getOrNull(3)?.let { setDriver(itemView.layoutDriver4, it) }
 
-        itemView.lpvProgress.backgroundColour = itemView.context.theme.getColor(R.attr.f1BackgroundPrimary)
+        itemView.lpvProgress.backgroundColour = context.theme.getColor(R.attr.f1BackgroundPrimary)
         itemView.lpvProgress.progressColour = item.constructor.color
+        itemView.lpvProgress.textBackgroundColour = context.theme.getColor(R.attr.f1TextSecondary)
 
         Log.i("Flashback", "Setting for ${item.constructor.name} the value ${item.points.toFloat() / maxPoints.toFloat()} (calculated to be ${(item.points.toFloat() / maxPoints.toFloat()) * maxPoints.toFloat()} (max points $maxPoints, their points ${item.points})")
 

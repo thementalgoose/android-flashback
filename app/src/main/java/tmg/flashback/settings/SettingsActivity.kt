@@ -72,6 +72,15 @@ class SettingsActivity : BaseActivity() {
         }
     }
 
+    override fun onBackPressed() {
+        if (themeBottomSheet.state != BottomSheetBehavior.STATE_HIDDEN) {
+            themeBottomSheet.hidden()
+        }
+        else {
+            super.onBackPressed()
+        }
+    }
+
     override fun setInsets(insets: WindowInsetsCompat) {
         titlebar.setPadding(0, insets.systemWindowInsetTop, 0, 0)
         rvSettings.setPadding(0, 0, 0, insets.systemWindowInsetBottom)
@@ -131,7 +140,7 @@ class SettingsActivity : BaseActivity() {
         startActivity(
             AboutThisAppActivity.intent(
                 context = this,
-                configuration = configuration(this, false)
+                configuration = configuration(this, !isLightTheme)
             )
         )
     }
