@@ -4,11 +4,19 @@ import android.view.View
 import androidx.annotation.ColorInt
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.layout_constructor_driver.view.*
+import kotlinx.android.synthetic.main.view_home_constructor.view.*
 import kotlinx.android.synthetic.main.view_race_constructor.view.*
+import kotlinx.android.synthetic.main.view_race_constructor.view.layoutDriver1
+import kotlinx.android.synthetic.main.view_race_constructor.view.layoutDriver2
+import kotlinx.android.synthetic.main.view_race_constructor.view.layoutDriver3
+import kotlinx.android.synthetic.main.view_race_constructor.view.lpvProgress
+import kotlinx.android.synthetic.main.view_race_constructor.view.tvTitle
 import tmg.flashback.R
 import tmg.flashback.race.RaceAdapterModel
 import tmg.flashback.repo.models.Driver
+import tmg.flashback.utils.getColor
 import tmg.flashback.utils.getFlagResourceAlpha3
+import tmg.utilities.extensions.views.context
 import tmg.utilities.extensions.views.show
 import kotlin.math.roundToInt
 
@@ -32,6 +40,7 @@ class ConstructorStandingsViewholder(itemView: View): RecyclerView.ViewHolder(it
             }
 
             lpvProgress.progressColour = model.constructor.color
+            lpvProgress.textBackgroundColour = context.theme.getColor(R.attr.f1TextSecondary)
             val progress = model.points.toFloat() / maxPointsByAnyTeam.toFloat()
             lpvProgress.animateProgress(progress) {
                 if (progress != 0.0f) {

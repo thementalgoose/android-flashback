@@ -17,8 +17,9 @@
         android:clickable="true"
         android:focusable="true"
         android:foreground="@drawable/rounded_ripple">
-
+        
         <ImageView
+            android:tint="?attr/f1TextPrimary"
             android:id="@+id/menuItemIcon"
             android:layout_width="18dp"
             android:layout_height="18dp"

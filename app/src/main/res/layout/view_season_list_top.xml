@@ -32,7 +32,7 @@
         android:id="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="@dimen/paddingSmall"
+        android:layout_marginTop="@dimen/paddingMedium"
         android:layout_marginBottom="@dimen/paddingSmall"
         android:background="?attr/f1BackgroundSecondary"
         app:layout_constraintBottom_toBottomOf="parent"

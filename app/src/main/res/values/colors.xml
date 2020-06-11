@@ -8,6 +8,7 @@
     <color name="fadedBackground">#66000000</color>
 
     <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
 
     <color name="transparent">#00ffffff</color>
 
@@ -15,7 +16,7 @@
     <color name="aboutThisApp_headerLight">@color/colorTheme</color>
 
     <color name="aboutThisApp_backgroundLight">#FBFBFB</color>
-    <color name="aboutThisApp_backgroundDark">#181818</color>
+    <color name="aboutThisApp_backgroundDark">#282828</color>
     <color name="whiteTranslucent">#88000000</color>
     <color name="overlay">#88000000</color>
     <color name="favourite">#D3BC4D</color>

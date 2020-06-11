@@ -25,6 +25,7 @@
         tools:text="Header" />
 
     <ImageView
+        android:tint="?attr/f1TextSecondary"
         android:paddingTop="@dimen/paddingSmall"
         android:paddingBottom="@dimen/paddingSmall"
         android:paddingStart="@dimen/paddingSmall"

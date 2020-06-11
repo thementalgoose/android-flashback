@@ -24,17 +24,6 @@
         <br/>• Improved network state management
         <br/>• The usual disclaimer of general data patching and bug fixes]]></string>
 
-    <!-- Planning -->
-    <string name="planned_0">Season overview</string>
-    <string name="planned_1">Race results</string>
-    <string name="planned_2">Qualifying results</string>
-    <string name="planned_3">World Championship season overview</string>
-    <string name="planned_4">Driver details</string>
-    <string name="planned_5">Constructor details</string>
-    <string name="planned_6">Lap times</string>
-    <string name="planned_7">Circuit information</string>
-    <string name="planned_8">Pit stops</string>
-
     <!-- App Lockout -->
     <string name="app_lockout_title">App lockout</string>
 
@@ -116,6 +105,7 @@
     <string name="home_season_header_current">Now</string>
     <string name="home_season_header_favourited">Favourites</string>
     <string name="home_season_header_All">All</string>
+    <string name="home_progress">Standings as of round %d, </string>
 
     <!-- Dashboard -->
     <string name="dashboard_header">@string/app_name</string>
