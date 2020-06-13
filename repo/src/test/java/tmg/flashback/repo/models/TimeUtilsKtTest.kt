@@ -1,9 +1,9 @@
 package tmg.flashback.repo.models
 
 import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
+import tmg.flashback.repo.models.stats.LapTime
 import tmg.flashback.repo.utils.add
 import tmg.flashback.repo.utils.addDelta
 import tmg.flashback.repo.utils.toLapTime
@@ -49,7 +49,8 @@ class TimeUtilsKtTest {
     )
     fun `adding millis to lap time results in correct lap time`(source: Int, delta: Int, expected: String) {
 
-        val lapTime: LapTime = LapTime(source)
+        val lapTime: LapTime =
+            LapTime(source)
         val lapTimeWithData: LapTime = lapTime.add(delta)
 
         assertEquals(expected, lapTimeWithData.toString())
@@ -62,7 +63,8 @@ class TimeUtilsKtTest {
     )
     fun `adding delta string to lap time results in correct lap time`(source: Int, delta: String, expected: String) {
 
-        val lapTime: LapTime = LapTime(source)
+        val lapTime: LapTime =
+            LapTime(source)
         val lapTimeWithDelta: LapTime = lapTime.addDelta(delta)
 
         assertEquals(expected, lapTimeWithDelta.toString())
@@ -75,7 +77,8 @@ class TimeUtilsKtTest {
     )
     fun `adding delta hours mins seconds millis to lap time results in correct lap time`(source: Int, hour: Int, min: Int, sec: Int, millis: Int, expectedMillis: Int, expectedString: String) {
 
-        val lapTime: LapTime = LapTime(source)
+        val lapTime: LapTime =
+            LapTime(source)
         val lapTimeWithDelta = lapTime.addDelta(hour, min, sec, millis)
 
         assertEquals(expectedMillis, lapTimeWithDelta.totalMillis)

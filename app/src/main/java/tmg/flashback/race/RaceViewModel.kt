@@ -2,7 +2,6 @@ package tmg.flashback.race
 
 import android.util.Log
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
@@ -10,14 +9,12 @@ import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.*
 import org.threeten.bp.LocalDate
 import tmg.flashback.base.BaseViewModel
-import tmg.flashback.home.list.HomeItem
 import tmg.flashback.repo.db.PrefsDB
-import tmg.flashback.repo.db.SeasonOverviewDB
-import tmg.flashback.repo.models.*
+import tmg.flashback.repo.db.stats.SeasonOverviewDB
+import tmg.flashback.repo.models.stats.*
 import tmg.flashback.settings.ConnectivityManager
 import tmg.flashback.utils.SeasonRound
 import tmg.utilities.extensions.combineTriple
-import tmg.utilities.extensions.then
 
 //region Inputs
 

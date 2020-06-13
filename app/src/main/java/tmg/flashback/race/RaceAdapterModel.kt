@@ -1,7 +1,7 @@
 package tmg.flashback.race
 
 import tmg.flashback.repo.enums.RaceStatus
-import tmg.flashback.repo.models.*
+import tmg.flashback.repo.models.stats.*
 
 sealed class RaceAdapterModel {
     data class Podium(

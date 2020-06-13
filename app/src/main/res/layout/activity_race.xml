@@ -33,9 +33,16 @@
                     style="@style/Text.Toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/paddingMedium"
+                    android:layout_marginEnd="@dimen/paddingMedium"
                     android:fitsSystemWindows="true"
                     android:gravity="center"
+                    android:lines="1"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:paddingStart="@dimen/toolbarSettingsIcon"
                     android:paddingTop="@dimen/paddingMedium"
+                    android:paddingEnd="@dimen/toolbarSettingsIcon"
                     android:paddingBottom="@dimen/paddingMedium"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -67,9 +74,9 @@
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nsvMain"
         android:layout_width="match_parent"
-        android:overScrollMode="never"
         android:layout_height="match_parent"
         android:layout_marginBottom="?attr/actionBarSize"
+        android:overScrollMode="never"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
         <LinearLayout
@@ -145,7 +152,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:background="?attr/f1BackgroundPrimary"
+        android:background="?attr/f1BackgroundNavPrimary"
         app:itemIconTint="@drawable/selector_bottom_nav_color"
         app:itemTextColor="@drawable/selector_bottom_nav_color"
         app:menu="@menu/menu_race" />

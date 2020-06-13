@@ -12,16 +12,13 @@ import kotlinx.coroutines.flow.map
 import tmg.flashback.base.BaseViewModel
 import tmg.flashback.currentYear
 import tmg.flashback.home.list.HomeItem
-import tmg.flashback.home.list.viewholders.NoDataViewHolder
-import tmg.flashback.repo.db.DataDB
-import tmg.flashback.repo.db.HistoryDB
+import tmg.flashback.repo.db.stats.DataDB
+import tmg.flashback.repo.db.stats.HistoryDB
 import tmg.flashback.repo.db.PrefsDB
-import tmg.flashback.repo.db.SeasonOverviewDB
-import tmg.flashback.repo.models.*
+import tmg.flashback.repo.db.stats.SeasonOverviewDB
+import tmg.flashback.repo.models.stats.*
 import tmg.flashback.settings.ConnectivityManager
-import tmg.flashback.utils.SeasonRound
 import tmg.utilities.extensions.combineTriple
-import tmg.utilities.lifecycle.DataEvent
 import tmg.utilities.lifecycle.Event
 
 //region Inputs

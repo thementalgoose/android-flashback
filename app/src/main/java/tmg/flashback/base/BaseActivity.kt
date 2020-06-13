@@ -5,6 +5,7 @@ import android.graphics.Insets
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.WindowManager
 import androidx.annotation.LayoutRes
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -38,6 +39,7 @@ abstract class BaseActivity : CommonActivity() {
         window.statusBarColor = Color.TRANSPARENT
 
         window.apply {
+            navigationBarColor = Color.TRANSPARENT
             if (isLightTheme) {
                 decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
             } else {

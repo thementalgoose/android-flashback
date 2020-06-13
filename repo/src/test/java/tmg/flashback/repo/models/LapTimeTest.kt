@@ -4,14 +4,15 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
-import tmg.flashback.repo.utils.add
-import tmg.flashback.repo.utils.addDelta
+import tmg.flashback.repo.models.stats.LapTime
+import tmg.flashback.repo.models.stats.noTime
 
 class LapTimeTest {
 
     @Test
     fun `initialising empty lap time prints no time`() {
-        val lapTime: LapTime = LapTime()
+        val lapTime: LapTime =
+            LapTime()
         assertEquals(lapTime.totalMillis, 0)
         assertEquals(lapTime.time, "No time")
         assertEquals(lapTime.toString(), "No time")
@@ -19,7 +20,8 @@ class LapTimeTest {
 
     @Test
     fun `empty lap time object prints no time`() {
-        val lapTime: LapTime = noTime
+        val lapTime: LapTime =
+            noTime
         assertEquals(lapTime.totalMillis, 0)
         assertEquals(lapTime.time, "No time")
         assertEquals(lapTime.toString(), "No time")
@@ -33,7 +35,8 @@ class LapTimeTest {
     )
     fun `initialising lap time with millis prints correct values`(millis: Int, expectedTime: String) {
 
-        val lapTime: LapTime = LapTime(millis)
+        val lapTime: LapTime =
+            LapTime(millis)
 
         assertEquals(expectedTime, lapTime.time)
     }
@@ -47,7 +50,13 @@ class LapTimeTest {
     )
     fun `initialising lap time with hour, min, sec and millis prints correct values`(hour: Int?, mins: Int?, seconds: Int?, millis: Int, expectedTime: String) {
 
-        val lapTime: LapTime = LapTime(hour ?: 0, mins ?: 0, seconds ?: 0, millis)
+        val lapTime: LapTime =
+            LapTime(
+                hour ?: 0,
+                mins ?: 0,
+                seconds ?: 0,
+                millis
+            )
 
         assertEquals(expectedTime, lapTime.time)
     }
@@ -59,8 +68,10 @@ class LapTimeTest {
     )
     fun `delta calculation on lap time prints correct delta`(sourceLapTime: Int, lapTime: Int, expectedDelta: String) {
 
-        val refLapTime: LapTime = LapTime(sourceLapTime)
-        val actualLapTime: LapTime = LapTime(lapTime)
+        val refLapTime: LapTime =
+            LapTime(sourceLapTime)
+        val actualLapTime: LapTime =
+            LapTime(lapTime)
 
         assertEquals(expectedDelta, refLapTime.deltaTo(actualLapTime))
     }
@@ -75,12 +86,13 @@ class LapTimeTest {
 
         val expectedMillis = millis + (1000 * seconds) + (1000 * 60 * mins) + (1000 * 60 * 60 * hours)
 
-        val lapTime: LapTime = LapTime(
-            hours = hours,
-            mins = mins,
-            seconds = seconds,
-            millis = millis
-        )
+        val lapTime: LapTime =
+            LapTime(
+                hours = hours,
+                mins = mins,
+                seconds = seconds,
+                millis = millis
+            )
 
         assertEquals(hours, lapTime.hours)
         assertEquals(mins, lapTime.mins)

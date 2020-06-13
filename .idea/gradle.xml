@@ -13,8 +13,9 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/firebase" />
+            <option value="$PROJECT_DIR$/news" />
             <option value="$PROJECT_DIR$/repo" />
-            <option value="$PROJECT_DIR$/repo-firebase" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

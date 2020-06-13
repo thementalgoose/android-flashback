@@ -7,7 +7,7 @@ import kotlinx.android.synthetic.main.layout_constructor_driver.view.*
 import kotlinx.android.synthetic.main.view_home_constructor.view.*
 import tmg.flashback.R
 import tmg.flashback.home.list.HomeItem
-import tmg.flashback.repo.models.Driver
+import tmg.flashback.repo.models.stats.Driver
 import tmg.flashback.utils.getColor
 import tmg.flashback.utils.getFlagResourceAlpha3
 import tmg.utilities.extensions.views.context

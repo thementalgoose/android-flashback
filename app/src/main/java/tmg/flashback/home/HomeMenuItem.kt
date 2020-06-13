@@ -4,5 +4,6 @@ enum class HomeMenuItem {
     CALENDAR,
     DRIVERS,
     CONSTRUCTORS,
-    SEASONS
+    SEASONS,
+    NEWS
 }

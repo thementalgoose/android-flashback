@@ -1,13 +1,12 @@
 package tmg.flashback.race.viewholders
 
-import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.layout_driver.view.*
 import kotlinx.android.synthetic.main.layout_qualifying_time.view.*
 import kotlinx.android.synthetic.main.view_race_qualifying_result.view.*
 import tmg.flashback.R
-import tmg.flashback.repo.models.RoundQualifyingResult
+import tmg.flashback.repo.models.stats.RoundQualifyingResult
 import tmg.flashback.race.RaceAdapterCallback
 import tmg.flashback.race.RaceAdapterType
 import tmg.flashback.race.RaceAdapterModel
