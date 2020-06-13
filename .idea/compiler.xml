@@ -3,8 +3,8 @@
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel>
       <module name="app" target="1.8" />
+      <module name="firebase" target="1.8" />
       <module name="repo" target="1.7" />
-      <module name="repo-firebase" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

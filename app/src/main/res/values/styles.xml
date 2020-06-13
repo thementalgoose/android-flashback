@@ -13,13 +13,14 @@
         <item name="android:isLightTheme">true</item>
 
         <item name="f1Selected">#4403DAC5</item>
+        <item name="f1BackgroundHighlighted">#334A34B6</item>
 
         <item name="f1TextPrimary">#181818</item>
         <item name="f1TextSecondary">#383838</item>
         <item name="f1TextTertiary">#585858</item>
+        <item name="f1BackgroundNavPrimary">#FBFBFB</item>
         <item name="f1BackgroundPrimary">#FBFBFB</item>
         <item name="f1BackgroundSecondary">#E8E8E8</item>
-        <item name="f1BackgroundHighlighted">#334A34B6</item>
 
         <item name="f1TextInversePrimary">#F8F8F8</item>
         <item name="f1TextInverseSecondary">#E8E8E8</item>
@@ -49,8 +50,8 @@
 
 
     <style name="DarkTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">#6A54D6</item>
-        <item name="colorPrimaryDark">#6A54D6</item>
+        <item name="colorPrimary">#9575CD</item>
+        <item name="colorPrimaryDark">#7E57C2</item>
         <item name="colorAccent">@color/logo_gradient_1</item>
 
         <item name="android:statusBarColor">@android:color/transparent</item>
@@ -66,6 +67,7 @@
         <item name="f1TextPrimary">#F8F8F8</item>
         <item name="f1TextSecondary">#E8E8E8</item>
         <item name="f1TextTertiary">#D8D8D8</item>
+        <item name="f1BackgroundNavPrimary">#383838</item>
         <item name="f1BackgroundPrimary">#282828</item>
         <item name="f1BackgroundSecondary">#383838</item>
 
@@ -126,6 +128,7 @@
     <!-- Home -->
 
     <style name="Text.Toolbar" parent="Text">
+        <item name="android:fontFamily">@font/montserrat</item>
         <item name="android:textSize">@dimen/textSizeXLarge</item>
         <item name="android:textStyle">bold</item>
     </style>

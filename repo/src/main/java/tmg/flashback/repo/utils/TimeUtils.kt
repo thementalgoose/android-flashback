@@ -2,11 +2,16 @@ package tmg.flashback.repo.utils
 
 import org.threeten.bp.LocalTime
 import tmg.flashback.repo.enums.LapTimeFormats
-import tmg.flashback.repo.models.LapTime
-import tmg.flashback.repo.models.noTime
+import tmg.flashback.repo.models.stats.LapTime
+import tmg.flashback.repo.models.stats.noTime
 
 fun LapTime.addDelta(hours: Int = 0, mins: Int = 0, seconds: Int = 0, millis: Int = 0): LapTime {
-    val lapMillis: Int = LapTime(hours, mins, seconds, millis).totalMillis
+    val lapMillis: Int = LapTime(
+        hours,
+        mins,
+        seconds,
+        millis
+    ).totalMillis
     return this.add(lapMillis)
 }
 

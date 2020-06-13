@@ -21,4 +21,9 @@
         android:id="@+id/nav_seasons"
         android:icon="@drawable/nav_seasons"
         android:title="@string/nav_seasons"/>
+
+<!--    <item-->
+<!--        android:id="@+id/nav_news"-->
+<!--        android:icon="@drawable/nav_news"-->
+<!--        android:title="@string/nav_news"/>-->
 </menu>

@@ -28,6 +28,10 @@
             android:label="" />
 
         <activity
+            android:name=".news.NewsActivity"
+            android:label="" />
+
+        <activity
             android:name=".race.RaceActivity"
             android:label="" />
 

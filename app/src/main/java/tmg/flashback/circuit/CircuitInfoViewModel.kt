@@ -6,8 +6,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import tmg.flashback.base.BaseViewModel
-import tmg.flashback.repo.db.CircuitDB
-import tmg.flashback.repo.models.Circuit
+import tmg.flashback.repo.models.stats.Circuit
 
 //region Inputs
 
@@ -25,9 +24,7 @@ interface CircuitInfoViewModelOutputs {
 
 //endregion
 
-class CircuitInfoViewModel(
-    private val circuitDB: CircuitDB
-): BaseViewModel(), CircuitInfoViewModelInputs, CircuitInfoViewModelOutputs {
+class CircuitInfoViewModel: BaseViewModel(), CircuitInfoViewModelInputs, CircuitInfoViewModelOutputs {
 
     private lateinit var circuitId: String
 
@@ -44,11 +41,6 @@ class CircuitInfoViewModel(
 
     override fun circuitId(circuitId: String) {
         this.circuitId = circuitId
-
-        viewModelScope.launch(Dispatchers.IO) {
-            val result = circuitDB.getCircuit(circuitId)
-            circuitInfo.postValue(result)
-        }
     }
 
     //endregion

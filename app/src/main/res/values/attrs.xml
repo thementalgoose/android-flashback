@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <attr name="f1BackgroundNavPrimary" format="color" />
+
     <attr name="f1BackgroundPrimary" format="color" />
     <attr name="f1BackgroundSecondary" format="color" />
     <attr name="f1BackgroundInversePrimary" format="color" />
