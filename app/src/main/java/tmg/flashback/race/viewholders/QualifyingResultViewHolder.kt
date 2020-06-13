@@ -6,6 +6,7 @@ import kotlinx.android.synthetic.main.layout_driver.view.*
 import kotlinx.android.synthetic.main.layout_qualifying_time.view.*
 import kotlinx.android.synthetic.main.view_race_qualifying_result.view.*
 import tmg.flashback.R
+import tmg.flashback.extensions.ordinalAbbreviation
 import tmg.flashback.repo.models.stats.RoundQualifyingResult
 import tmg.flashback.race.RaceAdapterCallback
 import tmg.flashback.race.RaceAdapterType
@@ -48,9 +49,9 @@ class QualifyingResultViewHolder(view: View, private val updateAdapterType: Race
             tvNumber.colorHighlight = model.driver.constructor.color
 
 
-            if (model.qualified != null && model.qualified != model.gridPos && model.gridPos > model.qualified) {
+            if (showQualifying.penalties && (model.qualified != null && model.qualified != model.gridPos && model.gridPos > model.qualified)) {
                 penalty.show(true)
-                penalty.text = getString(R.string.qualifying_grid_penalty, model.gridPos - model.qualified)
+                penalty.text = getString(R.string.qualifying_grid_penalty, model.gridPos - model.qualified, model.gridPos.ordinalAbbreviation)
             }
             else {
                 penalty.show(false)

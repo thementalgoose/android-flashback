@@ -44,7 +44,7 @@ data class Round(
                 .distinctBy { it.id }
         }
 
-    val constructorStandings: List<ConstructorStandings>
+    val constructorStandings: List<RoundConstructorStandings>
         get() {
             val standings: MutableMap<String, Int> = mutableMapOf()
             for ((driverId, raceResult) in race) {
@@ -53,7 +53,7 @@ data class Round(
                 standings[raceResult.driver.constructor.id] = previousPoints
             }
             return constructor.map {
-                ConstructorStandings(
+                RoundConstructorStandings(
                     standings.getOrElse(
                         it.id
                     ) { 0 }, it
@@ -61,10 +61,10 @@ data class Round(
             }
         }
 
-    val driverStandings: List<DriverStandings>
+    val driverStandings: List<RoundDriverStandings>
         get() {
             return race.map { (key, value) ->
-                DriverStandings(
+                RoundDriverStandings(
                     value.points,
                     value.driver
                 )
@@ -118,7 +118,7 @@ val List<Round>.upcoming: Int
 /**
  * Get the constructor standings for the season
  */
-fun List<Round>.standingsConstructor(): Map<String, Pair<Constructor, Map<String, Pair<Driver, Int>>>> {
+fun List<Round>.constructorStandings(): ConstructorStandings {
     val returnMap: MutableMap<String, Pair<Constructor, MutableMap<String, Pair<Driver, Int>>>> = mutableMapOf()
     this.forEach { round ->
         round.constructor.forEach {
@@ -168,7 +168,7 @@ fun Map<String, Pair<RoundDriver, Int>>.maxDriverPointsInSeason(): Int {
 /**
  * Get the driver standings for the season
  */
-fun List<Round>.standingsDriver(): Map<String, Pair<RoundDriver, Int>> {
+fun List<Round>.driverStandings(): DriverStandings {
     val returnMap: MutableMap<String, Pair<RoundDriver, Int>> = mutableMapOf()
     this.forEach { round ->
         round.drivers.forEach {

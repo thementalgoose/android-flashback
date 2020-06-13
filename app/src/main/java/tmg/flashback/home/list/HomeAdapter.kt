@@ -6,12 +6,18 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.R
 import tmg.flashback.home.list.viewholders.*
+import tmg.flashback.repo.models.news.NewsItem
 
 class HomeAdapter(
-    val trackClicked: (track: HomeItem.Track) -> Unit
+    val trackClicked: (track: HomeItem.Track) -> Unit,
+    val articleClicked: (item: NewsItem, itemId: Long) -> Unit
 ): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    var list: List<HomeItem> = List(5) { HomeItem.Loading(it) }
+    init {
+        setHasStableIds(true)
+    }
+
+    var list: List<HomeItem> = emptyList()
         set(value) {
             val result = DiffUtil.calculateDiff(DiffCallback(field, value))
             field = value
@@ -30,17 +36,16 @@ class HomeAdapter(
             R.layout.view_home_constructor -> ConstructorViewHolder(
                 LayoutInflater.from(parent.context).inflate(viewType, parent, false)
             )
-            R.layout.view_home_loading -> LoadingViewHolder(
-                LayoutInflater.from(parent.context).inflate(viewType, parent, false)
-            )
-            R.layout.view_home_no_data -> NoDataViewHolder(
-                LayoutInflater.from(parent.context).inflate(viewType, parent, false)
-            )
-            R.layout.view_home_no_network -> NoNetworkViewHolder(
+            R.layout.view_home_news -> NewsItemViewHolder(
+                articleClicked,
                 LayoutInflater.from(parent.context).inflate(viewType, parent, false)
             )
             else -> throw Exception("Type in HomeItem is not implemented on onCreateViewHolder")
         }
+    }
+
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -48,7 +53,7 @@ class HomeAdapter(
             is HomeItem.Track -> (holder as TrackViewHolder).bind(item)
             is HomeItem.Driver -> (holder as DriverViewHolder).bind(item)
             is HomeItem.Constructor -> (holder as ConstructorViewHolder).bind(item)
-            is HomeItem.NoData -> (holder as NoDataViewHolder).bind(item.hasSeasonStarted)
+            is HomeItem.NewsArticle -> (holder as NewsItemViewHolder).bind(item, getItemId(position))
         }
     }
 

@@ -5,5 +5,6 @@ enum class HomeMenuItem {
     DRIVERS,
     CONSTRUCTORS,
     SEASONS,
-    NEWS
+    NEWS,
+    SEARCH
 }

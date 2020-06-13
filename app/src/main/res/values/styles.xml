@@ -44,11 +44,6 @@
     </style>
 
 
-
-
-
-
-
     <style name="DarkTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">#9575CD</item>
         <item name="colorPrimaryDark">#7E57C2</item>
@@ -93,12 +88,6 @@
     </style>
 
 
-
-
-
-
-
-
     <style name="LightTheme.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.ActionBar" />
 
     <style name="LightTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Dark" />
@@ -133,6 +122,13 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="Text.Home.Placeholder" parent="Text">
+        <item name="android:textSize">@dimen/textSizeMedium</item>
+        <item name="android:textColor">?attr/f1TextTertiary</item>
+    </style>
+
+    <!--======================================-->
+
     <style name="Text.BottomSheet.Title" parent="Text">
         <item name="android:textSize">@dimen/textSizeLarge</item>
         <item name="android:textStyle">bold</item>
@@ -154,10 +150,36 @@
         <item name="android:textColor">?attr/f1TextTertiary</item>
     </style>
 
-    <style name="Text.Home.Placeholder" parent="Text">
+    <!--======================================-->
+
+    <style name="Text.News.Title" parent="Text">
         <item name="android:textSize">@dimen/textSizeMedium</item>
+        <item name="android:textColor">?attr/f1TextPrimary</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Text.News.Description" parent="Text">
+        <item name="android:textSize">@dimen/textSizeMedium</item>
+        <item name="android:textColor">?attr/f1TextSecondary</item>
+    </style>
+
+    <style name="Text.News.Date" parent="Text">
+        <item name="android:textSize">@dimen/textSizeSmall</item>
         <item name="android:textColor">?attr/f1TextTertiary</item>
     </style>
+
+    <style name="Text.News.Source" parent="Text">
+        <item name="android:textSize">@dimen/textSizeSmall</item>
+        <item name="android:textColor">?attr/f1TextTertiary</item>
+    </style>
+
+
+    <!--======================================-->
+
+    <!--======================================-->
+
+    <!--======================================-->
+
 
     <style name="Text.Network.Error" parent="Text">
         <item name="android:textSize">@dimen/textSizeMedium</item>

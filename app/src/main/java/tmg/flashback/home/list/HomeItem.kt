@@ -3,6 +3,7 @@ package tmg.flashback.home.list
 import androidx.annotation.LayoutRes
 import org.threeten.bp.LocalDate
 import tmg.flashback.R
+import tmg.flashback.repo.models.news.NewsItem
 
 sealed class HomeItem(
     @LayoutRes val layoutId: Int
@@ -14,7 +15,8 @@ sealed class HomeItem(
         val raceCountry: String,
         val raceCountryISO: String,
         val date: LocalDate,
-        val round: Int
+        val round: Int,
+        val hasData: Boolean
     ): HomeItem(R.layout.view_home_track)
 
     data class Driver(
@@ -34,13 +36,7 @@ sealed class HomeItem(
         val maxPointsInSeason: Int
     ): HomeItem(R.layout.view_home_constructor)
 
-    data class Loading(
-        val id: Int
-    ): HomeItem(R.layout.view_home_loading)
-
-    data class NoData(
-        val hasSeasonStarted: Boolean
-    ): HomeItem(R.layout.view_home_no_data)
-
-    object NoNetwork: HomeItem(R.layout.view_home_no_network)
+    data class NewsArticle(
+        val item: NewsItem
+    ): HomeItem(R.layout.view_home_news)
 }

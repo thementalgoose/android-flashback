@@ -60,7 +60,8 @@ data class ShowQualifying(
     val q1: Boolean,
     val q2: Boolean,
     val q3: Boolean,
-    val deltas: Boolean
+    val deltas: Boolean,
+    val penalties: Boolean
 ) {
     val none: Boolean
         get() = !q1 && !q2 && !q3

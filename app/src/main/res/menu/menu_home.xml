@@ -1,25 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <item
+        android:id="@+id/nav_news"
+        android:icon="@drawable/nav_news"
+        android:title="@string/nav_news"/>
 
     <item
         android:id="@+id/nav_calendar"
         android:icon="@drawable/nav_calendar"
+        tools:title="2020"
         android:title="@string/nav_calendar"/>
-
-    <item
-        android:id="@+id/nav_drivers"
-        android:icon="@drawable/nav_driver"
-        android:title="@string/nav_drivers"/>
-
-    <item
-        android:id="@+id/nav_constructor"
-        android:icon="@drawable/nav_constructor"
-        android:title="@string/nav_constructors"/>
 
     <item
         android:id="@+id/nav_seasons"
         android:icon="@drawable/nav_seasons"
         android:title="@string/nav_seasons"/>
+
+    <item
+        android:visible="false"
+        android:id="@+id/nav_search"
+        android:icon="@drawable/nav_search"
+        android:title="@string/nav_search"/>
 
 </menu>

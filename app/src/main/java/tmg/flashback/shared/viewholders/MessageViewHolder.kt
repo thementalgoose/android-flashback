@@ -1,4 +1,4 @@
-package tmg.flashback.home.list.viewholders
+package tmg.flashback.shared.viewholders
 
 import android.view.View
 import androidx.annotation.StringRes

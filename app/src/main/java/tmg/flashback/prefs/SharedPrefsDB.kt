@@ -4,11 +4,10 @@ import android.content.Context
 import tmg.flashback.BuildConfig
 import tmg.flashback.releaseNotes
 import tmg.flashback.repo.db.PrefsDB
+import tmg.flashback.repo.enums.HomeTab
 import tmg.flashback.repo.enums.ThemePref
-import tmg.flashback.repo.enums.ViewTypePref
 import tmg.utilities.extensions.toEnum
 import tmg.utilities.prefs.SharedPrefManager
-import tmg.utilities.utils.SharedPreferencesUtils
 import java.util.*
 
 private const val defaultShowQualifying: Boolean = false
@@ -19,12 +18,12 @@ private const val defaultCrashReporting: Boolean = true
 class SharedPrefsDB(context: Context): SharedPrefManager(context), PrefsDB {
 
     override val prefsKey: String = "Flashback"
-    private val keySelectedYear: String = "SELECTED_YEAR"
     private val keyShowQualifyingDelta: String = "SHOW_QUALIFYING_DELTA"
+    private val keyShowGridPenaltiesInQualifying: String = "SHOW_GRID_PENALTIES_IN_QUALIFYING"
     private val keyShowDriversInConstructorStandings: String = "SHOW_DRIVERS_IN_CONSTRUCTOR_STANDINGS"
     private val keyBottomSheetAll: String = "BOTTOM_SHEET_ALL"
     private val keyBottomSheetFavourited: String = "BOTTOM_SHEET_FAVOURITED"
-    private val keyViewType: String = "VIEW_TYPE"
+    private val keyDefaultTab: String = "DEFAULT_TAB"
     private val keyCrashReporting: String = "CRASH_REPORTING"
     private val keyShakeToReport: String = "SHAKE_TO_REPORT"
     private val keyReleaseNotes: String = "RELEASE_NOTES"
@@ -52,13 +51,17 @@ class SharedPrefsDB(context: Context): SharedPrefManager(context), PrefsDB {
         get() = getBoolean(keyBottomSheetAll, true)
         set(value) = save(keyBottomSheetAll, value)
 
-    override var viewType: ViewTypePref
-        get() = getString(keyViewType, ViewTypePref.STATIC.key)?.toEnum<ViewTypePref> { it.key } ?: ViewTypePref.STATIC
-        set(value) = save(keyViewType, value.key)
+    override var defaultToTab: HomeTab
+        get() = getString(keyDefaultTab)?.toEnum<HomeTab> { it.key } ?: HomeTab.CONSTRUCTORS
+        set(value) = save(keyDefaultTab, value.key)
 
     override var crashReporting: Boolean
         get() = getBoolean(keyCrashReporting, defaultShakeToReport)
         set(value) = save(keyCrashReporting, value)
+
+    override var showGridPenaltiesInQualifying: Boolean
+        get() = getBoolean(keyShowGridPenaltiesInQualifying, true)
+        set(value) = save(keyShowGridPenaltiesInQualifying, value)
 
     override var shakeToReport: Boolean
         get() = getBoolean(keyShakeToReport, defaultCrashReporting)

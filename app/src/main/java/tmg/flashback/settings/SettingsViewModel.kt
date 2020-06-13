@@ -61,6 +61,7 @@ class SettingsViewModel(
         settings.value = listOf(
             AppPreferencesItem.Category(applicationContext.getString(R.string.settings_customisation)),
             SettingsOptions.QUALIFYING_DELTAS.toSwitch(applicationContext, prefDB.showQualifyingDelta),
+            SettingsOptions.QUALIFYING_GRID_PENALTY.toSwitch(applicationContext, prefDB.showGridPenaltiesInQualifying),
             SettingsOptions.SHOW_DRIVERS_POINTS_IN_CONSTRUCTORS.toSwitch(applicationContext, prefDB.showDriversBehindConstructor),
             AppPreferencesItem.Category(applicationContext.getString(R.string.settings_theme)),
             SettingsOptions.THEME.toPref(applicationContext),
@@ -85,6 +86,7 @@ class SettingsViewModel(
         when (pref) {
             SettingsOptions.THEME -> openThemePicker.value = Event()
             SettingsOptions.QUALIFYING_DELTAS -> prefDB.showQualifyingDelta = value ?: false
+            SettingsOptions.QUALIFYING_GRID_PENALTY -> prefDB.showGridPenaltiesInQualifying = value ?: true
             SettingsOptions.SHOW_DRIVERS_POINTS_IN_CONSTRUCTORS -> prefDB.showDriversBehindConstructor = value ?: true
             SettingsOptions.SEASON_BOTTOM_SHEET_FAVOURITED -> prefDB.showBottomSheetFavourited = value ?: true
             SettingsOptions.SEASON_BOTTOM_SHEET_ALL -> prefDB.showBottomSheetAll = value ?: true
