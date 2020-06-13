@@ -23,6 +23,9 @@
         <br/>• Shifted app design over to a Material Design 2 inspired UI
         <br/>• Improved network state management
         <br/>• The usual disclaimer of general data patching and bug fixes]]></string>
+    <string name="release_8"><![CDATA[<b>4.1.0</b> - Dark mode!
+        <br/>• Added dark mode toggle to settings
+        <br/>• Added grid penalty indicator to race qualifying view]]></string>
 
     <!-- App Lockout -->
     <string name="app_lockout_title">App lockout</string>
