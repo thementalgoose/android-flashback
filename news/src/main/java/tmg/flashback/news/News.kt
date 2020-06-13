@@ -1,7 +1,9 @@
 package tmg.flashback.news
 
+import android.util.Log
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import retrofit2.HttpException
 import tmg.flashback.news.apis.autosport.AutosportRssRetrofit
 import tmg.flashback.news.apis.autosport.buildRetrofitAutosport
 import tmg.flashback.news.apis.autosport.convert
@@ -24,6 +26,10 @@ class News: NewsDB {
             this.emit(Response(allResults))
         } catch (e: Exception) {
             e.printStackTrace()
+            if (e is HttpException) {
+                Log.i("Flashback", "HTTP Status code ${e.code()}")
+                Log.i("Flashback", "HTTP Status message ${e.message()}")
+            }
             this.emit(Response<List<NewsItem>>(null, 500))
         }
     }

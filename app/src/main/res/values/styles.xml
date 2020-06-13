@@ -159,6 +159,11 @@
         <item name="android:textColor">?attr/f1TextTertiary</item>
     </style>
 
+    <style name="Text.Network.Error" parent="Text">
+        <item name="android:textSize">@dimen/textSizeMedium</item>
+        <item name="android:textColor">?attr/f1TextTertiary</item>
+    </style>
+
     <!--======================================-->
 
     <!--======================================-->
