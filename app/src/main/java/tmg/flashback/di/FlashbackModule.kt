@@ -5,7 +5,6 @@ import org.koin.dsl.module
 import tmg.flashback.admin.lockout.LockoutViewModel
 import tmg.flashback.home.HomeViewModel
 import tmg.flashback.home.season.SeasonViewModel
-import tmg.flashback.news.NewsViewModel
 import tmg.flashback.race.RaceViewModel
 import tmg.flashback.settings.ConnectivityManager
 import tmg.flashback.settings.NetworkConnectivityManager
@@ -19,8 +18,6 @@ var flashbackModule = module {
     viewModel { RaceViewModel(get(), get(), get()) }
     viewModel { SettingsViewModel(get(), get()) }
     viewModel { LockoutViewModel(get()) }
-
-    viewModel { NewsViewModel(get()) }
 
     single<ConnectivityManager> { NetworkConnectivityManager(get()) }
 }

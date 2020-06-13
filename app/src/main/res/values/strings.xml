@@ -94,6 +94,7 @@
     <string name="nav_drivers">Drivers</string>
     <string name="nav_constructors">Constructors</string>
     <string name="nav_seasons">Seasons</string>
+    <string name="nav_search">Search</string>
     <string name="nav_news">News</string>
     <string name="nav_gallery">Gallery</string>
     <string name="nav_settings">Settings</string>
@@ -103,32 +104,13 @@
     <string name="nav_race">Race</string>
     <string name="nav_qualifying">Qualifying</string>
 
+    <!-- Dashboard -->
 
     <!-- Home -->
-
     <string name="home_season_header_current">Now</string>
     <string name="home_season_header_favourited">Favourites</string>
     <string name="home_season_header_All">All</string>
     <string name="home_progress">Standings as of round %d, </string>
-
-    <!-- Dashboard -->
-    <string name="dashboard_header">@string/app_name</string>
-    <string name="dashboard_subtitle">Formula 1 statistics app</string>
-    <plurals name="dashboard_track_count">
-        <item quantity="one"><![CDATA[Races]]></item>
-        <item quantity="other"><![CDATA[Races]]></item>
-    </plurals>
-    <string name="dashboard_constructor_champion"><![CDATA[<b>%s</b> with <b>%s</b> points]]></string>
-    <string name="dashboard_drivers_champion"><![CDATA[<b>%s</b> with <b>%s</b> points]]></string>
-    <string name="dashboard_menu_seasons">Seasons</string>
-    <string name="dashboard_menu_drivers">Drivers championship standings</string>
-    <string name="dashboard_menu_constructors">Constructors standings</string>
-
-    <string name="dashboard_season"><![CDATA[<b>%s</b>]]></string>
-
-    <string name="dashboard_race_completed"><![CDATA[<b>%s</b> races completed]]></string>
-    <string name="dashboard_race_not_started"><![CDATA[<b>%s</b> races scheduled]]></string>
-    <string name="dashboard_race_mid"><![CDATA[<b>%s</b> races completed, <b>%s</b> to go]]></string>
 
     <!-- Race -->
     <string name="race_round" formatted="false">Round %d</string>
@@ -139,6 +121,7 @@
     <string name="season_not_found">We don\'t have any data on this season at the moment. We will try to get some season information as soon as possible!</string>
     <string name="season_not_started">This season hasn\'t started yet, please check back after the first race to see some statistics</string>
     <string name="season_network_error">We can\'t find the statistics on this right now, please check you have an active internet connection</string>
+    <string name="network_error">Network connectivity error - Please check you have an active internet connection</string>
     <string name="race_qualifying_no_data">Not found</string>
     <string name="race_standings_driver_result"><![CDATA[Finished <b>%s</b>, scored <b>%s</b> points]]></string>
     <plurals name="race_points">

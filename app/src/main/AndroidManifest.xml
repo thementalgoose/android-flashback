@@ -16,6 +16,7 @@
 
         <activity
             android:name="tmg.flashback.SplashActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/LightTheme.Launcher">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,30 +26,37 @@
 
         <activity
             android:name=".home.HomeActivity"
+            android:screenOrientation="portrait"
             android:label="" />
 
         <activity
             android:name=".news.NewsActivity"
+            android:screenOrientation="portrait"
             android:label="" />
 
         <activity
             android:name=".race.RaceActivity"
+            android:screenOrientation="portrait"
             android:label="" />
 
         <activity
             android:name="tmg.flashback.settings.SettingsActivity"
+            android:screenOrientation="portrait"
             android:label="" />
 
         <activity
             android:name="tmg.flashback.settings.release.ReleaseActivity"
+            android:screenOrientation="portrait"
             android:label="" />
 
         <activity
             android:name=".admin.lockout.LockoutActivity"
+            android:screenOrientation="portrait"
             android:label="" />
 
         <activity
             android:name="tmg.components.about.AboutThisAppActivity"
+            android:screenOrientation="portrait"
             android:label="" />
 
     </application>

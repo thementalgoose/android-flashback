@@ -27,7 +27,6 @@ import tmg.flashback.extensions.dimensionPx
 import tmg.flashback.home.list.HomeAdapter
 import tmg.flashback.home.season.*
 import tmg.flashback.minimumSupportedYear
-import tmg.flashback.news.NewsActivity
 import tmg.flashback.race.RaceActivity
 import tmg.flashback.settings.SettingsActivity
 import tmg.flashback.settings.release.ReleaseBottomSheetFragment
@@ -94,11 +93,6 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback {
                     viewModel.inputs.clickItem(HomeMenuItem.SEASONS)
                     false
                 }
-//                R.id.nav_news -> {
-//                    startActivity(Intent(this, NewsActivity::class.java))
-//                    viewModel.inputs.clickItem(HomeMenuItem.NEWS)
-//                    true
-//                }
                 else -> false
             }
             return@setOnNavigationItemSelectedListener shouldUpdateTab
