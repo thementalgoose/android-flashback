@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="@drawable/rounded_ripple"
+    android:paddingStart="@dimen/paddingMedium"
+    android:paddingTop="@dimen/paddingSmall"
+    android:paddingEnd="@dimen/paddingMedium"
+    android:paddingBottom="@dimen/paddingSmall">
+
+    <TextView
+        android:id="@+id/title"
+        style="@style/Text.News.Title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="2dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="No conversations with Vettel about 2021 seat, says Racing Point boss Otmar Szafnauer" />
+
+    <TextView
+        android:id="@+id/description"
+        style="@style/Text.News.Description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        tools:text="Something about something about formula 1 " />
+
+    <TextView
+        android:id="@+id/source"
+        style="@style/Text.News.Source"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="0dp"
+        android:paddingEnd="2dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/description"
+        tools:text="autosport.com" />
+
+    <TextView
+        android:id="@+id/date"
+        style="@style/Text.News.Source"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingStart="0dp"
+        android:paddingEnd="2dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/source"
+        app:layout_constraintTop_toBottomOf="@id/description"
+        tools:text="10:45 on 31st Jan" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

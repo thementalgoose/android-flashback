@@ -36,8 +36,6 @@
     <string name="settings_tutorial_onboarding_title">Onboarding</string>
     <string name="settings_tutorial_onboarding_description">View the app intro screens again</string>
     <string name="settings_customisation">Customisation</string>
-    <string name="settings_customisation_year_title">Year to be displayed</string>
-    <string name="settings_customisation_year_description">Select which year you would like the app to open up on (currently %d)</string>
     <string name="settings_defaults_year_dialog_title">Season</string>
     <string name="settings_defaults_year_dialog_confirm">Confirm</string>
     <string name="settings_defaults_year_dialog_cancel">Cancel</string>
@@ -47,10 +45,12 @@
     <string name="settings_theme_theme_follow_system">Follow system preferences</string>
     <string name="settings_theme_theme_light">Light mode</string>
     <string name="settings_theme_theme_dark">Dark mode</string>
-    <string name="settings_customisation_qualifying_delta_title">Show qualifying delta</string>
+    <string name="settings_customisation_qualifying_delta_title">Qualifying delta</string>
     <string name="settings_customisation_qualifying_delta_description">Show the lap time delta alongside the qualifying time when displaying qualifying results</string>
-    <string name="settings_customisation_driver_in_constructor_title">Show constructor drivers</string>
+    <string name="settings_customisation_driver_in_constructor_title">Drivers for constructor</string>
     <string name="settings_customisation_driver_in_constructor_description">Show the drivers of a constructor alongside the constructor points scored per race</string>
+    <string name="settings_customisation_qualifying_grid_penalties_title">Qualifying grid penalties</string>
+    <string name="settings_customisation_qualifying_grid_penalties_description">Shows the grid penalty that a driver has in the qualifying view</string>
     <string name="settings_season_list">Season list</string>
     <string name="settings_customisation_season_favourited_expanded_title">Expand favourites by default</string>
     <string name="settings_customisation_season_favourited_expanded_description">Toggle if the bottom sheet favourites section is expanded by default</string>
@@ -135,9 +135,6 @@
     <string name="standings_header">%s standings</string>
 
     <!-- Synchronisation -->
-    <string name="sync_type_overview">Season Overview</string>
-    <string name="sync_type_laps">Laps</string>
-    <string name="sync_season">season</string>
     <string name="round_podium_started">Started %s</string>
     <string name="round_podium_points">%d points</string>
     <string name="qualifying_q1">Q1</string>
@@ -147,17 +144,10 @@
     <string name="round_podium_second">2nd</string>
     <string name="round_podium_third">3rd</string>
     <string name="race_time_delta">+%s</string>
-    <string name="race_result_grid">Grid</string>
-    <string name="race_result_status">Status</string>
-    <string name="trackpicker_select">Browse</string>
-
-    <!-- View Type -->
-    <string name="view_type_swiping">Swiping</string>
-    <string name="view_type_static">Static</string>
 
     <!-- Race Status -->
     <string name="race_status_retired">DNF</string>
     <string name="ellipsis">…</string>
     <string name="close">Close</string>
-    <string name="qualifying_grid_penalty">%d place grid penalty</string>
+    <string name="qualifying_grid_penalty">%d place grid penalty, starts %s</string>
 </resources>

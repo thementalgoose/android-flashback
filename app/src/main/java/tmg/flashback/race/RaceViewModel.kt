@@ -113,7 +113,8 @@ class RaceViewModel(
                         q1 = roundData.q1.count { it.value.time != null } > 0,
                         q2 = roundData.q2.count { it.value.time != null } > 0,
                         q3 = roundData.q3.count { it.value.time != null } > 0,
-                        deltas = prefsDB.showQualifyingDelta
+                        deltas = prefsDB.showQualifyingDelta,
+                        penalties = prefsDB.showGridPenaltiesInQualifying
                     )
 
                     when (viewType) {

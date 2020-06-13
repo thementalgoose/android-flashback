@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.ViewCompat
@@ -17,6 +18,10 @@ import com.google.android.material.snackbar.Snackbar
 import com.reddit.indicatorfastscroll.FastScrollItemIndicator
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.bottom_sheet_season.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
+import me.saket.inboxrecyclerview.dimming.TintPainter
+import me.saket.inboxrecyclerview.page.PageStateChangeCallbacks
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.R
@@ -30,15 +35,14 @@ import tmg.flashback.minimumSupportedYear
 import tmg.flashback.race.RaceActivity
 import tmg.flashback.settings.SettingsActivity
 import tmg.flashback.settings.release.ReleaseBottomSheetFragment
+import tmg.flashback.web.WebFragment
 import tmg.utilities.bottomsheet.BottomSheetFader
-import tmg.utilities.extensions.collapse
-import tmg.utilities.extensions.hidden
-import tmg.utilities.extensions.observe
-import tmg.utilities.extensions.observeEvent
+import tmg.utilities.extensions.*
 import kotlin.coroutines.coroutineContext
 
-
-class HomeActivity : BaseActivity(), SeasonRequestedCallback {
+@FlowPreview
+@ExperimentalCoroutinesApi
+class HomeActivity : BaseActivity(), SeasonRequestedCallback, PageStateChangeCallbacks {
 
     private lateinit var adapter: HomeAdapter
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<*>
@@ -52,10 +56,17 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        adapter = HomeAdapter(
-            trackClicked = { track ->
-                dataList.alpha = 0.5f
+        expandablePageLayout.pullToCollapseEnabled = false
+        expandablePageLayout.addStateChangeCallbacks(this)
 
+        adapter = HomeAdapter(
+            articleClicked = { article, id ->
+
+                dataList.expandItem(id)
+
+                loadFragment(WebFragment(), R.id.expandablePageLayout, "WebView")
+            },
+            trackClicked = { track ->
                 val intent = RaceActivity.intent(
                     context = this,
                     season = track.season,
@@ -69,27 +80,26 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback {
                 startActivity(intent)
             }
         )
+        dataList.tintPainter = TintPainter.uncoveredArea(Color.WHITE, opacity = 0.65f)
+        dataList.expandablePage = expandablePageLayout
         dataList.adapter = adapter
         dataList.layoutManager = LinearLayoutManager(this)
 
         menu.setOnNavigationItemSelectedListener {
             val shouldUpdateTab = when (it.itemId) {
+                R.id.nav_news -> {
+                    viewModel.inputs.clickItem(HomeMenuItem.NEWS)
+                    true
+                }
                 R.id.nav_calendar -> {
-                    dataList.alpha = 0.5f
                     viewModel.inputs.clickItem(HomeMenuItem.CALENDAR)
                     true
                 }
-                R.id.nav_drivers -> {
-                    dataList.alpha = 0.5f
-                    viewModel.inputs.clickItem(HomeMenuItem.DRIVERS)
-                    true
-                }
-                R.id.nav_constructor -> {
-                    dataList.alpha = 0.5f
-                    viewModel.inputs.clickItem(HomeMenuItem.CONSTRUCTORS)
-                    true
-                }
                 R.id.nav_seasons -> {
+                    viewModel.inputs.clickItem(HomeMenuItem.SEASONS)
+                    false
+                }
+                R.id.nav_search -> {
                     viewModel.inputs.clickItem(HomeMenuItem.SEASONS)
                     false
                 }
@@ -158,17 +168,17 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback {
         //endregion
     }
 
-    override fun onResume() {
-        super.onResume()
-        dataList.alpha = 1.0f
-    }
-
     override fun onBackPressed() {
-        if (bottomSheetBehavior.state != BottomSheetBehavior.STATE_HIDDEN) {
-            bottomSheetBehavior.hide()
-        }
-        else {
-            super.onBackPressed()
+        when {
+            bottomSheetBehavior.state != BottomSheetBehavior.STATE_HIDDEN -> {
+                bottomSheetBehavior.hide()
+            }
+            expandablePageLayout.isExpandedOrExpanding -> {
+                dataList.collapse()
+            }
+            else -> {
+                super.onBackPressed()
+            }
         }
     }
 
@@ -259,18 +269,30 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback {
 
     //endregion
 
-    class LockableLinearLayoutManager(
-        context: Context,
-        val canScrollVertical: () -> Boolean
-    ): LinearLayoutManager(context) {
-        override fun canScrollVertically(): Boolean {
-            return canScrollVertical()
-        }
+    //region PageStateChangeCallbacks
+
+    override fun onPageAboutToCollapse(collapseAnimDuration: Long) {
+        menu.alpha = 1.0f
     }
 
-    fun BottomSheetBehavior<*>.hide() {
+    override fun onPageAboutToExpand(expandAnimDuration: Long) {
+        menu.alpha = 0.2f
+    }
+
+    override fun onPageCollapsed() {
+
+    }
+
+    override fun onPageExpanded() {
+
+    }
+
+    //endregion
+
+    private fun BottomSheetBehavior<*>.hide() {
         this.hidden()
         optionsList.scrollToPosition(0)
         seasonCollapse()
     }
+
 }

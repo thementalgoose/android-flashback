@@ -1,7 +1,7 @@
 package tmg.flashback.repo.db
 
+import tmg.flashback.repo.enums.HomeTab
 import tmg.flashback.repo.enums.ThemePref
-import tmg.flashback.repo.enums.ViewTypePref
 
 interface PrefsDB {
 
@@ -9,11 +9,6 @@ interface PrefsDB {
      * Dark mode preference
      */
     var theme: ThemePref
-
-    /**
-     * View type for the home screen
-     */
-    var viewType: ViewTypePref
 
     /**
      * Show the qualifying delta in the layout
@@ -34,6 +29,16 @@ interface PrefsDB {
      * Show the all bottom sheet section expanded by default
      */
     var showBottomSheetAll: Boolean
+
+    /**
+     * Show grid penalties in qualifying
+     */
+    var showGridPenaltiesInQualifying: Boolean
+
+    /**
+     * Which view to default too when opening the app
+     */
+    var defaultToTab: HomeTab
 
     /**
      * Automatic crash reporting functionality

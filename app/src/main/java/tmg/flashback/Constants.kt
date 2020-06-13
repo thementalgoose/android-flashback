@@ -154,6 +154,13 @@ val dependencies = listOf(
         imageUrl = "https://avatars1.githubusercontent.com/u/5982159"
     ),
     AboutThisAppDependency(
+        order = 13,
+        dependencyName = "Inbox Recycler View",
+        author = "Saket Narayan",
+        url = "https://github.com/saket/InboxRecyclerView",
+        imageUrl = "https://avatars3.githubusercontent.com/u/2387680"
+    ),
+    AboutThisAppDependency(
         order = 12,
         dependencyName = "IndicatorFastScroll",
         author = "Reddit",
