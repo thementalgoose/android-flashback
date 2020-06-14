@@ -35,6 +35,7 @@ import tmg.flashback.minimumSupportedYear
 import tmg.flashback.race.RaceActivity
 import tmg.flashback.settings.SettingsActivity
 import tmg.flashback.settings.release.ReleaseBottomSheetFragment
+import tmg.flashback.utils.FragmentRequestBack
 import tmg.flashback.web.WebFragment
 import tmg.utilities.bottomsheet.BottomSheetFader
 import tmg.utilities.extensions.*
@@ -42,7 +43,8 @@ import kotlin.coroutines.coroutineContext
 
 @FlowPreview
 @ExperimentalCoroutinesApi
-class HomeActivity : BaseActivity(), SeasonRequestedCallback, PageStateChangeCallbacks {
+class HomeActivity : BaseActivity(), SeasonRequestedCallback, PageStateChangeCallbacks,
+    FragmentRequestBack {
 
     private lateinit var adapter: HomeAdapter
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<*>
@@ -64,7 +66,7 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback, PageStateChangeCal
 
                 dataList.expandItem(id)
 
-                loadFragment(WebFragment(), R.id.expandablePageLayout, "WebView")
+                loadFragment(WebFragment.instance(article.title, article.link), R.id.expandablePageLayout, "WebView")
             },
             trackClicked = { track ->
                 val intent = RaceActivity.intent(
@@ -257,6 +259,7 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback, PageStateChangeCal
     override fun setInsets(insets: WindowInsetsCompat) {
         titlebar.setPadding(0, insets.systemWindowInsetTop, 0, 0)
         bottomSheet.setPadding(0, insets.systemWindowInsetTop, 0, 0)
+        expandablePageLayout.setPadding(0, insets.systemWindowInsetTop, 0, insets.systemWindowInsetBottom)
         menu.setPadding(0, 0, 0, insets.systemWindowInsetBottom)
         dataList.setPadding(0, 0, 0, insets.systemWindowInsetBottom)
     }
@@ -272,11 +275,17 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback, PageStateChangeCal
     //region PageStateChangeCallbacks
 
     override fun onPageAboutToCollapse(collapseAnimDuration: Long) {
-        menu.alpha = 1.0f
+        menu.animate()
+            .translationY(0f)
+            .setDuration(collapseAnimDuration)
+            .start()
     }
 
     override fun onPageAboutToExpand(expandAnimDuration: Long) {
-        menu.alpha = 0.2f
+        menu.animate()
+            .translationY(menu.height.toFloat())
+            .setDuration(expandAnimDuration)
+            .start()
     }
 
     override fun onPageCollapsed() {
@@ -285,6 +294,14 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback, PageStateChangeCal
 
     override fun onPageExpanded() {
 
+    }
+
+    //endregion
+
+    //region FragmentRequestBack
+
+    override fun fragmentBackPressed() {
+        onBackPressed()
     }
 
     //endregion

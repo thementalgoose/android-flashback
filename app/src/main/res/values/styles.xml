@@ -176,6 +176,17 @@
 
     <!--======================================-->
 
+    <style name="Text.Web.Title" parent="Text">
+
+    </style>
+
+    <style name="Text.Web.Domain" parent="Text">
+        <item name="android:textSize">@dimen/textSizeSmall</item>
+        <item name="android:textColor">?attr/f1TextTertiary</item>
+    </style>
+
+    <!--======================================-->
+
     <!--======================================-->
 
     <!--======================================-->
