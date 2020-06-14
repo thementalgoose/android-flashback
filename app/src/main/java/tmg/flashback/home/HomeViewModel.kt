@@ -125,7 +125,7 @@ class HomeViewModel(
                 }
                 HomeMenuItem.DRIVERS -> {
                     val driverStandings = rounds.driverStandings()
-                    list.addAll(driverStandings.toDriverList())
+                    list.addAll(driverStandings.toDriverList(rounds))
                 }
                 HomeMenuItem.CONSTRUCTORS -> {
                     val constructorStandings = rounds.constructorStandings()
@@ -240,7 +240,7 @@ class HomeViewModel(
     /**
      * Convert the driver standings construct into a list of home items to display on the home page
      */
-    private fun DriverStandings.toDriverList(): List<HomeItem> {
+    private fun DriverStandings.toDriverList(rounds: List<Round>): List<HomeItem> {
         return this
             .values
             .sortedByDescending { it.second }
@@ -251,6 +251,8 @@ class HomeViewModel(
                     driver = roundDriver,
                     points = points,
                     position = index + 1,
+                    bestQualifying = rounds.bestQualifyingResultFor(roundDriver.id),
+                    bestFinish = rounds.bestRaceResultFor(roundDriver.id),
                     maxPointsInSeason = this.maxDriverPointsInSeason()
                 )
             }

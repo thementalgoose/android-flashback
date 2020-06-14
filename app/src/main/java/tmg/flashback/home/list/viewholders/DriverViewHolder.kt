@@ -8,10 +8,13 @@ import kotlinx.android.synthetic.main.view_home_constructor.view.*
 import kotlinx.android.synthetic.main.view_home_driver.view.*
 import kotlinx.android.synthetic.main.view_home_driver.view.lpvProgress
 import tmg.flashback.R
+import tmg.flashback.extensions.ordinalAbbreviation
 import tmg.flashback.home.list.HomeItem
 import tmg.flashback.utils.getColor
 import tmg.flashback.utils.getFlagResourceAlpha3
+import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.views.context
+import tmg.utilities.extensions.views.getString
 import tmg.utilities.extensions.views.show
 
 class DriverViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
@@ -39,5 +42,33 @@ class DriverViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         itemView.lpvProgress.progressColour = item.driver.constructorAtEndOfSeason.color
         itemView.lpvProgress.textBackgroundColour = context.theme.getColor(R.attr.f1TextSecondary)
         itemView.lpvProgress.animateProgress(item.points.toFloat() / item.maxPointsInSeason.toFloat()) { (it * item.maxPointsInSeason.toFloat()).toInt().coerceIn(0, item.points).toString() }
+
+        itemView.best.show(item.bestFinish != null || item.bestQualifying != null)
+        itemView.best.text = StringBuilder().apply {
+            if (item.bestFinish != null ) {
+                val (position, circuits) = item.bestFinish
+                val circuitsString = if (circuits.size > 3) {
+                    getString(R.string.home_driver_grand_prixs, circuits.size)
+                } else {
+                    circuits.joinToString(separator = ", ") { it.country }
+                }
+                append(itemView.context.getString(R.string.home_driver_finish_pole, position.ordinalAbbreviation, circuitsString))
+            }
+            if (isNotEmpty()) append("<br/>")
+            if (item.bestQualifying != null) {
+                val (position, circuits) = item.bestQualifying
+                val circuitsString = if (circuits.size > 3) {
+                    getString(R.string.home_driver_grand_prixs, circuits.size)
+                } else {
+                    circuits.joinToString(separator = ", ") { it.country }
+                }
+                val qualiPos = if (position == 1) {
+                    getString(R.string.on_pole_position)
+                } else {
+                    position.ordinalAbbreviation
+                }
+                append(itemView.context.getString(R.string.home_driver_qualified, qualiPos, circuitsString))
+            }
+        }.toString().fromHtml()
     }
 }

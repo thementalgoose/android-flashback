@@ -64,7 +64,12 @@ class WebFragment : BaseFragment() {
         load(pageTitle, pageUrl)
 
         back.setOnClickListener {
-            backCallback?.fragmentBackPressed()
+            if (webview.canGoBack()) {
+                webview.goBack()
+            }
+            else {
+                backCallback?.fragmentBackPressed()
+            }
         }
 
         openInBrowser.setOnClickListener {

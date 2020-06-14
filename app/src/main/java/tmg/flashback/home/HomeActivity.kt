@@ -1,20 +1,12 @@
 package tmg.flashback.home
 
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.view.View
-import android.view.WindowManager
 import android.widget.Toast
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.coordinatorlayout.widget.CoordinatorLayout
-import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.snackbar.Snackbar
 import com.reddit.indicatorfastscroll.FastScrollItemIndicator
@@ -25,7 +17,6 @@ import kotlinx.coroutines.FlowPreview
 import me.saket.inboxrecyclerview.dimming.TintPainter
 import me.saket.inboxrecyclerview.page.PageStateChangeCallbacks
 import org.koin.android.viewmodel.ext.android.viewModel
-import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.R
 import tmg.flashback.admin.lockout.LockoutActivity
 import tmg.flashback.base.BaseActivity
@@ -42,7 +33,6 @@ import tmg.flashback.utils.TextAdapter
 import tmg.flashback.web.WebFragment
 import tmg.utilities.bottomsheet.BottomSheetFader
 import tmg.utilities.extensions.*
-import kotlin.coroutines.coroutineContext
 
 @FlowPreview
 @ExperimentalCoroutinesApi
@@ -50,9 +40,8 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback, PageStateChangeCal
     FragmentRequestBack {
 
     private lateinit var adapter: HomeAdapter
-    private lateinit var bottomSheetBehavior: BottomSheetBehavior<*>
+    private lateinit var seasonBottomSheetBehavior: BottomSheetBehavior<*>
     private lateinit var seasonAdapter: SeasonListAdapter
-    private lateinit var calendarAdapter: TextAdapter
 
     private val viewModel: HomeViewModel by viewModel()
     private val seasonViewModel: SeasonViewModel by viewModel()
@@ -101,6 +90,14 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback, PageStateChangeCal
                     viewModel.inputs.clickItem(HomeMenuItem.CALENDAR)
                     true
                 }
+                R.id.nav_drivers -> {
+                    viewModel.inputs.clickItem(HomeMenuItem.DRIVERS)
+                    true
+                }
+                R.id.nav_constructor -> {
+                    viewModel.inputs.clickItem(HomeMenuItem.CONSTRUCTORS)
+                    true
+                }
                 R.id.nav_seasons -> {
                     viewModel.inputs.clickItem(HomeMenuItem.SEASONS)
                     false
@@ -114,14 +111,14 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback, PageStateChangeCal
             return@setOnNavigationItemSelectedListener shouldUpdateTab
         }
 
-        setupBottomSheet()
+        setupBottomSheetSeason()
 
         settings.setOnClickListener {
             startActivity(Intent(this, SettingsActivity::class.java))
         }
 
         overlay.setOnClickListener {
-            bottomSheetBehavior.hidden()
+            seasonBottomSheetBehavior.hidden()
         }
 
         //region HomeViewModel
@@ -136,7 +133,7 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback, PageStateChangeCal
         }
 
         observeEvent(viewModel.outputs.openSeasonList) {
-            bottomSheetBehavior.state = BottomSheetBehavior.STATE_HALF_EXPANDED
+            seasonBottomSheetBehavior.state = BottomSheetBehavior.STATE_HALF_EXPANDED
         }
 
         observeEvent(viewModel.outputs.openAppLockout) {
@@ -167,7 +164,7 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback, PageStateChangeCal
         }
 
         observeEvent(seasonViewModel.outputs.showSeasonEvent) {
-            bottomSheetBehavior.hide()
+            seasonBottomSheetBehavior.hide()
             viewModel.inputs.selectSeason(it)
         }
 
@@ -176,8 +173,8 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback, PageStateChangeCal
 
     override fun onBackPressed() {
         when {
-            bottomSheetBehavior.state != BottomSheetBehavior.STATE_HIDDEN -> {
-                bottomSheetBehavior.hide()
+            seasonBottomSheetBehavior.state != BottomSheetBehavior.STATE_HIDDEN -> {
+                seasonBottomSheetBehavior.hide()
             }
             expandablePageLayout.isExpandedOrExpanding -> {
                 dataList.collapse()
@@ -243,13 +240,13 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback, PageStateChangeCal
         seasonCollapse()
     }
 
-    private fun setupBottomSheet() {
-        bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
-        bottomSheetBehavior.isHideable = true
-        bottomSheetBehavior.hidden()
-        bottomSheetBehavior.halfExpandedRatio = 0.6f
-        bottomSheetBehavior.addBottomSheetCallback(BottomSheetFader(overlay, "seasons"))
-        bottomSheetBehavior.addBottomSheetCallback(SeasonBottomSheetCallback(
+    private fun setupBottomSheetSeason() {
+        seasonBottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
+        seasonBottomSheetBehavior.isHideable = true
+        seasonBottomSheetBehavior.hidden()
+        seasonBottomSheetBehavior.halfExpandedRatio = 0.6f
+        seasonBottomSheetBehavior.addBottomSheetCallback(BottomSheetFader(overlay, "seasons"))
+        seasonBottomSheetBehavior.addBottomSheetCallback(SeasonBottomSheetCallback(
             expanded = { seasonExpand() },
             collapsed = { seasonCollapse() }
         ))
@@ -263,8 +260,11 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback, PageStateChangeCal
             },
             seasonClicked = {
                 seasonViewModel.inputs.clickSeason(it)
-                if (menu.selectedItemId != R.id.nav_calendar) {
-                    menu.selectedItemId = R.id.nav_calendar
+                when (menu.selectedItemId) {
+                    R.id.nav_calendar,
+                    R.id.nav_drivers,
+                    R.id.nav_constructor -> {}
+                    else -> menu.selectedItemId = R.id.nav_calendar
                 }
             }
         )

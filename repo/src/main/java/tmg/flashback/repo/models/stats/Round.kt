@@ -188,3 +188,39 @@ fun List<Round>.driverStandings(): DriverStandings {
  * Get all the points that drivers in a constructor has achieved
  */
 fun Map<String, Pair<Driver, Int>>.allPoints(): Int = this.map { it.value.second }.sum()
+
+/**
+ * Get the best qualifying position for a given driver
+ */
+fun List<Round>.bestQualified(driverId: String): Int? {
+    val round = this.minBy { it.race.get(driverId)?.qualified ?: Int.MAX_VALUE }
+    return round?.race?.get(driverId)?.qualified
+}
+fun List<Round>.bestQualifyingResultFor(driverId: String): Pair<Int, List<Circuit>>? {
+    val bestQualifyingPosition: Int = this.bestQualified(driverId) ?: return null
+    val listOfCircuits = this
+        .filter { it.race[driverId]?.qualified == bestQualifyingPosition }
+        .map { it.circuit }
+    return Pair(bestQualifyingPosition, listOfCircuits)
+}
+
+/**
+ * Get the best finishing position for a given driver
+ */
+fun List<Round>.bestFinish(driverId: String): Int? {
+    val round = this.minBy { it.race.get(driverId)?.finish ?: Int.MAX_VALUE }
+    return round?.race?.get(driverId)?.finish
+}
+fun List<Round>.bestRaceResultFor(driverId: String): Pair<Int, List<Circuit>>? {
+    val bestQualifyingPosition: Int = this.bestFinish(driverId) ?: return null
+    val listOfCircuits = this
+        .filter { it.race[driverId]?.finish == bestQualifyingPosition }
+        .map { it.circuit }
+    return Pair(bestQualifyingPosition, listOfCircuits)
+}
+
+
+
+
+
+

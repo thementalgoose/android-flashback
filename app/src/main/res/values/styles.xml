@@ -450,6 +450,10 @@
         <item name="android:textStyle">italic</item>
     </style>
 
+    <style name="Text.RaceResult.Best" parent="Text.RaceResult">
+        <item name="android:textSize">11sp</item>
+    </style>
+
     <style name="Text.RaceResult.Points" parent="Text.RaceResult">
         <item name="android:textStyle">bold</item>
         <item name="android:maxLines">1</item>

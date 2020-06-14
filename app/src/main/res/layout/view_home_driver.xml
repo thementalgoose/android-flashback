@@ -91,11 +91,21 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:minHeight="30dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/tvConstructor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/guideline"
         app:layout_constraintTop_toTopOf="parent"
         app:lpb_backgroundColour="?attr/f1BackgroundPrimary"
         app:lpb_radius="@dimen/radiusSmall" />
+
+    <TextView
+        android:id="@+id/best"
+        style="@style/Text.RaceResult.Best"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/imgDriverFlag"
+        app:layout_constraintTop_toBottomOf="@id/imgDriverFlag" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
