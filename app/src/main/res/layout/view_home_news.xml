@@ -9,9 +9,9 @@
     android:focusable="true"
     android:foreground="@drawable/rounded_ripple"
     android:paddingStart="@dimen/paddingMedium"
-    android:paddingTop="@dimen/paddingSmall"
+    android:paddingTop="10dp"
     android:paddingEnd="@dimen/paddingMedium"
-    android:paddingBottom="@dimen/paddingSmall">
+    android:paddingBottom="10dp">
 
     <TextView
         android:id="@+id/title"
@@ -29,8 +29,7 @@
         style="@style/Text.News.Description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="2dp"
-        android:paddingBottom="2dp"
+        android:paddingTop="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/title"
@@ -41,18 +40,23 @@
         style="@style/Text.News.Source"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
         android:paddingStart="0dp"
-        android:paddingEnd="2dp"
+        android:paddingEnd="4dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/description"
         tools:text="autosport.com" />
 
     <TextView
         android:id="@+id/date"
-        style="@style/Text.News.Source"
+        style="@style/Text.News.Date"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:paddingStart="0dp"
+        android:layout_marginTop="4dp"
+        android:drawableStart="@drawable/ic_small_constructor"
+        android:drawablePadding="4dp"
+        android:drawableTint="?attr/f1TextTertiary"
+        android:paddingStart="2dp"
         android:paddingEnd="2dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/source"

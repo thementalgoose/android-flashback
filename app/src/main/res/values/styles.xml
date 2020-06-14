@@ -170,6 +170,7 @@
 
     <style name="Text.News.Source" parent="Text">
         <item name="android:textSize">@dimen/textSizeSmall</item>
+        <item name="android:textStyle">italic</item>
         <item name="android:textColor">?attr/f1TextTertiary</item>
     </style>
 

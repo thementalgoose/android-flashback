@@ -11,6 +11,8 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.get
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -36,6 +38,7 @@ import tmg.flashback.race.RaceActivity
 import tmg.flashback.settings.SettingsActivity
 import tmg.flashback.settings.release.ReleaseBottomSheetFragment
 import tmg.flashback.utils.FragmentRequestBack
+import tmg.flashback.utils.TextAdapter
 import tmg.flashback.web.WebFragment
 import tmg.utilities.bottomsheet.BottomSheetFader
 import tmg.utilities.extensions.*
@@ -49,6 +52,7 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback, PageStateChangeCal
     private lateinit var adapter: HomeAdapter
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<*>
     private lateinit var seasonAdapter: SeasonListAdapter
+    private lateinit var calendarAdapter: TextAdapter
 
     private val viewModel: HomeViewModel by viewModel()
     private val seasonViewModel: SeasonViewModel by viewModel()
@@ -61,11 +65,11 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback, PageStateChangeCal
         expandablePageLayout.pullToCollapseEnabled = false
         expandablePageLayout.addStateChangeCallbacks(this)
 
+        loadFragment(Fragment(), R.id.expandablePageLayout, "WebView")
+
         adapter = HomeAdapter(
             articleClicked = { article, id ->
-
                 dataList.expandItem(id)
-
                 loadFragment(WebFragment.instance(article.title, article.link), R.id.expandablePageLayout, "WebView")
             },
             trackClicked = { track ->
@@ -127,8 +131,8 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback, PageStateChangeCal
             adapter.list = it
         }
 
-        observe(viewModel.outputs.currentSeason) {
-            season.text = it.toString()
+        observe(viewModel.outputs.label) {
+            season.text = it
         }
 
         observeEvent(viewModel.outputs.openSeasonList) {
@@ -184,6 +188,61 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback, PageStateChangeCal
         }
     }
 
+    override fun setInsets(insets: WindowInsetsCompat) {
+        titlebar.setPadding(0, insets.systemWindowInsetTop, 0, 0)
+        bottomSheet.setPadding(0, insets.systemWindowInsetTop, 0, 0)
+        expandablePageLayout.setPadding(0, insets.systemWindowInsetTop, 0, insets.systemWindowInsetBottom)
+        menu.setPadding(0, 0, 0, insets.systemWindowInsetBottom)
+        dataList.setPadding(0, 0, 0, insets.systemWindowInsetBottom)
+    }
+
+    //region SeasonRequestedCallback
+
+    override fun seasonRequested(season: Int) {
+        viewModel.inputs.selectSeason(season)
+        if (menu.selectedItemId != R.id.nav_calendar) {
+            menu.selectedItemId = R.id.nav_calendar
+        }
+    }
+
+    //endregion
+
+    //region PageStateChangeCallbacks
+
+    override fun onPageAboutToCollapse(collapseAnimDuration: Long) {
+        menu.animate()
+            .translationY(0f)
+            .setDuration(collapseAnimDuration)
+            .start()
+    }
+
+    override fun onPageAboutToExpand(expandAnimDuration: Long) {
+        menu.animate()
+            .translationY(menu.height.toFloat())
+            .setDuration(expandAnimDuration)
+            .start()
+    }
+
+    override fun onPageCollapsed() { }
+
+    override fun onPageExpanded() { }
+
+    //endregion
+
+    //region FragmentRequestBack
+
+    override fun fragmentBackPressed() {
+        onBackPressed()
+    }
+
+    //endregion
+
+    private fun BottomSheetBehavior<*>.hide() {
+        this.hidden()
+        optionsList.scrollToPosition(0)
+        seasonCollapse()
+    }
+
     private fun setupBottomSheet() {
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
         bottomSheetBehavior.isHideable = true
@@ -191,8 +250,8 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback, PageStateChangeCal
         bottomSheetBehavior.halfExpandedRatio = 0.6f
         bottomSheetBehavior.addBottomSheetCallback(BottomSheetFader(overlay, "seasons"))
         bottomSheetBehavior.addBottomSheetCallback(SeasonBottomSheetCallback(
-                expanded = { seasonExpand() },
-                collapsed = { seasonCollapse() }
+            expanded = { seasonExpand() },
+            collapsed = { seasonCollapse() }
         ))
 
         seasonAdapter = SeasonListAdapter(
@@ -204,6 +263,9 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback, PageStateChangeCal
             },
             seasonClicked = {
                 seasonViewModel.inputs.clickSeason(it)
+                if (menu.selectedItemId != R.id.nav_calendar) {
+                    menu.selectedItemId = R.id.nav_calendar
+                }
             }
         )
         optionsList.adapter = seasonAdapter
@@ -255,61 +317,4 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback, PageStateChangeCal
             .start()
         seasonAdapter.setToggle(false)
     }
-
-    override fun setInsets(insets: WindowInsetsCompat) {
-        titlebar.setPadding(0, insets.systemWindowInsetTop, 0, 0)
-        bottomSheet.setPadding(0, insets.systemWindowInsetTop, 0, 0)
-        expandablePageLayout.setPadding(0, insets.systemWindowInsetTop, 0, insets.systemWindowInsetBottom)
-        menu.setPadding(0, 0, 0, insets.systemWindowInsetBottom)
-        dataList.setPadding(0, 0, 0, insets.systemWindowInsetBottom)
-    }
-
-    //region SeasonRequestedCallback
-
-    override fun seasonRequested(season: Int) {
-        viewModel.inputs.selectSeason(season)
-    }
-
-    //endregion
-
-    //region PageStateChangeCallbacks
-
-    override fun onPageAboutToCollapse(collapseAnimDuration: Long) {
-        menu.animate()
-            .translationY(0f)
-            .setDuration(collapseAnimDuration)
-            .start()
-    }
-
-    override fun onPageAboutToExpand(expandAnimDuration: Long) {
-        menu.animate()
-            .translationY(menu.height.toFloat())
-            .setDuration(expandAnimDuration)
-            .start()
-    }
-
-    override fun onPageCollapsed() {
-
-    }
-
-    override fun onPageExpanded() {
-
-    }
-
-    //endregion
-
-    //region FragmentRequestBack
-
-    override fun fragmentBackPressed() {
-        onBackPressed()
-    }
-
-    //endregion
-
-    private fun BottomSheetBehavior<*>.hide() {
-        this.hidden()
-        optionsList.scrollToPosition(0)
-        seasonCollapse()
-    }
-
 }

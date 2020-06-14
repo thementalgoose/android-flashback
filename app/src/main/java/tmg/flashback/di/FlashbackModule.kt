@@ -12,7 +12,7 @@ import tmg.flashback.settings.SettingsViewModel
 
 var flashbackModule = module {
 
-    viewModel { HomeViewModel(get(), get(), get(), get(), get(), get()) }
+    viewModel { HomeViewModel(get(), get(), get(), get(), get(), get(), get()) }
     viewModel { SeasonViewModel(get()) }
 
     viewModel { RaceViewModel(get(), get(), get()) }

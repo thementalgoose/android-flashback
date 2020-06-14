@@ -5,22 +5,23 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.fragment_web.*
 import tmg.flashback.R
 import tmg.flashback.base.BaseFragment
 import tmg.flashback.utils.FragmentRequestBack
+import tmg.flashback.utils.getColor
+import tmg.utilities.extensions.views.show
 
 @SuppressLint("SetJavaScriptEnabled")
-class WebFragment: BaseFragment() {
+class WebFragment : BaseFragment() {
 
     private var backCallback: FragmentRequestBack? = null
 
     private lateinit var pageTitle: String
     private lateinit var pageUrl: String
-
-    private val webViewClient: FlashbackWebViewClient = FlashbackWebViewClient()
-    private val webChromeClient: FlashbackWebChromeClient = FlashbackWebChromeClient()
 
     override fun layoutId(): Int = R.layout.fragment_web
 
@@ -38,14 +39,29 @@ class WebFragment: BaseFragment() {
 
     override fun initViews() {
 
+        progressBar.progressColour = context?.theme?.getColor(R.attr.colorPrimary) ?: ContextCompat.getColor(requireContext(), R.color.colorTheme)
+        progressBar.timeLimit = 100
+
+        val webViewClient = FlashbackWebViewClient(
+            domainChanged = { domain?.text = it },
+            titleChanged = { title?.text = it }
+        )
+        val webChromeClient = FlashbackWebChromeClient(
+            updateProgressToo = {
+                val result = it.toFloat() / 100f
+                Log.i("Flashback", "PROGRESS $result -- ${progressBar != null}")
+                progressBar?.animateProgress(result, false) { "" }
+                progressBar?.show(result != 1.0f)
+            }
+        )
+
         webview.webChromeClient = webChromeClient
         webview.webViewClient = webViewClient
         webview.settings.loadsImagesAutomatically = true
         webview.settings.javaScriptEnabled = true
         webview.scrollBarStyle = View.SCROLLBARS_INSIDE_OVERLAY
-        webview.loadUrl(pageUrl)
 
-        title.text = pageTitle
+        load(pageTitle, pageUrl)
 
         back.setOnClickListener {
             backCallback?.fragmentBackPressed()
@@ -58,6 +74,21 @@ class WebFragment: BaseFragment() {
         share.setOnClickListener {
             share()
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putString(keyTitle, title.text.toString())
+        outState.putString(keyUrl, webview.url)
+        super.onSaveInstanceState(outState)
+    }
+
+    fun load(pageTitle: String, url: String) {
+        this.pageTitle = pageTitle
+        this.pageUrl = url
+        webview.loadUrl(pageUrl)
+
+        title.text = pageTitle
+        domain.text = Uri.parse(pageUrl).host ?: "-"
     }
 
     private fun openInBrowser() {
