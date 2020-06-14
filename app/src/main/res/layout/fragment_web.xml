@@ -8,12 +8,20 @@
 
     <WebView
         android:id="@+id/webview"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/webControlBar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="match_parent"
-        android:layout_height="0dp" />
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/webControlBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <tmg.labelledprogressbar.LabelledProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        app:layout_constraintBottom_toTopOf="@id/webControlBar"
+        app:lpb_backgroundColour="?attr/f1BackgroundPrimary"
+        app:lpb_progressColour="?attr/colorPrimary" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/webControlBar"

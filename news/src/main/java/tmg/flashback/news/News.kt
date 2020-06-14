@@ -29,8 +29,11 @@ class News: NewsDB {
             if (e is HttpException) {
                 Log.i("Flashback", "HTTP Status code ${e.code()}")
                 Log.i("Flashback", "HTTP Status message ${e.message()}")
+                this.emit(Response<List<NewsItem>>(null, e.code()))
             }
-            this.emit(Response<List<NewsItem>>(null, 500))
+            else {
+                this.emit(Response<List<NewsItem>>(null, 500))
+            }
         }
     }
 }

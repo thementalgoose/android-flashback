@@ -10,12 +10,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.activity_settings.*
 import kotlinx.android.synthetic.main.bottom_sheet_theme.*
-import kotlinx.android.synthetic.main.toolbar.view.*
 import org.koin.android.ext.android.inject
 import tmg.components.about.AboutThisAppActivity
-import tmg.components.about.AboutThisAppDependency
 import tmg.components.prefs.AppPreferencesAdapter
-import tmg.flashback.BuildConfig
 import tmg.flashback.R
 import tmg.flashback.base.BaseActivity
 import tmg.flashback.configuration
@@ -126,10 +123,10 @@ class SettingsActivity : BaseActivity() {
                 viewModel.inputs.pickTheme(ThemePref.values()[it.id])
             }
         )
-        themeList.adapter = themeAdapter
-        themeList.layoutManager = LinearLayoutManager(this)
+        textList.adapter = themeAdapter
+        textList.layoutManager = LinearLayoutManager(this)
 
-        themeBottomSheet = BottomSheetBehavior.from(themeLayout)
+        themeBottomSheet = BottomSheetBehavior.from(parentLayout)
         themeBottomSheet.isHideable = true
         themeBottomSheet.hidden()
         themeBottomSheet.addBottomSheetCallback(BottomSheetFader(vBackground, "theme"))

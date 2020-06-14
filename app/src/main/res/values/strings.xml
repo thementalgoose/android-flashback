@@ -104,13 +104,13 @@
     <string name="nav_race">Race</string>
     <string name="nav_qualifying">Qualifying</string>
 
-    <!-- Dashboard -->
-
     <!-- Home -->
     <string name="home_season_header_current">Now</string>
     <string name="home_season_header_favourited">Favourites</string>
     <string name="home_season_header_All">All</string>
     <string name="home_progress">Standings as of round %d, </string>
+    <string name="home_calendar_filter_title">Filter</string>
+    <string name="home_calendar_filter_description">Filter the season below</string>
 
     <!-- Race -->
     <string name="race_round" formatted="false">Round %d</string>

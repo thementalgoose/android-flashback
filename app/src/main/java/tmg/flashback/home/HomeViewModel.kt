@@ -1,5 +1,6 @@
 package tmg.flashback.home
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
@@ -8,6 +9,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.*
+import tmg.flashback.R
 import tmg.flashback.base.BaseViewModel
 import tmg.flashback.currentYear
 import tmg.flashback.home.list.HomeItem
@@ -18,6 +20,7 @@ import tmg.flashback.repo.db.stats.HistoryDB
 import tmg.flashback.repo.db.stats.SeasonOverviewDB
 import tmg.flashback.repo.models.stats.*
 import tmg.flashback.settings.ConnectivityManager
+import tmg.utilities.extensions.combinePair
 import tmg.utilities.extensions.combineTriple
 import tmg.utilities.lifecycle.Event
 
@@ -35,6 +38,7 @@ interface HomeViewModelInputs {
 interface HomeViewModelOutputs {
     val list: LiveData<List<HomeItem>>
     val openSeasonList: MutableLiveData<Event>
+    val label: LiveData<String>
     val currentSeason: LiveData<Int>
 
     val openCalendarFilter: LiveData<Boolean>
@@ -49,6 +53,7 @@ interface HomeViewModelOutputs {
 @FlowPreview
 @ExperimentalCoroutinesApi
 class HomeViewModel(
+    private val context: Context,
     private val seasonOverviewDB: SeasonOverviewDB,
     private val historyDB: HistoryDB,
     private val dataDB: DataDB,
@@ -76,6 +81,21 @@ class HomeViewModel(
                 HomeMenuItem.SEASONS -> true
                 HomeMenuItem.NEWS -> false
                 HomeMenuItem.SEARCH -> false
+            }
+        }
+        .asLiveData(viewModelScope.coroutineContext)
+
+    override val label: LiveData<String> = currentTab
+        .asFlow()
+        .combinePair(season.asFlow())
+        .map { (currentTab, season) ->
+            return@map when (currentTab) {
+                HomeMenuItem.CALENDAR -> season.toString()
+                HomeMenuItem.DRIVERS -> season.toString()
+                HomeMenuItem.CONSTRUCTORS -> season.toString()
+                HomeMenuItem.SEASONS -> season.toString()
+                HomeMenuItem.NEWS -> context.getString(R.string.nav_news)
+                HomeMenuItem.SEARCH -> ""
             }
         }
         .asLiveData(viewModelScope.coroutineContext)
