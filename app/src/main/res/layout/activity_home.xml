@@ -83,14 +83,7 @@
         android:id="@+id/expandablePageLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorTheme" />
-
-    <!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-    <!--        android:layout_gravity="bottom|end"-->
-    <!--        android:layout_marginBottom="?attr/actionBarSize"-->
-    <!--        app:layout_anchor="@id/menu"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content" />-->
+        android:background="?attr/f1BackgroundPrimary" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/menu"

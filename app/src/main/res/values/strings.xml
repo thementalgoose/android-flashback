@@ -150,4 +150,6 @@
     <string name="ellipsis">…</string>
     <string name="close">Close</string>
     <string name="qualifying_grid_penalty">%d place grid penalty, starts %s</string>
+    <string name="choose_browser">Open in browser</string>
+    <string name="choose_share">Share with</string>
 </resources>
