@@ -112,6 +112,10 @@
     <string name="home_calendar_filter_title">Filter</string>
     <string name="home_calendar_filter_description">Filter the season below</string>
 
+    <string name="home_driver_finish_pole"><![CDATA[Finished <b>%s</b> in %s]]></string> <!-- On pole or 4th -->
+    <string name="home_driver_qualified"><![CDATA[Qualified <b>%s</b> in %s]]></string> <!-- On pole or 2nd -->
+    <string name="home_driver_grand_prixs">%d grand prix</string> <!-- On pole or 2nd -->
+
     <!-- Race -->
     <string name="race_round" formatted="false">Round %d</string>
     <string name="race_round_format" formatted="false"><![CDATA[Round <b>%s</b> /// %s]]></string>
@@ -152,4 +156,5 @@
     <string name="qualifying_grid_penalty">%d place grid penalty, starts %s</string>
     <string name="choose_browser">Open in browser</string>
     <string name="choose_share">Share with</string>
+    <string name="on_pole_position">on pole position</string>
 </resources>

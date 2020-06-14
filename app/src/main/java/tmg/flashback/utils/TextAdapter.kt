@@ -8,7 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.view_text.view.*
 import tmg.flashback.R
 
-class TextAdapter: RecyclerView.Adapter<TextAdapter.ViewHolder>() {
+class TextAdapter(
+    var itemClicked: (value: String) -> Unit = { }
+): RecyclerView.Adapter<TextAdapter.ViewHolder>() {
 
     var list: List<Selected<String>> = listOf()
         set(value) {
@@ -16,8 +18,6 @@ class TextAdapter: RecyclerView.Adapter<TextAdapter.ViewHolder>() {
             field = value
             diff.dispatchUpdatesTo(this)
         }
-
-    var itemClicked: (value: String) -> Unit = { }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.view_text, parent, false), itemClicked)

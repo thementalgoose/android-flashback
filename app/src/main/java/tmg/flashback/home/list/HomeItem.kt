@@ -4,6 +4,7 @@ import androidx.annotation.LayoutRes
 import org.threeten.bp.LocalDate
 import tmg.flashback.R
 import tmg.flashback.repo.models.news.NewsItem
+import tmg.flashback.repo.models.stats.Circuit
 
 sealed class HomeItem(
     @LayoutRes val layoutId: Int
@@ -24,6 +25,8 @@ sealed class HomeItem(
         val driver: tmg.flashback.repo.models.stats.Driver,
         val driverId: String = driver.id,
         val position: Int,
+        val bestQualifying: Pair<Int, List<Circuit>>?,
+        val bestFinish: Pair<Int, List<Circuit>>?,
         val maxPointsInSeason: Int
     ): HomeItem(R.layout.view_home_driver)
 
