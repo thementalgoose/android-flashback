@@ -58,7 +58,7 @@ class WebFragment : BaseFragment() {
         webview.webChromeClient = webChromeClient
         webview.webViewClient = webViewClient
         webview.settings.loadsImagesAutomatically = true
-//        webview.settings.javaScriptEnabled = true
+        webview.settings.javaScriptEnabled = true
         webview.scrollBarStyle = View.SCROLLBARS_INSIDE_OVERLAY
 
         load(pageTitle, pageUrl)

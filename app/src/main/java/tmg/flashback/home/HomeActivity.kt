@@ -258,7 +258,7 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback, PageStateChangeCal
         seasonBottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
         seasonBottomSheetBehavior.isHideable = true
         seasonBottomSheetBehavior.hidden()
-        seasonBottomSheetBehavior.halfExpandedRatio = 0.6f
+        seasonBottomSheetBehavior.halfExpandedRatio = 0.7f
         seasonBottomSheetBehavior.addBottomSheetCallback(BottomSheetFader(overlay, "seasons"))
         seasonBottomSheetBehavior.addBottomSheetCallback(SeasonBottomSheetCallback(
             expanded = { seasonExpand() },
