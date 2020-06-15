@@ -22,7 +22,7 @@
         android:gravity="center|start"
         android:paddingStart="0dp"
         android:paddingEnd="@dimen/paddingMedium"
-        android:text="@string/network_error"
+        android:text="@string/shared_network_internal_error"
         app:layout_constraintBottom_toBottomOf="@id/lottie"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/lottie"

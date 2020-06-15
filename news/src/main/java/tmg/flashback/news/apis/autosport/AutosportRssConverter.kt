@@ -10,7 +10,9 @@ fun AutosportRssChannelModel.convert(): List<NewsItem> {
     val source = NewsSource(
         source = "Autosport",
         image = this.mImage?.mUrl,
-        link = "autosport.com"
+        link = "autosport.com",
+        colour = "#ef5350",
+        shortLink = "AS"
     )
 
     return this.mItem

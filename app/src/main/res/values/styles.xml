@@ -22,6 +22,8 @@
         <item name="f1BackgroundPrimary">#FBFBFB</item>
         <item name="f1BackgroundSecondary">#E8E8E8</item>
 
+        <item name="f1BackgroundLoading">#EEffffff</item>
+
         <item name="f1TextInversePrimary">#F8F8F8</item>
         <item name="f1TextInverseSecondary">#E8E8E8</item>
         <item name="f1TextInverseTertiary">#D8D8D8</item>
@@ -29,6 +31,7 @@
         <item name="f1BackgroundInverseSecondary">#383838</item>
 
         <item name="f1BackgroundOverlay">#44FBFBFB</item>
+        <item name="f1BackgroundSkeletonAlpha">0.8</item>
 
         <item name="f1Loading">#a8a8a8</item>
 
@@ -65,6 +68,9 @@
         <item name="f1BackgroundNavPrimary">#383838</item>
         <item name="f1BackgroundPrimary">#282828</item>
         <item name="f1BackgroundSecondary">#383838</item>
+
+        <item name="f1BackgroundLoading">#EE222222</item>
+        <item name="f1BackgroundSkeletonAlpha">0.4</item>
 
         <item name="f1TextInversePrimary">#181818</item>
         <item name="f1TextInverseSecondary">#383838</item>
@@ -172,6 +178,12 @@
         <item name="android:textSize">@dimen/textSizeSmall</item>
         <item name="android:textStyle">italic</item>
         <item name="android:textColor">?attr/f1TextTertiary</item>
+    </style>
+
+    <style name="Text.News.SourceThumb" parent="Text">
+        <item name="android:textSize">@dimen/textSizeMedium</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
 

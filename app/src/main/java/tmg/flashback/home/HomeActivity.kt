@@ -33,6 +33,8 @@ import tmg.flashback.utils.TextAdapter
 import tmg.flashback.web.WebFragment
 import tmg.utilities.bottomsheet.BottomSheetFader
 import tmg.utilities.extensions.*
+import tmg.utilities.extensions.views.hide
+import tmg.utilities.extensions.views.show
 
 @FlowPreview
 @ExperimentalCoroutinesApi
@@ -102,16 +104,15 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback, PageStateChangeCal
                     viewModel.inputs.clickItem(HomeMenuItem.SEASONS)
                     false
                 }
-                R.id.nav_search -> {
-                    viewModel.inputs.clickItem(HomeMenuItem.SEASONS)
-                    false
-                }
                 else -> false
             }
             return@setOnNavigationItemSelectedListener shouldUpdateTab
         }
 
         setupBottomSheetSeason()
+
+        skeleton.showSkeleton()
+        skeleton.showShimmer = true
 
         settings.setOnClickListener {
             startActivity(Intent(this, SettingsActivity::class.java))
@@ -124,7 +125,6 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback, PageStateChangeCal
         //region HomeViewModel
 
         observe(viewModel.outputs.list) {
-            dataList.alpha = 1.0f
             adapter.list = it
         }
 
@@ -155,6 +155,14 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback, PageStateChangeCal
                 .show(supportFragmentManager, "RELEASE_NOTES")
         }
 
+        observe(viewModel.outputs.showLoading) {
+            if (it) {
+                showLoading()
+            } else {
+                hideLoading()
+            }
+        }
+
         //endregion
 
         //region SeasonViewModel
@@ -169,6 +177,9 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback, PageStateChangeCal
         }
 
         //endregion
+
+        showLoading()
+        menu.isEnabled = false
     }
 
     override fun onBackPressed() {
@@ -177,6 +188,9 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback, PageStateChangeCal
                 seasonBottomSheetBehavior.hide()
             }
             expandablePageLayout.isExpandedOrExpanding -> {
+                // Pipe back exit events through to fragment, let it handle the back event
+                val webFrag = supportFragmentManager.findFragmentByTag("WebView") as? WebFragment
+                webFrag?.exitWeb()
                 dataList.collapse()
             }
             else -> {
@@ -316,5 +330,14 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback, PageStateChangeCal
             .setDuration(bottomSheetFastScrollDuration.toLong())
             .start()
         seasonAdapter.setToggle(false)
+    }
+
+    private fun showLoading() {
+        loadingContainer.show()
+    }
+
+    private fun hideLoading() {
+        loadingContainer.hide()
+        menu.isEnabled = true
     }
 }

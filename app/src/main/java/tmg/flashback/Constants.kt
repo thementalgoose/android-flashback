@@ -12,6 +12,8 @@ val currentYear: Int
 val allYears: List<Int>
     get() = (minimumSupportedYear..currentYear).map { it }
 
+const val showComingSoonMessageForNextDays = 10
+
 const val bottomSheetFastScrollDuration = 300
 
 val dateFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("dd MMMM yyyy")

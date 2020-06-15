@@ -5,6 +5,7 @@ import org.threeten.bp.LocalDate
 import tmg.flashback.R
 import tmg.flashback.repo.models.news.NewsItem
 import tmg.flashback.repo.models.stats.Circuit
+import tmg.flashback.shared.viewholders.DataUnavailable
 
 sealed class HomeItem(
     @LayoutRes val layoutId: Int
@@ -42,4 +43,12 @@ sealed class HomeItem(
     data class NewsArticle(
         val item: NewsItem
     ): HomeItem(R.layout.view_home_news)
+
+    object NoNetwork: HomeItem(R.layout.view_shared_no_network)
+
+    object InternalError: HomeItem(R.layout.view_shared_internal_error)
+
+    data class Unavailable(
+        val type: DataUnavailable
+    ): HomeItem(R.layout.view_shared_data_unavailable)
 }

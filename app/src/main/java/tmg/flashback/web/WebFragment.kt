@@ -58,7 +58,7 @@ class WebFragment : BaseFragment() {
         webview.webChromeClient = webChromeClient
         webview.webViewClient = webViewClient
         webview.settings.loadsImagesAutomatically = true
-        webview.settings.javaScriptEnabled = true
+//        webview.settings.javaScriptEnabled = true
         webview.scrollBarStyle = View.SCROLLBARS_INSIDE_OVERLAY
 
         load(pageTitle, pageUrl)
@@ -68,6 +68,7 @@ class WebFragment : BaseFragment() {
                 webview.goBack()
             }
             else {
+                exitWeb()
                 backCallback?.fragmentBackPressed()
             }
         }
@@ -106,6 +107,21 @@ class WebFragment : BaseFragment() {
         intent.type = "text/plain"
         intent.putExtra(Intent.EXTRA_TEXT, webview.url)
         startActivity(Intent.createChooser(intent, getString(R.string.choose_share)))
+    }
+
+    override fun onPause() {
+        super.onPause()
+        webview.onPause()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        webview.onResume()
+    }
+
+    fun exitWeb() {
+        webview.onPause()
+        webview.stopLoading()
     }
 
     companion object {

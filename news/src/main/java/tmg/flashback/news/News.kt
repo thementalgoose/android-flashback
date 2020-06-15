@@ -1,6 +1,7 @@
 package tmg.flashback.news
 
 import android.util.Log
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
@@ -23,6 +24,9 @@ class News: NewsDB {
         try {
             val allResults = autosportRss
                 .getFeed().mChannel?.convert() ?: emptyList<NewsItem>()
+
+            delay(1000)
+
             this.emit(Response(allResults))
         } catch (e: Exception) {
             e.printStackTrace()
@@ -32,7 +36,7 @@ class News: NewsDB {
                 this.emit(Response<List<NewsItem>>(null, e.code()))
             }
             else {
-                this.emit(Response<List<NewsItem>>(null, 500))
+                this.emit(Response<List<NewsItem>>(null, -1))
             }
         }
     }

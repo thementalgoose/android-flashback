@@ -116,16 +116,11 @@
     <string name="home_driver_qualified"><![CDATA[Qualified <b>%s</b> in %s]]></string> <!-- On pole or 2nd -->
     <string name="home_driver_grand_prixs">%d grand prix</string> <!-- On pole or 2nd -->
 
+    <string name="home_partial_season">Statistics are shown as of the %s round of the grand prix, the %s. %d rounds to go</string> <!-- On pole or 2nd -->
+
     <!-- Race -->
     <string name="race_round" formatted="false">Round %d</string>
     <string name="race_round_format" formatted="false"><![CDATA[Round <b>%s</b> /// %s]]></string>
-    <string name="race_network_error">Cannot connect, please check you are connected to the internet and try again</string>
-    <string name="race_not_found">We cannot find the stats on this race right now. Please check back again soon</string>
-    <string name="race_not_started">This race hasn\'t happened yet, please check back after the race where we will try to get some statistics!</string>
-    <string name="season_not_found">We don\'t have any data on this season at the moment. We will try to get some season information as soon as possible!</string>
-    <string name="season_not_started">This season hasn\'t started yet, please check back after the first race to see some statistics</string>
-    <string name="season_network_error">We can\'t find the statistics on this right now, please check you have an active internet connection</string>
-    <string name="network_error">Network connectivity error - Please check you have an active internet connection</string>
     <string name="race_qualifying_no_data">Not found</string>
     <string name="race_standings_driver_result"><![CDATA[Finished <b>%s</b>, scored <b>%s</b> points]]></string>
     <plurals name="race_points">
@@ -134,6 +129,15 @@
     </plurals>
     <string name="race_standings">Standings</string>
     <string name="race_circuit_info">Circuit\ninfo</string>
+
+    <!-- Error states -->
+    <string name="shared_unavailable_future_season">This season has not started yet, please check back after the first race to see the results!</string>
+    <string name="shared_unavailable_early_season">We don\'t yet have any data on this season yet, please check back later while we work on getting this</string>
+    <string name="shared_unavailable_future_race">This race has not yet happened, please check back after the race to see the results</string>
+    <string name="shared_unavailable_coming_soon_race">This race has only just happened, we will try to get this information as soon as possible!</string>
+    <string name="shared_unavailable_missing_race">Unfortunately we don\'t have any information for this yet, please check back you have an internet connection and try again</string>
+    <string name="shared_network_error">A network error occurred! Please check you are connected to the internet and try again</string>
+    <string name="shared_network_internal_error">A network error occurred and we weren\'t able to find any articles. Please check your internet connection or try again later</string>
 
     <!-- Standings -->
     <string name="standings_header">%s standings</string>
@@ -148,6 +152,7 @@
     <string name="round_podium_second">2nd</string>
     <string name="round_podium_third">3rd</string>
     <string name="race_time_delta">+%s</string>
+    <string name="race_dnf_cause">DNF cause: %s</string>
 
     <!-- Race Status -->
     <string name="race_status_retired">DNF</string>

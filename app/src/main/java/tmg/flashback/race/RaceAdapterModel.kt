@@ -2,6 +2,7 @@ package tmg.flashback.race
 
 import tmg.flashback.repo.enums.RaceStatus
 import tmg.flashback.repo.models.stats.*
+import tmg.flashback.shared.viewholders.DataUnavailable
 
 sealed class RaceAdapterModel {
     data class Podium(
@@ -45,13 +46,11 @@ sealed class RaceAdapterModel {
         val driver: List<Pair<Driver, Int>>
     ) : RaceAdapterModel()
 
-    data class Loading(
-        val id: Int
+    data class Unavailable(
+        val type: DataUnavailable
     ) : RaceAdapterModel()
 
-    data class NoData(
-        val pastRaceDate: Boolean
-    ) : RaceAdapterModel()
+    object Loading : RaceAdapterModel()
 
     object NoNetwork : RaceAdapterModel()
 }

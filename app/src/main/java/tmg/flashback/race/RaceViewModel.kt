@@ -5,6 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.*
 import org.threeten.bp.LocalDate
@@ -13,6 +15,8 @@ import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.db.stats.SeasonOverviewDB
 import tmg.flashback.repo.models.stats.*
 import tmg.flashback.settings.ConnectivityManager
+import tmg.flashback.shared.viewholders.DataUnavailable
+import tmg.flashback.showComingSoonMessageForNextDays
 import tmg.flashback.utils.SeasonRound
 import tmg.utilities.extensions.combineTriple
 
@@ -35,6 +39,8 @@ interface RaceViewModelOutputs {
 
 //endregion
 
+@FlowPreview
+@ExperimentalCoroutinesApi
 class RaceViewModel(
     seasonOverviewDB: SeasonOverviewDB,
     private val prefsDB: PrefsDB,
@@ -67,19 +73,17 @@ class RaceViewModel(
             .flatMapLatest { (season, round) -> seasonOverviewDB.getSeasonRound(season, round) }
             .combineTriple(viewType.asFlow(), seasonRound.asFlow())
             .map { (roundData, viewType, seasonRoundValue) ->
-
                 if (roundData == null) {
                     val list = mutableListOf<RaceAdapterModel>()
-                    if (!connectivityManager.isConnected) {
-                        list.add(RaceAdapterModel.NoNetwork)
-                    }
-                    else {
-                        if (roundDate != null) {
-                            list.add(RaceAdapterModel.NoData(roundDate!! < LocalDate.now()))
-                        }
-                        else {
-                            list.add(RaceAdapterModel.NoData(true))
-                        }
+                    when {
+                        !connectivityManager.isConnected ->
+                            list.add(RaceAdapterModel.NoNetwork)
+                        roundDate != null && roundDate!! > LocalDate.now().plusDays(showComingSoonMessageForNextDays.toLong()) ->
+                            list.add(RaceAdapterModel.Unavailable(DataUnavailable.IN_FUTURE_RACE))
+                        roundDate != null && roundDate!! > LocalDate.now() ->
+                            list.add(RaceAdapterModel.Unavailable(DataUnavailable.COMING_SOON_RACE))
+                        else ->
+                            list.add(RaceAdapterModel.Unavailable(DataUnavailable.MISSING_RACE))
                     }
                     return@map Triple(viewType, list, seasonRoundValue)
                 }

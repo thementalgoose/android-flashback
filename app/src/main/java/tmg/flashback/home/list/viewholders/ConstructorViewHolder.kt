@@ -35,8 +35,6 @@ class ConstructorViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         itemView.lpvProgress.progressColour = item.constructor.color
         itemView.lpvProgress.textBackgroundColour = context.theme.getColor(R.attr.f1TextSecondary)
 
-        Log.i("Flashback", "Setting for ${item.constructor.name} the value ${item.points.toFloat() / maxPoints.toFloat()} (calculated to be ${(item.points.toFloat() / maxPoints.toFloat()) * maxPoints.toFloat()} (max points $maxPoints, their points ${item.points})")
-
         itemView.lpvProgress.animateProgress(item.points.toFloat() / maxPoints.toFloat()) { (it * maxPoints.toFloat()).toInt().coerceIn(0, item.points).toString() }
     }
 

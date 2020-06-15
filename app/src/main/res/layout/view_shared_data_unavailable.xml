@@ -6,38 +6,26 @@
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lottie"
+        android:alpha="0.3"
         android:layout_width="110dp"
         android:layout_height="90dp"
-        android:alpha="0.3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/calendar" />
 
-    <ImageView
-        android:id="@+id/lights"
-        android:layout_width="110dp"
-        android:layout_height="90dp"
-        android:alpha="0.5"
-        android:paddingStart="@dimen/paddingMedium"
-        android:paddingEnd="@dimen/paddingMedium"
-        android:src="@drawable/fia_lights"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
-        android:id="@+id/title"
         style="@style/Text.Home.Placeholder"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="110dp"
+        android:id="@+id/title"
         android:gravity="center|start"
-        android:paddingStart="0dp"
         android:paddingEnd="@dimen/paddingMedium"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:paddingStart="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/lottie"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@id/lottie"
+        app:layout_constraintTop_toTopOf="@id/lottie"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -20,8 +20,11 @@ import tmg.flashback.repo.db.stats.HistoryDB
 import tmg.flashback.repo.db.stats.SeasonOverviewDB
 import tmg.flashback.repo.models.stats.*
 import tmg.flashback.settings.ConnectivityManager
+import tmg.flashback.shared.viewholders.DataUnavailable
+import tmg.flashback.shared.viewholders.InternalErrorOccurredViewHolder
 import tmg.utilities.extensions.combinePair
 import tmg.utilities.extensions.combineTriple
+import tmg.utilities.extensions.then
 import tmg.utilities.lifecycle.Event
 
 //region Inputs
@@ -40,6 +43,8 @@ interface HomeViewModelOutputs {
     val openSeasonList: MutableLiveData<Event>
     val label: LiveData<String>
     val currentSeason: LiveData<Int>
+
+    val showLoading: MutableLiveData<Boolean>
 
     val openCalendarFilter: LiveData<Boolean>
     val openAppLockout: LiveData<Event>
@@ -66,6 +71,8 @@ class HomeViewModel(
         ConflatedBroadcastChannel(HomeMenuItem.NEWS)
     private val season: ConflatedBroadcastChannel<Int> = ConflatedBroadcastChannel(currentYear)
     private val refreshNews: ConflatedBroadcastChannel<Boolean> = ConflatedBroadcastChannel(true)
+
+    override val showLoading: MutableLiveData<Boolean> = MutableLiveData(true)
 
     override val currentSeason: LiveData<Int> = season
         .asFlow()
@@ -121,21 +128,47 @@ class HomeViewModel(
             val historyRounds = history?.rounds ?: emptyList()
             when (menuItemType) {
                 HomeMenuItem.CALENDAR -> {
-                    list.addAll(historyRounds.toCalendarList())
+                    when {
+                        historyRounds.isEmpty() && !connectivityManager.isConnected ->
+                            list.add(HomeItem.NoNetwork)
+                        historyRounds.isEmpty() && season == currentYear ->
+                            list.add(HomeItem.Unavailable(DataUnavailable.EARLY_IN_SEASON))
+                        historyRounds.isEmpty() ->
+                            list.add(HomeItem.Unavailable(DataUnavailable.MISSING_RACE))
+                        else ->
+                            list.addAll(historyRounds.toCalendarList())
+                    }
                 }
                 HomeMenuItem.DRIVERS -> {
-                    val driverStandings = rounds.driverStandings()
-                    list.addAll(driverStandings.toDriverList(rounds))
+                    when {
+                        rounds.isEmpty() && !connectivityManager.isConnected ->
+                            list.add(HomeItem.NoNetwork)
+                        rounds.isEmpty() ->
+                            list.add(HomeItem.Unavailable(DataUnavailable.IN_FUTURE_SEASON))
+                        else -> {
+                            val driverStandings = rounds.driverStandings()
+                            list.addAll(driverStandings.toDriverList(rounds))
+                        }
+                    }
                 }
                 HomeMenuItem.CONSTRUCTORS -> {
-                    val constructorStandings = rounds.constructorStandings()
-                    list.addAll(constructorStandings.toConstructorList())
+                    when {
+                        rounds.isEmpty() && !connectivityManager.isConnected ->
+                            list.add(HomeItem.NoNetwork)
+                        rounds.isEmpty() ->
+                            list.add(HomeItem.Unavailable(DataUnavailable.IN_FUTURE_SEASON))
+                        else -> {
+                            val constructorStandings = rounds.constructorStandings()
+                            list.addAll(constructorStandings.toConstructorList())
+                        }
+                    }
                 }
                 else -> {
                 }
             }
             return@map list
         }
+        .onStart { emitAll(flow { emptyList<HomeItem>() }) }
 
     /**
      * List to handle news data
@@ -144,8 +177,16 @@ class HomeViewModel(
         .asFlow()
         .flatMapLatest { newsDB.getNews() }
         .map { response ->
-            response.result?.map { HomeItem.NewsArticle(it) } ?: emptyList()
+            if (response.isNoNetwork || !connectivityManager.isConnected) {
+                return@map listOf<HomeItem>(HomeItem.NoNetwork)
+            }
+            val results = response.result?.map { HomeItem.NewsArticle(it) } ?: emptyList()
+            if (results.isEmpty()) {
+                return@map listOf<HomeItem>(HomeItem.InternalError)
+            }
+            return@map results
         }
+        .onStart { emitAll(flow { emptyList<HomeItem>() }) }
 
     /**
      * Overview list that gets returned to the Activity
@@ -161,6 +202,9 @@ class HomeViewModel(
                 HomeMenuItem.CONSTRUCTORS -> seasonList
                 else -> emptyList()
             }
+        }
+        .then {
+            showLoading.value = false
         }
         .asLiveData(viewModelScope.coroutineContext)
 
@@ -206,11 +250,13 @@ class HomeViewModel(
         if (item == HomeMenuItem.SEASONS) {
             openSeasonList.value = Event()
         } else {
+            showLoading.value = true
             currentTab.offer(item)
         }
     }
 
     override fun selectSeason(season: Int) {
+        showLoading.value = true
         this.season.offer(season)
     }
 

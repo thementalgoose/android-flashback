@@ -106,6 +106,127 @@
         android:focusable="true"
         android:visibility="gone" />
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/loadingContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="@dimen/paddingMedium"
+        android:background="?attr/f1BackgroundLoading"
+        android:clickable="true"
+        android:focusable="true"
+        android:paddingBottom="?attr/actionBarSize"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <com.faltenreich.skeletonlayout.SkeletonLayout
+            android:id="@+id/skeleton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="?attr/actionBarSize"
+            android:alpha="?attr/f1BackgroundSkeletonAlpha"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <View
+                    android:id="@+id/icon1"
+                    android:layout_width="@dimen/homeSkeletonHeight"
+                    android:layout_height="@dimen/homeSkeletonHeight"
+                    android:layout_marginStart="@dimen/paddingMedium"
+                    android:layout_marginTop="@dimen/paddingSmall"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:id="@+id/line1"
+                    android:layout_width="0dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="@dimen/paddingSmall"
+                    android:layout_marginTop="@dimen/paddingSmall"
+                    android:layout_marginEnd="@dimen/paddingMedium"
+                    android:layout_marginBottom="@dimen/paddingSmall"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/icon1"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:id="@+id/line2"
+                    app:layout_constraintTop_toBottomOf="@id/line1"
+                    android:layout_width="0dp"
+                    android:layout_height="22dp"
+                    android:layout_marginStart="@dimen/paddingSmall"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="@dimen/paddingMedium"
+                    android:layout_marginBottom="@dimen/paddingSmall"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/icon1" />
+
+                <View
+                    android:id="@+id/line3"
+                    app:layout_constraintTop_toBottomOf="@id/line2"
+                    android:layout_width="0dp"
+                    android:layout_height="22dp"
+                    android:layout_marginStart="@dimen/paddingSmall"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="@dimen/paddingMedium"
+                    android:layout_marginBottom="@dimen/paddingSmall"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/icon1" />
+
+                <View
+                    android:id="@+id/icon2"
+                    android:layout_width="@dimen/homeSkeletonHeight"
+                    android:layout_height="@dimen/homeSkeletonHeight"
+                    android:layout_marginStart="@dimen/paddingMedium"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/line4"/>
+
+                <View
+                    android:id="@+id/line4"
+                    android:layout_width="0dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="@dimen/paddingSmall"
+                    android:layout_marginTop="@dimen/paddingMedium"
+                    android:layout_marginEnd="@dimen/paddingMedium"
+                    android:layout_marginBottom="@dimen/paddingSmall"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/icon2"
+                    app:layout_constraintTop_toBottomOf="@id/line3" />
+
+                <View
+                    android:id="@+id/line5"
+                    app:layout_constraintTop_toBottomOf="@id/line4"
+                    android:layout_width="0dp"
+                    android:layout_height="22dp"
+                    android:layout_marginStart="@dimen/paddingSmall"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="@dimen/paddingMedium"
+                    android:layout_marginBottom="@dimen/paddingSmall"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/icon2" />
+
+                <View
+                    app:layout_constraintTop_toBottomOf="@id/line5"
+                    android:layout_width="0dp"
+                    android:layout_height="22dp"
+                    android:layout_marginStart="@dimen/paddingSmall"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="@dimen/paddingMedium"
+                    android:layout_marginBottom="@dimen/paddingSmall"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/icon2" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.faltenreich.skeletonlayout.SkeletonLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <include
         android:id="@+id/bottomSheet"
         layout="@layout/bottom_sheet_season"

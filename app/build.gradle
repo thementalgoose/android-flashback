@@ -96,7 +96,7 @@ dependencies {
     // TMG dependencies
     implementation 'com.github.thementalgoose:android-components:2.1.0'
     implementation 'com.github.thementalgoose:android-utilities:2.0.1'
-    implementation 'com.github.thementalgoose:android-labelled-progress-bar:1.0.2'
+    implementation 'com.github.thementalgoose:android-labelled-progress-bar:1.0.3'
 
     // ViewPager2
     implementation "androidx.viewpager2:viewpager2:1.0.0"
