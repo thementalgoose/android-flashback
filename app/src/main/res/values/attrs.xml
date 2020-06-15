@@ -14,7 +14,10 @@
     <attr name="f1TextInverseSecondary" format="color" />
     <attr name="f1TextInverseTertiary" format="color" />
 
+    <attr name="f1BackgroundLoading" format="color" />
     <attr name="f1BackgroundOverlay" format="color" />
+
+    <attr name="f1BackgroundSkeletonAlpha" format="float" />
 
     <attr name="f1Loading" format="color" />
 

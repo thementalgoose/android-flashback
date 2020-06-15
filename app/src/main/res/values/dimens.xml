@@ -11,7 +11,7 @@
 
     <!-- Home -->
 
-    <dimen name="homeSkeletonHeight">36dp</dimen>
+    <dimen name="homeSkeletonHeight">42dp</dimen>
 
     <!-- Text sizes -->
 
@@ -110,5 +110,6 @@
 
     <dimen name="standingsDriverSize">32dp</dimen>
     <dimen name="constructorStandingsSize">40dp</dimen>
+    <dimen name="homeNewsIconSize">36dp</dimen>
 
 </resources>

@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/skeletonLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:alpha="?attr/f1BackgroundSkeletonAlpha"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent">
@@ -12,7 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="?attr/actionBarSize"
         android:paddingStart="@dimen/paddingSmall"
         android:paddingEnd="@dimen/paddingSmall"
         android:paddingBottom="@dimen/paddingMedium">

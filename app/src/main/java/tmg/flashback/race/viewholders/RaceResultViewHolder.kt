@@ -13,6 +13,7 @@ import tmg.flashback.race.RaceAdapterModel
 import tmg.flashback.utils.getColor
 import tmg.flashback.utils.getFlagResourceAlpha3
 import tmg.flashback.utils.position
+import tmg.utilities.extensions.views.getString
 import tmg.utilities.extensions.views.gone
 import tmg.utilities.extensions.views.visible
 import kotlin.math.abs
@@ -92,7 +93,7 @@ class RaceResultViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnC
         when (p0) {
             itemView.layoutTime -> {
                 if (status.isNotEmpty()) {
-                    Toast.makeText(itemView.context, status, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(itemView.context, getString(R.string.race_dnf_cause, status), Toast.LENGTH_SHORT).show()
                 }
             }
         }

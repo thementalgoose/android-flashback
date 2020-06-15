@@ -6,27 +6,26 @@
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lottie"
-        android:alpha="0.3"
         android:layout_width="110dp"
         android:layout_height="90dp"
+        android:alpha="0.3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
-        app:lottie_rawRes="@raw/calendar" />
+        app:lottie_rawRes="@raw/cloud_error" />
 
     <TextView
-        style="@style/Text.Home.Placeholder"
+        style="@style/Text.Network.Error"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:id="@+id/title"
         android:gravity="center|start"
-        android:paddingEnd="@dimen/paddingMedium"
         android:paddingStart="0dp"
-        android:text="@string/season_not_found"
+        android:paddingEnd="@dimen/paddingMedium"
+        android:text="@string/shared_network_error"
         app:layout_constraintBottom_toBottomOf="@id/lottie"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/lottie"
-        app:layout_constraintTop_toTopOf="@id/lottie"/>
+        app:layout_constraintTop_toTopOf="@id/lottie" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
