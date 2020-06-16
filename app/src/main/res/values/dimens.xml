@@ -11,7 +11,9 @@
 
     <!-- Home -->
 
-    <dimen name="homeSkeletonHeight">42dp</dimen>
+    <dimen name="homeSkeletonHeight">48dp</dimen>
+    <dimen name="homeSkeletonCellHeight">38dp</dimen>
+    <dimen name="homeSkeletonCellSubtitle">28dp</dimen>
 
     <!-- Text sizes -->
 

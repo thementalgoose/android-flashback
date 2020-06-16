@@ -70,7 +70,7 @@
         <item name="f1BackgroundSecondary">#383838</item>
 
         <item name="f1BackgroundLoading">#EE222222</item>
-        <item name="f1BackgroundSkeletonAlpha">0.4</item>
+        <item name="f1BackgroundSkeletonAlpha">0.1</item>
 
         <item name="f1TextInversePrimary">#181818</item>
         <item name="f1TextInverseSecondary">#383838</item>

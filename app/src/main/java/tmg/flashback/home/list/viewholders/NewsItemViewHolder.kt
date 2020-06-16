@@ -29,7 +29,7 @@ class NewsItemViewHolder(
 
         val colour = item.item.source.colour.toColorInt()
         itemView.label.text = item.item.source.shortLink
-        itemView.label.setBackgroundColor(colour)
+        itemView.imageBackground.setBackgroundColor(colour)
 
         itemView.title.text = item.item.title
         itemView.description.show(item.item.description.isEmpty())
