@@ -11,7 +11,7 @@ fun AutosportRssChannelModel.convert(): List<NewsItem> {
         source = "Autosport",
         image = this.mImage?.mUrl,
         link = "autosport.com",
-        colour = "#ef5350",
+        colour = "#ff0000",
         shortLink = "AS"
     )
 

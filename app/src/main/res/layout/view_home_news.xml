@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
+    tools:background="?attr/f1BackgroundPrimary"
     android:layout_height="wrap_content"
     android:clickable="true"
     android:focusable="true"
@@ -17,10 +18,16 @@
         android:id="@+id/imageContainer"
         android:layout_width="@dimen/homeNewsIconSize"
         android:layout_height="@dimen/homeNewsIconSize"
-        android:alpha="0.5"
         app:cardCornerRadius="18dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
+        <View
+            android:alpha="0.5"
+            tools:background="#ff0000"
+            android:id="@+id/imageBackground"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
         <TextView
             android:id="@+id/label"
@@ -39,7 +46,7 @@
         style="@style/Text.News.Title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/paddingSmall"
+        android:layout_marginStart="@dimen/paddingNSmall"
         android:paddingBottom="2dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/imageContainer"
@@ -51,10 +58,9 @@
         style="@style/Text.News.Description"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/paddingSmall"
         android:paddingTop="4dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/imageContainer"
+        app:layout_constraintStart_toStartOf="@id/title"
         app:layout_constraintTop_toBottomOf="@id/title"
         tools:text="Something about something about formula 1 " />
 
@@ -63,11 +69,10 @@
         style="@style/Text.News.Source"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/paddingSmall"
         android:layout_marginTop="4dp"
         android:paddingStart="0dp"
         android:paddingEnd="4dp"
-        app:layout_constraintStart_toEndOf="@id/imageContainer"
+        app:layout_constraintStart_toStartOf="@id/title"
         app:layout_constraintTop_toBottomOf="@id/description"
         tools:text="autosport.com" />
 

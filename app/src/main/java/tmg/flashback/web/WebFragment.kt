@@ -49,7 +49,6 @@ class WebFragment : BaseFragment() {
         val webChromeClient = FlashbackWebChromeClient(
             updateProgressToo = {
                 val result = it.toFloat() / 100f
-                Log.i("Flashback", "PROGRESS $result -- ${progressBar != null}")
                 progressBar?.animateProgress(result, false) { "" }
                 progressBar?.show(result != 1.0f)
             }
