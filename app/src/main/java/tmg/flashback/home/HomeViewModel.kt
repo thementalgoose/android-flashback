@@ -68,7 +68,7 @@ class HomeViewModel(
 ) : BaseViewModel(), HomeViewModelInputs, HomeViewModelOutputs {
 
     private val currentTab: ConflatedBroadcastChannel<HomeMenuItem> =
-        ConflatedBroadcastChannel(HomeMenuItem.CALENDAR)
+        ConflatedBroadcastChannel(HomeMenuItem.NEWS)
     private val season: ConflatedBroadcastChannel<Int> = ConflatedBroadcastChannel(currentYear)
     private val refreshNews: ConflatedBroadcastChannel<Boolean> = ConflatedBroadcastChannel(true)
 

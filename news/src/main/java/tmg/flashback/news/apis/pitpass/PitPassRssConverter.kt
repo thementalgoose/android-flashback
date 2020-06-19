@@ -1,17 +1,19 @@
-package tmg.flashback.news.apis.autosport
+package tmg.flashback.news.apis.pitpass
 
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
+import tmg.flashback.news.apis.autosport.AutosportRssChannelModel
+import tmg.flashback.news.apis.autosport.autosportDateFormat
 import tmg.flashback.repo.models.news.NewsItem
 import tmg.flashback.repo.models.news.NewsSource
 
-fun AutosportRssChannelModel.convert(): List<NewsItem> {
+fun PitPassRssChannelModel.convert(): List<NewsItem> {
 
     val source = NewsSource(
-        source = "Autosport",
-        colour = "#ff0000",
-        link = "autosport.com",
-        sourceShort = "AS"
+        source = "PitPass",
+        colour = "#611818",
+        link = "pitpass.com",
+        sourceShort = "PP"
     )
 
     return this.mItem
@@ -22,7 +24,9 @@ fun AutosportRssChannelModel.convert(): List<NewsItem> {
                 title = it.mTitle!!,
                 description = it.mDescription ?: "",
                 link = it.mLink!!,
-                date = LocalDateTime.parse(it.mPubDate!!, DateTimeFormatter.ofPattern(autosportDateFormat)),
+                date = LocalDateTime.parse(it.mPubDate!!, DateTimeFormatter.ofPattern(
+                    autosportDateFormat
+                )),
                 source = source
             )
         } ?: emptyList()
