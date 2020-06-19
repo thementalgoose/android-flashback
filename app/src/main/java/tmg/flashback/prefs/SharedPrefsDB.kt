@@ -33,6 +33,7 @@ class SharedPrefsDB(context: Context): SharedPrefManager(context), PrefsDB {
     private val keyFavouriteSeasons: String = "FAVOURITE_SEASONS"
     private val keyNewsSourceExcludeList: String = "NEWS_SOURCE_EXCLUDE_LIST"
     private val keyInAppEnableJavascript: String = "IN_APP_ENABLE_JAVASCRIPT"
+    private val keyAllowUnverifiedSSL: String = "ALLOW_UNVERIFIED_SSL"
 
     override var theme: ThemePref
         get() = getString(keyTheme)?.toEnum<ThemePref> { it.key } ?: ThemePref.AUTO

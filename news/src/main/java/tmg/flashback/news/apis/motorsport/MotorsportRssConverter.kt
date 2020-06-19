@@ -1,17 +1,20 @@
-package tmg.flashback.news.apis.crashnet
+package tmg.flashback.news.apis.motorsport
 
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
+import tmg.flashback.news.apis.crashnet.CrashNetRssChannelModel
+import tmg.flashback.news.apis.crashnet.crashNetDateFormat
 import tmg.flashback.repo.models.news.Article
 import tmg.flashback.repo.models.news.ArticleSource
 
-fun CrashNetRssChannelModel.convert(): List<Article> {
+fun MotorsportRssChannelModel.convert(): List<Article> {
 
     val source = ArticleSource(
-        source = "Crash.net ",
-        link = "crash.com",
-        colour = "#E91B1C",
-        sourceShort = "C"
+        source = "Motorsport.com",
+        link = "motorsport.com",
+        colour = "#FFD806",
+        textColor = "#181818",
+        sourceShort = "MS"
     )
 
     return this.mItem
@@ -19,11 +22,11 @@ fun CrashNetRssChannelModel.convert(): List<Article> {
         ?.map {
             Article(
                 id = it.mGuid!!,
-                title = it.mTitle!!.trim(),
+                title = it.mTitle!!,
                 description = it.mDescription ?: "",
                 link = it.mLink!!,
                 date = LocalDateTime.parse(it.mPubDate!!, DateTimeFormatter.ofPattern(
-                    crashNetDateFormat
+                    motorsportDateFormat
                 )),
                 source = source
             )

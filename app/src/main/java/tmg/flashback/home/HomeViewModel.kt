@@ -18,6 +18,7 @@ import tmg.flashback.repo.db.news.NewsDB
 import tmg.flashback.repo.db.stats.DataDB
 import tmg.flashback.repo.db.stats.HistoryDB
 import tmg.flashback.repo.db.stats.SeasonOverviewDB
+import tmg.flashback.repo.enums.NewsSource
 import tmg.flashback.repo.models.stats.*
 import tmg.flashback.settings.ConnectivityManager
 import tmg.flashback.shared.viewholders.DataUnavailable
@@ -182,7 +183,12 @@ class HomeViewModel(
             }
             val results = response.result?.map { HomeItem.NewsArticle(it) } ?: emptyList()
             if (results.isEmpty()) {
-                return@map listOf<HomeItem>(HomeItem.InternalError)
+                if (prefDB.newsSourceExcludeList.size == NewsSource.values().size) {
+                    return@map listOf<HomeItem>(HomeItem.AllSourcesDisabled)
+                }
+                else {
+                    return@map listOf<HomeItem>(HomeItem.InternalError)
+                }
             }
             return@map results
         }

@@ -48,6 +48,8 @@ sealed class HomeItem(
 
     object InternalError: HomeItem(R.layout.view_shared_internal_error)
 
+    object AllSourcesDisabled: HomeItem(R.layout.view_shared_no_news_sources)
+
     data class Unavailable(
         val type: DataUnavailable
     ): HomeItem(R.layout.view_shared_data_unavailable)
