@@ -3,20 +3,18 @@ package tmg.flashback.home.list.viewholders
 import android.view.View
 import androidx.core.graphics.toColorInt
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.view_home_news.view.*
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.home.list.HomeItem
-import tmg.flashback.repo.models.news.NewsItem
-import tmg.utilities.extensions.views.context
+import tmg.flashback.repo.models.news.Article
 import tmg.utilities.extensions.views.show
 
 class NewsItemViewHolder(
-    val articleClicked: (link: NewsItem, itemId: Long) -> Unit,
+    val articleClicked: (link: Article, itemId: Long) -> Unit,
     itemView: View
 ) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
-    private lateinit var item: NewsItem
+    private lateinit var item: Article
     private var expandableItemId: Long = -1L
 
     init {
@@ -35,7 +33,7 @@ class NewsItemViewHolder(
         itemView.description.show(item.item.description.isEmpty())
         itemView.description.text = item.item.description
         itemView.source.text = item.item.source.link
-        itemView.date.text = item.item.date.format(DateTimeFormatter.ofPattern("HH:mm 'at' dd MMM"))
+        itemView.date.text = item.item.date?.format(DateTimeFormatter.ofPattern("HH:mm 'at' dd MMM")) ?: ""
         itemView.title.text = item.item.title
     }
 

@@ -2,13 +2,12 @@ package tmg.flashback.news.apis.crashnet
 
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
-import tmg.flashback.news.apis.autosport.autosportDateFormat
-import tmg.flashback.repo.models.news.NewsItem
-import tmg.flashback.repo.models.news.NewsSource
+import tmg.flashback.repo.models.news.Article
+import tmg.flashback.repo.models.news.ArticleSource
 
-fun CrashNetRssChannelModel.convert(): List<NewsItem> {
+fun CrashNetRssChannelModel.convert(): List<Article> {
 
-    val source = NewsSource(
+    val source = ArticleSource(
         source = "Crash.net ",
         link = "crash.com",
         colour = "#afb500",
@@ -18,7 +17,7 @@ fun CrashNetRssChannelModel.convert(): List<NewsItem> {
     return this.mItem
         ?.filter { it.mTitle != null && it.mGuid != null && it.mLink != null && it.mPubDate != null }
         ?.map {
-            NewsItem(
+            Article(
                 id = it.mGuid!!,
                 title = it.mTitle!!,
                 description = it.mDescription ?: "",

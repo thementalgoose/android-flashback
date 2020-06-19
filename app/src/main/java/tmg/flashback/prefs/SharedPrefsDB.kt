@@ -5,6 +5,7 @@ import tmg.flashback.BuildConfig
 import tmg.flashback.releaseNotes
 import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.enums.HomeTab
+import tmg.flashback.repo.enums.NewsSource
 import tmg.flashback.repo.enums.ThemePref
 import tmg.utilities.extensions.toEnum
 import tmg.utilities.prefs.SharedPrefManager
@@ -30,6 +31,8 @@ class SharedPrefsDB(context: Context): SharedPrefManager(context), PrefsDB {
     private val keyDeviceUDID: String = "UDID"
     private val keyTheme: String = "THEME"
     private val keyFavouriteSeasons: String = "FAVOURITE_SEASONS"
+    private val keyNewsSourceExcludeList: String = "NEWS_SOURCE_EXCLUDE_LIST"
+    private val keyInAppEnableJavascript: String = "IN_APP_ENABLE_JAVASCRIPT"
 
     override var theme: ThemePref
         get() = getString(keyTheme)?.toEnum<ThemePref> { it.key } ?: ThemePref.AUTO
@@ -101,4 +104,17 @@ class SharedPrefsDB(context: Context): SharedPrefManager(context), PrefsDB {
                 .mapNotNull { it.toIntOrNull() }
                 .toSet()
         }
+
+    override var newsSourceExcludeList: Set<NewsSource>
+        set(value) = save(keyNewsSourceExcludeList, value.map { it.key }.toSet())
+        get() {
+            val value = getSet(keyNewsSourceExcludeList, setOf())
+            return value
+                .mapNotNull { key -> NewsSource.values().firstOrNull { it.key == key } }
+                .toSet()
+        }
+
+    override var inAppEnableJavascript: Boolean
+        get() = getBoolean(keyInAppEnableJavascript, false)
+        set(value) = save(keyInAppEnableJavascript, value)
 }

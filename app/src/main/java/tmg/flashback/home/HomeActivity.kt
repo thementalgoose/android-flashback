@@ -84,10 +84,10 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback, PageStateChangeCal
 
         menu.setOnNavigationItemSelectedListener {
             val shouldUpdateTab = when (it.itemId) {
-//                R.id.nav_news -> {
-//                    viewModel.inputs.clickItem(HomeMenuItem.NEWS)
-//                    true
-//                }
+                R.id.nav_news -> {
+                    viewModel.inputs.clickItem(HomeMenuItem.NEWS)
+                    true
+                }
                 R.id.nav_calendar -> {
                     viewModel.inputs.clickItem(HomeMenuItem.CALENDAR)
                     true

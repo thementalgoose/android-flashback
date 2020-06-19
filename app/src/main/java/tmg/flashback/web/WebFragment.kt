@@ -9,14 +9,18 @@ import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.fragment_web.*
+import org.koin.android.ext.android.inject
 import tmg.flashback.R
 import tmg.flashback.base.BaseFragment
+import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.utils.FragmentRequestBack
 import tmg.flashback.utils.getColor
 import tmg.utilities.extensions.views.show
 
 @SuppressLint("SetJavaScriptEnabled")
 class WebFragment : BaseFragment() {
+
+    private val prefsDB: PrefsDB by inject()
 
     private var backCallback: FragmentRequestBack? = null
 
@@ -57,7 +61,7 @@ class WebFragment : BaseFragment() {
         webview.webChromeClient = webChromeClient
         webview.webViewClient = webViewClient
         webview.settings.loadsImagesAutomatically = true
-        webview.settings.javaScriptEnabled = true
+        webview.settings.javaScriptEnabled = prefsDB.inAppEnableJavascript
         webview.scrollBarStyle = View.SCROLLBARS_INSIDE_OVERLAY
 
         load(pageTitle, pageUrl)

@@ -17,6 +17,7 @@ import tmg.flashback.R
 import tmg.flashback.base.BaseActivity
 import tmg.flashback.configuration
 import tmg.flashback.repo.enums.ThemePref
+import tmg.flashback.settings.news.SettingsNewsActivity
 import tmg.flashback.settings.release.ReleaseActivity
 import tmg.flashback.utils.bottomsheet.BottomSheetAdapter
 import tmg.utilities.bottomsheet.BottomSheetFader
@@ -25,7 +26,7 @@ import tmg.utilities.extensions.*
 class SettingsActivity : BaseActivity() {
 
     private val viewModel: SettingsViewModel by inject()
-    private lateinit var adapter: AppPreferencesAdapter
+    private lateinit var adapter: SettingsAdapter
 
     private lateinit var themeBottomSheet: BottomSheetBehavior<LinearLayout>
     private lateinit var themeAdapter: BottomSheetAdapter
@@ -66,6 +67,10 @@ class SettingsActivity : BaseActivity() {
 
         observeEvent(viewModel.outputs.openRelease) {
             startActivity(Intent(this, ReleaseActivity::class.java))
+        }
+
+        observeEvent(viewModel.outputs.openNews) {
+            startActivity(Intent(this, SettingsNewsActivity::class.java))
         }
     }
 
