@@ -34,6 +34,7 @@ interface SettingsViewModelOutputs {
     val openAbout: MutableLiveData<Event>
     val openRelease: MutableLiveData<Event>
     val openSuggestions: MutableLiveData<Event>
+    val openNews: MutableLiveData<Event>
 }
 
 //endregion
@@ -54,6 +55,7 @@ class SettingsViewModel(
     override val openAbout: MutableLiveData<Event> = MutableLiveData()
     override val openRelease: MutableLiveData<Event> = MutableLiveData()
     override val openSuggestions: MutableLiveData<Event> = MutableLiveData()
+    override val openNews: MutableLiveData<Event> = MutableLiveData()
 
     override val themePreferences: MutableLiveData<List<Selected<BottomSheetItem>>> = MutableLiveData()
 
@@ -65,6 +67,8 @@ class SettingsViewModel(
             SettingsOptions.SHOW_DRIVERS_POINTS_IN_CONSTRUCTORS.toSwitch(applicationContext, prefDB.showDriversBehindConstructor),
             AppPreferencesItem.Category(applicationContext.getString(R.string.settings_theme)),
             SettingsOptions.THEME.toPref(applicationContext),
+            AppPreferencesItem.Category(applicationContext.getString(R.string.settings_customisation_news)),
+            SettingsOptions.NEWS.toPref(applicationContext),
 //            AppPreferencesItem.Category(applicationContext.getString(R.string.settings_season_list)),
 //            SettingsOptions.SEASON_BOTTOM_SHEET_FAVOURITED.toSwitch(applicationContext, prefDB.showBottomSheetFavourited),
 //            SettingsOptions.SEASON_BOTTOM_SHEET_ALL.toSwitch(applicationContext, prefDB.showBottomSheetAll),
@@ -95,6 +99,7 @@ class SettingsViewModel(
             SettingsOptions.CRASH -> prefDB.crashReporting = value ?: true
             SettingsOptions.SUGGESTION -> openSuggestions.value = Event()
             SettingsOptions.SHAKE -> prefDB.shakeToReport = value ?: true
+            SettingsOptions.NEWS -> openNews.value = Event()
         }
     }
 

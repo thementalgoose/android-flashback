@@ -26,6 +26,10 @@ enum class SettingsOptions(
         title = R.string.settings_customisation_driver_in_constructor_title,
         description = R.string.settings_customisation_driver_in_constructor_description
     ),
+    NEWS("news",
+        title = R.string.settings_customisation_news_title,
+        description = R.string.settings_customisation_news_description
+    ),
     SEASON_BOTTOM_SHEET_FAVOURITED("bottomSheetFavourited",
         title = R.string.settings_customisation_season_favourited_expanded_title,
         description = R.string.settings_customisation_season_favourited_expanded_description

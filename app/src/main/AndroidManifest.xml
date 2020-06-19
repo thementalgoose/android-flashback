@@ -30,22 +30,22 @@
             android:label="" />
 
         <activity
-            android:name=".news.NewsActivity"
-            android:screenOrientation="portrait"
-            android:label="" />
-
-        <activity
             android:name=".race.RaceActivity"
             android:screenOrientation="portrait"
             android:label="" />
 
         <activity
-            android:name="tmg.flashback.settings.SettingsActivity"
+            android:name=".settings.release.ReleaseActivity"
             android:screenOrientation="portrait"
             android:label="" />
 
         <activity
-            android:name="tmg.flashback.settings.release.ReleaseActivity"
+            android:name=".settings.SettingsActivity"
+            android:screenOrientation="portrait"
+            android:label="" />
+
+        <activity
+            android:name=".settings.news.SettingsNewsActivity"
             android:screenOrientation="portrait"
             android:label="" />
 

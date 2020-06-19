@@ -1,6 +1,7 @@
 package tmg.flashback.repo.db
 
 import tmg.flashback.repo.enums.HomeTab
+import tmg.flashback.repo.enums.NewsSource
 import tmg.flashback.repo.enums.ThemePref
 
 interface PrefsDB {
@@ -70,4 +71,13 @@ interface PrefsDB {
      */
     var favouriteSeasons: Set<Int>
 
+    /**
+     * List of news sources that are blacklisted from being displayed in the app
+     */
+    var newsSourceExcludeList: Set<NewsSource>
+
+    /**
+     * Enable javascript in the in app browser.
+     */
+    var inAppEnableJavascript: Boolean
 }

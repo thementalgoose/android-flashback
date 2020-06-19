@@ -51,6 +51,9 @@
     <string name="settings_customisation_driver_in_constructor_description">Show the drivers of a constructor alongside the constructor points scored per race</string>
     <string name="settings_customisation_qualifying_grid_penalties_title">Qualifying grid penalties</string>
     <string name="settings_customisation_qualifying_grid_penalties_description">Shows the grid penalty that a driver has in the qualifying view</string>
+    <string name="settings_customisation_news">News</string>
+    <string name="settings_customisation_news_title">News</string>
+    <string name="settings_customisation_news_description">Configure news sources and preferences</string>
     <string name="settings_season_list">Season list</string>
     <string name="settings_customisation_season_favourited_expanded_title">Expand favourites by default</string>
     <string name="settings_customisation_season_favourited_expanded_description">Toggle if the bottom sheet favourites section is expanded by default</string>
@@ -75,6 +78,21 @@
     <string name="settings_help_shake_to_report_title">Shake the app to report a bug or a feature?</string>
     <string name="settings_help_shake_to_report_description">Shake the app at any time to screenshot and send me any bugs, issues, or suggestions you may have for this app!</string>
     <string name="settings_help_shake_to_report_notify">Your shake to report preference will be applied once the app has restarted</string>
+
+
+    <string name="settings_news_title">Settings - News</string>
+    <string name="settings_news_sources">Sources</string>
+    <string name="settings_news_sources_autosport_title">Autosport</string>
+    <string name="settings_news_sources_autosport_description">News from www.autosport.com</string>
+    <string name="settings_news_sources_crash_net_title">Crash.net</string>
+    <string name="settings_news_sources_crash_net_description">News from www.crash.net</string>
+    <string name="settings_news_sources_pitpass_title">PitPass</string>
+    <string name="settings_news_sources_pitpass_description">News from www.pitpass.com</string>
+    <string name="settings_news_sources_skysports_title">SkySports (Unofficial)</string>
+    <string name="settings_news_sources_skysports_description">Unofficial feed of news from www.skysports.com</string>
+    <string name="settings_news_browser">Web Browser</string>
+    <string name="settings_news_browser_javascript_title">Enable Javascript</string>
+    <string name="settings_news_browser_javascript_description">Toggle javascript being loaded in the app browser. Javascript being enabled may cause browser to be slower or popups shown</string>
 
     <!-- About -->
     <string name="about_name">Flashback</string>

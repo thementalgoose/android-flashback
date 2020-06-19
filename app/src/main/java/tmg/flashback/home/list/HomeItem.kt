@@ -3,7 +3,7 @@ package tmg.flashback.home.list
 import androidx.annotation.LayoutRes
 import org.threeten.bp.LocalDate
 import tmg.flashback.R
-import tmg.flashback.repo.models.news.NewsItem
+import tmg.flashback.repo.models.news.Article
 import tmg.flashback.repo.models.stats.Circuit
 import tmg.flashback.shared.viewholders.DataUnavailable
 
@@ -41,7 +41,7 @@ sealed class HomeItem(
     ): HomeItem(R.layout.view_home_constructor)
 
     data class NewsArticle(
-        val item: NewsItem
+        val item: Article
     ): HomeItem(R.layout.view_home_news)
 
     object NoNetwork: HomeItem(R.layout.view_shared_no_network)
