@@ -5,6 +5,8 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory
+import javax.net.ssl.HostnameVerifier
+import javax.net.ssl.SSLSession
 
 
 inline fun <reified T> buildRetrofit(baseUrl: String, isXML: Boolean = true, isDebug: Boolean = false): T {
@@ -17,12 +19,14 @@ inline fun <reified T> buildRetrofit(baseUrl: String, isXML: Boolean = true, isD
     else {
         builder.addConverterFactory(GsonConverterFactory.create())
     }
+    val client = OkHttpClient.Builder()
     if (isDebug) {
         val interceptor = HttpLoggingInterceptor()
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
-        val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
-        builder.client(client)
+        client.addInterceptor(interceptor)
     }
+
+    builder.client(client.build())
 
     val retrofit: Retrofit = builder.build()
     return retrofit.create(T::class.java)

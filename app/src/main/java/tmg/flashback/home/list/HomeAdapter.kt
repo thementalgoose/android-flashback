@@ -10,6 +10,7 @@ import tmg.flashback.repo.models.news.Article
 import tmg.flashback.shared.viewholders.DataUnavailableViewHolder
 import tmg.flashback.shared.viewholders.InternalErrorOccurredViewHolder
 import tmg.flashback.shared.viewholders.NoNetworkViewHolder
+import tmg.flashback.shared.viewholders.NoNewsSourcesViewHolder
 
 class HomeAdapter(
     val trackClicked: (track: HomeItem.Track) -> Unit,
@@ -47,6 +48,9 @@ class HomeAdapter(
                 LayoutInflater.from(parent.context).inflate(viewType, parent, false)
             )
             R.layout.view_shared_no_network -> NoNetworkViewHolder(
+                LayoutInflater.from(parent.context).inflate(viewType, parent, false)
+            )
+            R.layout.view_shared_no_news_sources -> NoNewsSourcesViewHolder(
                 LayoutInflater.from(parent.context).inflate(viewType, parent, false)
             )
             R.layout.view_shared_internal_error -> InternalErrorOccurredViewHolder(

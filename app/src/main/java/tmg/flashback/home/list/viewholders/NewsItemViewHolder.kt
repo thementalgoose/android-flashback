@@ -27,6 +27,7 @@ class NewsItemViewHolder(
 
         val colour = item.item.source.colour.toColorInt()
         itemView.label.text = item.item.source.sourceShort
+        itemView.label.setTextColor(item.item.source.textColor.toColorInt())
         itemView.imageBackground.setBackgroundColor(colour)
 
         itemView.title.text = item.item.title
