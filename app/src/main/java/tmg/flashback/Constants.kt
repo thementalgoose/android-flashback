@@ -107,13 +107,6 @@ val dependencies = listOf(
         imageUrl = "https://avatars3.githubusercontent.com/u/2981971"
     ),
     AboutThisAppDependency(
-        order = 5,
-        dependencyName = "CircleImageView",
-        author = "Henning Dodenhof",
-        url = "https://github.com/hdodenhof/CircleImageView",
-        imageUrl = "https://avatars2.githubusercontent.com/u/1824223"
-    ),
-    AboutThisAppDependency(
         order = 6,
         dependencyName = "BugShaker Android",
         author = "Stuart Kent",
@@ -126,13 +119,6 @@ val dependencies = listOf(
         author = "Jake Wharton",
         url = "https://github.com/JakeWharton/ThreeTenABP",
         imageUrl = "https://avatars0.githubusercontent.com/u/66577"
-    ),
-    AboutThisAppDependency(
-        order = 8,
-        dependencyName = "MaterialProgressBar",
-        author = "Hai Zhang",
-        url = "https://github.com/zhanghai/MaterialProgressBar",
-        imageUrl = "https://avatars2.githubusercontent.com/u/4469895"
     ),
     AboutThisAppDependency(
         order = 9,

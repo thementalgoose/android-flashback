@@ -12,8 +12,8 @@ android {
         applicationId "tmg.flashback"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 9
-        versionName "4.2.0"
+        versionCode 10
+        versionName "4.3.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -80,9 +80,6 @@ dependencies {
 
     // ConstraintLayout
     implementation "androidx.constraintlayout:constraintlayout:2.0.0-beta7"
-
-    // Circle Image View
-    implementation 'com.mikhaellopez:circularimageview:4.2.0'
 
     // Koin
     implementation "org.koin:koin-android:$koin_version"
