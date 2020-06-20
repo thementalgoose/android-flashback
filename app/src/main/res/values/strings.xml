@@ -28,7 +28,8 @@
         <br/>• Added grid penalty indicator to race qualifying view]]></string>
     <string name="release_10"><![CDATA[<b>4.3.0</b> - News feed!
         <br/>• Added news feed to the app
-        <br/>• Added ability to toggle preferred news sources]]></string>
+        <br/>• Added ability to toggle preferred news sources
+        <br/>• Added status for race data being synchronised]]></string>
 
     <!-- App Lockout -->
     <string name="app_lockout_title">App lockout</string>
