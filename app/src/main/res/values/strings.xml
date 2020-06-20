@@ -26,6 +26,9 @@
     <string name="release_8"><![CDATA[<b>4.1.0</b> - Dark mode!
         <br/>• Added dark mode toggle to settings
         <br/>• Added grid penalty indicator to race qualifying view]]></string>
+    <string name="release_10"><![CDATA[<b>4.3.0</b> - News feed!
+        <br/>• Added news feed to the app
+        <br/>• Added ability to toggle preferred news sources]]></string>
 
     <!-- App Lockout -->
     <string name="app_lockout_title">App lockout</string>
