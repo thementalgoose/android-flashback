@@ -6,6 +6,7 @@ import tmg.flashback.news.apis.autosport.autosportDateFormat
 import tmg.flashback.news.apis.pitpass.PitPassRssChannelModel
 import tmg.flashback.repo.models.news.Article
 import tmg.flashback.repo.models.news.ArticleSource
+import tmg.flashback.repo.utils.md5
 import java.util.*
 
 fun List<SkySportsModel>.convert(): List<Article> {
@@ -19,12 +20,12 @@ fun List<SkySportsModel>.convert(): List<Article> {
 
     return this
         .filter { it.title != null && it.link != null }
-        ?.map {
+        .map {
             Article(
-                id = UUID.randomUUID().toString(),
+                id = it.link!!.md5(),
                 title = it.title!!.trim(),
                 description = it.shortdesc ?: "",
-                link = it.link!!.replace("http://", "https://"),
+                link = it.link.replace("http://", "https://"),
                 date = null,
                 source = source
             )

@@ -7,6 +7,7 @@ import kotlinx.android.synthetic.main.view_home_news.view.*
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.home.list.HomeItem
 import tmg.flashback.repo.models.news.Article
+import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.views.show
 
 class NewsItemViewHolder(
@@ -31,8 +32,9 @@ class NewsItemViewHolder(
         itemView.imageBackground.setBackgroundColor(colour)
 
         itemView.title.text = item.item.title
-        itemView.description.show(item.item.description.isEmpty())
-        itemView.description.text = item.item.description
+        val shortDesc = item.item.description.split("<br>").firstOrNull()
+        itemView.description.show(!shortDesc.isNullOrEmpty())
+        itemView.description.text = shortDesc?.fromHtml()
         itemView.source.text = item.item.source.link
         itemView.date.text = item.item.date?.format(DateTimeFormatter.ofPattern("HH:mm 'at' dd MMM")) ?: ""
         itemView.title.text = item.item.title
