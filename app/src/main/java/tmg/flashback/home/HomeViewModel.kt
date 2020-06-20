@@ -50,6 +50,8 @@ interface HomeViewModelOutputs {
 
     val showLoading: MutableLiveData<Boolean>
 
+    val ensureOnCalendar: MutableLiveData<Event>
+
     val openCalendarFilter: LiveData<Boolean>
     val openAppLockout: LiveData<Event>
     val openAppBanner: LiveData<String?>
@@ -76,6 +78,7 @@ class HomeViewModel(
     private val season: ConflatedBroadcastChannel<Int> = ConflatedBroadcastChannel(currentYear)
     private val refreshNews: ConflatedBroadcastChannel<Boolean> = ConflatedBroadcastChannel(true)
 
+    override val ensureOnCalendar: MutableLiveData<Event> = MutableLiveData()
     override val showLoading: MutableLiveData<Boolean> = MutableLiveData(true)
 
     override val currentSeason: LiveData<Int> = season
@@ -170,6 +173,7 @@ class HomeViewModel(
                 else -> {
                 }
             }
+            ensureOnCalendar.value = Event()
             return@map list
         }
         .onStart { emitAll(flow { emptyList<HomeItem>() }) }

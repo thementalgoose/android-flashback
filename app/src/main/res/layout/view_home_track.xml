@@ -22,6 +22,16 @@
         app:layout_constraintTop_toTopOf="@id/raceName"
         tools:src="@drawable/au" />
 
+    <ImageView
+        android:alpha="0.7"
+        android:id="@+id/status"
+        android:layout_width="@dimen/dashboardTrackStatusSize"
+        android:layout_height="@dimen/dashboardTrackStatusSize"
+        app:layout_constraintBottom_toTopOf="@id/country"
+        app:layout_constraintEnd_toEndOf="@id/country"
+        app:layout_constraintStart_toEndOf="@id/country"
+        app:layout_constraintTop_toTopOf="@id/country" />
+
     <TextView
         android:id="@+id/raceName"
         style="@style/Text.Dashboard.Track.Title"
@@ -63,7 +73,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="2" />
+        tools:text="Round 12" />
 
     <TextView
         android:id="@+id/date"

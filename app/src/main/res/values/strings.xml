@@ -84,6 +84,9 @@
 
 
     <string name="settings_news_title">Settings - News</string>
+    <string name="settings_news_appearance_title">Appearance</string>
+    <string name="settings_news_show_description_title">Show description</string>
+    <string name="settings_news_show_description_description">Show the article description alongside the news source if it has one</string>
     <string name="settings_news_sources">Sources</string>
     <string name="settings_news_sources_autosport_title">Autosport</string>
     <string name="settings_news_sources_autosport_description">News from www.autosport.com</string>

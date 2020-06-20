@@ -36,6 +36,7 @@ class SettingsNewsViewModel(
     private val applicationContext: Context
 ): BaseViewModel(), SettingsNewsViewModelInputs, SettingsNewsViewModelOutputs {
 
+    private val keyShowDescription: String = "keyShowDescription"
     private val keyJavascript: String = "keyJavascript"
 
     var inputs: SettingsNewsViewModelInputs = this
@@ -63,6 +64,7 @@ class SettingsNewsViewModel(
 
     override fun updatePref(pref: String, toNewState: Boolean) {
         when (pref) {
+            keyShowDescription -> prefDB.newsShowDescription = toNewState
             keyJavascript -> prefDB.inAppEnableJavascript = toNewState
         }
     }
@@ -81,10 +83,22 @@ class SettingsNewsViewModel(
             }
 
         val list: MutableList<AppPreferencesItem> = mutableListOf()
+//        list.add(AppPreferencesItem.Category(applicationContext.getString(R.string.settings_news_appearance_title)))
+//        list.add(AppPreferencesItem.SwitchPreference(
+//            keyShowDescription,
+//            applicationContext.getString(R.string.settings_news_show_description_title),
+//            applicationContext.getString(R.string.settings_news_show_description_description),
+//            prefDB.newsShowDescription
+//        ))
         list.add(AppPreferencesItem.Category(applicationContext.getString(R.string.settings_news_sources)))
         list.addAll(sources)
         list.add(AppPreferencesItem.Category(applicationContext.getString(R.string.settings_news_browser)))
-        list.add(AppPreferencesItem.SwitchPreference(keyJavascript, applicationContext.getString(R.string.settings_news_browser_javascript_title), applicationContext.getString(R.string.settings_news_browser_javascript_description), prefDB.inAppEnableJavascript))
+        list.add(AppPreferencesItem.SwitchPreference(
+            keyJavascript,
+            applicationContext.getString(R.string.settings_news_browser_javascript_title),
+            applicationContext.getString(R.string.settings_news_browser_javascript_description),
+            prefDB.inAppEnableJavascript
+        ))
         return list
     }
 }
