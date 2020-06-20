@@ -5,6 +5,7 @@ import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.news.apis.autosport.autosportDateFormat
 import tmg.flashback.repo.models.news.Article
 import tmg.flashback.repo.models.news.ArticleSource
+import tmg.flashback.repo.utils.md5
 
 fun PitPassRssChannelModel.convert(): List<Article> {
 
@@ -19,10 +20,10 @@ fun PitPassRssChannelModel.convert(): List<Article> {
         ?.filter { it.mTitle != null && it.mGuid != null && it.mLink != null && it.mPubDate != null }
         ?.map {
             Article(
-                id = it.mGuid!!,
+                id = it.mLink!!.md5(),
                 title = it.mTitle!!,
                 description = it.mDescription ?: "",
-                link = it.mLink!!.replace("http://", "https://"),
+                link = it.mLink.replace("http://", "https://"),
                 date = LocalDateTime.parse(it.mPubDate!!, DateTimeFormatter.ofPattern(
                     autosportDateFormat
                 )),
