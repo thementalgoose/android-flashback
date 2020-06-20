@@ -4,12 +4,13 @@ import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.news.apis.autosport.autosportDateFormat
 import tmg.flashback.news.apis.pitpass.PitPassRssChannelModel
+import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.models.news.Article
 import tmg.flashback.repo.models.news.ArticleSource
 import tmg.flashback.repo.utils.md5
 import java.util.*
 
-fun List<SkySportsModel>.convert(): List<Article> {
+fun List<SkySportsModel>.convert(prefs: PrefsDB): List<Article> {
 
     val source = ArticleSource(
         source = "SkySports (Unofficial)",
@@ -27,7 +28,8 @@ fun List<SkySportsModel>.convert(): List<Article> {
                 description = it.shortdesc ?: "",
                 link = it.link.replace("http://", "https://"),
                 date = null,
-                source = source
+                source = source,
+                showDescription = prefs.newsShowDescription
             )
         }
 }

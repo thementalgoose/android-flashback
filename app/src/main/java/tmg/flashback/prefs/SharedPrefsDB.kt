@@ -33,7 +33,7 @@ class SharedPrefsDB(context: Context): SharedPrefManager(context), PrefsDB {
     private val keyFavouriteSeasons: String = "FAVOURITE_SEASONS"
     private val keyNewsSourceExcludeList: String = "NEWS_SOURCE_EXCLUDE_LIST"
     private val keyInAppEnableJavascript: String = "IN_APP_ENABLE_JAVASCRIPT"
-    private val keyAllowUnverifiedSSL: String = "ALLOW_UNVERIFIED_SSL"
+    private val keyNewsShowDescription: String = "NEWS_SHOW_DESCRIPTIONS"
 
     override var theme: ThemePref
         get() = getString(keyTheme)?.toEnum<ThemePref> { it.key } ?: ThemePref.AUTO
@@ -118,4 +118,8 @@ class SharedPrefsDB(context: Context): SharedPrefManager(context), PrefsDB {
     override var inAppEnableJavascript: Boolean
         get() = getBoolean(keyInAppEnableJavascript, false)
         set(value) = save(keyInAppEnableJavascript, value)
+
+    override var newsShowDescription: Boolean
+        get() = getBoolean(keyNewsShowDescription, true)
+        set(value) = save(keyNewsShowDescription, value)
 }

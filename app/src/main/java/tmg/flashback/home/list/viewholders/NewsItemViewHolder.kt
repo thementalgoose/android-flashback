@@ -33,7 +33,7 @@ class NewsItemViewHolder(
 
         itemView.title.text = item.item.title
         val shortDesc = item.item.description.split("<br>").firstOrNull()
-        itemView.description.show(!shortDesc.isNullOrEmpty())
+        itemView.description.show(!shortDesc.isNullOrEmpty() && item.item.showDescription)
         itemView.description.text = shortDesc?.fromHtml()
         itemView.source.text = item.item.source.link
         itemView.date.text = item.item.date?.format(DateTimeFormatter.ofPattern("HH:mm 'at' dd MMM")) ?: ""

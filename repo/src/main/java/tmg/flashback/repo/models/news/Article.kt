@@ -6,6 +6,7 @@ data class Article(
     val id: String,
     val title: String,
     val description: String,
+    val showDescription: Boolean,
     val link: String,
     val date: LocalDateTime?,
     val source: ArticleSource

@@ -7,16 +7,18 @@
 
     <TextView
         android:id="@+id/message"
-        style="@style/Text.Home.Placeholder"
+        style="@style/Text.Home.Message"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center"
         android:paddingStart="@dimen/paddingMedium"
         android:paddingTop="@dimen/paddingSmall"
         android:paddingEnd="@dimen/paddingMedium"
         android:paddingBottom="@dimen/paddingSmall"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Something else here" />
+        tools:text="Last updated 09:12:13" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

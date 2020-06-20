@@ -86,22 +86,27 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback, PageStateChangeCal
             val shouldUpdateTab = when (it.itemId) {
                 R.id.nav_news -> {
                     viewModel.inputs.clickItem(HomeMenuItem.NEWS)
+                    swipeContainer.isEnabled = true
                     true
                 }
                 R.id.nav_calendar -> {
                     viewModel.inputs.clickItem(HomeMenuItem.CALENDAR)
+                    swipeContainer.isEnabled = false
                     true
                 }
                 R.id.nav_drivers -> {
                     viewModel.inputs.clickItem(HomeMenuItem.DRIVERS)
+                    swipeContainer.isEnabled = false
                     true
                 }
                 R.id.nav_constructor -> {
                     viewModel.inputs.clickItem(HomeMenuItem.CONSTRUCTORS)
+                    swipeContainer.isEnabled = false
                     true
                 }
                 R.id.nav_seasons -> {
                     viewModel.inputs.clickItem(HomeMenuItem.SEASONS)
+                    swipeContainer.isEnabled = false
                     false
                 }
                 else -> false
@@ -110,6 +115,10 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback, PageStateChangeCal
         }
 
         setupBottomSheetSeason()
+
+        swipeContainer.setOnRefreshListener {
+            viewModel.inputs.refreshNews()
+        }
 
         skeleton.showSkeleton()
         skeleton.showShimmer = true
@@ -125,6 +134,7 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback, PageStateChangeCal
         //region HomeViewModel
 
         observe(viewModel.outputs.list) {
+            swipeContainer.isRefreshing = false
             adapter.list = it
         }
 

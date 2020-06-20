@@ -1,5 +1,6 @@
 package tmg.flashback.home.list
 
+import androidx.annotation.DrawableRes
 import androidx.annotation.LayoutRes
 import org.threeten.bp.LocalDate
 import tmg.flashback.R
@@ -49,6 +50,10 @@ sealed class HomeItem(
     object InternalError: HomeItem(R.layout.view_shared_internal_error)
 
     object AllSourcesDisabled: HomeItem(R.layout.view_shared_no_news_sources)
+
+    data class Message(
+        val msg: String
+    ): HomeItem(R.layout.view_shared_message)
 
     data class Unavailable(
         val type: DataUnavailable

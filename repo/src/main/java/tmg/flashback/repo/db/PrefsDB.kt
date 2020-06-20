@@ -80,4 +80,9 @@ interface PrefsDB {
      * Enable javascript in the in app browser.
      */
     var inAppEnableJavascript: Boolean
+
+    /**
+     * Shows the description for the news items
+     */
+    var newsShowDescription: Boolean
 }

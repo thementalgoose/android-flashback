@@ -2,11 +2,12 @@ package tmg.flashback.news.apis.autosport
 
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
+import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.models.news.Article
 import tmg.flashback.repo.models.news.ArticleSource
 import tmg.flashback.repo.utils.md5
 
-fun AutosportRssChannelModel.convert(): List<Article> {
+fun AutosportRssChannelModel.convert(prefsDB: PrefsDB): List<Article> {
 
     val source = ArticleSource(
         source = "Autosport",
@@ -24,7 +25,8 @@ fun AutosportRssChannelModel.convert(): List<Article> {
                 description = it.mDescription ?: "",
                 link = it.mLink.replace("http://", "https://"),
                 date = LocalDateTime.parse(it.mPubDate!!, DateTimeFormatter.ofPattern(autosportDateFormat)),
-                source = source
+                source = source,
+                showDescription = prefsDB.newsShowDescription
             )
         } ?: emptyList()
 }

@@ -9,6 +9,8 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.*
+import org.threeten.bp.LocalDateTime
+import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.R
 import tmg.flashback.base.BaseViewModel
 import tmg.flashback.currentYear
@@ -33,6 +35,7 @@ import tmg.utilities.lifecycle.Event
 interface HomeViewModelInputs {
     fun clickItem(item: HomeMenuItem)
     fun selectSeason(season: Int)
+    fun refreshNews()
 }
 
 //endregion
@@ -190,7 +193,9 @@ class HomeViewModel(
                     return@map listOf<HomeItem>(HomeItem.InternalError)
                 }
             }
-            return@map results
+            return@map listOf<HomeItem>(HomeItem.Message(
+                LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")))
+            ) + results
         }
         .onStart { emitAll(flow { emptyList<HomeItem>() }) }
 
@@ -264,6 +269,10 @@ class HomeViewModel(
     override fun selectSeason(season: Int) {
         showLoading.value = true
         this.season.offer(season)
+    }
+
+    override fun refreshNews() {
+        refreshNews.offer(true)
     }
 
     //endregion
