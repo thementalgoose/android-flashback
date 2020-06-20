@@ -2,11 +2,12 @@ package tmg.flashback.news.apis.crashnet
 
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
+import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.models.news.Article
 import tmg.flashback.repo.models.news.ArticleSource
 import tmg.flashback.repo.utils.md5
 
-fun CrashNetRssChannelModel.convert(): List<Article> {
+fun CrashNetRssChannelModel.convert(prefs: PrefsDB): List<Article> {
 
     val source = ArticleSource(
         source = "Crash.net ",
@@ -26,7 +27,8 @@ fun CrashNetRssChannelModel.convert(): List<Article> {
                 date = LocalDateTime.parse(it.mPubDate!!, DateTimeFormatter.ofPattern(
                     crashNetDateFormat
                 )),
-                source = source
+                source = source,
+                showDescription = prefs.newsShowDescription
             )
         } ?: emptyList()
 }

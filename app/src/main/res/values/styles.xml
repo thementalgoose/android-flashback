@@ -133,6 +133,11 @@
         <item name="android:textColor">?attr/f1TextTertiary</item>
     </style>
 
+    <style name="Text.Home.Message" parent="Text">
+        <item name="android:textSize">@dimen/textSizeXSmall</item>
+        <item name="android:textColor">?attr/f1TextTertiary</item>
+    </style>
+
     <!--======================================-->
 
     <style name="Text.BottomSheet.Title" parent="Text">

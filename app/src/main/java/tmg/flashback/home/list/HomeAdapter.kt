@@ -7,10 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.R
 import tmg.flashback.home.list.viewholders.*
 import tmg.flashback.repo.models.news.Article
-import tmg.flashback.shared.viewholders.DataUnavailableViewHolder
-import tmg.flashback.shared.viewholders.InternalErrorOccurredViewHolder
-import tmg.flashback.shared.viewholders.NoNetworkViewHolder
-import tmg.flashback.shared.viewholders.NoNewsSourcesViewHolder
+import tmg.flashback.shared.viewholders.*
 
 class HomeAdapter(
     val trackClicked: (track: HomeItem.Track) -> Unit,
@@ -56,6 +53,9 @@ class HomeAdapter(
             R.layout.view_shared_internal_error -> InternalErrorOccurredViewHolder(
                 LayoutInflater.from(parent.context).inflate(viewType, parent, false)
             )
+            R.layout.view_shared_message -> MessageViewHolder(
+                LayoutInflater.from(parent.context).inflate(viewType, parent, false)
+            )
             else -> throw Exception("Type in HomeItem is not implemented on onCreateViewHolder")
         }
     }
@@ -71,6 +71,7 @@ class HomeAdapter(
             is HomeItem.Constructor -> (holder as ConstructorViewHolder).bind(item)
             is HomeItem.NewsArticle -> (holder as NewsItemViewHolder).bind(item, getItemId(position))
             is HomeItem.Unavailable -> (holder as DataUnavailableViewHolder).bind(item.type)
+            is HomeItem.Message -> (holder as MessageViewHolder).bind(holder.itemView.context.getString(R.string.home_last_updated, item.msg))
         }
     }
 

@@ -4,11 +4,12 @@ import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.news.apis.crashnet.CrashNetRssChannelModel
 import tmg.flashback.news.apis.crashnet.crashNetDateFormat
+import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.models.news.Article
 import tmg.flashback.repo.models.news.ArticleSource
 import tmg.flashback.repo.utils.md5
 
-fun MotorsportRssChannelModel.convert(): List<Article> {
+fun MotorsportRssChannelModel.convert(prefs: PrefsDB): List<Article> {
 
     val source = ArticleSource(
         source = "Motorsport.com",
@@ -29,7 +30,8 @@ fun MotorsportRssChannelModel.convert(): List<Article> {
                 date = LocalDateTime.parse(it.mPubDate!!, DateTimeFormatter.ofPattern(
                     motorsportDateFormat
                 )),
-                source = source
+                source = source,
+                showDescription = prefs.newsShowDescription
             )
         } ?: emptyList()
 }

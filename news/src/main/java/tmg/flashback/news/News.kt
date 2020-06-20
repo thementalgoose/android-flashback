@@ -42,11 +42,11 @@ class News(
     private val isLive: Boolean
 ) : NewsDB {
 
-    private suspend fun getAutosport(): Response<List<Article>> = safelyRun { autosportRss.getFeed().mChannel?.convert() ?: emptyList() }
-    private suspend fun getCrashNet(): Response<List<Article>> = safelyRun { crashNetRss.getFeed().mChannel?.convert() ?: emptyList() }
-    private suspend fun getPitPass(): Response<List<Article>> = safelyRun { pitPassRss.getFeed().mChannel?.convert() ?: emptyList() }
-    private suspend fun getMotorsport(): Response<List<Article>> = safelyRun { motorsportRss.getFeed().mChannel?.convert() ?: emptyList() }
-    private suspend fun getSkySports(): Response<List<Article>> = safelyRun { skySports.getFeed().convert() }
+    private suspend fun getAutosport(): Response<List<Article>> = safelyRun { autosportRss.getFeed().mChannel?.convert(prefsDB) ?: emptyList() }
+    private suspend fun getCrashNet(): Response<List<Article>> = safelyRun { crashNetRss.getFeed().mChannel?.convert(prefsDB) ?: emptyList() }
+    private suspend fun getPitPass(): Response<List<Article>> = safelyRun { pitPassRss.getFeed().mChannel?.convert(prefsDB) ?: emptyList() }
+    private suspend fun getMotorsport(): Response<List<Article>> = safelyRun { motorsportRss.getFeed().mChannel?.convert(prefsDB) ?: emptyList() }
+    private suspend fun getSkySports(): Response<List<Article>> = safelyRun { skySports.getFeed().convert(prefsDB) }
 
     override fun syncAll() {
 
