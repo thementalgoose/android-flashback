@@ -99,6 +99,7 @@
     <!-- Dashboard -->
 
     <dimen name="dashboardTrackImageSize">28dp</dimen>
+    <dimen name="dashboardTrackStatusSize">16dp</dimen>
     <dimen name="dashboardYearImageSize">16dp</dimen>
     <dimen name="dashboardYearIconSize">16dp</dimen>
 

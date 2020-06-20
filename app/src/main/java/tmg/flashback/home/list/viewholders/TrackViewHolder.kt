@@ -3,11 +3,13 @@ package tmg.flashback.home.list.viewholders
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.view_home_track.view.*
+import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.R
 import tmg.flashback.extensions.ordinalAbbreviation
 import tmg.flashback.home.list.HomeItem
 import tmg.flashback.utils.SeasonRound
+import tmg.flashback.utils.getColor
 import tmg.flashback.utils.getFlagResourceAlpha3
 
 class TrackViewHolder(
@@ -25,6 +27,20 @@ class TrackViewHolder(
         data = item
         itemView.apply {
             country.setImageResource(context.getFlagResourceAlpha3(item.raceCountryISO))
+            when {
+                data.hasData -> {
+                    status.setColorFilter(context.theme.getColor(R.attr.f1DeltaNegative))
+                    status.setImageResource(R.drawable.race_status_hasdata)
+                }
+                data.date > LocalDate.now() -> {
+                    status.setColorFilter(context.theme.getColor(R.attr.f1DeltaNeutral))
+                    status.setImageResource(R.drawable.race_status_nothappened)
+                }
+                else -> {
+                    status.setColorFilter(context.theme.getColor(R.attr.f1DeltaNeutral))
+                    status.setImageResource(R.drawable.race_status_waitingfor)
+                }
+            }
             raceName.text = item.raceName
             circuitName.text = item.circuitName
             raceCountry.text = item.raceCountry

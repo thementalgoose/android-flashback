@@ -3,6 +3,7 @@ package tmg.flashback.firebase.converters
 import tmg.flashback.repo.models.stats.History
 import tmg.flashback.repo.models.stats.HistoryRound
 import tmg.flashback.firebase.models.*
+import java.time.Year
 
 fun FHistorySeason.convert(): List<History> {
     val list: MutableList<History> = mutableListOf()
@@ -42,7 +43,7 @@ fun FHistorySeasonRound.convert(): Pair<Int, HistoryRound> {
             country = this.country,
             countryISO = this.countryISO,
             circuitName = this.circuit,
-            hasResults = this.hasResults ?: false
+            hasResults = this.data ?: (this.s <= 2019)
         )
     )
 }
