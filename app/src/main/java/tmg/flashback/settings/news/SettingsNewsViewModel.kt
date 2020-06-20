@@ -83,13 +83,13 @@ class SettingsNewsViewModel(
             }
 
         val list: MutableList<AppPreferencesItem> = mutableListOf()
-//        list.add(AppPreferencesItem.Category(applicationContext.getString(R.string.settings_news_appearance_title)))
-//        list.add(AppPreferencesItem.SwitchPreference(
-//            keyShowDescription,
-//            applicationContext.getString(R.string.settings_news_show_description_title),
-//            applicationContext.getString(R.string.settings_news_show_description_description),
-//            prefDB.newsShowDescription
-//        ))
+        list.add(AppPreferencesItem.Category(applicationContext.getString(R.string.settings_news_appearance_title)))
+        list.add(AppPreferencesItem.SwitchPreference(
+            keyShowDescription,
+            applicationContext.getString(R.string.settings_news_show_description_title),
+            applicationContext.getString(R.string.settings_news_show_description_description),
+            prefDB.newsShowDescription
+        ))
         list.add(AppPreferencesItem.Category(applicationContext.getString(R.string.settings_news_sources)))
         list.addAll(sources)
         list.add(AppPreferencesItem.Category(applicationContext.getString(R.string.settings_news_browser)))
