@@ -73,6 +73,9 @@ class HomeViewModel(
     private val connectivityManager: ConnectivityManager
 ) : BaseViewModel(), HomeViewModelInputs, HomeViewModelOutputs {
 
+    // true = new season has been requested so don't progress
+    private var invalidSeasonData: Boolean = true
+
     private val currentTab: ConflatedBroadcastChannel<HomeMenuItem> =
         ConflatedBroadcastChannel(HomeMenuItem.NEWS)
     private val season: ConflatedBroadcastChannel<Int> = ConflatedBroadcastChannel(currentYear)
@@ -173,7 +176,7 @@ class HomeViewModel(
                 else -> {
                 }
             }
-            ensureOnCalendar.value = Event()
+            invalidSeasonData = false
             return@map list
         }
         .onStart { emitAll(flow { emptyList<HomeItem>() }) }
@@ -209,12 +212,15 @@ class HomeViewModel(
     override val list: LiveData<List<HomeItem>> = currentTab
         .asFlow()
         .combineTriple(seasonList, newsList)
+        .filter { (_, _, _) -> !invalidSeasonData }
         .map { (tab, seasonList, newsList) ->
             return@map when (tab) {
                 HomeMenuItem.NEWS -> newsList
                 HomeMenuItem.CALENDAR,
                 HomeMenuItem.DRIVERS,
-                HomeMenuItem.CONSTRUCTORS -> seasonList
+                HomeMenuItem.CONSTRUCTORS -> {
+                    seasonList
+                }
                 else -> emptyList()
             }
         }
@@ -271,6 +277,7 @@ class HomeViewModel(
     }
 
     override fun selectSeason(season: Int) {
+        invalidSeasonData = true
         showLoading.value = true
         this.season.offer(season)
     }

@@ -106,6 +106,12 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback, PageStateChangeCal
                 }
                 R.id.nav_seasons -> {
                     viewModel.inputs.clickItem(HomeMenuItem.SEASONS)
+                    when (menu.selectedItemId) {
+                        R.id.nav_calendar,
+                        R.id.nav_drivers,
+                        R.id.nav_constructor -> {}
+                        else -> menu.selectedItemId = R.id.nav_calendar
+                    }
                     swipeContainer.isEnabled = false
                     false
                 }

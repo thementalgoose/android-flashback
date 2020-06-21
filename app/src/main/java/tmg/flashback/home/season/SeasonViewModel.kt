@@ -33,8 +33,8 @@ class SeasonViewModel(
 ) : BaseViewModel(), SeasonViewModelInputs, SeasonViewModelOutputs {
 
     var headers: Headers = Headers(
-        favourited = prefDB.showBottomSheetAll,
-        all = prefDB.showBottomSheetFavourited
+        favourited = prefDB.showBottomSheetFavourited,
+        all = prefDB.showBottomSheetAll
     )
     data class Headers( // TODO: Move these to settings
         var favourited: Boolean = true,
