@@ -22,7 +22,8 @@ class HomeAdapter(
         set(value) {
             val result = DiffUtil.calculateDiff(DiffCallback(field, value))
             field = value
-            result.dispatchUpdatesTo(this)
+            notifyDataSetChanged()
+//            result.dispatchUpdatesTo(this)
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
