@@ -14,26 +14,16 @@ class SeasonBottomSheetCallback(
 
     override fun onStateChanged(bottomSheet: View, newState: Int) {
         when (newState) {
-            BottomSheetBehavior.STATE_COLLAPSED -> {
-                Log.i("Flashback", "State collapsed")
-            }
+            BottomSheetBehavior.STATE_COLLAPSED -> { }
             BottomSheetBehavior.STATE_DRAGGING -> {
-                Log.i("Flashback", "State dragging")
                 collapsed()
             }
             BottomSheetBehavior.STATE_EXPANDED -> {
-                Log.i("Flashback", "State expanded")
                 expanded()
             }
-            BottomSheetBehavior.STATE_HALF_EXPANDED -> {
-                Log.i("Flashback", "State half expanded")
-            }
-            BottomSheetBehavior.STATE_HIDDEN -> {
-                Log.i("Flashback", "State hidden")
-            }
-            BottomSheetBehavior.STATE_SETTLING -> {
-                Log.i("Flashback", "State settling")
-            }
+            BottomSheetBehavior.STATE_HALF_EXPANDED -> { }
+            BottomSheetBehavior.STATE_HIDDEN -> { }
+            BottomSheetBehavior.STATE_SETTLING -> { }
         }
     }
 

@@ -170,7 +170,6 @@ class RaceViewModel(
                         }
                         else -> throw Error("Unsupported view type")
                     }
-                    Log.i("Flashback", "Returning triple")
                     return@map Triple(
                         viewType,
                         list,
@@ -213,15 +212,23 @@ class RaceViewModel(
             .values
             .sortedBy {
                 val driverOverview: RoundDriverOverview = roundData.driverOverview(it.driver.id)
-                when (viewType) {
-                    RaceAdapterType.QUALIFYING_POS_1 -> {
-                        return@sortedBy driverOverview.q1?.position ?: driverOverview.q2?.position
-                        ?: driverOverview.race.qualified ?: driverOverview.race.grid
-                    }
-                    RaceAdapterType.QUALIFYING_POS_2 -> {
-                        return@sortedBy driverOverview.q2?.position ?: driverOverview.race.qualified
+
+                if (viewType.isQualifying() &&
+                    driverOverview.q1?.position == null &&
+                    driverOverview.q2?.position == null &&
+                    driverOverview.race.qualified == null &&
+                    (driverOverview.race.grid == 0)) {
+                    return@sortedBy Int.MAX_VALUE
+                }
+
+                return@sortedBy when (viewType) {
+                    RaceAdapterType.QUALIFYING_POS_1 -> driverOverview.q1?.position
+                        ?: driverOverview.q2?.position
+                        ?: driverOverview.race.qualified
                         ?: driverOverview.race.grid
-                    }
+                    RaceAdapterType.QUALIFYING_POS_2 -> driverOverview.q2?.position
+                            ?: driverOverview.race.qualified
+                            ?: driverOverview.race.grid
                     RaceAdapterType.QUALIFYING_POS -> driverOverview.race.qualified
                         ?: driverOverview.race.grid
                     else -> it.finish

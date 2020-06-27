@@ -59,11 +59,10 @@ class News(
         } catch (e: Exception) {
             e.printStackTrace()
             if (e is HttpException) {
-                Log.i("Flashback", "HTTP Status code ${e.code()}")
-                Log.i("Flashback", "HTTP Status message ${e.message()}")
-                Response<List<Article>>(null, e.code())
+                Log.i("Flashback", "Network error [${e.code()}] ${e.message()}")
+                Response(null, e.code())
             } else {
-                Response<List<Article>>(null, -1)
+                Response(null, -1)
             }
         }
     }
@@ -91,6 +90,7 @@ class News(
             }
 
             // TODO: Find a better way to do this shit
+            @Suppress("RemoveExplicitTypeArguments")
             val responses: List<Response<List<Article>>> = when (listOfRequests.size) {
                 1 -> listOf(listOfRequests[0].invoke())
                 2 -> listOf(listOfRequests[0].invoke(), listOfRequests[1].invoke())

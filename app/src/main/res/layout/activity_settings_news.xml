@@ -43,6 +43,7 @@
 
                 <ImageButton
                     android:id="@+id/back"
+                    android:foreground="@drawable/rounded_ripple"
                     android:layout_width="@dimen/toolbarSettingsIcon"
                     android:layout_height="@dimen/toolbarSettingsIcon"
                     android:layout_marginStart="@dimen/paddingSmall"

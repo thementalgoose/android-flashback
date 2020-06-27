@@ -35,6 +35,11 @@
             android:label="" />
 
         <activity
+            android:name=".news.NewsActivity"
+            android:screenOrientation="portrait"
+            android:label="" />
+
+        <activity
             android:name=".settings.release.ReleaseActivity"
             android:screenOrientation="portrait"
             android:label="" />

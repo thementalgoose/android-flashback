@@ -1,9 +1,9 @@
-package tmg.flashback.home.list.viewholders
+package tmg.flashback.news
 
 import android.view.View
 import androidx.core.graphics.toColorInt
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.view_home_news.view.*
+import kotlinx.android.synthetic.main.view_news_news.view.*
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.home.list.HomeItem
 import tmg.flashback.repo.models.news.Article
@@ -22,7 +22,7 @@ class NewsItemViewHolder(
         itemView.container.setOnClickListener(this)
     }
 
-    fun bind(item: HomeItem.NewsArticle, itemId: Long) {
+    fun bind(item: NewsItem.News, itemId: Long) {
         this.item = item.item
         this.expandableItemId = itemId
 

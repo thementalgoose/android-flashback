@@ -35,7 +35,6 @@ import tmg.utilities.lifecycle.Event
 interface HomeViewModelInputs {
     fun clickItem(item: HomeMenuItem)
     fun selectSeason(season: Int)
-    fun refreshNews()
 }
 
 //endregion
@@ -69,7 +68,6 @@ class HomeViewModel(
     private val historyDB: HistoryDB,
     private val dataDB: DataDB,
     private val prefDB: PrefsDB,
-    private val newsDB: NewsDB,
     private val connectivityManager: ConnectivityManager
 ) : BaseViewModel(), HomeViewModelInputs, HomeViewModelOutputs {
 
@@ -77,9 +75,8 @@ class HomeViewModel(
     private var invalidSeasonData: Boolean = true
 
     private val currentTab: ConflatedBroadcastChannel<HomeMenuItem> =
-        ConflatedBroadcastChannel(HomeMenuItem.NEWS)
+        ConflatedBroadcastChannel(HomeMenuItem.CALENDAR)
     private val season: ConflatedBroadcastChannel<Int> = ConflatedBroadcastChannel(currentYear)
-    private val refreshNews: ConflatedBroadcastChannel<Boolean> = ConflatedBroadcastChannel(true)
 
     override val ensureOnCalendar: MutableLiveData<Event> = MutableLiveData()
     override val showLoading: MutableLiveData<Boolean> = MutableLiveData(true)
@@ -182,48 +179,9 @@ class HomeViewModel(
         .onStart { emitAll(flow { emptyList<HomeItem>() }) }
 
     /**
-     * List to handle news data
-     */
-    private val newsList: Flow<List<HomeItem>> = refreshNews
-        .asFlow()
-        .flatMapLatest { newsDB.getNews() }
-        .map { response ->
-            if (response.isNoNetwork || !connectivityManager.isConnected) {
-                return@map listOf<HomeItem>(HomeItem.NoNetwork)
-            }
-            val results = response.result?.map { HomeItem.NewsArticle(it) } ?: emptyList()
-            if (results.isEmpty()) {
-                if (prefDB.newsSourceExcludeList.size == NewsSource.values().size) {
-                    return@map listOf<HomeItem>(HomeItem.AllSourcesDisabled)
-                }
-                else {
-                    return@map listOf<HomeItem>(HomeItem.InternalError)
-                }
-            }
-            return@map listOf<HomeItem>(HomeItem.Message(
-                LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")))
-            ) + results
-        }
-        .onStart { emitAll(flow { emptyList<HomeItem>() }) }
-
-    /**
      * Overview list that gets returned to the Activity
      */
-    override val list: LiveData<List<HomeItem>> = currentTab
-        .asFlow()
-        .combineTriple(seasonList, newsList)
-        .filter { (_, _, _) -> !invalidSeasonData }
-        .map { (tab, seasonList, newsList) ->
-            return@map when (tab) {
-                HomeMenuItem.NEWS -> newsList
-                HomeMenuItem.CALENDAR,
-                HomeMenuItem.DRIVERS,
-                HomeMenuItem.CONSTRUCTORS -> {
-                    seasonList
-                }
-                else -> emptyList()
-            }
-        }
+    override val list: LiveData<List<HomeItem>> = seasonList
         .then {
             showLoading.value = false
         }
@@ -280,10 +238,6 @@ class HomeViewModel(
         invalidSeasonData = true
         showLoading.value = true
         this.season.offer(season)
-    }
-
-    override fun refreshNews() {
-        refreshNews.offer(true)
     }
 
     //endregion
