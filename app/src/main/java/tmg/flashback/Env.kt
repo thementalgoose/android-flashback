@@ -5,7 +5,6 @@ import tmg.utilities.extensions.toEnum
 
 val env: Env
     get() {
-        Log.i("Flashback", "Environment is ${BuildConfig.ENVIRONMENT}")
         return BuildConfig.ENVIRONMENT.toEnum<Env> { it.id } ?: Env.LIVE
     }
 

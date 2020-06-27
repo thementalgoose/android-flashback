@@ -5,25 +5,20 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.R
-import tmg.flashback.home.list.viewholders.*
-import tmg.flashback.repo.models.news.Article
+import tmg.flashback.home.list.viewholders.ConstructorViewHolder
+import tmg.flashback.home.list.viewholders.DriverViewHolder
+import tmg.flashback.home.list.viewholders.TrackViewHolder
 import tmg.flashback.shared.viewholders.*
 
 class HomeAdapter(
-    val trackClicked: (track: HomeItem.Track) -> Unit,
-    val articleClicked: (item: Article, itemId: Long) -> Unit
+    val trackClicked: (track: HomeItem.Track) -> Unit
 ): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
-    init {
-        setHasStableIds(true)
-    }
 
     var list: List<HomeItem> = emptyList()
         set(value) {
             val result = DiffUtil.calculateDiff(DiffCallback(field, value))
             field = value
-            notifyDataSetChanged()
-//            result.dispatchUpdatesTo(this)
+            result.dispatchUpdatesTo(this)
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -36,10 +31,6 @@ class HomeAdapter(
                 LayoutInflater.from(parent.context).inflate(viewType, parent, false)
             )
             R.layout.view_home_constructor -> ConstructorViewHolder(
-                LayoutInflater.from(parent.context).inflate(viewType, parent, false)
-            )
-            R.layout.view_home_news -> NewsItemViewHolder(
-                articleClicked,
                 LayoutInflater.from(parent.context).inflate(viewType, parent, false)
             )
             R.layout.view_shared_data_unavailable -> DataUnavailableViewHolder(
@@ -61,18 +52,14 @@ class HomeAdapter(
         }
     }
 
-    override fun getItemId(position: Int): Long {
-        return position.toLong()
-    }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (val item = list[position]) {
             is HomeItem.Track -> (holder as TrackViewHolder).bind(item)
             is HomeItem.Driver -> (holder as DriverViewHolder).bind(item)
             is HomeItem.Constructor -> (holder as ConstructorViewHolder).bind(item)
-            is HomeItem.NewsArticle -> (holder as NewsItemViewHolder).bind(item, getItemId(position))
             is HomeItem.Unavailable -> (holder as DataUnavailableViewHolder).bind(item.type)
-            is HomeItem.Message -> (holder as MessageViewHolder).bind(holder.itemView.context.getString(R.string.home_last_updated, item.msg))
+            is HomeItem.Message -> (holder as MessageViewHolder).bind(item.msg)
         }
     }
 

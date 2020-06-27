@@ -13,7 +13,6 @@ class FlashbackWebChromeClient(
 ): WebChromeClient() {
 
     override fun onProgressChanged(view: WebView?, newProgress: Int) {
-        Log.i("Flashback", "Progress $newProgress")
         view?.show(newProgress >= 10)
         updateProgressToo(newProgress)
         super.onProgressChanged(view, newProgress)

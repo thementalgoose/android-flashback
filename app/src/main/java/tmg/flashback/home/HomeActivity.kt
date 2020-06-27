@@ -25,6 +25,7 @@ import tmg.flashback.extensions.dimensionPx
 import tmg.flashback.home.list.HomeAdapter
 import tmg.flashback.home.season.*
 import tmg.flashback.minimumSupportedYear
+import tmg.flashback.news.NewsActivity
 import tmg.flashback.race.RaceActivity
 import tmg.flashback.settings.SettingsActivity
 import tmg.flashback.settings.release.ReleaseBottomSheetFragment
@@ -38,8 +39,7 @@ import tmg.utilities.extensions.views.show
 
 @FlowPreview
 @ExperimentalCoroutinesApi
-class HomeActivity : BaseActivity(), SeasonRequestedCallback, PageStateChangeCallbacks,
-    FragmentRequestBack {
+class HomeActivity : BaseActivity(), SeasonRequestedCallback {
 
     private lateinit var adapter: HomeAdapter
     private lateinit var seasonBottomSheetBehavior: BottomSheetBehavior<*>
@@ -53,16 +53,9 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback, PageStateChangeCal
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        expandablePageLayout.pullToCollapseEnabled = false
-        expandablePageLayout.addStateChangeCallbacks(this)
-
-        loadFragment(Fragment(), R.id.expandablePageLayout, "WebView")
+        swipeContainer.isEnabled = false
 
         adapter = HomeAdapter(
-            articleClicked = { article, id ->
-                dataList.expandItem(id)
-                loadFragment(WebFragment.instance(article.title, article.link), R.id.expandablePageLayout, "WebView")
-            },
             trackClicked = { track ->
                 val intent = RaceActivity.intent(
                     context = this,
@@ -77,31 +70,25 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback, PageStateChangeCal
                 startActivity(intent)
             }
         )
-        dataList.tintPainter = TintPainter.uncoveredArea(Color.WHITE, opacity = 0.65f)
-        dataList.expandablePage = expandablePageLayout
         dataList.adapter = adapter
         dataList.layoutManager = LinearLayoutManager(this)
 
         menu.setOnNavigationItemSelectedListener {
             val shouldUpdateTab = when (it.itemId) {
                 R.id.nav_news -> {
-                    viewModel.inputs.clickItem(HomeMenuItem.NEWS)
-                    swipeContainer.isEnabled = true
-                    true
+                    startActivity(Intent(this, NewsActivity::class.java))
+                    false
                 }
                 R.id.nav_calendar -> {
                     viewModel.inputs.clickItem(HomeMenuItem.CALENDAR)
-                    swipeContainer.isEnabled = false
                     true
                 }
                 R.id.nav_drivers -> {
                     viewModel.inputs.clickItem(HomeMenuItem.DRIVERS)
-                    swipeContainer.isEnabled = false
                     true
                 }
                 R.id.nav_constructor -> {
                     viewModel.inputs.clickItem(HomeMenuItem.CONSTRUCTORS)
-                    swipeContainer.isEnabled = false
                     true
                 }
                 R.id.nav_seasons -> {
@@ -112,7 +99,6 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback, PageStateChangeCal
                         R.id.nav_constructor -> {}
                         else -> menu.selectedItemId = R.id.nav_calendar
                     }
-                    swipeContainer.isEnabled = false
                     false
                 }
                 else -> false
@@ -121,13 +107,6 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback, PageStateChangeCal
         }
 
         setupBottomSheetSeason()
-
-        swipeContainer.setOnRefreshListener {
-            viewModel.inputs.refreshNews()
-        }
-
-        skeleton.showSkeleton()
-        skeleton.showShimmer = true
 
         settings.setOnClickListener {
             startActivity(Intent(this, SettingsActivity::class.java))
@@ -140,7 +119,6 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback, PageStateChangeCal
         //region HomeViewModel
 
         observe(viewModel.outputs.list) {
-            swipeContainer.isRefreshing = false
             adapter.list = it
         }
 
@@ -204,19 +182,16 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback, PageStateChangeCal
         //endregion
 
         showLoading()
+
         menu.isEnabled = false
+
+        menu.selectedItemId = R.id.nav_calendar
     }
 
     override fun onBackPressed() {
         when {
             seasonBottomSheetBehavior.state != BottomSheetBehavior.STATE_HIDDEN -> {
                 seasonBottomSheetBehavior.hide()
-            }
-            expandablePageLayout.isExpandedOrExpanding -> {
-                // Pipe back exit events through to fragment, let it handle the back event
-                val webFrag = supportFragmentManager.findFragmentByTag("WebView") as? WebFragment
-                webFrag?.exitWeb()
-                dataList.collapse()
             }
             else -> {
                 super.onBackPressed()
@@ -227,7 +202,6 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback, PageStateChangeCal
     override fun setInsets(insets: WindowInsetsCompat) {
         titlebar.setPadding(0, insets.systemWindowInsetTop, 0, 0)
         bottomSheet.setPadding(0, insets.systemWindowInsetTop, 0, 0)
-        expandablePageLayout.setPadding(0, insets.systemWindowInsetTop, 0, insets.systemWindowInsetBottom)
         menu.setPadding(0, 0, 0, insets.systemWindowInsetBottom)
         dataList.setPadding(0, 0, 0, insets.systemWindowInsetBottom)
     }
@@ -239,36 +213,6 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback, PageStateChangeCal
         if (menu.selectedItemId != R.id.nav_calendar) {
             menu.selectedItemId = R.id.nav_calendar
         }
-    }
-
-    //endregion
-
-    //region PageStateChangeCallbacks
-
-    override fun onPageAboutToCollapse(collapseAnimDuration: Long) {
-        menu.animate()
-            .translationY(0f)
-            .setDuration(collapseAnimDuration)
-            .start()
-    }
-
-    override fun onPageAboutToExpand(expandAnimDuration: Long) {
-        menu.animate()
-            .translationY(menu.height.toFloat())
-            .setDuration(expandAnimDuration)
-            .start()
-    }
-
-    override fun onPageCollapsed() { }
-
-    override fun onPageExpanded() { }
-
-    //endregion
-
-    //region FragmentRequestBack
-
-    override fun fragmentBackPressed() {
-        onBackPressed()
     }
 
     //endregion
@@ -352,11 +296,14 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback, PageStateChangeCal
     }
 
     private fun showLoading() {
-        loadingContainer.show()
+        swipeContainer.isRefreshing = true
+        menu.isEnabled = false
+        dataList.alpha = 0.7f
     }
 
     private fun hideLoading() {
-        loadingContainer.hide()
+        swipeContainer.isRefreshing = false
         menu.isEnabled = true
+        dataList.alpha = 1.0f
     }
 }

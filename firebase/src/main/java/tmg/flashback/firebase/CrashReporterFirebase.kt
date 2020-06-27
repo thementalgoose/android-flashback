@@ -42,8 +42,10 @@ class CrashReporterFirebase(
     }
 
     override fun log(msg: String) {
-        Log.i("Flashback", "Logging INFO to crashlytics \"${msg}\"")
-        Crashlytics.log(Log.INFO, "Flashback", msg)
+        if (prefsDB.crashReporting) {
+            Log.i("Flashback", "Logging INFO to crashlytics \"${msg}\"")
+            Crashlytics.log(Log.INFO, "Flashback", msg)
+        }
     }
 
     override fun logError(error: Exception, context: String) {
@@ -51,8 +53,9 @@ class CrashReporterFirebase(
             Log.e("Flashback", "Logging ERROR to crashlytics \"${context}\"")
             error.printStackTrace()
         }
-        Crashlytics.log(Log.ERROR, "Flashback", context)
-        Crashlytics.logException(error)
+        if (prefsDB.crashReporting) {
+            Crashlytics.log(Log.ERROR, "Flashback", context)
+            Crashlytics.logException(error)
+        }
     }
-
 }

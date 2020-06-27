@@ -41,15 +41,9 @@ sealed class HomeItem(
         val maxPointsInSeason: Int
     ): HomeItem(R.layout.view_home_constructor)
 
-    data class NewsArticle(
-        val item: Article
-    ): HomeItem(R.layout.view_home_news)
-
     object NoNetwork: HomeItem(R.layout.view_shared_no_network)
 
     object InternalError: HomeItem(R.layout.view_shared_internal_error)
-
-    object AllSourcesDisabled: HomeItem(R.layout.view_shared_no_news_sources)
 
     data class Message(
         val msg: String
