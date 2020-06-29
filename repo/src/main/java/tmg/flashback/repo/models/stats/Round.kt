@@ -10,7 +10,7 @@ data class Round(
     val date: LocalDate,
     val time: LocalTime?,
     val name: String,
-    val circuit: Circuit,
+    val circuit: CircuitSummary,
     val q1: Map<String, RoundQualifyingResult>,
     val q2: Map<String, RoundQualifyingResult>,
     val q3: Map<String, RoundQualifyingResult>,
@@ -196,7 +196,7 @@ fun List<Round>.bestQualified(driverId: String): Int? {
     val round = this.minBy { it.race.get(driverId)?.qualified ?: Int.MAX_VALUE }
     return round?.race?.get(driverId)?.qualified
 }
-fun List<Round>.bestQualifyingResultFor(driverId: String): Pair<Int, List<Circuit>>? {
+fun List<Round>.bestQualifyingResultFor(driverId: String): Pair<Int, List<CircuitSummary>>? {
     val bestQualifyingPosition: Int = this.bestQualified(driverId) ?: return null
     val listOfCircuits = this
         .filter { it.race[driverId]?.qualified == bestQualifyingPosition }
@@ -211,7 +211,7 @@ fun List<Round>.bestFinish(driverId: String): Int? {
     val round = this.minBy { it.race.get(driverId)?.finish ?: Int.MAX_VALUE }
     return round?.race?.get(driverId)?.finish
 }
-fun List<Round>.bestRaceResultFor(driverId: String): Pair<Int, List<Circuit>>? {
+fun List<Round>.bestRaceResultFor(driverId: String): Pair<Int, List<CircuitSummary>>? {
     val bestQualifyingPosition: Int = this.bestFinish(driverId) ?: return null
     val listOfCircuits = this
         .filter { it.race[driverId]?.finish == bestQualifyingPosition }
