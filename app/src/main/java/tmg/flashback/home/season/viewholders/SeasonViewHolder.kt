@@ -13,9 +13,9 @@ import tmg.flashback.R
 import tmg.flashback.bottomSheetFastScrollDuration
 import tmg.flashback.coloursDecade
 import tmg.flashback.extensions.dimensionPx
-import tmg.flashback.extensions.ordinalAbbreviation
 import tmg.flashback.home.season.SeasonListItem
 import tmg.flashback.minimumSupportedYear
+import tmg.utilities.extensions.ordinalAbbreviation
 import tmg.utilities.extensions.views.show
 import tmg.utilities.utils.ConstraintSetAnimator
 

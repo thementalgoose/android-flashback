@@ -6,13 +6,13 @@ import kotlinx.android.synthetic.main.layout_driver.view.*
 import kotlinx.android.synthetic.main.layout_qualifying_time.view.*
 import kotlinx.android.synthetic.main.view_race_qualifying_result.view.*
 import tmg.flashback.R
-import tmg.flashback.extensions.ordinalAbbreviation
 import tmg.flashback.repo.models.stats.RoundQualifyingResult
 import tmg.flashback.race.RaceAdapterCallback
 import tmg.flashback.race.RaceAdapterType
 import tmg.flashback.race.RaceAdapterModel
 import tmg.flashback.race.ShowQualifying
 import tmg.flashback.utils.getFlagResourceAlpha3
+import tmg.utilities.extensions.ordinalAbbreviation
 import tmg.utilities.extensions.views.getString
 import tmg.utilities.extensions.views.gone
 import tmg.utilities.extensions.views.show

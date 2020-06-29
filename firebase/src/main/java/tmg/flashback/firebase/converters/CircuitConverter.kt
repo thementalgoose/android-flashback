@@ -36,7 +36,7 @@ fun FCircuit.convert(): Circuit {
 
 fun FCircuitResult.convert(): CircuitRace {
     return CircuitRace(
-        name = "",
+        name = this.name,
         season = this.season,
         round = this.round,
         wikiUrl = this.wikiUrl ?: "",

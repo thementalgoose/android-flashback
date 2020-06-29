@@ -2,11 +2,13 @@ package tmg.flashback.race
 
 import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.*
 import org.threeten.bp.LocalDate
@@ -18,7 +20,10 @@ import tmg.flashback.settings.ConnectivityManager
 import tmg.flashback.shared.viewholders.DataUnavailable
 import tmg.flashback.showComingSoonMessageForNextDays
 import tmg.flashback.utils.SeasonRound
+import tmg.utilities.extensions.combinePair
 import tmg.utilities.extensions.combineTriple
+import tmg.utilities.extensions.then
+import tmg.utilities.lifecycle.DataEvent
 
 //region Inputs
 
@@ -49,6 +54,8 @@ class RaceViewModel(
 
     var inputs: RaceViewModelInputs = this
     var outputs: RaceViewModelOutputs = this
+
+    private var circuitId: String? = null
 
     private var roundDate: LocalDate? = null
     private val seasonRound: ConflatedBroadcastChannel<SeasonRound> = ConflatedBroadcastChannel()

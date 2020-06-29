@@ -35,11 +35,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/paddingMedium"
                     android:layout_marginEnd="@dimen/paddingMedium"
+                    android:ellipsize="end"
                     android:fitsSystemWindows="true"
                     android:gravity="center"
                     android:lines="1"
                     android:maxLines="1"
-                    android:ellipsize="end"
                     android:paddingStart="@dimen/toolbarSettingsIcon"
                     android:paddingTop="@dimen/paddingMedium"
                     android:paddingEnd="@dimen/toolbarSettingsIcon"
@@ -94,7 +94,7 @@
                     android:layout_width="@dimen/raceImageSize"
                     android:layout_height="@dimen/raceImageSize"
                     android:layout_marginStart="@dimen/paddingMedium"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@id/tvDate"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:src="@drawable/au" />
@@ -127,11 +127,67 @@
                     style="@style/Text.Race.Date"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@id/tvRoundInfo"
                     app:layout_constraintStart_toStartOf="@id/tvRoundInfo"
                     app:layout_constraintTop_toBottomOf="@id/tvRoundInfo"
                     tools:text="21st January 2020" />
+
+                <HorizontalScrollView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/paddingMedium"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvDate">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingStart="@dimen/paddingSmall"
+                        android:paddingEnd="@dimen/paddingSmall">
+
+                        <TextView
+                            android:id="@+id/circuit"
+                            style="@style/Text.Pill.Text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/rounded_ripple"
+                            android:clickable="true"
+                            android:drawableStart="@drawable/ic_track_icon"
+                            android:drawablePadding="@dimen/paddingXSmall"
+                            android:focusable="true"
+                            android:gravity="center"
+                            android:paddingStart="@dimen/paddingSmall"
+                            android:paddingTop="@dimen/paddingXSmall"
+                            android:paddingEnd="@dimen/paddingSmall"
+                            android:paddingBottom="@dimen/paddingXSmall"
+                            android:text="@string/circuit_info_circuit" />
+
+                        <TextView
+                            android:id="@+id/wikipedia"
+                            style="@style/Text.Pill.Text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/paddingSmall"
+                            android:background="@drawable/rounded_ripple"
+                            android:clickable="true"
+                            android:drawableStart="@drawable/ic_wikipedia"
+                            android:drawablePadding="@dimen/paddingXSmall"
+                            android:focusable="true"
+                            android:gravity="center"
+                            android:paddingStart="@dimen/paddingSmall"
+                            android:paddingTop="@dimen/paddingXSmall"
+                            android:paddingEnd="@dimen/paddingSmall"
+                            android:paddingBottom="@dimen/paddingXSmall"
+                            android:text="@string/circuit_info_wikipedia"
+                            android:visibility="gone"
+                            app:layout_constraintStart_toEndOf="@id/maps"
+                            app:layout_constraintTop_toBottomOf="@id/status" />
+
+                    </LinearLayout>
+
+                </HorizontalScrollView>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

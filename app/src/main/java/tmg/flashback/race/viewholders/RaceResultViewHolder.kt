@@ -7,12 +7,12 @@ import kotlinx.android.synthetic.main.layout_driver.view.*
 import kotlinx.android.synthetic.main.view_race_race_result.view.*
 import tmg.flashback.R
 import tmg.flashback.extensions.iconRes
-import tmg.flashback.extensions.toEmptyIfZero
 import tmg.flashback.repo.enums.isStatusFinished
 import tmg.flashback.race.RaceAdapterModel
 import tmg.flashback.utils.getColor
 import tmg.flashback.utils.getFlagResourceAlpha3
 import tmg.flashback.utils.position
+import tmg.utilities.extensions.toEmptyIfZero
 import tmg.utilities.extensions.views.getString
 import tmg.utilities.extensions.views.gone
 import tmg.utilities.extensions.views.visible

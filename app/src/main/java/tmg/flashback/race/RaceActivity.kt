@@ -1,5 +1,6 @@
 package tmg.flashback.race
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.ColorFilter
@@ -20,10 +21,13 @@ import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.R
 import tmg.flashback.base.BaseActivity
+import tmg.flashback.circuit.CircuitInfoActivity
 import tmg.flashback.utils.getColor
 import tmg.flashback.utils.getFlagResourceAlpha3
 import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.observe
+import tmg.utilities.extensions.observeEvent
+import tmg.utilities.extensions.views.show
 
 private const val duration: Long = 200L
 private const val dateFormat: String = "yyyy/MM/dd"
@@ -35,6 +39,7 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
 
     var season: Int = -1
     var round: Int = -1
+    var circuitId: String? = null
 
     private var initialCountry: String = ""
     private var initialCountryISO: String = ""
@@ -46,6 +51,7 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
 
         private const val keySeason: String = "season"
         private const val keyRound: String = "round"
+        private const val keyCircuitId: String = "circuit"
 
         private const val keyCountry: String = "keyCountry"
         private const val keyRaceName: String = "keyRaceName"
@@ -57,6 +63,7 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
             context: Context,
             season: Int,
             round: Int,
+            circuitId: String,
             country: String? = null,
             raceName: String? = null,
             trackName: String? = null,
@@ -66,6 +73,7 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
             return Intent(context, RaceActivity::class.java).apply {
                 putExtra(keySeason, season)
                 putExtra(keyRound, round)
+                putExtra(keyCircuitId, circuitId)
                 putExtra(keyCountry, country)
                 putExtra(keyRaceName, raceName)
                 putExtra(keyTrackName, trackName)
@@ -80,6 +88,7 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
     override fun arguments(bundle: Bundle) {
         season = bundle.getInt(keySeason)
         round = bundle.getInt(keyRound)
+        circuitId = bundle.getString(keyCircuitId) ?: null
 
         initialCountry = bundle.getString(keyCountry, "")
         initialCountryISO = bundle.getString(keyCountryISO, "")
@@ -93,6 +102,7 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
         viewModel.inputs.initialise(season, round, initialDate)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -130,7 +140,15 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
         }
         back.setOnClickListener { finish() }
 
+        circuit.setOnClickListener {
+            circuitId?.let {
+                startActivity(CircuitInfoActivity.intent(this, it, initialTrackName))
+            }
+        }
+
         // Observe
+
+        circuit.show(circuitId != null)
 
         observe(viewModel.outputs.seasonRoundData) { (season, round) ->
             tvRoundInfo.text = getString(
@@ -159,20 +177,6 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
             finish()
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    private fun initialiseLottie(lottieView: LottieAnimationView) {
-        val colorFilter = SimpleColorFilter(theme.getColor(R.attr.f1Loading))
-        val keyPath = KeyPath("**")
-        val callback = LottieValueCallback<ColorFilter>(colorFilter)
-        lottieView.addValueCallback(keyPath, LottieProperty.COLOR_FILTER, callback)
-    }
-
-    private fun animate(layout: View, animateIn: Boolean) {
-        layout.animate()
-            .setDuration(duration)
-            .alpha(if (animateIn) 1.0f else 0.0f)
-            .start()
     }
 
     override fun setInsets(insets: WindowInsetsCompat) {

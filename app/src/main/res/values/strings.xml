@@ -169,6 +169,16 @@
     <string name="race_standings">Standings</string>
     <string name="race_circuit_info">Circuit\ninfo</string>
 
+    <!-- Circuit -->
+    <string name="circuit_info_status"><![CDATA[Hosted <b>%d</b> grand prix]]></string>
+    <string name="circuit_info_status_range"><![CDATA[Hosted <b>%d</b> grand prix between %d and %d]]></string>
+    <string name="circuit_info_status_this_year_single"><![CDATA[It will also host round <b>%s</b> of this season]]></string>
+    <string name="circuit_info_status_this_year_multiple"><![CDATA[It will also host the %s rounds of this season]]></string>
+
+    <string name="circuit_info_circuit">Circuit</string>
+    <string name="circuit_info_maps">Show on map</string>
+    <string name="circuit_info_wikipedia">Wikipedia</string>
+
     <!-- Error states -->
     <string name="shared_unavailable_future_season">This season has not started yet, please check back after the first race to see the results!</string>
     <string name="shared_unavailable_early_season">We don\'t yet have any data on this season yet, please check back later while we work on getting this</string>
