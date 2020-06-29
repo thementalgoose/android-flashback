@@ -4,6 +4,7 @@ import org.threeten.bp.LocalDate
 
 data class History(
     val season: Int,
+    val winner: WinnerSeason?,
     val rounds: List<HistoryRound>
 ) {
     val completed: Int

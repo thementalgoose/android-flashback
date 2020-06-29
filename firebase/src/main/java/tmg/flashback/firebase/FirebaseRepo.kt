@@ -25,13 +25,13 @@ open class FirebaseRepo(
 
     inline fun <reified E> CollectionReference.getDocuments(
         default: List<E> = emptyList(),
-        crossinline query: (ref: CollectionReference) -> Query
+        crossinline query: (ref: CollectionReference) -> Query = { it }
     ): Flow<List<E>> = callbackFlow {
         val subscription = query(this@getDocuments).addSnapshotListener { snapshot, exception ->
             when {
                 exception != null -> {
                     handleError(exception, "Collection $path")
-                    offer(emptyList())
+                    offer(emptyList<E>())
                 }
                 snapshot != null -> {
                     try {
@@ -43,12 +43,12 @@ open class FirebaseRepo(
                             throw e
                         } else {
                             handleError(e, "getDocuments under $path failed to parse")
-                            offer(emptyList())
+                            offer(emptyList<E>())
                         }
                     }
                 }
                 else -> {
-                    offer(emptyList())
+                    offer(emptyList<E>())
                 }
             }
         }
