@@ -38,9 +38,8 @@ class HistoryFirestore(
     private fun getHistory(): Flow<List<History>> {
         return collection("overview")
             .getDocuments<FHistorySeason>()
-            .map {
-                it
-                    .map { it.convert() }
+            .map { list ->
+                list.map { it.convert() }
                     .flatten()
                     .sortedByDescending { it.season }
             }

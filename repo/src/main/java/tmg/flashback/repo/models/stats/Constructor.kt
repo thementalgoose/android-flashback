@@ -3,7 +3,7 @@ package tmg.flashback.repo.models.stats
 /**
  * Data class for a specific constructor
  */
-open class Constructor(
+data class Constructor(
     val id: String,
     val name: String,
     val wikiUrl: String,

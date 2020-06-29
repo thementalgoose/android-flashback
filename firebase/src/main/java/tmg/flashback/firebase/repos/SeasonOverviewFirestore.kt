@@ -14,12 +14,12 @@ class SeasonOverviewFirestore(
     crashReporter: CrashReporter
 ): FirebaseRepo(crashReporter), SeasonOverviewDB {
 
-    override suspend fun getCircuits(season: Int): Flow<List<Circuit>> {
+    override suspend fun getCircuits(season: Int): Flow<List<CircuitSummary>> {
         return getSeason(season)
             .map { it?.circuits ?: emptyList() }
     }
 
-    override suspend fun getCircuit(season: Int, round: Int): Flow<Circuit?> {
+    override suspend fun getCircuit(season: Int, round: Int): Flow<CircuitSummary?> {
         return getSeasonRound(season, round)
             .map { it?.circuit }
     }

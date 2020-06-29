@@ -1,11 +1,9 @@
 package tmg.flashback.home.list
 
-import androidx.annotation.DrawableRes
 import androidx.annotation.LayoutRes
 import org.threeten.bp.LocalDate
 import tmg.flashback.R
-import tmg.flashback.repo.models.news.Article
-import tmg.flashback.repo.models.stats.Circuit
+import tmg.flashback.repo.models.stats.CircuitSummary
 import tmg.flashback.shared.viewholders.DataUnavailable
 
 sealed class HomeItem(
@@ -27,8 +25,8 @@ sealed class HomeItem(
         val driver: tmg.flashback.repo.models.stats.Driver,
         val driverId: String = driver.id,
         val position: Int,
-        val bestQualifying: Pair<Int, List<Circuit>>?,
-        val bestFinish: Pair<Int, List<Circuit>>?,
+        val bestQualifying: Pair<Int, List<CircuitSummary>>?,
+        val bestFinish: Pair<Int, List<CircuitSummary>>?,
         val maxPointsInSeason: Int
     ): HomeItem(R.layout.view_home_driver)
 

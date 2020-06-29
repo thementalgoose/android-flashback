@@ -1,14 +1,16 @@
 package tmg.flashback.firebase
 
 import com.google.firebase.firestore.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.map
 import tmg.flashback.repo.db.CrashReporter
 
+@ExperimentalCoroutinesApi
 open class FirebaseRepo(
-    val crashReporter: CrashReporter
+    private val crashReporter: CrashReporter
 ) {
 
     //#region References
@@ -72,7 +74,7 @@ open class FirebaseRepo(
                         if (BuildConfig.DEBUG) {
                             throw e
                         } else {
-                            handleError(e, "getDocuments under $path failed to parse")
+                            handleError(e, "getDoc under $path failed to parse")
                             offer(null)
                         }
                     }

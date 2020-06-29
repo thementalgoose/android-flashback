@@ -203,4 +203,5 @@
     <string name="choose_share">Share with</string>
     <string name="on_pole_position">on pole position</string>
     <string name="title_news">News</string>
+    <string name="shared_unavailable_circuit_not_found">We can\'t find any information on this circuit.</string>
 </resources>

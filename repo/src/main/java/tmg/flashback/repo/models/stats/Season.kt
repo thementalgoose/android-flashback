@@ -6,7 +6,7 @@ data class Season(
     val constructors: List<Constructor>,
     val rounds: List<Round>
 ) {
-    val circuits: List<Circuit>
+    val circuits: List<CircuitSummary>
         get() = rounds.map { it.circuit }
 
     val firstRound: Round?

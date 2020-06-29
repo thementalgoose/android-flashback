@@ -11,6 +11,7 @@ import tmg.flashback.shared.viewholders.InternalErrorOccurredViewHolder
 import tmg.flashback.shared.viewholders.MessageViewHolder
 import tmg.flashback.shared.viewholders.NoNetworkViewHolder
 import tmg.flashback.shared.viewholders.NoNewsSourcesViewHolder
+import tmg.flashback.utils.calculateDiff
 
 class NewsAdapter(
     val articleClicked: (item: Article, itemId: Long) -> Unit
@@ -22,7 +23,7 @@ class NewsAdapter(
 
     var list: List<NewsItem> = emptyList()
         set(value) {
-            val result = DiffUtil.calculateDiff(DiffCallback(field, value))
+            val result = calculateDiff(field, value)
             field = value
             result.dispatchUpdatesTo(this)
         }
@@ -60,17 +61,4 @@ class NewsAdapter(
     override fun getItemViewType(position: Int) = list[position].layoutId
 
     override fun getItemCount(): Int = list.size
-
-    inner class DiffCallback(
-        private val oldList: List<NewsItem>,
-        private val newList: List<NewsItem>
-    ) : DiffUtil.Callback() {
-        override fun areItemsTheSame(o: Int, n: Int) = oldList[o] == newList[n]
-
-        override fun areContentsTheSame(o: Int, n: Int) = oldList[o] == newList[n]
-
-        override fun getOldListSize(): Int = oldList.size
-
-        override fun getNewListSize(): Int = newList.size
-    }
 }
