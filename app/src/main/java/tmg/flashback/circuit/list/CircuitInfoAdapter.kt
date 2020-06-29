@@ -11,7 +11,11 @@ import tmg.flashback.home.list.HomeItem
 import tmg.flashback.shared.viewholders.*
 import tmg.flashback.utils.calculateDiff
 
-class CircuitInfoAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class CircuitInfoAdapter(
+    val clickShowOnMap: () -> Unit,
+    val clickWikipedia: () -> Unit,
+    val clickRace: (race: CircuitItem.Race) -> Unit
+): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var list: List<CircuitItem> = emptyList()
         set(value) {
@@ -23,9 +27,12 @@ class CircuitInfoAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             R.layout.view_circuit_info -> CircuitInfoViewHolder(
+                clickShowOnMap,
+                clickWikipedia,
                 LayoutInflater.from(parent.context).inflate(viewType, parent, false)
             )
             R.layout.view_circuit_race -> CircuitRaceViewHolder(
+                clickRace,
                 LayoutInflater.from(parent.context).inflate(viewType, parent, false)
             )
             R.layout.view_shared_data_unavailable -> DataUnavailableViewHolder(

@@ -254,6 +254,7 @@ class HomeViewModel(
                     season = it.season,
                     round = it.round,
                     raceName = it.raceName,
+                    circuitId = it.circuitId,
                     circuitName = it.circuitName,
                     raceCountry = it.country,
                     raceCountryISO = it.countryISO,

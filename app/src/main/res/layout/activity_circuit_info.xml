@@ -63,12 +63,12 @@
 
                 <ImageButton
                     android:id="@+id/settings"
+                    android:visibility="invisible"
                     android:layout_width="@dimen/toolbarSettingsIcon"
                     android:layout_height="@dimen/toolbarSettingsIcon"
                     android:layout_marginEnd="@dimen/paddingMedium"
                     android:background="@drawable/rounded_ripple"
                     android:contentDescription="@string/settings_title"
-                    android:src="@drawable/nav_settings"
                     android:tint="?attr/f1TextPrimary"
                     app:layout_constraintBottom_toBottomOf="@id/back"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -87,7 +87,7 @@
         android:fitsSystemWindows="false"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
-        <me.saket.inboxrecyclerview.InboxRecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

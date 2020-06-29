@@ -114,5 +114,6 @@
     <dimen name="standingsDriverSize">32dp</dimen>
     <dimen name="constructorStandingsSize">40dp</dimen>
     <dimen name="homeNewsIconSize">36dp</dimen>
+    <dimen name="circuitImageSize">42dp</dimen>
 
 </resources>

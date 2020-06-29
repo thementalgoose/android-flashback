@@ -61,6 +61,7 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback {
                     context = this,
                     season = track.season,
                     round = track.round,
+                    circuitId = track.circuitId,
                     country = track.raceCountry,
                     raceName = track.raceName,
                     trackName = track.circuitName,

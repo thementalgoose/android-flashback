@@ -194,6 +194,36 @@
 
     <!--======================================-->
 
+    <style name="Text.CircuitInfo.Name" parent="Text">
+        <item name="android:textSize">@dimen/textSizeMedium</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Text.CircuitInfo.Status" parent="Text">
+        <item name="android:textSize">@dimen/textSizeSmall</item>
+    </style>
+
+    <style name="Text.Circuit.Name" parent="Text">
+        <item name="android:textSize">@dimen/textSizeMedium</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Text.Circuit.Year" parent="Text">
+        <item name="android:textSize">@dimen/textSizeLarge</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Text.Circuit.Round" parent="Text">
+        <item name="android:textSize">@dimen/textSizeSmall</item>
+    </style>
+
+    <style name="Text.Circuit.Date" parent="Text">
+        <item name="android:textSize">@dimen/textSizeSmall</item>
+    </style>
+
+
+    <!--======================================-->
+
     <style name="Text.Web.Title" parent="Text">
 
     </style>
@@ -205,10 +235,15 @@
 
     <!--======================================-->
 
-    <!--======================================-->
+    <style name="Text.Pill.Text" parent="Text">
+        <item name="android:textSize">@dimen/textSizeMedium</item>
+        <item name="android:textColor">?attr/f1TextTertiary</item>
+        <item name="android:drawableTint">?attr/f1TextTertiary</item>
+    </style>
 
     <!--======================================-->
 
+    <!--======================================-->
 
     <style name="Text.Network.Error" parent="Text">
         <item name="android:textSize">@dimen/textSizeMedium</item>

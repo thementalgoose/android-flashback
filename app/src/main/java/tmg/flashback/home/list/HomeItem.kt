@@ -13,6 +13,7 @@ sealed class HomeItem(
         val season: Int,
         val raceName: String,
         val circuitName: String,
+        val circuitId: String,
         val raceCountry: String,
         val raceCountryISO: String,
         val date: LocalDate,

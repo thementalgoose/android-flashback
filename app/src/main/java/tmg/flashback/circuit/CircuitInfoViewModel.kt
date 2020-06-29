@@ -1,29 +1,28 @@
 package tmg.flashback.circuit
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
-import kotlinx.coroutines.flow.asFlow
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.map
-import org.threeten.bp.LocalDate
-import org.threeten.bp.LocalTime
+import kotlinx.coroutines.flow.*
 import tmg.flashback.base.BaseViewModel
 import tmg.flashback.circuit.list.CircuitItem
-import tmg.flashback.news.NewsItem
 import tmg.flashback.repo.db.stats.CircuitDB
-import tmg.flashback.repo.enums.NewsSource
-import tmg.flashback.repo.models.stats.CircuitRace
-import tmg.flashback.repo.models.stats.CircuitSummary
+import tmg.flashback.repo.models.stats.Circuit
 import tmg.flashback.settings.ConnectivityManager
-import tmg.flashback.shared.viewholders.DataUnavailable
+import tmg.utilities.extensions.then
+import tmg.utilities.lifecycle.DataEvent
 
 //region Inputs
 
 interface CircuitInfoViewModelInputs {
     fun circuitId(circuitId: String)
+    fun clickShowOnMap()
+    fun clickWikipedia()
 }
 
 //endregion
@@ -32,23 +31,50 @@ interface CircuitInfoViewModelInputs {
 
 interface CircuitInfoViewModelOutputs {
     val list: LiveData<List<CircuitItem>>
+    val circuitName: LiveData<String>
+    val isLoading: MutableLiveData<Boolean>
+
+    val showOnMap: MutableLiveData<DataEvent<String>>
+    val showWikipedia: MutableLiveData<DataEvent<String>>
 }
 
 //endregion
 
+@FlowPreview
+@ExperimentalCoroutinesApi
 class CircuitInfoViewModel(
     private val circuitDB: CircuitDB,
     private val connectivityManager: ConnectivityManager
-): BaseViewModel(), CircuitInfoViewModelInputs, CircuitInfoViewModelOutputs {
+) : BaseViewModel(), CircuitInfoViewModelInputs, CircuitInfoViewModelOutputs {
 
-    private lateinit var circuitId: String
+    private var circuitLat: Double? = null
+    private var circuitLng: Double? = null
+    private var wikipedia: String? = null
+    private var name: String? = null
 
     private val circuitIdentifier: ConflatedBroadcastChannel<String> = ConflatedBroadcastChannel()
 
-    override val list: LiveData<List<CircuitItem>> = circuitIdentifier
+    private val circuit: Flow<Circuit?> = circuitIdentifier
         .asFlow()
         .flatMapLatest { circuitDB.getCircuit(it) }
+
+    override val showOnMap: MutableLiveData<DataEvent<String>> = MutableLiveData()
+
+    override val showWikipedia: MutableLiveData<DataEvent<String>> = MutableLiveData()
+
+    override val isLoading: MutableLiveData<Boolean> = MutableLiveData(true)
+
+    override val circuitName: LiveData<String> = circuit
+        .map { it?.name }
+        .filterNotNull()
+        .asLiveData(viewModelScope.coroutineContext)
+
+    override val list: LiveData<List<CircuitItem>> = circuit
         .map {
+            name = it?.name
+            circuitLat = it?.locationLat
+            circuitLng = it?.locationLng
+            wikipedia = it?.wikiUrl
             when {
                 it == null && !connectivityManager.isConnected -> {
                     return@map listOf<CircuitItem>(CircuitItem.NoNetwork)
@@ -60,18 +86,24 @@ class CircuitInfoViewModel(
                     val list = mutableListOf<CircuitItem>(
                         CircuitItem.CircuitInfo(it)
                     )
-                    list.addAll(it.results.map { result ->
-                        CircuitItem.Race(
-                            name = result.name,
-                            season = result.season,
-                            round = result.round,
-                            date = result.date,
-                            time = result.time,
-                        )
-                    })
-                    return@map listOf<CircuitItem>()
+                    list.addAll(it.results
+                        .map { result ->
+                            CircuitItem.Race(
+                                name = result.name,
+                                season = result.season,
+                                round = result.round,
+                                date = result.date,
+                                time = result.time
+                            )
+                        }
+                        .sortedByDescending { it.season * 1000 + it.round }
+                    )
+                    return@map list
                 }
             }
+        }
+        .then {
+            isLoading.postValue(false)
         }
         .asLiveData(viewModelScope.coroutineContext)
 
@@ -88,9 +120,14 @@ class CircuitInfoViewModel(
         circuitIdentifier.offer(circuitId)
     }
 
-    //endregion
+    override fun clickShowOnMap() {
+        val mapsIntent = "geo:0,0?q=$circuitLat,$circuitLng ($name)"
+        showOnMap.postValue(DataEvent(mapsIntent))
+    }
 
-    //region Outputs
+    override fun clickWikipedia() {
+
+    }
 
     //endregion
 }

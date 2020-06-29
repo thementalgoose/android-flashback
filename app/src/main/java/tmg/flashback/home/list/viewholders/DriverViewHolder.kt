@@ -4,15 +4,14 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.layout_driver.view.*
-import kotlinx.android.synthetic.main.view_home_constructor.view.*
 import kotlinx.android.synthetic.main.view_home_driver.view.*
 import kotlinx.android.synthetic.main.view_home_driver.view.lpvProgress
 import tmg.flashback.R
-import tmg.flashback.extensions.ordinalAbbreviation
 import tmg.flashback.home.list.HomeItem
 import tmg.flashback.utils.getColor
 import tmg.flashback.utils.getFlagResourceAlpha3
 import tmg.utilities.extensions.fromHtml
+import tmg.utilities.extensions.ordinalAbbreviation
 import tmg.utilities.extensions.views.context
 import tmg.utilities.extensions.views.getString
 import tmg.utilities.extensions.views.show

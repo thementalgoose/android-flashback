@@ -6,11 +6,11 @@ import kotlinx.android.synthetic.main.view_home_track.view.*
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.R
-import tmg.flashback.extensions.ordinalAbbreviation
 import tmg.flashback.home.list.HomeItem
 import tmg.flashback.utils.SeasonRound
 import tmg.flashback.utils.getColor
 import tmg.flashback.utils.getFlagResourceAlpha3
+import tmg.utilities.extensions.ordinalAbbreviation
 
 class TrackViewHolder(
     val trackClicked: (HomeItem.Track) -> Unit,

@@ -45,12 +45,12 @@ open class FirebaseRepo(
                             throw e
                         } else {
                             handleError(e, "getDocuments under $path failed to parse")
-                            offer(emptyList<E>())
+                            offer(default)
                         }
                     }
                 }
                 else -> {
-                    offer(emptyList<E>())
+                    offer(default)
                 }
             }
         }
