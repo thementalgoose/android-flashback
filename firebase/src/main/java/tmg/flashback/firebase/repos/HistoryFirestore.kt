@@ -1,6 +1,7 @@
 package tmg.flashback.firebase.repos
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 import tmg.flashback.repo.db.CrashReporter
 import tmg.flashback.repo.db.stats.HistoryDB
@@ -35,14 +36,21 @@ class HistoryFirestore(
     }
 
     private fun getHistory(): Flow<List<History>> {
-        return document("version/$version/history/season")
-            .getDoc<FHistorySeason>()
-            .convertModel { it?.convert() ?: emptyList() }
+        return collection("overview")
+            .getDocuments<FHistorySeason>()
+            .map {
+                it
+                    .map { it.convert() }
+                    .flatten()
+                    .sortedByDescending { it.season }
+            }
     }
 
     private fun getWinner(): Flow<List<WinnerSeason>> {
-        return document("version/$version/history/winner")
-            .getDoc<FWinner>()
-            .convertModel { it?.convert() ?: emptyList() }
+        return getHistory()
+            .map { list -> list
+                .map { it.winner }
+                .filterNotNull()
+            }
     }
 }

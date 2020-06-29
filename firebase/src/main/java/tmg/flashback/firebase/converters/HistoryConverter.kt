@@ -7,6 +7,7 @@ import java.time.Year
 
 fun FHistorySeason.convert(): List<History> {
     val list: MutableList<History> = mutableListOf()
+    val winners = this.convertWin()
     for ((key, rounds) in this.all) {
         var season: Int = -1
         val historyRounds = rounds
@@ -24,6 +25,7 @@ fun FHistorySeason.convert(): List<History> {
             list.add(
                 History(
                     season = season,
+                    winner = winners.firstOrNull { it.season == season },
                     rounds = historyRounds ?: listOf()
                 )
             )

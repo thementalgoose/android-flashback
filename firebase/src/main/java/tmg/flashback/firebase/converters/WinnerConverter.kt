@@ -1,20 +1,17 @@
 package tmg.flashback.firebase.converters
 
+import tmg.flashback.firebase.models.*
 import tmg.flashback.repo.models.stats.WinnerSeason
 import tmg.flashback.repo.models.stats.WinnerSeasonConstructor
 import tmg.flashback.repo.models.stats.WinnerSeasonDriver
-import tmg.flashback.firebase.models.FWinner
-import tmg.flashback.firebase.models.FWinnerSeason
-import tmg.flashback.firebase.models.FWinnerSeasonConstructor
-import tmg.flashback.firebase.models.FWinnerSeasonDriver
 
-fun FWinner.convert(): List<WinnerSeason> {
+fun FHistorySeason.convertWin(): List<WinnerSeason> {
     return win?.map { (_, value) ->
         value.convert()
     } ?: emptyList()
 }
 
-fun FWinnerSeason.convert(): WinnerSeason {
+fun FHistorySeasonWin.convert(): WinnerSeason {
     return WinnerSeason(
         season = s ?: -1,
         driver = this.driver?.map { it.convert() } ?: emptyList(),
@@ -22,7 +19,7 @@ fun FWinnerSeason.convert(): WinnerSeason {
     )
 }
 
-fun FWinnerSeasonDriver.convert(): WinnerSeasonDriver {
+fun FHistorySeasonWinDriver.convert(): WinnerSeasonDriver {
     return WinnerSeasonDriver(
         id,
         name,
@@ -31,7 +28,7 @@ fun FWinnerSeasonDriver.convert(): WinnerSeasonDriver {
     )
 }
 
-fun FWinnerSeasonConstructor.convert(): WinnerSeasonConstructor {
+fun FHistorySeasonWinConstructor.convert(): WinnerSeasonConstructor {
     return WinnerSeasonConstructor(
         id,
         name,
