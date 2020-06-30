@@ -2,4 +2,4 @@ include ':news'
 include ':firebase'
 include ':repo'
 include ':app'
-rootProject.name = "F1 Stats"
+rootProject.name = "android-flashback"
