@@ -17,10 +17,6 @@ class ReleaseBottomSheetFragment: BaseBottomSheetFragment() {
 
     override fun initViews() {
 
-        imgbtnClose.setOnClickListener {
-            dismiss()
-        }
-
         val list = releaseNotes
             .filterKeys { it > prefsDB.lastAppVersion }
             .toList()

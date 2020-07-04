@@ -9,6 +9,11 @@ fun FAppLockout.convert(): AppLockout {
         message = message ?: "",
         linkText = linkText,
         link = link,
-        title = title ?: "App lockout"
+        title = title ?: "App lockout",
+        version = when {
+            version == null -> null
+            version <= 0 -> null
+            else -> version
+        }
     )
 }

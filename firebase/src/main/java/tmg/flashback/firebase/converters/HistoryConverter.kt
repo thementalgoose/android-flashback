@@ -45,7 +45,8 @@ fun FHistorySeasonRound.convert(): Pair<Int, HistoryRound> {
             country = this.country,
             countryISO = this.countryISO,
             circuitName = this.circuit,
-            hasResults = this.data ?: (this.s <= 2019)
+            hasQualifying = this.hasQ ?: this.data ?: (s <= 2019),
+            hasResults = this.hasR ?: this.data ?: (s <= 2019)
         )
     )
 }

@@ -24,5 +24,6 @@ data class HistoryRound(
     val circuitName: String,
     val country: String,
     val countryISO: String,
+    val hasQualifying: Boolean,
     val hasResults: Boolean
 )

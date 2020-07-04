@@ -11,10 +11,12 @@ import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.*
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
+import tmg.flashback.BuildConfig
 import tmg.flashback.R
 import tmg.flashback.base.BaseViewModel
 import tmg.flashback.currentYear
 import tmg.flashback.home.list.HomeItem
+import tmg.flashback.isValidVersion
 import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.db.news.NewsDB
 import tmg.flashback.repo.db.stats.DataDB
@@ -28,6 +30,7 @@ import tmg.flashback.shared.viewholders.InternalErrorOccurredViewHolder
 import tmg.utilities.extensions.combinePair
 import tmg.utilities.extensions.combineTriple
 import tmg.utilities.extensions.then
+import tmg.utilities.lifecycle.DataEvent
 import tmg.utilities.lifecycle.Event
 
 //region Inputs
@@ -43,7 +46,7 @@ interface HomeViewModelInputs {
 
 interface HomeViewModelOutputs {
     val list: LiveData<List<HomeItem>>
-    val openSeasonList: MutableLiveData<Event>
+    val openSeasonList: MutableLiveData<DataEvent<Boolean>>
     val label: LiveData<String>
     val currentSeason: LiveData<Int>
 
@@ -53,7 +56,6 @@ interface HomeViewModelOutputs {
 
     val openCalendarFilter: LiveData<Boolean>
     val openAppLockout: LiveData<Event>
-    val openAppBanner: LiveData<String?>
 
     val openReleaseNotes: MutableLiveData<Event>
 }
@@ -85,7 +87,7 @@ class HomeViewModel(
         .asFlow()
         .asLiveData(viewModelScope.coroutineContext)
 
-    override val openSeasonList: MutableLiveData<Event> = MutableLiveData()
+    override val openSeasonList: MutableLiveData<DataEvent<Boolean>> = MutableLiveData()
     override val openCalendarFilter: LiveData<Boolean> = currentTab.asFlow()
         .map {
             return@map when (it) {
@@ -126,13 +128,22 @@ class HomeViewModel(
         .combineTriple(
             currentTab.asFlow(),
             historyDB.allHistory()
-        ) // TODO: Convert this to use a summary document
-        .map { (seasonAndRounds, menuItemType, historyList) ->
+        )
+        .combinePair(dataDB.appBanner())
+        .map { (seasonRoundMenuItemListHistoryTriple, appBanner) ->
+            val (seasonAndRounds, menuItemType, historyList) = seasonRoundMenuItemListHistoryTriple
             val (season, rounds) = seasonAndRounds
             val list: MutableList<HomeItem> = mutableListOf()
             val history = historyList
                 .firstOrNull { it.season == season }
             val historyRounds = history?.rounds ?: emptyList()
+
+            appBanner?.let {
+                if (it.show && !it.message.isNullOrEmpty()) {
+                    list.add(HomeItem.Message(it.message ?: ""))
+                }
+            }
+
             when (menuItemType) {
                 HomeMenuItem.CALENDAR -> {
                     when {
@@ -192,23 +203,13 @@ class HomeViewModel(
     override val openAppLockout: LiveData<Event> = dataDB
         .appLockout()
         .map {
-            if (it?.show == true) {
+            if (it?.show == true && isValidVersion(it.version)) {
                 Event()
             } else {
                 null
             }
         }
         .filterNotNull()
-        .asLiveData(viewModelScope.coroutineContext)
-    override val openAppBanner: LiveData<String?> = dataDB
-        .appBanner()
-        .map {
-            if (it?.show == true) {
-                it.message
-            } else {
-                null
-            }
-        }
         .asLiveData(viewModelScope.coroutineContext)
     override val openReleaseNotes: MutableLiveData<Event> = MutableLiveData()
 
@@ -227,7 +228,7 @@ class HomeViewModel(
 
     override fun clickItem(item: HomeMenuItem) {
         if (item == HomeMenuItem.SEASONS) {
-            openSeasonList.value = Event()
+            openSeasonList.value = DataEvent(prefDB.showBottomSheetExpanded)
         } else {
             showLoading.value = true
             currentTab.offer(item)

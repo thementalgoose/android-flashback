@@ -40,11 +40,10 @@ class ConstructorStandingsViewholder(itemView: View): RecyclerView.ViewHolder(it
             lpvProgress.textBackgroundColour = context.theme.getColor(R.attr.f1TextSecondary)
             val progress = model.points.toFloat() / maxPointsByAnyTeam.toFloat()
             lpvProgress.animateProgress(progress) {
-                if (progress != 0.0f) {
-                    ((it / progress) * model.points).roundToInt().toString()
-                }
-                else {
-                    "0"
+                when {
+                    progress.isNaN() -> "0"
+                    progress != 0.0f -> ((it / progress) * model.points).roundToInt().toString()
+                    else -> "0"
                 }
             }
         }

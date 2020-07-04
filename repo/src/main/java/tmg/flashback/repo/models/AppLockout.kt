@@ -5,5 +5,6 @@ data class AppLockout(
     val title: String,
     val message: String,
     val linkText: String?,
-    val link: String?
+    val link: String?,
+    val version: Int?
 )

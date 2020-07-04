@@ -41,6 +41,13 @@
         <br/>• Updated utilities to 2.0.1
         <br/>• Updated firebase analytics to 17.4.3
         <br/>• Updated firebase crashlytics to 2.10.1]]></string>
+    <string name="release_14"><![CDATA[<b>4.4.1</b> - 2020 season start
+        <br/>• Addressed some bugs that have risen due to season starting
+        <br/>• Fixed issue with partial qualifying data not displaying when race data is unavailable
+        <br/>• Added setting to expand season list to full height by default
+        <br/>• Fixed some wording oversights with races being scheduled in the future or past
+        <br/>• Fixed optional message being displayed
+        <br/>• Moved app banner position to pinned position at the top of the display]]></string>
 
     <!-- App Lockout -->
     <string name="app_lockout_title">App lockout</string>
@@ -70,10 +77,12 @@
     <string name="settings_customisation_news_title">News</string>
     <string name="settings_customisation_news_description">Configure news sources and preferences</string>
     <string name="settings_season_list">Season list</string>
-    <string name="settings_customisation_season_favourited_expanded_title">Expand favourites by default</string>
-    <string name="settings_customisation_season_favourited_expanded_description">Toggle if the bottom sheet favourites section is expanded by default</string>
-    <string name="settings_customisation_season_all_expanded_title">Expand all by default</string>
-    <string name="settings_customisation_season_all_expanded_description">Toggle if the bottom sheet all seasons section is expanded by default</string>
+    <string name="settings_customisation_season_expanded_title">Expand sheet to full screen</string>
+    <string name="settings_customisation_season_expanded_description">When clicking the seasons tab, the sheet will default to going full screen rather than half height</string>
+    <string name="settings_customisation_season_favourited_expanded_title">Favourites section</string>
+    <string name="settings_customisation_season_favourited_expanded_description">Toggle if the favourites section inside the seasons list is expanded by default</string>
+    <string name="settings_customisation_season_all_expanded_title">All section</string>
+    <string name="settings_customisation_season_all_expanded_description">Toggle if the all section inside the seasons list is expanded by default</string>
     <string name="settings_customisation_view_type_title">View type</string>
     <string name="settings_customisation_view_type_description">Select the view type that you want to view race information in</string>
     <string name="settings_help">About</string>
@@ -214,4 +223,5 @@
     <string name="on_pole_position">on pole position</string>
     <string name="title_news">News</string>
     <string name="shared_unavailable_circuit_not_found">We can\'t find any information on this circuit.</string>
+    <string name="release_notes_description">Here\'s what\'s changed since you last updated</string>
 </resources>

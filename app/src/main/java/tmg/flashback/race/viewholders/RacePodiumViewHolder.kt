@@ -32,7 +32,7 @@ class RacePodiumViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private fun bind(model: RaceAdapterModel.Single, layout: View, pointsLayout: TextView) {
         layout.apply {
 
-            pointsLayout.text = itemView.context.getString(R.string.round_podium_points, model.racePoints)
+            pointsLayout.text = itemView.context.getString(R.string.round_podium_points, model.race?.points)
             tvDriver.text = model.driver.name
             tvNumber.text = model.driver.number.toString()
             tvNumber.colorHighlight = model.driver.constructor.color
@@ -45,9 +45,9 @@ class RacePodiumViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             }
 
             // Starting Position
-            tvStartedAbsolute.text = model.gridPos.positionStarted(context)
-            tvStartedRelative.text = abs(model.racePos - model.gridPos).toString()
-            val diff = model.gridPos - model.racePos
+            tvStartedAbsolute.text = model.race?.gridPos?.positionStarted(context)
+            tvStartedRelative.text = abs((model.race?.pos ?: 0) - (model.race?.pos ?: 0)).toString()
+            val diff = (model.race?.gridPos ?: 0) - (model.race?.pos ?: 0)
             when {
                 diff == 0 -> { // Equal
                     imgStarted.setImageResource(R.drawable.ic_pos_neutral)
@@ -70,19 +70,19 @@ class RacePodiumViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             imgNationality.setImageResource(context.getFlagResourceAlpha3(model.driver.nationalityISO))
 
             // Time
-            if (model.racePos == 1) {
-                tvTime.text = model.raceResult.toString()
+            if (model.race?.pos == 1) {
+                tvTime.text = model.race.result.toString()
             }
             else {
-                if (!model.raceResult.noTime) {
-                    tvTime.text = context.getString(R.string.race_time_delta, model.raceResult)
+                if (model.race?.result?.noTime == false) {
+                    tvTime.text = context.getString(R.string.race_time_delta, model.race.result)
                 }
                 else {
-                    tvTime.text = model.status
+                    tvTime.text = model.race?.status ?: ""
                 }
             }
 
-            if (model.fastestLap) {
+            if (model.race?.fastestLap == true) {
                 imgFastestLap.visible()
             } else {
                 imgFastestLap.gone()

@@ -5,5 +5,6 @@ data class FAppLockout(
     val title: String? = null,
     val message: String? = null,
     val linkText: String? = null,
-    val link: String? = null
+    val link: String? = null,
+    val version: Int? = null
 )

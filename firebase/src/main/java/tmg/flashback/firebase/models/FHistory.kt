@@ -14,7 +14,9 @@ data class FHistorySeasonRound(
     val countryISO: String = "",
     val circuit: String = "",
     val name: String = "",
-    val data: Boolean? = null
+    val data: Boolean? = null,
+    val hasQ: Boolean? = null,
+    val hasR: Boolean? = null
 )
 
 data class FHistorySeasonWin(

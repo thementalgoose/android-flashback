@@ -128,21 +128,17 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback {
         }
 
         observeEvent(viewModel.outputs.openSeasonList) {
-            seasonBottomSheetBehavior.state = BottomSheetBehavior.STATE_HALF_EXPANDED
+            if (it) {
+                seasonBottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+            }
+            else {
+                seasonBottomSheetBehavior.state = BottomSheetBehavior.STATE_HALF_EXPANDED
+            }
         }
 
         observeEvent(viewModel.outputs.openAppLockout) {
             startActivity(Intent(this, LockoutActivity::class.java))
             finishAffinity()
-        }
-
-        observe(viewModel.outputs.openAppBanner) { banner ->
-            banner?.let {
-                Snackbar
-                    .make(dataList, it, 5000)
-                    .setAnchorView(menu)
-                    .show()
-            }
         }
 
         observeEvent(viewModel.outputs.openReleaseNotes) {

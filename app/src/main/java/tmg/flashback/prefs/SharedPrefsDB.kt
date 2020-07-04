@@ -22,6 +22,7 @@ class SharedPrefsDB(context: Context): SharedPrefManager(context), PrefsDB {
     private val keyShowQualifyingDelta: String = "SHOW_QUALIFYING_DELTA"
     private val keyShowGridPenaltiesInQualifying: String = "SHOW_GRID_PENALTIES_IN_QUALIFYING"
     private val keyShowDriversInConstructorStandings: String = "SHOW_DRIVERS_IN_CONSTRUCTOR_STANDINGS"
+    private val keyBottomSheetExpanded: String = "BOTTOM_SHEET_EXPANDED"
     private val keyBottomSheetAll: String = "BOTTOM_SHEET_ALL"
     private val keyBottomSheetFavourited: String = "BOTTOM_SHEET_FAVOURITED"
     private val keyDefaultTab: String = "DEFAULT_TAB"
@@ -46,6 +47,10 @@ class SharedPrefsDB(context: Context): SharedPrefManager(context), PrefsDB {
     override var showDriversBehindConstructor: Boolean
         get() = getBoolean(keyShowDriversInConstructorStandings, defaultShowDriversInConstructors)
         set(value) = save(keyShowDriversInConstructorStandings, value)
+
+    override var showBottomSheetExpanded: Boolean
+        get() = getBoolean(keyBottomSheetExpanded, false)
+        set(value) = save(keyBottomSheetExpanded, value)
 
     override var showBottomSheetFavourited: Boolean
         get() = getBoolean(keyBottomSheetFavourited, true)
@@ -81,7 +86,7 @@ class SharedPrefsDB(context: Context): SharedPrefManager(context), PrefsDB {
                 lastAppVersion = BuildConfig.VERSION_CODE
                 false
             } else {
-                BuildConfig.VERSION_CODE > lastAppVersion && releaseNotes.keys.count { it > lastAppVersion} > 0
+                BuildConfig.VERSION_CODE > lastAppVersion && releaseNotes.keys.count { it > lastAppVersion } > 0
             }
         }
 
