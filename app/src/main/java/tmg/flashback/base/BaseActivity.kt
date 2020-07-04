@@ -20,7 +20,7 @@ import tmg.utilities.lifecycle.common.CommonActivity
 
 abstract class BaseActivity : CommonActivity() {
 
-    private val prefsDB: PrefsDB by inject()
+    val prefsDB: PrefsDB by inject()
 
     val crashReporter: CrashReporter by inject()
 

@@ -49,9 +49,10 @@ class QualifyingResultViewHolder(view: View, private val updateAdapterType: Race
             tvNumber.colorHighlight = model.driver.constructor.color
 
 
-            if (showQualifying.penalties && (model.qualified != null && model.qualified != model.gridPos && model.gridPos > model.qualified)) {
+
+            if (model.race != null && showQualifying.penalties && (model.qualified != null && model.qualified != model.race.gridPos && model.race.gridPos > model.qualified)) {
                 penalty.show(true)
-                penalty.text = getString(R.string.qualifying_grid_penalty, model.gridPos - model.qualified, model.gridPos.ordinalAbbreviation)
+                penalty.text = getString(R.string.qualifying_grid_penalty, model.race.gridPos - model.qualified, model.race.gridPos.ordinalAbbreviation)
             }
             else {
                 penalty.show(false)

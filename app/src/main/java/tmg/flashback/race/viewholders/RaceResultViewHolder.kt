@@ -28,7 +28,7 @@ class RaceResultViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnC
 
     fun bind(model: RaceAdapterModel.Single) {
         itemView.apply {
-            tvPosition.text = model.racePos.toString()
+            tvPosition.text = model.race?.pos.toString() ?: ""
             layoutDriver.tvName.text = model.driver.name
             layoutDriver.tvNumber.gone()
             layoutDriver.imgFlag.gone()
@@ -37,10 +37,10 @@ class RaceResultViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnC
             imgDriverFlag.setImageResource(context.getFlagResourceAlpha3(model.driver.nationalityISO))
             tvConstructor.text = model.driver.constructor.name
 
-            tvPoints.text = model.racePoints.toEmptyIfZero()
+            tvPoints.text = model.race?.points?.toEmptyIfZero() ?: ""
 
-            tvStartedAbsolute.text = model.gridPos.position()
-            val diff = model.gridPos - model.racePos
+            tvStartedAbsolute.text = model.race?.gridPos?.position() ?: ""
+            val diff = (model.race?.gridPos ?: 0) - (model.race?.pos ?: 0)
             tvStartedRelative.text = abs(diff).toString()
             when {
                 diff == 0 -> { // Equal
@@ -60,28 +60,30 @@ class RaceResultViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnC
                 }
             }
 
-            tvTime.text = model.raceResult.toString()
-            status = model.status
+            tvTime.text = model.race?.result.toString() ?: ""
+            status = model.race?.status ?: ""
             when {
-                !model.raceResult.noTime -> {
-                    tvTime.text = context.getString(R.string.race_time_delta, model.raceResult)
+                model.race?.result?.noTime == false -> {
+                    tvTime.text = context.getString(R.string.race_time_delta, model.race?.result)
                 }
-                model.status.isStatusFinished() -> {
-                    tvTime.text = model.status
+                model.race?.status?.isStatusFinished() == true -> {
+                    tvTime.text = model.race.status
                 }
                 else -> {
                     tvTime.text = context.getString(R.string.race_status_retired)
-                    imgStatus.setImageResource(model.status.iconRes)
+                    model.race?.status?.let {
+                        imgStatus.setImageResource(it.iconRes)
+                    }
                 }
             }
 
-            if (model.status.isStatusFinished()) {
+            if (model.race?.status?.isStatusFinished() == true) {
                 imgStatus.gone()
             } else {
                 imgStatus.visible()
             }
 
-            if (model.fastestLap) {
+            if (model.race?.fastestLap == true) {
                 imgFastestLap.visible()
             } else {
                 imgFastestLap.gone()

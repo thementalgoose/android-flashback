@@ -16,6 +16,8 @@ const val showComingSoonMessageForNextDays = 10
 
 const val bottomSheetFastScrollDuration = 300
 
+fun isValidVersion(version: Int?): Boolean = version == null || (version >= BuildConfig.VERSION_CODE)
+
 val dateFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("dd MMMM yyyy")
 val timeFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm")
 

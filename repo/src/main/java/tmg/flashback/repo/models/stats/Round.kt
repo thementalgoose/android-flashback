@@ -10,23 +10,20 @@ data class Round(
     val date: LocalDate,
     val time: LocalTime?,
     val name: String,
+    val drivers: List<RoundDriver>,
+    val constructors: List<Constructor>,
     val circuit: CircuitSummary,
     val q1: Map<String, RoundQualifyingResult>,
     val q2: Map<String, RoundQualifyingResult>,
     val q3: Map<String, RoundQualifyingResult>,
     val race: Map<String, RoundRaceResult>
 ) {
-    val drivers: List<RoundDriver>
-        get() {
-            return race.values.map { it.driver }
-        }
-
     fun driverOverview(driverId: String): RoundDriverOverview {
         return RoundDriverOverview(
             q1 = q1[driverId],
             q2 = q2[driverId],
             q3 = q3[driverId],
-            race = race.getValue(driverId)
+            race = race[driverId]
         )
     }
 
@@ -37,13 +34,6 @@ data class Round(
     val q3FastestLap: LapTime?
         get() = q3.fastest()
 
-    val constructor: List<Constructor>
-        get() {
-            return race.values
-                .map { it.driver.constructor }
-                .distinctBy { it.id }
-        }
-
     val constructorStandings: List<RoundConstructorStandings>
         get() {
             val standings: MutableMap<String, Int> = mutableMapOf()
@@ -52,7 +42,7 @@ data class Round(
                 previousPoints += raceResult.points
                 standings[raceResult.driver.constructor.id] = previousPoints
             }
-            return constructor.map {
+            return constructors.map {
                 RoundConstructorStandings(
                     standings.getOrElse(
                         it.id
@@ -83,7 +73,7 @@ data class RoundDriverOverview(
     val q1: RoundQualifyingResult?,
     val q2: RoundQualifyingResult?,
     val q3: RoundQualifyingResult?,
-    val race: RoundRaceResult
+    val race: RoundRaceResult?
 )
 
 data class RoundQualifyingResult(
@@ -121,7 +111,7 @@ val List<Round>.upcoming: Int
 fun List<Round>.constructorStandings(): ConstructorStandings {
     val returnMap: MutableMap<String, Pair<Constructor, MutableMap<String, Pair<Driver, Int>>>> = mutableMapOf()
     this.forEach { round ->
-        round.constructor.forEach {
+        round.constructors.forEach {
             if (!returnMap.containsKey(it.id)) {
                 returnMap[it.id] = Pair(it, mutableMapOf())
             }

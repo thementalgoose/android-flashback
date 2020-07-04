@@ -9,36 +9,55 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/paddingSmall">
+        android:layout_height="wrap_content">
+
+        <View
+            android:id="@+id/pill"
+            android:layout_width="@dimen/bottomSheetPillWidth"
+            android:layout_height="@dimen/bottomSheetPillHeight"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/paddingSmall"
+            android:background="?attr/f1BackgroundSecondary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            style="@style/Text.ReleaseNotes.Header"
+            android:id="@+id/bottomSheetTitle"
+            style="@style/Text.BottomSheet.Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/paddingSmall"
+            android:gravity="center"
+            android:text="@string/settings_help_release_notes_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/pill" />
+
+        <TextView
+            android:id="@+id/subtitle"
+            style="@style/Text.Dashboard.Menu.Subtitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:paddingStart="@dimen/paddingMedium"
             android:paddingTop="@dimen/paddingSmall"
             android:paddingEnd="@dimen/paddingMedium"
-            android:paddingBottom="@dimen/paddingSmall"
-            android:text="@string/settings_help_release_notes_title"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/imgbtnClose"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/imgbtnClose"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginEnd="@dimen/paddingMedium"
-            android:background="@null"
-            android:src="@drawable/ic_icon_close"
-            android:tint="?attr/f1TextPrimary"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:paddingBottom="@dimen/paddingNSmall"
+            android:text="@string/release_notes_description"
+            android:gravity="center"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bottomSheetTitle" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:id="@+id/div1"
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="?attr/f1BackgroundSecondary" />
+
 
     <TextView
         android:id="@+id/tvReleaseNotesDescription"
@@ -46,7 +65,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingStart="@dimen/paddingMedium"
-        android:paddingTop="@dimen/paddingXSmall"
+        android:paddingTop="@dimen/paddingSmall"
         android:paddingEnd="@dimen/paddingMedium"
         android:paddingBottom="@dimen/paddingXLarge"
         tools:text="Initial release!" />

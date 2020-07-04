@@ -26,35 +26,45 @@ fun FSeason.convert(season: Int): Season {
 fun FRound.convert(
     fSeason: FSeason
 ): Round {
+
+    val driverList = (fSeason.drivers ?: emptyMap()).values
+        .map { driver -> driver.convert(
+                fSeason.constructors ?: emptyMap(),
+                driverCon?.toList()?.firstOrNull { it.first == driver.id }?.second,
+                fSeason.constructorAtEndOfSeason(driver.id)
+            )
+        }
+    val constructorList =(fSeason.constructors ?: emptyMap()).values
+        .map { constructor -> constructor.convert() }
+
+    val raceMap = (race ?: mapOf())
+        .map { (driverId, raceResult) ->
+            driverId to RoundRaceResult(
+                driver = driverList.first { it.id == driverId },
+                time = raceResult.time?.toLapTime(),
+                points = raceResult.points ?: 0,
+                grid = raceResult.grid ?: 0,
+                qualified = getQualified(raceResult),
+                finish = raceResult.result ?: 0,
+                status = raceResult.status ?: raceStatusUnknown,
+                fastestLap = raceResult.fastestLap?.convert()
+            )
+        }
+        .toMap()
+
     return Round(
         season = season,
         round = round,
         date = fromDate(date),
         time = fromTime(time),
         name = name,
+        drivers = driverList,
+        constructors = constructorList,
         circuit = circuit.convert(),
         q1 = qualifying.onResult(fSeason, driverCon ?: emptyMap()) { it.q1 },
         q2 = qualifying.onResult(fSeason, driverCon ?: emptyMap()) { it.q2 },
         q3 = qualifying.onResult(fSeason, driverCon ?: emptyMap()) { it.q3 },
-        race = (race ?: mapOf())
-            .map { (driverId, raceResult) ->
-                driverId to RoundRaceResult(
-                    driver = (fSeason.drivers ?: emptyMap()).values.first { it.id == driverId }
-                        .convert(
-                            fSeason.constructors ?: emptyMap(),
-                            driverCon?.toList()?.firstOrNull { it.first == driverId }?.second,
-                            fSeason.constructorAtEndOfSeason(driverId)
-                        ),
-                    time = raceResult.time?.toLapTime(),
-                    points = raceResult.points ?: 0,
-                    grid = raceResult.grid ?: 0,
-                    qualified = getQualified(raceResult),
-                    finish = raceResult.result ?: 0,
-                    status = raceResult.status ?: raceStatusUnknown,
-                    fastestLap = raceResult.fastestLap?.convert()
-                )
-            }
-            .toMap()
+        race = raceMap
     )
 }
 

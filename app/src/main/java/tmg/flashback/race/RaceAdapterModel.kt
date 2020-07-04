@@ -18,13 +18,8 @@ sealed class RaceAdapterModel {
         val q1: RoundQualifyingResult?,
         val q2: RoundQualifyingResult?,
         val q3: RoundQualifyingResult?,
-        val racePoints: Int,
-        val raceResult: LapTime,
-        val racePos: Int,
-        val gridPos: Int,
+        val race: SingleRace?,
         val qualified: Int?,
-        val status: RaceStatus,
-        val fastestLap: Boolean,
         val q1Delta: String?,
         val q2Delta: String?,
         val q3Delta: String?,
@@ -54,6 +49,15 @@ sealed class RaceAdapterModel {
 
     object NoNetwork : RaceAdapterModel()
 }
+
+data class SingleRace(
+    val points: Int,
+    val result: LapTime,
+    val pos: Int,
+    val gridPos: Int,
+    val status: RaceStatus,
+    val fastestLap: Boolean
+)
 
 data class ShowQualifying(
     val q1: Boolean,

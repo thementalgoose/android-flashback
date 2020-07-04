@@ -7,6 +7,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.*
 import tmg.flashback.base.BaseViewModel
+import tmg.flashback.isValidVersion
 import tmg.flashback.repo.db.stats.DataDB
 import tmg.flashback.repo.models.AppLockout
 import tmg.utilities.lifecycle.DataEvent
@@ -64,7 +65,7 @@ class LockoutViewModel(
         .asLiveData(viewModelScope.coroutineContext)
 
     override val returnToHome: LiveData<Event> = appLockedData
-        .map { it.show }
+        .map { it.show && isValidVersion(it.version) }
         .filter { !it }
         .map { Event() }
         .asLiveData(viewModelScope.coroutineContext)
