@@ -28,6 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/paddingSmall"
+        android:paddingBottom="@dimen/paddingXSmall"
         app:layout_constraintStart_toEndOf="@id/tvPosition"
         app:layout_constraintTop_toTopOf="@id/tvPosition" />
 
@@ -35,8 +36,9 @@
         android:id="@+id/imgDriverFlag"
         android:layout_width="@dimen/driverFlagSize"
         android:layout_height="@dimen/driverFlagSize"
+        android:layout_marginStart="@dimen/paddingXSmall"
         app:layout_constraintBottom_toBottomOf="@id/tvDriverNumber"
-        app:layout_constraintStart_toStartOf="@id/layoutDriver"
+        app:layout_constraintStart_toEndOf="@id/constructorColor"
         app:layout_constraintTop_toTopOf="@id/tvDriverNumber"
         tools:src="@drawable/gb" />
 
@@ -50,15 +52,21 @@
         app:layout_constraintTop_toBottomOf="@id/layoutDriver"
         tools:text="44" />
 
+    <View
+        android:id="@+id/constructorColor"
+        android:layout_width="4dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/tvDriverNumber"
+        app:layout_constraintStart_toStartOf="@id/layoutDriver"
+        app:layout_constraintTop_toTopOf="@id/tvDriverNumber"
+        tools:background="#88ff88" />
+
     <TextView
-        android:drawableTint="?attr/f1TextSecondary"
         android:id="@+id/tvConstructor"
         style="@style/Text.RaceResult.Constructor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/paddingSmall"
-        android:drawableStart="@drawable/ic_small_constructor"
-        android:drawablePadding="@dimen/paddingXSmall"
+        android:layout_marginStart="@dimen/paddingNSmall"
         app:layout_constraintBottom_toBottomOf="@id/tvDriverNumber"
         app:layout_constraintStart_toEndOf="@id/tvDriverNumber"
         app:layout_constraintTop_toBottomOf="@id/layoutDriver"
@@ -175,11 +183,11 @@
                 tools:text="+1.123" />
 
             <ImageView
-                android:tint="?attr/f1TextSecondary"
                 android:id="@+id/imgStatus"
                 android:layout_width="@dimen/raceStatusSize"
                 android:layout_height="@dimen/raceStatusSize"
-                android:layout_marginStart="3dp" />
+                android:layout_marginStart="3dp"
+                android:tint="?attr/f1TextSecondary" />
 
         </LinearLayout>
 

@@ -28,9 +28,13 @@ class TrackViewHolder(
         itemView.apply {
             country.setImageResource(context.getFlagResourceAlpha3(item.raceCountryISO))
             when {
-                data.hasData -> {
+                data.hasResults -> {
                     status.setColorFilter(context.theme.getColor(R.attr.f1DeltaNegative))
                     status.setImageResource(R.drawable.race_status_hasdata)
+                }
+                data.hasQualifying -> {
+                    status.setColorFilter(context.theme.getColor(R.attr.f1DeltaWaiting))
+                    status.setImageResource(R.drawable.race_status_hasqualifying)
                 }
                 data.date > LocalDate.now() -> {
                     status.setColorFilter(context.theme.getColor(R.attr.f1DeltaNeutral))

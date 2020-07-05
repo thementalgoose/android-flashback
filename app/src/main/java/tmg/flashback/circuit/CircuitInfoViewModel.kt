@@ -11,6 +11,7 @@ import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.*
 import tmg.flashback.base.BaseViewModel
 import tmg.flashback.circuit.list.CircuitItem
+import tmg.flashback.extensions.circuitIcon
 import tmg.flashback.repo.db.stats.CircuitDB
 import tmg.flashback.repo.models.stats.Circuit
 import tmg.flashback.settings.ConnectivityManager
@@ -83,9 +84,11 @@ class CircuitInfoViewModel(
                     return@map listOf<CircuitItem>(CircuitItem.InternalError)
                 }
                 else -> {
-                    val list = mutableListOf<CircuitItem>(
-                        CircuitItem.CircuitInfo(it)
-                    )
+                    val list = mutableListOf<CircuitItem>()
+                    it.circuitIcon?.let {
+                        list.add(CircuitItem.TrackImage(it))
+                    }
+                    list.add(CircuitItem.CircuitInfo(it))
                     list.addAll(it.results
                         .map { result ->
                             CircuitItem.Race(

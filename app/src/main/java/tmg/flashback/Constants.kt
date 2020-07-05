@@ -1,8 +1,8 @@
 package tmg.flashback
 
 import android.content.Context
+import androidx.annotation.DrawableRes
 import org.threeten.bp.Year
-import org.threeten.bp.format.DateTimeFormatter
 import tmg.components.about.AboutThisAppConfiguration
 import tmg.components.about.AboutThisAppDependency
 
@@ -16,10 +16,41 @@ const val showComingSoonMessageForNextDays = 10
 
 const val bottomSheetFastScrollDuration = 300
 
-fun isValidVersion(version: Int?): Boolean = version == null || (version >= BuildConfig.VERSION_CODE)
+fun isValidVersion(version: Int?): Boolean =
+    version == null || (version >= BuildConfig.VERSION_CODE)
 
-val dateFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("dd MMMM yyyy")
-val timeFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm")
+
+enum class TrackLayout(
+    val circuitId: String,
+    @DrawableRes
+    val icon: Int
+) {
+    ALBERT_PARK("albert_park", R.drawable.circuit_albert_park),
+    AMERICAS("americas", R.drawable.circuit_americas),
+    BAHRAIN("bahrain", R.drawable.circuit_bahrain),
+    BAK("BAK", R.drawable.circuit_bak),
+    CATALUNYA("catalunya", R.drawable.circuit_catalunya),
+    HANOI("hanoi", R.drawable.circuit_hanoi),
+    HOCKENHEIMRING("hockenheimring", R.drawable.circuit_hockenheimring),
+    HUNGARORING("hungaroring", R.drawable.circuit_hungaroring),
+    INTERLAGOS("interlagos", R.drawable.circuit_interlagos),
+    MARINA_BAY("marina_bay", R.drawable.circuit_marina_bay),
+    MONACO("monaco", R.drawable.circuit_monaco),
+    MONZA("monza", R.drawable.circuit_monza),
+    RED_BULL_RING("red_bull_ring", R.drawable.circuit_red_bull_ring),
+    RICARD("ricard", R.drawable.circuit_ricard),
+    RODRIGUEZ("rodriguez", R.drawable.circuit_rodriguez),
+    SEPANG("sepang", R.drawable.circuit_sepang),
+    SHANGHAI("shanghai", R.drawable.circuit_shanghai),
+    SILVERSTONE("silverstone", R.drawable.circuit_silverstone),
+    SOCHI("sochi", R.drawable.circuit_sochi),
+    SPA("spa", R.drawable.circuit_spa),
+    SUZUKA("suzuka", R.drawable.circuit_suzuka),
+    VILLENEUVE("villeneuve", R.drawable.circuit_villeneuve),
+    YAS_MARINA("yas_marina", R.drawable.circuit_yas_marina),
+    ZANDVOORT("zandvoort", R.drawable.circuit_zandvoort);
+}
+
 
 val coloursDecade: Map<String, String> = mapOf(
     "1950" to "#9fa8da",

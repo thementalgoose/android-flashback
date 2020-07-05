@@ -20,6 +20,7 @@ import org.koin.android.ext.android.inject
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.R
+import tmg.flashback.TrackLayout
 import tmg.flashback.base.BaseActivity
 import tmg.flashback.circuit.CircuitInfoActivity
 import tmg.flashback.utils.getColor
@@ -27,6 +28,7 @@ import tmg.flashback.utils.getFlagResourceAlpha3
 import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
+import tmg.utilities.extensions.toEnum
 import tmg.utilities.extensions.views.show
 
 private const val duration: Long = 200L
@@ -39,7 +41,7 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
 
     var season: Int = -1
     var round: Int = -1
-    var circuitId: String? = null
+    lateinit var circuitId: String
 
     private var initialCountry: String = ""
     private var initialCountryISO: String = ""
@@ -88,7 +90,7 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
     override fun arguments(bundle: Bundle) {
         season = bundle.getInt(keySeason)
         round = bundle.getInt(keyRound)
-        circuitId = bundle.getString(keyCircuitId) ?: null
+        circuitId = bundle.getString(keyCircuitId)!!
 
         initialCountry = bundle.getString(keyCountry, "")
         initialCountryISO = bundle.getString(keyCountryISO, "")
@@ -121,6 +123,13 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
             tvDate.text = it.format(DateTimeFormatter.ofPattern("dd MMMM"))
         }
 
+        val track = circuitId.toEnum<TrackLayout> { it.circuitId }
+        trackLayout.show(track != null)
+        circuit.show(track == null)
+        if (track != null) {
+            trackLayout.setImageResource(track.icon)
+        }
+
         menu.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.nav_qualifying -> {
@@ -141,14 +150,15 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
         back.setOnClickListener { finish() }
 
         circuit.setOnClickListener {
-            circuitId?.let {
-                startActivity(CircuitInfoActivity.intent(this, it, initialTrackName))
-            }
+            startActivity(CircuitInfoActivity.intent(this, circuitId, initialTrackName))
+        }
+
+        trackLayout.setOnClickListener {
+            startActivity(CircuitInfoActivity.intent(this, circuitId, initialTrackName))
         }
 
         // Observe
 
-        circuit.show(circuitId != null)
 
         observe(viewModel.outputs.seasonRoundData) { (season, round) ->
             tvRoundInfo.text = getString(

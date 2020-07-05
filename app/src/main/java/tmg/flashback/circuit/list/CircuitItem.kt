@@ -4,6 +4,7 @@ import androidx.annotation.LayoutRes
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
 import tmg.flashback.R
+import tmg.flashback.TrackLayout
 import tmg.flashback.repo.models.stats.Circuit
 import tmg.flashback.repo.models.stats.CircuitSummary
 import tmg.flashback.shared.viewholders.DataUnavailable
@@ -22,6 +23,10 @@ sealed class CircuitItem(
         val season: Int,
         val round: Int
     ): CircuitItem(R.layout.view_circuit_race)
+
+    data class TrackImage(
+        val trackLayout: TrackLayout
+    ): CircuitItem(R.layout.view_circuit_track)
 
     object NoNetwork: CircuitItem(R.layout.view_shared_no_network)
 

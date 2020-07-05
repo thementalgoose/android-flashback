@@ -18,7 +18,8 @@ sealed class HomeItem(
         val raceCountryISO: String,
         val date: LocalDate,
         val round: Int,
-        val hasData: Boolean
+        val hasQualifying: Boolean,
+        val hasResults: Boolean
     ): HomeItem(R.layout.view_home_track)
 
     data class Driver(

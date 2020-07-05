@@ -260,7 +260,8 @@ class HomeViewModel(
                     raceCountry = it.country,
                     raceCountryISO = it.countryISO,
                     date = it.date,
-                    hasData = it.hasResults
+                    hasQualifying = it.hasQualifying,
+                    hasResults = it.hasResults
                 )
             }
     }

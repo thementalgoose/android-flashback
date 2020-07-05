@@ -9,6 +9,7 @@ import tmg.flashback.R
 import tmg.flashback.extensions.iconRes
 import tmg.flashback.repo.enums.isStatusFinished
 import tmg.flashback.race.RaceAdapterModel
+import tmg.flashback.repo.enums.RaceStatus
 import tmg.flashback.utils.getColor
 import tmg.flashback.utils.getFlagResourceAlpha3
 import tmg.flashback.utils.position
@@ -16,6 +17,7 @@ import tmg.utilities.extensions.toEmptyIfZero
 import tmg.utilities.extensions.views.getString
 import tmg.utilities.extensions.views.gone
 import tmg.utilities.extensions.views.visible
+import tmg.utilities.utils.ColorUtils.Companion.darken
 import kotlin.math.abs
 
 class RaceResultViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
@@ -33,9 +35,11 @@ class RaceResultViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnC
             layoutDriver.tvNumber.gone()
             layoutDriver.imgFlag.gone()
             tvDriverNumber.text = model.driver.number.toString()
-            tvDriverNumber.colorHighlight = model.driver.constructor.color
+            tvDriverNumber.colorHighlight = darken(model.driver.constructor.color)
             imgDriverFlag.setImageResource(context.getFlagResourceAlpha3(model.driver.nationalityISO))
             tvConstructor.text = model.driver.constructor.name
+
+            constructorColor.setBackgroundColor(model.driver.constructor.color)
 
             tvPoints.text = model.race?.points?.toEmptyIfZero() ?: ""
 
@@ -60,7 +64,7 @@ class RaceResultViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnC
                 }
             }
 
-            tvTime.text = model.race?.result.toString() ?: ""
+            tvTime.text = model.race?.result.toString()
             status = model.race?.status ?: ""
             when {
                 model.race?.result?.noTime == false -> {
@@ -94,7 +98,7 @@ class RaceResultViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnC
     override fun onClick(p0: View?) {
         when (p0) {
             itemView.layoutTime -> {
-                if (status.isNotEmpty()) {
+                if (status.isNotEmpty() && status != "Finished") {
                     Toast.makeText(itemView.context, getString(R.string.race_dnf_cause, status), Toast.LENGTH_SHORT).show()
                 }
             }

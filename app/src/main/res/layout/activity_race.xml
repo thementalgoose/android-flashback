@@ -106,10 +106,24 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="@dimen/paddingMedium"
                     android:layout_marginEnd="@dimen/paddingMedium"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    android:lines="2"
+                    android:minLines="2"
+                    app:layout_constraintEnd_toStartOf="@id/trackLayout"
                     app:layout_constraintStart_toEndOf="@id/imgCountry"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="Albert Park Grand Prix Circuit" />
+
+                <ImageView
+                    android:id="@+id/trackLayout"
+                    android:layout_width="100dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="@dimen/paddingMedium"
+                    android:tint="?attr/f1TextPrimary"
+                    app:layout_constraintBottom_toBottomOf="@id/tvDate"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:layout_width="100dp"
+                    tools:src="@drawable/circuit_albert_park" />
 
                 <TextView
                     android:id="@+id/tvRoundInfo"

@@ -20,16 +20,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-    <!--    <com.airbnb.lottie.LottieAnimationView-->
-    <!--        android:id="@+id/lottie"-->
-    <!--        android:layout_width="110dp"-->
-    <!--        android:layout_height="90dp"-->
-    <!--        android:alpha="0.3"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toTopOf="parent"-->
-    <!--        app:lottie_autoPlay="true"-->
-    <!--        app:lottie_loop="true"-->
-    <!--        app:lottie_rawRes="@raw/cloud_error" />-->
 
     <TextView
         style="@style/Text.Network.Error"
