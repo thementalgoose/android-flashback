@@ -81,6 +81,15 @@
         app:layout_constraintTop_toBottomOf="@id/tvDriver"
         tools:text="Mercedes" />
 
+    <View
+        android:id="@+id/constructorColor"
+        android:layout_width="0dp"
+        android:layout_height="4dp"
+        app:layout_constraintEnd_toEndOf="@id/tvConstructor"
+        app:layout_constraintStart_toStartOf="@id/tvConstructor"
+        app:layout_constraintTop_toBottomOf="@id/tvConstructor"
+        tools:background="#99ff99" />
+
     <TextView
         android:id="@+id/tvStartedAbsolute"
         style="@style/Text.Podium.Position.Absolute"
@@ -91,7 +100,7 @@
         app:layout_constraintEnd_toStartOf="@id/imgStarted"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvConstructor"
+        app:layout_constraintTop_toBottomOf="@id/constructorColor"
         tools:text="Started 8th" />
 
     <ImageView

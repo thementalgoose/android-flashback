@@ -44,6 +44,7 @@
         <item name="f1DeltaPositive">#f44336</item>
         <item name="f1DeltaNeutral">?attr/f1TextSecondary</item>
         <item name="f1DeltaNegative">#4CAF50</item>
+        <item name="f1DeltaWaiting">#FFA000</item>
     </style>
 
 
@@ -91,6 +92,7 @@
         <item name="f1DeltaPositive">#f44336</item>
         <item name="f1DeltaNeutral">?attr/f1TextSecondary</item>
         <item name="f1DeltaNegative">#4CAF50</item>
+        <item name="f1DeltaWaiting">#FFA000</item>
     </style>
 
 

@@ -38,6 +38,8 @@ class RacePodiumViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             tvNumber.colorHighlight = model.driver.constructor.color
             tvConstructor.text = model.driver.constructor.name
 
+            constructorColor.setBackgroundColor(model.driver.constructor.color)
+
             model.driver.photoUrl?.let {
                 Glide.with(imgDriver)
                     .load(it)

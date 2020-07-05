@@ -81,6 +81,7 @@
         android:layout_marginStart="@dimen/paddingSmall"
         android:drawableStart="@drawable/ic_small_constructor"
         android:drawablePadding="@dimen/paddingXSmall"
+        android:drawableTint="?attr/f1TextTertiary"
         app:layout_constraintBottom_toBottomOf="@id/tvDriverNumber"
         app:layout_constraintStart_toEndOf="@id/tvDriverNumber"
         app:layout_constraintTop_toBottomOf="@id/layoutDriver"

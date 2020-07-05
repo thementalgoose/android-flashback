@@ -29,24 +29,36 @@
         app:layout_constraintStart_toEndOf="@id/tvPosition"
         app:layout_constraintTop_toTopOf="@id/tvPosition" />
 
+    <View
+        android:id="@+id/constructorColor"
+        android:layout_width="4dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/tvConstructor"
+        app:layout_constraintStart_toStartOf="@id/layoutDriver"
+        app:layout_constraintTop_toTopOf="@id/tvConstructor"
+        tools:background="#99ff99" />
+
     <TextView
         android:id="@+id/tvConstructor"
         style="@style/Text.QualifyingTime.Constructor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/paddingXSmall"
+        android:layout_marginTop="2dp"
         android:layout_marginBottom="@dimen/paddingXSmall"
-        app:layout_constraintStart_toStartOf="@id/layoutDriver"
+        app:layout_constraintStart_toEndOf="@id/constructorColor"
         app:layout_constraintTop_toBottomOf="@id/layoutDriver"
         tools:text="Mercedes" />
 
     <TextView
+        android:id="@+id/penalty"
         style="@style/Text.QualifyingTime.Delta"
         android:layout_width="wrap_content"
-        android:id="@+id/penalty"
         android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
         android:text="@string/qualifying_grid_penalty"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@id/tvConstructor"
+        app:layout_constraintStart_toStartOf="@id/constructorColor"
         app:layout_constraintTop_toBottomOf="@id/tvConstructor" />
 
     <View

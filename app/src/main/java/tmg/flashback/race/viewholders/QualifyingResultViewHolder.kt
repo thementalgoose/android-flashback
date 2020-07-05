@@ -16,6 +16,7 @@ import tmg.utilities.extensions.ordinalAbbreviation
 import tmg.utilities.extensions.views.getString
 import tmg.utilities.extensions.views.gone
 import tmg.utilities.extensions.views.show
+import tmg.utilities.utils.ColorUtils.Companion.darken
 
 class QualifyingResultViewHolder(view: View, private val updateAdapterType: RaceAdapterCallback) :
     RecyclerView.ViewHolder(view), View.OnClickListener {
@@ -42,13 +43,13 @@ class QualifyingResultViewHolder(view: View, private val updateAdapterType: Race
             }
             layoutDriver.tvName.text = model.driver.name
             layoutDriver.tvNumber.text = model.driver.number.toString()
-            layoutDriver.tvNumber.colorHighlight = model.driver.constructor.color
+            layoutDriver.tvNumber.colorHighlight = darken(model.driver.constructor.color)
             layoutDriver.imgFlag.setImageResource(R.drawable.gb)
             tvConstructor.text = model.driver.constructor.name
             tvNumber.text = model.driver.number.toString()
             tvNumber.colorHighlight = model.driver.constructor.color
 
-
+            constructorColor.setBackgroundColor(model.driver.constructor.color)
 
             if (model.race != null && showQualifying.penalties && (model.qualified != null && model.qualified != model.race.gridPos && model.race.gridPos > model.qualified)) {
                 penalty.show(true)

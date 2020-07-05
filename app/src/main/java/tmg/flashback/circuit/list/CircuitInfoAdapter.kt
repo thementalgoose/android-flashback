@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.R
 import tmg.flashback.circuit.list.viewholders.CircuitInfoViewHolder
 import tmg.flashback.circuit.list.viewholders.CircuitRaceViewHolder
+import tmg.flashback.circuit.list.viewholders.CircuitTrackViewHolder
 import tmg.flashback.home.list.HomeItem
 import tmg.flashback.shared.viewholders.*
 import tmg.flashback.utils.calculateDiff
@@ -35,6 +36,9 @@ class CircuitInfoAdapter(
                 clickRace,
                 LayoutInflater.from(parent.context).inflate(viewType, parent, false)
             )
+            R.layout.view_circuit_track -> CircuitTrackViewHolder(
+                LayoutInflater.from(parent.context).inflate(viewType, parent, false)
+            )
             R.layout.view_shared_data_unavailable -> DataUnavailableViewHolder(
                 LayoutInflater.from(parent.context).inflate(viewType, parent, false)
             )
@@ -52,6 +56,7 @@ class CircuitInfoAdapter(
         when (val item = list[position]) {
             is CircuitItem.CircuitInfo -> (holder as CircuitInfoViewHolder).bind(item)
             is CircuitItem.Race -> (holder as CircuitRaceViewHolder).bind(item)
+            is CircuitItem.TrackImage -> (holder as CircuitTrackViewHolder).bind(item)
             is CircuitItem.Unavailable -> (holder as DataUnavailableViewHolder).bind(item.type)
         }
     }
