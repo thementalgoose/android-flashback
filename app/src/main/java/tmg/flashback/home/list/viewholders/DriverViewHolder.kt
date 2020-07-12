@@ -16,9 +16,26 @@ import tmg.utilities.extensions.views.context
 import tmg.utilities.extensions.views.getString
 import tmg.utilities.extensions.views.show
 
-class DriverViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+class DriverViewHolder(
+        val driverClicked: (season: Int, driverId: String, firstName: String?, lastName: String?) -> Unit,
+        itemView: View
+): RecyclerView.ViewHolder(itemView), View.OnClickListener {
+
+    init {
+        itemView.container.setOnClickListener(this)
+    }
+
+    private lateinit var driverId: String
+    private var season: Int = -1
+    private var firstName: String? = null
+    private var lastName: String? = null
 
     fun bind(item: HomeItem.Driver) {
+
+        driverId = item.driverId
+        season = item.season
+        firstName = item.driver.firstName
+        lastName = item.driver.lastName
 
         itemView.tvPosition.text = item.position.toString()
         itemView.layoutDriver.tvName.text = item.driver.name
@@ -69,5 +86,9 @@ class DriverViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
                 append(itemView.context.getString(R.string.home_driver_qualified, qualiPos, circuitsString))
             }
         }.toString().fromHtml()
+    }
+
+    override fun onClick(v: View?) {
+        driverClicked(season, driverId, firstName, lastName)
     }
 }

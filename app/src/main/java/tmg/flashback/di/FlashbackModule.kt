@@ -4,6 +4,7 @@ import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import tmg.flashback.admin.lockout.LockoutViewModel
 import tmg.flashback.circuit.CircuitInfoViewModel
+import tmg.flashback.driver.season.DriverSeasonViewModel
 import tmg.flashback.env
 import tmg.flashback.home.HomeViewModel
 import tmg.flashback.home.season.SeasonViewModel
@@ -23,6 +24,8 @@ var flashbackModule = module {
     viewModel { CircuitInfoViewModel(get(), get()) }
 
     viewModel { RaceViewModel(get(), get(), get()) }
+
+    viewModel { DriverSeasonViewModel(get(), get(), get()) }
 
     viewModel { SettingsViewModel(get(), get()) }
     viewModel { SettingsNewsViewModel(get(), env.isLive, get()) }

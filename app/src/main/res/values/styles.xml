@@ -341,6 +341,34 @@
         <item name="android:textSize">12sp</item>
     </style>
 
+    <!-- Driver Season - Track -->
+
+    <style name="Text.DriverSeason.Track.Title" parent="Text">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Text.DriverSeason.Track.TrackName" parent="Text">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="Text.DriverSeason.Track.Finish" parent="Text">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="Text.DriverSeason.Track.Status" parent="Text">
+        <item name="android:textSize">10sp</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+    <style name="Text.DriverSeason.Track.Qualified" parent="Text">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">?attr/f1TextSecondary</item>
+    </style>
+
+    <style name="Text.DriverSeason.Track.Date" parent="Text">
+        <item name="android:textSize">12sp</item>
+    </style>
+
     <!-- Race -->
 
     <style name="Text.Race.Header" parent="Text">
