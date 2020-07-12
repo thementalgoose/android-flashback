@@ -23,6 +23,7 @@ sealed class HomeItem(
     ): HomeItem(R.layout.view_home_track)
 
     data class Driver(
+        val season: Int,
         val points: Int,
         val driver: tmg.flashback.repo.models.stats.Driver,
         val driverId: String = driver.id,
@@ -33,6 +34,7 @@ sealed class HomeItem(
     ): HomeItem(R.layout.view_home_driver)
 
     data class Constructor(
+        val season: Int,
         val position: Int,
         val constructor: tmg.flashback.repo.models.stats.Constructor,
         val constructorId: String = constructor.id,

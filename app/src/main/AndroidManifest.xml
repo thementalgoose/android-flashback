@@ -60,6 +60,11 @@
             android:label="" />
 
         <activity
+            android:name=".driver.season.DriverSeasonActivity"
+            android:screenOrientation="portrait"
+            android:label="" />
+
+        <activity
             android:name=".admin.lockout.LockoutActivity"
             android:screenOrientation="portrait"
             android:label="" />

@@ -11,7 +11,8 @@ import tmg.flashback.home.list.viewholders.TrackViewHolder
 import tmg.flashback.shared.viewholders.*
 
 class HomeAdapter(
-    val trackClicked: (track: HomeItem.Track) -> Unit
+        private val trackClicked: (track: HomeItem.Track) -> Unit,
+        private val driverClicked: (season: Int, driverId: String, firstName: String?, lastName: String?) -> Unit
 ): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var list: List<HomeItem> = emptyList()
@@ -28,6 +29,7 @@ class HomeAdapter(
                 LayoutInflater.from(parent.context).inflate(viewType, parent, false)
             )
             R.layout.view_home_driver -> DriverViewHolder(
+                driverClicked,
                 LayoutInflater.from(parent.context).inflate(viewType, parent, false)
             )
             R.layout.view_home_constructor -> ConstructorViewHolder(

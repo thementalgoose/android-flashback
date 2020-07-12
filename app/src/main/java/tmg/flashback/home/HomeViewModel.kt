@@ -78,6 +78,7 @@ class HomeViewModel(
 
     private val currentTab: ConflatedBroadcastChannel<HomeMenuItem> =
         ConflatedBroadcastChannel(HomeMenuItem.CALENDAR)
+    private var _season: Int = currentYear
     private val season: ConflatedBroadcastChannel<Int> = ConflatedBroadcastChannel(currentYear)
 
     override val ensureOnCalendar: MutableLiveData<Event> = MutableLiveData()
@@ -164,6 +165,10 @@ class HomeViewModel(
                         rounds.isEmpty() ->
                             list.add(HomeItem.Unavailable(DataUnavailable.IN_FUTURE_SEASON))
                         else -> {
+                            val maxRound = rounds.maxBy { it.round }
+                            if (maxRound != null && historyRounds.size != rounds.size) {
+                                list.add(HomeItem.Message(context.getString(R.string.results_accurate_for, maxRound.name, maxRound.round)))
+                            }
                             val driverStandings = rounds.driverStandings()
                             list.addAll(driverStandings.toDriverList(rounds))
                         }
@@ -176,6 +181,10 @@ class HomeViewModel(
                         rounds.isEmpty() ->
                             list.add(HomeItem.Unavailable(DataUnavailable.IN_FUTURE_SEASON))
                         else -> {
+                            val maxRound = rounds.maxBy { it.round }
+                            if (maxRound != null && historyRounds.size != rounds.size) {
+                                list.add(HomeItem.Message(context.getString(R.string.results_accurate_for, maxRound.name, maxRound.round)))
+                            }
                             val constructorStandings = rounds.constructorStandings()
                             list.addAll(constructorStandings.toConstructorList())
                         }
@@ -238,6 +247,7 @@ class HomeViewModel(
     override fun selectSeason(season: Int) {
         invalidSeasonData = true
         showLoading.value = true
+        _season = season
         this.season.offer(season)
     }
 
@@ -277,6 +287,7 @@ class HomeViewModel(
             .mapIndexed { index: Int, pair: Pair<RoundDriver, Int> ->
                 val (roundDriver, points) = pair
                 HomeItem.Driver(
+                    season = _season,
                     driver = roundDriver,
                     points = points,
                     position = index + 1,
@@ -298,6 +309,7 @@ class HomeViewModel(
             .mapIndexed { index: Int, pair: Pair<Constructor, Map<String, Pair<Driver, Int>>> ->
                 val (constructor, driverPoints) = pair
                 HomeItem.Constructor(
+                    season = _season,
                     position = index + 1,
                     constructor = constructor,
                     driver = driverPoints.values.sortedByDescending { it.second },
