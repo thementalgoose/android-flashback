@@ -163,8 +163,8 @@
     <string name="home_calendar_filter_title">Filter</string>
     <string name="home_calendar_filter_description">Filter the season below</string>
 
-    <string name="home_driver_finish_pole"><![CDATA[Finished <b>%s</b> in %s]]></string> <!-- On pole or 4th -->
-    <string name="home_driver_qualified"><![CDATA[Qualified <b>%s</b> in %s]]></string> <!-- On pole or 2nd -->
+    <string name="home_driver_finish_pole"><![CDATA[‣ Finished <b>%s</b> in %s]]></string> <!-- On pole or 4th -->
+    <string name="home_driver_qualified"><![CDATA[‣ Qualified <b>%s</b> in %s]]></string> <!-- On pole or 2nd -->
     <string name="home_driver_grand_prixs">%d grand prix</string> <!-- On pole or 2nd -->
 
     <string name="home_partial_season">Statistics are shown as of the %s round of the grand prix, the %s. %d rounds to go</string> <!-- On pole or 2nd -->
