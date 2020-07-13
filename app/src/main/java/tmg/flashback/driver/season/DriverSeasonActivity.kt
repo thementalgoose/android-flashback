@@ -67,16 +67,18 @@ class DriverSeasonActivity: BaseActivity() {
         private const val keyFirstname: String = "keyFirstname"
         private const val keyLastname: String = "keyLastname"
 
-        fun intent(context: Context, season: Int, driverId: String, firstName: String? = null, lastName: String? = null): Intent {
+        fun intent(
+                context: Context,
+                season: Int,
+                driverId: String,
+                firstName: String? = null,
+                lastName: String? = null
+        ): Intent {
             val intent = Intent(context, DriverSeasonActivity::class.java)
             intent.putExtra(keySeason, season)
             intent.putExtra(keyDriverId, driverId)
-            firstName?.let {
-                intent.putExtra(keyFirstname, firstName)
-            }
-            lastName?.let {
-                intent.putExtra(keyLastname, lastName)
-            }
+            firstName?.let { intent.putExtra(keyFirstname, it) }
+            lastName?.let { intent.putExtra(keyLastname, it) }
             return intent
         }
     }

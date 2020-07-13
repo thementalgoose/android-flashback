@@ -5,11 +5,16 @@ import org.threeten.bp.LocalDate
 import tmg.flashback.R
 import tmg.flashback.repo.enums.RaceStatus
 import tmg.flashback.repo.models.stats.Constructor
+import tmg.flashback.repo.models.stats.Driver
 import tmg.flashback.shared.viewholders.DataUnavailable
 
 sealed class DriverSeasonItem(
         @LayoutRes val layoutId: Int
 ) {
+    data class Header(
+            val driver: Driver,
+            val constructors: List<Constructor>
+    ): DriverSeasonItem(R.layout.view_driver_header)
 
     data class Result(
             val season: Int,
