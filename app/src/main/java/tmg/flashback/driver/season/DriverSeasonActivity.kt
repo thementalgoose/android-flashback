@@ -10,6 +10,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.R
 import tmg.flashback.base.BaseActivity
 import tmg.flashback.driver.season.list.DriverSeasonAdapter
+import tmg.flashback.race.RaceActivity
 import tmg.utilities.extensions.observe
 
 class DriverSeasonActivity: BaseActivity() {
@@ -40,7 +41,21 @@ class DriverSeasonActivity: BaseActivity() {
 
         swipeContainer.isEnabled = false
 
-        adapter = DriverSeasonAdapter()
+        adapter = DriverSeasonAdapter(
+            itemClicked = { result ->
+                val intent: Intent = RaceActivity.intent(this,
+                    season = result.season,
+                    round = result.round,
+                    circuitId = result.circuitId,
+                    country = result.raceCountry,
+                    raceName = result.raceName,
+                    trackName = result.circuitName,
+                    countryISO = result.raceCountryISO,
+                    date = result.date
+                )
+                startActivity(intent)
+            }
+        )
         list.adapter = adapter
         list.layoutManager = LinearLayoutManager(this)
 

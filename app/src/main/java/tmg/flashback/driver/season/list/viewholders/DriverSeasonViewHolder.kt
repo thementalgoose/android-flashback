@@ -13,9 +13,21 @@ import tmg.utilities.extensions.ordinalAbbreviation
 import tmg.utilities.extensions.views.context
 import tmg.utilities.extensions.views.getString
 
-class DriverSeasonViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+class DriverSeasonViewHolder(
+    private val itemClicked: (result: DriverSeasonItem.Result) -> Unit,
+    itemView: View
+): RecyclerView.ViewHolder(itemView), View.OnClickListener {
+
+    init {
+        itemView.container.setOnClickListener(this)
+    }
+
+    private lateinit var result: DriverSeasonItem.Result
 
     fun bind(item: DriverSeasonItem.Result) {
+
+        this.result = item
+
         itemView.raceName.text = item.raceName
         itemView.country.setImageResource(context.getFlagResourceAlpha3(item.raceCountryISO))
         itemView.circuitName.text = item.circuitName
@@ -26,7 +38,6 @@ class DriverSeasonViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) 
         else {
             itemView.qualified.text = item.qualified.ordinalAbbreviation
         }
-
 
         if (item.raceStatus.isStatusFinished()) {
             itemView.finished.text = item.finished?.ordinalAbbreviation
@@ -41,5 +52,9 @@ class DriverSeasonViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) 
         itemView.lpvProgress.progressColour = item.constructor.color
         itemView.lpvProgress.textBackgroundColour = context.theme.getColor(R.attr.f1TextSecondary)
         itemView.lpvProgress.animateProgress(item.points.toFloat() / item.maxPoints.toFloat()) { (it * item.maxPoints.toFloat()).toInt().coerceIn(0, item.points).toString() }
+    }
+
+    override fun onClick(v: View?) {
+        itemClicked(result)
     }
 }

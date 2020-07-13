@@ -11,7 +11,9 @@ import tmg.flashback.driver.season.list.viewholders.DriverSeasonViewHolder
 import tmg.flashback.shared.viewholders.*
 import tmg.flashback.utils.GenericDiffCallback
 
-class DriverSeasonAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class DriverSeasonAdapter(
+        private val itemClicked: (result: DriverSeasonItem.Result) -> Unit
+): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var list: List<DriverSeasonItem> = emptyList()
         set(value) {
@@ -26,6 +28,7 @@ class DriverSeasonAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                     LayoutInflater.from(parent.context).inflate(viewType, parent, false)
             )
             R.layout.view_driver_season -> DriverSeasonViewHolder(
+                    itemClicked,
                     LayoutInflater.from(parent.context).inflate(viewType, parent, false)
             )
             R.layout.view_driver_season_header -> DriverSeasonHeaderViewHolder(

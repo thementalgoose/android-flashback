@@ -236,11 +236,13 @@ class HomeViewModel(
     //region Inputs
 
     override fun clickItem(item: HomeMenuItem) {
-        if (item == HomeMenuItem.SEASONS) {
-            openSeasonList.value = DataEvent(prefDB.showBottomSheetExpanded)
-        } else {
-            showLoading.value = true
-            currentTab.offer(item)
+        if (item != currentTab.value) {
+            if (item == HomeMenuItem.SEASONS) {
+                openSeasonList.value = DataEvent(prefDB.showBottomSheetExpanded)
+            } else {
+                showLoading.value = true
+                currentTab.offer(item)
+            }
         }
     }
 
