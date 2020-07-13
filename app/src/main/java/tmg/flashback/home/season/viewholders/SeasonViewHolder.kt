@@ -1,14 +1,10 @@
 package tmg.flashback.home.season.viewholders
 
-import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.toColorInt
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.activity_race.view.*
 import kotlinx.android.synthetic.main.view_season_list_season.view.*
-import kotlinx.android.synthetic.main.view_season_list_season.view.container
 import tmg.flashback.R
 import tmg.flashback.bottomSheetFastScrollDuration
 import tmg.flashback.coloursDecade
@@ -16,8 +12,6 @@ import tmg.flashback.extensions.dimensionPx
 import tmg.flashback.home.season.SeasonListItem
 import tmg.flashback.minimumSupportedYear
 import tmg.utilities.extensions.ordinalAbbreviation
-import tmg.utilities.extensions.views.show
-import tmg.utilities.utils.ConstraintSetAnimator
 
 class SeasonViewHolder(
     private var favouriteToggled: ((season: Int) -> Unit)? = null,

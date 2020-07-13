@@ -2,15 +2,16 @@ package tmg.flashback.views
 
 import android.animation.ValueAnimator
 import android.content.Context
-import android.graphics.*
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.View
 import android.view.animation.DecelerateInterpolator
 import androidx.annotation.ColorInt
 import tmg.flashback.R
 import tmg.labelledprogressbar.dpToPx
-import kotlin.math.max
-import kotlin.math.min
 
 private const val defaultBarSize: Float = 16f
 private const val defaultBackgroundColour: Int = Color.LTGRAY

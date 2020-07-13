@@ -3,11 +3,8 @@ package tmg.flashback.settings.news
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import tmg.components.prefs.AppPreferencesItem
-import tmg.components.prefs.AppPreferencesItemCategory
-import tmg.flashback.Env
 import tmg.flashback.R
 import tmg.flashback.base.BaseViewModel
-import tmg.flashback.env
 import tmg.flashback.extensions.description
 import tmg.flashback.extensions.title
 import tmg.flashback.repo.db.PrefsDB

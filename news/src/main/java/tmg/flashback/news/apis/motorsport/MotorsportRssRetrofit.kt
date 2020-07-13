@@ -1,7 +1,6 @@
 package tmg.flashback.news.apis.motorsport
 
 import retrofit2.http.GET
-import tmg.flashback.news.apis.crashnet.CrashNetRssModel
 import tmg.flashback.news.shared.buildRetrofit
 
 

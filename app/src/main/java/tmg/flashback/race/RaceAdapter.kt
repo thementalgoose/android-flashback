@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.R
 import tmg.flashback.race.viewholders.*
-import tmg.flashback.shared.viewholders.DataUnavailable
 import tmg.flashback.shared.viewholders.DataUnavailableViewHolder
 import tmg.flashback.shared.viewholders.NoNetworkViewHolder
 import tmg.utilities.extensions.toEnum

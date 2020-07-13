@@ -1,6 +1,5 @@
 package tmg.flashback.home.list.viewholders
 
-import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.layout_constructor_driver.view.*

@@ -3,14 +3,8 @@ package tmg.flashback.settings.news
 import android.os.Bundle
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.activity_settings.*
 import kotlinx.android.synthetic.main.activity_settings_news.*
-import kotlinx.android.synthetic.main.activity_settings_news.back
-import kotlinx.android.synthetic.main.activity_settings_news.header
-import kotlinx.android.synthetic.main.activity_settings_news.rvSettings
-import kotlinx.android.synthetic.main.activity_settings_news.titlebar
 import org.koin.android.viewmodel.ext.android.viewModel
-import tmg.components.prefs.AppPreferencesAdapter
 import tmg.flashback.R
 import tmg.flashback.base.BaseActivity
 import tmg.flashback.repo.enums.NewsSource

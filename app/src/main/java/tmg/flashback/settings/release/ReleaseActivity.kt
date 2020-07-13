@@ -4,12 +4,10 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.core.view.WindowInsetsCompat
 import kotlinx.android.synthetic.main.activity_release_notes.*
-import kotlinx.android.synthetic.main.toolbar.view.*
 import tmg.flashback.R
 import tmg.flashback.base.BaseActivity
 import tmg.flashback.releaseNotes
 import tmg.utilities.extensions.fromHtml
-import tmg.utilities.extensions.initToolbar
 
 class ReleaseActivity : BaseActivity() {
 

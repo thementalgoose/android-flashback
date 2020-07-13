@@ -4,14 +4,9 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.widget.Toast
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_circuit_info.*
-import kotlinx.android.synthetic.main.activity_circuit_info.back
-import kotlinx.android.synthetic.main.activity_circuit_info.list
-import kotlinx.android.synthetic.main.activity_circuit_info.titlebar
-import kotlinx.android.synthetic.main.view_circuit_info.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.R
 import tmg.flashback.base.BaseActivity

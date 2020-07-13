@@ -1,6 +1,5 @@
 package tmg.flashback.extensions
 
-import androidx.annotation.DrawableRes
 import tmg.flashback.R
 import tmg.flashback.repo.enums.RaceStatus
 import tmg.flashback.repo.enums.raceStatusUnknown

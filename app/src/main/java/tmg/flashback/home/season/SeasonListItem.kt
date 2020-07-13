@@ -1,6 +1,5 @@
 package tmg.flashback.home.season
 
-import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
 import tmg.flashback.R
 

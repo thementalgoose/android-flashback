@@ -1,6 +1,5 @@
 package tmg.flashback.home.season
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import tmg.flashback.allYears

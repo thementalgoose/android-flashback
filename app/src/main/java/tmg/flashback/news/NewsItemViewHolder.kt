@@ -5,7 +5,6 @@ import androidx.core.graphics.toColorInt
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.view_news_news.view.*
 import org.threeten.bp.format.DateTimeFormatter
-import tmg.flashback.home.list.HomeItem
 import tmg.flashback.repo.models.news.Article
 import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.views.show

@@ -1,7 +1,6 @@
 package tmg.flashback.settings
 
 import android.view.View
-import kotlinx.android.synthetic.main.view_settings_category.view.*
 import kotlinx.android.synthetic.main.view_settings_category.view.tvTitle
 import kotlinx.android.synthetic.main.view_settings_preference.view.*
 import kotlinx.android.synthetic.main.view_settings_preference.view.tvDescription

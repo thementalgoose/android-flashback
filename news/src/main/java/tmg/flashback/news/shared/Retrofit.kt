@@ -5,8 +5,6 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory
-import javax.net.ssl.HostnameVerifier
-import javax.net.ssl.SSLSession
 
 
 inline fun <reified T> buildRetrofit(baseUrl: String, isXML: Boolean = true, isDebug: Boolean = false): T {

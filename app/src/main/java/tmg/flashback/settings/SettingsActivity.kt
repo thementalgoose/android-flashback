@@ -12,7 +12,6 @@ import kotlinx.android.synthetic.main.activity_settings.*
 import kotlinx.android.synthetic.main.bottom_sheet_theme.*
 import org.koin.android.ext.android.inject
 import tmg.components.about.AboutThisAppActivity
-import tmg.components.prefs.AppPreferencesAdapter
 import tmg.flashback.R
 import tmg.flashback.base.BaseActivity
 import tmg.flashback.configuration

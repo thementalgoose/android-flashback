@@ -1,21 +1,15 @@
 package tmg.flashback.home
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
-import android.widget.Toast
 import androidx.core.view.WindowInsetsCompat
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.snackbar.Snackbar
 import com.reddit.indicatorfastscroll.FastScrollItemIndicator
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.bottom_sheet_season.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
-import me.saket.inboxrecyclerview.dimming.TintPainter
-import me.saket.inboxrecyclerview.page.PageStateChangeCallbacks
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.R
 import tmg.flashback.admin.lockout.LockoutActivity
@@ -30,13 +24,8 @@ import tmg.flashback.news.NewsActivity
 import tmg.flashback.race.RaceActivity
 import tmg.flashback.settings.SettingsActivity
 import tmg.flashback.settings.release.ReleaseBottomSheetFragment
-import tmg.flashback.utils.FragmentRequestBack
-import tmg.flashback.utils.TextAdapter
-import tmg.flashback.web.WebFragment
 import tmg.utilities.bottomsheet.BottomSheetFader
 import tmg.utilities.extensions.*
-import tmg.utilities.extensions.views.hide
-import tmg.utilities.extensions.views.show
 
 @FlowPreview
 @ExperimentalCoroutinesApi
@@ -80,7 +69,7 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback {
         dataList.layoutManager = LinearLayoutManager(this)
 
         menu.setOnNavigationItemSelectedListener {
-            val shouldUpdateTab = when (it.itemId) {
+            return@setOnNavigationItemSelectedListener when (it.itemId) {
                 R.id.nav_news -> {
                     startActivity(Intent(this, NewsActivity::class.java))
                     false
@@ -109,7 +98,6 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback {
                 }
                 else -> false
             }
-            return@setOnNavigationItemSelectedListener shouldUpdateTab
         }
 
         setupBottomSheetSeason()

@@ -7,20 +7,15 @@ import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import org.koin.ext.scope
-import org.threeten.bp.LocalDate
 import tmg.flashback.base.BaseViewModel
 import tmg.flashback.currentYear
 import tmg.flashback.driver.season.list.DriverSeasonItem
-import tmg.flashback.driver.season.list.viewholders.DriverSeasonHeaderViewHolder
-import tmg.flashback.race.RaceAdapterModel
 import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.db.stats.SeasonOverviewDB
 import tmg.flashback.repo.models.stats.Constructor
 import tmg.flashback.repo.models.stats.Driver
 import tmg.flashback.settings.ConnectivityManager
 import tmg.flashback.shared.viewholders.DataUnavailable
-import tmg.flashback.showComingSoonMessageForNextDays
 
 //region Inputs
 

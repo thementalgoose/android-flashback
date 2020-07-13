@@ -3,6 +3,7 @@ package tmg.flashback.utils
 import android.content.Context
 import androidx.annotation.DrawableRes
 import tmg.flashback.R
+import java.util.*
 
 @DrawableRes
 fun Context.getFlagResourceAlpha3(flag: String): Int {
@@ -14,5 +15,5 @@ fun Context.getFlagResource(flag: String?): Int {
     if (flag == null) {
         return R.drawable.nationality_not_found
     }
-    return resources.getIdentifier(flag.toLowerCase(), "drawable", packageName)
+    return resources.getIdentifier(flag.toLowerCase(Locale.UK), "drawable", packageName)
 }

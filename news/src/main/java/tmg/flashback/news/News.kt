@@ -1,13 +1,10 @@
 package tmg.flashback.news
 
 import android.util.Log
-import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
-import org.threeten.bp.LocalDateTime
 import retrofit2.HttpException
 import tmg.flashback.news.apis.autosport.AutosportRssRetrofit
 import tmg.flashback.news.apis.autosport.buildRetrofitAutosport
@@ -29,7 +26,6 @@ import tmg.flashback.repo.db.news.NewsDB
 import tmg.flashback.repo.enums.NewsSource
 import tmg.flashback.repo.models.Response
 import tmg.flashback.repo.models.news.Article
-import kotlin.coroutines.coroutineContext
 
 private val autosportRss: AutosportRssRetrofit = buildRetrofitAutosport(BuildConfig.DEBUG)
 private val crashNetRss: CrashNetRssRetrofit = buildRetrofitCrashNet(BuildConfig.DEBUG)
@@ -67,6 +63,7 @@ class News(
         }
     }
 
+    @Suppress("RemoveExplicitTypeArguments")
     override fun getNews(): Flow<Response<List<Article>>> = flow {
 
         withContext(GlobalScope.coroutineContext) {

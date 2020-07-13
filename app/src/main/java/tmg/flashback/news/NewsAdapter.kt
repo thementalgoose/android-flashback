@@ -2,10 +2,8 @@ package tmg.flashback.news
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.R
-import tmg.flashback.home.list.HomeItem
 import tmg.flashback.repo.models.news.Article
 import tmg.flashback.shared.viewholders.InternalErrorOccurredViewHolder
 import tmg.flashback.shared.viewholders.MessageViewHolder

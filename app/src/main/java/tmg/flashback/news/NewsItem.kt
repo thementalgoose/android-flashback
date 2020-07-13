@@ -2,7 +2,6 @@ package tmg.flashback.news
 
 import androidx.annotation.LayoutRes
 import tmg.flashback.R
-import tmg.flashback.home.list.HomeItem
 import tmg.flashback.repo.models.news.Article
 
 sealed class NewsItem(

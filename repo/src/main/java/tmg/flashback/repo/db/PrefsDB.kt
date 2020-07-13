@@ -1,6 +1,5 @@
 package tmg.flashback.repo.db
 
-import tmg.flashback.repo.enums.HomeTab
 import tmg.flashback.repo.enums.NewsSource
 import tmg.flashback.repo.enums.ThemePref
 
@@ -40,11 +39,6 @@ interface PrefsDB {
      * Show grid penalties in qualifying
      */
     var showGridPenaltiesInQualifying: Boolean
-
-    /**
-     * Which view to default too when opening the app
-     */
-    var defaultToTab: HomeTab
 
     /**
      * Automatic crash reporting functionality

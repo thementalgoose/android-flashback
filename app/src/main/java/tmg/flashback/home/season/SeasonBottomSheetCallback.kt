@@ -1,6 +1,5 @@
 package tmg.flashback.home.season
 
-import android.util.Log
 import android.view.View
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 

@@ -8,7 +8,7 @@ import tmg.flashback.R
 import tmg.flashback.circuit.list.CircuitItem
 import tmg.utilities.extensions.views.getString
 
-class CircuitRaceViewHolder(
+class CircuitInfoRaceViewHolder(
     private val raceClicked: (race: CircuitItem.Race) -> Unit,
     itemView: View
 ): RecyclerView.ViewHolder(itemView),

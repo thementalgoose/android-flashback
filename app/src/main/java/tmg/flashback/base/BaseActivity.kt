@@ -1,16 +1,11 @@
 package tmg.flashback.base
 
 import android.graphics.Color
-import android.graphics.Insets
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.view.WindowManager
-import androidx.annotation.LayoutRes
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import org.koin.android.ext.android.inject
-import tmg.flashback.BuildConfig
 import tmg.flashback.R
 import tmg.flashback.repo.db.CrashReporter
 import tmg.flashback.repo.db.PrefsDB

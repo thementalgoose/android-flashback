@@ -1,9 +1,9 @@
 package tmg.flashback.firebase.converters
 
+import tmg.flashback.firebase.models.FHistorySeason
+import tmg.flashback.firebase.models.FHistorySeasonRound
 import tmg.flashback.repo.models.stats.History
 import tmg.flashback.repo.models.stats.HistoryRound
-import tmg.flashback.firebase.models.*
-import java.time.Year
 
 fun FHistorySeason.convert(): List<History> {
     val list: MutableList<History> = mutableListOf()

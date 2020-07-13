@@ -7,9 +7,8 @@ import kotlinx.android.synthetic.main.layout_driver.view.*
 import kotlinx.android.synthetic.main.view_race_race_result.view.*
 import tmg.flashback.R
 import tmg.flashback.extensions.iconRes
-import tmg.flashback.repo.enums.isStatusFinished
 import tmg.flashback.race.RaceAdapterModel
-import tmg.flashback.repo.enums.RaceStatus
+import tmg.flashback.repo.enums.isStatusFinished
 import tmg.flashback.utils.getColor
 import tmg.flashback.utils.getFlagResourceAlpha3
 import tmg.flashback.utils.position
@@ -30,7 +29,7 @@ class RaceResultViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnC
 
     fun bind(model: RaceAdapterModel.Single) {
         itemView.apply {
-            tvPosition.text = model.race?.pos.toString() ?: ""
+            tvPosition.text = model.race?.pos.toString()
             layoutDriver.tvName.text = model.driver.name
             layoutDriver.tvNumber.gone()
             layoutDriver.imgFlag.gone()
@@ -68,7 +67,7 @@ class RaceResultViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnC
             status = model.race?.status ?: ""
             when {
                 model.race?.result?.noTime == false -> {
-                    tvTime.text = context.getString(R.string.race_time_delta, model.race?.result)
+                    tvTime.text = context.getString(R.string.race_time_delta, model.race.result)
                 }
                 model.race?.status?.isStatusFinished() == true -> {
                     tvTime.text = model.race.status

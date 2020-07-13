@@ -2,14 +2,14 @@ package tmg.flashback.circuit.list
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.R
-import tmg.flashback.circuit.list.viewholders.CircuitInfoViewHolder
-import tmg.flashback.circuit.list.viewholders.CircuitRaceViewHolder
-import tmg.flashback.circuit.list.viewholders.CircuitTrackViewHolder
-import tmg.flashback.home.list.HomeItem
-import tmg.flashback.shared.viewholders.*
+import tmg.flashback.circuit.list.viewholders.CircuitInfoHeaderViewHolder
+import tmg.flashback.circuit.list.viewholders.CircuitInfoRaceViewHolder
+import tmg.flashback.circuit.list.viewholders.CircuitInfoTrackViewHolder
+import tmg.flashback.shared.viewholders.DataUnavailableViewHolder
+import tmg.flashback.shared.viewholders.InternalErrorOccurredViewHolder
+import tmg.flashback.shared.viewholders.NoNetworkViewHolder
 import tmg.flashback.utils.calculateDiff
 
 class CircuitInfoAdapter(
@@ -27,16 +27,16 @@ class CircuitInfoAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            R.layout.view_circuit_info -> CircuitInfoViewHolder(
+            R.layout.view_circuit_info_header -> CircuitInfoHeaderViewHolder(
                 clickShowOnMap,
                 clickWikipedia,
                 LayoutInflater.from(parent.context).inflate(viewType, parent, false)
             )
-            R.layout.view_circuit_race -> CircuitRaceViewHolder(
+            R.layout.view_circuit_info_race -> CircuitInfoRaceViewHolder(
                 clickRace,
                 LayoutInflater.from(parent.context).inflate(viewType, parent, false)
             )
-            R.layout.view_circuit_track -> CircuitTrackViewHolder(
+            R.layout.view_circuit_info_track -> CircuitInfoTrackViewHolder(
                 LayoutInflater.from(parent.context).inflate(viewType, parent, false)
             )
             R.layout.view_shared_data_unavailable -> DataUnavailableViewHolder(
@@ -54,9 +54,9 @@ class CircuitInfoAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (val item = list[position]) {
-            is CircuitItem.CircuitInfo -> (holder as CircuitInfoViewHolder).bind(item)
-            is CircuitItem.Race -> (holder as CircuitRaceViewHolder).bind(item)
-            is CircuitItem.TrackImage -> (holder as CircuitTrackViewHolder).bind(item)
+            is CircuitItem.CircuitInfo -> (holder as CircuitInfoHeaderViewHolder).bind(item)
+            is CircuitItem.Race -> (holder as CircuitInfoRaceViewHolder).bind(item)
+            is CircuitItem.TrackImage -> (holder as CircuitInfoTrackViewHolder).bind(item)
             is CircuitItem.Unavailable -> (holder as DataUnavailableViewHolder).bind(item.type)
         }
     }

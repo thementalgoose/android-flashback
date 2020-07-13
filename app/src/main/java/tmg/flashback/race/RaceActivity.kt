@@ -3,18 +3,10 @@ package tmg.flashback.race
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.graphics.ColorFilter
 import android.os.Bundle
 import android.view.MenuItem
-import android.view.View
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.airbnb.lottie.LottieAnimationView
-import com.airbnb.lottie.LottieProperty
-import com.airbnb.lottie.SimpleColorFilter
-import com.airbnb.lottie.model.KeyPath
-import com.airbnb.lottie.value.LottieValueCallback
-import com.faltenreich.skeletonlayout.SkeletonLayout
 import kotlinx.android.synthetic.main.activity_race.*
 import org.koin.android.ext.android.inject
 import org.threeten.bp.LocalDate
@@ -23,11 +15,9 @@ import tmg.flashback.R
 import tmg.flashback.TrackLayout
 import tmg.flashback.base.BaseActivity
 import tmg.flashback.circuit.CircuitInfoActivity
-import tmg.flashback.utils.getColor
 import tmg.flashback.utils.getFlagResourceAlpha3
 import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.observe
-import tmg.utilities.extensions.observeEvent
 import tmg.utilities.extensions.toEnum
 import tmg.utilities.extensions.views.show
 
