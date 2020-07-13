@@ -2,7 +2,6 @@ package tmg.flashback.settings
 
 import android.content.Context
 import android.net.NetworkCapabilities
-import tmg.flashback.repo.db.CrashReporter
 import tmg.utilities.extensions.managerConnectivity
 
 interface ConnectivityManager {

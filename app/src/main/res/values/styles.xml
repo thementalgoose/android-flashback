@@ -1,5 +1,7 @@
 <resources>
-    <!-- Base application theme. -->
+
+    <!--#region Light Theme -->
+
     <style name="LightTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">#4A34B6</item>
         <item name="colorPrimaryDark">#4A34B6</item>
@@ -47,6 +49,30 @@
         <item name="f1DeltaWaiting">#FFA000</item>
     </style>
 
+    <style name="LightTheme.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.ActionBar" />
+
+    <style name="LightTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Dark" />
+
+    <style name="LightTheme.Launcher" parent="LightTheme">
+        <item name="android:windowBackground">@drawable/launch_screen</item>
+    </style>
+
+    <style name="TransparentBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/TransparentBottomSheet</item>
+    </style>
+
+    <style name="TransparentBottomSheet" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="TransparentBack">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+    </style>
+
+    <!--#endregion -->
+
+    <!--#region Dark Theme -->
 
     <style name="DarkTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">#9575CD</item>
@@ -95,34 +121,17 @@
         <item name="f1DeltaWaiting">#FFA000</item>
     </style>
 
-
-    <style name="LightTheme.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.ActionBar" />
-
-    <style name="LightTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Dark" />
-
-    <style name="LightTheme.Launcher" parent="LightTheme">
-        <item name="android:windowBackground">@drawable/launch_screen</item>
-    </style>
-
-    <style name="TransparentBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
-        <item name="bottomSheetStyle">@style/TransparentBottomSheet</item>
-    </style>
-
-    <style name="TransparentBottomSheet" parent="Widget.Design.BottomSheet.Modal">
-        <item name="android:background">@android:color/transparent</item>
-    </style>
-
-    <style name="TransparentBack">
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:colorBackgroundCacheHint">@null</item>
-    </style>
-
+    <!--#endregion -->
 
     <style name="Text">
         <item name="android:textColor">?attr/f1TextPrimary</item>
     </style>
 
-    <!-- Home -->
+    <!-- =========================================== -->
+
+    <!-- =========================================== -->
+
+    <!--#region Home -->
 
     <style name="Text.Toolbar" parent="Text">
         <item name="android:fontFamily">@font/montserrat</item>
@@ -130,40 +139,234 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="Text.Home.Placeholder" parent="Text">
-        <item name="android:textSize">@dimen/textSizeMedium</item>
-        <item name="android:textColor">?attr/f1TextTertiary</item>
-    </style>
+    <!--#endregion -->
 
-    <style name="Text.Home.Message" parent="Text">
-        <item name="android:textSize">@dimen/textSizeXSmall</item>
-        <item name="android:textColor">?attr/f1TextTertiary</item>
-    </style>
+    <!-- =========================================== -->
 
-    <!--======================================-->
+    <!-- =========================================== -->
 
-    <style name="Text.BottomSheet.Title" parent="Text">
-        <item name="android:textSize">@dimen/textSizeLarge</item>
+    <!--#region Dashboard -->
+
+    <style name="Text.Dashboard.Header" parent="Text">
+        <item name="android:textSize">24sp</item>
+        <item name="android:fontFamily">@font/opensans</item>
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="Text.BottomSheet.Item" parent="Text">
-        <item name="android:textSize">@dimen/textSizeMedium</item>
+    <style name="Text.Dashboard.Subtitles" parent="Text">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">?attr/f1TextSecondary</item>
+    </style>
+
+    <!--#endregion -->
+
+    <!--#region Dashboard - Track -->
+
+    <style name="Text.Dashboard.Track.Title" parent="Text">
+        <item name="android:textSize">16sp</item>
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="Text.BottomSheet.Label" parent="Text">
-        <item name="android:textSize">@dimen/textSizeSmall</item>
-        <item name="android:textColor">@color/white</item>
+    <style name="Text.Dashboard.Track.TrackName" parent="Text">
+        <item name="android:textSize">12sp</item>
     </style>
 
-    <style name="Text.BottomSheet.Header" parent="Text">
-        <item name="android:textSize">@dimen/textSizeSmall</item>
+    <style name="Text.Dashboard.Track.Round" parent="Text">
+        <item name="android:textSize">12sp</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textColor">?attr/f1TextTertiary</item>
     </style>
 
-    <!--======================================-->
+    <style name="Text.Dashboard.Track.Date" parent="Text">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <!--#endregion -->
+
+    <!--#region Dashboard - Driver -->
+
+    <style name="Text.Driver" parent="Text">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="Text.Driver.Name" parent="Text.Driver">
+
+    </style>
+
+    <style name="Text.Driver.Number" parent="Text.Driver">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <!--#endregion -->
+
+    <!--#region Dashboard - Constructor -->
+
+    <style name="Text.ConstructorStandings.Title" parent="Text">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Text.ConstructorStandings.Driver.Name" parent="Text">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="Text.ConstructorStandings.Driver.Number" parent="Text">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="Text.ConstructorStandings.Driver.Summary" parent="Text">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+
+    <!--#endregion -->
+
+    <!-- =========================================== -->
+
+    <!-- =========================================== -->
+
+    <!--#region Race -->
+
+    <style name="Text.Race.Header" parent="Text">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="Text.Race.Round" parent="Text">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="Text.Race.Date" parent="Text">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <!--#endregion -->
+
+    <!--#region Race - Podium -->
+
+    <style name="Text.Podium.Position" parent="Text">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">?attr/f1TextInversePrimary</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Text.Podium.Driver" parent="Text">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="Text.Podium.Number" parent="Text">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="Text.Podium.Constructor" parent="Text">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+
+    <style name="Text.Podium.Position.Absolute" parent="Text">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="Text.Podium.Position.Relative" parent="Text">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="Text.Podium.Time" parent="Text">
+        <item name="android:textSize">10sp</item>
+    </style>
+
+    <style name="Text.Podium.Points" parent="Text">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">?attr/f1TextInversePrimary</item>
+    </style>
+
+    <!--#endregion -->
+
+    <!--#region Race - Result -->
+
+    <style name="Text.RaceResult.Position" parent="Text">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="Text.RaceResult.Constructor" parent="Text">
+        <item name="android:textSize">12sp</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+
+    <style name="Text.RaceResult.Best" parent="Text">
+        <item name="android:textSize">11sp</item>
+    </style>
+
+    <style name="Text.RaceResult.Points" parent="Text">
+        <item name="android:textStyle">bold</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="Text.RaceResult.Header" parent="Text">
+        <item name="android:textStyle">bold</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="Text.RaceResult.Position.Absolute" parent="Text">
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="Text.RaceResult.Position.Relative" parent="Text">
+        <item name="android:textSize">12sp</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="Text.RaceResult.Time" parent="Text">
+        <item name="android:maxLines">1</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="Text.RaceResult.Status" parent="Text">
+        <item name="android:maxLines">1</item>
+        <item name="android:textSize">10sp</item>
+    </style>
+
+    <!--#endregion -->
+
+    <!--#region Race - Qualifying -->
+
+    <style name="Text.QualifyingTime.Header" parent="Text">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="Text.QualifyingTime.Constructor" parent="Text">
+        <item name="android:textSize">12sp</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+
+    <style name="Text.QualifyingTime.Position" parent="Text">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="Text.QualifyingTime.Time" parent="Text">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="Text.QualifyingTime.Delta" parent="Text">
+        <item name="android:textSize">9sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?attr/f1DeltaPositive</item>
+    </style>
+
+    <!--#endregion -->
+
+    <!-- =========================================== -->
+
+    <!-- =========================================== -->
+
+    <!--#region News -->
 
     <style name="Text.News.Title" parent="Text">
         <item name="android:textSize">@dimen/textSizeMedium</item>
@@ -193,8 +396,13 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
+    <!--#endregion -->
 
-    <!--======================================-->
+    <!-- =========================================== -->
+
+    <!-- =========================================== -->
+
+    <!--#region Circuit Info -->
 
     <style name="Text.CircuitInfo.Name" parent="Text">
         <item name="android:textSize">@dimen/textSizeMedium</item>
@@ -223,124 +431,13 @@
         <item name="android:textSize">@dimen/textSizeSmall</item>
     </style>
 
+    <!--#endregion -->
 
-    <!--======================================-->
+    <!-- =========================================== -->
 
-    <style name="Text.Web.Title" parent="Text">
+    <!-- =========================================== -->
 
-    </style>
-
-    <style name="Text.Web.Domain" parent="Text">
-        <item name="android:textSize">@dimen/textSizeSmall</item>
-        <item name="android:textColor">?attr/f1TextTertiary</item>
-    </style>
-
-    <!--======================================-->
-
-    <style name="Text.Pill.Text" parent="Text">
-        <item name="android:textSize">@dimen/textSizeMedium</item>
-        <item name="android:textColor">?attr/f1TextTertiary</item>
-    </style>
-
-    <!--======================================-->
-
-    <!--======================================-->
-
-    <style name="Text.Network.Error" parent="Text">
-        <item name="android:textSize">@dimen/textSizeMedium</item>
-        <item name="android:textColor">?attr/f1TextTertiary</item>
-    </style>
-
-    <!--======================================-->
-
-    <!--======================================-->
-
-    <!--======================================-->
-
-    <!--======================================-->
-
-    <!--======================================-->
-
-    <!--======================================-->
-
-    <!--======================================-->
-
-    <!--======================================-->
-
-    <!--======================================-->
-
-    <!--======================================-->
-
-    <!-- Dashboard -->
-
-    <style name="Text.Dashboard.Header" parent="Text">
-        <item name="android:textSize">24sp</item>
-        <item name="android:fontFamily">@font/opensans</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="Text.Race.Button" parent="Text">
-        <item name="android:textSize">10sp</item>
-    </style>
-
-    <style name="Text.Dashboard.Header.Subtitle" parent="Text">
-        <item name="android:textSize">14sp</item>
-        <item name="android:fontFamily">@font/opensans</item>
-        <item name="android:textColor">?attr/f1TextSecondary</item>
-    </style>
-
-    <style name="Text.Dashboard.Year" parent="Text">
-        <item name="android:textSize">22sp</item>
-        <item name="android:fontFamily">@font/opensans</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="Text.Dashboard.Relative" parent="Text">
-        <item name="android:textSize">12sp</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@color/white</item>
-    </style>
-
-    <style name="Text.Dashboard.Subtitles" parent="Text">
-        <item name="android:textSize">12sp</item>
-        <item name="android:textColor">?attr/f1TextSecondary</item>
-    </style>
-
-    <!-- Dashboard - Menu -->
-
-    <style name="Text.Dashboard.Menu.Title" parent="Text">
-        <item name="android:textSize">16sp</item>
-    </style>
-
-    <style name="Text.Dashboard.Menu.Subtitle" parent="Text">
-        <item name="android:textSize">12sp</item>
-    </style>
-
-    <style name="Text.Dashboard.MenuItem" parent="Text">
-        <item name="android:textSize">14sp</item>
-    </style>
-
-    <!-- Dashboard - Track -->
-
-    <style name="Text.Dashboard.Track.Title" parent="Text">
-        <item name="android:textSize">16sp</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="Text.Dashboard.Track.TrackName" parent="Text">
-        <item name="android:textSize">12sp</item>
-    </style>
-
-    <style name="Text.Dashboard.Track.Round" parent="Text">
-        <item name="android:textSize">12sp</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="Text.Dashboard.Track.Date" parent="Text">
-        <item name="android:textSize">12sp</item>
-    </style>
-
-    <!-- Driver Season - Track -->
+    <!--#region Driver Season -->
 
     <style name="Text.DriverSeason.Track.Title" parent="Text">
         <item name="android:textSize">16sp</item>
@@ -368,31 +465,13 @@
         <item name="android:textSize">12sp</item>
     </style>
 
-    <!-- Race -->
+    <!--#endregion -->
 
-    <style name="Text.Race.Header" parent="Text">
-        <item name="android:textSize">14sp</item>
-    </style>
+    <!-- =========================================== -->
 
-    <style name="Text.Race.Round" parent="Text">
-        <item name="android:textSize">12sp</item>
-    </style>
+    <!-- =========================================== -->
 
-    <style name="Text.Race.Date" parent="Text">
-        <item name="android:textSize">12sp</item>
-    </style>
-
-    <style name="Text.Race.Error.NotFound" parent="Text">
-        <item name="android:textSize">12sp</item>
-        <item name="android:textColor">?attr/f1TextTertiary</item>
-    </style>
-
-    <style name="Text.Race.Error.Network" parent="Text">
-        <item name="android:textSize">12sp</item>
-        <item name="android:textColor">?attr/f1TextTertiary</item>
-    </style>
-
-    <!-- Settings -->
+    <!--#region Settings -->
 
     <style name="Text.Settings.Category" parent="Text">
         <item name="android:textColor">@color/logo_gradient_1</item>
@@ -403,43 +482,87 @@
         <item name="android:textSize">16sp</item>
     </style>
 
-    <style name="Text.Settings.Preference.Description" parent="Text">
+    <style name="Text.Settings.Preference.Description" parent="Text" />
 
+    <!--#endregion -->
+
+    <!-- =========================================== -->
+
+    <!-- =========================================== -->
+
+    <!--#region Web view -->
+
+    <style name="Text.Web.Title" parent="Text" />
+
+    <style name="Text.Web.Domain" parent="Text">
+        <item name="android:textSize">@dimen/textSizeSmall</item>
+        <item name="android:textColor">?attr/f1TextTertiary</item>
     </style>
 
+    <!--#endregion -->
 
-    <!-- Loading -->
+    <!-- =========================================== -->
 
-    <style name="Text.Loading">
-        <item name="android:textSize">16sp</item>
-        <item name="android:textColor">?attr/f1Loading</item>
-    </style>
+    <!--#region Bottom sheets -->
 
-    <!-- Error -->
-
-    <style name="Text.Error">
-        <item name="android:textColor">?attr/f1Loading</item>
-    </style>
-
-    <style name="Text.Error.Button">
-        <item name="android:textSize">16sp</item>
-        <item name="android:textColor">?attr/f1Loading</item>
-    </style>
-
-    <!-- Release Notes -->
-
-    <style name="Text.ReleaseNotes" parent="Text" />
-
-    <style name="Text.ReleaseNotes.Header" parent="Text">
+    <style name="Text.BottomSheet.Title" parent="Text">
+        <item name="android:textSize">@dimen/textSizeLarge</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textSize">16sp</item>
     </style>
 
-    <style name="Text.ReleaseNotes.Content" parent="Text" />
+    <style name="Text.BottomSheet.Subtitle" parent="Text">
+        <item name="android:textSize">12sp</item>
+    </style>
 
-    <!-- App Lockout -->
+    <style name="Text.BottomSheet.Item" parent="Text">
+        <item name="android:textSize">@dimen/textSizeMedium</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 
-    <style name="Text.Lockout" parent="Text" />
+    <style name="Text.BottomSheet.Label" parent="Text">
+        <item name="android:textSize">@dimen/textSizeSmall</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="Text.BottomSheet.Header" parent="Text">
+        <item name="android:textSize">@dimen/textSizeSmall</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?attr/f1TextTertiary</item>
+    </style>
+
+    <!--#endregion -->
+
+    <!-- =========================================== -->
+
+    <!--#region Shared view types -->
+
+    <style name="Text.Pill.Text" parent="Text">
+        <item name="android:textSize">@dimen/textSizeMedium</item>
+        <item name="android:textColor">?attr/f1TextTertiary</item>
+    </style>
+
+    <style name="Text.Home.Placeholder" parent="Text">
+        <item name="android:textSize">@dimen/textSizeMedium</item>
+        <item name="android:textColor">?attr/f1TextTertiary</item>
+    </style>
+
+    <style name="Text.Home.Message" parent="Text">
+        <item name="android:textSize">@dimen/textSizeXSmall</item>
+        <item name="android:textColor">?attr/f1TextTertiary</item>
+    </style>
+
+    <style name="Text.Network.Error" parent="Text">
+        <item name="android:textSize">@dimen/textSizeMedium</item>
+        <item name="android:textColor">?attr/f1TextTertiary</item>
+    </style>
+
+    <!--#endregion -->
+
+    <!-- =========================================== -->
+
+    <!-- =========================================== -->
+
+    <!--#region App Lockout -->
 
     <style name="Text.Lockout.Text" parent="Text">
 
@@ -450,165 +573,25 @@
         <item name="android:textSize">16sp</item>
     </style>
 
-    <!-- Driver -->
+    <!--#endregion -->
 
-    <style name="Text.Driver" parent="Text">
-        <item name="android:textSize">14sp</item>
-    </style>
+    <!-- =========================================== -->
 
-    <style name="Text.Driver.Name" parent="Text.Driver">
+    <!-- =========================================== -->
 
-    </style>
+    <!--#region Release Notes -->
 
-    <style name="Text.Driver.Number" parent="Text.Driver">
-        <item name="android:textSize">12sp</item>
-    </style>
-
-    <!-- Podium -->
-
-    <style name="Text.Podium" parent="Text">
-
-    </style>
-
-    <style name="Text.Podium.Position" parent="Text.Podium">
-        <item name="android:textSize">16sp</item>
-        <item name="android:textColor">?attr/f1TextInversePrimary</item>
+    <style name="Text.ReleaseNotes.Header" parent="Text">
         <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="Text.Podium.Driver" parent="Text.Podium">
         <item name="android:textSize">16sp</item>
     </style>
 
-    <style name="Text.Podium.Number" parent="Text.Podium">
-        <item name="android:textSize">16sp</item>
-    </style>
+    <style name="Text.ReleaseNotes.Content" parent="Text" />
 
-    <style name="Text.Podium.Constructor" parent="Text.Podium">
-        <item name="android:textSize">12sp</item>
-        <item name="android:textStyle">italic</item>
-    </style>
+    <!--#endregion -->
 
-    <style name="Text.Podium.Grid" parent="Text.Podium">
+    <!-- =========================================== -->
 
-    </style>
+    <!-- =========================================== -->
 
-    <style name="Text.Podium.Position.Absolute" parent="Text.Podium">
-        <item name="android:textSize">12sp</item>
-    </style>
-
-    <style name="Text.Podium.Position.Relative" parent="Text.Podium">
-        <item name="android:textSize">12sp</item>
-    </style>
-
-    <style name="Text.Podium.Time" parent="Text.Podium">
-        <item name="android:textSize">10sp</item>
-    </style>
-
-    <style name="Text.Podium.Points" parent="Text.Podium">
-        <item name="android:textSize">12sp</item>
-        <item name="android:textColor">?attr/f1TextInversePrimary</item>
-    </style>
-
-    <!-- Qualifying layout -->
-
-    <style name="Text.RaceResult" parent="Text" />
-
-    <style name="Text.RaceResult.Position" parent="Text.RaceResult">
-        <item name="android:textSize">18sp</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:maxLines">1</item>
-    </style>
-
-    <style name="Text.RaceResult.Constructor" parent="Text.RaceResult">
-        <item name="android:textSize">12sp</item>
-        <item name="android:maxLines">1</item>
-        <item name="android:ellipsize">end</item>
-        <item name="android:textStyle">italic</item>
-    </style>
-
-    <style name="Text.RaceResult.Best" parent="Text.RaceResult">
-        <item name="android:textSize">11sp</item>
-    </style>
-
-    <style name="Text.RaceResult.Points" parent="Text.RaceResult">
-        <item name="android:textStyle">bold</item>
-        <item name="android:maxLines">1</item>
-    </style>
-
-    <style name="Text.RaceResult.Header" parent="Text.RaceResult">
-        <item name="android:textStyle">bold</item>
-        <item name="android:maxLines">1</item>
-    </style>
-
-    <style name="Text.RaceResult.Position.Absolute" parent="Text.RaceResult">
-        <item name="android:maxLines">1</item>
-    </style>
-
-    <style name="Text.RaceResult.Position.Relative" parent="Text.RaceResult">
-        <item name="android:textSize">12sp</item>
-        <item name="android:maxLines">1</item>
-    </style>
-
-    <style name="Text.RaceResult.Time" parent="Text.RaceResult">
-        <item name="android:maxLines">1</item>
-        <item name="android:textSize">12sp</item>
-    </style>
-
-    <style name="Text.RaceResult.Status" parent="Text.RaceResult">
-        <item name="android:maxLines">1</item>
-        <item name="android:textSize">10sp</item>
-    </style>
-
-    <!-- Qualifying time -->
-
-    <style name="Text.QualifyingTime" parent="Text" />
-
-    <style name="Text.QualifyingTime.Header" parent="Text.QualifyingTime">
-        <item name="android:textSize">18sp</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:maxLines">1</item>
-    </style>
-
-    <style name="Text.QualifyingTime.Constructor" parent="Text.QualifyingTime">
-        <item name="android:textSize">12sp</item>
-        <item name="android:maxLines">1</item>
-        <item name="android:ellipsize">end</item>
-        <item name="android:textStyle">italic</item>
-    </style>
-
-    <style name="Text.QualifyingTime.Position" parent="Text.QualifyingTime">
-        <item name="android:textSize">18sp</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:maxLines">1</item>
-    </style>
-
-    <style name="Text.QualifyingTime.Time" parent="Text.QualifyingTime">
-        <item name="android:textSize">12sp</item>
-    </style>
-
-    <style name="Text.QualifyingTime.Delta" parent="Text.QualifyingTime">
-        <item name="android:textSize">9sp</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textColor">?attr/f1DeltaPositive</item>
-    </style>
-
-    <!-- Constructor Standings item -->
-
-    <style name="Text.ConstructorStandings.Title" parent="Text">
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="Text.ConstructorStandings.Driver.Name" parent="Text">
-        <item name="android:textSize">12sp</item>
-    </style>
-
-    <style name="Text.ConstructorStandings.Driver.Number" parent="Text">
-        <item name="android:textSize">12sp</item>
-    </style>
-
-    <style name="Text.ConstructorStandings.Driver.Summary" parent="Text">
-        <item name="android:textSize">12sp</item>
-        <item name="android:textStyle">italic</item>
-    </style>
 </resources>

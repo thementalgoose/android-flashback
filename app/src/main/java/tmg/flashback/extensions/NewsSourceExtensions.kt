@@ -1,6 +1,5 @@
 package tmg.flashback.extensions
 
-import androidx.annotation.StringRes
 import tmg.flashback.R
 import tmg.flashback.repo.enums.NewsSource
 

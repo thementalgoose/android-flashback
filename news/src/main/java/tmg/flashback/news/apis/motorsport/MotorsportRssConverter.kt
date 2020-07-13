@@ -2,8 +2,6 @@ package tmg.flashback.news.apis.motorsport
 
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
-import tmg.flashback.news.apis.crashnet.CrashNetRssChannelModel
-import tmg.flashback.news.apis.crashnet.crashNetDateFormat
 import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.models.news.Article
 import tmg.flashback.repo.models.news.ArticleSource

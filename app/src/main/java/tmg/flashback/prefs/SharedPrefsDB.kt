@@ -60,10 +60,6 @@ class SharedPrefsDB(context: Context): SharedPrefManager(context), PrefsDB {
         get() = getBoolean(keyBottomSheetAll, true)
         set(value) = save(keyBottomSheetAll, value)
 
-    override var defaultToTab: HomeTab
-        get() = getString(keyDefaultTab)?.toEnum<HomeTab> { it.key } ?: HomeTab.CONSTRUCTORS
-        set(value) = save(keyDefaultTab, value.key)
-
     override var crashReporting: Boolean
         get() = getBoolean(keyCrashReporting, defaultShakeToReport)
         set(value) = save(keyCrashReporting, value)

@@ -4,12 +4,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_lockout.*
-import kotlinx.android.synthetic.main.toolbar.view.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.R
 import tmg.flashback.SplashActivity
 import tmg.flashback.base.BaseActivity
-import tmg.utilities.extensions.*
+import tmg.utilities.extensions.fromHtml
+import tmg.utilities.extensions.observe
+import tmg.utilities.extensions.observeEvent
+import tmg.utilities.extensions.viewUrl
 import tmg.utilities.extensions.views.gone
 import tmg.utilities.extensions.views.visible
 

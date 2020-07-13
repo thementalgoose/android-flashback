@@ -1,7 +1,6 @@
 package tmg.flashback.news.apis.skysports_unofficial
 
 import retrofit2.http.GET
-import tmg.flashback.news.apis.pitpass.PitPassRssModel
 import tmg.flashback.news.shared.buildRetrofit
 
 fun buildRetrofitSkySports(isDebug: Boolean = false): SkySportsRssRetrofit {

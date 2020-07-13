@@ -13,7 +13,7 @@ import tmg.utilities.extensions.ordinalAbbreviation
 import tmg.utilities.extensions.views.context
 import tmg.utilities.extensions.views.getString
 
-class CircuitInfoViewHolder(
+class CircuitInfoHeaderViewHolder(
     private val clickShowOnMap: () -> Unit,
     private val clickWikipedia: () -> Unit,
     itemView: View

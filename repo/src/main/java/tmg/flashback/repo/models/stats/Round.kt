@@ -52,13 +52,11 @@ data class Round(
         }
 
     val driverStandings: List<RoundDriverStandings>
-        get() {
-            return race.map { (key, value) ->
-                RoundDriverStandings(
-                    value.points,
-                    value.driver
-                )
-            }
+        get() = race.map { (_, value) ->
+            RoundDriverStandings(
+                value.points,
+                value.driver
+            )
         }
 
     private fun Map<String, RoundQualifyingResult>.fastest(): LapTime? = this
@@ -109,7 +107,8 @@ val List<Round>.upcoming: Int
  * Get the constructor standings for the season
  */
 fun List<Round>.constructorStandings(): ConstructorStandings {
-    val returnMap: MutableMap<String, Pair<Constructor, MutableMap<String, Pair<Driver, Int>>>> = mutableMapOf()
+    val returnMap: MutableMap<String, Pair<Constructor, MutableMap<String, Pair<Driver, Int>>>> =
+        mutableMapOf()
     this.forEach { round ->
         round.constructors.forEach {
             if (!returnMap.containsKey(it.id)) {
@@ -186,6 +185,7 @@ fun List<Round>.bestQualified(driverId: String): Int? {
     val round = this.minBy { it.race.get(driverId)?.qualified ?: Int.MAX_VALUE }
     return round?.race?.get(driverId)?.qualified
 }
+
 fun List<Round>.bestQualifyingResultFor(driverId: String): Pair<Int, List<CircuitSummary>>? {
     val bestQualifyingPosition: Int = this.bestQualified(driverId) ?: return null
     val listOfCircuits = this
@@ -201,6 +201,7 @@ fun List<Round>.bestFinish(driverId: String): Int? {
     val round = this.minBy { it.race.get(driverId)?.finish ?: Int.MAX_VALUE }
     return round?.race?.get(driverId)?.finish
 }
+
 fun List<Round>.bestRaceResultFor(driverId: String): Pair<Int, List<CircuitSummary>>? {
     val bestQualifyingPosition: Int = this.bestFinish(driverId) ?: return null
     val listOfCircuits = this

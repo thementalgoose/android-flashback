@@ -4,17 +4,13 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import androidx.core.view.WindowInsetsCompat
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_news.*
-import kotlinx.android.synthetic.main.activity_news.settings
-import kotlinx.android.synthetic.main.activity_news.titlebar
 import me.saket.inboxrecyclerview.dimming.TintPainter
 import me.saket.inboxrecyclerview.page.PageStateChangeCallbacks
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.R
 import tmg.flashback.base.BaseActivity
-import tmg.flashback.settings.SettingsActivity
 import tmg.flashback.settings.news.SettingsNewsActivity
 import tmg.flashback.utils.FragmentRequestBack
 import tmg.flashback.web.WebFragment

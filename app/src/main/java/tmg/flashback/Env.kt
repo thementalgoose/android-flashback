@@ -1,6 +1,5 @@
 package tmg.flashback
 
-import android.util.Log
 import tmg.utilities.extensions.toEnum
 
 val env: Env

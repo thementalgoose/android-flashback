@@ -1,7 +1,6 @@
 package tmg.flashback.home.season.viewholders
 
 import android.view.View
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.view_season_list_header.view.*
 import tmg.flashback.R

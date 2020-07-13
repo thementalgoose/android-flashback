@@ -11,7 +11,7 @@ import tmg.flashback.R
 import tmg.utilities.extensions.dpToPx
 import kotlin.math.roundToInt
 
-class RaceNumberView: TextView {
+class RaceNumberView: androidx.appcompat.widget.AppCompatTextView {
     constructor(context: Context?) : super(context)
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {
         initView(attrs)
