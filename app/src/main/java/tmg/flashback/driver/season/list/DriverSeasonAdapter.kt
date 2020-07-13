@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.R
+import tmg.flashback.driver.season.list.viewholders.DriverHeaderViewHolder
 import tmg.flashback.driver.season.list.viewholders.DriverSeasonHeaderViewHolder
 import tmg.flashback.driver.season.list.viewholders.DriverSeasonViewHolder
 import tmg.flashback.shared.viewholders.*
@@ -21,6 +22,9 @@ class DriverSeasonAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
+            R.layout.view_driver_header -> DriverHeaderViewHolder(
+                    LayoutInflater.from(parent.context).inflate(viewType, parent, false)
+            )
             R.layout.view_driver_season -> DriverSeasonViewHolder(
                     LayoutInflater.from(parent.context).inflate(viewType, parent, false)
             )
@@ -48,6 +52,7 @@ class DriverSeasonAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (val item = list[position]) {
+            is DriverSeasonItem.Header -> (holder as DriverHeaderViewHolder).bind(item)
             is DriverSeasonItem.Result -> (holder as DriverSeasonViewHolder).bind(item)
             is DriverSeasonItem.Unavailable -> (holder as DataUnavailableViewHolder).bind(item.type)
             is DriverSeasonItem.Message -> (holder as MessageViewHolder).bind(item.msg)

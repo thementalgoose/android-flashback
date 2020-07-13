@@ -240,7 +240,6 @@
     <style name="Text.Pill.Text" parent="Text">
         <item name="android:textSize">@dimen/textSizeMedium</item>
         <item name="android:textColor">?attr/f1TextTertiary</item>
-        <item name="android:drawableTint">?attr/f1TextTertiary</item>
     </style>
 
     <!--======================================-->
@@ -436,11 +435,7 @@
         <item name="android:textSize">16sp</item>
     </style>
 
-    <style name="Text.ReleaseNotes.Content" parent="Text">
-
-    </style>
-
-    <style name="Text.Planned" parent="Text"></style>
+    <style name="Text.ReleaseNotes.Content" parent="Text" />
 
     <!-- App Lockout -->
 

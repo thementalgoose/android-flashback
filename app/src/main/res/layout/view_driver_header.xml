@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="@dimen/podiumDriverImage"
+        android:layout_height="@dimen/podiumDriverImage"
+        android:layout_marginTop="@dimen/paddingMedium"
+        android:layout_marginBottom="@dimen/paddingSmall"
+        app:cardCornerRadius="@dimen/radiusMedium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imgDriver"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="?attr/f1BackgroundSecondary"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            style="@style/Text.Podium.Position"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:background="@color/whiteTranslucent"
+            android:paddingStart="@dimen/paddingSmall"
+            android:paddingTop="@dimen/paddingXSmall"
+            android:paddingEnd="@dimen/paddingSmall"
+            android:paddingBottom="@dimen/paddingXSmall"
+            app:layout_constraintBottom_toBottomOf="@id/cardView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <tmg.flashback.views.RaceNumberView
+            android:id="@+id/tvNumber"
+            style="@style/Text.Podium.Number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|start"
+            android:layout_marginStart="@dimen/paddingSmall"
+            android:layout_marginBottom="@dimen/paddingXSmall"
+            tools:text="44" />
+
+        <ImageView
+            android:id="@+id/imgNationality"
+            android:layout_width="@dimen/driverFlagPodiumSize"
+            android:layout_height="@dimen/driverFlagPodiumSize"
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="@dimen/paddingXSmall"
+            app:layout_constraintBottom_toBottomOf="@id/cardView"
+            app:layout_constraintEnd_toEndOf="@id/cardView"
+            tools:src="@drawable/gb" />
+
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/constructors"
+        style="@style/Text.Podium.Constructor"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/paddingSmall"
+        android:gravity="center"
+        android:paddingBottom="@dimen/paddingSmall"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cardView"
+        tools:text="Red Bull, Torro Rosso" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
