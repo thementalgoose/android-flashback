@@ -13,6 +13,7 @@ import tmg.flashback.R
 import tmg.flashback.base.BaseViewModel
 import tmg.flashback.currentYear
 import tmg.flashback.home.list.HomeItem
+import tmg.flashback.home.list.addError
 import tmg.flashback.isValidVersion
 import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.db.stats.DataDB
@@ -20,6 +21,7 @@ import tmg.flashback.repo.db.stats.HistoryDB
 import tmg.flashback.repo.db.stats.SeasonOverviewDB
 import tmg.flashback.repo.models.stats.*
 import tmg.flashback.settings.ConnectivityManager
+import tmg.flashback.shared.SyncDataItem
 import tmg.flashback.shared.viewholders.DataUnavailable
 import tmg.utilities.extensions.combinePair
 import tmg.utilities.extensions.combineTriple
@@ -135,7 +137,7 @@ class HomeViewModel(
 
             appBanner?.let {
                 if (it.show && !it.message.isNullOrEmpty()) {
-                    list.add(HomeItem.Message(it.message ?: ""))
+                    list.addError(SyncDataItem.Message(it.message ?: ""))
                 }
             }
 
@@ -143,11 +145,11 @@ class HomeViewModel(
                 HomeMenuItem.CALENDAR -> {
                     when {
                         historyRounds.isEmpty() && !connectivityManager.isConnected ->
-                            list.add(HomeItem.NoNetwork)
+                            list.addError(SyncDataItem.NoNetwork)
                         historyRounds.isEmpty() && season == currentYear ->
-                            list.add(HomeItem.Unavailable(DataUnavailable.EARLY_IN_SEASON))
+                            list.addError(SyncDataItem.Unavailable(DataUnavailable.EARLY_IN_SEASON))
                         historyRounds.isEmpty() ->
-                            list.add(HomeItem.Unavailable(DataUnavailable.MISSING_RACE))
+                            list.addError(SyncDataItem.Unavailable(DataUnavailable.MISSING_RACE))
                         else ->
                             list.addAll(historyRounds.toCalendarList())
                     }
@@ -155,13 +157,13 @@ class HomeViewModel(
                 HomeMenuItem.DRIVERS -> {
                     when {
                         rounds.isEmpty() && !connectivityManager.isConnected ->
-                            list.add(HomeItem.NoNetwork)
+                            list.addError(SyncDataItem.NoNetwork)
                         rounds.isEmpty() ->
-                            list.add(HomeItem.Unavailable(DataUnavailable.IN_FUTURE_SEASON))
+                            list.addError(SyncDataItem.Unavailable(DataUnavailable.IN_FUTURE_SEASON))
                         else -> {
                             val maxRound = rounds.maxBy { it.round }
                             if (maxRound != null && historyRounds.size != rounds.size) {
-                                list.add(HomeItem.Message(context.getString(R.string.results_accurate_for, maxRound.name, maxRound.round)))
+                                list.addError(SyncDataItem.Message(context.getString(R.string.results_accurate_for, maxRound.name, maxRound.round)))
                             }
                             val driverStandings = rounds.driverStandings()
                             list.addAll(driverStandings.toDriverList(rounds))
@@ -171,13 +173,13 @@ class HomeViewModel(
                 HomeMenuItem.CONSTRUCTORS -> {
                     when {
                         rounds.isEmpty() && !connectivityManager.isConnected ->
-                            list.add(HomeItem.NoNetwork)
+                            list.addError(SyncDataItem.NoNetwork)
                         rounds.isEmpty() ->
-                            list.add(HomeItem.Unavailable(DataUnavailable.IN_FUTURE_SEASON))
+                            list.addError(SyncDataItem.Unavailable(DataUnavailable.IN_FUTURE_SEASON))
                         else -> {
                             val maxRound = rounds.maxBy { it.round }
                             if (maxRound != null && historyRounds.size != rounds.size) {
-                                list.add(HomeItem.Message(context.getString(R.string.results_accurate_for, maxRound.name, maxRound.round)))
+                                list.addError(SyncDataItem.Message(context.getString(R.string.results_accurate_for, maxRound.name, maxRound.round)))
                             }
                             val constructorStandings = rounds.constructorStandings()
                             list.addAll(constructorStandings.toConstructorList())

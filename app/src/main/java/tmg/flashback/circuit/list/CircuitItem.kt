@@ -6,7 +6,7 @@ import org.threeten.bp.LocalTime
 import tmg.flashback.R
 import tmg.flashback.TrackLayout
 import tmg.flashback.repo.models.stats.Circuit
-import tmg.flashback.shared.viewholders.DataUnavailable
+import tmg.flashback.shared.SyncDataItem
 
 sealed class CircuitItem(
     @LayoutRes val layoutId: Int
@@ -27,11 +27,11 @@ sealed class CircuitItem(
         val trackLayout: TrackLayout
     ): CircuitItem(R.layout.view_circuit_info_track)
 
-    object NoNetwork: CircuitItem(R.layout.view_shared_no_network)
+    data class ErrorItem(
+        val item: SyncDataItem
+    ): CircuitItem(item.layoutId)
+}
 
-    object InternalError: CircuitItem(R.layout.view_shared_internal_error)
-
-    data class Unavailable(
-        val type: DataUnavailable
-    ): CircuitItem(R.layout.view_shared_data_unavailable)
+fun MutableList<CircuitItem>.addError(syncDataItem: SyncDataItem) {
+    this.add(CircuitItem.ErrorItem(syncDataItem))
 }

@@ -10,11 +10,13 @@ import kotlinx.coroutines.flow.map
 import tmg.flashback.base.BaseViewModel
 import tmg.flashback.currentYear
 import tmg.flashback.driver.season.list.DriverSeasonItem
+import tmg.flashback.driver.season.list.addError
 import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.db.stats.SeasonOverviewDB
 import tmg.flashback.repo.models.stats.Constructor
 import tmg.flashback.repo.models.stats.Driver
 import tmg.flashback.settings.ConnectivityManager
+import tmg.flashback.shared.SyncDataItem
 import tmg.flashback.shared.viewholders.DataUnavailable
 
 //region Inputs
@@ -54,13 +56,13 @@ class DriverSeasonViewModel(
                     rounds.isEmpty() -> {
                         when {
                             !connectivityManager.isConnected ->
-                                list.add(DriverSeasonItem.NoNetwork)
+                                list.addError(SyncDataItem.NoNetwork)
                             else ->
-                                list.add(DriverSeasonItem.Unavailable(DataUnavailable.EARLY_IN_SEASON))
+                                list.addError(SyncDataItem.Unavailable(DataUnavailable.EARLY_IN_SEASON))
                         }
                     }
                     season > currentYear -> {
-                        list.add(DriverSeasonItem.Unavailable(DataUnavailable.IN_FUTURE_SEASON))
+                        list.addError(SyncDataItem.Unavailable(DataUnavailable.IN_FUTURE_SEASON))
                     }
                     else -> {
                         val driver: Driver? = rounds

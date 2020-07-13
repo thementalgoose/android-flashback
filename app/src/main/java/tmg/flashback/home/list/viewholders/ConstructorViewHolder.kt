@@ -37,7 +37,7 @@ class ConstructorViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         itemView.lpvProgress.animateProgress(item.points.toFloat() / maxPoints.toFloat()) { (it * maxPoints.toFloat()).toInt().coerceIn(0, item.points).toString() }
     }
 
-    fun setDriver(layout: View, driverResult: Pair<Driver, Int>) {
+    private fun setDriver(layout: View, driverResult: Pair<Driver, Int>) {
         layout.tvName.text = driverResult.first.name
         layout.imgFlag.setImageResource(itemView.context.getFlagResourceAlpha3(driverResult.first.nationalityISO))
         layout.tvNumber.text = itemView.context.resources.getQuantityString(R.plurals.race_points, driverResult.second, driverResult.second)

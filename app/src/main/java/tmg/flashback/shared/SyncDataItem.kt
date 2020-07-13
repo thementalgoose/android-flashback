@@ -2,6 +2,7 @@ package tmg.flashback.shared
 
 import androidx.annotation.LayoutRes
 import tmg.flashback.R
+import tmg.flashback.news.NewsItem
 import tmg.flashback.shared.viewholders.DataUnavailable
 
 sealed class SyncDataItem(
@@ -10,6 +11,8 @@ sealed class SyncDataItem(
     object NoNetwork: SyncDataItem(R.layout.view_shared_no_network)
 
     object InternalError: SyncDataItem(R.layout.view_shared_internal_error)
+
+    object AllSourcesDisabled: SyncDataItem(R.layout.view_shared_no_news_sources)
 
     data class Message(
         val msg: String

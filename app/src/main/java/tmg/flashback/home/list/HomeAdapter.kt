@@ -8,14 +8,15 @@ import tmg.flashback.R
 import tmg.flashback.home.list.viewholders.ConstructorViewHolder
 import tmg.flashback.home.list.viewholders.DriverViewHolder
 import tmg.flashback.home.list.viewholders.TrackViewHolder
+import tmg.flashback.shared.SyncAdapter
 import tmg.flashback.shared.viewholders.*
 
 class HomeAdapter(
         private val trackClicked: (track: HomeItem.Track) -> Unit,
         private val driverClicked: (season: Int, driverId: String, firstName: String?, lastName: String?) -> Unit
-): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+): SyncAdapter<HomeItem>() {
 
-    var list: List<HomeItem> = emptyList()
+    override var list: List<HomeItem> = emptyList()
         set(value) {
             val result = DiffUtil.calculateDiff(DiffCallback(field, value))
             field = value
@@ -35,22 +36,7 @@ class HomeAdapter(
             R.layout.view_home_constructor -> ConstructorViewHolder(
                 LayoutInflater.from(parent.context).inflate(viewType, parent, false)
             )
-            R.layout.view_shared_data_unavailable -> DataUnavailableViewHolder(
-                LayoutInflater.from(parent.context).inflate(viewType, parent, false)
-            )
-            R.layout.view_shared_no_network -> NoNetworkViewHolder(
-                LayoutInflater.from(parent.context).inflate(viewType, parent, false)
-            )
-            R.layout.view_shared_no_news_sources -> NoNewsSourcesViewHolder(
-                LayoutInflater.from(parent.context).inflate(viewType, parent, false)
-            )
-            R.layout.view_shared_internal_error -> InternalErrorOccurredViewHolder(
-                LayoutInflater.from(parent.context).inflate(viewType, parent, false)
-            )
-            R.layout.view_shared_message -> MessageViewHolder(
-                LayoutInflater.from(parent.context).inflate(viewType, parent, false)
-            )
-            else -> throw Exception("Type in HomeItem is not implemented on onCreateViewHolder")
+            else -> super.onCreateViewHolder(parent, viewType)
         }
     }
 
@@ -60,14 +46,11 @@ class HomeAdapter(
             is HomeItem.Track -> (holder as TrackViewHolder).bind(item)
             is HomeItem.Driver -> (holder as DriverViewHolder).bind(item)
             is HomeItem.Constructor -> (holder as ConstructorViewHolder).bind(item)
-            is HomeItem.Unavailable -> (holder as DataUnavailableViewHolder).bind(item.type)
-            is HomeItem.Message -> (holder as MessageViewHolder).bind(item.msg)
+            is HomeItem.ErrorItem -> bindErrors(holder, item.item)
         }
     }
 
-    override fun getItemViewType(position: Int) = list[position].layoutId
-
-    override fun getItemCount(): Int = list.size
+    override fun viewType(position: Int) = list[position].layoutId
 
     inner class DiffCallback(
         private val oldList: List<HomeItem>,

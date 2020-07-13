@@ -6,6 +6,6 @@ enum class NewsSource(
     AUTO_SPORT("autosport"),
     PIT_PASS("pitpass"),
     CRASH_NET("crashnet"),
-    MOTORSPORT("motorsport"),
-    SKY_SPORTS("sky_sports_unofficial");
+    MOTORSPORT("motorsport");
+//    SKY_SPORTS("sky_sports_unofficial");
 }

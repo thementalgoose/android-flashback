@@ -123,8 +123,6 @@
     <string name="settings_news_sources_pitpass_description">News from www.pitpass.com</string>
     <string name="settings_news_sources_motorsport_title">Motorsport</string>
     <string name="settings_news_sources_motorsport_description">News from www.motorsport.com</string>
-    <string name="settings_news_sources_skysports_title">SkySports (Unofficial)</string>
-    <string name="settings_news_sources_skysports_description">Unofficial feed of news from www.skysports.com</string>
     <string name="settings_news_browser">Web Browser</string>
     <string name="settings_news_browser_javascript_title">Enable Javascript</string>
     <string name="settings_news_browser_javascript_description">Toggle javascript being loaded in the app browser. Disabling javascript should make the page and content load quicker but areas of the website may not perform properly</string>

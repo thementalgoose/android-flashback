@@ -6,7 +6,7 @@ import tmg.flashback.R
 import tmg.flashback.repo.enums.RaceStatus
 import tmg.flashback.repo.models.stats.Constructor
 import tmg.flashback.repo.models.stats.Driver
-import tmg.flashback.shared.viewholders.DataUnavailable
+import tmg.flashback.shared.SyncDataItem
 
 sealed class DriverSeasonItem(
         @LayoutRes val layoutId: Int
@@ -35,15 +35,11 @@ sealed class DriverSeasonItem(
 
     object ResultHeader: DriverSeasonItem(R.layout.view_driver_season_header)
 
-    object NoNetwork: DriverSeasonItem(R.layout.view_shared_no_network)
+    data class ErrorItem(
+        val item: SyncDataItem
+    ): DriverSeasonItem(item.layoutId)
+}
 
-    object InternalError: DriverSeasonItem(R.layout.view_shared_internal_error)
-
-    data class Message(
-            val msg: String
-    ): DriverSeasonItem(R.layout.view_shared_message)
-
-    data class Unavailable(
-            val type: DataUnavailable
-    ): DriverSeasonItem(R.layout.view_shared_data_unavailable)
+fun MutableList<DriverSeasonItem>.addError(syncDataItem: SyncDataItem) {
+    this.add(DriverSeasonItem.ErrorItem(syncDataItem))
 }

@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.R
 import tmg.flashback.repo.models.news.Article
+import tmg.flashback.shared.SyncAdapter
 import tmg.flashback.shared.viewholders.InternalErrorOccurredViewHolder
 import tmg.flashback.shared.viewholders.MessageViewHolder
 import tmg.flashback.shared.viewholders.NoNetworkViewHolder
@@ -13,13 +14,13 @@ import tmg.flashback.utils.calculateDiff
 
 class NewsAdapter(
     val articleClicked: (item: Article, itemId: Long) -> Unit
-): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+): SyncAdapter<NewsItem>() {
 
     init {
         setHasStableIds(true)
     }
 
-    var list: List<NewsItem> = emptyList()
+    override var list: List<NewsItem> = emptyList()
         set(value) {
             val result = calculateDiff(field, value)
             field = value
@@ -32,19 +33,7 @@ class NewsAdapter(
                 articleClicked,
                 LayoutInflater.from(parent.context).inflate(viewType, parent, false)
             )
-            R.layout.view_shared_no_network -> NoNetworkViewHolder(
-                    LayoutInflater.from(parent.context).inflate(viewType, parent, false)
-            )
-            R.layout.view_shared_no_news_sources -> NoNewsSourcesViewHolder(
-                LayoutInflater.from(parent.context).inflate(viewType, parent, false)
-            )
-            R.layout.view_shared_internal_error -> InternalErrorOccurredViewHolder(
-                LayoutInflater.from(parent.context).inflate(viewType, parent, false)
-            )
-            R.layout.view_shared_message -> MessageViewHolder(
-                LayoutInflater.from(parent.context).inflate(viewType, parent, false)
-            )
-            else -> throw Exception("Type in NewsItem is not implemented on onCreateViewHolder")
+            else -> super.onCreateViewHolder(parent, viewType)
         }
     }
     override fun getItemId(position: Int) = position.toLong()
@@ -56,7 +45,5 @@ class NewsAdapter(
         }
     }
 
-    override fun getItemViewType(position: Int) = list[position].layoutId
-
-    override fun getItemCount(): Int = list.size
+    override fun viewType(position: Int) = list[position].layoutId
 }

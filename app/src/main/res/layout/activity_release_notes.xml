@@ -75,15 +75,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar">
 
-        <TextView
+        <TextView xmlns:tools="http://schemas.android.com/tools"
             android:id="@+id/tvReleaseNotes"
-            style="@style/Text.ReleaseNotes"
+            style="@style/Text.ReleaseNotes.Content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingStart="@dimen/paddingMedium"
             android:paddingTop="@dimen/paddingMedium"
             android:paddingEnd="@dimen/paddingMedium"
-            android:paddingBottom="@dimen/paddingMedium" />
+            android:paddingBottom="@dimen/paddingMedium"
+            tools:text="@tools:sample/lorem" />
 
     </androidx.core.widget.NestedScrollView>
 
