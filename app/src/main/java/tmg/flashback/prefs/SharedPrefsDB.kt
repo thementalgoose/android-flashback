@@ -4,7 +4,6 @@ import android.content.Context
 import tmg.flashback.BuildConfig
 import tmg.flashback.releaseNotes
 import tmg.flashback.repo.db.PrefsDB
-import tmg.flashback.repo.enums.HomeTab
 import tmg.flashback.repo.enums.NewsSource
 import tmg.flashback.repo.enums.ThemePref
 import tmg.utilities.extensions.toEnum
@@ -16,16 +15,16 @@ private const val defaultShowDriversInConstructors: Boolean = true
 private const val defaultShakeToReport: Boolean = true
 private const val defaultCrashReporting: Boolean = true
 
-class SharedPrefsDB(context: Context): SharedPrefManager(context), PrefsDB {
+class SharedPrefsDB(context: Context) : SharedPrefManager(context), PrefsDB {
 
     override val prefsKey: String = "Flashback"
     private val keyShowQualifyingDelta: String = "SHOW_QUALIFYING_DELTA"
     private val keyShowGridPenaltiesInQualifying: String = "SHOW_GRID_PENALTIES_IN_QUALIFYING"
-    private val keyShowDriversInConstructorStandings: String = "SHOW_DRIVERS_IN_CONSTRUCTOR_STANDINGS"
+    private val keyShowDriversInConstructorStandings: String =
+        "SHOW_DRIVERS_IN_CONSTRUCTOR_STANDINGS"
     private val keyBottomSheetExpanded: String = "BOTTOM_SHEET_EXPANDED"
     private val keyBottomSheetAll: String = "BOTTOM_SHEET_ALL"
     private val keyBottomSheetFavourited: String = "BOTTOM_SHEET_FAVOURITED"
-    private val keyDefaultTab: String = "DEFAULT_TAB"
     private val keyCrashReporting: String = "CRASH_REPORTING"
     private val keyShakeToReport: String = "SHAKE_TO_REPORT"
     private val keyReleaseNotes: String = "RELEASE_NOTES"

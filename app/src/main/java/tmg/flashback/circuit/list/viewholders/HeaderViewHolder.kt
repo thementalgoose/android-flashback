@@ -2,7 +2,7 @@ package tmg.flashback.circuit.list.viewholders
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.view_circuit_info.view.*
+import kotlinx.android.synthetic.main.view_circuit_info_header.view.*
 import org.threeten.bp.LocalDate
 import tmg.flashback.R
 import tmg.flashback.circuit.list.CircuitItem
@@ -13,7 +13,7 @@ import tmg.utilities.extensions.ordinalAbbreviation
 import tmg.utilities.extensions.views.context
 import tmg.utilities.extensions.views.getString
 
-class CircuitInfoHeaderViewHolder(
+class HeaderViewHolder(
     private val clickShowOnMap: () -> Unit,
     private val clickWikipedia: () -> Unit,
     itemView: View

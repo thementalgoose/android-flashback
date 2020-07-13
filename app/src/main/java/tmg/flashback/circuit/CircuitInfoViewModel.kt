@@ -14,6 +14,7 @@ import tmg.flashback.extensions.circuitIcon
 import tmg.flashback.repo.db.stats.CircuitDB
 import tmg.flashback.repo.models.stats.Circuit
 import tmg.flashback.settings.ConnectivityManager
+import tmg.flashback.shared.SyncDataItem
 import tmg.utilities.extensions.then
 import tmg.utilities.lifecycle.DataEvent
 
@@ -77,10 +78,10 @@ class CircuitInfoViewModel(
             wikipedia = it?.wikiUrl
             when {
                 it == null && !connectivityManager.isConnected -> {
-                    return@map listOf<CircuitItem>(CircuitItem.NoNetwork)
+                    return@map listOf<CircuitItem>(CircuitItem.ErrorItem(SyncDataItem.NoNetwork))
                 }
                 it == null -> {
-                    return@map listOf<CircuitItem>(CircuitItem.InternalError)
+                    return@map listOf<CircuitItem>(CircuitItem.ErrorItem(SyncDataItem.InternalError))
                 }
                 else -> {
                     val list = mutableListOf<CircuitItem>()

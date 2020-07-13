@@ -13,7 +13,7 @@ import tmg.utilities.extensions.ordinalAbbreviation
 import tmg.utilities.extensions.views.context
 import tmg.utilities.extensions.views.getString
 
-class DriverSeasonViewHolder(
+class RaceViewHolder(
     private val itemClicked: (result: DriverSeasonItem.Result) -> Unit,
     itemView: View
 ): RecyclerView.ViewHolder(itemView), View.OnClickListener {

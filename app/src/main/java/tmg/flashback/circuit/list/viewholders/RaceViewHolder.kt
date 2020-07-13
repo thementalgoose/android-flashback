@@ -2,13 +2,13 @@ package tmg.flashback.circuit.list.viewholders
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.view_circuit_race.view.*
+import kotlinx.android.synthetic.main.view_circuit_info_race.view.*
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.R
 import tmg.flashback.circuit.list.CircuitItem
 import tmg.utilities.extensions.views.getString
 
-class CircuitInfoRaceViewHolder(
+class RaceViewHolder(
     private val raceClicked: (race: CircuitItem.Race) -> Unit,
     itemView: View
 ): RecyclerView.ViewHolder(itemView),

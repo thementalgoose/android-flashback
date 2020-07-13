@@ -71,7 +71,6 @@ class SettingsNewsViewModel(
     private fun populateList(): List<AppPreferencesItem> {
 
         val sources = NewsSource.values()
-            .filter { !isLive || NewsSource.SKY_SPORTS != it }
             .map { AppPreferencesItem.SwitchPreference(
                 prefKey = it.key,
                 title = applicationContext.getString(it.title),

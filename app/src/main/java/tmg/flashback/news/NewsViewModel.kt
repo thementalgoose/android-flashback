@@ -15,6 +15,7 @@ import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.db.news.NewsDB
 import tmg.flashback.repo.enums.NewsSource
 import tmg.flashback.settings.ConnectivityManager
+import tmg.flashback.shared.SyncDataItem
 import tmg.utilities.extensions.then
 
 //region Inputs
@@ -52,15 +53,15 @@ class NewsViewModel(
         .flatMapLatest { newsDB.getNews() }
         .map { response ->
             if (response.isNoNetwork || !connectivityManager.isConnected) {
-                return@map listOf<NewsItem>(NewsItem.NoNetwork)
+                return@map listOf<NewsItem>(NewsItem.ErrorItem(SyncDataItem.NoNetwork))
             }
             val results = response.result?.map { NewsItem.News(it) } ?: emptyList()
             if (results.isEmpty()) {
                 if (prefDB.newsSourceExcludeList.size == NewsSource.values().size) {
-                    return@map listOf<NewsItem>(NewsItem.AllSourcesDisabled)
+                    return@map listOf<NewsItem>(NewsItem.ErrorItem(SyncDataItem.AllSourcesDisabled))
                 }
                 else {
-                    return@map listOf<NewsItem>(NewsItem.InternalError)
+                    return@map listOf<NewsItem>(NewsItem.ErrorItem(SyncDataItem.InternalError))
                 }
             }
             return@map listOf<NewsItem>(NewsItem.Message(

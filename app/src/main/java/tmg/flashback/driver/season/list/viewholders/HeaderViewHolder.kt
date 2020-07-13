@@ -8,7 +8,7 @@ import tmg.flashback.driver.season.list.DriverSeasonItem
 import tmg.flashback.utils.getFlagResourceAlpha3
 import tmg.utilities.extensions.views.context
 
-class DriverHeaderViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+class HeaderViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
     fun bind(item: DriverSeasonItem.Header) {
 

@@ -3,6 +3,7 @@ package tmg.flashback.news
 import androidx.annotation.LayoutRes
 import tmg.flashback.R
 import tmg.flashback.repo.models.news.Article
+import tmg.flashback.shared.SyncDataItem
 
 sealed class NewsItem(
     @LayoutRes val layoutId: Int
@@ -15,11 +16,11 @@ sealed class NewsItem(
         val msg: String
     ): NewsItem(R.layout.view_shared_message)
 
-    object NoNetwork: NewsItem(R.layout.view_shared_no_network)
+    data class ErrorItem(
+        val item: SyncDataItem
+    ): NewsItem(item.layoutId)
+}
 
-    object InternalError: NewsItem(R.layout.view_shared_internal_error)
-
-    object AllSourcesDisabled: NewsItem(R.layout.view_shared_no_news_sources)
-
-
+fun MutableList<NewsItem>.addError(syncDataItem: SyncDataItem) {
+    this.add(NewsItem.ErrorItem(syncDataItem))
 }

@@ -4,6 +4,7 @@ import androidx.annotation.LayoutRes
 import org.threeten.bp.LocalDate
 import tmg.flashback.R
 import tmg.flashback.repo.models.stats.CircuitSummary
+import tmg.flashback.shared.SyncDataItem
 import tmg.flashback.shared.viewholders.DataUnavailable
 
 sealed class HomeItem(
@@ -43,15 +44,11 @@ sealed class HomeItem(
         val maxPointsInSeason: Int
     ): HomeItem(R.layout.view_home_constructor)
 
-    object NoNetwork: HomeItem(R.layout.view_shared_no_network)
+    data class ErrorItem(
+        val item: SyncDataItem
+    ): HomeItem(item.layoutId)
+}
 
-    object InternalError: HomeItem(R.layout.view_shared_internal_error)
-
-    data class Message(
-        val msg: String
-    ): HomeItem(R.layout.view_shared_message)
-
-    data class Unavailable(
-        val type: DataUnavailable
-    ): HomeItem(R.layout.view_shared_data_unavailable)
+fun MutableList<HomeItem>.addError(item: SyncDataItem) {
+    this.add(HomeItem.ErrorItem(item))
 }

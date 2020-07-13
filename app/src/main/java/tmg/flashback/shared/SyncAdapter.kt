@@ -10,9 +10,11 @@ import tmg.flashback.home.list.HomeItem
 import tmg.flashback.shared.viewholders.*
 import tmg.flashback.utils.GenericDiffCallback
 
-abstract class SyncAdapter<T: SyncDataItem>: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+abstract class SyncAdapter<T>: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    abstract val list: List<T>
+    abstract var list: List<T>
+
+    abstract fun viewType(position: Int): Int
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
@@ -35,8 +37,8 @@ abstract class SyncAdapter<T: SyncDataItem>: RecyclerView.Adapter<RecyclerView.V
         }
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        when (val item = list[position]) {
+    fun bindErrors(holder: RecyclerView.ViewHolder, syncDataItem: SyncDataItem) {
+        when (val item = syncDataItem) {
             is SyncDataItem.Unavailable -> (holder as DataUnavailableViewHolder).bind(item.type)
             is SyncDataItem.Message -> (holder as MessageViewHolder).bind(item.msg)
         }
@@ -44,6 +46,6 @@ abstract class SyncAdapter<T: SyncDataItem>: RecyclerView.Adapter<RecyclerView.V
 
     override fun getItemCount() = list.size
 
-    override fun getItemViewType(position: Int) = list[position].layoutId
+    override fun getItemViewType(position: Int) = viewType(position)
 
 }

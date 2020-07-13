@@ -4,21 +4,19 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.R
-import tmg.flashback.circuit.list.viewholders.CircuitInfoHeaderViewHolder
-import tmg.flashback.circuit.list.viewholders.CircuitInfoRaceViewHolder
-import tmg.flashback.circuit.list.viewholders.CircuitInfoTrackViewHolder
-import tmg.flashback.shared.viewholders.DataUnavailableViewHolder
-import tmg.flashback.shared.viewholders.InternalErrorOccurredViewHolder
-import tmg.flashback.shared.viewholders.NoNetworkViewHolder
+import tmg.flashback.circuit.list.viewholders.HeaderViewHolder
+import tmg.flashback.circuit.list.viewholders.RaceViewHolder
+import tmg.flashback.circuit.list.viewholders.TrackViewHolder
+import tmg.flashback.shared.SyncAdapter
 import tmg.flashback.utils.calculateDiff
 
 class CircuitInfoAdapter(
     val clickShowOnMap: () -> Unit,
     val clickWikipedia: () -> Unit,
     val clickRace: (race: CircuitItem.Race) -> Unit
-): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+): SyncAdapter<CircuitItem>() {
 
-    var list: List<CircuitItem> = emptyList()
+    override var list: List<CircuitItem> = emptyList()
         set(value) {
             val result = calculateDiff(field, value)
             field = value
@@ -27,41 +25,30 @@ class CircuitInfoAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            R.layout.view_circuit_info_header -> CircuitInfoHeaderViewHolder(
+            R.layout.view_circuit_info_header -> HeaderViewHolder(
                 clickShowOnMap,
                 clickWikipedia,
                 LayoutInflater.from(parent.context).inflate(viewType, parent, false)
             )
-            R.layout.view_circuit_info_race -> CircuitInfoRaceViewHolder(
+            R.layout.view_circuit_info_race -> RaceViewHolder(
                 clickRace,
                 LayoutInflater.from(parent.context).inflate(viewType, parent, false)
             )
-            R.layout.view_circuit_info_track -> CircuitInfoTrackViewHolder(
+            R.layout.view_circuit_info_track -> TrackViewHolder(
                 LayoutInflater.from(parent.context).inflate(viewType, parent, false)
             )
-            R.layout.view_shared_data_unavailable -> DataUnavailableViewHolder(
-                LayoutInflater.from(parent.context).inflate(viewType, parent, false)
-            )
-            R.layout.view_shared_no_network -> NoNetworkViewHolder(
-                LayoutInflater.from(parent.context).inflate(viewType, parent, false)
-            )
-            R.layout.view_shared_internal_error -> InternalErrorOccurredViewHolder(
-                LayoutInflater.from(parent.context).inflate(viewType, parent, false)
-            )
-            else -> throw Exception("Unsupported layout given to onCreateViewHolder. Address this in CircuitItem")
+            else -> super.onCreateViewHolder(parent, viewType)
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (val item = list[position]) {
-            is CircuitItem.CircuitInfo -> (holder as CircuitInfoHeaderViewHolder).bind(item)
-            is CircuitItem.Race -> (holder as CircuitInfoRaceViewHolder).bind(item)
-            is CircuitItem.TrackImage -> (holder as CircuitInfoTrackViewHolder).bind(item)
-            is CircuitItem.Unavailable -> (holder as DataUnavailableViewHolder).bind(item.type)
+            is CircuitItem.CircuitInfo -> (holder as HeaderViewHolder).bind(item)
+            is CircuitItem.Race -> (holder as RaceViewHolder).bind(item)
+            is CircuitItem.TrackImage -> (holder as TrackViewHolder).bind(item)
+            is CircuitItem.ErrorItem -> bindErrors(holder, item.item)
         }
     }
 
-    override fun getItemViewType(position: Int) = list[position].layoutId
-
-    override fun getItemCount(): Int = list.size
+    override fun viewType(position: Int) = list[position].layoutId
 }

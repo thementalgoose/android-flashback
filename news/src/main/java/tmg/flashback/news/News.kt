@@ -18,9 +18,6 @@ import tmg.flashback.news.apis.motorsport.convert
 import tmg.flashback.news.apis.pitpass.PitPassRssRetrofit
 import tmg.flashback.news.apis.pitpass.buildRetrofitPitPass
 import tmg.flashback.news.apis.pitpass.convert
-import tmg.flashback.news.apis.skysports_unofficial.SkySportsRssRetrofit
-import tmg.flashback.news.apis.skysports_unofficial.buildRetrofitSkySports
-import tmg.flashback.news.apis.skysports_unofficial.convert
 import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.db.news.NewsDB
 import tmg.flashback.repo.enums.NewsSource
@@ -31,7 +28,6 @@ private val autosportRss: AutosportRssRetrofit = buildRetrofitAutosport(BuildCon
 private val crashNetRss: CrashNetRssRetrofit = buildRetrofitCrashNet(BuildConfig.DEBUG)
 private val pitPassRss: PitPassRssRetrofit = buildRetrofitPitPass(BuildConfig.DEBUG)
 private val motorsportRss: MotorsportRssRetrofit = buildRetrofitMotorsport(BuildConfig.DEBUG)
-private val skySports: SkySportsRssRetrofit = buildRetrofitSkySports(BuildConfig.DEBUG)
 
 class News(
     private val prefsDB: PrefsDB,
@@ -42,7 +38,6 @@ class News(
     private suspend fun getCrashNet(): Response<List<Article>> = safelyRun { crashNetRss.getFeed().mChannel?.convert(prefsDB) ?: emptyList() }
     private suspend fun getPitPass(): Response<List<Article>> = safelyRun { pitPassRss.getFeed().mChannel?.convert(prefsDB) ?: emptyList() }
     private suspend fun getMotorsport(): Response<List<Article>> = safelyRun { motorsportRss.getFeed().mChannel?.convert(prefsDB) ?: emptyList() }
-    private suspend fun getSkySports(): Response<List<Article>> = safelyRun { skySports.getFeed().convert(prefsDB) }
 
     override fun syncAll() {
 
@@ -80,9 +75,6 @@ class News(
                 }
                 if (!prefsDB.newsSourceExcludeList.contains(NewsSource.MOTORSPORT)) {
                     add(::getMotorsport)
-                }
-                if (!isLive && !prefsDB.newsSourceExcludeList.contains(NewsSource.PIT_PASS)) {
-                    add(::getSkySports)
                 }
             }
 
