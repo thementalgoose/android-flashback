@@ -1,6 +1,7 @@
 package tmg.flashback.home.list.viewholders
 
 import android.view.View
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.layout_driver.view.*
@@ -10,7 +11,6 @@ import tmg.flashback.R
 import tmg.flashback.home.list.HomeItem
 import tmg.flashback.utils.getColor
 import tmg.flashback.utils.getFlagResourceAlpha3
-import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.ordinalAbbreviation
 import tmg.utilities.extensions.views.context
 import tmg.utilities.extensions.views.getString
@@ -23,12 +23,18 @@ class DriverViewHolder(
 
     init {
         itemView.container.setOnClickListener(this)
+        itemView.containerQuali.setOnClickListener(this)
+        itemView.containerFinish.setOnClickListener(this)
+        itemView.containerMore.setOnClickListener(this)
     }
 
     private lateinit var driverId: String
     private var season: Int = -1
     private var firstName: String? = null
     private var lastName: String? = null
+
+    private var qualiList: String? = null
+    private var finishList: String? = null
 
     fun bind(item: HomeItem.Driver) {
 
@@ -59,36 +65,55 @@ class DriverViewHolder(
         itemView.lpvProgress.textBackgroundColour = context.theme.getColor(R.attr.f1TextSecondary)
         itemView.lpvProgress.animateProgress(item.points.toFloat() / item.maxPointsInSeason.toFloat()) { (it * item.maxPointsInSeason.toFloat()).toInt().coerceIn(0, item.points).toString() }
 
-        itemView.best.show(item.bestFinish != null || item.bestQualifying != null)
-        itemView.best.text = StringBuilder().apply {
-            if (item.bestFinish != null ) {
-                val (position, circuits) = item.bestFinish
-                val circuitsString = if (circuits.size > 3) {
-                    getString(R.string.home_driver_grand_prixs, circuits.size)
-                } else {
-                    circuits.joinToString(separator = ", ") { it.country }
-                }
-                append(itemView.context.getString(R.string.home_driver_finish_pole, position.ordinalAbbreviation, circuitsString))
-            }
-            if (isNotEmpty()) append("<br/>")
-            if (item.bestQualifying != null) {
-                val (position, circuits) = item.bestQualifying
-                val circuitsString = if (circuits.size > 3) {
-                    getString(R.string.home_driver_grand_prixs, circuits.size)
-                } else {
-                    circuits.joinToString(separator = ", ") { it.country }
-                }
-                val qualiPos = if (position == 1) {
-                    getString(R.string.on_pole_position)
-                } else {
-                    position.ordinalAbbreviation
-                }
-                append(itemView.context.getString(R.string.home_driver_qualified, qualiPos, circuitsString))
-            }
-        }.toString().fromHtml()
+        itemView.stats.show(false)
+
+        // Qualifying
+        val (qualiPosition, qualiCircuits) = item.bestQualifying ?: Pair(0, emptyList())
+        if (qualiPosition == 0) {
+            itemView.qualifying.text = getString(R.string.endash)
+            qualiList = null
+        }
+        else {
+            itemView.qualifying.text = qualiPosition.ordinalAbbreviation
+            qualiList = qualiCircuits
+                    .map { it.name }
+                    .distinct()
+                    .joinToString(separator = ", ")
+        }
+
+        // Finish
+        val (position, circuits) = item.bestFinish ?: Pair(0, emptyList())
+        if (position == 0) {
+            itemView.finish.text = getString(R.string.endash)
+            finishList = null
+        }
+        else {
+            itemView.finish.text = position.ordinalAbbreviation
+            finishList = circuits
+                    .map { it.name }
+                    .distinct()
+                    .joinToString(separator = ", ")
+        }
     }
 
     override fun onClick(v: View?) {
-        driverClicked(season, driverId, firstName, lastName)
+        when (v) {
+            itemView.container -> {
+                itemView.stats.show(true)
+            }
+            itemView.containerQuali -> {
+                if (qualiList != null) {
+                    Toast.makeText(context, qualiList, Toast.LENGTH_LONG).show()
+                }
+            }
+            itemView.containerFinish -> {
+                if (finishList != null) {
+                    Toast.makeText(context, finishList, Toast.LENGTH_LONG).show()
+                }
+            }
+            itemView.containerMore -> {
+                driverClicked(season, driverId, firstName, lastName)
+            }
+        }
     }
 }

@@ -106,6 +106,11 @@
     <dimen name="dashboardProgressBarHeight">12dp</dimen>
     <dimen name="dashboardProgressBarWidth">90dp</dimen>
 
+    <!-- Driver -->
+
+    <fraction name="driverSeason">0.55</fraction>
+    <fraction name="driverSeasonPoints">0.85</fraction>
+
     <!-- Race -->
 
     <dimen name="raceSeasonImageSize">36dp</dimen>

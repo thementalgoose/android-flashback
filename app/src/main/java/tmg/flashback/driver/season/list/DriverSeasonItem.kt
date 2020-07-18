@@ -27,6 +27,7 @@ sealed class DriverSeasonItem(
             val date: LocalDate,
             val constructor: Constructor,
             val qualified: Int,
+            val gridPos: Int,
             val finished: Int?,
             val raceStatus: RaceStatus,
             val points: Int,

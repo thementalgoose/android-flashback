@@ -167,6 +167,10 @@
     <string name="home_driver_qualified"><![CDATA[‣ Qualified <b>%s</b> in %s]]></string> <!-- On pole or 2nd -->
     <string name="home_driver_grand_prixs">%d grand prix</string> <!-- On pole or 2nd -->
 
+    <string name="home_driver_best_quali">Best qualifying</string>
+    <string name="home_driver_best_finish">Best finish</string>
+    <string name="home_driver_best_view_more">Season overview</string>
+
     <string name="home_partial_season">Statistics are shown as of the %s round of the grand prix, the %s. %d rounds to go</string> <!-- On pole or 2nd -->
     <string name="home_last_updated"><![CDATA[Last updated <i>%s</i>]]></string> <!-- On pole or 2nd -->
 
@@ -235,5 +239,6 @@
 
     <string name="results_accurate_for">Results as of the %s (round %d)</string>
     <string name="qualifying_header">Q</string>
+    <string name="endash">–</string>
 
 </resources>

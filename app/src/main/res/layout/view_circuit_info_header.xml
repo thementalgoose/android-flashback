@@ -64,6 +64,7 @@
                 android:clickable="true"
                 android:drawableStart="@drawable/ic_map"
                 android:drawablePadding="@dimen/paddingXSmall"
+                android:drawableTint="?attr/f1TextPrimary"
                 android:focusable="true"
                 android:gravity="center"
                 android:paddingStart="@dimen/paddingSmall"
@@ -73,7 +74,6 @@
                 android:text="@string/circuit_info_maps" />
 
             <TextView
-                android:visibility="gone"
                 android:id="@+id/wikipedia"
                 style="@style/Text.Pill.Text"
                 android:layout_width="wrap_content"
@@ -83,6 +83,7 @@
                 android:clickable="true"
                 android:drawableStart="@drawable/ic_wikipedia"
                 android:drawablePadding="@dimen/paddingXSmall"
+                android:drawableTint="?attr/f1TextPrimary"
                 android:focusable="true"
                 android:gravity="center"
                 android:paddingStart="@dimen/paddingSmall"
@@ -90,6 +91,7 @@
                 android:paddingEnd="@dimen/paddingSmall"
                 android:paddingBottom="@dimen/paddingXSmall"
                 android:text="@string/circuit_info_wikipedia"
+                android:visibility="gone"
                 app:layout_constraintStart_toEndOf="@id/maps"
                 app:layout_constraintTop_toBottomOf="@id/status" />
 

@@ -97,6 +97,7 @@ class DriverSeasonViewModel(
                                                 constructor = race.driver.constructor,
                                                 date = it.date,
                                                 qualified = race.qualified ?: 0,
+                                                gridPos = race.grid,
                                                 finished = race.finish,
                                                 raceStatus = race.status,
                                                 points = race.points,
