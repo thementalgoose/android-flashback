@@ -14,14 +14,14 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.83" />
+        app:layout_constraintGuide_percent="@fraction/driverSeasonPoints" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/midpoint"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5" />
+        app:layout_constraintGuide_percent="@fraction/driverSeason" />
 
     <ImageView
         android:id="@+id/points"
@@ -30,6 +30,7 @@
         android:layout_height="0dp"
         android:gravity="center"
         android:src="@drawable/ic_race_points"
+        android:tint="?attr/f1TextPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/guideline"
         app:layout_constraintTop_toTopOf="parent" />
@@ -52,6 +53,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:src="@drawable/ic_race_status"
+        android:tint="?attr/f1TextPrimary"
         app:layout_constraintEnd_toStartOf="@id/guideline"
         app:layout_constraintStart_toEndOf="@id/qualified"
         app:layout_constraintTop_toTopOf="parent" />

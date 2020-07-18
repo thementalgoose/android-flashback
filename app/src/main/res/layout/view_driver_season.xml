@@ -18,14 +18,14 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.83" />
+        app:layout_constraintGuide_percent="@fraction/driverSeasonPoints" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/midpoint"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5" />
+        app:layout_constraintGuide_percent="@fraction/driverSeason" />
 
     <tmg.labelledprogressbar.LabelledProgressBar
         android:id="@+id/lpvProgress"
@@ -105,5 +105,16 @@
         app:layout_constraintStart_toStartOf="@id/raceName"
         app:layout_constraintTop_toBottomOf="@id/raceName"
         tools:text="Albert Park Circuit" />
+
+    <TextView
+        android:id="@+id/penalty"
+        style="@style/Text.QualifyingTime.Delta"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:text="@string/qualifying_grid_penalty"
+        app:layout_constraintTop_toBottomOf="@id/circuitName"
+        app:layout_constraintStart_toStartOf="@id/circuitName"
+        app:layout_constraintEnd_toStartOf="@id/midpoint"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -196,6 +196,16 @@
         <item name="android:textSize">12sp</item>
     </style>
 
+    <style name="Text.Driver.Statistic" parent="Text.Driver">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Text.Driver.StatisticSubtitle" parent="Text.Driver">
+        <item name="android:textSize">11sp</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+
     <!--#endregion -->
 
     <!--#region Dashboard - Constructor -->

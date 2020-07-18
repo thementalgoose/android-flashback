@@ -186,11 +186,10 @@ fun List<Round>.bestQualified(driverId: String): Int? {
     return round?.race?.get(driverId)?.qualified
 }
 
-fun List<Round>.bestQualifyingResultFor(driverId: String): Pair<Int, List<CircuitSummary>>? {
+fun List<Round>.bestQualifyingResultFor(driverId: String): Pair<Int, List<Round>>? {
     val bestQualifyingPosition: Int = this.bestQualified(driverId) ?: return null
     val listOfCircuits = this
         .filter { it.race[driverId]?.qualified == bestQualifyingPosition }
-        .map { it.circuit }
     return Pair(bestQualifyingPosition, listOfCircuits)
 }
 
@@ -202,11 +201,10 @@ fun List<Round>.bestFinish(driverId: String): Int? {
     return round?.race?.get(driverId)?.finish
 }
 
-fun List<Round>.bestRaceResultFor(driverId: String): Pair<Int, List<CircuitSummary>>? {
+fun List<Round>.bestRaceResultFor(driverId: String): Pair<Int, List<Round>>? {
     val bestQualifyingPosition: Int = this.bestFinish(driverId) ?: return null
     val listOfCircuits = this
         .filter { it.race[driverId]?.finish == bestQualifyingPosition }
-        .map { it.circuit }
     return Pair(bestQualifyingPosition, listOfCircuits)
 }
 

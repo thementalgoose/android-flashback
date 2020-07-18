@@ -161,7 +161,9 @@ class HomeViewModel(
                         rounds.isEmpty() ->
                             list.addError(SyncDataItem.Unavailable(DataUnavailable.IN_FUTURE_SEASON))
                         else -> {
-                            val maxRound = rounds.maxBy { it.round }
+                            val maxRound = rounds
+                                    .filter { it.race.isNotEmpty() }
+                                    .maxBy { it.round }
                             if (maxRound != null && historyRounds.size != rounds.size) {
                                 list.addError(SyncDataItem.Message(context.getString(R.string.results_accurate_for, maxRound.name, maxRound.round)))
                             }
@@ -177,7 +179,9 @@ class HomeViewModel(
                         rounds.isEmpty() ->
                             list.addError(SyncDataItem.Unavailable(DataUnavailable.IN_FUTURE_SEASON))
                         else -> {
-                            val maxRound = rounds.maxBy { it.round }
+                            val maxRound = rounds
+                                    .filter { it.race.isNotEmpty() }
+                                    .maxBy { it.round }
                             if (maxRound != null && historyRounds.size != rounds.size) {
                                 list.addError(SyncDataItem.Message(context.getString(R.string.results_accurate_for, maxRound.name, maxRound.round)))
                             }
