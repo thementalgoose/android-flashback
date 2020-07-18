@@ -54,7 +54,7 @@
         <br/>• Added constructor colour bar to qualifying and race details to make driver\'s constructor more obvious
         <br/>• Fixed DNF label showing when driver finishes normally
         <br/>• Fixed message label appearing in top of screen properly]]></string>
-    <string name="release_16"><![CDATA[<b>4.4.3</b> - Driver statuses
+    <string name="release_16"><![CDATA[<b>4.4.6</b> - Driver statuses
         <br/>• Updated layout for driver season status to be less confusing
         <br/>• Fixed theming bugs on maps links
         <br/>• Fixed incorrect round being used as reference message for driver stats]]></string>
