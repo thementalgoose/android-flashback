@@ -46,14 +46,6 @@ class SeasonOverviewFirestore(
         return getSeasonWithRounds(season)
     }
 
-    override suspend fun getPreviousWeekend(season: Int): Flow<Round?> {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun getNextWeekend(season: Int): Flow<Round?> {
-        TODO("Not yet implemented")
-    }
-
     override suspend fun getSeasonRound(season: Int, round: Int): Flow<Round?> {
         return getRounds(season)
             .map { rounds -> rounds.firstOrNull { it.round == round }}
@@ -70,7 +62,7 @@ class SeasonOverviewFirestore(
     }
 
     private suspend fun getSeason(season: Int): Flow<Season?> {
-        return document("version/$version/seasons/$season")
+        return document("seasons/$season")
             .getDoc<FSeason>()
             .convertModel { it?.convert(season) }
     }
