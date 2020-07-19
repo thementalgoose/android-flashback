@@ -6,12 +6,12 @@ apply plugin: 'koin'
 apply plugin: 'io.fabric'
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 30
 
     defaultConfig {
         applicationId "tmg.flashback"
         minSdkVersion 21
-        targetSdkVersion 29
+        targetSdkVersion 30
         versionCode 17
         versionName "4.4.6"
 
