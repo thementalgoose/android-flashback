@@ -13,7 +13,5 @@ interface SeasonOverviewDB {
     suspend fun getDriver(season: Int, driver: String): Flow<Driver?>
     suspend fun getAllConstructors(season: Int): Flow<List<Constructor>>
     suspend fun getSeasonOverview(season: Int): Flow<Pair<Int, List<Round>>>
-    suspend fun getPreviousWeekend(season: Int): Flow<Round?> // null = first weekend
-    suspend fun getNextWeekend(season: Int): Flow<Round?> // null = last weekend
     suspend fun getSeasonRound(season: Int, round: Int): Flow<Round?>
 }
