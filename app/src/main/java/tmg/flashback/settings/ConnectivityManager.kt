@@ -17,7 +17,7 @@ class NetworkConnectivityManager(
             val networks = connectivityManager.allNetworks
             return networks.any {
                 @Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
-                connectivityManager.getNetworkCapabilities(it).hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+                connectivityManager.getNetworkCapabilities(it)?.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) ?: true
             }
         }
 }
