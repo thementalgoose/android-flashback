@@ -25,7 +25,9 @@ enum class TrackLayout(
     @DrawableRes
     val icon: Int
 ) {
+    ADELAIDE("adelaide", R.drawable.circuit_adelaide),
     ALBERT_PARK("albert_park", R.drawable.circuit_albert_park),
+    ALGARVE("algarve", R.drawable.circuit_algarve),
     AMERICAS("americas", R.drawable.circuit_americas),
     BAHRAIN("bahrain", R.drawable.circuit_bahrain),
     BAK("BAK", R.drawable.circuit_bak),
@@ -33,10 +35,16 @@ enum class TrackLayout(
     HANOI("hanoi", R.drawable.circuit_hanoi),
     HOCKENHEIMRING("hockenheimring", R.drawable.circuit_hockenheimring),
     HUNGARORING("hungaroring", R.drawable.circuit_hungaroring),
+    INDIANAPOLIS("indianapolis", R.drawable.circuit_indianapolis),
     INTERLAGOS("interlagos", R.drawable.circuit_interlagos),
+    IMOLA("imola", R.drawable.circuit_imola),
+    ISTANBUL("istanbul", R.drawable.circuit_istanbul),
+    MAGNY_COURS("magny_cours", R.drawable.circuit_magny_cours),
     MARINA_BAY("marina_bay", R.drawable.circuit_marina_bay),
     MONACO("monaco", R.drawable.circuit_monaco),
     MONZA("monza", R.drawable.circuit_monza),
+    MUGELLO("mugello", R.drawable.circuit_mugello),
+    NURBURGRING("nurburgring", R.drawable.circuit_nurburgring),
     RED_BULL_RING("red_bull_ring", R.drawable.circuit_red_bull_ring),
     RICARD("ricard", R.drawable.circuit_ricard),
     RODRIGUEZ("rodriguez", R.drawable.circuit_rodriguez),
@@ -46,8 +54,10 @@ enum class TrackLayout(
     SOCHI("sochi", R.drawable.circuit_sochi),
     SPA("spa", R.drawable.circuit_spa),
     SUZUKA("suzuka", R.drawable.circuit_suzuka),
+    VALENCIA("valencia", R.drawable.circuit_valencia),
     VILLENEUVE("villeneuve", R.drawable.circuit_villeneuve),
     YAS_MARINA("yas_marina", R.drawable.circuit_yas_marina),
+    YEONGAM("yeongam", R.drawable.circuit_yeongam),
     ZANDVOORT("zandvoort", R.drawable.circuit_zandvoort);
 }
 

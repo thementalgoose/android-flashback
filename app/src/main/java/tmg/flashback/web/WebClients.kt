@@ -22,7 +22,7 @@ class FlashbackWebViewClient(
     val titleChanged: (title: String) -> Unit
 ): WebViewClient() {
 
-    override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
+    override fun shouldOverrideUrlLoading(view: WebView?, url: String): Boolean {
         view?.loadUrl(url)
         val uri = Uri.parse(url)
         domainChanged(uri.host ?: "")
