@@ -58,6 +58,12 @@
         <br/>• Updated layout for driver season status to be less confusing
         <br/>• Fixed theming bugs on maps links
         <br/>• Fixed incorrect round being used as reference message for driver stats]]></string>
+    <string name="release_18"><![CDATA[<b>4.5.0</b> - Behind the scenes
+        <br/>• Backend fixes to data management
+        <br/>• Added notification for when results are being pulled
+        <br/>• Fix for Perez qualifying data showing up in Round 4 2020 data
+        <br/>• Fix for closing driver season dropdown collapsing again
+        <br/>• Moved constructor color bars to edge]]></string>
 
     <!-- App Lockout -->
     <string name="app_lockout_title">App lockout</string>
