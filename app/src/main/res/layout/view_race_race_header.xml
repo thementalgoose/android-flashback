@@ -7,7 +7,7 @@
     android:background="?attr/f1BackgroundPrimary"
     android:paddingStart="@dimen/paddingSmall"
     android:paddingTop="@dimen/paddingSmall"
-    android:paddingEnd="@dimen/paddingSmall"
+    android:paddingEnd="@dimen/paddingMedium"
     android:paddingBottom="@dimen/paddingSmall">
 
     <androidx.constraintlayout.widget.Guideline

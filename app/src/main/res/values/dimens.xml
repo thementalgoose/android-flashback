@@ -108,8 +108,8 @@
 
     <!-- Driver -->
 
-    <fraction name="driverSeason">0.55</fraction>
-    <fraction name="driverSeasonPoints">0.85</fraction>
+    <fraction name="driverSeason">0.50</fraction>
+    <fraction name="driverSeasonPoints">0.80</fraction>
 
     <!-- Race -->
 

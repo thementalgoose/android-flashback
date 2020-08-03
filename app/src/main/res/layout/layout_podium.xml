@@ -75,6 +75,8 @@
         style="@style/Text.Podium.Constructor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingStart="2dp"
+        android:paddingEnd="2dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
@@ -84,7 +86,8 @@
     <View
         android:id="@+id/constructorColor"
         android:layout_width="0dp"
-        android:layout_height="4dp"
+        android:layout_height="6dp"
+        android:layout_marginTop="2dp"
         app:layout_constraintEnd_toEndOf="@id/tvConstructor"
         app:layout_constraintStart_toStartOf="@id/tvConstructor"
         app:layout_constraintTop_toBottomOf="@id/tvConstructor"

@@ -2,17 +2,19 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/qualifyingContainer"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?attr/f1BackgroundPrimary"
-    android:paddingStart="@dimen/paddingSmall"
-    android:paddingEnd="@dimen/paddingSmall">
+    android:paddingStart="0dp"
+    android:paddingEnd="0dp">
 
     <TextView
         android:id="@+id/tvPosition"
         style="@style/Text.QualifyingTime.Position"
         android:layout_width="@dimen/qualifyingListPositionWidth"
         android:layout_height="0dp"
+        android:layout_marginStart="@dimen/paddingSmall"
         android:gravity="center"
         app:layout_constraintBottom_toBottomOf="@id/tvConstructor"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,9 +35,9 @@
         android:id="@+id/constructorColor"
         android:layout_width="4dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="@id/tvConstructor"
-        app:layout_constraintStart_toStartOf="@id/layoutDriver"
-        app:layout_constraintTop_toTopOf="@id/tvConstructor"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:background="#99ff99" />
 
     <TextView
@@ -43,10 +45,10 @@
         style="@style/Text.QualifyingTime.Constructor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/paddingXSmall"
         android:layout_marginTop="2dp"
         android:layout_marginBottom="@dimen/paddingXSmall"
         app:layout_constraintStart_toEndOf="@id/constructorColor"
+        app:layout_constraintStart_toStartOf="@id/layoutDriver"
         app:layout_constraintTop_toBottomOf="@id/layoutDriver"
         tools:text="Mercedes" />
 
@@ -56,9 +58,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
+        android:layout_marginBottom="@dimen/paddingXSmall"
         android:text="@string/qualifying_grid_penalty"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@id/constructorColor"
+        app:layout_constraintStart_toStartOf="@id/layoutDriver"
         app:layout_constraintTop_toBottomOf="@id/tvConstructor" />
 
     <View
@@ -82,6 +85,7 @@
         layout="@layout/layout_qualifying_time"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginEnd="@dimen/paddingSmall"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_chainStyle="spread"

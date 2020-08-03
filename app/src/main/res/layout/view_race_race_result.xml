@@ -2,19 +2,20 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/resultContainer"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?attr/f1BackgroundPrimary"
-    android:paddingStart="@dimen/paddingSmall"
-    android:paddingTop="@dimen/paddingSmall"
-    android:paddingEnd="@dimen/paddingSmall"
-    android:paddingBottom="@dimen/paddingSmall">
+    android:paddingStart="0dp"
+    android:paddingEnd="@dimen/paddingSmall">
 
     <TextView
         android:id="@+id/tvPosition"
         style="@style/Text.RaceResult.Position"
         android:layout_width="@dimen/qualifyingListPositionWidth"
         android:layout_height="0dp"
+        android:layout_marginStart="@dimen/paddingSmall"
+        android:layout_marginTop="@dimen/paddingSmall"
         android:gravity="center"
         android:maxLength="2"
         app:layout_constraintBottom_toBottomOf="@id/tvConstructor"
@@ -36,9 +37,9 @@
         android:id="@+id/imgDriverFlag"
         android:layout_width="@dimen/driverFlagSize"
         android:layout_height="@dimen/driverFlagSize"
-        android:layout_marginStart="@dimen/paddingXSmall"
         app:layout_constraintBottom_toBottomOf="@id/tvDriverNumber"
         app:layout_constraintStart_toEndOf="@id/constructorColor"
+        app:layout_constraintStart_toStartOf="@id/layoutDriver"
         app:layout_constraintTop_toTopOf="@id/tvDriverNumber"
         tools:src="@drawable/gb" />
 
@@ -48,6 +49,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/paddingXSmall"
+        android:layout_marginBottom="@dimen/paddingSmall"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/imgDriverFlag"
         app:layout_constraintTop_toBottomOf="@id/layoutDriver"
         tools:text="44" />
@@ -56,9 +59,9 @@
         android:id="@+id/constructorColor"
         android:layout_width="4dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="@id/tvDriverNumber"
-        app:layout_constraintStart_toStartOf="@id/layoutDriver"
-        app:layout_constraintTop_toTopOf="@id/tvDriverNumber"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:background="#88ff88" />
 
     <TextView
@@ -88,10 +91,10 @@
         android:gravity="end"
         android:paddingStart="0dp"
         android:paddingEnd="@dimen/paddingSmall"
-        app:layout_constraintBottom_toBottomOf="@id/tvConstructor"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/llPosition"
         app:layout_constraintStart_toStartOf="@id/guideline"
-        app:layout_constraintTop_toTopOf="@id/layoutDriver"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="15" />
 
     <androidx.constraintlayout.widget.ConstraintLayout

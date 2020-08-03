@@ -21,7 +21,6 @@ import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.toEnum
 import tmg.utilities.extensions.views.show
 
-private const val duration: Long = 200L
 private const val dateFormat: String = "yyyy/MM/dd"
 
 class RaceActivity : BaseActivity(), RaceAdapterCallback {

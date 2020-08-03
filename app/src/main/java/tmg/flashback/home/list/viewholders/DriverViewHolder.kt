@@ -2,6 +2,7 @@ package tmg.flashback.home.list.viewholders
 
 import android.view.View
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.layout_driver.view.*
@@ -99,7 +100,7 @@ class DriverViewHolder(
     override fun onClick(v: View?) {
         when (v) {
             itemView.container -> {
-                itemView.stats.show(true)
+                itemView.stats.show(!itemView.stats.isVisible)
             }
             itemView.containerQuali -> {
                 if (qualiList != null) {
