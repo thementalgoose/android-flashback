@@ -251,4 +251,9 @@
     <string name="qualifying_header">Q</string>
     <string name="endash">–</string>
 
+    <!-- App Shortcut -->
+    <string name="app_shortcut_news_shorttitle">News</string>
+    <string name="app_shortcut_news_longtitle">Latest Formula 1 News</string>
+    <string name="app_shortcut_news_disabled">News (Unavailable)</string>
+
 </resources>
