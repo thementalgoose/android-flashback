@@ -41,12 +41,14 @@ android {
             applicationIdSuffix '.sand'
             versionNameSuffix '-sand'
 
+            resValue "string", "application_id", "tmg.flashback.sand"
             buildConfigField "int", "ENVIRONMENT", '1'
         }
 
         live {
             dimension 'version'
 
+            resValue "string", "application_id", "tmg.flashback"
             buildConfigField "int", "ENVIRONMENT", '0'
         }
     }
