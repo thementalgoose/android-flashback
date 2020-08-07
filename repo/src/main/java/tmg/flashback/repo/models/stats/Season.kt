@@ -4,7 +4,9 @@ data class Season(
     val season: Int,
     val drivers: List<Driver>,
     val constructors: List<Constructor>,
-    val rounds: List<Round>
+    val rounds: List<Round>,
+    val driverPenalties: List<DriverPenalty>,
+    val constructorPenalties: List<ConstructorPenalty>
 ) {
     val circuits: List<CircuitSummary>
         get() = rounds.map { it.circuit }
