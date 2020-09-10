@@ -1,11 +1,11 @@
-package tmg.flashback.driver.season.list.viewholders
+package tmg.flashback.driver.season.viewholders
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.view_driver_season.view.*
 import kotlinx.android.synthetic.main.view_driver_season.view.lpvProgress
 import tmg.flashback.R
-import tmg.flashback.driver.season.list.DriverSeasonItem
+import tmg.flashback.driver.season.DriverSeasonItem
 import tmg.flashback.repo.enums.isStatusFinished
 import tmg.flashback.utils.getColor
 import tmg.flashback.utils.getFlagResourceAlpha3
@@ -15,9 +15,9 @@ import tmg.utilities.extensions.views.getString
 import tmg.utilities.extensions.views.show
 
 class RaceViewHolder(
-    private val itemClicked: (result: DriverSeasonItem.Result) -> Unit,
+        private val itemClicked: (result: DriverSeasonItem.Result) -> Unit,
 
-    itemView: View
+        itemView: View
 ): RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
     init {

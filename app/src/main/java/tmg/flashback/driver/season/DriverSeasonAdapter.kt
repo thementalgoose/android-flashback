@@ -1,18 +1,18 @@
-package tmg.flashback.driver.season.list
+package tmg.flashback.driver.season
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.R
-import tmg.flashback.driver.season.list.viewholders.HeaderViewHolder
-import tmg.flashback.driver.season.list.viewholders.RaceHeaderViewHolder
-import tmg.flashback.driver.season.list.viewholders.RaceViewHolder
+import tmg.flashback.driver.season.viewholders.HeaderViewHolder
+import tmg.flashback.driver.season.viewholders.RaceHeaderViewHolder
+import tmg.flashback.driver.season.viewholders.RaceViewHolder
 import tmg.flashback.shared.SyncAdapter
 import tmg.flashback.utils.GenericDiffCallback
 
 class DriverSeasonAdapter(
-    private val itemClicked: (result: DriverSeasonItem.Result) -> Unit
+        private val itemClicked: (result: DriverSeasonItem.Result) -> Unit
 ): SyncAdapter<DriverSeasonItem>() {
 
     override var list: List<DriverSeasonItem> = emptyList()
@@ -25,14 +25,14 @@ class DriverSeasonAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             R.layout.view_driver_header -> HeaderViewHolder(
-                LayoutInflater.from(parent.context).inflate(viewType, parent, false)
+                    LayoutInflater.from(parent.context).inflate(viewType, parent, false)
             )
             R.layout.view_driver_season -> RaceViewHolder(
-                itemClicked,
-                LayoutInflater.from(parent.context).inflate(viewType, parent, false)
+                    itemClicked,
+                    LayoutInflater.from(parent.context).inflate(viewType, parent, false)
             )
             R.layout.view_driver_season_header -> RaceHeaderViewHolder(
-                LayoutInflater.from(parent.context).inflate(viewType, parent, false)
+                    LayoutInflater.from(parent.context).inflate(viewType, parent, false)
             )
             else -> super.onCreateViewHolder(parent, viewType)
         }
@@ -47,4 +47,5 @@ class DriverSeasonAdapter(
     }
 
     override fun viewType(position: Int) = list[position].layoutId
+
 }

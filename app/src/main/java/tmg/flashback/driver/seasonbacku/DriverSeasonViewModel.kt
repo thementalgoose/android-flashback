@@ -1,16 +1,16 @@
-package tmg.flashback.driver.season
+package tmg.flashback.driver.seasonbacku
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import tmg.flashback.base.BaseViewModel
 import tmg.flashback.currentYear
+import tmg.flashback.driver.season.DriverSeasonItem
+import tmg.flashback.driver.season.addError
 import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.db.stats.SeasonOverviewDB
 import tmg.flashback.repo.models.stats.Constructor
@@ -18,13 +18,11 @@ import tmg.flashback.repo.models.stats.Driver
 import tmg.flashback.settings.ConnectivityManager
 import tmg.flashback.shared.SyncDataItem
 import tmg.flashback.shared.viewholders.DataUnavailable
-import tmg.utilities.lifecycle.DataEvent
 
 //region Inputs
 
 interface DriverSeasonViewModelInputs {
-    fun setup(driverId: String, season: Int)
-    fun clickSeasonRound(result: DriverSeasonItem.Result)
+    fun initialise(season: Int, driverId: String)
 }
 
 //endregion
@@ -32,23 +30,19 @@ interface DriverSeasonViewModelInputs {
 //region Outputs
 
 interface DriverSeasonViewModelOutputs {
-    val goToSeasonRound: MutableLiveData<DataEvent<DriverSeasonItem.Result>>
     val list: LiveData<List<DriverSeasonItem>>
 }
 
 //endregion
 
-
 class DriverSeasonViewModel(
         private val seasonDB: SeasonOverviewDB,
         private val prefDB: PrefsDB,
         private val connectivityManager: ConnectivityManager
-): BaseViewModel(), DriverSeasonViewModelInputs, DriverSeasonViewModelOutputs {
+) : BaseViewModel(), DriverSeasonViewModelInputs, DriverSeasonViewModelOutputs {
 
     var inputs: DriverSeasonViewModelInputs = this
     var outputs: DriverSeasonViewModelOutputs = this
-
-    override val goToSeasonRound: MutableLiveData<DataEvent<DriverSeasonItem.Result>> = MutableLiveData()
 
     private lateinit var driverId: String
     private var season: ConflatedBroadcastChannel<Int> = ConflatedBroadcastChannel()
@@ -81,9 +75,10 @@ class DriverSeasonViewModel(
                         val constructors: List<Constructor> = rounds.mapNotNull { it.race[driverId]?.driver }
                                 .map { it.constructor }
                                 .distinct()
-//                        if (driver != null) {
-//                            list.add(DriverSeasonItem.Header(driver, constructors))
-//                        }
+
+                        if (driver != null) {
+                            list.add(DriverSeasonItem.Header(driver, constructors))
+                        }
 
                         list.add(DriverSeasonItem.ResultHeader)
 
@@ -128,15 +123,11 @@ class DriverSeasonViewModel(
 
     //region Inputs
 
-    override fun setup(driverId: String, season: Int) {
+    override fun initialise(season: Int, driverId: String) {
         this.driverId = driverId
         if (season != this.season.valueOrNull) {
             this.season.offer(season)
         }
-    }
-
-    override fun clickSeasonRound(result: DriverSeasonItem.Result) {
-        goToSeasonRound.value = DataEvent(result)
     }
 
     //endregion

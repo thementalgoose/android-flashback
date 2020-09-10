@@ -5,7 +5,7 @@ import tmg.flashback.base.BaseViewModel
 //region Inputs
 
 interface DriverViewModelInputs {
-
+    fun setup(driverId: String)
 }
 
 //endregion
@@ -28,6 +28,10 @@ class DriverViewModel: BaseViewModel(), DriverViewModelInputs, DriverViewModelOu
     }
 
     //region Inputs
+
+    override fun setup(driverId: String) {
+
+    }
 
     //endregion
 

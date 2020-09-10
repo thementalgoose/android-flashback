@@ -1,4 +1,4 @@
-package tmg.flashback.driver.season
+package tmg.flashback.driver.seasonbacku
 
 import android.content.Context
 import android.content.Intent
@@ -9,7 +9,7 @@ import kotlinx.android.synthetic.main.activity_driver_season.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.R
 import tmg.flashback.base.BaseActivity
-import tmg.flashback.driver.season.list.DriverSeasonAdapter
+import tmg.flashback.driver.seasonbacku.list.DriverSeasonAdapter
 import tmg.flashback.race.RaceActivity
 import tmg.utilities.extensions.observe
 
