@@ -202,8 +202,11 @@ class RaceViewModel(
     //region Inputs
 
     override fun initialise(season: Int, round: Int, date: LocalDate?) {
-        roundDate = date
-        seasonRound.offer(SeasonRound(season, round))
+        val existing: SeasonRound? = seasonRound.valueOrNull
+        if (existing?.first != season || existing.second != round) {
+            roundDate = date
+            seasonRound.offer(SeasonRound(season, round))
+        }
     }
 
     override fun orderBy(seasonRaceAdapterType: RaceAdapterType) {
@@ -212,11 +215,11 @@ class RaceViewModel(
 
     //endregion
 
-    private fun getDriverFromConstructor(round: Round, constructorId: String): List<Pair<RoundDriver, Int>> {
+    private fun getDriverFromConstructor(round: Round, constructorId: String): List<Pair<Driver, Int>> {
         return round
             .drivers
             .filter { it.constructor.id == constructorId }
-            .map { Pair(it, round.race[it.id]?.points ?: 0) }
+            .map { Pair(it.toDriver(), round.race[it.id]?.points ?: 0) }
             .sortedByDescending { it.second }
     }
 

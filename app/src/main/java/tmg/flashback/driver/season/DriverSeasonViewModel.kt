@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.asFlow
@@ -39,6 +41,8 @@ interface DriverSeasonViewModelOutputs {
 //endregion
 
 
+@FlowPreview
+@ExperimentalCoroutinesApi
 class DriverSeasonViewModel(
         private val seasonDB: SeasonOverviewDB,
         private val prefDB: PrefsDB,
@@ -75,7 +79,7 @@ class DriverSeasonViewModel(
                                 .map { round ->
                                     round.drivers.firstOrNull {
                                         it.id == driverId
-                                    }
+                                    }?.toDriver()
                                 }
                                 .firstOrNull()
                         val constructors: List<Constructor> = rounds.mapNotNull { it.race[driverId]?.driver }

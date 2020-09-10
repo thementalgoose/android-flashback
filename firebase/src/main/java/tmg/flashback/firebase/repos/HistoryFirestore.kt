@@ -19,8 +19,12 @@ class HistoryFirestore(
     }
 
     override fun historyFor(season: Int): Flow<History?> {
-        return getHistory()
-            .map { list -> list.firstOrNull { it.season == season } }
+        val seasonKey = "${season.toString().substring(0, 3)}0"
+        return document("overview/season$seasonKey")
+                .getDoc<FHistorySeason>()
+                .map {
+                    it?.convert()?.firstOrNull { it.season == season }
+                }
     }
 
     override fun allWinners(): Flow<List<WinnerSeason>> {
