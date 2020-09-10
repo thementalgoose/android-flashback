@@ -1,0 +1,68 @@
+package tmg.flashback.firebase.converters
+
+import androidx.core.graphics.toColorInt
+import org.threeten.bp.LocalDate
+import tmg.flashback.firebase.models.*
+import tmg.flashback.repo.models.stats.DriverOverview
+import tmg.flashback.repo.models.stats.DriverOverviewRace
+import tmg.flashback.repo.models.stats.DriverOverviewStanding
+import tmg.flashback.repo.models.stats.SlimConstructor
+
+fun FDriverOverview.convert(): DriverOverview {
+    return DriverOverview(
+            id = this.driver.id,
+            firstName = this.driver.firstName,
+            lastName = this.driver.surname,
+            code = this.driver.driverCode ?: this.driver.surname.take(3),
+            number = this.driver.driverNumber?.toInt() ?: 0,
+            wikiUrl = this.driver.wikiUrl,
+            photoUrl = this.driver.photoUrl,
+            dateOfBirth = fromDate(this.driver.dob),
+            nationality = this.driver.nationality,
+            nationalityISO = this.driver.nationalityISO ?: "",
+            standings = this.standings?.map { it.convert() } ?: emptyList()
+    )
+}
+
+fun FDriverOverviewStanding.convert(): DriverOverviewStanding {
+    return DriverOverviewStanding(
+             bestFinish = this.bestFinish ?: 0,
+             bestFinishQuantity = this.bestFinishQuantity ?: 0,
+             bestQualifying = this.bestQualifying ?: 0,
+             bestQualifyingQuantity = this.bestQualifyingQuantity ?: 0,
+             championshipStanding = this.championshipStanding ?: 0,
+             isInProgress = this.inProgress ?: false,
+             points = this.p ?: 0,
+             podiums = this.podiums ?: 0,
+             races = this.races ?: 0,
+             season = this.s,
+             wins = this.wins ?: 0,
+             constructors = this.constructor?.map { it.convert() } ?: emptyList(),
+             raceOverview = this.history?.map { it.convert(this.s) } ?: emptyList()
+    )
+}
+
+
+fun FDriverOverviewStandingHistory.convert(season: Int): DriverOverviewRace {
+    return DriverOverviewRace(
+            finished = this.f ?: 0,
+            points = this.p ?: 0,
+            qualified = this.q ?: 0,
+            round = this.r,
+            season = season,
+            raceName = this.rName ?: "",
+            date = fromDate(this.date),
+            circuitName = this.cName,
+            circuitId = this.cId,
+            circuitNationality = this.cCountry,
+            circuitNationalityISO = this.cISO ?: ""
+    )
+}
+
+fun FDriverOverviewStandingConstructor.convert(): SlimConstructor {
+    return SlimConstructor(
+            id = this.id,
+            color = this.color.toColorInt(),
+            name = this.name
+    )
+}
