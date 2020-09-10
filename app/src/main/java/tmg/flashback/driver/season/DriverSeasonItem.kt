@@ -1,4 +1,4 @@
-package tmg.flashback.driver.season.list
+package tmg.flashback.driver.season
 
 import androidx.annotation.LayoutRes
 import org.threeten.bp.LocalDate

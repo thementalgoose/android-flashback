@@ -15,7 +15,8 @@ import tmg.flashback.R
 import tmg.flashback.admin.lockout.LockoutActivity
 import tmg.flashback.base.BaseActivity
 import tmg.flashback.bottomSheetFastScrollDuration
-import tmg.flashback.driver.season.DriverSeasonActivity
+import tmg.flashback.driver.DriverActivity
+import tmg.flashback.driver.seasonbacku.DriverSeasonActivity
 import tmg.flashback.extensions.dimensionPx
 import tmg.flashback.home.list.HomeAdapter
 import tmg.flashback.home.season.*
@@ -61,7 +62,7 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback {
                 startActivity(intent)
             },
             driverClicked = { season: Int, driverId: String, firstName: String?, lastName: String? ->
-                val intent = DriverSeasonActivity.intent(this, season, driverId, firstName, lastName)
+                val intent = DriverActivity.intent(this, driverId, "$firstName $lastName")
                 startActivity(intent)
             }
         )

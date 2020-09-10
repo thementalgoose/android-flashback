@@ -170,7 +170,7 @@ class RaceViewModel(
                             }
                             else {
                                 when {
-                                    roundData.date >= LocalDate.now() -> list.add(RaceAdapterModel.Unavailable(DataUnavailable.IN_FUTURE_RACE))
+                                    roundData.date > LocalDate.now() -> list.add(RaceAdapterModel.Unavailable(DataUnavailable.IN_FUTURE_RACE))
                                     else -> list.add(RaceAdapterModel.Unavailable(DataUnavailable.COMING_SOON_RACE))
                                 }
                             }
