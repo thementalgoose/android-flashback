@@ -55,7 +55,7 @@ data class Round(
         get() = race.map { (_, value) ->
             RoundDriverStandings(
                 value.points,
-                value.driver
+                value.driver.toDriver()
             )
         }
 
@@ -123,7 +123,7 @@ fun List<Round>.constructorStandings(): ConstructorStandings {
 
             driversInRoundForConstructor.forEach { (roundDriver, points) ->
                 if (listOfDrivers[roundDriver.id] == null) {
-                    listOfDrivers[roundDriver.id] = Pair(roundDriver, 0)
+                    listOfDrivers[roundDriver.id] = Pair(roundDriver.toDriver(), 0)
                 }
 
                 val existing = listOfDrivers[roundDriver.id]!!

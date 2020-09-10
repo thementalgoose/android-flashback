@@ -1,5 +1,7 @@
 package tmg.flashback.driver
 
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import tmg.flashback.base.BaseViewModel
 
 //region Inputs
@@ -18,6 +20,8 @@ interface DriverViewModelOutputs {
 
 //endregion
 
+@FlowPreview
+@ExperimentalCoroutinesApi
 class DriverViewModel: BaseViewModel(), DriverViewModelInputs, DriverViewModelOutputs {
 
     var inputs: DriverViewModelInputs = this

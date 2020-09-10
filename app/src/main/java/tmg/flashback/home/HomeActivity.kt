@@ -16,7 +16,6 @@ import tmg.flashback.admin.lockout.LockoutActivity
 import tmg.flashback.base.BaseActivity
 import tmg.flashback.bottomSheetFastScrollDuration
 import tmg.flashback.driver.DriverActivity
-import tmg.flashback.driver.seasonbacku.DriverSeasonActivity
 import tmg.flashback.extensions.dimensionPx
 import tmg.flashback.home.list.HomeAdapter
 import tmg.flashback.home.season.*
