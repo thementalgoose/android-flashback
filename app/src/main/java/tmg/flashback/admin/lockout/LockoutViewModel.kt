@@ -3,6 +3,7 @@ package tmg.flashback.admin.lockout
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.*
@@ -34,7 +35,8 @@ interface LockoutViewModelOutputs {
 //endregion
 
 class LockoutViewModel(
-    dataDB: DataDB
+    dataDB: DataDB,
+    coroutineDispatcher: CoroutineDispatcher
 ): BaseViewModel(), LockoutViewModelInputs, LockoutViewModelOutputs {
 
     private val clickLinkEvent: ConflatedBroadcastChannel<Unit> = ConflatedBroadcastChannel()
@@ -47,7 +49,7 @@ class LockoutViewModel(
             appLocked = it
             it!!
         }
-        .flowOn(Dispatchers.IO)
+        .flowOn(coroutineDispatcher)
 
     override val data: LiveData<Pair<String, String>> = appLockedData // Title, Message
         .map { Pair(it.title, it.message) }

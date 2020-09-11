@@ -40,14 +40,11 @@ interface SettingsViewModelOutputs {
 //endregion
 
 class SettingsViewModel(
-    private val prefDB: PrefsDB,
-    applicationContext: Context
+    private val prefDB: PrefsDB
 ): BaseViewModel(), SettingsViewModelInputs, SettingsViewModelOutputs {
 
     var inputs: SettingsViewModelInputs = this
     var outputs: SettingsViewModelOutputs = this
-
-    override val settings: MutableLiveData<List<AppPreferencesItem>> = MutableLiveData()
 
     override val themeChanged: MutableLiveData<Event> = MutableLiveData()
 
@@ -59,27 +56,29 @@ class SettingsViewModel(
 
     override val themePreferences: MutableLiveData<List<Selected<BottomSheetItem>>> = MutableLiveData()
 
+    override val settings: MutableLiveData<List<AppPreferencesItem>> = MutableLiveData()
+
     init {
         settings.value = listOf(
-            AppPreferencesItem.Category(applicationContext.getString(R.string.settings_customisation)),
-            SettingsOptions.QUALIFYING_DELTAS.toSwitch(applicationContext, prefDB.showQualifyingDelta),
-            SettingsOptions.QUALIFYING_GRID_PENALTY.toSwitch(applicationContext, prefDB.showGridPenaltiesInQualifying),
-            SettingsOptions.SHOW_DRIVERS_POINTS_IN_CONSTRUCTORS.toSwitch(applicationContext, prefDB.showDriversBehindConstructor),
-            AppPreferencesItem.Category(applicationContext.getString(R.string.settings_theme)),
-            SettingsOptions.THEME.toPref(applicationContext),
-            AppPreferencesItem.Category(applicationContext.getString(R.string.settings_customisation_news)),
-            SettingsOptions.NEWS.toPref(applicationContext),
-            AppPreferencesItem.Category(applicationContext.getString(R.string.settings_season_list)),
-            SettingsOptions.SEASON_BOTTOM_SHEET_EXPANDED.toSwitch(applicationContext, prefDB.showBottomSheetExpanded),
-            SettingsOptions.SEASON_BOTTOM_SHEET_FAVOURITED.toSwitch(applicationContext, prefDB.showBottomSheetFavourited),
-            SettingsOptions.SEASON_BOTTOM_SHEET_ALL.toSwitch(applicationContext, prefDB.showBottomSheetAll),
-            AppPreferencesItem.Category(applicationContext.getString(R.string.settings_help)),
-            SettingsOptions.ABOUT.toPref(applicationContext),
-            SettingsOptions.RELEASE.toPref(applicationContext),
-            AppPreferencesItem.Category(applicationContext.getString(R.string.settings_feedback)),
-            SettingsOptions.CRASH.toSwitch(applicationContext, prefDB.crashReporting),
-            SettingsOptions.SUGGESTION.toPref(applicationContext),
-            SettingsOptions.SHAKE.toSwitch(applicationContext, prefDB.shakeToReport)
+            AppPreferencesItem.Category(R.string.settings_customisation),
+            SettingsOptions.QUALIFYING_DELTAS.toSwitch(prefDB.showQualifyingDelta),
+            SettingsOptions.QUALIFYING_GRID_PENALTY.toSwitch(prefDB.showGridPenaltiesInQualifying),
+            SettingsOptions.SHOW_DRIVERS_POINTS_IN_CONSTRUCTORS.toSwitch(prefDB.showDriversBehindConstructor),
+            AppPreferencesItem.Category(R.string.settings_theme),
+            SettingsOptions.THEME.toPref(),
+            AppPreferencesItem.Category(R.string.settings_customisation_news),
+            SettingsOptions.NEWS.toPref(),
+            AppPreferencesItem.Category(R.string.settings_season_list),
+            SettingsOptions.SEASON_BOTTOM_SHEET_EXPANDED.toSwitch(prefDB.showBottomSheetExpanded),
+            SettingsOptions.SEASON_BOTTOM_SHEET_FAVOURITED.toSwitch(prefDB.showBottomSheetFavourited),
+            SettingsOptions.SEASON_BOTTOM_SHEET_ALL.toSwitch(prefDB.showBottomSheetAll),
+            AppPreferencesItem.Category(R.string.settings_help),
+            SettingsOptions.ABOUT.toPref(),
+            SettingsOptions.RELEASE.toPref(),
+            AppPreferencesItem.Category(R.string.settings_feedback),
+            SettingsOptions.CRASH.toSwitch(prefDB.crashReporting),
+            SettingsOptions.SUGGESTION.toPref(),
+            SettingsOptions.SHAKE.toSwitch(prefDB.shakeToReport)
         )
 
         updateThemeList()

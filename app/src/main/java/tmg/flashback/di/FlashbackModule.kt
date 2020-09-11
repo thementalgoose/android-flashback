@@ -1,5 +1,7 @@
 package tmg.flashback.di
 
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import tmg.flashback.admin.lockout.LockoutViewModel
@@ -27,9 +29,11 @@ var flashbackModule = module {
 
     viewModel { DriverSeasonViewModel(get(), get(), get()) }
 
-    viewModel { SettingsViewModel(get(), get()) }
-    viewModel { SettingsNewsViewModel(get(), env.isLive, get()) }
-    viewModel { LockoutViewModel(get()) }
+    viewModel { SettingsViewModel(get()) }
+    viewModel { SettingsNewsViewModel(get()) }
+    viewModel { LockoutViewModel(get(), get()) }
 
     single<ConnectivityManager> { NetworkConnectivityManager(get()) }
+
+    single<CoroutineDispatcher> { Dispatchers.IO }
 }

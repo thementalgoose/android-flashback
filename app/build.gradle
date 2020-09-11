@@ -52,6 +52,24 @@ android {
             buildConfigField "int", "ENVIRONMENT", '0'
         }
     }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+        androidTest.java.srcDirs += 'src/androidTest/kotlin'
+        androidTest.resources.srcDirs += 'src/androidTest/res'
+        test.java.srcDirs += 'src/test/java'
+    }
+
+    testOptions {
+        unitTests {
+            returnDefaultValues = true
+            all {
+                testLogging {
+                    events "passed", "skipped", "failed", "standardOut", "standardError"
+                }
+            }
+        }
+    }
 }
 
 dependencies {
@@ -66,14 +84,19 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     testImplementation "org.junit.jupiter:junit-jupiter-engine:$junit"
     testImplementation "org.junit.jupiter:junit-jupiter-params:$junit"
+    testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.3"
     testImplementation 'androidx.test:core:1.3.0'
-    testImplementation 'org.mockito:mockito-core:1.10.19'
+    testImplementation 'androidx.arch.core:core-testing:2.1.0'
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0"
+    testImplementation 'org.mockito:mockito-core:3.0.0'
+    kaptTest "androidx.lifecycle:lifecycle-compiler:2.2.0"
 
     // Swipe refresh
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 
     // Coroutines
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.5"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.7"
 
     // Lifecycle
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0-alpha07"
@@ -98,7 +121,7 @@ dependencies {
     implementation 'com.reddit:indicator-fast-scroll:1.3.0'
 
     // TMG dependencies
-    implementation 'com.github.thementalgoose:android-components:2.1.0'
+    implementation 'com.github.thementalgoose:android-components:2.2.0'
     implementation 'com.github.thementalgoose:android-utilities:2.0.1'
     implementation 'com.github.thementalgoose:android-labelled-progress-bar:1.0.3'
 
