@@ -63,11 +63,11 @@ enum class SettingsOptions(
         description = R.string.settings_help_shake_to_report_description
     );
 
-    fun toPref(context: Context): AppPreferencesItem.Preference {
-        return AppPreferencesItem.Preference(key, context.getString(title), context.getString(description))
+    fun toPref(): AppPreferencesItem.Preference {
+        return AppPreferencesItem.Preference(key, title, description)
     }
 
-    fun toSwitch(context: Context, isChecked: Boolean): AppPreferencesItem.SwitchPreference {
-        return AppPreferencesItem.SwitchPreference(key, context.getString(title), context.getString(description), isChecked)
+    fun toSwitch(isChecked: Boolean): AppPreferencesItem.SwitchPreference {
+        return AppPreferencesItem.SwitchPreference(key, title, description, isChecked)
     }
 }

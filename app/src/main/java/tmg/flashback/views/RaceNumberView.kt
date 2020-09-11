@@ -12,11 +12,11 @@ import tmg.utilities.extensions.dpToPx
 import kotlin.math.roundToInt
 
 class RaceNumberView: androidx.appcompat.widget.AppCompatTextView {
-    constructor(context: Context?) : super(context)
-    constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {
+    constructor(context: Context) : super(context)
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
         initView(attrs)
     }
-    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
         context,
         attrs,
         defStyleAttr
