@@ -15,6 +15,12 @@ data class DriverOverview(
         val nationalityISO: String,
         val standings: List<DriverOverviewStanding>
 ) {
+    val championships: Int by lazy {
+        return@lazy standings
+            .filter { !it.isInProgress }
+            .count { it.championshipStanding == 1 }
+    }
+
     val careerWins: Int by lazy {
         return@lazy standings
                 .sumBy { it.wins }
@@ -60,6 +66,9 @@ data class DriverOverview(
     val careerQualifyingFrontRow: Int by lazy {
         return@lazy totalQualifyingIn(1) + totalQualifyingIn(2)
     }
+    val careerQualifyingTop3: Int by lazy {
+        return@lazy totalFinishesAbove(3)
+    }
     val careerQualifyingSecondRow: Int by lazy {
         return@lazy totalQualifyingIn(3) + totalQualifyingIn(4)
     }
@@ -104,6 +113,15 @@ data class DriverOverview(
                 .flatten()
                 .count { it.qualified == position }
     }
+
+    fun isWorldChampionFor(season: Int): Boolean {
+        return standings
+            .filter { it.season == season }
+            .filter { !it.isInProgress }
+            .filter { it.championshipStanding == 1 }
+            .count() > 0
+
+    }
 }
 
 data class DriverOverviewStanding(
@@ -121,21 +139,24 @@ data class DriverOverviewStanding(
         val constructors: List<SlimConstructor>,
         val raceOverview: List<DriverOverviewRace>
 ) {
-    val careerQualifyingPoles: Int by lazy {
+    val qualifyingPoles: Int by lazy {
         return@lazy totalQualifyingIn(1)
     }
-    val careerQualifyingFrontRow: Int by lazy {
+    val qualifyingTop3: Int by lazy {
+        return@lazy totalQualifyingAbove(3)
+    }
+    val qualifyingFrontRow: Int by lazy {
         return@lazy totalQualifyingIn(1) + totalQualifyingIn(2)
     }
-    val careerQualifyingSecondRow: Int by lazy {
+    val qualifyingSecondRow: Int by lazy {
         return@lazy totalQualifyingIn(3) + totalQualifyingIn(4)
     }
 
-    val careerFinishesInPoints: Int by lazy {
+    val finishesInPoints: Int by lazy {
         return@lazy raceOverview
                 .count { it.points > 0 }
     }
-    val careerFinishesTop5: Int by lazy {
+    val finishesInTop5: Int by lazy {
         return@lazy totalFinishesAbove(5)
     }
 

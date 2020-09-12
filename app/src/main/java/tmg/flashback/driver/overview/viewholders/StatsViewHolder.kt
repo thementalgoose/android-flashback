@@ -13,4 +13,10 @@ class StatsViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         itemView.label.setText(item.label)
         itemView.value.text = item.value
     }
+
+    fun bind(item: DriverSeasonItem.Stat) {
+        itemView.icon.setImageResource(item.icon)
+        itemView.label.setText(item.label)
+        itemView.value.text = item.value
+    }
 }

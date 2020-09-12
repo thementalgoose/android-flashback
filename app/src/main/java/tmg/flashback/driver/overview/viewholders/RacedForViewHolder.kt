@@ -4,6 +4,7 @@ import android.view.View
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.view_driver_overview_raced_for.view.*
+import tmg.flashback.R
 import tmg.flashback.driver.overview.DriverOverviewItem
 import tmg.flashback.driver.overview.RaceForPositionType.*
 import tmg.utilities.extensions.views.invisible
@@ -18,6 +19,13 @@ class RacedForViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
         itemView.constructor.text = item.constructors.name
         itemView.constructorColor.setBackgroundColor(item.constructors.color)
+
+        if (item.isChampionship) {
+            itemView.pipeCircle.setImageResource(R.drawable.ic_star_filled_coloured)
+        }
+        else {
+            itemView.pipeCircle.setImageResource(0)
+        }
 
         when (item.type) {
             SINGLE -> {

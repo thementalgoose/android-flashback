@@ -6,22 +6,20 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
+import tmg.flashback.R
 import tmg.flashback.base.BaseViewModel
-import tmg.flashback.currentYear
 import tmg.flashback.maxPointsBySeason
-import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.db.stats.DriverDB
-import tmg.flashback.repo.db.stats.SeasonOverviewDB
-import tmg.flashback.repo.models.stats.Constructor
-import tmg.flashback.repo.models.stats.Driver
+import tmg.flashback.repo.models.stats.DriverOverviewStanding
 import tmg.flashback.settings.ConnectivityManager
 import tmg.flashback.shared.SyncDataItem
 import tmg.flashback.shared.viewholders.DataUnavailable
+import tmg.flashback.utils.position
+import tmg.utilities.extensions.ordinalAbbreviation
 import tmg.utilities.lifecycle.DataEvent
 
 //region Inputs
@@ -76,6 +74,8 @@ class DriverSeasonViewModel(
                 }
                 else -> {
 
+                    list.addAll(getAllStats(standing))
+
                     list.add(DriverSeasonItem.ResultHeader)
 
                     list.addAll(standing
@@ -125,7 +125,57 @@ class DriverSeasonViewModel(
 
     //endregion
 
-    //region Outputs
 
-    //endregion
+    /**
+     * Add career stats for the driver across their career
+     */
+    private fun getAllStats(overview: DriverOverviewStanding): List<DriverSeasonItem> {
+        return listOf(
+            DriverSeasonItem.Stat(
+                icon = R.drawable.ic_championship_order,
+                label = R.string.driver_overview_stat_career_championship_standing,
+                value = overview.championshipStanding.ordinalAbbreviation
+            ),
+            DriverSeasonItem.Stat(
+                icon = R.drawable.ic_standings,
+                label = R.string.driver_overview_stat_career_wins,
+                value = overview.wins.toString()
+            ),
+            DriverSeasonItem.Stat(
+                icon = R.drawable.ic_podium,
+                label = R.string.driver_overview_stat_career_podiums,
+                value = overview.podiums.toString()
+            ),
+            DriverSeasonItem.Stat(
+                icon = R.drawable.ic_status_finished,
+                label = R.string.driver_overview_stat_career_best_finish,
+                value = overview.bestFinish.position().toString()
+            ),
+            DriverSeasonItem.Stat(
+                icon = R.drawable.ic_finishes_in_points,
+                label = R.string.driver_overview_stat_career_points_finishes,
+                value = overview.finishesInPoints.toString()
+            ),
+            DriverSeasonItem.Stat(
+                icon = R.drawable.ic_race_points,
+                label = R.string.driver_overview_stat_career_points,
+                value = overview.points.toString()
+            ),
+            DriverSeasonItem.Stat(
+                icon = R.drawable.ic_qualifying_pole,
+                label = R.string.driver_overview_stat_career_qualifying_pole,
+                value = overview.qualifyingPoles.toString()
+            ),
+            DriverSeasonItem.Stat(
+                icon = R.drawable.ic_qualifying_front_row,
+                label = R.string.driver_overview_stat_career_qualifying_top_3,
+                value = overview.qualifyingTop3.toString()
+            ),
+            DriverSeasonItem.Stat(
+                icon = R.drawable.ic_qualifying_top_ten,
+                label = R.string.driver_overview_stat_career_qualifying_top_10,
+                value = overview.totalQualifyingAbove(10).toString()
+            )
+        )
+    }
 }
