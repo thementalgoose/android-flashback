@@ -4,10 +4,12 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.core.view.WindowInsetsCompat
+import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_driver.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.R
 import tmg.flashback.base.BaseActivity
+import tmg.utilities.extensions.observe
 
 class DriverActivity: BaseActivity() {
 
@@ -26,12 +28,13 @@ class DriverActivity: BaseActivity() {
         driverId = bundle.getString(keyDriverId)!!
         passthroughDriverName = bundle.getString(keyDriverName)
         passthroughDriverImg = bundle.getString(keyDriverImg)
+        viewModel.inputs.setup(driverId)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        pagerAdapter = DriverPagerAdapter(this)
+        pagerAdapter = DriverPagerAdapter(driverId, this)
         viewPager.adapter = pagerAdapter
 
         header.text = passthroughDriverName
@@ -39,7 +42,18 @@ class DriverActivity: BaseActivity() {
             finish()
         }
 
-        viewModel.inputs.setup(driverId)
+        observe(viewModel.outputs.seasons) { list ->
+            pagerAdapter.seasons = list.map { Pair(driverId, it) }
+            TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+                when (position) {
+                    0 -> tab.text = getString(R.string.driver_overview_title_overview)
+                    else -> tab.text = "${list[position - 1]}"
+                }
+            }.attach()
+        }
+
+
+        swipeContainer.isEnabled = false
     }
 
     override fun setInsets(insets: WindowInsetsCompat) {

@@ -6,20 +6,32 @@ import org.threeten.bp.Year
 import tmg.components.about.AboutThisAppConfiguration
 import tmg.components.about.AboutThisAppDependency
 
+/**
+ * Constants
+ */
 const val minimumSupportedYear = 1950
 val currentYear: Int
     get() = Year.now().value
 val allYears: List<Int>
     get() = (minimumSupportedYear..currentYear).map { it }
-
 const val showComingSoonMessageForNextDays = 10
-
 const val bottomSheetFastScrollDuration = 300
 
+/**
+ * Version validation for app lockout
+ */
 fun isValidVersion(version: Int?): Boolean =
     version == null || (version >= BuildConfig.VERSION_CODE)
 
 
+/**
+ * Compile time feature toggles
+ */
+const val showDriverSummary: Boolean = false
+
+/**
+ * Supported track layouts
+ */
 enum class TrackLayout(
     val circuitId: String,
     @DrawableRes
@@ -62,6 +74,9 @@ enum class TrackLayout(
 }
 
 
+/**
+ * Colours for the decades for the menu
+ */
 val coloursDecade: Map<String, String> = mapOf(
     "1950" to "#9fa8da",
     "1960" to "#ce93d8",
@@ -80,24 +95,10 @@ val coloursDecade: Map<String, String> = mapOf(
     "2090" to "#80deea"
 )
 
-val colours: List<Pair<String, String>> = listOf( // Dark to light
-    "#ffcdd2" to "#ef9a9a",
-    "#f8bbd0" to "#f48fb1",
-    "#e1bee7" to "#ce93d8",
-    "#d1c4e9" to "#b39ddb",
-    "#c5cae9" to "#9fa8da",
-    "#bbdefb" to "#90caf9",
-    "#b3e5fc" to "#81d4fa",
-    "#b2ebf2" to "#80deea",
-    "#b2dfdb" to "#80cbc4",
-    "#c8e6c9" to "#a5d6a7",
-    "#dcedc8" to "#c5e1a5",
-    "#f0f4c3" to "#e6ee9c",
-    "#ffe0b2" to "#ffcc80",
-    "#ffccbc" to "#ffab91",
-    "#cfd8dc" to "#b0bec5"
-)
-
+/**
+ * About This App Configuration and data
+ */
+// Configuration item
 fun configuration(context: Context, isDarkMode: Boolean = false) = AboutThisAppConfiguration(
     isDarkMode = isDarkMode,
     name = context.getString(R.string.about_name),
@@ -112,7 +113,7 @@ fun configuration(context: Context, isDarkMode: Boolean = false) = AboutThisAppC
     dependencies = dependencies,
     insetsForNavigationBar = true
 )
-
+// List of all app dependencies
 val dependencies = listOf(
     AboutThisAppDependency(
         order = -1,

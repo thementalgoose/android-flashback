@@ -244,7 +244,22 @@
     <string name="on_pole_position">on pole position</string>
     <string name="title_news">News</string>
     <string name="shared_unavailable_circuit_not_found">We can\'t find any information on this circuit.</string>
+    <string name="shared_unavailable_driver_not_found">We can\'t find any information on this driver.</string>
     <string name="release_notes_description">Here\'s what\'s changed since you last updated</string>
+
+
+    <!-- Driver overview -->
+    <string name="driver_overview_stat_career_wins">Wins</string>
+    <string name="driver_overview_stat_career_podiums">Podiums</string>
+    <string name="driver_overview_stat_career_points">Points</string>
+    <string name="driver_overview_stat_career_best_finish">Best finish</string>
+    <string name="driver_overview_stat_career_best_qualifying">Best qualifying</string>
+    <string name="driver_overview_stat_career_points_finishes">Points finishes</string>
+    <string name="driver_overview_stat_career_best_race_result_season">Best season by race result</string>
+    <string name="driver_overview_stat_career_best_qualifying_season">Best season by qualifying</string>
+    <string name="driver_overview_stat_career_qualifying_pole">Qualified on pole</string>
+    <string name="driver_overview_stat_career_qualifying_front_row">Qualified on the front row</string>
+    <string name="driver_overview_stat_career_qualifying_top_10">Qualified within top 10</string>
 
 
     <string name="results_accurate_for">Results as of the %s (round %d)</string>
@@ -255,5 +270,7 @@
     <string name="app_shortcut_news_shorttitle">News</string>
     <string name="app_shortcut_news_longtitle">Latest Formula 1 News</string>
     <string name="app_shortcut_news_disabled">News (Unavailable)</string>
+    <string name="driver_overview_stat_birthday">Born %s</string>
+    <string name="driver_overview_title_overview">Overview</string>
 
 </resources>

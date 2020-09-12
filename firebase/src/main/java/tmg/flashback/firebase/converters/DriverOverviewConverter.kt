@@ -20,7 +20,7 @@ fun FDriverOverview.convert(): DriverOverview {
             dateOfBirth = fromDate(this.driver.dob),
             nationality = this.driver.nationality,
             nationalityISO = this.driver.nationalityISO ?: "",
-            standings = this.standings?.map { it.convert() } ?: emptyList()
+            standings = this.standings?.map { (_, value) -> value.convert() } ?: emptyList()
     )
 }
 
@@ -38,7 +38,7 @@ fun FDriverOverviewStanding.convert(): DriverOverviewStanding {
              season = this.s,
              wins = this.wins ?: 0,
              constructors = this.constructor?.map { it.convert() } ?: emptyList(),
-             raceOverview = this.history?.map { it.convert(this.s) } ?: emptyList()
+             raceOverview = this.history?.map { (_, value) -> value.convert(this.s) } ?: emptyList()
     )
 }
 
