@@ -38,7 +38,8 @@ sealed class DriverOverviewItem(
     data class RacedFor(
             val season: Int,
             val constructors: SlimConstructor,
-            val type: RaceForPositionType
+            val type: RaceForPositionType,
+            val isChampionship: Boolean
     ): DriverOverviewItem(
             R.layout.view_driver_overview_raced_for
     )

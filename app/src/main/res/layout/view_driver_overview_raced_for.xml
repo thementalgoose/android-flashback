@@ -75,7 +75,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/pipeTop" />
 
-        <View
+        <ImageView
             android:id="@+id/pipeCircle"
             android:layout_width="@dimen/driverOverviewCircleSize"
             android:layout_height="@dimen/driverOverviewCircleSize"
