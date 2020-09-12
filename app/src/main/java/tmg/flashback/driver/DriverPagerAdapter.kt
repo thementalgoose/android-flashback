@@ -3,11 +3,15 @@ package tmg.flashback.driver
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import tmg.flashback.driver.overview.DriverOverviewFragment
 import tmg.flashback.driver.season.DriverSeasonFragment
 
-class DriverPagerAdapter(activity: AppCompatActivity): FragmentStateAdapter(activity) {
+class DriverPagerAdapter(
+        val driverId: String,
+        activity: AppCompatActivity
+): FragmentStateAdapter(activity) {
 
-    var seasons: List<Pair<String, Int>> = listOf(Pair("perez", 2019), Pair("perez", 2020))
+    var seasons: List<Pair<String, Int>> = listOf()
         set(value) {
             if (field != value) {
                 field = value
@@ -15,10 +19,15 @@ class DriverPagerAdapter(activity: AppCompatActivity): FragmentStateAdapter(acti
             }
         }
 
-    override fun getItemCount(): Int = seasons.size
+    override fun getItemCount(): Int = seasons.size + 1
 
     override fun createFragment(position: Int): Fragment {
-        val (driverId, season) = seasons[position]
-        return DriverSeasonFragment.instance(season, driverId)
+        return if (position == 0) {
+            DriverOverviewFragment.instance(driverId)
+        }
+        else {
+            val (driverId, season) = seasons[position - 1]
+            DriverSeasonFragment.instance(season, driverId)
+        }
     }
 }

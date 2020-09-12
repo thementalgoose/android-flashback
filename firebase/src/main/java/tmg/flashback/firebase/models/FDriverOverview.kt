@@ -2,7 +2,7 @@ package tmg.flashback.firebase.models
 
 data class FDriverOverview(
         val driver: FDriverOverviewDriver = FDriverOverviewDriver(),
-        val standings: List<FDriverOverviewStanding>? = null
+        val standings: Map<String, FDriverOverviewStanding>? = null
 )
 
 data class FDriverOverviewDriver(
@@ -25,14 +25,14 @@ data class FDriverOverviewStanding(
         val bestQualifyingQuantity: Int? = null,
         val championshipStanding: Int? = null,
         val constructor: List<FDriverOverviewStandingConstructor>? = null,
-        val history: List<FDriverOverviewStandingHistory>? = null,
+        val history: Map<String, FDriverOverviewStandingHistory>? = null,
         val inProgress: Boolean? = null,
         // Points
         val p: Int? = null,
         val podiums: Int? = null,
         val races: Int? = null,
         // Season
-        val s: Int,
+        val s: Int = -1,
         val wins: Int? = null
 )
 

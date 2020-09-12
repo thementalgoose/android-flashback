@@ -32,6 +32,17 @@ data class DriverOverview(
                 .sumBy { it.races }
     }
 
+    val constructors: List<Pair<Int, SlimConstructor>> by lazy {
+        return@lazy standings
+                .sortedBy { it.season }
+                .map { standings ->
+                    standings.constructors.map {
+                        Pair(standings.season, it)
+                    }
+                }
+                .flatten()
+    }
+
     val careerBestFinish: Int by lazy {
         return@lazy standings.minBy { it.bestFinish }?.bestFinish ?: -1
     }
@@ -51,6 +62,9 @@ data class DriverOverview(
     }
     val careerQualifyingSecondRow: Int by lazy {
         return@lazy totalQualifyingIn(3) + totalQualifyingIn(4)
+    }
+    val careerQualifyingTop10: Int by lazy {
+        return@lazy totalFinishesAbove(10)
     }
 
     val careerFinishesInPoints: Int by lazy {
@@ -75,6 +89,13 @@ data class DriverOverview(
                 .map { it.raceOverview }
                 .flatten()
                 .count { it.finished <= position }
+    }
+
+    fun totalQualifyingAbove(position: Int): Int {
+        return standings
+                .map { it.raceOverview }
+                .flatten()
+                .count { it.qualified <= position }
     }
 
     fun totalQualifyingIn(position: Int): Int {
@@ -126,6 +147,10 @@ data class DriverOverviewStanding(
     fun totalFinishesAbove(position: Int): Int {
         return raceOverview
                 .count { it.finished <= position }
+    }
+    fun totalQualifyingAbove(position: Int): Int {
+        return raceOverview
+                .count { it.qualified <= position }
     }
 
     fun totalQualifyingIn(position: Int): Int {

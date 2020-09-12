@@ -12,6 +12,7 @@ enum class DataUnavailable {
     IN_FUTURE_RACE,
     COMING_SOON_RACE,
     MISSING_RACE,
+    DRIVER_NOT_EXIST,
     CIRCUIT_NOT_EXIST
 }
 
@@ -25,6 +26,7 @@ class DataUnavailableViewHolder(itemView: View): RecyclerView.ViewHolder(itemVie
             DataUnavailable.COMING_SOON_RACE -> getString(R.string.shared_unavailable_coming_soon_race)
             DataUnavailable.MISSING_RACE -> getString(R.string.shared_unavailable_missing_race)
             DataUnavailable.CIRCUIT_NOT_EXIST -> getString(R.string.shared_unavailable_circuit_not_found)
+            DataUnavailable.DRIVER_NOT_EXIST -> getString(R.string.shared_unavailable_driver_not_found)
         }
     }
 }
