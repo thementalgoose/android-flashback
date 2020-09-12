@@ -45,7 +45,9 @@ class DriverViewModel(
         .map {
             when (it) {
                 null -> emptyList()
-                else -> it.standings.map { it.season }
+                else -> it.standings
+                    .map { it.season }
+                    .sortedByDescending { it }
             }
         }
         .asLiveData(viewModelScope.coroutineContext)

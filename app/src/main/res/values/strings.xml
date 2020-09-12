@@ -260,6 +260,7 @@
     <string name="driver_overview_stat_career_qualifying_pole">Qualified on pole</string>
     <string name="driver_overview_stat_career_qualifying_front_row">Qualified on the front row</string>
     <string name="driver_overview_stat_career_qualifying_top_10">Qualified within top 10</string>
+        <string name="driver_overview_stat_career_team_history">Team history</string>
 
 
     <string name="results_accurate_for">Results as of the %s (round %d)</string>

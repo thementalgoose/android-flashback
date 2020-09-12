@@ -13,7 +13,9 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import tmg.flashback.base.BaseViewModel
 import tmg.flashback.currentYear
+import tmg.flashback.maxPointsBySeason
 import tmg.flashback.repo.db.PrefsDB
+import tmg.flashback.repo.db.stats.DriverDB
 import tmg.flashback.repo.db.stats.SeasonOverviewDB
 import tmg.flashback.repo.models.stats.Constructor
 import tmg.flashback.repo.models.stats.Driver
@@ -44,87 +46,65 @@ interface DriverSeasonViewModelOutputs {
 @FlowPreview
 @ExperimentalCoroutinesApi
 class DriverSeasonViewModel(
-        private val seasonDB: SeasonOverviewDB,
-        private val prefDB: PrefsDB,
-        private val connectivityManager: ConnectivityManager
-): BaseViewModel(), DriverSeasonViewModelInputs, DriverSeasonViewModelOutputs {
+    private val driverDB: DriverDB,
+    private val connectivityManager: ConnectivityManager
+) : BaseViewModel(), DriverSeasonViewModelInputs, DriverSeasonViewModelOutputs {
 
     var inputs: DriverSeasonViewModelInputs = this
     var outputs: DriverSeasonViewModelOutputs = this
 
-    override val goToSeasonRound: MutableLiveData<DataEvent<DriverSeasonItem.Result>> = MutableLiveData()
+    override val goToSeasonRound: MutableLiveData<DataEvent<DriverSeasonItem.Result>> =
+        MutableLiveData()
 
-    private lateinit var driverId: String
-    private var season: ConflatedBroadcastChannel<Int> = ConflatedBroadcastChannel()
+    private var driverId: ConflatedBroadcastChannel<String> = ConflatedBroadcastChannel()
+    private var season: Int = -1
 
-    override val list: LiveData<List<DriverSeasonItem>> = season
-            .asFlow()
-            .flatMapLatest { seasonDB.getSeasonOverview(it) }
-            .map { (season, rounds) ->
-                val list: MutableList<DriverSeasonItem> = mutableListOf()
-                when {
-                    rounds.isEmpty() -> {
-                        when {
-                            !connectivityManager.isConnected ->
-                                list.addError(SyncDataItem.NoNetwork)
-                            else ->
-                                list.addError(SyncDataItem.Unavailable(DataUnavailable.EARLY_IN_SEASON))
-                        }
-                    }
-                    season > currentYear -> {
-                        list.addError(SyncDataItem.Unavailable(DataUnavailable.IN_FUTURE_SEASON))
-                    }
-                    else -> {
-                        val driver: Driver? = rounds
-                                .map { round ->
-                                    round.drivers.firstOrNull {
-                                        it.id == driverId
-                                    }?.toDriver()
-                                }
-                                .firstOrNull()
-                        val constructors: List<Constructor> = rounds.mapNotNull { it.race[driverId]?.driver }
-                                .map { it.constructor }
-                                .distinct()
-//                        if (driver != null) {
-//                            list.add(DriverSeasonItem.Header(driver, constructors))
-//                        }
-
-                        list.add(DriverSeasonItem.ResultHeader)
-
-                        list.addAll(rounds
-                                .map {
-                                    val race = it.race[driverId]
-                                    if (race != null) {
-                                        DriverSeasonItem.Result(
-                                                season = it.season,
-                                                round = it.round,
-                                                raceName = it.name,
-                                                circuitName = it.circuit.name,
-                                                circuitId = it.circuit.id,
-                                                raceCountry = it.circuit.country,
-                                                raceCountryISO = it.circuit.countryISO,
-                                                constructor = race.driver.constructor,
-                                                date = it.date,
-                                                qualified = race.qualified ?: 0,
-                                                gridPos = race.grid,
-                                                finished = race.finish,
-                                                raceStatus = race.status,
-                                                points = race.points,
-                                                maxPoints = it.race.maxBy { it.value.points }?.value?.points
-                                                        ?: 25
-                                        )
-                                    } else {
-                                        null
-                                    }
-                                }
-                                .filterNotNull()
-                                .sortedBy { it.round }
-                        )
+    override val list: LiveData<List<DriverSeasonItem>> = driverId
+        .asFlow()
+        .flatMapLatest { driverDB.getDriverOverview(it) }
+        .map { overview ->
+            val list: MutableList<DriverSeasonItem> = mutableListOf()
+            val standing = overview?.standings?.firstOrNull { it.season == season }
+            when {
+                overview == null || standing == null -> {
+                    when {
+                        !connectivityManager.isConnected ->
+                            list.addError(SyncDataItem.NoNetwork)
+                        else ->
+                            list.addError(SyncDataItem.Unavailable(DataUnavailable.DRIVER_NOT_EXIST))
                     }
                 }
-                return@map list
+                else -> {
+
+                    list.add(DriverSeasonItem.ResultHeader)
+
+                    list.addAll(standing
+                        .raceOverview
+                        .map {
+                            DriverSeasonItem.Result(
+                                season = it.season,
+                                round = it.round,
+                                raceName = it.raceName,
+                                circuitName = it.circuitName,
+                                circuitId = it.circuitId,
+                                raceCountry = it.circuitNationality,
+                                raceCountryISO = it.circuitNationalityISO,
+                                constructor = standing.constructors.last(),
+                                date = it.date,
+                                qualified = it.qualified,
+                                finished = it.finished,
+                                raceStatus = it.status,
+                                points = it.points,
+                                maxPoints = maxPointsBySeason(it.season)
+                            )
+                        }
+                        .sortedBy { it.round }
+                    )
+                }
             }
-            .asLiveData(viewModelScope.coroutineContext)
+            return@map list
+        }
+        .asLiveData(viewModelScope.coroutineContext)
 
     init {
 
@@ -133,9 +113,9 @@ class DriverSeasonViewModel(
     //region Inputs
 
     override fun setup(driverId: String, season: Int) {
-        this.driverId = driverId
-        if (season != this.season.valueOrNull) {
-            this.season.offer(season)
+        if (driverId != this.driverId.valueOrNull) {
+            this.season = season
+            this.driverId.offer(driverId)
         }
     }
 

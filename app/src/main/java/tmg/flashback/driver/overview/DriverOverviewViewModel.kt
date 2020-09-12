@@ -80,9 +80,6 @@ class DriverOverviewViewModel(
                                 driverNationalityISO = it.nationalityISO
                         ))
 
-                        // Add constructor history
-                        list.addAll(getConstructorItemList(it))
-
                         // Add individual stats
                         list.addStat(
                                 icon = R.drawable.ic_standings,
@@ -131,6 +128,14 @@ class DriverOverviewViewModel(
                                 label = R.string.driver_overview_stat_career_qualifying_top_10,
                                 value = it.totalQualifyingAbove(10).toString()
                         )
+
+                        // Add constructor history
+                        list.addStat(
+                            icon = R.drawable.ic_team,
+                            label = R.string.driver_overview_stat_career_team_history,
+                            value = ""
+                        )
+                        list.addAll(getConstructorItemList(it))
                     }
                 }
 

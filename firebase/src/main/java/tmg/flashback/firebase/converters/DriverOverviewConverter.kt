@@ -55,7 +55,8 @@ fun FDriverOverviewStandingHistory.convert(season: Int): DriverOverviewRace {
             circuitName = this.cName,
             circuitId = this.cId,
             circuitNationality = this.cCountry,
-            circuitNationalityISO = this.cISO ?: ""
+            circuitNationalityISO = this.cISO ?: "",
+            status = this.fStatus ?: ""
     )
 }
 
