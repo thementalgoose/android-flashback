@@ -3,10 +3,12 @@ package tmg.flashback.driver
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_driver.*
 import org.koin.android.viewmodel.ext.android.viewModel
+import tmg.flashback.BuildConfig
 import tmg.flashback.R
 import tmg.flashback.base.BaseActivity
 import tmg.utilities.extensions.observe
@@ -43,7 +45,8 @@ class DriverActivity: BaseActivity() {
         }
 
         observe(viewModel.outputs.seasons) { list ->
-            pagerAdapter.seasons = list.map { Pair(driverId, it) }
+            pagerAdapter.seasons = list
+                .map { Pair(driverId, it) }
             TabLayoutMediator(tabLayout, viewPager) { tab, position ->
                 when (position) {
                     0 -> tab.text = getString(R.string.driver_overview_title_overview)
@@ -52,8 +55,11 @@ class DriverActivity: BaseActivity() {
             }.attach()
         }
 
-
         swipeContainer.isEnabled = false
+
+        if (BuildConfig.DEBUG) {
+            Toast.makeText(this, "DriverID: $driverId", Toast.LENGTH_LONG).show()
+        }
     }
 
     override fun setInsets(insets: WindowInsetsCompat) {

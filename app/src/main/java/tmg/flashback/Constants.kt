@@ -23,6 +23,17 @@ const val bottomSheetFastScrollDuration = 300
 fun isValidVersion(version: Int?): Boolean =
     version == null || (version >= BuildConfig.VERSION_CODE)
 
+/**
+ * Max points by season
+ */
+fun maxPointsBySeason(season: Int): Int {
+    return when {
+        season >= 2010 -> 25
+        season >= 1991 -> 10
+        else -> 8
+    }
+}
+
 
 /**
  * Compile time feature toggles

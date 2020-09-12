@@ -6,6 +6,7 @@ import tmg.flashback.R
 import tmg.flashback.repo.enums.RaceStatus
 import tmg.flashback.repo.models.stats.Constructor
 import tmg.flashback.repo.models.stats.Driver
+import tmg.flashback.repo.models.stats.SlimConstructor
 import tmg.flashback.shared.SyncDataItem
 
 sealed class DriverSeasonItem(
@@ -25,9 +26,8 @@ sealed class DriverSeasonItem(
             val raceCountry: String,
             val raceCountryISO: String,
             val date: LocalDate,
-            val constructor: Constructor,
+            val constructor: SlimConstructor,
             val qualified: Int,
-            val gridPos: Int,
             val finished: Int?,
             val raceStatus: RaceStatus,
             val points: Int,

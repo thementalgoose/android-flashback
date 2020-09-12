@@ -55,13 +55,13 @@ class RaceViewHolder(
         itemView.lpvProgress.textBackgroundColour = context.theme.getColor(R.attr.f1TextSecondary)
         itemView.lpvProgress.animateProgress(item.points.toFloat() / item.maxPoints.toFloat()) { (it * item.maxPoints.toFloat()).toInt().coerceIn(0, item.points).toString() }
 
-        if (item.qualified != item.gridPos && item.gridPos > item.qualified) {
-            itemView.penalty.show(true)
-            itemView.penalty.text = getString(R.string.qualifying_grid_penalty, item.gridPos - item.qualified, item.gridPos.ordinalAbbreviation)
-        }
-        else {
+//        if (item.qualified != item.gridPos && item.gridPos > item.qualified) {
+//            itemView.penalty.show(true)
+//            itemView.penalty.text = getString(R.string.qualifying_grid_penalty, item.gridPos - item.qualified, item.gridPos.ordinalAbbreviation)
+//        }
+//        else {
             itemView.penalty.show(false)
-        }
+//        }
     }
 
     override fun onClick(v: View?) {

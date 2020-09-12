@@ -160,6 +160,7 @@ data class DriverOverviewStanding(
 }
 
 data class DriverOverviewRace(
+        val status: String,
         val finished: Int,
         val points: Int,
         val qualified: Int,
