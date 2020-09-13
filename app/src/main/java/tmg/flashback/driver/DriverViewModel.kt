@@ -20,8 +20,8 @@ interface DriverViewModelOutputs {
 //endregion
 
 class DriverViewModel(
-    executionScope: ScopeProvider
-): BaseViewModel(executionScope), DriverViewModelInputs, DriverViewModelOutputs {
+    scopeProvider: ScopeProvider
+): BaseViewModel(scopeProvider), DriverViewModelInputs, DriverViewModelOutputs {
 
     var inputs: DriverViewModelInputs = this
     var outputs: DriverViewModelOutputs = this

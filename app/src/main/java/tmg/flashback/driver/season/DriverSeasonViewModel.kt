@@ -42,8 +42,8 @@ interface DriverSeasonViewModelOutputs {
 class DriverSeasonViewModel(
         private val seasonDB: SeasonOverviewDB,
         private val connectivityManager: ConnectivityManager,
-        executionScope: ScopeProvider
-) : BaseViewModel(executionScope), DriverSeasonViewModelInputs, DriverSeasonViewModelOutputs {
+        scopeProvider: ScopeProvider
+) : BaseViewModel(scopeProvider), DriverSeasonViewModelInputs, DriverSeasonViewModelOutputs {
 
     var inputs: DriverSeasonViewModelInputs = this
     var outputs: DriverSeasonViewModelOutputs = this

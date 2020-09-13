@@ -41,8 +41,8 @@ class NewsViewModel(
     private val newsDB: NewsDB,
     private val prefDB: PrefsDB,
     private val connectivityManager: ConnectivityManager,
-    executionScope: ScopeProvider
-): BaseViewModel(executionScope), NewsViewModelInputs, NewsViewModelOutputs {
+    scopeProvider: ScopeProvider
+): BaseViewModel(scopeProvider), NewsViewModelInputs, NewsViewModelOutputs {
 
     override val isRefreshing: MutableLiveData<Boolean> = MutableLiveData(true)
     private val refreshNews: ConflatedBroadcastChannel<Boolean> = ConflatedBroadcastChannel(true)

@@ -44,8 +44,8 @@ class RaceViewModel(
     seasonOverviewDB: SeasonOverviewDB,
     private val prefsDB: PrefsDB,
     connectivityManager: ConnectivityManager,
-    executionScope: ScopeProvider
-) : BaseViewModel(executionScope), RaceViewModelInputs, RaceViewModelOutputs {
+    scopeProvider: ScopeProvider
+) : BaseViewModel(scopeProvider), RaceViewModelInputs, RaceViewModelOutputs {
 
     var inputs: RaceViewModelInputs = this
     var outputs: RaceViewModelOutputs = this

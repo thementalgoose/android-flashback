@@ -6,8 +6,8 @@ import tmg.flashback.di.async.ScopeProvider
 import tmg.flashback.utils.getScope
 
 abstract class BaseViewModel(
-    executionScope: ScopeProvider
+    scopeProvider: ScopeProvider
 ): ViewModel() {
 
-    val scope: CoroutineScope = getScope(executionScope.getCoroutineScope())
+    val scope: CoroutineScope = getScope(scopeProvider.getCoroutineScope())
 }
