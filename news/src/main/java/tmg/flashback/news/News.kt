@@ -39,10 +39,6 @@ class News(
     private suspend fun getPitPass(): Response<List<Article>> = safelyRun { pitPassRss.getFeed().mChannel?.convert(prefsDB) ?: emptyList() }
     private suspend fun getMotorsport(): Response<List<Article>> = safelyRun { motorsportRss.getFeed().mChannel?.convert(prefsDB) ?: emptyList() }
 
-    override fun syncAll() {
-
-    }
-
     private suspend fun safelyRun(runner: suspend () -> List<Article>): Response<List<Article>> {
         return try {
             val articles = runner()
@@ -78,7 +74,7 @@ class News(
                 }
             }
 
-            // TODO: Find a better way to do this shit
+            // TODO: Some weird quirk of varargs - Find a better way to do this shit
             @Suppress("RemoveExplicitTypeArguments")
             val responses: List<Response<List<Article>>> = when (listOfRequests.size) {
                 1 -> listOf(listOfRequests[0].invoke())

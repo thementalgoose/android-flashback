@@ -41,8 +41,8 @@ interface SettingsViewModelOutputs {
 
 class SettingsViewModel(
     private val prefDB: PrefsDB,
-    executionScope: ScopeProvider
-): BaseViewModel(executionScope), SettingsViewModelInputs, SettingsViewModelOutputs {
+    scopeProvider: ScopeProvider
+): BaseViewModel(scopeProvider), SettingsViewModelInputs, SettingsViewModelOutputs {
 
     var inputs: SettingsViewModelInputs = this
     var outputs: SettingsViewModelOutputs = this

@@ -30,8 +30,8 @@ interface SeasonViewModelOutputs {
 
 class SeasonViewModel(
     private val prefDB: PrefsDB,
-    executionScope: ScopeProvider
-) : BaseViewModel(executionScope), SeasonViewModelInputs, SeasonViewModelOutputs {
+    scopeProvider: ScopeProvider
+) : BaseViewModel(scopeProvider), SeasonViewModelInputs, SeasonViewModelOutputs {
 
     var headers: Headers = Headers(
         favourited = prefDB.showBottomSheetFavourited,
