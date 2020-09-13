@@ -4,23 +4,14 @@ import android.content.Context
 import android.text.Spanned
 import tmg.flashback.R
 import tmg.utilities.extensions.fromHtml
+import tmg.utilities.extensions.ordinalAbbreviation
 
-fun Int.position(podiumOnly: Boolean = false): Spanned {
-    return when (this) {
-        1 -> "1st".fromHtml()
-        2 -> "2nd".fromHtml()
-        3 -> "3rd".fromHtml()
-        else -> if (podiumOnly) "".fromHtml() else "${this}th".fromHtml()
-    }
+fun Int.position(): String {
+    return this.ordinalAbbreviation
 }
 
-fun Int.podium(): Spanned {
-    return when (this) {
-        1 -> "1st".fromHtml()
-        2 -> "2nd".fromHtml()
-        3 -> "3rd".fromHtml()
-        else -> "${this}th".fromHtml()
-    }
+fun Int.podium(): String {
+    return this.position()
 }
 
 fun Int.positionStarted(context: Context): String {

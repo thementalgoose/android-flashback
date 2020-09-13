@@ -3,7 +3,6 @@ package tmg.flashback.news
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
@@ -16,6 +15,7 @@ import tmg.flashback.repo.db.news.NewsDB
 import tmg.flashback.repo.enums.NewsSource
 import tmg.flashback.settings.ConnectivityManager
 import tmg.flashback.shared.SyncDataItem
+import tmg.flashback.di.async.ScopeProvider
 import tmg.utilities.extensions.then
 
 //region Inputs
@@ -40,8 +40,9 @@ interface NewsViewModelOutputs {
 class NewsViewModel(
     private val newsDB: NewsDB,
     private val prefDB: PrefsDB,
-    private val connectivityManager: ConnectivityManager
-): BaseViewModel(), NewsViewModelInputs, NewsViewModelOutputs {
+    private val connectivityManager: ConnectivityManager,
+    executionScope: ScopeProvider
+): BaseViewModel(executionScope), NewsViewModelInputs, NewsViewModelOutputs {
 
     override val isRefreshing: MutableLiveData<Boolean> = MutableLiveData(true)
     private val refreshNews: ConflatedBroadcastChannel<Boolean> = ConflatedBroadcastChannel(true)
@@ -74,7 +75,7 @@ class NewsViewModel(
         }
 
     override val list: LiveData<List<NewsItem>> = newsList
-        .asLiveData(viewModelScope.coroutineContext)
+        .asLiveData(scope.coroutineContext)
 
     var inputs: NewsViewModelInputs = this
     var outputs: NewsViewModelOutputs = this

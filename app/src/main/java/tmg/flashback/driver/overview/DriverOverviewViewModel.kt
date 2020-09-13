@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.map
 import tmg.flashback.R
 import tmg.flashback.base.BaseViewModel
 import tmg.flashback.currentYear
+import tmg.flashback.di.async.ScopeProvider
 import tmg.flashback.driver.overview.RaceForPositionType.*
 import tmg.flashback.repo.db.stats.DriverDB
 import tmg.flashback.repo.models.stats.DriverOverview
@@ -44,8 +45,9 @@ interface DriverOverviewViewModelOutputs {
 @ExperimentalCoroutinesApi
 class DriverOverviewViewModel(
         private val driverDB: DriverDB,
-        private val connectivityManager: ConnectivityManager
-): BaseViewModel(), DriverOverviewViewModelInputs, DriverOverviewViewModelOutputs {
+        private val connectivityManager: ConnectivityManager,
+        scopeProvider: ScopeProvider
+): BaseViewModel(scopeProvider), DriverOverviewViewModelInputs, DriverOverviewViewModelOutputs {
 
     var inputs: DriverOverviewViewModelInputs = this
     var outputs: DriverOverviewViewModelOutputs = this

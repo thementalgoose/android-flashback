@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import tmg.flashback.base.BaseViewModel
+import tmg.flashback.di.async.ScopeProvider
 import tmg.flashback.repo.db.stats.DriverDB
 
 //region Inputs
@@ -31,8 +32,9 @@ interface DriverViewModelOutputs {
 @FlowPreview
 @ExperimentalCoroutinesApi
 class DriverViewModel(
-    driverDB: DriverDB
-): BaseViewModel(), DriverViewModelInputs, DriverViewModelOutputs {
+    driverDB: DriverDB,
+    scopeProvider: ScopeProvider
+): BaseViewModel(scopeProvider), DriverViewModelInputs, DriverViewModelOutputs {
 
     var inputs: DriverViewModelInputs = this
     var outputs: DriverViewModelOutputs = this

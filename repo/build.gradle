@@ -11,11 +11,14 @@ dependencies {
     testImplementation "org.junit.jupiter:junit-jupiter-engine:$junit"
     testImplementation "org.junit.jupiter:junit-jupiter-params:$junit"
 
-    // Kotlin
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-
     // ThreeTen
     implementation "com.jakewharton.threetenabp:threetenabp:$threeten"
+    testImplementation ("org.threeten:threetenbp:$threetenbp") {
+        exclude group:'com.jakewharton.threetenabp', module:'threetenabp'
+    }
+
+    // Kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
     // Coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines"
