@@ -19,6 +19,7 @@
 
     <attr name="f1BackgroundSkeletonAlpha" format="float" />
 
+    <attr name="f1Favourite" format="color" />
     <attr name="f1Loading" format="color" />
 
     <attr name="f1PurpleSector" format="color" />

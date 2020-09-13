@@ -5,9 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.R
-import tmg.flashback.driver.overview.viewholders.StatsViewHolder
+import tmg.flashback.driver.overview.DriverOverviewItem
+import tmg.flashback.driver.viewholders.StatsViewHolder
 import tmg.flashback.driver.season.viewholders.RaceHeaderViewHolder
 import tmg.flashback.driver.season.viewholders.RaceViewHolder
+import tmg.flashback.driver.viewholders.RacedForViewHolder
 import tmg.flashback.shared.SyncAdapter
 import tmg.flashback.utils.GenericDiffCallback
 
@@ -27,6 +29,9 @@ class DriverSeasonAdapter(
             R.layout.view_driver_overview_stat -> StatsViewHolder(
                     LayoutInflater.from(parent.context).inflate(viewType, parent, false)
             )
+            R.layout.view_driver_overview_raced_for -> RacedForViewHolder(
+                    LayoutInflater.from(parent.context).inflate(viewType, parent, false)
+            )
             R.layout.view_driver_season -> RaceViewHolder(
                     itemClicked,
                     LayoutInflater.from(parent.context).inflate(viewType, parent, false)
@@ -43,6 +48,7 @@ class DriverSeasonAdapter(
             is DriverSeasonItem.Stat -> (holder as StatsViewHolder).bind(item)
             is DriverSeasonItem.Result -> (holder as RaceViewHolder).bind(item)
             is DriverSeasonItem.ErrorItem -> bindErrors(holder, item.item)
+            is DriverSeasonItem.RacedFor -> (holder as RacedForViewHolder).bind(item)
         }
     }
 

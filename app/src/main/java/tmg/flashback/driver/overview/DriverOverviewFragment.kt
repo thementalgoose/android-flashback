@@ -38,6 +38,8 @@ class DriverOverviewFragment: BaseFragment() {
         }
     }
 
+
+
     companion object {
 
         private const val keyDriverId: String = "keyDriverId"

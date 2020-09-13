@@ -21,6 +21,16 @@ data class DriverOverview(
             .count { it.championshipStanding == 1 }
     }
 
+    val careerBestChampionship: Int? by lazy {
+        return@lazy standings
+                .map { it.championshipStanding }
+                .minBy { it }
+    }
+
+    val hasChampionshipCurrentlyInProgress: Boolean by lazy {
+        return@lazy standings.any { it.isInProgress }
+    }
+
     val careerWins: Int by lazy {
         return@lazy standings
                 .sumBy { it.wins }

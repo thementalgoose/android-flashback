@@ -6,8 +6,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.R
 import tmg.flashback.driver.overview.viewholders.HeaderViewHolder
-import tmg.flashback.driver.overview.viewholders.RacedForViewHolder
-import tmg.flashback.driver.overview.viewholders.StatsViewHolder
+import tmg.flashback.driver.viewholders.RacedForViewHolder
+import tmg.flashback.driver.viewholders.StatsViewHolder
 import tmg.flashback.shared.SyncAdapter
 import tmg.flashback.utils.GenericDiffCallback
 

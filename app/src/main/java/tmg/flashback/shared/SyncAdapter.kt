@@ -37,6 +37,7 @@ abstract class SyncAdapter<T>: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         when (val item = syncDataItem) {
             is SyncDataItem.Unavailable -> (holder as DataUnavailableViewHolder).bind(item.type)
             is SyncDataItem.Message -> (holder as MessageViewHolder).bind(item.msg)
+            is SyncDataItem.MessageRes -> (holder as MessageViewHolder).bind(item.msg, item.values)
         }
     }
 
