@@ -15,6 +15,15 @@ import tmg.flashback.di.device.BuildConfigProvider
 import tmg.utilities.lifecycle.DataEvent
 import tmg.utilities.lifecycle.Event
 
+/**
+ * To lockout the app
+ *
+ * - version must be greater than or equal to the build number to lockout
+ * - show = true
+ *
+ * If any of these conditions are not met (including show = true, version = null) then lockout won't happen!
+ */
+
 //region Inputs
 
 interface LockoutViewModelInputs {
