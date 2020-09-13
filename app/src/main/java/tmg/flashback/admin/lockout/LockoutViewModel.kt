@@ -48,9 +48,9 @@ interface LockoutViewModelOutputs {
 @ExperimentalCoroutinesApi
 class LockoutViewModel(
     dataDB: DataDB,
-    executionScope: ScopeProvider,
+    scopeProvider: ScopeProvider,
     buildConfigProvider: BuildConfigProvider
-): BaseViewModel(executionScope), LockoutViewModelInputs, LockoutViewModelOutputs {
+): BaseViewModel(scopeProvider), LockoutViewModelInputs, LockoutViewModelOutputs {
 
     private val clickLinkEvent: ConflatedBroadcastChannel<DataEvent<String>> = ConflatedBroadcastChannel()
 

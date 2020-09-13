@@ -46,8 +46,8 @@ interface CircuitInfoViewModelOutputs {
 class CircuitInfoViewModel(
     private val circuitDB: CircuitDB,
     private val connectivityManager: ConnectivityManager,
-    executionScope: ScopeProvider
-) : BaseViewModel(executionScope), CircuitInfoViewModelInputs, CircuitInfoViewModelOutputs {
+    scopeProvider: ScopeProvider
+) : BaseViewModel(scopeProvider), CircuitInfoViewModelInputs, CircuitInfoViewModelOutputs {
 
     private var circuitLat: Double? = null
     private var circuitLng: Double? = null

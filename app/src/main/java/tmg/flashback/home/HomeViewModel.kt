@@ -68,8 +68,8 @@ class HomeViewModel(
     private val prefDB: PrefsDB,
     private val connectivityManager: ConnectivityManager,
     private val buildConfigProvider: BuildConfigProvider,
-    executionScope: ScopeProvider
-) : BaseViewModel(executionScope), HomeViewModelInputs, HomeViewModelOutputs {
+    scopeProvider: ScopeProvider
+) : BaseViewModel(scopeProvider), HomeViewModelInputs, HomeViewModelOutputs {
 
     // true = new season has been requested so don't progress
     private var invalidSeasonData: Boolean = true
