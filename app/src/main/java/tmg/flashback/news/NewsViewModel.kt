@@ -44,8 +44,8 @@ class NewsViewModel(
     scopeProvider: ScopeProvider
 ): BaseViewModel(scopeProvider), NewsViewModelInputs, NewsViewModelOutputs {
 
-    override val isRefreshing: MutableLiveData<Boolean> = MutableLiveData(true)
-    private val refreshNews: ConflatedBroadcastChannel<Boolean> = ConflatedBroadcastChannel(true)
+    override val isRefreshing: MutableLiveData<Boolean> = MutableLiveData()
+    private val refreshNews: ConflatedBroadcastChannel<Boolean> = ConflatedBroadcastChannel()
     private val newsList: Flow<List<NewsItem>> = refreshNews
         .asFlow()
         .then {
@@ -81,12 +81,13 @@ class NewsViewModel(
     var outputs: NewsViewModelOutputs = this
 
     init {
-
+        refresh()
     }
 
     //region Inputs
 
     override fun refresh() {
+        isRefreshing.value = true
         refreshNews.offer(true)
     }
 
