@@ -3,12 +3,12 @@ package tmg.flashback.circuit
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.*
 import tmg.flashback.base.BaseViewModel
 import tmg.flashback.circuit.list.CircuitItem
+import tmg.flashback.di.async.ScopeProvider
 import tmg.flashback.extensions.circuitIcon
 import tmg.flashback.repo.db.stats.CircuitDB
 import tmg.flashback.repo.models.stats.Circuit
@@ -17,7 +17,6 @@ import tmg.flashback.shared.SyncDataItem
 import tmg.flashback.utils.getScope
 import tmg.utilities.extensions.then
 import tmg.utilities.lifecycle.DataEvent
-import kotlin.coroutines.CoroutineContext
 
 //region Inputs
 
@@ -47,10 +46,8 @@ interface CircuitInfoViewModelOutputs {
 class CircuitInfoViewModel(
     private val circuitDB: CircuitDB,
     private val connectivityManager: ConnectivityManager,
-    scope: CoroutineScope?
-) : BaseViewModel(), CircuitInfoViewModelInputs, CircuitInfoViewModelOutputs {
-
-    private val vmScope = getScope(scope)
+    executionScope: ScopeProvider
+) : BaseViewModel(executionScope), CircuitInfoViewModelInputs, CircuitInfoViewModelOutputs {
 
     private var circuitLat: Double? = null
     private var circuitLng: Double? = null
@@ -72,7 +69,7 @@ class CircuitInfoViewModel(
     override val circuitName: LiveData<String> = circuit
         .map { it?.name }
         .filterNotNull()
-        .asLiveData(vmScope.coroutineContext)
+        .asLiveData(scope.coroutineContext)
 
     override val list: LiveData<List<CircuitItem>> = circuit
         .map {
@@ -112,7 +109,7 @@ class CircuitInfoViewModel(
         .then {
             isLoading.postValue(false)
         }
-        .asLiveData(vmScope.coroutineContext)
+        .asLiveData(scope.coroutineContext)
 
     var inputs: CircuitInfoViewModelInputs = this
     var outputs: CircuitInfoViewModelOutputs = this

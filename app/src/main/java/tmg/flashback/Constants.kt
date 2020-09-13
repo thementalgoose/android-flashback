@@ -5,6 +5,7 @@ import androidx.annotation.DrawableRes
 import org.threeten.bp.Year
 import tmg.components.about.AboutThisAppConfiguration
 import tmg.components.about.AboutThisAppDependency
+import tmg.flashback.di.device.BuildConfigProvider
 
 const val minimumSupportedYear = 1950
 val currentYear: Int
@@ -15,10 +16,6 @@ val allYears: List<Int>
 const val showComingSoonMessageForNextDays = 10
 
 const val bottomSheetFastScrollDuration = 300
-
-fun isValidVersion(version: Int?): Boolean =
-    version == null || (version >= BuildConfig.VERSION_CODE)
-
 
 enum class TrackLayout(
     val circuitId: String,

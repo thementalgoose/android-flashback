@@ -1,6 +1,7 @@
 package tmg.flashback.driver
 
 import tmg.flashback.base.BaseViewModel
+import tmg.flashback.di.async.ScopeProvider
 
 //region Inputs
 
@@ -18,7 +19,9 @@ interface DriverViewModelOutputs {
 
 //endregion
 
-class DriverViewModel: BaseViewModel(), DriverViewModelInputs, DriverViewModelOutputs {
+class DriverViewModel(
+    executionScope: ScopeProvider
+): BaseViewModel(executionScope), DriverViewModelInputs, DriverViewModelOutputs {
 
     var inputs: DriverViewModelInputs = this
     var outputs: DriverViewModelOutputs = this

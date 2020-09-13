@@ -35,7 +35,7 @@ class SettingsNewsViewModelTest: BaseTest() {
         whenever(mockPrefs.inAppEnableJavascript).thenReturn(false)
         whenever(mockPrefs.newsSourceExcludeList).thenReturn(emptySet())
 
-        sut = SettingsNewsViewModel(mockPrefs)
+        sut = SettingsNewsViewModel(mockPrefs, testScopeProvider)
     }
 
     @Test
