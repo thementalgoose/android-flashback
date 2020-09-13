@@ -29,8 +29,8 @@ interface SettingsNewsViewModelOutputs {
 
 class SettingsNewsViewModel(
         private val prefDB: PrefsDB,
-        executionScope: ScopeProvider
-): BaseViewModel(executionScope), SettingsNewsViewModelInputs, SettingsNewsViewModelOutputs {
+        scopeProvider: ScopeProvider
+): BaseViewModel(scopeProvider), SettingsNewsViewModelInputs, SettingsNewsViewModelOutputs {
 
     private val keyShowDescription: String = "keyShowDescription"
     private val keyJavascript: String = "keyJavascript"
