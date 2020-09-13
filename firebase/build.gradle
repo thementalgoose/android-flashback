@@ -51,6 +51,9 @@ dependencies {
 
     // ThreeTen
     implementation "com.jakewharton.threetenabp:threetenabp:$threeten"
+    testImplementation ("org.threeten:threetenbp:$threetenbp") {
+        exclude group:'com.jakewharton.threetenabp', module:'threetenabp'
+    }
 
     // Coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines"

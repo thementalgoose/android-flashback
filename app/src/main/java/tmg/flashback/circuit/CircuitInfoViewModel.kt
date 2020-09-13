@@ -4,8 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.*
 import tmg.flashback.base.BaseViewModel
@@ -15,8 +14,10 @@ import tmg.flashback.repo.db.stats.CircuitDB
 import tmg.flashback.repo.models.stats.Circuit
 import tmg.flashback.settings.ConnectivityManager
 import tmg.flashback.shared.SyncDataItem
+import tmg.flashback.utils.getScope
 import tmg.utilities.extensions.then
 import tmg.utilities.lifecycle.DataEvent
+import kotlin.coroutines.CoroutineContext
 
 //region Inputs
 
@@ -45,8 +46,11 @@ interface CircuitInfoViewModelOutputs {
 @ExperimentalCoroutinesApi
 class CircuitInfoViewModel(
     private val circuitDB: CircuitDB,
-    private val connectivityManager: ConnectivityManager
+    private val connectivityManager: ConnectivityManager,
+    scope: CoroutineScope?
 ) : BaseViewModel(), CircuitInfoViewModelInputs, CircuitInfoViewModelOutputs {
+
+    private val vmScope = getScope(scope)
 
     private var circuitLat: Double? = null
     private var circuitLng: Double? = null
@@ -63,12 +67,12 @@ class CircuitInfoViewModel(
 
     override val showWikipedia: MutableLiveData<DataEvent<String>> = MutableLiveData()
 
-    override val isLoading: MutableLiveData<Boolean> = MutableLiveData(true)
+    override val isLoading: MutableLiveData<Boolean> = MutableLiveData()
 
     override val circuitName: LiveData<String> = circuit
         .map { it?.name }
         .filterNotNull()
-        .asLiveData(viewModelScope.coroutineContext)
+        .asLiveData(vmScope.coroutineContext)
 
     override val list: LiveData<List<CircuitItem>> = circuit
         .map {
@@ -108,13 +112,13 @@ class CircuitInfoViewModel(
         .then {
             isLoading.postValue(false)
         }
-        .asLiveData(viewModelScope.coroutineContext)
+        .asLiveData(vmScope.coroutineContext)
 
     var inputs: CircuitInfoViewModelInputs = this
     var outputs: CircuitInfoViewModelOutputs = this
 
     init {
-
+        isLoading.postValue(true)
     }
 
     //region Inputs

@@ -19,6 +19,10 @@ android {
     }
 
     buildTypes {
+        debug {
+            minifyEnabled false
+            useProguard false
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -62,6 +66,7 @@ android {
 
     testOptions {
         unitTests {
+            includeAndroidResources = true
             returnDefaultValues = true
             all {
                 testLogging {
@@ -85,7 +90,8 @@ dependencies {
     testImplementation "org.junit.jupiter:junit-jupiter-engine:$junit"
     testImplementation "org.junit.jupiter:junit-jupiter-params:$junit"
     testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
-    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.3"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines"
     testImplementation 'androidx.test:core:1.3.0'
     testImplementation 'androidx.arch.core:core-testing:2.1.0'
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0"
@@ -95,8 +101,15 @@ dependencies {
     // Swipe refresh
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 
+    // ThreeTen
+    implementation "com.jakewharton.threetenabp:threetenabp:$threeten"
+    testImplementation ("org.threeten:threetenbp:$threetenbp") {
+        exclude group:'com.jakewharton.threetenabp', module:'threetenabp'
+    }
+
     // Coroutines
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.7"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines"
 
     // Lifecycle
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0-alpha07"
@@ -127,9 +140,6 @@ dependencies {
 
     // ViewPager2
     implementation "androidx.viewpager2:viewpager2:1.0.0"
-
-    // ThreeTen
-    implementation 'com.jakewharton.threetenabp:threetenabp:1.2.2'
 
     // Preferences
     implementation "androidx.preference:preference-ktx:1.1.1"

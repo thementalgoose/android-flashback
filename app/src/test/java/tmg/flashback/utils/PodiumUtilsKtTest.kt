@@ -9,17 +9,16 @@ class PodiumUtilsKtTest: BaseTest() {
 
     @ParameterizedTest
     @CsvSource(
-            "1,true,1st",
-            "2,true,2nd",
-            "3,true,3rd",
-            "11,false,",
-            "11,true,11th",
-            "21,true,21st",
-            "23,true,23rd",
-            "30,true,30st"
+            "1,1st",
+            "2,2nd",
+            "3,3rd",
+            "11,11th",
+            "21,21st",
+            "23,23rd",
+            "31,31st"
     )
-    fun `PodiumUtils position int to podium`(position: Int, podium: Boolean, expectedValue: String) {
+    fun `PodiumUtils position int to podium`(position: Int, expectedValue: String) {
 
-        assertEquals(expectedValue, position.position(podium).toString())
+        assertEquals(expectedValue, position.position())
     }
 }

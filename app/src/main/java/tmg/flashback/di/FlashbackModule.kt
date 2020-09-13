@@ -1,6 +1,7 @@
 package tmg.flashback.di
 
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -23,7 +24,7 @@ var flashbackModule = module {
     viewModel { SeasonViewModel(get()) }
     viewModel { NewsViewModel(get(), get(), get()) }
 
-    viewModel { CircuitInfoViewModel(get(), get()) }
+    viewModel { CircuitInfoViewModel(get(), get(), get()) }
 
     viewModel { RaceViewModel(get(), get(), get()) }
 
@@ -35,5 +36,5 @@ var flashbackModule = module {
 
     single<ConnectivityManager> { NetworkConnectivityManager(get()) }
 
-    single<CoroutineDispatcher> { Dispatchers.IO }
+    single<CoroutineScope?> { null }
 }
