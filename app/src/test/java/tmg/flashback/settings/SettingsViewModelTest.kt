@@ -16,6 +16,7 @@ import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.enums.ThemePref.*
 import tmg.flashback.settings.SettingsOptions.*
 import tmg.flashback.testutils.BaseTest
+import tmg.flashback.testutils.assertEventFired
 import tmg.flashback.testutils.test
 import tmg.flashback.utils.Selected
 import tmg.flashback.utils.bottomsheet.BottomSheetItem
@@ -27,7 +28,7 @@ class SettingsViewModelTest: BaseTest() {
     private val mockPrefs: PrefsDB = mock()
 
     @BeforeEach
-    fun setUp() {
+    internal fun setUp() {
 
         whenever(mockPrefs.showQualifyingDelta).thenReturn(false)
         whenever(mockPrefs.showGridPenaltiesInQualifying).thenReturn(false)
@@ -196,7 +197,6 @@ class SettingsViewModelTest: BaseTest() {
 
         sut.outputs.openNews.test().assertEventFired()
     }
-
 
     @AfterEach
     internal fun tearDown() {
