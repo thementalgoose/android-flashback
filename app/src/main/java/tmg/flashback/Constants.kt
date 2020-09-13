@@ -18,12 +18,6 @@ const val showComingSoonMessageForNextDays = 10
 const val bottomSheetFastScrollDuration = 300
 
 /**
- * Version validation for app lockout
- */
-fun isValidVersion(version: Int?): Boolean =
-    version == null || (version >= BuildConfig.VERSION_CODE)
-
-/**
  * Max points by season
  */
 fun maxPointsBySeason(season: Int): Int {

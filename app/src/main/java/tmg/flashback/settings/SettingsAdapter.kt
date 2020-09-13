@@ -23,7 +23,7 @@ class SettingsAdapter(
 
     override fun bindCategory(view: View, model: AppPreferencesItem.Category) {
         view.apply {
-            this.tvTitle.text = model.title
+            this.tvTitle.setText(model.title)
         }
     }
 
@@ -32,15 +32,15 @@ class SettingsAdapter(
             this.clPref.setOnClickListener {
                 prefClicked(model.prefKey)
             }
-            this.tvTitle.text = model.title
-            this.tvDescription.text = model.description
+            this.tvTitle.setText(model.title)
+            this.tvDescription.setText(model.description)
         }
     }
 
     override fun bindPreferenceSwitch(view: View, model: AppPreferencesItem.SwitchPreference) {
         view.apply {
-            this.tvTitle.text = model.title
-            this.tvDescription.text = model.description
+            this.tvTitle.setText(model.title)
+            this.tvDescription.setText(model.description)
             this.checkbox.isChecked = model.isChecked
 
             this.clCheckbox.setOnClickListener {

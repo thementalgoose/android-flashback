@@ -2,7 +2,6 @@ package tmg.flashback.race
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -16,6 +15,7 @@ import tmg.flashback.repo.models.stats.*
 import tmg.flashback.settings.ConnectivityManager
 import tmg.flashback.shared.viewholders.DataUnavailable
 import tmg.flashback.showComingSoonMessageForNextDays
+import tmg.flashback.di.async.ScopeProvider
 import tmg.flashback.utils.SeasonRound
 import tmg.utilities.extensions.combineTriple
 
@@ -43,8 +43,9 @@ interface RaceViewModelOutputs {
 class RaceViewModel(
     seasonOverviewDB: SeasonOverviewDB,
     private val prefsDB: PrefsDB,
-    connectivityManager: ConnectivityManager
-) : BaseViewModel(), RaceViewModelInputs, RaceViewModelOutputs {
+    connectivityManager: ConnectivityManager,
+    executionScope: ScopeProvider
+) : BaseViewModel(executionScope), RaceViewModelInputs, RaceViewModelOutputs {
 
     var inputs: RaceViewModelInputs = this
     var outputs: RaceViewModelOutputs = this
@@ -66,7 +67,7 @@ class RaceViewModel(
     override val circuitInfo: LiveData<Round> = seasonRoundFlow
         .filterNotNull()
         .flowOn(Dispatchers.IO)
-        .asLiveData(viewModelScope.coroutineContext)
+        .asLiveData(scope.coroutineContext)
 
     override val raceItems: LiveData<Triple<RaceAdapterType, List<RaceAdapterModel>, SeasonRound>> =
         seasonRound
@@ -197,7 +198,7 @@ class RaceViewModel(
                     )
                 }
             }
-            .asLiveData(viewModelScope.coroutineContext)
+            .asLiveData(scope.coroutineContext)
 
     //region Inputs
 

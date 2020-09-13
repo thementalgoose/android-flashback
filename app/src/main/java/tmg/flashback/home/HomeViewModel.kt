@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
@@ -14,7 +13,6 @@ import tmg.flashback.base.BaseViewModel
 import tmg.flashback.currentYear
 import tmg.flashback.home.list.HomeItem
 import tmg.flashback.home.list.addError
-import tmg.flashback.isValidVersion
 import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.db.stats.DataDB
 import tmg.flashback.repo.db.stats.HistoryDB
@@ -24,6 +22,8 @@ import tmg.flashback.repo.models.stats.*
 import tmg.flashback.settings.ConnectivityManager
 import tmg.flashback.shared.SyncDataItem
 import tmg.flashback.shared.viewholders.DataUnavailable
+import tmg.flashback.di.async.ScopeProvider
+import tmg.flashback.di.device.BuildConfigProvider
 import tmg.utilities.extensions.combinePair
 import tmg.utilities.extensions.combineTriple
 import tmg.utilities.extensions.then
@@ -65,10 +65,12 @@ class HomeViewModel(
     private val context: Context,
     private val seasonOverviewDB: SeasonOverviewDB,
     private val historyDB: HistoryDB,
-    private val dataDB: DataDB,
+    dataDB: DataDB,
     private val prefDB: PrefsDB,
-    private val connectivityManager: ConnectivityManager
-) : BaseViewModel(), HomeViewModelInputs, HomeViewModelOutputs {
+    private val connectivityManager: ConnectivityManager,
+    private val buildConfigProvider: BuildConfigProvider,
+    executionScope: ScopeProvider
+) : BaseViewModel(executionScope), HomeViewModelInputs, HomeViewModelOutputs {
 
     // true = new season has been requested so don't progress
     private var invalidSeasonData: Boolean = true
@@ -88,7 +90,7 @@ class HomeViewModel(
 
     override val currentSeason: LiveData<Int> = season
         .asFlow()
-        .asLiveData(viewModelScope.coroutineContext)
+        .asLiveData(scope.coroutineContext)
 
     override val openSeasonList: MutableLiveData<DataEvent<Boolean>> = MutableLiveData()
     override val openCalendarFilter: LiveData<Boolean> = currentTab.asFlow()
@@ -102,7 +104,7 @@ class HomeViewModel(
                 HomeMenuItem.SEARCH -> false
             }
         }
-        .asLiveData(viewModelScope.coroutineContext)
+        .asLiveData(scope.coroutineContext)
 
     override val label: LiveData<String> = currentTabFlow
         .combinePair(season.asFlow())
@@ -116,7 +118,7 @@ class HomeViewModel(
                 HomeMenuItem.SEARCH -> ""
             }
         }
-        .asLiveData(viewModelScope.coroutineContext)
+        .asLiveData(scope.coroutineContext)
 
     /**
      * List to handle season data
@@ -214,21 +216,21 @@ class HomeViewModel(
         .then {
             showLoading.value = false
         }
-        .asLiveData(viewModelScope.coroutineContext)
+        .asLiveData(scope.coroutineContext)
 
     //region App lockout and banner
 
     override val openAppLockout: LiveData<Event> = dataDB
         .appLockout()
         .map {
-            if (it?.show == true && isValidVersion(it.version)) {
+            if (it?.show == true && buildConfigProvider.shouldLockoutBasedOnVersion(it.version)) {
                 Event()
             } else {
                 null
             }
         }
         .filterNotNull()
-        .asLiveData(viewModelScope.coroutineContext)
+        .asLiveData(scope.coroutineContext)
     override val openReleaseNotes: MutableLiveData<Event> = MutableLiveData()
 
     //endregion

@@ -3,18 +3,18 @@ package tmg.flashback.circuit
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.*
 import tmg.flashback.base.BaseViewModel
 import tmg.flashback.circuit.list.CircuitItem
+import tmg.flashback.di.async.ScopeProvider
 import tmg.flashback.extensions.circuitIcon
 import tmg.flashback.repo.db.stats.CircuitDB
 import tmg.flashback.repo.models.stats.Circuit
 import tmg.flashback.settings.ConnectivityManager
 import tmg.flashback.shared.SyncDataItem
+import tmg.flashback.utils.getScope
 import tmg.utilities.extensions.then
 import tmg.utilities.lifecycle.DataEvent
 
@@ -45,8 +45,9 @@ interface CircuitInfoViewModelOutputs {
 @ExperimentalCoroutinesApi
 class CircuitInfoViewModel(
     private val circuitDB: CircuitDB,
-    private val connectivityManager: ConnectivityManager
-) : BaseViewModel(), CircuitInfoViewModelInputs, CircuitInfoViewModelOutputs {
+    private val connectivityManager: ConnectivityManager,
+    executionScope: ScopeProvider
+) : BaseViewModel(executionScope), CircuitInfoViewModelInputs, CircuitInfoViewModelOutputs {
 
     private var circuitLat: Double? = null
     private var circuitLng: Double? = null
@@ -63,12 +64,12 @@ class CircuitInfoViewModel(
 
     override val showWikipedia: MutableLiveData<DataEvent<String>> = MutableLiveData()
 
-    override val isLoading: MutableLiveData<Boolean> = MutableLiveData(true)
+    override val isLoading: MutableLiveData<Boolean> = MutableLiveData()
 
     override val circuitName: LiveData<String> = circuit
         .map { it?.name }
         .filterNotNull()
-        .asLiveData(viewModelScope.coroutineContext)
+        .asLiveData(scope.coroutineContext)
 
     override val list: LiveData<List<CircuitItem>> = circuit
         .map {
@@ -108,13 +109,13 @@ class CircuitInfoViewModel(
         .then {
             isLoading.postValue(false)
         }
-        .asLiveData(viewModelScope.coroutineContext)
+        .asLiveData(scope.coroutineContext)
 
     var inputs: CircuitInfoViewModelInputs = this
     var outputs: CircuitInfoViewModelOutputs = this
 
     init {
-
+        isLoading.postValue(true)
     }
 
     //region Inputs

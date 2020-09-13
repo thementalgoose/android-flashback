@@ -19,21 +19,25 @@ class LockoutActivity: BaseActivity() {
 
     private val viewModel: LockoutViewModel by viewModel()
 
+    private var maintenanceLink: String = ""
+
     override fun layoutId(): Int = R.layout.activity_lockout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         btnLink.setOnClickListener {
-            viewModel.inputs.clickLink()
+            viewModel.inputs.clickLink(maintenanceLink)
         }
 
         observe(viewModel.outputs.showLink) {
-            if (it.isEmpty()) {
+            val (linkText, link) = it
+            maintenanceLink = link
+            if (linkText.isEmpty()) {
                 btnLink.gone()
             }
             else {
-                btnLink.text = it
+                btnLink.text = linkText
                 btnLink.visible()
             }
         }

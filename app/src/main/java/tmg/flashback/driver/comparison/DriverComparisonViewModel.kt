@@ -1,6 +1,7 @@
 package tmg.flashback.driver.comparison
 
 import tmg.flashback.base.BaseViewModel
+import tmg.flashback.di.async.ScopeProvider
 import tmg.flashback.driver.DriverViewModelInputs
 import tmg.flashback.driver.DriverViewModelOutputs
 
@@ -21,7 +22,9 @@ interface DriverComparisonViewModelOutputs {
 //endregion
 
 
-class DriverComparisonViewModel: BaseViewModel(), DriverComparisonViewModelInputs, DriverComparisonViewModelOutputs {
+class DriverComparisonViewModel(
+    scopeProvider: ScopeProvider
+): BaseViewModel(scopeProvider), DriverComparisonViewModelInputs, DriverComparisonViewModelOutputs {
 
     var inputs: DriverComparisonViewModelInputs = this
     var outputs: DriverComparisonViewModelOutputs = this
