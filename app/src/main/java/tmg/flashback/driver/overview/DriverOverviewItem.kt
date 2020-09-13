@@ -1,5 +1,6 @@
 package tmg.flashback.driver.overview
 
+import androidx.annotation.AttrRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
@@ -26,6 +27,8 @@ sealed class DriverOverviewItem(
     )
 
     data class Stat(
+            @AttrRes
+            val tint: Int = R.attr.f1TextSecondary,
             @DrawableRes
             val icon: Int,
             @StringRes

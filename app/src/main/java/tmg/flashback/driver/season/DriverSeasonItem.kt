@@ -1,11 +1,10 @@
 package tmg.flashback.driver.season
 
-import androidx.annotation.DrawableRes
-import androidx.annotation.LayoutRes
-import androidx.annotation.StringRes
+import androidx.annotation.*
 import org.threeten.bp.LocalDate
 import tmg.flashback.R
 import tmg.flashback.driver.overview.DriverOverviewItem
+import tmg.flashback.driver.overview.RaceForPositionType
 import tmg.flashback.repo.enums.RaceStatus
 import tmg.flashback.repo.models.stats.Constructor
 import tmg.flashback.repo.models.stats.Driver
@@ -16,6 +15,8 @@ sealed class DriverSeasonItem(
         @LayoutRes val layoutId: Int
 ) {
     data class Stat(
+        @AttrRes
+        val tint: Int = R.attr.f1TextSecondary,
         @DrawableRes
         val icon: Int,
         @StringRes
@@ -23,6 +24,15 @@ sealed class DriverSeasonItem(
         val value: String
     ): DriverSeasonItem(
         R.layout.view_driver_overview_stat
+    )
+
+    data class RacedFor(
+            val season: Int?,
+            val constructors: SlimConstructor,
+            val type: RaceForPositionType,
+            val isChampionship: Boolean
+    ): DriverSeasonItem(
+            R.layout.view_driver_overview_raced_for
     )
 
     data class Result(

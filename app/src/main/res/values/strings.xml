@@ -250,7 +250,9 @@
 
     <!-- Driver overview -->
     <string name="driver_overview_stat_career_drivers_title">Drivers championships</string>
+    <string name="driver_overview_stat_career_best_championship_position">Best championship position</string>
     <string name="driver_overview_stat_career_championship_standing">Championship standing</string>
+    <string name="driver_overview_stat_career_championship_standing_so_far">Current championship standing</string>
     <string name="driver_overview_stat_career_wins">Wins</string>
     <string name="driver_overview_stat_career_podiums">Podiums</string>
     <string name="driver_overview_stat_career_points">Points</string>
@@ -263,9 +265,10 @@
     <string name="driver_overview_stat_career_qualifying_top_3">Qualified in top 3</string>
     <string name="driver_overview_stat_career_qualifying_top_10">Qualified within top 10</string>
     <string name="driver_overview_stat_career_team_history">History</string>
-
+    <string name="driver_overview_stat_career_team">Team</string>
 
     <string name="results_accurate_for">Results as of the %s (round %d)</string>
+    <string name="results_accurate_for_year">Results as of the %d %s (round %d)</string>
     <string name="qualifying_header">Q</string>
     <string name="endash">–</string>
 

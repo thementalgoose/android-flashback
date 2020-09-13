@@ -24,6 +24,7 @@
         <item name="f1BackgroundPrimary">#FBFBFB</item>
         <item name="f1BackgroundSecondary">#E8E8E8</item>
 
+        <item name="f1Favourite">@color/favourite</item>
         <item name="f1BackgroundLoading">#EEffffff</item>
 
         <item name="f1TextInversePrimary">#F8F8F8</item>
@@ -107,6 +108,7 @@
 
         <item name="f1BackgroundOverlay">#44FBFBFB</item>
 
+        <item name="f1Favourite">@color/favourite</item>
         <item name="f1Loading">#a8a8a8</item>
 
         <item name="f1PurpleSector">#673AB7</item>
@@ -471,6 +473,7 @@
 
     <style name="Text.DriverOverview.Stats.Title" parent="Text">
         <item name="android:textSize">14sp</item>
+        <item name="android:textColor">?attr/f1TextSecondary</item>
     </style>
 
     <style name="Text.DriverOverview.Stats.Value" parent="Text">

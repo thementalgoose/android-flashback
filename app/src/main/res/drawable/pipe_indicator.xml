@@ -2,7 +2,7 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <shape android:shape="oval">
-            <solid android:color="?attr/f1BackgroundSecondary" />
+            <solid android:color="?attr/f1TextTertiary" />
             <size android:height="@dimen/driverOverviewCircleSize"
                 android:width="@dimen/driverOverviewCircleSize" />
         </shape>

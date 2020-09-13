@@ -1,5 +1,6 @@
 package tmg.flashback.driver.overview
 
+import androidx.annotation.AttrRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.lifecycle.LiveData
@@ -21,6 +22,7 @@ import tmg.flashback.settings.ConnectivityManager
 import tmg.flashback.shared.SyncDataItem
 import tmg.flashback.shared.viewholders.DataUnavailable
 import tmg.flashback.utils.position
+import tmg.utilities.extensions.ordinalAbbreviation
 
 //region Inputs
 
@@ -75,6 +77,13 @@ class DriverOverviewViewModel(
                                 driverNationalityISO = it.nationalityISO
                         ))
 
+                        if (it.hasChampionshipCurrentlyInProgress) {
+                            val latestRound = it.standings.maxBy { it.season }?.raceOverview?.maxBy { it.round }
+                            if (latestRound != null) {
+                                list.add(DriverOverviewItem.ErrorItem(SyncDataItem.MessageRes(R.string.results_accurate_for_year, listOf(latestRound.season, latestRound.raceName, latestRound.round))))
+                            }
+                        }
+
                         // Add general stats
                         list.addAll(getAllStats(it))
 
@@ -107,57 +116,73 @@ class DriverOverviewViewModel(
      * Add career stats for the driver across their career
      */
     private fun getAllStats(overview: DriverOverview): List<DriverOverviewItem> {
-        return listOf(
-                DriverOverviewItem.Stat(
-                    icon = R.drawable.ic_menu_drivers,
-                    label = R.string.driver_overview_stat_career_drivers_title,
-                    value = overview.championships.toString()
-                ),
-                DriverOverviewItem.Stat(
-                    icon = R.drawable.ic_standings,
-                    label = R.string.driver_overview_stat_career_wins,
-                    value = overview.careerWins.toString()
-                ),
-                DriverOverviewItem.Stat(
-                    icon = R.drawable.ic_podium,
-                    label = R.string.driver_overview_stat_career_podiums,
-                    value = overview.careerPodiums.toString()
-                ),
-                DriverOverviewItem.Stat(
-                    icon = R.drawable.ic_status_finished,
-                    label = R.string.driver_overview_stat_career_best_finish,
-                    value = overview.careerBestFinish.position().toString()
-                ),
-                DriverOverviewItem.Stat(
-                    icon = R.drawable.ic_finishes_in_points,
-                    label = R.string.driver_overview_stat_career_points_finishes,
-                    value = overview.careerFinishesInPoints.toString()
-                ),
-                DriverOverviewItem.Stat(
-                    icon = R.drawable.ic_race_points,
-                    label = R.string.driver_overview_stat_career_points,
-                    value = overview.careerPoints.toString()
-                ),
-                DriverOverviewItem.Stat(
-                    icon = R.drawable.ic_qualifying_pole,
-                    label = R.string.driver_overview_stat_career_qualifying_pole,
-                    value = overview.careerQualifyingPoles.toString()
-                ),
-                DriverOverviewItem.Stat(
-                    icon = R.drawable.ic_qualifying_front_row,
-                    label = R.string.driver_overview_stat_career_qualifying_top_3,
-                    value = overview.careerQualifyingTop3.toString()
-                ),
-                DriverOverviewItem.Stat(
-                    icon = R.drawable.ic_qualifying_top_ten,
-                    label = R.string.driver_overview_stat_career_qualifying_top_10,
-                    value = overview.totalQualifyingAbove(10).toString()
-                )
+        val list: MutableList<DriverOverviewItem> = mutableListOf()
+        list.addStat(
+            tint = if (overview.championships > 0) R.attr.f1Favourite else R.attr.f1TextSecondary,
+            icon = R.drawable.ic_menu_drivers,
+            label = R.string.driver_overview_stat_career_drivers_title,
+            value = overview.championships.toString()
         )
+
+        overview.careerBestChampionship?.let {
+            list.addStat(
+                    icon = R.drawable.ic_championship_order,
+                    label = R.string.driver_overview_stat_career_best_championship_position,
+                    value = it.ordinalAbbreviation
+            )
+        }
+
+        list.addStat(
+            icon = R.drawable.ic_standings,
+            label = R.string.driver_overview_stat_career_wins,
+            value = overview.careerWins.toString()
+        )
+        list.addStat(
+            icon = R.drawable.ic_podium,
+            label = R.string.driver_overview_stat_career_podiums,
+            value = overview.careerPodiums.toString()
+        )
+        list.addStat(
+            icon = R.drawable.ic_status_finished,
+            label = R.string.driver_overview_stat_career_best_finish,
+            value = overview.careerBestFinish.position().toString()
+        )
+        list.addStat(
+            icon = R.drawable.ic_finishes_in_points,
+            label = R.string.driver_overview_stat_career_points_finishes,
+            value = overview.careerFinishesInPoints.toString()
+        )
+        list.addStat(
+            icon = R.drawable.ic_race_points,
+            label = R.string.driver_overview_stat_career_points,
+            value = overview.careerPoints.toString()
+        )
+        list.addStat(
+            icon = R.drawable.ic_qualifying_pole,
+            label = R.string.driver_overview_stat_career_qualifying_pole,
+            value = overview.careerQualifyingPoles.toString()
+        )
+        list.addStat(
+            icon = R.drawable.ic_qualifying_front_row,
+            label = R.string.driver_overview_stat_career_qualifying_top_3,
+            value = overview.careerQualifyingTop3.toString()
+        )
+        list.addStat(
+            icon = R.drawable.ic_qualifying_top_ten,
+            label = R.string.driver_overview_stat_career_qualifying_top_10,
+            value = overview.totalQualifyingAbove(10).toString()
+        )
+
+        return list
     }
 
-    private fun MutableList<DriverOverviewItem>.addStat(@DrawableRes icon: Int, @StringRes label: Int, value: String) {
-        this.add(DriverOverviewItem.Stat(icon, label, value))
+    private fun MutableList<DriverOverviewItem>.addStat(@AttrRes tint: Int = R.attr.f1TextSecondary, @DrawableRes icon: Int, @StringRes label: Int, value: String) {
+        this.add(DriverOverviewItem.Stat(
+                tint = tint,
+                icon = icon,
+                label = label,
+                value = value
+        ))
     }
 
     /**
