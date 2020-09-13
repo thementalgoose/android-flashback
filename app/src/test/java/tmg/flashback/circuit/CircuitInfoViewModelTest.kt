@@ -67,7 +67,7 @@ class CircuitInfoViewModelTest: BaseTest() {
 
     private fun initSUT() {
 
-        sut = CircuitInfoViewModel(mockCircuitDB, mockConnectivityManager, testScope)
+        sut = CircuitInfoViewModel(mockCircuitDB, mockConnectivityManager, testScopeProvider)
     }
 
     @Test
@@ -90,7 +90,7 @@ class CircuitInfoViewModelTest: BaseTest() {
 
         advanceUntilIdle()
 
-        sut.outputs.list.test().assertListContains {
+        assertListContains(sut.outputs.list) {
             it is CircuitItem.ErrorItem && it.item == SyncDataItem.NoNetwork
         }
     }
@@ -107,7 +107,7 @@ class CircuitInfoViewModelTest: BaseTest() {
 
         advanceUntilIdle()
 
-        sut.outputs.list.test().assertListContains {
+        assertListContains(sut.outputs.list) {
             it is CircuitItem.ErrorItem && it.item == SyncDataItem.InternalError
         }
     }
@@ -135,7 +135,7 @@ class CircuitInfoViewModelTest: BaseTest() {
 
         advanceUntilIdle()
 
-        assertEquals(expected, sut.outputs.list.test().latestValue())
+        assertValue(expected, sut.outputs.list)
     }
 
     @Test
@@ -161,7 +161,25 @@ class CircuitInfoViewModelTest: BaseTest() {
 
         advanceUntilIdle()
 
-        assertEquals(expected, sut.outputs.list.test().latestValue())
+        assertValue(expected, sut.outputs.list)
+    }
+
+    @Test
+    fun `CircuitInfoViewModel loading gets set to false once data has appeared`() = coroutineTest {
+
+        whenever(mockCircuitDB.getCircuit(any())).thenReturn(circuitWithTrackFlow)
+        whenever(mockConnectivityManager.isConnected).thenReturn(true)
+
+        initSUT()
+
+        assertValue(true, sut.outputs.isLoading)
+
+        sut.inputs.circuitId(mockCircuitId)
+
+        advanceUntilIdle()
+
+        assertHasItems(sut.outputs.list)
+        assertValue(false, sut.outputs.isLoading)
     }
 
     @Test
@@ -171,7 +189,9 @@ class CircuitInfoViewModelTest: BaseTest() {
 
         sut.inputs.clickShowOnMap()
 
-        sut.outputs.showOnMap.test().assertEventFired()
+        assertDataEventValue(sut.outputs.showOnMap) {
+            it.startsWith("geo:0,0?q=")
+        }
     }
 
     @Test
@@ -181,7 +201,7 @@ class CircuitInfoViewModelTest: BaseTest() {
 
         sut.inputs.clickWikipedia()
 
-        sut.outputs.showWikipedia.test().assertEventNotFired()
+        assertEventNotFired(sut.outputs.showWikipedia)
     }
 
     @AfterEach

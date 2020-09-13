@@ -1,6 +1,5 @@
 package tmg.flashback.settings
 
-import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import tmg.components.prefs.AppPreferencesItem
 import tmg.flashback.R
@@ -9,6 +8,7 @@ import tmg.flashback.extensions.icon
 import tmg.flashback.extensions.label
 import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.enums.ThemePref
+import tmg.flashback.di.async.ScopeProvider
 import tmg.flashback.utils.Selected
 import tmg.flashback.utils.bottomsheet.BottomSheetItem
 import tmg.utilities.lifecycle.Event
@@ -40,8 +40,9 @@ interface SettingsViewModelOutputs {
 //endregion
 
 class SettingsViewModel(
-    private val prefDB: PrefsDB
-): BaseViewModel(), SettingsViewModelInputs, SettingsViewModelOutputs {
+    private val prefDB: PrefsDB,
+    executionScope: ScopeProvider
+): BaseViewModel(executionScope), SettingsViewModelInputs, SettingsViewModelOutputs {
 
     var inputs: SettingsViewModelInputs = this
     var outputs: SettingsViewModelOutputs = this

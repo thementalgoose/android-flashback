@@ -3,6 +3,8 @@ package tmg.flashback.driver.season
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.flatMapLatest
@@ -11,13 +13,13 @@ import tmg.flashback.base.BaseViewModel
 import tmg.flashback.currentYear
 import tmg.flashback.driver.season.list.DriverSeasonItem
 import tmg.flashback.driver.season.list.addError
-import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.db.stats.SeasonOverviewDB
 import tmg.flashback.repo.models.stats.Constructor
 import tmg.flashback.repo.models.stats.Driver
 import tmg.flashback.settings.ConnectivityManager
 import tmg.flashback.shared.SyncDataItem
 import tmg.flashback.shared.viewholders.DataUnavailable
+import tmg.flashback.di.async.ScopeProvider
 
 //region Inputs
 
@@ -35,11 +37,13 @@ interface DriverSeasonViewModelOutputs {
 
 //endregion
 
+@FlowPreview
+@ExperimentalCoroutinesApi
 class DriverSeasonViewModel(
         private val seasonDB: SeasonOverviewDB,
-        private val prefDB: PrefsDB,
-        private val connectivityManager: ConnectivityManager
-) : BaseViewModel(), DriverSeasonViewModelInputs, DriverSeasonViewModelOutputs {
+        private val connectivityManager: ConnectivityManager,
+        executionScope: ScopeProvider
+) : BaseViewModel(executionScope), DriverSeasonViewModelInputs, DriverSeasonViewModelOutputs {
 
     var inputs: DriverSeasonViewModelInputs = this
     var outputs: DriverSeasonViewModelOutputs = this

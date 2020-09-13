@@ -8,6 +8,7 @@ import tmg.flashback.extensions.description
 import tmg.flashback.extensions.title
 import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.enums.NewsSource
+import tmg.flashback.di.async.ScopeProvider
 
 //region Inputs
 
@@ -27,8 +28,9 @@ interface SettingsNewsViewModelOutputs {
 //endregion
 
 class SettingsNewsViewModel(
-        private val prefDB: PrefsDB
-): BaseViewModel(), SettingsNewsViewModelInputs, SettingsNewsViewModelOutputs {
+        private val prefDB: PrefsDB,
+        executionScope: ScopeProvider
+): BaseViewModel(executionScope), SettingsNewsViewModelInputs, SettingsNewsViewModelOutputs {
 
     private val keyShowDescription: String = "keyShowDescription"
     private val keyJavascript: String = "keyJavascript"

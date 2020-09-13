@@ -21,12 +21,13 @@ import org.junit.jupiter.api.extension.ExtensionContext
 @ExtendWith(TestingTaskExecutor::class)
 open class BaseTest {
 
-
     @get:Rule
     val coroutineScope = CoroutineRule()
 
-    val testDispatcher = TestCoroutineDispatcher()
+    private val testDispatcher = TestCoroutineDispatcher()
     val testScope = TestCoroutineScope(testDispatcher)
+
+    val testScopeProvider = TestScopeProvider()
 
     @BeforeEach
     @CallSuper

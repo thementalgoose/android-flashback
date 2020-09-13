@@ -41,7 +41,7 @@ class SettingsViewModelTest: BaseTest() {
 
         whenever(mockPrefs.theme).thenReturn(AUTO)
 
-        sut = SettingsViewModel(mockPrefs)
+        sut = SettingsViewModel(mockPrefs, testScopeProvider)
 
     }
 
@@ -91,7 +91,7 @@ class SettingsViewModelTest: BaseTest() {
         sut.pickTheme(NIGHT)
         verify(mockPrefs).theme = NIGHT
 
-        sut.themeChanged.test().assertEventFired()
+        assertEventFired(sut.outputs.themeChanged)
     }
 
     @Test
@@ -99,7 +99,7 @@ class SettingsViewModelTest: BaseTest() {
 
         sut.inputs.preferenceClicked(SettingsOptions.THEME, null)
 
-        sut.openThemePicker.test().assertEventFired()
+        assertEventFired(sut.openThemePicker)
     }
 
     @Test
@@ -155,7 +155,7 @@ class SettingsViewModelTest: BaseTest() {
 
         sut.inputs.preferenceClicked(ABOUT, null)
 
-        sut.outputs.openAbout.test().assertEventFired()
+        assertEventFired(sut.outputs.openAbout)
     }
 
     @Test
@@ -163,7 +163,7 @@ class SettingsViewModelTest: BaseTest() {
 
         sut.inputs.preferenceClicked(RELEASE, null)
 
-        sut.outputs.openRelease.test().assertEventFired()
+        assertEventFired(sut.outputs.openRelease)
     }
 
     @Test
@@ -179,7 +179,7 @@ class SettingsViewModelTest: BaseTest() {
 
         sut.inputs.preferenceClicked(SUGGESTION, null)
 
-        sut.outputs.openSuggestions.test().assertEventFired()
+        assertEventFired(sut.outputs.openSuggestions)
     }
 
     @Test
@@ -195,7 +195,7 @@ class SettingsViewModelTest: BaseTest() {
 
         sut.inputs.preferenceClicked(NEWS, null)
 
-        sut.outputs.openNews.test().assertEventFired()
+        assertEventFired(sut.outputs.openNews)
     }
 
     @AfterEach
