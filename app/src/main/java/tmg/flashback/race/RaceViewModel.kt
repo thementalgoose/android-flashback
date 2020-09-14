@@ -62,11 +62,10 @@ class RaceViewModel(
 
     override val seasonRoundData: LiveData<SeasonRound> = seasonRound
         .asFlow()
-        .asLiveData()
+        .asLiveData(scope.coroutineContext)
 
     override val circuitInfo: LiveData<Round> = seasonRoundFlow
         .filterNotNull()
-        .flowOn(Dispatchers.IO)
         .asLiveData(scope.coroutineContext)
 
     override val raceItems: LiveData<Triple<RaceAdapterType, List<RaceAdapterModel>, SeasonRound>> =
