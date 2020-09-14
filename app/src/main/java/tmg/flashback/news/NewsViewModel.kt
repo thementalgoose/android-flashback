@@ -87,7 +87,6 @@ class NewsViewModel(
     //region Inputs
 
     override fun refresh() {
-        isRefreshing.value = true
         refreshNews.offer(true)
     }
 
