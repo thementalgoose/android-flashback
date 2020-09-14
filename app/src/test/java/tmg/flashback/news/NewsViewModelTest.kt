@@ -23,6 +23,8 @@ import tmg.flashback.settings.ConnectivityManager
 import tmg.flashback.shared.SyncDataItem
 import tmg.flashback.testutils.BaseTest
 import tmg.flashback.testutils.assertValue
+import tmg.flashback.testutils.assertValues
+import tmg.flashback.testutils.test
 
 @FlowPreview
 @ExperimentalCoroutinesApi
@@ -69,15 +71,28 @@ class NewsViewModelTest: BaseTest() {
         sut = NewsViewModel(mockNewsDB, mockPrefsDB, mockConnectivityManager, testScopeProvider)
     }
 
-//    @Test
-//    fun `NewsViewModel is refreshing is initialised is reset after refresh flow`() = coroutineTest {
-//
-//    }
-//
-//    @Test
-//    fun `NewsViewModel calling refresh calls news items to be updated`() {
-//
-//    }
+    @Test
+    fun `NewsViewModel is refreshing is initialised is reset after refresh flow`() = coroutineTest {
+
+        val expectedObservedList = listOf(
+                NewsItem.Message(mockLocalDate.format(DateTimeFormatter.ofPattern("HH:mm:ss"))),
+                NewsItem.News(mockArticle)
+        )
+
+        initSUT()
+
+        val observer = sut.outputs.isRefreshing.test()
+        advanceUntilIdle()
+
+        assertValue(expectedObservedList, sut.outputs.list)
+        assertEquals(listOf(true, false), observer.listOfValues.toList())
+
+        sut.inputs.refresh()
+
+        advanceUntilIdle()
+
+        assertEquals(listOf(true, false, true, false), observer.listOfValues.toList())
+    }
 
     @Test
     fun `NewsViewModel init loads all news sources`() = coroutineTest {
