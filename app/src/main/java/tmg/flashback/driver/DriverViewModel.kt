@@ -52,7 +52,7 @@ class DriverViewModel(
                     .sortedByDescending { it }
             }
         }
-        .asLiveData(viewModelScope.coroutineContext)
+        .asLiveData(scope.coroutineContext)
 
     init {
 
