@@ -56,7 +56,8 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback {
                     raceName = track.raceName,
                     trackName = track.circuitName,
                     countryISO = track.raceCountryISO,
-                    date = track.date
+                    date = track.date,
+                    defaultToRace = track.hasResults || !track.hasQualifying
                 )
                 startActivity(intent)
             },

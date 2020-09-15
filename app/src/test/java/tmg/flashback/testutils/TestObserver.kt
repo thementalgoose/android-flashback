@@ -30,6 +30,10 @@ class TestObserver<T>(liveData: LiveData<T>): Observer<T> {
         return listOfValues.lastOrNull()
     }
 
+    fun values(): List<T> {
+        return listOfValues
+    }
+
     fun assertQuantityOf(number: Int, predicate: (item: T) -> Boolean = { true }) {
         val items = listOfValues.count(predicate)
         assertEquals(number, items, "Expected $number Actual $items - Items have been emitted $listOfValues")
@@ -42,7 +46,18 @@ class TestObserver<T>(liveData: LiveData<T>): Observer<T> {
 
     fun assertContains(predicate: (item: T) -> Boolean) {
         val item = listOfValues.firstOrNull(predicate)
-        assertNotNull(item, "Cannot an item in the list $listOfValues that matches the predicate provided")
+        assertNotNull(item, "Cannot find item in the list $listOfValues that matches the predicate provided")
+    }
+
+    fun assertValueIs(value: T) {
+        assertEquals(1, listOfValues.size)
+        val item = latestValue()!!
+        assertEquals(value, item)
+    }
+
+    fun assertLatestValueIs(value: T) {
+        val item = latestValue()!!
+        assertEquals(value, item)
     }
 }
 
@@ -68,9 +83,30 @@ fun <T> assertValues(liveData: LiveData<T>, vararg values: T) {
     }
 }
 
+fun <T> assertValues(values: List<T>, liveData: LiveData<T>) {
+    val list = liveData.test().listOfValues
+    assertEquals(values.size, list.size, "Values mismatch - Expected $values Actual $list")
+    for (x in list.indices) {
+        assertEquals(values[x], list[x], "Items as position $x did not match: Expected ${values[x]} Actual ${list[x]}")
+    }
+}
+
 fun <T> assertValue(expected: T, liveData: LiveData<T>) {
-    liveData.test().assertContains {
-        it == expected
+    val test = liveData.test()
+    if (test.listOfValues.size == 1) {
+        test.assertValueIs(expected)
+    }
+    else {
+        test.assertContains {
+            it == expected
+        }
+    }
+}
+
+fun <T> assertLatestValue(expected: T, liveData: LiveData<T>) {
+    val test = liveData.test()
+    if (test.listOfValues.isNotEmpty()) {
+        test.assertLatestValueIs(expected)
     }
 }
 

@@ -32,6 +32,8 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
     var round: Int = -1
     lateinit var circuitId: String
 
+    private var defaultToRace: Boolean = true
+
     private var initialCountry: String = ""
     private var initialCountryISO: String = ""
     private var initialRaceName: String = ""
@@ -44,6 +46,8 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
         private const val keyRound: String = "round"
         private const val keyCircuitId: String = "circuit"
 
+        private const val keyDefaultToRace: String = "orderType"
+
         private const val keyCountry: String = "keyCountry"
         private const val keyRaceName: String = "keyRaceName"
         private const val keyTrackName: String = "keyTrackName"
@@ -51,20 +55,22 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
         private const val keyDate: String = "keyDate"
 
         fun intent(
-            context: Context,
-            season: Int,
-            round: Int,
-            circuitId: String,
-            country: String? = null,
-            raceName: String? = null,
-            trackName: String? = null,
-            countryISO: String? = null,
-            date: LocalDate? = null
+                context: Context,
+                season: Int,
+                round: Int,
+                circuitId: String,
+                defaultToRace: Boolean = true,
+                country: String? = null,
+                raceName: String? = null,
+                trackName: String? = null,
+                countryISO: String? = null,
+                date: LocalDate? = null
         ): Intent {
             return Intent(context, RaceActivity::class.java).apply {
                 putExtra(keySeason, season)
                 putExtra(keyRound, round)
                 putExtra(keyCircuitId, circuitId)
+                putExtra(keyDefaultToRace, defaultToRace)
                 putExtra(keyCountry, country)
                 putExtra(keyRaceName, raceName)
                 putExtra(keyTrackName, trackName)
@@ -80,6 +86,8 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
         season = bundle.getInt(keySeason)
         round = bundle.getInt(keyRound)
         circuitId = bundle.getString(keyCircuitId)!!
+
+        defaultToRace = bundle.getBoolean(keyDefaultToRace)
 
         initialCountry = bundle.getString(keyCountry, "")
         initialCountryISO = bundle.getString(keyCountryISO, "")
@@ -151,9 +159,9 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
 
         observe(viewModel.outputs.seasonRoundData) { (season, round) ->
             tvRoundInfo.text = getString(
-                R.string.race_round_format,
-                round.toString(),
-                season.toString()
+                    R.string.race_round_format,
+                    round.toString(),
+                    season.toString()
             ).fromHtml()
         }
 
@@ -168,7 +176,11 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
             raceAdapter.update(adapterType, list)
         }
 
-        menu.selectedItemId = R.id.nav_race
+        if (defaultToRace) {
+            menu.selectedItemId = R.id.nav_race
+        } else {
+            menu.selectedItemId = R.id.nav_qualifying
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

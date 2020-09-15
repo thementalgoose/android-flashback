@@ -33,31 +33,29 @@ class SeasonViewModel(
     scopeProvider: ScopeProvider
 ) : BaseViewModel(scopeProvider), SeasonViewModelInputs, SeasonViewModelOutputs {
 
-    var headers: Headers = Headers(
-        favourited = prefDB.showBottomSheetFavourited,
-        all = prefDB.showBottomSheetAll
-    )
-    data class Headers( // TODO: Move these to settings
-        var favourited: Boolean = true,
-        var all: Boolean = true
-    )
+    var headerSectionFavourited: Boolean = prefDB.showBottomSheetFavourited
+    var headerSectionAll: Boolean = prefDB.showBottomSheetAll
 
     private val favouriteSeasons = prefDB.favouriteSeasons.toMutableSet()
-    override val list: MutableLiveData<List<SeasonListItem>> = MutableLiveData(buildList(favouriteSeasons, headers))
+    override val list: MutableLiveData<List<SeasonListItem>> = MutableLiveData()
     override val showSeasonEvent: MutableLiveData<DataEvent<Int>> = MutableLiveData()
 
     var inputs: SeasonViewModelInputs = this
     var outputs: SeasonViewModelOutputs = this
 
+    init {
+        list.value = buildList(favouriteSeasons, headerSectionFavourited, headerSectionAll)
+    }
+
     //region Inputs
 
     override fun toggleHeader(header: HeaderType, to: Boolean?) {
         when (header) {
-            HeaderType.FAVOURITED -> headers.favourited = to ?: !headers.favourited
-            HeaderType.ALL -> headers.all = to ?: !headers.all
+            HeaderType.FAVOURITED -> headerSectionFavourited = to ?: !headerSectionFavourited
+            HeaderType.ALL -> headerSectionAll = to ?: !headerSectionAll
             else -> {}
         }
-        list.value = buildList(favouriteSeasons, headers)
+        list.value = buildList(favouriteSeasons, headerSectionFavourited, headerSectionAll)
     }
 
     override fun toggleFavourite(season: Int) {
@@ -68,7 +66,7 @@ class SeasonViewModel(
             favouriteSeasons.add(season)
         }
         prefDB.favouriteSeasons = favouriteSeasons
-        list.value = buildList(favouriteSeasons, headers)
+        list.value = buildList(favouriteSeasons, headerSectionFavourited, headerSectionAll)
     }
 
     override fun clickSeason(season: Int) {
@@ -79,7 +77,8 @@ class SeasonViewModel(
 
     private fun buildList(
         favouritedSet: Set<Int>,
-        expandedState: Headers
+        headerSectionFavourites: Boolean,
+        headerSectionAll: Boolean
     ): List<SeasonListItem> {
 
         val list: MutableList<SeasonListItem> = mutableListOf(SeasonListItem.Top)
@@ -96,10 +95,10 @@ class SeasonViewModel(
         list.add(
             SeasonListItem.Header(
                 HeaderType.FAVOURITED,
-                expandedState.favourited
+                headerSectionFavourites
             )
         )
-        if (expandedState.favourited) {
+        if (headerSectionFavourites) {
             list.addAll(favouritedSet
                 .toList()
                 .sortedByDescending { it }
@@ -114,8 +113,8 @@ class SeasonViewModel(
         }
 
         // All
-        list.add(SeasonListItem.Header(HeaderType.ALL, expandedState.all))
-        if (expandedState.all) {
+        list.add(SeasonListItem.Header(HeaderType.ALL, headerSectionAll))
+        if (headerSectionAll) {
             list.addAll(allYears
                 .map {
                     SeasonListItem.Season(
