@@ -9,6 +9,7 @@ import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
+import org.koin.ext.scope
 import tmg.flashback.base.BaseViewModel
 import tmg.flashback.di.async.ScopeProvider
 import tmg.flashback.repo.db.stats.DriverDB

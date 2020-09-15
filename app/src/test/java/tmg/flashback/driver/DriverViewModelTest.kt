@@ -23,6 +23,12 @@ class DriverViewModelTest: BaseTest() {
 
     private val mockDriverDB: DriverDB = mock()
 
+    @BeforeEach
+    internal fun setUp() {
+
+        whenever(mockDriverDB.getDriverOverview(any())).thenReturn(flow { emit(mockDriverOverview) })
+    }
+
     private fun initSUT() {
         sut = DriverViewModel(mockDriverDB, testScopeProvider)
         sut.inputs.setup(mockDriverId)
@@ -31,7 +37,6 @@ class DriverViewModelTest: BaseTest() {
     @Test
     fun `DriverViewModel initialising driver with valid driver id shows season list emitted`() = coroutineTest {
 
-        whenever(mockDriverDB.getDriverOverview(any())).thenReturn(flow { emit(mockDriverOverview) })
         val expected: List<Int> = listOf(2019, 2018) // From MockData.kt
 
         initSUT()
