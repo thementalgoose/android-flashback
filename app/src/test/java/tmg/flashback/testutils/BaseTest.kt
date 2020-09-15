@@ -25,9 +25,9 @@ open class BaseTest {
     val coroutineScope = CoroutineRule()
 
     private val testDispatcher = TestCoroutineDispatcher()
-    val testScope = TestCoroutineScope(testDispatcher)
+    private val testScope = TestCoroutineScope(testDispatcher)
 
-    val testScopeProvider = TestScopeProvider()
+    val testScopeProvider = TestScopeProvider(testScope)
 
     @BeforeEach
     @CallSuper
