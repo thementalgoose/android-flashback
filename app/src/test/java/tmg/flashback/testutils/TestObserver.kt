@@ -87,11 +87,6 @@ private fun <T> LiveData<List<T>>.assertLatestValueContains(valuesToFind: List<T
 
     val sorted = indexes.sorted()
     assertEquals(sorted, indexes, "Items didn't appear in the order specified. Expected $sorted Actual $indexes")
-
-    // Final existance check
-//    for (x in valuesToFind) {
-//        assertTrue(list.contains(x), "List does not contain one of the specified items. Item that couldn't be found $x")
-//    }
 }
 
 fun <T: Event> assertEventNotFired(liveData: LiveData<T>) {
