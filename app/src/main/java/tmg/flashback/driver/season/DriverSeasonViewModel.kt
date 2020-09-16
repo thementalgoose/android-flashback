@@ -113,7 +113,6 @@ class DriverSeasonViewModel(
                         }
                     }
 
-
                     list.addAll(getAllStats(standing))
 
                     list.add(DriverSeasonItem.ResultHeader)

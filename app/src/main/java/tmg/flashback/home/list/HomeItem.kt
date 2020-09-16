@@ -27,7 +27,7 @@ sealed class HomeItem(
     data class Driver(
             val season: Int,
             val points: Int,
-            val driver: tmg.flashback.repo.models.stats.Driver,
+            val driver: tmg.flashback.repo.models.stats.RoundDriver,
             val driverId: String = driver.id,
             val position: Int,
             val bestQualifying: Pair<Int, List<Round>>?,
