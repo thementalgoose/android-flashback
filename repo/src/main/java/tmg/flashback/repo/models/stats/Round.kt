@@ -55,7 +55,7 @@ data class Round(
         get() = race.map { (_, value) ->
             RoundDriverStandings(
                 value.points,
-                value.driver.toDriver()
+                value.driver
             )
         }
 

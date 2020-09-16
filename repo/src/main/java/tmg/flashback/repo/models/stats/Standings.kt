@@ -11,5 +11,5 @@ data class RoundConstructorStandings(
 
 data class RoundDriverStandings(
     val points: Int,
-    val driver: Driver
+    val driver: RoundDriver
 )

@@ -301,7 +301,7 @@ class HomeViewModel(
                 val (roundDriver, points) = pair
                 HomeItem.Driver(
                     season = _season,
-                    driver = roundDriver.toDriver(),
+                    driver = roundDriver,
                     points = points,
                     position = index + 1,
                     bestQualifying = rounds.bestQualifyingResultFor(roundDriver.id),
