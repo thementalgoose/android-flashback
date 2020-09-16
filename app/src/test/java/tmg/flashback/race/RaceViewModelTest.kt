@@ -1,9 +1,12 @@
 package tmg.flashback.race
 
+import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.reset
+import com.nhaarman.mockitokotlin2.whenever
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.flow
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
@@ -29,15 +32,22 @@ class RaceViewModelTest: BaseTest() {
     @BeforeEach
     internal fun setUp() {
 
+        whenever(mockConnectivityManager.isConnected).thenReturn(false)
     }
 
     private fun initSUT() {
         sut = RaceViewModel(mockSeasonOverviewDB, mockPrefsDB, mockConnectivityManager, testScopeProvider)
+        sut.inputs.initialise(2019, 1, null)
     }
 
     @Test
-    fun `RaceViewModel`() {
-        TODO("Do more race view model unit tests")
+    fun `RaceViewModel init no network error shown when network isnt available`() = coroutineTest {
+
+        whenever(mockSeasonOverviewDB.getSeasonRound(any(), any())).thenReturn(flow { emit(null) })
+
+        initSUT()
+
+
     }
 
     @Test
