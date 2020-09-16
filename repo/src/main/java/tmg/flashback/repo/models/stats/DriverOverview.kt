@@ -23,6 +23,7 @@ data class DriverOverview(
 
     val careerBestChampionship: Int? by lazy {
         return@lazy standings
+                .filter { !it.isInProgress }
                 .map { it.championshipStanding }
                 .minBy { it }
     }

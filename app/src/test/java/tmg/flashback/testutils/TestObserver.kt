@@ -45,7 +45,7 @@ class TestObserver<T>(liveData: LiveData<T>): Observer<T> {
     }
 
     fun assertContains(predicate: (item: T) -> Boolean) {
-        val item = listOfValues.firstOrNull(predicate)
+        val item = listOfValues.lastOrNull(predicate)
         assertNotNull(item, "Cannot find item in the list $listOfValues that matches the predicate provided")
     }
 
@@ -62,9 +62,36 @@ class TestObserver<T>(liveData: LiveData<T>): Observer<T> {
 }
 
 private fun <T> LiveData<List<T>>.assertListContainItem(predicate: (item: T) -> Boolean) {
-    val list = this.test().listOfValues.flatten()
+    val list = this.test().listOfValues.lastOrNull()!!
     val item = list.firstOrNull(predicate)
     assertNotNull(item, "No list has been emitted by this live data that contains the item specified by the predicate")
+}
+
+private fun <T> LiveData<List<T>>.assertListNotContainItem(predicate: (item: T) -> Boolean) {
+    val list = this.test().listOfValues.lastOrNull()!!
+    val item = list.firstOrNull(predicate)
+    assertNull(item, "Item has been found in the list. Item found $item")
+}
+
+private fun <T> LiveData<List<T>>.assertLatestValueContains(valuesToFind: List<T>) {
+    val list = this.test().listOfValues.lastOrNull()!!
+
+    val indexes = valuesToFind
+            .map {
+                val index = list.indexOf(it)
+                if (index == -1) {
+                    throw Exception("Item $it cannot be found in the list of values returned")
+                }
+                return@map index
+            }
+
+    val sorted = indexes.sorted()
+    assertEquals(sorted, indexes, "Items didn't appear in the order specified. Expected $sorted Actual $indexes")
+
+    // Final existance check
+//    for (x in valuesToFind) {
+//        assertTrue(list.contains(x), "List does not contain one of the specified items. Item that couldn't be found $x")
+//    }
 }
 
 fun <T: Event> assertEventNotFired(liveData: LiveData<T>) {
@@ -128,4 +155,10 @@ fun <T> assertHasItems(liveData: LiveData<T>) {
 
 fun <T> assertListContains(liveData: LiveData<List<T>>, predicate: (item: T) -> Boolean) {
     liveData.assertListContainItem(predicate)
+}
+fun <T> assertListNotContains(liveData: LiveData<List<T>>, predicate: (item: T) -> Boolean) {
+    liveData.assertListNotContainItem(predicate)
+}
+fun <T> assertListContainsValues(liveData: LiveData<List<T>>, list: List<T>) {
+    liveData.assertLatestValueContains(list)
 }
