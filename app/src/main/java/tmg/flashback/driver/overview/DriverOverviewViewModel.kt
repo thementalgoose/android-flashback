@@ -75,7 +75,7 @@ class DriverOverviewViewModel(
                                 driverNumber = it.number,
                                 driverImg = it.photoUrl ?: "",
                                 driverBirthday = it.dateOfBirth,
-                                driverWikiUrl = it.firstName,
+                                driverWikiUrl = it.wikiUrl,
                                 driverNationalityISO = it.nationalityISO
                         ))
 
@@ -147,7 +147,7 @@ class DriverOverviewViewModel(
         list.addStat(
             icon = R.drawable.ic_status_finished,
             label = R.string.driver_overview_stat_career_best_finish,
-            value = overview.careerBestFinish.position().toString()
+            value = overview.careerBestFinish.position()
         )
         list.addStat(
             icon = R.drawable.ic_finishes_in_points,

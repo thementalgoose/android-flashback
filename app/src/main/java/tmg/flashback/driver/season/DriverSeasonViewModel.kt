@@ -173,8 +173,8 @@ class DriverSeasonViewModel(
         val list: MutableList<DriverSeasonItem> = mutableListOf()
 
         list.addStat(
-            tint = if  (!overview.isInProgress && overview.championshipStanding == 1) R.attr.f1Favourite else R.attr.f1TextSecondary,
-            icon = if  (!overview.isInProgress && overview.championshipStanding == 1) R.drawable.ic_star_filled_coloured else R.drawable.ic_championship_order,
+            tint = if (!overview.isInProgress && overview.championshipStanding == 1) R.attr.f1Favourite else R.attr.f1TextSecondary,
+            icon = if (!overview.isInProgress && overview.championshipStanding == 1) R.drawable.ic_star_filled_coloured else R.drawable.ic_championship_order,
             label = if (overview.isInProgress) R.string.driver_overview_stat_career_championship_standing_so_far else R.string.driver_overview_stat_career_championship_standing,
             value = overview.championshipStanding.ordinalAbbreviation
         )
