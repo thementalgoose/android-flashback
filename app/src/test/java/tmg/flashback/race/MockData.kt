@@ -85,7 +85,7 @@ val raceResultDriver4 = RoundRaceResult(
         qualified = 4,
         finish = 1,
         status = "Finished",
-        fastestLap = null,
+        fastestLap = null
 )
 val raceResultDriver3 = RoundRaceResult(
         driver = mockDriver3,
@@ -95,7 +95,7 @@ val raceResultDriver3 = RoundRaceResult(
         qualified = 3,
         finish = 2,
         status = "Finished",
-        fastestLap = null,
+        fastestLap = null
 )
 val raceResultDriver2 = RoundRaceResult(
         driver = mockDriver2,
@@ -105,7 +105,7 @@ val raceResultDriver2 = RoundRaceResult(
         qualified = 2,
         finish = 3,
         status = "Finished",
-        fastestLap = null,
+        fastestLap = null
 )
 val raceResultDriver1 = RoundRaceResult(
         driver = mockDriver1,
@@ -115,7 +115,7 @@ val raceResultDriver1 = RoundRaceResult(
         qualified = 1,
         finish = 4,
         status = "Engine",
-        fastestLap = null,
+        fastestLap = null
 )
 
 

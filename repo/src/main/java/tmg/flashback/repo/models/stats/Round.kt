@@ -123,7 +123,7 @@ fun List<Round>.constructorStandings(): ConstructorStandings {
 
             driversInRoundForConstructor.forEach { (roundDriver, points) ->
                 if (listOfDrivers[roundDriver.id] == null) {
-                    listOfDrivers[roundDriver.id] = Pair(roundDriver, 0)
+                    listOfDrivers[roundDriver.id] = Pair(roundDriver.toDriver(), 0)
                 }
 
                 val existing = listOfDrivers[roundDriver.id]!!
