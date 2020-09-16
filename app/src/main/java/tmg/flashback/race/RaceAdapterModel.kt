@@ -38,7 +38,7 @@ sealed class RaceAdapterModel {
     data class ConstructorStandings(
         val constructor: Constructor,
         val points: Int,
-        val driver: List<Pair<Driver, Int>>
+        val driver: List<Pair<RoundDriver, Int>>
     ) : RaceAdapterModel()
 
     data class Unavailable(

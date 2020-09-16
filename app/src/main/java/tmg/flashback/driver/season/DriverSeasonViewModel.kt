@@ -73,7 +73,7 @@ class DriverSeasonViewModel(
                                 .map { round ->
                                     round.drivers.firstOrNull {
                                         it.id == driverId
-                                    }
+                                    }?.toDriver()
                                 }
                                 .firstOrNull()
                         val constructors: List<Constructor> = rounds.mapNotNull { it.race[driverId]?.driver }

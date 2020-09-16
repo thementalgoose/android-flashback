@@ -68,10 +68,7 @@ class RaceViewModel(
         .filterNotNull()
         .asLiveData(scope.coroutineContext)
 
-    override val raceItems: LiveData<Triple<RaceAdapterType, List<RaceAdapterModel>, SeasonRound>> =
-        seasonRound
-            .asFlow()
-            .flatMapLatest { (season, round) -> seasonOverviewDB.getSeasonRound(season, round) }
+    override val raceItems: LiveData<Triple<RaceAdapterType, List<RaceAdapterModel>, SeasonRound>> = seasonRoundFlow
             .combineTriple(viewType.asFlow(), seasonRound.asFlow())
             .map { (roundData, viewType, seasonRoundValue) ->
                 if (roundData == null) {
@@ -94,7 +91,7 @@ class RaceViewModel(
                     val list: List<RaceAdapterModel.ConstructorStandings> = roundData
                         .constructorStandings
                         .map {
-                            val drivers: List<Pair<Driver, Int>> = if (prefsDB.showDriversBehindConstructor) {
+                            val drivers: List<Pair<RoundDriver, Int>> = if (prefsDB.showDriversBehindConstructor) {
                                 getDriverFromConstructor(roundData, it.constructor.id)
                             }
                             else {
