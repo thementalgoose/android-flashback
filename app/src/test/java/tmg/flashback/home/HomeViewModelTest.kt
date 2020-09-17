@@ -1,10 +1,12 @@
 package tmg.flashback.home
 
+import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.reset
 import com.nhaarman.mockitokotlin2.whenever
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.flow
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -35,7 +37,10 @@ class HomeViewModelTest: BaseTest() {
     internal fun setUp() {
 
         whenever(mockPrefsDB.shouldShowReleaseNotes).thenReturn(false)
-//        whenever(mockSeasonOverviewDB.getSeasonOverview(any())).thenReturn()
+        whenever(mockSeasonOverviewDB.getSeasonOverview(any())).thenReturn(flow { emit(Pair(2019, emptyList())) })
+        whenever(mockHistoryDB.allHistory()).thenReturn(flow { emit(emptyList()) })
+        whenever(mockDataDB.appBanner()).thenReturn(flow { emit(null) })
+        whenever(mockDataDB.appLockout()).thenReturn(flow { emit(null) })
     }
 
     private fun initSUT() {
