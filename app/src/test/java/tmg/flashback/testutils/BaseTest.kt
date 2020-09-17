@@ -15,8 +15,6 @@ import org.junit.jupiter.api.extension.BeforeAllCallback
 import org.junit.jupiter.api.extension.ExtendWith
 import org.junit.jupiter.api.extension.ExtensionContext
 
-// https://stackoverflow.com/questions/62332403/how-to-inject-viewmodelscope-for-android-unit-test-with-kotlin-coroutines
-
 @ExperimentalCoroutinesApi
 @ExtendWith(TestingTaskExecutor::class)
 open class BaseTest {
@@ -24,25 +22,15 @@ open class BaseTest {
     @get:Rule
     val coroutineScope = CoroutineRule()
 
-    private val testDispatcher = TestCoroutineDispatcher()
-    private val testScope = TestCoroutineScope(testDispatcher)
+    private val testDispatcher = coroutineScope.testDispatcher
+    private val testScope = coroutineScope.testScope
 
     val testScopeProvider = TestScopeProvider(testScope)
 
-    @BeforeEach
-    @CallSuper
-    private fun beforeAll() {
-        Dispatchers.setMain(testDispatcher)
-    }
-
-    @AfterEach
-    @CallSuper
-    private fun afterAll() {
-        Dispatchers.resetMain()
-        testDispatcher.cleanupTestCoroutines()
-        testScope.cleanupTestCoroutines()
-    }
-
+    /**
+     * Run a test with test coroutine scope
+     * - advanceUntilIdle()
+     */
     fun coroutineTest(block: TestCoroutineScope.() -> Unit) {
         runBlockingTest(testDispatcher) {
             block(this)

@@ -76,9 +76,9 @@ class RaceViewModel(
                     when {
                         !connectivityManager.isConnected ->
                             list.add(RaceAdapterModel.NoNetwork)
-                        roundDate != null && roundDate!! > LocalDate.now().plusDays(showComingSoonMessageForNextDays.toLong()) ->
+                        roundDate != null && roundDate!! > LocalDate.now() ->
                             list.add(RaceAdapterModel.Unavailable(DataUnavailable.IN_FUTURE_RACE))
-                        roundDate != null && roundDate!! < LocalDate.now() ->
+                        roundDate != null && roundDate!! <= LocalDate.now() && roundDate!! >= LocalDate.now().minusDays(showComingSoonMessageForNextDays.toLong()) ->
                             list.add(RaceAdapterModel.Unavailable(DataUnavailable.COMING_SOON_RACE))
                         else ->
                             list.add(RaceAdapterModel.Unavailable(DataUnavailable.MISSING_RACE))
