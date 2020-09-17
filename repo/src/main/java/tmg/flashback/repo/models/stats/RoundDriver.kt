@@ -3,9 +3,10 @@ package tmg.flashback.repo.models.stats
 import org.threeten.bp.LocalDate
 
 /**
- * Data class to hold driver variables
+ * Class to hold the driver in a specific round of a season
+ * - Includes what constructor they are driving for in this round
  */
-data class Driver(
+data class RoundDriver(
         val id: String,
         val firstName: String,
         val lastName: String,
@@ -16,10 +17,11 @@ data class Driver(
         val dateOfBirth: LocalDate,
         val nationality: String,
         val nationalityISO: String,
+        val constructor: Constructor,
         val constructorAtEndOfSeason: Constructor
 ) {
-    fun forRound(constructor: Constructor): RoundDriver {
-        return RoundDriver(
+    fun toDriver(): Driver {
+        return Driver(
                 id = id,
                 firstName = firstName,
                 lastName = lastName,
@@ -30,7 +32,6 @@ data class Driver(
                 dateOfBirth = dateOfBirth,
                 nationality = nationality,
                 nationalityISO = nationalityISO,
-                constructor = constructor,
                 constructorAtEndOfSeason = constructorAtEndOfSeason
         )
     }
