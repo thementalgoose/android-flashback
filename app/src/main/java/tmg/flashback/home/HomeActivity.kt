@@ -118,7 +118,7 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback {
         }
 
         observe(viewModel.outputs.label) {
-            season.text = it
+            season.text = it.resolve(context = this)
         }
 
         observeEvent(viewModel.outputs.openSeasonList) {

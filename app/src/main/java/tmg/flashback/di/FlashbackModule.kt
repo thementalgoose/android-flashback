@@ -26,7 +26,7 @@ import tmg.flashback.di.device.BuildConfigProvider
 @ExperimentalCoroutinesApi
 var flashbackModule = module {
 
-    viewModel { HomeViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
+    viewModel { HomeViewModel(get(), get(), get(), get(), get(), get(), get()) }
     viewModel { SeasonViewModel(get(), get()) }
     viewModel { NewsViewModel(get(), get(), get(), get()) }
 

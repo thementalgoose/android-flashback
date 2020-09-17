@@ -24,6 +24,7 @@ import tmg.flashback.shared.SyncDataItem
 import tmg.flashback.shared.viewholders.DataUnavailable
 import tmg.flashback.di.async.ScopeProvider
 import tmg.flashback.di.device.BuildConfigProvider
+import tmg.flashback.utils.StringHolder
 import tmg.utilities.extensions.combinePair
 import tmg.utilities.extensions.combineTriple
 import tmg.utilities.extensions.then
@@ -44,7 +45,7 @@ interface HomeViewModelInputs {
 interface HomeViewModelOutputs {
     val list: LiveData<List<HomeItem>>
     val openSeasonList: MutableLiveData<DataEvent<Boolean>>
-    val label: LiveData<String>
+    val label: LiveData<StringHolder>
     val currentSeason: LiveData<Int>
 
     val showLoading: MutableLiveData<Boolean>
@@ -62,7 +63,6 @@ interface HomeViewModelOutputs {
 @FlowPreview
 @ExperimentalCoroutinesApi
 class HomeViewModel(
-    private val context: Context,
     private val seasonOverviewDB: SeasonOverviewDB,
     private val historyDB: HistoryDB,
     dataDB: DataDB,
@@ -76,17 +76,17 @@ class HomeViewModel(
     private var invalidSeasonData: Boolean = true
 
     private val currentTab: ConflatedBroadcastChannel<HomeMenuItem> =
-        ConflatedBroadcastChannel(HomeMenuItem.CALENDAR)
+        ConflatedBroadcastChannel()
     private val currentTabFlow: Flow<HomeMenuItem> = currentTab.asFlow()
     private val appBanner: Flow<AppBanner?> = dataDB.appBanner()
     private var _season: Int = currentYear
-    private val season: ConflatedBroadcastChannel<Int> = ConflatedBroadcastChannel(currentYear)
+    private val season: ConflatedBroadcastChannel<Int> = ConflatedBroadcastChannel()
     private val currentHistory: Flow<History> = season.asFlow()
             .flatMapLatest { historyDB.historyFor(it) }
             .filterNotNull()
 
     override val ensureOnCalendar: MutableLiveData<Event> = MutableLiveData()
-    override val showLoading: MutableLiveData<Boolean> = MutableLiveData(true)
+    override val showLoading: MutableLiveData<Boolean> = MutableLiveData()
 
     override val currentSeason: LiveData<Int> = season
         .asFlow()
@@ -106,16 +106,16 @@ class HomeViewModel(
         }
         .asLiveData(scope.coroutineContext)
 
-    override val label: LiveData<String> = currentTabFlow
+    override val label: LiveData<StringHolder> = currentTabFlow
         .combinePair(season.asFlow())
         .map { (currentTab, season) ->
             return@map when (currentTab) {
-                HomeMenuItem.CALENDAR -> season.toString()
-                HomeMenuItem.DRIVERS -> season.toString()
-                HomeMenuItem.CONSTRUCTORS -> season.toString()
-                HomeMenuItem.SEASONS -> season.toString()
-                HomeMenuItem.NEWS -> context.getString(R.string.nav_news)
-                HomeMenuItem.SEARCH -> ""
+                HomeMenuItem.CALENDAR -> StringHolder(msg = season.toString())
+                HomeMenuItem.DRIVERS -> StringHolder(msg = season.toString())
+                HomeMenuItem.CONSTRUCTORS -> StringHolder( msg = season.toString())
+                HomeMenuItem.SEASONS -> StringHolder(msg = season.toString())
+                HomeMenuItem.NEWS -> StringHolder(id = R.string.nav_news)
+                HomeMenuItem.SEARCH -> StringHolder()
             }
         }
         .asLiveData(scope.coroutineContext)
@@ -129,16 +129,10 @@ class HomeViewModel(
     private val seasonList: Flow<List<HomeItem>> = season
         .asFlow()
         .flatMapLatest { seasonOverviewDB.getSeasonOverview(it) }
-            .then {
-                println("Triggered here! number 1")
-            }
         .combineTriple(
             currentTabFlow,
             currentHistory
         )
-        .then {
-            println("Triggered here!")
-        }
         .combinePair(appBanner)
         .map { (seasonRoundMenuItemListHistoryTriple, appBanner) ->
             val (seasonAndRounds, menuItemType, history) = seasonRoundMenuItemListHistoryTriple
@@ -176,7 +170,7 @@ class HomeViewModel(
                                     .filter { it.race.isNotEmpty() }
                                     .maxBy { it.round }
                             if (maxRound != null && historyRounds.size != rounds.size) {
-                                list.addError(SyncDataItem.Message(context.getString(R.string.results_accurate_for, maxRound.name, maxRound.round)))
+                                list.addError(SyncDataItem.MessageRes(R.string.results_accurate_for, listOf(maxRound.name, maxRound.round)))
                             }
                             val driverStandings = rounds.driverStandings()
                             list.addAll(driverStandings.toDriverList(rounds))
@@ -194,7 +188,7 @@ class HomeViewModel(
                                     .filter { it.race.isNotEmpty() }
                                     .maxBy { it.round }
                             if (maxRound != null && historyRounds.size != rounds.size) {
-                                list.addError(SyncDataItem.Message(context.getString(R.string.results_accurate_for, maxRound.name, maxRound.round)))
+                                list.addError(SyncDataItem.MessageRes(R.string.results_accurate_for, listOf(maxRound.name, maxRound.round)))
                             }
                             val constructorStandings = rounds.constructorStandings()
                             list.addAll(constructorStandings.toConstructorList())
@@ -239,6 +233,10 @@ class HomeViewModel(
     var outputs: HomeViewModelOutputs = this
 
     init {
+        season.offer(currentYear)
+        currentTab.offer(HomeMenuItem.CALENDAR)
+        showLoading.value = true
+
         if (prefDB.shouldShowReleaseNotes) {
             openReleaseNotes.value = Event()
         }
