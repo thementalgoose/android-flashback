@@ -1,4 +1,4 @@
-package tmg.flashback.repo.models
+package tmg.flashback.repo.models.stats
 
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test

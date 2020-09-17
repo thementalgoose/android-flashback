@@ -1,6 +1,7 @@
 package tmg.flashback.repo.models.stats
 
 import org.threeten.bp.LocalTime
+import tmg.flashback.repo.utils.extendTo
 import kotlin.math.abs
 
 // TODO: Clean up the internals of this class!
@@ -75,13 +76,4 @@ data class LapTime(
     }
 }
 
-val noTime: LapTime =
-    LapTime()
-
-private fun Int.extendTo(toCharacters: Int = 2): String {
-    var chars: String = ""
-    for (i in this.toString().length until toCharacters) {
-        chars += "0"
-    }
-    return "$chars$this"
-}
+val noTime: LapTime = LapTime()
