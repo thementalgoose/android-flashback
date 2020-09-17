@@ -74,6 +74,12 @@ class SettingsNewsViewModelTest: BaseTest() {
                 description = R.string.settings_news_sources_motorsport_description,
                 isChecked = true
             ),
+            AppPreferencesItem.SwitchPreference(
+                prefKey = "racefans",
+                title = R.string.settings_news_sources_race_fans_title,
+                description = R.string.settings_news_sources_race_fans_description,
+                isChecked = true
+            ),
             AppPreferencesItem.Category(R.string.settings_news_browser),
             AppPreferencesItem.SwitchPreference(
                 keyJavascript,
@@ -91,7 +97,8 @@ class SettingsNewsViewModelTest: BaseTest() {
         "autosport",
         "pitpass",
         "crashnet",
-        "motorsport"
+        "motorsport",
+        "racefans"
     )
     fun `SettingsNewsViewModel update news source disabled adds it to the exclusion list`(newsPrefKey: String) {
 
