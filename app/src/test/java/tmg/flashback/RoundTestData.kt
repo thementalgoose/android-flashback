@@ -3,13 +3,14 @@ package tmg.flashback
 import android.graphics.Color
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
+import tmg.flashback.repo.models.AppBanner
 import tmg.flashback.repo.models.stats.*
+import tmg.utilities.extensions.hexColor
+
+
+//region Constructors
 
 val mockRoundName: String = "Round name"
-val mockLocalDateOfRound1: LocalDate = LocalDate.of(2020, 5, 10)
-val mockLocalTimeOfRound1: LocalTime = LocalTime.of(14, 10)
-val mockLocalDateOfRound2: LocalDate = LocalDate.of(2020, 5, 17)
-val mockLocalTimeOfRound2: LocalTime = LocalTime.of(14, 10)
 
 val mockConstructorAlpha: Constructor = Constructor(
         id = "alpha",
@@ -28,6 +29,7 @@ val mockConstructorBeta: Constructor = Constructor(
         color = Color.BLUE
 )
 
+//endregion
 
 
 
@@ -37,6 +39,7 @@ val mockConstructorBeta: Constructor = Constructor(
 
 
 
+//region Drivers
 
 val mockDriver1: RoundDriver = RoundDriver(
         id = "1",
@@ -74,6 +77,7 @@ val mockDriver4 = mockDriver1.copy(
         constructorAtEndOfSeason = mockConstructorBeta
 )
 
+//endregion
 
 
 
@@ -82,7 +86,7 @@ val mockDriver4 = mockDriver1.copy(
 
 
 
-
+//region Circuits
 
 val mockCircuitCharlie = CircuitSummary(
         id = "charlie",
@@ -105,6 +109,15 @@ val mockCircuitDelta = CircuitSummary(
         locationLng = 1.03
 )
 
+//endregion
+
+
+
+
+
+
+
+
 
 
 
@@ -126,6 +139,7 @@ val mockCircuitDelta = CircuitSummary(
  *
  * Finish: 4,3,2,1(DNF)
  *
+ * Points: 20,15,10,5
  *
  *
  *
@@ -138,7 +152,31 @@ val mockCircuitDelta = CircuitSummary(
  * Grid: 4,1,3,2
  *
  * Finish: 1,3,2,4
+ *
+ * Points: 16,12,8,4
+ *
+ *
+ *
+ * #### Results
+ *
+ * Drivers
+ * - Driver3 - 27     1st   A
+ * - Driver4 - 24     2nd   B
+ * - Driver1 - 21     3rd   A
+ * - Driver2 - 18     4th   B
+ *
+ * Constructors
+ * - Alpha   - 48     1st
+ * - Beta    - 42     2nd
  */
+
+val mockLocalDateOfRound1: LocalDate = LocalDate.of(2020, 5, 10)
+val mockLocalTimeOfRound1: LocalTime = LocalTime.of(14, 10)
+val mockLocalDateOfRound2: LocalDate = LocalDate.of(2020, 5, 17)
+val mockLocalTimeOfRound2: LocalTime = LocalTime.of(14, 10)
+// Only added when testing partial data!
+val mockLocalDateOfRound3: LocalDate = LocalDate.of(2020, 5, 24)
+val mockLocalTimeOfRound3: LocalTime = LocalTime.of(14, 10)
 
 //region Round 1
 
@@ -344,6 +382,91 @@ val mockRound3 = mockRound1.copy(
         name = "Round 3",
         q2 = emptyMap(),
         q3 = emptyMap()
+)
+
+//endregion
+
+
+
+
+
+
+
+
+
+
+
+//region Season
+
+val mockSeason = Season(
+        season = 2019,
+        drivers = listOf(mockDriver1.toDriver(), mockDriver2.toDriver(), mockDriver3.toDriver(), mockDriver4.toDriver()),
+        constructors = listOf(mockConstructorAlpha, mockConstructorBeta),
+        rounds = listOf(mockRound1, mockRound2),
+        driverPenalties = emptyList(),
+        constructorPenalties = emptyList()
+)
+
+//endregion
+
+
+
+
+
+
+
+//region History
+
+val mockHistoryRound1 = HistoryRound(
+        date = mockLocalDateOfRound1,
+        season = 2019,
+        round = 1,
+        raceName = "Round 1",
+        circuitId = mockCircuitCharlie.id,
+        circuitName = mockCircuitCharlie.name,
+        country = mockCircuitCharlie.country,
+        countryISO = mockCircuitCharlie.countryISO,
+        hasQualifying = true,
+        hasResults = true
+)
+
+val mockHistoryRound2 = HistoryRound(
+        date = mockLocalDateOfRound2,
+        season = 2019,
+        round = 2,
+        raceName = "Round 2",
+        circuitId = mockCircuitDelta.id,
+        circuitName = mockCircuitDelta.name,
+        country = mockCircuitDelta.country,
+        countryISO = mockCircuitDelta.countryISO,
+        hasQualifying = true,
+        hasResults = true
+)
+val mockHistoryRound3 = mockHistoryRound2.copy(
+        season = 2019,
+        round = 3,
+        raceName = "Round 3"
+)
+
+val mockHistory = History(
+        2019,
+        winner = WinnerSeason(
+                season = 2019,
+                driver = listOf(
+                        WinnerSeasonDriver(mockDriver3.id, mockDriver3.name, mockDriver3.photoUrl ?: "", 27),
+                        WinnerSeasonDriver(mockDriver4.id, mockDriver4.name, mockDriver4.photoUrl ?: "", 24),
+                        WinnerSeasonDriver(mockDriver1.id, mockDriver1.name, mockDriver1.photoUrl ?: "", 21),
+                        WinnerSeasonDriver(mockDriver2.id, mockDriver2.name, mockDriver2.photoUrl ?: "", 18)
+                ),
+                constructor = listOf(
+                        WinnerSeasonConstructor(mockConstructorAlpha.id, mockConstructorAlpha.name, mockConstructorAlpha.color.hexColor, 48),
+                        WinnerSeasonConstructor(mockConstructorBeta.id, mockConstructorBeta.name, mockConstructorBeta.color.hexColor, 42)
+                )
+        ),
+        rounds = listOf(
+                mockHistoryRound1,
+                mockHistoryRound2
+        )
 )
 
 //endregion

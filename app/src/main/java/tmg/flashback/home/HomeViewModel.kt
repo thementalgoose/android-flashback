@@ -45,15 +45,9 @@ interface HomeViewModelOutputs {
     val list: LiveData<List<HomeItem>>
     val openSeasonList: MutableLiveData<DataEvent<Boolean>>
     val label: LiveData<StringHolder>
-    val currentSeason: LiveData<Int>
-
     val showLoading: MutableLiveData<Boolean>
-
     val ensureOnCalendar: MutableLiveData<Event>
-
-    val openCalendarFilter: LiveData<Boolean>
     val openAppLockout: LiveData<Event>
-
     val openReleaseNotes: MutableLiveData<Event>
 }
 
@@ -81,37 +75,11 @@ class HomeViewModel(
 
     override val ensureOnCalendar: MutableLiveData<Event> = MutableLiveData()
     override val showLoading: MutableLiveData<Boolean> = MutableLiveData()
-
-    override val currentSeason: LiveData<Int> = season
-        .asFlow()
-        .asLiveData(scope.coroutineContext)
-
     override val openSeasonList: MutableLiveData<DataEvent<Boolean>> = MutableLiveData()
-    override val openCalendarFilter: LiveData<Boolean> = currentTab.asFlow()
-        .map {
-            return@map when (it) {
-                HomeMenuItem.CALENDAR -> true
-                HomeMenuItem.DRIVERS -> true
-                HomeMenuItem.CONSTRUCTORS -> true
-                HomeMenuItem.SEASONS -> true
-                HomeMenuItem.NEWS -> false
-                HomeMenuItem.SEARCH -> false
-            }
-        }
-        .asLiveData(scope.coroutineContext)
 
-    override val label: LiveData<StringHolder> = currentTab
-        .asFlow()
-        .combinePair(season.asFlow())
-        .map { (currentTab, season) ->
-            return@map when (currentTab) {
-                HomeMenuItem.CALENDAR -> StringHolder(msg = season.toString())
-                HomeMenuItem.DRIVERS -> StringHolder(msg = season.toString())
-                HomeMenuItem.CONSTRUCTORS -> StringHolder( msg = season.toString())
-                HomeMenuItem.SEASONS -> StringHolder(msg = season.toString())
-                HomeMenuItem.NEWS -> StringHolder(id = R.string.nav_news)
-                HomeMenuItem.SEARCH -> StringHolder()
-            }
+    override val label: LiveData<StringHolder> = season.asFlow()
+        .map { season ->
+            StringHolder(msg = season.toString())
         }
         .asLiveData(scope.coroutineContext)
 

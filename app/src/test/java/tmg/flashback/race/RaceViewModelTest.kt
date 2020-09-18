@@ -336,11 +336,7 @@ class RaceViewModelTest: BaseTest() {
 
         assertLatestValue(Triple(QUALIFYING_POS, expected, SeasonRound(2019, 3)), sut.outputs.raceItems)
 
-        // Not clickable in the UI
-//        initSUT(orderBy = QUALIFYING_POS_1)
-//        advanceUntilIdle()
-//
-//        assertLatestValue(Triple(QUALIFYING_POS_1, expected, SeasonRound(2019, 3)), sut.outputs.raceItems)
+        // QUALIFYING_POS_1 not available in the UI
 
         initSUT(orderBy = QUALIFYING_POS_2)
         advanceUntilIdle()
