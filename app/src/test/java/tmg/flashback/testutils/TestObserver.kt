@@ -67,6 +67,11 @@ private fun <T> LiveData<List<T>>.assertListContainItem(predicate: (item: T) -> 
     assertNotNull(item, "No list has been emitted by this live data that contains the item specified by the predicate")
 }
 
+private fun <T> LiveData<List<T>>.assertListContainDoesntItem(predicate: (item: T) -> Boolean) {
+    val list = this.test().listOfValues.last()
+    assertFalse(list.any(predicate), "Item was found in the list. Current list $list")
+}
+
 fun <T: Event> assertEventNotFired(liveData: LiveData<T>) {
     liveData.test().assertQuantityOf(0)
 }
@@ -128,4 +133,8 @@ fun <T> assertHasItems(liveData: LiveData<T>) {
 
 fun <T> assertListContains(liveData: LiveData<List<T>>, predicate: (item: T) -> Boolean) {
     liveData.assertListContainItem(predicate)
+}
+
+fun <T> assertListDoesntContains(liveData: LiveData<List<T>>, predicate: (item: T) -> Boolean) {
+    liveData.assertListContainDoesntItem(predicate)
 }
