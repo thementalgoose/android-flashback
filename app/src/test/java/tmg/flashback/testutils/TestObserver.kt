@@ -67,10 +67,9 @@ private fun <T> LiveData<List<T>>.assertListContainItem(predicate: (item: T) -> 
     assertNotNull(item, "No list has been emitted by this live data that contains the item specified by the predicate")
 }
 
-private fun <T> LiveData<List<T>>.assertListNotContainItem(predicate: (item: T) -> Boolean) {
-    val list = this.test().listOfValues.lastOrNull()!!
-    val item = list.firstOrNull(predicate)
-    assertNull(item, "Item has been found in the list. Item found $item")
+private fun <T> LiveData<List<T>>.assertListContainDoesntItem(predicate: (item: T) -> Boolean) {
+    val list = this.test().listOfValues.last()
+    assertFalse(list.any(predicate), "Item was found in the list. Current list $list")
 }
 
 private fun <T> LiveData<List<T>>.assertLatestValueContains(valuesToFind: List<T>) {
@@ -151,9 +150,11 @@ fun <T> assertHasItems(liveData: LiveData<T>) {
 fun <T> assertListContains(liveData: LiveData<List<T>>, predicate: (item: T) -> Boolean) {
     liveData.assertListContainItem(predicate)
 }
-fun <T> assertListNotContains(liveData: LiveData<List<T>>, predicate: (item: T) -> Boolean) {
-    liveData.assertListNotContainItem(predicate)
+
+fun <T> assertListDoesntContains(liveData: LiveData<List<T>>, predicate: (item: T) -> Boolean) {
+    liveData.assertListContainDoesntItem(predicate)
 }
+
 fun <T> assertListContainsValues(liveData: LiveData<List<T>>, list: List<T>) {
     liveData.assertLatestValueContains(list)
 }
