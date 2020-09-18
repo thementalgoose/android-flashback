@@ -27,6 +27,12 @@ open class BaseTest {
 
     val testScopeProvider = TestScopeProvider(testScope)
 
+    @BeforeEach
+    @CallSuper
+    open fun beforeAll() {
+        Dispatchers.setMain(testDispatcher)
+    }
+
     /**
      * Run a test with test coroutine scope
      * - advanceUntilIdle()

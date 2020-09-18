@@ -145,7 +145,7 @@ class DriverOverviewViewModelTest: BaseTest() {
 
         initSUT()
 
-        assertListNotContains(sut.outputs.list) {
+        assertListDoesntContains(sut.outputs.list) {
             it == DriverOverviewItem.Stat(
                     icon = R.drawable.ic_championship_order,
                     label = R.string.driver_overview_stat_career_best_championship_position,
