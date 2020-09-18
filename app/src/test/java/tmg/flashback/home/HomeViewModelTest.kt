@@ -24,7 +24,6 @@ import tmg.flashback.repo.db.stats.SeasonOverviewDB
 import tmg.flashback.repo.models.AppBanner
 import tmg.flashback.repo.models.AppLockout
 import tmg.flashback.repo.models.stats.History
-import tmg.flashback.repo.models.stats.Round
 import tmg.flashback.settings.ConnectivityManager
 import tmg.flashback.shared.SyncDataItem
 import tmg.flashback.shared.viewholders.DataUnavailable
@@ -51,7 +50,7 @@ class HomeViewModelTest : BaseTest() {
         whenever(mockConnectivityManager.isConnected).thenReturn(true)
         whenever(mockPrefsDB.shouldShowReleaseNotes).thenReturn(false)
         whenever(mockSeasonOverviewDB.getSeasonOverview(any())).thenReturn(flow { emit(Pair(2019, listOf(mockRound1, mockRound2))) })
-        whenever(mockHistoryDB.allHistory()).thenReturn(flow { emit(listOf(mockHistory)) })
+        whenever(mockHistoryDB.historyFor(any())).thenReturn(flow { emit(mockHistory) })
         whenever(mockDataDB.appBanner()).thenReturn(flow { emit(null) })
         whenever(mockDataDB.appLockout()).thenReturn(flow { emit(null) })
     }
@@ -213,10 +212,10 @@ class HomeViewModelTest : BaseTest() {
     @Test
     fun `HomeViewModel when home type is calendar and history rounds is empty and network not connected, show no network error`() = coroutineTest {
 
-        val historyListWithEmptyRound = listOf(History(2019, null, emptyList()))
+        val historyListWithEmptyRound = History(2019, null, emptyList())
 
         whenever(mockConnectivityManager.isConnected).thenReturn(false)
-        whenever(mockHistoryDB.allHistory()).thenReturn(flow { emit(historyListWithEmptyRound) })
+        whenever(mockHistoryDB.historyFor(any())).thenReturn(flow { emit(historyListWithEmptyRound) })
         val expected = listOf<HomeItem>(
                 HomeItem.ErrorItem(SyncDataItem.NoNetwork)
         )
@@ -229,10 +228,10 @@ class HomeViewModelTest : BaseTest() {
     @Test
     fun `HomeViewModel when home type is calendar and history rounds is empty and network is connected and year is current year, show early in season error`() = coroutineTest {
 
-        val historyListWithEmptyRound = listOf(History(currentYear, null, emptyList()))
+        val historyItemWithEmptyRound = History(currentYear, null, emptyList())
 
         whenever(mockSeasonOverviewDB.getSeasonOverview(any())).thenReturn(flow { emit(Pair(currentYear, listOf(mockRound1, mockRound2))) })
-        whenever(mockHistoryDB.allHistory()).thenReturn(flow { emit(historyListWithEmptyRound) })
+        whenever(mockHistoryDB.historyFor(any())).thenReturn(flow { emit(historyItemWithEmptyRound) })
         val expected = listOf<HomeItem>(
                 HomeItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.EARLY_IN_SEASON))
         )
@@ -245,8 +244,8 @@ class HomeViewModelTest : BaseTest() {
     @Test
     fun `HomeViewModel when home type is calendar and history rounds is empty and network is connected and year is in the past, show missing race data message`() = coroutineTest {
 
-        val historyListWithEmptyRound = listOf(History(2019, null, emptyList()))
-        whenever(mockHistoryDB.allHistory()).thenReturn(flow { emit(historyListWithEmptyRound) })
+        val historyListWithEmptyRound = History(2019, null, emptyList())
+        whenever(mockHistoryDB.historyFor(any())).thenReturn(flow { emit(historyListWithEmptyRound) })
         val expected = listOf<HomeItem>(HomeItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.MISSING_RACE)))
 
         initSUT()
@@ -342,7 +341,7 @@ class HomeViewModelTest : BaseTest() {
     @Test
     fun `HomeViewModel when home type is drivers and history rounds size doesnt match rounds available, show results as of header box in response`() = coroutineTest {
 
-        whenever(mockHistoryDB.allHistory()).thenReturn(flow { emit(listOf(History(2019, null, listOf(mockHistoryRound1, mockHistoryRound2, mockHistoryRound3)))) })
+        whenever(mockHistoryDB.historyFor(any())).thenReturn(flow { emit(History(2019, null, listOf(mockHistoryRound1, mockHistoryRound2, mockHistoryRound3))) })
 
         initSUT()
         sut.inputs.clickItem(DRIVERS)
@@ -407,7 +406,7 @@ class HomeViewModelTest : BaseTest() {
     @Test
     fun `HomeViewModel when home type is constructors and history rounds size doesnt match rounds available, show results as of header box in response`() = coroutineTest {
 
-        whenever(mockHistoryDB.allHistory()).thenReturn(flow { emit(listOf(History(2019, null, listOf(mockHistoryRound1, mockHistoryRound2, mockHistoryRound3)))) })
+        whenever(mockHistoryDB.historyFor(any())).thenReturn(flow { emit(History(2019, null, listOf(mockHistoryRound1, mockHistoryRound2, mockHistoryRound3))) })
 
         initSUT()
         sut.inputs.clickItem(CONSTRUCTORS)
