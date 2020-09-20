@@ -1,6 +1,7 @@
 package tmg.flashback.race
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -18,12 +19,14 @@ import tmg.flashback.showComingSoonMessageForNextDays
 import tmg.flashback.di.async.ScopeProvider
 import tmg.flashback.utils.SeasonRound
 import tmg.utilities.extensions.combineTriple
+import tmg.utilities.lifecycle.DataEvent
 
 //region Inputs
 
 interface RaceViewModelInputs {
     fun initialise(season: Int, round: Int, date: LocalDate?)
     fun orderBy(seasonRaceAdapterType: RaceAdapterType)
+    fun goToDriver(driverId: String, driverName: String)
 }
 
 //endregion
@@ -34,6 +37,7 @@ interface RaceViewModelOutputs {
     val circuitInfo: LiveData<Round>
     val raceItems: LiveData<Triple<RaceAdapterType, List<RaceAdapterModel>, SeasonRound>>
     val seasonRoundData: LiveData<SeasonRound>
+    val goToDriverOverview: MutableLiveData<DataEvent<Pair<String, String>>>
 }
 
 //endregion
@@ -54,6 +58,8 @@ class RaceViewModel(
     private var roundDate: LocalDate? = null
     private val seasonRound: ConflatedBroadcastChannel<SeasonRound> = ConflatedBroadcastChannel()
     private var viewType: ConflatedBroadcastChannel<RaceAdapterType> = ConflatedBroadcastChannel()
+
+    override val goToDriverOverview: MutableLiveData<DataEvent<Pair<String, String>>> = MutableLiveData()
 
     private val seasonRoundFlow: Flow<Round?> = seasonRound
         .asFlow()
@@ -207,6 +213,10 @@ class RaceViewModel(
 
     override fun orderBy(seasonRaceAdapterType: RaceAdapterType) {
         viewType.offer(seasonRaceAdapterType)
+    }
+
+    override fun goToDriver(driverId: String, driverName: String) {
+        goToDriverOverview.value = DataEvent(Pair(driverId, driverName))
     }
 
     //endregion

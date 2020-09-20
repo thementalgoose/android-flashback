@@ -8,12 +8,14 @@ import tmg.flashback.R
 import tmg.flashback.driver.overview.viewholders.HeaderViewHolder
 import tmg.flashback.driver.viewholders.RacedForViewHolder
 import tmg.flashback.driver.viewholders.StatsViewHolder
+import tmg.flashback.race.viewholders.SkeletonLoadingViewHolder
 import tmg.flashback.shared.SyncAdapter
+import tmg.flashback.shared.viewholders.LoadingViewHolder
 import tmg.flashback.utils.GenericDiffCallback
 
 class DriverOverviewAdapter: SyncAdapter<DriverOverviewItem>() {
 
-    override var list: List<DriverOverviewItem> = emptyList()
+    override var list: List<DriverOverviewItem> = listOf(DriverOverviewItem.Loading)
         set(value) {
             val result = DiffUtil.calculateDiff(GenericDiffCallback(field, value))
             field = value
@@ -29,6 +31,9 @@ class DriverOverviewAdapter: SyncAdapter<DriverOverviewItem>() {
                     LayoutInflater.from(parent.context).inflate(viewType, parent, false)
             )
             R.layout.view_driver_overview_raced_for -> RacedForViewHolder(
+                    LayoutInflater.from(parent.context).inflate(viewType, parent, false)
+            )
+            R.layout.view_loading_podium -> SkeletonLoadingViewHolder(
                     LayoutInflater.from(parent.context).inflate(viewType, parent, false)
             )
             else -> super.onCreateViewHolder(parent, viewType)

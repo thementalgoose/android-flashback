@@ -15,9 +15,11 @@ import tmg.flashback.R
 import tmg.flashback.TrackLayout
 import tmg.flashback.base.BaseActivity
 import tmg.flashback.circuit.CircuitInfoActivity
+import tmg.flashback.driver.DriverActivity
 import tmg.flashback.utils.getFlagResourceAlpha3
 import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.observe
+import tmg.utilities.extensions.observeEvent
 import tmg.utilities.extensions.toEnum
 import tmg.utilities.extensions.views.show
 
@@ -156,7 +158,6 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
 
         // Observe
 
-
         observe(viewModel.outputs.seasonRoundData) { (season, round) ->
             tvRoundInfo.text = getString(
                     R.string.race_round_format,
@@ -174,6 +175,10 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
 
         observe(viewModel.outputs.raceItems) { (adapterType, list) ->
             raceAdapter.update(adapterType, list)
+        }
+
+        observeEvent(viewModel.outputs.goToDriverOverview) { (driverId, driverName) ->
+            startActivity(DriverActivity.intent(this, driverId, driverName))
         }
 
         if (defaultToRace) {
@@ -200,6 +205,10 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
 
     override fun orderBy(adapterType: RaceAdapterType) {
         viewModel.inputs.orderBy(adapterType)
+    }
+
+    override fun driverClicked(driverId: String, driverName: String) {
+        viewModel.inputs.goToDriver(driverId, driverName)
     }
 
     //endregion

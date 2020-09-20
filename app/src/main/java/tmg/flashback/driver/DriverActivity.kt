@@ -20,7 +20,6 @@ class DriverActivity: BaseActivity() {
     private lateinit var pagerAdapter: DriverPagerAdapter
     private lateinit var driverId: String
     private var passthroughDriverName: String? = null
-    private var passthroughDriverImg: String? = null
 
     override fun layoutId(): Int = R.layout.activity_driver
 
@@ -29,7 +28,6 @@ class DriverActivity: BaseActivity() {
 
         driverId = bundle.getString(keyDriverId)!!
         passthroughDriverName = bundle.getString(keyDriverName)
-        passthroughDriverImg = bundle.getString(keyDriverImg)
         viewModel.inputs.setup(driverId)
     }
 
@@ -71,13 +69,11 @@ class DriverActivity: BaseActivity() {
 
         private const val keyDriverId: String = "keyDriverId"
         private const val keyDriverName: String = "keyDriverName"
-        private const val keyDriverImg: String = "keyDriverImg"
 
-        fun intent(context: Context, driverId: String, driverName: String? = null, driverImg: String? = null): Intent {
+        fun intent(context: Context, driverId: String, driverName: String): Intent {
             val intent = Intent(context, DriverActivity::class.java)
             intent.putExtra(keyDriverId, driverId)
             intent.putExtra(keyDriverName, driverName)
-            intent.putExtra(keyDriverImg, driverImg)
             return intent
         }
     }

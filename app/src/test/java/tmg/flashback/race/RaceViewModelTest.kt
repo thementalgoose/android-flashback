@@ -22,6 +22,7 @@ import tmg.flashback.repo.models.stats.RoundQualifyingResult
 import tmg.flashback.settings.ConnectivityManager
 import tmg.flashback.shared.viewholders.DataUnavailable
 import tmg.flashback.testutils.BaseTest
+import tmg.flashback.testutils.assertDataEventValue
 import tmg.flashback.testutils.assertLatestValue
 import tmg.flashback.testutils.assertValue
 import tmg.flashback.utils.SeasonRound
@@ -344,11 +345,17 @@ class RaceViewModelTest: BaseTest() {
         assertLatestValue(Triple(QUALIFYING_POS_2, expected, SeasonRound(2019, 3)), sut.outputs.raceItems)
     }
 
-//    @Test
-//    fun `RaceViewModel when only q1 and q2 data is supplied, changing the order adheres to q1, q2 and then true qualifying order`() = coroutineTest {
-//
-//        TODO("Unit test needs to implemented")
-//    }
+    @Test
+    fun `RaceViewModel clicking go to driver with driver id and name fires go to driver event`() {
+
+        val expectedDriverId = "driver-id"
+        val expectedDriverName = "driver-name"
+        initSUT()
+
+        sut.inputs.goToDriver(expectedDriverId, expectedDriverName)
+
+        assertDataEventValue(Pair(expectedDriverId, expectedDriverName), sut.outputs.goToDriverOverview)
+    }
 
     @Test
     fun `RaceViewModel initialise emits season round data`() = coroutineTest {
