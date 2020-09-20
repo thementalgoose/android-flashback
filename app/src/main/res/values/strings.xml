@@ -64,6 +64,12 @@
         <br/>• Fix for Perez qualifying data showing up in Round 4 2020 data
         <br/>• Fix for closing driver season dropdown collapsing again
         <br/>• Moved constructor color bars to edge]]></string>
+    <string name="release_20"><![CDATA[<b>4.6.1</b>
+        <br/>• Added RaceFans.net as a supported news site in the news tab
+        <br/>• Bringing project dependencies up to date
+        <br/>• Backend prep for driver career breakdown
+        <br/>• Fixed some race data format errors from races in 1962
+        <br/>• Improved in-app experience during a sync event after a race]]></string>
 
     <!-- App Lockout -->
     <string name="app_lockout_title">App lockout</string>
