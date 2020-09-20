@@ -53,8 +53,7 @@ interface HomeViewModelOutputs {
 
 //endregion
 
-@FlowPreview
-@ExperimentalCoroutinesApi
+@Suppress("EXPERIMENTAL_API_USAGE")
 class HomeViewModel(
     private val seasonOverviewDB: SeasonOverviewDB,
     private val historyDB: HistoryDB,

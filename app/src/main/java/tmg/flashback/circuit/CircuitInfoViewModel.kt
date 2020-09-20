@@ -41,8 +41,7 @@ interface CircuitInfoViewModelOutputs {
 
 //endregion
 
-@FlowPreview
-@ExperimentalCoroutinesApi
+@Suppress("EXPERIMENTAL_API_USAGE")
 class CircuitInfoViewModel(
     private val circuitDB: CircuitDB,
     private val connectivityManager: ConnectivityManager,

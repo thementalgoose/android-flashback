@@ -38,8 +38,7 @@ interface RaceViewModelOutputs {
 
 //endregion
 
-@FlowPreview
-@ExperimentalCoroutinesApi
+@Suppress("EXPERIMENTAL_API_USAGE")
 class RaceViewModel(
     seasonOverviewDB: SeasonOverviewDB,
     private val prefsDB: PrefsDB,
@@ -176,7 +175,7 @@ class RaceViewModel(
                         RaceAdapterType.QUALIFYING_POS_2,
                         RaceAdapterType.QUALIFYING_POS -> {
                             list.add(RaceAdapterModel.QualifyingHeader(showQualifying))
-                            list.addAll(driverIds.mapIndexed { index, driverId ->
+                            list.addAll(driverIds.mapIndexed { _, driverId ->
                                 getDriverModel(
                                     roundData,
                                     viewType,
@@ -279,6 +278,7 @@ class RaceViewModel(
      */
     private fun getDriverModel(
         round: Round,
+        @Suppress("UNUSED_PARAMETER")
         viewType: RaceAdapterType,
         driverId: String,
         showQualifying: ShowQualifying

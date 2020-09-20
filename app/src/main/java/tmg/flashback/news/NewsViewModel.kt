@@ -35,8 +35,7 @@ interface NewsViewModelOutputs {
 
 //endregion
 
-@FlowPreview
-@ExperimentalCoroutinesApi
+@Suppress("EXPERIMENTAL_API_USAGE")
 class NewsViewModel(
     private val newsDB: NewsDB,
     private val prefDB: PrefsDB,

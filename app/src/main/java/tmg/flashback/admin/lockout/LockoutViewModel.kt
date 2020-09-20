@@ -44,8 +44,7 @@ interface LockoutViewModelOutputs {
 
 //endregion
 
-@FlowPreview
-@ExperimentalCoroutinesApi
+@Suppress("EXPERIMENTAL_API_USAGE")
 class LockoutViewModel(
     dataDB: DataDB,
     scopeProvider: ScopeProvider,

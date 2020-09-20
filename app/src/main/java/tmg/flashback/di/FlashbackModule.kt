@@ -19,8 +19,6 @@ import tmg.flashback.di.async.ViewModelScopeProvider
 import tmg.flashback.di.device.AppBuildConfigProvider
 import tmg.flashback.di.device.BuildConfigProvider
 
-@FlowPreview
-@ExperimentalCoroutinesApi
 var flashbackModule = module {
 
     viewModel { HomeViewModel(get(), get(), get(), get(), get(), get(), get()) }
