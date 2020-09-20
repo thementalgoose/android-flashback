@@ -8,7 +8,7 @@ import tmg.flashback.repo.models.stats.HistoryRound
 fun FHistorySeason.convert(): List<History> {
     val list: MutableList<History> = mutableListOf()
     val winners = this.convertWin()
-    for ((key, rounds) in this.all) {
+    for ((_, rounds) in this.all) {
         var season: Int = -1
         val historyRounds = rounds
             ?.mapValues { (_, round) ->

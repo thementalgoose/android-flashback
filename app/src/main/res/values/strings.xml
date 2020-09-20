@@ -268,7 +268,7 @@
     <string name="driver_overview_stat_career_team">Team</string>
 
     <string name="results_accurate_for" formatted="false">Results as of the %s (round %d)</string>
-    <string name="results_accurate_for_year">Results as of the %d %s (round %d)</string>
+    <string name="results_accurate_for_year" formatted="false">Results as of the %d %s (round %d)</string>
     <string name="qualifying_header">Q</string>
     <string name="endash">–</string>
 

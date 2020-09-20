@@ -41,8 +41,7 @@ interface DriverOverviewViewModelOutputs {
 
 //endregion
 
-@FlowPreview
-@ExperimentalCoroutinesApi
+@Suppress("EXPERIMENTAL_API_USAGE")
 class DriverOverviewViewModel(
         private val driverDB: DriverDB,
         private val connectivityManager: ConnectivityManager,
