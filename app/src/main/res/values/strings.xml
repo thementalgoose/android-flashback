@@ -173,22 +173,22 @@
     <string name="home_calendar_filter_title">Filter</string>
     <string name="home_calendar_filter_description">Filter the season below</string>
 
-    <string name="home_driver_finish_pole"><![CDATA[‣ Finished <b>%s</b> in %s]]></string> <!-- On pole or 4th -->
-    <string name="home_driver_qualified"><![CDATA[‣ Qualified <b>%s</b> in %s]]></string> <!-- On pole or 2nd -->
+    <string name="home_driver_finish_pole" formatted="false"><![CDATA[‣ Finished <b>%s</b> in %s]]></string> <!-- On pole or 4th -->
+    <string name="home_driver_qualified" formatted="false"><![CDATA[‣ Qualified <b>%s</b> in %s]]></string> <!-- On pole or 2nd -->
     <string name="home_driver_grand_prixs">%d grand prix</string> <!-- On pole or 2nd -->
 
     <string name="home_driver_best_quali">Best qualifying</string>
     <string name="home_driver_best_finish">Best finish</string>
     <string name="home_driver_best_view_more">Season overview</string>
 
-    <string name="home_partial_season">Statistics are shown as of the %s round of the grand prix, the %s. %d rounds to go</string> <!-- On pole or 2nd -->
+    <string name="home_partial_season" formatted="false">Statistics are shown as of the %s round of the grand prix, the %s. %d rounds to go</string> <!-- On pole or 2nd -->
     <string name="home_last_updated"><![CDATA[Last updated <i>%s</i>]]></string> <!-- On pole or 2nd -->
 
     <!-- Race -->
     <string name="race_round" formatted="false">Round %d</string>
     <string name="race_round_format" formatted="false"><![CDATA[Round <b>%s</b> /// %s]]></string>
     <string name="race_qualifying_no_data">Not found</string>
-    <string name="race_standings_driver_result"><![CDATA[Finished <b>%s</b>, scored <b>%s</b> points]]></string>
+    <string name="race_standings_driver_result" formatted="false"><![CDATA[Finished <b>%s</b>, scored <b>%s</b> points]]></string>
     <plurals name="race_points">
         <item quantity="one">%d point</item>
         <item quantity="other">%d points</item>
@@ -198,7 +198,7 @@
 
     <!-- Circuit -->
     <string name="circuit_info_status"><![CDATA[Hosted <b>%d</b> grand prix]]></string>
-    <string name="circuit_info_status_range"><![CDATA[Hosted <b>%d</b> grand prix between %d and %d]]></string>
+    <string name="circuit_info_status_range" formatted="false"><![CDATA[Hosted <b>%d</b> grand prix between %d and %d]]></string>
     <string name="circuit_info_status_this_year_single"><![CDATA[It will also host round <b>%s</b> of this season]]></string>
     <string name="circuit_info_status_this_year_multiple"><![CDATA[It will also host the %s rounds of this season]]></string>
 
@@ -238,7 +238,7 @@
     <string name="race_status_retired">DNF</string>
     <string name="ellipsis">…</string>
     <string name="close">Close</string>
-    <string name="qualifying_grid_penalty">%d place grid penalty, starts %s</string>
+    <string name="qualifying_grid_penalty" formatted="false">%d place grid penalty, starts %s</string>
     <string name="choose_browser">Open in browser</string>
     <string name="choose_share">Share with</string>
     <string name="on_pole_position">on pole position</string>
@@ -247,7 +247,7 @@
     <string name="release_notes_description">Here\'s what\'s changed since you last updated</string>
 
 
-    <string name="results_accurate_for">Results as of the %s (round %d)</string>
+    <string name="results_accurate_for" formatted="false">Results as of the %s (round %d)</string>
     <string name="qualifying_header">Q</string>
     <string name="endash">–</string>
 
