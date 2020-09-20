@@ -48,6 +48,8 @@ sealed class DriverOverviewItem(
     data class ErrorItem(
             val item: SyncDataItem
     ): DriverOverviewItem(item.layoutId)
+
+    object Loading: DriverOverviewItem(R.layout.view_loading_podium)
 }
 
 

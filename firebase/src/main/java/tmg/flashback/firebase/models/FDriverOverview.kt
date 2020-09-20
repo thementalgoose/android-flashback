@@ -13,7 +13,7 @@ data class FDriverOverviewDriver(
         val id: String = "",
         val nationality: String = "",
         val nationalityISO: String? = null,
-        val photoUrl: String = "",
+        val photoUrl: String? = null,
         val surname: String = "",
         val wikiUrl: String = ""
 )
