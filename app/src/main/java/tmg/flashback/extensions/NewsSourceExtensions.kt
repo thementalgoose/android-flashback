@@ -9,6 +9,7 @@ val NewsSource.title: Int
         NewsSource.PIT_PASS -> R.string.settings_news_sources_pitpass_title
         NewsSource.CRASH_NET -> R.string.settings_news_sources_crash_net_title
         NewsSource.MOTORSPORT -> R.string.settings_news_sources_motorsport_title
+        NewsSource.RACEFANS -> R.string.settings_news_sources_race_fans_title
     }
 
 val NewsSource.description: Int
@@ -17,4 +18,5 @@ val NewsSource.description: Int
         NewsSource.PIT_PASS -> R.string.settings_news_sources_pitpass_description
         NewsSource.CRASH_NET -> R.string.settings_news_sources_crash_net_description
         NewsSource.MOTORSPORT -> R.string.settings_news_sources_motorsport_description
+        NewsSource.RACEFANS -> R.string.settings_news_sources_race_fans_description
     }
