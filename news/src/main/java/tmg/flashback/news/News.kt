@@ -30,8 +30,7 @@ private val pitPassRss: PitPassRssRetrofit = buildRetrofitPitPass(BuildConfig.DE
 private val motorsportRss: MotorsportRssRetrofit = buildRetrofitMotorsport(BuildConfig.DEBUG)
 
 class News(
-    private val prefsDB: PrefsDB,
-    private val isLive: Boolean
+    private val prefsDB: PrefsDB
 ) : NewsDB {
 
     private suspend fun getAutosport(): Response<List<Article>> = safelyRun { autosportRss.getFeed().mChannel?.convert(prefsDB) ?: emptyList() }

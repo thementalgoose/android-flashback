@@ -26,8 +26,9 @@ class CrashReporterFirebase(
     override fun initialise() {
         val shouldDisable = !prefsDB.crashReporting
         var builder = CrashlyticsCore.Builder()
-        builder = builder.disabled(shouldDisable)
-        if (shouldDisable) {
+        val willDisableCrashlytics: Boolean = shouldDisable || BuildConfig.DEBUG
+        builder = builder.disabled(willDisableCrashlytics)
+        if (willDisableCrashlytics) {
             Log.i("Flashback", "Disabling crashlytics")
         } else {
             Log.i("Flashback", "Enabling crashlytics")
