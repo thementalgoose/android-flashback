@@ -448,12 +448,12 @@ class HomeViewModelTest : BaseTest() {
 
     @ParameterizedTest
     @CsvSource(
-            "CALENDAR,msg",
-            "DRIVERS,msg",
-            "CONSTRUCTORS,msg",
-            "SEASONS,msg"
+            "CALENDAR",
+            "DRIVERS",
+            "CONSTRUCTORS",
+            "SEASONS"
     )
-    fun `HomeViewModel label output when current tab changes maps to correct value`(enum: HomeMenuItem, type: String) = coroutineTest {
+    fun `HomeViewModel label output when current tab changes maps to correct value`(enum: HomeMenuItem) = coroutineTest {
 
         initSUT()
         sut.inputs.selectSeason(2019)

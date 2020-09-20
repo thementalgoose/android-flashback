@@ -11,6 +11,7 @@ import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.repo.db.PrefsDB
@@ -21,10 +22,7 @@ import tmg.flashback.repo.models.news.Article
 import tmg.flashback.repo.models.news.ArticleSource
 import tmg.flashback.settings.ConnectivityManager
 import tmg.flashback.shared.SyncDataItem
-import tmg.flashback.testutils.BaseTest
-import tmg.flashback.testutils.assertValue
-import tmg.flashback.testutils.assertValues
-import tmg.flashback.testutils.test
+import tmg.flashback.testutils.*
 
 @FlowPreview
 @ExperimentalCoroutinesApi
@@ -74,17 +72,14 @@ class NewsViewModelTest: BaseTest() {
     @Test
     fun `NewsViewModel is refreshing is initialised is reset after refresh flow`() = coroutineTest {
 
-        val expectedObservedList = listOf(
-                NewsItem.Message(mockLocalDate.format(DateTimeFormatter.ofPattern("HH:mm:ss"))),
-                NewsItem.News(mockArticle)
-        )
-
         initSUT()
 
         val observer = sut.outputs.isRefreshing.test()
         advanceUntilIdle()
 
-        assertValue(expectedObservedList, sut.outputs.list)
+        assertListContains(sut.outputs.list) {
+            it == NewsItem.News(mockArticle) || it is NewsItem.Message
+        }
         assertEquals(listOf(true, false), observer.listOfValues.toList())
 
         sut.inputs.refresh()
