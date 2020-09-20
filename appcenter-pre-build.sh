@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 GOOGLE_JSON_FILE=$APPCENTER_SOURCE_DIRECTORY/app/src/live/google-services.json
 
 echo "Updating Google Json"
