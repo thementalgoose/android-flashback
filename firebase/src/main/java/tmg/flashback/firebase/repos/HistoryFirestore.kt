@@ -1,5 +1,6 @@
 package tmg.flashback.firebase.repos
 
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import tmg.flashback.firebase.FirebaseRepo
@@ -10,6 +11,7 @@ import tmg.flashback.repo.db.stats.HistoryDB
 import tmg.flashback.repo.models.stats.History
 import tmg.flashback.repo.models.stats.WinnerSeason
 
+@ExperimentalCoroutinesApi
 class HistoryFirestore(
     crashReporter: CrashReporter
 ): FirebaseRepo(crashReporter), HistoryDB {

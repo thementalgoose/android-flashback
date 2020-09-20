@@ -30,8 +30,7 @@ interface DriverViewModelOutputs {
 
 //endregion
 
-@FlowPreview
-@ExperimentalCoroutinesApi
+@Suppress("EXPERIMENTAL_API_USAGE")
 class DriverViewModel(
     driverDB: DriverDB,
     scopeProvider: ScopeProvider

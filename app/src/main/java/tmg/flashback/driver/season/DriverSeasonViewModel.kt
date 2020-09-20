@@ -45,9 +45,7 @@ interface DriverSeasonViewModelOutputs {
 
 //endregion
 
-
-@FlowPreview
-@ExperimentalCoroutinesApi
+@Suppress("EXPERIMENTAL_API_USAGE")
 class DriverSeasonViewModel(
     private val driverDB: DriverDB,
     private val connectivityManager: ConnectivityManager,

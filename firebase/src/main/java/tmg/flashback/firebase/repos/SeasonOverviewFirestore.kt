@@ -1,5 +1,6 @@
 package tmg.flashback.firebase.repos
 
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import tmg.flashback.repo.db.CrashReporter
@@ -10,6 +11,7 @@ import tmg.flashback.firebase.FirebaseRepo
 import tmg.flashback.firebase.models.FSeason
 import tmg.flashback.firebase.version
 
+@ExperimentalCoroutinesApi
 class SeasonOverviewFirestore(
     crashReporter: CrashReporter
 ): FirebaseRepo(crashReporter), SeasonOverviewDB {
