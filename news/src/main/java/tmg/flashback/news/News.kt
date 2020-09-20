@@ -18,6 +18,9 @@ import tmg.flashback.news.apis.motorsport.convert
 import tmg.flashback.news.apis.pitpass.PitPassRssRetrofit
 import tmg.flashback.news.apis.pitpass.buildRetrofitPitPass
 import tmg.flashback.news.apis.pitpass.convert
+import tmg.flashback.news.apis.racefans.RaceFansRssRetrofit
+import tmg.flashback.news.apis.racefans.buildRetrofitRaceFans
+import tmg.flashback.news.apis.racefans.convert
 import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.db.news.NewsDB
 import tmg.flashback.repo.enums.NewsSource
@@ -28,6 +31,7 @@ private val autosportRss: AutosportRssRetrofit = buildRetrofitAutosport(BuildCon
 private val crashNetRss: CrashNetRssRetrofit = buildRetrofitCrashNet(BuildConfig.DEBUG)
 private val pitPassRss: PitPassRssRetrofit = buildRetrofitPitPass(BuildConfig.DEBUG)
 private val motorsportRss: MotorsportRssRetrofit = buildRetrofitMotorsport(BuildConfig.DEBUG)
+private val raceFansRss: RaceFansRssRetrofit = buildRetrofitRaceFans(BuildConfig.DEBUG)
 
 class News(
     private val prefsDB: PrefsDB
@@ -37,6 +41,7 @@ class News(
     private suspend fun getCrashNet(): Response<List<Article>> = safelyRun { crashNetRss.getFeed().mChannel?.convert(prefsDB) ?: emptyList() }
     private suspend fun getPitPass(): Response<List<Article>> = safelyRun { pitPassRss.getFeed().mChannel?.convert(prefsDB) ?: emptyList() }
     private suspend fun getMotorsport(): Response<List<Article>> = safelyRun { motorsportRss.getFeed().mChannel?.convert(prefsDB) ?: emptyList() }
+    private suspend fun getRaceFans(): Response<List<Article>> = safelyRun { raceFansRss.getFeed().mChannel?.convert(prefsDB) ?: emptyList() }
 
     private suspend fun safelyRun(runner: suspend () -> List<Article>): Response<List<Article>> {
         return try {
@@ -70,6 +75,9 @@ class News(
                 }
                 if (!prefsDB.newsSourceExcludeList.contains(NewsSource.MOTORSPORT)) {
                     add(::getMotorsport)
+                }
+                if (!prefsDB.newsSourceExcludeList.contains(NewsSource.RACEFANS)) {
+                    add(::getRaceFans)
                 }
             }
 
