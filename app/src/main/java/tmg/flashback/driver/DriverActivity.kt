@@ -17,6 +17,8 @@ class DriverActivity: BaseActivity() {
 
     private val viewModel: DriverViewModel by viewModel()
 
+    private var tabLayoutMediator: TabLayoutMediator? = null
+
     private lateinit var pagerAdapter: DriverPagerAdapter
     private lateinit var driverId: String
     private var passthroughDriverName: String? = null
@@ -43,14 +45,16 @@ class DriverActivity: BaseActivity() {
         }
 
         observe(viewModel.outputs.seasons) { list ->
+            tabLayoutMediator?.detach()
             pagerAdapter.seasons = list
                 .map { Pair(driverId, it) }
-            TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+            tabLayoutMediator = TabLayoutMediator(tabLayout, viewPager) { tab, position ->
                 when (position) {
                     0 -> tab.text = getString(R.string.driver_overview_title_overview)
-                    else -> tab.text = "${list[position - 1]}"
+                    else -> tab.text = "${list.getOrNull(position - 1) ?: ""}"
                 }
-            }.attach()
+            }
+            tabLayoutMediator?.attach()
         }
 
         swipeContainer.isEnabled = false
