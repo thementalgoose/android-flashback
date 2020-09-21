@@ -24,6 +24,7 @@
         <item name="f1BackgroundPrimary">#FBFBFB</item>
         <item name="f1BackgroundSecondary">#E8E8E8</item>
 
+        <item name="f1Favourite">@color/favourite</item>
         <item name="f1BackgroundLoading">#EEffffff</item>
 
         <item name="f1TextInversePrimary">#F8F8F8</item>
@@ -107,6 +108,7 @@
 
         <item name="f1BackgroundOverlay">#44FBFBFB</item>
 
+        <item name="f1Favourite">@color/favourite</item>
         <item name="f1Loading">#a8a8a8</item>
 
         <item name="f1PurpleSector">#673AB7</item>
@@ -439,6 +441,43 @@
 
     <style name="Text.Circuit.Date" parent="Text">
         <item name="android:textSize">@dimen/textSizeSmall</item>
+    </style>
+
+    <!--#endregion -->
+
+    <!-- =========================================== -->
+
+    <!-- =========================================== -->
+
+    <!--#region Driver Overview -->
+
+    <style name="Text.DriverOverview.DriverName" parent="Text">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Text.DriverOverview.Birthday" parent="Text">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+
+    <style name="Text.DriverOverview.History.Year" parent="Text">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?attr/f1TextSecondary</item>
+    </style>
+
+    <style name="Text.DriverOverview.History.Constructor" parent="Text">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="Text.DriverOverview.Stats.Title" parent="Text">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">?attr/f1TextSecondary</item>
+    </style>
+
+    <style name="Text.DriverOverview.Stats.Value" parent="Text">
+        <item name="android:textSize">18sp</item>
     </style>
 
     <!--#endregion -->

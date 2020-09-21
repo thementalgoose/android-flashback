@@ -1,4 +1,4 @@
-package tmg.flashback.driver.season.list.viewholders
+package tmg.flashback.driver.season.viewholders
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView

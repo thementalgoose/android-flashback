@@ -13,7 +13,7 @@ fun FHistorySeason.convertWin(): List<WinnerSeason> {
 
 fun FHistorySeasonWin.convert(): WinnerSeason {
     return WinnerSeason(
-        season = s ?: -1,
+        season = s,
         driver = this.driver?.map { it.convert() } ?: emptyList(),
         constructor = this.constr?.map { it.convert() } ?: emptyList()
     )
@@ -23,7 +23,7 @@ fun FHistorySeasonWinDriver.convert(): WinnerSeasonDriver {
     return WinnerSeasonDriver(
         id,
         name,
-        img ?: "",
+        img,
         p
     )
 }
@@ -32,7 +32,7 @@ fun FHistorySeasonWinConstructor.convert(): WinnerSeasonConstructor {
     return WinnerSeasonConstructor(
         id,
         name,
-        color ?: "",
+        color,
         p
     )
 }

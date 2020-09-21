@@ -218,7 +218,7 @@
     <string name="shared_unavailable_future_season">This season has not started yet, please check back after the first race to see the results!</string>
     <string name="shared_unavailable_early_season">We don\'t yet have any data on this season yet, please check back later while we work on getting this</string>
     <string name="shared_unavailable_future_race">This race has not yet happened, please check back after the race to see the results</string>
-    <string name="shared_unavailable_coming_soon_race">This race is about to happen or has happened recently, we will try to get this information as soon as possible!</string>
+    <string name="shared_unavailable_coming_soon_race">We don\'t have this information yet, it should be available after the race (race results usually take between 2 – 6 hours to appear, but can take longer)</string>
     <string name="shared_unavailable_missing_race">Unfortunately we don\'t have any information for this yet, please check back you have an internet connection and try again</string>
     <string name="shared_network_error">A network error occurred! Please check you are connected to the internet and try again</string>
     <string name="shared_network_internal_error">A network error occurred and we weren\'t able to find any articles. Please check your internet connection or try again later</string>
@@ -252,10 +252,31 @@
     <string name="on_pole_position">on pole position</string>
     <string name="title_news">News</string>
     <string name="shared_unavailable_circuit_not_found">We can\'t find any information on this circuit.</string>
+    <string name="shared_unavailable_driver_not_found">We can\'t find any information on this driver.</string>
     <string name="release_notes_description">Here\'s what\'s changed since you last updated</string>
 
 
+    <!-- Driver overview -->
+    <string name="driver_overview_stat_career_drivers_title">Drivers championships</string>
+    <string name="driver_overview_stat_career_best_championship_position">Best championship position</string>
+    <string name="driver_overview_stat_career_championship_standing">Championship standing</string>
+    <string name="driver_overview_stat_career_championship_standing_so_far">Current championship standing</string>
+    <string name="driver_overview_stat_career_wins">Wins</string>
+    <string name="driver_overview_stat_career_podiums">Podiums</string>
+    <string name="driver_overview_stat_career_points">Points</string>
+    <string name="driver_overview_stat_career_best_finish">Best finish</string>
+    <string name="driver_overview_stat_career_best_qualifying">Best qualifying</string>
+    <string name="driver_overview_stat_career_points_finishes">Points finishes</string>
+    <string name="driver_overview_stat_career_best_race_result_season">Best season by race result</string>
+    <string name="driver_overview_stat_career_best_qualifying_season">Best season by qualifying</string>
+    <string name="driver_overview_stat_career_qualifying_pole">Qualified on pole</string>
+    <string name="driver_overview_stat_career_qualifying_top_3">Qualified in top 3</string>
+    <string name="driver_overview_stat_career_qualifying_top_10">Qualified within top 10</string>
+    <string name="driver_overview_stat_career_team_history">History</string>
+    <string name="driver_overview_stat_career_team">Team</string>
+
     <string name="results_accurate_for" formatted="false">Results as of the %s (round %d)</string>
+    <string name="results_accurate_for_year" formatted="false">Results as of the %d %s (round %d)</string>
     <string name="qualifying_header">Q</string>
     <string name="endash">–</string>
 
@@ -263,5 +284,7 @@
     <string name="app_shortcut_news_shorttitle">News</string>
     <string name="app_shortcut_news_longtitle">Latest Formula 1 News</string>
     <string name="app_shortcut_news_disabled">News (Unavailable)</string>
+    <string name="driver_overview_stat_birthday">Born %s</string>
+    <string name="driver_overview_title_overview">Overview</string>
 
 </resources>

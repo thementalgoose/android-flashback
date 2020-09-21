@@ -1,20 +1,38 @@
-package tmg.flashback.driver.season.list
+package tmg.flashback.driver.season
 
-import androidx.annotation.LayoutRes
+import androidx.annotation.*
 import org.threeten.bp.LocalDate
 import tmg.flashback.R
+import tmg.flashback.driver.overview.RaceForPositionType
 import tmg.flashback.repo.enums.RaceStatus
 import tmg.flashback.repo.models.stats.Constructor
 import tmg.flashback.repo.models.stats.Driver
+import tmg.flashback.repo.models.stats.SlimConstructor
 import tmg.flashback.shared.SyncDataItem
 
 sealed class DriverSeasonItem(
         @LayoutRes val layoutId: Int
 ) {
-    data class Header(
-            val driver: Driver,
-            val constructors: List<Constructor>
-    ): DriverSeasonItem(R.layout.view_driver_header)
+    data class Stat(
+        @AttrRes
+        val tint: Int = R.attr.f1TextSecondary,
+        @DrawableRes
+        val icon: Int,
+        @StringRes
+        val label: Int,
+        val value: String
+    ): DriverSeasonItem(
+        R.layout.view_driver_overview_stat
+    )
+
+    data class RacedFor(
+            val season: Int?, // Null = hide season
+            val constructors: SlimConstructor,
+            val type: RaceForPositionType,
+            val isChampionship: Boolean
+    ): DriverSeasonItem(
+            R.layout.view_driver_overview_raced_for
+    )
 
     data class Result(
             val season: Int,
@@ -25,9 +43,8 @@ sealed class DriverSeasonItem(
             val raceCountry: String,
             val raceCountryISO: String,
             val date: LocalDate,
-            val constructor: Constructor,
+            val constructor: SlimConstructor,
             val qualified: Int,
-            val gridPos: Int,
             val finished: Int?,
             val raceStatus: RaceStatus,
             val points: Int,

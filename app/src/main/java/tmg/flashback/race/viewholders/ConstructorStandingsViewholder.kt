@@ -50,7 +50,7 @@ class ConstructorStandingsViewholder(itemView: View) : RecyclerView.ViewHolder(i
         }
     }
 
-    private fun setDriver(layout: View, driver: RoundDriver, points: Int, @ColorInt constructorColor: Int) {
+    private fun setDriver(layout: View, driver: Driver, points: Int, @ColorInt constructorColor: Int) {
         layout.tvName.text = driver.name
         layout.tvNumber.text = layout.context.resources.getQuantityString(R.plurals.race_points, points, points)
         layout.imgFlag.setImageResource(layout.context.getFlagResourceAlpha3(driver.nationalityISO))

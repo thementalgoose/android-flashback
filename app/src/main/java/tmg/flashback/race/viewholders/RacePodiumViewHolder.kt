@@ -21,7 +21,10 @@ import tmg.utilities.extensions.views.gone
 import tmg.utilities.extensions.views.visible
 import kotlin.math.abs
 
-class RacePodiumViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+class RacePodiumViewHolder(
+        val driverClicked: (driverId: String, driverName: String) -> Unit,
+        view: View
+) : RecyclerView.ViewHolder(view) {
 
     fun bind(first: RaceAdapterModel.Single, second: RaceAdapterModel.Single, third: RaceAdapterModel.Single) {
         bind(first, itemView.layoutFirst, itemView.tvPoint1)
@@ -44,6 +47,10 @@ class RacePodiumViewHolder(view: View) : RecyclerView.ViewHolder(view) {
                 Glide.with(imgDriver)
                     .load(it)
                     .into(imgDriver)
+            }
+
+            imgDriver.setOnClickListener {
+                driverClicked(model.driver.id, model.driver.name)
             }
 
             // Starting Position

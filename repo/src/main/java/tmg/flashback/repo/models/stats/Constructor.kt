@@ -11,3 +11,9 @@ data class Constructor(
     val nationalityISO: String,
     val color: Int
 )
+
+data class SlimConstructor(
+    val id: String,
+    val name: String,
+    val color: Int
+)

@@ -1,6 +1,7 @@
 package tmg.flashback.race
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -18,12 +19,14 @@ import tmg.flashback.showComingSoonMessageForNextDays
 import tmg.flashback.di.async.ScopeProvider
 import tmg.flashback.utils.SeasonRound
 import tmg.utilities.extensions.combineTriple
+import tmg.utilities.lifecycle.DataEvent
 
 //region Inputs
 
 interface RaceViewModelInputs {
     fun initialise(season: Int, round: Int, date: LocalDate?)
     fun orderBy(seasonRaceAdapterType: RaceAdapterType)
+    fun goToDriver(driverId: String, driverName: String)
 }
 
 //endregion
@@ -34,6 +37,7 @@ interface RaceViewModelOutputs {
     val circuitInfo: LiveData<Round>
     val raceItems: LiveData<Triple<RaceAdapterType, List<RaceAdapterModel>, SeasonRound>>
     val seasonRoundData: LiveData<SeasonRound>
+    val goToDriverOverview: MutableLiveData<DataEvent<Pair<String, String>>>
 }
 
 //endregion
@@ -54,6 +58,8 @@ class RaceViewModel(
     private var roundDate: LocalDate? = null
     private val seasonRound: ConflatedBroadcastChannel<SeasonRound> = ConflatedBroadcastChannel()
     private var viewType: ConflatedBroadcastChannel<RaceAdapterType> = ConflatedBroadcastChannel()
+
+    override val goToDriverOverview: MutableLiveData<DataEvent<Pair<String, String>>> = MutableLiveData()
 
     private val seasonRoundFlow: Flow<Round?> = seasonRound
         .asFlow()
@@ -90,7 +96,7 @@ class RaceViewModel(
                     val list: List<RaceAdapterModel.ConstructorStandings> = roundData
                         .constructorStandings
                         .map {
-                            val drivers: List<Pair<RoundDriver, Int>> = if (prefsDB.showDriversBehindConstructor) {
+                            val drivers: List<Pair<Driver, Int>> = if (prefsDB.showDriversBehindConstructor) {
                                 getDriverFromConstructor(roundData, it.constructor.id)
                             }
                             else {
@@ -166,7 +172,7 @@ class RaceViewModel(
                             }
                             else {
                                 when {
-                                    roundData.date >= LocalDate.now() -> list.add(RaceAdapterModel.Unavailable(DataUnavailable.IN_FUTURE_RACE))
+                                    roundData.date > LocalDate.now() -> list.add(RaceAdapterModel.Unavailable(DataUnavailable.IN_FUTURE_RACE))
                                     else -> list.add(RaceAdapterModel.Unavailable(DataUnavailable.COMING_SOON_RACE))
                                 }
                             }
@@ -198,21 +204,28 @@ class RaceViewModel(
     //region Inputs
 
     override fun initialise(season: Int, round: Int, date: LocalDate?) {
-        roundDate = date
-        seasonRound.offer(SeasonRound(season, round))
+        val existing: SeasonRound? = seasonRound.valueOrNull
+        if (existing?.first != season || existing.second != round) {
+            roundDate = date
+            seasonRound.offer(SeasonRound(season, round))
+        }
     }
 
     override fun orderBy(seasonRaceAdapterType: RaceAdapterType) {
         viewType.offer(seasonRaceAdapterType)
     }
 
+    override fun goToDriver(driverId: String, driverName: String) {
+        goToDriverOverview.value = DataEvent(Pair(driverId, driverName))
+    }
+
     //endregion
 
-    private fun getDriverFromConstructor(round: Round, constructorId: String): List<Pair<RoundDriver, Int>> {
+    private fun getDriverFromConstructor(round: Round, constructorId: String): List<Pair<Driver, Int>> {
         return round
             .drivers
             .filter { it.constructor.id == constructorId }
-            .map { Pair(it, round.race[it.id]?.points ?: 0) }
+            .map { Pair(it.toDriver(), round.race[it.id]?.points ?: 0) }
             .sortedByDescending { it.second }
     }
 
