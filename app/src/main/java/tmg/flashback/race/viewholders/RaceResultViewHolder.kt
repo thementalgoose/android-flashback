@@ -19,15 +19,25 @@ import tmg.utilities.extensions.views.visible
 import tmg.utilities.utils.ColorUtils.Companion.darken
 import kotlin.math.abs
 
-class RaceResultViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
+class RaceResultViewHolder(
+        val driverClicked: (driverId: String, driverName: String) -> Unit,
+        view: View
+) : RecyclerView.ViewHolder(view), View.OnClickListener {
 
     init {
         itemView.layoutTime.setOnClickListener(this)
+        itemView.clickTarget.setOnClickListener(this)
     }
 
+    private lateinit var driverId: String
+    private lateinit var driverName: String
     private var status: String = ""
 
     fun bind(model: RaceAdapterModel.Single) {
+
+        driverId = model.driver.id
+        driverName = model.driver.name
+
         itemView.apply {
             tvPosition.text = model.race?.pos.toString()
             layoutDriver.tvName.text = model.driver.name
@@ -100,6 +110,9 @@ class RaceResultViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnC
                 if (status.isNotEmpty() && status != "Finished") {
                     Toast.makeText(itemView.context, getString(R.string.race_dnf_cause, status), Toast.LENGTH_SHORT).show()
                 }
+            }
+            itemView.clickTarget -> {
+                driverClicked(driverId, driverName)
             }
         }
     }

@@ -63,7 +63,12 @@
             android:label="" />
 
         <activity
-            android:name=".driver.season.DriverSeasonActivity"
+            android:name=".driver.DriverActivity"
+            android:screenOrientation="portrait"
+            android:label="" />
+
+        <activity
+            android:name=".driver.seasonbacku.DriverSeasonActivity"
             android:screenOrientation="portrait"
             android:label="" />
 

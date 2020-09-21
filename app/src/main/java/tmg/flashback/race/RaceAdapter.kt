@@ -30,8 +30,8 @@ class RaceAdapter(
             View(parent.context)
         }
         return when (viewHolderType) {
-            RaceAdapterViewHolderType.RACE_PODIUM -> RacePodiumViewHolder(view)
-            RaceAdapterViewHolderType.RACE_RESULT -> RaceResultViewHolder(view)
+            RaceAdapterViewHolderType.RACE_PODIUM -> RacePodiumViewHolder(callback::driverClicked, view)
+            RaceAdapterViewHolderType.RACE_RESULT -> RaceResultViewHolder(callback::driverClicked, view)
             RaceAdapterViewHolderType.RACE_RESULT_HEADER -> RaceResultHeaderViewHolder(view)
             RaceAdapterViewHolderType.QUALIFYING_RESULT_HEADER -> QualifyingHeaderViewHolder(view, callback)
             RaceAdapterViewHolderType.QUALIFYING_RESULT -> QualifyingResultViewHolder(view, callback)
@@ -193,4 +193,5 @@ enum class RaceAdapterViewHolderType(
 
 interface RaceAdapterCallback {
     fun orderBy(adapterType: RaceAdapterType)
+    fun driverClicked(driverId: String, driverName: String)
 }

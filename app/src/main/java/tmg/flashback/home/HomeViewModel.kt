@@ -17,6 +17,7 @@ import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.db.stats.DataDB
 import tmg.flashback.repo.db.stats.HistoryDB
 import tmg.flashback.repo.db.stats.SeasonOverviewDB
+import tmg.flashback.repo.models.AppBanner
 import tmg.flashback.repo.models.stats.*
 import tmg.flashback.settings.ConnectivityManager
 import tmg.flashback.shared.SyncDataItem
@@ -69,8 +70,13 @@ class HomeViewModel(
 
     private val currentTab: ConflatedBroadcastChannel<HomeMenuItem> =
         ConflatedBroadcastChannel()
+    private val currentTabFlow: Flow<HomeMenuItem> = currentTab.asFlow()
+    private val appBanner: Flow<AppBanner?> = dataDB.appBanner()
     private var _season: Int = currentYear
     private val season: ConflatedBroadcastChannel<Int> = ConflatedBroadcastChannel()
+    private val currentHistory: Flow<History> = season.asFlow()
+            .flatMapLatest { historyDB.historyFor(it) }
+            .filterNotNull()
 
     override val ensureOnCalendar: MutableLiveData<Event> = MutableLiveData()
     override val showLoading: MutableLiveData<Boolean> = MutableLiveData()
@@ -92,17 +98,15 @@ class HomeViewModel(
         .asFlow()
         .flatMapLatest { seasonOverviewDB.getSeasonOverview(it) }
         .combineTriple(
-            currentTab.asFlow(),
-            historyDB.allHistory()
+            currentTabFlow,
+            currentHistory
         )
-        .combinePair(dataDB.appBanner())
+        .combinePair(appBanner)
         .map { (seasonRoundMenuItemListHistoryTriple, appBanner) ->
-            val (seasonAndRounds, menuItemType, historyList) = seasonRoundMenuItemListHistoryTriple
+            val (seasonAndRounds, menuItemType, history) = seasonRoundMenuItemListHistoryTriple
             val (season, rounds) = seasonAndRounds
             val list: MutableList<HomeItem> = mutableListOf()
-            val history = historyList
-                .firstOrNull { it.season == season }
-            val historyRounds = history?.rounds ?: emptyList()
+            val historyRounds = history.rounds
 
             appBanner?.let {
                 if (it.show && !it.message.isNullOrEmpty()) {

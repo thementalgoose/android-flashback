@@ -2,13 +2,9 @@ package tmg.flashback.shared
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.R
-import tmg.flashback.driver.season.list.DriverSeasonItem
-import tmg.flashback.home.list.HomeItem
 import tmg.flashback.shared.viewholders.*
-import tmg.flashback.utils.GenericDiffCallback
 
 abstract class SyncAdapter<T>: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 

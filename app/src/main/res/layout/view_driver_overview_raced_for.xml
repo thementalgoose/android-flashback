@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        style="@style/Text.DriverOverview.History.Year"
+        android:layout_width="0dp"
+        android:id="@+id/year"
+        android:gravity="end"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/driverOverviewPipeIndent"
+        android:paddingTop="6dp"
+        android:paddingEnd="@dimen/paddingMedium"
+        android:paddingBottom="6dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/pipe"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="2020" />
+
+    <View
+        android:layout_marginEnd="@dimen/paddingMedium"
+        android:id="@+id/constructorColor"
+        android:layout_width="4dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/paddingXSmall"
+        android:layout_marginBottom="@dimen/paddingXSmall"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:gravity="end"
+        android:id="@+id/constructor"
+        style="@style/Text.DriverOverview.History.Constructor"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/paddingXSmall"
+        android:paddingTop="@dimen/paddingXSmall"
+        android:paddingEnd="@dimen/paddingMedium"
+        android:paddingBottom="@dimen/paddingXSmall"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/constructorColor"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Red Bull" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="@dimen/driverOverviewCircleSize"
+        android:layout_height="0dp"
+        android:id="@+id/pipe"
+        android:layout_marginStart="@dimen/driverOverviewPipeIndent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <View
+            android:id="@+id/pipeTop"
+            android:layout_width="@dimen/driverOverviewPipeWidth"
+            android:layout_height="0dp"
+            android:background="?attr/f1TextTertiary"
+            app:layout_constraintBottom_toTopOf="@id/pipeBottom"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/pipeBottom"
+            android:layout_width="@dimen/driverOverviewPipeWidth"
+            android:layout_height="0dp"
+            android:background="?attr/f1TextTertiary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/pipeTop" />
+
+        <ImageView
+            android:id="@+id/pipeCircle"
+            android:layout_width="@dimen/driverOverviewCircleSize"
+            android:layout_height="@dimen/driverOverviewCircleSize"
+            android:background="@drawable/pipe_indicator"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

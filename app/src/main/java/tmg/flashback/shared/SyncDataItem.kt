@@ -16,13 +16,13 @@ sealed class SyncDataItem(
     object AllSourcesDisabled: SyncDataItem(R.layout.view_shared_no_news_sources)
 
     data class Message(
-        val msg: String
+            val msg: String
     ): SyncDataItem(R.layout.view_shared_message)
 
     data class MessageRes(
-        @StringRes
-        val msg: Int,
-        val values: List<Any> = emptyList()
+            @StringRes
+            val msg: Int,
+            val values: List<Any> = emptyList()
     ): SyncDataItem(R.layout.view_shared_message)
 
     data class Unavailable(

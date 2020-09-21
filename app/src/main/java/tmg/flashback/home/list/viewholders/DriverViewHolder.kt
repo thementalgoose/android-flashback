@@ -10,6 +10,7 @@ import kotlinx.android.synthetic.main.view_home_driver.view.*
 import kotlinx.android.synthetic.main.view_home_driver.view.lpvProgress
 import tmg.flashback.R
 import tmg.flashback.home.list.HomeItem
+import tmg.flashback.showDriverSummary
 import tmg.flashback.utils.getColor
 import tmg.flashback.utils.getFlagResourceAlpha3
 import tmg.utilities.extensions.ordinalAbbreviation
@@ -100,7 +101,13 @@ class DriverViewHolder(
     override fun onClick(v: View?) {
         when (v) {
             itemView.container -> {
-                itemView.stats.show(!itemView.stats.isVisible)
+                @Suppress("ConstantConditionIf")
+                if (showDriverSummary) {
+                    itemView.stats.show(!itemView.stats.isVisible)
+                }
+                else {
+                    driverClicked(season, driverId, firstName, lastName)
+                }
             }
             itemView.containerQuali -> {
                 if (qualiList != null) {

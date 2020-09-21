@@ -1,10 +1,15 @@
 package tmg.flashback.di
 
-import kotlinx.coroutines.*
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import tmg.flashback.admin.lockout.LockoutViewModel
 import tmg.flashback.circuit.CircuitInfoViewModel
+import tmg.flashback.di.async.ScopeProvider
+import tmg.flashback.di.async.ViewModelScopeProvider
+import tmg.flashback.di.device.AppBuildConfigProvider
+import tmg.flashback.di.device.BuildConfigProvider
+import tmg.flashback.driver.DriverViewModel
+import tmg.flashback.driver.overview.DriverOverviewViewModel
 import tmg.flashback.driver.season.DriverSeasonViewModel
 import tmg.flashback.home.HomeViewModel
 import tmg.flashback.home.season.SeasonViewModel
@@ -14,10 +19,6 @@ import tmg.flashback.settings.ConnectivityManager
 import tmg.flashback.settings.NetworkConnectivityManager
 import tmg.flashback.settings.SettingsViewModel
 import tmg.flashback.settings.news.SettingsNewsViewModel
-import tmg.flashback.di.async.ScopeProvider
-import tmg.flashback.di.async.ViewModelScopeProvider
-import tmg.flashback.di.device.AppBuildConfigProvider
-import tmg.flashback.di.device.BuildConfigProvider
 
 var flashbackModule = module {
 
@@ -30,6 +31,8 @@ var flashbackModule = module {
     viewModel { RaceViewModel(get(), get(), get(), get()) }
 
     viewModel { DriverSeasonViewModel(get(), get(), get()) }
+    viewModel { DriverViewModel(get(), get()) }
+    viewModel { DriverOverviewViewModel(get(), get(), get()) }
 
     viewModel { SettingsViewModel(get(), get()) }
     viewModel { SettingsNewsViewModel(get(), get()) }
