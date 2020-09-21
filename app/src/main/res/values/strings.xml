@@ -70,6 +70,10 @@
         <br/>• Backend prep for driver career breakdown
         <br/>• Fixed some race data format errors from races in 1962
         <br/>• Improved in-app experience during a sync event after a race]]></string>
+    <string name="release_21"><![CDATA[<b>4.7.0</b> - Driver overviews
+        <br/>• Adds driver overview. See a history of any drivers performance in F1!
+        <br/>• Fixed edge case crash in driver season data updating whilst app is open
+        <br/>• Usual assortment of bugfixes and improvements]]></string>
 
     <!-- App Lockout -->
     <string name="app_lockout_title">App lockout</string>
