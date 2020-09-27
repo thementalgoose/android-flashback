@@ -74,6 +74,10 @@
         <br/>• Adds driver overview. See a history of any drivers performance in F1!
         <br/>• Fixed edge case crash in driver season data updating whilst app is open
         <br/>• Usual assortment of bugfixes and improvements]]></string>
+    <string name="release_22"><![CDATA[<b>4.7.2</b>
+        <br/>• Fixes issue with 2020 Racing Point penalty not being shown in the preview
+        <br/>• Fixed position delta always being 0 for podium sitters
+        <br/>• Fixed DNF label showing up for not finished status]]></string>
 
     <!-- App Lockout -->
     <string name="app_lockout_title">App lockout</string>
