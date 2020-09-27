@@ -14,6 +14,7 @@ import tmg.flashback.repo.db.CrashReporter
 import tmg.flashback.repo.db.PrefsDB
 
 val releaseNotes: Map<Int, Int> = mapOf(
+    22 to R.string.release_22,
     21 to R.string.release_21,
     20 to R.string.release_20,
     18 to R.string.release_18,
