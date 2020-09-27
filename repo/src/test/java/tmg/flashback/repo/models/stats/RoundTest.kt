@@ -17,17 +17,17 @@ class RoundTest {
     @Test
     fun `Round fastest laps in q1, q2 and q3 return the fastest lap`() {
 
-        assertEquals(LapTime(0,1, 1, 0), mockRound1.q1FastestLap)
-        assertEquals(LapTime(0,1, 1, 0), mockRound1.q2FastestLap)
-        assertEquals(LapTime(0,1, 1, 0), mockRound1.q3FastestLap)
+        assertEquals(LapTime(0, 1, 1, 0), mockRound1.q1FastestLap)
+        assertEquals(LapTime(0, 1, 1, 0), mockRound1.q2FastestLap)
+        assertEquals(LapTime(0, 1, 1, 0), mockRound1.q3FastestLap)
     }
 
     @Test
     fun `Round constructorStandings returns correct standings`() {
 
         val expected = listOf(
-            RoundConstructorStandings(constructor = mockConstructorAlpha, points = 20), // driver 1 + 3 as they have current constructor as mockConstructorAlpha
-            RoundConstructorStandings(constructor = mockConstructorBeta, points = 30) // driver 2 + 4 as they have current constructor as mockConstructorBeta
+                RoundConstructorStandings(constructor = mockConstructorAlpha, points = 20), // driver 1 + 3 as they have current constructor as mockConstructorAlpha
+                RoundConstructorStandings(constructor = mockConstructorBeta, points = 30) // driver 2 + 4 as they have current constructor as mockConstructorBeta
         )
         assertEquals(expected, mockRound1.constructorStandings)
     }
@@ -36,10 +36,10 @@ class RoundTest {
     fun `Round driverStandings returns correct driver standings`() {
 
         val expected = listOf(
-            RoundDriverStandings(driver = mockDriver1, points = 5),
-            RoundDriverStandings(driver = mockDriver2, points = 10),
-            RoundDriverStandings(driver = mockDriver3, points = 15),
-            RoundDriverStandings(driver = mockDriver4, points = 20)
+                RoundDriverStandings(driver = mockDriver1, points = 5),
+                RoundDriverStandings(driver = mockDriver2, points = 10),
+                RoundDriverStandings(driver = mockDriver3, points = 15),
+                RoundDriverStandings(driver = mockDriver4, points = 20)
         )
         assertEquals(expected, mockRound1.driverStandings)
     }
@@ -48,30 +48,38 @@ class RoundTest {
     fun `Round (List) constructorStandings calculates constructor standings for season overview`() {
 
         val expected = mapOf(
-            "alpha" to Pair(mockConstructorAlpha, mapOf(
-                "1" to Pair(mockDriver1.toDriver(), 21),
-                "3" to Pair(mockDriver3.toDriver(), 27)
-            )),
-            "beta" to Pair(mockConstructorBeta, mapOf(
-                "4" to Pair(mockDriver4.toDriver(), 24),
-                "2" to Pair(mockDriver2.toDriver(), 18)
-            ))
+                "alpha" to Triple(
+                        mockConstructorAlpha,
+                        mapOf(
+                                "1" to Pair(mockDriver1.toDriver(), 21),
+                                "3" to Pair(mockDriver3.toDriver(), 27)
+                        ),
+                        48
+                ),
+                "beta" to Triple(
+                        mockConstructorBeta,
+                        mapOf(
+                                "4" to Pair(mockDriver4.toDriver(), 24),
+                                "2" to Pair(mockDriver2.toDriver(), 18)
+                        ),
+                        42
+                )
         )
-        assertEquals(expected, listOf(mockRound1, mockRound2).constructorStandings())
+        assertEquals(expected, mockSeason.constructorStandings())
     }
 
     @Test
     fun `Round (List) constructorStandings maxDriverPointsInSeason returns the most points `() {
 
         val example = mapOf(
-            "alpha" to Pair(mockConstructorAlpha, mapOf(
-                "1" to Pair(mockDriver1.toDriver(), 21),
-                "3" to Pair(mockDriver3.toDriver(), 27)
-            )),
-            "beta" to Pair(mockConstructorBeta, mapOf(
-                "4" to Pair(mockDriver4.toDriver(), 24),
-                "2" to Pair(mockDriver2.toDriver(), 18)
-            ))
+                "alpha" to Triple(mockConstructorAlpha, mapOf(
+                        "1" to Pair(mockDriver1.toDriver(), 21),
+                        "3" to Pair(mockDriver3.toDriver(), 27)
+                ), 48),
+                "beta" to Triple(mockConstructorBeta, mapOf(
+                        "4" to Pair(mockDriver4.toDriver(), 24),
+                        "2" to Pair(mockDriver2.toDriver(), 18)
+                ), 42)
         )
         assertEquals(48, example.maxConstructorPointsInSeason())
     }
@@ -80,10 +88,10 @@ class RoundTest {
     fun `Round (List) driverStandings calculates driver standings for season overview`() {
 
         val driverStandings = mapOf(
-            "1" to Pair(mockDriver1, 21),
-            "2" to Pair(mockDriver2, 18),
-            "3" to Pair(mockDriver3, 27),
-            "4" to Pair(mockDriver4, 24)
+                "1" to Pair(mockDriver1, 21),
+                "2" to Pair(mockDriver2, 18),
+                "3" to Pair(mockDriver3, 27),
+                "4" to Pair(mockDriver4, 24)
         )
         assertEquals(driverStandings, listOf(mockRound1, mockRound2).driverStandings())
     }
@@ -92,10 +100,10 @@ class RoundTest {
     fun `Round (List) driverStandings maxDriverPointsInSeason returns the most points `() {
 
         val example = mapOf(
-            "1" to Pair(mockDriver1, 21),
-            "2" to Pair(mockDriver2, 18),
-            "3" to Pair(mockDriver3, 27),
-            "4" to Pair(mockDriver4, 24)
+                "1" to Pair(mockDriver1, 21),
+                "2" to Pair(mockDriver2, 18),
+                "3" to Pair(mockDriver3, 27),
+                "4" to Pair(mockDriver4, 24)
         )
         assertEquals(27, example.maxDriverPointsInSeason())
     }
@@ -104,8 +112,8 @@ class RoundTest {
     fun `Round (List) allPoints for constructorStandings individual item returns the sum of the points`() {
 
         val example = mapOf(
-            "1" to Pair(mockDriver1.toDriver(), 21),
-            "3" to Pair(mockDriver3.toDriver(), 27)
+                "1" to Pair(mockDriver1.toDriver(), 21),
+                "3" to Pair(mockDriver3.toDriver(), 27)
         )
         assertEquals(48, example.allPoints())
     }
