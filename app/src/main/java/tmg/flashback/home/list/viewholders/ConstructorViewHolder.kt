@@ -10,6 +10,7 @@ import tmg.flashback.repo.models.stats.Driver
 import tmg.flashback.utils.getColor
 import tmg.flashback.utils.getFlagResourceAlpha3
 import tmg.utilities.extensions.views.context
+import tmg.utilities.extensions.views.getString
 import tmg.utilities.extensions.views.show
 
 class ConstructorViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
@@ -24,17 +25,25 @@ class ConstructorViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         itemView.layoutDriver2.show(item.driver.size >= 2)
         itemView.layoutDriver3.show(item.driver.size >= 3)
         itemView.layoutDriver4.show(item.driver.size >= 4)
+        itemView.layoutDriver5.show(item.driver.size >= 5)
 
         item.driver.getOrNull(0)?.let { setDriver(itemView.layoutDriver1, it) }
         item.driver.getOrNull(1)?.let { setDriver(itemView.layoutDriver2, it) }
         item.driver.getOrNull(2)?.let { setDriver(itemView.layoutDriver3, it) }
         item.driver.getOrNull(3)?.let { setDriver(itemView.layoutDriver4, it) }
+        item.driver.getOrNull(4)?.let { setDriver(itemView.layoutDriver5, it) }
 
         itemView.lpvProgress.backgroundColour = context.theme.getColor(R.attr.f1BackgroundPrimary)
         itemView.lpvProgress.progressColour = item.constructor.color
         itemView.lpvProgress.textBackgroundColour = context.theme.getColor(R.attr.f1TextSecondary)
 
         itemView.lpvProgress.animateProgress(item.points.toFloat() / maxPoints.toFloat()) { (it * maxPoints.toFloat()).toInt().coerceIn(0, item.points).toString() }
+
+        val driverPoints = item.driver.sumBy { it.second }
+        itemView.penalty.show(item.points != driverPoints)
+        if (item.points < driverPoints) {
+            itemView.penalty.text = getString(R.string.home_constructor_penalty, driverPoints - item.points)
+        }
     }
 
     private fun setDriver(layout: View, driverResult: Pair<Driver, Int>) {
