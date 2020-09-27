@@ -56,6 +56,7 @@ data class FRound(
 data class FDriverPenalties(
         val season: Int = 0,
         val fine: Int? = null,
+        val round: Int? = null,
         val driverId: String? = "",
         val date: String? = "",
         val pointsDelta: Int? = null
@@ -64,6 +65,7 @@ data class FDriverPenalties(
 data class FConstructorPenalties(
         val season: Int = 0,
         val fine: Int? = null,
+        val round: Int? = null,
         val constructorId: String? = "",
         val date: String? = "",
         val pointsDelta: Int? = null

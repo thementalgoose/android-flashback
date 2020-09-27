@@ -135,6 +135,7 @@ private fun FSeason.constructorAtEndOfSeason(driverId: String): Constructor {
 private fun FDriverPenalties.convert(drivers: List<Driver>): DriverPenalty {
     return DriverPenalty(
             season = this.season,
+            round = this.round,
             driver = drivers.first { it.id == this.driverId },
             pointsDelta = this.pointsDelta ?: 0,
             date = fromDate(this.date ?: "${this.season}-01-01"),
@@ -145,6 +146,7 @@ private fun FDriverPenalties.convert(drivers: List<Driver>): DriverPenalty {
 private fun FConstructorPenalties.convert(constructors: List<Constructor>): ConstructorPenalty {
     return ConstructorPenalty(
             season = this.season,
+            round = this.round,
             constructor = constructors.first { it.id == this.constructorId },
             pointsDelta = this.pointsDelta ?: 0,
             date = fromDate(this.date ?: "${this.season}-01-01"),

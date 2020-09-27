@@ -103,10 +103,11 @@ class HomeViewModel(
         )
         .combinePair(appBanner)
         .map { (seasonRoundMenuItemListHistoryTriple, appBanner) ->
-            val (seasonAndRounds, menuItemType, history) = seasonRoundMenuItemListHistoryTriple
-            val (season, rounds) = seasonAndRounds
+            val (season, menuItemType, history) = seasonRoundMenuItemListHistoryTriple
             val list: MutableList<HomeItem> = mutableListOf()
             val historyRounds = history.rounds
+
+            val rounds = season.rounds
 
             appBanner?.let {
                 if (it.show && !it.message.isNullOrEmpty()) {
@@ -119,7 +120,7 @@ class HomeViewModel(
                     when {
                         historyRounds.isEmpty() && !connectivityManager.isConnected ->
                             list.addError(SyncDataItem.NoNetwork)
-                        historyRounds.isEmpty() && season == currentYear ->
+                        historyRounds.isEmpty() && season.season == currentYear ->
                             list.addError(SyncDataItem.Unavailable(DataUnavailable.EARLY_IN_SEASON))
                         historyRounds.isEmpty() ->
                             list.addError(SyncDataItem.Unavailable(DataUnavailable.MISSING_RACE))
@@ -158,7 +159,7 @@ class HomeViewModel(
                             if (maxRound != null && historyRounds.size != rounds.size) {
                                 list.addError(SyncDataItem.MessageRes(R.string.results_accurate_for, listOf(maxRound.name, maxRound.round)))
                             }
-                            val constructorStandings = rounds.constructorStandings()
+                            val constructorStandings = season.constructorStandings()
                             list.addAll(constructorStandings.toConstructorList())
                         }
                     }
@@ -283,18 +284,18 @@ class HomeViewModel(
     private fun ConstructorStandings.toConstructorList(): List<HomeItem> {
         return this
             .values
-            .sortedByDescending { it.second.allPoints() }
             .toList()
-            .mapIndexed { index: Int, pair: Pair<Constructor, Map<String, Pair<Driver, Int>>> ->
-                val (constructor, driverPoints) = pair
+            .mapIndexed { index: Int, triple: Triple<Constructor, Map<String, Pair<Driver, Int>>, Int> ->
+                val (constructor, driverPoints, constructorPoints) = triple
                 HomeItem.Constructor(
                     season = _season,
                     position = index + 1,
                     constructor = constructor,
                     driver = driverPoints.values.sortedByDescending { it.second },
-                    points = driverPoints.allPoints(),
+                    points = constructorPoints,
                     maxPointsInSeason = this.maxConstructorPointsInSeason()
                 )
             }
+            .sortedByDescending { it.points }
     }
 }
