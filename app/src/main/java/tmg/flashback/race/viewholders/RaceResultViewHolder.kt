@@ -107,7 +107,7 @@ class RaceResultViewHolder(
     override fun onClick(p0: View?) {
         when (p0) {
             itemView.layoutTime -> {
-                if (status.isNotEmpty() && status != "Finished") {
+                if (status.isNotEmpty() && status.isStatusFinished()) {
                     Toast.makeText(itemView.context, getString(R.string.race_dnf_cause, status), Toast.LENGTH_SHORT).show()
                 }
             }

@@ -55,7 +55,7 @@ class RacePodiumViewHolder(
 
             // Starting Position
             tvStartedAbsolute.text = model.race?.gridPos?.positionStarted(context)
-            tvStartedRelative.text = abs((model.race?.pos ?: 0) - (model.race?.pos ?: 0)).toString()
+            tvStartedRelative.text = abs((model.race?.pos ?: 0) - (model.race?.gridPos ?: 0)).toString()
             val diff = (model.race?.gridPos ?: 0) - (model.race?.pos ?: 0)
             when {
                 diff == 0 -> { // Equal
