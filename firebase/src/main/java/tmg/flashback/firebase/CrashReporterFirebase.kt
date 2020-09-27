@@ -2,9 +2,7 @@ package tmg.flashback.firebase
 
 import android.content.Context
 import android.util.Log
-import com.crashlytics.android.Crashlytics
-import com.crashlytics.android.core.CrashlyticsCore
-import io.fabric.sdk.android.Fabric
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import tmg.flashback.repo.db.CrashReporter
 import tmg.flashback.repo.db.PrefsDB
 import java.lang.Exception
@@ -25,27 +23,27 @@ class CrashReporterFirebase(
 
     override fun initialise() {
         val shouldDisable = !prefsDB.crashReporting
-        var builder = CrashlyticsCore.Builder()
-        val willDisableCrashlytics: Boolean = shouldDisable || BuildConfig.DEBUG
-        builder = builder.disabled(willDisableCrashlytics)
-        if (willDisableCrashlytics) {
+
+        if (BuildConfig.DEBUG || shouldDisable) {
+            FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(false)
             Log.i("Flashback", "Disabling crashlytics")
-        } else {
+        }
+        else {
+            FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(true)
             Log.i("Flashback", "Enabling crashlytics")
         }
-        Fabric.with(context, Crashlytics.Builder().core(builder.build()).build())
 
-        Crashlytics.setString(keyDeviceUuid, prefsDB.deviceUdid)
-        Crashlytics.setString(keyModel, android.os.Build.MODEL)
-        Crashlytics.setString(keyManufacturer, android.os.Build.MANUFACTURER)
-        Crashlytics.setString(keyProduct, android.os.Build.PRODUCT)
-        Crashlytics.setString(keyDevice, android.os.Build.DEVICE)
+        FirebaseCrashlytics.getInstance().setCustomKey(keyDeviceUuid, prefsDB.deviceUdid)
+        FirebaseCrashlytics.getInstance().setCustomKey(keyModel, android.os.Build.MODEL)
+        FirebaseCrashlytics.getInstance().setCustomKey(keyManufacturer, android.os.Build.MANUFACTURER)
+        FirebaseCrashlytics.getInstance().setCustomKey(keyProduct, android.os.Build.PRODUCT)
+        FirebaseCrashlytics.getInstance().setCustomKey(keyDevice, android.os.Build.DEVICE)
     }
 
     override fun log(msg: String) {
         if (prefsDB.crashReporting) {
             Log.i("Flashback", "Logging INFO to crashlytics \"${msg}\"")
-            Crashlytics.log(Log.INFO, "Flashback", msg)
+            FirebaseCrashlytics.getInstance().log("INFO $msg")
         }
     }
 
@@ -55,8 +53,8 @@ class CrashReporterFirebase(
             error.printStackTrace()
         }
         if (prefsDB.crashReporting) {
-            Crashlytics.log(Log.ERROR, "Flashback", context)
-            Crashlytics.logException(error)
+            FirebaseCrashlytics.getInstance().log("ERROR ${error.message}")
+            FirebaseCrashlytics.getInstance().recordException(error)
         }
     }
 }
