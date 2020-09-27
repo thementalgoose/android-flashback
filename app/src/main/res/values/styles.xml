@@ -216,6 +216,12 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="Text.ConstructorStandings.Penalty" parent="Text">
+        <item name="android:textSize">9sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?attr/f1DeltaPositive</item>
+    </style>
+
     <style name="Text.ConstructorStandings.Driver.Name" parent="Text">
         <item name="android:textSize">12sp</item>
     </style>

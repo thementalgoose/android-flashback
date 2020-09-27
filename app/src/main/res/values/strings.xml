@@ -184,6 +184,7 @@
     <string name="home_progress">Standings as of round %d, </string>
     <string name="home_calendar_filter_title">Filter</string>
     <string name="home_calendar_filter_description">Filter the season below</string>
+    <string name="home_constructor_penalty">%d point penalty</string>
 
     <string name="home_driver_finish_pole" formatted="false"><![CDATA[‣ Finished <b>%s</b> in %s]]></string> <!-- On pole or 4th -->
     <string name="home_driver_qualified" formatted="false"><![CDATA[‣ Qualified <b>%s</b> in %s]]></string> <!-- On pole or 2nd -->

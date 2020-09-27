@@ -484,3 +484,16 @@ val mockDriverOverview = DriverOverview(
         )
 )
 
+//region Season
+
+val mockSeason = Season(
+        season = 2019,
+        drivers = listOf(mockDriver1.toDriver(), mockDriver2.toDriver(), mockDriver3.toDriver(), mockDriver4.toDriver()),
+        constructors = listOf(mockConstructorAlpha, mockConstructorBeta),
+        rounds = listOf(mockRound1, mockRound2),
+        driverPenalties = emptyList(),
+        constructorPenalties = emptyList()
+)
+
+//endregion
+

@@ -106,20 +106,24 @@ val List<Round>.upcoming: Int
 /**
  * Get the constructor standings for the season
  */
-fun List<Round>.constructorStandings(): ConstructorStandings {
-    val returnMap: MutableMap<String, Pair<Constructor, MutableMap<String, Pair<Driver, Int>>>> =
+fun Season.constructorStandings(): ConstructorStandings {
+    val returnMap: MutableMap<String, Triple<Constructor, MutableMap<String, Pair<Driver, Int>>, Int>> =
         mutableMapOf()
-    this.forEach { round ->
+
+    this.rounds.forEach { round ->
         round.constructors.forEach {
             if (!returnMap.containsKey(it.id)) {
-                returnMap[it.id] = Pair(it, mutableMapOf())
+                returnMap[it.id] = Triple(it, mutableMapOf(), 0)
             }
 
-            val (constructor, listOfDrivers) = returnMap[it.id]!!
+            val (constructor, listOfDrivers, allPoints) = returnMap[it.id]!!
 
             val driversInRoundForConstructor = round.drivers
                 .filter { roundDriver -> roundDriver.constructor.id == it.id }
                 .map { it to (round.race[it.id]?.points ?: 0) }
+
+            val points = driversInRoundForConstructor
+                    .sumBy { driverInRound -> driverInRound.second }
 
             driversInRoundForConstructor.forEach { (roundDriver, points) ->
                 if (listOfDrivers[roundDriver.id] == null) {
@@ -131,7 +135,18 @@ fun List<Round>.constructorStandings(): ConstructorStandings {
                 listOfDrivers[roundDriver.id] = Pair(existing.first, existing.second + points)
             }
 
-            returnMap[it.id] = Pair(constructor, listOfDrivers)
+            returnMap[it.id] = Triple(constructor, listOfDrivers, allPoints + points)
+        }
+    }
+
+
+    val penaltyPoints = this.constructorPenalties
+            .filter { penalty -> penalty.season == this.season }
+
+    penaltyPoints.forEach { penalty ->
+        val existing = returnMap[penalty.constructor.id]
+        if (existing != null) {
+            returnMap[penalty.constructor.id] = Triple(existing.first, existing.second, existing.third + penalty.pointsDelta)
         }
     }
 
@@ -142,8 +157,8 @@ fun List<Round>.constructorStandings(): ConstructorStandings {
  * Get the maximum points that a team has scored in the season
  * (ie. Points that the constructors champion has scored)
  */
-fun Map<String, Pair<Constructor, Map<String, Pair<Driver, Int>>>>.maxConstructorPointsInSeason(): Int {
-    return this.values.maxBy { it.second.allPoints() }?.second?.allPoints() ?: 0
+fun Map<String, Triple<Constructor, Map<String, Pair<Driver, Int>>, Int>>.maxConstructorPointsInSeason(): Int {
+    return this.values.maxBy { it.third }?.third ?: 0
 }
 
 /**
