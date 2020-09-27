@@ -10,7 +10,7 @@ import org.koin.core.context.startKoin
 import tmg.flashback.di.firebaseModule
 import tmg.flashback.di.flashbackModule
 import tmg.flashback.di.newsModule
-import tmg.flashback.repo.db.CrashReporter
+import tmg.flashback.repo.db.CrashManager
 import tmg.flashback.repo.db.PrefsDB
 
 val releaseNotes: Map<Int, Int> = mapOf(
@@ -35,7 +35,7 @@ class FlashbackApplication: Application() {
 
     private val prefs: PrefsDB by inject()
 
-    private val crashReporter: CrashReporter by inject()
+    private val crashManager: CrashManager by inject()
 
     override fun onCreate() {
         super.onCreate()
@@ -61,6 +61,6 @@ class FlashbackApplication: Application() {
         }
 
         // Crash Reporting
-        crashReporter.initialise()
+        crashManager.initialise()
     }
 }

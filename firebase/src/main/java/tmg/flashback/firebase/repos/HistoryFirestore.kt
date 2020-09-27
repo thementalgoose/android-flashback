@@ -6,15 +6,15 @@ import kotlinx.coroutines.flow.map
 import tmg.flashback.firebase.FirebaseRepo
 import tmg.flashback.firebase.converters.convert
 import tmg.flashback.firebase.models.FHistorySeason
-import tmg.flashback.repo.db.CrashReporter
+import tmg.flashback.repo.db.CrashManager
 import tmg.flashback.repo.db.stats.HistoryDB
 import tmg.flashback.repo.models.stats.History
 import tmg.flashback.repo.models.stats.WinnerSeason
 
 @ExperimentalCoroutinesApi
 class HistoryFirestore(
-    crashReporter: CrashReporter
-): FirebaseRepo(crashReporter), HistoryDB {
+    crashManager: CrashManager
+): FirebaseRepo(crashManager), HistoryDB {
 
     override fun allHistory(): Flow<List<History>> {
         return getHistory()

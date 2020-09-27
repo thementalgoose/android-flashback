@@ -2,9 +2,9 @@ package tmg.flashback.repo.db
 
 import java.lang.Exception
 
-interface CrashReporter {
+interface CrashManager {
 
-    val isDebug: Boolean
+    val enableCrashlytics: Boolean
 
     fun initialise()
     fun log(msg: String)
