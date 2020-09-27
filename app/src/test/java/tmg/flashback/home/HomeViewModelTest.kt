@@ -49,7 +49,7 @@ class HomeViewModelTest : BaseTest() {
 
         whenever(mockConnectivityManager.isConnected).thenReturn(true)
         whenever(mockPrefsDB.shouldShowReleaseNotes).thenReturn(false)
-        whenever(mockSeasonOverviewDB.getSeasonOverview(any())).thenReturn(flow { emit(Pair(2019, listOf(mockRound1, mockRound2))) })
+        whenever(mockSeasonOverviewDB.getSeasonOverview(any())).thenReturn(flow { emit(mockSeason) })
         whenever(mockHistoryDB.historyFor(any())).thenReturn(flow { emit(mockHistory) })
         whenever(mockDataDB.appBanner()).thenReturn(flow { emit(null) })
         whenever(mockDataDB.appLockout()).thenReturn(flow { emit(null) })
@@ -230,7 +230,7 @@ class HomeViewModelTest : BaseTest() {
 
         val historyItemWithEmptyRound = History(currentYear, null, emptyList())
 
-        whenever(mockSeasonOverviewDB.getSeasonOverview(any())).thenReturn(flow { emit(Pair(currentYear, listOf(mockRound1, mockRound2))) })
+        whenever(mockSeasonOverviewDB.getSeasonOverview(any())).thenReturn(flow { emit(mockSeason.copy(season = currentYear)) })
         whenever(mockHistoryDB.historyFor(any())).thenReturn(flow { emit(historyItemWithEmptyRound) })
         val expected = listOf<HomeItem>(
                 HomeItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.EARLY_IN_SEASON))
@@ -297,7 +297,7 @@ class HomeViewModelTest : BaseTest() {
     fun `HomeViewModel when home type is drivers and history rounds is empty and network not connected, show no network error`() = coroutineTest {
 
         whenever(mockConnectivityManager.isConnected).thenReturn(false)
-        whenever(mockSeasonOverviewDB.getSeasonOverview(any())).thenReturn(flow { emit(Pair(2019, emptyList())) })
+        whenever(mockSeasonOverviewDB.getSeasonOverview(any())).thenReturn(flow { emit(mockSeason.copy(rounds = emptyList())) })
         val expected = listOf<HomeItem>(HomeItem.ErrorItem(SyncDataItem.NoNetwork))
 
         initSUT()
@@ -310,7 +310,7 @@ class HomeViewModelTest : BaseTest() {
     @Test
     fun `HomeViewModel when home type is drivers and history rounds is empty, show in future season`() = coroutineTest {
 
-        whenever(mockSeasonOverviewDB.getSeasonOverview(any())).thenReturn(flow { emit(Pair(2019, emptyList())) })
+        whenever(mockSeasonOverviewDB.getSeasonOverview(any())).thenReturn(flow { emit(mockSeason.copy(rounds = emptyList())) })
         val expected = listOf<HomeItem>(HomeItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.IN_FUTURE_SEASON)))
 
         initSUT()
@@ -364,7 +364,7 @@ class HomeViewModelTest : BaseTest() {
     fun `HomeViewModel when home type is constructors and history rounds is empty and network not connected, show no network error`() = coroutineTest {
 
         whenever(mockConnectivityManager.isConnected).thenReturn(false)
-        whenever(mockSeasonOverviewDB.getSeasonOverview(any())).thenReturn(flow { emit(Pair(2019, emptyList())) })
+        whenever(mockSeasonOverviewDB.getSeasonOverview(any())).thenReturn(flow { emit(mockSeason.copy(rounds = emptyList())) })
         val expected = listOf<HomeItem>(HomeItem.ErrorItem(SyncDataItem.NoNetwork))
 
         initSUT()
@@ -377,7 +377,7 @@ class HomeViewModelTest : BaseTest() {
     @Test
     fun `HomeViewModel when home type is constructors and history rounds is empty, show in future season`() = coroutineTest {
 
-        whenever(mockSeasonOverviewDB.getSeasonOverview(any())).thenReturn(flow { emit(Pair(2019, emptyList())) })
+        whenever(mockSeasonOverviewDB.getSeasonOverview(any())).thenReturn(flow { emit(mockSeason.copy(rounds = emptyList())) })
         val expected = listOf<HomeItem>(HomeItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.IN_FUTURE_SEASON)))
 
         initSUT()
