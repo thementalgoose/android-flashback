@@ -7,7 +7,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import org.koin.android.ext.android.inject
 import tmg.flashback.R
-import tmg.flashback.repo.db.CrashReporter
+import tmg.flashback.repo.db.CrashManager
 import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.enums.ThemePref
 import tmg.utilities.extensions.isInDayMode
@@ -17,7 +17,7 @@ abstract class BaseActivity : CommonActivity() {
 
     val prefsDB: PrefsDB by inject()
 
-    val crashReporter: CrashReporter by inject()
+    val crashManager: CrashManager by inject()
 
     protected var isLightTheme: Boolean = true
 

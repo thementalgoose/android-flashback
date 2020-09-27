@@ -2,7 +2,7 @@ package tmg.flashback.firebase.repos
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import tmg.flashback.repo.db.CrashReporter
+import tmg.flashback.repo.db.CrashManager
 import tmg.flashback.repo.db.stats.DataDB
 import tmg.flashback.repo.models.AppBanner
 import tmg.flashback.repo.models.AppLockout
@@ -13,8 +13,8 @@ import tmg.flashback.firebase.models.FAppLockout
 
 @ExperimentalCoroutinesApi
 class DataFirestore(
-    crashReporter: CrashReporter
-): FirebaseRepo(crashReporter), DataDB {
+    crashManager: CrashManager
+): FirebaseRepo(crashManager), DataDB {
 
     override fun appLockout(): Flow<AppLockout?> {
         return document("data/app-lockout")
