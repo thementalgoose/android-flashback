@@ -78,6 +78,10 @@
         <br/>• Fixes issue with 2020 Racing Point penalty not being shown in the preview
         <br/>• Fixed position delta always being 0 for podium sitters
         <br/>• Fixed DNF label showing up for not finished status]]></string>
+    <string name="release_23"><![CDATA[<b>4.7.3</b>
+        <br/>• Fixes issue with driver stats qualifying data taking into account DNS
+        <br/>• Adds ability to customise bar animations throughout the app
+        <br/>• Fixes typos throughout error messages]]></string>
 
     <!-- App Lockout -->
     <string name="app_lockout_title">App lockout</string>
