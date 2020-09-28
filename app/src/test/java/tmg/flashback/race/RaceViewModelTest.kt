@@ -15,6 +15,7 @@ import tmg.flashback.*
 import tmg.flashback.race.RaceAdapterType.*
 import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.db.stats.SeasonOverviewDB
+import tmg.flashback.repo.enums.BarAnimation
 import tmg.flashback.repo.models.stats.LapTime
 import tmg.flashback.repo.models.stats.Round
 import tmg.flashback.repo.models.stats.RoundDriver
@@ -43,6 +44,7 @@ class RaceViewModelTest: BaseTest() {
     internal fun setUp() {
 
         whenever(mockConnectivityManager.isConnected).thenReturn(true)
+        whenever(mockPrefsDB.barAnimation).thenReturn(BarAnimation.NONE)
     }
 
     private fun initSUT(roundDate: LocalDate? = null, orderBy: RaceAdapterType = RACE) {
@@ -124,13 +126,13 @@ class RaceViewModelTest: BaseTest() {
                 mockConstructorBeta, 30, listOf(
                     Pair(mockDriver4.toDriver(), 20),
                     Pair(mockDriver2.toDriver(), 10)
-                )
+                ), BarAnimation.NONE
             ),
             RaceAdapterModel.ConstructorStandings(
                 mockConstructorAlpha, 20, listOf(
                     Pair(mockDriver3.toDriver(), 15),
                     Pair(mockDriver1.toDriver(), 5)
-                )
+                ), BarAnimation.NONE
             )
         )
 
@@ -146,10 +148,10 @@ class RaceViewModelTest: BaseTest() {
         whenever(mockSeasonOverviewDB.getSeasonRound(any(), any())).thenReturn(flow { emit(mockRound1) })
         val expected = listOf<RaceAdapterModel>(
             RaceAdapterModel.ConstructorStandings(
-                mockConstructorBeta, 30, emptyList()
+                mockConstructorBeta, 30, emptyList(), BarAnimation.NONE
             ),
             RaceAdapterModel.ConstructorStandings(
-                mockConstructorAlpha, 20, emptyList()
+                mockConstructorAlpha, 20, emptyList(), BarAnimation.NONE
             )
         )
 

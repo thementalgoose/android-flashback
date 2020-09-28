@@ -1,5 +1,6 @@
 package tmg.flashback.repo.db
 
+import tmg.flashback.repo.enums.BarAnimation
 import tmg.flashback.repo.enums.NewsSource
 import tmg.flashback.repo.enums.ThemePref
 
@@ -34,6 +35,11 @@ interface PrefsDB {
      * Show the all bottom sheet section expanded by default
      */
     var showBottomSheetAll: Boolean
+
+    /**
+     * Bar animation preference
+     */
+    var barAnimation: BarAnimation
 
     /**
      * Show grid penalties in qualifying

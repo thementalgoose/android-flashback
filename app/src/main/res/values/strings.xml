@@ -97,6 +97,13 @@
     <string name="settings_theme_theme_follow_system">Follow system preferences</string>
     <string name="settings_theme_theme_light">Light mode</string>
     <string name="settings_theme_theme_dark">Dark mode</string>
+    <string name="settings_bar_animation">Bar Animation</string>
+    <string name="settings_bar_animation_animation_title">Bar Animation</string>
+    <string name="settings_bar_animation_animation_description">Pick the speed of the points bar animations throughout the app</string>
+    <string name="settings_bar_animation_instant">No animation</string>
+    <string name="settings_bar_animation_quick">0.5x</string>
+    <string name="settings_bar_animation_medium">1x</string>
+    <string name="settings_bar_animation_slow">2x</string>
     <string name="settings_customisation_qualifying_delta_title">Qualifying delta</string>
     <string name="settings_customisation_qualifying_delta_description">Show the lap time delta alongside the qualifying time when displaying qualifying results</string>
     <string name="settings_customisation_driver_in_constructor_title">Drivers for constructor</string>

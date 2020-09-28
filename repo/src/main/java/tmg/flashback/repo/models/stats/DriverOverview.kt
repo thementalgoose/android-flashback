@@ -23,7 +23,7 @@ data class DriverOverview(
 
     val careerBestChampionship: Int? by lazy {
         return@lazy standings
-                .filter { !it.isInProgress }
+                .filter { !it.isInProgress && it.championshipStanding > 0 }
                 .map { it.championshipStanding }
                 .minBy { it }
     }
@@ -108,14 +108,14 @@ data class DriverOverview(
         return standings
                 .map { it.raceOverview }
                 .flatten()
-                .count { it.finished <= position }
+                .count { it.finished in 1..position }
     }
 
     fun totalQualifyingAbove(position: Int): Int {
         return standings
                 .map { it.raceOverview }
                 .flatten()
-                .count { it.qualified <= position }
+                .count { it.qualified in 1..position }
     }
 
     fun totalQualifyingIn(position: Int): Int {
@@ -178,11 +178,11 @@ data class DriverOverviewStanding(
 
     fun totalFinishesAbove(position: Int): Int {
         return raceOverview
-                .count { it.finished <= position }
+                .count { it.finished in 1..position }
     }
     fun totalQualifyingAbove(position: Int): Int {
         return raceOverview
-                .count { it.qualified <= position }
+                .count { it.qualified in 1..position }
     }
 
     fun totalQualifyingIn(position: Int): Int {

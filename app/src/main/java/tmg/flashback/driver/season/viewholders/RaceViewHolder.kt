@@ -6,6 +6,7 @@ import kotlinx.android.synthetic.main.view_driver_season.view.*
 import kotlinx.android.synthetic.main.view_driver_season.view.lpvProgress
 import tmg.flashback.R
 import tmg.flashback.driver.season.DriverSeasonItem
+import tmg.flashback.repo.enums.BarAnimation
 import tmg.flashback.repo.enums.isStatusFinished
 import tmg.flashback.utils.getColor
 import tmg.flashback.utils.getFlagResourceAlpha3
@@ -53,7 +54,17 @@ class RaceViewHolder(
         itemView.lpvProgress.backgroundColour = itemView.context.theme.getColor(R.attr.f1BackgroundPrimary)
         itemView.lpvProgress.progressColour = item.constructor.color
         itemView.lpvProgress.textBackgroundColour = context.theme.getColor(R.attr.f1TextSecondary)
-        itemView.lpvProgress.animateProgress(item.points.toFloat() / item.maxPoints.toFloat()) { (it * item.maxPoints.toFloat()).toInt().coerceIn(0, item.points).toString() }
+        when (item.barAnimation) {
+            BarAnimation.NONE -> {
+                itemView.lpvProgress.setProgress(item.points.toFloat() / item.maxPoints.toFloat()) { (it * item.maxPoints.toFloat()).toInt().coerceIn(0, item.points).toString() }
+            }
+            else -> {
+                itemView.lpvProgress.timeLimit = item.barAnimation.millis
+                itemView.lpvProgress.animateProgress(item.points.toFloat() / item.maxPoints.toFloat()) { (it * item.maxPoints.toFloat()).toInt().coerceIn(0, item.points).toString() }
+            }
+        }
+
+
 
 //        if (item.qualified != item.gridPos && item.gridPos > item.qualified) {
 //            itemView.penalty.show(true)

@@ -102,7 +102,7 @@ class RaceViewModel(
                             else {
                                 emptyList()
                             }
-                            RaceAdapterModel.ConstructorStandings(it.constructor, it.points, drivers)
+                            RaceAdapterModel.ConstructorStandings(it.constructor, it.points, drivers, prefsDB.barAnimation)
                         }
                         .sortedByDescending { it.points }
 

@@ -14,7 +14,9 @@ import tmg.flashback.R
 import tmg.flashback.driver.*
 import tmg.flashback.driver.overview.RaceForPositionType.*
 import tmg.flashback.maxPointsBySeason
+import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.db.stats.DriverDB
+import tmg.flashback.repo.enums.BarAnimation
 import tmg.flashback.repo.models.stats.DriverOverviewRace
 import tmg.flashback.settings.ConnectivityManager
 import tmg.flashback.shared.SyncDataItem
@@ -31,15 +33,17 @@ class DriverSeasonViewModelTest: BaseTest() {
 
     private var mockDriverDB: DriverDB = mock()
     private var mockConnectivityManager: ConnectivityManager = mock()
+    private var mockPrefsDB: PrefsDB = mock()
 
     @BeforeEach
     internal fun setUp() {
 
         whenever(mockConnectivityManager.isConnected).thenReturn(true)
+        whenever(mockPrefsDB.barAnimation).thenReturn(BarAnimation.NONE)
     }
 
     private fun initSUT() {
-        sut = DriverSeasonViewModel(mockDriverDB, mockConnectivityManager, testScopeProvider)
+        sut = DriverSeasonViewModel(mockDriverDB, mockConnectivityManager, mockPrefsDB, testScopeProvider)
         sut.inputs.setup(mockDriverId, 2019)
     }
 
@@ -239,7 +243,8 @@ class DriverSeasonViewModelTest: BaseTest() {
                 finished = race.finished,
                 raceStatus = race.status,
                 points = race.points,
-                maxPoints = 25
+                maxPoints = 25,
+                barAnimation = BarAnimation.NONE
         )
     }
 }

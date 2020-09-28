@@ -4,6 +4,7 @@ import android.content.Context
 import tmg.flashback.BuildConfig
 import tmg.flashback.releaseNotes
 import tmg.flashback.repo.db.PrefsDB
+import tmg.flashback.repo.enums.BarAnimation
 import tmg.flashback.repo.enums.NewsSource
 import tmg.flashback.repo.enums.ThemePref
 import tmg.utilities.extensions.toEnum
@@ -25,6 +26,7 @@ class SharedPrefsDB(context: Context) : SharedPrefManager(context), PrefsDB {
     private val keyBottomSheetExpanded: String = "BOTTOM_SHEET_EXPANDED"
     private val keyBottomSheetAll: String = "BOTTOM_SHEET_ALL"
     private val keyBottomSheetFavourited: String = "BOTTOM_SHEET_FAVOURITED"
+    private val keyBarAnimation: String = "BAR_ANIMATION"
     private val keyCrashReporting: String = "CRASH_REPORTING"
     private val keyShakeToReport: String = "SHAKE_TO_REPORT"
     private val keyReleaseNotes: String = "RELEASE_NOTES"
@@ -58,6 +60,10 @@ class SharedPrefsDB(context: Context) : SharedPrefManager(context), PrefsDB {
     override var showBottomSheetAll: Boolean
         get() = getBoolean(keyBottomSheetAll, true)
         set(value) = save(keyBottomSheetAll, value)
+
+    override var barAnimation: BarAnimation
+        get() = getString(keyBarAnimation)?.toEnum<BarAnimation> { it.key } ?: BarAnimation.MEDIUM
+        set(value) = save(keyBarAnimation, value.key)
 
     override var crashReporting: Boolean
         get() = getBoolean(keyCrashReporting, defaultShakeToReport)

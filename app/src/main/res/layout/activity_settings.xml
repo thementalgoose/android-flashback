@@ -85,4 +85,6 @@
 
     <include layout="@layout/bottom_sheet_theme" />
 
+    <include layout="@layout/bottom_sheet_animation" />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
