@@ -13,6 +13,8 @@ import tmg.flashback.R
 import tmg.flashback.extensions.icon
 import tmg.flashback.extensions.label
 import tmg.flashback.repo.db.PrefsDB
+import tmg.flashback.repo.enums.BarAnimation
+import tmg.flashback.repo.enums.BarAnimation.*
 import tmg.flashback.repo.enums.ThemePref.*
 import tmg.flashback.settings.SettingsOptions.*
 import tmg.flashback.testutils.BaseTest
@@ -40,6 +42,7 @@ class SettingsViewModelTest: BaseTest() {
         whenever(mockPrefs.shakeToReport).thenReturn(false)
 
         whenever(mockPrefs.theme).thenReturn(AUTO)
+        whenever(mockPrefs.barAnimation).thenReturn(MEDIUM)
 
         sut = SettingsViewModel(mockPrefs, testScopeProvider)
 
@@ -49,14 +52,15 @@ class SettingsViewModelTest: BaseTest() {
     fun `SettingsViewModel setup populates settings list`() {
 
         val expected: List<AppPreferencesItem> = listOf(
+                AppPreferencesItem.Category(R.string.settings_customisation_news),
+                NEWS.toPref(),
+                AppPreferencesItem.Category(R.string.settings_theme),
+                THEME.toPref(),
                 AppPreferencesItem.Category(R.string.settings_customisation),
+                BAR_ANIMATION_SPEED.toPref(),
                 QUALIFYING_DELTAS.toSwitch(false),
                 QUALIFYING_GRID_PENALTY.toSwitch(false),
                 SHOW_DRIVERS_POINTS_IN_CONSTRUCTORS.toSwitch(false),
-                AppPreferencesItem.Category(R.string.settings_theme),
-                THEME.toPref(),
-                AppPreferencesItem.Category(R.string.settings_customisation_news),
-                NEWS.toPref(),
                 AppPreferencesItem.Category(R.string.settings_season_list),
                 SEASON_BOTTOM_SHEET_EXPANDED.toSwitch(false),
                 SEASON_BOTTOM_SHEET_FAVOURITED.toSwitch(false),
@@ -77,12 +81,25 @@ class SettingsViewModelTest: BaseTest() {
     fun `SettingsViewModel setup populates settings theme list`() {
 
         val expected = listOf(
-            Selected(BottomSheetItem(DAY.ordinal, DAY.icon, DAY.label), false),
-            Selected(BottomSheetItem(AUTO.ordinal, AUTO.icon, AUTO.label), true),
-            Selected(BottomSheetItem(NIGHT.ordinal, NIGHT.icon, NIGHT.label), false)
+                Selected(BottomSheetItem(DAY.ordinal, DAY.icon, DAY.label), false),
+                Selected(BottomSheetItem(AUTO.ordinal, AUTO.icon, AUTO.label), true),
+                Selected(BottomSheetItem(NIGHT.ordinal, NIGHT.icon, NIGHT.label), false)
         )
 
         assertEquals(expected, sut.themePreferences.test().latestValue())
+    }
+
+    @Test
+    fun `SettingsViewModel setup populates settings animation list`() {
+
+        val expected = listOf(
+                Selected(BottomSheetItem(NONE.ordinal, NONE.icon, NONE.label), false),
+                Selected(BottomSheetItem(QUICK.ordinal, QUICK.icon, QUICK.label), false),
+                Selected(BottomSheetItem(MEDIUM.ordinal, MEDIUM.icon, MEDIUM.label), true),
+                Selected(BottomSheetItem(SLOW.ordinal, SLOW.icon, SLOW.label), false)
+        )
+
+        assertEquals(expected, sut.animationPreference.test().latestValue())
     }
 
     @Test
@@ -95,11 +112,28 @@ class SettingsViewModelTest: BaseTest() {
     }
 
     @Test
+    fun `SettingsViewModel select a bar animation updates the pref`() {
+
+        sut.pickAnimationSpeed(SLOW)
+        verify(mockPrefs).barAnimation = SLOW
+
+        assertEventFired(sut.outputs.animationChanged)
+    }
+
+    @Test
     fun `SettingsViewModel selecting theme pref opens picker`() {
 
         sut.inputs.preferenceClicked(SettingsOptions.THEME, null)
 
         assertEventFired(sut.openThemePicker)
+    }
+
+    @Test
+    fun `SettingsViewModel selecting animation pref opens picker`() {
+
+        sut.inputs.preferenceClicked(BAR_ANIMATION_SPEED, null)
+
+        assertEventFired(sut.openAnimationPicker)
     }
 
     @Test

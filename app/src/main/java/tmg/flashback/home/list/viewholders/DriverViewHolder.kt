@@ -10,6 +10,7 @@ import kotlinx.android.synthetic.main.view_home_driver.view.*
 import kotlinx.android.synthetic.main.view_home_driver.view.lpvProgress
 import tmg.flashback.R
 import tmg.flashback.home.list.HomeItem
+import tmg.flashback.repo.enums.BarAnimation
 import tmg.flashback.showDriverSummary
 import tmg.flashback.utils.getColor
 import tmg.flashback.utils.getFlagResourceAlpha3
@@ -65,7 +66,15 @@ class DriverViewHolder(
         itemView.lpvProgress.backgroundColour = itemView.context.theme.getColor(R.attr.f1BackgroundPrimary)
         itemView.lpvProgress.progressColour = item.driver.constructorAtEndOfSeason.color
         itemView.lpvProgress.textBackgroundColour = context.theme.getColor(R.attr.f1TextSecondary)
-        itemView.lpvProgress.animateProgress(item.points.toFloat() / item.maxPointsInSeason.toFloat()) { (it * item.maxPointsInSeason.toFloat()).toInt().coerceIn(0, item.points).toString() }
+        when (item.barAnimation) {
+            BarAnimation.NONE -> {
+                itemView.lpvProgress.setProgress(item.points.toFloat() / item.maxPointsInSeason.toFloat()) { (it * item.maxPointsInSeason.toFloat()).toInt().coerceIn(0, item.points).toString() }
+            }
+            else -> {
+                itemView.lpvProgress.timeLimit = item.barAnimation.millis
+                itemView.lpvProgress.animateProgress(item.points.toFloat() / item.maxPointsInSeason.toFloat()) { (it * item.maxPointsInSeason.toFloat()).toInt().coerceIn(0, item.points).toString() }
+            }
+        }
 
         itemView.stats.show(false)
 

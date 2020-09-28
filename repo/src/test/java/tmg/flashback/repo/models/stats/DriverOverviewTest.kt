@@ -11,6 +11,7 @@ class DriverOverviewTest {
 
     @ParameterizedTest
     @CsvSource(
+            "0,1,false,1",
             "1,1,false,2",
             "1,3,false,1",
             "4,2,false,0",
@@ -27,6 +28,7 @@ class DriverOverviewTest {
 
     @ParameterizedTest
     @CsvSource(
+            "0,1,false,1",
             "1,1,false,1",
             "1,3,false,1",
             "1,3,true,1",
@@ -169,6 +171,7 @@ class DriverOverviewTest {
 
     @ParameterizedTest
     @CsvSource(
+            "0,1,-1,1,3,0",
             "1,2,3,4,1,1",
             "3,1,4,1,2,0",
             "4,5,6,7,3,0",
@@ -190,6 +193,7 @@ class DriverOverviewTest {
 
     @ParameterizedTest
     @CsvSource(
+            "0,1,-1,1,3,2",
             "1,2,3,4,1,1",
             "3,1,4,1,2,2",
             "4,5,6,7,3,0",
@@ -212,6 +216,7 @@ class DriverOverviewTest {
 
     @ParameterizedTest
     @CsvSource(
+            "0,1,-1,0,2,1",
             "1,2,3,4,1,1",
             "3,1,4,1,2,2",
             "4,5,6,7,3,0",
@@ -234,6 +239,7 @@ class DriverOverviewTest {
 
     @ParameterizedTest
     @CsvSource(
+            "0,1,-1,1,3,0",
             "1,2,3,4,1,1",
             "3,1,4,1,2,0",
             "4,5,6,7,3,0",

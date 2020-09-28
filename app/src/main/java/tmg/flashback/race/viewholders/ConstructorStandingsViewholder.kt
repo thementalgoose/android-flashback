@@ -11,6 +11,7 @@ import kotlinx.android.synthetic.main.view_race_constructor.view.lpvProgress
 import kotlinx.android.synthetic.main.view_race_constructor.view.tvTitle
 import tmg.flashback.R
 import tmg.flashback.race.RaceAdapterModel
+import tmg.flashback.repo.enums.BarAnimation
 import tmg.flashback.repo.models.stats.Driver
 import tmg.flashback.repo.models.stats.RoundDriver
 import tmg.flashback.utils.getColor
@@ -40,11 +41,26 @@ class ConstructorStandingsViewholder(itemView: View) : RecyclerView.ViewHolder(i
             lpvProgress.progressColour = model.constructor.color
             lpvProgress.textBackgroundColour = context.theme.getColor(R.attr.f1TextSecondary)
             val progress = model.points.toFloat() / maxPointsByAnyTeam.toFloat()
-            lpvProgress.animateProgress(progress) {
-                when {
-                    progress.isNaN() -> "0"
-                    progress != 0.0f -> ((it / progress) * model.points).roundToInt().toString()
-                    else -> "0"
+
+            when (model.barAnimation) {
+                BarAnimation.NONE -> {
+                    lpvProgress.setProgress(progress) {
+                        when {
+                            progress.isNaN() -> "0"
+                            progress != 0.0f -> ((it / progress) * model.points).roundToInt().toString()
+                            else -> "0"
+                        }
+                    }
+                }
+                else -> {
+                    lpvProgress.timeLimit = model.barAnimation.millis
+                    lpvProgress.animateProgress(progress) {
+                        when {
+                            progress.isNaN() -> "0"
+                            progress != 0.0f -> ((it / progress) * model.points).roundToInt().toString()
+                            else -> "0"
+                        }
+                    }
                 }
             }
         }

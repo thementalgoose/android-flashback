@@ -33,7 +33,7 @@ var flashbackModule = module {
 
     viewModel { RaceViewModel(get(), get(), get(), get()) }
 
-    viewModel { DriverSeasonViewModel(get(), get(), get()) }
+    viewModel { DriverSeasonViewModel(get(), get(), get(), get()) }
     viewModel { DriverViewModel(get(), get()) }
     viewModel { DriverOverviewViewModel(get(), get(), get()) }
 

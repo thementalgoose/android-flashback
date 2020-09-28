@@ -9,6 +9,7 @@ import tmg.flashback.extensions.label
 import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.enums.ThemePref
 import tmg.flashback.di.async.ScopeProvider
+import tmg.flashback.repo.enums.BarAnimation
 import tmg.flashback.utils.Selected
 import tmg.flashback.utils.bottomsheet.BottomSheetItem
 import tmg.utilities.lifecycle.Event
@@ -18,6 +19,7 @@ import tmg.utilities.lifecycle.Event
 interface SettingsViewModelInputs {
     fun preferenceClicked(pref: SettingsOptions?, value: Boolean?)
     fun pickTheme(theme: ThemePref)
+    fun pickAnimationSpeed(animation: BarAnimation)
 }
 
 //endregion
@@ -28,9 +30,13 @@ interface SettingsViewModelOutputs {
     val settings: MutableLiveData<List<AppPreferencesItem>>
 
     val themePreferences: MutableLiveData<List<Selected<BottomSheetItem>>>
+    val animationPreference: MutableLiveData<List<Selected<BottomSheetItem>>>
 
     val themeChanged: MutableLiveData<Event>
+    val animationChanged: MutableLiveData<Event>
+
     val openThemePicker: MutableLiveData<Event>
+    val openAnimationPicker: MutableLiveData<Event>
     val openAbout: MutableLiveData<Event>
     val openRelease: MutableLiveData<Event>
     val openSuggestions: MutableLiveData<Event>
@@ -48,27 +54,31 @@ class SettingsViewModel(
     var outputs: SettingsViewModelOutputs = this
 
     override val themeChanged: MutableLiveData<Event> = MutableLiveData()
+    override val animationChanged: MutableLiveData<Event> = MutableLiveData()
+
+    override val themePreferences: MutableLiveData<List<Selected<BottomSheetItem>>> = MutableLiveData()
+    override val animationPreference: MutableLiveData<List<Selected<BottomSheetItem>>> = MutableLiveData()
 
     override val openThemePicker: MutableLiveData<Event> = MutableLiveData()
+    override val openAnimationPicker: MutableLiveData<Event> = MutableLiveData()
     override val openAbout: MutableLiveData<Event> = MutableLiveData()
     override val openRelease: MutableLiveData<Event> = MutableLiveData()
     override val openSuggestions: MutableLiveData<Event> = MutableLiveData()
     override val openNews: MutableLiveData<Event> = MutableLiveData()
 
-    override val themePreferences: MutableLiveData<List<Selected<BottomSheetItem>>> = MutableLiveData()
-
     override val settings: MutableLiveData<List<AppPreferencesItem>> = MutableLiveData()
 
     init {
         settings.value = listOf(
+            AppPreferencesItem.Category(R.string.settings_customisation_news),
+            SettingsOptions.NEWS.toPref(),
+            AppPreferencesItem.Category(R.string.settings_theme),
+            SettingsOptions.THEME.toPref(),
             AppPreferencesItem.Category(R.string.settings_customisation),
+            SettingsOptions.BAR_ANIMATION_SPEED.toPref(),
             SettingsOptions.QUALIFYING_DELTAS.toSwitch(prefDB.showQualifyingDelta),
             SettingsOptions.QUALIFYING_GRID_PENALTY.toSwitch(prefDB.showGridPenaltiesInQualifying),
             SettingsOptions.SHOW_DRIVERS_POINTS_IN_CONSTRUCTORS.toSwitch(prefDB.showDriversBehindConstructor),
-            AppPreferencesItem.Category(R.string.settings_theme),
-            SettingsOptions.THEME.toPref(),
-            AppPreferencesItem.Category(R.string.settings_customisation_news),
-            SettingsOptions.NEWS.toPref(),
             AppPreferencesItem.Category(R.string.settings_season_list),
             SettingsOptions.SEASON_BOTTOM_SHEET_EXPANDED.toSwitch(prefDB.showBottomSheetExpanded),
             SettingsOptions.SEASON_BOTTOM_SHEET_FAVOURITED.toSwitch(prefDB.showBottomSheetFavourited),
@@ -83,6 +93,7 @@ class SettingsViewModel(
         )
 
         updateThemeList()
+        updateAnimationList()
     }
 
     //region Inputs
@@ -96,6 +107,7 @@ class SettingsViewModel(
             SettingsOptions.SEASON_BOTTOM_SHEET_EXPANDED -> prefDB.showBottomSheetExpanded = value ?: true
             SettingsOptions.SEASON_BOTTOM_SHEET_FAVOURITED -> prefDB.showBottomSheetFavourited = value ?: true
             SettingsOptions.SEASON_BOTTOM_SHEET_ALL -> prefDB.showBottomSheetAll = value ?: true
+            SettingsOptions.BAR_ANIMATION_SPEED -> openAnimationPicker.value = Event()
             SettingsOptions.ABOUT -> openAbout.value = Event()
             SettingsOptions.RELEASE -> openRelease.value = Event()
             SettingsOptions.CRASH -> prefDB.crashReporting = value ?: true
@@ -111,13 +123,26 @@ class SettingsViewModel(
         themeChanged.value = Event()
     }
 
+    override fun pickAnimationSpeed(animation: BarAnimation) {
+        prefDB.barAnimation = animation
+        updateAnimationList()
+        animationChanged.value = Event()
+    }
+
     //endregion
 
     private fun updateThemeList() {
         themePreferences.value = ThemePref.values()
-            .map {
-                Selected(BottomSheetItem(it.ordinal, it.icon, it.label), it == prefDB.theme)
-            }
+                .map {
+                    Selected(BottomSheetItem(it.ordinal, it.icon, it.label), it == prefDB.theme)
+                }
+    }
+
+    private fun updateAnimationList() {
+        animationPreference.value = BarAnimation.values()
+                .map {
+                    Selected(BottomSheetItem(it.ordinal, it.icon, it.label), it == prefDB.barAnimation)
+                }
     }
 
 }

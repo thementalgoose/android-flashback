@@ -273,7 +273,8 @@ class HomeViewModel(
                     position = index + 1,
                     bestQualifying = rounds.bestQualifyingResultFor(roundDriver.id),
                     bestFinish = rounds.bestRaceResultFor(roundDriver.id),
-                    maxPointsInSeason = this.maxDriverPointsInSeason()
+                    maxPointsInSeason = this.maxDriverPointsInSeason(),
+                    barAnimation = prefDB.barAnimation
                 )
             }
     }
@@ -293,7 +294,8 @@ class HomeViewModel(
                     constructor = constructor,
                     driver = driverPoints.values.sortedByDescending { it.second },
                     points = constructorPoints,
-                    maxPointsInSeason = this.maxConstructorPointsInSeason()
+                    maxPointsInSeason = this.maxConstructorPointsInSeason(),
+                    barAnimation = prefDB.barAnimation
                 )
             }
             .sortedByDescending { it.points }

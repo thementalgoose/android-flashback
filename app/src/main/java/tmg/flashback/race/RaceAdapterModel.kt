@@ -1,5 +1,6 @@
 package tmg.flashback.race
 
+import tmg.flashback.repo.enums.BarAnimation
 import tmg.flashback.repo.enums.RaceStatus
 import tmg.flashback.repo.models.stats.*
 import tmg.flashback.shared.viewholders.DataUnavailable
@@ -38,7 +39,8 @@ sealed class RaceAdapterModel {
     data class ConstructorStandings(
         val constructor: Constructor,
         val points: Int,
-        val driver: List<Pair<Driver, Int>>
+        val driver: List<Pair<Driver, Int>>,
+        val barAnimation: BarAnimation
     ) : RaceAdapterModel()
 
     data class Unavailable(

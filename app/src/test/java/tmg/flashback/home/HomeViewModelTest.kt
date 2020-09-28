@@ -21,6 +21,7 @@ import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.db.stats.DataDB
 import tmg.flashback.repo.db.stats.HistoryDB
 import tmg.flashback.repo.db.stats.SeasonOverviewDB
+import tmg.flashback.repo.enums.BarAnimation
 import tmg.flashback.repo.models.AppBanner
 import tmg.flashback.repo.models.AppLockout
 import tmg.flashback.repo.models.stats.History
@@ -49,6 +50,7 @@ class HomeViewModelTest : BaseTest() {
 
         whenever(mockConnectivityManager.isConnected).thenReturn(true)
         whenever(mockPrefsDB.shouldShowReleaseNotes).thenReturn(false)
+        whenever(mockPrefsDB.barAnimation).thenReturn(BarAnimation.NONE)
         whenever(mockSeasonOverviewDB.getSeasonOverview(any())).thenReturn(flow { emit(mockSeason) })
         whenever(mockHistoryDB.historyFor(any())).thenReturn(flow { emit(mockHistory) })
         whenever(mockDataDB.appBanner()).thenReturn(flow { emit(null) })
@@ -496,7 +498,8 @@ class HomeViewModelTest : BaseTest() {
             position = 3,
             bestQualifying = Pair(1, listOf(mockRound1)),
             bestFinish = Pair(1, listOf(mockRound2)),
-            maxPointsInSeason = 27
+            maxPointsInSeason = 27,
+            barAnimation = BarAnimation.NONE
     )
     private val expectedDriver2 = HomeItem.Driver(
             season = 2019,
@@ -506,7 +509,8 @@ class HomeViewModelTest : BaseTest() {
             position = 4,
             bestQualifying = Pair(2, listOf(mockRound1)),
             bestFinish = Pair(3, listOf(mockRound1, mockRound2)),
-            maxPointsInSeason = 27
+            maxPointsInSeason = 27,
+            barAnimation = BarAnimation.NONE
     )
     private val expectedDriver3 = HomeItem.Driver(
             season = 2019,
@@ -516,7 +520,8 @@ class HomeViewModelTest : BaseTest() {
             position = 1,
             bestQualifying = Pair(3, listOf(mockRound1, mockRound2)),
             bestFinish = Pair(2, listOf(mockRound1, mockRound2)),
-            maxPointsInSeason = 27
+            maxPointsInSeason = 27,
+            barAnimation = BarAnimation.NONE
     )
     private val expectedDriver4 = HomeItem.Driver(
             season = 2019,
@@ -526,7 +531,8 @@ class HomeViewModelTest : BaseTest() {
             position = 2,
             bestQualifying = Pair(1, listOf(mockRound2)),
             bestFinish = Pair(1, listOf(mockRound1)),
-            maxPointsInSeason = 27
+            maxPointsInSeason = 27,
+            barAnimation = BarAnimation.NONE
     )
 
     //endregion
@@ -543,7 +549,8 @@ class HomeViewModelTest : BaseTest() {
                     Pair(mockDriver1.toDriver(), 21)
             ),
             points = 48,
-            maxPointsInSeason = 48
+            maxPointsInSeason = 48,
+            barAnimation = BarAnimation.NONE
     )
     private val expectedConstructorBeta = HomeItem.Constructor(
             season = 2019,
@@ -555,7 +562,8 @@ class HomeViewModelTest : BaseTest() {
                     Pair(mockDriver2.toDriver(), 18)
             ),
             points = 42,
-            maxPointsInSeason = 48
+            maxPointsInSeason = 48,
+            barAnimation = BarAnimation.NONE
     )
 
     //endregion

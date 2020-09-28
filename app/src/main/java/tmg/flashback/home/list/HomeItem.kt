@@ -3,6 +3,7 @@ package tmg.flashback.home.list
 import androidx.annotation.LayoutRes
 import org.threeten.bp.LocalDate
 import tmg.flashback.R
+import tmg.flashback.repo.enums.BarAnimation
 import tmg.flashback.repo.models.stats.CircuitSummary
 import tmg.flashback.repo.models.stats.Round
 import tmg.flashback.shared.SyncDataItem
@@ -32,7 +33,8 @@ sealed class HomeItem(
             val position: Int,
             val bestQualifying: Pair<Int, List<Round>>?,
             val bestFinish: Pair<Int, List<Round>>?,
-            val maxPointsInSeason: Int
+            val maxPointsInSeason: Int,
+            val barAnimation: BarAnimation
     ) : HomeItem(R.layout.view_home_driver)
 
     data class Constructor(
@@ -42,7 +44,8 @@ sealed class HomeItem(
             val constructorId: String = constructor.id,
             val driver: List<Pair<tmg.flashback.repo.models.stats.Driver, Int>>,
             val points: Int,
-            val maxPointsInSeason: Int
+            val maxPointsInSeason: Int,
+            val barAnimation: BarAnimation
     ) : HomeItem(R.layout.view_home_constructor)
 
     data class ErrorItem(

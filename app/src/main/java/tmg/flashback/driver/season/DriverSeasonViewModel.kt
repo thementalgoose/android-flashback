@@ -18,6 +18,7 @@ import tmg.flashback.base.BaseViewModel
 import tmg.flashback.di.async.ScopeProvider
 import tmg.flashback.driver.overview.RaceForPositionType
 import tmg.flashback.maxPointsBySeason
+import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.db.stats.DriverDB
 import tmg.flashback.repo.models.stats.DriverOverviewStanding
 import tmg.flashback.settings.ConnectivityManager
@@ -49,6 +50,7 @@ interface DriverSeasonViewModelOutputs {
 class DriverSeasonViewModel(
     private val driverDB: DriverDB,
     private val connectivityManager: ConnectivityManager,
+    private val prefsDB: PrefsDB,
     scopeProvider: ScopeProvider
 ) : BaseViewModel(scopeProvider), DriverSeasonViewModelInputs, DriverSeasonViewModelOutputs {
 
@@ -132,7 +134,8 @@ class DriverSeasonViewModel(
                                 finished = it.finished,
                                 raceStatus = it.status,
                                 points = it.points,
-                                maxPoints = maxPointsBySeason(it.season)
+                                maxPoints = maxPointsBySeason(it.season),
+                                barAnimation = prefsDB.barAnimation
                             )
                         }
                         .sortedBy { it.round }
