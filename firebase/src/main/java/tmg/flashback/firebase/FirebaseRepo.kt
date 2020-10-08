@@ -33,7 +33,7 @@ open class FirebaseRepo(
             when {
                 exception != null -> {
                     handleError(exception, "Collection $path")
-                    offer(emptyList())
+                    offer(emptyList<E>())
                 }
                 snapshot != null -> {
                     try {
