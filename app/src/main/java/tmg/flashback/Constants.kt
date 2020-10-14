@@ -5,6 +5,7 @@ import androidx.annotation.DrawableRes
 import org.threeten.bp.Year
 import tmg.components.about.AboutThisAppConfiguration
 import tmg.components.about.AboutThisAppDependency
+import tmg.flashback.utils.SeasonRound
 
 /**
  * Constants
@@ -40,7 +41,8 @@ const val showDriverSummary: Boolean = false
 enum class TrackLayout(
         val circuitId: String,
         @DrawableRes
-        val icon: Int
+        val icon: Int,
+        val override: List<String> = emptyList() // "2020 Sakhir Grand Prix" - Should be "${year} ${raceName}"
 ) {
     ADELAIDE("adelaide", R.drawable.circuit_adelaide),
     ALBERT_PARK("albert_park", R.drawable.circuit_albert_park),
@@ -66,6 +68,9 @@ enum class TrackLayout(
     RED_BULL_RING("red_bull_ring", R.drawable.circuit_red_bull_ring),
     RICARD("ricard", R.drawable.circuit_ricard),
     RODRIGUEZ("rodriguez", R.drawable.circuit_rodriguez),
+    SAKHIR("sakhir", R.drawable.circuit_sakhir, listOf(
+            "2020 Sakhir Grand Prix"
+    )),
     SEPANG("sepang", R.drawable.circuit_sepang),
     SHANGHAI("shanghai", R.drawable.circuit_shanghai),
     SILVERSTONE("silverstone", R.drawable.circuit_silverstone),
@@ -77,6 +82,14 @@ enum class TrackLayout(
     YAS_MARINA("yas_marina", R.drawable.circuit_yas_marina),
     YEONGAM("yeongam", R.drawable.circuit_yeongam),
     ZANDVOORT("zandvoort", R.drawable.circuit_zandvoort);
+
+    companion object {
+        fun getOverride(year: Int, raceName: String): TrackLayout? {
+            return TrackLayout
+                    .values()
+                    .firstOrNull { it.override.contains("${year} ${raceName}") }
+        }
+    }
 }
 
 

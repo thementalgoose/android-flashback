@@ -122,7 +122,8 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
             tvDate.text = it.format(DateTimeFormatter.ofPattern("dd MMMM"))
         }
 
-        val track = circuitId.toEnum<TrackLayout> { it.circuitId }
+        @Suppress("RemoveExplicitTypeArguments")
+        val track = TrackLayout.getOverride(season, initialRaceName) ?: circuitId.toEnum<TrackLayout> { it.circuitId }
         trackLayout.show(track != null)
         circuit.show(track == null)
         if (track != null) {
