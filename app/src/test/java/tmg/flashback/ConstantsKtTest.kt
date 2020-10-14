@@ -1,6 +1,7 @@
 package tmg.flashback
 
 import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
@@ -18,5 +19,21 @@ class ConstantsKtTest {
     fun `ConstantsKt maxPoints by season returns correct amount of points`(season: Int, expectedPoints: Int) {
 
         assertEquals(expectedPoints, maxPointsBySeason(season))
+    }
+
+    @Test
+    fun `ConstantsKt maxPoints by current year returns correct amounts of points`() {
+
+        assertEquals(25, maxPointsBySeason(currentYear))
+    }
+
+    @ParameterizedTest
+    @CsvSource(
+        "2020,Sakhir Grand Prix,SAKHIR"
+    )
+    fun `TrackLayout testing override values pull overriden enum`(year: Int, raceName: String, expected: TrackLayout) {
+
+        val actual = TrackLayout.getOverride(year, raceName)
+        assertEquals(expected, actual)
     }
 }

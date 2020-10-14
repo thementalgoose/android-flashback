@@ -82,6 +82,10 @@
         <br/>• Fixes issue with driver stats qualifying data taking into account DNS
         <br/>• Adds ability to customise bar animations throughout the app
         <br/>• Fixes typos throughout error messages]]></string>
+    <string name="release_24"><![CDATA[<b>4.7.4</b>
+        <br/>• Fixes issue with track layout displayed in 2020 Sakhir Grand Prix race
+        <br/>• Migrates to Firebase crashlytics
+        <br/>• Usual assortment of bugfixes and improvements]]></string>
 
     <!-- App Lockout -->
     <string name="app_lockout_title">App lockout</string>
