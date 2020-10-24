@@ -9,7 +9,7 @@ data class WinnerSeason(
 data class WinnerSeasonDriver(
     val id: String,
     val name: String,
-    val image: String,
+    val image: String?,
     val points: Int
 )
 
