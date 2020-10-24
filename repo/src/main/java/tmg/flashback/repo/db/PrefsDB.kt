@@ -90,4 +90,9 @@ interface PrefsDB {
      * Shows the description for the news items
      */
     var newsShowDescription: Boolean
+
+    /**
+     * Open the news article in an external browser or not
+     */
+    var newsOpenInExternalBrowser: Boolean
 }

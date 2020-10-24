@@ -2,6 +2,7 @@ package tmg.flashback.news
 
 import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -36,8 +37,18 @@ class NewsActivity: BaseActivity(), PageStateChangeCallbacks, FragmentRequestBac
 
         adapter = NewsAdapter(
             articleClicked = { article, id ->
-                list.expandItem(id)
-                loadFragment(WebFragment.instance(article.title, article.link), R.id.expandablePageLayout, "WebView")
+                if (prefsDB.newsOpenInExternalBrowser) {
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(article.link))
+                    startActivity(intent)
+                }
+                else {
+                    list.expandItem(id)
+                    loadFragment(
+                        WebFragment.instance(article.title, article.link),
+                        R.id.expandablePageLayout,
+                        "WebView"
+                    )
+                }
             }
         )
         list.tintPainter = TintPainter.uncoveredArea(Color.WHITE, opacity = 0.65f)

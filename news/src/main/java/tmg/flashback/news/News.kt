@@ -4,6 +4,7 @@ import android.util.Log
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import tmg.flashback.news.apis.autosport.AutosportRssRetrofit
