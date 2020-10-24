@@ -6,7 +6,7 @@ import org.threeten.bp.LocalDate
 data class Circuit(
     val id: String,
     val name: String,
-    val wikiUrl: String,
+    val wikiUrl: String?,
     val locality: String,
     val country: String,
     val countryISO: String,

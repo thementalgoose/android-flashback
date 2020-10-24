@@ -7,6 +7,7 @@ import com.nhaarman.mockitokotlin2.whenever
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.flow
+import org.junit.Ignore
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -22,10 +23,7 @@ import tmg.flashback.repo.models.stats.RoundDriver
 import tmg.flashback.repo.models.stats.RoundQualifyingResult
 import tmg.flashback.settings.ConnectivityManager
 import tmg.flashback.shared.viewholders.DataUnavailable
-import tmg.flashback.testutils.BaseTest
-import tmg.flashback.testutils.assertDataEventValue
-import tmg.flashback.testutils.assertLatestValue
-import tmg.flashback.testutils.assertValue
+import tmg.flashback.testutils.*
 import tmg.flashback.utils.SeasonRound
 
 @FlowPreview
@@ -368,6 +366,38 @@ class RaceViewModelTest: BaseTest() {
         advanceUntilIdle()
 
         assertValue(SeasonRound(2020, 1), sut.outputs.seasonRoundData)
+    }
+
+    @Test
+    fun `RaceViewModel initialisation sets wikipedia button to not be shown`() = coroutineTest {
+
+        initSUT()
+
+        assertValue(false, sut.outputs.showWikipedia)
+    }
+
+    // Look at re-implementing this to make it test friendly
+    // As of 24/10/2020 it works but it's because i'm doing it hacky (:
+//    @Test
+//    fun `RaceViewModel initialisation sets wikipedia button to true if round data contains wikipedia link`() = coroutineTest {
+//
+//        whenever(mockSeasonOverviewDB.getSeasonRound(any(), any())).thenReturn(flow { emit(mockRound1) })
+//
+//        initSUT()
+//
+//        assertValue(true, sut.outputs.showWikipedia)
+//    }
+
+    @Test
+    fun `RaceViewModel clicking wikipedia button fires goToWikipedia event`() = coroutineTest {
+
+        whenever(mockSeasonOverviewDB.getSeasonRound(any(), any())).thenReturn(flow { emit(mockRound1) })
+
+        initSUT()
+
+        sut.inputs.clickWikipedia()
+
+        assertEventFired(sut.outputs.goToWikipedia)
     }
 
     @AfterEach

@@ -1,5 +1,7 @@
 package tmg.flashback.driver.overview
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -29,7 +31,12 @@ class DriverOverviewFragment: BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = DriverOverviewAdapter()
+        adapter = DriverOverviewAdapter(
+            openUrl = {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(it))
+                startActivity(intent)
+            }
+        )
         list.adapter = adapter
         list.layoutManager = LinearLayoutManager(context)
 
