@@ -27,6 +27,7 @@ class SettingsNewsViewModelTest: BaseTest() {
 
     private val keyShowDescription: String = "keyShowDescription"
     private val keyJavascript: String = "keyJavascript"
+    private val keyOpenInExternalBrowser: String = "keyOpenInExternalBrowser"
 
     @BeforeEach
     internal fun setUp() {
@@ -82,6 +83,12 @@ class SettingsNewsViewModelTest: BaseTest() {
             ),
             AppPreferencesItem.Category(R.string.settings_news_browser),
             AppPreferencesItem.SwitchPreference(
+                keyOpenInExternalBrowser,
+                R.string.settings_news_browser_external_title,
+                R.string.settings_news_browser_external_description,
+                false
+            ),
+            AppPreferencesItem.SwitchPreference(
                 keyJavascript,
                 R.string.settings_news_browser_javascript_title,
                 R.string.settings_news_browser_javascript_description,
@@ -126,6 +133,14 @@ class SettingsNewsViewModelTest: BaseTest() {
         sut.updatePref(keyJavascript, true)
 
         verify(mockPrefs).inAppEnableJavascript = true
+    }
+
+    @Test
+    fun `SettingsNewsViewModel update enable open in external browser marks it enabled in prefs`() {
+
+        sut.updatePref(keyOpenInExternalBrowser, true)
+
+        verify(mockPrefs).newsOpenInExternalBrowser = true
     }
 
     @AfterEach
