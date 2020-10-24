@@ -34,6 +34,7 @@ class SettingsNewsViewModel(
 
     private val keyShowDescription: String = "keyShowDescription"
     private val keyJavascript: String = "keyJavascript"
+    private val keyOpenExternal: String = "keyOpenInExternalBrowser"
 
     var inputs: SettingsNewsViewModelInputs = this
     var outputs: SettingsNewsViewModelOutputs = this
@@ -62,6 +63,7 @@ class SettingsNewsViewModel(
         when (pref) {
             keyShowDescription -> prefDB.newsShowDescription = toNewState
             keyJavascript -> prefDB.inAppEnableJavascript = toNewState
+            keyOpenExternal -> prefDB.newsOpenInExternalBrowser = toNewState
         }
     }
 
@@ -88,6 +90,12 @@ class SettingsNewsViewModel(
         list.add(AppPreferencesItem.Category(R.string.settings_news_sources))
         list.addAll(sources)
         list.add(AppPreferencesItem.Category(R.string.settings_news_browser))
+        list.add(AppPreferencesItem.SwitchPreference(
+            keyOpenExternal,
+            R.string.settings_news_browser_external_title,
+            R.string.settings_news_browser_external_description,
+            prefDB.newsOpenInExternalBrowser
+        ))
         list.add(AppPreferencesItem.SwitchPreference(
             keyJavascript,
             R.string.settings_news_browser_javascript_title,

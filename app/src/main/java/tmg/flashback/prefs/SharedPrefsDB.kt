@@ -34,6 +34,7 @@ class SharedPrefsDB(context: Context) : SharedPrefManager(context), PrefsDB {
     private val keyTheme: String = "THEME"
     private val keyFavouriteSeasons: String = "FAVOURITE_SEASONS"
     private val keyNewsSourceExcludeList: String = "NEWS_SOURCE_EXCLUDE_LIST"
+    private val keyNewsOpenInExternalBrowser: String = "NEWS_OPEN_IN_EXTERNAL_BROWSER"
     private val keyInAppEnableJavascript: String = "IN_APP_ENABLE_JAVASCRIPT"
     private val keyNewsShowDescription: String = "NEWS_SHOW_DESCRIPTIONS"
 
@@ -128,4 +129,8 @@ class SharedPrefsDB(context: Context) : SharedPrefManager(context), PrefsDB {
     override var newsShowDescription: Boolean
         get() = getBoolean(keyNewsShowDescription, true)
         set(value) = save(keyNewsShowDescription, value)
+
+    override var newsOpenInExternalBrowser: Boolean
+        get() = getBoolean(keyNewsOpenInExternalBrowser, false)
+        set(value) = save(keyNewsOpenInExternalBrowser, value)
 }
