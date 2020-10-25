@@ -119,18 +119,18 @@ val coloursDecade: Map<String, String> = mapOf(
  */
 // Configuration item
 fun configuration(context: Context, isDarkMode: Boolean = false) = AboutThisAppConfiguration(
-        isDarkMode = isDarkMode,
+        themeRes = if (isDarkMode) R.style.DarkTheme else R.style.LightTheme,
         name = context.getString(R.string.about_name),
         nameDesc = context.getString(R.string.about_desc),
         imageUrl = "https://lh3.googleusercontent.com/l7T59nmp3joS3CUWEw-_mfmZAwXMHmiikR6uvQLFTXGy1-BlUICXxJZ9UCcvQlWhvQ",
-        thankYou = context.getString(R.string.dependency_thank_you),
+        subtitle = context.getString(R.string.dependency_thank_you),
         footnote = context.getString(R.string.about_additional),
         appVersion = BuildConfig.VERSION_NAME,
         appName = context.getString(R.string.app_name),
+        appPackageName = "tmg.flashback",
         email = "thementalgoose@gmail.com",
         play = "https://play.google.com/store/apps/details?id=tmg.flashback",
-        dependencies = dependencies,
-        insetsForNavigationBar = true
+        dependencies = dependencies
 )
 
 // List of all app dependencies
