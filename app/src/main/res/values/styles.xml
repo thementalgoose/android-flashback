@@ -134,7 +134,7 @@
         <item name="f1DeltaWaiting">#FFA000</item>
 
         <!-- About This App Activity -->
-        <item name="aboutThisApp_header">?attr/colorPrimary</item>
+        <item name="aboutThisApp_header">@color/logo_gradient_2</item>
         <item name="aboutThisApp_textPrimary">#f8f8f8</item>
         <item name="aboutThisApp_textSecondary">#e8e8e8</item>
         <item name="aboutThisApp_textToolbar">#f8f8f8</item>
