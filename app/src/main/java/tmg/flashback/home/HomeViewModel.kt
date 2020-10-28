@@ -1,11 +1,8 @@
 package tmg.flashback.home
 
-import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.*
 import tmg.flashback.R
@@ -259,7 +256,7 @@ class HomeViewModel(
     /**
      * Convert the driver standings construct into a list of home items to display on the home page
      */
-    private fun DriverStandings.toDriverList(rounds: List<Round>): List<HomeItem> {
+    private fun DriverStandingsRound.toDriverList(rounds: List<Round>): List<HomeItem> {
         return this
             .values
             .sortedByDescending { it.second }
@@ -282,7 +279,7 @@ class HomeViewModel(
     /**
      * Convert the constructor standings construct into a list of home items to display on the home page
      */
-    private fun ConstructorStandings.toConstructorList(): List<HomeItem> {
+    private fun ConstructorStandingsRound.toConstructorList(): List<HomeItem> {
         return this
             .values
             .toList()

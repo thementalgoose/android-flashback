@@ -23,14 +23,12 @@ fun FSeason.convert(season: Int): Season {
                     .map {
                         it.convert(this)
                     },
-            constructorPenalties = (this.penConstructor ?: emptyList())
-                    .map {
-                        it.convert(constructors)
-                    },
-            driverPenalties = (this.penDriver ?: emptyList())
-                    .map {
-                        it.convert(drivers)
-                    }
+            driverStandings = this.standings?.drivers?.let {
+                return@let it.convertDriver(drivers)
+            } ?: mapOf(),
+            constructorStandings = this.standings?.constructors?.let {
+                return@let it.convertConstructor(constructors)
+            } ?: mapOf()
     )
 }
 
@@ -132,24 +130,15 @@ private fun FSeason.constructorAtEndOfSeason(driverId: String): Constructor {
     return this.constructors?.get(constructorId)!!.convert()
 }
 
-private fun FDriverPenalties.convert(drivers: List<Driver>): DriverPenalty {
-    return DriverPenalty(
-            season = this.season,
-            round = this.round,
-            driver = drivers.first { it.id == this.driverId },
-            pointsDelta = this.pointsDelta ?: 0,
-            date = fromDate(this.date ?: "${this.season}-01-01"),
-            fine = this.fine ?: 0
-    )
-}
+// key = driverId, value = model
+private fun Map<String, FSeasonStatisticsPoints>.convertDriver(drivers: List<Driver>): DriverStandings = this
+        .map {
+            it.key to Pair(drivers.first { driver -> driver.id == it.key }, it.value.p ?: 0)
+        }
+        .toMap()
 
-private fun FConstructorPenalties.convert(constructors: List<Constructor>): ConstructorPenalty {
-    return ConstructorPenalty(
-            season = this.season,
-            round = this.round,
-            constructor = constructors.first { it.id == this.constructorId },
-            pointsDelta = this.pointsDelta ?: 0,
-            date = fromDate(this.date ?: "${this.season}-01-01"),
-            fine = this.fine ?: 0
-    )
-}
+private fun Map<String, FSeasonStatisticsPoints>.convertConstructor(constructors: List<Constructor>): ConstructorStandings = this
+        .map {
+            it.key to Pair(constructors.first { constructor -> constructor.id == it.key }, it.value.p ?: 0)
+        }
+        .toMap()
