@@ -7,6 +7,7 @@ import android.os.Bundle
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_circuit_info.*
+import kotlinx.android.synthetic.main.view_circuit_info_header.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.R
 import tmg.flashback.base.BaseActivity
@@ -14,6 +15,7 @@ import tmg.flashback.circuit.list.CircuitInfoAdapter
 import tmg.flashback.race.RaceActivity
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
+import tmg.utilities.extensions.views.show
 
 class CircuitInfoActivity: BaseActivity() {
 
@@ -60,6 +62,7 @@ class CircuitInfoActivity: BaseActivity() {
             onBackPressed()
         }
 
+
         observe(viewModel.outputs.list) {
             adapter.list = it
         }
@@ -72,9 +75,16 @@ class CircuitInfoActivity: BaseActivity() {
             header.text = it
         }
 
-        observeEvent(viewModel.outputs.showOnMap) {
+        observeEvent(viewModel.outputs.goToMap) {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(it))
             startActivity(intent)
+        }
+
+        observeEvent(viewModel.outputs.goToWikipediaPage) {
+            if (it.isNotEmpty()) {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(it))
+                startActivity(intent)
+            }
         }
 
         viewModel.inputs.circuitId(circuitId)

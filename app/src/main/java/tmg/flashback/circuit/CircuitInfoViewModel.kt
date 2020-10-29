@@ -3,10 +3,8 @@ package tmg.flashback.circuit
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
-import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.*
-import tmg.flashback.TrackLayout
 import tmg.flashback.base.BaseViewModel
 import tmg.flashback.circuit.list.CircuitItem
 import tmg.flashback.di.async.ScopeProvider
@@ -15,7 +13,6 @@ import tmg.flashback.repo.db.stats.CircuitDB
 import tmg.flashback.repo.models.stats.Circuit
 import tmg.flashback.settings.ConnectivityManager
 import tmg.flashback.shared.SyncDataItem
-import tmg.flashback.utils.getScope
 import tmg.utilities.extensions.then
 import tmg.utilities.lifecycle.DataEvent
 
@@ -36,8 +33,8 @@ interface CircuitInfoViewModelOutputs {
     val circuitName: LiveData<String>
     val isLoading: MutableLiveData<Boolean>
 
-    val showOnMap: MutableLiveData<DataEvent<String>>
-    val showWikipedia: MutableLiveData<DataEvent<String>>
+    val goToMap: MutableLiveData<DataEvent<String>>
+    val goToWikipediaPage: MutableLiveData<DataEvent<String>>
 }
 
 //endregion
@@ -60,9 +57,8 @@ class CircuitInfoViewModel(
         .asFlow()
         .flatMapLatest { circuitDB.getCircuit(it) }
 
-    override val showOnMap: MutableLiveData<DataEvent<String>> = MutableLiveData()
-
-    override val showWikipedia: MutableLiveData<DataEvent<String>> = MutableLiveData()
+    override val goToMap: MutableLiveData<DataEvent<String>> = MutableLiveData()
+    override val goToWikipediaPage: MutableLiveData<DataEvent<String>> = MutableLiveData()
 
     override val isLoading: MutableLiveData<Boolean> = MutableLiveData()
 
@@ -126,11 +122,11 @@ class CircuitInfoViewModel(
 
     override fun clickShowOnMap() {
         val mapsIntent = "geo:0,0?q=$circuitLat,$circuitLng ($name)"
-        showOnMap.postValue(DataEvent(mapsIntent))
+        goToMap.postValue(DataEvent(mapsIntent))
     }
 
     override fun clickWikipedia() {
-
+        goToWikipediaPage.postValue(DataEvent(wikipedia ?: ""))
     }
 
     //endregion

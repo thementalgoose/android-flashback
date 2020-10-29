@@ -91,7 +91,7 @@
                 android:paddingEnd="@dimen/paddingSmall"
                 android:paddingBottom="@dimen/paddingXSmall"
                 android:text="@string/circuit_info_wikipedia"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:layout_constraintStart_toEndOf="@id/maps"
                 app:layout_constraintTop_toBottomOf="@id/status" />
 

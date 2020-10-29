@@ -3,6 +3,7 @@ package tmg.flashback.race
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.core.view.WindowInsetsCompat
@@ -157,7 +158,15 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
             startActivity(CircuitInfoActivity.intent(this, circuitId, initialTrackName))
         }
 
+        wikipedia.setOnClickListener {
+            viewModel.inputs.clickWikipedia()
+        }
+
         // Observe
+
+        observe(viewModel.outputs.showWikipedia) {
+            wikipedia.show(it)
+        }
 
         observe(viewModel.outputs.seasonRoundData) { (season, round) ->
             tvRoundInfo.text = getString(
@@ -180,6 +189,11 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
 
         observeEvent(viewModel.outputs.goToDriverOverview) { (driverId, driverName) ->
             startActivity(DriverActivity.intent(this, driverId, driverName))
+        }
+
+        observeEvent(viewModel.outputs.goToWikipedia) {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(it))
+            startActivity(intent)
         }
 
         if (defaultToRace) {

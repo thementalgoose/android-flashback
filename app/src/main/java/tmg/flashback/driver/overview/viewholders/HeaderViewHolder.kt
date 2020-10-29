@@ -15,8 +15,18 @@ import tmg.flashback.driver.season.DriverSeasonItem
 import tmg.flashback.utils.getColor
 import tmg.flashback.utils.getFlagResourceAlpha3
 import tmg.utilities.extensions.views.context
+import tmg.utilities.extensions.views.show
 
-class HeaderViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+class HeaderViewHolder(
+    private val clickOnWikipedia: (String) -> Unit,
+    itemView: View
+): RecyclerView.ViewHolder(itemView), View.OnClickListener {
+
+    private var wikipediaUrl: String? = null
+
+    init {
+        itemView.wikipedia.setOnClickListener(this)
+    }
 
     fun bind(item: DriverOverviewItem.Header) {
 
@@ -29,5 +39,15 @@ class HeaderViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         itemView.driverBirthday.text = itemView.context.getString(R.string.driver_overview_stat_birthday, item.driverBirthday.format(DateTimeFormatter.ofPattern("dd MMMM yyyy")))
 
         itemView.imgNationality.setImageResource(context.getFlagResourceAlpha3(item.driverNationalityISO))
+
+        @Suppress("UselessCallOnNotNull")
+        itemView.wikipedia.show(!item.driverWikiUrl.isNullOrEmpty())
+        wikipediaUrl = item.driverWikiUrl
+    }
+
+    override fun onClick(p0: View?) {
+        wikipediaUrl?.let {
+            clickOnWikipedia(it)
+        }
     }
 }

@@ -13,7 +13,9 @@ import tmg.flashback.shared.SyncAdapter
 import tmg.flashback.shared.viewholders.LoadingViewHolder
 import tmg.flashback.utils.GenericDiffCallback
 
-class DriverOverviewAdapter: SyncAdapter<DriverOverviewItem>() {
+class DriverOverviewAdapter(
+    val openUrl: (String) -> Unit
+): SyncAdapter<DriverOverviewItem>() {
 
     override var list: List<DriverOverviewItem> = listOf(DriverOverviewItem.Loading)
         set(value) {
@@ -25,6 +27,7 @@ class DriverOverviewAdapter: SyncAdapter<DriverOverviewItem>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             R.layout.view_driver_overview_header -> HeaderViewHolder(
+                    openUrl,
                     LayoutInflater.from(parent.context).inflate(viewType, parent, false)
             )
             R.layout.view_driver_overview_stat -> StatsViewHolder(
