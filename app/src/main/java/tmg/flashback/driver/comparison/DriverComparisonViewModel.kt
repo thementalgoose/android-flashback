@@ -2,8 +2,6 @@ package tmg.flashback.driver.comparison
 
 import tmg.flashback.base.BaseViewModel
 import tmg.flashback.di.async.ScopeProvider
-import tmg.flashback.driver.DriverViewModelInputs
-import tmg.flashback.driver.DriverViewModelOutputs
 
 //region Inputs
 

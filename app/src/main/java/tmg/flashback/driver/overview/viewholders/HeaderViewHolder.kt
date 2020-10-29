@@ -1,7 +1,6 @@
 package tmg.flashback.driver.overview.viewholders
 
 import android.view.View
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.view_driver_overview_header.view.*
@@ -11,7 +10,6 @@ import kotlinx.android.synthetic.main.view_driver_overview_header.view.tvNumber
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.R
 import tmg.flashback.driver.overview.DriverOverviewItem
-import tmg.flashback.driver.season.DriverSeasonItem
 import tmg.flashback.utils.getColor
 import tmg.flashback.utils.getFlagResourceAlpha3
 import tmg.utilities.extensions.views.context

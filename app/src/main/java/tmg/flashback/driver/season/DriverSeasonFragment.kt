@@ -3,8 +3,10 @@ package tmg.flashback.driver.season
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.Fragment
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import kotlinx.android.synthetic.main.activity_driver_season.*
 import kotlinx.android.synthetic.main.fragment_driver_season.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.R
@@ -32,7 +34,7 @@ class DriverSeasonFragment: BaseFragment() {
         super.onCreate(savedInstanceState)
 
         seasonAdapter = DriverSeasonAdapter(
-                itemClicked = viewModel.inputs::clickSeasonRound
+            itemClicked = viewModel.inputs::clickSeasonRound
         )
     }
 
@@ -46,7 +48,7 @@ class DriverSeasonFragment: BaseFragment() {
             seasonAdapter.list = it
         }
 
-        observeEvent(viewModel.outputs.goToSeasonRound) { result ->
+        observeEvent(viewModel.outputs.openSeasonRound) { result ->
             context?.let {
                 val intent: Intent = RaceActivity.intent(it,
                         season = result.season,
@@ -60,6 +62,11 @@ class DriverSeasonFragment: BaseFragment() {
                 )
                 startActivity(intent)
             }
+        }
+
+        ViewCompat.setOnApplyWindowInsetsListener(list) { _, inset ->
+            list.setPadding(0, 0, 0, inset.systemWindowInsetBottom)
+            inset
         }
     }
 

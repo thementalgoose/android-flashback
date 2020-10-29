@@ -2,71 +2,71 @@ package tmg.flashback.driver
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.widget.Toast
 import androidx.core.view.WindowInsetsCompat
-import com.google.android.material.tabs.TabLayoutMediator
+import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_driver.*
 import org.koin.android.viewmodel.ext.android.viewModel
-import tmg.flashback.BuildConfig
 import tmg.flashback.R
 import tmg.flashback.base.BaseActivity
+import tmg.flashback.driver.overview.DriverOverviewAdapter
+import tmg.flashback.driver.season.DriverSeasonActivity
 import tmg.utilities.extensions.observe
+import tmg.utilities.extensions.observeEvent
 
 class DriverActivity: BaseActivity() {
 
     private val viewModel: DriverViewModel by viewModel()
 
-    private var tabLayoutMediator: TabLayoutMediator? = null
-
-    private lateinit var pagerAdapter: DriverPagerAdapter
     private lateinit var driverId: String
-    private var passthroughDriverName: String? = null
+    private lateinit var driverName: String
+    private lateinit var adapter: DriverOverviewAdapter
 
     override fun layoutId(): Int = R.layout.activity_driver
 
     override fun arguments(bundle: Bundle) {
         super.arguments(bundle)
-
         driverId = bundle.getString(keyDriverId)!!
-        passthroughDriverName = bundle.getString(keyDriverName)
+        driverName = bundle.getString(keyDriverName)!!
+
         viewModel.inputs.setup(driverId)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        pagerAdapter = DriverPagerAdapter(driverId, this)
-        viewPager.adapter = pagerAdapter
+        header.text = driverName
 
-        header.text = passthroughDriverName
+        adapter = DriverOverviewAdapter(
+            openUrl = viewModel.inputs::openUrl,
+            seasonClicked = viewModel.inputs::openSeason
+        )
+        list.adapter = adapter
+        list.layoutManager = LinearLayoutManager(this)
+
         back.setOnClickListener {
-            finish()
+            onBackPressed()
         }
 
-        observe(viewModel.outputs.seasons) { list ->
-            tabLayoutMediator?.detach()
-            pagerAdapter.seasons = list
-                .map { Pair(driverId, it) }
-            tabLayoutMediator = TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-                when (position) {
-                    0 -> tab.text = getString(R.string.driver_overview_title_overview)
-                    else -> tab.text = "${list.getOrNull(position - 1) ?: ""}"
-                }
-            }
-            tabLayoutMediator?.attach()
+        observe(viewModel.outputs.list) {
+            adapter.list = it
         }
 
-        swipeContainer.isEnabled = false
+        observeEvent(viewModel.outputs.openSeason) { (driverId, season) ->
+            val intent = DriverSeasonActivity.intent(this, driverId, driverName, season)
+            startActivity(intent)
+        }
 
-        if (BuildConfig.DEBUG) {
-            Toast.makeText(this, "DriverID: $driverId", Toast.LENGTH_LONG).show()
+        observeEvent(viewModel.outputs.openUrl) {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(it))
+            startActivity(intent)
         }
     }
 
     override fun setInsets(insets: WindowInsetsCompat) {
         titlebar.setPadding(0, insets.systemWindowInsetTop, 0, 0)
-        viewPager.setPadding(0, 0, 0, insets.systemWindowInsetBottom)
+        list.setPadding(0, 0, 0, insets.systemWindowInsetBottom)
     }
 
     companion object {
@@ -81,4 +81,5 @@ class DriverActivity: BaseActivity() {
             return intent
         }
     }
+
 }

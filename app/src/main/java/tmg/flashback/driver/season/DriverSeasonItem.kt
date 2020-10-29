@@ -6,8 +6,6 @@ import tmg.flashback.R
 import tmg.flashback.driver.overview.RaceForPositionType
 import tmg.flashback.repo.enums.BarAnimation
 import tmg.flashback.repo.enums.RaceStatus
-import tmg.flashback.repo.models.stats.Constructor
-import tmg.flashback.repo.models.stats.Driver
 import tmg.flashback.repo.models.stats.SlimConstructor
 import tmg.flashback.shared.SyncDataItem
 
@@ -27,10 +25,10 @@ sealed class DriverSeasonItem(
     )
 
     data class RacedFor(
-            val season: Int?, // Null = hide season
-            val constructors: SlimConstructor,
-            val type: RaceForPositionType,
-            val isChampionship: Boolean
+        val season: Int?, // Null = hide season
+        val constructors: SlimConstructor,
+        val type: RaceForPositionType,
+        val isChampionship: Boolean
     ): DriverSeasonItem(
             R.layout.view_driver_overview_raced_for
     )

@@ -1,4 +1,4 @@
-package tmg.flashback.driver.overview
+package tmg.flashback.driver_old.overview
 
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.mock
@@ -13,7 +13,8 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.R
 import tmg.flashback.currentYear
-import tmg.flashback.driver.*
+import tmg.flashback.driver.overview.DriverOverviewItem
+import tmg.flashback.driver_old.*
 import tmg.flashback.driver.overview.RaceForPositionType.*
 import tmg.flashback.repo.db.stats.DriverDB
 import tmg.flashback.settings.ConnectivityManager

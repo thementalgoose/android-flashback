@@ -1,4 +1,4 @@
-package tmg.flashback.driver.season
+package tmg.flashback.driver_old.season
 
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.mock
@@ -11,16 +11,16 @@ import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.R
-import tmg.flashback.driver.*
+import tmg.flashback.driver_old.*
 import tmg.flashback.driver.overview.RaceForPositionType.*
-import tmg.flashback.maxPointsBySeason
+import tmg.flashback.driver.season.DriverSeasonItem
+import tmg.flashback.driver.season.DriverSeasonViewModel
 import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.db.stats.DriverDB
 import tmg.flashback.repo.enums.BarAnimation
 import tmg.flashback.repo.models.stats.DriverOverviewRace
 import tmg.flashback.settings.ConnectivityManager
 import tmg.flashback.shared.SyncDataItem
-import tmg.flashback.shared.viewholders.DataUnavailable
 import tmg.flashback.shared.viewholders.DataUnavailable.DRIVER_NOT_EXIST
 import tmg.flashback.testutils.*
 import tmg.flashback.utils.position
@@ -43,7 +43,12 @@ class DriverSeasonViewModelTest: BaseTest() {
     }
 
     private fun initSUT() {
-        sut = DriverSeasonViewModel(mockDriverDB, mockConnectivityManager, mockPrefsDB, testScopeProvider)
+        sut = DriverSeasonViewModel(
+            mockDriverDB,
+            mockConnectivityManager,
+            mockPrefsDB,
+            testScopeProvider
+        )
         sut.inputs.setup(mockDriverId, 2019)
     }
 
@@ -213,7 +218,7 @@ class DriverSeasonViewModelTest: BaseTest() {
 
         sut.inputs.clickSeasonRound(expectedFirstRound)
 
-        assertDataEventValue(expectedFirstRound, sut.outputs.goToSeasonRound)
+        assertDataEventValue(expectedFirstRound, sut.outputs.openSeasonRound)
     }
 
     @AfterEach
