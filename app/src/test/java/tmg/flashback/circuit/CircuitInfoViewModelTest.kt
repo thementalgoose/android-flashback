@@ -5,13 +5,11 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
-import tmg.flashback.TrackLayout
 import tmg.flashback.TrackLayout.MONACO
 import tmg.flashback.circuit.list.CircuitItem
 import tmg.flashback.extensions.circuitIcon
@@ -35,7 +33,7 @@ class CircuitInfoViewModelTest: BaseTest() {
     private val mockInvalidCircuitId: String = "mockCircuitId"
     private val mockLocalDate: LocalDate = LocalDate.now()
     private val mockLocalTime: LocalTime = LocalTime.now()
-    private val mockCircuitRace =CircuitRace(
+    private val mockCircuitRace = CircuitRace(
         name = "Test circuit",
         season = 2020,
         round = 1,
@@ -183,25 +181,25 @@ class CircuitInfoViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `CircuitInfoViewModel click showOnMap launches show map action`() {
+    fun `CircuitInfoViewModel click showOnMap launches show map action`() = coroutineTest {
 
         initSUT()
 
         sut.inputs.clickShowOnMap()
 
-        assertDataEventValue(sut.outputs.showOnMap) {
+        assertDataEventValue(sut.outputs.goToMap) {
             it.startsWith("geo:0,0?q=")
         }
     }
 
     @Test
-    fun `CircuitInfoViewModel click wikipedia does nothing and does not show wikipedia link action while functionality is missing`() {
+    fun `CircuitInfoViewModel click wikipedia launches wikipedia action`() = coroutineTest {
 
         initSUT()
 
         sut.inputs.clickWikipedia()
 
-        assertEventNotFired(sut.outputs.showWikipedia)
+        assertEventFired(sut.outputs.goToWikipediaPage)
     }
 
     @AfterEach
