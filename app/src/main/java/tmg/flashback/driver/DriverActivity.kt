@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_driver.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.R
