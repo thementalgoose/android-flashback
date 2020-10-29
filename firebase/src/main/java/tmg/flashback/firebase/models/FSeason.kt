@@ -4,8 +4,16 @@ data class FSeason(
         val drivers: Map<String, FSeasonOverviewDriver>? = null,
         val constructors: Map<String, FSeasonOverviewConstructor>? = null,
         val race: Map<String, FRound>? = null,
-        val penDriver: List<FDriverPenalties>? = null,
-        val penConstructor: List<FConstructorPenalties>? = null
+        val standings: FSeasonStatistics? = null
+)
+
+data class FSeasonStatistics(
+        val constructors: Map<String, FSeasonStatisticsPoints>? = null,
+        val drivers: Map<String, FSeasonStatisticsPoints>? = null
+)
+
+data class FSeasonStatisticsPoints(
+        val p: Int? = 0
 )
 
 data class FSeasonOverviewDriver(
@@ -52,24 +60,6 @@ data class FRound(
         val circuit: FSeasonOverviewRaceCircuit = FSeasonOverviewRaceCircuit(),
         val qualifying: Map<String, FSeasonOverviewRaceQualifying>? = null,
         val race: Map<String, FSeasonOverviewRaceRace>? = null
-)
-
-data class FDriverPenalties(
-        val season: Int = 0,
-        val fine: Int? = null,
-        val round: Int? = null,
-        val driverId: String? = "",
-        val date: String? = "",
-        val pointsDelta: Int? = null
-)
-
-data class FConstructorPenalties(
-        val season: Int = 0,
-        val fine: Int? = null,
-        val round: Int? = null,
-        val constructorId: String? = "",
-        val date: String? = "",
-        val pointsDelta: Int? = null
 )
 
 data class FSeasonOverviewRaceCircuit(
