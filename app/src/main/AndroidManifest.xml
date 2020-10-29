@@ -73,6 +73,11 @@
             android:label="" />
 
         <activity
+            android:name=".constructors.ConstructorActivity"
+            android:screenOrientation="portrait"
+            android:label="" />
+
+        <activity
             android:name=".admin.lockout.LockoutActivity"
             android:screenOrientation="portrait"
             android:label="" />

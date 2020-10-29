@@ -5,6 +5,7 @@ import org.koin.dsl.module
 import tmg.flashback.BuildConfig
 import tmg.flashback.admin.lockout.LockoutViewModel
 import tmg.flashback.circuit.CircuitInfoViewModel
+import tmg.flashback.constructors.ConstructorViewModel
 import tmg.flashback.di.async.ScopeProvider
 import tmg.flashback.di.async.ViewModelScopeProvider
 import tmg.flashback.di.device.AppBuildConfigProvider
@@ -40,6 +41,9 @@ var flashbackModule = module {
     // Driver
     viewModel { DriverViewModel(get(), get(), get()) }
     viewModel { DriverSeasonViewModel(get(), get(), get(), get()) }
+
+    // Constructor
+    viewModel { ConstructorViewModel(get()) }
 
     // Settings
     viewModel { SettingsViewModel(get(), get()) }
