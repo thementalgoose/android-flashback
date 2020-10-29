@@ -18,5 +18,5 @@ data class FCircuitResult(
     val name: String = "",
     val season: Int = -1,
     val round: Int = -1,
-    val wikiUrl: String? = ""
+    val wikiUrl: String? = null
 )

@@ -27,6 +27,7 @@ interface RaceViewModelInputs {
     fun initialise(season: Int, round: Int, date: LocalDate?)
     fun orderBy(seasonRaceAdapterType: RaceAdapterType)
     fun goToDriver(driverId: String, driverName: String)
+    fun clickWikipedia()
 }
 
 //endregion
@@ -38,6 +39,9 @@ interface RaceViewModelOutputs {
     val raceItems: LiveData<Triple<RaceAdapterType, List<RaceAdapterModel>, SeasonRound>>
     val seasonRoundData: LiveData<SeasonRound>
     val goToDriverOverview: MutableLiveData<DataEvent<Pair<String, String>>>
+
+    val showWikipedia: MutableLiveData<Boolean>
+    val goToWikipedia: MutableLiveData<DataEvent<String>>
 }
 
 //endregion
@@ -53,13 +57,16 @@ class RaceViewModel(
     var inputs: RaceViewModelInputs = this
     var outputs: RaceViewModelOutputs = this
 
-    private var circuitId: String? = null
+    private var wikipedia: String? = null
 
     private var roundDate: LocalDate? = null
     private val seasonRound: ConflatedBroadcastChannel<SeasonRound> = ConflatedBroadcastChannel()
     private var viewType: ConflatedBroadcastChannel<RaceAdapterType> = ConflatedBroadcastChannel()
 
     override val goToDriverOverview: MutableLiveData<DataEvent<Pair<String, String>>> = MutableLiveData()
+
+    override val showWikipedia: MutableLiveData<Boolean> = MutableLiveData(false)
+    override val goToWikipedia: MutableLiveData<DataEvent<String>> = MutableLiveData()
 
     private val seasonRoundFlow: Flow<Round?> = seasonRound
         .asFlow()
@@ -90,6 +97,9 @@ class RaceViewModel(
                     }
                     return@map Triple(viewType, list, seasonRoundValue)
                 }
+
+                wikipedia = roundData.wikipediaUrl
+                showWikipedia.value = wikipedia != null
 
                 // Constructor standings, models are constructors
                 if (viewType == RaceAdapterType.CONSTRUCTOR_STANDINGS) {
@@ -217,6 +227,10 @@ class RaceViewModel(
 
     override fun goToDriver(driverId: String, driverName: String) {
         goToDriverOverview.value = DataEvent(Pair(driverId, driverName))
+    }
+
+    override fun clickWikipedia() {
+        goToWikipedia.postValue(DataEvent(wikipedia ?: ""))
     }
 
     //endregion

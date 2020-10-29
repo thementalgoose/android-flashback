@@ -252,6 +252,7 @@ val mockRound1: Round = Round(
         drivers = listOf(mockDriver1, mockDriver2, mockDriver3, mockDriver4),
         constructors = listOf(mockConstructorAlpha, mockConstructorBeta),
         circuit = mockCircuitCharlie,
+        wikipediaUrl = "http://www.mockwikiurl.com",
         q1 = mapOf(
                 mockDriver1.id to mockRound1Driver1Q1,
                 mockDriver2.id to mockRound1Driver2Q1,
@@ -347,6 +348,7 @@ val mockRound2: Round = Round(
         date = mockLocalDateOfRound2,
         time = mockLocalTimeOfRound2,
         name = "Round 2",
+        wikipediaUrl = "http://www.mockwikiurl.com",
         drivers = listOf(mockDriver1, mockDriver2, mockDriver3, mockDriver4),
         constructors = listOf(mockConstructorAlpha, mockConstructorBeta),
         circuit = mockCircuitDelta,

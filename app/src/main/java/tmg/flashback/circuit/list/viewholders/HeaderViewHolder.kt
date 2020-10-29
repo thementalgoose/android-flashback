@@ -12,6 +12,7 @@ import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.ordinalAbbreviation
 import tmg.utilities.extensions.views.context
 import tmg.utilities.extensions.views.getString
+import tmg.utilities.extensions.views.show
 
 class HeaderViewHolder(
     private val clickShowOnMap: () -> Unit,
@@ -57,6 +58,7 @@ class HeaderViewHolder(
         }
         itemView.status.text = subtitle.fromHtml()
 
+        itemView.wikipedia.show(true)
 
     }
 

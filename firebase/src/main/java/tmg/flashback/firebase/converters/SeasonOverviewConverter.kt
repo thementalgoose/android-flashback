@@ -68,6 +68,7 @@ fun FRound.convert(
             date = fromDate(date),
             time = fromTime(time),
             name = name,
+            wikipediaUrl = wiki,
             drivers = driverList,
             constructors = constructorList,
             circuit = circuit.convert(),
