@@ -10,6 +10,7 @@ data class Round(
         val date: LocalDate,
         val time: LocalTime?,
         val name: String,
+        val wikipediaUrl: String?,
         val drivers: List<RoundDriver>,
         val constructors: List<Constructor>,
         val circuit: CircuitSummary,
