@@ -29,6 +29,9 @@ abstract class SyncAdapter<T>: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             R.layout.view_shared_message -> MessageViewHolder(
                 LayoutInflater.from(parent.context).inflate(viewType, parent, false)
             )
+            R.layout.view_shared_constructor_championship_not_awarded -> ConstructorsChampionshipNotAwardedViewHolder(
+                LayoutInflater.from(parent.context).inflate(viewType, parent, false)
+            )
             else -> throw Error("${this.javaClass.simpleName} Does not have a supported layout id to create a viewholder by")
         }
     }
