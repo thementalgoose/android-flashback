@@ -405,8 +405,8 @@ val mockSeason = Season(
         drivers = listOf(mockDriver1.toDriver(), mockDriver2.toDriver(), mockDriver3.toDriver(), mockDriver4.toDriver()),
         constructors = listOf(mockConstructorAlpha, mockConstructorBeta),
         rounds = listOf(mockRound1, mockRound2),
-        driverPenalties = emptyList(),
-        constructorPenalties = emptyList()
+        driverStandings = emptyMap(),
+        constructorStandings = emptyMap()
 )
 
 //endregion
