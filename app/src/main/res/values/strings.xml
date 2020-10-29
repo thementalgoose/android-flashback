@@ -90,6 +90,9 @@
         <br/>• Adds setting option to open news articles in external browser by default
         <br/>• Fixes crash in certain seasons in the 1980s
         <br/>• Fixes theming issue with circuit icons that are not fully supported]]></string>
+    <string name="release_26"><![CDATA[<b>4.7.8</b>
+        <br/>• Adds wikipedia links to driver overview, race and circuit information screens
+        <br/>• Fixes some constructor penalties not being applied to disqualified teams throughout F1]]></string>
 
     <!-- App Lockout -->
     <string name="app_lockout_title">App lockout</string>
