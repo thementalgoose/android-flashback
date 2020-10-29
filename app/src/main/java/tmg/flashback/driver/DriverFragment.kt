@@ -1,4 +1,4 @@
-package tmg.flashback.driver.overview
+package tmg.flashback.driver
 
 import android.content.Intent
 import android.net.Uri
@@ -9,16 +9,14 @@ import kotlinx.android.synthetic.main.fragment_driver_season.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.R
 import tmg.flashback.base.BaseFragment
-import tmg.flashback.driver.season.DriverSeasonFragment
-import tmg.flashback.repo.models.stats.DriverOverview
+import tmg.flashback.driver.overview.DriverOverviewAdapter
 import tmg.utilities.extensions.observe
-import tmg.utilities.extensions.observeEvent
 
-class DriverOverviewFragment: BaseFragment() {
+class DriverFragment: BaseFragment() {
 
     private lateinit var adapter: DriverOverviewAdapter
 
-    private val viewModel: DriverOverviewViewModel by viewModel()
+    private val viewModel: DriverViewModel by viewModel()
 
     override fun layoutId(): Int = R.layout.fragment_driver_season
 
@@ -49,8 +47,8 @@ class DriverOverviewFragment: BaseFragment() {
 
         private const val keyDriverId: String = "keyDriverId"
 
-        fun instance(driverId: String): DriverOverviewFragment {
-            val fragment = DriverOverviewFragment()
+        fun instance(driverId: String): DriverFragment {
+            val fragment = DriverFragment()
             val bundle = Bundle().apply {
                 putString(keyDriverId, driverId)
             }

@@ -10,7 +10,6 @@ import tmg.flashback.di.async.ViewModelScopeProvider
 import tmg.flashback.di.device.AppBuildConfigProvider
 import tmg.flashback.di.device.BuildConfigProvider
 import tmg.flashback.driver.DriverViewModel
-import tmg.flashback.driver.overview.DriverOverviewViewModel
 import tmg.flashback.driver.season.DriverSeasonViewModel
 import tmg.flashback.firebase.FirebaseCrashManager
 import tmg.flashback.home.HomeViewModel
@@ -25,18 +24,24 @@ import tmg.flashback.settings.news.SettingsNewsViewModel
 
 var flashbackModule = module {
 
+    // Home
     viewModel { HomeViewModel(get(), get(), get(), get(), get(), get(), get()) }
     viewModel { SeasonViewModel(get(), get()) }
+
+    // News
     viewModel { NewsViewModel(get(), get(), get(), get()) }
 
+    // Circuit
     viewModel { CircuitInfoViewModel(get(), get(), get()) }
 
+    // Race
     viewModel { RaceViewModel(get(), get(), get(), get()) }
 
+    // Driver
+    viewModel { DriverViewModel(get(), get(), get()) }
     viewModel { DriverSeasonViewModel(get(), get(), get(), get()) }
-    viewModel { DriverViewModel(get(), get()) }
-    viewModel { DriverOverviewViewModel(get(), get(), get()) }
 
+    // Settings
     viewModel { SettingsViewModel(get(), get()) }
     viewModel { SettingsNewsViewModel(get(), get()) }
     viewModel { LockoutViewModel(get(), get(), get()) }
