@@ -48,7 +48,7 @@ class TrackViewHolder(
             circuitName.text = item.circuitName
             raceCountry.text = item.raceCountry
             round.text = context.getString(R.string.race_round, item.round)
-            date.text = "${item.date.dayOfMonth.ordinalAbbreviation} ${item.date.format(DateTimeFormatter.ofPattern("MMMM yy"))}"
+            date.text = "${item.date.dayOfMonth.ordinalAbbreviation} ${item.date.format(DateTimeFormatter.ofPattern("MMM yy"))}"
         }
     }
 
