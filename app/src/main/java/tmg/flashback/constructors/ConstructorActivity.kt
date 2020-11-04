@@ -13,10 +13,25 @@ class ConstructorActivity: BaseActivity() {
 
     private val viewModel: ConstructorViewModel by viewModel()
 
+    private lateinit var constructorId: String
+    private lateinit var constructorName: String
+
     override fun layoutId(): Int = R.layout.activity_constructor
+
+    override fun arguments(bundle: Bundle) {
+        super.arguments(bundle)
+        constructorId = bundle.getString(keyConstructorId)!!
+        constructorName = bundle.getString(keyConstructorName)!!
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        header.text = constructorName
+
+        back.setOnClickListener {
+            onBackPressed()
+        }
     }
 
     override fun setInsets(insets: WindowInsetsCompat) {
