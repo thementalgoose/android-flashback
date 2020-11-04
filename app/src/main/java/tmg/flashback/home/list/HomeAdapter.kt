@@ -13,7 +13,8 @@ import tmg.flashback.shared.viewholders.*
 
 class HomeAdapter(
         private val trackClicked: (track: HomeItem.Track) -> Unit,
-        private val driverClicked: (season: Int, driverId: String, firstName: String?, lastName: String?) -> Unit
+        private val driverClicked: (season: Int, driverId: String, firstName: String?, lastName: String?) -> Unit,
+        private val constructorClicked: (constructorId: String, constructorName: String) -> Unit
 ): SyncAdapter<HomeItem>() {
 
     override var list: List<HomeItem> = emptyList()
@@ -34,6 +35,7 @@ class HomeAdapter(
                 LayoutInflater.from(parent.context).inflate(viewType, parent, false)
             )
             R.layout.view_home_constructor -> ConstructorViewHolder(
+                constructorClicked,
                 LayoutInflater.from(parent.context).inflate(viewType, parent, false)
             )
             else -> super.onCreateViewHolder(parent, viewType)

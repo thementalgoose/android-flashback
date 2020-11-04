@@ -14,9 +14,22 @@ import tmg.utilities.extensions.views.context
 import tmg.utilities.extensions.views.getString
 import tmg.utilities.extensions.views.show
 
-class ConstructorViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+class ConstructorViewHolder(
+        private val constructorClicked: (constructorId: String, constructorName: String) -> Unit,
+        itemView: View
+): RecyclerView.ViewHolder(itemView), View.OnClickListener {
+
+    init {
+        itemView.container.setOnClickListener(this)
+    }
+
+    private lateinit var constructorId: String
+    private lateinit var constructorName: String
 
     fun bind(item: HomeItem.Constructor) {
+
+        constructorId = item.constructorId
+        constructorName = item.constructor.name
 
         val maxPoints = item.maxPointsInSeason
 
@@ -60,5 +73,9 @@ class ConstructorViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         layout.tvName.text = driverResult.first.name
         layout.imgFlag.setImageResource(itemView.context.getFlagResourceAlpha3(driverResult.first.nationalityISO))
         layout.tvNumber.text = itemView.context.resources.getQuantityString(R.plurals.race_points, driverResult.second, driverResult.second)
+    }
+
+    override fun onClick(p0: View?) {
+        constructorClicked(constructorId, constructorName)
     }
 }
