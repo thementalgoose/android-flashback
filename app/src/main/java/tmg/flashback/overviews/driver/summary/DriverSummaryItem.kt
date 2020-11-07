@@ -1,4 +1,4 @@
-package tmg.flashback.driver.overview
+package tmg.flashback.overviews.driver.summary
 
 import androidx.annotation.AttrRes
 import androidx.annotation.DrawableRes
@@ -9,7 +9,7 @@ import tmg.flashback.R
 import tmg.flashback.repo.models.stats.SlimConstructor
 import tmg.flashback.shared.SyncDataItem
 
-sealed class DriverOverviewItem(
+sealed class DriverSummaryItem(
         @LayoutRes val layoutId: Int
 ) {
     data class Header(
@@ -20,8 +20,8 @@ sealed class DriverOverviewItem(
             val driverBirthday: LocalDate,
             val driverWikiUrl: String,
             val driverNationalityISO: String
-    ): DriverOverviewItem(
-            R.layout.view_driver_overview_header
+    ): DriverSummaryItem(
+            R.layout.view_driver_summary_header
     )
 
     data class Stat(
@@ -32,32 +32,32 @@ sealed class DriverOverviewItem(
             @StringRes
             val label: Int,
             val value: String
-    ): DriverOverviewItem(
-            R.layout.view_driver_overview_stat
+    ): DriverSummaryItem(
+            R.layout.view_overview_stat
     )
 
     data class RacedFor(
-        val season: Int,
-        val constructors: SlimConstructor,
-        val type: RaceForPositionType,
-        val isChampionship: Boolean
-    ): DriverOverviewItem(
-            R.layout.view_driver_overview_raced_for
+            val season: Int,
+            val constructors: SlimConstructor,
+            val type: RaceForPositionType,
+            val isChampionship: Boolean
+    ): DriverSummaryItem(
+            R.layout.view_driver_summary_raced_for
     )
 
     data class ErrorItem(
             val item: SyncDataItem
-    ): DriverOverviewItem(item.layoutId)
+    ): DriverSummaryItem(item.layoutId)
 
-    object Loading: DriverOverviewItem(R.layout.view_loading_podium)
+    object Loading: DriverSummaryItem(R.layout.view_loading_podium)
 }
 
 
-fun MutableList<DriverOverviewItem>.addError(syncDataItem: SyncDataItem) {
+fun MutableList<DriverSummaryItem>.addError(syncDataItem: SyncDataItem) {
     this.add(
-        DriverOverviewItem.ErrorItem(
-            syncDataItem
-        )
+            DriverSummaryItem.ErrorItem(
+                    syncDataItem
+            )
     )
 }
 

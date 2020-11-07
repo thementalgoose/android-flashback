@@ -12,7 +12,9 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.R
 import tmg.flashback.driver.*
-import tmg.flashback.driver.overview.RaceForPositionType.*
+import tmg.flashback.overviews.driver.season.DriverSeasonItem
+import tmg.flashback.overviews.driver.season.DriverSeasonViewModel
+import tmg.flashback.overviews.driver.summary.RaceForPositionType.*
 import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.db.stats.DriverDB
 import tmg.flashback.repo.enums.BarAnimation
@@ -42,10 +44,10 @@ class DriverSeasonViewModelTest: BaseTest() {
 
     private fun initSUT() {
         sut = DriverSeasonViewModel(
-            mockDriverDB,
-            mockConnectivityManager,
-            mockPrefsDB,
-            testScopeProvider
+                mockDriverDB,
+                mockConnectivityManager,
+                mockPrefsDB,
+                testScopeProvider
         )
         sut.inputs.setup(mockDriverId, 2019)
     }

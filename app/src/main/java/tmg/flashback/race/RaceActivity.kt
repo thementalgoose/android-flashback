@@ -16,7 +16,7 @@ import tmg.flashback.R
 import tmg.flashback.TrackLayout
 import tmg.flashback.base.BaseActivity
 import tmg.flashback.circuit.CircuitInfoActivity
-import tmg.flashback.driver.DriverActivity
+import tmg.flashback.overviews.driver.DriverActivity
 import tmg.flashback.utils.getFlagResourceAlpha3
 import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.observe

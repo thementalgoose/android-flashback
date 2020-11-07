@@ -1,4 +1,4 @@
-package tmg.flashback.constructors
+package tmg.flashback.overviews.constructor
 
 import tmg.flashback.base.BaseViewModel
 import tmg.flashback.di.async.ScopeProvider

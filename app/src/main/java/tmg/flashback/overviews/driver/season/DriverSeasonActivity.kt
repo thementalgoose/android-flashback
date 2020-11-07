@@ -1,4 +1,4 @@
-package tmg.flashback.driver.season
+package tmg.flashback.overviews.driver.season
 
 import android.content.Context
 import android.content.Intent

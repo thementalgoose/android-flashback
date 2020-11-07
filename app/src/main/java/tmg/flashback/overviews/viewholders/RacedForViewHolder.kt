@@ -1,4 +1,4 @@
-package tmg.flashback.driver.viewholders
+package tmg.flashback.overviews.viewholders
 
 import android.view.View
 import android.widget.ImageView
@@ -7,10 +7,10 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.R
-import tmg.flashback.driver.overview.DriverOverviewItem
-import tmg.flashback.driver.overview.RaceForPositionType
-import tmg.flashback.driver.overview.RaceForPositionType.*
-import tmg.flashback.driver.season.DriverSeasonItem
+import tmg.flashback.overviews.driver.summary.DriverSummaryItem
+import tmg.flashback.overviews.driver.summary.RaceForPositionType
+import tmg.flashback.overviews.driver.summary.RaceForPositionType.*
+import tmg.flashback.overviews.driver.season.DriverSeasonItem
 import tmg.flashback.repo.models.stats.SlimConstructor
 import tmg.utilities.extensions.views.invisible
 import tmg.utilities.extensions.views.visible
@@ -48,16 +48,16 @@ open class RacedForViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
         this.bind(item.season, item.constructors, item.type, item.isChampionship)
     }
 
-    fun bind(item: DriverOverviewItem.RacedFor) {
+    fun bind(item: DriverSummaryItem.RacedFor) {
         season = item.season
         this.bind(item.season, item.constructors, item.type, item.isChampionship)
     }
 
     open fun bind(
-        season: Int?,
-        constructors: SlimConstructor,
-        type: RaceForPositionType,
-        isChampionship: Boolean
+            season: Int?,
+            constructors: SlimConstructor,
+            type: RaceForPositionType,
+            isChampionship: Boolean
     ) {
         year.isVisible = type != MID_SEASON_CHANGE && season != null
         year.text = season.toString()

@@ -1,4 +1,4 @@
-package tmg.flashback.driver
+package tmg.flashback.overviews.driver
 
 import android.content.Context
 import android.content.Intent
@@ -6,13 +6,12 @@ import android.net.Uri
 import android.os.Bundle
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_driver.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.R
 import tmg.flashback.base.BaseActivity
-import tmg.flashback.driver.overview.DriverOverviewAdapter
-import tmg.flashback.driver.season.DriverSeasonActivity
+import tmg.flashback.overviews.driver.summary.DriverSummaryAdapter
+import tmg.flashback.overviews.driver.season.DriverSeasonActivity
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 
@@ -22,7 +21,7 @@ class DriverActivity: BaseActivity() {
 
     private lateinit var driverId: String
     private lateinit var driverName: String
-    private lateinit var adapter: DriverOverviewAdapter
+    private lateinit var adapter: DriverSummaryAdapter
 
     override fun layoutId(): Int = R.layout.activity_driver
 
@@ -39,9 +38,9 @@ class DriverActivity: BaseActivity() {
 
         header.text = driverName
 
-        adapter = DriverOverviewAdapter(
-            openUrl = viewModel.inputs::openUrl,
-            seasonClicked = viewModel.inputs::openSeason
+        adapter = DriverSummaryAdapter(
+                openUrl = viewModel.inputs::openUrl,
+                seasonClicked = viewModel.inputs::openSeason
         )
         list.adapter = adapter
         list.layoutManager = LinearLayoutManager(this)

@@ -1,4 +1,4 @@
-package tmg.flashback.driver
+package tmg.flashback.overviews.driver
 
 import androidx.annotation.AttrRes
 import androidx.annotation.DrawableRes
@@ -14,9 +14,9 @@ import tmg.flashback.R
 import tmg.flashback.base.BaseViewModel
 import tmg.flashback.currentYear
 import tmg.flashback.di.async.ScopeProvider
-import tmg.flashback.driver.overview.DriverOverviewItem
-import tmg.flashback.driver.overview.RaceForPositionType
-import tmg.flashback.driver.overview.addError
+import tmg.flashback.overviews.driver.summary.DriverSummaryItem
+import tmg.flashback.overviews.driver.summary.RaceForPositionType
+import tmg.flashback.overviews.driver.summary.addError
 import tmg.flashback.repo.db.stats.DriverDB
 import tmg.flashback.repo.models.stats.DriverOverview
 import tmg.flashback.settings.ConnectivityManager
@@ -39,7 +39,7 @@ interface DriverViewModelInputs {
 //region Outputs
 
 interface DriverViewModelOutputs {
-    val list: LiveData<List<DriverOverviewItem>>
+    val list: LiveData<List<DriverSummaryItem>>
     val openUrl: LiveData<DataEvent<String>>
     val openSeason: LiveData<DataEvent<Pair<String, Int>>>
 }
@@ -60,11 +60,11 @@ class DriverViewModel(
     var outputs: DriverViewModelOutputs = this
 
     private val driverId: ConflatedBroadcastChannel<String> = ConflatedBroadcastChannel()
-    override val list: LiveData<List<DriverOverviewItem>> = driverId
+    override val list: LiveData<List<DriverSummaryItem>> = driverId
         .asFlow()
         .flatMapLatest { driverDB.getDriverOverview(it) }
         .map {
-            val list: MutableList<DriverOverviewItem> = mutableListOf()
+            val list: MutableList<DriverSummaryItem> = mutableListOf()
             when (it) {
                 null -> {
                     when {
@@ -76,7 +76,7 @@ class DriverViewModel(
                 }
                 else -> {
                     list.add(
-                        DriverOverviewItem.Header(
+                        DriverSummaryItem.Header(
                         driverFirstname = it.firstName,
                         driverSurname = it.lastName,
                         driverNumber = it.number,
@@ -89,7 +89,7 @@ class DriverViewModel(
                     if (it.hasChampionshipCurrentlyInProgress) {
                         val latestRound = it.standings.maxBy { it.season }?.raceOverview?.maxBy { it.round }
                         if (latestRound != null) {
-                            list.add(DriverOverviewItem.ErrorItem(SyncDataItem.MessageRes(R.string.results_accurate_for_year, listOf(latestRound.season, latestRound.raceName, latestRound.round))))
+                            list.add(DriverSummaryItem.ErrorItem(SyncDataItem.MessageRes(R.string.results_accurate_for_year, listOf(latestRound.season, latestRound.raceName, latestRound.round))))
                         }
                     }
 
@@ -142,8 +142,8 @@ class DriverViewModel(
     /**
      * Add career stats for the driver across their career
      */
-    private fun getAllStats(overview: DriverOverview): List<DriverOverviewItem> {
-        val list: MutableList<DriverOverviewItem> = mutableListOf()
+    private fun getAllStats(overview: DriverOverview): List<DriverSummaryItem> {
+        val list: MutableList<DriverSummaryItem> = mutableListOf()
         list.addStat(
             tint = if (overview.championships > 0) R.attr.f1Favourite else R.attr.f1TextSecondary,
             icon = R.drawable.ic_menu_drivers,
@@ -203,9 +203,9 @@ class DriverViewModel(
         return list
     }
 
-    private fun MutableList<DriverOverviewItem>.addStat(@AttrRes tint: Int = R.attr.f1TextSecondary, @DrawableRes icon: Int, @StringRes label: Int, value: String) {
+    private fun MutableList<DriverSummaryItem>.addStat(@AttrRes tint: Int = R.attr.f1TextSecondary, @DrawableRes icon: Int, @StringRes label: Int, value: String) {
         this.add(
-            DriverOverviewItem.Stat(
+            DriverSummaryItem.Stat(
             tint = tint,
             icon = icon,
             label = label,
@@ -216,7 +216,7 @@ class DriverViewModel(
     /**
      * Add the directional constructor list at the bottom of the page
      */
-    private fun getConstructorItemList(overview: DriverOverview): List<DriverOverviewItem> {
+    private fun getConstructorItemList(overview: DriverOverview): List<DriverSummaryItem> {
         return this.generateConstructorsListInDescendingOrder(overview)
             .reversed()
             .map {
@@ -225,11 +225,11 @@ class DriverViewModel(
                     RaceForPositionType.END -> RaceForPositionType.START
                     else -> it.type
                 }
-                DriverOverviewItem.RacedFor(it.season, it.constructors, type, overview.isWorldChampionFor(it.season))
+                DriverSummaryItem.RacedFor(it.season, it.constructors, type, overview.isWorldChampionFor(it.season))
             }
     }
 
-    private fun generateConstructorsListInDescendingOrder(overview: DriverOverview): List<DriverOverviewItem.RacedFor> {
+    private fun generateConstructorsListInDescendingOrder(overview: DriverOverview): List<DriverSummaryItem.RacedFor> {
         // Team history in chronological order
         // * 2008
         // | 2008
@@ -291,7 +291,7 @@ class DriverViewModel(
                 }
             }
 
-            DriverOverviewItem.RacedFor(season, constructor, dotType, overview.isWorldChampionFor(season))
+            DriverSummaryItem.RacedFor(season, constructor, dotType, overview.isWorldChampionFor(season))
         }
     }
 }
