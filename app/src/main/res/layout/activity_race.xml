@@ -118,7 +118,7 @@
                     android:layout_width="100dp"
                     android:layout_height="0dp"
                     android:layout_marginEnd="@dimen/paddingMedium"
-                    android:tint="?attr/f1TextPrimary"
+                    app:tint="?attr/f1TextPrimary"
                     app:layout_constraintBottom_toBottomOf="@id/tvDate"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"

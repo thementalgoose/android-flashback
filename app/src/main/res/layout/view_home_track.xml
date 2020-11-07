@@ -23,10 +23,10 @@
         tools:src="@drawable/au" />
 
     <ImageView
-        android:alpha="0.7"
         android:id="@+id/status"
         android:layout_width="@dimen/dashboardTrackStatusSize"
         android:layout_height="@dimen/dashboardTrackStatusSize"
+        android:alpha="0.7"
         app:layout_constraintBottom_toTopOf="@id/country"
         app:layout_constraintEnd_toEndOf="@id/country"
         app:layout_constraintStart_toEndOf="@id/country"
@@ -38,9 +38,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/paddingMedium"
-        android:layout_marginEnd="@dimen/paddingMedium"
+        android:layout_marginEnd="@dimen/paddingSmall"
         android:gravity="center|start"
-        app:layout_constraintEnd_toStartOf="@id/round"
+        app:layout_constraintEnd_toStartOf="@id/barrier"
         app:layout_constraintStart_toEndOf="@id/country"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Australian Grand Prix" />
@@ -83,5 +83,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/round"
         tools:text="21st Jan" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="start"
+        app:constraint_referenced_ids="round,date" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
