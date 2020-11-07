@@ -18,6 +18,9 @@ val allYears: List<Int>
 const val showComingSoonMessageForNextDays = 10
 const val bottomSheetFastScrollDuration = 300
 
+
+const val constructorChampionshipStarts = 1958
+
 /**
  * Max points by season
  */
