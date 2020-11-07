@@ -93,6 +93,9 @@
     <string name="release_26"><![CDATA[<b>4.7.8</b>
         <br/>• Adds wikipedia links to driver overview, race and circuit information screens
         <br/>• Fixes some constructor penalties not being applied to disqualified teams throughout F1]]></string>
+    <string name="release_27"><![CDATA[<b>4.8.0</b>
+        <br/>• Handles constructors championship starting in 1958 properly
+        <br/>• Tweaked layout of Driver Overview season navigation]]></string>
 
     <!-- App Lockout -->
     <string name="app_lockout_title">App lockout</string>
@@ -256,6 +259,7 @@
     <string name="shared_network_error">A network error occurred! Please check you are connected to the internet and try again</string>
     <string name="shared_network_internal_error">A network error occurred and we weren\'t able to find any articles. Please check your internet connection or try again later</string>
     <string name="shared_network_no_articles">All news sources have been disabled - Please enable a preferred source and try again</string>
+    <string name="shared_constructor_championship_not_awarded">The constructors championship did not start until 1958</string>
 
     <!-- Standings -->
     <string name="standings_header">%s standings</string>

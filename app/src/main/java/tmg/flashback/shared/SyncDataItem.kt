@@ -11,6 +11,8 @@ sealed class SyncDataItem(
 ) {
     object NoNetwork: SyncDataItem(R.layout.view_shared_no_network)
 
+    object ConstructorsChampionshipNotAwarded: SyncDataItem(R.layout.view_shared_constructor_championship_not_awarded)
+
     object InternalError: SyncDataItem(R.layout.view_shared_internal_error)
 
     object AllSourcesDisabled: SyncDataItem(R.layout.view_shared_no_news_sources)

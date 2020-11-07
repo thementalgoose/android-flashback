@@ -7,6 +7,7 @@ import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.*
 import tmg.flashback.R
 import tmg.flashback.base.BaseViewModel
+import tmg.flashback.constructorChampionshipStarts
 import tmg.flashback.currentYear
 import tmg.flashback.home.list.HomeItem
 import tmg.flashback.home.list.addError
@@ -145,6 +146,8 @@ class HomeViewModel(
                 }
                 HomeMenuItem.CONSTRUCTORS -> {
                     when {
+                        season.season < constructorChampionshipStarts ->
+                            list.addError(SyncDataItem.ConstructorsChampionshipNotAwarded)
                         rounds.isEmpty() && !connectivityManager.isConnected ->
                             list.addError(SyncDataItem.NoNetwork)
                         rounds.isEmpty() ->
