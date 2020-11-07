@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
+import org.junit.jupiter.params.provider.ValueSource
 import tmg.flashback.*
 import tmg.flashback.di.device.BuildConfigProvider
 import tmg.flashback.home.HomeMenuItem.*
@@ -419,6 +420,34 @@ class HomeViewModelTest : BaseTest() {
             it is HomeItem.ErrorItem &&
                     (it.item as? SyncDataItem.MessageRes)?.msg == R.string.results_accurate_for &&
                     (it.item as? SyncDataItem.MessageRes)?.values == listOf(mockRound2.name, mockRound2.round)
+        }
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = [1950, 1951, 1952, 1953, 1954, 1955, 1956, 1957])
+    fun `HomeViewModel when season is before constructor standing season the championship did not start message is displayed`(season: Int) = coroutineTest {
+
+        whenever(mockSeasonOverviewDB.getSeasonOverview(any())).thenReturn(flow { emit(mockSeason.copy(season = season)) })
+
+        initSUT()
+        sut.inputs.clickItem(CONSTRUCTORS)
+        sut.inputs.selectSeason(season)
+
+        assertValue(listOf(HomeItem.ErrorItem(SyncDataItem.ConstructorsChampionshipNotAwarded)), sut.outputs.list)
+    }
+
+    @Test
+    fun `HomeViewModel when season is on border of constructor standing season the championship did not start message is not displayed`() = coroutineTest {
+
+        val season = 1958
+        whenever(mockSeasonOverviewDB.getSeasonOverview(any())).thenReturn(flow { emit(mockSeason.copy(season = season)) })
+
+        initSUT()
+        sut.inputs.clickItem(CONSTRUCTORS)
+        sut.inputs.selectSeason(season)
+
+        assertListDoesntContains(sut.outputs.list) {
+            it is HomeItem.ErrorItem && it.item == SyncDataItem.ConstructorsChampionshipNotAwarded
         }
     }
 
