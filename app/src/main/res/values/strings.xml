@@ -93,6 +93,9 @@
     <string name="release_26"><![CDATA[<b>4.7.8</b>
         <br/>• Adds wikipedia links to driver overview, race and circuit information screens
         <br/>• Fixes some constructor penalties not being applied to disqualified teams throughout F1]]></string>
+    <string name="release_27"><![CDATA[<b>4.8.0</b>
+        <br/>• Handles constructors championship starting in 1958 properly
+        <br/>• Tweaked layout of Driver Overview season navigation]]></string>
 
     <!-- App Lockout -->
     <string name="app_lockout_title">App lockout</string>
