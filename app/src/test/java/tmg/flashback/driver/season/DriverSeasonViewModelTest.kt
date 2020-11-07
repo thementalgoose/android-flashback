@@ -13,14 +13,12 @@ import org.junit.jupiter.api.Test
 import tmg.flashback.R
 import tmg.flashback.driver.*
 import tmg.flashback.driver.overview.RaceForPositionType.*
-import tmg.flashback.maxPointsBySeason
 import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.db.stats.DriverDB
 import tmg.flashback.repo.enums.BarAnimation
 import tmg.flashback.repo.models.stats.DriverOverviewRace
 import tmg.flashback.settings.ConnectivityManager
 import tmg.flashback.shared.SyncDataItem
-import tmg.flashback.shared.viewholders.DataUnavailable
 import tmg.flashback.shared.viewholders.DataUnavailable.DRIVER_NOT_EXIST
 import tmg.flashback.testutils.*
 import tmg.flashback.utils.position
@@ -43,7 +41,12 @@ class DriverSeasonViewModelTest: BaseTest() {
     }
 
     private fun initSUT() {
-        sut = DriverSeasonViewModel(mockDriverDB, mockConnectivityManager, mockPrefsDB, testScopeProvider)
+        sut = DriverSeasonViewModel(
+            mockDriverDB,
+            mockConnectivityManager,
+            mockPrefsDB,
+            testScopeProvider
+        )
         sut.inputs.setup(mockDriverId, 2019)
     }
 
@@ -213,7 +216,7 @@ class DriverSeasonViewModelTest: BaseTest() {
 
         sut.inputs.clickSeasonRound(expectedFirstRound)
 
-        assertDataEventValue(expectedFirstRound, sut.outputs.goToSeasonRound)
+        assertDataEventValue(expectedFirstRound, sut.outputs.openSeasonRound)
     }
 
     @AfterEach

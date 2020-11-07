@@ -54,7 +54,7 @@
 
     <!--==================================-->
 
-    <dimen name="driverOverviewPipeWidth">6dp</dimen>
+    <dimen name="driverOverviewPipeWidth">4dp</dimen>
     <dimen name="driverOverviewCircleSize">16dp</dimen>
     <dimen name="driverOverviewIconSize">24dp</dimen>
     <dimen name="driverOverviewPipeIndent">20dp</dimen> <!-- paddingMedium + (iconSize - circleSize) / 2 -->

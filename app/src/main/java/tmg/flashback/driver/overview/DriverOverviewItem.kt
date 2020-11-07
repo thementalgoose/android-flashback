@@ -37,10 +37,10 @@ sealed class DriverOverviewItem(
     )
 
     data class RacedFor(
-            val season: Int,
-            val constructors: SlimConstructor,
-            val type: RaceForPositionType,
-            val isChampionship: Boolean
+        val season: Int,
+        val constructors: SlimConstructor,
+        val type: RaceForPositionType,
+        val isChampionship: Boolean
     ): DriverOverviewItem(
             R.layout.view_driver_overview_raced_for
     )
@@ -54,7 +54,11 @@ sealed class DriverOverviewItem(
 
 
 fun MutableList<DriverOverviewItem>.addError(syncDataItem: SyncDataItem) {
-    this.add(DriverOverviewItem.ErrorItem(syncDataItem))
+    this.add(
+        DriverOverviewItem.ErrorItem(
+            syncDataItem
+        )
+    )
 }
 
 enum class RaceForPositionType {

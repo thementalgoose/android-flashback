@@ -7,6 +7,7 @@ import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.enums.BarAnimation
 import tmg.flashback.repo.enums.NewsSource
 import tmg.flashback.repo.enums.ThemePref
+import tmg.flashback.repo.enums.Tooltips
 import tmg.utilities.extensions.toEnum
 import tmg.utilities.prefs.SharedPrefManager
 import java.util.*
@@ -37,6 +38,8 @@ class SharedPrefsDB(context: Context) : SharedPrefManager(context), PrefsDB {
     private val keyNewsOpenInExternalBrowser: String = "NEWS_OPEN_IN_EXTERNAL_BROWSER"
     private val keyInAppEnableJavascript: String = "IN_APP_ENABLE_JAVASCRIPT"
     private val keyNewsShowDescription: String = "NEWS_SHOW_DESCRIPTIONS"
+
+    private val keyTooltips: String = "TOOLTIPS"
 
     override var theme: ThemePref
         get() = getString(keyTheme)?.toEnum<ThemePref> { it.key } ?: ThemePref.AUTO
@@ -133,4 +136,10 @@ class SharedPrefsDB(context: Context) : SharedPrefManager(context), PrefsDB {
     override var newsOpenInExternalBrowser: Boolean
         get() = getBoolean(keyNewsOpenInExternalBrowser, false)
         set(value) = save(keyNewsOpenInExternalBrowser, value)
+
+    override var tooltips: Set<Tooltips>
+        get() = getSet(keyTooltips, emptySet())
+            .mapNotNull { it.toEnum<Tooltips> { it.key } }
+            .toSet()
+        set(value) = save(keyTooltips, value.map { it.key }.toSet())
 }

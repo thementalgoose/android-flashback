@@ -6,9 +6,6 @@ import androidx.annotation.StringRes
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.flatMapLatest
@@ -40,7 +37,7 @@ interface DriverSeasonViewModelInputs {
 //region Outputs
 
 interface DriverSeasonViewModelOutputs {
-    val goToSeasonRound: MutableLiveData<DataEvent<DriverSeasonItem.Result>>
+    val openSeasonRound: MutableLiveData<DataEvent<DriverSeasonItem.Result>>
     val list: LiveData<List<DriverSeasonItem>>
 }
 
@@ -52,12 +49,14 @@ class DriverSeasonViewModel(
     private val connectivityManager: ConnectivityManager,
     private val prefsDB: PrefsDB,
     scopeProvider: ScopeProvider
-) : BaseViewModel(scopeProvider), DriverSeasonViewModelInputs, DriverSeasonViewModelOutputs {
+) : BaseViewModel(scopeProvider),
+    DriverSeasonViewModelInputs,
+    DriverSeasonViewModelOutputs {
 
     var inputs: DriverSeasonViewModelInputs = this
     var outputs: DriverSeasonViewModelOutputs = this
 
-    override val goToSeasonRound: MutableLiveData<DataEvent<DriverSeasonItem.Result>> =
+    override val openSeasonRound: MutableLiveData<DataEvent<DriverSeasonItem.Result>> =
         MutableLiveData()
 
     private var driverId: ConflatedBroadcastChannel<String> = ConflatedBroadcastChannel()
@@ -82,7 +81,14 @@ class DriverSeasonViewModel(
 
                     if (standing.isInProgress) {
                         standing.raceOverview.maxBy { it.round }?.let {
-                            list.add(DriverSeasonItem.ErrorItem(SyncDataItem.MessageRes(R.string.results_accurate_for, listOf(it.raceName, it.round))))
+                            list.add(
+                                DriverSeasonItem.ErrorItem(
+                                    SyncDataItem.MessageRes(
+                                        R.string.results_accurate_for,
+                                        listOf(it.raceName, it.round)
+                                    )
+                                )
+                            )
                         }
                     }
 
@@ -93,7 +99,14 @@ class DriverSeasonViewModel(
                     )
                     if (standing.constructors.size == 1) {
                         val const = standing.constructors.first()
-                        list.add(DriverSeasonItem.RacedFor(null, const, RaceForPositionType.SINGLE, false))
+                        list.add(
+                            DriverSeasonItem.RacedFor(
+                                null,
+                                const,
+                                RaceForPositionType.SINGLE,
+                                false
+                            )
+                        )
                     }
                     else {
                         for (x in standing.constructors.indices) {
@@ -109,7 +122,14 @@ class DriverSeasonViewModel(
                                     RaceForPositionType.MID_SEASON_CHANGE
                                 }
                             }
-                            list.add(DriverSeasonItem.RacedFor(null, const, dotType, false))
+                            list.add(
+                                DriverSeasonItem.RacedFor(
+                                    null,
+                                    const,
+                                    dotType,
+                                    false
+                                )
+                            )
                         }
                     }
 
@@ -144,7 +164,7 @@ class DriverSeasonViewModel(
             }
             return@map list
         }
-        .asLiveData(viewModelScope.coroutineContext)
+        .asLiveData(scope.coroutineContext)
 
     init {
 
@@ -160,7 +180,7 @@ class DriverSeasonViewModel(
     }
 
     override fun clickSeasonRound(result: DriverSeasonItem.Result) {
-        goToSeasonRound.value = DataEvent(result)
+        openSeasonRound.value = DataEvent(result)
     }
 
     //endregion
@@ -222,11 +242,13 @@ class DriverSeasonViewModel(
     }
 
     private fun MutableList<DriverSeasonItem>.addStat(@AttrRes tint: Int = R.attr.f1TextSecondary, @DrawableRes icon: Int, @StringRes label: Int, value: String) {
-        this.add(DriverSeasonItem.Stat(
+        this.add(
+            DriverSeasonItem.Stat(
                 tint = tint,
                 icon = icon,
                 label = label,
                 value = value
-        ))
+            )
+        )
     }
 }

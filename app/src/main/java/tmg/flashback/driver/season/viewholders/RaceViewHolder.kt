@@ -16,9 +16,9 @@ import tmg.utilities.extensions.views.getString
 import tmg.utilities.extensions.views.show
 
 class RaceViewHolder(
-        private val itemClicked: (result: DriverSeasonItem.Result) -> Unit,
+    private val itemClicked: (result: DriverSeasonItem.Result) -> Unit,
 
-        itemView: View
+    itemView: View
 ): RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
     init {
