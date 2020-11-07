@@ -13,8 +13,9 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.R
 import tmg.flashback.currentYear
-import tmg.flashback.driver.overview.DriverOverviewItem
-import tmg.flashback.driver.overview.RaceForPositionType.*
+import tmg.flashback.overviews.driver.summary.DriverSummaryItem
+import tmg.flashback.overviews.driver.summary.RaceForPositionType.*
+import tmg.flashback.overviews.driver.DriverViewModel
 import tmg.flashback.repo.db.stats.DriverDB
 import tmg.flashback.settings.ConnectivityManager
 import tmg.flashback.shared.SyncDataItem
@@ -48,7 +49,7 @@ class DriverViewModelTest: BaseTest() {
         whenever(mockConnectivityManager.isConnected).thenReturn(false)
         whenever(mockDriverDB.getDriverOverview(any())).thenReturn(flow { emit(null) })
         val expected = listOf(
-            DriverOverviewItem.ErrorItem(
+            DriverSummaryItem.ErrorItem(
                 SyncDataItem.NoNetwork
             )
         )
@@ -63,7 +64,7 @@ class DriverViewModelTest: BaseTest() {
 
         whenever(mockDriverDB.getDriverOverview(any())).thenReturn(flow { emit(null) })
         val expected = listOf(
-            DriverOverviewItem.ErrorItem(
+            DriverSummaryItem.ErrorItem(
                 SyncDataItem.Unavailable(DataUnavailable.DRIVER_NOT_EXIST)
             )
         )
@@ -81,7 +82,7 @@ class DriverViewModelTest: BaseTest() {
         initSUT()
 
         assertListContains(sut.outputs.list) {
-            it is DriverOverviewItem.ErrorItem &&
+            it is DriverSummaryItem.ErrorItem &&
                     it.item is SyncDataItem.MessageRes &&
                     (it.item as SyncDataItem.MessageRes).msg == R.string.results_accurate_for_year
         }
@@ -95,7 +96,7 @@ class DriverViewModelTest: BaseTest() {
         initSUT()
 
         assertListContains(sut.outputs.list) {
-            if (it is DriverOverviewItem.Header) {
+            if (it is DriverSummaryItem.Header) {
                 assertEquals(mockDriverFirstName, it.driverFirstname)
                 assertEquals(mockDriverLastName, it.driverSurname)
                 assertEquals(mockDriverNumber, it.driverNumber)
@@ -117,7 +118,7 @@ class DriverViewModelTest: BaseTest() {
         initSUT()
 
         assertListContains(sut.outputs.list) {
-            it == DriverOverviewItem.Stat(
+            it == DriverSummaryItem.Stat(
                 tint = R.attr.f1Favourite,
                 icon = R.drawable.ic_menu_drivers,
                 label = R.string.driver_overview_stat_career_drivers_title,
@@ -134,7 +135,7 @@ class DriverViewModelTest: BaseTest() {
         initSUT()
 
         assertListContains(sut.outputs.list) {
-            it == DriverOverviewItem.Stat(
+            it == DriverSummaryItem.Stat(
                 icon = R.drawable.ic_menu_drivers,
                 label = R.string.driver_overview_stat_career_drivers_title,
                 value = "0"
@@ -150,7 +151,7 @@ class DriverViewModelTest: BaseTest() {
         initSUT()
 
         assertListDoesntContains(sut.outputs.list) {
-            it == DriverOverviewItem.Stat(
+            it == DriverSummaryItem.Stat(
                 icon = R.drawable.ic_championship_order,
                 label = R.string.driver_overview_stat_career_best_championship_position,
                 value = "1st"
@@ -167,7 +168,7 @@ class DriverViewModelTest: BaseTest() {
         initSUT()
 
         assertListContains(sut.outputs.list) {
-            it == DriverOverviewItem.Stat(
+            it == DriverSummaryItem.Stat(
                 icon = R.drawable.ic_championship_order,
                 label = R.string.driver_overview_stat_career_best_championship_position,
                 value = "1st"
@@ -181,47 +182,47 @@ class DriverViewModelTest: BaseTest() {
         whenever(mockDriverDB.getDriverOverview(any())).thenReturn(flow { emit(mockDriverOverview) })
         val expected = listOf(
                 expectedDriverHeader,
-            DriverOverviewItem.Stat(
+            DriverSummaryItem.Stat(
                 icon = R.drawable.ic_standings,
                 label = R.string.driver_overview_stat_career_wins,
                 value = mockDriverOverview.careerWins.toString()
             ),
-            DriverOverviewItem.Stat(
+            DriverSummaryItem.Stat(
                 icon = R.drawable.ic_podium,
                 label = R.string.driver_overview_stat_career_podiums,
                 value = mockDriverOverview.careerPodiums.toString()
             ),
-            DriverOverviewItem.Stat(
+            DriverSummaryItem.Stat(
                 icon = R.drawable.ic_status_finished,
                 label = R.string.driver_overview_stat_career_best_finish,
                 value = mockDriverOverview.careerBestFinish.position()
             ),
-            DriverOverviewItem.Stat(
+            DriverSummaryItem.Stat(
                 icon = R.drawable.ic_finishes_in_points,
                 label = R.string.driver_overview_stat_career_points_finishes,
                 value = mockDriverOverview.careerFinishesInPoints.toString()
             ),
-            DriverOverviewItem.Stat(
+            DriverSummaryItem.Stat(
                 icon = R.drawable.ic_race_points,
                 label = R.string.driver_overview_stat_career_points,
                 value = mockDriverOverview.careerPoints.toString()
             ),
-            DriverOverviewItem.Stat(
+            DriverSummaryItem.Stat(
                 icon = R.drawable.ic_qualifying_pole,
                 label = R.string.driver_overview_stat_career_qualifying_pole,
                 value = mockDriverOverview.careerQualifyingPoles.toString()
             ),
-            DriverOverviewItem.Stat(
+            DriverSummaryItem.Stat(
                 icon = R.drawable.ic_qualifying_front_row,
                 label = R.string.driver_overview_stat_career_qualifying_top_3,
                 value = mockDriverOverview.careerQualifyingTop3.toString()
             ),
-            DriverOverviewItem.Stat(
+            DriverSummaryItem.Stat(
                 icon = R.drawable.ic_qualifying_top_ten,
                 label = R.string.driver_overview_stat_career_qualifying_top_10,
                 value = mockDriverOverview.totalQualifyingAbove(10).toString()
             ),
-            DriverOverviewItem.Stat(
+            DriverSummaryItem.Stat(
                 icon = R.drawable.ic_team,
                 label = R.string.driver_overview_stat_career_team_history,
                 value = ""
@@ -237,8 +238,8 @@ class DriverViewModelTest: BaseTest() {
     fun `DriverOverviewViewModel team ordering and highlighting default setup`() = coroutineTest {
 
         whenever(mockDriverDB.getDriverOverview(any())).thenReturn(flow { emit(mockDriverOverviewConstructorChangeThenYearOffEndingInCurrentSeason) })
-        val expected = listOf<DriverOverviewItem>(
-            DriverOverviewItem.RacedFor(
+        val expected = listOf<DriverSummaryItem>(
+            DriverSummaryItem.RacedFor(
                 currentYear,
                 mockDriverOverviewConstructor2,
                 SEASON,
@@ -246,67 +247,67 @@ class DriverViewModelTest: BaseTest() {
             ),
                 // TODO: Add this when it's 2022 - DriverOverviewItem.RacedFor(2021, mockDriverOverviewConstructor, SEASON, false),
                 // TODO: Add this when it's 2021 - DriverOverviewItem.RacedFor(2020, mockDriverOverviewConstructor, SEASON, false),
-            DriverOverviewItem.RacedFor(
+            DriverSummaryItem.RacedFor(
                 2019,
                 mockDriverOverviewConstructor,
                 SEASON,
                 false
             ),
-            DriverOverviewItem.RacedFor(
+            DriverSummaryItem.RacedFor(
                 2018,
                 mockDriverOverviewConstructor2,
                 MID_SEASON_CHANGE,
                 false
             ),
-            DriverOverviewItem.RacedFor(
+            DriverSummaryItem.RacedFor(
                 2018,
                 mockDriverOverviewConstructor,
                 SEASON,
                 false
             ),
-            DriverOverviewItem.RacedFor(
+            DriverSummaryItem.RacedFor(
                 2017,
                 mockDriverOverviewConstructor,
                 SEASON,
                 false
             ),
-            DriverOverviewItem.RacedFor(
+            DriverSummaryItem.RacedFor(
                 2016,
                 mockDriverOverviewConstructor,
                 MID_SEASON_CHANGE,
                 false
             ),
-            DriverOverviewItem.RacedFor(
+            DriverSummaryItem.RacedFor(
                 2016,
                 mockDriverOverviewConstructor2,
                 MID_SEASON_CHANGE,
                 false
             ),
-            DriverOverviewItem.RacedFor(
+            DriverSummaryItem.RacedFor(
                 2016,
                 mockDriverOverviewConstructor,
                 END,
                 false
             ),
-            DriverOverviewItem.RacedFor(
+            DriverSummaryItem.RacedFor(
                 2014,
                 mockDriverOverviewConstructor,
                 START,
                 false
             ),
-            DriverOverviewItem.RacedFor(
+            DriverSummaryItem.RacedFor(
                 2013,
                 mockDriverOverviewConstructor2,
                 MID_SEASON_CHANGE,
                 false
             ),
-            DriverOverviewItem.RacedFor(
+            DriverSummaryItem.RacedFor(
                 2013,
                 mockDriverOverviewConstructor,
                 END,
                 false
             ),
-            DriverOverviewItem.RacedFor(
+            DriverSummaryItem.RacedFor(
                 2011,
                 mockDriverOverviewConstructor,
                 SINGLE,
@@ -324,13 +325,13 @@ class DriverViewModelTest: BaseTest() {
 
         whenever(mockDriverDB.getDriverOverview(any())).thenReturn(flow { emit(mockDriverOverviewTwoSeasonWithYearBetweenThem) })
         val expected = listOf(
-            DriverOverviewItem.RacedFor(
+            DriverSummaryItem.RacedFor(
                 2019,
                 mockDriverOverviewConstructor,
                 SINGLE,
                 true
             ),
-            DriverOverviewItem.RacedFor(
+            DriverSummaryItem.RacedFor(
                 2017,
                 mockDriverOverviewConstructor,
                 SINGLE,
@@ -348,13 +349,13 @@ class DriverViewModelTest: BaseTest() {
 
         whenever(mockDriverDB.getDriverOverview(any())).thenReturn(flow { emit(mockDriverOverviewTwoSeasonWithYearBetweenThemEndingInCurrentYear) })
         val expected = listOf(
-            DriverOverviewItem.RacedFor(
+            DriverSummaryItem.RacedFor(
                 currentYear,
                 mockDriverOverviewConstructor,
                 END,
                 false
             ),
-            DriverOverviewItem.RacedFor(
+            DriverSummaryItem.RacedFor(
                 2017,
                 mockDriverOverviewConstructor,
                 SINGLE,
@@ -399,8 +400,8 @@ class DriverViewModelTest: BaseTest() {
 
     // Expected list for mockDriverOverview
 
-    private val expectedDriverHeader: DriverOverviewItem.Header =
-        DriverOverviewItem.Header(
+    private val expectedDriverHeader: DriverSummaryItem.Header =
+        DriverSummaryItem.Header(
             driverFirstname = mockDriverFirstName,
             driverSurname = mockDriverLastName,
             driverNumber = mockDriverNumber,

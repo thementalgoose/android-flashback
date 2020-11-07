@@ -1,4 +1,4 @@
-package tmg.flashback.driver.season
+package tmg.flashback.overviews.driver.season
 
 import androidx.annotation.AttrRes
 import androidx.annotation.DrawableRes
@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.map
 import tmg.flashback.R
 import tmg.flashback.base.BaseViewModel
 import tmg.flashback.di.async.ScopeProvider
-import tmg.flashback.driver.overview.RaceForPositionType
+import tmg.flashback.overviews.driver.summary.RaceForPositionType
 import tmg.flashback.maxPointsBySeason
 import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.db.stats.DriverDB
@@ -50,8 +50,8 @@ class DriverSeasonViewModel(
     private val prefsDB: PrefsDB,
     scopeProvider: ScopeProvider
 ) : BaseViewModel(scopeProvider),
-    DriverSeasonViewModelInputs,
-    DriverSeasonViewModelOutputs {
+        DriverSeasonViewModelInputs,
+        DriverSeasonViewModelOutputs {
 
     var inputs: DriverSeasonViewModelInputs = this
     var outputs: DriverSeasonViewModelOutputs = this

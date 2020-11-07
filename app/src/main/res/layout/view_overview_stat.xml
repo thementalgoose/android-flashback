@@ -11,11 +11,11 @@
         android:id="@+id/icon"
         android:layout_width="@dimen/driverOverviewIconSize"
         android:layout_height="@dimen/driverOverviewIconSize"
-            android:layout_marginStart="@dimen/paddingMedium"
-            android:tint="?attr/f1TextSecondary"
+        android:layout_marginStart="@dimen/paddingMedium"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="?attr/f1TextSecondary" />
 
     <TextView
         android:id="@+id/value"

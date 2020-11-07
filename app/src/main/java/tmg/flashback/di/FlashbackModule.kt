@@ -5,13 +5,13 @@ import org.koin.dsl.module
 import tmg.flashback.BuildConfig
 import tmg.flashback.admin.lockout.LockoutViewModel
 import tmg.flashback.circuit.CircuitInfoViewModel
-import tmg.flashback.constructors.ConstructorViewModel
+import tmg.flashback.overviews.constructor.ConstructorViewModel
 import tmg.flashback.di.async.ScopeProvider
 import tmg.flashback.di.async.ViewModelScopeProvider
 import tmg.flashback.di.device.AppBuildConfigProvider
 import tmg.flashback.di.device.BuildConfigProvider
-import tmg.flashback.driver.DriverViewModel
-import tmg.flashback.driver.season.DriverSeasonViewModel
+import tmg.flashback.overviews.driver.DriverViewModel
+import tmg.flashback.overviews.driver.season.DriverSeasonViewModel
 import tmg.flashback.firebase.FirebaseCrashManager
 import tmg.flashback.home.HomeViewModel
 import tmg.flashback.home.season.SeasonViewModel

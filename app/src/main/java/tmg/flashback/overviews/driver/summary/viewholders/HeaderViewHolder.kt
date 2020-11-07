@@ -1,4 +1,4 @@
-package tmg.flashback.driver.overview.viewholders
+package tmg.flashback.overviews.driver.summary.viewholders
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
@@ -9,7 +9,7 @@ import kotlinx.android.synthetic.main.view_driver_overview_header.view.imgNation
 import kotlinx.android.synthetic.main.view_driver_overview_header.view.tvNumber
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.R
-import tmg.flashback.driver.overview.DriverOverviewItem
+import tmg.flashback.overviews.driver.summary.DriverSummaryItem
 import tmg.flashback.utils.getColor
 import tmg.flashback.utils.getFlagResourceAlpha3
 import tmg.utilities.extensions.views.context
@@ -26,7 +26,7 @@ class HeaderViewHolder(
         itemView.wikipedia.setOnClickListener(this)
     }
 
-    fun bind(item: DriverOverviewItem.Header) {
+    fun bind(item: DriverSummaryItem.Header) {
 
         Glide.with(itemView.context)
                 .load(item.driverImg)

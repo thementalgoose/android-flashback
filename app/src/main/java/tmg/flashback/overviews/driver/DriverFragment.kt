@@ -1,4 +1,4 @@
-package tmg.flashback.driver
+package tmg.flashback.overviews.driver
 
 import android.content.Intent
 import android.net.Uri
@@ -9,12 +9,12 @@ import kotlinx.android.synthetic.main.fragment_driver_season.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.R
 import tmg.flashback.base.BaseFragment
-import tmg.flashback.driver.overview.DriverOverviewAdapter
+import tmg.flashback.overviews.driver.summary.DriverSummaryAdapter
 import tmg.utilities.extensions.observe
 
 class DriverFragment: BaseFragment() {
 
-    private lateinit var adapter: DriverOverviewAdapter
+    private lateinit var adapter: DriverSummaryAdapter
 
     private val viewModel: DriverViewModel by viewModel()
 
@@ -29,11 +29,11 @@ class DriverFragment: BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = DriverOverviewAdapter(
-            openUrl = {
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(it))
-                startActivity(intent)
-            }
+        adapter = DriverSummaryAdapter(
+                openUrl = {
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(it))
+                    startActivity(intent)
+                }
         )
         list.adapter = adapter
         list.layoutManager = LinearLayoutManager(context)
