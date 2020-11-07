@@ -14,6 +14,8 @@
     <attr name="f1TextInverseSecondary" format="color" />
     <attr name="f1TextInverseTertiary" format="color" />
 
+    <attr name="f1PipeColor" format="color" />
+
     <attr name="f1BackgroundLoading" format="color" />
     <attr name="f1BackgroundOverlay" format="color" />
 

@@ -3,6 +3,7 @@ package tmg.flashback.repo.db
 import tmg.flashback.repo.enums.BarAnimation
 import tmg.flashback.repo.enums.NewsSource
 import tmg.flashback.repo.enums.ThemePref
+import tmg.flashback.repo.enums.Tooltips
 
 interface PrefsDB {
 
@@ -95,4 +96,9 @@ interface PrefsDB {
      * Open the news article in an external browser or not
      */
     var newsOpenInExternalBrowser: Boolean
+
+    /**
+     * Tooltip set of app hints for functional usage
+     */
+    var tooltips: Set<Tooltips>
 }
