@@ -115,9 +115,8 @@ class RaceViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `RaceViewModel when view type is (happy) constructor with preference to show drivers enabled, standings show constructor standings items with list of drivers`() = coroutineTest {
+    fun `RaceViewModel when view type is (happy) constructor, standings show constructor standings items with list of drivers`() = coroutineTest {
 
-        whenever(mockPrefsDB.showDriversBehindConstructor).thenReturn(true)
         whenever(mockSeasonOverviewDB.getSeasonRound(any(), any())).thenReturn(flow { emit(mockRound1) })
         val expected = listOf<RaceAdapterModel>(
             RaceAdapterModel.ConstructorStandings(
@@ -131,25 +130,6 @@ class RaceViewModelTest: BaseTest() {
                     Pair(mockDriver3.toDriver(), 15),
                     Pair(mockDriver1.toDriver(), 5)
                 ), BarAnimation.NONE
-            )
-        )
-
-        initSUT(orderBy = CONSTRUCTOR_STANDINGS)
-
-        assertValue(Triple(CONSTRUCTOR_STANDINGS, expected, expectedSeasonRound), sut.outputs.raceItems)
-    }
-
-    @Test
-    fun `RaceViewModel when view type is (happy) constructor with preference to show drivers disabled, standings show constructor standings items with no drivers`() = coroutineTest {
-
-        whenever(mockPrefsDB.showDriversBehindConstructor).thenReturn(false)
-        whenever(mockSeasonOverviewDB.getSeasonRound(any(), any())).thenReturn(flow { emit(mockRound1) })
-        val expected = listOf<RaceAdapterModel>(
-            RaceAdapterModel.ConstructorStandings(
-                mockConstructorBeta, 30, emptyList(), BarAnimation.NONE
-            ),
-            RaceAdapterModel.ConstructorStandings(
-                mockConstructorAlpha, 20, emptyList(), BarAnimation.NONE
             )
         )
 
