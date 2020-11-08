@@ -13,6 +13,7 @@ sealed class ConstructorSummaryItem(
     data class Header(
             val constructorName: String,
             val constructorColor: Int,
+            val constructorNationality: String,
             val constructorNationalityISO: String,
             val constructorWikiUrl: String
     ): ConstructorSummaryItem(
