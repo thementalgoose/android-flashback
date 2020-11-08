@@ -4,16 +4,50 @@ import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
 import java.awt.Color
 
-val mockRoundName: String = "Round name"
 val mockLocalDateOfRound1: LocalDate = LocalDate.of(2020, 5, 10)
 val mockLocalTimeOfRound1: LocalTime = LocalTime.of(14, 10)
 val mockLocalDateOfRound2: LocalDate = LocalDate.of(2020, 5, 17)
 val mockLocalTimeOfRound2: LocalTime = LocalTime.of(14, 10)
+val mockRoundName: String = "Round name"
+
+//region Circuits
+
+val mockCircuitCharlie = CircuitSummary(
+        id = "charlie",
+        name = "circuit",
+        wikiUrl = "https://www.wiki.com",
+        locality = "Italian",
+        country = "Italy",
+        countryISO = "ITA",
+        locationLat = 51.1,
+        locationLng = 1.03
+)
+val mockCircuitDelta = CircuitSummary(
+        id = "delta",
+        name = "circuit2",
+        wikiUrl = "https://www.wiki.com",
+        locality = "German",
+        country = "Germany",
+        countryISO = "DEU",
+        locationLat = 51.1,
+        locationLng = 1.03
+)
+
+//endregion
+
+//region Constructors
+
+/**
+ * MOCK Constructor data
+ *
+ * Because these objects are quite complicated, there are scenario test data that is setup and tested
+ *   against
+ */
 
 val mockConstructorAlpha: Constructor = Constructor(
         id = "alpha",
         name = "alphaName",
-        wikiUrl = "https://www.wiki.com",
+        wikiUrl = "https:   //www.wiki.com",
         nationality = "British",
         nationalityISO = "GBR",
         color = Color.GREEN.rgb
@@ -21,21 +55,15 @@ val mockConstructorAlpha: Constructor = Constructor(
 val mockConstructorBeta: Constructor = Constructor(
         id = "beta",
         name = "betaName",
-        wikiUrl = "https://www.wiki.com",
+        wikiUrl = "https:   //www.wiki.com",
         nationality = "German",
         nationalityISO = "DEU",
         color = Color.BLUE.rgb
 )
 
+//endregion
 
-
-
-
-
-
-
-
-
+//region Drivers
 
 val mockDriver1: RoundDriver = RoundDriver(
         id = "1",
@@ -73,38 +101,248 @@ val mockDriver4 = mockDriver1.copy(
         constructorAtEndOfSeason = mockConstructorBeta
 )
 
+//endregion
 
+//region Driver Overview
 
-
-
-
-
-
-
-
-
-val mockCircuitCharlie = CircuitSummary(
-        id = "charlie",
-        name = "circuit",
-        wikiUrl = "https://www.wiki.com",
-        locality = "Italian",
-        country = "Italy",
-        countryISO = "ITA",
-        locationLat = 51.1,
-        locationLng = 1.03
+val mockDriverSlimConstructor = SlimConstructor(
+        id = "slim",
+        name = "slim",
+        color = Color.CYAN.rgb
 )
-val mockCircuitDelta = CircuitSummary(
-        id = "delta",
-        name = "circuit2",
-        wikiUrl = "https://www.wiki.com",
-        locality = "German",
-        country = "Germany",
-        countryISO = "DEU",
-        locationLat = 51.1,
-        locationLng = 1.03
+val mockDriverRound11 = DriverOverviewRace(
+        status = "Finished",
+        finished = 2,
+        points = 18,
+        qualified = 4,
+        round = 1,
+        season = 2019,
+        raceName = "Race 1",
+        date = LocalDate.now(),
+        circuitName = mockCircuitCharlie.name,
+        circuitId = mockCircuitCharlie.id,
+        circuitNationality = mockCircuitCharlie.country,
+        circuitNationalityISO = mockCircuitCharlie.countryISO
+)
+val mockDriverRound12 = DriverOverviewRace(
+        status = "Finished",
+        finished = 4,
+        points = 12,
+        qualified = 3,
+        round = 2,
+        season = 2019,
+        raceName = "Race 2",
+        date = LocalDate.now(),
+        circuitName = mockCircuitCharlie.name,
+        circuitId = mockCircuitCharlie.id,
+        circuitNationality = mockCircuitCharlie.country,
+        circuitNationalityISO = mockCircuitCharlie.countryISO
+)
+val mockDriverStanding1 = DriverOverviewStanding(
+        bestFinish = 2,
+        bestFinishQuantity = 1,
+        bestQualifying = 3,
+        bestQualifyingQuantity = 1,
+        championshipStanding = 2,
+        isInProgress = false,
+        points = 30,
+        podiums = 1,
+        races = 3,
+        season = 2019,
+        wins = 0,
+        constructors = listOf(
+                mockDriverSlimConstructor
+        ),
+        raceOverview = listOf(
+                mockDriverRound11,
+                mockDriverRound12
+        )
+)
+val mockDriverRound21 = DriverOverviewRace(
+        status = "Finished",
+        finished = 7,
+        points = 4,
+        qualified = 2,
+        round = 1,
+        season = 2020,
+        raceName = "Race 1",
+        date = LocalDate.now(),
+        circuitName = mockCircuitCharlie.name,
+        circuitId = mockCircuitCharlie.id,
+        circuitNationality = mockCircuitCharlie.country,
+        circuitNationalityISO = mockCircuitCharlie.countryISO
+)
+val mockDriverRound22 = DriverOverviewRace(
+        status = "Finished",
+        finished = 12,
+        points = 0,
+        qualified = 15,
+        round = 2,
+        season = 2020,
+        raceName = "Race 2",
+        date = LocalDate.now(),
+        circuitName = mockCircuitDelta.name,
+        circuitId = mockCircuitDelta.id,
+        circuitNationality = mockCircuitDelta.country,
+        circuitNationalityISO = mockCircuitDelta.countryISO
+)
+val mockDriverStanding2 = DriverOverviewStanding(
+        bestFinish = 7,
+        bestFinishQuantity = 1,
+        bestQualifying = 2,
+        bestQualifyingQuantity = 1,
+        championshipStanding = 5,
+        isInProgress = false,
+        points = 4,
+        podiums = 0,
+        races = 2,
+        season = 2019,
+        wins = 0,
+        constructors = listOf(
+                mockDriverSlimConstructor
+        ),
+        raceOverview = listOf(
+                mockDriverRound21,
+                mockDriverRound22
+        )
+)
+
+/**
+ * championships: 0
+ * careerBestChampionship: 2
+ *
+ */
+val mockDriverOverview = DriverOverview(
+        id = mockDriver1.id,
+        firstName = mockDriver1.firstName,
+        lastName = mockDriver1.lastName,
+        code = mockDriver1.code,
+        number = mockDriver1.number,
+        wikiUrl = mockDriver1.wikiUrl,
+        photoUrl = mockDriver1.photoUrl,
+        dateOfBirth = mockDriver1.dateOfBirth,
+        nationality = mockDriver1.nationality,
+        nationalityISO = mockDriver1.nationalityISO,
+        standings = listOf(
+                mockDriverStanding1,
+                mockDriverStanding2
+        )
 )
 
 
+//endregion
+
+//region Constructor Overview
+
+/**
+ * Setup a mock constructor overview object, with
+ * - Constructor doing two seasons
+ * - Each season had two drivers
+ */
+
+
+val mockConstructorOverviewStanding1Driver1 = ConstructorOverviewDriverStanding(
+        driver = mockDriver1.toConstructorDriver(),
+        bestFinish = 2,
+        bestQualifying = 3,
+        points = 12,
+        finishesInP1 = 0,
+        finishesInP2 = 1,
+        finishesInP3 = 0,
+        finishesInPoints = 1,
+        qualifyingP1 = 0,
+        qualifyingP2 = 0,
+        qualifyingP3 = 1,
+        qualifyingTop10 = 2,
+        races = 2,
+        championshipStanding = 1
+)
+val mockConstructorOverviewStanding1Driver2 = ConstructorOverviewDriverStanding(
+        driver = mockDriver2.toConstructorDriver(),
+        bestFinish = 3,
+        bestQualifying = 1,
+        points = 10,
+        finishesInP1 = 0,
+        finishesInP2 = 0,
+        finishesInP3 = 1,
+        finishesInPoints = 2,
+        qualifyingP1 = 1,
+        qualifyingP2 = 0,
+        qualifyingP3 = 1,
+        qualifyingTop10 = 2,
+        races = 2,
+        championshipStanding = 2
+)
+val mockConstructorOverviewStanding1 = ConstructorOverviewStanding(
+        drivers = mapOf(
+                mockDriver1.id to mockConstructorOverviewStanding1Driver1,
+                mockDriver2.id to mockConstructorOverviewStanding1Driver2
+        ),
+        isInProgress = false,
+        championshipStanding = 2,
+        points = 22,
+        season = 2019,
+        races = 2
+)
+
+val mockConstructorOverviewStanding2Driver1 = ConstructorOverviewDriverStanding(
+        driver = mockDriver1.toConstructorDriver(),
+        bestFinish = 3,
+        bestQualifying = 3,
+        points = 12,
+        finishesInP1 = 0,
+        finishesInP2 = 0,
+        finishesInP3 = 2,
+        finishesInPoints = 1,
+        qualifyingP1 = 0,
+        qualifyingP2 = 0,
+        qualifyingP3 = 1,
+        qualifyingTop10 = 2,
+        races = 2,
+        championshipStanding = 1
+)
+val mockConstructorOverviewStanding2Driver2 = ConstructorOverviewDriverStanding(
+        driver = mockDriver2.toConstructorDriver(),
+        bestFinish = 4,
+        bestQualifying = 1,
+        points = 17,
+        finishesInP1 = 0,
+        finishesInP2 = 0,
+        finishesInP3 = 0,
+        finishesInPoints = 3,
+        qualifyingP1 = 1,
+        qualifyingP2 = 0,
+        qualifyingP3 = 1,
+        qualifyingTop10 = 2,
+        races = 3,
+        championshipStanding = 2
+)
+val mockConstructorOverviewStanding2 = ConstructorOverviewStanding(
+        drivers = mapOf(
+                mockDriver1.id to mockConstructorOverviewStanding2Driver1,
+                mockDriver2.id to mockConstructorOverviewStanding2Driver2
+        ),
+        isInProgress = false,
+        championshipStanding = 1,
+        points = 29,
+        season = 2018,
+        races = 3
+)
+
+val mockConstructorOverview = ConstructorOverview(
+        id = mockConstructorAlpha.id,
+        name = mockConstructorAlpha.name,
+        wikiUrl = mockConstructorAlpha.wikiUrl,
+        nationality = mockConstructorAlpha.nationality,
+        nationalityISO = mockConstructorAlpha.nationalityISO,
+        color = mockConstructorAlpha.color,
+        standings = listOf(
+                mockConstructorOverviewStanding1,
+                mockConstructorOverviewStanding2
+        )
+)
+
+//endregion
 
 
 
@@ -112,6 +350,29 @@ val mockCircuitDelta = CircuitSummary(
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//region Round data
 
 /**
  * #### ROUND 1
@@ -343,6 +604,7 @@ val mockRound2: Round = Round(
         )
 )
 
+//endregion
 
 
 
@@ -362,129 +624,11 @@ val mockRound2: Round = Round(
 
 
 
-val mockDriverSlimConstructor = SlimConstructor(
-        id = "slim",
-        name = "slim",
-        color = Color.CYAN.rgb
-)
-val mockDriverRound11 = DriverOverviewRace(
-        status = "Finished",
-        finished = 2,
-        points = 18,
-        qualified = 4,
-        round = 1,
-        season = 2019,
-        raceName = "Race 1",
-        date = LocalDate.now(),
-        circuitName = mockCircuitCharlie.name,
-        circuitId = mockCircuitCharlie.id,
-        circuitNationality = mockCircuitCharlie.country,
-        circuitNationalityISO = mockCircuitCharlie.countryISO
-)
-val mockDriverRound12 = DriverOverviewRace(
-        status = "Finished",
-        finished = 4,
-        points = 12,
-        qualified = 3,
-        round = 2,
-        season = 2019,
-        raceName = "Race 2",
-        date = LocalDate.now(),
-        circuitName = mockCircuitCharlie.name,
-        circuitId = mockCircuitCharlie.id,
-        circuitNationality = mockCircuitCharlie.country,
-        circuitNationalityISO = mockCircuitCharlie.countryISO
-)
-val mockDriverStanding1 = DriverOverviewStanding(
-        bestFinish = 2,
-        bestFinishQuantity = 1,
-        bestQualifying = 3,
-        bestQualifyingQuantity = 1,
-        championshipStanding = 2,
-        isInProgress = false,
-        points = 30,
-        podiums = 1,
-        races = 3,
-        season = 2019,
-        wins = 0,
-        constructors = listOf(
-                mockDriverSlimConstructor
-        ),
-        raceOverview = listOf(
-                mockDriverRound11,
-                mockDriverRound12
-        )
-)
-val mockDriverRound21 = DriverOverviewRace(
-        status = "Finished",
-        finished = 7,
-        points = 4,
-        qualified = 2,
-        round = 1,
-        season = 2020,
-        raceName = "Race 1",
-        date = LocalDate.now(),
-        circuitName = mockCircuitCharlie.name,
-        circuitId = mockCircuitCharlie.id,
-        circuitNationality = mockCircuitCharlie.country,
-        circuitNationalityISO = mockCircuitCharlie.countryISO
-)
-val mockDriverRound22 = DriverOverviewRace(
-        status = "Finished",
-        finished = 12,
-        points = 0,
-        qualified = 15,
-        round = 2,
-        season = 2020,
-        raceName = "Race 2",
-        date = LocalDate.now(),
-        circuitName = mockCircuitDelta.name,
-        circuitId = mockCircuitDelta.id,
-        circuitNationality = mockCircuitDelta.country,
-        circuitNationalityISO = mockCircuitDelta.countryISO
-)
-val mockDriverStanding2 = DriverOverviewStanding(
-        bestFinish = 7,
-        bestFinishQuantity = 1,
-        bestQualifying = 2,
-        bestQualifyingQuantity = 1,
-        championshipStanding = 5,
-        isInProgress = false,
-        points = 4,
-        podiums = 0,
-        races = 2,
-        season = 2019,
-        wins = 0,
-        constructors = listOf(
-                mockDriverSlimConstructor
-        ),
-        raceOverview = listOf(
-                mockDriverRound21,
-                mockDriverRound22
-        )
-)
 
-/**
- * championships: 0
- * careerBestChampionship: 2
- *
- */
-val mockDriverOverview = DriverOverview(
-        id = mockDriver1.id,
-        firstName = mockDriver1.firstName,
-        lastName = mockDriver1.lastName,
-        code = mockDriver1.code,
-        number = mockDriver1.number,
-        wikiUrl = mockDriver1.wikiUrl,
-        photoUrl = mockDriver1.photoUrl,
-        dateOfBirth = mockDriver1.dateOfBirth,
-        nationality = mockDriver1.nationality,
-        nationalityISO = mockDriver1.nationalityISO,
-        standings = listOf(
-                mockDriverStanding1,
-                mockDriverStanding2
-        )
-)
+
+
+
+
 
 //region Season
 

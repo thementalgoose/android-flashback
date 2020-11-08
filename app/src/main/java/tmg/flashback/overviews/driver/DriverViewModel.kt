@@ -145,10 +145,10 @@ class DriverViewModel(
     private fun getAllStats(overview: DriverOverview): List<DriverSummaryItem> {
         val list: MutableList<DriverSummaryItem> = mutableListOf()
         list.addStat(
-            tint = if (overview.championships > 0) R.attr.f1Favourite else R.attr.f1TextSecondary,
+            tint = if (overview.championshipWins > 0) R.attr.f1Favourite else R.attr.f1TextSecondary,
             icon = R.drawable.ic_menu_drivers,
             label = R.string.driver_overview_stat_career_drivers_title,
-            value = overview.championships.toString()
+            value = overview.championshipWins.toString()
         )
 
         overview.careerBestChampionship?.let {
