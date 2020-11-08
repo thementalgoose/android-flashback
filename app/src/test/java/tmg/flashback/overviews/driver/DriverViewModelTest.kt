@@ -18,7 +18,7 @@ import tmg.flashback.overviews.driver.summary.DriverSummaryItem
 import tmg.flashback.overviews.driver.summary.RaceForPositionType.*
 import tmg.flashback.repo.db.stats.DriverDB
 import tmg.flashback.settings.ConnectivityManager
-import tmg.flashback.shared.SyncDataItem
+import tmg.flashback.shared.sync.SyncDataItem
 import tmg.flashback.shared.viewholders.DataUnavailable
 import tmg.flashback.testutils.*
 import tmg.flashback.utils.position

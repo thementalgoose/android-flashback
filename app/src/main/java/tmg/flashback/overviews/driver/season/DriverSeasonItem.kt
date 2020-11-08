@@ -7,7 +7,7 @@ import tmg.flashback.overviews.driver.summary.RaceForPositionType
 import tmg.flashback.repo.enums.BarAnimation
 import tmg.flashback.repo.enums.RaceStatus
 import tmg.flashback.repo.models.stats.SlimConstructor
-import tmg.flashback.shared.SyncDataItem
+import tmg.flashback.shared.sync.SyncDataItem
 
 sealed class DriverSeasonItem(
         @LayoutRes val layoutId: Int

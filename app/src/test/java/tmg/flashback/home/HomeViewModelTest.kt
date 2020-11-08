@@ -27,7 +27,7 @@ import tmg.flashback.repo.models.AppBanner
 import tmg.flashback.repo.models.AppLockout
 import tmg.flashback.repo.models.stats.History
 import tmg.flashback.settings.ConnectivityManager
-import tmg.flashback.shared.SyncDataItem
+import tmg.flashback.shared.sync.SyncDataItem
 import tmg.flashback.shared.viewholders.DataUnavailable
 import tmg.flashback.testutils.*
 import tmg.flashback.utils.StringHolder

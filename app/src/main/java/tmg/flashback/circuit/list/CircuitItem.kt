@@ -6,7 +6,7 @@ import org.threeten.bp.LocalTime
 import tmg.flashback.R
 import tmg.flashback.TrackLayout
 import tmg.flashback.repo.models.stats.Circuit
-import tmg.flashback.shared.SyncDataItem
+import tmg.flashback.shared.sync.SyncDataItem
 
 sealed class CircuitItem(
     @LayoutRes val layoutId: Int

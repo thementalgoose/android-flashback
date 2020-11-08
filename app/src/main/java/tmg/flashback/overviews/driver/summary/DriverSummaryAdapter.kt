@@ -10,7 +10,8 @@ import tmg.flashback.overviews.viewholders.OverviewRacedForViewHolder
 import tmg.flashback.overviews.viewholders.RacedForViewHolder
 import tmg.flashback.overviews.viewholders.StatsViewHolder
 import tmg.flashback.race.viewholders.SkeletonLoadingViewHolder
-import tmg.flashback.shared.SyncAdapter
+import tmg.flashback.shared.pill.PillItem
+import tmg.flashback.shared.sync.SyncAdapter
 import tmg.flashback.utils.GenericDiffCallback
 
 class DriverSummaryAdapter(
@@ -18,8 +19,7 @@ class DriverSummaryAdapter(
     val seasonClicked: ((Int) -> Unit)? = null
 ): SyncAdapter<DriverSummaryItem>() {
 
-    override var list: List<DriverSummaryItem> = listOf(
-            DriverSummaryItem.Loading)
+    override var list: List<DriverSummaryItem> = listOf(DriverSummaryItem.Loading)
         set(value) {
             val result = DiffUtil.calculateDiff(GenericDiffCallback(field, value))
             field = value
@@ -29,8 +29,13 @@ class DriverSummaryAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             R.layout.view_driver_summary_header -> HeaderViewHolder(
-                    openUrl,
-                    LayoutInflater.from(parent.context).inflate(viewType, parent, false)
+                    pillClicked = {
+                        when (it) {
+                            is PillItem.Wikipedia -> openUrl(it.link)
+                            else -> {} /* Not shown */
+                        }
+                    },
+                    itemView = LayoutInflater.from(parent.context).inflate(viewType, parent, false)
             )
             R.layout.view_overview_stat -> StatsViewHolder(
                     LayoutInflater.from(parent.context).inflate(viewType, parent, false)

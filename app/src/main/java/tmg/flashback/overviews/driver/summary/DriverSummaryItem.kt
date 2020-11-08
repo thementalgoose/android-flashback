@@ -7,7 +7,7 @@ import androidx.annotation.StringRes
 import org.threeten.bp.LocalDate
 import tmg.flashback.R
 import tmg.flashback.repo.models.stats.SlimConstructor
-import tmg.flashback.shared.SyncDataItem
+import tmg.flashback.shared.sync.SyncDataItem
 
 sealed class DriverSummaryItem(
         @LayoutRes val layoutId: Int

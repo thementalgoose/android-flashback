@@ -8,7 +8,7 @@
     android:layout_height="wrap_content"
     android:clickable="true"
     android:focusable="true"
-    android:foreground="@drawable/rounded_ripple"
+    android:foreground="@drawable/ripple_rounded"
     android:paddingStart="@dimen/paddingMedium"
     android:paddingTop="10dp"
     android:paddingEnd="@dimen/paddingMedium"

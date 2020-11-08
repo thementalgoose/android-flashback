@@ -5,7 +5,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
 import tmg.flashback.R
-import tmg.flashback.shared.SyncDataItem
+import tmg.flashback.shared.sync.SyncDataItem
 
 sealed class ConstructorSummaryItem(
         @LayoutRes val layoutId: Int

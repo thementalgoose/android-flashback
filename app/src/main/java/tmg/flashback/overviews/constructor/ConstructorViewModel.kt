@@ -8,7 +8,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.asFlow
-import kotlinx.coroutines.flow.flatMap
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import tmg.flashback.R
@@ -16,11 +15,10 @@ import tmg.flashback.base.BaseViewModel
 import tmg.flashback.di.async.ScopeProvider
 import tmg.flashback.overviews.constructor.summary.ConstructorSummaryItem
 import tmg.flashback.overviews.constructor.summary.addError
-import tmg.flashback.overviews.driver.summary.DriverSummaryItem
 import tmg.flashback.repo.db.stats.ConstructorDB
 import tmg.flashback.repo.models.stats.ConstructorOverview
 import tmg.flashback.settings.ConnectivityManager
-import tmg.flashback.shared.SyncDataItem
+import tmg.flashback.shared.sync.SyncDataItem
 import tmg.flashback.shared.viewholders.DataUnavailable
 import tmg.flashback.utils.position
 import tmg.utilities.extensions.ordinalAbbreviation
@@ -149,6 +147,11 @@ class ConstructorViewModel(
         }
 
         list.addStat(
+                icon = R.drawable.ic_race_grid,
+                label = R.string.constructor_overview_stat_races,
+                value = overview.races.toString()
+        )
+        list.addStat(
                 icon = R.drawable.ic_standings,
                 label = R.string.constructor_overview_stat_race_wins,
                 value = overview.totalWins.toString()
@@ -164,14 +167,14 @@ class ConstructorViewModel(
                 value = overview.bestFinish.position()
         )
         list.addStat(
-                icon = R.drawable.ic_finishes_in_points,
-                label = R.string.constructor_overview_stat_points_finishes,
-                value = overview.finishesInPoints.toString()
-        )
-        list.addStat(
                 icon = R.drawable.ic_race_points,
                 label = R.string.constructor_overview_stat_points,
                 value = overview.totalPoints.toString()
+        )
+        list.addStat(
+                icon = R.drawable.ic_finishes_in_points,
+                label = R.string.constructor_overview_stat_points_finishes,
+                value = overview.finishesInPoints.toString()
         )
         list.addStat(
                 icon = R.drawable.ic_qualifying_pole,
