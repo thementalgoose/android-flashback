@@ -3,10 +3,7 @@ package tmg.flashback.overviews.driver.summary.viewholders
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import kotlinx.android.synthetic.main.view_driver_overview_header.view.*
-import kotlinx.android.synthetic.main.view_driver_overview_header.view.imgDriver
-import kotlinx.android.synthetic.main.view_driver_overview_header.view.imgNationality
-import kotlinx.android.synthetic.main.view_driver_overview_header.view.tvNumber
+import kotlinx.android.synthetic.main.view_driver_summary_header.view.*
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.R
 import tmg.flashback.overviews.driver.summary.DriverSummaryItem

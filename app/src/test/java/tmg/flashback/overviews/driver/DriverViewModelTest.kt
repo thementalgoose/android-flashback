@@ -1,4 +1,4 @@
-package tmg.flashback.driver
+package tmg.flashback.overviews.driver
 
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.mock
@@ -13,9 +13,9 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.R
 import tmg.flashback.currentYear
+import tmg.flashback.overviews.*
 import tmg.flashback.overviews.driver.summary.DriverSummaryItem
 import tmg.flashback.overviews.driver.summary.RaceForPositionType.*
-import tmg.flashback.overviews.driver.DriverViewModel
 import tmg.flashback.repo.db.stats.DriverDB
 import tmg.flashback.settings.ConnectivityManager
 import tmg.flashback.shared.SyncDataItem
@@ -44,7 +44,7 @@ class DriverViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `DriverOverviewViewModel setup loads error state when network connectivity is down`() = coroutineTest {
+    fun `DriverViewModel setup loads error state when network connectivity is down`() = coroutineTest {
 
         whenever(mockConnectivityManager.isConnected).thenReturn(false)
         whenever(mockDriverDB.getDriverOverview(any())).thenReturn(flow { emit(null) })
@@ -60,7 +60,7 @@ class DriverViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `DriverOverviewViewModel setup loads an error state when driver overview is returned`() = coroutineTest {
+    fun `DriverViewModel setup loads an error state when driver overview is returned`() = coroutineTest {
 
         whenever(mockDriverDB.getDriverOverview(any())).thenReturn(flow { emit(null) })
         val expected = listOf(
@@ -75,7 +75,7 @@ class DriverViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `DriverOverviewViewModel setup which contains championship item in progress`() = coroutineTest {
+    fun `DriverViewModel setup which contains championship item in progress`() = coroutineTest {
 
         whenever(mockDriverDB.getDriverOverview(any())).thenReturn(flow { emit(mockDriverOverviewChampionshipInProgress) })
 
@@ -89,7 +89,7 @@ class DriverViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `DriverOverviewViewModel contains header item with appropiate mock data`() = coroutineTest {
+    fun `DriverViewModel contains header item with appropiate mock data`() = coroutineTest {
 
         whenever(mockDriverDB.getDriverOverview(any())).thenReturn(flow { emit(mockDriverOverview) })
 
@@ -111,7 +111,7 @@ class DriverViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `DriverOverviewViewModel list contains highlighted championship quantity result when driver has championships`() = coroutineTest {
+    fun `DriverViewModel list contains highlighted championship quantity result when driver has championships`() = coroutineTest {
 
         whenever(mockDriverDB.getDriverOverview(any())).thenReturn(flow { emit(mockDriverOverviewWonChampionship) })
 
@@ -128,7 +128,7 @@ class DriverViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `DriverOverviewViewModel list contains non highlighted championship quantity result when driver has not won championships`() = coroutineTest {
+    fun `DriverViewModel list contains non highlighted championship quantity result when driver has not won championships`() = coroutineTest {
 
         whenever(mockDriverDB.getDriverOverview(any())).thenReturn(flow { emit(mockDriverOverviewNotWonChampionship) })
 
@@ -144,7 +144,7 @@ class DriverViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `DriverOverviewViewModel list doesn't contain career best championship if driver is in rookie season`() = coroutineTest {
+    fun `DriverViewModel list doesn't contain career best championship if driver is in rookie season`() = coroutineTest {
 
         whenever(mockDriverDB.getDriverOverview(any())).thenReturn(flow { emit(mockDriverOverviewRookieSeason) })
 
@@ -161,7 +161,7 @@ class DriverViewModelTest: BaseTest() {
 
 
     @Test
-    fun `DriverOverviewViewModel list contains career best championship if driver has completed a season`() = coroutineTest {
+    fun `DriverViewModel list contains career best championship if driver has completed a season`() = coroutineTest {
 
         whenever(mockDriverDB.getDriverOverview(any())).thenReturn(flow { emit(mockDriverOverview) })
 
@@ -177,7 +177,7 @@ class DriverViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `DriverOverviewViewModel setup loads standard list of statistics items`() = coroutineTest {
+    fun `DriverViewModel setup loads standard list of statistics items`() = coroutineTest {
 
         whenever(mockDriverDB.getDriverOverview(any())).thenReturn(flow { emit(mockDriverOverview) })
         val expected = listOf(
@@ -235,13 +235,13 @@ class DriverViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `DriverOverviewViewModel team ordering and highlighting default setup`() = coroutineTest {
+    fun `DriverViewModel team ordering and highlighting default setup`() = coroutineTest {
 
         whenever(mockDriverDB.getDriverOverview(any())).thenReturn(flow { emit(mockDriverOverviewConstructorChangeThenYearOffEndingInCurrentSeason) })
         val expected = listOf<DriverSummaryItem>(
             DriverSummaryItem.RacedFor(
                 currentYear,
-                mockDriverOverviewConstructor2,
+                    mockDriverOverviewConstructor2,
                 SEASON,
                 false
             ),
@@ -249,67 +249,67 @@ class DriverViewModelTest: BaseTest() {
                 // TODO: Add this when it's 2021 - DriverOverviewItem.RacedFor(2020, mockDriverOverviewConstructor, SEASON, false),
             DriverSummaryItem.RacedFor(
                 2019,
-                mockDriverOverviewConstructor,
+                    mockDriverOverviewConstructor,
                 SEASON,
                 false
             ),
             DriverSummaryItem.RacedFor(
                 2018,
-                mockDriverOverviewConstructor2,
+                    mockDriverOverviewConstructor2,
                 MID_SEASON_CHANGE,
                 false
             ),
             DriverSummaryItem.RacedFor(
                 2018,
-                mockDriverOverviewConstructor,
+                    mockDriverOverviewConstructor,
                 SEASON,
                 false
             ),
             DriverSummaryItem.RacedFor(
                 2017,
-                mockDriverOverviewConstructor,
+                    mockDriverOverviewConstructor,
                 SEASON,
                 false
             ),
             DriverSummaryItem.RacedFor(
                 2016,
-                mockDriverOverviewConstructor,
+                    mockDriverOverviewConstructor,
                 MID_SEASON_CHANGE,
                 false
             ),
             DriverSummaryItem.RacedFor(
                 2016,
-                mockDriverOverviewConstructor2,
+                    mockDriverOverviewConstructor2,
                 MID_SEASON_CHANGE,
                 false
             ),
             DriverSummaryItem.RacedFor(
                 2016,
-                mockDriverOverviewConstructor,
+                    mockDriverOverviewConstructor,
                 END,
                 false
             ),
             DriverSummaryItem.RacedFor(
                 2014,
-                mockDriverOverviewConstructor,
+                    mockDriverOverviewConstructor,
                 START,
                 false
             ),
             DriverSummaryItem.RacedFor(
                 2013,
-                mockDriverOverviewConstructor2,
+                    mockDriverOverviewConstructor2,
                 MID_SEASON_CHANGE,
                 false
             ),
             DriverSummaryItem.RacedFor(
                 2013,
-                mockDriverOverviewConstructor,
+                    mockDriverOverviewConstructor,
                 END,
                 false
             ),
             DriverSummaryItem.RacedFor(
                 2011,
-                mockDriverOverviewConstructor,
+                    mockDriverOverviewConstructor,
                 SINGLE,
                 true
             )
@@ -321,19 +321,19 @@ class DriverViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `DriverOverviewViewModel single team shown when 1 season for 1 year then year off`() = coroutineTest {
+    fun `DriverViewModel single team shown when 1 season for 1 year then year off`() = coroutineTest {
 
         whenever(mockDriverDB.getDriverOverview(any())).thenReturn(flow { emit(mockDriverOverviewTwoSeasonWithYearBetweenThem) })
         val expected = listOf(
             DriverSummaryItem.RacedFor(
                 2019,
-                mockDriverOverviewConstructor,
+                    mockDriverOverviewConstructor,
                 SINGLE,
                 true
             ),
             DriverSummaryItem.RacedFor(
                 2017,
-                mockDriverOverviewConstructor,
+                    mockDriverOverviewConstructor,
                 SINGLE,
                 false
             )
@@ -345,19 +345,19 @@ class DriverViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `DriverOverviewViewModel single team shown when 1 season for 1 year whilst current year in progress`() = coroutineTest {
+    fun `DriverViewModel single team shown when 1 season for 1 year whilst current year in progress`() = coroutineTest {
 
         whenever(mockDriverDB.getDriverOverview(any())).thenReturn(flow { emit(mockDriverOverviewTwoSeasonWithYearBetweenThemEndingInCurrentYear) })
         val expected = listOf(
             DriverSummaryItem.RacedFor(
                 currentYear,
-                mockDriverOverviewConstructor,
+                    mockDriverOverviewConstructor,
                 END,
                 false
             ),
             DriverSummaryItem.RacedFor(
                 2017,
-                mockDriverOverviewConstructor,
+                    mockDriverOverviewConstructor,
                 SINGLE,
                 true
             )
@@ -369,7 +369,7 @@ class DriverViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `DriverOverviewViewModel clicking open season opens season for driver`() = coroutineTest {
+    fun `DriverViewModel clicking open season opens season for driver`() = coroutineTest {
 
         val expected = 2020
 
@@ -381,7 +381,7 @@ class DriverViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `DriverOverviewViewModel clicking open url forwards open url event`() = coroutineTest {
+    fun `DriverViewModel clicking open url forwards open url event`() = coroutineTest {
 
         val expectUrl = "http://www.google.com"
 

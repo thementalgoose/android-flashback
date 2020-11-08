@@ -18,12 +18,12 @@ class DriverOverviewTest {
             "21,1,false,1",
             "21,1,true,0"
     )
-    fun `DriverOverview championship`(s1: Int, s2: Int, s2InProgress: Boolean, expected: Int) {
+    fun `DriverOverview championship wins`(s1: Int, s2: Int, s2InProgress: Boolean, expected: Int) {
         val sut = mockDriverOverview.copy(standings = listOf(
                 mockDriverStanding1.copy(championshipStanding = s1),
                 mockDriverStanding2.copy(championshipStanding = s2, isInProgress = s2InProgress)
         ))
-        assertEquals(expected, sut.championships)
+        assertEquals(expected, sut.championshipWins)
     }
 
     @ParameterizedTest

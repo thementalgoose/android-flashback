@@ -9,3 +9,8 @@ fun Int.extendTo(toCharacters: Int = 2): String {
     }
     return "$chars$this"
 }
+
+fun Int.positive(): Int = when {
+    this < 0 -> 0
+    else -> this
+}

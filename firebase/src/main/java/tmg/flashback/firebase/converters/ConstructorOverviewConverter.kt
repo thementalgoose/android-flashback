@@ -42,7 +42,7 @@ fun FConstructorOverviewStandings.convert(data: FConstructorOverviewData, driver
                     .filterNotNull()
                     .map { it.driver.id to it }
                     .toMap(),
-            inProgress = this.inProgress == true,
+            isInProgress = this.inProgress == true,
             championshipStanding = this.championshipStanding ?: 0,
             points = this.p ?: 0,
             season = this.s,

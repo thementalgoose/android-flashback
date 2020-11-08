@@ -1,4 +1,4 @@
-package tmg.flashback.driver.season
+package tmg.flashback.overviews.driver.season
 
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.mock
@@ -11,9 +11,7 @@ import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.R
-import tmg.flashback.driver.*
-import tmg.flashback.overviews.driver.season.DriverSeasonItem
-import tmg.flashback.overviews.driver.season.DriverSeasonViewModel
+import tmg.flashback.overviews.*
 import tmg.flashback.overviews.driver.summary.RaceForPositionType.*
 import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.db.stats.DriverDB
