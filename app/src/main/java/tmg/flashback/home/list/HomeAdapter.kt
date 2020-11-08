@@ -8,8 +8,7 @@ import tmg.flashback.R
 import tmg.flashback.home.list.viewholders.ConstructorViewHolder
 import tmg.flashback.home.list.viewholders.DriverViewHolder
 import tmg.flashback.home.list.viewholders.TrackViewHolder
-import tmg.flashback.shared.SyncAdapter
-import tmg.flashback.shared.viewholders.*
+import tmg.flashback.shared.sync.SyncAdapter
 
 class HomeAdapter(
         private val trackClicked: (track: HomeItem.Track) -> Unit,

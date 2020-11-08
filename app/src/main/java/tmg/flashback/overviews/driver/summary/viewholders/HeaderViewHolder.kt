@@ -1,26 +1,31 @@
 package tmg.flashback.overviews.driver.summary.viewholders
 
 import android.view.View
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.view_driver_summary_header.view.*
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.R
 import tmg.flashback.overviews.driver.summary.DriverSummaryItem
+import tmg.flashback.shared.pill.PillAdapter
+import tmg.flashback.shared.pill.PillItem
 import tmg.flashback.utils.getColor
 import tmg.flashback.utils.getFlagResourceAlpha3
 import tmg.utilities.extensions.views.context
-import tmg.utilities.extensions.views.show
 
 class HeaderViewHolder(
-    private val clickOnWikipedia: (String) -> Unit,
-    itemView: View
-): RecyclerView.ViewHolder(itemView), View.OnClickListener {
+        pillClicked: (PillItem) -> Unit,
+        itemView: View
+): RecyclerView.ViewHolder(itemView) {
 
-    private var wikipediaUrl: String? = null
+    var adapter: PillAdapter = PillAdapter(pillClicked = pillClicked)
 
     init {
-        itemView.wikipedia.setOnClickListener(this)
+        itemView.links.adapter = adapter
+        itemView.links.layoutManager = LinearLayoutManager(context).apply {
+            orientation = LinearLayoutManager.HORIZONTAL
+        }
     }
 
     fun bind(item: DriverSummaryItem.Header) {
@@ -35,14 +40,8 @@ class HeaderViewHolder(
 
         itemView.imgNationality.setImageResource(context.getFlagResourceAlpha3(item.driverNationalityISO))
 
-        @Suppress("UselessCallOnNotNull")
-        itemView.wikipedia.show(!item.driverWikiUrl.isNullOrEmpty())
-        wikipediaUrl = item.driverWikiUrl
-    }
-
-    override fun onClick(p0: View?) {
-        wikipediaUrl?.let {
-            clickOnWikipedia(it)
-        }
+        adapter.list = mutableListOf(
+                PillItem.Wikipedia(item.driverWikiUrl)
+        )
     }
 }

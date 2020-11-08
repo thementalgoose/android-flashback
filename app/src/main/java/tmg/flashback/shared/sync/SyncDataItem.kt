@@ -1,9 +1,8 @@
-package tmg.flashback.shared
+package tmg.flashback.shared.sync
 
 import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
 import tmg.flashback.R
-import tmg.flashback.news.NewsItem
 import tmg.flashback.shared.viewholders.DataUnavailable
 
 sealed class SyncDataItem(

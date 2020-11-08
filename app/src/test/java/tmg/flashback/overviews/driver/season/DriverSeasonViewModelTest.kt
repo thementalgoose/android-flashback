@@ -18,7 +18,7 @@ import tmg.flashback.repo.db.stats.DriverDB
 import tmg.flashback.repo.enums.BarAnimation
 import tmg.flashback.repo.models.stats.DriverOverviewRace
 import tmg.flashback.settings.ConnectivityManager
-import tmg.flashback.shared.SyncDataItem
+import tmg.flashback.shared.sync.SyncDataItem
 import tmg.flashback.shared.viewholders.DataUnavailable.DRIVER_NOT_EXIST
 import tmg.flashback.testutils.*
 import tmg.flashback.utils.position

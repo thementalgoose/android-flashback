@@ -17,6 +17,8 @@ import tmg.flashback.TrackLayout
 import tmg.flashback.base.BaseActivity
 import tmg.flashback.circuit.CircuitInfoActivity
 import tmg.flashback.overviews.driver.DriverActivity
+import tmg.flashback.shared.pill.PillAdapter
+import tmg.flashback.shared.pill.PillItem
 import tmg.flashback.utils.getFlagResourceAlpha3
 import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.observe
@@ -30,6 +32,7 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
 
     private val viewModel: RaceViewModel by inject()
     private lateinit var raceAdapter: RaceAdapter
+    private lateinit var linkAdapter: PillAdapter
 
     var season: Int = -1
     var round: Int = -1
@@ -126,9 +129,25 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
         @Suppress("RemoveExplicitTypeArguments")
         val track = TrackLayout.getOverride(season, initialRaceName) ?: circuitId.toEnum<TrackLayout> { it.circuitId }
         trackLayout.show(track != null)
-        circuit.show(track == null)
         if (track != null) {
             trackLayout.setImageResource(track.icon)
+        }
+
+        /**
+         * Setup the links at the top of the file
+         */
+        linkAdapter = PillAdapter(
+                pillClicked = {
+                    when (it) {
+                        is PillItem.Wikipedia -> viewModel.inputs.clickWikipedia()
+                        is PillItem.Circuit -> startActivity(CircuitInfoActivity.intent(this, circuitId, initialTrackName))
+                        else -> {} /* Do nothing */
+                    }
+                }
+        )
+        links.adapter = linkAdapter
+        links.layoutManager = LinearLayoutManager(this).apply {
+            orientation = LinearLayoutManager.HORIZONTAL
         }
 
         menu.setOnNavigationItemSelectedListener {
@@ -150,22 +169,21 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
         }
         back.setOnClickListener { finish() }
 
-        circuit.setOnClickListener {
-            startActivity(CircuitInfoActivity.intent(this, circuitId, initialTrackName))
-        }
-
         trackLayout.setOnClickListener {
             startActivity(CircuitInfoActivity.intent(this, circuitId, initialTrackName))
         }
 
-        wikipedia.setOnClickListener {
-            viewModel.inputs.clickWikipedia()
-        }
-
         // Observe
 
-        observe(viewModel.outputs.showWikipedia) {
-            wikipedia.show(it)
+        observe(viewModel.outputs.showLinks) {
+            linkAdapter.list = mutableListOf<PillItem>().apply {
+                if (track == null) {
+                    add(PillItem.Circuit())
+                }
+                if (it) {
+                    add(PillItem.Wikipedia(""))
+                }
+            }
         }
 
         observe(viewModel.outputs.seasonRoundData) { (season, round) ->

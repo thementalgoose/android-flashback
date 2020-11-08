@@ -7,7 +7,7 @@ import tmg.flashback.R
 import tmg.flashback.circuit.list.viewholders.HeaderViewHolder
 import tmg.flashback.circuit.list.viewholders.RaceViewHolder
 import tmg.flashback.circuit.list.viewholders.TrackViewHolder
-import tmg.flashback.shared.SyncAdapter
+import tmg.flashback.shared.sync.SyncAdapter
 import tmg.flashback.utils.calculateDiff
 
 class CircuitInfoAdapter(

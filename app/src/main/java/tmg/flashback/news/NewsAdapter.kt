@@ -5,11 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.R
 import tmg.flashback.repo.models.news.Article
-import tmg.flashback.shared.SyncAdapter
-import tmg.flashback.shared.viewholders.InternalErrorOccurredViewHolder
+import tmg.flashback.shared.sync.SyncAdapter
 import tmg.flashback.shared.viewholders.MessageViewHolder
-import tmg.flashback.shared.viewholders.NoNetworkViewHolder
-import tmg.flashback.shared.viewholders.NoNewsSourcesViewHolder
 import tmg.flashback.utils.calculateDiff
 
 class NewsAdapter(

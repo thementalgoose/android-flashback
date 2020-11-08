@@ -1,4 +1,4 @@
-package tmg.flashback.shared
+package tmg.flashback.shared.sync
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

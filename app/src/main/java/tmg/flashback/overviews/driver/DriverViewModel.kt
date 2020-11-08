@@ -20,7 +20,7 @@ import tmg.flashback.overviews.driver.summary.addError
 import tmg.flashback.repo.db.stats.DriverDB
 import tmg.flashback.repo.models.stats.DriverOverview
 import tmg.flashback.settings.ConnectivityManager
-import tmg.flashback.shared.SyncDataItem
+import tmg.flashback.shared.sync.SyncDataItem
 import tmg.flashback.shared.viewholders.DataUnavailable
 import tmg.flashback.utils.position
 import tmg.utilities.extensions.ordinalAbbreviation

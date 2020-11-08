@@ -3,7 +3,7 @@ package tmg.flashback.news
 import androidx.annotation.LayoutRes
 import tmg.flashback.R
 import tmg.flashback.repo.models.news.Article
-import tmg.flashback.shared.SyncDataItem
+import tmg.flashback.shared.sync.SyncDataItem
 
 sealed class NewsItem(
     @LayoutRes val layoutId: Int

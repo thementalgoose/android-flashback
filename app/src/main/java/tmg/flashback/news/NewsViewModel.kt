@@ -3,8 +3,6 @@ package tmg.flashback.news
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.*
 import org.threeten.bp.LocalDateTime
@@ -14,7 +12,7 @@ import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.db.news.NewsDB
 import tmg.flashback.repo.enums.NewsSource
 import tmg.flashback.settings.ConnectivityManager
-import tmg.flashback.shared.SyncDataItem
+import tmg.flashback.shared.sync.SyncDataItem
 import tmg.flashback.di.async.ScopeProvider
 import tmg.utilities.extensions.then
 

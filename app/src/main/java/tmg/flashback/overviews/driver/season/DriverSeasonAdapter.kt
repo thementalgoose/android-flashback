@@ -9,7 +9,7 @@ import tmg.flashback.overviews.viewholders.StatsViewHolder
 import tmg.flashback.overviews.driver.season.viewholders.RaceHeaderViewHolder
 import tmg.flashback.overviews.driver.season.viewholders.RaceViewHolder
 import tmg.flashback.overviews.viewholders.RacedForViewHolder
-import tmg.flashback.shared.SyncAdapter
+import tmg.flashback.shared.sync.SyncAdapter
 import tmg.flashback.utils.GenericDiffCallback
 
 class DriverSeasonAdapter(

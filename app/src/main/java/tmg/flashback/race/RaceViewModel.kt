@@ -3,9 +3,6 @@ package tmg.flashback.race
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.*
 import org.threeten.bp.LocalDate
@@ -40,7 +37,7 @@ interface RaceViewModelOutputs {
     val seasonRoundData: LiveData<SeasonRound>
     val goToDriverOverview: MutableLiveData<DataEvent<Pair<String, String>>>
 
-    val showWikipedia: MutableLiveData<Boolean>
+    val showLinks: MutableLiveData<Boolean>
     val goToWikipedia: MutableLiveData<DataEvent<String>>
 }
 
@@ -65,7 +62,7 @@ class RaceViewModel(
 
     override val goToDriverOverview: MutableLiveData<DataEvent<Pair<String, String>>> = MutableLiveData()
 
-    override val showWikipedia: MutableLiveData<Boolean> = MutableLiveData(false)
+    override val showLinks: MutableLiveData<Boolean> = MutableLiveData(false)
     override val goToWikipedia: MutableLiveData<DataEvent<String>> = MutableLiveData()
 
     private val seasonRoundFlow: Flow<Round?> = seasonRound
@@ -99,7 +96,7 @@ class RaceViewModel(
                 }
 
                 wikipedia = roundData.wikipediaUrl
-                showWikipedia.value = wikipedia != null
+                showLinks.value = wikipedia != null
 
                 // Constructor standings, models are constructors
                 if (viewType == RaceAdapterType.CONSTRUCTOR_STANDINGS) {
