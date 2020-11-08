@@ -75,8 +75,7 @@ class DriverViewModel(
                     }
                 }
                 else -> {
-                    list.add(
-                        DriverSummaryItem.Header(
+                    list.add(DriverSummaryItem.Header(
                         driverFirstname = it.firstName,
                         driverSurname = it.lastName,
                         driverNumber = it.number,

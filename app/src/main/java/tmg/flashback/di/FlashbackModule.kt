@@ -43,7 +43,7 @@ var flashbackModule = module {
     viewModel { DriverSeasonViewModel(get(), get(), get(), get()) }
 
     // Constructor
-    viewModel { ConstructorViewModel(get()) }
+    viewModel { ConstructorViewModel(get(), get(), get()) }
 
     // Settings
     viewModel { SettingsViewModel(get(), get()) }
