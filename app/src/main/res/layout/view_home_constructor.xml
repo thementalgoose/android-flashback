@@ -30,9 +30,10 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Ferrari" />
 
-    <androidx.recyclerview.widget.RecyclerView
+    <tmg.flashback.views.PassThroughRecyclerView
         android:id="@+id/driverList"
         android:layout_width="0dp"
+        android:clickable="false"
         android:layout_height="wrap_content"
         android:overScrollMode="never"
         app:layout_constraintEnd_toStartOf="@id/guideline"

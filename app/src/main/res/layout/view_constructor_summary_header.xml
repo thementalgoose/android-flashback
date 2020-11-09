@@ -14,10 +14,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <View
+        android:id="@+id/colour"
+        android:layout_width="0dp"
+        android:layout_height="8dp"
+        android:layout_marginTop="@dimen/paddingSmall"
+        app:layout_constraintEnd_toEndOf="@id/nationality"
+        app:layout_constraintStart_toStartOf="@id/nationality"
+        app:layout_constraintTop_toBottomOf="@id/nationality" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/links"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/paddingSmall"
         android:clipToPadding="false"
         android:overScrollMode="never"
         android:paddingStart="@dimen/paddingMedium"
@@ -25,7 +35,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/nationality"
+        app:layout_constraintTop_toBottomOf="@id/colour"
         tools:itemCount="3"
         tools:listitem="@layout/view_link_pill" />
 

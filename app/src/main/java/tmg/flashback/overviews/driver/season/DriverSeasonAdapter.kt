@@ -8,7 +8,7 @@ import tmg.flashback.R
 import tmg.flashback.overviews.viewholders.StatsViewHolder
 import tmg.flashback.overviews.driver.season.viewholders.RaceHeaderViewHolder
 import tmg.flashback.overviews.driver.season.viewholders.RaceViewHolder
-import tmg.flashback.overviews.viewholders.RacedForViewHolder
+import tmg.flashback.overviews.viewholders.DriverHistoryViewHolder
 import tmg.flashback.shared.sync.SyncAdapter
 import tmg.flashback.utils.GenericDiffCallback
 
@@ -28,7 +28,7 @@ class DriverSeasonAdapter(
             R.layout.view_overview_stat -> StatsViewHolder(
                     LayoutInflater.from(parent.context).inflate(viewType, parent, false)
             )
-            R.layout.view_driver_summary_history -> RacedForViewHolder(
+            R.layout.view_driver_summary_history -> DriverHistoryViewHolder(
                     LayoutInflater.from(parent.context).inflate(viewType, parent, false)
             )
             R.layout.view_driver_season -> RaceViewHolder(
@@ -47,7 +47,7 @@ class DriverSeasonAdapter(
             is DriverSeasonItem.Stat -> (holder as StatsViewHolder).bind(item)
             is DriverSeasonItem.Result -> (holder as RaceViewHolder).bind(item)
             is DriverSeasonItem.ErrorItem -> bindErrors(holder, item.item)
-            is DriverSeasonItem.RacedFor -> (holder as RacedForViewHolder).bind(item)
+            is DriverSeasonItem.RacedFor -> (holder as DriverHistoryViewHolder).bind(item)
         }
     }
 

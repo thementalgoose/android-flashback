@@ -6,8 +6,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.R
 import tmg.flashback.overviews.driver.summary.viewholders.HeaderViewHolder
-import tmg.flashback.overviews.viewholders.OverviewRacedForViewHolder
-import tmg.flashback.overviews.viewholders.RacedForViewHolder
+import tmg.flashback.overviews.viewholders.OverviewDriverHistoryViewHolder
+import tmg.flashback.overviews.viewholders.DriverHistoryViewHolder
 import tmg.flashback.overviews.viewholders.StatsViewHolder
 import tmg.flashback.race.viewholders.SkeletonLoadingViewHolder
 import tmg.flashback.shared.pill.PillItem
@@ -41,11 +41,11 @@ class DriverSummaryAdapter(
                     LayoutInflater.from(parent.context).inflate(viewType, parent, false)
             )
             R.layout.view_driver_summary_history -> when (seasonClicked != null) {
-                true -> OverviewRacedForViewHolder(
+                true -> OverviewDriverHistoryViewHolder(
                         seasonClicked,
                         LayoutInflater.from(parent.context).inflate(viewType, parent, false)
                 )
-                false -> RacedForViewHolder(
+                false -> DriverHistoryViewHolder(
                         LayoutInflater.from(parent.context).inflate(viewType, parent, false)
                 )
             }
@@ -60,7 +60,7 @@ class DriverSummaryAdapter(
         when (val item = list[position]) {
             is DriverSummaryItem.Header -> (holder as HeaderViewHolder).bind(item)
             is DriverSummaryItem.Stat -> (holder as StatsViewHolder).bind(item)
-            is DriverSummaryItem.RacedFor -> (holder as OverviewRacedForViewHolder).bind(item)
+            is DriverSummaryItem.RacedFor -> (holder as OverviewDriverHistoryViewHolder).bind(item)
             is DriverSummaryItem.ErrorItem -> bindErrors(holder, item.item)
         }
     }

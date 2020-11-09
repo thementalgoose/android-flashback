@@ -15,7 +15,7 @@ import tmg.flashback.base.BaseViewModel
 import tmg.flashback.currentYear
 import tmg.flashback.di.async.ScopeProvider
 import tmg.flashback.overviews.driver.summary.DriverSummaryItem
-import tmg.flashback.overviews.driver.summary.RaceForPositionType
+import tmg.flashback.overviews.driver.summary.PipeType
 import tmg.flashback.overviews.driver.summary.addError
 import tmg.flashback.repo.db.stats.DriverDB
 import tmg.flashback.repo.models.stats.DriverOverview
@@ -220,8 +220,8 @@ class DriverViewModel(
             .reversed()
             .map {
                 val type = when (it.type) {
-                    RaceForPositionType.START -> RaceForPositionType.END
-                    RaceForPositionType.END -> RaceForPositionType.START
+                    PipeType.START -> PipeType.END
+                    PipeType.END -> PipeType.START
                     else -> it.type
                 }
                 DriverSummaryItem.RacedFor(it.season, it.constructors, type, overview.isWorldChampionFor(it.season))
@@ -239,21 +239,21 @@ class DriverViewModel(
             val (season, constructor) = pair
             val nextItem = overview.constructors.getOrNull(index + 1)
             // Handle first item
-            val dotType: RaceForPositionType
+            val dotType: PipeType
             // First year
             if (index == 0) {
                 dotType = when {
                     // Raced for one and only year
                     nextItem == null -> {
-                        RaceForPositionType.SINGLE
+                        PipeType.SINGLE
                     }
                     // Raced for one year, then took one or more years off but returned later
                     nextItem.first >= season + 2 -> {
-                        RaceForPositionType.SINGLE
+                        PipeType.SINGLE
                     }
                     // Next result is either same year constructor change or next year.
                     else -> {
-                        RaceForPositionType.START
+                        PipeType.START
                     }
                 }
             }
@@ -264,28 +264,28 @@ class DriverViewModel(
                     // Nothing afterwards. End of career
                     nextItem == null -> {
                         when {
-                            previousItem.first <= season - 2 && currentYear == season -> RaceForPositionType.START
-                            previousItem.first <= season - 2 && currentYear != season -> RaceForPositionType.SINGLE
-                            currentYear == season -> RaceForPositionType.SEASON
-                            else -> RaceForPositionType.END
+                            previousItem.first <= season - 2 && currentYear == season -> PipeType.START
+                            previousItem.first <= season - 2 && currentYear != season -> PipeType.SINGLE
+                            currentYear == season -> PipeType.START_END
+                            else -> PipeType.END
                         }
                     }
 
                     // Driver took one or more years off. Last item should be end, so need start
                     previousItem.first <= season - 2 -> {
-                        RaceForPositionType.START
+                        PipeType.START
                     }
                     // Ending before temporarily retiring
                     nextItem.first >= season + 2 -> {
-                        RaceForPositionType.END
+                        PipeType.END
                     }
                     // Next year constructor
                     previousItem.first == season - 1 -> {
-                        RaceForPositionType.SEASON
+                        PipeType.START_END
                     }
                     // Same year, constructor change mid season
                     else -> {
-                        RaceForPositionType.MID_SEASON_CHANGE
+                        PipeType.SINGLE_PIPE
                     }
                 }
             }

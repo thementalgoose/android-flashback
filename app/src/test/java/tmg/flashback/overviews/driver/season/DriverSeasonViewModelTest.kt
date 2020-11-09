@@ -12,7 +12,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.R
 import tmg.flashback.overviews.*
-import tmg.flashback.overviews.driver.summary.RaceForPositionType.*
+import tmg.flashback.overviews.driver.summary.PipeType.*
 import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.db.stats.DriverDB
 import tmg.flashback.repo.enums.BarAnimation
@@ -135,7 +135,7 @@ class DriverSeasonViewModelTest: BaseTest() {
         whenever(mockDriverDB.getDriverOverview(any())).thenReturn(flow { emit(conditionedDriverOverview) })
         val expected = listOf(
                 DriverSeasonItem.RacedFor(null, mockDriverOverviewConstructor2, START, false),
-                DriverSeasonItem.RacedFor(null, mockDriverOverviewConstructor3, MID_SEASON_CHANGE, false),
+                DriverSeasonItem.RacedFor(null, mockDriverOverviewConstructor3, SINGLE_PIPE, false),
                 DriverSeasonItem.RacedFor(null, mockDriverOverviewConstructor, END, false)
         )
 

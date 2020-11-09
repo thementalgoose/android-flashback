@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="start|center"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/tvName"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        style="@style/Text.ConstructorStandings.Driver.Name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@id/imgFlag"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Lewis Hamilton" />
+
+    <ImageView
+        android:id="@+id/imgFlag"
+        android:layout_width="@dimen/driverFlagSize"
+        android:layout_height="@dimen/driverFlagSize"
+        android:layout_marginStart="@dimen/paddingXSmall"
+        app:layout_constraintEnd_toStartOf="@id/tvNumber"
+        app:layout_constraintStart_toEndOf="@id/tvName"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/gb" />
+
+    <TextView
+        android:id="@+id/tvNumber"
+        style="@style/Text.ConstructorStandings.Driver.Summary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/paddingSmall"
+        app:layout_constraintEnd_toStartOf="@id/standing"
+        app:layout_constraintStart_toEndOf="@id/imgFlag"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="44" />
+
+    <TextView
+        android:id="@+id/standing"
+        style="@style/Text.ConstructorStandings.Driver.Summary"
+        android:layout_width="@dimen/constructorOverviewItem"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="1st" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

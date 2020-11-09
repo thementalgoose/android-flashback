@@ -3,7 +3,7 @@ package tmg.flashback.overviews.driver.season
 import androidx.annotation.*
 import org.threeten.bp.LocalDate
 import tmg.flashback.R
-import tmg.flashback.overviews.driver.summary.RaceForPositionType
+import tmg.flashback.overviews.driver.summary.PipeType
 import tmg.flashback.repo.enums.BarAnimation
 import tmg.flashback.repo.enums.RaceStatus
 import tmg.flashback.repo.models.stats.SlimConstructor
@@ -27,7 +27,7 @@ sealed class DriverSeasonItem(
     data class RacedFor(
             val season: Int?, // Null = hide season
             val constructors: SlimConstructor,
-            val type: RaceForPositionType,
+            val type: PipeType,
             val isChampionship: Boolean
     ): DriverSeasonItem(
             R.layout.view_driver_summary_history

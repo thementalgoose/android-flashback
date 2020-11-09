@@ -32,6 +32,8 @@ class HeaderViewHolder(
                 .load(context.getFlagResourceAlpha3(item.constructorNationalityISO))
                 .into(itemView.nationality)
 
+        itemView.colour.setBackgroundColor(item.constructorColor)
+
         adapter.list = mutableListOf(
                 PillItem.Wikipedia(item.constructorWikiUrl)
         )

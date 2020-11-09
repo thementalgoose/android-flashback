@@ -11,6 +11,7 @@ import tmg.flashback.R
 import tmg.flashback.home.list.HomeItem
 import tmg.flashback.repo.enums.BarAnimation
 import tmg.flashback.repo.models.stats.Driver
+import tmg.flashback.shared.driverlist.DriverListAdapter
 import tmg.flashback.utils.getColor
 import tmg.flashback.utils.getFlagResourceAlpha3
 import tmg.utilities.extensions.views.context
@@ -29,7 +30,7 @@ class ConstructorViewHolder(
     private lateinit var constructorId: String
     private lateinit var constructorName: String
 
-    var adapter = ConstructorViewHolderDriverAdapter()
+    var adapter = DriverListAdapter()
 
     init {
         itemView.driverList.adapter = adapter
@@ -66,34 +67,6 @@ class ConstructorViewHolder(
         }
 
         adapter.list = item.driver
-    }
-}
-
-class ConstructorViewHolderDriverAdapter: RecyclerView.Adapter<ConstructorViewHolderDriverAdapter.ViewHolder>() {
-
-    var list: List<Pair<Driver, Int>> = emptyList()
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
-
-    override fun getItemCount(): Int = list.size
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.layout_constructor_driver, parent, false))
-    }
-
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(list[position])
-    }
-
-    inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        fun bind(item: Pair<Driver, Int>) {
-            val (driver, points) = item
-            itemView.tvName.text = driver.name
-            itemView.imgFlag.setImageResource(itemView.context.getFlagResourceAlpha3(driver.nationalityISO))
-            itemView.tvNumber.text = itemView.context.resources.getQuantityString(R.plurals.race_points, points, points)
-        }
     }
 
     override fun onClick(p0: View?) {

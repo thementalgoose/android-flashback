@@ -8,17 +8,17 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.R
 import tmg.flashback.overviews.driver.summary.DriverSummaryItem
-import tmg.flashback.overviews.driver.summary.RaceForPositionType
-import tmg.flashback.overviews.driver.summary.RaceForPositionType.*
+import tmg.flashback.overviews.driver.summary.PipeType
+import tmg.flashback.overviews.driver.summary.PipeType.*
 import tmg.flashback.overviews.driver.season.DriverSeasonItem
 import tmg.flashback.repo.models.stats.SlimConstructor
 import tmg.utilities.extensions.views.invisible
 import tmg.utilities.extensions.views.visible
 
-class OverviewRacedForViewHolder(
+class OverviewDriverHistoryViewHolder(
     private val callback: (season: Int) -> Unit,
     itemView: View
-): RacedForViewHolder(itemView), View.OnClickListener {
+): DriverHistoryViewHolder(itemView), View.OnClickListener {
 
     init {
         container.isClickable = true
@@ -31,7 +31,7 @@ class OverviewRacedForViewHolder(
     }
 }
 
-open class RacedForViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+open class DriverHistoryViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
     protected val container: ConstraintLayout = itemView.findViewById(R.id.container)
     protected val year: TextView = itemView.findViewById(R.id.year)
@@ -56,10 +56,10 @@ open class RacedForViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
     open fun bind(
             season: Int?,
             constructors: SlimConstructor,
-            type: RaceForPositionType,
+            type: PipeType,
             isChampionship: Boolean
     ) {
-        year.isVisible = type != MID_SEASON_CHANGE && season != null
+        year.isVisible = type != SINGLE_PIPE && season != null
         year.text = season.toString()
 
         constructor.text = constructors.name
@@ -83,12 +83,12 @@ open class RacedForViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
                 pipeCircle.visible()
                 pipeBottom.visible()
             }
-            SEASON -> {
+            START_END -> {
                 pipeTop.visible()
                 pipeCircle.visible()
                 pipeBottom.visible()
             }
-            MID_SEASON_CHANGE -> {
+            SINGLE_PIPE -> {
                 pipeTop.visible()
                 pipeCircle.invisible()
                 pipeBottom.visible()
