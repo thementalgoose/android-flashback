@@ -42,7 +42,7 @@ sealed class DriverSummaryItem(
             val type: RaceForPositionType,
             val isChampionship: Boolean
     ): DriverSummaryItem(
-            R.layout.view_driver_summary_raced_for
+            R.layout.view_driver_summary_history
     )
 
     data class ErrorItem(

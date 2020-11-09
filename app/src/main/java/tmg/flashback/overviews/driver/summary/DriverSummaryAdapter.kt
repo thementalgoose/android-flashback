@@ -40,7 +40,7 @@ class DriverSummaryAdapter(
             R.layout.view_overview_stat -> StatsViewHolder(
                     LayoutInflater.from(parent.context).inflate(viewType, parent, false)
             )
-            R.layout.view_driver_summary_raced_for -> when (seasonClicked != null) {
+            R.layout.view_driver_summary_history -> when (seasonClicked != null) {
                 true -> OverviewRacedForViewHolder(
                         seasonClicked,
                         LayoutInflater.from(parent.context).inflate(viewType, parent, false)

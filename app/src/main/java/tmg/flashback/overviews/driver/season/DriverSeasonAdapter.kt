@@ -28,7 +28,7 @@ class DriverSeasonAdapter(
             R.layout.view_overview_stat -> StatsViewHolder(
                     LayoutInflater.from(parent.context).inflate(viewType, parent, false)
             )
-            R.layout.view_driver_summary_raced_for -> RacedForViewHolder(
+            R.layout.view_driver_summary_history -> RacedForViewHolder(
                     LayoutInflater.from(parent.context).inflate(viewType, parent, false)
             )
             R.layout.view_driver_season -> RaceViewHolder(
