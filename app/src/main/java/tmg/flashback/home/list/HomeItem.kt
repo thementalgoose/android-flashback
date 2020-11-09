@@ -4,10 +4,8 @@ import androidx.annotation.LayoutRes
 import org.threeten.bp.LocalDate
 import tmg.flashback.R
 import tmg.flashback.repo.enums.BarAnimation
-import tmg.flashback.repo.models.stats.CircuitSummary
 import tmg.flashback.repo.models.stats.Round
-import tmg.flashback.shared.SyncDataItem
-import tmg.flashback.shared.viewholders.DataUnavailable
+import tmg.flashback.shared.sync.SyncDataItem
 
 sealed class HomeItem(
         @LayoutRes val layoutId: Int

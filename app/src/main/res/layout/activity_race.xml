@@ -118,10 +118,10 @@
                     android:layout_width="100dp"
                     android:layout_height="0dp"
                     android:layout_marginEnd="@dimen/paddingMedium"
-                    app:tint="?attr/f1TextPrimary"
                     app:layout_constraintBottom_toBottomOf="@id/tvDate"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    app:tint="?attr/f1TextPrimary"
                     tools:layout_width="100dp"
                     tools:src="@drawable/circuit_albert_park" />
 
@@ -146,62 +146,20 @@
                     app:layout_constraintTop_toBottomOf="@id/tvRoundInfo"
                     tools:text="21st January 2020" />
 
-                <HorizontalScrollView
+                <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="0dp"
+                    android:id="@+id/links"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/paddingMedium"
+                    android:clipToPadding="false"
+                    android:overScrollMode="never"
+                    android:paddingStart="@dimen/paddingMedium"
+                    android:paddingEnd="@dimen/paddingMedium"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvDate">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingStart="@dimen/paddingSmall"
-                        android:paddingEnd="@dimen/paddingSmall">
-
-                        <TextView
-                            android:id="@+id/circuit"
-                            style="@style/Text.Pill.Text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/rounded_ripple"
-                            android:clickable="true"
-                            android:drawableStart="@drawable/ic_track_icon"
-                            android:drawablePadding="@dimen/paddingXSmall"
-                            android:focusable="true"
-                            android:gravity="center"
-                            android:paddingStart="@dimen/paddingSmall"
-                            android:paddingTop="@dimen/paddingXSmall"
-                            android:paddingEnd="@dimen/paddingSmall"
-                            android:paddingBottom="@dimen/paddingXSmall"
-                            android:text="@string/circuit_info_circuit" />
-
-                        <TextView
-                            android:id="@+id/wikipedia"
-                            style="@style/Text.Pill.Text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/paddingSmall"
-                            android:background="@drawable/rounded_ripple"
-                            android:clickable="true"
-                            android:drawableStart="@drawable/ic_wikipedia"
-                            android:drawablePadding="@dimen/paddingXSmall"
-                            android:focusable="true"
-                            android:gravity="center"
-                            android:paddingStart="@dimen/paddingSmall"
-                            android:paddingTop="@dimen/paddingXSmall"
-                            android:paddingEnd="@dimen/paddingSmall"
-                            android:paddingBottom="@dimen/paddingXSmall"
-                            android:text="@string/circuit_info_wikipedia"
-                            android:visibility="gone"
-                            app:layout_constraintStart_toEndOf="@id/maps"
-                            app:layout_constraintTop_toBottomOf="@id/status" />
-
-                    </LinearLayout>
-
-                </HorizontalScrollView>
+                    app:layout_constraintTop_toBottomOf="@id/tvDate"
+                    tools:itemCount="1"
+                    tools:listitem="@layout/view_link_pill" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

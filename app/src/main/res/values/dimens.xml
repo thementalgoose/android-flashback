@@ -54,6 +54,12 @@
 
     <!--==================================-->
 
+    <!-- Constructor Overview -->
+
+    <dimen name="constructorOverviewItem">64dp</dimen>
+
+    <!-- Driver Overview -->
+
     <dimen name="driverOverviewPipeWidth">4dp</dimen>
     <dimen name="driverOverviewCircleSize">16dp</dimen>
     <dimen name="driverOverviewIconSize">24dp</dimen>
@@ -100,11 +106,6 @@
     <!--==================================-->
 
 
-    <dimen name="gridWidth">90dp</dimen>
-    <dimen name="gridHeight">22dp</dimen>
-
-    <dimen name="gridOffset">64dp</dimen>
-
     <dimen name="qualifyingListPositionWidth">24dp</dimen>
     <dimen name="raceResultPointsWidth">24dp</dimen>
 
@@ -148,6 +149,15 @@
     <fraction name="driverSeason">0.50</fraction>
     <fraction name="driverSeasonPoints">0.80</fraction>
 
+    <!-- ======================================== -->
+
+    <!-- ======================================== -->
+
+
+    <!-- ======================================== -->
+
+    <!-- ======================================== -->
+
     <!-- Race -->
 
     <dimen name="raceSeasonImageSize">36dp</dimen>
@@ -157,5 +167,9 @@
     <dimen name="constructorStandingsSize">40dp</dimen>
     <dimen name="homeNewsIconSize">36dp</dimen>
     <dimen name="circuitImageSize">42dp</dimen>
+
+    <!-- ======================================== -->
+
+    <!-- ======================================== -->
 
 </resources>

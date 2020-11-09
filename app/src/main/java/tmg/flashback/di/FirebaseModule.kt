@@ -14,4 +14,5 @@ val firebaseModule = module {
     single<CircuitDB> { CircuitFirestore(get()) }
     single<DataDB> { DataFirestore(get()) }
     single<DriverDB> { DriverFirestore(get()) }
+    single<ConstructorDB> { ConstructorFirestore(get()) }
 }

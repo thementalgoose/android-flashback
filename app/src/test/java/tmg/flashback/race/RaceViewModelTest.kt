@@ -7,7 +7,6 @@ import com.nhaarman.mockitokotlin2.whenever
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.flow
-import org.junit.Ignore
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -20,7 +19,6 @@ import tmg.flashback.repo.enums.BarAnimation
 import tmg.flashback.repo.models.stats.LapTime
 import tmg.flashback.repo.models.stats.Round
 import tmg.flashback.repo.models.stats.RoundDriver
-import tmg.flashback.repo.models.stats.RoundQualifyingResult
 import tmg.flashback.settings.ConnectivityManager
 import tmg.flashback.shared.viewholders.DataUnavailable
 import tmg.flashback.testutils.*
@@ -353,7 +351,7 @@ class RaceViewModelTest: BaseTest() {
 
         initSUT()
 
-        assertValue(false, sut.outputs.showWikipedia)
+        assertValue(false, sut.outputs.showLinks)
     }
 
     // Look at re-implementing this to make it test friendly

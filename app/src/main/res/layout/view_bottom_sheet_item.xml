@@ -16,7 +16,7 @@
         android:layout_marginBottom="@dimen/paddingXSmall"
         android:clickable="true"
         android:focusable="true"
-        android:foreground="@drawable/rounded_ripple">
+        android:foreground="@drawable/ripple_rounded">
         
         <ImageView
             android:tint="?attr/f1TextPrimary"

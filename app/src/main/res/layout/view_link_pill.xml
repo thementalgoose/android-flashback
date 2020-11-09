@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <TextView xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/button"
+        style="@style/Text.Pill.Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/paddingSmall"
+        android:background="@drawable/background_link_pill"
+        android:clickable="true"
+        android:drawableStart="@drawable/ic_wikipedia"
+        android:drawablePadding="@dimen/paddingXSmall"
+        android:focusable="true"
+        android:foreground="@drawable/ripple_pill"
+        android:gravity="center"
+        android:paddingStart="@dimen/paddingMedium"
+        android:paddingTop="@dimen/paddingXSmall"
+        android:paddingEnd="@dimen/paddingMedium"
+        android:paddingBottom="@dimen/paddingXSmall"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Wikipedia" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

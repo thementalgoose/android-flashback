@@ -18,7 +18,7 @@ import tmg.flashback.repo.db.stats.SeasonOverviewDB
 import tmg.flashback.repo.models.AppBanner
 import tmg.flashback.repo.models.stats.*
 import tmg.flashback.settings.ConnectivityManager
-import tmg.flashback.shared.SyncDataItem
+import tmg.flashback.shared.sync.SyncDataItem
 import tmg.flashback.shared.viewholders.DataUnavailable
 import tmg.flashback.di.async.ScopeProvider
 import tmg.flashback.di.device.BuildConfigProvider

@@ -54,7 +54,7 @@
                     android:layout_width="@dimen/toolbarSettingsIcon"
                     android:layout_height="@dimen/toolbarSettingsIcon"
                     android:layout_marginEnd="@dimen/paddingMedium"
-                    android:background="@drawable/rounded_ripple"
+                    android:background="@drawable/ripple_rounded"
                     android:contentDescription="@string/settings_title"
                     android:src="@drawable/nav_settings"
                     android:tint="?attr/f1TextPrimary"

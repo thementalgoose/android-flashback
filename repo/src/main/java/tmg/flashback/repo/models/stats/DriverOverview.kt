@@ -15,7 +15,7 @@ data class DriverOverview(
         val nationalityISO: String,
         val standings: List<DriverOverviewStanding>
 ) {
-    val championships: Int by lazy {
+    val championshipWins: Int by lazy {
         return@lazy standings
             .filter { !it.isInProgress }
             .count { it.championshipStanding == 1 }
@@ -25,7 +25,7 @@ data class DriverOverview(
         return@lazy standings
                 .filter { !it.isInProgress && it.championshipStanding > 0 }
                 .map { it.championshipStanding }
-                .minBy { it }
+                .minByOrNull { it }
     }
 
     val hasChampionshipCurrentlyInProgress: Boolean by lazy {
@@ -61,14 +61,14 @@ data class DriverOverview(
     }
 
     val careerBestFinish: Int by lazy {
-        return@lazy standings.minBy { it.bestFinish }?.bestFinish ?: -1
+        return@lazy standings.minByOrNull { it.bestFinish }?.bestFinish ?: -1
     }
     val careerBestQualifying: Int by lazy {
-        return@lazy standings.minBy { it.bestQualifying }?.bestQualifying ?: -1
+        return@lazy standings.minByOrNull { it.bestQualifying }?.bestQualifying ?: -1
     }
 
     val careerConstructorStanding: Int by lazy {
-        return@lazy standings.minBy { it.championshipStanding }?.championshipStanding ?: -1
+        return@lazy standings.minByOrNull { it.championshipStanding }?.championshipStanding ?: -1
     }
 
     val careerQualifyingPoles: Int by lazy {
@@ -131,7 +131,6 @@ data class DriverOverview(
             .filter { !it.isInProgress }
             .filter { it.championshipStanding == 1 }
             .count() > 0
-
     }
 }
 

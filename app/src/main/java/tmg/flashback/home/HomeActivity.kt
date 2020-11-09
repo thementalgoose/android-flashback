@@ -15,7 +15,8 @@ import tmg.flashback.R
 import tmg.flashback.admin.lockout.LockoutActivity
 import tmg.flashback.base.BaseActivity
 import tmg.flashback.bottomSheetFastScrollDuration
-import tmg.flashback.driver.DriverActivity
+import tmg.flashback.overviews.constructor.ConstructorActivity
+import tmg.flashback.overviews.driver.DriverActivity
 import tmg.flashback.extensions.dimensionPx
 import tmg.flashback.home.list.HomeAdapter
 import tmg.flashback.home.season.*
@@ -46,25 +47,29 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback {
         swipeContainer.isEnabled = false
 
         adapter = HomeAdapter(
-            trackClicked = { track ->
-                val intent = RaceActivity.intent(
-                    context = this,
-                    season = track.season,
-                    round = track.round,
-                    circuitId = track.circuitId,
-                    country = track.raceCountry,
-                    raceName = track.raceName,
-                    trackName = track.circuitName,
-                    countryISO = track.raceCountryISO,
-                    date = track.date,
-                    defaultToRace = track.hasResults || !track.hasQualifying
-                )
-                startActivity(intent)
-            },
-            driverClicked = { season: Int, driverId: String, firstName: String?, lastName: String? ->
-                val intent = DriverActivity.intent(this, driverId, "$firstName $lastName")
-                startActivity(intent)
-            }
+                trackClicked = { track ->
+                    val intent = RaceActivity.intent(
+                            context = this,
+                            season = track.season,
+                            round = track.round,
+                            circuitId = track.circuitId,
+                            country = track.raceCountry,
+                            raceName = track.raceName,
+                            trackName = track.circuitName,
+                            countryISO = track.raceCountryISO,
+                            date = track.date,
+                            defaultToRace = track.hasResults || !track.hasQualifying
+                    )
+                    startActivity(intent)
+                },
+                driverClicked = { season: Int, driverId: String, firstName: String?, lastName: String? ->
+                    val intent = DriverActivity.intent(this, driverId, "$firstName $lastName")
+                    startActivity(intent)
+                },
+                constructorClicked = { constructorId: String, constructorName: String ->
+                    val intent = ConstructorActivity.intent(this, constructorId, constructorName)
+                    startActivity(intent)
+                }
         )
         dataList.adapter = adapter
         dataList.layoutManager = LinearLayoutManager(this)
@@ -92,7 +97,8 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback {
                     when (menu.selectedItemId) {
                         R.id.nav_calendar,
                         R.id.nav_drivers,
-                        R.id.nav_constructor -> {}
+                        R.id.nav_constructor -> {
+                        }
                         else -> menu.selectedItemId = R.id.nav_calendar
                     }
                     false
@@ -124,8 +130,7 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback {
         observeEvent(viewModel.outputs.openSeasonList) {
             if (it) {
                 seasonBottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
-            }
-            else {
+            } else {
                 seasonBottomSheetBehavior.state = BottomSheetBehavior.STATE_HALF_EXPANDED
             }
         }
@@ -137,7 +142,7 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback {
 
         observeEvent(viewModel.outputs.openReleaseNotes) {
             ReleaseBottomSheetFragment()
-                .show(supportFragmentManager, "RELEASE_NOTES")
+                    .show(supportFragmentManager, "RELEASE_NOTES")
         }
 
         observe(viewModel.outputs.showLoading) {
@@ -152,7 +157,8 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback {
             when (menu.selectedItemId) {
                 R.id.nav_calendar,
                 R.id.nav_constructor,
-                R.id.nav_drivers -> {}
+                R.id.nav_drivers -> {
+                }
                 else -> menu.selectedItemId = R.id.nav_calendar
             }
         }
@@ -221,20 +227,20 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback {
         seasonBottomSheetBehavior.halfExpandedRatio = 0.7f
         seasonBottomSheetBehavior.addBottomSheetCallback(BottomSheetFader(overlay, "seasons"))
         seasonBottomSheetBehavior.addBottomSheetCallback(SeasonBottomSheetCallback(
-            expanded = { seasonExpand() },
-            collapsed = { seasonCollapse() }
+                expanded = { seasonExpand() },
+                collapsed = { seasonCollapse() }
         ))
 
         seasonAdapter = SeasonListAdapter(
-            featureToggled = {
-                seasonViewModel.inputs.toggleHeader(it)
-            },
-            favouriteToggled = {
-                seasonViewModel.inputs.toggleFavourite(it)
-            },
-            seasonClicked = {
-                seasonViewModel.inputs.clickSeason(it)
-            }
+                featureToggled = {
+                    seasonViewModel.inputs.toggleHeader(it)
+                },
+                favouriteToggled = {
+                    seasonViewModel.inputs.toggleFavourite(it)
+                },
+                seasonClicked = {
+                    seasonViewModel.inputs.clickSeason(it)
+                }
         )
         optionsList.adapter = seasonAdapter
         optionsList.layoutManager = LinearLayoutManager(this)
@@ -249,8 +255,7 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback {
                         HeaderType.ALL -> {
                             if (item.season != minimumSupportedYear) {
                                 FastScrollItemIndicator.Text("${item.season.toString().substring(2, 3)}0")
-                            }
-                            else {
+                            } else {
                                 FastScrollItemIndicator.Icon(R.drawable.ic_bottom_sheet_start)
                             }
                         }
@@ -272,17 +277,17 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback {
 
     private fun seasonExpand() {
         fastscroller.animate()
-            .translationX(0.0f)
-            .setDuration(bottomSheetFastScrollDuration.toLong())
-            .start()
+                .translationX(0.0f)
+                .setDuration(bottomSheetFastScrollDuration.toLong())
+                .start()
         seasonAdapter.setToggle(true)
     }
 
     private fun seasonCollapse() {
         fastscroller.animate()
-            .translationX(dimensionPx(R.dimen.bottomSheetFastScrollWidth))
-            .setDuration(bottomSheetFastScrollDuration.toLong())
-            .start()
+                .translationX(dimensionPx(R.dimen.bottomSheetFastScrollWidth))
+                .setDuration(bottomSheetFastScrollDuration.toLong())
+                .start()
         seasonAdapter.setToggle(false)
     }
 
