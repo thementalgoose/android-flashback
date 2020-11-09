@@ -48,11 +48,7 @@ class DriverViewModelTest: BaseTest() {
 
         whenever(mockConnectivityManager.isConnected).thenReturn(false)
         whenever(mockDriverDB.getDriverOverview(any())).thenReturn(flow { emit(null) })
-        val expected = listOf(
-            DriverSummaryItem.ErrorItem(
-                SyncDataItem.NoNetwork
-            )
-        )
+        val expected = listOf(DriverSummaryItem.ErrorItem(SyncDataItem.NoNetwork))
 
         initSUT()
 
@@ -60,7 +56,7 @@ class DriverViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `DriverViewModel setup loads an error state when driver overview is returned`() = coroutineTest {
+    fun `DriverViewModel setup loads an error state when driver overview is returned as null`() = coroutineTest {
 
         whenever(mockDriverDB.getDriverOverview(any())).thenReturn(flow { emit(null) })
         val expected = listOf(
@@ -89,7 +85,7 @@ class DriverViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `DriverViewModel contains header item with appropiate mock data`() = coroutineTest {
+    fun `DriverViewModel contains header item with appropriate mock data`() = coroutineTest {
 
         whenever(mockDriverDB.getDriverOverview(any())).thenReturn(flow { emit(mockDriverOverview) })
 
@@ -240,76 +236,74 @@ class DriverViewModelTest: BaseTest() {
         whenever(mockDriverDB.getDriverOverview(any())).thenReturn(flow { emit(mockDriverOverviewConstructorChangeThenYearOffEndingInCurrentSeason) })
         val expected = listOf<DriverSummaryItem>(
             DriverSummaryItem.RacedFor(
-                currentYear,
-                    mockDriverOverviewConstructor2,
+                2020,
+                mockDriverOverviewConstructor2,
                 START_END,
                 false
             ),
-                // TODO: Add this when it's 2022 - DriverOverviewItem.RacedFor(2021, mockDriverOverviewConstructor, SEASON, false),
-                // TODO: Add this when it's 2021 - DriverOverviewItem.RacedFor(2020, mockDriverOverviewConstructor, SEASON, false),
             DriverSummaryItem.RacedFor(
                 2019,
-                    mockDriverOverviewConstructor,
+                mockDriverOverviewConstructor,
                 START_END,
                 false
             ),
             DriverSummaryItem.RacedFor(
                 2018,
-                    mockDriverOverviewConstructor2,
+                mockDriverOverviewConstructor2,
                 SINGLE_PIPE,
                 false
             ),
             DriverSummaryItem.RacedFor(
                 2018,
-                    mockDriverOverviewConstructor,
+                mockDriverOverviewConstructor,
                 START_END,
                 false
             ),
             DriverSummaryItem.RacedFor(
                 2017,
-                    mockDriverOverviewConstructor,
+                mockDriverOverviewConstructor,
                 START_END,
                 false
             ),
             DriverSummaryItem.RacedFor(
                 2016,
-                    mockDriverOverviewConstructor,
+                mockDriverOverviewConstructor,
                 SINGLE_PIPE,
                 false
             ),
             DriverSummaryItem.RacedFor(
                 2016,
-                    mockDriverOverviewConstructor2,
+                mockDriverOverviewConstructor2,
                 SINGLE_PIPE,
                 false
             ),
             DriverSummaryItem.RacedFor(
                 2016,
-                    mockDriverOverviewConstructor,
+                mockDriverOverviewConstructor,
                 END,
                 false
             ),
             DriverSummaryItem.RacedFor(
                 2014,
-                    mockDriverOverviewConstructor,
+                mockDriverOverviewConstructor,
                 START,
                 false
             ),
             DriverSummaryItem.RacedFor(
                 2013,
-                    mockDriverOverviewConstructor2,
+                mockDriverOverviewConstructor2,
                 SINGLE_PIPE,
                 false
             ),
             DriverSummaryItem.RacedFor(
                 2013,
-                    mockDriverOverviewConstructor,
+                mockDriverOverviewConstructor,
                 END,
                 false
             ),
             DriverSummaryItem.RacedFor(
                 2011,
-                    mockDriverOverviewConstructor,
+                mockDriverOverviewConstructor,
                 SINGLE,
                 true
             )
