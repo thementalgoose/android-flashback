@@ -30,7 +30,7 @@ sealed class DriverSeasonItem(
             val type: RaceForPositionType,
             val isChampionship: Boolean
     ): DriverSeasonItem(
-            R.layout.view_driver_summary_raced_for
+            R.layout.view_driver_summary_history
     )
 
     data class Result(
