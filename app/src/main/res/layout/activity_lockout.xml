@@ -71,7 +71,7 @@
         android:layout_marginBottom="@dimen/paddingMedium"
         android:clickable="true"
         android:focusable="true"
-        android:foreground="@drawable/rounded_ripple"
+        android:foreground="@drawable/ripple_rounded"
         android:gravity="center"
         android:paddingStart="@dimen/paddingMedium"
         android:paddingTop="@dimen/paddingSmall"

@@ -1,6 +1,7 @@
 package tmg.flashback.repo.models.stats
 
 import org.threeten.bp.LocalDate
+import tmg.flashback.repo.models.ConstructorDriver
 
 /**
  * Class to hold the driver in a specific round of a season
@@ -20,6 +21,22 @@ data class RoundDriver(
         val constructor: Constructor,
         val constructorAtEndOfSeason: Constructor
 ) {
+    fun toConstructorDriver(): ConstructorDriver {
+        return ConstructorDriver(
+                id = id,
+                firstName = firstName,
+                lastName = lastName,
+                code = code,
+                number = number,
+                wikiUrl = wikiUrl,
+                photoUrl = photoUrl,
+                dateOfBirth = dateOfBirth,
+                nationality = nationality,
+                nationalityISO = nationalityISO,
+                constructor = constructorAtEndOfSeason
+        )
+    }
+
     fun toDriver(): Driver {
         return Driver(
                 id = id,

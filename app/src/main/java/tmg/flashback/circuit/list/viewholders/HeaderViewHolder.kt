@@ -1,12 +1,15 @@
 package tmg.flashback.circuit.list.viewholders
 
 import android.view.View
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.view_circuit_info_header.view.*
 import org.threeten.bp.LocalDate
 import tmg.flashback.R
 import tmg.flashback.circuit.list.CircuitItem
 import tmg.flashback.currentYear
+import tmg.flashback.shared.pill.PillAdapter
+import tmg.flashback.shared.pill.PillItem
 import tmg.flashback.utils.getFlagResourceAlpha3
 import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.ordinalAbbreviation
@@ -18,11 +21,23 @@ class HeaderViewHolder(
     private val clickShowOnMap: () -> Unit,
     private val clickWikipedia: () -> Unit,
     itemView: View
-): RecyclerView.ViewHolder(itemView), View.OnClickListener {
+): RecyclerView.ViewHolder(itemView) {
+
+    private var linkAdapter = PillAdapter(
+            pillClicked = {
+                when (it) {
+                    is PillItem.Wikipedia -> clickWikipedia()
+                    is PillItem.ShowOnMap -> clickShowOnMap()
+                    else -> {} /* Do nothing */
+                }
+            }
+    )
 
     init {
-        itemView.maps.setOnClickListener(this)
-        itemView.wikipedia.setOnClickListener(this)
+        itemView.links.adapter = linkAdapter
+        itemView.links.layoutManager = LinearLayoutManager(context).apply {
+            orientation = LinearLayoutManager.HORIZONTAL
+        }
     }
 
     fun bind(item: CircuitItem.CircuitInfo) {
@@ -58,14 +73,10 @@ class HeaderViewHolder(
         }
         itemView.status.text = subtitle.fromHtml()
 
-        itemView.wikipedia.show(true)
-
-    }
-
-    override fun onClick(p0: View?) {
-        when (p0) {
-            itemView.maps -> clickShowOnMap()
-            itemView.wikipedia -> clickWikipedia()
+        linkAdapter.list = mutableListOf<PillItem>().apply {
+            item.circuit.wikiUrl?.let { add(PillItem.Wikipedia(it)) }
+            add(PillItem.ShowOnMap())
         }
+
     }
 }

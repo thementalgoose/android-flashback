@@ -288,8 +288,8 @@
     <string name="title_news">News</string>
     <string name="shared_unavailable_circuit_not_found">We can\'t find any information on this circuit.</string>
     <string name="shared_unavailable_driver_not_found">We can\'t find any information on this driver.</string>
+    <string name="shared_unavailable_constructor_not_found">We can\'t find any information on this constructor.</string>
     <string name="release_notes_description">Here\'s what\'s changed since you last updated</string>
-
 
     <!-- Driver overview -->
     <string name="driver_overview_stat_career_drivers_title">Drivers championships</string>
@@ -310,7 +310,25 @@
     <string name="driver_overview_stat_career_team_history">History</string>
     <string name="driver_overview_stat_career_team">Team</string>
 
+    <!-- Constructor Overview -->
+    <string name="constructor_overview_stat_titles">Constructors championships</string>
+    <string name="constructor_overview_stat_races">Races</string>
+    <string name="constructor_overview_stat_race_wins">Wins</string>
+    <string name="constructor_overview_stat_race_podiums">Podiums</string>
+    <string name="constructor_overview_stat_qualifying_poles">Qualifying on pole</string>
+    <string name="constructor_overview_stat_qualifying_top_3">Qualifying in the top 3</string>
+    <string name="constructor_overview_stat_qualifying_top_10">Qualifying in top 10</string>
+    <string name="constructor_overview_stat_points">Points</string>
+    <string name="constructor_overview_stat_points_finishes">Points finishes</string>
+    <string name="constructor_overview_stat_best_finish">Best finish</string>
+    <string name="constructor_overview_stat_best_qualifying">Best qualifying</string>
+    <string name="constructor_overview_stat_best_championship_position">Best championship position</string>
+    <string name="constructor_overview_stat_best_championship_standing">Championship standing</string>
+    <string name="constructor_overview_stat_best_championship_standing_so_far">Current championship standing</string>
+
+
     <string name="results_accurate_for" formatted="false">Results as of the %s (round %d)</string>
+    <string name="results_accurate_for_round" formatted="false">Results as of the %d, round %s</string>
     <string name="results_accurate_for_year" formatted="false">Results as of the %d %s (round %d)</string>
     <string name="qualifying_header">Q</string>
     <string name="endash">–</string>

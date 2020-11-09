@@ -3,6 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/container"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground"
     android:layout_height="wrap_content"
     android:paddingStart="@dimen/paddingMedium"
     android:paddingTop="@dimen/paddingSmall"
@@ -26,9 +30,10 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Ferrari" />
 
-    <androidx.recyclerview.widget.RecyclerView
+    <tmg.flashback.views.PassThroughRecyclerView
         android:id="@+id/driverList"
         android:layout_width="0dp"
+        android:clickable="false"
         android:layout_height="wrap_content"
         android:overScrollMode="never"
         app:layout_constraintEnd_toStartOf="@id/guideline"

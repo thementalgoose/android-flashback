@@ -12,7 +12,7 @@ import tmg.flashback.extensions.circuitIcon
 import tmg.flashback.repo.db.stats.CircuitDB
 import tmg.flashback.repo.models.stats.Circuit
 import tmg.flashback.settings.ConnectivityManager
-import tmg.flashback.shared.SyncDataItem
+import tmg.flashback.shared.sync.SyncDataItem
 import tmg.utilities.extensions.then
 import tmg.utilities.lifecycle.DataEvent
 

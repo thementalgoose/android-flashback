@@ -58,7 +58,7 @@
                         android:layout_marginBottom="@dimen/paddingSmall"
                         android:background="@null"
                         android:contentDescription="@string/settings_title"
-                        android:foreground="@drawable/rounded_ripple"
+                        android:foreground="@drawable/ripple_rounded"
                         android:scaleType="center"
                         android:src="@drawable/ic_back"
                         android:tint="?attr/f1TextPrimary"
