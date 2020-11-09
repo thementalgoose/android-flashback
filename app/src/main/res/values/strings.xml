@@ -124,8 +124,6 @@
     <string name="settings_bar_animation_slow">2x</string>
     <string name="settings_customisation_qualifying_delta_title">Qualifying delta</string>
     <string name="settings_customisation_qualifying_delta_description">Show the lap time delta alongside the qualifying time when displaying qualifying results</string>
-    <string name="settings_customisation_driver_in_constructor_title">Drivers for constructor</string>
-    <string name="settings_customisation_driver_in_constructor_description">Show the drivers of a constructor alongside the constructor points scored per race</string>
     <string name="settings_customisation_qualifying_grid_penalties_title">Qualifying grid penalties</string>
     <string name="settings_customisation_qualifying_grid_penalties_description">Shows the grid penalty that a driver has in the qualifying view</string>
     <string name="settings_customisation_news">News</string>

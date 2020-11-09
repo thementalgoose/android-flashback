@@ -34,7 +34,6 @@ class SettingsViewModelTest: BaseTest() {
 
         whenever(mockPrefs.showQualifyingDelta).thenReturn(false)
         whenever(mockPrefs.showGridPenaltiesInQualifying).thenReturn(false)
-        whenever(mockPrefs.showDriversBehindConstructor).thenReturn(false)
         whenever(mockPrefs.showBottomSheetExpanded).thenReturn(false)
         whenever(mockPrefs.showBottomSheetFavourited).thenReturn(false)
         whenever(mockPrefs.showBottomSheetAll).thenReturn(false)
@@ -60,7 +59,6 @@ class SettingsViewModelTest: BaseTest() {
                 BAR_ANIMATION_SPEED.toPref(),
                 QUALIFYING_DELTAS.toSwitch(false),
                 QUALIFYING_GRID_PENALTY.toSwitch(false),
-                SHOW_DRIVERS_POINTS_IN_CONSTRUCTORS.toSwitch(false),
                 AppPreferencesItem.Category(R.string.settings_season_list),
                 SEASON_BOTTOM_SHEET_EXPANDED.toSwitch(false),
                 SEASON_BOTTOM_SHEET_FAVOURITED.toSwitch(false),
@@ -150,14 +148,6 @@ class SettingsViewModelTest: BaseTest() {
         sut.inputs.preferenceClicked(QUALIFYING_GRID_PENALTY, true)
 
         verify(mockPrefs).showGridPenaltiesInQualifying = true
-    }
-
-    @Test
-    fun `SettingsViewModel selecting show drivers in constructor updates value`() {
-
-        sut.inputs.preferenceClicked(SHOW_DRIVERS_POINTS_IN_CONSTRUCTORS, true)
-
-        verify(mockPrefs).showDriversBehindConstructor = true
     }
 
     @Test

@@ -103,12 +103,7 @@ class RaceViewModel(
                     val list: List<RaceAdapterModel.ConstructorStandings> = roundData
                         .constructorStandings
                         .map {
-                            val drivers: List<Pair<Driver, Int>> = if (prefsDB.showDriversBehindConstructor) {
-                                getDriverFromConstructor(roundData, it.constructor.id)
-                            }
-                            else {
-                                emptyList()
-                            }
+                            val drivers: List<Pair<Driver, Int>> = getDriverFromConstructor(roundData, it.constructor.id)
                             RaceAdapterModel.ConstructorStandings(it.constructor, it.points, drivers, prefsDB.barAnimation)
                         }
                         .sortedByDescending { it.points }
