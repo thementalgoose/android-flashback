@@ -18,11 +18,6 @@ interface PrefsDB {
     var showQualifyingDelta: Boolean
 
     /**
-     * Show the drivers breakdown behind a constructor
-     */
-    var showDriversBehindConstructor: Boolean
-
-    /**
      * Bottom sheet expanded default behavior
      */
     var showBottomSheetExpanded: Boolean

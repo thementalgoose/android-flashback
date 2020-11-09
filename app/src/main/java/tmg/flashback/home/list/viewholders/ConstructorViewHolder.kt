@@ -1,6 +1,9 @@
 package tmg.flashback.home.list.viewholders
 
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.layout_constructor_driver.view.*
 import kotlinx.android.synthetic.main.view_home_constructor.view.*
@@ -26,6 +29,13 @@ class ConstructorViewHolder(
     private lateinit var constructorId: String
     private lateinit var constructorName: String
 
+    var adapter = ConstructorViewHolderDriverAdapter()
+
+    init {
+        itemView.driverList.adapter = adapter
+        itemView.driverList.layoutManager = LinearLayoutManager(itemView.context)
+    }
+
     fun bind(item: HomeItem.Constructor) {
 
         constructorId = item.constructorId
@@ -34,18 +44,6 @@ class ConstructorViewHolder(
         val maxPoints = item.maxPointsInSeason
 
         itemView.tvTitle.text = item.constructor.name
-
-        itemView.layoutDriver1.show(item.driver.isNotEmpty())
-        itemView.layoutDriver2.show(item.driver.size >= 2)
-        itemView.layoutDriver3.show(item.driver.size >= 3)
-        itemView.layoutDriver4.show(item.driver.size >= 4)
-        itemView.layoutDriver5.show(item.driver.size >= 5)
-
-        item.driver.getOrNull(0)?.let { setDriver(itemView.layoutDriver1, it) }
-        item.driver.getOrNull(1)?.let { setDriver(itemView.layoutDriver2, it) }
-        item.driver.getOrNull(2)?.let { setDriver(itemView.layoutDriver3, it) }
-        item.driver.getOrNull(3)?.let { setDriver(itemView.layoutDriver4, it) }
-        item.driver.getOrNull(4)?.let { setDriver(itemView.layoutDriver5, it) }
 
         itemView.lpvProgress.backgroundColour = context.theme.getColor(R.attr.f1BackgroundPrimary)
         itemView.lpvProgress.progressColour = item.constructor.color
@@ -61,18 +59,41 @@ class ConstructorViewHolder(
             }
         }
 
-
         val driverPoints = item.driver.sumBy { it.second }
         itemView.penalty.show(item.points != driverPoints)
         if (item.points < driverPoints) {
             itemView.penalty.text = getString(R.string.home_constructor_penalty, driverPoints - item.points)
         }
+
+        adapter.list = item.driver
+    }
+}
+
+class ConstructorViewHolderDriverAdapter: RecyclerView.Adapter<ConstructorViewHolderDriverAdapter.ViewHolder>() {
+
+    var list: List<Pair<Driver, Int>> = emptyList()
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
+
+    override fun getItemCount(): Int = list.size
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.layout_constructor_driver, parent, false))
     }
 
-    private fun setDriver(layout: View, driverResult: Pair<Driver, Int>) {
-        layout.tvName.text = driverResult.first.name
-        layout.imgFlag.setImageResource(itemView.context.getFlagResourceAlpha3(driverResult.first.nationalityISO))
-        layout.tvNumber.text = itemView.context.resources.getQuantityString(R.plurals.race_points, driverResult.second, driverResult.second)
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.bind(list[position])
+    }
+
+    inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+        fun bind(item: Pair<Driver, Int>) {
+            val (driver, points) = item
+            itemView.tvName.text = driver.name
+            itemView.imgFlag.setImageResource(itemView.context.getFlagResourceAlpha3(driver.nationalityISO))
+            itemView.tvNumber.text = itemView.context.resources.getQuantityString(R.plurals.race_points, points, points)
+        }
     }
 
     override fun onClick(p0: View?) {

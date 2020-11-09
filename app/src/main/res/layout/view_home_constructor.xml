@@ -30,50 +30,16 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Ferrari" />
 
-    <include
-        android:id="@+id/layoutDriver1"
-        layout="@layout/layout_constructor_driver"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/driverList"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="@id/guideline"
+        android:overScrollMode="never"
+        app:layout_constraintEnd_toStartOf="@id/guideline"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvTitle" />
-
-    <include
-        android:id="@+id/layoutDriver2"
-        layout="@layout/layout_constructor_driver"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="@id/guideline"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layoutDriver1" />
-
-    <include
-        android:id="@+id/layoutDriver3"
-        layout="@layout/layout_constructor_driver"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="@id/guideline"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layoutDriver2" />
-
-    <include
-        android:id="@+id/layoutDriver4"
-        layout="@layout/layout_constructor_driver"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="@id/guideline"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layoutDriver3" />
-
-    <include
-        android:id="@+id/layoutDriver5"
-        layout="@layout/layout_constructor_driver"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="@id/guideline"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layoutDriver4" />
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        tools:itemCount="4"
+        tools:listitem="@layout/layout_constructor_driver" />
 
     <TextView
         android:id="@+id/penalty"
@@ -86,14 +52,14 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/tvTitle"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layoutDriver5" />
+        app:layout_constraintTop_toBottomOf="@id/driverList" />
 
     <tmg.labelledprogressbar.LabelledProgressBar
         android:id="@+id/lpvProgress"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:minHeight="30dp"
-        app:layout_constraintBottom_toBottomOf="@id/layoutDriver4"
+        app:layout_constraintBottom_toBottomOf="@id/penalty"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/guideline"
         app:layout_constraintTop_toTopOf="parent"
