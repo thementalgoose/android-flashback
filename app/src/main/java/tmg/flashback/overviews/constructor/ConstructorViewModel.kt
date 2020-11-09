@@ -15,8 +15,10 @@ import tmg.flashback.base.BaseViewModel
 import tmg.flashback.di.async.ScopeProvider
 import tmg.flashback.overviews.constructor.summary.ConstructorSummaryItem
 import tmg.flashback.overviews.constructor.summary.addError
+import tmg.flashback.overviews.driver.summary.PipeType
 import tmg.flashback.repo.db.stats.ConstructorDB
 import tmg.flashback.repo.models.stats.ConstructorOverview
+import tmg.flashback.repo.models.stats.ConstructorOverviewStanding
 import tmg.flashback.settings.ConnectivityManager
 import tmg.flashback.shared.sync.SyncDataItem
 import tmg.flashback.shared.viewholders.DataUnavailable
@@ -82,14 +84,15 @@ class ConstructorViewModel(
                     if (it.hasChampionshipCurrentlyInProgress) {
                         val lastStanding = it.standings.maxByOrNull { it.season }
                         if (lastStanding != null) {
-                            list.add(ConstructorSummaryItem.ErrorItem(SyncDataItem.MessageRes(R.string.results_accurate_for_year, listOf(lastStanding.season, lastStanding.races))))
+                            list.add(ConstructorSummaryItem.ErrorItem(SyncDataItem.MessageRes(R.string.results_accurate_for_round, listOf(lastStanding.season, lastStanding.races))))
                         }
                     }
 
                     list.addAll(getAllStats(it))
 
-                    // TODO: Add the history
-//                    list.addStat()
+                    list.add(ConstructorSummaryItem.ListHeader)
+
+                    list.addAll(getHistory(it))
                 }
             }
             return@map list
@@ -198,5 +201,54 @@ class ConstructorViewModel(
                         label = label,
                         value = value
                 ))
+    }
+
+    private fun getHistory(overview: ConstructorOverview): List<ConstructorSummaryItem> {
+        val sortedList = overview.standings.sortedByDescending { it.season }
+        return sortedList
+                .mapIndexed { index, item ->
+                    ConstructorSummaryItem.History(
+                            pipe = getPipeType(item, sortedList.getOrNull(index - 1), sortedList.getOrNull(index + 1)),
+                            season = item.season,
+                            colour = overview.color,
+                            championshipPosition = item.championshipStanding,
+                            points = item.points,
+                            isInProgress = item.isInProgress,
+                            drivers = item.drivers.values.toList()
+                    )
+                }
+    }
+
+    private fun getPipeType(currentItem: ConstructorOverviewStanding, newer: ConstructorOverviewStanding?, prev: ConstructorOverviewStanding?): PipeType {
+        if (newer == null && prev == null) {
+            return PipeType.SINGLE
+        }
+        when {
+            newer == null -> {
+                return if (prev!!.season == currentItem.season - 1) {
+                    PipeType.START
+                } else {
+                    PipeType.SINGLE
+                }
+            }
+            prev == null -> {
+                return if (newer.season == currentItem.season + 1) {
+                    PipeType.END
+                } else {
+                    PipeType.SINGLE
+                }
+            }
+            else -> {
+                return if (newer.season == currentItem.season + 1 && prev.season == currentItem.season - 1) {
+                    PipeType.START_END
+                } else if (newer.season == currentItem.season + 1) {
+                    PipeType.END
+                } else if (prev.season == currentItem.season - 1) {
+                    PipeType.START
+                } else {
+                    PipeType.SINGLE
+                }
+            }
+        }
     }
 }

@@ -7,38 +7,56 @@
     android:layout_height="wrap_content"
     android:foreground="?attr/selectableItemBackground">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        style="@style/Text.DriverOverview.History.Year"
+    <TextView
+        android:id="@+id/year"
+        style="@style/Text.ConstructorOverview.History.Year"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:gravity="start"
-        android:paddingStart="@dimen/driverOverviewPipeIndent"
-        android:paddingTop="@dimen/paddingSmall"
-        android:paddingEnd="@dimen/paddingMedium"
-        android:paddingBottom="@dimen/paddingSmall"
+        android:layout_marginStart="@dimen/paddingNSmall"
+        android:layout_marginTop="@dimen/paddingXSmall"
+        android:paddingStart="0dp"
+        android:paddingEnd="@dimen/paddingSmall"
+        app:layout_constraintEnd_toStartOf="@id/standing"
+        app:layout_constraintStart_toEndOf="@id/pipe"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="2020" />
+
+    <TextView
+        android:id="@+id/points"
+        style="@style/Text.ConstructorOverview.Stats.Value"
+        android:layout_width="@dimen/constructorOverviewItem"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="@id/year"
+        app:layout_constraintEnd_toStartOf="@id/standing"
+        app:layout_constraintTop_toTopOf="@id/year"
+        tools:text="410" />
+
+    <TextView
+        android:id="@+id/standing"
+        style="@style/Text.ConstructorOverview.Stats.Value"
+        android:layout_width="@dimen/constructorOverviewItem"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="@id/year"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/year"
+        tools:text="1st" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/drivers"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/paddingXSmall"
+        android:layout_marginBottom="@dimen/paddingSmall"
+        android:clipToPadding="false"
+        android:overScrollMode="never"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/pipe"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/year"
-            style="@style/Text.ConstructorOverview.History.Year"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="2020" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:id="@+id/drivers"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/year"
-            tools:text="2020" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        app:layout_constraintStart_toStartOf="@id/year"
+        app:layout_constraintTop_toBottomOf="@id/year"
+        tools:itemCount="4"
+        tools:listitem="@layout/layout_constructor_driver_label" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/pipe"
@@ -53,8 +71,9 @@
             android:id="@+id/pipeTop"
             android:layout_width="@dimen/driverOverviewPipeWidth"
             android:layout_height="0dp"
+            android:layout_marginBottom="2dp"
             android:background="?attr/f1PipeColor"
-            app:layout_constraintBottom_toTopOf="@id/pipeBottom"
+            app:layout_constraintBottom_toBottomOf="@id/pipeCircle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -63,11 +82,12 @@
             android:id="@+id/pipeBottom"
             android:layout_width="@dimen/driverOverviewPipeWidth"
             android:layout_height="0dp"
+            android:layout_marginTop="2dp"
             android:background="?attr/f1PipeColor"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/pipeTop" />
+            app:layout_constraintTop_toTopOf="@id/pipeCircle" />
 
         <ImageView
             android:id="@+id/pipeCircle"
@@ -78,6 +98,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/championship"
+            app:srcCompat="@drawable/ic_star_filled_coloured"
+            app:layout_constraintTop_toTopOf="@id/pipeCircle"
+            app:layout_constraintStart_toStartOf="@id/pipeCircle"
+            app:layout_constraintEnd_toEndOf="@id/pipeCircle"
+            app:layout_constraintBottom_toBottomOf="@id/pipeCircle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

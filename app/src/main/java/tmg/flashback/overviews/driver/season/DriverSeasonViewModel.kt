@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.map
 import tmg.flashback.R
 import tmg.flashback.base.BaseViewModel
 import tmg.flashback.di.async.ScopeProvider
-import tmg.flashback.overviews.driver.summary.RaceForPositionType
+import tmg.flashback.overviews.driver.summary.PipeType
 import tmg.flashback.maxPointsBySeason
 import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.db.stats.DriverDB
@@ -103,7 +103,7 @@ class DriverSeasonViewModel(
                             DriverSeasonItem.RacedFor(
                                 null,
                                 const,
-                                RaceForPositionType.SINGLE,
+                                PipeType.SINGLE,
                                 false
                             )
                         )
@@ -111,15 +111,15 @@ class DriverSeasonViewModel(
                     else {
                         for (x in standing.constructors.indices) {
                             val const = standing.constructors[(standing.constructors.size - 1) - x]
-                            val dotType: RaceForPositionType = when (x) {
+                            val dotType: PipeType = when (x) {
                                 0 -> {
-                                    RaceForPositionType.START
+                                    PipeType.START
                                 }
                                 standing.constructors.size - 1 -> {
-                                    RaceForPositionType.END
+                                    PipeType.END
                                 }
                                 else -> {
-                                    RaceForPositionType.MID_SEASON_CHANGE
+                                    PipeType.SINGLE_PIPE
                                 }
                             }
                             list.add(

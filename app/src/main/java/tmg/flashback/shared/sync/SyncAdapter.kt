@@ -36,11 +36,12 @@ abstract class SyncAdapter<T>: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
     }
 
-    fun bindErrors(holder: RecyclerView.ViewHolder, syncDataItem: SyncDataItem) {
-        when (val item = syncDataItem) {
+    fun bindErrors(holder: RecyclerView.ViewHolder, item: SyncDataItem) {
+        when (item) {
             is SyncDataItem.Unavailable -> (holder as DataUnavailableViewHolder).bind(item.type)
             is SyncDataItem.Message -> (holder as MessageViewHolder).bind(item.msg)
             is SyncDataItem.MessageRes -> (holder as MessageViewHolder).bind(item.msg, item.values)
+            else -> {}
         }
     }
 

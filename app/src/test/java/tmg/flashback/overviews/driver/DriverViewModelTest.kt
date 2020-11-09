@@ -15,7 +15,7 @@ import tmg.flashback.R
 import tmg.flashback.currentYear
 import tmg.flashback.overviews.*
 import tmg.flashback.overviews.driver.summary.DriverSummaryItem
-import tmg.flashback.overviews.driver.summary.RaceForPositionType.*
+import tmg.flashback.overviews.driver.summary.PipeType.*
 import tmg.flashback.repo.db.stats.DriverDB
 import tmg.flashback.settings.ConnectivityManager
 import tmg.flashback.shared.sync.SyncDataItem
@@ -242,7 +242,7 @@ class DriverViewModelTest: BaseTest() {
             DriverSummaryItem.RacedFor(
                 currentYear,
                     mockDriverOverviewConstructor2,
-                SEASON,
+                START_END,
                 false
             ),
                 // TODO: Add this when it's 2022 - DriverOverviewItem.RacedFor(2021, mockDriverOverviewConstructor, SEASON, false),
@@ -250,37 +250,37 @@ class DriverViewModelTest: BaseTest() {
             DriverSummaryItem.RacedFor(
                 2019,
                     mockDriverOverviewConstructor,
-                SEASON,
+                START_END,
                 false
             ),
             DriverSummaryItem.RacedFor(
                 2018,
                     mockDriverOverviewConstructor2,
-                MID_SEASON_CHANGE,
+                SINGLE_PIPE,
                 false
             ),
             DriverSummaryItem.RacedFor(
                 2018,
                     mockDriverOverviewConstructor,
-                SEASON,
+                START_END,
                 false
             ),
             DriverSummaryItem.RacedFor(
                 2017,
                     mockDriverOverviewConstructor,
-                SEASON,
+                START_END,
                 false
             ),
             DriverSummaryItem.RacedFor(
                 2016,
                     mockDriverOverviewConstructor,
-                MID_SEASON_CHANGE,
+                SINGLE_PIPE,
                 false
             ),
             DriverSummaryItem.RacedFor(
                 2016,
                     mockDriverOverviewConstructor2,
-                MID_SEASON_CHANGE,
+                SINGLE_PIPE,
                 false
             ),
             DriverSummaryItem.RacedFor(
@@ -298,7 +298,7 @@ class DriverViewModelTest: BaseTest() {
             DriverSummaryItem.RacedFor(
                 2013,
                     mockDriverOverviewConstructor2,
-                MID_SEASON_CHANGE,
+                SINGLE_PIPE,
                 false
             ),
             DriverSummaryItem.RacedFor(

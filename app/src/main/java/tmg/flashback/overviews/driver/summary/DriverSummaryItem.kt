@@ -39,7 +39,7 @@ sealed class DriverSummaryItem(
     data class RacedFor(
             val season: Int,
             val constructors: SlimConstructor,
-            val type: RaceForPositionType,
+            val type: PipeType,
             val isChampionship: Boolean
     ): DriverSummaryItem(
             R.layout.view_driver_summary_history
@@ -61,10 +61,10 @@ fun MutableList<DriverSummaryItem>.addError(syncDataItem: SyncDataItem) {
     )
 }
 
-enum class RaceForPositionType {
+enum class PipeType {
     SINGLE,
     START,
-    SEASON,
-    MID_SEASON_CHANGE,
+    START_END,
+    SINGLE_PIPE,
     END
 }

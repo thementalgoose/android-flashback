@@ -24,9 +24,11 @@ private fun FConstructorOverview.convertStandings(): List<ConstructorOverviewSta
     if (this.drivers == null || this.standings == null) {
         return emptyList()
     }
-    return this.standings.map {
-        it.value.convert(this.data, this.drivers)
-    }
+    return this.standings
+            .map {
+                it.value.convert(this.data, this.drivers)
+            }
+            .sortedByDescending { it.season }
 }
 
 fun FConstructorOverviewStandings.convert(data: FConstructorOverviewData, drivers: Map<String, FConstructorOverviewDrivers>): ConstructorOverviewStanding {
