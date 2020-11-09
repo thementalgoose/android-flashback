@@ -22,10 +22,6 @@ enum class SettingsOptions(
             title = R.string.settings_customisation_qualifying_grid_penalties_title,
             description = R.string.settings_customisation_qualifying_grid_penalties_description
     ),
-    SHOW_DRIVERS_POINTS_IN_CONSTRUCTORS("showDriversInConstructorStandings",
-            title = R.string.settings_customisation_driver_in_constructor_title,
-            description = R.string.settings_customisation_driver_in_constructor_description
-    ),
     BAR_ANIMATION_SPEED("barAnimationSpeed",
             title = R.string.settings_bar_animation_animation_title,
             description = R.string.settings_bar_animation_animation_description
