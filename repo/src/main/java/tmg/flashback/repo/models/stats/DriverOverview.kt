@@ -108,14 +108,14 @@ data class DriverOverview(
         return standings
                 .map { it.raceOverview }
                 .flatten()
-                .count { it.finished in 1..position }
+                .count { it.finished >= 1 && it.finished <= position }
     }
 
     fun totalQualifyingAbove(position: Int): Int {
         return standings
                 .map { it.raceOverview }
                 .flatten()
-                .count { it.qualified in 1..position }
+                .count { it.qualified >= 1 && it.qualified <= position }
     }
 
     fun totalQualifyingIn(position: Int): Int {
@@ -177,11 +177,11 @@ data class DriverOverviewStanding(
 
     fun totalFinishesAbove(position: Int): Int {
         return raceOverview
-                .count { it.finished in 1..position }
+                .count { it.finished >= 1 && it.finished <= position }
     }
     fun totalQualifyingAbove(position: Int): Int {
         return raceOverview
-                .count { it.qualified in 1..position }
+                .count { it.qualified >= 1 && it.qualified <= position }
     }
 
     fun totalQualifyingIn(position: Int): Int {
