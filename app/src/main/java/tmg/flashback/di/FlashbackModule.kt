@@ -46,7 +46,7 @@ var flashbackModule = module {
     viewModel { ConstructorViewModel(get(), get(), get()) }
 
     // Settings
-    viewModel { SettingsViewModel(get(), get()) }
+    viewModel { SettingsViewModel(get(), get(), get()) }
     viewModel { SettingsNewsViewModel(get(), get()) }
     viewModel { LockoutViewModel(get(), get(), get()) }
 

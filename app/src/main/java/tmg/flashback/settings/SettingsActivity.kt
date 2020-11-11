@@ -16,6 +16,7 @@ import tmg.components.about.AboutThisAppActivity
 import tmg.flashback.R
 import tmg.flashback.base.BaseActivity
 import tmg.flashback.configuration
+import tmg.flashback.news.NewsActivity
 import tmg.flashback.repo.enums.BarAnimation
 import tmg.flashback.repo.enums.ThemePref
 import tmg.flashback.settings.news.SettingsNewsActivity
@@ -81,7 +82,7 @@ class SettingsActivity : BaseActivity() {
         }
 
         observeEvent(viewModel.outputs.openNews) {
-            startActivity(Intent(this, SettingsNewsActivity::class.java))
+            startActivity(Intent(this, NewsActivity::class.java))
         }
     }
 

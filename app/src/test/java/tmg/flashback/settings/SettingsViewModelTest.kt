@@ -10,10 +10,10 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.components.prefs.AppPreferencesItem
 import tmg.flashback.R
+import tmg.flashback.di.toggle.ToggleDB
 import tmg.flashback.extensions.icon
 import tmg.flashback.extensions.label
 import tmg.flashback.repo.db.PrefsDB
-import tmg.flashback.repo.enums.BarAnimation
 import tmg.flashback.repo.enums.BarAnimation.*
 import tmg.flashback.repo.enums.ThemePref.*
 import tmg.flashback.settings.SettingsOptions.*
@@ -28,6 +28,7 @@ class SettingsViewModelTest: BaseTest() {
     lateinit var sut: SettingsViewModel
 
     private val mockPrefs: PrefsDB = mock()
+    private val mockToggle: ToggleDB = mock()
 
     @BeforeEach
     internal fun setUp() {
@@ -43,40 +44,71 @@ class SettingsViewModelTest: BaseTest() {
         whenever(mockPrefs.theme).thenReturn(AUTO)
         whenever(mockPrefs.barAnimation).thenReturn(MEDIUM)
 
-        sut = SettingsViewModel(mockPrefs, testScopeProvider)
-
+        whenever(mockToggle.isNewsEnabled).thenReturn(true)
     }
+
+    private fun initSUT() {
+
+        sut = SettingsViewModel(mockPrefs, mockToggle, testScopeProvider)
+    }
+
+    /**
+     * Expected news list that should be displayed in the SettingsViewModel
+     */
+    private val expectedNewsList: List<AppPreferencesItem> = listOf(
+        AppPreferencesItem.Category(R.string.settings_customisation_news),
+        NEWS.toPref(),
+        AppPreferencesItem.Category(R.string.settings_theme),
+        THEME.toPref(),
+        AppPreferencesItem.Category(R.string.settings_customisation),
+        BAR_ANIMATION_SPEED.toPref(),
+        QUALIFYING_DELTAS.toSwitch(false),
+        QUALIFYING_GRID_PENALTY.toSwitch(false),
+        AppPreferencesItem.Category(R.string.settings_season_list),
+        SEASON_BOTTOM_SHEET_EXPANDED.toSwitch(false),
+        SEASON_BOTTOM_SHEET_FAVOURITED.toSwitch(false),
+        SEASON_BOTTOM_SHEET_ALL.toSwitch(false),
+        AppPreferencesItem.Category(R.string.settings_help),
+        ABOUT.toPref(),
+        RELEASE.toPref(),
+        AppPreferencesItem.Category(R.string.settings_feedback),
+        CRASH.toSwitch(false),
+        SUGGESTION.toPref(),
+        SHAKE.toSwitch(false)
+    )
+
 
     @Test
     fun `SettingsViewModel setup populates settings list`() {
 
-        val expected: List<AppPreferencesItem> = listOf(
-                AppPreferencesItem.Category(R.string.settings_customisation_news),
-                NEWS.toPref(),
-                AppPreferencesItem.Category(R.string.settings_theme),
-                THEME.toPref(),
-                AppPreferencesItem.Category(R.string.settings_customisation),
-                BAR_ANIMATION_SPEED.toPref(),
-                QUALIFYING_DELTAS.toSwitch(false),
-                QUALIFYING_GRID_PENALTY.toSwitch(false),
-                AppPreferencesItem.Category(R.string.settings_season_list),
-                SEASON_BOTTOM_SHEET_EXPANDED.toSwitch(false),
-                SEASON_BOTTOM_SHEET_FAVOURITED.toSwitch(false),
-                SEASON_BOTTOM_SHEET_ALL.toSwitch(false),
-                AppPreferencesItem.Category(R.string.settings_help),
-                ABOUT.toPref(),
-                RELEASE.toPref(),
-                AppPreferencesItem.Category(R.string.settings_feedback),
-                CRASH.toSwitch(false),
-                SUGGESTION.toPref(),
-                SHAKE.toSwitch(false)
-        )
+        initSUT()
+
+        assertEquals(expectedNewsList, sut.settings.test().latestValue())
+    }
+
+    @Test
+    fun `SettingsViewModel setup populates settings list with toggle disabled hides the news`() {
+
+        whenever(mockToggle.isNewsEnabled).thenReturn(false)
+
+        initSUT()
+
+        // Filter out the news items we are expecting (should mean test still passes if order changes)
+        val expected = expectedNewsList.filter {
+            when (it) {
+                is AppPreferencesItem.Category -> it.title != R.string.settings_customisation_news
+                is AppPreferencesItem.Preference -> it.prefKey != "news"
+                else -> true
+            }
+        }
 
         assertEquals(expected, sut.settings.test().latestValue())
     }
 
     @Test
     fun `SettingsViewModel setup populates settings theme list`() {
+
+        initSUT()
 
         val expected = listOf(
                 Selected(BottomSheetItem(DAY.ordinal, DAY.icon, DAY.label), false),
@@ -89,6 +121,8 @@ class SettingsViewModelTest: BaseTest() {
 
     @Test
     fun `SettingsViewModel setup populates settings animation list`() {
+
+        initSUT()
 
         val expected = listOf(
                 Selected(BottomSheetItem(NONE.ordinal, NONE.icon, NONE.label), false),
@@ -103,6 +137,8 @@ class SettingsViewModelTest: BaseTest() {
     @Test
     fun `SettingsViewModel select a theme updates the pref`() {
 
+        initSUT()
+
         sut.pickTheme(NIGHT)
         verify(mockPrefs).theme = NIGHT
 
@@ -111,6 +147,8 @@ class SettingsViewModelTest: BaseTest() {
 
     @Test
     fun `SettingsViewModel select a bar animation updates the pref`() {
+
+        initSUT()
 
         sut.pickAnimationSpeed(SLOW)
         verify(mockPrefs).barAnimation = SLOW
@@ -121,6 +159,8 @@ class SettingsViewModelTest: BaseTest() {
     @Test
     fun `SettingsViewModel selecting theme pref opens picker`() {
 
+        initSUT()
+
         sut.inputs.preferenceClicked(SettingsOptions.THEME, null)
 
         assertEventFired(sut.openThemePicker)
@@ -128,6 +168,8 @@ class SettingsViewModelTest: BaseTest() {
 
     @Test
     fun `SettingsViewModel selecting animation pref opens picker`() {
+
+        initSUT()
 
         sut.inputs.preferenceClicked(BAR_ANIMATION_SPEED, null)
 
@@ -137,6 +179,8 @@ class SettingsViewModelTest: BaseTest() {
     @Test
     fun `SettingsViewModel selecting qualifying delta pref updates value`() {
 
+        initSUT()
+
         sut.inputs.preferenceClicked(QUALIFYING_DELTAS, true)
 
         verify(mockPrefs).showQualifyingDelta = true
@@ -144,6 +188,8 @@ class SettingsViewModelTest: BaseTest() {
 
     @Test
     fun `SettingsViewModel selecting qualifying grid penalty updates value`() {
+
+        initSUT()
 
         sut.inputs.preferenceClicked(QUALIFYING_GRID_PENALTY, true)
 
@@ -153,6 +199,8 @@ class SettingsViewModelTest: BaseTest() {
     @Test
     fun `SettingsViewModel selecting season bottom sheet expand updates value`() {
 
+        initSUT()
+
         sut.inputs.preferenceClicked(SEASON_BOTTOM_SHEET_EXPANDED, true)
 
         verify(mockPrefs).showBottomSheetExpanded = true
@@ -160,6 +208,8 @@ class SettingsViewModelTest: BaseTest() {
 
     @Test
     fun `SettingsViewModel selecting season bottom sheet favourited updates value`() {
+
+        initSUT()
 
         sut.inputs.preferenceClicked(SEASON_BOTTOM_SHEET_FAVOURITED, true)
 
@@ -169,6 +219,8 @@ class SettingsViewModelTest: BaseTest() {
     @Test
     fun `SettingsViewModel selecting season bottom sheet all updates value`() {
 
+        initSUT()
+
         sut.inputs.preferenceClicked(SEASON_BOTTOM_SHEET_ALL, true)
 
         verify(mockPrefs).showBottomSheetAll = true
@@ -176,6 +228,8 @@ class SettingsViewModelTest: BaseTest() {
 
     @Test
     fun `SettingsViewModel selecting about fires open about event`() {
+
+        initSUT()
 
         sut.inputs.preferenceClicked(ABOUT, null)
 
@@ -185,6 +239,8 @@ class SettingsViewModelTest: BaseTest() {
     @Test
     fun `SettingsViewModel selecting release fires open release notes event`() {
 
+        initSUT()
+
         sut.inputs.preferenceClicked(RELEASE, null)
 
         assertEventFired(sut.outputs.openRelease)
@@ -192,6 +248,8 @@ class SettingsViewModelTest: BaseTest() {
 
     @Test
     fun `SettingsViewModel selecting crash reporting updates value`() {
+
+        initSUT()
 
         sut.inputs.preferenceClicked(CRASH, true)
 
@@ -201,6 +259,8 @@ class SettingsViewModelTest: BaseTest() {
     @Test
     fun `SettingsViewModel selecting suggestions fires open suggestions event`() {
 
+        initSUT()
+
         sut.inputs.preferenceClicked(SUGGESTION, null)
 
         assertEventFired(sut.outputs.openSuggestions)
@@ -209,6 +269,8 @@ class SettingsViewModelTest: BaseTest() {
     @Test
     fun `SettingsViewModel selecting shake to report updates value`() {
 
+        initSUT()
+
         sut.inputs.preferenceClicked(SHAKE, true)
 
         verify(mockPrefs).shakeToReport = true
@@ -216,6 +278,8 @@ class SettingsViewModelTest: BaseTest() {
 
     @Test
     fun `SettingsViewModel selecting news fires open news settings event`() {
+
+        initSUT()
 
         sut.inputs.preferenceClicked(NEWS, null)
 

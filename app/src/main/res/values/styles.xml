@@ -56,8 +56,8 @@
         <item name="aboutThisApp_textSecondary">#383838</item>
         <item name="aboutThisApp_textToolbar">#f8f8f8</item>
         <item name="aboutThisApp_iconPrimary">?attr/aboutThisApp_textPrimary</item>
-        <item name="aboutThisApp_backgroundPrimary">#fbfbfb</item>
-        <item name="aboutThisApp_backgroundSecondary">#f2f2f2</item>
+        <item name="aboutThisApp_backgroundPrimary">?attr/f1BackgroundPrimary</item>
+        <item name="aboutThisApp_backgroundSecondary">?attr/f1BackgroundSecondary</item>
 
 
     </style>
@@ -141,8 +141,8 @@
         <item name="aboutThisApp_textSecondary">#e8e8e8</item>
         <item name="aboutThisApp_textToolbar">#f8f8f8</item>
         <item name="aboutThisApp_iconPrimary">?attr/aboutThisApp_textPrimary</item>
-        <item name="aboutThisApp_backgroundPrimary">#181818</item>
-        <item name="aboutThisApp_backgroundSecondary">#383838</item>
+        <item name="aboutThisApp_backgroundPrimary">?attr/f1BackgroundPrimary</item>
+        <item name="aboutThisApp_backgroundSecondary">?attr/f1BackgroundSecondary</item>
     </style>
 
     <!--#endregion -->
