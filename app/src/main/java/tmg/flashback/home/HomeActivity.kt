@@ -76,10 +76,6 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback {
 
         menu.setOnNavigationItemSelectedListener {
             return@setOnNavigationItemSelectedListener when (it.itemId) {
-                R.id.nav_news -> {
-                    startActivity(Intent(this, NewsActivity::class.java))
-                    false
-                }
                 R.id.nav_calendar -> {
                     viewModel.inputs.clickItem(HomeMenuItem.CALENDAR)
                     true

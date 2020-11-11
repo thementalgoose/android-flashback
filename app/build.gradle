@@ -48,6 +48,7 @@ android {
 
             resValue "string", "application_id", "tmg.flashback.sand"
             buildConfigField "int", "ENVIRONMENT", '1'
+            buildConfigField "boolean", "NEWS", "true"
         }
 
         live {
@@ -55,6 +56,7 @@ android {
 
             resValue "string", "application_id", "tmg.flashback"
             buildConfigField "int", "ENVIRONMENT", '0'
+            buildConfigField "boolean", "NEWS", "false"
         }
     }
 

@@ -1,6 +1,8 @@
 package tmg.flashback.di
 
 import org.koin.dsl.module
+import tmg.flashback.di.toggle.ToggleDB
+import tmg.flashback.di.toggle.FlashbackToggleDB
 import tmg.flashback.firebase.repos.*
 import tmg.flashback.prefs.SharedPrefsDB
 import tmg.flashback.repo.db.PrefsDB
@@ -15,4 +17,6 @@ val firebaseModule = module {
     single<DataDB> { DataFirestore(get()) }
     single<DriverDB> { DriverFirestore(get()) }
     single<ConstructorDB> { ConstructorFirestore(get()) }
+
+    single<ToggleDB> { FlashbackToggleDB() }
 }
