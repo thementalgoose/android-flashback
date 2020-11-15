@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.layout_podium.view.tvStartedRelative
 import kotlinx.android.synthetic.main.layout_podium.view.tvTime
 import kotlinx.android.synthetic.main.view_race_race_podium.view.*
 import tmg.flashback.R
-import tmg.flashback.race.RaceAdapterModel
+import tmg.flashback.race.RaceModel
 import tmg.flashback.utils.getColor
 import tmg.flashback.utils.getFlagResourceAlpha3
 import tmg.flashback.utils.positionStarted
@@ -26,13 +26,13 @@ class RacePodiumViewHolder(
         view: View
 ) : RecyclerView.ViewHolder(view) {
 
-    fun bind(first: RaceAdapterModel.Single, second: RaceAdapterModel.Single, third: RaceAdapterModel.Single) {
+    fun bind(first: RaceModel.Single, second: RaceModel.Single, third: RaceModel.Single) {
         bind(first, itemView.layoutFirst, itemView.tvPoint1)
         bind(second, itemView.layoutSecond, itemView.tvPoints2)
         bind(third, itemView.layoutThird, itemView.tvPoints3)
     }
 
-    private fun bind(model: RaceAdapterModel.Single, layout: View, pointsLayout: TextView) {
+    private fun bind(model: RaceModel.Single, layout: View, pointsLayout: TextView) {
         layout.apply {
 
             pointsLayout.text = itemView.context.getString(R.string.round_podium_points, model.race?.points)
