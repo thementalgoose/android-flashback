@@ -16,6 +16,7 @@ import tmg.flashback.R
 import tmg.flashback.TrackLayout
 import tmg.flashback.base.BaseActivity
 import tmg.flashback.circuit.CircuitInfoActivity
+import tmg.flashback.overviews.constructor.ConstructorActivity
 import tmg.flashback.overviews.driver.DriverActivity
 import tmg.flashback.shared.pill.PillAdapter
 import tmg.flashback.shared.pill.PillItem
@@ -209,6 +210,10 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
             startActivity(DriverActivity.intent(this, driverId, driverName))
         }
 
+        observeEvent(viewModel.outputs.goToConstructorOverview) { (constructorId, constructorName) ->
+            startActivity(ConstructorActivity.intent(this, constructorId, constructorName))
+        }
+
         observeEvent(viewModel.outputs.goToWikipedia) {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(it))
             startActivity(intent)
@@ -242,6 +247,10 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
 
     override fun driverClicked(driverId: String, driverName: String) {
         viewModel.inputs.goToDriver(driverId, driverName)
+    }
+
+    override fun constructorClicked(constructorId: String, constructorName: String) {
+        viewModel.inputs.goToConstructor(constructorId, constructorName)
     }
 
     //endregion

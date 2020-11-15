@@ -25,6 +25,7 @@ interface RaceViewModelInputs {
     fun initialise(season: Int, round: Int, date: LocalDate?)
     fun orderBy(seasonRaceAdapterType: RaceAdapterType)
     fun goToDriver(driverId: String, driverName: String)
+    fun goToConstructor(constructorId: String, constructorName: String)
     fun clickWikipedia()
 }
 
@@ -37,6 +38,7 @@ interface RaceViewModelOutputs {
     val raceItems: LiveData<Triple<RaceAdapterType, List<RaceModel>, SeasonRound>>
     val seasonRoundData: LiveData<SeasonRound>
     val goToDriverOverview: MutableLiveData<DataEvent<Pair<String, String>>>
+    val goToConstructorOverview: MutableLiveData<DataEvent<Pair<String, String>>>
 
     val showLinks: MutableLiveData<Boolean>
     val goToWikipedia: MutableLiveData<DataEvent<String>>
@@ -62,6 +64,7 @@ class RaceViewModel(
     private var viewType: ConflatedBroadcastChannel<RaceAdapterType> = ConflatedBroadcastChannel()
 
     override val goToDriverOverview: MutableLiveData<DataEvent<Pair<String, String>>> = MutableLiveData()
+    override val goToConstructorOverview: MutableLiveData<DataEvent<Pair<String, String>>> = MutableLiveData()
 
     override val showLinks: MutableLiveData<Boolean> = MutableLiveData(false)
     override val goToWikipedia: MutableLiveData<DataEvent<String>> = MutableLiveData()
@@ -220,6 +223,10 @@ class RaceViewModel(
 
     override fun goToDriver(driverId: String, driverName: String) {
         goToDriverOverview.value = DataEvent(Pair(driverId, driverName))
+    }
+
+    override fun goToConstructor(constructorId: String, constructorName: String) {
+        goToConstructorOverview.value = DataEvent(Pair(constructorId, constructorName))
     }
 
     override fun clickWikipedia() {

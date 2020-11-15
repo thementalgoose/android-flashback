@@ -337,6 +337,18 @@ class RaceViewModelTest: BaseTest() {
     }
 
     @Test
+    fun `RaceViewModel clicking go to constructor with constructor id and name fires go to constructor event`() {
+
+        val expectedConstructorId = "driver-id"
+        val expectedConstructorName = "driver-name"
+        initSUT()
+
+        sut.inputs.goToConstructor(expectedConstructorId, expectedConstructorName)
+
+        assertDataEventValue(Pair(expectedConstructorId, expectedConstructorName), sut.outputs.goToConstructorOverview)
+    }
+
+    @Test
     fun `RaceViewModel initialise emits season round data`() = coroutineTest {
 
         initSUT()
