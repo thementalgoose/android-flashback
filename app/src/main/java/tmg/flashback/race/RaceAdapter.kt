@@ -40,7 +40,7 @@ class RaceAdapter(
             R.layout.view_race_race_header -> RaceResultHeaderViewHolder(inflatedView)
             R.layout.view_race_qualifying_header -> QualifyingHeaderViewHolder(inflatedView, callback)
             R.layout.view_race_qualifying_result -> QualifyingResultViewHolder(inflatedView, callback)
-            R.layout.view_race_constructor -> ConstructorStandingsViewholder(inflatedView)
+            R.layout.view_race_constructor -> ConstructorStandingsViewholder(callback::constructorClicked, inflatedView)
             R.layout.skeleton_race -> SkeletonLoadingViewHolder(inflatedView)
             else -> super.onCreateViewHolder(parent, viewType)
         }
@@ -101,4 +101,5 @@ class RaceAdapter(
 interface RaceAdapterCallback {
     fun orderBy(adapterType: RaceAdapterType)
     fun driverClicked(driverId: String, driverName: String)
+    fun constructorClicked(constructorId: String, constructorName: String)
 }
