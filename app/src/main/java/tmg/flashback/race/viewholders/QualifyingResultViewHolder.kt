@@ -9,7 +9,7 @@ import tmg.flashback.R
 import tmg.flashback.repo.models.stats.RoundQualifyingResult
 import tmg.flashback.race.RaceAdapterCallback
 import tmg.flashback.race.RaceAdapterType
-import tmg.flashback.race.RaceAdapterModel
+import tmg.flashback.race.RaceModel
 import tmg.flashback.race.ShowQualifying
 import tmg.flashback.utils.getFlagResourceAlpha3
 import tmg.utilities.extensions.ordinalAbbreviation
@@ -30,7 +30,7 @@ class QualifyingResultViewHolder(view: View, private val updateAdapterType: Race
 
     private lateinit var showQualifying: ShowQualifying
 
-    fun bind(model: RaceAdapterModel.Single, type: RaceAdapterType) {
+    fun bind(model: RaceModel.Single, type: RaceAdapterType) {
         this.showQualifying = model.showQualifying
 
         itemView.apply {

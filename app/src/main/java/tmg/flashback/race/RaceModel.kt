@@ -1,16 +1,20 @@
 package tmg.flashback.race
 
+import androidx.annotation.LayoutRes
+import tmg.flashback.R
 import tmg.flashback.repo.enums.BarAnimation
 import tmg.flashback.repo.enums.RaceStatus
 import tmg.flashback.repo.models.stats.*
-import tmg.flashback.shared.viewholders.DataUnavailable
+import tmg.flashback.shared.sync.SyncDataItem
 
-sealed class RaceAdapterModel {
+sealed class RaceModel(
+        @LayoutRes val layoutId: Int
+) {
     data class Podium(
         val driverFirst: Single,
         val driverSecond: Single,
         val driverThird: Single
-    ) : RaceAdapterModel()
+    ) : RaceModel(R.layout.view_race_race_podium)
 
     data class Single(
         val season: Int,
@@ -25,31 +29,41 @@ sealed class RaceAdapterModel {
         val q2Delta: String?,
         val q3Delta: String?,
         val showQualifying: ShowQualifying
-    ) : RaceAdapterModel()
+    ) : RaceModel(0) {
+
+        @LayoutRes
+        fun layoutIdByViewType(type: RaceAdapterType): Int {
+            return when (type) {
+                RaceAdapterType.RACE -> R.layout.view_race_race_result
+                RaceAdapterType.QUALIFYING_POS_1 -> R.layout.view_race_qualifying_result
+                RaceAdapterType.QUALIFYING_POS_2 -> R.layout.view_race_qualifying_result
+                RaceAdapterType.QUALIFYING_POS -> R.layout.view_race_qualifying_result
+                else -> 0
+            }
+        }
+    }
 
     data class RaceHeader(
         val season: Int,
         val round: Int
-    ) : RaceAdapterModel()
+    ) : RaceModel(R.layout.view_race_race_header)
 
     data class QualifyingHeader(
         val showQualifyingDeltas: ShowQualifying
-    ) : RaceAdapterModel()
+    ) : RaceModel(R.layout.view_race_qualifying_header)
 
     data class ConstructorStandings(
         val constructor: Constructor,
         val points: Int,
         val driver: List<Pair<Driver, Int>>,
         val barAnimation: BarAnimation
-    ) : RaceAdapterModel()
+    ) : RaceModel(R.layout.view_race_constructor)
 
-    data class Unavailable(
-        val type: DataUnavailable
-    ) : RaceAdapterModel()
+    data class ErrorItem(
+            val item: SyncDataItem
+    ) : RaceModel(item.layoutId)
 
-    object Loading : RaceAdapterModel()
-
-    object NoNetwork : RaceAdapterModel()
+    object Loading : RaceModel(R.layout.skeleton_race)
 }
 
 data class SingleRace(
@@ -71,3 +85,4 @@ data class ShowQualifying(
     val none: Boolean
         get() = !q1 && !q2 && !q3
 }
+

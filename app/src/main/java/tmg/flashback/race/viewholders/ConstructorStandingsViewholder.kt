@@ -10,17 +10,16 @@ import kotlinx.android.synthetic.main.view_race_constructor.view.layoutDriver3
 import kotlinx.android.synthetic.main.view_race_constructor.view.lpvProgress
 import kotlinx.android.synthetic.main.view_race_constructor.view.tvTitle
 import tmg.flashback.R
-import tmg.flashback.race.RaceAdapterModel
+import tmg.flashback.race.RaceModel
 import tmg.flashback.repo.enums.BarAnimation
 import tmg.flashback.repo.models.stats.Driver
-import tmg.flashback.repo.models.stats.RoundDriver
 import tmg.flashback.utils.getColor
 import tmg.flashback.utils.getFlagResourceAlpha3
 import tmg.utilities.extensions.views.show
 import kotlin.math.roundToInt
 
 class ConstructorStandingsViewholder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    fun bind(model: RaceAdapterModel.ConstructorStandings, maxPointsByAnyTeam: Int) {
+    fun bind(model: RaceModel.ConstructorStandings, maxPointsByAnyTeam: Int) {
         itemView.apply {
             tvTitle.text = model.constructor.name
 
