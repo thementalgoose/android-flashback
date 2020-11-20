@@ -66,18 +66,23 @@ workflows:
   version: 2
 
   run_tests:
-    filters:
-      branches:
-        only: master
     jobs:
-      - tests
+      - test:
+          filters:
+            branches:
+              only: master
 
   run_build_deploy:
-    filters:
-      tags:
-        only: /^v.*/
-      branches:
-        ignore: /.*/
     jobs:
-      - tests
-      - build_deploy
+      - test:
+          filters:
+            tags:
+              only: /^[0-9]+\.[0-9]+\.[0-9]+/
+            branches:
+              only: master
+      - build_deploy:
+          filters:
+            tags:
+              only: /^[0-9]+\.[0-9]+\.[0-9]+/
+            branches:
+              only: master
