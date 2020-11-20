@@ -68,21 +68,16 @@ workflows:
   run_tests:
     jobs:
       - tests
-          filters:
-            branches:
-              only: master
+        filters:
+          branches:
+            only: master
 
   run_build_deploy:
     jobs:
       - tests
-          filters:
-            tags:
-              only: /^v.*/
-            branches:
-              ignore: /.*/
       - build_deploy
-          filters:
-            tags:
-              only: /^v.*/
-            branches:
-              ignore: /.*/
+        filters:
+          tags:
+            only: /^v.*/
+          branches:
+            ignore: /.*/
