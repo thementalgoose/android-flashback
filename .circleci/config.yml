@@ -66,18 +66,18 @@ workflows:
   version: 2
 
   run_tests:
+    filters:
+      branches:
+        only: master
     jobs:
       - tests
-        filters:
-          branches:
-            only: master
 
   run_build_deploy:
+    filters:
+      tags:
+        only: /^v.*/
+      branches:
+        ignore: /.*/
     jobs:
       - tests
       - build_deploy
-        filters:
-          tags:
-            only: /^v.*/
-          branches:
-            ignore: /.*/
