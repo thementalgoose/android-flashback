@@ -1,0 +1,57 @@
+version: 2.1
+
+executors:
+  setup:
+    working_directory: ~/code
+    docker:
+     - image: circleci/android:api-30-node
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - configure
+      - test
+
+  build_deploy:
+    jobs:
+      - configure
+      - test
+      - deploy
+
+
+jobs:
+  configure:
+    exectuor: setup
+    steps:
+      - checkout
+      - restore_cache:
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+      - run:
+          name: Download Dependencies
+          command: ./gradlew androidDependencies
+      - save_cache:
+          paths:
+            - ~/.gradle
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+  test:
+    executor: setup
+    steps:
+      - run:
+          name: Run app unit tests
+          command: ./gradlew :app:testLiveReleaseUnitTest
+      - store_test_results:
+          path: app/build/reports/tests/testLiveReleaseUnitTest
+          destination: reports/app
+      - run:
+          name: Run repo unit tests
+          command: ./gradlew :repo:test
+      - store_test_results:
+          path: app/build/reports/tests/test
+          destination: reports/repo
+  deploy:
+    executor: setup
+    steps:
+      - run:
+          name: Publishing app for release
+          command: ./gradlew publishRelease
