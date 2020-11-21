@@ -42,11 +42,23 @@ jobs:
       - <<: *dependencies
       - <<: *save_cache
       - run:
+          name: Preparing test directory
+          command: |
+            mkdir test-results
+            mkdir test-results/app
+            mkdir test-results/repo
+      - run:
           name: Running unit tests - app
-          command: ./gradlew :app:testSandReleaseUnitTest
+          command: ./gradlew :app:testSandDebugUnitTest
+      - run:
+          name: Moving test results
+          command: mv app/build/reports/tests/testSandDebugUnitTest/* test-results/app
       - run:
           name: Running unit tests - repo
           command: ./gradlew :repo:test
+      - run:
+          name: Moving test results
+          command: mv repo/build/reports/tests/test/* test-results/repo
       - store_test_results:
           path: test-results
 
