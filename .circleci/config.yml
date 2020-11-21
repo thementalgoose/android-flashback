@@ -44,7 +44,6 @@ jobs:
       - run:
           name: Preparing test directory
           command: |
-            mkdir test-results
             mkdir test-results/app
             mkdir test-results/repo
       - run:
