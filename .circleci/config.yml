@@ -38,8 +38,8 @@ keystore: &keystore
   - run:
       name: Decrypting environment variables
       command: |
-        echo $ENCODED_KEYSTORE | base64 --decode >> ${HOME}/hour-glass.keystore
-        echo 'export KEYSTORE=${HOME}/hour-glass.keystore' >> $BASH_ENV
+        echo $ENCODED_KEYSTORE | base64 --decode >> ${HOME}/flashback.keystore
+        echo 'export KEYSTORE=${HOME}/flashback.keystore' >> $BASH_ENV
         echo $ENCODED_DEPLOYMENT_KEY | base64 --decode >> ${HOME}/deployment_private_key.json
         echo 'export PRIVATE_KEY=${HOME}/deployment_private_key.json' >> $BASH_ENV
 
