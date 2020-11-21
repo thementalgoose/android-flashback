@@ -24,11 +24,24 @@ save_cache: &save_cache
 
 dependencies: &dependencies
   - run:
-      name: Fixing gradlew permissions
-      command: sudo chmod +x ./gradlew
+      name: Updating dependencies
+      command: |
+        sudo chmod +x ./gradlew
+        ./gradlew dependencies
+
+services: &services
   - run:
-      name: Update dependencies
-      command: ./gradlew dependencies
+      name: Applying google services
+      command: echo $ENCODED_GOOGLE_SERVICES_LIVE | base64 --decode >> app/src/live/google-services.json
+
+keystore: &keystore
+  - run:
+      name: Decrypting environment variables
+      command: |
+        echo $ENCODED_KEYSTORE | base64 --decode >> ${HOME}/hour-glass.keystore
+        echo 'export KEYSTORE=${HOME}/hour-glass.keystore' >> $BASH_ENV
+        echo $ENCODED_DEPLOYMENT_KEY | base64 --decode >> ${HOME}/deployment_private_key.json
+        echo 'export PRIVATE_KEY=${HOME}/deployment_private_key.json' >> $BASH_ENV
 
 ## Jobs
 
@@ -41,6 +54,7 @@ jobs:
       - <<: *restore_cache
       - <<: *dependencies
       - <<: *save_cache
+      - <<: *services
       - run:
           name: Running unit tests - repo
           command: ./gradlew :repo:test
@@ -59,9 +73,11 @@ jobs:
       - <<: *restore_cache
       - <<: *dependencies
       - <<: *save_cache
+      - <<: *services
+      - <<: *keystore
       - run:
           name: Assemble release build
-          command: ./gradlew publishRelease
+          command: ./gradlew publishLiveReleaseBundle
 
 ## Workflows
 
@@ -84,6 +100,8 @@ workflows:
             branches:
               ignore: /.*/
       - job-build-deploy:
+          requires:
+            - job-test
           filters:
             tags:
               only: /^[0-9]+\.[0-9]+\.[0-9]+/
