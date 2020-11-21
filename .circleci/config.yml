@@ -43,7 +43,7 @@ jobs:
       - <<: *save_cache
       - run:
           name: Running unit tests - app
-          command: ./gradlew :app:testLiveReleaseUnitTest
+          command: ./gradlew :app:testSandReleaseUnitTest
       - run:
           name: Running unit tests - repo
           command: ./gradlew :repo:test
