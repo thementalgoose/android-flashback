@@ -52,14 +52,17 @@ jobs:
       - run:
           name: Moving test results
           command: mv app/build/reports/tests/testSandDebugUnitTest/* test-results/app
+          when: always
       - run:
           name: Running unit tests - repo
           command: ./gradlew :repo:test
       - run:
           name: Moving test results
           command: mv repo/build/reports/tests/test/* test-results/repo
+          when: always
       - store_test_results:
           path: test-results
+          when: always
 
   job-build-deploy:
     <<: *config_android
