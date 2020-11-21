@@ -1,3 +1,5 @@
+import com.github.triplet.gradle.androidpublisher.ResolutionStrategy
+
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
@@ -5,6 +7,7 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'koin'
 apply plugin: 'com.google.firebase.crashlytics'
 apply plugin: 'de.mannodermaus.android-junit5'
+apply plugin: 'com.github.triplet.play'
 
 android {
     compileSdkVersion 30
@@ -95,6 +98,13 @@ android {
             }
         }
     }
+}
+
+play {
+    track = 'internal'
+    serviceAccountCredentials = file(System.getenv("PRIVATE_KEY") ?: "flashback.json")
+    defaultToAppBundles = true
+    resolutionStrategy = ResolutionStrategy.IGNORE
 }
 
 tasks.withType(Test) {
