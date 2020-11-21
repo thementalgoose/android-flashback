@@ -69,7 +69,7 @@ workflows:
       - job-test:
           filters:
             branches:
-              only: master
+              only: circle
 
   run_build_deploy:
     jobs:
