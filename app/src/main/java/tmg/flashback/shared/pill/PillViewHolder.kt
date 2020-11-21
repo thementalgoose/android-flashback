@@ -15,19 +15,13 @@ class PillViewHolder(
     lateinit var item: PillItem
 
     init {
-        itemView.button.setOnClickListener(this)
+        itemView.container.setOnClickListener(this)
     }
 
     fun bind(item: PillItem) {
         this.item = item
-        itemView.button.setText(item.label)
-        item.icon.toDrawable()?.let {
-            itemView.button.setCompoundDrawablesRelative(it, null, null, null)
-        }
-    }
-
-    private fun Int.toDrawable(): Drawable? {
-        return ContextCompat.getDrawable(context, this)
+        itemView.text.setText(item.label)
+        itemView.image.setImageResource(item.icon)
     }
 
     override fun onClick(p0: View?) {
