@@ -47,6 +47,8 @@ jobs:
       - run:
           name: Running unit tests - repo
           command: ./gradlew :repo:test
+      - store_test_results:
+          path: test-results
 
   job-build-deploy:
     <<: *config_android
