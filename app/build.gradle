@@ -22,12 +22,22 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        release {
+            storeFile file(System.getenv("KEYSTORE") ?: "flashback.keystore")
+            storePassword System.getenv("KEYSTORE_PASSWORD")
+            keyAlias System.getenv("KEYSTORE_ALIAS")
+            keyPassword System.getenv("KEYSTORE_PASSWORD")
+        }
+    }
+
     buildTypes {
         debug {
             minifyEnabled false
             useProguard false
         }
         release {
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -162,7 +172,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.3.0-alpha03'
 
     // ConstraintLayout
-    implementation "androidx.constraintlayout:constraintlayout:2.0.2"
+    implementation "androidx.constraintlayout:constraintlayout:2.0.4"
 
     // Koin
     implementation "org.koin:koin-android:$koin_version"
