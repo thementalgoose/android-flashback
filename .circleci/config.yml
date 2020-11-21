@@ -22,28 +22,25 @@ save_cache: &save_cache
       - ~/.gradle/wrapper
     key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
 
-## Setup command to run any extra commands on the device
-
-setup_env: &setup_env
-  steps:
-    - <<: *restore_cache
-    - run:
-        name: Update dependencies
-        command: ./gradlew dependencies
-    - <<: *save_cache
-    - run:
-        name: Fixing gradlew permissions
-        command: sudo chmod +x ./gradlew
-
+dependencies: &dependencies
+  - run:
+      name: Fixing gradlew permissions
+      command: sudo chmod +x ./gradlew
+  - run:
+      name: Update dependencies
+      command: ./gradlew dependencies
 
 ## Jobs
 
 jobs:
-  test:
+
+  job-test:
     <<: *config_android
     steps:
       - checkout
-      - <<: *setup_env
+      - <<: *restore_cache
+      - <<: *dependencies
+      - <<: *save_cache
       - run:
           name: Running unit tests - app
           command: ./gradlew :app:testLiveReleaseUnitTest
@@ -51,11 +48,13 @@ jobs:
           name: Running unit tests - repo
           command: ./gradlew :repo:test
 
-  build_deploy:
+  job-build-deploy:
     <<: *config_android
     steps:
       - checkout
-      - <<: *setup_env
+      - <<: *restore_cache
+      - <<: *dependencies
+      - <<: *save_cache
       - run:
           name: Assemble release build
           command: ./gradlew publishRelease
@@ -67,20 +66,20 @@ workflows:
 
   run_tests:
     jobs:
-      - test:
+      - job-test:
           filters:
             branches:
               only: master
 
   run_build_deploy:
     jobs:
-      - test:
+      - job-test:
           filters:
             tags:
               only: /^[0-9]+\.[0-9]+\.[0-9]+/
             branches:
               only: master
-      - build_deploy:
+      - job-build-deploy:
           filters:
             tags:
               only: /^[0-9]+\.[0-9]+\.[0-9]+/
