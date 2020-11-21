@@ -44,17 +44,11 @@ jobs:
       - run:
           name: Running unit tests - repo
           command: ./gradlew :repo:test
-      - run:
-          name: Moving unit tests - repo
-          command: mv repo/build/test-results/test repo/build/test-results/repo
       - store_test_results:
           path: repo/build/test-results
       - run:
           name: Running unit tests - app
           command: ./gradlew :app:testSandDebugUnitTest
-      - run:
-          name: Moving unit tests - repo
-          command: mv repo/build/test-results/testSandDebugUnitTest repo/build/test-results/app
       - store_test_results:
           path: app/build/test-results
 
@@ -79,7 +73,7 @@ workflows:
       - job-test:
           filters:
             branches:
-              only: circle
+              only: master
 
   run_build_deploy:
     jobs:
