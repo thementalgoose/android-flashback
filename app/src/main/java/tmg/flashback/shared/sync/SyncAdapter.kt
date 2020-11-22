@@ -20,9 +20,6 @@ abstract class SyncAdapter<T>: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             R.layout.view_shared_no_network -> NoNetworkViewHolder(
                 LayoutInflater.from(parent.context).inflate(viewType, parent, false)
             )
-            R.layout.view_shared_no_news_sources -> NoNewsSourcesViewHolder(
-                LayoutInflater.from(parent.context).inflate(viewType, parent, false)
-            )
             R.layout.view_shared_internal_error -> InternalErrorOccurredViewHolder(
                 LayoutInflater.from(parent.context).inflate(viewType, parent, false)
             )

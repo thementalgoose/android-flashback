@@ -1,7 +1,6 @@
 package tmg.flashback.repo.db
 
 import tmg.flashback.repo.enums.BarAnimation
-import tmg.flashback.repo.enums.NewsSource
 import tmg.flashback.repo.enums.ThemePref
 import tmg.flashback.repo.enums.Tooltips
 
@@ -73,9 +72,9 @@ interface PrefsDB {
     var favouriteSeasons: Set<Int>
 
     /**
-     * List of news sources that are blacklisted from being displayed in the app
+     * RSS URLs
      */
-    var newsSourceExcludeList: Set<NewsSource>
+    var rssUrls: Set<String>
 
     /**
      * Enable javascript in the in app browser.
@@ -85,7 +84,7 @@ interface PrefsDB {
     /**
      * Shows the description for the news items
      */
-    var newsShowDescription: Boolean
+    var rssShowDescription: Boolean
 
     /**
      * Open the news article in an external browser or not

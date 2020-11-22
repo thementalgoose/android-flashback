@@ -2,34 +2,34 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/nav_news"
-        android:icon="@drawable/nav_news"
-        android:title="@string/nav_news"/>
+        android:id="@+id/nav_rss"
+        android:icon="@drawable/nav_rss"
+        android:title="@string/nav_rss" />
 
     <item
         android:id="@+id/nav_calendar"
         android:icon="@drawable/nav_calendar"
-        android:title="@string/nav_calendar"/>
+        android:title="@string/nav_calendar" />
 
     <item
         android:id="@+id/nav_drivers"
         android:icon="@drawable/nav_driver"
-        android:title="@string/nav_drivers"/>
+        android:title="@string/nav_drivers" />
 
     <item
         android:id="@+id/nav_constructor"
         android:icon="@drawable/nav_constructor"
-        android:title="@string/nav_constructors"/>
+        android:title="@string/nav_constructors" />
 
     <item
         android:id="@+id/nav_seasons"
         android:icon="@drawable/nav_seasons"
-        android:title="@string/nav_seasons"/>
+        android:title="@string/nav_seasons" />
 
-<!--    <item-->
-<!--        android:visible="false"-->
-<!--        android:id="@+id/nav_search"-->
-<!--        android:icon="@drawable/nav_search"-->
-<!--        android:title="@string/nav_search"/>-->
+    <!--    <item-->
+    <!--        android:visible="false"-->
+    <!--        android:id="@+id/nav_search"-->
+    <!--        android:icon="@drawable/nav_search"-->
+    <!--        android:title="@string/nav_search"/>-->
 
 </menu>
