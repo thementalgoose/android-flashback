@@ -15,7 +15,6 @@ interface RSSConfigureViewModelInputs {
     fun addQuickItem(supportedArticle: SupportedArticleSource)
     fun removeItem(link: String)
     fun addCustomItem(link: String)
-    fun clickSave()
 }
 
 //endregion
@@ -24,7 +23,6 @@ interface RSSConfigureViewModelInputs {
 
 interface RSSConfigureViewModelOutputs {
     val list: LiveData<List<RSSConfigureItem>>
-    val listSaved: LiveData<Event>
 }
 
 //endregion
@@ -41,7 +39,6 @@ class RSSConfigureViewModel(
         get() = prefsDB.rssUrls.toMutableSet()
 
     override val list: MutableLiveData<List<RSSConfigureItem>> = MutableLiveData()
-    override val listSaved: MutableLiveData<Event> = MutableLiveData()
 
     init {
         loadState()
@@ -61,11 +58,8 @@ class RSSConfigureViewModel(
     }
 
     override fun addCustomItem(link: String) {
-
-    }
-
-    override fun clickSave() {
-        listSaved.postValue(Event())
+        prefsDB.rssUrls = rssUrls + link
+        updateList()
     }
 
     //endregion

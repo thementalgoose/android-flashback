@@ -42,10 +42,6 @@ class RSSConfigureActivity : BaseActivity() {
         observe(viewModel.outputs.list) {
             adapter.list = it
         }
-
-        observeEvent(viewModel.outputs.listSaved) {
-            finish()
-        }
     }
 
     override fun setInsets(insets: WindowInsetsCompat) {

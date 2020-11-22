@@ -1,6 +1,7 @@
 package tmg.flashback.repo.enums
 
 import tmg.flashback.repo.models.rss.ArticleSource
+import java.net.MalformedURLException
 import java.net.URL
 
 enum class SupportedArticleSource(
@@ -54,17 +55,30 @@ enum class SupportedArticleSource(
 
     companion object {
         fun getByLink(link: String): SupportedArticleSource? {
-            val url = URL(link)
-            return values().firstOrNull {
-                val supportUrl = URL(it.rssLink)
-                return@firstOrNull url.host == supportUrl.host || url.host == "www.${supportUrl.host}"
+            try {
+                val url = URL(link)
+                return values().firstOrNull {
+                    val supportUrl = URL(it.rssLink)
+
+                    return@firstOrNull url.host.stripWWW() == supportUrl.host.stripWWW()
+                }
+            } catch (exception: MalformedURLException) {
+                return null
             }
         }
 
         fun getByRssFeedURL(rssLink: String): SupportedArticleSource? {
             return values().firstOrNull { it.rssLink == rssLink }
         }
+
+        private fun String.stripWWW(): String {
+            return when (this.startsWith("www.")) {
+                true -> this.substring(4, this.length)
+                false -> this
+            }
+        }
     }
+
 
     val article: ArticleSource
         get() {

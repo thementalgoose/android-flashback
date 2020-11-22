@@ -14,7 +14,7 @@ import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.db.news.RSSDB
-import tmg.flashback.repo.enums.NewsSource
+import tmg.flashback.repo.enums.SupportedArticleSource
 import tmg.flashback.repo.models.Response
 import tmg.flashback.repo.models.rss.Article
 import tmg.flashback.repo.models.rss.ArticleSource
@@ -36,14 +36,14 @@ class RSSViewModelTest: BaseTest() {
     private val mockArticleSource = ArticleSource(
         title = "Test source",
         colour = "#123456",
-        sourceShort = "short something here",
+        shortSource = "short something here",
+        rssLink = "https://www.google.com/rss",
         source = "https://www.google.com/source"
     )
     private val mockArticle = Article(
         id = "test",
         title = "test title",
         description = "test description",
-        showDescription = false,
         link = "http://www.google.com",
         date = mockLocalDate,
         source = mockArticleSource
@@ -57,7 +57,7 @@ class RSSViewModelTest: BaseTest() {
     internal fun setUp() {
 
         whenever(mockConnectivityManager.isConnected).thenReturn(true)
-        whenever(mockPrefsDB.newsSourceExcludeList).thenReturn(emptySet())
+        whenever(mockPrefsDB.rssUrls).thenReturn(SupportedArticleSource.values().map { it.rssLink }.toSet())
         whenever(mockPrefsDB.rssShowDescription).thenReturn(true)
         whenever(mockRSSDB.getNews()).thenReturn(mockResponse200)
     }
@@ -68,7 +68,7 @@ class RSSViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `NewsViewModel is refreshing is initialised is reset after refresh flow`() = coroutineTest {
+    fun `RSSViewModel is refreshing is initialised is reset after refresh flow`() = coroutineTest {
 
         initSUT()
 
@@ -88,7 +88,7 @@ class RSSViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `NewsViewModel init loads all news sources`() = coroutineTest {
+    fun `RSSViewModel init loads all news sources`() = coroutineTest {
 
         val expected = listOf(
             RSSItem.Message(mockLocalDate.format(DateTimeFormatter.ofPattern("HH:mm:ss"))),
@@ -102,13 +102,13 @@ class RSSViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `NewsViewModel init all sources disabled if excludes list contains all news sources`() = coroutineTest {
+    fun `RSSViewModel init all sources disabled if excludes list contains all news sources`() = coroutineTest {
 
         whenever(mockRSSDB.getNews()).thenReturn(mockResponse500)
-        whenever(mockPrefsDB.newsSourceExcludeList).thenReturn(NewsSource.values().toSet())
+        whenever(mockPrefsDB.rssUrls).thenReturn(emptySet())
 
         val expected = listOf<RSSItem>(
-            RSSItem.ErrorItem(SyncDataItem.AllSourcesDisabled)
+            RSSItem.SourcesDisabled
         )
 
         initSUT()
@@ -118,7 +118,7 @@ class RSSViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `NewsViewModel init internal error is thrown if results are empty`() = coroutineTest {
+    fun `RSSViewModel init internal error is thrown if results are empty`() = coroutineTest {
 
         whenever(mockRSSDB.getNews()).thenReturn(mockResponse500)
 
@@ -133,7 +133,7 @@ class RSSViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `NewsViewModel no network error shown when network response code is no network`() = coroutineTest {
+    fun `RSSViewModel no network error shown when network response code is no network`() = coroutineTest {
 
         whenever(mockRSSDB.getNews()).thenReturn(mockResponseNoNetwork)
 
@@ -148,7 +148,7 @@ class RSSViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `NewsViewModel no network error shown when network connectivity check returns false`() = coroutineTest {
+    fun `RSSViewModel no network error shown when network connectivity check returns false`() = coroutineTest {
 
         whenever(mockConnectivityManager.isConnected).thenReturn(false)
 

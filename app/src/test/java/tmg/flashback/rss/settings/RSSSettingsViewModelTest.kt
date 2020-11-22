@@ -8,13 +8,11 @@ import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.CsvSource
 import tmg.components.prefs.AppPreferencesItem
 import tmg.flashback.R
 import tmg.flashback.repo.db.PrefsDB
-import tmg.flashback.repo.enums.NewsSource
 import tmg.flashback.testutils.BaseTest
+import tmg.flashback.testutils.assertEventFired
 import tmg.flashback.testutils.test
 
 class RSSSettingsViewModelTest: BaseTest() {
@@ -23,6 +21,7 @@ class RSSSettingsViewModelTest: BaseTest() {
 
     private val mockPrefs: PrefsDB = mock()
 
+    private val keyConfigureSources: String = "keyConfigureSources"
     private val keyShowDescription: String = "keyShowDescription"
     private val keyJavascript: String = "keyJavascript"
     private val keyOpenInExternalBrowser: String = "keyOpenInExternalBrowser"
@@ -32,7 +31,7 @@ class RSSSettingsViewModelTest: BaseTest() {
 
         whenever(mockPrefs.rssShowDescription).thenReturn(false)
         whenever(mockPrefs.inAppEnableJavascript).thenReturn(false)
-        whenever(mockPrefs.newsSourceExcludeList).thenReturn(emptySet())
+        whenever(mockPrefs.rssUrls).thenReturn(emptySet())
 
         sut = RSSSettingsViewModel(
             mockPrefs,
@@ -41,46 +40,21 @@ class RSSSettingsViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `SettingsNewsViewModel settings list is returned properly`() {
+    fun `RSSSettingsViewModel settings list is returned properly`() {
 
         val expected = listOf(
+            AppPreferencesItem.Category(R.string.settings_rss_configure),
+            AppPreferencesItem.Preference(
+                keyConfigureSources,
+                R.string.settings_rss_configure_sources_title,
+                R.string.settings_rss_configure_sources_description
+            ),
             AppPreferencesItem.Category(R.string.settings_rss_appearance_title),
             AppPreferencesItem.SwitchPreference(
                 keyShowDescription,
                 R.string.settings_rss_show_description_title,
                 R.string.settings_rss_show_description_description,
                 false
-            ),
-            AppPreferencesItem.Category(R.string.settings_rss_sources),
-            AppPreferencesItem.SwitchPreference(
-                prefKey = "autosport",
-                title = R.string.settings_rss_sources_autosport_title,
-                description = R.string.settings_rss_sources_autosport_description,
-                isChecked = true
-            ),
-            AppPreferencesItem.SwitchPreference(
-                prefKey = "pitpass",
-                title = R.string.settings_rss_sources_pitpass_title,
-                description = R.string.settings_rss_sources_pitpass_description,
-                isChecked = true
-            ),
-            AppPreferencesItem.SwitchPreference(
-                prefKey = "crashnet",
-                title = R.string.settings_rss_sources_crash_net_title,
-                description = R.string.settings_rss_sources_crash_net_description,
-                isChecked = true
-            ),
-            AppPreferencesItem.SwitchPreference(
-                prefKey = "motorsport",
-                title = R.string.settings_rss_sources_motorsport_title,
-                description = R.string.settings_rss_sources_motorsport_description,
-                isChecked = true
-            ),
-            AppPreferencesItem.SwitchPreference(
-                prefKey = "racefans",
-                title = R.string.settings_rss_sources_race_fans_title,
-                description = R.string.settings_rss_sources_race_fans_description,
-                isChecked = true
             ),
             AppPreferencesItem.Category(R.string.settings_rss_browser),
             AppPreferencesItem.SwitchPreference(
@@ -100,28 +74,16 @@ class RSSSettingsViewModelTest: BaseTest() {
         assertEquals(expected, sut.outputs.settings.test().latestValue())
     }
 
-    @ParameterizedTest
-    @CsvSource(
-        "autosport",
-        "pitpass",
-        "crashnet",
-        "motorsport",
-        "racefans"
-    )
-    fun `SettingsNewsViewModel update news source disabled adds it to the exclusion list`(newsPrefKey: String) {
+    @Test
+    fun `RSSSettingsViewModel clicking configure sources item notifies navigation`() {
 
-        val newsSourceItem = NewsSource.values().first { it.key == newsPrefKey }
+        sut.clickPref(keyConfigureSources)
 
-        sut.updateNewsSourcePref(newsSourceItem, false)
-
-        val expected = setOf(newsSourceItem)
-
-        verify(mockPrefs).newsSourceExcludeList = expected
-
+        assertEventFired(sut.outputs.goToConfigure)
     }
 
     @Test
-    fun `SettingsNewsViewModel update show description marks it enabled in prefs`() {
+    fun `RSSSettingsViewModel update show description marks it enabled in prefs`() {
 
         sut.updatePref(keyShowDescription, true)
 
@@ -129,7 +91,7 @@ class RSSSettingsViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `SettingsNewsViewModel update enable javascript marks it enabled in prefs`() {
+    fun `RSSSettingsViewModel update enable javascript marks it enabled in prefs`() {
 
         sut.updatePref(keyJavascript, true)
 
@@ -137,7 +99,7 @@ class RSSSettingsViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `SettingsNewsViewModel update enable open in external browser marks it enabled in prefs`() {
+    fun `RSSSettingsViewModel update enable open in external browser marks it enabled in prefs`() {
 
         sut.updatePref(keyOpenInExternalBrowser, true)
 
