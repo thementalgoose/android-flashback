@@ -9,6 +9,7 @@ import tmg.flashback.extensions.label
 import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.enums.ThemePref
 import tmg.flashback.di.async.ScopeProvider
+import tmg.flashback.di.toggle.ToggleDB
 import tmg.flashback.repo.enums.BarAnimation
 import tmg.flashback.utils.Selected
 import tmg.flashback.utils.bottomsheet.BottomSheetItem
@@ -47,6 +48,7 @@ interface SettingsViewModelOutputs {
 
 class SettingsViewModel(
     private val prefDB: PrefsDB,
+    private val toggleDB: ToggleDB,
     scopeProvider: ScopeProvider
 ): BaseViewModel(scopeProvider), SettingsViewModelInputs, SettingsViewModelOutputs {
 
@@ -69,27 +71,29 @@ class SettingsViewModel(
     override val settings: MutableLiveData<List<AppPreferencesItem>> = MutableLiveData()
 
     init {
-        settings.value = listOf(
-            AppPreferencesItem.Category(R.string.settings_customisation_news),
-            SettingsOptions.NEWS.toPref(),
-            AppPreferencesItem.Category(R.string.settings_theme),
-            SettingsOptions.THEME.toPref(),
-            AppPreferencesItem.Category(R.string.settings_customisation),
-            SettingsOptions.BAR_ANIMATION_SPEED.toPref(),
-            SettingsOptions.QUALIFYING_DELTAS.toSwitch(prefDB.showQualifyingDelta),
-            SettingsOptions.QUALIFYING_GRID_PENALTY.toSwitch(prefDB.showGridPenaltiesInQualifying),
-            AppPreferencesItem.Category(R.string.settings_season_list),
-            SettingsOptions.SEASON_BOTTOM_SHEET_EXPANDED.toSwitch(prefDB.showBottomSheetExpanded),
-            SettingsOptions.SEASON_BOTTOM_SHEET_FAVOURITED.toSwitch(prefDB.showBottomSheetFavourited),
-            SettingsOptions.SEASON_BOTTOM_SHEET_ALL.toSwitch(prefDB.showBottomSheetAll),
-            AppPreferencesItem.Category(R.string.settings_help),
-            SettingsOptions.ABOUT.toPref(),
-            SettingsOptions.RELEASE.toPref(),
-            AppPreferencesItem.Category(R.string.settings_feedback),
-            SettingsOptions.CRASH.toSwitch(prefDB.crashReporting),
-            SettingsOptions.SUGGESTION.toPref(),
-            SettingsOptions.SHAKE.toSwitch(prefDB.shakeToReport)
-        )
+        settings.value = mutableListOf<AppPreferencesItem>().apply {
+            if (toggleDB.isRSSEnabled) {
+                add(AppPreferencesItem.Category(R.string.settings_customisation_rss))
+                add(SettingsOptions.NEWS.toPref())
+            }
+            add(AppPreferencesItem.Category(R.string.settings_theme))
+            add(SettingsOptions.THEME.toPref())
+            add(AppPreferencesItem.Category(R.string.settings_customisation))
+            add(SettingsOptions.BAR_ANIMATION_SPEED.toPref())
+            add(SettingsOptions.QUALIFYING_DELTAS.toSwitch(prefDB.showQualifyingDelta))
+            add(SettingsOptions.QUALIFYING_GRID_PENALTY.toSwitch(prefDB.showGridPenaltiesInQualifying))
+            add(AppPreferencesItem.Category(R.string.settings_season_list))
+            add(SettingsOptions.SEASON_BOTTOM_SHEET_EXPANDED.toSwitch(prefDB.showBottomSheetExpanded))
+            add(SettingsOptions.SEASON_BOTTOM_SHEET_FAVOURITED.toSwitch(prefDB.showBottomSheetFavourited))
+            add(SettingsOptions.SEASON_BOTTOM_SHEET_ALL.toSwitch(prefDB.showBottomSheetAll))
+            add(AppPreferencesItem.Category(R.string.settings_help))
+            add(SettingsOptions.ABOUT.toPref())
+            add(SettingsOptions.RELEASE.toPref())
+            add(AppPreferencesItem.Category(R.string.settings_feedback))
+            add(SettingsOptions.CRASH.toSwitch(prefDB.crashReporting))
+            add(SettingsOptions.SUGGESTION.toPref())
+            add(SettingsOptions.SHAKE.toSwitch(prefDB.shakeToReport))
+        }
 
         updateThemeList()
         updateAnimationList()

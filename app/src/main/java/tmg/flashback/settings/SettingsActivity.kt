@@ -16,9 +16,10 @@ import tmg.components.about.AboutThisAppActivity
 import tmg.flashback.R
 import tmg.flashback.base.BaseActivity
 import tmg.flashback.configuration
+import tmg.flashback.rss.RSSActivity
 import tmg.flashback.repo.enums.BarAnimation
 import tmg.flashback.repo.enums.ThemePref
-import tmg.flashback.settings.news.SettingsNewsActivity
+import tmg.flashback.rss.settings.RSSSettingsActivity
 import tmg.flashback.settings.release.ReleaseActivity
 import tmg.flashback.utils.bottomsheet.BottomSheetAdapter
 import tmg.utilities.bottomsheet.BottomSheetFader
@@ -81,7 +82,7 @@ class SettingsActivity : BaseActivity() {
         }
 
         observeEvent(viewModel.outputs.openNews) {
-            startActivity(Intent(this, SettingsNewsActivity::class.java))
+            startActivity(Intent(this, RSSSettingsActivity::class.java))
         }
     }
 

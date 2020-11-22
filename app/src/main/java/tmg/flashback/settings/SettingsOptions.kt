@@ -1,6 +1,5 @@
 package tmg.flashback.settings
 
-import android.content.Context
 import androidx.annotation.StringRes
 import tmg.components.prefs.AppPreferencesItem
 import tmg.flashback.R
@@ -27,8 +26,8 @@ enum class SettingsOptions(
             description = R.string.settings_bar_animation_animation_description
     ),
     NEWS("news",
-            title = R.string.settings_customisation_news_title,
-            description = R.string.settings_customisation_news_description
+            title = R.string.settings_customisation_rss_title,
+            description = R.string.settings_customisation_rss_description
     ),
     SEASON_BOTTOM_SHEET_EXPANDED("bottomSheetExpanded",
             title = R.string.settings_customisation_season_expanded_title,
