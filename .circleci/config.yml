@@ -1,0 +1,109 @@
+version: 2.1
+
+## Docker container setup
+
+config_android: &config_android
+  docker:
+    - image: circleci/android:api-30
+  working_directory: ~/code
+  environment:
+    TERM: dumb
+
+## Caching information
+
+restore_cache: &restore_cache
+  restore_cache:
+    key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+
+save_cache: &save_cache
+  save_cache:
+    paths:
+      - ~/.gradle/caches
+      - ~/.gradle/wrapper
+    key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+
+dependencies: &dependencies
+  - run:
+      name: Updating dependencies
+      command: |
+        sudo chmod +x ./gradlew
+        ./gradlew dependencies
+
+services: &services
+  - run:
+      name: Applying google services
+      command: echo $ENCODED_GOOGLE_SERVICES_LIVE | base64 --decode >> app/src/live/google-services.json
+
+keystore: &keystore
+  - run:
+      name: Decrypting environment variables
+      command: |
+        echo $ENCODED_KEYSTORE | base64 --decode >> ${HOME}/flashback.keystore
+        echo 'export KEYSTORE=${HOME}/flashback.keystore' >> $BASH_ENV
+        echo $ENCODED_DEPLOYMENT_KEY | base64 --decode >> ${HOME}/deployment_private_key.json
+        echo 'export PRIVATE_KEY=${HOME}/deployment_private_key.json' >> $BASH_ENV
+
+## Jobs
+
+jobs:
+
+  job-test:
+    <<: *config_android
+    steps:
+      - checkout
+      - <<: *restore_cache
+      - <<: *dependencies
+      - <<: *save_cache
+      - <<: *services
+      - run:
+          name: Running unit tests - repo
+          command: ./gradlew :repo:test
+      - store_test_results:
+          path: repo/build/test-results
+      - run:
+          name: Running unit tests - app
+          command: ./gradlew :app:testSandDebugUnitTest
+      - store_test_results:
+          path: app/build/test-results
+
+  job-build-deploy:
+    <<: *config_android
+    steps:
+      - checkout
+      - <<: *restore_cache
+      - <<: *dependencies
+      - <<: *save_cache
+      - <<: *services
+      - <<: *keystore
+      - run:
+          name: Assemble release build
+          command: ./gradlew publishLiveReleaseBundle
+
+## Workflows
+
+workflows:
+  version: 2
+
+  run_tests:
+    jobs:
+      - job-test:
+          filters:
+            branches:
+              only: master
+
+  run_build_deploy:
+    jobs:
+      - job-test:
+          filters:
+            tags:
+              only: /^[0-9]+\.[0-9]+\.[0-9]+/
+            branches:
+              ignore: /.*/
+      - job-build-deploy:
+          requires:
+            - job-test
+          filters:
+            tags:
+              only: /^[0-9]+\.[0-9]+\.[0-9]+/
+            branches:
+              ignore: /.*/

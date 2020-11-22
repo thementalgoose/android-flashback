@@ -4,23 +4,33 @@ import android.view.View
 import androidx.annotation.ColorInt
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.layout_constructor_driver.view.*
-import kotlinx.android.synthetic.main.view_race_constructor.view.layoutDriver1
-import kotlinx.android.synthetic.main.view_race_constructor.view.layoutDriver2
-import kotlinx.android.synthetic.main.view_race_constructor.view.layoutDriver3
-import kotlinx.android.synthetic.main.view_race_constructor.view.lpvProgress
-import kotlinx.android.synthetic.main.view_race_constructor.view.tvTitle
+import kotlinx.android.synthetic.main.view_race_constructor.view.*
 import tmg.flashback.R
-import tmg.flashback.race.RaceAdapterModel
+import tmg.flashback.race.RaceModel
 import tmg.flashback.repo.enums.BarAnimation
 import tmg.flashback.repo.models.stats.Driver
-import tmg.flashback.repo.models.stats.RoundDriver
 import tmg.flashback.utils.getColor
 import tmg.flashback.utils.getFlagResourceAlpha3
 import tmg.utilities.extensions.views.show
 import kotlin.math.roundToInt
 
-class ConstructorStandingsViewholder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    fun bind(model: RaceAdapterModel.ConstructorStandings, maxPointsByAnyTeam: Int) {
+class ConstructorStandingsViewholder(
+        val constructorClicked: (constructorId: String, constructorName: String) -> Unit,
+        itemView: View
+) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+
+    lateinit var constructorId: String
+    lateinit var constructorName: String
+
+    init {
+        itemView.container.setOnClickListener(this)
+    }
+
+    fun bind(model: RaceModel.ConstructorStandings, maxPointsByAnyTeam: Int) {
+
+        constructorId = model.constructor.id
+        constructorName = model.constructor.name
+
         itemView.apply {
             tvTitle.text = model.constructor.name
 
@@ -70,5 +80,9 @@ class ConstructorStandingsViewholder(itemView: View) : RecyclerView.ViewHolder(i
         layout.tvName.text = driver.name
         layout.tvNumber.text = layout.context.resources.getQuantityString(R.plurals.race_points, points, points)
         layout.imgFlag.setImageResource(layout.context.getFlagResourceAlpha3(driver.nationalityISO))
+    }
+
+    override fun onClick(p0: View?) {
+        constructorClicked(constructorId, constructorName)
     }
 }

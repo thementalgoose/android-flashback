@@ -14,6 +14,7 @@ import tmg.flashback.settings.ConnectivityManager
 import tmg.flashback.shared.viewholders.DataUnavailable
 import tmg.flashback.showComingSoonMessageForNextDays
 import tmg.flashback.di.async.ScopeProvider
+import tmg.flashback.shared.sync.SyncDataItem
 import tmg.flashback.utils.SeasonRound
 import tmg.utilities.extensions.combineTriple
 import tmg.utilities.lifecycle.DataEvent
@@ -24,6 +25,7 @@ interface RaceViewModelInputs {
     fun initialise(season: Int, round: Int, date: LocalDate?)
     fun orderBy(seasonRaceAdapterType: RaceAdapterType)
     fun goToDriver(driverId: String, driverName: String)
+    fun goToConstructor(constructorId: String, constructorName: String)
     fun clickWikipedia()
 }
 
@@ -33,9 +35,10 @@ interface RaceViewModelInputs {
 
 interface RaceViewModelOutputs {
     val circuitInfo: LiveData<Round>
-    val raceItems: LiveData<Triple<RaceAdapterType, List<RaceAdapterModel>, SeasonRound>>
+    val raceItems: LiveData<Triple<RaceAdapterType, List<RaceModel>, SeasonRound>>
     val seasonRoundData: LiveData<SeasonRound>
     val goToDriverOverview: MutableLiveData<DataEvent<Pair<String, String>>>
+    val goToConstructorOverview: MutableLiveData<DataEvent<Pair<String, String>>>
 
     val showLinks: MutableLiveData<Boolean>
     val goToWikipedia: MutableLiveData<DataEvent<String>>
@@ -61,6 +64,7 @@ class RaceViewModel(
     private var viewType: ConflatedBroadcastChannel<RaceAdapterType> = ConflatedBroadcastChannel()
 
     override val goToDriverOverview: MutableLiveData<DataEvent<Pair<String, String>>> = MutableLiveData()
+    override val goToConstructorOverview: MutableLiveData<DataEvent<Pair<String, String>>> = MutableLiveData()
 
     override val showLinks: MutableLiveData<Boolean> = MutableLiveData(false)
     override val goToWikipedia: MutableLiveData<DataEvent<String>> = MutableLiveData()
@@ -77,20 +81,20 @@ class RaceViewModel(
         .filterNotNull()
         .asLiveData(scope.coroutineContext)
 
-    override val raceItems: LiveData<Triple<RaceAdapterType, List<RaceAdapterModel>, SeasonRound>> = seasonRoundFlow
+    override val raceItems: LiveData<Triple<RaceAdapterType, List<RaceModel>, SeasonRound>> = seasonRoundFlow
             .combineTriple(viewType.asFlow(), seasonRound.asFlow())
             .map { (roundData, viewType, seasonRoundValue) ->
                 if (roundData == null) {
-                    val list = mutableListOf<RaceAdapterModel>()
+                    val list = mutableListOf<RaceModel>()
                     when {
                         !connectivityManager.isConnected ->
-                            list.add(RaceAdapterModel.NoNetwork)
+                            list.add(RaceModel.ErrorItem(SyncDataItem.NoNetwork))
                         roundDate != null && roundDate!! > LocalDate.now() ->
-                            list.add(RaceAdapterModel.Unavailable(DataUnavailable.IN_FUTURE_RACE))
+                            list.add(RaceModel.ErrorItem(SyncDataItem.Unavailable((DataUnavailable.IN_FUTURE_RACE))))
                         roundDate != null && roundDate!! <= LocalDate.now() && roundDate!! >= LocalDate.now().minusDays(showComingSoonMessageForNextDays.toLong()) ->
-                            list.add(RaceAdapterModel.Unavailable(DataUnavailable.COMING_SOON_RACE))
+                            list.add(RaceModel.ErrorItem(SyncDataItem.Unavailable((DataUnavailable.COMING_SOON_RACE))))
                         else ->
-                            list.add(RaceAdapterModel.Unavailable(DataUnavailable.MISSING_RACE))
+                            list.add(RaceModel.ErrorItem(SyncDataItem.Unavailable((DataUnavailable.MISSING_RACE))))
                     }
                     return@map Triple(viewType, list, seasonRoundValue)
                 }
@@ -100,11 +104,11 @@ class RaceViewModel(
 
                 // Constructor standings, models are constructors
                 if (viewType == RaceAdapterType.CONSTRUCTOR_STANDINGS) {
-                    val list: List<RaceAdapterModel.ConstructorStandings> = roundData
+                    val list: List<RaceModel.ConstructorStandings> = roundData
                         .constructorStandings
                         .map {
                             val drivers: List<Pair<Driver, Int>> = getDriverFromConstructor(roundData, it.constructor.id)
-                            RaceAdapterModel.ConstructorStandings(it.constructor, it.points, drivers, prefsDB.barAnimation)
+                            RaceModel.ConstructorStandings(it.constructor, it.points, drivers, prefsDB.barAnimation)
                         }
                         .sortedByDescending { it.points }
 
@@ -117,7 +121,7 @@ class RaceViewModel(
                 // Race or qualifying - Models are driver models
                 else {
                     val driverIds: List<String> = getOrderedDriverIds(roundData, viewType)
-                    val list: MutableList<RaceAdapterModel> = mutableListOf()
+                    val list: MutableList<RaceModel> = mutableListOf()
                     val showQualifying = ShowQualifying(
                         q1 = roundData.q1.count { it.value.time != null } > 0,
                         q2 = roundData.q2.count { it.value.time != null } > 0,
@@ -132,7 +136,7 @@ class RaceViewModel(
                                 var startIndex = 0
                                 if (driverIds.size >= 3) {
                                     list.add(
-                                        RaceAdapterModel.Podium(
+                                        RaceModel.Podium(
                                             driverFirst = getDriverModel(
                                                 roundData,
                                                 viewType,
@@ -155,7 +159,7 @@ class RaceViewModel(
                                     )
                                     startIndex = 3
                                     list.add(
-                                        RaceAdapterModel.RaceHeader(
+                                        RaceModel.RaceHeader(
                                             roundData.season,
                                             roundData.round
                                         )
@@ -174,15 +178,15 @@ class RaceViewModel(
                             }
                             else {
                                 when {
-                                    roundData.date > LocalDate.now() -> list.add(RaceAdapterModel.Unavailable(DataUnavailable.IN_FUTURE_RACE))
-                                    else -> list.add(RaceAdapterModel.Unavailable(DataUnavailable.COMING_SOON_RACE))
+                                    roundData.date > LocalDate.now() -> list.add(RaceModel.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.IN_FUTURE_RACE)))
+                                    else -> list.add(RaceModel.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.COMING_SOON_RACE)))
                                 }
                             }
                         }
                         RaceAdapterType.QUALIFYING_POS_1,
                         RaceAdapterType.QUALIFYING_POS_2,
                         RaceAdapterType.QUALIFYING_POS -> {
-                            list.add(RaceAdapterModel.QualifyingHeader(showQualifying))
+                            list.add(RaceModel.QualifyingHeader(showQualifying))
                             list.addAll(driverIds.mapIndexed { _, driverId ->
                                 getDriverModel(
                                     roundData,
@@ -219,6 +223,10 @@ class RaceViewModel(
 
     override fun goToDriver(driverId: String, driverName: String) {
         goToDriverOverview.value = DataEvent(Pair(driverId, driverName))
+    }
+
+    override fun goToConstructor(constructorId: String, constructorName: String) {
+        goToConstructorOverview.value = DataEvent(Pair(constructorId, constructorName))
     }
 
     override fun clickWikipedia() {
@@ -293,7 +301,7 @@ class RaceViewModel(
     }
 
     /**
-     * Get a [RaceAdapterModel.Single] instance for a given driver
+     * Get a [RaceModel.Single] instance for a given driver
      */
     private fun getDriverModel(
         round: Round,
@@ -301,7 +309,7 @@ class RaceViewModel(
         viewType: RaceAdapterType,
         driverId: String,
         showQualifying: ShowQualifying
-    ): RaceAdapterModel.Single {
+    ): RaceModel.Single {
         val overview = round.driverOverview(driverId)
         val race = overview.race?.let {
             SingleRace(
@@ -313,7 +321,7 @@ class RaceViewModel(
                 fastestLap = it.fastestLap?.rank == 1
             )
         }
-        return RaceAdapterModel.Single(
+        return RaceModel.Single(
             season = round.season,
             round = round.round,
             driver = round.drivers.first { it.id == driverId },
