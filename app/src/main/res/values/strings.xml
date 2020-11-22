@@ -96,6 +96,9 @@
     <string name="release_27"><![CDATA[<b>4.8.0</b>
         <br/>• Handles constructors championship starting in 1958 properly
         <br/>• Tweaked layout of Driver Overview season navigation]]></string>
+    <string name="release_28"><![CDATA[<b>5.0.0</b>
+        <br/>• Constructor overview! View a simplistic history of a constructor in F1
+        <br/>• Fixes more than 5 drivers under constructor not stacking properly]]></string>
 
     <!-- App Lockout -->
     <string name="app_lockout_title">App lockout</string>

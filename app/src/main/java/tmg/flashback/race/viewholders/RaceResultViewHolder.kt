@@ -7,7 +7,7 @@ import kotlinx.android.synthetic.main.layout_driver.view.*
 import kotlinx.android.synthetic.main.view_race_race_result.view.*
 import tmg.flashback.R
 import tmg.flashback.extensions.iconRes
-import tmg.flashback.race.RaceAdapterModel
+import tmg.flashback.race.RaceModel
 import tmg.flashback.repo.enums.isStatusFinished
 import tmg.flashback.utils.getColor
 import tmg.flashback.utils.getFlagResourceAlpha3
@@ -33,7 +33,7 @@ class RaceResultViewHolder(
     private lateinit var driverName: String
     private var status: String = ""
 
-    fun bind(model: RaceAdapterModel.Single) {
+    fun bind(model: RaceModel.Single) {
 
         driverId = model.driver.id
         driverName = model.driver.name

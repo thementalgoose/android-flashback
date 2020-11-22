@@ -20,6 +20,7 @@ import tmg.flashback.repo.models.stats.LapTime
 import tmg.flashback.repo.models.stats.Round
 import tmg.flashback.repo.models.stats.RoundDriver
 import tmg.flashback.settings.ConnectivityManager
+import tmg.flashback.shared.sync.SyncDataItem
 import tmg.flashback.shared.viewholders.DataUnavailable
 import tmg.flashback.testutils.*
 import tmg.flashback.utils.SeasonRound
@@ -58,7 +59,7 @@ class RaceViewModelTest: BaseTest() {
 
         initSUT()
 
-        assertValue(Triple(RACE, listOf(RaceAdapterModel.NoNetwork), expectedSeasonRound), sut.outputs.raceItems)
+        assertValue(Triple(RACE, listOf(RaceModel.ErrorItem(SyncDataItem.NoNetwork)), expectedSeasonRound), sut.outputs.raceItems)
     }
 
     @Test
@@ -68,7 +69,7 @@ class RaceViewModelTest: BaseTest() {
 
         initSUT(LocalDate.now().plusDays(1L))
 
-        assertValue(Triple(RACE, listOf(RaceAdapterModel.Unavailable(DataUnavailable.IN_FUTURE_RACE)), expectedSeasonRound), sut.outputs.raceItems)
+        assertValue(Triple(RACE, listOf(RaceModel.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.IN_FUTURE_RACE))), expectedSeasonRound), sut.outputs.raceItems)
     }
 
     @Test
@@ -78,7 +79,7 @@ class RaceViewModelTest: BaseTest() {
 
         initSUT(LocalDate.now().minusDays(1L))
 
-        assertValue(Triple(RACE, listOf(RaceAdapterModel.Unavailable(DataUnavailable.COMING_SOON_RACE)), expectedSeasonRound), sut.outputs.raceItems)
+        assertValue(Triple(RACE, listOf(RaceModel.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.COMING_SOON_RACE))), expectedSeasonRound), sut.outputs.raceItems)
     }
 
     @Test
@@ -88,7 +89,7 @@ class RaceViewModelTest: BaseTest() {
 
         initSUT(null)
 
-        assertValue(Triple(RACE, listOf(RaceAdapterModel.Unavailable(DataUnavailable.MISSING_RACE)), expectedSeasonRound), sut.outputs.raceItems)
+        assertValue(Triple(RACE, listOf(RaceModel.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.MISSING_RACE))), expectedSeasonRound), sut.outputs.raceItems)
     }
 
     @Test
@@ -99,7 +100,7 @@ class RaceViewModelTest: BaseTest() {
 
         initSUT(LocalDate.now().minusDays(showComingSoonMessageForNextDays - 1L))
 
-        assertValue(Triple(RACE, listOf(RaceAdapterModel.Unavailable(DataUnavailable.COMING_SOON_RACE)), expectedSeasonRound), sut.outputs.raceItems)
+        assertValue(Triple(RACE, listOf(RaceModel.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.COMING_SOON_RACE))), expectedSeasonRound), sut.outputs.raceItems)
     }
 
     @Test
@@ -109,21 +110,21 @@ class RaceViewModelTest: BaseTest() {
 
         initSUT(LocalDate.now())
 
-        assertValue(Triple(RACE, listOf(RaceAdapterModel.Unavailable(DataUnavailable.COMING_SOON_RACE)), expectedSeasonRound), sut.outputs.raceItems)
+        assertValue(Triple(RACE, listOf(RaceModel.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.COMING_SOON_RACE))), expectedSeasonRound), sut.outputs.raceItems)
     }
 
     @Test
     fun `RaceViewModel when view type is (happy) constructor, standings show constructor standings items with list of drivers`() = coroutineTest {
 
         whenever(mockSeasonOverviewDB.getSeasonRound(any(), any())).thenReturn(flow { emit(mockRound1) })
-        val expected = listOf<RaceAdapterModel>(
-            RaceAdapterModel.ConstructorStandings(
+        val expected = listOf<RaceModel>(
+            RaceModel.ConstructorStandings(
                 mockConstructorBeta, 30, listOf(
                     Pair(mockDriver4.toDriver(), 20),
                     Pair(mockDriver2.toDriver(), 10)
                 ), BarAnimation.NONE
             ),
-            RaceAdapterModel.ConstructorStandings(
+            RaceModel.ConstructorStandings(
                 mockConstructorAlpha, 20, listOf(
                     Pair(mockDriver3.toDriver(), 15),
                     Pair(mockDriver1.toDriver(), 5)
@@ -143,8 +144,8 @@ class RaceViewModelTest: BaseTest() {
             date = LocalDate.now().plusDays(5L),
             race = emptyMap()
         )) })
-        val expected = listOf<RaceAdapterModel>(
-            RaceAdapterModel.Unavailable(DataUnavailable.IN_FUTURE_RACE)
+        val expected = listOf<RaceModel>(
+            RaceModel.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.IN_FUTURE_RACE))
         )
 
         initSUT()
@@ -159,8 +160,8 @@ class RaceViewModelTest: BaseTest() {
             date = LocalDate.now().minusDays(5L),
             race = emptyMap()
         )) })
-        val expected = listOf<RaceAdapterModel>(
-            RaceAdapterModel.Unavailable(DataUnavailable.COMING_SOON_RACE)
+        val expected = listOf<RaceModel>(
+            RaceModel.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.COMING_SOON_RACE))
         )
 
         initSUT()
@@ -175,7 +176,7 @@ class RaceViewModelTest: BaseTest() {
         whenever(mockPrefsDB.showGridPenaltiesInQualifying).thenReturn(false)
         whenever(mockSeasonOverviewDB.getSeasonRound(any(), any())).thenReturn(flow { emit(mockRound1) })
         val expected = listOf(
-            RaceAdapterModel.Podium(
+            RaceModel.Podium(
                 convertDriverToSingle(round = mockRound1, roundDriver = mockDriver4,
                     expectedQualified = 4,
                     expectedGrid = 3,
@@ -192,7 +193,7 @@ class RaceViewModelTest: BaseTest() {
                     expectedFinish = 3
                 )
             ),
-            RaceAdapterModel.RaceHeader(expectedSeasonRound.first, expectedSeasonRound.second),
+            RaceModel.RaceHeader(expectedSeasonRound.first, expectedSeasonRound.second),
             convertDriverToSingle(round = mockRound1, roundDriver = mockDriver1,
                 expectedQualified = 1,
                 expectedGrid = 1,
@@ -213,7 +214,7 @@ class RaceViewModelTest: BaseTest() {
         whenever(mockPrefsDB.showQualifyingDelta).thenReturn(false)
         whenever(mockPrefsDB.showGridPenaltiesInQualifying).thenReturn(false)
         whenever(mockSeasonOverviewDB.getSeasonRound(any(), any())).thenReturn(flow { emit(mockRound1) })
-        val expected = mutableListOf<RaceAdapterModel>(RaceAdapterModel.QualifyingHeader(showQualifying))
+        val expected = mutableListOf<RaceModel>(RaceModel.QualifyingHeader(showQualifying))
         expected.addAll(expectedQ3Order)
 
         initSUT(orderBy = QUALIFYING_POS)
@@ -229,7 +230,7 @@ class RaceViewModelTest: BaseTest() {
         whenever(mockPrefsDB.showQualifyingDelta).thenReturn(false)
         whenever(mockPrefsDB.showGridPenaltiesInQualifying).thenReturn(false)
         whenever(mockSeasonOverviewDB.getSeasonRound(any(), any())).thenReturn(flow { emit(mockRound1) })
-        val expected = mutableListOf<RaceAdapterModel>(RaceAdapterModel.QualifyingHeader(showQualifying))
+        val expected = mutableListOf<RaceModel>(RaceModel.QualifyingHeader(showQualifying))
         expected.addAll(expectedQ2Order)
 
         initSUT(orderBy = QUALIFYING_POS_2)
@@ -245,7 +246,7 @@ class RaceViewModelTest: BaseTest() {
         whenever(mockPrefsDB.showQualifyingDelta).thenReturn(false)
         whenever(mockPrefsDB.showGridPenaltiesInQualifying).thenReturn(false)
         whenever(mockSeasonOverviewDB.getSeasonRound(any(), any())).thenReturn(flow { emit(mockRound1) })
-        val expected = mutableListOf<RaceAdapterModel>(RaceAdapterModel.QualifyingHeader(showQualifying))
+        val expected = mutableListOf<RaceModel>(RaceModel.QualifyingHeader(showQualifying))
         expected.addAll(expectedQ1Order)
 
         initSUT(orderBy = QUALIFYING_POS_1)
@@ -262,11 +263,11 @@ class RaceViewModelTest: BaseTest() {
         whenever(mockPrefsDB.showGridPenaltiesInQualifying).thenReturn(false)
         whenever(mockSeasonOverviewDB.getSeasonRound(any(), any())).thenReturn(flow { emit(mockRound1) })
 
-        val expectedQ3 = mutableListOf<RaceAdapterModel>(RaceAdapterModel.QualifyingHeader(showQualifying))
+        val expectedQ3 = mutableListOf<RaceModel>(RaceModel.QualifyingHeader(showQualifying))
         expectedQ3.addAll(expectedQ3Order)
-        val expectedQ2 = mutableListOf<RaceAdapterModel>(RaceAdapterModel.QualifyingHeader(showQualifying))
+        val expectedQ2 = mutableListOf<RaceModel>(RaceModel.QualifyingHeader(showQualifying))
         expectedQ2.addAll(expectedQ2Order)
-        val expectedQ1 = mutableListOf<RaceAdapterModel>(RaceAdapterModel.QualifyingHeader(showQualifying))
+        val expectedQ1 = mutableListOf<RaceModel>(RaceModel.QualifyingHeader(showQualifying))
         expectedQ1.addAll(expectedQ1Order)
 
         initSUT(orderBy = QUALIFYING_POS)
@@ -292,7 +293,7 @@ class RaceViewModelTest: BaseTest() {
         whenever(mockPrefsDB.showQualifyingDelta).thenReturn(true)
         whenever(mockPrefsDB.showGridPenaltiesInQualifying).thenReturn(false)
         whenever(mockSeasonOverviewDB.getSeasonRound(any(), any())).thenReturn(flow { emit(mockRound1) })
-        val expected = mutableListOf<RaceAdapterModel>(RaceAdapterModel.QualifyingHeader(showQualifying))
+        val expected = mutableListOf<RaceModel>(RaceModel.QualifyingHeader(showQualifying))
         expected.addAll(expectedQ3OrderWithQualifyingDeltas)
 
         initSUT(orderBy = QUALIFYING_POS)
@@ -308,7 +309,7 @@ class RaceViewModelTest: BaseTest() {
         whenever(mockPrefsDB.showQualifyingDelta).thenReturn(false)
         whenever(mockPrefsDB.showGridPenaltiesInQualifying).thenReturn(false)
         whenever(mockSeasonOverviewDB.getSeasonRound(any(), any())).thenReturn(flow { emit(mockRound3) })
-        val expected = mutableListOf<RaceAdapterModel>(RaceAdapterModel.QualifyingHeader(showQualifying))
+        val expected = mutableListOf<RaceModel>(RaceModel.QualifyingHeader(showQualifying))
         expected.addAll(expectedQ3Order(round = mockRound3, showQualifying = showQualifying))
 
         initSUT(orderBy = QUALIFYING_POS)
@@ -333,6 +334,18 @@ class RaceViewModelTest: BaseTest() {
         sut.inputs.goToDriver(expectedDriverId, expectedDriverName)
 
         assertDataEventValue(Pair(expectedDriverId, expectedDriverName), sut.outputs.goToDriverOverview)
+    }
+
+    @Test
+    fun `RaceViewModel clicking go to constructor with constructor id and name fires go to constructor event`() {
+
+        val expectedConstructorId = "driver-id"
+        val expectedConstructorName = "driver-name"
+        initSUT()
+
+        sut.inputs.goToConstructor(expectedConstructorId, expectedConstructorName)
+
+        assertDataEventValue(Pair(expectedConstructorId, expectedConstructorName), sut.outputs.goToConstructorOverview)
     }
 
     @Test
@@ -389,7 +402,7 @@ class RaceViewModelTest: BaseTest() {
 
     //region Round 1 expected qualifying orders
 
-    private val expectedQ3Order: List<RaceAdapterModel> = listOf(
+    private val expectedQ3Order: List<RaceModel> = listOf(
         convertDriverToSingle(round = mockRound1, roundDriver = mockDriver1,
             expectedQualified = 1,
             expectedGrid = 1,
@@ -418,7 +431,7 @@ class RaceViewModelTest: BaseTest() {
         q3 = true,
         penalties = false,
         deltas = false
-    )): List<RaceAdapterModel> = listOf(
+    )): List<RaceModel> = listOf(
         convertDriverToSingle(round = round, roundDriver = mockDriver1,
             expectedQualified = 1,
             expectedGrid = 1,
@@ -445,7 +458,7 @@ class RaceViewModelTest: BaseTest() {
         )
     )
 
-    private val expectedQ2Order: List<RaceAdapterModel> = listOf(
+    private val expectedQ2Order: List<RaceModel> = listOf(
         convertDriverToSingle(round = mockRound1, roundDriver = mockDriver2,
             expectedQualified = 2,
             expectedGrid = 2,
@@ -467,7 +480,7 @@ class RaceViewModelTest: BaseTest() {
             expectedFinish = 1
         )
     )
-    private val expectedQ1Order: List<RaceAdapterModel> = listOf(
+    private val expectedQ1Order: List<RaceModel> = listOf(
         convertDriverToSingle(round = mockRound1, roundDriver = mockDriver1,
             expectedQualified = 1,
             expectedGrid = 1,
@@ -495,7 +508,7 @@ class RaceViewModelTest: BaseTest() {
 
     //region Round 1 Qualifying deltas check
 
-    private val expectedQ3OrderWithQualifyingDeltas: List<RaceAdapterModel> = listOf(
+    private val expectedQ3OrderWithQualifyingDeltas: List<RaceModel> = listOf(
         convertDriverToSingle(round = mockRound1, roundDriver = mockDriver1,
             expectedQualified = 1,
             expectedGrid = 1,
@@ -552,9 +565,9 @@ class RaceViewModelTest: BaseTest() {
                                           penalties = false,
                                           deltas = false
                                       )
-    ): RaceAdapterModel.Single {
+    ): RaceModel.Single {
         val overview = round.driverOverview(roundDriver.id)
-        return RaceAdapterModel.Single(
+        return RaceModel.Single(
             season = round.season,
             round = round.round,
             driver = roundDriver,
