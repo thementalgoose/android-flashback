@@ -43,7 +43,6 @@ var flashbackModule = module {
 
     // Settings
     viewModel { SettingsViewModel(get(), get(), get()) }
-    viewModel { RSSSettingsViewModel(get(), get()) }
     viewModel { LockoutViewModel(get(), get(), get()) }
 
     single<ConnectivityManager> { NetworkConnectivityManager(get()) }
