@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
     <shortcut
-        android:enabled="true"
+        android:enabled="@bool/toggle_rss"
         android:icon="@drawable/nav_rss">
         <intent
             android:action="android.intent.action.VIEW"

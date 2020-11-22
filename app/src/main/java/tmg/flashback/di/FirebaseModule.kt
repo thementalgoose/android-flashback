@@ -18,5 +18,5 @@ val firebaseModule = module {
     single<DriverDB> { DriverFirestore(get()) }
     single<ConstructorDB> { ConstructorFirestore(get()) }
 
-    single<ToggleDB> { FlashbackToggleDB() }
+    single<ToggleDB> { FlashbackToggleDB(get()) }
 }
