@@ -131,7 +131,7 @@
     <string name="settings_customisation_qualifying_grid_penalties_description">Shows the grid penalty that a driver has in the qualifying view</string>
     <string name="settings_customisation_rss">RSS</string>
     <string name="settings_customisation_rss_title">RSS</string>
-    <string name="settings_customisation_rss_description">Open the formula 1 RSS feed</string>
+    <string name="settings_customisation_rss_description">Open the RSS feed settings</string>
     <string name="settings_season_list">Season list</string>
     <string name="settings_customisation_season_expanded_title">Expand sheet to full screen</string>
     <string name="settings_customisation_season_expanded_description">When clicking the seasons tab, the sheet will default to going full screen rather than half height</string>
@@ -173,8 +173,11 @@
     <string name="settings_rss_browser_javascript_description">For the in app browser: Toggle javascript being loaded. Disabling javascript should make the page and content load quicker but areas of the website may not perform properly</string>
 
     <string name="rss_configure_title">Configure RSS</string>
-    <string name="rss_configure_header_items">Your list</string>
-    <string name="rss_configure_header_quick_add">Supported Links</string>
+    <string name="rss_configure_header_items">Your RSS list</string>
+    <string name="rss_configure_header_items_subtitle">Configure your personalised RSS feed here! We will soon support adding your own RSS urls to show in this list</string>
+    <string name="rss_configure_header_items_no_items">0 items</string>
+    <string name="rss_configure_header_quick_add">Quick links</string>
+    <string name="rss_configure_header_quick_add_subtitle">These RSS feeds from popular news sites for F1 news, and these can be added to your personalised feed. If you wish to include another RSS feed in this list, send me an email!</string>
 
     <!-- About -->
     <string name="about_name">Flashback</string>
@@ -254,7 +257,7 @@
     <string name="shared_unavailable_missing_race">Unfortunately we don\'t have any information for this yet, please check back you have an internet connection and try again</string>
     <string name="shared_network_error">A network error occurred! Please check you are connected to the internet and try again</string>
     <string name="shared_network_internal_error">A network error occurred and we weren\'t able to find any articles. Please check your internet connection or try again later</string>
-    <string name="shared_network_no_articles">All rss sources have been disabled - Please enable a preferred source and try again</string>
+    <string name="shared_network_no_articles">You don\'t have any RSS sources enabled - Click here to configure them now</string>
     <string name="shared_constructor_championship_not_awarded">The constructors championship did not start until 1958</string>
 
     <!-- Standings -->

@@ -1,13 +1,15 @@
-package tmg.flashback.rss
+package tmg.flashback.rss.viewholder
 
 import android.view.View
 import androidx.core.graphics.toColorInt
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.view_news_news.view.*
+import kotlinx.android.synthetic.main.view_rss_item.view.*
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.repo.models.rss.Article
+import tmg.flashback.rss.RSSItem
 import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.views.show
+import java.net.URL
 
 class RSSItemViewHolder(
     val articleClicked: (link: Article, itemId: Long) -> Unit,
@@ -34,10 +36,16 @@ class RSSItemViewHolder(
         val shortDesc = item.item.description?.split("<br>")?.firstOrNull()
         itemView.description.show(!shortDesc.isNullOrEmpty())
         itemView.description.text = shortDesc?.fromHtml()
-        itemView.source.text = item.item.source.source
+        itemView.source.text = item.item.url
         itemView.date.text = item.item.date?.format(DateTimeFormatter.ofPattern("HH:mm 'at' dd MMM")) ?: ""
         itemView.title.text = item.item.title
     }
+
+    val Article.url: String
+        get() {
+            val url = URL(this.link)
+            return "${url.protocol}://${url.host}"
+        }
 
     override fun onClick(p0: View?) {
         articleClicked(item, expandableItemId)

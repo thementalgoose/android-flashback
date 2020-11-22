@@ -26,9 +26,8 @@ class RSS(
 
             val xmlRetrofit: RssXMLRetrofit = buildRetrofit(true)
 
-            val list = listOf("https://racefans.net/feed/", "https://www.pitpass.com/fes_php/fes_usr_sit_newsfeed.php", "https://crash.net/rss/f1", "https://www.autosport.com/rss/feed/f1", "https://motorsport.com/rss/f1/news/")
             val responses: MutableList<Response<List<Article>>> = mutableListOf()
-            for (x in listOf("https://racefans.net/feed/")) {
+            for (x in prefsDB.rssUrls) {
                 try {
                     val response = xmlRetrofit.getRssXML(x).convert(x, prefsDB.rssShowDescription)
                     responses.add(Response(response))

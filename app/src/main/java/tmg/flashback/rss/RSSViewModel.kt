@@ -55,7 +55,7 @@ class RSSViewModel(
             val results = response.result?.map { RSSItem.RSS(it) } ?: emptyList()
             if (results.isEmpty()) {
                 if (prefDB.rssUrls.isEmpty()) {
-                    return@map listOf<RSSItem>(RSSItem.ErrorItem(SyncDataItem.AllSourcesDisabled))
+                    return@map listOf<RSSItem>(RSSItem.SourcesDisabled)
                 }
                 else {
                     return@map listOf<RSSItem>(RSSItem.ErrorItem(SyncDataItem.InternalError))

@@ -1,6 +1,7 @@
 package tmg.flashback.repo.enums
 
 import tmg.flashback.repo.models.rss.ArticleSource
+import java.net.URL
 
 enum class SupportedArticleSource(
     val rssLink: String,
@@ -53,9 +54,10 @@ enum class SupportedArticleSource(
 
     companion object {
         fun getByLink(link: String): SupportedArticleSource? {
+            val url = URL(link)
             return values().firstOrNull {
-                println("Checking if \"${it.source}\" starts with \"$link\"")
-                it.source.startsWith(link)
+                val supportUrl = URL(it.rssLink)
+                return@firstOrNull url.host == supportUrl.host || url.host == "www.${supportUrl.host}"
             }
         }
 

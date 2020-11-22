@@ -5,12 +5,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.R
 import tmg.flashback.repo.models.rss.Article
+import tmg.flashback.rss.viewholder.RSSItemViewHolder
+import tmg.flashback.rss.viewholder.RSSSourcesDisabledViewHolder
 import tmg.flashback.shared.sync.SyncAdapter
 import tmg.flashback.shared.viewholders.MessageViewHolder
 import tmg.flashback.utils.calculateDiff
 
 class RSSAdapter(
-    val articleClicked: (item: Article, itemId: Long) -> Unit
+    private val articleClicked: (item: Article, itemId: Long) -> Unit,
+    private val openConfigure: () -> Unit
 ): SyncAdapter<RSSItem>() {
 
     init {
@@ -26,8 +29,12 @@ class RSSAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            R.layout.view_news_news -> RSSItemViewHolder(
+            R.layout.view_rss_item -> RSSItemViewHolder(
                 articleClicked,
+                LayoutInflater.from(parent.context).inflate(viewType, parent, false)
+            )
+            R.layout.view_rss_sources_disabled -> RSSSourcesDisabledViewHolder(
+                openConfigure,
                 LayoutInflater.from(parent.context).inflate(viewType, parent, false)
             )
             else -> super.onCreateViewHolder(parent, viewType)

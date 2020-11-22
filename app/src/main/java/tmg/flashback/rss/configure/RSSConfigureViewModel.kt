@@ -29,16 +29,16 @@ interface RSSConfigureViewModelOutputs {
 
 //endregion
 
-
 class RSSConfigureViewModel(
     private val prefsDB: PrefsDB,
     scopeProvider: ScopeProvider
-): BaseViewModel(scopeProvider), RSSConfigureViewModelInputs, RSSConfigureViewModelOutputs {
+) : BaseViewModel(scopeProvider), RSSConfigureViewModelInputs, RSSConfigureViewModelOutputs {
 
     var inputs: RSSConfigureViewModelInputs = this
     var outputs: RSSConfigureViewModelOutputs = this
 
-    private val added: MutableList<String> = mutableListOf()
+    private val rssUrls: MutableSet<String>
+        get() = prefsDB.rssUrls.toMutableSet()
 
     override val list: MutableLiveData<List<RSSConfigureItem>> = MutableLiveData()
     override val listSaved: MutableLiveData<Event> = MutableLiveData()
@@ -50,10 +50,13 @@ class RSSConfigureViewModel(
     //region Inputs
 
     override fun addQuickItem(supportedArticle: SupportedArticleSource) {
-
+        prefsDB.rssUrls = rssUrls + supportedArticle.rssLink
+        updateList()
     }
 
     override fun removeItem(link: String) {
+        prefsDB.rssUrls = rssUrls - link
+        updateList()
 
     }
 
@@ -71,25 +74,40 @@ class RSSConfigureViewModel(
      * Load the state of the rss urls from shared preferences
      */
     private fun loadState() {
-        this.added.clear()
+        this.rssUrls.clear()
         val urls = prefsDB.rssUrls
-        this.added.addAll(urls)
-        processList()
+        this.rssUrls.addAll(urls)
+        updateList()
     }
 
     /**
      * Process the "Added" URL list into a sectioned list to be displayed on the screen
      */
-    private fun processList() {
+    private fun updateList() {
         val itemList = mutableListOf<RSSConfigureItem>()
-        itemList.add(RSSConfigureItem.Header(R.string.rss_configure_header_items))
-        itemList.addAll(added.map {
-            RSSConfigureItem.Item(it, SupportedArticleSource.getByRssFeedURL(it))
-        })
-        itemList.add(RSSConfigureItem.Header(R.string.rss_configure_header_quick_add))
+        itemList.add(RSSConfigureItem.Header(
+            text = R.string.rss_configure_header_items,
+            subtitle = R.string.rss_configure_header_items_subtitle
+        ))
+        if (rssUrls.isNotEmpty()) {
+            itemList.addAll(rssUrls
+                .sortedBy { it }
+                .map {
+                    RSSConfigureItem.Item(it, SupportedArticleSource.getByRssFeedURL(it))
+                }
+            )
+        }
+        else {
+            itemList.add(RSSConfigureItem.NoItems)
+        }
+        itemList.add(RSSConfigureItem.Header(
+            text = R.string.rss_configure_header_quick_add,
+            subtitle = R.string.rss_configure_header_quick_add_subtitle
+        ))
         itemList.addAll(SupportedArticleSource
             .values()
-            .filter { !added.contains(it.rssLink) }
+            .filter { !rssUrls.contains(it.rssLink) }
+            .sortedBy { it }
             .map {
                 RSSConfigureItem.QuickAdd(it)
             }

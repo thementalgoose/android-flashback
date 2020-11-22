@@ -2,7 +2,10 @@ package tmg.flashback.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.get
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.reddit.indicatorfastscroll.FastScrollItemIndicator
@@ -22,6 +25,7 @@ import tmg.flashback.home.list.HomeAdapter
 import tmg.flashback.home.season.*
 import tmg.flashback.minimumSupportedYear
 import tmg.flashback.race.RaceActivity
+import tmg.flashback.rss.RSSActivity
 import tmg.flashback.settings.SettingsActivity
 import tmg.flashback.settings.release.ReleaseBottomSheetFragment
 import tmg.utilities.bottomsheet.BottomSheetFader
@@ -73,8 +77,15 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback {
         dataList.adapter = adapter
         dataList.layoutManager = LinearLayoutManager(this)
 
+        if (!toggleDB.isRSSEnabled) {
+            menu.menu.removeItem(R.id.nav_rss)
+        }
         menu.setOnNavigationItemSelectedListener {
             return@setOnNavigationItemSelectedListener when (it.itemId) {
+                R.id.nav_rss -> {
+                    startActivity(Intent(this, RSSActivity::class.java))
+                    false
+                }
                 R.id.nav_calendar -> {
                     viewModel.inputs.clickItem(HomeMenuItem.CALENDAR)
                     true
