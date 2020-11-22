@@ -257,7 +257,7 @@
     <string name="shared_unavailable_missing_race">Unfortunately we don\'t have any information for this yet, please check back you have an internet connection and try again</string>
     <string name="shared_network_error">A network error occurred! Please check you are connected to the internet and try again</string>
     <string name="shared_network_internal_error">A network error occurred and we weren\'t able to find any articles. Please check your internet connection or try again later</string>
-    <string name="shared_network_no_articles">You don\'t have any RSS sources enabled - Click here to configure them now</string>
+    <string name="shared_network_no_articles">Welcome to the RSS feed!\nYou don\'t have any RSS sources enabled - Click here to configure them now</string>
     <string name="shared_constructor_championship_not_awarded">The constructors championship did not start until 1958</string>
 
     <!-- Standings -->
