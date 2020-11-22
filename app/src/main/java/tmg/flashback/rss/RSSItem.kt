@@ -10,7 +10,7 @@ sealed class RSSItem(
 ) {
     data class RSS(
         val item: Article
-    ): RSSItem(R.layout.view_news_news)
+    ): RSSItem(R.layout.view_rss_item)
 
     data class Message(
         val msg: String
@@ -19,6 +19,8 @@ sealed class RSSItem(
     data class ErrorItem(
         val item: SyncDataItem
     ): RSSItem(item.layoutId)
+
+    object SourcesDisabled: RSSItem(R.layout.view_rss_sources_disabled)
 }
 
 fun MutableList<RSSItem>.addError(syncDataItem: SyncDataItem) {

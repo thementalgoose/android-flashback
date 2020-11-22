@@ -12,6 +12,7 @@ import me.saket.inboxrecyclerview.page.PageStateChangeCallbacks
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.R
 import tmg.flashback.base.BaseActivity
+import tmg.flashback.rss.configure.RSSConfigureActivity
 import tmg.flashback.rss.settings.RSSSettingsActivity
 import tmg.flashback.utils.FragmentRequestBack
 import tmg.flashback.web.WebFragment
@@ -36,6 +37,9 @@ class RSSActivity: BaseActivity(), PageStateChangeCallbacks, FragmentRequestBack
         expandablePageLayout.pullToCollapseEnabled = false
 
         adapter = RSSAdapter(
+            openConfigure = {
+                startActivity(Intent(this, RSSConfigureActivity::class.java))
+            },
             articleClicked = { article, id ->
                 if (prefsDB.newsOpenInExternalBrowser) {
                     val intent = Intent(Intent.ACTION_VIEW, Uri.parse(article.link))

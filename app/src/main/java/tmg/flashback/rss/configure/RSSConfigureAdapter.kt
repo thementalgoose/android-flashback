@@ -8,6 +8,7 @@ import tmg.flashback.R
 import tmg.flashback.repo.enums.SupportedArticleSource
 import tmg.flashback.rss.configure.viewholders.HeaderViewHolder
 import tmg.flashback.rss.configure.viewholders.ItemViewHolder
+import tmg.flashback.rss.configure.viewholders.NoItemsViewHolder
 import tmg.flashback.rss.configure.viewholders.QuickAddViewHolder
 import java.lang.RuntimeException
 
@@ -29,6 +30,7 @@ class RSSConfigureAdapter(
             R.layout.view_rss_configure_header -> HeaderViewHolder(view)
             R.layout.view_rss_configure_item -> ItemViewHolder(removeItem, view)
             R.layout.view_rss_configure_quickadd -> QuickAddViewHolder(quickAddItem, view)
+            R.layout.view_rss_configure_no_items -> NoItemsViewHolder(view)
             else -> throw RuntimeException("ViewType not supported by configuration adapter")
         }
     }

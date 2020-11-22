@@ -72,18 +72,18 @@ class RSSSettingsViewModel(
     private fun populateList(): List<AppPreferencesItem> {
 
         val list: MutableList<AppPreferencesItem> = mutableListOf()
+        list.add(AppPreferencesItem.Category(R.string.settings_rss_configure))
+        list.add(AppPreferencesItem.Preference(
+            prefKey = keyConfigureSources,
+            title = R.string.settings_rss_configure_sources_title,
+            description = R.string.settings_rss_configure_sources_description
+        ))
         list.add(AppPreferencesItem.Category(R.string.settings_rss_appearance_title))
         list.add(AppPreferencesItem.SwitchPreference(
             keyShowDescription,
             R.string.settings_rss_show_description_title,
             R.string.settings_rss_show_description_description,
             prefDB.rssShowDescription
-        ))
-        list.add(AppPreferencesItem.Category(R.string.settings_rss_configure))
-        list.add(AppPreferencesItem.Preference(
-            prefKey = keyConfigureSources,
-            title = R.string.settings_rss_configure_sources_title,
-            description = R.string.settings_rss_configure_sources_description
         ))
         list.add(AppPreferencesItem.Category(R.string.settings_rss_browser))
         list.add(AppPreferencesItem.SwitchPreference(

@@ -10,8 +10,12 @@ sealed class RSSConfigureItem(
 ) {
     data class Header(
         @StringRes
-        val text: Int
+        val text: Int,
+        @StringRes
+        val subtitle: Int? = null
     ): RSSConfigureItem(R.layout.view_rss_configure_header)
+
+    object NoItems: RSSConfigureItem(R.layout.view_rss_configure_no_items)
 
     data class Item(
         val url: String,

@@ -14,8 +14,6 @@ sealed class SyncDataItem(
 
     object InternalError: SyncDataItem(R.layout.view_shared_internal_error)
 
-    object AllSourcesDisabled: SyncDataItem(R.layout.view_shared_no_news_sources)
-
     data class Message(
             val msg: String
     ): SyncDataItem(R.layout.view_shared_message)

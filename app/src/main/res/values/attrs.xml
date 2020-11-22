@@ -36,4 +36,7 @@
     <attr name="f1DeltaNegative" format="color" />
     <attr name="f1DeltaNeutral" format="color" />
     <attr name="f1DeltaWaiting" format="color" />
+
+    <attr name="f1Remove" format="color" />
+    <attr name="f1Add" format="color" />
 </resources>
