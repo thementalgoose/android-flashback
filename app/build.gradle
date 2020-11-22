@@ -60,16 +60,16 @@ android {
             versionNameSuffix '-sand'
 
             resValue "string", "application_id", "tmg.flashback.sand"
+            resValue "bool", "toggle_rss", "true"
             buildConfigField "int", "ENVIRONMENT", '1'
-            buildConfigField "boolean", "RSS", "true"
         }
 
         live {
             dimension 'version'
 
             resValue "string", "application_id", "tmg.flashback"
+            resValue "bool", "toggle_rss", "true"
             buildConfigField "int", "ENVIRONMENT", '0'
-            buildConfigField "boolean", "RSS", "false"
         }
     }
 

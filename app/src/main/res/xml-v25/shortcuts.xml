@@ -2,7 +2,7 @@
 <shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
     <shortcut
         android:shortcutId="news"
-        android:enabled="true"
+        android:enabled="@bool/toggle_rss"
         android:icon="@drawable/nav_rss"
         android:shortcutShortLabel="@string/app_shortcut_rss_shorttitle"
         android:shortcutLongLabel="@string/app_shortcut_rss_longtitle"
