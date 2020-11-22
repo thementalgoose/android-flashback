@@ -95,17 +95,15 @@ workflows:
     jobs:
       - job-test:
           filters:
-#            tags:
-#              only: /^[0-9]+\.[0-9]+\.[0-9]+/
+            tags:
+              only: /^[0-9]+\.[0-9]+\.[0-9]+/
             branches:
-#              ignore: /.*/
-              only: master
+              ignore: /.*/
       - job-build-deploy:
           requires:
             - job-test
           filters:
-#            tags:
-#              only: /^[0-9]+\.[0-9]+\.[0-9]+/
+            tags:
+              only: /^[0-9]+\.[0-9]+\.[0-9]+/
             branches:
-#              ignore: /.*/
-              only: master
+              ignore: /.*/
