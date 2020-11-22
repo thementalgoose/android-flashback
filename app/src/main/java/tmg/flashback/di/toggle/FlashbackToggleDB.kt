@@ -3,7 +3,7 @@ package tmg.flashback.di.toggle
 import tmg.flashback.BuildConfig
 
 class FlashbackToggleDB: ToggleDB {
-    override val isNewsEnabled: Boolean
-        get() = BuildConfig.NEWS
+    override val isRSSEnabled: Boolean
+        get() = BuildConfig.RSS
 
 }

@@ -72,8 +72,8 @@ class SettingsViewModel(
 
     init {
         settings.value = mutableListOf<AppPreferencesItem>().apply {
-            if (toggleDB.isNewsEnabled) {
-                add(AppPreferencesItem.Category(R.string.settings_customisation_news))
+            if (toggleDB.isRSSEnabled) {
+                add(AppPreferencesItem.Category(R.string.settings_customisation_rss))
                 add(SettingsOptions.NEWS.toPref())
             }
             add(AppPreferencesItem.Category(R.string.settings_theme))

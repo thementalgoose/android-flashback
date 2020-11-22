@@ -21,7 +21,6 @@ import tmg.flashback.extensions.dimensionPx
 import tmg.flashback.home.list.HomeAdapter
 import tmg.flashback.home.season.*
 import tmg.flashback.minimumSupportedYear
-import tmg.flashback.news.NewsActivity
 import tmg.flashback.race.RaceActivity
 import tmg.flashback.settings.SettingsActivity
 import tmg.flashback.settings.release.ReleaseBottomSheetFragment

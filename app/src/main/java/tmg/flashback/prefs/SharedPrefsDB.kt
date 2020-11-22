@@ -5,7 +5,6 @@ import tmg.flashback.BuildConfig
 import tmg.flashback.releaseNotes
 import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.enums.BarAnimation
-import tmg.flashback.repo.enums.NewsSource
 import tmg.flashback.repo.enums.ThemePref
 import tmg.flashback.repo.enums.Tooltips
 import tmg.utilities.extensions.toEnum
@@ -32,7 +31,7 @@ class SharedPrefsDB(context: Context) : SharedPrefManager(context), PrefsDB {
     private val keyDeviceUDID: String = "UDID"
     private val keyTheme: String = "THEME"
     private val keyFavouriteSeasons: String = "FAVOURITE_SEASONS"
-    private val keyNewsSourceExcludeList: String = "NEWS_SOURCE_EXCLUDE_LIST"
+    private val keyRSSList: String = "RSS_LIST"
     private val keyNewsOpenInExternalBrowser: String = "NEWS_OPEN_IN_EXTERNAL_BROWSER"
     private val keyInAppEnableJavascript: String = "IN_APP_ENABLE_JAVASCRIPT"
     private val keyNewsShowDescription: String = "NEWS_SHOW_DESCRIPTIONS"
@@ -110,20 +109,15 @@ class SharedPrefsDB(context: Context) : SharedPrefManager(context), PrefsDB {
                 .toSet()
         }
 
-    override var newsSourceExcludeList: Set<NewsSource>
-        set(value) = save(keyNewsSourceExcludeList, value.map { it.key }.toSet())
-        get() {
-            val value = getSet(keyNewsSourceExcludeList, setOf())
-            return value
-                .mapNotNull { key -> NewsSource.values().firstOrNull { it.key == key } }
-                .toSet()
-        }
+    override var rssUrls: Set<String>
+        set(value) = save(keyRSSList, value.toSet())
+        get() = getSet(keyRSSList, setOf())
 
     override var inAppEnableJavascript: Boolean
         get() = getBoolean(keyInAppEnableJavascript, false)
         set(value) = save(keyInAppEnableJavascript, value)
 
-    override var newsShowDescription: Boolean
+    override var rssShowDescription: Boolean
         get() = getBoolean(keyNewsShowDescription, true)
         set(value) = save(keyNewsShowDescription, value)
 

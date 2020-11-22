@@ -9,7 +9,7 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import tmg.flashback.di.firebaseModule
 import tmg.flashback.di.flashbackModule
-import tmg.flashback.di.newsModule
+import tmg.flashback.di.rssModule
 import tmg.flashback.repo.db.CrashManager
 import tmg.flashback.repo.db.PrefsDB
 
@@ -49,7 +49,7 @@ class FlashbackApplication: Application() {
         // Start Koin
         startKoin {
             androidContext(this@FlashbackApplication)
-            modules(flashbackModule, newsModule, firebaseModule)
+            modules(flashbackModule, rssModule, firebaseModule)
         }
 
         // ThreeTen
