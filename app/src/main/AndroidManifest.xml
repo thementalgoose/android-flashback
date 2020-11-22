@@ -26,64 +26,69 @@
 
         <activity
             android:name=".home.HomeActivity"
-            android:screenOrientation="portrait"
-            android:label="" />
+            android:label=""
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".race.RaceActivity"
-            android:screenOrientation="portrait"
-            android:label="" />
+            android:label=""
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".circuit.CircuitInfoActivity"
-            android:screenOrientation="portrait"
-            android:label="" />
+            android:label=""
+            android:screenOrientation="portrait" />
 
         <activity
+            android:name=".rss.RSSActivity"
             android:exported="false"
-            android:name=".news.NewsActivity"
-            android:screenOrientation="portrait"
-            android:label="" />
+            android:label=""
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".settings.release.ReleaseActivity"
-            android:screenOrientation="portrait"
-            android:label="" />
+            android:label=""
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".settings.SettingsActivity"
-            android:screenOrientation="portrait"
-            android:label="" />
+            android:label=""
+            android:screenOrientation="portrait" />
 
         <activity
-            android:name=".settings.news.SettingsNewsActivity"
-            android:screenOrientation="portrait"
-            android:label="" />
+            android:name=".rss.settings.RSSSettingsActivity"
+            android:label=""
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".overviews.driver.DriverActivity"
-            android:screenOrientation="portrait"
-            android:label="" />
+            android:label=""
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".overviews.driver.season.DriverSeasonActivity"
-            android:screenOrientation="portrait"
-            android:label="" />
+            android:label=""
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".overviews.constructor.ConstructorActivity"
-            android:screenOrientation="portrait"
-            android:label="" />
+            android:label=""
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".admin.lockout.LockoutActivity"
-            android:screenOrientation="portrait"
-            android:label="" />
+            android:label=""
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".rss.configure.RSSConfigureActivity"
+            android:label=""
+            android:screenOrientation="portrait" />
 
         <activity
             android:name="tmg.components.about.AboutThisAppActivity"
-            android:screenOrientation="portrait"
-            android:label="" />
+            android:label=""
+            android:screenOrientation="portrait" />
 
     </application>
 

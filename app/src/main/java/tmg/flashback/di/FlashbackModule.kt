@@ -15,22 +15,18 @@ import tmg.flashback.overviews.driver.season.DriverSeasonViewModel
 import tmg.flashback.firebase.FirebaseCrashManager
 import tmg.flashback.home.HomeViewModel
 import tmg.flashback.home.season.SeasonViewModel
-import tmg.flashback.news.NewsViewModel
 import tmg.flashback.race.RaceViewModel
 import tmg.flashback.repo.db.CrashManager
 import tmg.flashback.settings.ConnectivityManager
 import tmg.flashback.settings.NetworkConnectivityManager
 import tmg.flashback.settings.SettingsViewModel
-import tmg.flashback.settings.news.SettingsNewsViewModel
+import tmg.flashback.rss.settings.RSSSettingsViewModel
 
 var flashbackModule = module {
 
     // Home
     viewModel { HomeViewModel(get(), get(), get(), get(), get(), get(), get()) }
     viewModel { SeasonViewModel(get(), get()) }
-
-    // News
-    viewModel { NewsViewModel(get(), get(), get(), get()) }
 
     // Circuit
     viewModel { CircuitInfoViewModel(get(), get(), get()) }
@@ -47,7 +43,7 @@ var flashbackModule = module {
 
     // Settings
     viewModel { SettingsViewModel(get(), get(), get()) }
-    viewModel { SettingsNewsViewModel(get(), get()) }
+    viewModel { RSSSettingsViewModel(get(), get()) }
     viewModel { LockoutViewModel(get(), get(), get()) }
 
     single<ConnectivityManager> { NetworkConnectivityManager(get()) }

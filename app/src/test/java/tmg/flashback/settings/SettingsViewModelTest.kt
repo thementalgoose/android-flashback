@@ -44,7 +44,7 @@ class SettingsViewModelTest: BaseTest() {
         whenever(mockPrefs.theme).thenReturn(AUTO)
         whenever(mockPrefs.barAnimation).thenReturn(MEDIUM)
 
-        whenever(mockToggle.isNewsEnabled).thenReturn(true)
+        whenever(mockToggle.isRSSEnabled).thenReturn(true)
     }
 
     private fun initSUT() {
@@ -56,7 +56,7 @@ class SettingsViewModelTest: BaseTest() {
      * Expected news list that should be displayed in the SettingsViewModel
      */
     private val expectedNewsList: List<AppPreferencesItem> = listOf(
-        AppPreferencesItem.Category(R.string.settings_customisation_news),
+        AppPreferencesItem.Category(R.string.settings_customisation_rss),
         NEWS.toPref(),
         AppPreferencesItem.Category(R.string.settings_theme),
         THEME.toPref(),
@@ -89,14 +89,14 @@ class SettingsViewModelTest: BaseTest() {
     @Test
     fun `SettingsViewModel setup populates settings list with toggle disabled hides the news`() {
 
-        whenever(mockToggle.isNewsEnabled).thenReturn(false)
+        whenever(mockToggle.isRSSEnabled).thenReturn(false)
 
         initSUT()
 
         // Filter out the news items we are expecting (should mean test still passes if order changes)
         val expected = expectedNewsList.filter {
             when (it) {
-                is AppPreferencesItem.Category -> it.title != R.string.settings_customisation_news
+                is AppPreferencesItem.Category -> it.title != R.string.settings_customisation_rss
                 is AppPreferencesItem.Preference -> it.prefKey != "news"
                 else -> true
             }

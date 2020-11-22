@@ -61,7 +61,7 @@ android {
 
             resValue "string", "application_id", "tmg.flashback.sand"
             buildConfigField "int", "ENVIRONMENT", '1'
-            buildConfigField "boolean", "NEWS", "true"
+            buildConfigField "boolean", "RSS", "true"
         }
 
         live {
@@ -69,7 +69,7 @@ android {
 
             resValue "string", "application_id", "tmg.flashback"
             buildConfigField "int", "ENVIRONMENT", '0'
-            buildConfigField "boolean", "NEWS", "false"
+            buildConfigField "boolean", "RSS", "false"
         }
     }
 
@@ -137,7 +137,7 @@ dependencies {
     implementation project(path: ':repo')
     testImplementation project(path: ':repo')
     implementation project(path: ':firebase')
-    implementation project(path: ':news')
+    implementation project(path: ':rss')
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     testImplementation "org.junit.jupiter:junit-jupiter-api:$junit"
