@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <attr name="rssBrandPrimary" format="color" />
+
+    <attr name="rssAdd" format="color" />
+    <attr name="rssRemove" format="color" />
+
+    <attr name="rssBackground" format="color" />
+    <attr name="rssBackgroundSecondary" format="color" />
+    <attr name="rssBackgroundNewsBar" format="color" />
+
+    <attr name="rssTextPrimary" format="color" />
+    <attr name="rssTextSecondary" format="color" />
+    <attr name="rssTextTertiary" format="color" />
+</resources>

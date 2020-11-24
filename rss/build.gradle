@@ -143,6 +143,7 @@ dependencies {
     // TMG dependencies
     implementation "com.github.thementalgoose:android-components:$tmg_components"
     implementation "com.github.thementalgoose:android-utilities:$tmg_utils"
+    implementation "com.github.thementalgoose:android-labelled-progress-bar:$tmg_labelled_progressbar"
 
     // Inbox
     implementation 'me.saket:inboxrecyclerview:2.0.0-beta3'

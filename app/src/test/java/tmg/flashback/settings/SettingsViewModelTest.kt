@@ -10,7 +10,6 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.components.prefs.AppPreferencesItem
 import tmg.flashback.R
-import tmg.flashback.di.toggle.ToggleDB
 import tmg.flashback.extensions.icon
 import tmg.flashback.extensions.label
 import tmg.flashback.repo.db.PrefsDB

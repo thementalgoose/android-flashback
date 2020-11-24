@@ -5,7 +5,7 @@
         android:icon="@drawable/nav_rss">
         <intent
             android:action="android.intent.action.VIEW"
-            android:targetClass="tmg.flashback.rss.RSSActivity"
+            android:targetClass="tmg.flashback.rss.ui.RSSActivity"
             android:targetPackage="tmg.flashback" />
     </shortcut>
 </shortcuts>

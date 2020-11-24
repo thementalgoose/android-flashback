@@ -12,13 +12,13 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import tmg.flashback.R
 import tmg.flashback.base.BaseViewModel
-import tmg.flashback.di.async.ScopeProvider
 import tmg.flashback.overviews.driver.summary.PipeType
 import tmg.flashback.maxPointsBySeason
+import tmg.flashback.repo.NetworkConnectivityManager
+import tmg.flashback.repo.ScopeProvider
 import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.db.stats.DriverDB
 import tmg.flashback.repo.models.stats.DriverOverviewStanding
-import tmg.flashback.settings.ConnectivityManager
 import tmg.flashback.shared.sync.SyncDataItem
 import tmg.flashback.shared.viewholders.DataUnavailable
 import tmg.flashback.utils.position
@@ -46,7 +46,7 @@ interface DriverSeasonViewModelOutputs {
 @Suppress("EXPERIMENTAL_API_USAGE")
 class DriverSeasonViewModel(
     private val driverDB: DriverDB,
-    private val connectivityManager: ConnectivityManager,
+    private val connectivityManager: NetworkConnectivityManager,
     private val prefsDB: PrefsDB,
     scopeProvider: ScopeProvider
 ) : BaseViewModel(scopeProvider),

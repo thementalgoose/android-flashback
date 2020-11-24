@@ -10,6 +10,6 @@
         <intent
             android:action="android.intent.action.VIEW"
             android:targetPackage="tmg.flashback"
-            android:targetClass="tmg.flashback.rss.RSSActivity" />
+            android:targetClass="tmg.flashback.rss.ui.RSSActivity" />
     </shortcut>
 </shortcuts>
