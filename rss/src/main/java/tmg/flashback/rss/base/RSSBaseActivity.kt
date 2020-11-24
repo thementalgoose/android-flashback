@@ -21,27 +21,9 @@ abstract class RSSBaseActivity: CommonActivity() {
 
     private var isLightTheme: Boolean = true
 
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(getThemeStyle())
-        super.onCreate(savedInstanceState, persistentState)
-
-        window.statusBarColor = Color.TRANSPARENT
-
-        window.apply {
-            navigationBarColor = Color.TRANSPARENT
-            if (isLightTheme) {
-                decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-            } else {
-                decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-            }
-        }
-
-        findViewById<View>(R.id.container)?.let {
-            ViewCompat.setOnApplyWindowInsetsListener(it) { view, insets ->
-                setInsets(insets = insets)
-                insets
-            }
-        }
+        super.onCreate(savedInstanceState)
     }
 
     @StyleRes

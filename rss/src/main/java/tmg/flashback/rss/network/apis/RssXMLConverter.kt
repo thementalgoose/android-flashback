@@ -54,7 +54,7 @@ fun RssXMLModel.convert(fromSource: String, showDescription: Boolean): List<Arti
                     false -> null
                     true -> it.description
                 },
-                link = it.link!!,
+                link = it.link!!.replace("http://", "https://"),
                 date = LocalDateTime.parse(it.pubDate!!, DateTimeFormatter.ofPattern(dateFormat)),
                 source = source
             )

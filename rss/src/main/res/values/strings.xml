@@ -10,7 +10,7 @@
 
 
     <string name="rss_internal_error">A network error occurred and we weren\'t able to find any articles. Please check your internet connection or try again later</string>
-    <string name="rss_network_error">A network error occurred! Please check you are connected to the internet and try again</string>
+    <string name="rss_network_error">A network error occurred! Please check you have added a valid set of RSS sources and you are connected to the internet and try again. </string>
     <string name="rss_no_articles">Welcome to the RSS feed!\nYou don\'t have any RSS sources enabled - Click here to configure them now</string>
 
     <!-- Settings -->
