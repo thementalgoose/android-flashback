@@ -33,7 +33,8 @@ class RSSConfigureActivity : BaseActivity() {
 
         adapter = RSSConfigureAdapter(
             quickAddItem = viewModel.inputs::addQuickItem,
-            removeItem = viewModel.inputs::removeItem
+            removeItem = viewModel.inputs::removeItem,
+            customAddItem = viewModel.inputs::addCustomItem
         )
 
         configuration.adapter = adapter

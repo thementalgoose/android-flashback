@@ -157,6 +157,14 @@
         <item name="android:textColor">?attr/f1TextPrimary</item>
     </style>
 
+    <style name="Input.Text" parent="Text">
+        <item name="android:paddingStart">@dimen/paddingMedium</item>
+        <item name="android:paddingEnd">@dimen/paddingMedium</item>
+        <item name="android:paddingTop">@dimen/paddingSmall</item>
+        <item name="android:paddingBottom">@dimen/paddingSmall</item>
+        <item name="android:background">@drawable/background_input</item>
+    </style>
+
     <!-- =========================================== -->
 
     <!-- =========================================== -->
@@ -730,10 +738,6 @@
         <item name="android:textSize">@dimen/textSizeMedium</item>
         <item name="android:textColor">?attr/f1TextPrimary</item>
         <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="Text.RSS.Configure.QuickAdd.RssFeed" parent="Text">
-
     </style>
 
     <style name="Text.RSS.Configure.Item.SourceThumb" parent="Text">

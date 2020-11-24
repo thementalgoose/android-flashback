@@ -9,7 +9,7 @@ import tmg.flashback.rss.BuildConfig
 
 inline fun <reified T> buildRetrofit(isXML: Boolean = true): T {
     var builder = Retrofit.Builder()
-        .baseUrl("https://jordanfisher.io")
+        .baseUrl("https://testing")
 
     builder = if (isXML) {
         builder.addConverterFactory(SimpleXmlConverterFactory.create())
