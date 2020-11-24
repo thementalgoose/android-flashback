@@ -1,19 +1,17 @@
-package tmg.flashback.rss
+package tmg.flashback.rss.network
 
-import android.util.Log
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.db.news.RSSDB
 import tmg.flashback.repo.models.Response
 import tmg.flashback.repo.models.rss.Article
-import tmg.flashback.rss.apis.convert
-import tmg.flashback.rss.shared.RssXMLRetrofit
-import tmg.flashback.rss.shared.buildRetrofit
+import tmg.flashback.rss.network.apis.convert
+import tmg.flashback.rss.network.shared.RssXMLRetrofit
+import tmg.flashback.rss.network.shared.buildRetrofit
 import java.lang.NullPointerException
 import java.lang.RuntimeException
 import java.net.UnknownHostException
