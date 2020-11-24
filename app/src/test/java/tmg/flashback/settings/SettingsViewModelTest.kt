@@ -12,6 +12,7 @@ import tmg.components.prefs.AppPreferencesItem
 import tmg.flashback.R
 import tmg.flashback.extensions.icon
 import tmg.flashback.extensions.label
+import tmg.flashback.repo.ToggleDB
 import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.enums.BarAnimation.*
 import tmg.flashback.repo.enums.ThemePref.*

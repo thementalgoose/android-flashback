@@ -1,7 +1,7 @@
-package tmg.flashback.testutils
+package tmg.flashback.rss.testutils
 
 import kotlinx.coroutines.CoroutineScope
-import tmg.flashback.di.async.ScopeProvider
+import tmg.flashback.repo.ScopeProvider
 
 class TestScopeProvider(
         private val scope: CoroutineScope

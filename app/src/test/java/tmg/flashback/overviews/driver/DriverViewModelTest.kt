@@ -16,8 +16,8 @@ import tmg.flashback.currentYear
 import tmg.flashback.overviews.*
 import tmg.flashback.overviews.driver.summary.DriverSummaryItem
 import tmg.flashback.overviews.driver.summary.PipeType.*
+import tmg.flashback.repo.NetworkConnectivityManager
 import tmg.flashback.repo.db.stats.DriverDB
-import tmg.flashback.settings.ConnectivityManager
 import tmg.flashback.shared.sync.SyncDataItem
 import tmg.flashback.shared.viewholders.DataUnavailable
 import tmg.flashback.testutils.*
@@ -30,7 +30,7 @@ class DriverViewModelTest: BaseTest() {
     lateinit var sut: DriverViewModel
 
     private var mockDriverDB: DriverDB = mock()
-    private var mockConnectivityManager: ConnectivityManager = mock()
+    private var mockConnectivityManager: NetworkConnectivityManager = mock()
 
     @BeforeEach
     internal fun setUp() {
