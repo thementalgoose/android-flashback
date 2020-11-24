@@ -152,15 +152,6 @@ dependencies {
     testImplementation 'org.mockito:mockito-core:3.0.0'
     kaptTest "androidx.lifecycle:lifecycle-compiler:2.2.0"
 
-    // Swipe refresh
-    implementation "androidx.swiperefreshlayout:swiperefreshlayout:$swipe_refresh"
-
-    // ThreeTen
-    implementation "com.jakewharton.threetenabp:threetenabp:$threeten"
-    testImplementation ("org.threeten:threetenbp:$threetenbp") {
-        exclude group:'com.jakewharton.threetenabp', module:'threetenabp'
-    }
-
     // Coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines"
@@ -175,11 +166,23 @@ dependencies {
     // ConstraintLayout
     implementation "androidx.constraintlayout:constraintlayout:$android_constraint"
 
+    // Swipe refresh
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:$swipe_refresh"
+
     // Koin
     implementation "org.koin:koin-android:$koin_version"
     implementation "org.koin:koin-android-scope:$koin_version"
     implementation "org.koin:koin-android-viewmodel:$koin_version"
     implementation "org.koin:koin-android-ext:$koin_version"
+
+
+
+
+    // ThreeTen
+    implementation "com.jakewharton.threetenabp:threetenabp:$threeten"
+    testImplementation ("org.threeten:threetenbp:$threetenbp") {
+        exclude group:'com.jakewharton.threetenabp', module:'threetenabp'
+    }
 
     // Progress bar
     implementation 'com.aswin:CustomArc:1.0.2'
@@ -207,9 +210,6 @@ dependencies {
 
     // Indicator scroller
     implementation 'com.reddit:indicator-fast-scroll:1.3.0'
-
-    // Inbox
-    implementation 'me.saket:inboxrecyclerview:2.0.0-beta3'
 
     // Lottie
     implementation "com.airbnb.android:lottie:$lottie"
