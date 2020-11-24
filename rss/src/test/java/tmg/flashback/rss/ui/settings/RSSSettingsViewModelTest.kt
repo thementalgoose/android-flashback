@@ -9,8 +9,8 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.components.prefs.AppPreferencesItem
-import tmg.flashback.R
-import tmg.flashback.repo.db.PrefsDB
+import tmg.flashback.rss.R
+import tmg.flashback.rss.prefs.RSSPrefsDB
 import tmg.flashback.testutils.BaseTest
 import tmg.flashback.testutils.assertEventFired
 import tmg.flashback.testutils.test
@@ -19,7 +19,7 @@ class RSSSettingsViewModelTest: BaseTest() {
 
     lateinit var sut: RSSSettingsViewModel
 
-    private val mockPrefs: PrefsDB = mock()
+    private val mockPrefs: RSSPrefsDB = mock()
 
     private val keyConfigureSources: String = "keyConfigureSources"
     private val keyShowDescription: String = "keyShowDescription"

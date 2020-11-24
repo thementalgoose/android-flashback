@@ -30,7 +30,7 @@
 
                 <TextView
                     android:id="@+id/header"
-                    style="@style/Text.Toolbar"
+                    style="@style/RSS.Toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fitsSystemWindows="true"
@@ -43,17 +43,17 @@
 
                 <ImageButton
                     android:id="@+id/back"
-                    android:foreground="@drawable/ripple_rounded"
-                    android:layout_width="@dimen/toolbarSettingsIcon"
-                    android:layout_height="@dimen/toolbarSettingsIcon"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:layout_width="@dimen/toolbarIconSize"
+                    android:layout_height="@dimen/toolbarIconSize"
                     android:layout_marginStart="@dimen/paddingSmall"
                     android:layout_marginTop="@dimen/paddingSmall"
                     android:layout_marginEnd="@dimen/paddingMedium"
                     android:layout_marginBottom="@dimen/paddingSmall"
                     android:background="@null"
-                    android:contentDescription="@string/settings_title"
+                    android:contentDescription="@string/ab_settings"
                     android:scaleType="center"
-                    android:src="@drawable/ic_back"
+                    android:src="@drawable/ic_rss_back"
                     android:tint="?attr/rssTextPrimary"
                     app:layout_constraintBottom_toBottomOf="@id/header"
                     app:layout_constraintStart_toStartOf="parent"

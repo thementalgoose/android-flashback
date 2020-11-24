@@ -1,4 +1,4 @@
-package tmg.flashback.rss
+package tmg.flashback.rss.ui
 
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.reset
@@ -12,16 +12,16 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
+import tmg.flashback.repo.NetworkConnectivityManager
 import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.db.news.RSSDB
 import tmg.flashback.repo.enums.SupportedArticleSource
 import tmg.flashback.repo.models.Response
 import tmg.flashback.repo.models.rss.Article
 import tmg.flashback.repo.models.rss.ArticleSource
+import tmg.flashback.rss.prefs.RSSPrefsDB
 import tmg.flashback.rss.ui.RSSItem
 import tmg.flashback.rss.ui.RSSViewModel
-import tmg.flashback.settings.ConnectivityManager
-import tmg.flashback.shared.sync.SyncDataItem
 import tmg.flashback.testutils.*
 
 @FlowPreview
@@ -31,8 +31,8 @@ class RSSViewModelTest: BaseTest() {
     private lateinit var sut: RSSViewModel
 
     private val mockRSSDB: RSSDB = mock()
-    private val mockPrefsDB: PrefsDB = mock()
-    private val mockConnectivityManager: ConnectivityManager = mock()
+    private val mockPrefsDB: RSSPrefsDB = mock()
+    private val mockConnectivityManager: NetworkConnectivityManager = mock()
 
     private val mockLocalDate: LocalDateTime = LocalDateTime.now()
     private val mockArticleSource = ArticleSource(
@@ -130,7 +130,7 @@ class RSSViewModelTest: BaseTest() {
         whenever(mockRSSDB.getNews()).thenReturn(mockResponse500)
 
         val expected = listOf<RSSItem>(
-            RSSItem.ErrorItem(SyncDataItem.InternalError)
+            RSSItem.InternalError
         )
 
         initSUT()
@@ -145,7 +145,7 @@ class RSSViewModelTest: BaseTest() {
         whenever(mockRSSDB.getNews()).thenReturn(mockResponseNoNetwork)
 
         val expected = listOf<RSSItem>(
-            RSSItem.ErrorItem(SyncDataItem.NoNetwork)
+            RSSItem.NoNetwork
         )
 
         initSUT()
@@ -160,7 +160,7 @@ class RSSViewModelTest: BaseTest() {
         whenever(mockConnectivityManager.isConnected).thenReturn(false)
 
         val expected = listOf<RSSItem>(
-            RSSItem.ErrorItem(SyncDataItem.NoNetwork)
+            RSSItem.NoNetwork
         )
 
         initSUT()

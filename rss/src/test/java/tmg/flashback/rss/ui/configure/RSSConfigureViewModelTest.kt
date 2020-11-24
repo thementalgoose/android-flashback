@@ -8,9 +8,10 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
-import tmg.flashback.R
 import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.enums.SupportedArticleSource
+import tmg.flashback.rss.R
+import tmg.flashback.rss.prefs.RSSPrefsDB
 import tmg.flashback.testutils.BaseTest
 import tmg.flashback.testutils.assertValue
 import java.util.stream.Stream
@@ -19,7 +20,7 @@ class RSSConfigureViewModelTest: BaseTest() {
 
     lateinit var sut: RSSConfigureViewModel
 
-    private val mockPrefs: PrefsDB = mock()
+    private val mockPrefs: RSSPrefsDB = mock()
 
     @BeforeEach
     fun setUp() {
@@ -204,6 +205,8 @@ class RSSConfigureViewModelTest: BaseTest() {
                 }
             )
         }
+        list.add(RSSConfigureItem.Header(R.string.rss_configure_header_add, R.string.rss_configure_header_add_subtitle))
+        list.add(RSSConfigureItem.Add)
         list.add(RSSConfigureItem.Header(R.string.rss_configure_header_quick_add, R.string.rss_configure_header_quick_add_subtitle))
         list.addAll(quick
             .sortedBy { it.source }

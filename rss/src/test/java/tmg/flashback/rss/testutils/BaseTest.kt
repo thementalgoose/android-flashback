@@ -14,6 +14,7 @@ import org.junit.jupiter.api.extension.AfterAllCallback
 import org.junit.jupiter.api.extension.BeforeAllCallback
 import org.junit.jupiter.api.extension.ExtendWith
 import org.junit.jupiter.api.extension.ExtensionContext
+import tmg.flashback.rss.testutils.TestScopeProvider
 
 @ExperimentalCoroutinesApi
 @ExtendWith(TestingTaskExecutor::class)

@@ -61,6 +61,11 @@ jobs:
       - store_test_results:
           path: repo/build/test-results
       - run:
+      name: Running unit tests - rss
+      command: ./gradlew :rss:testDebugUnitTest
+        - store_test_results:
+            path: rss/build/test-results
+      - run:
           name: Running unit tests - app
           command: ./gradlew :app:testSandDebugUnitTest
       - store_test_results:
