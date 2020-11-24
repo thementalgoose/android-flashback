@@ -3,6 +3,7 @@ package tmg.flashback.base
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import androidx.annotation.StyleRes
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import org.koin.android.ext.android.inject
@@ -24,12 +25,7 @@ abstract class BaseActivity : CommonActivity() {
     protected var isLightTheme: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        isLightTheme = prefsDB.theme == ThemePref.DAY || (prefsDB.theme == ThemePref.AUTO && isInDayMode())
-        if (isLightTheme) {
-            setTheme(R.style.LightTheme)
-        } else {
-            setTheme(R.style.DarkTheme)
-        }
+        setTheme(getThemeStyle())
 
         super.onCreate(savedInstanceState)
 
@@ -52,6 +48,14 @@ abstract class BaseActivity : CommonActivity() {
         }
     }
 
+    @StyleRes
+    private fun getThemeStyle(): Int {
+        isLightTheme = prefsDB.theme == ThemePref.DAY || (prefsDB.theme == ThemePref.AUTO && isInDayMode())
+        return when (isLightTheme) {
+            true -> tmg.flashback.rss.R.style.RSS_LightTheme
+            false -> tmg.flashback.rss.R.style.RSS_DarkTheme
+        }
+    }
     open fun setInsets(insets: WindowInsetsCompat) {
 
     }

@@ -80,7 +80,7 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback {
         menu.setOnNavigationItemSelectedListener {
             return@setOnNavigationItemSelectedListener when (it.itemId) {
                 R.id.nav_rss -> {
-                    startActivity(Intent(this, RSSActivity::class.java))
+                    startActivity(RSSActivity.intent(this))
                     false
                 }
                 R.id.nav_calendar -> {

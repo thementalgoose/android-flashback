@@ -81,7 +81,7 @@ class SettingsActivity : BaseActivity() {
         }
 
         observeEvent(viewModel.outputs.openNews) {
-            startActivity(Intent(this, RSSSettingsActivity::class.java))
+            startActivity(RSSSettingsActivity.intent(this))
         }
     }
 

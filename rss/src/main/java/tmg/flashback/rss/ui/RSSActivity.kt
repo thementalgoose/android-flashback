@@ -1,14 +1,15 @@
 package tmg.flashback.rss.ui
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
+import androidx.annotation.StyleRes
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_rss.*
 import me.saket.inboxrecyclerview.dimming.TintPainter
-import me.saket.inboxrecyclerview.page.PageStateChangeCallbacks
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.rss.R
 import tmg.flashback.rss.base.RSSBaseActivity
@@ -19,7 +20,7 @@ import tmg.flashback.rss.web.WebFragment
 import tmg.utilities.extensions.loadFragment
 import tmg.utilities.extensions.observe
 
-class RSSActivity: RSSBaseActivity(), PageStateChangeCallbacks, FragmentRequestBack {
+class RSSActivity: RSSBaseActivity(), FragmentRequestBack {
 
     private val viewModel: RSSViewModel by viewModel()
 
@@ -106,15 +107,11 @@ class RSSActivity: RSSBaseActivity(), PageStateChangeCallbacks, FragmentRequestB
 
     //endregion
 
-    //region PageStateChangeCallbacks
+    companion object {
 
-    override fun onPageAboutToCollapse(collapseAnimDuration: Long) { }
-
-    override fun onPageAboutToExpand(expandAnimDuration: Long) { }
-
-    override fun onPageCollapsed() { }
-
-    override fun onPageExpanded() { }
-
-    //endregion
+        fun intent(context: Context): Intent {
+            val intent = Intent(context, RSSActivity::class.java)
+            return intent
+        }
+    }
 }

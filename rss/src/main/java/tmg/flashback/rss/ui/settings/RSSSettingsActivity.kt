@@ -1,17 +1,21 @@
 package tmg.flashback.rss.ui.settings
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import androidx.annotation.StyleRes
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_settings_news.*
 import tmg.flashback.rss.R
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.rss.base.RSSBaseActivity
+import tmg.flashback.rss.ui.RSSActivity
 import tmg.flashback.rss.ui.configure.RSSConfigureActivity
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 
-class RSSSettingsActivity: RSSBaseActivity() {
+class RSSSettingsActivity : RSSBaseActivity() {
 
     private val viewModel: RSSSettingsViewModel by viewModel()
 
@@ -45,5 +49,13 @@ class RSSSettingsActivity: RSSBaseActivity() {
     override fun setInsets(insets: WindowInsetsCompat) {
         titlebar.setPadding(0, insets.systemWindowInsetTop, 0, 0)
         rvSettings.setPadding(0, 0, 0, insets.systemWindowInsetBottom)
+    }
+
+    companion object {
+
+        fun intent(context: Context): Intent {
+            val intent = Intent(context, RSSSettingsActivity::class.java)
+            return intent
+        }
     }
 }
