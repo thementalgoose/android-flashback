@@ -29,31 +29,31 @@ abstract class BaseActivity : CommonActivity() {
 
         super.onCreate(savedInstanceState)
 
-        window.statusBarColor = Color.TRANSPARENT
-
-        window.apply {
-            navigationBarColor = Color.TRANSPARENT
-            if (isLightTheme) {
-                decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-            } else {
-                decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-            }
-        }
-
-        findViewById<View>(R.id.container)?.let {
-            ViewCompat.setOnApplyWindowInsetsListener(it) { view, insets ->
-                setInsets(insets = insets)
-                insets
-            }
-        }
+//        window.statusBarColor = Color.TRANSPARENT
+//
+//        window.apply {
+//            navigationBarColor = Color.TRANSPARENT
+//            if (isLightTheme) {
+//                decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+//            } else {
+//                decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+//            }
+//        }
+//
+//        findViewById<View>(R.id.container)?.let {
+//            ViewCompat.setOnApplyWindowInsetsListener(it) { view, insets ->
+//                setInsets(insets = insets)
+//                insets
+//            }
+//        }
     }
 
     @StyleRes
     private fun getThemeStyle(): Int {
         isLightTheme = prefsDB.theme == ThemePref.DAY || (prefsDB.theme == ThemePref.AUTO && isInDayMode())
         return when (isLightTheme) {
-            true -> tmg.flashback.rss.R.style.RSS_LightTheme
-            false -> tmg.flashback.rss.R.style.RSS_DarkTheme
+            true -> R.style.LightTheme
+            false -> R.style.DarkTheme
         }
     }
     open fun setInsets(insets: WindowInsetsCompat) {

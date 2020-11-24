@@ -7,12 +7,10 @@
         <item name="colorPrimaryDark">#4A34B6</item>
         <item name="colorAccent">@color/logo_gradient_1</item>
 
-        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:statusBarColor">?attr/f1BackgroundPrimary</item>
         <item name="android:navigationBarColor">?attr/f1BackgroundPrimary</item>
-        <item name="android:windowTranslucentStatus">false</item>
-        <item name="android:windowTranslucentNavigation">true</item>
-        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:isLightTheme">true</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
 
         <item name="f1BackgroundHighlighted">#334A34B6</item>
 
@@ -100,12 +98,10 @@
         <item name="colorPrimaryDark">#7E57C2</item>
         <item name="colorAccent">@color/logo_gradient_1</item>
 
-        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:statusBarColor">?attr/f1BackgroundPrimary</item>
         <item name="android:navigationBarColor">?attr/f1BackgroundPrimary</item>
-        <item name="android:windowTranslucentStatus">false</item>
-        <item name="android:windowTranslucentNavigation">true</item>
-        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:isLightTheme">false</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
 
         <item name="f1BackgroundHighlighted">#334A34B6</item>
 
