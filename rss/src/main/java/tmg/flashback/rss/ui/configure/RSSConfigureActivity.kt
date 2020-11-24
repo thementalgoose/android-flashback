@@ -3,6 +3,7 @@ package tmg.flashback.rss.ui.configure
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.annotation.StyleRes
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_rss_configure.*
@@ -11,6 +12,7 @@ import kotlinx.android.synthetic.main.activity_rss_configure.titlebar
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.rss.R
 import tmg.flashback.rss.base.RSSBaseActivity
+import tmg.flashback.rss.ui.settings.RSSSettingsActivity
 import tmg.utilities.extensions.observe
 
 class RSSConfigureActivity : RSSBaseActivity() {
@@ -50,8 +52,10 @@ class RSSConfigureActivity : RSSBaseActivity() {
     }
 
     companion object {
+
         fun intent(context: Context): Intent {
-            return Intent(context, RSSConfigureActivity::class.java)
+            val intent = Intent(context, RSSConfigureActivity::class.java)
+            return intent
         }
     }
 }

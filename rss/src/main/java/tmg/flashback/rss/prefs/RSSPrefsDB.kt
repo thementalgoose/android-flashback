@@ -1,5 +1,7 @@
 package tmg.flashback.rss.prefs
 
+import tmg.flashback.repo.enums.ThemePref
+
 interface RSSPrefsDB {
 
     /**
@@ -21,4 +23,9 @@ interface RSSPrefsDB {
      * Open the news article in an external browser or not
      */
     var newsOpenInExternalBrowser: Boolean
+
+    /**
+     * Current theme
+     */
+    val theme: ThemePref
 }
