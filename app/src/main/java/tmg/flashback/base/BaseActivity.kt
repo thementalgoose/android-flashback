@@ -7,7 +7,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import org.koin.android.ext.android.inject
 import tmg.flashback.R
-import tmg.flashback.di.toggle.ToggleDB
+import tmg.flashback.repo.ToggleDB
 import tmg.flashback.repo.db.CrashManager
 import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.enums.ThemePref
@@ -16,7 +16,8 @@ import tmg.utilities.lifecycle.common.CommonActivity
 
 abstract class BaseActivity : CommonActivity() {
 
-    val prefsDB: PrefsDB by inject()
+    private val prefsDB: PrefsDB by inject()
+
     val crashManager: CrashManager by inject()
     val toggleDB: ToggleDB by inject()
 

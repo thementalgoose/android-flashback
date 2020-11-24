@@ -7,16 +7,16 @@ import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.enums.BarAnimation
 import tmg.flashback.repo.enums.ThemePref
 import tmg.flashback.repo.enums.Tooltips
+import tmg.flashback.rss.prefs.RSSPrefsDB
 import tmg.utilities.extensions.toEnum
 import tmg.utilities.prefs.SharedPrefManager
 import java.util.*
 
 private const val defaultShowQualifying: Boolean = false
-private const val defaultShowDriversInConstructors: Boolean = true
 private const val defaultShakeToReport: Boolean = true
 private const val defaultCrashReporting: Boolean = true
 
-class SharedPrefsDB(context: Context) : SharedPrefManager(context), PrefsDB {
+class SharedPrefsDB(context: Context) : SharedPrefManager(context), PrefsDB, RSSPrefsDB {
 
     override val prefsKey: String = "Flashback"
     private val keyShowQualifyingDelta: String = "SHOW_QUALIFYING_DELTA"

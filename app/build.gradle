@@ -193,7 +193,7 @@ dependencies {
     // TMG dependencies
     implementation "com.github.thementalgoose:android-components:$tmg_components"
     implementation "com.github.thementalgoose:android-utilities:$tmg_utils"
-    implementation 'com.github.thementalgoose:android-labelled-progress-bar:1.0.3'
+    implementation "com.github.thementalgoose:android-labelled-progress-bar:$tmg_labelled_progressbar"
 
     // Preferences
     implementation "androidx.preference:preference-ktx:1.1.1"

@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import tmg.flashback.allYears
 import tmg.flashback.base.BaseViewModel
 import tmg.flashback.currentYear
+import tmg.flashback.repo.ScopeProvider
 import tmg.flashback.repo.db.PrefsDB
-import tmg.flashback.di.async.ScopeProvider
 import tmg.utilities.lifecycle.DataEvent
 
 //region Inputs

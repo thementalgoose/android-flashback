@@ -72,26 +72,6 @@ interface PrefsDB {
     var favouriteSeasons: Set<Int>
 
     /**
-     * RSS URLs
-     */
-    var rssUrls: Set<String>
-
-    /**
-     * Enable javascript in the in app browser.
-     */
-    var inAppEnableJavascript: Boolean
-
-    /**
-     * Shows the description for the news items
-     */
-    var rssShowDescription: Boolean
-
-    /**
-     * Open the news article in an external browser or not
-     */
-    var newsOpenInExternalBrowser: Boolean
-
-    /**
      * Tooltip set of app hints for functional usage
      */
     var tooltips: Set<Tooltips>

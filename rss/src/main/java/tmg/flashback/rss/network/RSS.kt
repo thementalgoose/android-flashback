@@ -12,14 +12,14 @@ import tmg.flashback.repo.models.rss.Article
 import tmg.flashback.rss.network.apis.convert
 import tmg.flashback.rss.network.shared.RssXMLRetrofit
 import tmg.flashback.rss.network.shared.buildRetrofit
+import tmg.flashback.rss.prefs.RSSPrefsDB
 import java.lang.NullPointerException
 import java.lang.RuntimeException
 import java.net.UnknownHostException
 import javax.xml.stream.XMLStreamException
 
-
 class RSS(
-    private val prefsDB: PrefsDB
+    private val prefsDB: RSSPrefsDB
 ) : RSSDB {
     override fun getNews(): Flow<Response<List<Article>>> = flow {
 
