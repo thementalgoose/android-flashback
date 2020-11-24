@@ -2,7 +2,7 @@ package tmg.flashback.di
 
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
-import tmg.flashback.rss.RSS
+import tmg.flashback.rss.network.RSS
 import tmg.flashback.repo.db.news.RSSDB
 import tmg.flashback.rss.RSSViewModel
 import tmg.flashback.rss.configure.RSSConfigureViewModel

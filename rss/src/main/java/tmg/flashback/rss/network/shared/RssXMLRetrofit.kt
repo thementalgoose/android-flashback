@@ -1,8 +1,8 @@
-package tmg.flashback.rss.shared
+package tmg.flashback.rss.network.shared
 
 import retrofit2.http.GET
 import retrofit2.http.Url
-import tmg.flashback.rss.apis.model.RssXMLModel
+import tmg.flashback.rss.network.apis.model.RssXMLModel
 
 interface RssXMLRetrofit {
 

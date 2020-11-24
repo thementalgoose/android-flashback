@@ -1,4 +1,4 @@
-package tmg.flashback.rss.shared
+package tmg.flashback.rss.network.shared
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

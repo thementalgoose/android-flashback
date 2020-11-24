@@ -153,7 +153,7 @@ dependencies {
     kaptTest "androidx.lifecycle:lifecycle-compiler:2.2.0"
 
     // Swipe refresh
-    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:$swipe_refresh"
 
     // ThreeTen
     implementation "com.jakewharton.threetenabp:threetenabp:$threeten"
@@ -166,14 +166,14 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines"
 
     // Lifecycle
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0-beta01"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.3.0-beta01"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$android_lifecycle"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$android_lifecycle"
 
     // Material components
-    implementation 'com.google.android.material:material:1.3.0-alpha03'
+    implementation "com.google.android.material:material:$android_material"
 
     // ConstraintLayout
-    implementation "androidx.constraintlayout:constraintlayout:2.0.4"
+    implementation "androidx.constraintlayout:constraintlayout:$android_constraint"
 
     // Koin
     implementation "org.koin:koin-android:$koin_version"
@@ -188,12 +188,9 @@ dependencies {
     implementation 'com.reddit:indicator-fast-scroll:1.3.0'
 
     // TMG dependencies
-    implementation 'com.github.thementalgoose:android-components:3.0.0'
-    implementation 'com.github.thementalgoose:android-utilities:2.0.1'
+    implementation "com.github.thementalgoose:android-components:$tmg_components"
+    implementation "com.github.thementalgoose:android-utilities:$tmg_utils"
     implementation 'com.github.thementalgoose:android-labelled-progress-bar:1.0.3'
-
-    // ViewPager2
-    implementation "androidx.viewpager2:viewpager2:1.0.0"
 
     // Preferences
     implementation "androidx.preference:preference-ktx:1.1.1"
@@ -215,7 +212,7 @@ dependencies {
     implementation 'me.saket:inboxrecyclerview:2.0.0-beta3'
 
     // Lottie
-    implementation 'com.airbnb.android:lottie:3.4.0'
+    implementation "com.airbnb.android:lottie:$lottie"
 
     // Skeleton Layout
     implementation 'com.faltenreich:skeletonlayout:2.0.1'
