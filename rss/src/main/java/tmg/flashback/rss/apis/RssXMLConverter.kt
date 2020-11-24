@@ -49,7 +49,7 @@ fun RssXMLModel.convert(fromSource: String, showDescription: Boolean): List<Arti
         ?.map {
             Article(
                 id = it.link!!.md5(),
-                title = it.title,
+                title = it.title.replace("&#039;", "'"),
                 description = when (showDescription) {
                     false -> null
                     true -> it.description

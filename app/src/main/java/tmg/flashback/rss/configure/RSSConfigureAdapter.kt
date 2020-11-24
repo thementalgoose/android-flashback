@@ -6,13 +6,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.R
 import tmg.flashback.repo.enums.SupportedArticleSource
-import tmg.flashback.rss.configure.viewholders.HeaderViewHolder
-import tmg.flashback.rss.configure.viewholders.ItemViewHolder
-import tmg.flashback.rss.configure.viewholders.NoItemsViewHolder
-import tmg.flashback.rss.configure.viewholders.QuickAddViewHolder
+import tmg.flashback.rss.configure.viewholders.*
 import java.lang.RuntimeException
 
 class RSSConfigureAdapter(
+    private val customAddItem: (String) -> Unit,
     private val quickAddItem: (SupportedArticleSource) -> Unit,
     private val removeItem: (String) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -31,6 +29,7 @@ class RSSConfigureAdapter(
             R.layout.view_rss_configure_item -> ItemViewHolder(removeItem, view)
             R.layout.view_rss_configure_quickadd -> QuickAddViewHolder(quickAddItem, view)
             R.layout.view_rss_configure_no_items -> NoItemsViewHolder(view)
+            R.layout.view_rss_configure_add -> AddViewHolder(customAddItem, view)
             else -> throw RuntimeException("ViewType not supported by configuration adapter")
         }
     }

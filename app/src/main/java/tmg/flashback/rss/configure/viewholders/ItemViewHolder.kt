@@ -10,6 +10,7 @@ import tmg.flashback.R
 import tmg.flashback.rss.configure.RSSConfigureItem
 import tmg.flashback.utils.getColor
 import tmg.utilities.extensions.views.context
+import java.net.MalformedURLException
 import java.net.URL
 
 class ItemViewHolder(
@@ -36,11 +37,15 @@ class ItemViewHolder(
             itemView.imageBackground.setBackgroundColor(context.theme.getColor(R.attr.colorPrimary))
             itemView.label.text = "..."
 
-            val url = URL(item.url)
-            @SuppressLint("SetTextI18n")
-            itemView.title.text = "${url.protocol}://${url.host}"
-
-            itemView.description.text = item.url
+            try {
+                val url = URL(item.url)
+                @SuppressLint("SetTextI18n")
+                itemView.title.text = "${url.protocol}://${url.host}"
+                itemView.description.text = item.url
+            } catch (e: MalformedURLException) {
+                itemView.title.text = item.url
+                itemView.description.setText(R.string.rss_configure_malformed_url)
+            }
         }
     }
 

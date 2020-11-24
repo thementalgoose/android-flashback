@@ -174,10 +174,13 @@
 
     <string name="rss_configure_title">Configure RSS</string>
     <string name="rss_configure_header_items">Your RSS list</string>
-    <string name="rss_configure_header_items_subtitle">Configure your personalised RSS feed here! We will soon support adding your own RSS urls to show in this list</string>
+    <string name="rss_configure_header_items_subtitle">Configure your personalised RSS feed here!</string>
     <string name="rss_configure_header_items_no_items">0 items</string>
+    <string name="rss_configure_header_add">Add custom</string>
+    <string name="rss_configure_header_add_subtitle">Add your own RSS link or feed to curate your own formula 1 news. If no posts are showing up, send me an email with the link you are trying to add!</string>
     <string name="rss_configure_header_quick_add">Quick links</string>
     <string name="rss_configure_header_quick_add_subtitle">These RSS feeds from popular news sites for F1 news, and these can be added to your personalised feed. If you wish to include another RSS feed in this list, send me an email!</string>
+    <string name="rss_configure_malformed_url">Error in URL</string>
 
     <!-- About -->
     <string name="about_name">Flashback</string>
@@ -340,5 +343,7 @@
     <string name="app_shortcut_rss_disabled">RSS (Unavailable)</string>
     <string name="driver_overview_stat_birthday">Born %s</string>
     <string name="driver_overview_title_overview">Overview</string>
+    <string name="rss_configure_hint">www.formula1.com/link/to/rss</string>
+    <string name="rss_configure_valid_url">Valid URL required</string>
 
 </resources>

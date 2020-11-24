@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
     <shortcut
-        android:enabled="@bool/toggle_rss"
+        android:enabled="true"
         android:icon="@drawable/nav_rss">
         <intent
             android:action="android.intent.action.VIEW"
             android:targetClass="tmg.flashback.rss.RSSActivity"
-            android:targetPackage="tmg.flashback" />
+            android:targetPackage="tmg.flashback.sand" />
     </shortcut>
 </shortcuts>

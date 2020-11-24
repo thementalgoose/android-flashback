@@ -15,6 +15,9 @@ import tmg.flashback.rss.apis.convert
 import tmg.flashback.rss.shared.RssXMLRetrofit
 import tmg.flashback.rss.shared.buildRetrofit
 import java.lang.NullPointerException
+import java.lang.RuntimeException
+import java.net.UnknownHostException
+import javax.xml.stream.XMLStreamException
 
 
 class RSS(
@@ -31,6 +34,12 @@ class RSS(
                 try {
                     val response = xmlRetrofit.getRssXML(x).convert(x, prefsDB.rssShowDescription)
                     responses.add(Response(response))
+                } catch (e: XMLStreamException) {
+                    responses.add(Response(null, -1))
+                } catch (e: RuntimeException) {
+                    responses.add(Response(null, -1))
+                } catch (e: UnknownHostException) {
+                    responses.add(Response(null, -1))
                 } catch (e: HttpException) {
                     responses.add(Response(null, e.code()))
                 } catch (e: NullPointerException) {
