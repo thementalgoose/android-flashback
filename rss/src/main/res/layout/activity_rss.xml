@@ -87,7 +87,7 @@
         android:fitsSystemWindows="false"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
-        <me.saket.inboxrecyclerview.InboxRecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -97,10 +97,9 @@
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    <me.saket.inboxrecyclerview.page.ExpandablePageLayout
-        android:id="@+id/expandablePageLayout"
+    <FrameLayout
+        android:id="@+id/webContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="?attr/rssBackground" />
+        android:layout_height="match_parent" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

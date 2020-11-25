@@ -14,6 +14,7 @@ import kotlinx.android.synthetic.main.activity_rss.*
 import me.saket.inboxrecyclerview.InboxRecyclerView
 import me.saket.inboxrecyclerview.dimming.TintPainter
 import org.koin.android.viewmodel.ext.android.viewModel
+import tmg.flashback.repo.models.rss.Article
 import tmg.flashback.rss.R
 import tmg.flashback.rss.base.RSSBaseActivity
 import tmg.flashback.rss.ui.configure.RSSConfigureActivity
@@ -38,10 +39,6 @@ class RSSActivity: RSSBaseActivity(), FragmentRequestBack {
 
         header.setText(R.string.title_rss)
 
-        loadFragment(WebFragment.instance(getString(R.string.app_name), "about"), R.id.expandablePageLayout, "WebView")
-
-        expandablePageLayout.pullToCollapseEnabled = false
-
         adapter = RSSAdapter(
             openConfigure = {
                 startActivity(Intent(this, RSSConfigureActivity::class.java))
@@ -51,17 +48,10 @@ class RSSActivity: RSSBaseActivity(), FragmentRequestBack {
                     val intent = Intent(Intent.ACTION_VIEW, Uri.parse(article.link))
                     startActivity(intent)
                 } else {
-                    list.expandItem(id)
-                    loadFragment(
-                        WebFragment.instance(article.title, article.link),
-                        R.id.expandablePageLayout,
-                        "WebView"
-                    )
+                    loadWebView(article)
                 }
             }
         )
-        list.tintPainter = TintPainter.uncoveredArea(Color.WHITE, opacity = 0.65f)
-        list.expandablePage = expandablePageLayout
         list.adapter = adapter
         list.layoutManager = LinearLayoutManager(this)
 
@@ -88,21 +78,24 @@ class RSSActivity: RSSBaseActivity(), FragmentRequestBack {
     }
 
     override fun onBackPressed() {
-        when {
-            expandablePageLayout.isExpandedOrExpanding -> {
-                // Pipe back exit events through to fragment, let it handle the back event
-                val webFrag = supportFragmentManager.findFragmentByTag("WebView") as? WebFragment
-                webFrag?.exitWeb()
-                list.collapse()
-            }
-            else -> super.onBackPressed()
+
+        val webFrag = supportFragmentManager.findFragmentByTag("WebView") as? WebFragment
+        if (webFrag != null) {
+            webFrag.exitWeb()
+            supportFragmentManager.popBackStack()
+        }
+        else {
+            super.onBackPressed()
         }
     }
 
-    override fun setInsets(insets: WindowInsetsCompat) {
-        titlebar.setPadding(0, insets.systemWindowInsetTop, 0, 0)
-        list.setPadding(0, 0, 0, insets.systemWindowInsetBottom)
-        expandablePageLayout.setPadding(0, insets.systemWindowInsetTop, 0, insets.systemWindowInsetBottom)
+    private fun loadWebView(article: Article) {
+        supportFragmentManager
+                .beginTransaction()
+                .setCustomAnimations(R.anim.in_from_bottom, -1, -1, R.anim.out_to_bottom)
+                .replace(R.id.webContainer, WebFragment.instance(article.title, article.link), "WebView")
+                .addToBackStack(null)
+                .commit()
     }
 
     //region FragmentRequestBack
