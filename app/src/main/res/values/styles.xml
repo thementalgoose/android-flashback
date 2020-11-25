@@ -72,8 +72,10 @@
 
     <style name="LightTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Dark" />
 
-    <style name="LightTheme.Launcher" parent="LightTheme">
+    <style name="LightTheme.Launcher" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowBackground">@drawable/launch_screen</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
     </style>
 
     <style name="TransparentBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
