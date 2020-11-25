@@ -1,7 +1,7 @@
 package tmg.flashback.driver.comparison
 
 import tmg.flashback.base.BaseViewModel
-import tmg.flashback.di.async.ScopeProvider
+import tmg.flashback.repo.ScopeProvider
 
 //region Inputs
 

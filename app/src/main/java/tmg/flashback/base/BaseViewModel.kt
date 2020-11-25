@@ -1,13 +1,16 @@
 package tmg.flashback.base
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineScope
-import tmg.flashback.di.async.ScopeProvider
-import tmg.flashback.utils.getScope
+import tmg.flashback.repo.ScopeProvider
 
 abstract class BaseViewModel(
     scopeProvider: ScopeProvider
 ): ViewModel() {
 
-    val scope: CoroutineScope = getScope(scopeProvider.getCoroutineScope())
+    val scope: CoroutineScope = when (val provider = scopeProvider.getCoroutineScope()) {
+        null -> viewModelScope
+        else -> provider
+    }
 }

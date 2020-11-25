@@ -7,13 +7,13 @@ import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.*
 import org.threeten.bp.LocalDate
 import tmg.flashback.base.BaseViewModel
+import tmg.flashback.repo.NetworkConnectivityManager
+import tmg.flashback.repo.ScopeProvider
 import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.db.stats.SeasonOverviewDB
 import tmg.flashback.repo.models.stats.*
-import tmg.flashback.settings.ConnectivityManager
 import tmg.flashback.shared.viewholders.DataUnavailable
 import tmg.flashback.showComingSoonMessageForNextDays
-import tmg.flashback.di.async.ScopeProvider
 import tmg.flashback.shared.sync.SyncDataItem
 import tmg.flashback.utils.SeasonRound
 import tmg.utilities.extensions.combineTriple
@@ -50,7 +50,7 @@ interface RaceViewModelOutputs {
 class RaceViewModel(
     seasonOverviewDB: SeasonOverviewDB,
     private val prefsDB: PrefsDB,
-    connectivityManager: ConnectivityManager,
+    connectivityManager: NetworkConnectivityManager,
     scopeProvider: ScopeProvider
 ) : BaseViewModel(scopeProvider), RaceViewModelInputs, RaceViewModelOutputs {
 

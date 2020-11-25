@@ -15,8 +15,8 @@ import tmg.flashback.R
 import tmg.flashback.overviews.*
 import tmg.flashback.overviews.constructor.summary.ConstructorSummaryItem
 import tmg.flashback.overviews.driver.summary.PipeType
+import tmg.flashback.repo.NetworkConnectivityManager
 import tmg.flashback.repo.db.stats.ConstructorDB
-import tmg.flashback.settings.ConnectivityManager
 import tmg.flashback.shared.sync.SyncDataItem
 import tmg.flashback.shared.viewholders.DataUnavailable
 import tmg.flashback.testutils.*
@@ -29,7 +29,7 @@ class ConstructorViewModelTest: BaseTest() {
     lateinit var sut: ConstructorViewModel
 
     private var mockConstructorDB: ConstructorDB = mock()
-    private var mockConnectivityManager: ConnectivityManager = mock()
+    private var mockConnectivityManager: NetworkConnectivityManager = mock()
 
     @BeforeEach
     internal fun setUp() {

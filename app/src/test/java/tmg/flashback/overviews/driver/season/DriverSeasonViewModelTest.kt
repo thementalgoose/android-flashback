@@ -13,11 +13,11 @@ import org.junit.jupiter.api.Test
 import tmg.flashback.R
 import tmg.flashback.overviews.*
 import tmg.flashback.overviews.driver.summary.PipeType.*
+import tmg.flashback.repo.NetworkConnectivityManager
 import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.db.stats.DriverDB
 import tmg.flashback.repo.enums.BarAnimation
 import tmg.flashback.repo.models.stats.DriverOverviewRace
-import tmg.flashback.settings.ConnectivityManager
 import tmg.flashback.shared.sync.SyncDataItem
 import tmg.flashback.shared.viewholders.DataUnavailable.DRIVER_NOT_EXIST
 import tmg.flashback.testutils.*
@@ -30,7 +30,7 @@ class DriverSeasonViewModelTest: BaseTest() {
     lateinit var sut: DriverSeasonViewModel
 
     private var mockDriverDB: DriverDB = mock()
-    private var mockConnectivityManager: ConnectivityManager = mock()
+    private var mockConnectivityManager: NetworkConnectivityManager = mock()
     private var mockPrefsDB: PrefsDB = mock()
 
     @BeforeEach

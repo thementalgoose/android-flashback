@@ -5,8 +5,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/f1BackgroundPrimary"
-    android:fitsSystemWindows="false">
+    android:background="?attr/f1BackgroundPrimary">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
@@ -26,8 +25,7 @@
                 android:id="@+id/titlebar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?attr/f1BackgroundPrimary"
-                android:fitsSystemWindows="false">
+                android:background="?attr/f1BackgroundPrimary">
 
                 <TextView
                     android:id="@+id/season"
@@ -72,8 +70,8 @@
         android:id="@+id/swipeContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="false"
         android:layout_marginBottom="?attr/actionBarSize"
+        android:fitsSystemWindows="false"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
         <androidx.recyclerview.widget.RecyclerView
@@ -81,7 +79,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
-            android:fitsSystemWindows="false"
             android:overScrollMode="never"
             tools:listitem="@layout/view_home_track" />
 
@@ -93,7 +90,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:background="?attr/f1BackgroundNavPrimary"
-        android:fitsSystemWindows="true"
         app:itemIconTint="@drawable/selector_bottom_nav_color"
         app:itemTextColor="@drawable/selector_bottom_nav_color"
         app:labelVisibilityMode="labeled"

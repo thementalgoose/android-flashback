@@ -25,8 +25,7 @@
                 android:id="@+id/titlebar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?attr/f1BackgroundPrimary"
-                android:fitsSystemWindows="false">
+                android:background="?attr/f1BackgroundPrimary">
 
                 <TextView
                     android:id="@+id/grandprix"

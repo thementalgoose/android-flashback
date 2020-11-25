@@ -17,11 +17,11 @@ import tmg.flashback.repo.db.stats.HistoryDB
 import tmg.flashback.repo.db.stats.SeasonOverviewDB
 import tmg.flashback.repo.models.AppBanner
 import tmg.flashback.repo.models.stats.*
-import tmg.flashback.settings.ConnectivityManager
 import tmg.flashback.shared.sync.SyncDataItem
 import tmg.flashback.shared.viewholders.DataUnavailable
-import tmg.flashback.di.async.ScopeProvider
 import tmg.flashback.di.device.BuildConfigProvider
+import tmg.flashback.repo.NetworkConnectivityManager
+import tmg.flashback.repo.ScopeProvider
 import tmg.flashback.utils.StringHolder
 import tmg.utilities.extensions.combinePair
 import tmg.utilities.extensions.combineTriple
@@ -58,7 +58,7 @@ class HomeViewModel(
     private val historyDB: HistoryDB,
     dataDB: DataDB,
     private val prefDB: PrefsDB,
-    private val connectivityManager: ConnectivityManager,
+    private val connectivityManager: NetworkConnectivityManager,
     private val buildConfigProvider: BuildConfigProvider,
     scopeProvider: ScopeProvider
 ) : BaseViewModel(scopeProvider), HomeViewModelInputs, HomeViewModelOutputs {

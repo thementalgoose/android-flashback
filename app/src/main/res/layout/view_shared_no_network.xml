@@ -16,10 +16,10 @@
         android:layout_marginBottom="@dimen/paddingMedium"
         android:padding="@dimen/paddingMedium"
         android:src="@drawable/ic_icon_wifi"
-        android:tint="?attr/f1TextTertiary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="?attr/f1TextTertiary" />
 
     <TextView
         style="@style/Text.Network.Error"

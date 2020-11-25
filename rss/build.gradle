@@ -1,6 +1,8 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'de.mannodermaus.android-junit5'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 30
@@ -21,6 +23,53 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+        androidTest.java.srcDirs += 'src/androidTest/kotlin'
+        androidTest.resources.srcDirs += 'src/androidTest/res'
+        test.java.srcDirs += 'src/test/java'
+    }
+
+    testOptions {
+        junitPlatform {
+            testLogging {
+                events "skipped", "failed", "standardOut", "standardError"
+            }
+        }
+        unitTests {
+            includeAndroidResources = true
+            returnDefaultValues = true
+            all {
+                afterSuite { desc, result ->
+                    if (!desc.parent) {
+                        println "\n======================================================================="
+                        println "${desc.displayName}"
+                        println "Test result: ${result.resultType}"
+                        println "Test summary: ${result.testCount} tests, " +
+                                "${result.successfulTestCount} succeeded, " +
+                                "${result.failedTestCount} failed, " +
+                                "${result.skippedTestCount} skipped"
+                        println "======================================================================="
+                    }
+                }
+                useJUnitPlatform()
+                testLogging {
+                    showStandardStreams = true
+                    events "skipped", "failed", "standardOut", "standardError"
+                }
+            }
+        }
+    }
 }
 
 ext {
@@ -34,18 +83,47 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.3.2'
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation project(path: ':repo')
-    testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-
-    // ThreeTen
-    implementation "com.jakewharton.threetenabp:threetenabp:$threeten"
-    testImplementation ("org.threeten:threetenbp:$threetenbp") {
-        exclude group:'com.jakewharton.threetenabp', module:'threetenabp'
-    }
+    testImplementation "org.junit.jupiter:junit-jupiter-api:$junit"
+    testImplementation "org.junit.jupiter:junit-jupiter-engine:$junit"
+    testImplementation "org.junit.jupiter:junit-jupiter-params:$junit"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junit"
+    testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines"
+    testImplementation 'androidx.test:core:1.3.0'
+    testImplementation 'androidx.arch.core:core-testing:2.1.0'
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0"
+    testImplementation 'org.mockito:mockito-core:3.0.0'
+    kaptTest "androidx.lifecycle:lifecycle-compiler:2.2.0"
 
     // Coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines"
+
+    // Lifecycle
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$android_lifecycle"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$android_lifecycle"
+
+    // Material components
+    implementation "com.google.android.material:material:$android_material"
+
+    // ConstraintLayout
+    implementation "androidx.constraintlayout:constraintlayout:$android_constraint"
+
+    // Swipe refresh
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:$swipe_refresh"
+
+    // Koin
+    implementation "org.koin:koin-android:$koin_version"
+    implementation "org.koin:koin-android-scope:$koin_version"
+    implementation "org.koin:koin-android-viewmodel:$koin_version"
+    implementation "org.koin:koin-android-ext:$koin_version"
+
+
+
+
 
     // Retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofit"
@@ -55,4 +133,21 @@ dependencies {
     implementation "com.squareup.okhttp3:okhttp:$okhttp3"
     implementation "com.squareup.okhttp3:logging-interceptor:$okhttp3"
     implementation 'org.conscrypt:conscrypt-android:2.2.1'
+
+    // ThreeTen
+    implementation "com.jakewharton.threetenabp:threetenabp:$threeten"
+    testImplementation ("org.threeten:threetenbp:$threetenbp") {
+        exclude group:'com.jakewharton.threetenabp', module:'threetenabp'
+    }
+
+    // TMG dependencies
+    implementation "com.github.thementalgoose:android-components:$tmg_components"
+    implementation "com.github.thementalgoose:android-utilities:$tmg_utils"
+    implementation "com.github.thementalgoose:android-labelled-progress-bar:$tmg_labelled_progressbar"
+
+    // Inbox
+    implementation 'me.saket:inboxrecyclerview:2.0.0-beta3'
+
+    // Lottie
+    implementation "com.airbnb.android:lottie:$lottie"
 }
