@@ -99,6 +99,10 @@
     <string name="release_28"><![CDATA[<b>5.0.0</b>
         <br/>• Constructor overview! View a simplistic history of a constructor in F1
         <br/>• Fixes more than 5 drivers under constructor not stacking properly]]></string>
+    <string name="release_30"><![CDATA[<b>5.1.0</b>
+        <br/>• Migrated news away to RSS feed - Configure predefined or your own RSS feeds for formula 1 news
+        <br/>• Fixed typos in settings panel
+        <br/>• Fixed edge case crash in 1990s qualifying data]]></string>
 
     <!-- App Lockout -->
     <string name="app_lockout_title">App lockout</string>
