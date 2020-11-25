@@ -33,7 +33,7 @@ interface CircuitInfoViewModelOutputs {
     val circuitName: LiveData<String>
     val isLoading: MutableLiveData<Boolean>
 
-    val goToMap: MutableLiveData<DataEvent<String>>
+    val goToMap: MutableLiveData<DataEvent<Pair<String, String>>> // Maps URI, lat / lng
     val goToWikipediaPage: MutableLiveData<DataEvent<String>>
 }
 
@@ -57,7 +57,7 @@ class CircuitInfoViewModel(
         .asFlow()
         .flatMapLatest { circuitDB.getCircuit(it) }
 
-    override val goToMap: MutableLiveData<DataEvent<String>> = MutableLiveData()
+    override val goToMap: MutableLiveData<DataEvent<Pair<String, String>>> = MutableLiveData()
     override val goToWikipediaPage: MutableLiveData<DataEvent<String>> = MutableLiveData()
 
     override val isLoading: MutableLiveData<Boolean> = MutableLiveData()
@@ -122,7 +122,8 @@ class CircuitInfoViewModel(
 
     override fun clickShowOnMap() {
         val mapsIntent = "geo:0,0?q=$circuitLat,$circuitLng ($name)"
-        goToMap.postValue(DataEvent(mapsIntent))
+        val mapsLatLng = "$circuitLat,$circuitLng"
+        goToMap.postValue(DataEvent(Pair(mapsIntent, mapsLatLng)))
     }
 
     override fun clickWikipedia() {

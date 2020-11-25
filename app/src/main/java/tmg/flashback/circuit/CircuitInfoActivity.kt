@@ -1,9 +1,12 @@
 package tmg.flashback.circuit
 
+import android.content.ActivityNotFoundException
+import android.content.ClipData
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.widget.Toast
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_circuit_info.*
@@ -13,6 +16,7 @@ import tmg.flashback.R
 import tmg.flashback.base.BaseActivity
 import tmg.flashback.circuit.list.CircuitInfoAdapter
 import tmg.flashback.race.RaceActivity
+import tmg.utilities.extensions.copyToClipboard
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 import tmg.utilities.extensions.views.show
@@ -22,7 +26,7 @@ class CircuitInfoActivity: BaseActivity() {
     private val viewModel: CircuitInfoViewModel by viewModel()
 
     private lateinit var circuitId: String
-    private var circuitName: String? = null
+    private lateinit var circuitName: String
     private lateinit var adapter: CircuitInfoAdapter
 
     override fun layoutId(): Int = R.layout.activity_circuit_info
@@ -30,7 +34,7 @@ class CircuitInfoActivity: BaseActivity() {
     override fun arguments(bundle: Bundle) {
         super.arguments(bundle)
         circuitId = bundle.getString(keyCircuit)!!
-        circuitName = bundle.getString(keyCircuitName)
+        circuitName = bundle.getString(keyCircuitName)!!
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,9 +79,14 @@ class CircuitInfoActivity: BaseActivity() {
             header.text = it
         }
 
-        observeEvent(viewModel.outputs.goToMap) {
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(it))
-            startActivity(intent)
+        observeEvent(viewModel.outputs.goToMap) { (mapUri, coordinates) ->
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(mapUri))
+            try {
+                startActivity(intent)
+            } catch (e: ActivityNotFoundException) {
+                copyToClipboard("$circuitName - $coordinates")
+                Toast.makeText(this, getString(R.string.no_app_copy_clipboard), Toast.LENGTH_LONG).show()
+            }
         }
 
         observeEvent(viewModel.outputs.goToWikipediaPage) {
@@ -100,7 +109,7 @@ class CircuitInfoActivity: BaseActivity() {
         private const val keyCircuit: String = "circuit"
         private const val keyCircuitName: String = "circuitName"
 
-        fun intent(context: Context, circuitId: String, circuitName: String? = null): Intent {
+        fun intent(context: Context, circuitId: String, circuitName: String): Intent {
             val intent = Intent(context, CircuitInfoActivity::class.java)
             intent.putExtra(keyCircuit, circuitId)
             intent.putExtra(keyCircuitName, circuitName)

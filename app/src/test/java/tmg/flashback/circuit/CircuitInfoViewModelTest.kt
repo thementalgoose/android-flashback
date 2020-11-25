@@ -187,8 +187,8 @@ class CircuitInfoViewModelTest: BaseTest() {
 
         sut.inputs.clickShowOnMap()
 
-        assertDataEventValue(sut.outputs.goToMap) {
-            it.startsWith("geo:0,0?q=")
+        assertDataEventValue(sut.outputs.goToMap) { (mapUri, _) ->
+            mapUri.startsWith("geo:0,0?q=")
         }
     }
 
