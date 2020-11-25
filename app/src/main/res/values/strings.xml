@@ -232,6 +232,8 @@
     <string name="circuit_info_maps">Show on map</string>
     <string name="circuit_info_wikipedia">Wikipedia</string>
 
+    <string name="no_app_copy_clipboard">Cannot find app. Coordinates have been copied to clipboard</string>
+
     <!-- Error states -->
     <string name="shared_unavailable_future_season">This season has not started yet, please check back after the first race to see the results!</string>
     <string name="shared_unavailable_early_season">We don\'t yet have any data on this season yet, please check back later while we work on getting this</string>
