@@ -3,7 +3,7 @@
 
     <dimen name="toolbarSettingsIcon">36dp</dimen>
     <dimen name="bottomSheetPillWidth">36dp</dimen>
-    <dimen name="bottomSheetBoxSize">36dp</dimen>
+    <dimen name="bottomSheetBoxSize">16dp</dimen>
     <dimen name="bottomSheetPillHeight">4dp</dimen>
     <dimen name="bottomSheetIconSize">36dp</dimen>
     <dimen name="bottomSheetFastScrollWidth">28dp</dimen>
