@@ -2,17 +2,10 @@ package tmg.flashback.rss.ui
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.Rect
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
-import androidx.annotation.StyleRes
-import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_rss.*
-import me.saket.inboxrecyclerview.InboxRecyclerView
-import me.saket.inboxrecyclerview.dimming.TintPainter
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.repo.models.rss.Article
 import tmg.flashback.rss.R
@@ -21,10 +14,8 @@ import tmg.flashback.rss.ui.configure.RSSConfigureActivity
 import tmg.flashback.rss.ui.settings.RSSSettingsActivity
 import tmg.flashback.rss.web.FragmentRequestBack
 import tmg.flashback.rss.web.WebFragment
-import tmg.utilities.extensions.loadFragment
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.views.show
-import java.lang.IndexOutOfBoundsException
 
 class RSSActivity: RSSBaseActivity(), FragmentRequestBack {
 
