@@ -34,7 +34,7 @@ class RSSViewModelTest: BaseTest() {
     private val mockPrefsDB: RSSPrefsDB = mock()
     private val mockConnectivityManager: NetworkConnectivityManager = mock()
 
-    private val mockLocalDate: LocalDateTime = LocalDateTime.now()
+    private val mockLocalDate: LocalDateTime = LocalDateTime.of(2020, 1, 1, 1, 2, 3, 0)
     private val mockArticleSource = ArticleSource(
         title = "Test source",
         colour = "#123456",
@@ -98,14 +98,16 @@ class RSSViewModelTest: BaseTest() {
     fun `RSSViewModel init loads all news sources`() = coroutineTest {
 
         val expected = listOf(
-            RSSItem.Message(mockLocalDate.format(DateTimeFormatter.ofPattern("HH:mm:ss"))),
             RSSItem.RSS(mockArticle)
         )
 
         initSUT()
         advanceUntilIdle()
 
-        assertValue(expected, sut.outputs.list)
+        assertListContains(sut.outputs.list) {
+            it == RSSItem.RSS(mockArticle) ||
+                    (it is RSSItem.Message && it.msg.split(":").size == 3)
+        }
     }
 
     @Test
