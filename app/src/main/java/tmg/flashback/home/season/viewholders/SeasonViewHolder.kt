@@ -34,7 +34,7 @@ class SeasonViewHolder(
         itemView.label.text = season.season.toString()
         itemView.favourite.setImageResource(if (season.isFavourited) R.drawable.ic_star_filled_coloured else R.drawable.ic_star_outline)
         itemView.season.setBackgroundColor(coloursDecade["${season.season.toString().substring(0, 3)}0"]?.toColorInt() ?: ContextCompat.getColor(itemView.context, R.color.colorTheme))
-        itemView.season.text = ((season.season - minimumSupportedYear) + 1).ordinalAbbreviation
+//        itemView.season.text = ((season.season - minimumSupportedYear) + 1).ordinalAbbreviation
 
         if (isCurrentlyOnScreen) {
             if (indentState) { // true = indent it!

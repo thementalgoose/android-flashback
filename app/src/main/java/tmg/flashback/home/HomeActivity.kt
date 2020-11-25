@@ -33,7 +33,7 @@ import tmg.utilities.extensions.*
 class HomeActivity : BaseActivity(), SeasonRequestedCallback {
 
     private lateinit var adapter: HomeAdapter
-    private lateinit var seasonBottomSheetBehavior: BottomSheetBehavior<*>
+    private var seasonBottomSheetBehavior: BottomSheetBehavior<*>? = null
     private lateinit var seasonAdapter: SeasonListAdapter
 
     private val viewModel: HomeViewModel by viewModel()
@@ -77,6 +77,9 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback {
         if (!toggleDB.isRSSEnabled) {
             menu.menu.removeItem(R.id.nav_rss)
         }
+        if (container_landscape != null) {
+            menu.menu.removeItem(R.id.nav_seasons)
+        }
         menu.setOnNavigationItemSelectedListener {
             return@setOnNavigationItemSelectedListener when (it.itemId) {
                 R.id.nav_rss -> {
@@ -116,8 +119,8 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback {
             startActivity(Intent(this, SettingsActivity::class.java))
         }
 
-        overlay.setOnClickListener {
-            seasonBottomSheetBehavior.hidden()
+        overlay?.setOnClickListener {
+            seasonBottomSheetBehavior?.collapseAndHide()
         }
 
         //region HomeViewModel
@@ -132,9 +135,9 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback {
 
         observeEvent(viewModel.outputs.openSeasonList) {
             if (it) {
-                seasonBottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+                seasonBottomSheetBehavior?.state = BottomSheetBehavior.STATE_EXPANDED
             } else {
-                seasonBottomSheetBehavior.state = BottomSheetBehavior.STATE_HALF_EXPANDED
+                seasonBottomSheetBehavior?.state = BottomSheetBehavior.STATE_HALF_EXPANDED
             }
         }
 
@@ -175,7 +178,7 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback {
         }
 
         observeEvent(seasonViewModel.outputs.showSeasonEvent) {
-            seasonBottomSheetBehavior.hide()
+            seasonBottomSheetBehavior?.collapseAndHide()
             viewModel.inputs.selectSeason(it)
         }
 
@@ -189,13 +192,11 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback {
     }
 
     override fun onBackPressed() {
-        when {
-            seasonBottomSheetBehavior.state != BottomSheetBehavior.STATE_HIDDEN -> {
-                seasonBottomSheetBehavior.hide()
-            }
-            else -> {
-                super.onBackPressed()
-            }
+        if (seasonBottomSheetBehavior != null && seasonBottomSheetBehavior?.state != BottomSheetBehavior.STATE_HIDDEN) {
+            seasonBottomSheetBehavior?.collapseAndHide()
+        }
+        else {
+            super.onBackPressed()
         }
     }
 
@@ -210,22 +211,24 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback {
 
     //endregion
 
-    private fun BottomSheetBehavior<*>.hide() {
+    private fun BottomSheetBehavior<*>.collapseAndHide() {
         this.hidden()
         optionsList.scrollToPosition(0)
         seasonCollapse()
     }
 
     private fun setupBottomSheetSeason() {
-        seasonBottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
-        seasonBottomSheetBehavior.isHideable = true
-        seasonBottomSheetBehavior.hidden()
-        seasonBottomSheetBehavior.halfExpandedRatio = 0.7f
-        seasonBottomSheetBehavior.addBottomSheetCallback(BottomSheetFader(overlay, "seasons"))
-        seasonBottomSheetBehavior.addBottomSheetCallback(SeasonBottomSheetCallback(
-                expanded = { seasonExpand() },
-                collapsed = { seasonCollapse() }
-        ))
+        if (bottomSheet != null && overlay != null) {
+            seasonBottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
+            seasonBottomSheetBehavior!!.isHideable = true
+            seasonBottomSheetBehavior!!.hidden()
+            seasonBottomSheetBehavior!!.halfExpandedRatio = 0.7f
+            seasonBottomSheetBehavior!!.addBottomSheetCallback(BottomSheetFader(overlay, "seasons"))
+            seasonBottomSheetBehavior!!.addBottomSheetCallback(SeasonBottomSheetCallback(
+                    expanded = { seasonExpand() },
+                    collapsed = { seasonCollapse() }
+            ))
+        }
 
         seasonAdapter = SeasonListAdapter(
                 featureToggled = {
