@@ -233,12 +233,6 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun setInsets(insets: WindowInsetsCompat) {
-        titlebar.setPadding(0, insets.systemWindowInsetTop, 0, 0)
-        menu.setPadding(0, 0, 0, insets.systemWindowInsetBottom)
-        rvContent.setPadding(0, 0, 0, insets.systemWindowInsetBottom)
-    }
-
     //region RaceAdapterCallback
 
     override fun orderBy(adapterType: RaceAdapterType) {

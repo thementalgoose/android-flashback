@@ -67,13 +67,8 @@ class WebFragment : CommonFragment() {
         load(pageTitle, pageUrl)
 
         back.setOnClickListener {
-            if (webview.canGoBack()) {
-                webview.goBack()
-            }
-            else {
-                exitWeb()
-                backCallback?.fragmentBackPressed()
-            }
+            exitWeb()
+            backCallback?.fragmentBackPressed()
         }
 
         openInBrowser.setOnClickListener {

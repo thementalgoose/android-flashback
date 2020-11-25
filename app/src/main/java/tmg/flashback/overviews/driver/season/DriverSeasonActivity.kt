@@ -41,11 +41,6 @@ class DriverSeasonActivity: BaseActivity() {
         loadFragment(DriverSeasonFragment.instance(season, driverId), R.id.fragment)
     }
 
-    override fun setInsets(insets: WindowInsetsCompat) {
-        titlebar.setPadding(0, insets.systemWindowInsetTop, 0, 0)
-    }
-
-
     companion object {
 
         private const val keyDriverId: String = "driverId"
