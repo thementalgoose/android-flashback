@@ -7,6 +7,7 @@ import com.nhaarman.mockitokotlin2.whenever
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.flow
+import org.junit.Ignore
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -20,7 +21,6 @@ import tmg.flashback.repo.enums.BarAnimation
 import tmg.flashback.repo.models.stats.LapTime
 import tmg.flashback.repo.models.stats.Round
 import tmg.flashback.repo.models.stats.RoundDriver
-import tmg.flashback.rss.testutils.BaseTest
 import tmg.flashback.shared.sync.SyncDataItem
 import tmg.flashback.shared.viewholders.DataUnavailable
 import tmg.flashback.testutils.*
@@ -60,7 +60,13 @@ class RaceViewModelTest: BaseTest() {
 
         initSUT()
 
-        assertValue(Triple(RACE, listOf(RaceModel.ErrorItem(SyncDataItem.NoNetwork)), expectedSeasonRound), sut.outputs.raceItems)
+        sut.outputs.raceItems.test {
+            assertValue(Triple(
+                RACE,
+                listOf(RaceModel.ErrorItem(SyncDataItem.NoNetwork)),
+                expectedSeasonRound
+            ))
+        }
     }
 
     @Test
@@ -70,7 +76,13 @@ class RaceViewModelTest: BaseTest() {
 
         initSUT(LocalDate.now().plusDays(1L))
 
-        assertValue(Triple(RACE, listOf(RaceModel.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.IN_FUTURE_RACE))), expectedSeasonRound), sut.outputs.raceItems)
+        sut.outputs.raceItems.test {
+            assertValue(Triple(
+                RACE,
+                listOf(RaceModel.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.IN_FUTURE_RACE))),
+                expectedSeasonRound
+            ))
+        }
     }
 
     @Test
@@ -80,7 +92,9 @@ class RaceViewModelTest: BaseTest() {
 
         initSUT(LocalDate.now().minusDays(1L))
 
-        assertValue(Triple(RACE, listOf(RaceModel.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.COMING_SOON_RACE))), expectedSeasonRound), sut.outputs.raceItems)
+        sut.outputs.raceItems.test {
+            assertValue(Triple(RACE, listOf(RaceModel.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.COMING_SOON_RACE))), expectedSeasonRound))
+        }
     }
 
     @Test
@@ -90,7 +104,9 @@ class RaceViewModelTest: BaseTest() {
 
         initSUT(null)
 
-        assertValue(Triple(RACE, listOf(RaceModel.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.MISSING_RACE))), expectedSeasonRound), sut.outputs.raceItems)
+        sut.outputs.raceItems.test {
+            assertValue(Triple(RACE, listOf(RaceModel.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.MISSING_RACE))), expectedSeasonRound))
+        }
     }
 
     @Test
@@ -101,7 +117,9 @@ class RaceViewModelTest: BaseTest() {
 
         initSUT(LocalDate.now().minusDays(showComingSoonMessageForNextDays - 1L))
 
-        assertValue(Triple(RACE, listOf(RaceModel.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.COMING_SOON_RACE))), expectedSeasonRound), sut.outputs.raceItems)
+        sut.outputs.raceItems.test {
+            assertValue(Triple(RACE, listOf(RaceModel.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.COMING_SOON_RACE))), expectedSeasonRound))
+        }
     }
 
     @Test
@@ -111,7 +129,9 @@ class RaceViewModelTest: BaseTest() {
 
         initSUT(LocalDate.now())
 
-        assertValue(Triple(RACE, listOf(RaceModel.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.COMING_SOON_RACE))), expectedSeasonRound), sut.outputs.raceItems)
+        sut.outputs.raceItems.test {
+            assertValue(Triple(RACE, listOf(RaceModel.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.COMING_SOON_RACE))), expectedSeasonRound))
+        }
     }
 
     @Test
@@ -135,7 +155,9 @@ class RaceViewModelTest: BaseTest() {
 
         initSUT(orderBy = CONSTRUCTOR_STANDINGS)
 
-        assertValue(Triple(CONSTRUCTOR_STANDINGS, expected, expectedSeasonRound), sut.outputs.raceItems)
+        sut.outputs.raceItems.test {
+            assertValue(Triple(CONSTRUCTOR_STANDINGS, expected, expectedSeasonRound))
+        }
     }
 
     @Test
@@ -151,7 +173,9 @@ class RaceViewModelTest: BaseTest() {
 
         initSUT()
 
-        assertValue(Triple(RACE, expected, expectedSeasonRound), sut.outputs.raceItems)
+        sut.outputs.raceItems.test {
+            assertValue(Triple(RACE, expected, expectedSeasonRound))
+        }
     }
 
     @Test
@@ -167,7 +191,9 @@ class RaceViewModelTest: BaseTest() {
 
         initSUT()
 
-        assertValue(Triple(RACE, expected, expectedSeasonRound), sut.outputs.raceItems)
+        sut.outputs.raceItems.test {
+            assertValue(Triple(RACE, expected, expectedSeasonRound))
+        }
     }
 
     @Test
@@ -204,7 +230,9 @@ class RaceViewModelTest: BaseTest() {
 
         initSUT()
 
-        assertValue(Triple(RACE, expected, expectedSeasonRound), sut.outputs.raceItems)
+        sut.outputs.raceItems.test {
+            assertValue(Triple(RACE, expected, expectedSeasonRound))
+        }
     }
 
     @Test
@@ -220,7 +248,9 @@ class RaceViewModelTest: BaseTest() {
 
         initSUT(orderBy = QUALIFYING_POS)
 
-        assertValue(Triple(QUALIFYING_POS, expected, expectedSeasonRound), sut.outputs.raceItems)
+        sut.outputs.raceItems.test {
+            assertValue(Triple(QUALIFYING_POS, expected, expectedSeasonRound))
+        }
     }
 
     @Test
@@ -236,7 +266,9 @@ class RaceViewModelTest: BaseTest() {
 
         initSUT(orderBy = QUALIFYING_POS_2)
 
-        assertValue(Triple(QUALIFYING_POS_2, expected, expectedSeasonRound), sut.outputs.raceItems)
+        sut.outputs.raceItems.test {
+            assertValue(Triple(QUALIFYING_POS_2, expected, expectedSeasonRound))
+        }
     }
 
     @Test
@@ -252,7 +284,9 @@ class RaceViewModelTest: BaseTest() {
 
         initSUT(orderBy = QUALIFYING_POS_1)
 
-        assertValue(Triple(QUALIFYING_POS_1, expected, expectedSeasonRound), sut.outputs.raceItems)
+        sut.outputs.raceItems.test {
+            assertValue(Triple(QUALIFYING_POS_1, expected, expectedSeasonRound))
+        }
     }
 
     @Test
@@ -273,17 +307,23 @@ class RaceViewModelTest: BaseTest() {
 
         initSUT(orderBy = QUALIFYING_POS)
 
-        assertLatestValue(Triple(QUALIFYING_POS, expectedQ3, expectedSeasonRound), sut.outputs.raceItems)
+        sut.outputs.raceItems.test {
+            assertValue(Triple(QUALIFYING_POS, expectedQ3, expectedSeasonRound))
+        }
 
         sut.inputs.orderBy(QUALIFYING_POS_1)
         advanceUntilIdle()
 
-        assertLatestValue(Triple(QUALIFYING_POS_1, expectedQ1, expectedSeasonRound), sut.outputs.raceItems)
+        sut.outputs.raceItems.test {
+            assertValue(Triple(QUALIFYING_POS_1, expectedQ1, expectedSeasonRound))
+        }
 
         sut.inputs.orderBy(QUALIFYING_POS_2)
         advanceUntilIdle()
 
-        assertLatestValue(Triple(QUALIFYING_POS_2, expectedQ2, expectedSeasonRound), sut.outputs.raceItems)
+        sut.outputs.raceItems.test {
+            assertValue(Triple(QUALIFYING_POS_2, expectedQ2, expectedSeasonRound))
+        }
     }
 
     @Test
@@ -299,7 +339,9 @@ class RaceViewModelTest: BaseTest() {
 
         initSUT(orderBy = QUALIFYING_POS)
 
-        assertValue(Triple(QUALIFYING_POS, expected, expectedSeasonRound), sut.outputs.raceItems)
+        sut.outputs.raceItems.test {
+            assertValue(Triple(QUALIFYING_POS, expected, expectedSeasonRound))
+        }
     }
 
     @Test
@@ -315,14 +357,18 @@ class RaceViewModelTest: BaseTest() {
 
         initSUT(orderBy = QUALIFYING_POS)
 
-        assertLatestValue(Triple(QUALIFYING_POS, expected, SeasonRound(2019, 3)), sut.outputs.raceItems)
+        sut.outputs.raceItems.test {
+            assertValue(Triple(QUALIFYING_POS, expected, SeasonRound(2019, 3)))
+        }
 
         // QUALIFYING_POS_1 not available in the UI
 
         initSUT(orderBy = QUALIFYING_POS_2)
         advanceUntilIdle()
 
-        assertLatestValue(Triple(QUALIFYING_POS_2, expected, SeasonRound(2019, 3)), sut.outputs.raceItems)
+        sut.outputs.raceItems.test {
+            assertValue(Triple(QUALIFYING_POS_2, expected, SeasonRound(2019, 3)))
+        }
     }
 
     @Test
@@ -334,7 +380,9 @@ class RaceViewModelTest: BaseTest() {
 
         sut.inputs.goToDriver(expectedDriverId, expectedDriverName)
 
-        assertDataEventValue(Pair(expectedDriverId, expectedDriverName), sut.outputs.goToDriverOverview)
+        sut.outputs.goToDriverOverview.test {
+            assertDataEventValue(Pair(expectedDriverId, expectedDriverName))
+        }
     }
 
     @Test
@@ -346,7 +394,9 @@ class RaceViewModelTest: BaseTest() {
 
         sut.inputs.goToConstructor(expectedConstructorId, expectedConstructorName)
 
-        assertDataEventValue(Pair(expectedConstructorId, expectedConstructorName), sut.outputs.goToConstructorOverview)
+        sut.outputs.goToConstructorOverview.test {
+            assertDataEventValue(Pair(expectedConstructorId, expectedConstructorName))
+        }
     }
 
     @Test
@@ -357,7 +407,9 @@ class RaceViewModelTest: BaseTest() {
         sut.inputs.initialise(2020, 1, LocalDate.now())
         advanceUntilIdle()
 
-        assertValue(SeasonRound(2020, 1), sut.outputs.seasonRoundData)
+        sut.outputs.seasonRoundData.test {
+            assertValue(SeasonRound(2020, 1))
+        }
     }
 
     @Test
@@ -365,20 +417,26 @@ class RaceViewModelTest: BaseTest() {
 
         initSUT()
 
-        assertValue(false, sut.outputs.showLinks)
+        sut.outputs.showLinks.test {
+            assertValue(false)
+        }
     }
 
-    // Look at re-implementing this to make it test friendly
-    // As of 24/10/2020 it works but it's because i'm doing it hacky (:
-//    @Test
-//    fun `RaceViewModel initialisation sets wikipedia button to true if round data contains wikipedia link`() = coroutineTest {
-//
-//        whenever(mockSeasonOverviewDB.getSeasonRound(any(), any())).thenReturn(flow { emit(mockRound1) })
-//
-//        initSUT()
-//
-//        assertValue(true, sut.outputs.showWikipedia)
-//    }
+//     Look at re-implementing this to make it test friendly
+//     As of 24/10/2020 it works but it's because i'm doing it hacky (:
+    @Test
+    @Ignore
+    fun `RaceViewModel initialisation sets wikipedia button to true if round data contains wikipedia link`() = coroutineTest {
+
+        whenever(mockSeasonOverviewDB.getSeasonRound(any(), any())).thenReturn(flow { emit(mockRound1) })
+
+        initSUT()
+
+        sut.outputs.goToWikipedia.test {
+            // TODO: Uncomment this
+//            assertEventFired()
+        }
+    }
 
     @Test
     fun `RaceViewModel clicking wikipedia button fires goToWikipedia event`() = coroutineTest {
@@ -389,7 +447,9 @@ class RaceViewModelTest: BaseTest() {
 
         sut.inputs.clickWikipedia()
 
-        assertEventFired(sut.outputs.goToWikipedia)
+        sut.outputs.goToWikipedia.test {
+            assertEventFired()
+        }
     }
 
     @AfterEach

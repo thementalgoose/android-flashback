@@ -17,7 +17,7 @@ import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.enums.BarAnimation.*
 import tmg.flashback.repo.enums.ThemePref.*
 import tmg.flashback.settings.SettingsOptions.*
-import tmg.flashback.rss.testutils.BaseTest
+import tmg.flashback.testutils.BaseTest
 import tmg.flashback.testutils.assertEventFired
 import tmg.flashback.testutils.test
 import tmg.flashback.utils.Selected
@@ -83,7 +83,9 @@ class SettingsViewModelTest: BaseTest() {
 
         initSUT()
 
-        assertEquals(expectedNewsList, sut.settings.test().latestValue())
+        sut.outputs.settings.test {
+            assertValue(expectedNewsList)
+        }
     }
 
     @Test
@@ -102,7 +104,9 @@ class SettingsViewModelTest: BaseTest() {
             }
         }
 
-        assertEquals(expected, sut.settings.test().latestValue())
+        sut.outputs.settings.test {
+            assertValue(expected)
+        }
     }
 
     @Test
@@ -116,7 +120,9 @@ class SettingsViewModelTest: BaseTest() {
                 Selected(BottomSheetItem(NIGHT.ordinal, NIGHT.icon, NIGHT.label), false)
         )
 
-        assertEquals(expected, sut.themePreferences.test().latestValue())
+        sut.outputs.themePreferences.test {
+            assertValue(expected)
+        }
     }
 
     @Test
@@ -131,7 +137,9 @@ class SettingsViewModelTest: BaseTest() {
                 Selected(BottomSheetItem(SLOW.ordinal, SLOW.icon, SLOW.label), false)
         )
 
-        assertEquals(expected, sut.animationPreference.test().latestValue())
+        sut.outputs.animationPreference.test {
+            assertValue(expected)
+        }
     }
 
     @Test
@@ -142,7 +150,9 @@ class SettingsViewModelTest: BaseTest() {
         sut.pickTheme(NIGHT)
         verify(mockPrefs).theme = NIGHT
 
-        assertEventFired(sut.outputs.themeChanged)
+        sut.outputs.themeChanged.test {
+            assertEventFired()
+        }
     }
 
     @Test
@@ -153,7 +163,9 @@ class SettingsViewModelTest: BaseTest() {
         sut.pickAnimationSpeed(SLOW)
         verify(mockPrefs).barAnimation = SLOW
 
-        assertEventFired(sut.outputs.animationChanged)
+        sut.outputs.animationChanged.test {
+            assertEventFired()
+        }
     }
 
     @Test
@@ -163,7 +175,9 @@ class SettingsViewModelTest: BaseTest() {
 
         sut.inputs.preferenceClicked(SettingsOptions.THEME, null)
 
-        assertEventFired(sut.openThemePicker)
+        sut.outputs.openThemePicker.test {
+            assertEventFired()
+        }
     }
 
     @Test
@@ -173,7 +187,9 @@ class SettingsViewModelTest: BaseTest() {
 
         sut.inputs.preferenceClicked(BAR_ANIMATION_SPEED, null)
 
-        assertEventFired(sut.openAnimationPicker)
+        sut.outputs.openAnimationPicker.test {
+            assertEventFired()
+        }
     }
 
     @Test
@@ -233,7 +249,9 @@ class SettingsViewModelTest: BaseTest() {
 
         sut.inputs.preferenceClicked(ABOUT, null)
 
-        assertEventFired(sut.outputs.openAbout)
+        sut.outputs.openAbout.test {
+            assertEventFired()
+        }
     }
 
     @Test
@@ -243,7 +261,9 @@ class SettingsViewModelTest: BaseTest() {
 
         sut.inputs.preferenceClicked(RELEASE, null)
 
-        assertEventFired(sut.outputs.openRelease)
+        sut.outputs.openRelease.test {
+            assertEventFired()
+        }
     }
 
     @Test
@@ -263,7 +283,9 @@ class SettingsViewModelTest: BaseTest() {
 
         sut.inputs.preferenceClicked(SUGGESTION, null)
 
-        assertEventFired(sut.outputs.openSuggestions)
+        sut.outputs.openSuggestions.test {
+            assertEventFired()
+        }
     }
 
     @Test
@@ -283,7 +305,9 @@ class SettingsViewModelTest: BaseTest() {
 
         sut.inputs.preferenceClicked(NEWS, null)
 
-        assertEventFired(sut.outputs.openNews)
+        sut.outputs.openNews.test {
+            assertEventFired()
+        }
     }
 
     @AfterEach

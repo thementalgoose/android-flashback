@@ -18,7 +18,6 @@ import tmg.flashback.overviews.driver.summary.DriverSummaryItem
 import tmg.flashback.overviews.driver.summary.PipeType.*
 import tmg.flashback.repo.NetworkConnectivityManager
 import tmg.flashback.repo.db.stats.DriverDB
-import tmg.flashback.rss.testutils.BaseTest
 import tmg.flashback.shared.sync.SyncDataItem
 import tmg.flashback.shared.viewholders.DataUnavailable
 import tmg.flashback.testutils.*
@@ -53,7 +52,9 @@ class DriverViewModelTest: BaseTest() {
 
         initSUT()
 
-        assertValue(expected, sut.outputs.list)
+        sut.outputs.list.test {
+            assertValue(expected)
+        }
     }
 
     @Test
@@ -68,7 +69,9 @@ class DriverViewModelTest: BaseTest() {
 
         initSUT()
 
-        assertValue(expected, sut.outputs.list)
+        sut.outputs.list.test {
+            assertValue(expected)
+        }
     }
 
     @Test
@@ -78,10 +81,12 @@ class DriverViewModelTest: BaseTest() {
 
         initSUT()
 
-        assertListContains(sut.outputs.list) {
-            it is DriverSummaryItem.ErrorItem &&
-                    it.item is SyncDataItem.MessageRes &&
-                    (it.item as SyncDataItem.MessageRes).msg == R.string.results_accurate_for_year
+        sut.outputs.list.test {
+            assertListMatchesItem {
+                it is DriverSummaryItem.ErrorItem &&
+                        it.item is SyncDataItem.MessageRes &&
+                        (it.item as SyncDataItem.MessageRes).msg == R.string.results_accurate_for_year
+            }
         }
     }
 
@@ -92,18 +97,20 @@ class DriverViewModelTest: BaseTest() {
 
         initSUT()
 
-        assertListContains(sut.outputs.list) {
-            if (it is DriverSummaryItem.Header) {
-                assertEquals(mockDriverFirstName, it.driverFirstname)
-                assertEquals(mockDriverLastName, it.driverSurname)
-                assertEquals(mockDriverNumber, it.driverNumber)
-                assertEquals(mockDriverPhotoUrl, it.driverImg)
-                assertEquals(mockDriverDateOfBirth, it.driverBirthday)
-                assertEquals(mockDriverWikiUrl, it.driverWikiUrl)
-                assertEquals(mockDriverNationalityISO, it.driverNationalityISO)
-                return@assertListContains true
+        sut.outputs.list.test {
+            assertListMatchesItem {
+                if (it is DriverSummaryItem.Header) {
+                    assertEquals(mockDriverFirstName, it.driverFirstname)
+                    assertEquals(mockDriverLastName, it.driverSurname)
+                    assertEquals(mockDriverNumber, it.driverNumber)
+                    assertEquals(mockDriverPhotoUrl, it.driverImg)
+                    assertEquals(mockDriverDateOfBirth, it.driverBirthday)
+                    assertEquals(mockDriverWikiUrl, it.driverWikiUrl)
+                    assertEquals(mockDriverNationalityISO, it.driverNationalityISO)
+                    return@assertListMatchesItem true
+                }
+                return@assertListMatchesItem false
             }
-            return@assertListContains false
         }
     }
 
@@ -114,13 +121,13 @@ class DriverViewModelTest: BaseTest() {
 
         initSUT()
 
-        assertListContains(sut.outputs.list) {
-            it == DriverSummaryItem.Stat(
+        sut.outputs.list.test {
+            assertListContainsItem(DriverSummaryItem.Stat(
                 tint = R.attr.f1Favourite,
                 icon = R.drawable.ic_menu_drivers,
                 label = R.string.driver_overview_stat_career_drivers_title,
                 value = "1"
-            )
+            ))
         }
     }
 
@@ -131,12 +138,12 @@ class DriverViewModelTest: BaseTest() {
 
         initSUT()
 
-        assertListContains(sut.outputs.list) {
-            it == DriverSummaryItem.Stat(
+        sut.outputs.list.test {
+            assertListContainsItem(DriverSummaryItem.Stat(
                 icon = R.drawable.ic_menu_drivers,
                 label = R.string.driver_overview_stat_career_drivers_title,
                 value = "0"
-            )
+            ))
         }
     }
 
@@ -147,12 +154,12 @@ class DriverViewModelTest: BaseTest() {
 
         initSUT()
 
-        assertListDoesntContains(sut.outputs.list) {
-            it == DriverSummaryItem.Stat(
+        sut.outputs.list.test {
+            assertListExcludesItem(DriverSummaryItem.Stat(
                 icon = R.drawable.ic_championship_order,
                 label = R.string.driver_overview_stat_career_best_championship_position,
                 value = "1st"
-            )
+            ))
         }
     }
 
@@ -164,12 +171,12 @@ class DriverViewModelTest: BaseTest() {
 
         initSUT()
 
-        assertListContains(sut.outputs.list) {
-            it == DriverSummaryItem.Stat(
+        sut.outputs.list.test {
+            assertListContainsItem(DriverSummaryItem.Stat(
                 icon = R.drawable.ic_championship_order,
                 label = R.string.driver_overview_stat_career_best_championship_position,
                 value = "1st"
-            )
+            ))
         }
     }
 
@@ -228,7 +235,9 @@ class DriverViewModelTest: BaseTest() {
 
         initSUT()
 
-        assertListContainsValues(sut.outputs.list, expected)
+        sut.outputs.list.test {
+            assertListContainsItems(expected)
+        }
     }
 
     @Test
@@ -312,7 +321,9 @@ class DriverViewModelTest: BaseTest() {
 
         initSUT()
 
-        assertListContainsValues(sut.outputs.list, expected)
+        sut.outputs.list.test {
+            assertListContainsItems(expected)
+        }
     }
 
     @Test
@@ -336,7 +347,9 @@ class DriverViewModelTest: BaseTest() {
 
         initSUT()
 
-        assertListContainsValues(sut.outputs.list, expected)
+        sut.outputs.list.test {
+            assertListContainsItems(expected)
+        }
     }
 
     @Test
@@ -360,7 +373,9 @@ class DriverViewModelTest: BaseTest() {
 
         initSUT()
 
-        assertListContainsValues(sut.outputs.list, expected)
+        sut.outputs.list.test {
+            assertListContainsItems(expected)
+        }
     }
 
     @Test
@@ -372,7 +387,9 @@ class DriverViewModelTest: BaseTest() {
 
         sut.inputs.openSeason(expected)
 
-        assertDataEventValue(Pair(mockDriverId, expected), sut.outputs.openSeason)
+        sut.outputs.openSeason.test {
+            assertDataEventValue(Pair(mockDriverId, expected))
+        }
     }
 
     @Test
@@ -384,7 +401,9 @@ class DriverViewModelTest: BaseTest() {
 
         sut.inputs.openUrl(expectUrl)
 
-        assertDataEventValue(expectUrl, sut.outputs.openUrl)
+        sut.outputs.openUrl.test {
+            assertDataEventValue(expectUrl)
+        }
     }
 
     @AfterEach

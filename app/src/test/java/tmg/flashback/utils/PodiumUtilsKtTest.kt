@@ -3,7 +3,7 @@ package tmg.flashback.utils
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
-import tmg.flashback.rss.testutils.BaseTest
+import tmg.flashback.testutils.BaseTest
 
 class PodiumUtilsKtTest: BaseTest() {
 
