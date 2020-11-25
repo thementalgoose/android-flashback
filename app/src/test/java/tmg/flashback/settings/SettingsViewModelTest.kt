@@ -17,7 +17,7 @@ import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.enums.BarAnimation.*
 import tmg.flashback.repo.enums.ThemePref.*
 import tmg.flashback.settings.SettingsOptions.*
-import tmg.flashback.testutils.BaseTest
+import tmg.flashback.rss.testutils.BaseTest
 import tmg.flashback.testutils.assertEventFired
 import tmg.flashback.testutils.test
 import tmg.flashback.utils.Selected

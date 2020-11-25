@@ -17,6 +17,7 @@ import tmg.flashback.overviews.constructor.summary.ConstructorSummaryItem
 import tmg.flashback.overviews.driver.summary.PipeType
 import tmg.flashback.repo.NetworkConnectivityManager
 import tmg.flashback.repo.db.stats.ConstructorDB
+import tmg.flashback.rss.testutils.BaseTest
 import tmg.flashback.shared.sync.SyncDataItem
 import tmg.flashback.shared.viewholders.DataUnavailable
 import tmg.flashback.testutils.*

@@ -11,18 +11,15 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDateTime
-import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.repo.NetworkConnectivityManager
-import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.db.news.RSSDB
 import tmg.flashback.repo.enums.SupportedArticleSource
 import tmg.flashback.repo.models.Response
 import tmg.flashback.repo.models.rss.Article
 import tmg.flashback.repo.models.rss.ArticleSource
 import tmg.flashback.rss.prefs.RSSPrefsDB
-import tmg.flashback.rss.ui.RSSItem
-import tmg.flashback.rss.ui.RSSViewModel
-import tmg.flashback.testutils.*
+import tmg.flashback.rss.testutils.BaseTest
+import tmg.flashback.rss.testutils.*
 
 @FlowPreview
 @ExperimentalCoroutinesApi
@@ -79,34 +76,32 @@ class RSSViewModelTest: BaseTest() {
 
         initSUT()
 
-        val observer = sut.outputs.isRefreshing.test()
+        val observer = sut.outputs.isRefreshing.testObserve()
         advanceUntilIdle()
 
-        assertListContains(sut.outputs.list) {
-            it == RSSItem.RSS(mockArticle) || it is RSSItem.Message
+        sut.outputs.list.test {
+            assertListContainsItem(RSSItem.RSS(mockArticle))
+            assertListHasItem { it is RSSItem.Message }
         }
-        assertEquals(listOf(true, false), observer.listOfValues.toList())
+
+        observer.assertEmittedItems(true, false)
 
         sut.inputs.refresh()
 
         advanceUntilIdle()
 
-        assertEquals(listOf(true, false, true, false), observer.listOfValues.toList())
+        observer.assertEmittedItems(true, false, true, false)
     }
 
     @Test
     fun `RSSViewModel init loads all news sources`() = coroutineTest {
 
-        val expected = listOf(
-            RSSItem.RSS(mockArticle)
-        )
-
         initSUT()
         advanceUntilIdle()
 
-        assertListContains(sut.outputs.list) {
-            it == RSSItem.RSS(mockArticle) ||
-                    (it is RSSItem.Message && it.msg.split(":").size == 3)
+        sut.outputs.list.test {
+            assertListContainsItem(RSSItem.RSS(mockArticle))
+            assertListHasItem { it is RSSItem.Message && it.msg.split(":").size == 3 }
         }
     }
 
@@ -123,7 +118,9 @@ class RSSViewModelTest: BaseTest() {
         initSUT()
         advanceUntilIdle()
 
-        assertValue(expected, sut.outputs.list)
+        sut.outputs.list.test {
+            assertValue(expected)
+        }
     }
 
     @Test
@@ -138,7 +135,9 @@ class RSSViewModelTest: BaseTest() {
         initSUT()
         advanceUntilIdle()
 
-        assertValue(expected, sut.outputs.list)
+        sut.outputs.list.test {
+            assertValue(expected)
+        }
     }
 
     @Test
@@ -153,7 +152,9 @@ class RSSViewModelTest: BaseTest() {
         initSUT()
         advanceUntilIdle()
 
-        assertValue(expected, sut.outputs.list)
+        sut.outputs.list.test {
+            assertValue(expected)
+        }
     }
 
     @Test
@@ -168,7 +169,9 @@ class RSSViewModelTest: BaseTest() {
         initSUT()
         advanceUntilIdle()
 
-        assertValue(expected, sut.outputs.list)
+        sut.outputs.list.test {
+            assertValue(expected)
+        }
     }
 
 

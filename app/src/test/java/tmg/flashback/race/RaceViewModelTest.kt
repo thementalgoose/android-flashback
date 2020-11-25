@@ -20,6 +20,7 @@ import tmg.flashback.repo.enums.BarAnimation
 import tmg.flashback.repo.models.stats.LapTime
 import tmg.flashback.repo.models.stats.Round
 import tmg.flashback.repo.models.stats.RoundDriver
+import tmg.flashback.rss.testutils.BaseTest
 import tmg.flashback.shared.sync.SyncDataItem
 import tmg.flashback.shared.viewholders.DataUnavailable
 import tmg.flashback.testutils.*

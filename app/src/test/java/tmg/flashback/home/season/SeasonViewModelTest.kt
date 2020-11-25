@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.home.season.HeaderType.*
 import tmg.flashback.repo.db.PrefsDB
+import tmg.flashback.rss.testutils.BaseTest
 import tmg.flashback.testutils.*
 
 class SeasonViewModelTest: BaseTest() {

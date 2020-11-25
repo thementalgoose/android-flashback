@@ -27,6 +27,7 @@ import tmg.flashback.repo.enums.BarAnimation
 import tmg.flashback.repo.models.AppBanner
 import tmg.flashback.repo.models.AppLockout
 import tmg.flashback.repo.models.stats.History
+import tmg.flashback.rss.testutils.BaseTest
 import tmg.flashback.shared.sync.SyncDataItem
 import tmg.flashback.shared.viewholders.DataUnavailable
 import tmg.flashback.testutils.*
