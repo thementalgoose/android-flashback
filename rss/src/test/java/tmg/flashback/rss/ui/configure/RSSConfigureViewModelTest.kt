@@ -8,12 +8,11 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
-import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.enums.SupportedArticleSource
 import tmg.flashback.rss.R
 import tmg.flashback.rss.prefs.RSSPrefsDB
-import tmg.flashback.testutils.BaseTest
-import tmg.flashback.testutils.assertValue
+import tmg.flashback.rss.testutils.BaseTest
+import tmg.flashback.rss.testutils.test
 import java.util.stream.Stream
 
 class RSSConfigureViewModelTest: BaseTest() {
@@ -41,7 +40,9 @@ class RSSConfigureViewModelTest: BaseTest() {
             quick = SupportedArticleSource.values().toList()
         )
 
-        assertValue(expected, sut.outputs.list)
+        sut.outputs.list.test {
+            assertValue(expected)
+        }
     }
 
     @Test
@@ -74,7 +75,9 @@ class RSSConfigureViewModelTest: BaseTest() {
         whenever(mockPrefs.rssUrls).thenReturn(setOf(source.rssLink))
         sut.inputs.removeItem(source.rssLink)
 
-        assertValue(expected, sut.outputs.list)
+        sut.outputs.list.test {
+            assertValue(expected)
+        }
     }
 
     @Test
@@ -112,7 +115,9 @@ class RSSConfigureViewModelTest: BaseTest() {
         )
         sut.inputs.removeItem(source.rssLink)
 
-        assertValue(expected, sut.outputs.list)
+        sut.outputs.list.test {
+            assertValue(expected)
+        }
     }
 
     @Test
@@ -130,7 +135,9 @@ class RSSConfigureViewModelTest: BaseTest() {
         whenever(mockPrefs.rssUrls).thenReturn(setOf(item))
         sut.inputs.addCustomItem(item)
 
-        assertValue(expected, sut.outputs.list)
+        sut.outputs.list.test {
+            assertValue(expected)
+        }
     }
 
     @Test
@@ -147,7 +154,9 @@ class RSSConfigureViewModelTest: BaseTest() {
         whenever(mockPrefs.rssUrls).thenReturn(emptySet())
         sut.inputs.removeItem(item)
 
-        assertValue(expected, sut.outputs.list)
+        sut.outputs.list.test {
+            assertValue(expected)
+        }
     }
 
     @Test

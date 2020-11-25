@@ -17,6 +17,7 @@ import tmg.flashback.repo.NetworkConnectivityManager
 import tmg.flashback.repo.db.stats.CircuitDB
 import tmg.flashback.repo.models.stats.Circuit
 import tmg.flashback.repo.models.stats.CircuitRace
+import tmg.flashback.rss.testutils.BaseTest
 import tmg.flashback.shared.sync.SyncDataItem
 import tmg.flashback.testutils.*
 

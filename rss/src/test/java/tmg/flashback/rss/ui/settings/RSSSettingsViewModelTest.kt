@@ -11,9 +11,9 @@ import org.junit.jupiter.api.Test
 import tmg.components.prefs.AppPreferencesItem
 import tmg.flashback.rss.R
 import tmg.flashback.rss.prefs.RSSPrefsDB
-import tmg.flashback.testutils.BaseTest
-import tmg.flashback.testutils.assertEventFired
-import tmg.flashback.testutils.test
+import tmg.flashback.rss.testutils.BaseTest
+import tmg.flashback.rss.testutils.assertEventFired
+import tmg.flashback.rss.testutils.test
 
 class RSSSettingsViewModelTest: BaseTest() {
 
@@ -71,7 +71,9 @@ class RSSSettingsViewModelTest: BaseTest() {
             )
         )
 
-        assertEquals(expected, sut.outputs.settings.test().latestValue())
+        sut.outputs.settings.test {
+            assertValue(expected)
+        }
     }
 
     @Test
@@ -79,7 +81,9 @@ class RSSSettingsViewModelTest: BaseTest() {
 
         sut.clickPref(keyConfigureSources)
 
-        assertEventFired(sut.outputs.goToConfigure)
+        sut.outputs.goToConfigure.test {
+            assertEventFired()
+        }
     }
 
     @Test

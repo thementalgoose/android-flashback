@@ -1,4 +1,4 @@
-package tmg.flashback.testutils
+package tmg.flashback.rss.testutils
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi

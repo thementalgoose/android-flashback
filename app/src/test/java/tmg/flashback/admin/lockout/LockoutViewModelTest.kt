@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test
 import tmg.flashback.di.device.BuildConfigProvider
 import tmg.flashback.repo.db.stats.DataDB
 import tmg.flashback.repo.models.AppLockout
+import tmg.flashback.rss.testutils.BaseTest
 import tmg.flashback.testutils.*
 
 @FlowPreview
