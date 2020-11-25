@@ -17,7 +17,7 @@
         <activity
             android:name="tmg.flashback.SplashActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/LightTheme.Launcher">
+            android:theme="@style/Launcher">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

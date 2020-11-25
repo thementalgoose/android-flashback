@@ -122,7 +122,7 @@ val coloursDecade: Map<String, String> = mapOf(
  */
 // Configuration item
 fun configuration(context: Context, isDarkMode: Boolean = false) = AboutThisAppConfiguration(
-        themeRes = if (isDarkMode) R.style.DarkTheme else R.style.LightTheme,
+        themeRes = if (isDarkMode) R.style.DarkTheme_AboutThisApp else R.style.LightTheme_AboutThisApp,
         name = context.getString(R.string.about_name),
         nameDesc = context.getString(R.string.about_desc),
         imageUrl = "https://lh3.googleusercontent.com/l7T59nmp3joS3CUWEw-_mfmZAwXMHmiikR6uvQLFTXGy1-BlUICXxJZ9UCcvQlWhvQ",
