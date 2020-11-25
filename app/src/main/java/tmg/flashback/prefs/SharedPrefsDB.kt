@@ -51,7 +51,7 @@ class SharedPrefsDB(context: Context) : SharedPrefManager(context), PrefsDB, RSS
         set(value) = save(keyBottomSheetExpanded, value)
 
     override var showBottomSheetFavourited: Boolean
-        get() = getBoolean(keyBottomSheetFavourited, true)
+        get() = getBoolean(keyBottomSheetFavourited, false)
         set(value) = save(keyBottomSheetFavourited, value)
 
     override var showBottomSheetAll: Boolean

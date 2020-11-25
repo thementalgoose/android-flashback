@@ -28,71 +28,58 @@
 
         <activity
             android:name=".home.HomeActivity"
-            android:label=""
-            android:screenOrientation="portrait" />
+            android:label="" />
 
         <activity
             android:name=".race.RaceActivity"
-            android:label=""
-            android:screenOrientation="portrait" />
+            android:label="" />
 
         <activity
             android:name=".circuit.CircuitInfoActivity"
-            android:label=""
-            android:screenOrientation="portrait" />
+            android:label="" />
 
         <activity
             android:name=".settings.release.ReleaseActivity"
-            android:label=""
-            android:screenOrientation="portrait" />
+            android:label="" />
 
         <activity
             android:name=".settings.SettingsActivity"
-            android:label=""
-            android:screenOrientation="portrait" />
+            android:label="" />
 
         <activity
             android:name=".overviews.driver.DriverActivity"
-            android:label=""
-            android:screenOrientation="portrait" />
+            android:label="" />
 
         <activity
             android:name=".overviews.driver.season.DriverSeasonActivity"
-            android:label=""
-            android:screenOrientation="portrait" />
+            android:label="" />
 
         <activity
             android:name=".overviews.constructor.ConstructorActivity"
-            android:label=""
-            android:screenOrientation="portrait" />
+            android:label="" />
 
         <activity
             android:name=".admin.lockout.LockoutActivity"
-            android:label=""
-            android:screenOrientation="portrait" />
+            android:label="" />
 
         <activity
             android:name="tmg.components.about.AboutThisAppActivity"
-            android:label=""
-            android:screenOrientation="portrait" />
+            android:label="" />
 
 
 
         <activity
             android:name=".rss.ui.RSSActivity"
             android:exported="false"
-            android:label=""
-            android:screenOrientation="portrait" />
+            android:label="" />
 
         <activity
             android:name=".rss.ui.configure.RSSConfigureActivity"
-            android:label=""
-            android:screenOrientation="portrait" />
+            android:label="" />
 
         <activity
             android:name=".rss.ui.settings.RSSSettingsActivity"
-            android:label=""
-            android:screenOrientation="portrait" />
+            android:label="" />
 
     </application>
 

@@ -32,9 +32,29 @@
             android:paddingTop="@dimen/paddingXSmall"
             android:paddingEnd="@dimen/paddingXSmall"
             android:paddingBottom="@dimen/paddingXSmall"
-            tools:text="71st" />
+            tools:text="" />
 
     </androidx.cardview.widget.CardView>
+
+    <View
+        android:id="@+id/pipeTop"
+        android:layout_width="@dimen/bottomSheetBoxPipeSize"
+        android:layout_height="0dp"
+        android:layout_marginBottom="@dimen/paddingXSmall"
+        app:layout_constraintBottom_toBottomOf="@id/cardview"
+        app:layout_constraintEnd_toEndOf="@id/cardview"
+        app:layout_constraintStart_toStartOf="@id/cardview"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/pipeBottom"
+        android:layout_width="@dimen/bottomSheetBoxPipeSize"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/paddingXSmall"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/cardview"
+        app:layout_constraintStart_toStartOf="@id/cardview"
+        app:layout_constraintTop_toTopOf="@id/cardview" />
 
     <TextView
         android:id="@+id/label"
@@ -52,18 +72,18 @@
         tools:text="2019" />
 
     <ImageButton
-        android:background="@drawable/ripple_rounded"
-        tools:src="@drawable/ic_star_filled"
         android:id="@+id/favourite"
-        android:paddingTop="@dimen/paddingSmall"
-        android:paddingBottom="@dimen/paddingSmall"
-        android:paddingStart="@dimen/paddingSmall"
-        android:paddingEnd="@dimen/paddingSmall"
         android:layout_width="@dimen/bottomSheetIconSize"
         android:layout_height="@dimen/bottomSheetIconSize"
         android:layout_marginEnd="@dimen/paddingMedium"
+        android:background="@drawable/ripple_rounded"
+        android:paddingStart="@dimen/paddingSmall"
+        android:paddingTop="@dimen/paddingSmall"
+        android:paddingEnd="@dimen/paddingSmall"
+        android:paddingBottom="@dimen/paddingSmall"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/ic_star_filled" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

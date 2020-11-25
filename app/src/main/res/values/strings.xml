@@ -103,6 +103,16 @@
         <br/>• Migrated news away to RSS feed - Configure predefined or your own RSS feeds for formula 1 news
         <br/>• Fixed typos in settings panel
         <br/>• Fixed edge case crash in 1990s qualifying data]]></string>
+    <string name="release_31"><![CDATA[<b>5.2.1</b>
+        <br/>• Increases minimum support to Android 6.0 Marshmellow (API 23)
+        <br/>• Adds initial landscape support and a custom view for the home screen
+        <br/>• Changes RSS news animation and close animation to reduce crash rates
+        <br/>• Fixes crash when "Show on map" is pressed on certain devices
+        <br/>• Fixes some theming issues for new RSS feed section of the app
+        <br/>• Updated firebase analytics to 18.0.0
+        <br/>• Updated firebase auth to 20.0.1
+        <br/>• Updated firebase firestore to 22.0.0
+        <br/>• Updated firebase crashlytics to 17.3.0]]></string>
 
     <!-- App Lockout -->
     <string name="app_lockout_title">App lockout</string>
