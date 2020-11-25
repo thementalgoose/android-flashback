@@ -13,13 +13,13 @@ import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
 import tmg.flashback.*
 import tmg.flashback.race.RaceAdapterType.*
+import tmg.flashback.repo.NetworkConnectivityManager
 import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.db.stats.SeasonOverviewDB
 import tmg.flashback.repo.enums.BarAnimation
 import tmg.flashback.repo.models.stats.LapTime
 import tmg.flashback.repo.models.stats.Round
 import tmg.flashback.repo.models.stats.RoundDriver
-import tmg.flashback.settings.ConnectivityManager
 import tmg.flashback.shared.sync.SyncDataItem
 import tmg.flashback.shared.viewholders.DataUnavailable
 import tmg.flashback.testutils.*
@@ -33,7 +33,7 @@ class RaceViewModelTest: BaseTest() {
 
     private val mockSeasonOverviewDB: SeasonOverviewDB = mock()
     private val mockPrefsDB: PrefsDB = mock()
-    private val mockConnectivityManager: ConnectivityManager = mock()
+    private val mockConnectivityManager: NetworkConnectivityManager = mock()
 
     private val expectedSeasonRound: SeasonRound = SeasonRound(2019, 1)
 

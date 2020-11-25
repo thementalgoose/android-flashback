@@ -18,6 +18,7 @@ import tmg.flashback.*
 import tmg.flashback.di.device.BuildConfigProvider
 import tmg.flashback.home.HomeMenuItem.*
 import tmg.flashback.home.list.HomeItem
+import tmg.flashback.repo.NetworkConnectivityManager
 import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.db.stats.DataDB
 import tmg.flashback.repo.db.stats.HistoryDB
@@ -26,7 +27,6 @@ import tmg.flashback.repo.enums.BarAnimation
 import tmg.flashback.repo.models.AppBanner
 import tmg.flashback.repo.models.AppLockout
 import tmg.flashback.repo.models.stats.History
-import tmg.flashback.settings.ConnectivityManager
 import tmg.flashback.shared.sync.SyncDataItem
 import tmg.flashback.shared.viewholders.DataUnavailable
 import tmg.flashback.testutils.*
@@ -43,7 +43,7 @@ class HomeViewModelTest : BaseTest() {
     private val mockHistoryDB: HistoryDB = mock()
     private val mockDataDB: DataDB = mock()
     private val mockPrefsDB: PrefsDB = mock()
-    private val mockConnectivityManager: ConnectivityManager = mock()
+    private val mockConnectivityManager: NetworkConnectivityManager = mock()
     private val mockBuildConfigProvider: BuildConfigProvider = mock()
 
     @BeforeEach

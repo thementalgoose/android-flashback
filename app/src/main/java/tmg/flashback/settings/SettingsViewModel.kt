@@ -6,10 +6,10 @@ import tmg.flashback.R
 import tmg.flashback.base.BaseViewModel
 import tmg.flashback.extensions.icon
 import tmg.flashback.extensions.label
+import tmg.flashback.repo.ScopeProvider
+import tmg.flashback.repo.ToggleDB
 import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.enums.ThemePref
-import tmg.flashback.di.async.ScopeProvider
-import tmg.flashback.di.toggle.ToggleDB
 import tmg.flashback.repo.enums.BarAnimation
 import tmg.flashback.utils.Selected
 import tmg.flashback.utils.bottomsheet.BottomSheetItem

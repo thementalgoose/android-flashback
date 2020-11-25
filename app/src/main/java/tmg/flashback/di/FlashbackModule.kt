@@ -6,21 +6,20 @@ import tmg.flashback.BuildConfig
 import tmg.flashback.admin.lockout.LockoutViewModel
 import tmg.flashback.circuit.CircuitInfoViewModel
 import tmg.flashback.overviews.constructor.ConstructorViewModel
-import tmg.flashback.di.async.ScopeProvider
 import tmg.flashback.di.async.ViewModelScopeProvider
 import tmg.flashback.di.device.AppBuildConfigProvider
 import tmg.flashback.di.device.BuildConfigProvider
+import tmg.flashback.di.network.AndroidConnectivityManager
 import tmg.flashback.overviews.driver.DriverViewModel
 import tmg.flashback.overviews.driver.season.DriverSeasonViewModel
 import tmg.flashback.firebase.FirebaseCrashManager
 import tmg.flashback.home.HomeViewModel
 import tmg.flashback.home.season.SeasonViewModel
 import tmg.flashback.race.RaceViewModel
+import tmg.flashback.repo.NetworkConnectivityManager
+import tmg.flashback.repo.ScopeProvider
 import tmg.flashback.repo.db.CrashManager
-import tmg.flashback.settings.ConnectivityManager
-import tmg.flashback.settings.NetworkConnectivityManager
 import tmg.flashback.settings.SettingsViewModel
-import tmg.flashback.rss.settings.RSSSettingsViewModel
 
 var flashbackModule = module {
 
@@ -45,7 +44,7 @@ var flashbackModule = module {
     viewModel { SettingsViewModel(get(), get(), get()) }
     viewModel { LockoutViewModel(get(), get(), get()) }
 
-    single<ConnectivityManager> { NetworkConnectivityManager(get()) }
+    single<NetworkConnectivityManager> { AndroidConnectivityManager(get()) }
 
     single<BuildConfigProvider> { AppBuildConfigProvider() }
     single<ScopeProvider> { ViewModelScopeProvider() }

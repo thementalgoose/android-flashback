@@ -13,13 +13,13 @@ import kotlinx.coroutines.flow.map
 import tmg.flashback.R
 import tmg.flashback.base.BaseViewModel
 import tmg.flashback.currentYear
-import tmg.flashback.di.async.ScopeProvider
 import tmg.flashback.overviews.driver.summary.DriverSummaryItem
 import tmg.flashback.overviews.driver.summary.PipeType
 import tmg.flashback.overviews.driver.summary.addError
+import tmg.flashback.repo.NetworkConnectivityManager
+import tmg.flashback.repo.ScopeProvider
 import tmg.flashback.repo.db.stats.DriverDB
 import tmg.flashback.repo.models.stats.DriverOverview
-import tmg.flashback.settings.ConnectivityManager
 import tmg.flashback.shared.sync.SyncDataItem
 import tmg.flashback.shared.viewholders.DataUnavailable
 import tmg.flashback.utils.position
@@ -50,7 +50,7 @@ interface DriverViewModelOutputs {
 @Suppress("EXPERIMENTAL_API_USAGE")
 class DriverViewModel(
     private val driverDB: DriverDB,
-    private val connectivityManager: ConnectivityManager,
+    private val connectivityManager: NetworkConnectivityManager,
     scopeProvider: ScopeProvider
 ): BaseViewModel(
     scopeProvider

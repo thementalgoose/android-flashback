@@ -7,14 +7,11 @@
         <item name="colorPrimaryDark">#4A34B6</item>
         <item name="colorAccent">@color/logo_gradient_1</item>
 
-        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:statusBarColor">?attr/f1BackgroundPrimary</item>
         <item name="android:navigationBarColor">?attr/f1BackgroundPrimary</item>
-        <item name="android:windowTranslucentStatus">false</item>
-        <item name="android:windowTranslucentNavigation">true</item>
-        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:isLightTheme">true</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
 
-        <item name="f1Selected">#4403DAC5</item>
         <item name="f1BackgroundHighlighted">#334A34B6</item>
 
         <item name="f1TextPrimary">#181818</item>
@@ -50,9 +47,6 @@
         <item name="f1DeltaNegative">#4CAF50</item>
         <item name="f1DeltaWaiting">#FFA000</item>
 
-        <item name="f1Add">#4CAF50</item>
-        <item name="f1Remove">#f44336</item>
-
         <!-- About This App Activity -->
         <item name="aboutThisApp_header">?attr/colorPrimary</item>
         <item name="aboutThisApp_textPrimary">#181818</item>
@@ -62,15 +56,26 @@
         <item name="aboutThisApp_backgroundPrimary">?attr/f1BackgroundPrimary</item>
         <item name="aboutThisApp_backgroundSecondary">?attr/f1BackgroundSecondary</item>
 
-
+        <!-- RSS -->
+        <item name="rssBrandPrimary">?attr/colorPrimary</item>
+        <item name="rssAdd">#4CAF50</item>
+        <item name="rssRemove">#f44336</item>
+        <item name="rssBackground">?attr/f1BackgroundPrimary</item>
+        <item name="rssBackgroundSecondary">?attr/f1BackgroundSecondary</item>
+        <item name="rssBackgroundNewsBar">?attr/f1BackgroundSecondary</item>
+        <item name="rssTextPrimary">?attr/f1TextPrimary</item>
+        <item name="rssTextSecondary">?attr/f1TextSecondary</item>
+        <item name="rssTextTertiary">?attr/f1TextTertiary</item>
     </style>
 
     <style name="LightTheme.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.ActionBar" />
 
     <style name="LightTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Dark" />
 
-    <style name="LightTheme.Launcher" parent="LightTheme">
+    <style name="LightTheme.Launcher" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowBackground">@drawable/launch_screen</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
     </style>
 
     <style name="TransparentBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
@@ -95,14 +100,11 @@
         <item name="colorPrimaryDark">#7E57C2</item>
         <item name="colorAccent">@color/logo_gradient_1</item>
 
-        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:statusBarColor">?attr/f1BackgroundPrimary</item>
         <item name="android:navigationBarColor">?attr/f1BackgroundPrimary</item>
-        <item name="android:windowTranslucentStatus">false</item>
-        <item name="android:windowTranslucentNavigation">true</item>
-        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:isLightTheme">false</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
 
-        <item name="f1Selected">#4403DAC5</item>
         <item name="f1BackgroundHighlighted">#334A34B6</item>
 
         <item name="f1TextPrimary">#F8F8F8</item>
@@ -138,9 +140,6 @@
         <item name="f1DeltaNegative">#4CAF50</item>
         <item name="f1DeltaWaiting">#FFA000</item>
 
-        <item name="f1Add">#4CAF50</item>
-        <item name="f1Remove">#f44336</item>
-
         <!-- About This App Activity -->
         <item name="aboutThisApp_header">@color/logo_gradient_2</item>
         <item name="aboutThisApp_textPrimary">#f8f8f8</item>
@@ -149,20 +148,23 @@
         <item name="aboutThisApp_iconPrimary">?attr/aboutThisApp_textPrimary</item>
         <item name="aboutThisApp_backgroundPrimary">?attr/f1BackgroundPrimary</item>
         <item name="aboutThisApp_backgroundSecondary">?attr/f1BackgroundSecondary</item>
+
+        <!-- RSS -->
+        <item name="rssBrandPrimary">?attr/colorPrimary</item>
+        <item name="rssAdd">#4CAF50</item>
+        <item name="rssRemove">#f44336</item>
+        <item name="rssBackground">?attr/f1BackgroundPrimary</item>
+        <item name="rssBackgroundSecondary">?attr/f1BackgroundSecondary</item>
+        <item name="rssBackgroundNewsBar">?attr/f1BackgroundSecondary</item>
+        <item name="rssTextPrimary">?attr/f1TextPrimary</item>
+        <item name="rssTextSecondary">?attr/f1TextSecondary</item>
+        <item name="rssTextTertiary">?attr/f1TextTertiary</item>
     </style>
 
     <!--#endregion -->
 
     <style name="Text">
         <item name="android:textColor">?attr/f1TextPrimary</item>
-    </style>
-
-    <style name="Input.Text" parent="Text">
-        <item name="android:paddingStart">@dimen/paddingMedium</item>
-        <item name="android:paddingEnd">@dimen/paddingMedium</item>
-        <item name="android:paddingTop">@dimen/paddingSmall</item>
-        <item name="android:paddingBottom">@dimen/paddingSmall</item>
-        <item name="android:background">@drawable/background_input</item>
     </style>
 
     <!-- =========================================== -->
@@ -420,42 +422,6 @@
 
     <!-- =========================================== -->
 
-    <!--#region News -->
-
-    <style name="Text.News.Title" parent="Text">
-        <item name="android:textSize">@dimen/textSizeMedium</item>
-        <item name="android:textColor">?attr/f1TextPrimary</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="Text.News.Description" parent="Text">
-        <item name="android:textSize">@dimen/textSizeMedium</item>
-        <item name="android:textColor">?attr/f1TextSecondary</item>
-    </style>
-
-    <style name="Text.News.Date" parent="Text">
-        <item name="android:textSize">@dimen/textSizeSmall</item>
-        <item name="android:textColor">?attr/f1TextTertiary</item>
-    </style>
-
-    <style name="Text.News.Source" parent="Text">
-        <item name="android:textSize">@dimen/textSizeSmall</item>
-        <item name="android:textStyle">italic</item>
-        <item name="android:textColor">?attr/f1TextTertiary</item>
-    </style>
-
-    <style name="Text.News.SourceThumb" parent="Text">
-        <item name="android:textSize">@dimen/textSizeMedium</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@color/white</item>
-    </style>
-
-    <!--#endregion -->
-
-    <!-- =========================================== -->
-
-    <!-- =========================================== -->
-
     <!--#region Circuit Info -->
 
     <style name="Text.CircuitInfo.Name" parent="Text">
@@ -609,21 +575,6 @@
 
     <!-- =========================================== -->
 
-    <!-- =========================================== -->
-
-    <!--#region Web view -->
-
-    <style name="Text.Web.Title" parent="Text" />
-
-    <style name="Text.Web.Domain" parent="Text">
-        <item name="android:textSize">@dimen/textSizeSmall</item>
-        <item name="android:textColor">?attr/f1TextTertiary</item>
-    </style>
-
-    <!--#endregion -->
-
-    <!-- =========================================== -->
-
     <!--#region Bottom sheets -->
 
     <style name="Text.BottomSheet.Title" parent="Text">
@@ -708,54 +659,6 @@
     </style>
 
     <style name="Text.ReleaseNotes.Content" parent="Text" />
-
-    <!--#endregion -->
-
-    <!-- =========================================== -->
-
-    <!-- =========================================== -->
-
-    <!--#region RSS Configure -->
-
-    <style name="Text.RSS.Configure.Header" parent="Text">
-        <item name="android:textStyle">bold</item>
-        <item name="android:textSize">16sp</item>
-    </style>
-
-    <style name="Text.RSS.Configure.Subtitle" parent="Text">
-        <item name="android:textStyle">italic</item>
-        <item name="android:textSize">12sp</item>
-        <item name="android:textColor">?attr/f1TextSecondary</item>
-    </style>
-
-    <style name="Text.RSS.Configure.QuickAdd.SourceThumb" parent="Text">
-        <item name="android:textSize">@dimen/textSizeMedium</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@color/white</item>
-    </style>
-
-    <style name="Text.RSS.Configure.QuickAdd.Url" parent="Text">
-        <item name="android:textSize">@dimen/textSizeMedium</item>
-        <item name="android:textColor">?attr/f1TextPrimary</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="Text.RSS.Configure.Item.SourceThumb" parent="Text">
-        <item name="android:textSize">@dimen/textSizeMedium</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@color/white</item>
-    </style>
-
-    <style name="Text.RSS.Configure.Item.Url" parent="Text">
-        <item name="android:textSize">@dimen/textSizeMedium</item>
-        <item name="android:textColor">?attr/f1TextPrimary</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="Text.RSS.Configure.Item.RssFeed" parent="Text">
-        <item name="android:textSize">@dimen/textSizeSmall</item>
-        <item name="android:textColor">?attr/f1TextSecondary</item>
-    </style>
 
     <!--#endregion -->
 

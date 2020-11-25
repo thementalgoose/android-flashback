@@ -13,10 +13,10 @@ import org.threeten.bp.LocalTime
 import tmg.flashback.TrackLayout.MONACO
 import tmg.flashback.circuit.list.CircuitItem
 import tmg.flashback.extensions.circuitIcon
+import tmg.flashback.repo.NetworkConnectivityManager
 import tmg.flashback.repo.db.stats.CircuitDB
 import tmg.flashback.repo.models.stats.Circuit
 import tmg.flashback.repo.models.stats.CircuitRace
-import tmg.flashback.settings.ConnectivityManager
 import tmg.flashback.shared.sync.SyncDataItem
 import tmg.flashback.testutils.*
 
@@ -27,7 +27,7 @@ class CircuitInfoViewModelTest: BaseTest() {
     lateinit var sut: CircuitInfoViewModel
 
     private val mockCircuitDB: CircuitDB = mock()
-    private val mockConnectivityManager: ConnectivityManager = mock()
+    private val mockConnectivityManager: NetworkConnectivityManager = mock()
 
     private val mockCircuitId: String = MONACO.circuitId
     private val mockInvalidCircuitId: String = "mockCircuitId"

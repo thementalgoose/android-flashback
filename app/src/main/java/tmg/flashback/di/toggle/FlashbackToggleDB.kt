@@ -3,6 +3,7 @@ package tmg.flashback.di.toggle
 import android.content.Context
 import tmg.flashback.BuildConfig
 import tmg.flashback.R
+import tmg.flashback.repo.ToggleDB
 import tmg.utilities.extensions.getBoolean
 
 class FlashbackToggleDB(

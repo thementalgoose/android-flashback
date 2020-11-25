@@ -12,14 +12,14 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import tmg.flashback.R
 import tmg.flashback.base.BaseViewModel
-import tmg.flashback.di.async.ScopeProvider
 import tmg.flashback.overviews.constructor.summary.ConstructorSummaryItem
 import tmg.flashback.overviews.constructor.summary.addError
 import tmg.flashback.overviews.driver.summary.PipeType
+import tmg.flashback.repo.NetworkConnectivityManager
+import tmg.flashback.repo.ScopeProvider
 import tmg.flashback.repo.db.stats.ConstructorDB
 import tmg.flashback.repo.models.stats.ConstructorOverview
 import tmg.flashback.repo.models.stats.ConstructorOverviewStanding
-import tmg.flashback.settings.ConnectivityManager
 import tmg.flashback.shared.sync.SyncDataItem
 import tmg.flashback.shared.viewholders.DataUnavailable
 import tmg.flashback.utils.position
@@ -48,9 +48,9 @@ interface ConstructorViewModelOutputs {
 
 @Suppress("EXPERIMENTAL_API_USAGE")
 class ConstructorViewModel(
-        private val constructorDB: ConstructorDB,
-        private val connectivityManager: ConnectivityManager,
-        scopeProvider: ScopeProvider
+    private val constructorDB: ConstructorDB,
+    private val connectivityManager: NetworkConnectivityManager,
+    scopeProvider: ScopeProvider
 ): BaseViewModel(scopeProvider), ConstructorViewModelInputs, ConstructorViewModelOutputs {
 
     var inputs: ConstructorViewModelInputs = this

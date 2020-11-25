@@ -43,7 +43,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".rss.RSSActivity"
+            android:name=".rss.ui.RSSActivity"
             android:exported="false"
             android:label=""
             android:screenOrientation="portrait" />
@@ -59,7 +59,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".rss.settings.RSSSettingsActivity"
+            android:name="tmg.flashback.rss.ui.settings.RSSSettingsActivity"
             android:label=""
             android:screenOrientation="portrait" />
 
@@ -84,7 +84,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".rss.configure.RSSConfigureActivity"
+            android:name="tmg.flashback.rss.ui.configure.RSSConfigureActivity"
             android:label=""
             android:screenOrientation="portrait" />
 

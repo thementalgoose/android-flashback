@@ -27,8 +27,6 @@
 
     <attr name="f1PurpleSector" format="color" />
 
-    <attr name="f1Selected" format="color" />
-
     <attr name="f1Pos1" format="color" />
     <attr name="f1Pos2" format="color" />
     <attr name="f1Pos3" format="color" />
@@ -37,7 +35,4 @@
     <attr name="f1DeltaNegative" format="color" />
     <attr name="f1DeltaNeutral" format="color" />
     <attr name="f1DeltaWaiting" format="color" />
-
-    <attr name="f1Remove" format="color" />
-    <attr name="f1Add" format="color" />
 </resources>

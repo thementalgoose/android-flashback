@@ -163,29 +163,6 @@
     <string name="settings_help_shake_to_report_description">Shake the app at any time to screenshot and send me any bugs, issues, or suggestions you may have for this app!</string>
     <string name="settings_help_shake_to_report_notify">Your shake to report preference will be applied once the app has restarted</string>
 
-    <string name="settings_rss_title">RSS Settings</string>
-    <string name="settings_rss_appearance_title">Appearance</string>
-    <string name="settings_rss_show_description_title">Show description</string>
-    <string name="settings_rss_show_description_description">Show the article description alongside the rss source if it has one</string>
-    <string name="settings_rss_configure">Configure</string>
-    <string name="settings_rss_configure_sources_title">Configure sources</string>
-    <string name="settings_rss_configure_sources_description">Setup which RSS feeds you wish to subscribe too</string>
-    <string name="settings_rss_browser">Web Browser</string>
-    <string name="settings_rss_browser_external_title">Open articles in external browser</string>
-    <string name="settings_rss_browser_external_description">Open web links in an external browser by default and not inline in the app</string>
-    <string name="settings_rss_browser_javascript_title">Enable Javascript</string>
-    <string name="settings_rss_browser_javascript_description">For the in app browser: Toggle javascript being loaded. Disabling javascript should make the page and content load quicker but areas of the website may not perform properly</string>
-
-    <string name="rss_configure_title">Configure RSS</string>
-    <string name="rss_configure_header_items">Your RSS list</string>
-    <string name="rss_configure_header_items_subtitle">Configure your personalised RSS feed here!</string>
-    <string name="rss_configure_header_items_no_items">0 items</string>
-    <string name="rss_configure_header_add">Add custom</string>
-    <string name="rss_configure_header_add_subtitle">Add your own RSS link or feed to curate your own formula 1 news. If no posts are showing up, send me an email with the link you are trying to add!</string>
-    <string name="rss_configure_header_quick_add">Quick links</string>
-    <string name="rss_configure_header_quick_add_subtitle">These RSS feeds from popular news sites for F1 news, and these can be added to your personalised feed. If you wish to include another RSS feed in this list, send me an email!</string>
-    <string name="rss_configure_malformed_url">Error in URL</string>
-
     <!-- About -->
     <string name="about_name">Flashback</string>
     <string name="about_desc">Formula 1 statistics</string>
@@ -232,7 +209,6 @@
     <string name="home_driver_best_view_more">Season overview</string>
 
     <string name="home_partial_season" formatted="false">Statistics are shown as of the %s round of the grand prix, the %s. %d rounds to go</string> <!-- On pole or 2nd -->
-    <string name="home_last_updated"><![CDATA[Last updated <i>%s</i>]]></string> <!-- On pole or 2nd -->
 
     <!-- Race -->
     <string name="race_round" formatted="false">Round %d</string>
@@ -264,7 +240,6 @@
     <string name="shared_unavailable_missing_race">Unfortunately we don\'t have any information for this yet, please check back you have an internet connection and try again</string>
     <string name="shared_network_error">A network error occurred! Please check you are connected to the internet and try again</string>
     <string name="shared_network_internal_error">A network error occurred and we weren\'t able to find any articles. Please check your internet connection or try again later</string>
-    <string name="shared_network_no_articles">Welcome to the RSS feed!\nYou don\'t have any RSS sources enabled - Click here to configure them now</string>
     <string name="shared_constructor_championship_not_awarded">The constructors championship did not start until 1958</string>
 
     <!-- Standings -->
@@ -290,10 +265,8 @@
     <string name="ellipsis">…</string>
     <string name="close">Close</string>
     <string name="qualifying_grid_penalty" formatted="false">%d place grid penalty, starts %s</string>
-    <string name="choose_browser">Open in browser</string>
-    <string name="choose_share">Share with</string>
     <string name="on_pole_position">on pole position</string>
-    <string name="title_rss">RSS</string>
+
     <string name="shared_unavailable_circuit_not_found">We can\'t find any information on this circuit.</string>
     <string name="shared_unavailable_driver_not_found">We can\'t find any information on this driver.</string>
     <string name="shared_unavailable_constructor_not_found">We can\'t find any information on this constructor.</string>
@@ -334,7 +307,6 @@
     <string name="constructor_overview_stat_best_championship_standing">Championship standing</string>
     <string name="constructor_overview_stat_best_championship_standing_so_far">Current championship standing</string>
 
-
     <string name="results_accurate_for" formatted="false">Results as of the %s (round %d)</string>
     <string name="results_accurate_for_round" formatted="false">Results as of the %d, round %s</string>
     <string name="results_accurate_for_year" formatted="false">Results as of the %d %s (round %d)</string>
@@ -347,7 +319,5 @@
     <string name="app_shortcut_rss_disabled">RSS (Unavailable)</string>
     <string name="driver_overview_stat_birthday">Born %s</string>
     <string name="driver_overview_title_overview">Overview</string>
-    <string name="rss_configure_hint">www.formula1.com/link/to/rss</string>
-    <string name="rss_configure_valid_url">Valid URL required</string>
 
 </resources>

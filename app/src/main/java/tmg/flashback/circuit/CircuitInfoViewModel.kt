@@ -7,11 +7,11 @@ import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.*
 import tmg.flashback.base.BaseViewModel
 import tmg.flashback.circuit.list.CircuitItem
-import tmg.flashback.di.async.ScopeProvider
 import tmg.flashback.extensions.circuitIcon
+import tmg.flashback.repo.NetworkConnectivityManager
+import tmg.flashback.repo.ScopeProvider
 import tmg.flashback.repo.db.stats.CircuitDB
 import tmg.flashback.repo.models.stats.Circuit
-import tmg.flashback.settings.ConnectivityManager
 import tmg.flashback.shared.sync.SyncDataItem
 import tmg.utilities.extensions.then
 import tmg.utilities.lifecycle.DataEvent
@@ -42,7 +42,7 @@ interface CircuitInfoViewModelOutputs {
 @Suppress("EXPERIMENTAL_API_USAGE")
 class CircuitInfoViewModel(
     private val circuitDB: CircuitDB,
-    private val connectivityManager: ConnectivityManager,
+    private val connectivityManager: NetworkConnectivityManager,
     scopeProvider: ScopeProvider
 ) : BaseViewModel(scopeProvider), CircuitInfoViewModelInputs, CircuitInfoViewModelOutputs {
 
