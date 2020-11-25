@@ -5,13 +5,12 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.toColorInt
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.view_season_list_season.view.*
-import tmg.flashback.R
-import tmg.flashback.bottomSheetFastScrollDuration
-import tmg.flashback.coloursDecade
+import tmg.flashback.*
 import tmg.flashback.extensions.dimensionPx
+import tmg.flashback.home.season.HeaderType
 import tmg.flashback.home.season.SeasonListItem
-import tmg.flashback.minimumSupportedYear
 import tmg.utilities.extensions.ordinalAbbreviation
+import tmg.utilities.extensions.views.show
 
 class SeasonViewHolder(
     private var favouriteToggled: ((season: Int) -> Unit)? = null,
@@ -31,10 +30,16 @@ class SeasonViewHolder(
         currentSeason = season.season
         isFavourited = season.isFavourited
 
+        val colour = coloursDecade["${season.season.toString().substring(0, 3)}0"]?.toColorInt() ?: ContextCompat.getColor(itemView.context, R.color.colorTheme)
+
         itemView.label.text = season.season.toString()
         itemView.favourite.setImageResource(if (season.isFavourited) R.drawable.ic_star_filled_coloured else R.drawable.ic_star_outline)
-        itemView.season.setBackgroundColor(coloursDecade["${season.season.toString().substring(0, 3)}0"]?.toColorInt() ?: ContextCompat.getColor(itemView.context, R.color.colorTheme))
-//        itemView.season.text = ((season.season - minimumSupportedYear) + 1).ordinalAbbreviation
+        itemView.season.setBackgroundColor(colour)
+
+        itemView.pipeTop.setBackgroundColor(colour)
+        itemView.pipeBottom.setBackgroundColor(colour)
+        itemView.pipeTop.show(!currentSeason.toString().endsWith('9') && currentSeason != currentYear && season.fixed == HeaderType.ALL)
+        itemView.pipeBottom.show(!currentSeason.toString().endsWith('0') && currentSeason != currentYear && season.fixed == HeaderType.ALL)
 
         if (isCurrentlyOnScreen) {
             if (indentState) { // true = indent it!
