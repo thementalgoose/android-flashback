@@ -64,7 +64,6 @@ class RSSActivity: RSSBaseActivity(), FragmentRequestBack {
 
         observe(viewModel.outputs.isRefreshing) {
             swipeContainer.isRefreshing = it
-            list.show(!it)
         }
     }
 
