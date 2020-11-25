@@ -45,7 +45,7 @@
 
         <item name="rssBackground">#282828</item>
         <item name="rssBackgroundSecondary">#383838</item>
-        <item name="rssBackgroundNewsBar">#383838</item>
+        <item name="rssBackgroundNewsBar">#282828</item>
 
         <item name="rssTextPrimary">#F8F8F8</item>
         <item name="rssTextSecondary">#E8E8E8</item>
