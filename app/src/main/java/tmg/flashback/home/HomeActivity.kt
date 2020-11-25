@@ -199,13 +199,6 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback {
         }
     }
 
-    override fun setInsets(insets: WindowInsetsCompat) {
-        titlebar.setPadding(0, insets.systemWindowInsetTop, 0, 0)
-        bottomSheet.setPadding(0, insets.systemWindowInsetTop, 0, 0)
-        menu.setPadding(0, 0, 0, insets.systemWindowInsetBottom)
-        dataList.setPadding(0, 0, 0, insets.systemWindowInsetBottom)
-    }
-
     //region SeasonRequestedCallback
 
     override fun seasonRequested(season: Int) {

@@ -95,11 +95,6 @@ class SettingsActivity : BaseActivity() {
         }
     }
 
-    override fun setInsets(insets: WindowInsetsCompat) {
-        titlebar.setPadding(0, insets.systemWindowInsetTop, 0, 0)
-        rvSettings.setPadding(0, 0, 0, insets.systemWindowInsetBottom)
-    }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
             finish()

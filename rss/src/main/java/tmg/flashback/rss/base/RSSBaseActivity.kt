@@ -34,8 +34,4 @@ abstract class RSSBaseActivity: CommonActivity() {
             false -> R.style.RSS_DarkTheme
         }
     }
-
-    open fun setInsets(insets: WindowInsetsCompat) {
-
-    }
 }

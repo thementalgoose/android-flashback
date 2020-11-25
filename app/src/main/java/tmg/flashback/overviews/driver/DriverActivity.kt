@@ -64,11 +64,6 @@ class DriverActivity: BaseActivity() {
         }
     }
 
-    override fun setInsets(insets: WindowInsetsCompat) {
-        titlebar.setPadding(0, insets.systemWindowInsetTop, 0, 0)
-        list.setPadding(0, 0, 0, insets.systemWindowInsetBottom)
-    }
-
     companion object {
 
         private const val keyDriverId: String = "keyDriverId"
