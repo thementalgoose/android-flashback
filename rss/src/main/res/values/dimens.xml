@@ -27,6 +27,7 @@
 
     <!-- News icon size -->
 
+    <dimen name="toolbarHeight">54dp</dimen>
     <dimen name="toolbarIconSize">36dp</dimen>
     <dimen name="newsIconSize">36dp</dimen>
 

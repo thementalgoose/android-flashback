@@ -38,6 +38,8 @@ abstract class BaseActivity : CommonActivity() {
             false -> R.style.DarkTheme
         }
     }
+
+    @Deprecated("No longer used")
     open fun setInsets(insets: WindowInsetsCompat) {
 
     }

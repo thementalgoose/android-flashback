@@ -20,7 +20,7 @@
 
         <item name="rssBackground">#FBFBFB</item>
         <item name="rssBackgroundSecondary">#E8E8E8</item>
-        <item name="rssBackgroundNewsBar">#E8E8E8</item>
+        <item name="rssBackgroundNewsBar">#FBFBFB</item>
 
         <item name="rssTextPrimary">#181818</item>
         <item name="rssTextSecondary">#383838</item>
