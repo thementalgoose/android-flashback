@@ -14,7 +14,6 @@ import org.junit.jupiter.api.Test
 import tmg.flashback.di.device.BuildConfigProvider
 import tmg.flashback.repo.db.stats.DataDB
 import tmg.flashback.repo.models.AppLockout
-import tmg.flashback.rss.testutils.BaseTest
 import tmg.flashback.testutils.*
 
 @FlowPreview
@@ -88,7 +87,9 @@ class LockoutViewModelTest : BaseTest() {
         initSUT()
         advanceUntilIdle()
 
-        assertEventNotFired(sut.outputs.returnToHome)
+        sut.outputs.returnToHome.test {
+            assertEventNotFired()
+        }
     }
 
     @Test
@@ -100,7 +101,9 @@ class LockoutViewModelTest : BaseTest() {
         initSUT()
         advanceUntilIdle()
 
-        assertEventNotFired(sut.outputs.returnToHome)
+        sut.outputs.returnToHome.test {
+            assertEventNotFired()
+        }
     }
 
     @Test
@@ -112,7 +115,9 @@ class LockoutViewModelTest : BaseTest() {
         initSUT()
         advanceUntilIdle()
 
-        assertEventFired(sut.outputs.returnToHome)
+        sut.outputs.returnToHome.test {
+            assertEventFired()
+        }
     }
 
     @Test
@@ -124,7 +129,9 @@ class LockoutViewModelTest : BaseTest() {
         initSUT()
         advanceUntilIdle()
 
-        assertEventFired(sut.outputs.returnToHome)
+        sut.outputs.returnToHome.test {
+            assertEventFired()
+        }
     }
 
     @Test
@@ -136,7 +143,9 @@ class LockoutViewModelTest : BaseTest() {
         initSUT()
         advanceUntilIdle()
 
-        assertEventFired(sut.outputs.returnToHome)
+        sut.outputs.returnToHome.test {
+            assertEventFired()
+        }
     }
 
 
@@ -148,7 +157,9 @@ class LockoutViewModelTest : BaseTest() {
         initSUT()
         advanceUntilIdle()
 
-        assertValue(expected, sut.outputs.data)
+        sut.outputs.data.test {
+            assertValue(expected)
+        }
     }
 
 
@@ -161,7 +172,9 @@ class LockoutViewModelTest : BaseTest() {
         initSUT()
         advanceUntilIdle()
 
-        assertValue(expected, sut.outputs.showLink)
+        sut.outputs.showLink.test {
+            assertValue(expected)
+        }
     }
 
     @Test
@@ -174,7 +187,9 @@ class LockoutViewModelTest : BaseTest() {
         initSUT()
         advanceUntilIdle()
 
-        assertValue(expected, sut.outputs.showLink)
+        sut.outputs.showLink.test {
+            assertValue(expected)
+        }
     }
 
 
@@ -188,7 +203,9 @@ class LockoutViewModelTest : BaseTest() {
         sut.inputs.clickLink(mockLink)
         advanceUntilIdle()
 
-        assertDataEventValue(expected, sut.outputs.openLinkEvent)
+        sut.outputs.openLinkEvent.test {
+            assertDataEventValue(expected)
+        }
     }
 
 

@@ -18,7 +18,6 @@ import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.db.stats.DriverDB
 import tmg.flashback.repo.enums.BarAnimation
 import tmg.flashback.repo.models.stats.DriverOverviewRace
-import tmg.flashback.rss.testutils.BaseTest
 import tmg.flashback.shared.sync.SyncDataItem
 import tmg.flashback.shared.viewholders.DataUnavailable.DRIVER_NOT_EXIST
 import tmg.flashback.testutils.*
@@ -62,7 +61,9 @@ class DriverSeasonViewModelTest: BaseTest() {
 
         initSUT()
 
-        assertValue(expected, sut.outputs.list)
+        sut.outputs.list.test {
+            assertValue(expected)
+        }
     }
 
     @Test
@@ -75,7 +76,9 @@ class DriverSeasonViewModelTest: BaseTest() {
 
         initSUT()
 
-        assertValue(expected, sut.outputs.list)
+        sut.outputs.list.test {
+            assertValue(expected)
+        }
     }
 
     @Test
@@ -95,8 +98,9 @@ class DriverSeasonViewModelTest: BaseTest() {
 
         initSUT()
 
-        assertListContainsValues(sut.outputs.list, expected)
-
+        sut.outputs.list.test {
+            assertListContainsItems(expected)
+        }
     }
 
     @Test
@@ -118,7 +122,9 @@ class DriverSeasonViewModelTest: BaseTest() {
 
         initSUT()
 
-        assertListContainsValues(sut.outputs.list, expected)
+        sut.outputs.list.test {
+            assertListContainsItems(expected)
+        }
     }
 
     @Test
@@ -142,7 +148,9 @@ class DriverSeasonViewModelTest: BaseTest() {
 
         initSUT()
 
-        assertListContainsValues(sut.outputs.list, expected)
+        sut.outputs.list.test {
+            assertListContainsItems(expected)
+        }
     }
 
     @Test
@@ -163,7 +171,9 @@ class DriverSeasonViewModelTest: BaseTest() {
 
         initSUT()
 
-        assertListContainsValues(sut.outputs.list, expected)
+        sut.outputs.list.test {
+            assertListContainsItems(expected)
+        }
     }
 
 
@@ -177,7 +187,9 @@ class DriverSeasonViewModelTest: BaseTest() {
 
         initSUT()
 
-        assertListContainsValues(sut.outputs.list, expected)
+        sut.outputs.list.test {
+            assertListContainsItems(expected)
+        }
     }
 
 
@@ -191,7 +203,9 @@ class DriverSeasonViewModelTest: BaseTest() {
 
         initSUT()
 
-        assertListContainsValues(sut.outputs.list, expected)
+        sut.outputs.list.test {
+            assertListContainsItems(expected)
+        }
     }
 
 
@@ -206,7 +220,9 @@ class DriverSeasonViewModelTest: BaseTest() {
 
         initSUT()
 
-        assertListContainsValues(sut.outputs.list, expected)
+        sut.outputs.list.test {
+            assertListContainsItems(expected)
+        }
     }
 
 
@@ -217,7 +233,9 @@ class DriverSeasonViewModelTest: BaseTest() {
 
         sut.inputs.clickSeasonRound(expectedFirstRound)
 
-        assertDataEventValue(expectedFirstRound, sut.outputs.openSeasonRound)
+        sut.outputs.openSeasonRound.test {
+            assertDataEventValue(expectedFirstRound)
+        }
     }
 
     @AfterEach
@@ -226,10 +244,10 @@ class DriverSeasonViewModelTest: BaseTest() {
         reset(mockDriverDB, mockConnectivityManager)
     }
 
-    val expectedFirstRound: DriverSeasonItem.Result
+    private val expectedFirstRound: DriverSeasonItem.Result
         get() = convertDriverOverviewRace(mockDriverOverviewRaceFirst)
 
-    val expectedSecondRound: DriverSeasonItem.Result
+    private val expectedSecondRound: DriverSeasonItem.Result
         get() = convertDriverOverviewRace(mockDriverOverviewRaceSecond)
 
     private fun convertDriverOverviewRace(race: DriverOverviewRace): DriverSeasonItem.Result {

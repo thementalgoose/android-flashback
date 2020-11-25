@@ -27,7 +27,6 @@ import tmg.flashback.repo.enums.BarAnimation
 import tmg.flashback.repo.models.AppBanner
 import tmg.flashback.repo.models.AppLockout
 import tmg.flashback.repo.models.stats.History
-import tmg.flashback.rss.testutils.BaseTest
 import tmg.flashback.shared.sync.SyncDataItem
 import tmg.flashback.shared.viewholders.DataUnavailable
 import tmg.flashback.testutils.*
@@ -73,7 +72,9 @@ class HomeViewModelTest : BaseTest() {
 
         initSUT()
 
-        assertEventFired(sut.outputs.openReleaseNotes)
+        sut.outputs.openReleaseNotes.test {
+            assertEventFired()
+        }
     }
 
     //endregion
@@ -88,8 +89,8 @@ class HomeViewModelTest : BaseTest() {
         initSUT()
 
         // Track items should be calendar items
-        assertListContains(sut.outputs.list) {
-            it is HomeItem.Track
+        sut.outputs.list.test {
+            assertListMatchesItem { it is HomeItem.Track }
         }
     }
 
@@ -98,7 +99,9 @@ class HomeViewModelTest : BaseTest() {
 
         initSUT()
 
-        assertValue(true, sut.outputs.showLoading)
+        sut.outputs.showLoading.test {
+            assertValue(true)
+        }
     }
 
     //endregion
@@ -114,7 +117,9 @@ class HomeViewModelTest : BaseTest() {
         initSUT()
         advanceUntilIdle()
 
-        assertEventFired(sut.outputs.openAppLockout)
+        sut.outputs.openAppLockout.test {
+            assertEventFired()
+        }
     }
 
     @Test
@@ -126,7 +131,9 @@ class HomeViewModelTest : BaseTest() {
         initSUT()
         advanceUntilIdle()
 
-        assertEventNotFired(sut.outputs.openAppLockout)
+        sut.outputs.openAppLockout.test {
+            assertEventNotFired()
+        }
     }
 
     @Test
@@ -138,7 +145,9 @@ class HomeViewModelTest : BaseTest() {
         initSUT()
         advanceUntilIdle()
 
-        assertEventNotFired(sut.outputs.openAppLockout)
+        sut.outputs.openAppLockout.test {
+            assertEventNotFired()
+        }
     }
 
     @Test
@@ -150,7 +159,9 @@ class HomeViewModelTest : BaseTest() {
         initSUT()
         advanceUntilIdle()
 
-        assertEventNotFired(sut.outputs.openAppLockout)
+        sut.outputs.openAppLockout.test {
+            assertEventNotFired()
+        }
     }
 
     //endregion
@@ -165,8 +176,8 @@ class HomeViewModelTest : BaseTest() {
 
         initSUT()
 
-        assertListContains(sut.outputs.list) {
-            it is HomeItem.ErrorItem && (it.item as? SyncDataItem.Message)?.msg == expectedMessage
+        sut.outputs.list.test {
+            assertListMatchesItem { it is HomeItem.ErrorItem && (it.item as SyncDataItem.Message).msg == expectedMessage }
         }
     }
 
@@ -178,8 +189,8 @@ class HomeViewModelTest : BaseTest() {
 
         initSUT()
 
-        assertListDoesntContains(sut.outputs.list) {
-            it is HomeItem.ErrorItem && (it.item as? SyncDataItem.Message)?.msg == expectedMessage
+        sut.outputs.list.test {
+            assertListExcludesItem(HomeItem.ErrorItem(SyncDataItem.Message(expectedMessage)))
         }
     }
 
@@ -191,8 +202,8 @@ class HomeViewModelTest : BaseTest() {
 
         initSUT()
 
-        assertListDoesntContains(sut.outputs.list) {
-            it is HomeItem.ErrorItem && (it.item as? SyncDataItem.Message)?.msg == expectedMessage
+        sut.outputs.list.test {
+            assertListExcludesItem(HomeItem.ErrorItem(SyncDataItem.Message(expectedMessage)))
         }
     }
 
@@ -204,8 +215,8 @@ class HomeViewModelTest : BaseTest() {
 
         initSUT()
 
-        assertListDoesntContains(sut.outputs.list) {
-            it is HomeItem.ErrorItem && (it.item as? SyncDataItem.Message)?.msg == expectedMessage
+        sut.outputs.list.test {
+            assertListExcludesItem(HomeItem.ErrorItem(SyncDataItem.Message(expectedMessage)))
         }
     }
 
@@ -226,7 +237,9 @@ class HomeViewModelTest : BaseTest() {
 
         initSUT()
 
-        assertValue(expected, sut.outputs.list)
+        sut.outputs.list.test {
+            assertValue(expected)
+        }
     }
 
     @Test
@@ -242,7 +255,9 @@ class HomeViewModelTest : BaseTest() {
 
         initSUT()
 
-        assertValue(expected, sut.outputs.list)
+        sut.outputs.list.test {
+            assertValue(expected)
+        }
     }
 
     @Test
@@ -254,7 +269,9 @@ class HomeViewModelTest : BaseTest() {
 
         initSUT()
 
-        assertValue(expected, sut.outputs.list)
+        sut.outputs.list.test {
+            assertValue(expected)
+        }
     }
 
 
@@ -290,7 +307,9 @@ class HomeViewModelTest : BaseTest() {
 
         initSUT()
 
-        assertValue(expected, sut.outputs.list)
+        sut.outputs.list.test {
+            assertValue(expected)
+        }
     }
 
     //endregion
@@ -308,7 +327,9 @@ class HomeViewModelTest : BaseTest() {
         sut.inputs.clickItem(DRIVERS)
         advanceUntilIdle()
 
-        assertValue(expected, sut.outputs.list)
+        sut.outputs.list.test {
+            assertValue(expected)
+        }
     }
 
     @Test
@@ -321,7 +342,9 @@ class HomeViewModelTest : BaseTest() {
         sut.inputs.clickItem(DRIVERS)
         advanceUntilIdle()
 
-        assertValue(expected, sut.outputs.list)
+        sut.outputs.list.test {
+            assertValue(expected)
+        }
     }
 
     @Test
@@ -339,7 +362,9 @@ class HomeViewModelTest : BaseTest() {
         sut.inputs.selectSeason(2019)
         advanceUntilIdle()
 
-        assertValue(expected, sut.outputs.list)
+        sut.outputs.list.test {
+            assertValue(expected)
+        }
     }
 
     @Test
@@ -352,10 +377,8 @@ class HomeViewModelTest : BaseTest() {
         sut.inputs.selectSeason(2019)
         advanceUntilIdle()
 
-        assertListContains(sut.outputs.list) {
-            it is HomeItem.ErrorItem &&
-                    (it.item as? SyncDataItem.MessageRes)?.msg == R.string.results_accurate_for &&
-                    (it.item as? SyncDataItem.MessageRes)?.values == listOf(mockRound2.name, mockRound2.round)
+        sut.outputs.list.test {
+            assertListContainsItem(HomeItem.ErrorItem(SyncDataItem.MessageRes(R.string.results_accurate_for, listOf(mockRound2.name, mockRound2.round))))
         }
     }
 
@@ -375,7 +398,9 @@ class HomeViewModelTest : BaseTest() {
         sut.inputs.clickItem(CONSTRUCTORS)
         advanceUntilIdle()
 
-        assertValue(expected, sut.outputs.list)
+        sut.outputs.list.test {
+            assertValue(expected)
+        }
     }
 
     @Test
@@ -388,7 +413,9 @@ class HomeViewModelTest : BaseTest() {
         sut.inputs.clickItem(CONSTRUCTORS)
         advanceUntilIdle()
 
-        assertValue(expected, sut.outputs.list)
+        sut.outputs.list.test {
+            assertValue(expected)
+        }
     }
 
     @Test
@@ -404,7 +431,9 @@ class HomeViewModelTest : BaseTest() {
         sut.inputs.selectSeason(2019)
         advanceUntilIdle()
 
-        assertValue(expected, sut.outputs.list)
+        sut.outputs.list.test {
+            assertValue(expected)
+        }
     }
 
     @Test
@@ -417,10 +446,8 @@ class HomeViewModelTest : BaseTest() {
         sut.inputs.selectSeason(2019)
         advanceUntilIdle()
 
-        assertListContains(sut.outputs.list) {
-            it is HomeItem.ErrorItem &&
-                    (it.item as? SyncDataItem.MessageRes)?.msg == R.string.results_accurate_for &&
-                    (it.item as? SyncDataItem.MessageRes)?.values == listOf(mockRound2.name, mockRound2.round)
+        sut.outputs.list.test {
+            assertListContainsItem(HomeItem.ErrorItem(SyncDataItem.MessageRes(R.string.results_accurate_for, listOf(mockRound2.name, mockRound2.round))))
         }
     }
 
@@ -434,7 +461,9 @@ class HomeViewModelTest : BaseTest() {
         sut.inputs.clickItem(CONSTRUCTORS)
         sut.inputs.selectSeason(season)
 
-        assertValue(listOf(HomeItem.ErrorItem(SyncDataItem.ConstructorsChampionshipNotAwarded)), sut.outputs.list)
+        sut.outputs.list.test {
+            assertValue(listOf(HomeItem.ErrorItem(SyncDataItem.ConstructorsChampionshipNotAwarded)))
+        }
     }
 
     @Test
@@ -447,8 +476,8 @@ class HomeViewModelTest : BaseTest() {
         sut.inputs.clickItem(CONSTRUCTORS)
         sut.inputs.selectSeason(season)
 
-        assertListDoesntContains(sut.outputs.list) {
-            it is HomeItem.ErrorItem && it.item == SyncDataItem.ConstructorsChampionshipNotAwarded
+        sut.outputs.list.test {
+            assertListExcludesItem(HomeItem.ErrorItem(SyncDataItem.ConstructorsChampionshipNotAwarded))
         }
     }
 
@@ -465,13 +494,17 @@ class HomeViewModelTest : BaseTest() {
         sut.inputs.clickItem(SEASONS)
         advanceUntilIdle()
 
-        assertDataEventValue(true, sut.outputs.openSeasonList)
+        sut.outputs.openSeasonList.test {
+            assertDataEventValue(true)
+        }
 
         whenever(mockPrefsDB.showBottomSheetExpanded).thenReturn(false)
         sut.inputs.clickItem(SEASONS)
         advanceUntilIdle()
 
-        assertDataEventValue(false, sut.outputs.openSeasonList)
+        sut.outputs.openSeasonList.test {
+            assertDataEventValue(false)
+        }
     }
 
     //endregion
@@ -493,7 +526,9 @@ class HomeViewModelTest : BaseTest() {
 
         advanceUntilIdle()
 
-        assertValue(StringHolder(msg = "2019"), sut.outputs.label)
+        sut.outputs.label.test {
+            assertValue(StringHolder(msg = "2019"))
+        }
     }
 
     //endregion

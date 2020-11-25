@@ -12,12 +12,12 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.R
+import tmg.flashback.home.list.HomeItem
 import tmg.flashback.overviews.*
 import tmg.flashback.overviews.constructor.summary.ConstructorSummaryItem
 import tmg.flashback.overviews.driver.summary.PipeType
 import tmg.flashback.repo.NetworkConnectivityManager
 import tmg.flashback.repo.db.stats.ConstructorDB
-import tmg.flashback.rss.testutils.BaseTest
 import tmg.flashback.shared.sync.SyncDataItem
 import tmg.flashback.shared.viewholders.DataUnavailable
 import tmg.flashback.testutils.*
@@ -53,7 +53,9 @@ class ConstructorViewModelTest: BaseTest() {
 
         initSUT()
 
-        assertValue(expected, sut.outputs.list)
+        sut.outputs.list.test {
+            assertValue(expected)
+        }
     }
 
     @Test
@@ -64,7 +66,9 @@ class ConstructorViewModelTest: BaseTest() {
 
         initSUT()
 
-        assertValue(expected, sut.outputs.list)
+        sut.outputs.list.test {
+            assertValue(expected)
+        }
     }
 
     @Test
@@ -74,10 +78,12 @@ class ConstructorViewModelTest: BaseTest() {
 
         initSUT()
 
-        assertListContains(sut.outputs.list) {
-            it is ConstructorSummaryItem.ErrorItem &&
-                    it.item is SyncDataItem.MessageRes &&
-                    (it.item as SyncDataItem.MessageRes).msg == R.string.results_accurate_for_round
+        sut.outputs.list.test {
+            assertListMatchesItem {
+                it is ConstructorSummaryItem.ErrorItem &&
+                        it.item is SyncDataItem.MessageRes &&
+                        (it.item as SyncDataItem.MessageRes).msg == R.string.results_accurate_for_round
+            }
         }
     }
 
@@ -88,16 +94,18 @@ class ConstructorViewModelTest: BaseTest() {
 
         initSUT()
 
-        assertListContains(sut.outputs.list) {
-            if (it is ConstructorSummaryItem.Header) {
-                assertEquals(mockConstructorOverview.name, it.constructorName)
-                assertEquals(mockConstructorOverview.color, it.constructorColor)
-                assertEquals(mockConstructorOverview.nationality, it.constructorNationality)
-                assertEquals(mockConstructorOverview.nationalityISO, it.constructorNationalityISO)
-                assertEquals(mockConstructorOverview.wikiUrl, it.constructorWikiUrl)
-                return@assertListContains true
+        sut.outputs.list.test {
+            assertListMatchesItem {
+                if (it is ConstructorSummaryItem.Header) {
+                    assertEquals(mockConstructorOverview.name, it.constructorName)
+                    assertEquals(mockConstructorOverview.color, it.constructorColor)
+                    assertEquals(mockConstructorOverview.nationality, it.constructorNationality)
+                    assertEquals(mockConstructorOverview.nationalityISO, it.constructorNationalityISO)
+                    assertEquals(mockConstructorOverview.wikiUrl, it.constructorWikiUrl)
+                    return@assertListMatchesItem true
+                }
+                return@assertListMatchesItem false
             }
-            return@assertListContains false
         }
     }
 
@@ -108,13 +116,13 @@ class ConstructorViewModelTest: BaseTest() {
 
         initSUT()
 
-        assertListContains(sut.outputs.list) {
-            it == ConstructorSummaryItem.Stat(
-                    tint = R.attr.f1Favourite,
-                    icon = R.drawable.ic_menu_constructors,
-                    label = R.string.constructor_overview_stat_titles,
-                    value = "1"
-            )
+        sut.outputs.list.test {
+            assertListContainsItem(ConstructorSummaryItem.Stat(
+                tint = R.attr.f1Favourite,
+                icon = R.drawable.ic_menu_constructors,
+                label = R.string.constructor_overview_stat_titles,
+                value = "1"
+            ))
         }
     }
 
@@ -125,12 +133,12 @@ class ConstructorViewModelTest: BaseTest() {
 
         initSUT()
 
-        assertListContains(sut.outputs.list) {
-            it == ConstructorSummaryItem.Stat(
-                    icon = R.drawable.ic_menu_constructors,
-                    label = R.string.constructor_overview_stat_titles,
-                    value = "0"
-            )
+        sut.outputs.list.test {
+            assertListContainsItem(ConstructorSummaryItem.Stat(
+                icon = R.drawable.ic_menu_constructors,
+                label = R.string.constructor_overview_stat_titles,
+                value = "0"
+            ))
         }
     }
 
@@ -141,12 +149,12 @@ class ConstructorViewModelTest: BaseTest() {
 
         initSUT()
 
-        assertListDoesntContains(sut.outputs.list) {
-            it == ConstructorSummaryItem.Stat(
-                    icon = R.drawable.ic_championship_order,
-                    label = R.string.constructor_overview_stat_best_championship_position,
-                    value = "1st"
-            )
+        sut.outputs.list.test {
+            assertListExcludesItem(ConstructorSummaryItem.Stat(
+                icon = R.drawable.ic_championship_order,
+                label = R.string.constructor_overview_stat_best_championship_position,
+                value = "1st"
+            ))
         }
     }
 
@@ -157,12 +165,12 @@ class ConstructorViewModelTest: BaseTest() {
 
         initSUT()
 
-        assertListContains(sut.outputs.list) {
-            it == ConstructorSummaryItem.Stat(
-                    icon = R.drawable.ic_championship_order,
-                    label = R.string.constructor_overview_stat_best_championship_position,
-                    value = "1st"
-            )
+        sut.outputs.list.test {
+            assertListContainsItem(ConstructorSummaryItem.Stat(
+                icon = R.drawable.ic_championship_order,
+                label = R.string.constructor_overview_stat_best_championship_position,
+                value = "1st"
+            ))
         }
     }
 
@@ -216,7 +224,9 @@ class ConstructorViewModelTest: BaseTest() {
 
         initSUT()
 
-        assertListContainsValues(sut.outputs.list, expected)
+        sut.outputs.list.test {
+            assertListContainsItems(expected)
+        }
     }
 
     @Test
@@ -256,7 +266,9 @@ class ConstructorViewModelTest: BaseTest() {
 
         initSUT()
 
-        assertListContainsValues(sut.outputs.list, expected)
+        sut.outputs.list.test {
+            assertListContainsItems(expected)
+        }
     }
 
 
@@ -269,7 +281,9 @@ class ConstructorViewModelTest: BaseTest() {
 
         sut.inputs.openSeason(expected)
 
-        assertDataEventValue(Pair(mockConstructorId, expected), sut.outputs.openSeason)
+        sut.outputs.openSeason.test {
+            assertDataEventValue(Pair(mockConstructorId, expected))
+        }
     }
 
     @Test
@@ -281,7 +295,9 @@ class ConstructorViewModelTest: BaseTest() {
 
         sut.inputs.openUrl(expectUrl)
 
-        assertDataEventValue(expectUrl, sut.outputs.openUrl)
+        sut.outputs.openUrl.test {
+            assertDataEventValue(expectUrl)
+        }
     }
 
     @AfterEach

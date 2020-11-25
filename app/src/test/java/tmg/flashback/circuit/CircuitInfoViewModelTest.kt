@@ -17,7 +17,6 @@ import tmg.flashback.repo.NetworkConnectivityManager
 import tmg.flashback.repo.db.stats.CircuitDB
 import tmg.flashback.repo.models.stats.Circuit
 import tmg.flashback.repo.models.stats.CircuitRace
-import tmg.flashback.rss.testutils.BaseTest
 import tmg.flashback.shared.sync.SyncDataItem
 import tmg.flashback.testutils.*
 
@@ -74,7 +73,9 @@ class CircuitInfoViewModelTest: BaseTest() {
 
         initSUT()
 
-        assertTrue(sut.outputs.isLoading.test().latestValue() == true)
+        sut.outputs.isLoading.test {
+            assertValue(true)
+        }
     }
 
     @Test
@@ -89,8 +90,8 @@ class CircuitInfoViewModelTest: BaseTest() {
 
         advanceUntilIdle()
 
-        assertListContains(sut.outputs.list) {
-            it is CircuitItem.ErrorItem && it.item == SyncDataItem.NoNetwork
+        sut.outputs.list.test {
+            assertListContainsItem(CircuitItem.ErrorItem(SyncDataItem.NoNetwork))
         }
     }
 
@@ -106,8 +107,8 @@ class CircuitInfoViewModelTest: BaseTest() {
 
         advanceUntilIdle()
 
-        assertListContains(sut.outputs.list) {
-            it is CircuitItem.ErrorItem && it.item == SyncDataItem.InternalError
+        sut.outputs.list.test {
+            assertListContainsItem(CircuitItem.ErrorItem(SyncDataItem.InternalError))
         }
     }
 
@@ -134,7 +135,9 @@ class CircuitInfoViewModelTest: BaseTest() {
 
         advanceUntilIdle()
 
-        assertValue(expected, sut.outputs.list)
+        sut.outputs.list.test {
+            assertValue(expected)
+        }
     }
 
     @Test
@@ -160,7 +163,9 @@ class CircuitInfoViewModelTest: BaseTest() {
 
         advanceUntilIdle()
 
-        assertValue(expected, sut.outputs.list)
+        sut.outputs.list.test {
+            assertValue(expected)
+        }
     }
 
     @Test
@@ -171,14 +176,20 @@ class CircuitInfoViewModelTest: BaseTest() {
 
         initSUT()
 
-        assertValue(true, sut.outputs.isLoading)
+        sut.outputs.isLoading.test {
+            assertValue(true)
+        }
 
         sut.inputs.circuitId(mockCircuitId)
 
         advanceUntilIdle()
 
-        assertHasItems(sut.outputs.list)
-        assertValue(false, sut.outputs.isLoading)
+        sut.outputs.list.test {
+            assertListNotEmpty()
+        }
+        sut.outputs.isLoading.test {
+            assertValue(false)
+        }
     }
 
     @Test
@@ -188,8 +199,8 @@ class CircuitInfoViewModelTest: BaseTest() {
 
         sut.inputs.clickShowOnMap()
 
-        assertDataEventValue(sut.outputs.goToMap) { (mapUri, _) ->
-            mapUri.startsWith("geo:0,0?q=")
+        sut.outputs.goToMap.test {
+            assertDataEventMatches { (mapUri, _) -> mapUri.startsWith("geo:0,0?q=") }
         }
     }
 
@@ -200,7 +211,9 @@ class CircuitInfoViewModelTest: BaseTest() {
 
         sut.inputs.clickWikipedia()
 
-        assertEventFired(sut.outputs.goToWikipediaPage)
+        sut.outputs.goToWikipediaPage.test {
+            assertEventFired()
+        }
     }
 
     @AfterEach

@@ -10,7 +10,6 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.home.season.HeaderType.*
 import tmg.flashback.repo.db.PrefsDB
-import tmg.flashback.rss.testutils.BaseTest
 import tmg.flashback.testutils.*
 
 class SeasonViewModelTest: BaseTest() {
@@ -74,7 +73,9 @@ class SeasonViewModelTest: BaseTest() {
 
         initSUT()
 
-        assertValue(expected, sut.outputs.list)
+        sut.outputs.list.test {
+            assertValue(expected)
+        }
     }
 
     @Test
@@ -87,7 +88,9 @@ class SeasonViewModelTest: BaseTest() {
 
         initSUT()
 
-        assertValue(expected, sut.outputs.list)
+        sut.outputs.list.test {
+            assertValue(expected)
+        }
     }
 
     @Test
@@ -102,7 +105,9 @@ class SeasonViewModelTest: BaseTest() {
 
         initSUT()
 
-        assertValue(expected, sut.outputs.list)
+        sut.outputs.list.test {
+            assertValue(expected)
+        }
     }
 
     @Test
@@ -113,19 +118,21 @@ class SeasonViewModelTest: BaseTest() {
 
         initSUT()
 
-        assertLatestValue(expectedList(favourites), sut.outputs.list)
+        val observer = sut.outputs.list.testObserve()
+
+        observer.assertValue(expectedList(favourites))
 
         sut.inputs.toggleHeader(FAVOURITED, false)
-        assertLatestValue(expectedList(favourites, showFavourites = false), sut.outputs.list)
+        observer.assertValue(expectedList(favourites, showFavourites = false))
 
         sut.inputs.toggleHeader(ALL, false)
-        assertLatestValue(expectedList(favourites, showFavourites = false, showAll = false), sut.outputs.list)
+        observer.assertValue(expectedList(favourites, showFavourites = false, showAll = false))
 
         sut.inputs.toggleHeader(FAVOURITED, true)
-        assertLatestValue(expectedList(favourites, showAll = false), sut.outputs.list)
+        observer.assertValue(expectedList(favourites, showAll = false))
 
         sut.inputs.toggleHeader(ALL, true)
-        assertLatestValue(expectedList(favourites), sut.outputs.list)
+        observer.assertValue(expectedList(favourites))
     }
 
     @Test
@@ -162,13 +169,15 @@ class SeasonViewModelTest: BaseTest() {
 
         initSUT()
 
-        assertLatestValue(expectedList(favourites), sut.outputs.list)
+        val observer = sut.outputs.list.testObserve()
+
+        observer.assertValue(expectedList(favourites))
 
         sut.inputs.toggleFavourite(2017)
-        assertLatestValue(expectedList(setOf(2012, 2010)), sut.outputs.list)
+        observer.assertValue(expectedList(setOf(2012, 2010)))
 
         sut.inputs.toggleFavourite(2018)
-        assertLatestValue(expectedList(setOf(2012, 2010, 2018)), sut.outputs.list)
+        observer.assertValue(expectedList(setOf(2012, 2010, 2018)))
     }
 
     @Test
@@ -178,7 +187,9 @@ class SeasonViewModelTest: BaseTest() {
 
         sut.inputs.clickSeason(2020)
 
-        assertDataEventValue(2020, sut.outputs.showSeasonEvent)
+        sut.outputs.showSeasonEvent.test {
+            assertDataEventValue(2020)
+        }
     }
 
     @AfterEach

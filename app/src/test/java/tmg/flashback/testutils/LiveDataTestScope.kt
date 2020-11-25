@@ -1,4 +1,4 @@
-package tmg.flashback.rss.testutils
+package tmg.flashback.testutils
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
@@ -123,6 +123,15 @@ internal fun <T> LiveDataTestScope<DataEvent<T>>.assertDataEventValue(expected: 
     assertEquals(expected, latestValue!!.data)
 }
 
+/**
+ * Assert that a data event item has been fired
+ *  and that the data contains the item
+ */
+internal fun <T> LiveDataTestScope<DataEvent<T>>.assertDataEventMatches(predicate: (item: T) -> Boolean) {
+    assertEventFired()
+    assertTrue(predicate(latestValue!!.data), "Item emitted does not match the predicate")
+}
+
 //endregion
 
 //region LiveDataTestScope<List<T>>
@@ -132,6 +141,14 @@ internal fun <T> LiveDataTestScope<DataEvent<T>>.assertDataEventValue(expected: 
  *  emitted and the list contains the following item
  */
 internal fun <T> LiveDataTestScope<List<T>>.assertListContainsItems(vararg item: T) {
+    assertListContainsItems(item.toList())
+}
+
+/**
+ * Assert that given the subject is a list that only one list has been
+ *  emitted and the list contains the following item
+ */
+internal fun <T> LiveDataTestScope<List<T>>.assertListContainsItems(item: List<T>) {
     item.forEach {
         assertListContainsItem(it)
     }
@@ -153,12 +170,32 @@ internal fun <T> LiveDataTestScope<List<T>>.assertListContainsItem(item: T) {
  * Assert that given the subject is a list that only one list has been
  *  emitted and the list contains the following item
  */
-internal fun <T> LiveDataTestScope<List<T>>.assertListHasItem(predicate: (item: T) -> Boolean) {
+internal fun <T> LiveDataTestScope<List<T>>.assertListMatchesItem(predicate: (item: T) -> Boolean) {
     assertNotNull(latestValue)
     latestValue!!.forEach {
         if (predicate(it)) return
     }
     assertFalse(true, "List does not contain an item that matches the predicate - (${latestValue!!.size} items)")
+}
+
+/**
+ * Assert that given the subject is a list that only one list has been
+ *  emitted and the list contains the following item
+ */
+internal fun <T> LiveDataTestScope<List<T>>.assertListExcludesItem(item: T) {
+    assertNotNull(latestValue)
+    latestValue!!.forEach {
+        if (it != item) return
+    }
+    assertFalse(true, "List contains an item that matches the predicate when exclusion is required - $item (${latestValue!!.size} items)")
+}
+
+/**
+ * Assert that the latest value emitted contains 0 items
+ */
+internal fun <T> LiveDataTestScope<List<T>>.assertListNotEmpty() {
+    assertNotNull(latestValue)
+    assertTrue(latestValue!!.isNotEmpty(), "List contains 0 items")
 }
 
 //endregion
