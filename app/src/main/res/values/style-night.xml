@@ -16,9 +16,9 @@
         <item name="f1TextSecondary">#E8E8E8</item>
         <item name="f1TextTertiary">#CCCCCC</item>
         <item name="f1PipeColor">#787878</item>
-        <item name="f1BackgroundNavPrimary">#383838</item>
-        <item name="f1BackgroundPrimary">#282828</item>
-        <item name="f1BackgroundSecondary">#383838</item>
+        <item name="f1BackgroundNavPrimary">#303030</item>
+        <item name="f1BackgroundPrimary">#18181A</item>
+        <item name="f1BackgroundSecondary">#303030</item>
 
         <item name="f1Favourite">@color/favourite</item>
 
