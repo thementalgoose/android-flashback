@@ -11,12 +11,15 @@ import tmg.components.prefs.AppPreferencesItem
 import tmg.flashback.R
 import tmg.flashback.extensions.icon
 import tmg.flashback.extensions.label
+import tmg.flashback.notifications.FirebasePushNotificationManager.Companion.topicQualifying
+import tmg.flashback.notifications.FirebasePushNotificationManager.Companion.topicRace
 import tmg.flashback.repo.toggle.ToggleDB
 import tmg.flashback.repo.pref.PrefsDB
 import tmg.flashback.repo.enums.BarAnimation.*
 import tmg.flashback.repo.enums.ThemePref.*
 import tmg.flashback.settings.SettingsOptions.*
 import tmg.flashback.testutils.BaseTest
+import tmg.flashback.testutils.assertDataEventValue
 import tmg.flashback.testutils.assertEventFired
 import tmg.flashback.testutils.test
 import tmg.flashback.utils.Selected
@@ -328,6 +331,42 @@ class SettingsViewModelTest: BaseTest() {
         sut.inputs.preferenceClicked(NEWS, null)
 
         sut.outputs.openNews.test {
+            assertEventFired()
+        }
+    }
+
+    @Test
+    fun `SettingsViewModel selecting notification qualifying channel fires notification event`() {
+
+        initSUT()
+
+        sut.inputs.preferenceClicked(NOTIFICATIONS_CHANNEL_QUALIFYING, null)
+
+        sut.outputs.openNotificationsChannel.test {
+            assertDataEventValue(topicQualifying)
+        }
+    }
+
+    @Test
+    fun `SettingsViewModel selecting notification race channel fires notification event`() {
+
+        initSUT()
+
+        sut.inputs.preferenceClicked(NOTIFICATIONS_CHANNEL_RACE, null)
+
+        sut.outputs.openNotificationsChannel.test {
+            assertDataEventValue(topicRace)
+        }
+    }
+
+    @Test
+    fun `SettingsViewModel selecting notification settings fires notification event`() {
+
+        initSUT()
+
+        sut.inputs.preferenceClicked(NOTIFICATIONS_SETTINGS, null)
+
+        sut.outputs.openNotifications.test {
             assertEventFired()
         }
     }

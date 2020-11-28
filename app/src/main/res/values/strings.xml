@@ -113,6 +113,9 @@
         <br/>• Updated firebase auth to 20.0.1
         <br/>• Updated firebase firestore to 22.0.0
         <br/>• Updated firebase crashlytics to 17.3.0]]></string>
+    <string name="release_32"><![CDATA[<b>5.3.0</b>
+        <br/>• Added notification support! Get notified for races and qualifying sessions 30 minutes before
+        <br/>• Fixed theming gaps in Android 6.0 and 6.1]]></string>
 
     <!-- App Lockout -->
     <string name="app_lockout_title">App lockout</string>
