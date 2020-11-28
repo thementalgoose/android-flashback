@@ -57,9 +57,9 @@ jobs:
       - <<: *services
       - run:
           name: Running unit tests - repo
-          command: ./gradlew :repo:test
+          command: ./gradlew :app-repo:test
       - store_test_results:
-          path: repo/build/test-results
+          path: app-repo/build/test-results
       - run:
           name: Running unit tests - rss
           command: ./gradlew :rss:testDebugUnitTest
