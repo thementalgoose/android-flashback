@@ -6,7 +6,7 @@ import tmg.flashback.BuildConfig
 import tmg.flashback.R
 import tmg.flashback.base.BaseBottomSheetFragment
 import tmg.flashback.releaseNotes
-import tmg.flashback.repo.db.PrefsDB
+import tmg.flashback.repo.pref.PrefsDB
 import tmg.utilities.extensions.fromHtml
 
 class ReleaseBottomSheetFragment: BaseBottomSheetFragment() {

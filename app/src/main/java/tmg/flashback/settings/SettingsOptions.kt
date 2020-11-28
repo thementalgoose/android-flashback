@@ -9,6 +9,22 @@ enum class SettingsOptions(
         @StringRes val title: Int,
         @StringRes val description: Int
 ) {
+    NEWS("news",
+            title = R.string.settings_customisation_rss_title,
+            description = R.string.settings_customisation_rss_description
+    ),
+    NOTIFICATIONS_CHANNEL_RACE("notificationRace",
+        title = R.string.settings_notifications_channel_race_title,
+        description = R.string.settings_notifications_channel_race_description
+    ),
+    NOTIFICATIONS_CHANNEL_QUALIFYING("notificationQualifying",
+        title = R.string.settings_notifications_channel_qualifying_title,
+        description = R.string.settings_notifications_channel_qualifying_description
+    ),
+    NOTIFICATIONS_SETTINGS("notificationSetting",
+        title = R.string.settings_notifications_nonchannel_title,
+        description = R.string.settings_notifications_nonchannel_description
+    ),
     THEME("theme",
             title = R.string.settings_theme_theme_title,
             description = R.string.settings_theme_theme_description
@@ -24,10 +40,6 @@ enum class SettingsOptions(
     BAR_ANIMATION_SPEED("barAnimationSpeed",
             title = R.string.settings_bar_animation_animation_title,
             description = R.string.settings_bar_animation_animation_description
-    ),
-    NEWS("news",
-            title = R.string.settings_customisation_rss_title,
-            description = R.string.settings_customisation_rss_description
     ),
     SEASON_BOTTOM_SHEET_EXPANDED("bottomSheetExpanded",
             title = R.string.settings_customisation_season_expanded_title,

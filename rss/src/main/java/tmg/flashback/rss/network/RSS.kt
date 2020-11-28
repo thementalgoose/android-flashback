@@ -5,7 +5,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
-import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.db.news.RSSDB
 import tmg.flashback.repo.models.Response
 import tmg.flashback.repo.models.rss.Article

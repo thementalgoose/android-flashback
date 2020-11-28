@@ -119,9 +119,13 @@
 
     <!-- Settings -->
     <string name="settings_title">Settings</string>
-    <string name="settings_tutorial">Tutorial</string>
-    <string name="settings_tutorial_onboarding_title">Onboarding</string>
-    <string name="settings_tutorial_onboarding_description">View the app intro screens again</string>
+    <string name="settings_notifications_title">Notifications</string>
+    <string name="settings_notifications_channel_race_title">Race</string>
+    <string name="settings_notifications_channel_race_description">Receive notifications 30 minutes before a race starts. Configure them here </string>
+    <string name="settings_notifications_channel_qualifying_title">Qualifying</string>
+    <string name="settings_notifications_channel_qualifying_description">Receive notifications 30 minutes before qualifying starts. Configure them here</string>
+    <string name="settings_notifications_nonchannel_title">Notifications</string>
+    <string name="settings_notifications_nonchannel_description">Turn off the app notifications by turning them off in your settings</string>
     <string name="settings_customisation">Customisation</string>
     <string name="settings_defaults_year_dialog_title">Season</string>
     <string name="settings_defaults_year_dialog_confirm">Confirm</string>
@@ -331,5 +335,9 @@
     <string name="app_shortcut_rss_disabled">RSS (Unavailable)</string>
     <string name="driver_overview_stat_birthday">Born %s</string>
     <string name="driver_overview_title_overview">Overview</string>
+
+    <!-- Notifications -->
+    <string name="notification_channel_race">Race starts</string>
+    <string name="notification_channel_qualifying">Qualifying starts</string>
 
 </resources>

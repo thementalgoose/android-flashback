@@ -15,7 +15,7 @@ import org.threeten.bp.LocalDate
 import tmg.flashback.*
 import tmg.flashback.race.RaceAdapterType.*
 import tmg.flashback.repo.NetworkConnectivityManager
-import tmg.flashback.repo.db.PrefsDB
+import tmg.flashback.repo.pref.PrefsDB
 import tmg.flashback.repo.db.stats.SeasonOverviewDB
 import tmg.flashback.repo.enums.BarAnimation
 import tmg.flashback.repo.models.stats.LapTime

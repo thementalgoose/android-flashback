@@ -9,32 +9,17 @@
     android:focusable="true"
     android:foreground="@drawable/ripple">
 
-    <androidx.cardview.widget.CardView
+    <tmg.flashback.views.CircleView
         android:id="@+id/cardview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/bottomSheetBoxSize"
+        android:layout_height="@dimen/bottomSheetBoxSize"
         android:layout_marginStart="@dimen/paddingMedium"
         android:layout_marginTop="@dimen/paddingSmall"
         android:layout_marginBottom="@dimen/paddingSmall"
-        app:cardCornerRadius="18dp"
+        android:elevation="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/season"
-            style="@style/Text.BottomSheet.Label"
-            android:layout_width="@dimen/bottomSheetBoxSize"
-            android:layout_height="@dimen/bottomSheetBoxSize"
-            android:background="@color/colorTheme"
-            android:gravity="center"
-            android:paddingStart="@dimen/paddingXSmall"
-            android:paddingTop="@dimen/paddingXSmall"
-            android:paddingEnd="@dimen/paddingXSmall"
-            android:paddingBottom="@dimen/paddingXSmall"
-            tools:text="" />
-
-    </androidx.cardview.widget.CardView>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <View
         android:id="@+id/pipeTop"
