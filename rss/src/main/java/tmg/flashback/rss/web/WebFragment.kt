@@ -7,10 +7,8 @@ import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.fragment_web.*
 import org.koin.android.ext.android.inject
-import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.rss.R
 import tmg.flashback.rss.prefs.RSSPrefsDB
 import tmg.utilities.extensions.getColor

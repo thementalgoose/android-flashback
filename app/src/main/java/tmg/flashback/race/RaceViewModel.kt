@@ -9,7 +9,7 @@ import org.threeten.bp.LocalDate
 import tmg.flashback.base.BaseViewModel
 import tmg.flashback.repo.NetworkConnectivityManager
 import tmg.flashback.repo.ScopeProvider
-import tmg.flashback.repo.db.PrefsDB
+import tmg.flashback.repo.pref.PrefsDB
 import tmg.flashback.repo.db.stats.SeasonOverviewDB
 import tmg.flashback.repo.models.stats.*
 import tmg.flashback.shared.viewholders.DataUnavailable

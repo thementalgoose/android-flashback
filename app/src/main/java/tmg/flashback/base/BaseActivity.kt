@@ -1,16 +1,12 @@
 package tmg.flashback.base
 
-import android.graphics.Color
 import android.os.Bundle
-import android.view.View
 import androidx.annotation.StyleRes
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import org.koin.android.ext.android.inject
 import tmg.flashback.R
-import tmg.flashback.repo.ToggleDB
+import tmg.flashback.repo.toggle.ToggleDB
 import tmg.flashback.repo.db.CrashManager
-import tmg.flashback.repo.db.PrefsDB
+import tmg.flashback.repo.pref.PrefsDB
 import tmg.flashback.repo.enums.ThemePref
 import tmg.utilities.extensions.isInDayMode
 import tmg.utilities.lifecycle.common.CommonActivity

@@ -1,17 +1,21 @@
 package tmg.flashback
 
 import android.app.Application
+import android.util.Log
 import com.github.stkent.bugshaker.BugShaker
 import com.github.stkent.bugshaker.flow.dialog.AlertDialogType
 import com.jakewharton.threetenabp.AndroidThreeTen
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import tmg.flashback.di.firebaseModule
 import tmg.flashback.di.flashbackModule
 import tmg.flashback.di.rssModule
+import tmg.flashback.notifications.PushNotificationManager
 import tmg.flashback.repo.db.CrashManager
-import tmg.flashback.repo.db.PrefsDB
+import tmg.flashback.repo.pref.PrefsDB
 
 val releaseNotes: Map<Int, Int> = mapOf(
     31 to R.string.release_31,
@@ -45,6 +49,8 @@ class FlashbackApplication: Application() {
 
     private val crashManager: CrashManager by inject()
 
+    private val notificationManager: PushNotificationManager by inject()
+
     override fun onCreate() {
         super.onCreate()
 
@@ -70,5 +76,24 @@ class FlashbackApplication: Application() {
 
         // Crash Reporting
         crashManager.initialise()
+
+        // Channels
+        notificationManager.createChannels()
+
+        // Enrol for race push notifications
+        if (prefs.notificationsRace == null && BuildConfig.AUTO_ENROL_PUSH_NOTIFICATIONS) {
+            GlobalScope.launch {
+                val result = notificationManager.raceSubscribe()
+                Log.i("Flashback", "Auto enrol push notifications race - $result")
+            }
+        }
+
+        // Enrol for qualifying push notifications
+        if (prefs.notificationsQualifying == null && BuildConfig.AUTO_ENROL_PUSH_NOTIFICATIONS) {
+            GlobalScope.launch {
+                val result = notificationManager.qualifyingSubscribe()
+                Log.i("Flashback", "Auto enrol push notifications qualifying - $result")
+            }
+        }
     }
 }

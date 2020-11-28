@@ -19,7 +19,7 @@ import tmg.flashback.di.device.BuildConfigProvider
 import tmg.flashback.home.HomeMenuItem.*
 import tmg.flashback.home.list.HomeItem
 import tmg.flashback.repo.NetworkConnectivityManager
-import tmg.flashback.repo.db.PrefsDB
+import tmg.flashback.repo.pref.PrefsDB
 import tmg.flashback.repo.db.stats.DataDB
 import tmg.flashback.repo.db.stats.HistoryDB
 import tmg.flashback.repo.db.stats.SeasonOverviewDB
