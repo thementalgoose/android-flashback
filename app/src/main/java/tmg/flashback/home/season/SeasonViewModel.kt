@@ -6,7 +6,7 @@ import tmg.flashback.allYears
 import tmg.flashback.base.BaseViewModel
 import tmg.flashback.currentYear
 import tmg.flashback.repo.ScopeProvider
-import tmg.flashback.repo.db.PrefsDB
+import tmg.flashback.repo.pref.PrefsDB
 import tmg.utilities.lifecycle.DataEvent
 
 //region Inputs

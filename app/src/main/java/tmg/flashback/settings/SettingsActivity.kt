@@ -1,7 +1,11 @@
 package tmg.flashback.settings
 
+import android.content.ActivityNotFoundException
+import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.view.MenuItem
 import android.widget.LinearLayout
 import android.widget.Toast
@@ -66,6 +70,26 @@ class SettingsActivity : BaseActivity() {
 
         observeEvent(viewModel.outputs.openAbout) {
             showAbout()
+        }
+
+        observeEvent(viewModel.outputs.openNotifications) {
+            val intent = Intent().apply {
+                action = "android.settings.APP_NOTIFICATION_SETTINGS"
+                putExtra("app_package", packageName)
+                putExtra("app_uid", applicationInfo.uid)
+            }
+            startActivity(intent)
+        }
+
+        observeEvent(viewModel.outputs.openNotificationsChannel) { channelId ->
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                val intent = Intent().apply {
+                    action = Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS
+                    putExtra(Settings.EXTRA_APP_PACKAGE, packageName)
+                    putExtra(Settings.EXTRA_CHANNEL_ID, channelId)
+                }
+                startActivity(intent)
+            }
         }
 
         observeEvent(viewModel.outputs.openSuggestions) {

@@ -5,15 +5,14 @@ import com.nhaarman.mockitokotlin2.reset
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.components.prefs.AppPreferencesItem
 import tmg.flashback.R
 import tmg.flashback.extensions.icon
 import tmg.flashback.extensions.label
-import tmg.flashback.repo.ToggleDB
-import tmg.flashback.repo.db.PrefsDB
+import tmg.flashback.repo.toggle.ToggleDB
+import tmg.flashback.repo.pref.PrefsDB
 import tmg.flashback.repo.enums.BarAnimation.*
 import tmg.flashback.repo.enums.ThemePref.*
 import tmg.flashback.settings.SettingsOptions.*
@@ -45,6 +44,7 @@ class SettingsViewModelTest: BaseTest() {
         whenever(mockPrefs.barAnimation).thenReturn(MEDIUM)
 
         whenever(mockToggle.isRSSEnabled).thenReturn(true)
+        whenever(mockToggle.isNotificationChannelsSupported).thenReturn(true)
     }
 
     private fun initSUT() {
@@ -55,27 +55,37 @@ class SettingsViewModelTest: BaseTest() {
     /**
      * Expected news list that should be displayed in the SettingsViewModel
      */
-    private val expectedNewsList: List<AppPreferencesItem> = listOf(
-        AppPreferencesItem.Category(R.string.settings_customisation_rss),
-        NEWS.toPref(),
-        AppPreferencesItem.Category(R.string.settings_theme),
-        THEME.toPref(),
-        AppPreferencesItem.Category(R.string.settings_customisation),
-        BAR_ANIMATION_SPEED.toPref(),
-        QUALIFYING_DELTAS.toSwitch(false),
-        QUALIFYING_GRID_PENALTY.toSwitch(false),
-        AppPreferencesItem.Category(R.string.settings_season_list),
-        SEASON_BOTTOM_SHEET_EXPANDED.toSwitch(false),
-        SEASON_BOTTOM_SHEET_FAVOURITED.toSwitch(false),
-        SEASON_BOTTOM_SHEET_ALL.toSwitch(false),
-        AppPreferencesItem.Category(R.string.settings_help),
-        ABOUT.toPref(),
-        RELEASE.toPref(),
-        AppPreferencesItem.Category(R.string.settings_feedback),
-        CRASH.toSwitch(false),
-        SUGGESTION.toPref(),
-        SHAKE.toSwitch(false)
-    )
+    private fun expectedNewsList(isChannelsSupported: Boolean = true): List<AppPreferencesItem> {
+        return mutableListOf<AppPreferencesItem>().apply {
+            add(AppPreferencesItem.Category(R.string.settings_customisation_rss))
+            add(NEWS.toPref())
+            add(AppPreferencesItem.Category(R.string.settings_notifications_title))
+            if (isChannelsSupported) {
+                add(NOTIFICATIONS_CHANNEL_QUALIFYING.toPref())
+                add(NOTIFICATIONS_CHANNEL_RACE.toPref())
+            }
+            else {
+                add(NOTIFICATIONS_SETTINGS.toPref())
+            }
+            add(AppPreferencesItem.Category(R.string.settings_theme))
+            add(THEME.toPref())
+            add(AppPreferencesItem.Category(R.string.settings_customisation))
+            add(BAR_ANIMATION_SPEED.toPref())
+            add(QUALIFYING_DELTAS.toSwitch(false))
+            add(QUALIFYING_GRID_PENALTY.toSwitch(false))
+            add(AppPreferencesItem.Category(R.string.settings_season_list))
+            add(SEASON_BOTTOM_SHEET_EXPANDED.toSwitch(false))
+            add(SEASON_BOTTOM_SHEET_FAVOURITED.toSwitch(false))
+            add(SEASON_BOTTOM_SHEET_ALL.toSwitch(false))
+            add(AppPreferencesItem.Category(R.string.settings_help))
+            add(ABOUT.toPref())
+            add(RELEASE.toPref())
+            add(AppPreferencesItem.Category(R.string.settings_feedback))
+            add(CRASH.toSwitch(false))
+            add(SUGGESTION.toPref())
+            add(SHAKE.toSwitch(false))
+        }
+    }
 
 
     @Test
@@ -84,7 +94,19 @@ class SettingsViewModelTest: BaseTest() {
         initSUT()
 
         sut.outputs.settings.test {
-            assertValue(expectedNewsList)
+            assertValue(expectedNewsList())
+        }
+    }
+
+    @Test
+    fun `SettingsViewModel setup with notification channels not supported doesnt show individual options`() {
+
+        whenever(mockToggle.isNotificationChannelsSupported).thenReturn(false)
+
+        initSUT()
+
+        sut.outputs.settings.test {
+            assertValue(expectedNewsList(false))
         }
     }
 
@@ -96,7 +118,7 @@ class SettingsViewModelTest: BaseTest() {
         initSUT()
 
         // Filter out the news items we are expecting (should mean test still passes if order changes)
-        val expected = expectedNewsList.filter {
+        val expected = expectedNewsList().filter {
             when (it) {
                 is AppPreferencesItem.Category -> it.title != R.string.settings_customisation_rss
                 is AppPreferencesItem.Preference -> it.prefKey != "news"

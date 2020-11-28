@@ -9,7 +9,9 @@
         <item name="colorAccent">#4A34B6</item>
 
         <item name="android:statusBarColor">?attr/rssBackground</item>
+        <item name="android:navigationBarColor">?attr/rssBackground</item>
         <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
 
         <item name="rssBrandPrimary">#4A34B6</item>
 

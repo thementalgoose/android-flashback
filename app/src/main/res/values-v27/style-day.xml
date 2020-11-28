@@ -6,7 +6,9 @@
         <item name="colorAccent">@color/logo_gradient_1</item>
 
         <item name="android:statusBarColor">?attr/f1BackgroundPrimary</item>
+        <item name="android:navigationBarColor">?attr/f1BackgroundPrimary</item>
         <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
 
         <item name="f1BackgroundHighlighted">#334A34B6</item>
 

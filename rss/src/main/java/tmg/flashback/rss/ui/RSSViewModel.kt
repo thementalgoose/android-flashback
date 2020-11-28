@@ -9,7 +9,6 @@ import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.repo.NetworkConnectivityManager
 import tmg.flashback.repo.ScopeProvider
-import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.db.news.RSSDB
 import tmg.flashback.rss.base.RSSBaseViewModel
 import tmg.flashback.rss.prefs.RSSPrefsDB

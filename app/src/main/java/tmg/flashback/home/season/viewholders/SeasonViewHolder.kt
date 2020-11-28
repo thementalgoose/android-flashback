@@ -9,7 +9,6 @@ import tmg.flashback.*
 import tmg.flashback.extensions.dimensionPx
 import tmg.flashback.home.season.HeaderType
 import tmg.flashback.home.season.SeasonListItem
-import tmg.utilities.extensions.ordinalAbbreviation
 import tmg.utilities.extensions.views.show
 
 class SeasonViewHolder(
@@ -34,7 +33,7 @@ class SeasonViewHolder(
 
         itemView.label.text = season.season.toString()
         itemView.favourite.setImageResource(if (season.isFavourited) R.drawable.ic_star_filled_coloured else R.drawable.ic_star_outline)
-        itemView.season.setBackgroundColor(colour)
+        itemView.cardview.setCircleColour(colour)
 
         itemView.pipeTop.setBackgroundColor(colour)
         itemView.pipeBottom.setBackgroundColor(colour)
