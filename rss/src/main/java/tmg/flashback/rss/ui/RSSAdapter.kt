@@ -15,10 +15,6 @@ class RSSAdapter(
     private val openConfigure: () -> Unit
 ): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    init {
-        setHasStableIds(true)
-    }
-
     var list: List<RSSItem> = emptyList()
         set(value) {
             val result = calculateDiff(DiffCallback(field, value))
@@ -37,7 +33,6 @@ class RSSAdapter(
             else -> throw RuntimeException("View not supported in RSS feed")
         }
     }
-    override fun getItemId(position: Int) = position.toLong()
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (val item = list[position]) {

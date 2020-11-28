@@ -124,7 +124,7 @@
     <string name="settings_title">Settings</string>
     <string name="settings_notifications_title">Notifications</string>
     <string name="settings_notifications_channel_race_title">Race</string>
-    <string name="settings_notifications_channel_race_description">Receive notifications 30 minutes before a race starts. Configure them here </string>
+    <string name="settings_notifications_channel_race_description">Receive notifications 30 minutes before a race starts. Configure them here</string>
     <string name="settings_notifications_channel_qualifying_title">Qualifying</string>
     <string name="settings_notifications_channel_qualifying_description">Receive notifications 30 minutes before qualifying starts. Configure them here</string>
     <string name="settings_notifications_nonchannel_title">Notifications</string>
