@@ -3,7 +3,7 @@
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="1.7">
       <module name="android-flashback.app" target="1.8" />
-      <module name="android-flashback.firebase" target="1.8" />
+      <module name="android-flashback.app-firebase" target="1.8" />
       <module name="android-flashback.rss" target="1.8" />
       <module name="app" target="1.8" />
       <module name="firebase" target="1.8" />

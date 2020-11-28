@@ -13,8 +13,8 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/firebase" />
-            <option value="$PROJECT_DIR$/repo" />
+            <option value="$PROJECT_DIR$/app-firebase" />
+            <option value="$PROJECT_DIR$/app-repo" />
             <option value="$PROJECT_DIR$/rss" />
           </set>
         </option>
