@@ -8,6 +8,12 @@
 
 Flashback is a Formula 1 statistics app!
 
+### Configuring notifications
+
+- [Dashboard](https://console.firebase.google.com/project/f1stats-live/notification)
+- In app messaging says it's "30 minutes before the race"
+- Channels: `race` or `qualifying`
+
 ### Libraries
 
 - MVVM
