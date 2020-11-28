@@ -15,10 +15,14 @@ import tmg.flashback.overviews.driver.season.DriverSeasonViewModel
 import tmg.flashback.firebase.FirebaseCrashManager
 import tmg.flashback.home.HomeViewModel
 import tmg.flashback.home.season.SeasonViewModel
+import tmg.flashback.notifications.FirebasePushNotificationManager
+import tmg.flashback.notifications.PushNotificationManager
+import tmg.flashback.prefs.SharedPrefsDB
 import tmg.flashback.race.RaceViewModel
 import tmg.flashback.repo.NetworkConnectivityManager
 import tmg.flashback.repo.ScopeProvider
 import tmg.flashback.repo.db.CrashManager
+import tmg.flashback.repo.pref.PrefsDB
 import tmg.flashback.settings.SettingsViewModel
 
 var flashbackModule = module {
@@ -44,10 +48,21 @@ var flashbackModule = module {
     viewModel { SettingsViewModel(get(), get(), get()) }
     viewModel { LockoutViewModel(get(), get(), get()) }
 
+    // Network connectivity
     single<NetworkConnectivityManager> { AndroidConnectivityManager(get()) }
 
+    // Push notifications
+    single<PushNotificationManager> { FirebasePushNotificationManager(get(), get()) }
+
+    // Shared Prefs
+    single<PrefsDB> { SharedPrefsDB(get()) }
+
+    // Build Config
     single<BuildConfigProvider> { AppBuildConfigProvider() }
+
+    // Scope
     single<ScopeProvider> { ViewModelScopeProvider() }
 
+    // Crash Reporting
     single<CrashManager> { FirebaseCrashManager(get(), BuildConfig.ENVIRONMENT != 1) }
 }

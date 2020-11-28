@@ -3,7 +3,6 @@ package tmg.flashback.rss.ui.configure
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import tmg.flashback.repo.ScopeProvider
-import tmg.flashback.repo.db.PrefsDB
 import tmg.flashback.repo.enums.SupportedArticleSource
 import tmg.flashback.rss.R
 import tmg.flashback.rss.base.RSSBaseViewModel

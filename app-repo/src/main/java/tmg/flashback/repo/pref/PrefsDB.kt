@@ -1,6 +1,7 @@
-package tmg.flashback.repo.db
+package tmg.flashback.repo.pref
 
 import tmg.flashback.repo.enums.BarAnimation
+import tmg.flashback.repo.enums.NotificationRegistration
 import tmg.flashback.repo.enums.ThemePref
 import tmg.flashback.repo.enums.Tooltips
 
@@ -75,4 +76,20 @@ interface PrefsDB {
      * Tooltip set of app hints for functional usage
      */
     var tooltips: Set<Tooltips>
+
+    //region Notification enrolment
+
+    /**
+     * Race Notification preference
+     *   null = hasn't been set
+     */
+    var notificationsRace: NotificationRegistration?
+
+    /**
+     * Qualifying Notification preference
+     *   null = hasn't been set
+     */
+    var notificationsQualifying: NotificationRegistration?
+
+    //endregion
 }

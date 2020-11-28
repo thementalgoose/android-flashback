@@ -11,7 +11,7 @@ import tmg.flashback.constructorChampionshipStarts
 import tmg.flashback.currentYear
 import tmg.flashback.home.list.HomeItem
 import tmg.flashback.home.list.addError
-import tmg.flashback.repo.db.PrefsDB
+import tmg.flashback.repo.pref.PrefsDB
 import tmg.flashback.repo.db.stats.DataDB
 import tmg.flashback.repo.db.stats.HistoryDB
 import tmg.flashback.repo.db.stats.SeasonOverviewDB

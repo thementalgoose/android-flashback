@@ -1,18 +1,23 @@
 package tmg.flashback.settings
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import tmg.components.prefs.AppPreferencesItem
 import tmg.flashback.R
 import tmg.flashback.base.BaseViewModel
+import tmg.flashback.di.device.BuildConfigProvider
 import tmg.flashback.extensions.icon
 import tmg.flashback.extensions.label
+import tmg.flashback.notifications.FirebasePushNotificationManager.Companion.topicQualifying
+import tmg.flashback.notifications.FirebasePushNotificationManager.Companion.topicRace
 import tmg.flashback.repo.ScopeProvider
-import tmg.flashback.repo.ToggleDB
-import tmg.flashback.repo.db.PrefsDB
+import tmg.flashback.repo.toggle.ToggleDB
+import tmg.flashback.repo.pref.PrefsDB
 import tmg.flashback.repo.enums.ThemePref
 import tmg.flashback.repo.enums.BarAnimation
 import tmg.flashback.utils.Selected
 import tmg.flashback.utils.bottomsheet.BottomSheetItem
+import tmg.utilities.lifecycle.DataEvent
 import tmg.utilities.lifecycle.Event
 
 //region Inputs
@@ -42,6 +47,9 @@ interface SettingsViewModelOutputs {
     val openRelease: MutableLiveData<Event>
     val openSuggestions: MutableLiveData<Event>
     val openNews: MutableLiveData<Event>
+
+    val openNotificationsChannel: LiveData<DataEvent<String>>
+    val openNotifications: LiveData<Event>
 }
 
 //endregion
@@ -68,6 +76,9 @@ class SettingsViewModel(
     override val openSuggestions: MutableLiveData<Event> = MutableLiveData()
     override val openNews: MutableLiveData<Event> = MutableLiveData()
 
+    override val openNotifications: MutableLiveData<Event> = MutableLiveData()
+    override val openNotificationsChannel: MutableLiveData<DataEvent<String>> = MutableLiveData()
+
     override val settings: MutableLiveData<List<AppPreferencesItem>> = MutableLiveData()
 
     init {
@@ -75,6 +86,14 @@ class SettingsViewModel(
             if (toggleDB.isRSSEnabled) {
                 add(AppPreferencesItem.Category(R.string.settings_customisation_rss))
                 add(SettingsOptions.NEWS.toPref())
+            }
+            add(AppPreferencesItem.Category(R.string.settings_notifications_title))
+            if (toggleDB.isNotificationChannelsSupported) {
+                add(SettingsOptions.NOTIFICATIONS_CHANNEL_QUALIFYING.toPref())
+                add(SettingsOptions.NOTIFICATIONS_CHANNEL_RACE.toPref())
+            }
+            else {
+                add(SettingsOptions.NOTIFICATIONS_SETTINGS.toPref())
             }
             add(AppPreferencesItem.Category(R.string.settings_theme))
             add(SettingsOptions.THEME.toPref())
@@ -104,6 +123,9 @@ class SettingsViewModel(
     override fun preferenceClicked(pref: SettingsOptions?, value: Boolean?) {
         when (pref) {
             SettingsOptions.THEME -> openThemePicker.value = Event()
+            SettingsOptions.NOTIFICATIONS_CHANNEL_RACE -> openNotificationsChannel.value = DataEvent(topicRace)
+            SettingsOptions.NOTIFICATIONS_CHANNEL_QUALIFYING -> openNotificationsChannel.value = DataEvent(topicQualifying)
+            SettingsOptions.NOTIFICATIONS_SETTINGS -> openNotifications.value = Event()
             SettingsOptions.QUALIFYING_DELTAS -> prefDB.showQualifyingDelta = value ?: false
             SettingsOptions.QUALIFYING_GRID_PENALTY -> prefDB.showGridPenaltiesInQualifying = value ?: true
             SettingsOptions.SEASON_BOTTOM_SHEET_EXPANDED -> prefDB.showBottomSheetExpanded = value ?: true
