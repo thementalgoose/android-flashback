@@ -24,6 +24,7 @@ import tmg.flashback.repo.ScopeProvider
 import tmg.flashback.repo.db.CrashManager
 import tmg.flashback.repo.pref.PrefsDB
 import tmg.flashback.settings.SettingsViewModel
+import tmg.flashback.settings.privacy.PrivacyPolicyViewModel
 
 var flashbackModule = module {
 
@@ -47,6 +48,7 @@ var flashbackModule = module {
     // Settings
     viewModel { SettingsViewModel(get(), get(), get()) }
     viewModel { LockoutViewModel(get(), get(), get()) }
+    viewModel { PrivacyPolicyViewModel(get()) }
 
     // Network connectivity
     single<NetworkConnectivityManager> { AndroidConnectivityManager(get()) }

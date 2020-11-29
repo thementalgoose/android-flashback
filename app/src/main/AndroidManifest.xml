@@ -54,6 +54,10 @@
             android:label="" />
 
         <activity
+            android:name=".settings.privacy.PrivacyPolicyActivity"
+            android:label="" />
+
+        <activity
             android:name=".overviews.driver.DriverActivity"
             android:label="" />
 
