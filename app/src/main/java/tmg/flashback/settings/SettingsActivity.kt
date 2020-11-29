@@ -23,6 +23,7 @@ import tmg.flashback.configuration
 import tmg.flashback.repo.enums.BarAnimation
 import tmg.flashback.repo.enums.ThemePref
 import tmg.flashback.rss.ui.settings.RSSSettingsActivity
+import tmg.flashback.settings.privacy.PrivacyPolicyActivity
 import tmg.flashback.settings.release.ReleaseActivity
 import tmg.flashback.utils.bottomsheet.BottomSheetAdapter
 import tmg.utilities.bottomsheet.BottomSheetFader
@@ -70,6 +71,10 @@ class SettingsActivity : BaseActivity() {
 
         observeEvent(viewModel.outputs.openAbout) {
             showAbout()
+        }
+
+        observeEvent(viewModel.outputs.openPrivacyPolicy) {
+            startActivity(Intent(this, PrivacyPolicyActivity::class.java))
         }
 
         observeEvent(viewModel.outputs.openNotifications) {
