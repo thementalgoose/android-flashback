@@ -91,5 +91,11 @@ interface PrefsDB {
      */
     var notificationsQualifying: NotificationRegistration?
 
+    /**
+     * Miscellaneous Notification preference
+     *   null = hasn't been set
+     */
+    var notificationsMisc: NotificationRegistration?
+
     //endregion
 }
