@@ -44,6 +44,7 @@ interface SettingsViewModelOutputs {
     val openThemePicker: MutableLiveData<Event>
     val openAnimationPicker: MutableLiveData<Event>
     val openAbout: MutableLiveData<Event>
+    val openPrivacyPolicy: MutableLiveData<Event>
     val openRelease: MutableLiveData<Event>
     val openSuggestions: MutableLiveData<Event>
     val openNews: MutableLiveData<Event>
@@ -72,6 +73,7 @@ class SettingsViewModel(
     override val openThemePicker: MutableLiveData<Event> = MutableLiveData()
     override val openAnimationPicker: MutableLiveData<Event> = MutableLiveData()
     override val openAbout: MutableLiveData<Event> = MutableLiveData()
+    override val openPrivacyPolicy: MutableLiveData<Event> = MutableLiveData()
     override val openRelease: MutableLiveData<Event> = MutableLiveData()
     override val openSuggestions: MutableLiveData<Event> = MutableLiveData()
     override val openNews: MutableLiveData<Event> = MutableLiveData()
@@ -107,6 +109,7 @@ class SettingsViewModel(
             add(SettingsOptions.SEASON_BOTTOM_SHEET_ALL.toSwitch(prefDB.showBottomSheetAll))
             add(AppPreferencesItem.Category(R.string.settings_help))
             add(SettingsOptions.ABOUT.toPref())
+            add(SettingsOptions.PRIVACY_POLICY.toPref())
             add(SettingsOptions.RELEASE.toPref())
             add(AppPreferencesItem.Category(R.string.settings_feedback))
             add(SettingsOptions.CRASH.toSwitch(prefDB.crashReporting))
@@ -133,6 +136,7 @@ class SettingsViewModel(
             SettingsOptions.SEASON_BOTTOM_SHEET_ALL -> prefDB.showBottomSheetAll = value ?: true
             SettingsOptions.BAR_ANIMATION_SPEED -> openAnimationPicker.value = Event()
             SettingsOptions.ABOUT -> openAbout.value = Event()
+            SettingsOptions.PRIVACY_POLICY -> openPrivacyPolicy.value = Event()
             SettingsOptions.RELEASE -> openRelease.value = Event()
             SettingsOptions.CRASH -> prefDB.crashReporting = value ?: true
             SettingsOptions.SUGGESTION -> openSuggestions.value = Event()
