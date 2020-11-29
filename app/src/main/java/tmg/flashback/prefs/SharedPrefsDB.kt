@@ -42,6 +42,7 @@ class SharedPrefsDB(context: Context) : SharedPrefManager(context),
 
     private val keyNotificationRace: String = "NOTIFICATION_RACE"
     private val keyNotificationQualifying: String = "NOTIFICATION_QUALIFYING"
+    private val keyNotificationMisc: String = "NOTIFICATION_MISC"
 
     override var theme: ThemePref
         get() = getString(keyTheme)?.toEnum<ThemePref> { it.key } ?: ThemePref.AUTO
@@ -152,6 +153,14 @@ class SharedPrefsDB(context: Context) : SharedPrefManager(context),
             save(keyNotificationRace, value.key)
         } else {
             save(keyNotificationRace, "")
+        }
+
+    override var notificationsMisc: NotificationRegistration?
+        get() = getString(keyNotificationMisc, null)?.toEnum<NotificationRegistration>()
+        set(value) = if (value != null) {
+            save(keyNotificationMisc, value.key)
+        } else {
+            save(keyNotificationMisc, "")
         }
 
     //endregion
