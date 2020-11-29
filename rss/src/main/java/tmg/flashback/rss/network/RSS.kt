@@ -14,6 +14,7 @@ import tmg.flashback.rss.network.shared.buildRetrofit
 import tmg.flashback.rss.prefs.RSSPrefsDB
 import java.lang.NullPointerException
 import java.lang.RuntimeException
+import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 import javax.net.ssl.SSLHandshakeException
 import javax.xml.stream.XMLStreamException
@@ -33,6 +34,8 @@ class RSS(
                     val response = xmlRetrofit.getRssXML(x).convert(x, prefsDB.rssShowDescription)
                     responses.add(Response(response))
                 } catch (e: XMLStreamException) {
+                    responses.add(Response(null, -1))
+                } catch (e: SocketTimeoutException) {
                     responses.add(Response(null, -1))
                 } catch (e: SSLHandshakeException) {
                     responses.add(Response(null, -1))
