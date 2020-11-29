@@ -82,6 +82,7 @@ class SettingsViewModelTest: BaseTest() {
             add(SEASON_BOTTOM_SHEET_ALL.toSwitch(false))
             add(AppPreferencesItem.Category(R.string.settings_help))
             add(ABOUT.toPref())
+            add(PRIVACY_POLICY.toPref())
             add(RELEASE.toPref())
             add(AppPreferencesItem.Category(R.string.settings_feedback))
             add(CRASH.toSwitch(false))
