@@ -1,4 +1,6 @@
 package tmg.flashback.firebase
 
-const val apiVersion = 2
-const val version = "v$apiVersion"
+import org.threeten.bp.Year
+
+internal val currentYear: Int
+    get() = Year.now().value
