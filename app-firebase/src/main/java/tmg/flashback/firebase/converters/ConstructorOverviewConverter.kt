@@ -1,6 +1,7 @@
 package tmg.flashback.firebase.converters
 
 import androidx.core.graphics.toColorInt
+import tmg.flashback.firebase.currentYear
 import tmg.flashback.firebase.models.*
 import tmg.flashback.repo.models.ConstructorDriver
 import tmg.flashback.repo.models.stats.Constructor
@@ -44,7 +45,7 @@ fun FConstructorOverviewStandings.convert(data: FConstructorOverviewData, driver
                     .filterNotNull()
                     .map { it.driver.id to it }
                     .toMap(),
-            isInProgress = this.inProgress == true,
+            isInProgress = if (this.s >= currentYear) (this.inProgress ?: false) else false,
             championshipStanding = this.championshipStanding ?: 0,
             points = this.p ?: 0,
             season = this.s,
