@@ -33,7 +33,7 @@
     <dimen name="paddingLarge">32dp</dimen>
     <dimen name="paddingMedLarge">24dp</dimen>
     <dimen name="paddingMedium">16dp</dimen>
-    <dimen name="paddingNSmall">16dp</dimen>
+    <dimen name="paddingNSmall">12dp</dimen>
     <dimen name="paddingSmall">8dp</dimen>
     <dimen name="paddingXSmall">4dp</dimen>
 

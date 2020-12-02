@@ -259,6 +259,7 @@ class DriverSeasonViewModelTest: BaseTest() {
                 circuitId = race.circuitId,
                 raceCountry = race.circuitNationality,
                 raceCountryISO = race.circuitNationalityISO,
+                showConstructorLabel = false,
                 constructor = mockDriverOverviewConstructor,
                 date = race.date,
                 qualified = race.qualified,
