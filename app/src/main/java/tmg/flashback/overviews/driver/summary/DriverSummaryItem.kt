@@ -38,7 +38,7 @@ sealed class DriverSummaryItem(
 
     data class RacedFor(
             val season: Int,
-            val constructors: SlimConstructor,
+            val constructors: List<SlimConstructor>,
             val type: PipeType,
             val isChampionship: Boolean
     ): DriverSummaryItem(

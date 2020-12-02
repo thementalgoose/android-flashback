@@ -25,6 +25,7 @@ fun FDriverOverview.convert(): DriverOverview {
 }
 
 fun FDriverOverviewStanding.convert(): DriverOverviewStanding {
+    val constructors = this.constructor?.map { it.convert() } ?: emptyList()
     return DriverOverviewStanding(
              bestFinish = this.bestFinish ?: 0,
              bestFinishQuantity = this.bestFinishQuantity ?: 0,
@@ -37,13 +38,13 @@ fun FDriverOverviewStanding.convert(): DriverOverviewStanding {
              races = this.races ?: 0,
              season = this.s,
              wins = this.wins ?: 0,
-             constructors = this.constructor?.map { it.convert() } ?: emptyList(),
-             raceOverview = this.history?.map { (_, value) -> value.convert(this.s) } ?: emptyList()
+             constructors = constructors,
+             raceOverview = this.history?.map { (_, value) -> value.convert(this.s, constructors) } ?: emptyList()
     )
 }
 
 
-fun FDriverOverviewStandingHistory.convert(season: Int): DriverOverviewRace {
+fun FDriverOverviewStandingHistory.convert(season: Int, constructors: List<SlimConstructor>): DriverOverviewRace {
     return DriverOverviewRace(
             finished = this.f ?: 0,
             points = this.p ?: 0,
@@ -52,6 +53,10 @@ fun FDriverOverviewStandingHistory.convert(season: Int): DriverOverviewRace {
             season = season,
             raceName = this.rName ?: "",
             date = fromDate(this.date),
+            constructor = when (constructors.size) {
+                1 -> constructors.first()
+                else -> constructors.firstOrNull { it.id == this.con }
+            },
             circuitName = this.cName,
             circuitId = this.cId,
             circuitNationality = this.cCountry,

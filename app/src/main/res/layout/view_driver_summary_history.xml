@@ -10,44 +10,29 @@
     <TextView
         android:id="@+id/year"
         style="@style/Text.DriverOverview.History.Year"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="start"
         android:paddingStart="@dimen/driverOverviewPipeIndent"
         android:paddingTop="@dimen/paddingSmall"
         android:paddingEnd="@dimen/paddingMedium"
         android:paddingBottom="@dimen/paddingSmall"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/constructor"
         app:layout_constraintStart_toEndOf="@id/pipe"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="2020" />
 
-    <View
-        android:id="@+id/constructorColor"
-        android:layout_width="4dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="@dimen/paddingXSmall"
-        android:layout_marginEnd="@dimen/paddingMedium"
-        android:layout_marginBottom="@dimen/paddingXSmall"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/constructor"
-        style="@style/Text.DriverOverview.History.Constructor"
+    <tmg.flashback.views.PassThroughRecyclerView
+        android:id="@+id/constructorList"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:gravity="end"
-        android:paddingStart="@dimen/paddingXSmall"
-        android:paddingTop="@dimen/paddingXSmall"
-        android:paddingEnd="@dimen/paddingMedium"
-        android:paddingBottom="@dimen/paddingXSmall"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/constructorColor"
+        android:clipToPadding="false"
+        android:nestedScrollingEnabled="false"
+        android:overScrollMode="never"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/year"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Red Bull" />
+        tools:itemCount="4"
+        tools:listitem="@layout/view_driver_constructors" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/pipe"
@@ -62,8 +47,9 @@
             android:id="@+id/pipeTop"
             android:layout_width="@dimen/driverOverviewPipeWidth"
             android:layout_height="0dp"
+            android:layout_marginBottom="@dimen/paddingXSmall"
             android:background="?attr/f1PipeColor"
-            app:layout_constraintBottom_toTopOf="@id/pipeBottom"
+            app:layout_constraintBottom_toBottomOf="@id/pipeCircle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -72,21 +58,24 @@
             android:id="@+id/pipeBottom"
             android:layout_width="@dimen/driverOverviewPipeWidth"
             android:layout_height="0dp"
+            android:layout_marginTop="@dimen/paddingXSmall"
             android:background="?attr/f1PipeColor"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/pipeTop" />
+            app:layout_constraintTop_toTopOf="@id/pipeCircle" />
 
         <ImageView
             android:id="@+id/pipeCircle"
             android:layout_width="@dimen/driverOverviewCircleSize"
             android:layout_height="@dimen/driverOverviewCircleSize"
+            android:layout_marginTop="@dimen/paddingNSmall"
             android:background="@drawable/pipe_indicator"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

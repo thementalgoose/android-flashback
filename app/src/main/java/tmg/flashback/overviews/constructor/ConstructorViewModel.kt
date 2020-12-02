@@ -208,7 +208,11 @@ class ConstructorViewModel(
         return sortedList
                 .mapIndexed { index, item ->
                     ConstructorSummaryItem.History(
-                            pipe = getPipeType(item, sortedList.getOrNull(index - 1), sortedList.getOrNull(index + 1)),
+                            pipe = getPipeType(
+                                currentItem = item.season,
+                                newer = sortedList.getOrNull(index - 1)?.season,
+                                prev = sortedList.getOrNull(index + 1)?.season
+                            ),
                             season = item.season,
                             colour = overview.color,
                             championshipPosition = item.championshipStanding,
@@ -219,31 +223,31 @@ class ConstructorViewModel(
                 }
     }
 
-    private fun getPipeType(currentItem: ConstructorOverviewStanding, newer: ConstructorOverviewStanding?, prev: ConstructorOverviewStanding?): PipeType {
+    fun getPipeType(currentItem: Int, newer: Int?, prev: Int?): PipeType {
         if (newer == null && prev == null) {
             return PipeType.SINGLE
         }
         when {
             newer == null -> {
-                return if (prev!!.season == currentItem.season - 1) {
+                return if (prev!! == currentItem - 1) {
                     PipeType.START
                 } else {
                     PipeType.SINGLE
                 }
             }
             prev == null -> {
-                return if (newer.season == currentItem.season + 1) {
+                return if (newer == currentItem + 1) {
                     PipeType.END
                 } else {
                     PipeType.SINGLE
                 }
             }
             else -> {
-                return if (newer.season == currentItem.season + 1 && prev.season == currentItem.season - 1) {
+                return if (newer == currentItem + 1 && prev == currentItem - 1) {
                     PipeType.START_END
-                } else if (newer.season == currentItem.season + 1) {
+                } else if (newer == currentItem + 1) {
                     PipeType.END
-                } else if (prev.season == currentItem.season - 1) {
+                } else if (prev == currentItem - 1) {
                     PipeType.START
                 } else {
                     PipeType.SINGLE

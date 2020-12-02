@@ -1,5 +1,6 @@
 package tmg.flashback.overviews.driver
 
+import android.util.Log
 import androidx.annotation.AttrRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
@@ -20,6 +21,7 @@ import tmg.flashback.repo.NetworkConnectivityManager
 import tmg.flashback.repo.ScopeProvider
 import tmg.flashback.repo.db.stats.DriverDB
 import tmg.flashback.repo.models.stats.DriverOverview
+import tmg.flashback.repo.models.stats.SlimConstructor
 import tmg.flashback.shared.sync.SyncDataItem
 import tmg.flashback.shared.viewholders.DataUnavailable
 import tmg.flashback.utils.position
@@ -216,81 +218,61 @@ class DriverViewModel(
      * Add the directional constructor list at the bottom of the page
      */
     private fun getConstructorItemList(overview: DriverOverview): List<DriverSummaryItem> {
-        return this.generateConstructorsListInDescendingOrder(overview)
+        // Team history in chronological order
+        // * 2010
+        // * 2009
+        // * 2008
+        // | 2008
+        // ....
+
+        val seasonConstructors = overview.constructors
             .reversed()
-            .map {
-                val type = when (it.type) {
-                    PipeType.START -> PipeType.END
-                    PipeType.END -> PipeType.START
-                    else -> it.type
-                }
-                DriverSummaryItem.RacedFor(it.season, it.constructors, type, overview.isWorldChampionFor(it.season))
+            .groupBy { it.first }
+            .toList()
+            .map { it.first to it.second.map { it.second } }
+            .toList()
+
+        return seasonConstructors
+            .mapIndexed { index, pair ->
+                val (season, constructor) = pair
+                DriverSummaryItem.RacedFor(season, constructor, getPipeType(
+                    current = season,
+                    newer = seasonConstructors.getOrNull(index - 1)?.first,
+                    prev = seasonConstructors.getOrNull(index + 1)?.first
+                ), overview.isWorldChampionFor(season))
             }
     }
 
-    private fun generateConstructorsListInDescendingOrder(overview: DriverOverview): List<DriverSummaryItem.RacedFor> {
-        // Team history in chronological order
-        // * 2008
-        // | 2008
-        // * 2009
-        // * 2010
-        // ....
-        return overview.constructors.mapIndexed { index, pair ->
-            val (season, constructor) = pair
-            val nextItem = overview.constructors.getOrNull(index + 1)
-            // Handle first item
-            val dotType: PipeType
-            // First year
-            if (index == 0) {
-                dotType = when {
-                    // Raced for one and only year
-                    nextItem == null -> {
-                        PipeType.SINGLE
-                    }
-                    // Raced for one year, then took one or more years off but returned later
-                    nextItem.first >= season + 2 -> {
-                        PipeType.SINGLE
-                    }
-                    // Next result is either same year constructor change or next year.
-                    else -> {
-                        PipeType.START
-                    }
+    fun getPipeType(current: Int, newer: Int?, prev: Int?): PipeType {
+        if (newer == null && prev == null) {
+            return PipeType.SINGLE
+        }
+        when {
+            newer == null -> {
+                return if (prev!! <= current - 2) {
+                    PipeType.SINGLE
+                } else {
+                    PipeType.START
                 }
             }
-            // Next year
-            else {
-                val previousItem = overview.constructors[index - 1]
-                dotType = when {
-                    // Nothing afterwards. End of career
-                    nextItem == null -> {
-                        when {
-                            previousItem.first <= season - 2 && currentYear == season -> PipeType.START
-                            previousItem.first <= season - 2 && currentYear != season -> PipeType.SINGLE
-                            currentYear == season -> PipeType.START_END
-                            else -> PipeType.END
-                        }
-                    }
-
-                    // Driver took one or more years off. Last item should be end, so need start
-                    previousItem.first <= season - 2 -> {
-                        PipeType.START
-                    }
-                    // Ending before temporarily retiring
-                    nextItem.first >= season + 2 -> {
-                        PipeType.END
-                    }
-                    // Next year constructor
-                    previousItem.first == season - 1 -> {
-                        PipeType.START_END
-                    }
-                    // Same year, constructor change mid season
-                    else -> {
-                        PipeType.SINGLE_PIPE
-                    }
+            prev == null -> {
+                return if (newer >= current + 2) {
+                    PipeType.SINGLE
+                } else {
+                    PipeType.END
                 }
             }
-
-            DriverSummaryItem.RacedFor(season, constructor, dotType, overview.isWorldChampionFor(season))
+            else -> {
+                return if (newer >= current + 2 && prev <= current - 2) {
+                    PipeType.SINGLE
+                } else if (prev <= current - 2) {
+                    PipeType.END
+                } else if (newer >= current + 2) {
+                    PipeType.START
+                } else {
+                    PipeType.START_END
+                }
+            }
         }
     }
 }
