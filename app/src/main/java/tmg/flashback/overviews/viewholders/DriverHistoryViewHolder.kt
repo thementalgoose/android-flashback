@@ -2,16 +2,21 @@ package tmg.flashback.overviews.viewholders
 
 import android.view.View
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.view_driver_summary_history.view.*
 import tmg.flashback.R
 import tmg.flashback.overviews.driver.summary.DriverSummaryItem
 import tmg.flashback.overviews.driver.summary.PipeType
 import tmg.flashback.overviews.driver.summary.PipeType.*
 import tmg.flashback.overviews.driver.season.DriverSeasonItem
 import tmg.flashback.repo.models.stats.SlimConstructor
+import tmg.flashback.shared.constructorlist.ConstructorListAdapter
+import tmg.utilities.extensions.views.context
 import tmg.utilities.extensions.views.invisible
 import tmg.utilities.extensions.views.visible
 
@@ -33,10 +38,11 @@ class OverviewDriverHistoryViewHolder(
 
 open class DriverHistoryViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
+
+    private val adapter: ConstructorListAdapter = ConstructorListAdapter()
+
     protected val container: ConstraintLayout = itemView.findViewById(R.id.container)
     protected val year: TextView = itemView.findViewById(R.id.year)
-    protected val constructor: TextView = itemView.findViewById(R.id.constructor)
-    private val constructorColor: View = itemView.findViewById(R.id.constructorColor)
     private val pipeCircle: ImageView = itemView.findViewById(R.id.pipeCircle)
     private val pipeTop: View = itemView.findViewById(R.id.pipeTop)
     private val pipeBottom: View = itemView.findViewById(R.id.pipeBottom)
@@ -45,7 +51,7 @@ open class DriverHistoryViewHolder(itemView: View): RecyclerView.ViewHolder(item
 
     fun bind(item: DriverSeasonItem.RacedFor) {
         season = item.season ?: -1
-        this.bind(item.season, item.constructors, item.type, item.isChampionship)
+        this.bind(item.season, listOf(item.constructors), item.type, item.isChampionship)
     }
 
     fun bind(item: DriverSummaryItem.RacedFor) {
@@ -53,17 +59,21 @@ open class DriverHistoryViewHolder(itemView: View): RecyclerView.ViewHolder(item
         this.bind(item.season, item.constructors, item.type, item.isChampionship)
     }
 
+    init {
+        itemView.constructorList.layoutManager = LinearLayoutManager(context)
+        itemView.constructorList.adapter = adapter
+    }
+
     open fun bind(
             season: Int?,
-            constructors: SlimConstructor,
+            constructors: List<SlimConstructor>,
             type: PipeType,
             isChampionship: Boolean
     ) {
         year.isVisible = type != SINGLE_PIPE && season != null
         year.text = season.toString()
 
-        constructor.text = constructors.name
-        constructorColor.setBackgroundColor(constructors.color)
+        adapter.list = constructors
 
         if (isChampionship) {
             pipeCircle.setImageResource(R.drawable.ic_star_filled_coloured)

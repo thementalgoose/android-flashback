@@ -48,6 +48,8 @@ data class FDriverOverviewStandingHistory(
         val cCountry: String = "",
         // Nationality iso
         val cISO: String? = "",
+        // Constructor id
+        val con: String? = null,
         val date: String = "",
         // Finish
         val f: Int? = null,

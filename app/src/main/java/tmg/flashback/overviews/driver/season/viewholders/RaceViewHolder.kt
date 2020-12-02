@@ -2,6 +2,7 @@ package tmg.flashback.overviews.driver.season.viewholders
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.layout_podium.view.*
 import kotlinx.android.synthetic.main.view_driver_season.view.*
 import kotlinx.android.synthetic.main.view_driver_season.view.lpvProgress
 import tmg.flashback.R
@@ -49,6 +50,13 @@ class RaceViewHolder(
         else {
             itemView.finished.text = getString(R.string.race_dnf)
             itemView.raceStatus.text = getString(R.string.race_cause, item.raceStatus)
+        }
+
+        if (item.showConstructorLabel) {
+            itemView.constructorLabel.show(true)
+            itemView.constructorLabel.text = getString(R.string.driver_overview_constructor, item.constructor.name)
+        } else {
+            itemView.constructorLabel.show(false)
         }
 
         itemView.lpvProgress.backgroundColour = itemView.context.theme.getColor(R.attr.f1BackgroundPrimary)
