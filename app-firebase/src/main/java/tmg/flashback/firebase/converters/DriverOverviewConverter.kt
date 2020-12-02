@@ -2,6 +2,7 @@ package tmg.flashback.firebase.converters
 
 import androidx.core.graphics.toColorInt
 import org.threeten.bp.LocalDate
+import tmg.flashback.firebase.currentYear
 import tmg.flashback.firebase.models.*
 import tmg.flashback.repo.models.stats.DriverOverview
 import tmg.flashback.repo.models.stats.DriverOverviewRace
@@ -31,7 +32,7 @@ fun FDriverOverviewStanding.convert(): DriverOverviewStanding {
              bestQualifying = this.bestQualifying ?: 0,
              bestQualifyingQuantity = this.bestQualifyingQuantity ?: 0,
              championshipStanding = this.championshipStanding ?: 0,
-             isInProgress = this.inProgress ?: false,
+             isInProgress = if (this.s >= currentYear) (this.inProgress ?: false) else false,
              points = this.p ?: 0,
              podiums = this.podiums ?: 0,
              races = this.races ?: 0,
