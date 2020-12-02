@@ -1,6 +1,7 @@
 package tmg.flashback.rss.ui.configure.viewholders
 
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.view_rss_configure_add.view.*
 import tmg.flashback.rss.R
@@ -16,6 +17,15 @@ class AddViewHolder(
 ): RecyclerView.ViewHolder(itemView), View.OnClickListener {
     init {
         itemView.add.setOnClickListener(this)
+        itemView.input.setOnEditorActionListener { _, actionId, _ ->
+            return@setOnEditorActionListener when (actionId) {
+                EditorInfo.IME_ACTION_SEND -> {
+                    onClick(itemView.add)
+                    true
+                }
+                else -> false
+            }
+        }
     }
 
     override fun onClick(p0: View?) {

@@ -16,6 +16,7 @@
         android:layout_marginEnd="@dimen/paddingMedium"
         android:hint="@string/rss_configure_hint"
         android:importantForAutofill="no"
+        android:imeOptions="actionSend"
         android:inputType="textUri"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/add"
