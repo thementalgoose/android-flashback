@@ -14,6 +14,7 @@ import com.google.firebase.messaging.RemoteMessage
 import org.koin.android.ext.android.inject
 import tmg.flashback.R
 import tmg.flashback.SplashActivity
+import tmg.flashback.notifications.FirebasePushNotificationManager.Companion.topicMisc
 import tmg.flashback.notifications.FirebasePushNotificationManager.Companion.topicQualifying
 import tmg.flashback.notifications.FirebasePushNotificationManager.Companion.topicRace
 
@@ -25,7 +26,7 @@ class RaceNotificationService: FirebaseMessagingService() {
         message.notification?.let {
             if (it.title != null) {
                 sendNotification(
-                    channelId = it.channelId ?: "race",
+                    channelId = it.channelId ?: "misc",
                     title = it.title!!,
                     text = it.body
                 )
@@ -62,6 +63,7 @@ class RaceNotificationService: FirebaseMessagingService() {
             val channel: NotificationChannel? = when (channelId) {
                 topicRace -> NotificationChannel(channelId, getString(R.string.notification_channel_race), NotificationManager.IMPORTANCE_DEFAULT)
                 topicQualifying -> NotificationChannel(channelId, getString(R.string.notification_channel_qualifying), NotificationManager.IMPORTANCE_DEFAULT)
+                topicMisc -> NotificationChannel(channelId, getString(R.string.notification_channel_info), NotificationManager.IMPORTANCE_DEFAULT)
                 else -> null
             }
             channel?.let {
