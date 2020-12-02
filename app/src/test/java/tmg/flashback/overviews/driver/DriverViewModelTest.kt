@@ -11,10 +11,13 @@ import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
 import tmg.flashback.R
 import tmg.flashback.currentYear
 import tmg.flashback.overviews.*
 import tmg.flashback.overviews.driver.summary.DriverSummaryItem
+import tmg.flashback.overviews.driver.summary.PipeType
 import tmg.flashback.overviews.driver.summary.PipeType.*
 import tmg.flashback.repo.NetworkConnectivityManager
 import tmg.flashback.repo.db.stats.DriverDB
@@ -247,73 +250,49 @@ class DriverViewModelTest: BaseTest() {
         val expected = listOf<DriverSummaryItem>(
             DriverSummaryItem.RacedFor(
                 2020,
-                mockDriverOverviewConstructor2,
-                START_END,
+                listOf(mockDriverOverviewConstructor2),
+                START,
                 false
             ),
             DriverSummaryItem.RacedFor(
                 2019,
-                mockDriverOverviewConstructor,
+                listOf(mockDriverOverviewConstructor),
                 START_END,
                 false
             ),
             DriverSummaryItem.RacedFor(
                 2018,
-                mockDriverOverviewConstructor2,
-                SINGLE_PIPE,
-                false
-            ),
-            DriverSummaryItem.RacedFor(
-                2018,
-                mockDriverOverviewConstructor,
+                listOf(mockDriverOverviewConstructor2, mockDriverOverviewConstructor),
                 START_END,
                 false
             ),
             DriverSummaryItem.RacedFor(
                 2017,
-                mockDriverOverviewConstructor,
+                listOf(mockDriverOverviewConstructor),
                 START_END,
                 false
             ),
             DriverSummaryItem.RacedFor(
                 2016,
-                mockDriverOverviewConstructor,
-                SINGLE_PIPE,
-                false
-            ),
-            DriverSummaryItem.RacedFor(
-                2016,
-                mockDriverOverviewConstructor2,
-                SINGLE_PIPE,
-                false
-            ),
-            DriverSummaryItem.RacedFor(
-                2016,
-                mockDriverOverviewConstructor,
+                listOf(mockDriverOverviewConstructor, mockDriverOverviewConstructor2, mockDriverOverviewConstructor),
                 END,
                 false
             ),
             DriverSummaryItem.RacedFor(
                 2014,
-                mockDriverOverviewConstructor,
+                listOf(mockDriverOverviewConstructor),
                 START,
                 false
             ),
             DriverSummaryItem.RacedFor(
                 2013,
-                mockDriverOverviewConstructor2,
-                SINGLE_PIPE,
-                false
-            ),
-            DriverSummaryItem.RacedFor(
-                2013,
-                mockDriverOverviewConstructor,
+                listOf(mockDriverOverviewConstructor2, mockDriverOverviewConstructor),
                 END,
                 false
             ),
             DriverSummaryItem.RacedFor(
                 2011,
-                mockDriverOverviewConstructor,
+                listOf(mockDriverOverviewConstructor),
                 SINGLE,
                 true
             )
@@ -333,13 +312,13 @@ class DriverViewModelTest: BaseTest() {
         val expected = listOf(
             DriverSummaryItem.RacedFor(
                 2019,
-                    mockDriverOverviewConstructor,
+                    listOf(mockDriverOverviewConstructor),
                 SINGLE,
                 true
             ),
             DriverSummaryItem.RacedFor(
                 2017,
-                    mockDriverOverviewConstructor,
+                    listOf(mockDriverOverviewConstructor),
                 SINGLE,
                 false
             )
@@ -359,13 +338,13 @@ class DriverViewModelTest: BaseTest() {
         val expected = listOf(
             DriverSummaryItem.RacedFor(
                 currentYear,
-                    mockDriverOverviewConstructor,
-                END,
+                listOf(mockDriverOverviewConstructor),
+                SINGLE,
                 false
             ),
             DriverSummaryItem.RacedFor(
                 2017,
-                    mockDriverOverviewConstructor,
+                    listOf(mockDriverOverviewConstructor),
                 SINGLE,
                 true
             )
@@ -404,6 +383,25 @@ class DriverViewModelTest: BaseTest() {
         sut.outputs.openUrl.test {
             assertDataEventValue(expectUrl)
         }
+    }
+
+    @ParameterizedTest
+    @CsvSource(
+        "2019,2020,2021,START_END",
+        "2018,2020,2022,SINGLE",
+        "    ,2020,2021,END",
+        "    ,2020,2022,SINGLE",
+        "2018,2020,    ,SINGLE",
+        "2019,2020,    ,START",
+        "    ,2020,    ,SINGLE",
+        "2019,2020,2022,START",
+        "2019,2021,2022,END"
+    )
+    fun `DriverViewModel getPipeType correct sequence of years returns the correct pipe type`(previous: Int?, current: Int, next: Int?, pipeType: PipeType) {
+
+        initSUT()
+
+        assertEquals(pipeType, sut.getPipeType(current, next, previous))
     }
 
     @AfterEach

@@ -199,6 +199,7 @@ data class DriverOverviewRace(
         val season: Int,
         val raceName: String,
         val date: LocalDate,
+        val constructor: SlimConstructor?,
         val circuitName: String,
         val circuitId: String,
         val circuitNationality: String,

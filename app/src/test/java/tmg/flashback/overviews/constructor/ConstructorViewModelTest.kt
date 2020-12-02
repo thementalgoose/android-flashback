@@ -11,6 +11,8 @@ import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
 import tmg.flashback.R
 import tmg.flashback.home.list.HomeItem
 import tmg.flashback.overviews.*
@@ -298,6 +300,25 @@ class ConstructorViewModelTest: BaseTest() {
         sut.outputs.openUrl.test {
             assertDataEventValue(expectUrl)
         }
+    }
+
+    @ParameterizedTest
+    @CsvSource(
+        "2019,2020,2021,START_END",
+        "2018,2020,2022,SINGLE",
+        "    ,2020,2021,END",
+        "    ,2020,2022,SINGLE",
+        "2018,2020,    ,SINGLE",
+        "2019,2020,    ,START",
+        "    ,2020,    ,SINGLE",
+        "2019,2020,2022,START",
+        "2019,2021,2022,END"
+    )
+    fun `ConstructorViewModel getPipeType correct sequence of years returns the correct pipe type`(previous: Int?, current: Int, next: Int?, pipeType: PipeType) {
+
+        initSUT()
+
+        assertEquals(pipeType, sut.getPipeType(current, next, previous))
     }
 
     @AfterEach

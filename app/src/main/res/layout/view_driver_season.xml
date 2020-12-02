@@ -107,13 +107,24 @@
         tools:text="Albert Park Circuit" />
 
     <TextView
+        android:id="@+id/constructorLabel"
+        style="@style/Text.DriverSeason.Track.Status"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        tools:text="Constructor: Toro Rosso"
+        app:layout_constraintTop_toBottomOf="@id/circuitName"
+        app:layout_constraintStart_toStartOf="@id/circuitName"
+        app:layout_constraintEnd_toStartOf="@id/midpoint"/>
+
+    <TextView
         android:id="@+id/penalty"
         style="@style/Text.QualifyingTime.Delta"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
         android:text="@string/qualifying_grid_penalty"
-        app:layout_constraintTop_toBottomOf="@id/circuitName"
+        app:layout_constraintTop_toBottomOf="@id/constructorLabel"
         app:layout_constraintStart_toStartOf="@id/circuitName"
         app:layout_constraintEnd_toStartOf="@id/midpoint"/>
 
