@@ -5,7 +5,6 @@ import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
 import androidx.annotation.StringRes
-import com.google.firebase.messaging.BuildConfig
 import com.google.firebase.messaging.FirebaseMessaging
 import tmg.flashback.R
 import tmg.flashback.repo.enums.NotificationRegistration.OPT_IN
@@ -22,6 +21,7 @@ class FirebasePushNotificationManager(
     companion object {
         const val topicRace: String = "race"
         const val topicQualifying: String = "qualifying"
+        const val topicMisc: String = "misc"
     }
 
 
@@ -81,9 +81,38 @@ class FirebasePushNotificationManager(
         }
     }
 
+    override suspend fun appSupportSubscribe(): Boolean {
+        return suspendCoroutine { continuation ->
+            FirebaseMessaging
+                .getInstance()
+                .unsubscribeFromTopic(topicMisc)
+                .addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        pref.notificationsMisc = OPT_IN
+                    }
+                    continuation.resume(it.isSuccessful)
+                }
+        }
+    }
+
+    override suspend fun appSupportUnsubscribe(): Boolean {
+        return suspendCoroutine { continuation ->
+            FirebaseMessaging
+                .getInstance()
+                .unsubscribeFromTopic(topicMisc)
+                .addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        pref.notificationsMisc = OPT_OUT
+                    }
+                    continuation.resume(it.isSuccessful)
+                }
+        }
+    }
+
     override fun createChannels() {
         createChannel(topicRace, R.string.notification_channel_race)
         createChannel(topicQualifying, R.string.notification_channel_qualifying)
+        createChannel(topicMisc, R.string.notification_channel_info)
     }
 
     private fun createChannel(channelId: String, @StringRes channelName: Int) {

@@ -97,5 +97,13 @@ class FlashbackApplication: Application() {
                 Log.i("Flashback", "Auto enrol push notifications qualifying - $result")
             }
         }
+
+        // Enrol for qualifying push notifications
+        if (prefs.notificationsMisc == null && BuildConfig.AUTO_ENROL_PUSH_NOTIFICATIONS) {
+            GlobalScope.launch {
+                val result = notificationManager.appSupportSubscribe()
+                Log.i("Flashback", "Auto enrol push notifications misc - $result")
+            }
+        }
     }
 }

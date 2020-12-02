@@ -7,5 +7,8 @@ interface PushNotificationManager {
     suspend fun qualifyingSubscribe(): Boolean
     suspend fun qualifyingUnsubscribe(): Boolean
 
+    suspend fun appSupportSubscribe(): Boolean
+    suspend fun appSupportUnsubscribe(): Boolean
+
     fun createChannels()
 }
