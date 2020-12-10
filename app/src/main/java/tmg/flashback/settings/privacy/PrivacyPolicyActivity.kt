@@ -1,6 +1,7 @@
 package tmg.flashback.settings.privacy
 
 import android.os.Bundle
+import android.text.method.LinkMovementMethod
 import kotlinx.android.synthetic.main.activity_privacy_policy.*
 import kotlinx.android.synthetic.main.activity_privacy_policy.header
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -21,6 +22,7 @@ class PrivacyPolicyActivity: BaseActivity() {
         header.text = getString(R.string.privacy_policy_title)
 
         tvPolicy.text = getString(R.string.privacy_policy_data).fromHtml()
+        tvPolicy.movementMethod = LinkMovementMethod.getInstance()
 
         back.setOnClickListener {
             viewModel.inputs.clickBack()
