@@ -13,22 +13,14 @@ abstract class SyncAdapter<T>: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     abstract fun viewType(position: Int): Int
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(viewType, parent, false)
         return when (viewType) {
-            R.layout.view_shared_data_unavailable -> DataUnavailableViewHolder(
-                LayoutInflater.from(parent.context).inflate(viewType, parent, false)
-            )
-            R.layout.view_shared_no_network -> NoNetworkViewHolder(
-                LayoutInflater.from(parent.context).inflate(viewType, parent, false)
-            )
-            R.layout.view_shared_internal_error -> InternalErrorOccurredViewHolder(
-                LayoutInflater.from(parent.context).inflate(viewType, parent, false)
-            )
-            R.layout.view_shared_message -> MessageViewHolder(
-                LayoutInflater.from(parent.context).inflate(viewType, parent, false)
-            )
-            R.layout.view_shared_constructor_championship_not_awarded -> ConstructorsChampionshipNotAwardedViewHolder(
-                LayoutInflater.from(parent.context).inflate(viewType, parent, false)
-            )
+            R.layout.view_shared_data_unavailable -> DataUnavailableViewHolder(view)
+            R.layout.view_shared_no_network -> NoNetworkViewHolder(view)
+            R.layout.view_shared_internal_error -> InternalErrorOccurredViewHolder(view)
+            R.layout.view_shared_message -> MessageViewHolder(view)
+            R.layout.view_shared_constructor_championship_not_awarded -> ConstructorsChampionshipNotAwardedViewHolder(view)
+            R.layout.view_shared_provided -> ProvidedByViewHolder(view)
             else -> throw Error("${this.javaClass.simpleName} Does not have a supported layout id to create a viewholder by")
         }
     }

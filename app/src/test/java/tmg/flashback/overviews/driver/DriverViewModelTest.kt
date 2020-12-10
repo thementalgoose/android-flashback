@@ -51,7 +51,10 @@ class DriverViewModelTest: BaseTest() {
 
         whenever(mockConnectivityManager.isConnected).thenReturn(false)
         whenever(mockDriverDB.getDriverOverview(any())).thenReturn(flow { emit(null) })
-        val expected = listOf(DriverSummaryItem.ErrorItem(SyncDataItem.NoNetwork))
+        val expected = listOf(
+            DriverSummaryItem.ErrorItem(SyncDataItem.NoNetwork),
+            DriverSummaryItem.ErrorItem(SyncDataItem.ProvidedBy)
+        )
 
         initSUT()
 
@@ -65,9 +68,8 @@ class DriverViewModelTest: BaseTest() {
 
         whenever(mockDriverDB.getDriverOverview(any())).thenReturn(flow { emit(null) })
         val expected = listOf(
-            DriverSummaryItem.ErrorItem(
-                SyncDataItem.Unavailable(DataUnavailable.DRIVER_NOT_EXIST)
-            )
+            DriverSummaryItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.DRIVER_NOT_EXIST)),
+            DriverSummaryItem.ErrorItem(SyncDataItem.ProvidedBy)
         )
 
         initSUT()

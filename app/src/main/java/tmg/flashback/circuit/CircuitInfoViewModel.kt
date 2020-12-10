@@ -98,6 +98,7 @@ class CircuitInfoViewModel(
                         }
                         .sortedByDescending { it.season * 1000 + it.round }
                     )
+                    list.add(CircuitItem.ErrorItem(SyncDataItem.ProvidedBy))
                     return@map list
                 }
             }

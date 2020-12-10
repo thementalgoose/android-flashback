@@ -124,7 +124,8 @@ class CircuitInfoViewModelTest: BaseTest() {
                 round = mockCircuitRace.round,
                 date = mockCircuitRace.date,
                 time = mockCircuitRace.time
-            )
+            ),
+            CircuitItem.ErrorItem(SyncDataItem.ProvidedBy)
         )
         whenever(mockCircuitDB.getCircuit(any())).thenReturn(circuitWithTrackFlow)
         whenever(mockConnectivityManager.isConnected).thenReturn(true)
@@ -151,7 +152,8 @@ class CircuitInfoViewModelTest: BaseTest() {
                 round = mockCircuitRace.round,
                 date = mockCircuitRace.date,
                 time = mockCircuitRace.time
-            )
+            ),
+            CircuitItem.ErrorItem(SyncDataItem.ProvidedBy)
         )
 
         whenever(mockCircuitDB.getCircuit(any())).thenReturn(circuitWithoutTrackFlow)
