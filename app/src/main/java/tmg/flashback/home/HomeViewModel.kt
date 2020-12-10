@@ -103,6 +103,7 @@ class HomeViewModel(
         .map { (seasonRoundMenuItemListHistoryTriple, appBanner) ->
             val (season, menuItemType, history) = seasonRoundMenuItemListHistoryTriple
             val list: MutableList<HomeItem> = mutableListOf()
+            list.add(HomeItem.ErrorItem(SyncDataItem.ProvidedBy))
             val historyRounds = history.rounds
 
             val rounds = season.rounds

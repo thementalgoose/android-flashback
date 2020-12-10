@@ -107,6 +107,8 @@ class DriverViewModel(
                 }
             }
 
+            list.add(DriverSummaryItem.ErrorItem(SyncDataItem.ProvidedBy))
+
             return@map list
         }
         .asLiveData(scope.coroutineContext)

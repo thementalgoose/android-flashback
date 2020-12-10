@@ -43,6 +43,10 @@
     <dimen name="radiusMedium">12dp</dimen>
     <dimen name="radiusSmall">6dp</dimen>
 
+    <!-- Shared -->
+
+    <dimen name="sharedErgast">16dp</dimen>
+
     <!--==================================-->
 
     <!--==================================-->

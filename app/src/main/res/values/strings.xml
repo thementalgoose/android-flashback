@@ -69,7 +69,7 @@
     <!-- About -->
     <string name="about_name">Flashback</string>
     <string name="about_desc">Formula 1 statistics</string>
-    <string name="dependency_thank_you">A big thank you to everyone listed below for helping make this app possible!</string>
+    <string name="dependency_thank_you">The statistics provided throughout this app are supported by the Ergast API and cached by the flashback team in firebase. Like the Ergast API, we cannot guarantee the accuracy of the data provided (please let us know however if you spot an issue). You can visit the Ergast API by clicking the item in the list below to view more about this API.\n\nA big thank you to the Ergast team and everyone listed below for making this app possible!</string>
     <string name="about_additional">Special thanks to\n
     - Icons made by Freepik from www.flaticon.com\n
     - Icons made by Vitaly Gorbachev from www.flaticon.com\n
@@ -234,6 +234,8 @@
     <string name="driver_overview_stat_career_team_history">History</string>
     <string name="driver_overview_stat_career_team">Team</string>
     <string name="driver_overview_constructor">Constructor: %s</string>
+    <string name="driver_overview_stat_birthday">Born %s</string>
+    <string name="driver_overview_title_overview">Overview</string>
 
     <!-- Constructor Overview -->
     <string name="constructor_overview_stat_titles">Constructors championships</string>
@@ -261,12 +263,14 @@
     <string name="app_shortcut_rss_shorttitle">RSS</string>
     <string name="app_shortcut_rss_longtitle">Formula 1 RSS feed</string>
     <string name="app_shortcut_rss_disabled">RSS (Unavailable)</string>
-    <string name="driver_overview_stat_birthday">Born %s</string>
-    <string name="driver_overview_title_overview">Overview</string>
 
     <!-- Notifications -->
     <string name="notification_channel_race">Race starts</string>
     <string name="notification_channel_qualifying">Qualifying starts</string>
     <string name="notification_channel_info">Miscellaneous</string>
+
+    <!-- Data Provided -->
+    <string name="shared_provided_by"><![CDATA[Data provided by ergast.com]]></string>
+    <string name="shared_provided_by_cached" />
 
 </resources>

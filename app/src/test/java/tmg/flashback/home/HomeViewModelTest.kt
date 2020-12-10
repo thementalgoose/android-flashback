@@ -177,7 +177,7 @@ class HomeViewModelTest : BaseTest() {
         initSUT()
 
         sut.outputs.list.test {
-            assertListMatchesItem { it is HomeItem.ErrorItem && (it.item as SyncDataItem.Message).msg == expectedMessage }
+            assertListMatchesItem { it is HomeItem.ErrorItem && (it.item as? SyncDataItem.Message)?.msg == expectedMessage }
         }
     }
 
@@ -232,6 +232,7 @@ class HomeViewModelTest : BaseTest() {
         whenever(mockConnectivityManager.isConnected).thenReturn(false)
         whenever(mockHistoryDB.historyFor(any())).thenReturn(flow { emit(historyListWithEmptyRound) })
         val expected = listOf<HomeItem>(
+                HomeItem.ErrorItem(SyncDataItem.ProvidedBy),
                 HomeItem.ErrorItem(SyncDataItem.NoNetwork)
         )
 
@@ -250,6 +251,7 @@ class HomeViewModelTest : BaseTest() {
         whenever(mockSeasonOverviewDB.getSeasonOverview(any())).thenReturn(flow { emit(mockSeason.copy(season = currentYear)) })
         whenever(mockHistoryDB.historyFor(any())).thenReturn(flow { emit(historyItemWithEmptyRound) })
         val expected = listOf<HomeItem>(
+                HomeItem.ErrorItem(SyncDataItem.ProvidedBy),
                 HomeItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.EARLY_IN_SEASON))
         )
 
@@ -265,7 +267,10 @@ class HomeViewModelTest : BaseTest() {
 
         val historyListWithEmptyRound = History(2019, null, emptyList())
         whenever(mockHistoryDB.historyFor(any())).thenReturn(flow { emit(historyListWithEmptyRound) })
-        val expected = listOf<HomeItem>(HomeItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.MISSING_RACE)))
+        val expected = listOf<HomeItem>(
+            HomeItem.ErrorItem(SyncDataItem.ProvidedBy),
+            HomeItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.MISSING_RACE))
+        )
 
         initSUT()
 
@@ -279,6 +284,7 @@ class HomeViewModelTest : BaseTest() {
     fun `HomeViewModel when home type is calendar show calendar history list`() = coroutineTest {
 
         val expected = listOf<HomeItem>(
+                HomeItem.ErrorItem(SyncDataItem.ProvidedBy),
                 HomeItem.Track(
                         season = mockHistoryRound1.season,
                         round = mockHistoryRound1.round,
@@ -321,7 +327,10 @@ class HomeViewModelTest : BaseTest() {
 
         whenever(mockConnectivityManager.isConnected).thenReturn(false)
         whenever(mockSeasonOverviewDB.getSeasonOverview(any())).thenReturn(flow { emit(mockSeason.copy(rounds = emptyList())) })
-        val expected = listOf<HomeItem>(HomeItem.ErrorItem(SyncDataItem.NoNetwork))
+        val expected = listOf<HomeItem>(
+            HomeItem.ErrorItem(SyncDataItem.ProvidedBy),
+            HomeItem.ErrorItem(SyncDataItem.NoNetwork)
+        )
 
         initSUT()
         sut.inputs.clickItem(DRIVERS)
@@ -336,7 +345,10 @@ class HomeViewModelTest : BaseTest() {
     fun `HomeViewModel when home type is drivers and history rounds is empty, show in future season`() = coroutineTest {
 
         whenever(mockSeasonOverviewDB.getSeasonOverview(any())).thenReturn(flow { emit(mockSeason.copy(rounds = emptyList())) })
-        val expected = listOf<HomeItem>(HomeItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.IN_FUTURE_SEASON)))
+        val expected = listOf<HomeItem>(
+            HomeItem.ErrorItem(SyncDataItem.ProvidedBy),
+            HomeItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.IN_FUTURE_SEASON))
+        )
 
         initSUT()
         sut.inputs.clickItem(DRIVERS)
@@ -351,6 +363,7 @@ class HomeViewModelTest : BaseTest() {
     fun `HomeViewModel when home type is drivers list driver standings in order`() = coroutineTest {
 
         val expected = listOf<HomeItem>(
+                HomeItem.ErrorItem(SyncDataItem.ProvidedBy),
                 expectedDriver3,
                 expectedDriver4,
                 expectedDriver1,
@@ -392,7 +405,10 @@ class HomeViewModelTest : BaseTest() {
 
         whenever(mockConnectivityManager.isConnected).thenReturn(false)
         whenever(mockSeasonOverviewDB.getSeasonOverview(any())).thenReturn(flow { emit(mockSeason.copy(rounds = emptyList())) })
-        val expected = listOf<HomeItem>(HomeItem.ErrorItem(SyncDataItem.NoNetwork))
+        val expected = listOf<HomeItem>(
+            HomeItem.ErrorItem(SyncDataItem.ProvidedBy),
+            HomeItem.ErrorItem(SyncDataItem.NoNetwork)
+        )
 
         initSUT()
         sut.inputs.clickItem(CONSTRUCTORS)
@@ -407,7 +423,10 @@ class HomeViewModelTest : BaseTest() {
     fun `HomeViewModel when home type is constructors and history rounds is empty, show in future season`() = coroutineTest {
 
         whenever(mockSeasonOverviewDB.getSeasonOverview(any())).thenReturn(flow { emit(mockSeason.copy(rounds = emptyList())) })
-        val expected = listOf<HomeItem>(HomeItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.IN_FUTURE_SEASON)))
+        val expected = listOf<HomeItem>(
+            HomeItem.ErrorItem(SyncDataItem.ProvidedBy),
+            HomeItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.IN_FUTURE_SEASON))
+        )
 
         initSUT()
         sut.inputs.clickItem(CONSTRUCTORS)
@@ -422,6 +441,7 @@ class HomeViewModelTest : BaseTest() {
     fun `HomeViewModel when home type is constructors list driver standings in order`() = coroutineTest {
 
         val expected = listOf<HomeItem>(
+                HomeItem.ErrorItem(SyncDataItem.ProvidedBy),
                 expectedConstructorAlpha,
                 expectedConstructorBeta
         )
@@ -462,7 +482,10 @@ class HomeViewModelTest : BaseTest() {
         sut.inputs.selectSeason(season)
 
         sut.outputs.list.test {
-            assertValue(listOf(HomeItem.ErrorItem(SyncDataItem.ConstructorsChampionshipNotAwarded)))
+            assertValue(listOf(
+                HomeItem.ErrorItem(SyncDataItem.ProvidedBy),
+                HomeItem.ErrorItem(SyncDataItem.ConstructorsChampionshipNotAwarded)
+            ))
         }
     }
 
