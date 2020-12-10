@@ -270,7 +270,7 @@
     <string name="notification_channel_info">Miscellaneous</string>
 
     <!-- Data Provided -->
-    <string name="shared_provided_by"><![CDATA[Data provided by ergast.com]]></string>
+    <string name="shared_provided_by"><![CDATA[Data provided by Ergast API]]></string>
     <string name="shared_provided_by_cached" />
 
 </resources>
