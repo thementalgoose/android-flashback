@@ -93,6 +93,8 @@ class ConstructorViewModel(
                     list.add(ConstructorSummaryItem.ListHeader)
 
                     list.addAll(getHistory(it))
+
+                    list.add(ConstructorSummaryItem.ErrorItem(SyncDataItem.ProvidedBy))
                 }
             }
             return@map list

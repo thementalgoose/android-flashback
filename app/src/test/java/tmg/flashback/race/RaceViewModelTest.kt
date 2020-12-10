@@ -13,6 +13,8 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
 import tmg.flashback.*
+import tmg.flashback.circuit.list.CircuitItem
+import tmg.flashback.overviews.driver.summary.DriverSummaryItem
 import tmg.flashback.race.RaceAdapterType.*
 import tmg.flashback.repo.NetworkConnectivityManager
 import tmg.flashback.repo.pref.PrefsDB
@@ -168,7 +170,8 @@ class RaceViewModelTest: BaseTest() {
             race = emptyMap()
         )) })
         val expected = listOf<RaceModel>(
-            RaceModel.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.IN_FUTURE_RACE))
+            RaceModel.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.IN_FUTURE_RACE)),
+            RaceModel.ErrorItem(SyncDataItem.ProvidedBy)
         )
 
         initSUT()
@@ -186,7 +189,8 @@ class RaceViewModelTest: BaseTest() {
             race = emptyMap()
         )) })
         val expected = listOf<RaceModel>(
-            RaceModel.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.COMING_SOON_RACE))
+            RaceModel.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.COMING_SOON_RACE)),
+            RaceModel.ErrorItem(SyncDataItem.ProvidedBy)
         )
 
         initSUT()
@@ -225,7 +229,8 @@ class RaceViewModelTest: BaseTest() {
                 expectedQualified = 1,
                 expectedGrid = 1,
                 expectedFinish = 4
-            )
+            ),
+            RaceModel.ErrorItem(SyncDataItem.ProvidedBy)
         )
 
         initSUT()
@@ -245,6 +250,7 @@ class RaceViewModelTest: BaseTest() {
         whenever(mockSeasonOverviewDB.getSeasonRound(any(), any())).thenReturn(flow { emit(mockRound1) })
         val expected = mutableListOf<RaceModel>(RaceModel.QualifyingHeader(showQualifying))
         expected.addAll(expectedQ3Order)
+        expected.add(RaceModel.ErrorItem(SyncDataItem.ProvidedBy))
 
         initSUT(orderBy = QUALIFYING_POS)
 
@@ -263,6 +269,7 @@ class RaceViewModelTest: BaseTest() {
         whenever(mockSeasonOverviewDB.getSeasonRound(any(), any())).thenReturn(flow { emit(mockRound1) })
         val expected = mutableListOf<RaceModel>(RaceModel.QualifyingHeader(showQualifying))
         expected.addAll(expectedQ2Order)
+        expected.add(RaceModel.ErrorItem(SyncDataItem.ProvidedBy))
 
         initSUT(orderBy = QUALIFYING_POS_2)
 
@@ -281,6 +288,7 @@ class RaceViewModelTest: BaseTest() {
         whenever(mockSeasonOverviewDB.getSeasonRound(any(), any())).thenReturn(flow { emit(mockRound1) })
         val expected = mutableListOf<RaceModel>(RaceModel.QualifyingHeader(showQualifying))
         expected.addAll(expectedQ1Order)
+        expected.add(RaceModel.ErrorItem(SyncDataItem.ProvidedBy))
 
         initSUT(orderBy = QUALIFYING_POS_1)
 
@@ -300,10 +308,13 @@ class RaceViewModelTest: BaseTest() {
 
         val expectedQ3 = mutableListOf<RaceModel>(RaceModel.QualifyingHeader(showQualifying))
         expectedQ3.addAll(expectedQ3Order)
+        expectedQ3.add(RaceModel.ErrorItem(SyncDataItem.ProvidedBy))
         val expectedQ2 = mutableListOf<RaceModel>(RaceModel.QualifyingHeader(showQualifying))
         expectedQ2.addAll(expectedQ2Order)
+        expectedQ2.add(RaceModel.ErrorItem(SyncDataItem.ProvidedBy))
         val expectedQ1 = mutableListOf<RaceModel>(RaceModel.QualifyingHeader(showQualifying))
         expectedQ1.addAll(expectedQ1Order)
+        expectedQ1.add(RaceModel.ErrorItem(SyncDataItem.ProvidedBy))
 
         initSUT(orderBy = QUALIFYING_POS)
 
@@ -336,6 +347,7 @@ class RaceViewModelTest: BaseTest() {
         whenever(mockSeasonOverviewDB.getSeasonRound(any(), any())).thenReturn(flow { emit(mockRound1) })
         val expected = mutableListOf<RaceModel>(RaceModel.QualifyingHeader(showQualifying))
         expected.addAll(expectedQ3OrderWithQualifyingDeltas)
+        expected.add(RaceModel.ErrorItem(SyncDataItem.ProvidedBy))
 
         initSUT(orderBy = QUALIFYING_POS)
 
@@ -354,6 +366,7 @@ class RaceViewModelTest: BaseTest() {
         whenever(mockSeasonOverviewDB.getSeasonRound(any(), any())).thenReturn(flow { emit(mockRound3) })
         val expected = mutableListOf<RaceModel>(RaceModel.QualifyingHeader(showQualifying))
         expected.addAll(expectedQ3Order(round = mockRound3, showQualifying = showQualifying))
+        expected.add(RaceModel.ErrorItem(SyncDataItem.ProvidedBy))
 
         initSUT(orderBy = QUALIFYING_POS)
 

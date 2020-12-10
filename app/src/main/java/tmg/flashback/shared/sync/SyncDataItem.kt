@@ -27,4 +27,6 @@ sealed class SyncDataItem(
     data class Unavailable(
         val type: DataUnavailable
     ): SyncDataItem(R.layout.view_shared_data_unavailable)
+
+    object ProvidedBy: SyncDataItem(R.layout.view_shared_provided)
 }
