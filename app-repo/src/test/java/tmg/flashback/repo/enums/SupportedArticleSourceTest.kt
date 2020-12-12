@@ -8,7 +8,7 @@ import org.junit.jupiter.params.provider.MethodSource
 
 class SupportedArticleSourceTest {
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "Source {0} is valid == {1}")
     @CsvSource(
         "https://www.autosport.com/test,true",
         "http://www.autosport.com/test,true",

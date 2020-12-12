@@ -6,7 +6,7 @@ import org.junit.jupiter.params.provider.CsvSource
 
 class LapTimeFormatsTest {
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "{0} laptime is valid == {1}")
     @CsvSource(
             "00:000,true",
             "59:999,true",
@@ -25,7 +25,7 @@ class LapTimeFormatsTest {
         assertEquals(LapTimeFormats.SECOND_MILLIS.regex.matches(lapTime), expectedIsValid)
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "{0} laptime is valid == {1}")
     @CsvSource(
             "1:00:000,true",
             "59:59:999,true",
@@ -45,7 +45,7 @@ class LapTimeFormatsTest {
         assertEquals(LapTimeFormats.MIN_SECOND_MILLIS.regex.matches(lapTime), expectedIsValid)
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "{0} laptime is valid == {1}")
     @CsvSource(
             "1:03:00:000,true",
             "23:02:59:999,true",
