@@ -17,6 +17,11 @@ val allYears: List<Int>
     get() = (minimumSupportedYear..currentYear).map { it }
 
 /**
+ * Play store market url
+ */
+const val playStoreUrl: String = "https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID
+
+/**
  * Days until the app banner gets displayed at the bottom
  */
 const val daysUntilDataProvidedBannerMovedToBottom = 10
