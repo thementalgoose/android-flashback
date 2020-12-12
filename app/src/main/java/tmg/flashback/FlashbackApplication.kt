@@ -15,7 +15,6 @@ import tmg.flashback.di.flashbackModule
 import tmg.flashback.di.rssModule
 import tmg.flashback.notifications.PushNotificationManager
 import tmg.flashback.repo.db.CrashManager
-import tmg.flashback.repo.pref.PrefCustomisationDB
 import tmg.flashback.repo.pref.PrefDeviceDB
 import tmg.flashback.repo.pref.PrefNotificationDB
 
@@ -89,7 +88,10 @@ class FlashbackApplication: Application() {
         }
 
         // Crash Reporting
-        crashManager.initialise()
+        crashManager.initialise(
+            appFirstOpened = prefsDevice.appFirstBootTime.toString(),
+            appOpenedCount = prefsDevice.appOpenedCount
+        )
 
         // Channels
         notificationManager.createChannels()
