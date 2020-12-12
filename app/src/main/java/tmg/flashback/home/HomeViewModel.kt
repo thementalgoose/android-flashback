@@ -5,10 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.*
+import org.threeten.bp.LocalDate
+import org.threeten.bp.temporal.ChronoUnit
 import tmg.flashback.R
 import tmg.flashback.base.BaseViewModel
 import tmg.flashback.constructorChampionshipStarts
 import tmg.flashback.currentYear
+import tmg.flashback.daysUntilDataProvidedBannerMovedToBottom
 import tmg.flashback.home.list.HomeItem
 import tmg.flashback.home.list.addError
 import tmg.flashback.repo.pref.PrefCustomisationDB
@@ -88,6 +91,8 @@ class HomeViewModel(
         }
         .asLiveData(scope.coroutineContext)
 
+    private val showBannerAtTop: Boolean = showBannerAtTop()
+
     /**
      * List to handle season data
      * - CALENDAR
@@ -105,7 +110,9 @@ class HomeViewModel(
         .map { (seasonRoundMenuItemListHistoryTriple, appBanner) ->
             val (season, menuItemType, history) = seasonRoundMenuItemListHistoryTriple
             val list: MutableList<HomeItem> = mutableListOf()
-            list.add(HomeItem.ErrorItem(SyncDataItem.ProvidedBy))
+            if (showBannerAtTop) {
+                list.add(HomeItem.ErrorItem(SyncDataItem.ProvidedBy))
+            }
             val historyRounds = history.rounds
 
             val rounds = season.rounds
@@ -169,6 +176,9 @@ class HomeViewModel(
                 }
                 else -> {
                 }
+            }
+            if (!showBannerAtTop) {
+                list.add(HomeItem.ErrorItem(SyncDataItem.ProvidedBy))
             }
             invalidSeasonData = false
             return@map list
@@ -235,6 +245,11 @@ class HomeViewModel(
     }
 
     //endregion
+
+    private fun showBannerAtTop(): Boolean {
+        val daysBetween = ChronoUnit.DAYS.between(prefDeviceDB.appFirstBootTime, LocalDate.now())
+        return daysBetween <= daysUntilDataProvidedBannerMovedToBottom
+    }
 
 
     /**
