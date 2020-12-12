@@ -8,9 +8,9 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
-import tmg.flashback.repo.enums.SupportedArticleSource
 import tmg.flashback.rss.R
-import tmg.flashback.rss.prefs.RSSPrefsDB
+import tmg.flashback.rss.prefs.RSSPrefsRepository
+import tmg.flashback.rss.repo.enums.SupportedArticleSource
 import tmg.flashback.rss.testutils.BaseTest
 import tmg.flashback.rss.testutils.test
 import java.util.stream.Stream
@@ -19,7 +19,7 @@ class RSSConfigureViewModelTest: BaseTest() {
 
     lateinit var sut: RSSConfigureViewModel
 
-    private val mockPrefs: RSSPrefsDB = mock()
+    private val mockPrefs: RSSPrefsRepository = mock()
 
     @BeforeEach
     fun setUp() {
@@ -27,7 +27,7 @@ class RSSConfigureViewModelTest: BaseTest() {
     }
 
     private fun initSUT() {
-        sut = RSSConfigureViewModel(mockPrefs, testScopeProvider)
+        sut = RSSConfigureViewModel(mockPrefs)
     }
 
     @Test

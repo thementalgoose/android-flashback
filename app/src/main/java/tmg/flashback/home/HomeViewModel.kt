@@ -3,6 +3,7 @@ package tmg.flashback.home
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.*
 import org.threeten.bp.LocalDate
@@ -14,18 +15,17 @@ import tmg.flashback.currentYear
 import tmg.flashback.daysUntilDataProvidedBannerMovedToBottom
 import tmg.flashback.home.list.HomeItem
 import tmg.flashback.home.list.addError
-import tmg.flashback.repo.pref.PrefCustomisationDB
-import tmg.flashback.repo.db.stats.DataDB
-import tmg.flashback.repo.db.stats.HistoryDB
-import tmg.flashback.repo.db.stats.SeasonOverviewDB
+import tmg.flashback.repo.pref.PrefCustomisationRepository
+import tmg.flashback.repo.db.stats.DataRepository
+import tmg.flashback.repo.db.stats.HistoryRepository
+import tmg.flashback.repo.db.stats.SeasonOverviewRepository
 import tmg.flashback.repo.models.AppBanner
 import tmg.flashback.repo.models.stats.*
 import tmg.flashback.shared.sync.SyncDataItem
 import tmg.flashback.shared.viewholders.DataUnavailable
 import tmg.flashback.di.device.BuildConfigProvider
 import tmg.flashback.repo.NetworkConnectivityManager
-import tmg.flashback.repo.ScopeProvider
-import tmg.flashback.repo.pref.PrefDeviceDB
+import tmg.flashback.repo.pref.PrefDeviceRepository
 import tmg.flashback.utils.StringHolder
 import tmg.utilities.extensions.combinePair
 import tmg.utilities.extensions.combineTriple
@@ -58,15 +58,14 @@ interface HomeViewModelOutputs {
 
 @Suppress("EXPERIMENTAL_API_USAGE")
 class HomeViewModel(
-        private val seasonOverviewDB: SeasonOverviewDB,
-        private val historyDB: HistoryDB,
-        dataDB: DataDB,
-        private val prefCustomisationDB: PrefCustomisationDB,
-        private val prefDeviceDB: PrefDeviceDB,
+        private val seasonOverviewRepository: SeasonOverviewRepository,
+        private val historyRepository: HistoryRepository,
+        dataRepository: DataRepository,
+        private val prefCustomisationRepository: PrefCustomisationRepository,
+        private val prefDeviceRepository: PrefDeviceRepository,
         private val connectivityManager: NetworkConnectivityManager,
-        private val buildConfigProvider: BuildConfigProvider,
-        scopeProvider: ScopeProvider
-) : BaseViewModel(scopeProvider), HomeViewModelInputs, HomeViewModelOutputs {
+        private val buildConfigProvider: BuildConfigProvider
+) : BaseViewModel(), HomeViewModelInputs, HomeViewModelOutputs {
 
     // true = new season has been requested so don't progress
     private var invalidSeasonData: Boolean = true
@@ -74,11 +73,11 @@ class HomeViewModel(
     private val currentTab: ConflatedBroadcastChannel<HomeMenuItem> =
         ConflatedBroadcastChannel()
     private val currentTabFlow: Flow<HomeMenuItem> = currentTab.asFlow()
-    private val appBanner: Flow<AppBanner?> = dataDB.appBanner()
+    private val appBanner: Flow<AppBanner?> = dataRepository.appBanner()
     private var _season: Int = currentYear
     private val season: ConflatedBroadcastChannel<Int> = ConflatedBroadcastChannel()
     private val currentHistory: Flow<History> = season.asFlow()
-            .flatMapLatest { historyDB.historyFor(it) }
+            .flatMapLatest { historyRepository.historyFor(it) }
             .filterNotNull()
 
     override val ensureOnCalendar: MutableLiveData<Event> = MutableLiveData()
@@ -89,7 +88,7 @@ class HomeViewModel(
         .map { season ->
             StringHolder(msg = season.toString())
         }
-        .asLiveData(scope.coroutineContext)
+        .asLiveData(viewModelScope.coroutineContext)
 
     private val showBannerAtTop: Boolean = showBannerAtTop()
 
@@ -101,7 +100,7 @@ class HomeViewModel(
      */
     private val seasonList: Flow<List<HomeItem>> = season
         .asFlow()
-        .flatMapLatest { seasonOverviewDB.getSeasonOverview(it) }
+        .flatMapLatest { seasonOverviewRepository.getSeasonOverview(it) }
         .combineTriple(
             currentTabFlow,
             currentHistory
@@ -192,11 +191,11 @@ class HomeViewModel(
         .then {
             showLoading.value = false
         }
-        .asLiveData(scope.coroutineContext)
+        .asLiveData(viewModelScope.coroutineContext)
 
     //region App lockout and banner
 
-    override val openAppLockout: LiveData<Event> = dataDB
+    override val openAppLockout: LiveData<Event> = dataRepository
         .appLockout()
         .map {
             if (it?.show == true && buildConfigProvider.shouldLockoutBasedOnVersion(it.version)) {
@@ -206,7 +205,7 @@ class HomeViewModel(
             }
         }
         .filterNotNull()
-        .asLiveData(scope.coroutineContext)
+        .asLiveData(viewModelScope.coroutineContext)
     override val openReleaseNotes: MutableLiveData<Event> = MutableLiveData()
 
     //endregion
@@ -219,7 +218,7 @@ class HomeViewModel(
         currentTab.offer(HomeMenuItem.CALENDAR)
         showLoading.value = true
 
-        if (prefDeviceDB.shouldShowReleaseNotes) {
+        if (prefDeviceRepository.shouldShowReleaseNotes) {
             openReleaseNotes.value = Event()
         }
     }
@@ -229,7 +228,7 @@ class HomeViewModel(
     override fun clickItem(item: HomeMenuItem) {
         if (item != currentTab.value) {
             if (item == HomeMenuItem.SEASONS) {
-                openSeasonList.value = DataEvent(prefCustomisationDB.showBottomSheetExpanded)
+                openSeasonList.value = DataEvent(prefCustomisationRepository.showBottomSheetExpanded)
             } else {
                 showLoading.value = true
                 currentTab.offer(item)
@@ -247,7 +246,7 @@ class HomeViewModel(
     //endregion
 
     private fun showBannerAtTop(): Boolean {
-        val daysBetween = ChronoUnit.DAYS.between(prefDeviceDB.appFirstBootTime, LocalDate.now())
+        val daysBetween = ChronoUnit.DAYS.between(prefDeviceRepository.appFirstBootTime, LocalDate.now())
         return daysBetween <= daysUntilDataProvidedBannerMovedToBottom
     }
 
@@ -292,7 +291,7 @@ class HomeViewModel(
                     bestQualifying = rounds.bestQualifyingResultFor(roundDriver.id),
                     bestFinish = rounds.bestRaceResultFor(roundDriver.id),
                     maxPointsInSeason = this.maxDriverPointsInSeason(),
-                    barAnimation = prefCustomisationDB.barAnimation
+                    barAnimation = prefCustomisationRepository.barAnimation
                 )
             }
     }
@@ -313,7 +312,7 @@ class HomeViewModel(
                     driver = driverPoints.values.sortedByDescending { it.second },
                     points = constructorPoints,
                     maxPointsInSeason = this.maxConstructorPointsInSeason(),
-                    barAnimation = prefCustomisationDB.barAnimation
+                    barAnimation = prefCustomisationRepository.barAnimation
                 )
             }
             .sortedByDescending { it.points }

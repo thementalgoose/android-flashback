@@ -15,8 +15,8 @@ import tmg.flashback.di.flashbackModule
 import tmg.flashback.di.rssModule
 import tmg.flashback.notifications.PushNotificationManager
 import tmg.flashback.repo.db.CrashManager
-import tmg.flashback.repo.pref.PrefDeviceDB
-import tmg.flashback.repo.pref.PrefNotificationDB
+import tmg.flashback.repo.pref.PrefDeviceRepository
+import tmg.flashback.repo.pref.PrefNotificationRepository
 
 val releaseNotes: Map<Int, Int> = mapOf(
     34 to R.string.release_34,
@@ -49,8 +49,8 @@ val releaseNotes: Map<Int, Int> = mapOf(
 
 class FlashbackApplication: Application() {
 
-    private val prefsDevice: PrefDeviceDB by inject()
-    private val prefsNotification: PrefNotificationDB by inject()
+    private val prefsDevice: PrefDeviceRepository by inject()
+    private val prefsNotification: PrefNotificationRepository by inject()
 
     private val crashManager: CrashManager by inject()
 

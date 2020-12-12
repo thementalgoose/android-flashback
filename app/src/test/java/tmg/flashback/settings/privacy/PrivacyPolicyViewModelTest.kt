@@ -11,7 +11,7 @@ class PrivacyPolicyViewModelTest: BaseTest() {
     private lateinit var sut: PrivacyPolicyViewModel
 
     private fun initSUT() {
-        sut = PrivacyPolicyViewModel(testScopeProvider)
+        sut = PrivacyPolicyViewModel()
     }
 
     @Test

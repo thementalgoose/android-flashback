@@ -5,13 +5,13 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
-import tmg.flashback.repo.db.news.RSSDB
 import tmg.flashback.repo.models.Response
-import tmg.flashback.repo.models.rss.Article
 import tmg.flashback.rss.network.apis.convert
 import tmg.flashback.rss.network.shared.RssXMLRetrofit
 import tmg.flashback.rss.network.shared.buildRetrofit
-import tmg.flashback.rss.prefs.RSSPrefsDB
+import tmg.flashback.rss.prefs.RSSPrefsRepository
+import tmg.flashback.rss.repo.RSSRepository
+import tmg.flashback.rss.repo.model.Article
 import java.lang.NullPointerException
 import java.lang.RuntimeException
 import java.net.ConnectException
@@ -21,8 +21,8 @@ import javax.net.ssl.SSLHandshakeException
 import javax.xml.stream.XMLStreamException
 
 class RSS(
-    private val prefsDB: RSSPrefsDB
-) : RSSDB {
+    private val prefsRepository: RSSPrefsRepository
+) : RSSRepository {
     override fun getNews(): Flow<Response<List<Article>>> = flow {
 
         withContext(GlobalScope.coroutineContext) {
@@ -30,9 +30,9 @@ class RSS(
             val xmlRetrofit: RssXMLRetrofit = buildRetrofit(true)
 
             val responses: MutableList<Response<List<Article>>> = mutableListOf()
-            for (x in prefsDB.rssUrls) {
+            for (x in prefsRepository.rssUrls) {
                 try {
-                    val response = xmlRetrofit.getRssXML(x).convert(x, prefsDB.rssShowDescription)
+                    val response = xmlRetrofit.getRssXML(x).convert(x, prefsRepository.rssShowDescription)
                     responses.add(Response(response))
                 } catch (e: XMLStreamException) {
                     responses.add(Response(null, -1))
