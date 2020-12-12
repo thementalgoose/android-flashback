@@ -11,7 +11,6 @@ import tmg.flashback.repo.db.stats.HistoryDB
 import tmg.flashback.repo.models.stats.History
 import tmg.flashback.repo.models.stats.WinnerSeason
 
-@ExperimentalCoroutinesApi
 class HistoryFirestore(
     crashManager: CrashManager
 ): FirebaseRepo(crashManager), HistoryDB {

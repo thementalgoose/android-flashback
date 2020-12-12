@@ -10,7 +10,6 @@ import tmg.flashback.repo.db.CrashManager
 import tmg.flashback.repo.db.stats.ConstructorDB
 import tmg.flashback.repo.models.stats.ConstructorOverview
 
-@ExperimentalCoroutinesApi
 class ConstructorFirestore(
         crashManager: CrashManager
 ) : FirebaseRepo(crashManager), ConstructorDB {

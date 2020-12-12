@@ -20,8 +20,6 @@ import tmg.flashback.repo.models.stats.CircuitRace
 import tmg.flashback.shared.sync.SyncDataItem
 import tmg.flashback.testutils.*
 
-@FlowPreview
-@ExperimentalCoroutinesApi
 class CircuitInfoViewModelTest: BaseTest() {
 
     lateinit var sut: CircuitInfoViewModel

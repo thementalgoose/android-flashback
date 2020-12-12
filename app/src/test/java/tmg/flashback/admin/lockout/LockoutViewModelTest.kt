@@ -16,8 +16,6 @@ import tmg.flashback.repo.db.stats.DataDB
 import tmg.flashback.repo.models.AppLockout
 import tmg.flashback.testutils.*
 
-@FlowPreview
-@ExperimentalCoroutinesApi
 class LockoutViewModelTest : BaseTest() {
 
     lateinit var sut: LockoutViewModel
