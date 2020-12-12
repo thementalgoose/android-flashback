@@ -5,8 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import tmg.flashback.allYears
 import tmg.flashback.base.BaseViewModel
 import tmg.flashback.currentYear
-import tmg.flashback.repo.ScopeProvider
-import tmg.flashback.repo.pref.PrefCustomisationDB
+import tmg.flashback.repo.pref.PrefCustomisationRepository
 import tmg.utilities.lifecycle.DataEvent
 
 //region Inputs
@@ -29,14 +28,13 @@ interface SeasonViewModelOutputs {
 //endregion
 
 class SeasonViewModel(
-        private val prefDB: PrefCustomisationDB,
-        scopeProvider: ScopeProvider
-) : BaseViewModel(scopeProvider), SeasonViewModelInputs, SeasonViewModelOutputs {
+        private val prefRepository: PrefCustomisationRepository
+) : BaseViewModel(), SeasonViewModelInputs, SeasonViewModelOutputs {
 
-    var headerSectionFavourited: Boolean = prefDB.showBottomSheetFavourited
-    var headerSectionAll: Boolean = prefDB.showBottomSheetAll
+    var headerSectionFavourited: Boolean = prefRepository.showBottomSheetFavourited
+    var headerSectionAll: Boolean = prefRepository.showBottomSheetAll
 
-    private val favouriteSeasons = prefDB.favouriteSeasons.toMutableSet()
+    private val favouriteSeasons = prefRepository.favouriteSeasons.toMutableSet()
     override val list: MutableLiveData<List<SeasonListItem>> = MutableLiveData()
     override val showSeasonEvent: MutableLiveData<DataEvent<Int>> = MutableLiveData()
 
@@ -65,7 +63,7 @@ class SeasonViewModel(
         else {
             favouriteSeasons.add(season)
         }
-        prefDB.favouriteSeasons = favouriteSeasons
+        prefRepository.favouriteSeasons = favouriteSeasons
         list.value = buildList(favouriteSeasons, headerSectionFavourited, headerSectionAll)
     }
 

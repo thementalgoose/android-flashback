@@ -14,12 +14,11 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 import tmg.flashback.R
-import tmg.flashback.home.list.HomeItem
 import tmg.flashback.overviews.*
 import tmg.flashback.overviews.constructor.summary.ConstructorSummaryItem
 import tmg.flashback.overviews.driver.summary.PipeType
 import tmg.flashback.repo.NetworkConnectivityManager
-import tmg.flashback.repo.db.stats.ConstructorDB
+import tmg.flashback.repo.db.stats.ConstructorRepository
 import tmg.flashback.shared.sync.SyncDataItem
 import tmg.flashback.shared.viewholders.DataUnavailable
 import tmg.flashback.testutils.*
@@ -31,7 +30,7 @@ class ConstructorViewModelTest: BaseTest() {
 
     lateinit var sut: ConstructorViewModel
 
-    private var mockConstructorDB: ConstructorDB = mock()
+    private var mockConstructorRepository: ConstructorRepository = mock()
     private var mockConnectivityManager: NetworkConnectivityManager = mock()
 
     @BeforeEach
@@ -42,7 +41,7 @@ class ConstructorViewModelTest: BaseTest() {
 
     private fun initSUT() {
 
-        sut = ConstructorViewModel(mockConstructorDB, mockConnectivityManager, testScopeProvider)
+        sut = ConstructorViewModel(mockConstructorRepository, mockConnectivityManager)
         sut.inputs.setup(mockConstructorId)
     }
 
@@ -50,7 +49,7 @@ class ConstructorViewModelTest: BaseTest() {
     fun `ConstructorViewModel setup loads error state when network connectivity is down`() = coroutineTest {
 
         whenever(mockConnectivityManager.isConnected).thenReturn(false)
-        whenever(mockConstructorDB.getConstructorOverview(any())).thenReturn(flow { emit(null) })
+        whenever(mockConstructorRepository.getConstructorOverview(any())).thenReturn(flow { emit(null) })
         val expected = listOf(ConstructorSummaryItem.ErrorItem(SyncDataItem.NoNetwork))
 
         initSUT()
@@ -63,7 +62,7 @@ class ConstructorViewModelTest: BaseTest() {
     @Test
     fun `ConstructorViewModel setup loads an error state when constructor overview is returned as null`() = coroutineTest {
 
-        whenever(mockConstructorDB.getConstructorOverview(any())).thenReturn(flow { emit(null) })
+        whenever(mockConstructorRepository.getConstructorOverview(any())).thenReturn(flow { emit(null) })
         val expected = listOf(ConstructorSummaryItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.CONSTRUCTOR_NOT_EXIST)))
 
         initSUT()
@@ -76,7 +75,7 @@ class ConstructorViewModelTest: BaseTest() {
     @Test
     fun `ConstructorViewModel setup which contains championship item in progress`() = coroutineTest {
 
-        whenever(mockConstructorDB.getConstructorOverview(any())).thenReturn(flow { emit(mockConstructorOverviewChampionshipInProgress) })
+        whenever(mockConstructorRepository.getConstructorOverview(any())).thenReturn(flow { emit(mockConstructorOverviewChampionshipInProgress) })
 
         initSUT()
 
@@ -92,7 +91,7 @@ class ConstructorViewModelTest: BaseTest() {
     @Test
     fun `ConstructorViewModel contains header item with appropriate mock data`() = coroutineTest {
 
-        whenever(mockConstructorDB.getConstructorOverview(any())).thenReturn(flow { emit(mockConstructorOverview) })
+        whenever(mockConstructorRepository.getConstructorOverview(any())).thenReturn(flow { emit(mockConstructorOverview) })
 
         initSUT()
 
@@ -114,7 +113,7 @@ class ConstructorViewModelTest: BaseTest() {
     @Test
     fun `ConstructorViewModel list contains highlighted championship quantity result when constructor has championships`() = coroutineTest {
 
-        whenever(mockConstructorDB.getConstructorOverview(any())).thenReturn(flow { emit(mockConstructorOverviewChampionshipWon) })
+        whenever(mockConstructorRepository.getConstructorOverview(any())).thenReturn(flow { emit(mockConstructorOverviewChampionshipWon) })
 
         initSUT()
 
@@ -131,7 +130,7 @@ class ConstructorViewModelTest: BaseTest() {
     @Test
     fun `ConstructorViewModel list contains highlighted championship quantity result when constructor has not won championships`() = coroutineTest {
 
-        whenever(mockConstructorDB.getConstructorOverview(any())).thenReturn(flow { emit(mockConstructorOverviewChampionshipNotWon) })
+        whenever(mockConstructorRepository.getConstructorOverview(any())).thenReturn(flow { emit(mockConstructorOverviewChampionshipNotWon) })
 
         initSUT()
 
@@ -147,7 +146,7 @@ class ConstructorViewModelTest: BaseTest() {
     @Test
     fun `ConstructorViewModel list doesn't contain career best championship if constructor is in progress`() = coroutineTest {
 
-        whenever(mockConstructorDB.getConstructorOverview(any())).thenReturn(flow { emit(mockConstructorOverviewChampionshipWonInProgress) })
+        whenever(mockConstructorRepository.getConstructorOverview(any())).thenReturn(flow { emit(mockConstructorOverviewChampionshipWonInProgress) })
 
         initSUT()
 
@@ -163,7 +162,7 @@ class ConstructorViewModelTest: BaseTest() {
     @Test
     fun `ConstructorViewModel list contains career best championship if constructor has completed a season`() = coroutineTest {
 
-        whenever(mockConstructorDB.getConstructorOverview(any())).thenReturn(flow { emit(mockConstructorOverview) })
+        whenever(mockConstructorRepository.getConstructorOverview(any())).thenReturn(flow { emit(mockConstructorOverview) })
 
         initSUT()
 
@@ -179,7 +178,7 @@ class ConstructorViewModelTest: BaseTest() {
     @Test
     fun `DriverViewModel setup loads standard list of statistics items`() = coroutineTest {
 
-        whenever(mockConstructorDB.getConstructorOverview(any())).thenReturn(flow { emit(mockConstructorOverview) })
+        whenever(mockConstructorRepository.getConstructorOverview(any())).thenReturn(flow { emit(mockConstructorOverview) })
         val expected = listOf(
                 expectedConstructorHeader,
                 ConstructorSummaryItem.Stat(
@@ -234,7 +233,7 @@ class ConstructorViewModelTest: BaseTest() {
     @Test
     fun `ConstructorViewModel team ordering and highlighting default setup`() = coroutineTest {
 
-        whenever(mockConstructorDB.getConstructorOverview(any())).thenReturn(flow { emit(mockConstructorOverviewStandings) })
+        whenever(mockConstructorRepository.getConstructorOverview(any())).thenReturn(flow { emit(mockConstructorOverviewStandings) })
         val expected = listOf<ConstructorSummaryItem>(
                 summaryHistory(
                         season = 2018,
@@ -324,7 +323,7 @@ class ConstructorViewModelTest: BaseTest() {
     @AfterEach
     internal fun tearDown() {
 
-        reset(mockConstructorDB, mockConnectivityManager)
+        reset(mockConstructorRepository, mockConnectivityManager)
     }
 
     private fun summaryHistory(type: PipeType, season: Int): ConstructorSummaryItem.History {

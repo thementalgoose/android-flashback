@@ -4,12 +4,11 @@ import android.os.Build
 import android.util.Log
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import tmg.flashback.repo.db.CrashManager
-import tmg.flashback.repo.pref.PrefCustomisationDB
-import tmg.flashback.repo.pref.PrefDeviceDB
+import tmg.flashback.repo.pref.PrefDeviceRepository
 import java.lang.Exception
 
 class FirebaseCrashManager(
-        private val prefsDB: PrefDeviceDB,
+        private val prefsRepository: PrefDeviceRepository,
         private val isProd: Boolean
 ): CrashManager {
 
@@ -17,7 +16,7 @@ class FirebaseCrashManager(
         get() = BuildConfig.DEBUG
 
     override val enableCrashlytics: Boolean
-        get() = prefsDB.crashReporting || !isProd
+        get() = prefsRepository.crashReporting || !isProd
 
     private val keyDebug: String = "debug"
     private val keyEmulator: String = "emulator"
@@ -44,8 +43,8 @@ class FirebaseCrashManager(
         instance.setCustomKey(keyEmulator, isEmulator)
         instance.setCustomKey(keyDebug, isDebug)
 
-        instance.setUserId(prefsDB.deviceUdid)
-        instance.setCustomKey(keyDeviceUuid, prefsDB.deviceUdid)
+        instance.setUserId(prefsRepository.deviceUdid)
+        instance.setCustomKey(keyDeviceUuid, prefsRepository.deviceUdid)
         instance.setCustomKey(keyModel, Build.MODEL)
         instance.setCustomKey(keyManufacturer, Build.MANUFACTURER)
         instance.setCustomKey(keyProduct, Build.PRODUCT)

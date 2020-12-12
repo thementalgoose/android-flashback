@@ -1,6 +1,6 @@
 package tmg.flashback.repo.toggle
 
-interface ToggleDB {
+interface ToggleRepository {
 
     val isRSSEnabled: Boolean
 

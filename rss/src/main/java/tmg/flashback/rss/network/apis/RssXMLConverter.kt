@@ -3,12 +3,12 @@ package tmg.flashback.rss.network.apis
 import android.util.Log
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
-import tmg.flashback.repo.enums.SupportedArticleSource.Companion.getByLink
-import tmg.flashback.repo.models.rss.Article
-import tmg.flashback.repo.models.rss.ArticleSource
 import tmg.flashback.repo.utils.md5
 import tmg.flashback.rss.network.apis.model.RssXMLModel
 import tmg.flashback.rss.network.apis.model.RssXMLModelItem
+import tmg.flashback.rss.repo.enums.SupportedArticleSource.Companion.getByLink
+import tmg.flashback.rss.repo.model.Article
+import tmg.flashback.rss.repo.model.ArticleSource
 import java.net.URL
 
 private const val dateFormat = "EEE, dd MMM yyyy HH:mm:ss Z"
