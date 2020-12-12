@@ -1,12 +1,9 @@
 package tmg.flashback.repo.pref
 
-import org.threeten.bp.LocalDate
 import tmg.flashback.repo.enums.BarAnimation
-import tmg.flashback.repo.enums.NotificationRegistration
 import tmg.flashback.repo.enums.ThemePref
-import tmg.flashback.repo.enums.Tooltips
 
-interface PrefCustomisationDB {
+interface PrefCustomisationRepository {
 
     /**
      * Dark mode preference

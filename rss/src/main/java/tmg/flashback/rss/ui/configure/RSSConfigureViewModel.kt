@@ -2,11 +2,10 @@ package tmg.flashback.rss.ui.configure
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import tmg.flashback.repo.ScopeProvider
-import tmg.flashback.repo.enums.SupportedArticleSource
 import tmg.flashback.rss.R
 import tmg.flashback.rss.base.RSSBaseViewModel
-import tmg.flashback.rss.prefs.RSSPrefsDB
+import tmg.flashback.rss.prefs.RSSPrefsRepository
+import tmg.flashback.rss.repo.enums.SupportedArticleSource
 
 //region Inputs
 
@@ -27,15 +26,14 @@ interface RSSConfigureViewModelOutputs {
 //endregion
 
 class RSSConfigureViewModel(
-    private val prefsDB: RSSPrefsDB,
-    scopeProvider: ScopeProvider
-) : RSSBaseViewModel(scopeProvider), RSSConfigureViewModelInputs, RSSConfigureViewModelOutputs {
+        private val prefsRepository: RSSPrefsRepository
+) : RSSBaseViewModel(), RSSConfigureViewModelInputs, RSSConfigureViewModelOutputs {
 
     var inputs: RSSConfigureViewModelInputs = this
     var outputs: RSSConfigureViewModelOutputs = this
 
     private val rssUrls: MutableSet<String>
-        get() = prefsDB.rssUrls.toMutableSet()
+        get() = prefsRepository.rssUrls.toMutableSet()
 
     override val list: MutableLiveData<List<RSSConfigureItem>> = MutableLiveData()
 
@@ -46,18 +44,18 @@ class RSSConfigureViewModel(
     //region Inputs
 
     override fun addQuickItem(supportedArticle: SupportedArticleSource) {
-        prefsDB.rssUrls = rssUrls + supportedArticle.rssLink
+        prefsRepository.rssUrls = rssUrls + supportedArticle.rssLink
         updateList()
     }
 
     override fun removeItem(link: String) {
-        prefsDB.rssUrls = rssUrls - link
+        prefsRepository.rssUrls = rssUrls - link
         updateList()
 
     }
 
     override fun addCustomItem(link: String) {
-        prefsDB.rssUrls = rssUrls + link
+        prefsRepository.rssUrls = rssUrls + link
         updateList()
     }
 
@@ -68,7 +66,7 @@ class RSSConfigureViewModel(
      */
     private fun loadState() {
         this.rssUrls.clear()
-        val urls = prefsDB.rssUrls
+        val urls = prefsRepository.rssUrls
         this.rssUrls.addAll(urls)
         updateList()
     }

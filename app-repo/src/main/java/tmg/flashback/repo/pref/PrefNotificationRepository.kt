@@ -2,7 +2,7 @@ package tmg.flashback.repo.pref
 
 import tmg.flashback.repo.enums.NotificationRegistration
 
-interface PrefNotificationDB {
+interface PrefNotificationRepository {
 
     /**
      * Race Notification preference

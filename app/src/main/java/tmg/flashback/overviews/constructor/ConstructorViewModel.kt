@@ -6,6 +6,7 @@ import androidx.annotation.StringRes
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.flatMapLatest
@@ -16,10 +17,8 @@ import tmg.flashback.overviews.constructor.summary.ConstructorSummaryItem
 import tmg.flashback.overviews.constructor.summary.addError
 import tmg.flashback.overviews.driver.summary.PipeType
 import tmg.flashback.repo.NetworkConnectivityManager
-import tmg.flashback.repo.ScopeProvider
-import tmg.flashback.repo.db.stats.ConstructorDB
+import tmg.flashback.repo.db.stats.ConstructorRepository
 import tmg.flashback.repo.models.stats.ConstructorOverview
-import tmg.flashback.repo.models.stats.ConstructorOverviewStanding
 import tmg.flashback.shared.sync.SyncDataItem
 import tmg.flashback.shared.viewholders.DataUnavailable
 import tmg.flashback.utils.position
@@ -48,10 +47,9 @@ interface ConstructorViewModelOutputs {
 
 @Suppress("EXPERIMENTAL_API_USAGE")
 class ConstructorViewModel(
-    private val constructorDB: ConstructorDB,
-    private val connectivityManager: NetworkConnectivityManager,
-    scopeProvider: ScopeProvider
-): BaseViewModel(scopeProvider), ConstructorViewModelInputs, ConstructorViewModelOutputs {
+        private val constructorRepository: ConstructorRepository,
+        private val connectivityManager: NetworkConnectivityManager
+): BaseViewModel(), ConstructorViewModelInputs, ConstructorViewModelOutputs {
 
     var inputs: ConstructorViewModelInputs = this
     var outputs: ConstructorViewModelOutputs = this
@@ -60,7 +58,7 @@ class ConstructorViewModel(
 
     override val list: LiveData<List<ConstructorSummaryItem>> = constructorId
         .asFlow()
-        .flatMapLatest { constructorDB.getConstructorOverview(it) }
+        .flatMapLatest { constructorRepository.getConstructorOverview(it) }
         .map {
             val list: MutableList<ConstructorSummaryItem> = mutableListOf()
             when (it) {
@@ -99,7 +97,7 @@ class ConstructorViewModel(
             }
             return@map list
         }
-        .asLiveData(scope.coroutineContext)
+        .asLiveData(viewModelScope.coroutineContext)
 
     override val openUrl: MutableLiveData<DataEvent<String>> = MutableLiveData()
     override val openSeason: MutableLiveData<DataEvent<Pair<String, Int>>> = MutableLiveData()

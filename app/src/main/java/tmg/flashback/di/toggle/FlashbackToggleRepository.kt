@@ -3,11 +3,11 @@ package tmg.flashback.di.toggle
 import android.content.Context
 import android.os.Build
 import tmg.flashback.R
-import tmg.flashback.repo.toggle.ToggleDB
+import tmg.flashback.repo.toggle.ToggleRepository
 
-class FlashbackToggleDB(
+class FlashbackToggleRepository(
     private val applicationContext: Context
-): ToggleDB {
+): ToggleRepository {
 
     override val isRSSEnabled: Boolean
         get() = applicationContext.resources.getBoolean(R.bool.toggle_rss)

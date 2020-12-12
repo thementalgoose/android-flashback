@@ -1,6 +1,6 @@
 package tmg.flashback.di.device
 
-interface BuildConfigProvider {
+interface BuildConfigManager {
 
     val autoEnrolPushNotifications: Boolean
 

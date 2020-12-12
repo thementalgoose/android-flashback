@@ -5,13 +5,13 @@ import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.BuildConfig
 import tmg.flashback.releaseNotes
-import tmg.flashback.repo.pref.PrefCustomisationDB
+import tmg.flashback.repo.pref.PrefCustomisationRepository
 import tmg.flashback.repo.enums.BarAnimation
 import tmg.flashback.repo.enums.NotificationRegistration
 import tmg.flashback.repo.enums.ThemePref
-import tmg.flashback.repo.pref.PrefDeviceDB
-import tmg.flashback.repo.pref.PrefNotificationDB
-import tmg.flashback.rss.prefs.RSSPrefsDB
+import tmg.flashback.repo.pref.PrefDeviceRepository
+import tmg.flashback.repo.pref.PrefNotificationRepository
+import tmg.flashback.rss.prefs.RSSPrefsRepository
 import tmg.utilities.extensions.toEnum
 import tmg.utilities.prefs.SharedPrefManager
 import java.util.*
@@ -20,11 +20,11 @@ private const val defaultShowQualifying: Boolean = false
 private const val defaultShakeToReport: Boolean = true
 private const val defaultCrashReporting: Boolean = true
 
-class SharedPrefsDB(context: Context) : SharedPrefManager(context),
-        PrefCustomisationDB,
-        PrefDeviceDB,
-        PrefNotificationDB,
-        RSSPrefsDB {
+class SharedPrefsRepository(context: Context) : SharedPrefManager(context),
+        PrefCustomisationRepository,
+        PrefDeviceRepository,
+        PrefNotificationRepository,
+        RSSPrefsRepository {
 
     override val prefsKey: String = "Flashback"
     private val keyShowQualifyingDelta: String = "SHOW_QUALIFYING_DELTA"

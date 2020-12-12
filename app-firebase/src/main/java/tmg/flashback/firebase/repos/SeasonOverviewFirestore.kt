@@ -3,7 +3,7 @@ package tmg.flashback.firebase.repos
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import tmg.flashback.repo.db.CrashManager
-import tmg.flashback.repo.db.stats.SeasonOverviewDB
+import tmg.flashback.repo.db.stats.SeasonOverviewRepository
 import tmg.flashback.repo.models.stats.*
 import tmg.flashback.firebase.converters.convert
 import tmg.flashback.firebase.FirebaseRepo
@@ -11,7 +11,7 @@ import tmg.flashback.firebase.models.FSeason
 
 class SeasonOverviewFirestore(
     crashManager: CrashManager
-) : FirebaseRepo(crashManager), SeasonOverviewDB {
+) : FirebaseRepo(crashManager), SeasonOverviewRepository {
 
     override fun getCircuits(season: Int): Flow<List<CircuitSummary>> {
         return getSeason(season)

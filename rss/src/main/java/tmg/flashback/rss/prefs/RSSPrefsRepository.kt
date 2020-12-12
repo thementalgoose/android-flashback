@@ -2,7 +2,7 @@ package tmg.flashback.rss.prefs
 
 import tmg.flashback.repo.enums.ThemePref
 
-interface RSSPrefsDB {
+interface RSSPrefsRepository {
 
     /**
      * RSS URLs

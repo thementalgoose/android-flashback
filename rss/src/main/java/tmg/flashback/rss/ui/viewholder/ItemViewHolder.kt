@@ -5,15 +5,15 @@ import androidx.core.graphics.toColorInt
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.view_rss_item.view.*
 import org.threeten.bp.format.DateTimeFormatter
-import tmg.flashback.repo.models.rss.Article
+import tmg.flashback.rss.repo.model.Article
 import tmg.flashback.rss.ui.RSSItem
 import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.views.show
 import java.net.URL
 
 class ItemViewHolder(
-    val articleClicked: (link: Article, itemId: Long) -> Unit,
-    itemView: View
+        val articleClicked: (link: Article, itemId: Long) -> Unit,
+        itemView: View
 ) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
     private lateinit var item: Article

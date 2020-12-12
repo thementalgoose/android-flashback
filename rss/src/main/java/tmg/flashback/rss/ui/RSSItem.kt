@@ -1,8 +1,8 @@
 package tmg.flashback.rss.ui
 
 import androidx.annotation.LayoutRes
-import tmg.flashback.repo.models.rss.Article
 import tmg.flashback.rss.R
+import tmg.flashback.rss.repo.model.Article
 
 sealed class RSSItem(
     @LayoutRes val layoutId: Int

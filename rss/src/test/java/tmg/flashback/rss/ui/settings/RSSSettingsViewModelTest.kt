@@ -5,12 +5,11 @@ import com.nhaarman.mockitokotlin2.reset
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.components.prefs.AppPreferencesItem
 import tmg.flashback.rss.R
-import tmg.flashback.rss.prefs.RSSPrefsDB
+import tmg.flashback.rss.prefs.RSSPrefsRepository
 import tmg.flashback.rss.testutils.BaseTest
 import tmg.flashback.rss.testutils.assertEventFired
 import tmg.flashback.rss.testutils.test
@@ -19,7 +18,7 @@ class RSSSettingsViewModelTest: BaseTest() {
 
     lateinit var sut: RSSSettingsViewModel
 
-    private val mockPrefs: RSSPrefsDB = mock()
+    private val mockPrefs: RSSPrefsRepository = mock()
 
     private val keyConfigureSources: String = "keyConfigureSources"
     private val keyShowDescription: String = "keyShowDescription"
@@ -34,8 +33,7 @@ class RSSSettingsViewModelTest: BaseTest() {
         whenever(mockPrefs.rssUrls).thenReturn(emptySet())
 
         sut = RSSSettingsViewModel(
-            mockPrefs,
-            testScopeProvider
+            mockPrefs
         )
     }
 

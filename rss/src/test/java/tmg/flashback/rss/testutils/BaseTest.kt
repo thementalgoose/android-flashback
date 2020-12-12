@@ -22,8 +22,6 @@ open class BaseTest {
     private val testDispatcher = coroutineScope.testDispatcher
     private val testScope = coroutineScope.testScope
 
-    val testScopeProvider = TestScopeProvider(testScope)
-
     @BeforeEach
     @CallSuper
     open fun beforeAll() {

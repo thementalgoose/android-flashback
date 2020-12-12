@@ -7,12 +7,12 @@ import tmg.flashback.firebase.FirebaseRepo
 import tmg.flashback.firebase.converters.convert
 import tmg.flashback.firebase.models.FDriverOverview
 import tmg.flashback.repo.db.CrashManager
-import tmg.flashback.repo.db.stats.DriverDB
+import tmg.flashback.repo.db.stats.DriverRepository
 import tmg.flashback.repo.models.stats.DriverOverview
 
 class DriverFirestore(
     crashManager: CrashManager
-) : FirebaseRepo(crashManager), DriverDB {
+) : FirebaseRepo(crashManager), DriverRepository {
 
     override fun getDriverOverview(driverId: String): Flow<DriverOverview?> {
         return document("drivers/$driverId")
