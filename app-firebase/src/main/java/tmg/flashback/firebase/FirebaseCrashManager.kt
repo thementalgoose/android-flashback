@@ -4,12 +4,13 @@ import android.os.Build
 import android.util.Log
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import tmg.flashback.repo.db.CrashManager
-import tmg.flashback.repo.pref.PrefsDB
+import tmg.flashback.repo.pref.PrefCustomisationDB
+import tmg.flashback.repo.pref.PrefDeviceDB
 import java.lang.Exception
 
 class FirebaseCrashManager(
-    private val prefsDB: PrefsDB,
-    private val isProd: Boolean
+        private val prefsDB: PrefDeviceDB,
+        private val isProd: Boolean
 ): CrashManager {
 
     private val isDebug: Boolean

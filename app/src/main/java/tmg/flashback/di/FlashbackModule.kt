@@ -22,14 +22,16 @@ import tmg.flashback.race.RaceViewModel
 import tmg.flashback.repo.NetworkConnectivityManager
 import tmg.flashback.repo.ScopeProvider
 import tmg.flashback.repo.db.CrashManager
-import tmg.flashback.repo.pref.PrefsDB
+import tmg.flashback.repo.pref.PrefCustomisationDB
+import tmg.flashback.repo.pref.PrefDeviceDB
+import tmg.flashback.repo.pref.PrefNotificationDB
 import tmg.flashback.settings.SettingsViewModel
 import tmg.flashback.settings.privacy.PrivacyPolicyViewModel
 
 var flashbackModule = module {
 
     // Home
-    viewModel { HomeViewModel(get(), get(), get(), get(), get(), get(), get()) }
+    viewModel { HomeViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
     viewModel { SeasonViewModel(get(), get()) }
 
     // Circuit
@@ -46,7 +48,7 @@ var flashbackModule = module {
     viewModel { ConstructorViewModel(get(), get(), get()) }
 
     // Settings
-    viewModel { SettingsViewModel(get(), get(), get()) }
+    viewModel { SettingsViewModel(get(), get(), get(), get()) }
     viewModel { LockoutViewModel(get(), get(), get()) }
     viewModel { PrivacyPolicyViewModel(get()) }
 
@@ -57,7 +59,9 @@ var flashbackModule = module {
     single<PushNotificationManager> { FirebasePushNotificationManager(get(), get()) }
 
     // Shared Prefs
-    single<PrefsDB> { SharedPrefsDB(get()) }
+    single<PrefCustomisationDB> { SharedPrefsDB(get()) }
+    single<PrefDeviceDB> { SharedPrefsDB(get()) }
+    single<PrefNotificationDB> { SharedPrefsDB(get()) }
 
     // Build Config
     single<BuildConfigProvider> { AppBuildConfigProvider() }

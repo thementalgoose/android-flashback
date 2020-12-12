@@ -198,4 +198,31 @@ internal fun <T> LiveDataTestScope<List<T>>.assertListNotEmpty() {
     assertTrue(latestValue!!.isNotEmpty(), "List contains 0 items")
 }
 
+/**
+ * Assert that the last item in the latest value emitted is equal to this item
+ */
+internal fun <T> LiveDataTestScope<List<T>>.assertListHasLastItem(item: T) {
+    assertNotNull(latestValue)
+    assertEquals(item, latestValue!!.last())
+}
+
+/**
+ * Assert that the first item in the latest value emitted is equal to this item
+ */
+internal fun <T> LiveDataTestScope<List<T>>.assertListHasFirstItem(item: T) {
+    assertNotNull(latestValue)
+    assertEquals(item, latestValue!!.first())
+}
+
+/**
+ * Assert that the list in the latest value contains this sublist of items in the order specified
+ */
+internal fun <T> LiveDataTestScope<List<T>>.assertListHasSublist(list: List<T>) {
+    assertNotNull(latestValue)
+    assertTrue(list.isNotEmpty(), "Expected list is empty, which will match any value. Consider changing your assertion")
+    val filter = latestValue!!.filter { list.contains(it) }
+    assertEquals(filter.size, list.size, "Expected list of size ${list.size} but can only find ${filter.size} items in common")
+    assertEquals(filter, list)
+}
+
 //endregion
