@@ -3,7 +3,7 @@ package tmg.flashback.repo.db.stats
 import kotlinx.coroutines.flow.Flow
 import tmg.flashback.repo.models.stats.*
 
-interface SeasonOverviewDB {
+interface SeasonOverviewRepository {
     fun getCircuits(season: Int): Flow<List<CircuitSummary>>
     fun getCircuit(season: Int, round: Int): Flow<CircuitSummary?>
     fun getConstructor(season: Int, constructorId: String): Flow<Constructor?>

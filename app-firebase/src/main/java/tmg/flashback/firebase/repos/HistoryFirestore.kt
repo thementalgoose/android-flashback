@@ -7,14 +7,13 @@ import tmg.flashback.firebase.FirebaseRepo
 import tmg.flashback.firebase.converters.convert
 import tmg.flashback.firebase.models.FHistorySeason
 import tmg.flashback.repo.db.CrashManager
-import tmg.flashback.repo.db.stats.HistoryDB
+import tmg.flashback.repo.db.stats.HistoryRepository
 import tmg.flashback.repo.models.stats.History
 import tmg.flashback.repo.models.stats.WinnerSeason
 
-@ExperimentalCoroutinesApi
 class HistoryFirestore(
     crashManager: CrashManager
-): FirebaseRepo(crashManager), HistoryDB {
+): FirebaseRepo(crashManager), HistoryRepository {
 
     override fun allHistory(): Flow<List<History>> {
         return getHistory()

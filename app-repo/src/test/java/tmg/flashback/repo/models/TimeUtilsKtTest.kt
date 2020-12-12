@@ -12,7 +12,7 @@ import tmg.flashback.repo.utils.toLocalTime
 class TimeUtilsKtTest {
 
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "Converting {0} to a standard format results in {1}")
     @CsvSource(
         "1.123,00:00:01.123",
         "-0.123,00:00:00.123",
@@ -27,7 +27,7 @@ class TimeUtilsKtTest {
         assertEquals(expected, time?.toLocalTime().toString())
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "Total millis behind \"{0}\" is {1}")
     @CsvSource(
         "1.123,1123",
         "-0.123,123",
@@ -42,7 +42,7 @@ class TimeUtilsKtTest {
         assertEquals(expected, time?.toLapTime()?.totalMillis ?: 0)
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "Taking {0} millis and adding millis delta of {1} results in {2} laptime")
     @CsvSource(
         "91274,4373,1:35.647",
         "187837,19489,3:27.326"
@@ -56,7 +56,7 @@ class TimeUtilsKtTest {
         assertEquals(expected, lapTimeWithData.toString())
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "Taking {0} millis and adding formatted delta of {1} results in {2} laptime")
     @CsvSource(
         "38122,+1.342,39.464",
         "438122,+23:01.923,30:20.045"
@@ -70,7 +70,7 @@ class TimeUtilsKtTest {
         assertEquals(expected, lapTimeWithDelta.toString())
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "Taking {0} millis and adding {1}h {2}m {3}s {4}ms results in {6} ({5} millis)")
     @CsvSource(
         "5788,0,1,2,3,67791,1:07.791",
         "323294,3,23,42,232,12545526,3:29:05.526"

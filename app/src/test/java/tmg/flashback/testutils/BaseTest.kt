@@ -11,7 +11,6 @@ import org.junit.Rule
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.extension.*
 
-@ExperimentalCoroutinesApi
 @ExtendWith(TestingTaskExecutor::class)
 open class BaseTest {
 
@@ -20,8 +19,6 @@ open class BaseTest {
 
     private val testDispatcher = coroutineScope.testDispatcher
     private val testScope = coroutineScope.testScope
-
-    val testScopeProvider = TestScopeProvider(testScope)
 
     @BeforeEach
     @CallSuper

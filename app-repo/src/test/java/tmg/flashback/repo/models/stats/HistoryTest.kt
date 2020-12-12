@@ -17,7 +17,7 @@ class HistoryTest {
     private val now = LocalDate.now()
     private val future = LocalDate.now().plusDays(1)
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "Numbers of rounds found with two seasons {0} and {1} is {2}")
     @CsvSource(
             "previous,previous,2",
             "previous,now,1",

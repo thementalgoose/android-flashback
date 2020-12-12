@@ -3,7 +3,6 @@ package tmg.flashback.settings.privacy
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import tmg.flashback.base.BaseViewModel
-import tmg.flashback.repo.ScopeProvider
 import tmg.utilities.lifecycle.Event
 
 //region Inputs
@@ -23,9 +22,7 @@ interface PrivacyPolicyViewModelOutputs {
 //endregion
 
 
-class PrivacyPolicyViewModel(
-        scopeProvider: ScopeProvider
-): BaseViewModel(scopeProvider), PrivacyPolicyViewModelInputs, PrivacyPolicyViewModelOutputs {
+class PrivacyPolicyViewModel: BaseViewModel(), PrivacyPolicyViewModelInputs, PrivacyPolicyViewModelOutputs {
 
     var inputs: PrivacyPolicyViewModelInputs = this
     var outputs: PrivacyPolicyViewModelOutputs = this

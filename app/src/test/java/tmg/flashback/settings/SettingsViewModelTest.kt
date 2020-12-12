@@ -8,18 +8,19 @@ import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.components.prefs.AppPreferencesItem
+import tmg.flashback.BuildConfig
 import tmg.flashback.R
 import tmg.flashback.extensions.icon
 import tmg.flashback.extensions.label
 import tmg.flashback.notifications.FirebasePushNotificationManager.Companion.topicQualifying
 import tmg.flashback.notifications.FirebasePushNotificationManager.Companion.topicRace
-import tmg.flashback.repo.toggle.ToggleDB
-import tmg.flashback.repo.pref.PrefCustomisationDB
+import tmg.flashback.repo.toggle.ToggleRepository
+import tmg.flashback.repo.pref.PrefCustomisationRepository
 import tmg.flashback.repo.enums.BarAnimation.*
 import tmg.flashback.repo.enums.ThemePref.*
-import tmg.flashback.repo.pref.PrefDeviceDB
+import tmg.flashback.repo.pref.PrefDeviceRepository
 import tmg.flashback.settings.SettingsOptions.*
-import tmg.flashback.testutils.BaseTest
+import tmg.flashback.testutils.*
 import tmg.flashback.testutils.assertDataEventValue
 import tmg.flashback.testutils.assertEventFired
 import tmg.flashback.testutils.test
@@ -30,9 +31,9 @@ class SettingsViewModelTest: BaseTest() {
 
     lateinit var sut: SettingsViewModel
 
-    private val mockPrefsCustomisation: PrefCustomisationDB = mock()
-    private val mockPrefsDevice: PrefDeviceDB = mock()
-    private val mockToggle: ToggleDB = mock()
+    private val mockPrefsCustomisation: PrefCustomisationRepository = mock()
+    private val mockPrefsDevice: PrefDeviceRepository = mock()
+    private val mockToggle: ToggleRepository = mock()
 
     @BeforeEach
     internal fun setUp() {
@@ -54,7 +55,7 @@ class SettingsViewModelTest: BaseTest() {
 
     private fun initSUT() {
 
-        sut = SettingsViewModel(mockPrefsCustomisation, mockPrefsDevice, mockToggle, testScopeProvider)
+        sut = SettingsViewModel(mockPrefsCustomisation, mockPrefsDevice, mockToggle)
     }
 
     /**
@@ -84,6 +85,7 @@ class SettingsViewModelTest: BaseTest() {
             add(SEASON_BOTTOM_SHEET_ALL.toSwitch(false))
             add(AppPreferencesItem.Category(R.string.settings_help))
             add(ABOUT.toPref())
+            add(REVIEW.toPref())
             add(PRIVACY_POLICY.toPref())
             add(RELEASE.toPref())
             add(AppPreferencesItem.Category(R.string.settings_feedback))
@@ -279,6 +281,18 @@ class SettingsViewModelTest: BaseTest() {
 
         sut.outputs.openAbout.test {
             assertEventFired()
+        }
+    }
+
+    @Test
+    fun `SettingsViewModel selecting review fires open review event with package id`() {
+
+        initSUT()
+
+        sut.inputs.preferenceClicked(REVIEW, null)
+
+        sut.outputs.openReview.test {
+            assertDataEventValue("https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID)
         }
     }
 

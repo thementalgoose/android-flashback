@@ -3,14 +3,14 @@ package tmg.flashback.race
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.*
 import org.threeten.bp.LocalDate
 import tmg.flashback.base.BaseViewModel
 import tmg.flashback.repo.NetworkConnectivityManager
-import tmg.flashback.repo.ScopeProvider
-import tmg.flashback.repo.pref.PrefCustomisationDB
-import tmg.flashback.repo.db.stats.SeasonOverviewDB
+import tmg.flashback.repo.pref.PrefCustomisationRepository
+import tmg.flashback.repo.db.stats.SeasonOverviewRepository
 import tmg.flashback.repo.models.stats.*
 import tmg.flashback.shared.viewholders.DataUnavailable
 import tmg.flashback.showComingSoonMessageForNextDays
@@ -46,13 +46,11 @@ interface RaceViewModelOutputs {
 
 //endregion
 
-@Suppress("EXPERIMENTAL_API_USAGE")
 class RaceViewModel(
-        seasonOverviewDB: SeasonOverviewDB,
-        private val prefsDB: PrefCustomisationDB,
-        connectivityManager: NetworkConnectivityManager,
-        scopeProvider: ScopeProvider
-) : BaseViewModel(scopeProvider), RaceViewModelInputs, RaceViewModelOutputs {
+        seasonOverviewRepository: SeasonOverviewRepository,
+        private val prefsRepository: PrefCustomisationRepository,
+        connectivityManager: NetworkConnectivityManager
+) : BaseViewModel(), RaceViewModelInputs, RaceViewModelOutputs {
 
     var inputs: RaceViewModelInputs = this
     var outputs: RaceViewModelOutputs = this
@@ -71,15 +69,15 @@ class RaceViewModel(
 
     private val seasonRoundFlow: Flow<Round?> = seasonRound
         .asFlow()
-        .flatMapLatest { (season, round) -> seasonOverviewDB.getSeasonRound(season, round) }
+        .flatMapLatest { (season, round) -> seasonOverviewRepository.getSeasonRound(season, round) }
 
     override val seasonRoundData: LiveData<SeasonRound> = seasonRound
         .asFlow()
-        .asLiveData(scope.coroutineContext)
+        .asLiveData(viewModelScope.coroutineContext)
 
     override val circuitInfo: LiveData<Round> = seasonRoundFlow
         .filterNotNull()
-        .asLiveData(scope.coroutineContext)
+        .asLiveData(viewModelScope.coroutineContext)
 
     override val raceItems: LiveData<Triple<RaceAdapterType, List<RaceModel>, SeasonRound>> = seasonRoundFlow
             .combineTriple(viewType.asFlow(), seasonRound.asFlow())
@@ -108,7 +106,7 @@ class RaceViewModel(
                         .constructorStandings
                         .map {
                             val drivers: List<Pair<Driver, Int>> = getDriverFromConstructor(roundData, it.constructor.id)
-                            RaceModel.ConstructorStandings(it.constructor, it.points, drivers, prefsDB.barAnimation)
+                            RaceModel.ConstructorStandings(it.constructor, it.points, drivers, prefsRepository.barAnimation)
                         }
                         .sortedByDescending { it.points }
 
@@ -126,8 +124,8 @@ class RaceViewModel(
                         q1 = roundData.q1.count { it.value.time != null } > 0,
                         q2 = roundData.q2.count { it.value.time != null } > 0,
                         q3 = roundData.q3.count { it.value.time != null } > 0,
-                        deltas = prefsDB.showQualifyingDelta,
-                        penalties = prefsDB.showGridPenaltiesInQualifying
+                        deltas = prefsRepository.showQualifyingDelta,
+                        penalties = prefsRepository.showGridPenaltiesInQualifying
                     )
 
                     when (viewType) {
@@ -208,7 +206,7 @@ class RaceViewModel(
                     )
                 }
             }
-            .asLiveData(scope.coroutineContext)
+            .asLiveData(viewModelScope.coroutineContext)
 
     //region Inputs
 
@@ -333,9 +331,9 @@ class RaceViewModel(
             q3 = overview.q3,
             race = race,
             qualified = overview.race?.qualified ?: round.getQualifyingOnlyPosByDriverId(driverId),
-            q1Delta = if (prefsDB.showQualifyingDelta) round.q1FastestLap?.deltaTo(overview.q1?.time) else null,
-            q2Delta = if (prefsDB.showQualifyingDelta) round.q2FastestLap?.deltaTo(overview.q2?.time) else null,
-            q3Delta = if (prefsDB.showQualifyingDelta) round.q3FastestLap?.deltaTo(overview.q3?.time) else null,
+            q1Delta = if (prefsRepository.showQualifyingDelta) round.q1FastestLap?.deltaTo(overview.q1?.time) else null,
+            q2Delta = if (prefsRepository.showQualifyingDelta) round.q2FastestLap?.deltaTo(overview.q2?.time) else null,
+            q3Delta = if (prefsRepository.showQualifyingDelta) round.q3FastestLap?.deltaTo(overview.q3?.time) else null,
             showQualifying = showQualifying
         )
     }

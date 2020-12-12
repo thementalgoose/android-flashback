@@ -1,27 +1,24 @@
 package tmg.flashback.overviews.driver
 
-import android.util.Log
 import androidx.annotation.AttrRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import tmg.flashback.R
 import tmg.flashback.base.BaseViewModel
-import tmg.flashback.currentYear
 import tmg.flashback.overviews.driver.summary.DriverSummaryItem
 import tmg.flashback.overviews.driver.summary.PipeType
 import tmg.flashback.overviews.driver.summary.addError
 import tmg.flashback.repo.NetworkConnectivityManager
-import tmg.flashback.repo.ScopeProvider
-import tmg.flashback.repo.db.stats.DriverDB
+import tmg.flashback.repo.db.stats.DriverRepository
 import tmg.flashback.repo.models.stats.DriverOverview
-import tmg.flashback.repo.models.stats.SlimConstructor
 import tmg.flashback.shared.sync.SyncDataItem
 import tmg.flashback.shared.viewholders.DataUnavailable
 import tmg.flashback.utils.position
@@ -51,12 +48,9 @@ interface DriverViewModelOutputs {
 
 @Suppress("EXPERIMENTAL_API_USAGE")
 class DriverViewModel(
-    private val driverDB: DriverDB,
-    private val connectivityManager: NetworkConnectivityManager,
-    scopeProvider: ScopeProvider
-): BaseViewModel(
-    scopeProvider
-), DriverViewModelInputs, DriverViewModelOutputs {
+        private val driverRepository: DriverRepository,
+        private val connectivityManager: NetworkConnectivityManager
+): BaseViewModel(), DriverViewModelInputs, DriverViewModelOutputs {
 
     var inputs: DriverViewModelInputs = this
     var outputs: DriverViewModelOutputs = this
@@ -64,7 +58,7 @@ class DriverViewModel(
     private val driverId: ConflatedBroadcastChannel<String> = ConflatedBroadcastChannel()
     override val list: LiveData<List<DriverSummaryItem>> = driverId
         .asFlow()
-        .flatMapLatest { driverDB.getDriverOverview(it) }
+        .flatMapLatest { driverRepository.getDriverOverview(it) }
         .map {
             val list: MutableList<DriverSummaryItem> = mutableListOf()
             when (it) {
@@ -111,7 +105,7 @@ class DriverViewModel(
 
             return@map list
         }
-        .asLiveData(scope.coroutineContext)
+        .asLiveData(viewModelScope.coroutineContext)
 
     override val openUrl: MutableLiveData<DataEvent<String>> = MutableLiveData()
     override val openSeason: MutableLiveData<DataEvent<Pair<String, Int>>> = MutableLiveData()

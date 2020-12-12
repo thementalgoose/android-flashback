@@ -5,14 +5,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.DiffUtil.calculateDiff
 import androidx.recyclerview.widget.RecyclerView
-import tmg.flashback.repo.models.rss.Article
 import tmg.flashback.rss.R
+import tmg.flashback.rss.repo.model.Article
 import tmg.flashback.rss.ui.viewholder.*
 import java.lang.RuntimeException
 
 class RSSAdapter(
-    private val articleClicked: (item: Article, itemId: Long) -> Unit,
-    private val openConfigure: () -> Unit
+        private val articleClicked: (item: Article, itemId: Long) -> Unit,
+        private val openConfigure: () -> Unit
 ): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var list: List<RSSItem> = emptyList()
