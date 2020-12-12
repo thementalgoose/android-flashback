@@ -1,5 +1,6 @@
 package tmg.flashback.repo.pref
 
+import org.threeten.bp.LocalDate
 import tmg.flashback.repo.enums.BarAnimation
 import tmg.flashback.repo.enums.NotificationRegistration
 import tmg.flashback.repo.enums.ThemePref
@@ -73,9 +74,14 @@ interface PrefsDB {
     var favouriteSeasons: Set<Int>
 
     /**
-     * Tooltip set of app hints for functional usage
+     * App open events
      */
-    var tooltips: Set<Tooltips>
+    var appFirstBootTime: LocalDate
+
+    /**
+     * The number of times the app has been opened
+     */
+    var appOpenedCount: Int
 
     //region Notification enrolment
 

@@ -77,6 +77,10 @@ class FlashbackApplication: Application() {
                 .start()
         }
 
+        // App bootup stats
+        val _ = prefs.appFirstBootTime
+        prefs.appOpenedCount = prefs.appOpenedCount + 1
+
         // Crash Reporting
         crashManager.initialise()
 
