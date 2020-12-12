@@ -67,7 +67,6 @@
             app:layout_constraintTop_toBottomOf="@id/r1" />
 
         <ImageView
-            android:id="@+id/r3"
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_marginStart="@dimen/paddingSmall"

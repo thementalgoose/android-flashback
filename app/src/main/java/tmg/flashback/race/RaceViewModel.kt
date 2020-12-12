@@ -9,7 +9,7 @@ import org.threeten.bp.LocalDate
 import tmg.flashback.base.BaseViewModel
 import tmg.flashback.repo.NetworkConnectivityManager
 import tmg.flashback.repo.ScopeProvider
-import tmg.flashback.repo.pref.PrefsDB
+import tmg.flashback.repo.pref.PrefCustomisationDB
 import tmg.flashback.repo.db.stats.SeasonOverviewDB
 import tmg.flashback.repo.models.stats.*
 import tmg.flashback.shared.viewholders.DataUnavailable
@@ -48,10 +48,10 @@ interface RaceViewModelOutputs {
 
 @Suppress("EXPERIMENTAL_API_USAGE")
 class RaceViewModel(
-    seasonOverviewDB: SeasonOverviewDB,
-    private val prefsDB: PrefsDB,
-    connectivityManager: NetworkConnectivityManager,
-    scopeProvider: ScopeProvider
+        seasonOverviewDB: SeasonOverviewDB,
+        private val prefsDB: PrefCustomisationDB,
+        connectivityManager: NetworkConnectivityManager,
+        scopeProvider: ScopeProvider
 ) : BaseViewModel(scopeProvider), RaceViewModelInputs, RaceViewModelOutputs {
 
     var inputs: RaceViewModelInputs = this

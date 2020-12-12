@@ -5,16 +5,16 @@ import androidx.lifecycle.MutableLiveData
 import tmg.components.prefs.AppPreferencesItem
 import tmg.flashback.R
 import tmg.flashback.base.BaseViewModel
-import tmg.flashback.di.device.BuildConfigProvider
 import tmg.flashback.extensions.icon
 import tmg.flashback.extensions.label
 import tmg.flashback.notifications.FirebasePushNotificationManager.Companion.topicQualifying
 import tmg.flashback.notifications.FirebasePushNotificationManager.Companion.topicRace
 import tmg.flashback.repo.ScopeProvider
 import tmg.flashback.repo.toggle.ToggleDB
-import tmg.flashback.repo.pref.PrefsDB
+import tmg.flashback.repo.pref.PrefCustomisationDB
 import tmg.flashback.repo.enums.ThemePref
 import tmg.flashback.repo.enums.BarAnimation
+import tmg.flashback.repo.pref.PrefDeviceDB
 import tmg.flashback.utils.Selected
 import tmg.flashback.utils.bottomsheet.BottomSheetItem
 import tmg.utilities.lifecycle.DataEvent
@@ -56,9 +56,10 @@ interface SettingsViewModelOutputs {
 //endregion
 
 class SettingsViewModel(
-    private val prefDB: PrefsDB,
-    private val toggleDB: ToggleDB,
-    scopeProvider: ScopeProvider
+        private val prefCustomisationDB: PrefCustomisationDB,
+        private val prefDeviceDB: PrefDeviceDB,
+        private val toggleDB: ToggleDB,
+        scopeProvider: ScopeProvider
 ): BaseViewModel(scopeProvider), SettingsViewModelInputs, SettingsViewModelOutputs {
 
     var inputs: SettingsViewModelInputs = this
@@ -101,20 +102,20 @@ class SettingsViewModel(
             add(SettingsOptions.THEME.toPref())
             add(AppPreferencesItem.Category(R.string.settings_customisation))
             add(SettingsOptions.BAR_ANIMATION_SPEED.toPref())
-            add(SettingsOptions.QUALIFYING_DELTAS.toSwitch(prefDB.showQualifyingDelta))
-            add(SettingsOptions.QUALIFYING_GRID_PENALTY.toSwitch(prefDB.showGridPenaltiesInQualifying))
+            add(SettingsOptions.QUALIFYING_DELTAS.toSwitch(prefCustomisationDB.showQualifyingDelta))
+            add(SettingsOptions.QUALIFYING_GRID_PENALTY.toSwitch(prefCustomisationDB.showGridPenaltiesInQualifying))
             add(AppPreferencesItem.Category(R.string.settings_season_list))
-            add(SettingsOptions.SEASON_BOTTOM_SHEET_EXPANDED.toSwitch(prefDB.showBottomSheetExpanded))
-            add(SettingsOptions.SEASON_BOTTOM_SHEET_FAVOURITED.toSwitch(prefDB.showBottomSheetFavourited))
-            add(SettingsOptions.SEASON_BOTTOM_SHEET_ALL.toSwitch(prefDB.showBottomSheetAll))
+            add(SettingsOptions.SEASON_BOTTOM_SHEET_EXPANDED.toSwitch(prefCustomisationDB.showBottomSheetExpanded))
+            add(SettingsOptions.SEASON_BOTTOM_SHEET_FAVOURITED.toSwitch(prefCustomisationDB.showBottomSheetFavourited))
+            add(SettingsOptions.SEASON_BOTTOM_SHEET_ALL.toSwitch(prefCustomisationDB.showBottomSheetAll))
             add(AppPreferencesItem.Category(R.string.settings_help))
             add(SettingsOptions.ABOUT.toPref())
             add(SettingsOptions.PRIVACY_POLICY.toPref())
             add(SettingsOptions.RELEASE.toPref())
             add(AppPreferencesItem.Category(R.string.settings_feedback))
-            add(SettingsOptions.CRASH.toSwitch(prefDB.crashReporting))
+            add(SettingsOptions.CRASH.toSwitch(prefDeviceDB.crashReporting))
             add(SettingsOptions.SUGGESTION.toPref())
-            add(SettingsOptions.SHAKE.toSwitch(prefDB.shakeToReport))
+            add(SettingsOptions.SHAKE.toSwitch(prefDeviceDB.shakeToReport))
         }
 
         updateThemeList()
@@ -129,30 +130,30 @@ class SettingsViewModel(
             SettingsOptions.NOTIFICATIONS_CHANNEL_RACE -> openNotificationsChannel.value = DataEvent(topicRace)
             SettingsOptions.NOTIFICATIONS_CHANNEL_QUALIFYING -> openNotificationsChannel.value = DataEvent(topicQualifying)
             SettingsOptions.NOTIFICATIONS_SETTINGS -> openNotifications.value = Event()
-            SettingsOptions.QUALIFYING_DELTAS -> prefDB.showQualifyingDelta = value ?: false
-            SettingsOptions.QUALIFYING_GRID_PENALTY -> prefDB.showGridPenaltiesInQualifying = value ?: true
-            SettingsOptions.SEASON_BOTTOM_SHEET_EXPANDED -> prefDB.showBottomSheetExpanded = value ?: true
-            SettingsOptions.SEASON_BOTTOM_SHEET_FAVOURITED -> prefDB.showBottomSheetFavourited = value ?: true
-            SettingsOptions.SEASON_BOTTOM_SHEET_ALL -> prefDB.showBottomSheetAll = value ?: true
+            SettingsOptions.QUALIFYING_DELTAS -> prefCustomisationDB.showQualifyingDelta = value ?: false
+            SettingsOptions.QUALIFYING_GRID_PENALTY -> prefCustomisationDB.showGridPenaltiesInQualifying = value ?: true
+            SettingsOptions.SEASON_BOTTOM_SHEET_EXPANDED -> prefCustomisationDB.showBottomSheetExpanded = value ?: true
+            SettingsOptions.SEASON_BOTTOM_SHEET_FAVOURITED -> prefCustomisationDB.showBottomSheetFavourited = value ?: true
+            SettingsOptions.SEASON_BOTTOM_SHEET_ALL -> prefCustomisationDB.showBottomSheetAll = value ?: true
             SettingsOptions.BAR_ANIMATION_SPEED -> openAnimationPicker.value = Event()
             SettingsOptions.ABOUT -> openAbout.value = Event()
             SettingsOptions.PRIVACY_POLICY -> openPrivacyPolicy.value = Event()
             SettingsOptions.RELEASE -> openRelease.value = Event()
-            SettingsOptions.CRASH -> prefDB.crashReporting = value ?: true
+            SettingsOptions.CRASH -> prefDeviceDB.crashReporting = value ?: true
             SettingsOptions.SUGGESTION -> openSuggestions.value = Event()
-            SettingsOptions.SHAKE -> prefDB.shakeToReport = value ?: true
+            SettingsOptions.SHAKE -> prefDeviceDB.shakeToReport = value ?: true
             SettingsOptions.NEWS -> openNews.value = Event()
         }
     }
 
     override fun pickTheme(theme: ThemePref) {
-        prefDB.theme = theme
+        prefCustomisationDB.theme = theme
         updateThemeList()
         themeChanged.value = Event()
     }
 
     override fun pickAnimationSpeed(animation: BarAnimation) {
-        prefDB.barAnimation = animation
+        prefCustomisationDB.barAnimation = animation
         updateAnimationList()
         animationChanged.value = Event()
     }
@@ -162,14 +163,14 @@ class SettingsViewModel(
     private fun updateThemeList() {
         themePreferences.value = ThemePref.values()
                 .map {
-                    Selected(BottomSheetItem(it.ordinal, it.icon, it.label), it == prefDB.theme)
+                    Selected(BottomSheetItem(it.ordinal, it.icon, it.label), it == prefCustomisationDB.theme)
                 }
     }
 
     private fun updateAnimationList() {
         animationPreference.value = BarAnimation.values()
                 .map {
-                    Selected(BottomSheetItem(it.ordinal, it.icon, it.label), it == prefDB.barAnimation)
+                    Selected(BottomSheetItem(it.ordinal, it.icon, it.label), it == prefCustomisationDB.barAnimation)
                 }
     }
 

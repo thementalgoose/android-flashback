@@ -19,7 +19,7 @@ import tmg.flashback.di.device.BuildConfigProvider
 import tmg.flashback.home.HomeMenuItem.*
 import tmg.flashback.home.list.HomeItem
 import tmg.flashback.repo.NetworkConnectivityManager
-import tmg.flashback.repo.pref.PrefsDB
+import tmg.flashback.repo.pref.PrefCustomisationDB
 import tmg.flashback.repo.db.stats.DataDB
 import tmg.flashback.repo.db.stats.HistoryDB
 import tmg.flashback.repo.db.stats.SeasonOverviewDB
@@ -42,7 +42,7 @@ class HomeViewModelTest : BaseTest() {
     private val mockSeasonOverviewDB: SeasonOverviewDB = mock()
     private val mockHistoryDB: HistoryDB = mock()
     private val mockDataDB: DataDB = mock()
-    private val mockPrefsDB: PrefsDB = mock()
+    private val mockPrefsDB: PrefCustomisationDB = mock()
     private val mockConnectivityManager: NetworkConnectivityManager = mock()
     private val mockBuildConfigProvider: BuildConfigProvider = mock()
 

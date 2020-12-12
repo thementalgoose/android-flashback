@@ -1,23 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <color name="colorTheme">#4A34B6</color>
 
     <color name="logo_gradient_1">#745BE9</color>
     <color name="logo_gradient_2">#4A34B6</color>
 
-    <color name="fadedBackground">#66000000</color>
-
-    <color name="white">#ffffff</color>
-    <color name="black">#000000</color>
-
     <color name="transparent">#00ffffff</color>
 
-    <color name="aboutThisApp_headerDark">@color/colorTheme</color>
-    <color name="aboutThisApp_headerLight">@color/colorTheme</color>
-
-    <color name="aboutThisApp_backgroundLight">#FBFBFB</color>
-    <color name="aboutThisApp_backgroundDark">#282828</color>
     <color name="whiteTranslucent">#88000000</color>
+
     <color name="overlay">#88000000</color>
     <color name="favourite">#D3BC4D</color>
 

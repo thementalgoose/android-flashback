@@ -16,7 +16,7 @@ import tmg.flashback.overviews.driver.summary.PipeType
 import tmg.flashback.maxPointsBySeason
 import tmg.flashback.repo.NetworkConnectivityManager
 import tmg.flashback.repo.ScopeProvider
-import tmg.flashback.repo.pref.PrefsDB
+import tmg.flashback.repo.pref.PrefCustomisationDB
 import tmg.flashback.repo.db.stats.DriverDB
 import tmg.flashback.repo.models.stats.DriverOverviewStanding
 import tmg.flashback.shared.sync.SyncDataItem
@@ -45,10 +45,10 @@ interface DriverSeasonViewModelOutputs {
 
 @Suppress("EXPERIMENTAL_API_USAGE")
 class DriverSeasonViewModel(
-    private val driverDB: DriverDB,
-    private val connectivityManager: NetworkConnectivityManager,
-    private val prefsDB: PrefsDB,
-    scopeProvider: ScopeProvider
+        private val driverDB: DriverDB,
+        private val connectivityManager: NetworkConnectivityManager,
+        private val prefsDB: PrefCustomisationDB,
+        scopeProvider: ScopeProvider
 ) : BaseViewModel(scopeProvider),
         DriverSeasonViewModelInputs,
         DriverSeasonViewModelOutputs {

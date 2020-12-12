@@ -5,10 +5,12 @@ import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.BuildConfig
 import tmg.flashback.releaseNotes
-import tmg.flashback.repo.pref.PrefsDB
+import tmg.flashback.repo.pref.PrefCustomisationDB
 import tmg.flashback.repo.enums.BarAnimation
 import tmg.flashback.repo.enums.NotificationRegistration
 import tmg.flashback.repo.enums.ThemePref
+import tmg.flashback.repo.pref.PrefDeviceDB
+import tmg.flashback.repo.pref.PrefNotificationDB
 import tmg.flashback.rss.prefs.RSSPrefsDB
 import tmg.utilities.extensions.toEnum
 import tmg.utilities.prefs.SharedPrefManager
@@ -19,7 +21,10 @@ private const val defaultShakeToReport: Boolean = true
 private const val defaultCrashReporting: Boolean = true
 
 class SharedPrefsDB(context: Context) : SharedPrefManager(context),
-    PrefsDB, RSSPrefsDB {
+        PrefCustomisationDB,
+        PrefDeviceDB,
+        PrefNotificationDB,
+        RSSPrefsDB {
 
     override val prefsKey: String = "Flashback"
     private val keyShowQualifyingDelta: String = "SHOW_QUALIFYING_DELTA"
@@ -45,7 +50,6 @@ class SharedPrefsDB(context: Context) : SharedPrefManager(context),
 
     private val keyAppFirstBoot: String = "APP_STARTUP_FIRST_BOOT"
     private val keyAppOpenCount: String = "APP_STARTUP_OPEN_COUNT"
-
 
 
     private val dateFormat = DateTimeFormatter.ofPattern("yyyy/MM/dd")
@@ -118,8 +122,8 @@ class SharedPrefsDB(context: Context) : SharedPrefManager(context),
         get() {
             val value = getSet(keyFavouriteSeasons, setOf())
             return value
-                .mapNotNull { it.toIntOrNull() }
-                .toSet()
+                    .mapNotNull { it.toIntOrNull() }
+                    .toSet()
         }
 
     override var rssUrls: Set<String>
