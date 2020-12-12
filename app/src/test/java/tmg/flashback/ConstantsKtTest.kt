@@ -7,7 +7,7 @@ import org.junit.jupiter.params.provider.CsvSource
 
 class ConstantsKtTest {
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "Max points in {0} season is {1}")
     @CsvSource(
             "2020,25",
             "2010,25",
@@ -27,7 +27,7 @@ class ConstantsKtTest {
         assertEquals(25, maxPointsBySeason(currentYear))
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "For the {0} {1} the {2} track layout will be used")
     @CsvSource(
         "2020,Sakhir Grand Prix,SAKHIR"
     )

@@ -23,7 +23,7 @@ import tmg.flashback.repo.models.AppBanner
 import tmg.flashback.repo.models.stats.*
 import tmg.flashback.shared.sync.SyncDataItem
 import tmg.flashback.shared.viewholders.DataUnavailable
-import tmg.flashback.di.device.BuildConfigProvider
+import tmg.flashback.di.device.BuildConfigManager
 import tmg.flashback.repo.NetworkConnectivityManager
 import tmg.flashback.repo.pref.PrefDeviceRepository
 import tmg.flashback.utils.StringHolder
@@ -64,7 +64,7 @@ class HomeViewModel(
         private val prefCustomisationRepository: PrefCustomisationRepository,
         private val prefDeviceRepository: PrefDeviceRepository,
         private val connectivityManager: NetworkConnectivityManager,
-        private val buildConfigProvider: BuildConfigProvider
+        private val buildConfigProvider: BuildConfigManager
 ) : BaseViewModel(), HomeViewModelInputs, HomeViewModelOutputs {
 
     // true = new season has been requested so don't progress

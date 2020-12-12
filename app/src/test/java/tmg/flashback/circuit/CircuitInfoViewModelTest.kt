@@ -121,8 +121,7 @@ class CircuitInfoViewModelTest: BaseTest() {
                 round = mockCircuitRace.round,
                 date = mockCircuitRace.date,
                 time = mockCircuitRace.time
-            ),
-            CircuitItem.ErrorItem(SyncDataItem.ProvidedBy)
+            )
         )
         whenever(mockCircuitRepository.getCircuit(any())).thenReturn(circuitWithTrackFlow)
         whenever(mockConnectivityManager.isConnected).thenReturn(true)
@@ -134,7 +133,7 @@ class CircuitInfoViewModelTest: BaseTest() {
         advanceUntilIdle()
 
         sut.outputs.list.test {
-            assertValue(expected)
+            assertListHasSublist(expected)
         }
     }
 
@@ -149,8 +148,7 @@ class CircuitInfoViewModelTest: BaseTest() {
                 round = mockCircuitRace.round,
                 date = mockCircuitRace.date,
                 time = mockCircuitRace.time
-            ),
-            CircuitItem.ErrorItem(SyncDataItem.ProvidedBy)
+            )
         )
 
         whenever(mockCircuitRepository.getCircuit(any())).thenReturn(circuitWithoutTrackFlow)
@@ -163,7 +161,7 @@ class CircuitInfoViewModelTest: BaseTest() {
         advanceUntilIdle()
 
         sut.outputs.list.test {
-            assertValue(expected)
+            assertListHasSublist(expected)
         }
     }
 

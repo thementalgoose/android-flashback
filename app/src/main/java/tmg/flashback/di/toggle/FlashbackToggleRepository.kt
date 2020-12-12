@@ -5,7 +5,7 @@ import android.os.Build
 import tmg.flashback.R
 import tmg.flashback.repo.toggle.ToggleRepository
 
-class FlashbackToggleDB(
+class FlashbackToggleRepository(
     private val applicationContext: Context
 ): ToggleRepository {
 

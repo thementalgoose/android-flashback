@@ -4,14 +4,12 @@ import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.reset
 import com.nhaarman.mockitokotlin2.whenever
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.flashback.di.device.BuildConfigProvider
+import tmg.flashback.di.device.BuildConfigManager
 import tmg.flashback.repo.db.stats.DataRepository
 import tmg.flashback.repo.models.AppLockout
 import tmg.flashback.testutils.*
@@ -21,7 +19,7 @@ class LockoutViewModelTest : BaseTest() {
     lateinit var sut: LockoutViewModel
 
     private val mockDataRepository: DataRepository = mock()
-    private val mockBuildConfigProvider: BuildConfigProvider = mock()
+    private val mockBuildConfigProvider: BuildConfigManager = mock()
 
     private val mockTitle: String = "mock title"
     private val mockMessage: String = "mock description"
