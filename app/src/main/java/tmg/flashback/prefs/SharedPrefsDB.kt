@@ -1,13 +1,14 @@
 package tmg.flashback.prefs
 
 import android.content.Context
+import org.threeten.bp.LocalDate
+import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.BuildConfig
 import tmg.flashback.releaseNotes
 import tmg.flashback.repo.pref.PrefsDB
 import tmg.flashback.repo.enums.BarAnimation
 import tmg.flashback.repo.enums.NotificationRegistration
 import tmg.flashback.repo.enums.ThemePref
-import tmg.flashback.repo.enums.Tooltips
 import tmg.flashback.rss.prefs.RSSPrefsDB
 import tmg.utilities.extensions.toEnum
 import tmg.utilities.prefs.SharedPrefManager
@@ -38,11 +39,17 @@ class SharedPrefsDB(context: Context) : SharedPrefManager(context),
     private val keyInAppEnableJavascript: String = "IN_APP_ENABLE_JAVASCRIPT"
     private val keyNewsShowDescription: String = "NEWS_SHOW_DESCRIPTIONS"
 
-    private val keyTooltips: String = "TOOLTIPS"
-
     private val keyNotificationRace: String = "NOTIFICATION_RACE"
     private val keyNotificationQualifying: String = "NOTIFICATION_QUALIFYING"
     private val keyNotificationMisc: String = "NOTIFICATION_MISC"
+
+    private val keyAppFirstBoot: String = "APP_STARTUP_FIRST_BOOT"
+    private val keyAppOpenCount: String = "APP_STARTUP_OPEN_COUNT"
+
+
+
+    private val dateFormat = DateTimeFormatter.ofPattern("yyyy/MM/dd")
+
 
     override var theme: ThemePref
         get() = getString(keyTheme)?.toEnum<ThemePref> { it.key } ?: ThemePref.AUTO
@@ -131,11 +138,19 @@ class SharedPrefsDB(context: Context) : SharedPrefManager(context),
         get() = getBoolean(keyNewsOpenInExternalBrowser, false)
         set(value) = save(keyNewsOpenInExternalBrowser, value)
 
-    override var tooltips: Set<Tooltips>
-        get() = getSet(keyTooltips, emptySet())
-            .mapNotNull { it.toEnum<Tooltips> { it.key } }
-            .toSet()
-        set(value) = save(keyTooltips, value.map { it.key }.toSet())
+    override var appFirstBootTime: LocalDate
+        get() {
+            val value = getString(keyAppFirstBoot, null)
+            if (value == null) {
+                appFirstBootTime = LocalDate.now()
+            }
+            return LocalDate.parse(value, dateFormat)
+        }
+        set(value) = save(keyAppFirstBoot, value.format(dateFormat))
+
+    override var appOpenedCount: Int
+        get() = getInt(keyAppOpenCount, 0)
+        set(value) = save(keyAppOpenCount, value)
 
     //region Notifications
 
