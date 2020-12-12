@@ -3,6 +3,7 @@ package tmg.flashback.settings
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
@@ -71,6 +72,13 @@ class SettingsActivity : BaseActivity() {
 
         observeEvent(viewModel.outputs.openAbout) {
             showAbout()
+        }
+
+        observeEvent(viewModel.outputs.openReview) {
+            try {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(it))
+                startActivity(intent)
+            } catch (e: ActivityNotFoundException) { }
         }
 
         observeEvent(viewModel.outputs.openPrivacyPolicy) {

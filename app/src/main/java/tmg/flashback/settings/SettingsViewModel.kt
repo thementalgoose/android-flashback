@@ -3,12 +3,14 @@ package tmg.flashback.settings
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import tmg.components.prefs.AppPreferencesItem
+import tmg.flashback.BuildConfig
 import tmg.flashback.R
 import tmg.flashback.base.BaseViewModel
 import tmg.flashback.extensions.icon
 import tmg.flashback.extensions.label
 import tmg.flashback.notifications.FirebasePushNotificationManager.Companion.topicQualifying
 import tmg.flashback.notifications.FirebasePushNotificationManager.Companion.topicRace
+import tmg.flashback.playStoreUrl
 import tmg.flashback.repo.ScopeProvider
 import tmg.flashback.repo.toggle.ToggleDB
 import tmg.flashback.repo.pref.PrefCustomisationDB
@@ -44,6 +46,7 @@ interface SettingsViewModelOutputs {
     val openThemePicker: MutableLiveData<Event>
     val openAnimationPicker: MutableLiveData<Event>
     val openAbout: MutableLiveData<Event>
+    val openReview: MutableLiveData<DataEvent<String>>
     val openPrivacyPolicy: MutableLiveData<Event>
     val openRelease: MutableLiveData<Event>
     val openSuggestions: MutableLiveData<Event>
@@ -74,6 +77,7 @@ class SettingsViewModel(
     override val openThemePicker: MutableLiveData<Event> = MutableLiveData()
     override val openAnimationPicker: MutableLiveData<Event> = MutableLiveData()
     override val openAbout: MutableLiveData<Event> = MutableLiveData()
+    override val openReview: MutableLiveData<DataEvent<String>> = MutableLiveData()
     override val openPrivacyPolicy: MutableLiveData<Event> = MutableLiveData()
     override val openRelease: MutableLiveData<Event> = MutableLiveData()
     override val openSuggestions: MutableLiveData<Event> = MutableLiveData()
@@ -110,6 +114,7 @@ class SettingsViewModel(
             add(SettingsOptions.SEASON_BOTTOM_SHEET_ALL.toSwitch(prefCustomisationDB.showBottomSheetAll))
             add(AppPreferencesItem.Category(R.string.settings_help))
             add(SettingsOptions.ABOUT.toPref())
+            add(SettingsOptions.REVIEW.toPref())
             add(SettingsOptions.PRIVACY_POLICY.toPref())
             add(SettingsOptions.RELEASE.toPref())
             add(AppPreferencesItem.Category(R.string.settings_feedback))
@@ -137,6 +142,7 @@ class SettingsViewModel(
             SettingsOptions.SEASON_BOTTOM_SHEET_ALL -> prefCustomisationDB.showBottomSheetAll = value ?: true
             SettingsOptions.BAR_ANIMATION_SPEED -> openAnimationPicker.value = Event()
             SettingsOptions.ABOUT -> openAbout.value = Event()
+            SettingsOptions.REVIEW -> openReview.value = DataEvent(playStoreUrl)
             SettingsOptions.PRIVACY_POLICY -> openPrivacyPolicy.value = Event()
             SettingsOptions.RELEASE -> openRelease.value = Event()
             SettingsOptions.CRASH -> prefDeviceDB.crashReporting = value ?: true
