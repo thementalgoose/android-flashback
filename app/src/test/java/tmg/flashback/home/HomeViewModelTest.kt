@@ -4,8 +4,6 @@ import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.reset
 import com.nhaarman.mockitokotlin2.whenever
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.flow
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
@@ -16,7 +14,7 @@ import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.ValueSource
 import org.threeten.bp.LocalDate
 import tmg.flashback.*
-import tmg.flashback.di.device.BuildConfigProvider
+import tmg.flashback.di.device.BuildConfigManager
 import tmg.flashback.home.HomeMenuItem.*
 import tmg.flashback.home.list.HomeItem
 import tmg.flashback.repo.NetworkConnectivityManager
@@ -45,7 +43,7 @@ class HomeViewModelTest : BaseTest() {
     private val mockPrefsCustomiseRepository: PrefCustomisationRepository = mock()
     private val mockPrefsDeviceRepository: PrefDeviceRepository = mock()
     private val mockConnectivityManager: NetworkConnectivityManager = mock()
-    private val mockBuildConfigProvider: BuildConfigProvider = mock()
+    private val mockBuildConfigProvider: BuildConfigManager = mock()
 
     @BeforeEach
     internal fun setUp() {

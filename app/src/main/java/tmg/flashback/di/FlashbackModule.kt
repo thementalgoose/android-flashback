@@ -6,8 +6,8 @@ import tmg.flashback.BuildConfig
 import tmg.flashback.admin.lockout.LockoutViewModel
 import tmg.flashback.circuit.CircuitInfoViewModel
 import tmg.flashback.overviews.constructor.ConstructorViewModel
-import tmg.flashback.di.device.AppBuildConfigProvider
-import tmg.flashback.di.device.BuildConfigProvider
+import tmg.flashback.di.device.AppBuildConfigManager
+import tmg.flashback.di.device.BuildConfigManager
 import tmg.flashback.di.network.AndroidConnectivityManager
 import tmg.flashback.overviews.driver.DriverViewModel
 import tmg.flashback.overviews.driver.season.DriverSeasonViewModel
@@ -62,7 +62,7 @@ var flashbackModule = module {
     single<PrefNotificationRepository> { SharedPrefsRepository(get()) }
 
     // Build Config
-    single<BuildConfigProvider> { AppBuildConfigProvider() }
+    single<BuildConfigManager> { AppBuildConfigManager() }
 
     // Crash Reporting
     single<CrashManager> { FirebaseCrashManager(get(), BuildConfig.ENVIRONMENT != 1) }
