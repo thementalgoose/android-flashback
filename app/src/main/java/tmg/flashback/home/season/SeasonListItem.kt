@@ -10,7 +10,8 @@ sealed class SeasonListItem {
     data class Season(
         val season: Int,
         val isFavourited: Boolean,
-        val fixed: HeaderType
+        val fixed: HeaderType,
+        val selected: Boolean = false
     ): SeasonListItem()
 
     data class Header(
