@@ -283,12 +283,10 @@ class HomeViewModelTest : BaseTest() {
         }
     }
 
-
     @Test
     fun `HomeViewModel when home type is calendar show calendar history list`() = coroutineTest {
 
         val expected = listOf<HomeItem>(
-                HomeItem.ErrorItem(SyncDataItem.ProvidedBy),
                 HomeItem.Track(
                         season = mockHistoryRound1.season,
                         round = mockHistoryRound1.round,
@@ -318,7 +316,7 @@ class HomeViewModelTest : BaseTest() {
         initSUT()
 
         sut.outputs.list.test {
-            assertValue(expected)
+            assertListHasSublist(expected)
         }
     }
 
@@ -565,38 +563,22 @@ class HomeViewModelTest : BaseTest() {
 
         whenever(mockPrefsDeviceDB.appFirstBootTime).thenReturn(LocalDate.now().minusDays(daysUntilDataProvidedBannerMovedToBottom.toLong() + 1L))
 
-        val expected = listOf<HomeItem>(
-                HomeItem.Track(
-                        season = mockHistoryRound1.season,
-                        round = mockHistoryRound1.round,
-                        raceName = mockHistoryRound1.raceName,
-                        circuitId = mockHistoryRound1.circuitId,
-                        circuitName = mockHistoryRound1.circuitName,
-                        raceCountry = mockHistoryRound1.country,
-                        raceCountryISO = mockHistoryRound1.countryISO,
-                        date = mockHistoryRound1.date,
-                        hasQualifying = mockHistoryRound1.hasQualifying,
-                        hasResults = mockHistoryRound1.hasResults
-                ),
-                HomeItem.Track(
-                        season = mockHistoryRound2.season,
-                        round = mockHistoryRound2.round,
-                        raceName = mockHistoryRound2.raceName,
-                        circuitId = mockHistoryRound2.circuitId,
-                        circuitName = mockHistoryRound2.circuitName,
-                        raceCountry = mockHistoryRound2.country,
-                        raceCountryISO = mockHistoryRound2.countryISO,
-                        date = mockHistoryRound2.date,
-                        hasQualifying = mockHistoryRound2.hasQualifying,
-                        hasResults = mockHistoryRound2.hasResults
-                ),
-                HomeItem.ErrorItem(SyncDataItem.ProvidedBy)
-        )
+        initSUT()
+
+        sut.outputs.list.test {
+            assertListHasLastItem(HomeItem.ErrorItem(SyncDataItem.ProvidedBy))
+        }
+    }
+
+    @Test
+    fun `HomeViewModel banner is at the top when first boot time is less than or equal to 10 days after`() = coroutineTest {
+
+        whenever(mockPrefsDeviceDB.appFirstBootTime).thenReturn(LocalDate.now().minusDays(daysUntilDataProvidedBannerMovedToBottom.toLong()))
 
         initSUT()
 
         sut.outputs.list.test {
-            assertValue(expected)
+            assertListHasFirstItem(HomeItem.ErrorItem(SyncDataItem.ProvidedBy))
         }
     }
 
