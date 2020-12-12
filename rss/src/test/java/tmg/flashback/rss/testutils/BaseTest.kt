@@ -13,7 +13,6 @@ import org.junit.jupiter.api.extension.BeforeEachCallback
 import org.junit.jupiter.api.extension.ExtendWith
 import org.junit.jupiter.api.extension.ExtensionContext
 
-@ExperimentalCoroutinesApi
 @ExtendWith(TestingTaskExecutor::class)
 open class BaseTest {
 
@@ -22,8 +21,6 @@ open class BaseTest {
 
     private val testDispatcher = coroutineScope.testDispatcher
     private val testScope = coroutineScope.testScope
-
-    val testScopeProvider = TestScopeProvider(testScope)
 
     @BeforeEach
     @CallSuper

@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import tmg.flashback.repo.models.stats.History
 import tmg.flashback.repo.models.stats.WinnerSeason
 
-interface HistoryDB {
+interface HistoryRepository {
     fun allHistory(): Flow<List<History>>
     fun historyFor(season: Int): Flow<History?>
     fun allWinners(): Flow<List<WinnerSeason>>

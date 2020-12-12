@@ -40,6 +40,8 @@
     <string name="settings_help">About</string>
     <string name="settings_help_about_title">About this app</string>
     <string name="settings_help_about_description">About the application and the developer</string>
+    <string name="settings_help_review_title">Review</string>
+    <string name="settings_help_review_description">Rate the app on the google play store</string>
     <string name="settings_help_release_notes_title">Release notes</string>
     <string name="settings_help_release_notes_description">See the release notes history</string>
     <string name="settings_feedback">Feedback</string>

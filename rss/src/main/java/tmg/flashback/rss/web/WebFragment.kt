@@ -10,7 +10,7 @@ import android.view.View
 import kotlinx.android.synthetic.main.fragment_web.*
 import org.koin.android.ext.android.inject
 import tmg.flashback.rss.R
-import tmg.flashback.rss.prefs.RSSPrefsDB
+import tmg.flashback.rss.prefs.RSSPrefsRepository
 import tmg.utilities.extensions.getColor
 import tmg.utilities.extensions.views.show
 import tmg.utilities.lifecycle.common.CommonFragment
@@ -18,7 +18,7 @@ import tmg.utilities.lifecycle.common.CommonFragment
 @SuppressLint("SetJavaScriptEnabled")
 class WebFragment : CommonFragment() {
 
-    private val prefsDB: RSSPrefsDB by inject()
+    private val prefsRepository: RSSPrefsRepository by inject()
 
     private var backCallback: FragmentRequestBack? = null
 
@@ -59,7 +59,7 @@ class WebFragment : CommonFragment() {
         webview.webChromeClient = webChromeClient
         webview.webViewClient = webViewClient
         webview.settings.loadsImagesAutomatically = true
-        webview.settings.javaScriptEnabled = prefsDB.inAppEnableJavascript
+        webview.settings.javaScriptEnabled = prefsRepository.inAppEnableJavascript
         webview.scrollBarStyle = View.SCROLLBARS_INSIDE_OVERLAY
 
         load(pageTitle, pageUrl)

@@ -57,6 +57,10 @@ enum class SettingsOptions(
             title = R.string.settings_help_about_title,
             description = R.string.settings_help_about_description
     ),
+    REVIEW("review",
+            title = R.string.settings_help_review_title,
+            description = R.string.settings_help_review_description
+    ),
     PRIVACY_POLICY("privacy_policy",
             title = R.string.settings_help_privacy_policy_title,
             description = R.string.settings_help_privacy_policy_description

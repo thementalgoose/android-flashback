@@ -7,13 +7,12 @@ import tmg.flashback.firebase.FirebaseRepo
 import tmg.flashback.firebase.converters.convert
 import tmg.flashback.firebase.models.FConstructorOverview
 import tmg.flashback.repo.db.CrashManager
-import tmg.flashback.repo.db.stats.ConstructorDB
+import tmg.flashback.repo.db.stats.ConstructorRepository
 import tmg.flashback.repo.models.stats.ConstructorOverview
 
-@ExperimentalCoroutinesApi
 class ConstructorFirestore(
         crashManager: CrashManager
-) : FirebaseRepo(crashManager), ConstructorDB {
+) : FirebaseRepo(crashManager), ConstructorRepository {
 
     override fun getConstructorOverview(constructorId: String): Flow<ConstructorOverview?> {
         return document("constructors/$constructorId")

@@ -3,10 +3,9 @@ package tmg.flashback.rss.ui.settings
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import tmg.components.prefs.AppPreferencesItem
-import tmg.flashback.repo.ScopeProvider
 import tmg.flashback.rss.R
 import tmg.flashback.rss.base.RSSBaseViewModel
-import tmg.flashback.rss.prefs.RSSPrefsDB
+import tmg.flashback.rss.prefs.RSSPrefsRepository
 import tmg.utilities.lifecycle.Event
 
 //region Inputs
@@ -28,9 +27,8 @@ interface RSSSettingsViewModelOutputs {
 //endregion
 
 class RSSSettingsViewModel(
-        private val prefDB: RSSPrefsDB,
-        scopeProvider: ScopeProvider
-): RSSBaseViewModel(scopeProvider),
+        private val prefRepository: RSSPrefsRepository
+): RSSBaseViewModel(),
     RSSSettingsViewModelInputs,
     RSSSettingsViewModelOutputs {
 
@@ -60,9 +58,9 @@ class RSSSettingsViewModel(
 
     override fun updatePref(pref: String, toNewState: Boolean) {
         when (pref) {
-            keyShowDescription -> prefDB.rssShowDescription = toNewState
-            keyJavascript -> prefDB.inAppEnableJavascript = toNewState
-            keyOpenExternal -> prefDB.newsOpenInExternalBrowser = toNewState
+            keyShowDescription -> prefRepository.rssShowDescription = toNewState
+            keyJavascript -> prefRepository.inAppEnableJavascript = toNewState
+            keyOpenExternal -> prefRepository.newsOpenInExternalBrowser = toNewState
         }
     }
 
@@ -82,20 +80,20 @@ class RSSSettingsViewModel(
             keyShowDescription,
             R.string.settings_rss_show_description_title,
             R.string.settings_rss_show_description_description,
-            prefDB.rssShowDescription
+            prefRepository.rssShowDescription
         ))
         list.add(AppPreferencesItem.Category(R.string.settings_rss_browser))
         list.add(AppPreferencesItem.SwitchPreference(
             keyOpenExternal,
             R.string.settings_rss_browser_external_title,
             R.string.settings_rss_browser_external_description,
-            prefDB.newsOpenInExternalBrowser
+            prefRepository.newsOpenInExternalBrowser
         ))
         list.add(AppPreferencesItem.SwitchPreference(
             keyJavascript,
             R.string.settings_rss_browser_javascript_title,
             R.string.settings_rss_browser_javascript_description,
-            prefDB.inAppEnableJavascript
+            prefRepository.inAppEnableJavascript
         ))
         return list
     }

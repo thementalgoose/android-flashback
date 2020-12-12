@@ -34,7 +34,6 @@ android {
     buildTypes {
         debug {
             minifyEnabled false
-            useProguard false
         }
         release {
             signingConfig signingConfigs.release
@@ -50,6 +49,7 @@ android {
 
     kotlinOptions {
         jvmTarget = '1.8'
+        freeCompilerArgs += kotlinCompilerArgs
     }
 
     flavorDimensions 'version'
@@ -174,7 +174,6 @@ dependencies {
     implementation "org.koin:koin-android-scope:$koin_version"
     implementation "org.koin:koin-android-viewmodel:$koin_version"
     implementation "org.koin:koin-android-ext:$koin_version"
-
 
 
 

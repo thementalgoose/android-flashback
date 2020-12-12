@@ -3,14 +3,13 @@ package tmg.flashback.di.device
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
-import tmg.flashback.BuildConfig
 
 class BuildConfigProviderTest {
 
-    lateinit var sut: BuildConfigProvider
+    lateinit var sut: BuildConfigManager
 
     private fun initSUT(versionCode: Int) {
-        sut = object : BuildConfigProvider {
+        sut = object : BuildConfigManager {
             override val autoEnrolPushNotifications: Boolean
                 get() = true
             override val versionCode: Int
