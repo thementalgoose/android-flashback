@@ -10,7 +10,6 @@ import tmg.flashback.repo.db.CrashManager
 import tmg.flashback.repo.db.stats.CircuitRepository
 import tmg.flashback.repo.models.stats.Circuit
 
-@ExperimentalCoroutinesApi
 class CircuitFirestore(
     crashManager: CrashManager
 ) : FirebaseRepo(crashManager), CircuitRepository {

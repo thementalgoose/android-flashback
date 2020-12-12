@@ -13,7 +13,6 @@ import org.junit.jupiter.api.extension.BeforeEachCallback
 import org.junit.jupiter.api.extension.ExtendWith
 import org.junit.jupiter.api.extension.ExtensionContext
 
-@ExperimentalCoroutinesApi
 @ExtendWith(TestingTaskExecutor::class)
 open class BaseTest {
 

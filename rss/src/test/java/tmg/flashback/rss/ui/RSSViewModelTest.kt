@@ -20,8 +20,6 @@ import tmg.flashback.rss.repo.model.ArticleSource
 import tmg.flashback.rss.testutils.BaseTest
 import tmg.flashback.rss.testutils.*
 
-@FlowPreview
-@ExperimentalCoroutinesApi
 class RSSViewModelTest: BaseTest() {
 
     private lateinit var sut: RSSViewModel

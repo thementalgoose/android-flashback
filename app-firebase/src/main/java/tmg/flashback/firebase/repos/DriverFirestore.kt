@@ -10,7 +10,6 @@ import tmg.flashback.repo.db.CrashManager
 import tmg.flashback.repo.db.stats.DriverRepository
 import tmg.flashback.repo.models.stats.DriverOverview
 
-@ExperimentalCoroutinesApi
 class DriverFirestore(
     crashManager: CrashManager
 ) : FirebaseRepo(crashManager), DriverRepository {
