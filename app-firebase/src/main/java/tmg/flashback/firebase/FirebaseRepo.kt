@@ -8,7 +8,6 @@ import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.map
 import tmg.flashback.repo.db.CrashManager
 
-@ExperimentalCoroutinesApi
 open class FirebaseRepo(
     private val crashManager: CrashManager
 ) {

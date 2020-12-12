@@ -11,7 +11,6 @@ import tmg.flashback.firebase.FirebaseRepo
 import tmg.flashback.firebase.models.FAppBanner
 import tmg.flashback.firebase.models.FAppLockout
 
-@ExperimentalCoroutinesApi
 class DataFirestore(
     crashManager: CrashManager
 ): FirebaseRepo(crashManager), DataDB {

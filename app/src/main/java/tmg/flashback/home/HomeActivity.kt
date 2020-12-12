@@ -28,8 +28,6 @@ import tmg.flashback.settings.release.ReleaseBottomSheetFragment
 import tmg.utilities.bottomsheet.BottomSheetFader
 import tmg.utilities.extensions.*
 
-@FlowPreview
-@ExperimentalCoroutinesApi
 class HomeActivity : BaseActivity(), SeasonRequestedCallback {
 
     private lateinit var adapter: HomeAdapter
