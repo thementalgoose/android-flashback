@@ -63,6 +63,7 @@
     <!-- Circuit overview -->
 
     <dimen name="circuitImageSize">42dp</dimen>
+    <dimen name="trackImageSize">160dp</dimen>
 
     <!--===============================================================-->
 
