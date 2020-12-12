@@ -11,7 +11,6 @@ import org.junit.Rule
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.extension.*
 
-@ExperimentalCoroutinesApi
 @ExtendWith(TestingTaskExecutor::class)
 open class BaseTest {
 

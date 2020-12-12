@@ -10,7 +10,6 @@ import tmg.flashback.firebase.converters.convert
 import tmg.flashback.firebase.FirebaseRepo
 import tmg.flashback.firebase.models.FSeason
 
-@ExperimentalCoroutinesApi
 class SeasonOverviewFirestore(
     crashManager: CrashManager
 ) : FirebaseRepo(crashManager), SeasonOverviewRepository {

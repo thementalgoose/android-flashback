@@ -26,8 +26,6 @@ import tmg.flashback.shared.viewholders.DataUnavailable
 import tmg.flashback.testutils.*
 import tmg.flashback.utils.SeasonRound
 
-@FlowPreview
-@ExperimentalCoroutinesApi
 class RaceViewModelTest: BaseTest() {
 
     lateinit var sut: RaceViewModel

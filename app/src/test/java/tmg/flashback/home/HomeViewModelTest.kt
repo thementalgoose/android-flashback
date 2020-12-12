@@ -34,8 +34,6 @@ import tmg.flashback.shared.viewholders.DataUnavailable
 import tmg.flashback.testutils.*
 import tmg.flashback.utils.StringHolder
 
-@FlowPreview
-@ExperimentalCoroutinesApi
 @Nested
 class HomeViewModelTest : BaseTest() {
 

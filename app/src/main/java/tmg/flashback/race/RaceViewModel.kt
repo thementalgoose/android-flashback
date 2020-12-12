@@ -46,7 +46,6 @@ interface RaceViewModelOutputs {
 
 //endregion
 
-@Suppress("EXPERIMENTAL_API_USAGE")
 class RaceViewModel(
         seasonOverviewRepository: SeasonOverviewRepository,
         private val prefsRepository: PrefCustomisationRepository,

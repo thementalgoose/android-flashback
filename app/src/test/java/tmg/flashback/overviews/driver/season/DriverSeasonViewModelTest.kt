@@ -23,8 +23,6 @@ import tmg.flashback.shared.viewholders.DataUnavailable.DRIVER_NOT_EXIST
 import tmg.flashback.testutils.*
 import tmg.flashback.utils.position
 
-@FlowPreview
-@ExperimentalCoroutinesApi
 class DriverSeasonViewModelTest: BaseTest() {
 
     lateinit var sut: DriverSeasonViewModel
