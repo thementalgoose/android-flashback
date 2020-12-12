@@ -6,7 +6,7 @@ import org.junit.jupiter.params.provider.CsvSource
 
 class ConstructorOverviewStandingTest {
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "Best finish of {0} by first driver and {1} by second driver shows {2} as best")
     @CsvSource(
             "-1,9,9",
             "1,4,1",
