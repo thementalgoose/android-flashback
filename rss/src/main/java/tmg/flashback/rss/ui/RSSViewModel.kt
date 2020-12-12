@@ -3,15 +3,15 @@ package tmg.flashback.rss.ui
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.*
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.repo.NetworkConnectivityManager
-import tmg.flashback.repo.ScopeProvider
-import tmg.flashback.repo.db.news.RSSDB
 import tmg.flashback.rss.base.RSSBaseViewModel
-import tmg.flashback.rss.prefs.RSSPrefsDB
+import tmg.flashback.rss.prefs.RSSPrefsRepository
+import tmg.flashback.rss.repo.RSSRepository
 import tmg.utilities.extensions.then
 
 //region Inputs
@@ -33,11 +33,10 @@ interface RSSViewModelOutputs {
 
 @Suppress("EXPERIMENTAL_API_USAGE")
 class RSSViewModel(
-    private val RSSDB: RSSDB,
-    private val prefDB: RSSPrefsDB,
-    private val connectivityManager: NetworkConnectivityManager,
-    scopeProvider: ScopeProvider
-): RSSBaseViewModel(scopeProvider), RSSViewModelInputs,
+        private val RSSDB: RSSRepository,
+        private val prefRepository: RSSPrefsRepository,
+        private val connectivityManager: NetworkConnectivityManager
+): RSSBaseViewModel(), RSSViewModelInputs,
     RSSViewModelOutputs {
 
     override val isRefreshing: MutableLiveData<Boolean> = MutableLiveData()
@@ -54,7 +53,7 @@ class RSSViewModel(
             }
             val results = response.result?.map { RSSItem.RSS(it) } ?: emptyList()
             if (results.isEmpty()) {
-                if (prefDB.rssUrls.isEmpty()) {
+                if (prefRepository.rssUrls.isEmpty()) {
                     return@map listOf<RSSItem>(
                         RSSItem.SourcesDisabled)
                 }
@@ -73,7 +72,7 @@ class RSSViewModel(
         }
 
     override val list: LiveData<List<RSSItem>> = newsList
-        .asLiveData(scope.coroutineContext)
+        .asLiveData(viewModelScope.coroutineContext)
 
     var inputs: RSSViewModelInputs = this
     var outputs: RSSViewModelOutputs = this

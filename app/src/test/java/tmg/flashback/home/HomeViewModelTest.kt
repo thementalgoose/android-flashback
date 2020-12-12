@@ -4,8 +4,6 @@ import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.reset
 import com.nhaarman.mockitokotlin2.whenever
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.flow
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
@@ -16,19 +14,19 @@ import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.ValueSource
 import org.threeten.bp.LocalDate
 import tmg.flashback.*
-import tmg.flashback.di.device.BuildConfigProvider
+import tmg.flashback.di.device.BuildConfigManager
 import tmg.flashback.home.HomeMenuItem.*
 import tmg.flashback.home.list.HomeItem
 import tmg.flashback.repo.NetworkConnectivityManager
-import tmg.flashback.repo.pref.PrefCustomisationDB
-import tmg.flashback.repo.db.stats.DataDB
-import tmg.flashback.repo.db.stats.HistoryDB
-import tmg.flashback.repo.db.stats.SeasonOverviewDB
+import tmg.flashback.repo.pref.PrefCustomisationRepository
+import tmg.flashback.repo.db.stats.DataRepository
+import tmg.flashback.repo.db.stats.HistoryRepository
+import tmg.flashback.repo.db.stats.SeasonOverviewRepository
 import tmg.flashback.repo.enums.BarAnimation
 import tmg.flashback.repo.models.AppBanner
 import tmg.flashback.repo.models.AppLockout
 import tmg.flashback.repo.models.stats.History
-import tmg.flashback.repo.pref.PrefDeviceDB
+import tmg.flashback.repo.pref.PrefDeviceRepository
 import tmg.flashback.shared.sync.SyncDataItem
 import tmg.flashback.shared.viewholders.DataUnavailable
 import tmg.flashback.testutils.*
@@ -39,30 +37,30 @@ class HomeViewModelTest : BaseTest() {
 
     lateinit var sut: HomeViewModel
 
-    private val mockSeasonOverviewDB: SeasonOverviewDB = mock()
-    private val mockHistoryDB: HistoryDB = mock()
-    private val mockDataDB: DataDB = mock()
-    private val mockPrefsCustomiseDB: PrefCustomisationDB = mock()
-    private val mockPrefsDeviceDB: PrefDeviceDB = mock()
+    private val mockSeasonOverviewRepository: SeasonOverviewRepository = mock()
+    private val mockHistoryRepository: HistoryRepository = mock()
+    private val mockDataRepository: DataRepository = mock()
+    private val mockPrefsCustomiseRepository: PrefCustomisationRepository = mock()
+    private val mockPrefsDeviceRepository: PrefDeviceRepository = mock()
     private val mockConnectivityManager: NetworkConnectivityManager = mock()
-    private val mockBuildConfigProvider: BuildConfigProvider = mock()
+    private val mockBuildConfigProvider: BuildConfigManager = mock()
 
     @BeforeEach
     internal fun setUp() {
 
         whenever(mockConnectivityManager.isConnected).thenReturn(true)
-        whenever(mockPrefsDeviceDB.shouldShowReleaseNotes).thenReturn(false)
-        whenever(mockPrefsDeviceDB.appFirstBootTime).thenReturn(LocalDate.now())
-        whenever(mockPrefsCustomiseDB.barAnimation).thenReturn(BarAnimation.NONE)
-        whenever(mockSeasonOverviewDB.getSeasonOverview(any())).thenReturn(flow { emit(mockSeason) })
-        whenever(mockHistoryDB.historyFor(any())).thenReturn(flow { emit(mockHistory) })
-        whenever(mockDataDB.appBanner()).thenReturn(flow { emit(null) })
-        whenever(mockDataDB.appLockout()).thenReturn(flow { emit(null) })
+        whenever(mockPrefsDeviceRepository.shouldShowReleaseNotes).thenReturn(false)
+        whenever(mockPrefsDeviceRepository.appFirstBootTime).thenReturn(LocalDate.now())
+        whenever(mockPrefsCustomiseRepository.barAnimation).thenReturn(BarAnimation.NONE)
+        whenever(mockSeasonOverviewRepository.getSeasonOverview(any())).thenReturn(flow { emit(mockSeason) })
+        whenever(mockHistoryRepository.historyFor(any())).thenReturn(flow { emit(mockHistory) })
+        whenever(mockDataRepository.appBanner()).thenReturn(flow { emit(null) })
+        whenever(mockDataRepository.appLockout()).thenReturn(flow { emit(null) })
     }
 
     private fun initSUT() {
 
-        sut = HomeViewModel(mockSeasonOverviewDB, mockHistoryDB, mockDataDB, mockPrefsCustomiseDB, mockPrefsDeviceDB, mockConnectivityManager, mockBuildConfigProvider, testScopeProvider)
+        sut = HomeViewModel(mockSeasonOverviewRepository, mockHistoryRepository, mockDataRepository, mockPrefsCustomiseRepository, mockPrefsDeviceRepository, mockConnectivityManager, mockBuildConfigProvider)
     }
 
     //region Open release notes
@@ -70,7 +68,7 @@ class HomeViewModelTest : BaseTest() {
     @Test
     fun `HomeViewModel open release notes fires if the prefs signal we should show release notes`() = coroutineTest {
 
-        whenever(mockPrefsDeviceDB.shouldShowReleaseNotes).thenReturn(true)
+        whenever(mockPrefsDeviceRepository.shouldShowReleaseNotes).thenReturn(true)
 
         initSUT()
 
@@ -86,7 +84,7 @@ class HomeViewModelTest : BaseTest() {
     @Test
     fun `HomeViewModel defaults to calendar type by default`() = coroutineTest {
 
-        whenever(mockPrefsDeviceDB.shouldShowReleaseNotes).thenReturn(true)
+        whenever(mockPrefsDeviceRepository.shouldShowReleaseNotes).thenReturn(true)
 
         initSUT()
 
@@ -113,7 +111,7 @@ class HomeViewModelTest : BaseTest() {
     @Test
     fun `HomeViewModel app lockout event is fired if show is true and build config provider says version is should lockout`() = coroutineTest {
 
-        whenever(mockDataDB.appLockout()).thenReturn(flow { emit(expectedAppLockout) })
+        whenever(mockDataRepository.appLockout()).thenReturn(flow { emit(expectedAppLockout) })
         whenever(mockBuildConfigProvider.shouldLockoutBasedOnVersion(any())).thenReturn(true)
 
         initSUT()
@@ -127,7 +125,7 @@ class HomeViewModelTest : BaseTest() {
     @Test
     fun `HomeViewModel app lockout event is not fired if show is false and build config provider says version is should lockout`() = coroutineTest {
 
-        whenever(mockDataDB.appLockout()).thenReturn(flow { emit(expectedAppLockout.copy(show = false)) })
+        whenever(mockDataRepository.appLockout()).thenReturn(flow { emit(expectedAppLockout.copy(show = false)) })
         whenever(mockBuildConfigProvider.shouldLockoutBasedOnVersion(any())).thenReturn(true)
 
         initSUT()
@@ -141,7 +139,7 @@ class HomeViewModelTest : BaseTest() {
     @Test
     fun `HomeViewModel app lockout event is not fired if show is true and build config provider says version is should not lockout`() = coroutineTest {
 
-        whenever(mockDataDB.appLockout()).thenReturn(flow { emit(expectedAppLockout.copy()) })
+        whenever(mockDataRepository.appLockout()).thenReturn(flow { emit(expectedAppLockout.copy()) })
         whenever(mockBuildConfigProvider.shouldLockoutBasedOnVersion(any())).thenReturn(false)
 
         initSUT()
@@ -155,7 +153,7 @@ class HomeViewModelTest : BaseTest() {
     @Test
     fun `HomeViewModel app lockout event is not fired if app lockout value is null`() = coroutineTest {
 
-        whenever(mockDataDB.appLockout()).thenReturn(flow { emit(null) })
+        whenever(mockDataRepository.appLockout()).thenReturn(flow { emit(null) })
         whenever(mockBuildConfigProvider.shouldLockoutBasedOnVersion(any())).thenReturn(true)
 
         initSUT()
@@ -174,7 +172,7 @@ class HomeViewModelTest : BaseTest() {
     fun `HomeViewModel when app banner model exists and show is true then it's added to the data`() = coroutineTest {
 
         val expectedMessage = "Testing the custom app banner!"
-        whenever(mockDataDB.appBanner()).thenReturn(flow { emit(AppBanner(show = true, message = expectedMessage)) })
+        whenever(mockDataRepository.appBanner()).thenReturn(flow { emit(AppBanner(show = true, message = expectedMessage)) })
 
         initSUT()
 
@@ -187,7 +185,7 @@ class HomeViewModelTest : BaseTest() {
     fun `HomeViewModel when app banner model exists and show is false then it's not available in the list`() = coroutineTest {
 
         val expectedMessage = "Testing the custom app banner!"
-        whenever(mockDataDB.appBanner()).thenReturn(flow { emit(AppBanner(show = false, message = expectedMessage)) })
+        whenever(mockDataRepository.appBanner()).thenReturn(flow { emit(AppBanner(show = false, message = expectedMessage)) })
 
         initSUT()
 
@@ -200,7 +198,7 @@ class HomeViewModelTest : BaseTest() {
     fun `HomeViewModel when app banner model exists with empty message and show is true then it's not available in the list`() = coroutineTest {
 
         val expectedMessage = ""
-        whenever(mockDataDB.appBanner()).thenReturn(flow { emit(AppBanner(show = true, message = expectedMessage)) })
+        whenever(mockDataRepository.appBanner()).thenReturn(flow { emit(AppBanner(show = true, message = expectedMessage)) })
 
         initSUT()
 
@@ -213,7 +211,7 @@ class HomeViewModelTest : BaseTest() {
     fun `HomeViewModel when app banner model is null then it's not available in the list`() = coroutineTest {
 
         val expectedMessage = "Testing the custom app banner!"
-        whenever(mockDataDB.appBanner()).thenReturn(flow { emit(null) })
+        whenever(mockDataRepository.appBanner()).thenReturn(flow { emit(null) })
 
         initSUT()
 
@@ -232,7 +230,7 @@ class HomeViewModelTest : BaseTest() {
         val historyListWithEmptyRound = History(2019, null, emptyList())
 
         whenever(mockConnectivityManager.isConnected).thenReturn(false)
-        whenever(mockHistoryDB.historyFor(any())).thenReturn(flow { emit(historyListWithEmptyRound) })
+        whenever(mockHistoryRepository.historyFor(any())).thenReturn(flow { emit(historyListWithEmptyRound) })
         val expected = listOf<HomeItem>(
                 HomeItem.ErrorItem(SyncDataItem.ProvidedBy),
                 HomeItem.ErrorItem(SyncDataItem.NoNetwork)
@@ -250,8 +248,8 @@ class HomeViewModelTest : BaseTest() {
 
         val historyItemWithEmptyRound = History(currentYear, null, emptyList())
 
-        whenever(mockSeasonOverviewDB.getSeasonOverview(any())).thenReturn(flow { emit(mockSeason.copy(season = currentYear)) })
-        whenever(mockHistoryDB.historyFor(any())).thenReturn(flow { emit(historyItemWithEmptyRound) })
+        whenever(mockSeasonOverviewRepository.getSeasonOverview(any())).thenReturn(flow { emit(mockSeason.copy(season = currentYear)) })
+        whenever(mockHistoryRepository.historyFor(any())).thenReturn(flow { emit(historyItemWithEmptyRound) })
         val expected = listOf<HomeItem>(
                 HomeItem.ErrorItem(SyncDataItem.ProvidedBy),
                 HomeItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.EARLY_IN_SEASON))
@@ -268,7 +266,7 @@ class HomeViewModelTest : BaseTest() {
     fun `HomeViewModel when home type is calendar and history rounds is empty and network is connected and year is in the past, show missing race data message`() = coroutineTest {
 
         val historyListWithEmptyRound = History(2019, null, emptyList())
-        whenever(mockHistoryDB.historyFor(any())).thenReturn(flow { emit(historyListWithEmptyRound) })
+        whenever(mockHistoryRepository.historyFor(any())).thenReturn(flow { emit(historyListWithEmptyRound) })
         val expected = listOf<HomeItem>(
             HomeItem.ErrorItem(SyncDataItem.ProvidedBy),
             HomeItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.MISSING_RACE))
@@ -326,7 +324,7 @@ class HomeViewModelTest : BaseTest() {
     fun `HomeViewModel when home type is drivers and history rounds is empty and network not connected, show no network error`() = coroutineTest {
 
         whenever(mockConnectivityManager.isConnected).thenReturn(false)
-        whenever(mockSeasonOverviewDB.getSeasonOverview(any())).thenReturn(flow { emit(mockSeason.copy(rounds = emptyList())) })
+        whenever(mockSeasonOverviewRepository.getSeasonOverview(any())).thenReturn(flow { emit(mockSeason.copy(rounds = emptyList())) })
         val expected = listOf<HomeItem>(
             HomeItem.ErrorItem(SyncDataItem.ProvidedBy),
             HomeItem.ErrorItem(SyncDataItem.NoNetwork)
@@ -344,7 +342,7 @@ class HomeViewModelTest : BaseTest() {
     @Test
     fun `HomeViewModel when home type is drivers and history rounds is empty, show in future season`() = coroutineTest {
 
-        whenever(mockSeasonOverviewDB.getSeasonOverview(any())).thenReturn(flow { emit(mockSeason.copy(rounds = emptyList())) })
+        whenever(mockSeasonOverviewRepository.getSeasonOverview(any())).thenReturn(flow { emit(mockSeason.copy(rounds = emptyList())) })
         val expected = listOf<HomeItem>(
             HomeItem.ErrorItem(SyncDataItem.ProvidedBy),
             HomeItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.IN_FUTURE_SEASON))
@@ -383,7 +381,7 @@ class HomeViewModelTest : BaseTest() {
     @Test
     fun `HomeViewModel when home type is drivers and history rounds size doesnt match rounds available, show results as of header box in response`() = coroutineTest {
 
-        whenever(mockHistoryDB.historyFor(any())).thenReturn(flow { emit(History(2019, null, listOf(mockHistoryRound1, mockHistoryRound2, mockHistoryRound3))) })
+        whenever(mockHistoryRepository.historyFor(any())).thenReturn(flow { emit(History(2019, null, listOf(mockHistoryRound1, mockHistoryRound2, mockHistoryRound3))) })
 
         initSUT()
         sut.inputs.clickItem(DRIVERS)
@@ -404,7 +402,7 @@ class HomeViewModelTest : BaseTest() {
     fun `HomeViewModel when home type is constructors and history rounds is empty and network not connected, show no network error`() = coroutineTest {
 
         whenever(mockConnectivityManager.isConnected).thenReturn(false)
-        whenever(mockSeasonOverviewDB.getSeasonOverview(any())).thenReturn(flow { emit(mockSeason.copy(rounds = emptyList())) })
+        whenever(mockSeasonOverviewRepository.getSeasonOverview(any())).thenReturn(flow { emit(mockSeason.copy(rounds = emptyList())) })
         val expected = listOf<HomeItem>(
             HomeItem.ErrorItem(SyncDataItem.ProvidedBy),
             HomeItem.ErrorItem(SyncDataItem.NoNetwork)
@@ -422,7 +420,7 @@ class HomeViewModelTest : BaseTest() {
     @Test
     fun `HomeViewModel when home type is constructors and history rounds is empty, show in future season`() = coroutineTest {
 
-        whenever(mockSeasonOverviewDB.getSeasonOverview(any())).thenReturn(flow { emit(mockSeason.copy(rounds = emptyList())) })
+        whenever(mockSeasonOverviewRepository.getSeasonOverview(any())).thenReturn(flow { emit(mockSeason.copy(rounds = emptyList())) })
         val expected = listOf<HomeItem>(
             HomeItem.ErrorItem(SyncDataItem.ProvidedBy),
             HomeItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.IN_FUTURE_SEASON))
@@ -459,7 +457,7 @@ class HomeViewModelTest : BaseTest() {
     @Test
     fun `HomeViewModel when home type is constructors and history rounds size doesnt match rounds available, show results as of header box in response`() = coroutineTest {
 
-        whenever(mockHistoryDB.historyFor(any())).thenReturn(flow { emit(History(2019, null, listOf(mockHistoryRound1, mockHistoryRound2, mockHistoryRound3))) })
+        whenever(mockHistoryRepository.historyFor(any())).thenReturn(flow { emit(History(2019, null, listOf(mockHistoryRound1, mockHistoryRound2, mockHistoryRound3))) })
 
         initSUT()
         sut.inputs.clickItem(CONSTRUCTORS)
@@ -475,7 +473,7 @@ class HomeViewModelTest : BaseTest() {
     @ValueSource(ints = [1950, 1951, 1952, 1953, 1954, 1955, 1956, 1957])
     fun `HomeViewModel when season is before constructor standing season the championship did not start message is displayed`(season: Int) = coroutineTest {
 
-        whenever(mockSeasonOverviewDB.getSeasonOverview(any())).thenReturn(flow { emit(mockSeason.copy(season = season)) })
+        whenever(mockSeasonOverviewRepository.getSeasonOverview(any())).thenReturn(flow { emit(mockSeason.copy(season = season)) })
 
         initSUT()
         sut.inputs.clickItem(CONSTRUCTORS)
@@ -493,7 +491,7 @@ class HomeViewModelTest : BaseTest() {
     fun `HomeViewModel when season is on border of constructor standing season the championship did not start message is not displayed`() = coroutineTest {
 
         val season = 1958
-        whenever(mockSeasonOverviewDB.getSeasonOverview(any())).thenReturn(flow { emit(mockSeason.copy(season = season)) })
+        whenever(mockSeasonOverviewRepository.getSeasonOverview(any())).thenReturn(flow { emit(mockSeason.copy(season = season)) })
 
         initSUT()
         sut.inputs.clickItem(CONSTRUCTORS)
@@ -513,7 +511,7 @@ class HomeViewModelTest : BaseTest() {
 
         initSUT()
 
-        whenever(mockPrefsCustomiseDB.showBottomSheetExpanded).thenReturn(true)
+        whenever(mockPrefsCustomiseRepository.showBottomSheetExpanded).thenReturn(true)
         sut.inputs.clickItem(SEASONS)
         advanceUntilIdle()
 
@@ -521,7 +519,7 @@ class HomeViewModelTest : BaseTest() {
             assertDataEventValue(true)
         }
 
-        whenever(mockPrefsCustomiseDB.showBottomSheetExpanded).thenReturn(false)
+        whenever(mockPrefsCustomiseRepository.showBottomSheetExpanded).thenReturn(false)
         sut.inputs.clickItem(SEASONS)
         advanceUntilIdle()
 
@@ -559,7 +557,7 @@ class HomeViewModelTest : BaseTest() {
     @Test
     fun `HomeViewModel banner moves to the bottom when first boot time is greater than 10 days after`() = coroutineTest {
 
-        whenever(mockPrefsDeviceDB.appFirstBootTime).thenReturn(LocalDate.now().minusDays(daysUntilDataProvidedBannerMovedToBottom.toLong() + 1L))
+        whenever(mockPrefsDeviceRepository.appFirstBootTime).thenReturn(LocalDate.now().minusDays(daysUntilDataProvidedBannerMovedToBottom.toLong() + 1L))
 
         initSUT()
 
@@ -571,7 +569,7 @@ class HomeViewModelTest : BaseTest() {
     @Test
     fun `HomeViewModel banner is at the top when first boot time is less than or equal to 10 days after`() = coroutineTest {
 
-        whenever(mockPrefsDeviceDB.appFirstBootTime).thenReturn(LocalDate.now().minusDays(daysUntilDataProvidedBannerMovedToBottom.toLong()))
+        whenever(mockPrefsDeviceRepository.appFirstBootTime).thenReturn(LocalDate.now().minusDays(daysUntilDataProvidedBannerMovedToBottom.toLong()))
 
         initSUT()
 
@@ -582,7 +580,7 @@ class HomeViewModelTest : BaseTest() {
 
     @AfterEach
     internal fun tearDown() {
-        reset(mockSeasonOverviewDB, mockHistoryDB, mockDataDB, mockPrefsCustomiseDB, mockConnectivityManager, mockBuildConfigProvider)
+        reset(mockSeasonOverviewRepository, mockHistoryRepository, mockDataRepository, mockPrefsCustomiseRepository, mockConnectivityManager, mockBuildConfigProvider)
     }
 
     //region Mock Data - App lockout

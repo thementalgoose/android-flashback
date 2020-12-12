@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.home.season.HeaderType.*
-import tmg.flashback.repo.pref.PrefCustomisationDB
+import tmg.flashback.repo.pref.PrefCustomisationRepository
 import tmg.flashback.testutils.*
 
 class SeasonViewModelTest: BaseTest() {
@@ -19,7 +19,7 @@ class SeasonViewModelTest: BaseTest() {
 
     lateinit var sut: SeasonViewModel
 
-    private val mockPrefsDB: PrefCustomisationDB = mock()
+    private val mockPrefsRepository: PrefCustomisationRepository = mock()
 
     private val headerCurrent: SeasonListItem.Header = SeasonListItem.Header(CURRENT, null)
     private val seasonCurrent: SeasonListItem.Season = SeasonListItem.Season(currentYear, false, CURRENT)
@@ -32,20 +32,20 @@ class SeasonViewModelTest: BaseTest() {
     @BeforeEach
     internal fun setUp() {
 
-        whenever(mockPrefsDB.favouriteSeasons).thenReturn(setOf())
-        whenever(mockPrefsDB.showBottomSheetFavourited).thenReturn(true)
-        whenever(mockPrefsDB.showBottomSheetAll).thenReturn(true)
+        whenever(mockPrefsRepository.favouriteSeasons).thenReturn(setOf())
+        whenever(mockPrefsRepository.showBottomSheetFavourited).thenReturn(true)
+        whenever(mockPrefsRepository.showBottomSheetAll).thenReturn(true)
     }
 
     private fun initSUT() {
-        sut = SeasonViewModel(mockPrefsDB, testScopeProvider)
+        sut = SeasonViewModel(mockPrefsRepository)
     }
 
     @Test
     fun `SeasonViewModel header section favourited and all are false when prefs are false on initial load`() {
 
-        whenever(mockPrefsDB.showBottomSheetFavourited).thenReturn(false)
-        whenever(mockPrefsDB.showBottomSheetAll).thenReturn(false)
+        whenever(mockPrefsRepository.showBottomSheetFavourited).thenReturn(false)
+        whenever(mockPrefsRepository.showBottomSheetAll).thenReturn(false)
 
         initSUT()
 
@@ -56,8 +56,8 @@ class SeasonViewModelTest: BaseTest() {
     @Test
     fun `SeasonViewModel header section favourited and all are true when prefs are true on initial load`() {
 
-        whenever(mockPrefsDB.showBottomSheetFavourited).thenReturn(true)
-        whenever(mockPrefsDB.showBottomSheetAll).thenReturn(true)
+        whenever(mockPrefsRepository.showBottomSheetFavourited).thenReturn(true)
+        whenever(mockPrefsRepository.showBottomSheetAll).thenReturn(true)
 
         initSUT()
 
@@ -84,7 +84,7 @@ class SeasonViewModelTest: BaseTest() {
         val favourites = setOf(2017, 2012, 20150)
         val expected = expectedList(favourites)
 
-        whenever(mockPrefsDB.favouriteSeasons).thenReturn(favourites)
+        whenever(mockPrefsRepository.favouriteSeasons).thenReturn(favourites)
 
         initSUT()
 
@@ -99,9 +99,9 @@ class SeasonViewModelTest: BaseTest() {
         val favourites: Set<Int> = setOf(2012, 2018, 2014)
         val expected = expectedList(favourites, showFavourites = false, showAll = false)
 
-        whenever(mockPrefsDB.favouriteSeasons).thenReturn(favourites)
-        whenever(mockPrefsDB.showBottomSheetAll).thenReturn(false)
-        whenever(mockPrefsDB.showBottomSheetFavourited).thenReturn(false)
+        whenever(mockPrefsRepository.favouriteSeasons).thenReturn(favourites)
+        whenever(mockPrefsRepository.showBottomSheetAll).thenReturn(false)
+        whenever(mockPrefsRepository.showBottomSheetFavourited).thenReturn(false)
 
         initSUT()
 
@@ -114,7 +114,7 @@ class SeasonViewModelTest: BaseTest() {
     fun `SeasonViewModel list is emitted all items toggling each section removes list`() {
 
         val favourites = setOf(2017, 2012, 2010)
-        whenever(mockPrefsDB.favouriteSeasons).thenReturn(favourites)
+        whenever(mockPrefsRepository.favouriteSeasons).thenReturn(favourites)
 
         initSUT()
 
@@ -139,33 +139,33 @@ class SeasonViewModelTest: BaseTest() {
     fun `SeasonViewModel toggling a favourite season that exists removed it from favourites shared prefs`() {
 
         val favourites = mutableSetOf(2020, 2018)
-        whenever(mockPrefsDB.favouriteSeasons).thenReturn(favourites)
+        whenever(mockPrefsRepository.favouriteSeasons).thenReturn(favourites)
 
         initSUT()
 
         sut.toggleFavourite(2020)
 
-        verify(mockPrefsDB).favouriteSeasons = setOf(2018)
+        verify(mockPrefsRepository).favouriteSeasons = setOf(2018)
     }
 
     @Test
     fun `SeasonViewModel toggling a favourite season that does not exists adds it from favourites shared prefs`() {
 
         val favourites = mutableSetOf(2020, 2018)
-        whenever(mockPrefsDB.favouriteSeasons).thenReturn(favourites)
+        whenever(mockPrefsRepository.favouriteSeasons).thenReturn(favourites)
 
         initSUT()
 
         sut.toggleFavourite(2019)
 
-        verify(mockPrefsDB).favouriteSeasons = setOf(2020, 2018, 2019)
+        verify(mockPrefsRepository).favouriteSeasons = setOf(2020, 2018, 2019)
     }
 
     @Test
     fun `SeasonViewModel toggling favourite updates list to contain new favourite`() {
 
         val favourites = setOf(2017, 2012, 2010)
-        whenever(mockPrefsDB.favouriteSeasons).thenReturn(favourites)
+        whenever(mockPrefsRepository.favouriteSeasons).thenReturn(favourites)
 
         initSUT()
 
@@ -195,7 +195,7 @@ class SeasonViewModelTest: BaseTest() {
     @AfterEach
     internal fun tearDown() {
 
-        reset(mockPrefsDB)
+        reset(mockPrefsRepository)
     }
 
     private fun expectedList(favourites: Set<Int> = emptySet(), showFavourites: Boolean = true, showAll: Boolean = true): List<SeasonListItem> {

@@ -2,8 +2,8 @@ package tmg.flashback.rss.ui.configure
 
 import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
-import tmg.flashback.repo.enums.SupportedArticleSource
 import tmg.flashback.rss.R
+import tmg.flashback.rss.repo.enums.SupportedArticleSource
 
 sealed class RSSConfigureItem(
     @LayoutRes val layoutId: Int

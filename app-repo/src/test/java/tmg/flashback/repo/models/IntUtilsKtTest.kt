@@ -8,7 +8,7 @@ import tmg.flashback.repo.utils.toMaxIfZero
 
 class IntUtilsKtTest {
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "{0}.toMaxIfZero() == {1}")
     @CsvSource(
         "1,false",
         "-1,false",
@@ -22,7 +22,7 @@ class IntUtilsKtTest {
         assertEquals(expectedValue, value.toMaxIfZero())
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "{0}.extendTo({1}) == {2}")
     @CsvSource(
         "0,2,00",
         "1,3,001",

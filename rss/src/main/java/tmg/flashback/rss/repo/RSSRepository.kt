@@ -1,9 +1,9 @@
-package tmg.flashback.repo.db.news
+package tmg.flashback.rss.repo
 
 import kotlinx.coroutines.flow.Flow
 import tmg.flashback.repo.models.Response
-import tmg.flashback.repo.models.rss.Article
+import tmg.flashback.rss.repo.model.Article
 
-interface RSSDB {
+interface RSSRepository {
     fun getNews(): Flow<Response<List<Article>>>
 }

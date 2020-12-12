@@ -3,14 +3,14 @@ package tmg.flashback.circuit
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.*
 import tmg.flashback.base.BaseViewModel
 import tmg.flashback.circuit.list.CircuitItem
 import tmg.flashback.extensions.circuitIcon
 import tmg.flashback.repo.NetworkConnectivityManager
-import tmg.flashback.repo.ScopeProvider
-import tmg.flashback.repo.db.stats.CircuitDB
+import tmg.flashback.repo.db.stats.CircuitRepository
 import tmg.flashback.repo.models.stats.Circuit
 import tmg.flashback.shared.sync.SyncDataItem
 import tmg.utilities.extensions.then
@@ -41,10 +41,9 @@ interface CircuitInfoViewModelOutputs {
 
 @Suppress("EXPERIMENTAL_API_USAGE")
 class CircuitInfoViewModel(
-    private val circuitDB: CircuitDB,
-    private val connectivityManager: NetworkConnectivityManager,
-    scopeProvider: ScopeProvider
-) : BaseViewModel(scopeProvider), CircuitInfoViewModelInputs, CircuitInfoViewModelOutputs {
+        private val circuitRepository: CircuitRepository,
+        private val connectivityManager: NetworkConnectivityManager
+) : BaseViewModel(), CircuitInfoViewModelInputs, CircuitInfoViewModelOutputs {
 
     private var circuitLat: Double? = null
     private var circuitLng: Double? = null
@@ -55,7 +54,7 @@ class CircuitInfoViewModel(
 
     private val circuit: Flow<Circuit?> = circuitIdentifier
         .asFlow()
-        .flatMapLatest { circuitDB.getCircuit(it) }
+        .flatMapLatest { circuitRepository.getCircuit(it) }
 
     override val goToMap: MutableLiveData<DataEvent<Pair<String, String>>> = MutableLiveData()
     override val goToWikipediaPage: MutableLiveData<DataEvent<String>> = MutableLiveData()
@@ -65,7 +64,7 @@ class CircuitInfoViewModel(
     override val circuitName: LiveData<String> = circuit
         .map { it?.name }
         .filterNotNull()
-        .asLiveData(scope.coroutineContext)
+        .asLiveData(viewModelScope.coroutineContext)
 
     override val list: LiveData<List<CircuitItem>> = circuit
         .map {
@@ -106,7 +105,7 @@ class CircuitInfoViewModel(
         .then {
             isLoading.postValue(false)
         }
-        .asLiveData(scope.coroutineContext)
+        .asLiveData(viewModelScope.coroutineContext)
 
     var inputs: CircuitInfoViewModelInputs = this
     var outputs: CircuitInfoViewModelOutputs = this

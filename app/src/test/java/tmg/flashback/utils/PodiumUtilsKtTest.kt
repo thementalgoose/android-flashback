@@ -7,7 +7,7 @@ import tmg.flashback.testutils.BaseTest
 
 class PodiumUtilsKtTest: BaseTest() {
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "{0} as ordinal abbreviation is {1}")
     @CsvSource(
             "1,1st",
             "2,2nd",

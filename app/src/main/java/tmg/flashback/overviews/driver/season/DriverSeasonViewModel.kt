@@ -6,6 +6,7 @@ import androidx.annotation.StringRes
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.flatMapLatest
@@ -15,9 +16,8 @@ import tmg.flashback.base.BaseViewModel
 import tmg.flashback.overviews.driver.summary.PipeType
 import tmg.flashback.maxPointsBySeason
 import tmg.flashback.repo.NetworkConnectivityManager
-import tmg.flashback.repo.ScopeProvider
-import tmg.flashback.repo.pref.PrefCustomisationDB
-import tmg.flashback.repo.db.stats.DriverDB
+import tmg.flashback.repo.pref.PrefCustomisationRepository
+import tmg.flashback.repo.db.stats.DriverRepository
 import tmg.flashback.repo.models.stats.DriverOverviewStanding
 import tmg.flashback.shared.sync.SyncDataItem
 import tmg.flashback.shared.viewholders.DataUnavailable
@@ -45,11 +45,10 @@ interface DriverSeasonViewModelOutputs {
 
 @Suppress("EXPERIMENTAL_API_USAGE")
 class DriverSeasonViewModel(
-        private val driverDB: DriverDB,
+        private val driverRepository: DriverRepository,
         private val connectivityManager: NetworkConnectivityManager,
-        private val prefsDB: PrefCustomisationDB,
-        scopeProvider: ScopeProvider
-) : BaseViewModel(scopeProvider),
+        private val prefsRepository: PrefCustomisationRepository
+) : BaseViewModel(),
         DriverSeasonViewModelInputs,
         DriverSeasonViewModelOutputs {
 
@@ -64,7 +63,7 @@ class DriverSeasonViewModel(
 
     override val list: LiveData<List<DriverSeasonItem>> = driverId
         .asFlow()
-        .flatMapLatest { driverDB.getDriverOverview(it) }
+        .flatMapLatest { driverRepository.getDriverOverview(it) }
         .map { overview ->
             val list: MutableList<DriverSeasonItem> = mutableListOf()
             val standing = overview?.standings?.firstOrNull { it.season == season }
@@ -156,7 +155,7 @@ class DriverSeasonViewModel(
                                 raceStatus = it.status,
                                 points = it.points,
                                 maxPoints = maxPointsBySeason(it.season),
-                                barAnimation = prefsDB.barAnimation
+                                barAnimation = prefsRepository.barAnimation
                             )
                         }
                         .sortedBy { it.round }
@@ -167,7 +166,7 @@ class DriverSeasonViewModel(
             }
             return@map list
         }
-        .asLiveData(scope.coroutineContext)
+        .asLiveData(viewModelScope.coroutineContext)
 
     init {
 
