@@ -14,12 +14,13 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.ValueSource
+import org.threeten.bp.LocalDate
 import tmg.flashback.*
 import tmg.flashback.di.device.BuildConfigProvider
 import tmg.flashback.home.HomeMenuItem.*
 import tmg.flashback.home.list.HomeItem
 import tmg.flashback.repo.NetworkConnectivityManager
-import tmg.flashback.repo.pref.PrefsDB
+import tmg.flashback.repo.pref.PrefCustomisationDB
 import tmg.flashback.repo.db.stats.DataDB
 import tmg.flashback.repo.db.stats.HistoryDB
 import tmg.flashback.repo.db.stats.SeasonOverviewDB
@@ -27,6 +28,7 @@ import tmg.flashback.repo.enums.BarAnimation
 import tmg.flashback.repo.models.AppBanner
 import tmg.flashback.repo.models.AppLockout
 import tmg.flashback.repo.models.stats.History
+import tmg.flashback.repo.pref.PrefDeviceDB
 import tmg.flashback.shared.sync.SyncDataItem
 import tmg.flashback.shared.viewholders.DataUnavailable
 import tmg.flashback.testutils.*
@@ -42,7 +44,8 @@ class HomeViewModelTest : BaseTest() {
     private val mockSeasonOverviewDB: SeasonOverviewDB = mock()
     private val mockHistoryDB: HistoryDB = mock()
     private val mockDataDB: DataDB = mock()
-    private val mockPrefsDB: PrefsDB = mock()
+    private val mockPrefsCustomiseDB: PrefCustomisationDB = mock()
+    private val mockPrefsDeviceDB: PrefDeviceDB = mock()
     private val mockConnectivityManager: NetworkConnectivityManager = mock()
     private val mockBuildConfigProvider: BuildConfigProvider = mock()
 
@@ -50,8 +53,9 @@ class HomeViewModelTest : BaseTest() {
     internal fun setUp() {
 
         whenever(mockConnectivityManager.isConnected).thenReturn(true)
-        whenever(mockPrefsDB.shouldShowReleaseNotes).thenReturn(false)
-        whenever(mockPrefsDB.barAnimation).thenReturn(BarAnimation.NONE)
+        whenever(mockPrefsDeviceDB.shouldShowReleaseNotes).thenReturn(false)
+        whenever(mockPrefsDeviceDB.appFirstBootTime).thenReturn(LocalDate.now())
+        whenever(mockPrefsCustomiseDB.barAnimation).thenReturn(BarAnimation.NONE)
         whenever(mockSeasonOverviewDB.getSeasonOverview(any())).thenReturn(flow { emit(mockSeason) })
         whenever(mockHistoryDB.historyFor(any())).thenReturn(flow { emit(mockHistory) })
         whenever(mockDataDB.appBanner()).thenReturn(flow { emit(null) })
@@ -60,7 +64,7 @@ class HomeViewModelTest : BaseTest() {
 
     private fun initSUT() {
 
-        sut = HomeViewModel(mockSeasonOverviewDB, mockHistoryDB, mockDataDB, mockPrefsDB, mockConnectivityManager, mockBuildConfigProvider, testScopeProvider)
+        sut = HomeViewModel(mockSeasonOverviewDB, mockHistoryDB, mockDataDB, mockPrefsCustomiseDB, mockPrefsDeviceDB, mockConnectivityManager, mockBuildConfigProvider, testScopeProvider)
     }
 
     //region Open release notes
@@ -68,7 +72,7 @@ class HomeViewModelTest : BaseTest() {
     @Test
     fun `HomeViewModel open release notes fires if the prefs signal we should show release notes`() = coroutineTest {
 
-        whenever(mockPrefsDB.shouldShowReleaseNotes).thenReturn(true)
+        whenever(mockPrefsDeviceDB.shouldShowReleaseNotes).thenReturn(true)
 
         initSUT()
 
@@ -84,7 +88,7 @@ class HomeViewModelTest : BaseTest() {
     @Test
     fun `HomeViewModel defaults to calendar type by default`() = coroutineTest {
 
-        whenever(mockPrefsDB.shouldShowReleaseNotes).thenReturn(true)
+        whenever(mockPrefsDeviceDB.shouldShowReleaseNotes).thenReturn(true)
 
         initSUT()
 
@@ -279,12 +283,10 @@ class HomeViewModelTest : BaseTest() {
         }
     }
 
-
     @Test
     fun `HomeViewModel when home type is calendar show calendar history list`() = coroutineTest {
 
         val expected = listOf<HomeItem>(
-                HomeItem.ErrorItem(SyncDataItem.ProvidedBy),
                 HomeItem.Track(
                         season = mockHistoryRound1.season,
                         round = mockHistoryRound1.round,
@@ -314,7 +316,7 @@ class HomeViewModelTest : BaseTest() {
         initSUT()
 
         sut.outputs.list.test {
-            assertValue(expected)
+            assertListHasSublist(expected)
         }
     }
 
@@ -513,7 +515,7 @@ class HomeViewModelTest : BaseTest() {
 
         initSUT()
 
-        whenever(mockPrefsDB.showBottomSheetExpanded).thenReturn(true)
+        whenever(mockPrefsCustomiseDB.showBottomSheetExpanded).thenReturn(true)
         sut.inputs.clickItem(SEASONS)
         advanceUntilIdle()
 
@@ -521,7 +523,7 @@ class HomeViewModelTest : BaseTest() {
             assertDataEventValue(true)
         }
 
-        whenever(mockPrefsDB.showBottomSheetExpanded).thenReturn(false)
+        whenever(mockPrefsCustomiseDB.showBottomSheetExpanded).thenReturn(false)
         sut.inputs.clickItem(SEASONS)
         advanceUntilIdle()
 
@@ -556,12 +558,34 @@ class HomeViewModelTest : BaseTest() {
 
     //endregion
 
-    @AfterEach
-    internal fun tearDown() {
-        reset(mockSeasonOverviewDB, mockHistoryDB, mockDataDB, mockPrefsDB, mockConnectivityManager, mockBuildConfigProvider)
+    @Test
+    fun `HomeViewModel banner moves to the bottom when first boot time is greater than 10 days after`() = coroutineTest {
+
+        whenever(mockPrefsDeviceDB.appFirstBootTime).thenReturn(LocalDate.now().minusDays(daysUntilDataProvidedBannerMovedToBottom.toLong() + 1L))
+
+        initSUT()
+
+        sut.outputs.list.test {
+            assertListHasLastItem(HomeItem.ErrorItem(SyncDataItem.ProvidedBy))
+        }
     }
 
+    @Test
+    fun `HomeViewModel banner is at the top when first boot time is less than or equal to 10 days after`() = coroutineTest {
 
+        whenever(mockPrefsDeviceDB.appFirstBootTime).thenReturn(LocalDate.now().minusDays(daysUntilDataProvidedBannerMovedToBottom.toLong()))
+
+        initSUT()
+
+        sut.outputs.list.test {
+            assertListHasFirstItem(HomeItem.ErrorItem(SyncDataItem.ProvidedBy))
+        }
+    }
+
+    @AfterEach
+    internal fun tearDown() {
+        reset(mockSeasonOverviewDB, mockHistoryDB, mockDataDB, mockPrefsCustomiseDB, mockConnectivityManager, mockBuildConfigProvider)
+    }
 
     //region Mock Data - App lockout
 

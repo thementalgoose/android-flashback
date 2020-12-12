@@ -56,7 +56,6 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <View
-        android:id="@+id/div1"
         android:layout_width="wrap_content"
         android:layout_height="1dp"
         android:background="?attr/f1BackgroundSecondary" />

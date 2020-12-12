@@ -6,19 +6,19 @@ import tmg.flashback.BuildConfig
 import tmg.flashback.R
 import tmg.flashback.base.BaseBottomSheetFragment
 import tmg.flashback.releaseNotes
-import tmg.flashback.repo.pref.PrefsDB
+import tmg.flashback.repo.pref.PrefDeviceDB
 import tmg.utilities.extensions.fromHtml
 
 class ReleaseBottomSheetFragment: BaseBottomSheetFragment() {
 
-    private val prefsDB: PrefsDB by inject()
+    private val prefsDeviceDB: PrefDeviceDB by inject()
 
     override fun layoutId(): Int = R.layout.fragment_release_notes
 
     override fun initViews() {
 
         val list = releaseNotes
-            .filterKeys { it > prefsDB.lastAppVersion }
+            .filterKeys { it > prefsDeviceDB.lastAppVersion }
             .toList()
             .reversed()
             .sortedBy { it.first }
@@ -26,6 +26,6 @@ class ReleaseBottomSheetFragment: BaseBottomSheetFragment() {
 
         tvReleaseNotesDescription.text = list.map { getString(it) }.joinToString("<br/><br/>").fromHtml()
 
-        prefsDB.lastAppVersion = BuildConfig.VERSION_CODE
+        prefsDeviceDB.lastAppVersion = BuildConfig.VERSION_CODE
     }
 }

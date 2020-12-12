@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <attr name="f1BackgroundNavPrimary" format="color" />
 
     <attr name="f1BackgroundPrimary" format="color" />
@@ -35,4 +36,5 @@
     <attr name="f1DeltaNegative" format="color" />
     <attr name="f1DeltaNeutral" format="color" />
     <attr name="f1DeltaWaiting" format="color" />
+
 </resources>

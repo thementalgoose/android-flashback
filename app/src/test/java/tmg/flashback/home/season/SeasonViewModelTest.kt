@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.home.season.HeaderType.*
-import tmg.flashback.repo.pref.PrefsDB
+import tmg.flashback.repo.pref.PrefCustomisationDB
 import tmg.flashback.testutils.*
 
 class SeasonViewModelTest: BaseTest() {
@@ -19,7 +19,7 @@ class SeasonViewModelTest: BaseTest() {
 
     lateinit var sut: SeasonViewModel
 
-    private val mockPrefsDB: PrefsDB = mock()
+    private val mockPrefsDB: PrefCustomisationDB = mock()
 
     private val headerCurrent: SeasonListItem.Header = SeasonListItem.Header(CURRENT, null)
     private val seasonCurrent: SeasonListItem.Season = SeasonListItem.Season(currentYear, false, CURRENT)

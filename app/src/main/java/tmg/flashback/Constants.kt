@@ -15,10 +15,25 @@ val currentYear: Int
     get() = Year.now().value
 val allYears: List<Int>
     get() = (minimumSupportedYear..currentYear).map { it }
+
+/**
+ * Days until the app banner gets displayed at the bottom
+ */
+const val daysUntilDataProvidedBannerMovedToBottom = 10
+
+/**
+ * Coming soon message for race statistics that are not synchronised
+ */
 const val showComingSoonMessageForNextDays = 10
+
+/**
+ * Bottom sheet fast scroll
+ */
 const val bottomSheetFastScrollDuration = 300
 
-
+/**
+ * When did championships start
+ */
 const val constructorChampionshipStarts = 1958
 
 /**
@@ -31,7 +46,6 @@ fun maxPointsBySeason(season: Int): Int {
         else -> 8
     }
 }
-
 
 /**
  * Compile time feature toggles

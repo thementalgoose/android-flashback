@@ -1,22 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <dimen name="toolbarSettingsIcon">36dp</dimen>
-    <dimen name="bottomSheetPillWidth">36dp</dimen>
-
-    <dimen name="bottomSheetBoxSize">20dp</dimen>
-    <dimen name="bottomSheetBoxPipeSize">6dp</dimen>
-    <dimen name="bottomSheetPillHeight">4dp</dimen>
-
-    <dimen name="bottomSheetIconSize">36dp</dimen>
-    <dimen name="bottomSheetFastScrollWidth">28dp</dimen>
-    <dimen name="bottomSheetPeekHeight">350dp</dimen>
-
-    <!-- Home -->
-
-    <dimen name="homeSkeletonHeight">48dp</dimen>
-    <dimen name="homeSkeletonCellHeight">38dp</dimen>
-    <dimen name="homeSkeletonCellSubtitle">28dp</dimen>
+    <!--===============================================================-->
 
     <!-- Text sizes -->
 
@@ -26,16 +11,18 @@
     <dimen name="textSizeSmall">12sp</dimen>
     <dimen name="textSizeXSmall">10sp</dimen>
 
+    <!--===============================================================-->
+
     <!-- Padding -->
 
     <dimen name="paddingXLarge">64dp</dimen>
-    <dimen name="paddingVLarge">48dp</dimen>
-    <dimen name="paddingLarge">32dp</dimen>
     <dimen name="paddingMedLarge">24dp</dimen>
     <dimen name="paddingMedium">16dp</dimen>
     <dimen name="paddingNSmall">12dp</dimen>
     <dimen name="paddingSmall">8dp</dimen>
     <dimen name="paddingXSmall">4dp</dimen>
+
+    <!--===============================================================-->
 
     <!-- Radius -->
 
@@ -43,75 +30,72 @@
     <dimen name="radiusMedium">12dp</dimen>
     <dimen name="radiusSmall">6dp</dimen>
 
-    <!-- Shared -->
+    <!--===============================================================-->
 
-    <dimen name="sharedErgast">16dp</dimen>
+    <!-- Toolbar -->
 
-    <!--==================================-->
+    <dimen name="toolbarSettingsIcon">36dp</dimen>
 
-    <!--==================================-->
+    <!--===============================================================-->
 
-    <!--==================================-->
+    <!-- Bottom sheet -->
 
-    <!--==================================-->
+    <dimen name="bottomSheetPillWidth">36dp</dimen>
 
-    <!--==================================-->
+    <dimen name="bottomSheetBoxSize">20dp</dimen>
+    <dimen name="bottomSheetBoxPipeSize">6dp</dimen>
+    <dimen name="bottomSheetPillHeight">4dp</dimen>
 
-    <!--==================================-->
+    <dimen name="bottomSheetIconSize">36dp</dimen>
+    <dimen name="bottomSheetFastScrollWidth">28dp</dimen>
 
-    <!--==================================-->
+    <!--===============================================================-->
+
+    <!-- Home -->
+
+    <dimen name="dashboardTrackImageSize">28dp</dimen>
+    <dimen name="dashboardTrackStatusSize">16dp</dimen>
+
+    <dimen name="standingsDriverSize">32dp</dimen>
+
+    <!--===============================================================-->
+
+    <!-- Circuit overview -->
+
+    <dimen name="circuitImageSize">42dp</dimen>
+    <dimen name="trackImageSize">160dp</dimen>
+
+    <!--===============================================================-->
 
     <!-- Constructor Overview -->
 
     <dimen name="constructorOverviewItem">64dp</dimen>
+
+    <!--===============================================================-->
 
     <!-- Driver Overview -->
 
     <dimen name="driverOverviewPipeWidth">4dp</dimen>
     <dimen name="driverOverviewCircleSize">16dp</dimen>
     <dimen name="driverOverviewIconSize">24dp</dimen>
-    <dimen name="driverOverviewPipeIndent">20dp</dimen> <!-- paddingMedium + (iconSize - circleSize) / 2 -->
+    <dimen name="driverOverviewPipeIndent">20dp</dimen>
 
-    <!--==================================-->
+    <fraction name="driverSeason">0.50</fraction>
+    <fraction name="driverSeasonPoints">0.80</fraction>
 
-    <!--==================================-->
+    <!--===============================================================-->
 
-    <!--==================================-->
+    <!-- Race -->
 
-    <!--==================================-->
+    <dimen name="driverFlagSize">16dp</dimen>
+    <dimen name="driverFlagPodiumSize">28dp</dimen>
 
-    <!--==================================-->
+    <dimen name="raceImageSize">42dp</dimen>
 
-    <!--==================================-->
-
-    <!--==================================-->
-
-    <!--==================================-->
-
-    <!--==================================-->
-
-    <!--==================================-->
-
-    <!--==================================-->
-
-    <!--==================================-->
-
-    <!--==================================-->
-
-    <!--==================================-->
-
-    <!--==================================-->
-
-    <!--==================================-->
-
-    <!--==================================-->
-
-    <!--==================================-->
-
-    <!--==================================-->
-
-    <!--==================================-->
-
+    <dimen name="podium1">140dp</dimen>
+    <dimen name="podium2">95dp</dimen>
+    <dimen name="podium3">60dp</dimen>
+    <dimen name="podiumDriverImage">96dp</dimen>
 
     <dimen name="qualifyingListPositionWidth">24dp</dimen>
     <dimen name="raceResultPointsWidth">24dp</dimen>
@@ -119,64 +103,12 @@
     <dimen name="raceStatusSize">12dp</dimen>
     <dimen name="fastestLapSize">12dp</dimen>
 
-    <dimen name="driverFlagSize">16dp</dimen>
-    <dimen name="driverFlagPodiumSize">28dp</dimen>
+    <!--===============================================================-->
 
-    <dimen name="podium1">140dp</dimen>
-    <dimen name="podium2">95dp</dimen>
-    <dimen name="podium3">60dp</dimen>
-    <dimen name="podiumDriverImage">96dp</dimen>
+    <!-- Shared -->
 
-    <dimen name="qualifyingGridConstructorIndicator">12dp</dimen>
+    <dimen name="sharedErgast">16dp</dimen>
 
-
-    <dimen name="trackPickerCountrySize">24dp</dimen>
-
-    <dimen name="homeDisplayCountrySize">36dp</dimen>
-    <dimen name="loadingSize">250dp</dimen>
-    <dimen name="loadingMargin">60dp</dimen>
-
-
-    <!-- Headers -->
-
-    <dimen name="headerHeight">48dp</dimen>
-
-    <!-- Dashboard -->
-
-    <dimen name="dashboardTrackImageSize">28dp</dimen>
-    <dimen name="dashboardTrackStatusSize">16dp</dimen>
-    <dimen name="dashboardYearImageSize">16dp</dimen>
-    <dimen name="dashboardYearIconSize">16dp</dimen>
-
-    <dimen name="dashboardProgressBarHeight">12dp</dimen>
-    <dimen name="dashboardProgressBarWidth">90dp</dimen>
-
-    <!-- Driver -->
-
-    <fraction name="driverSeason">0.50</fraction>
-    <fraction name="driverSeasonPoints">0.80</fraction>
-
-    <!-- ======================================== -->
-
-    <!-- ======================================== -->
-
-
-    <!-- ======================================== -->
-
-    <!-- ======================================== -->
-
-    <!-- Race -->
-
-    <dimen name="raceSeasonImageSize">36dp</dimen>
-    <dimen name="raceImageSize">42dp</dimen>
-
-    <dimen name="standingsDriverSize">32dp</dimen>
-    <dimen name="constructorStandingsSize">40dp</dimen>
-    <dimen name="homeNewsIconSize">36dp</dimen>
-    <dimen name="circuitImageSize">42dp</dimen>
-
-    <!-- ======================================== -->
-
-    <!-- ======================================== -->
+    <!--===============================================================-->
 
 </resources>

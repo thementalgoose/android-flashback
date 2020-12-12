@@ -15,7 +15,9 @@ import tmg.flashback.di.flashbackModule
 import tmg.flashback.di.rssModule
 import tmg.flashback.notifications.PushNotificationManager
 import tmg.flashback.repo.db.CrashManager
-import tmg.flashback.repo.pref.PrefsDB
+import tmg.flashback.repo.pref.PrefCustomisationDB
+import tmg.flashback.repo.pref.PrefDeviceDB
+import tmg.flashback.repo.pref.PrefNotificationDB
 
 val releaseNotes: Map<Int, Int> = mapOf(
     34 to R.string.release_34,
@@ -48,7 +50,8 @@ val releaseNotes: Map<Int, Int> = mapOf(
 
 class FlashbackApplication: Application() {
 
-    private val prefs: PrefsDB by inject()
+    private val prefsDevice: PrefDeviceDB by inject()
+    private val prefsNotification: PrefNotificationDB by inject()
 
     private val crashManager: CrashManager by inject()
 
@@ -67,7 +70,7 @@ class FlashbackApplication: Application() {
         AndroidThreeTen.init(this)
 
         // Shake to report a bug
-        if (prefs.shakeToReport) {
+        if (prefsDevice.shakeToReport) {
             BugShaker.get(this)
                 .setEmailAddresses("thementalgoose@gmail.com")
                 .setEmailSubjectLine("${getString(R.string.app_name)} - App Feedback")
@@ -77,6 +80,14 @@ class FlashbackApplication: Application() {
                 .start()
         }
 
+        // App bootup stats
+        prefsDevice.appFirstBootTime
+        prefsDevice.appOpenedCount = prefsDevice.appOpenedCount + 1
+        if (BuildConfig.DEBUG) {
+            Log.i("Flashback", "First boot time ${prefsDevice.appFirstBootTime}")
+            Log.i("Flashback", "App open count ${prefsDevice.appOpenedCount}")
+        }
+
         // Crash Reporting
         crashManager.initialise()
 
@@ -84,7 +95,7 @@ class FlashbackApplication: Application() {
         notificationManager.createChannels()
 
         // Enrol for race push notifications
-        if (prefs.notificationsRace == null && BuildConfig.AUTO_ENROL_PUSH_NOTIFICATIONS) {
+        if (prefsNotification.notificationsRace == null && BuildConfig.AUTO_ENROL_PUSH_NOTIFICATIONS) {
             GlobalScope.launch {
                 val result = notificationManager.raceSubscribe()
                 Log.i("Flashback", "Auto enrol push notifications race - $result")
@@ -92,7 +103,7 @@ class FlashbackApplication: Application() {
         }
 
         // Enrol for qualifying push notifications
-        if (prefs.notificationsQualifying == null && BuildConfig.AUTO_ENROL_PUSH_NOTIFICATIONS) {
+        if (prefsNotification.notificationsQualifying == null && BuildConfig.AUTO_ENROL_PUSH_NOTIFICATIONS) {
             GlobalScope.launch {
                 val result = notificationManager.qualifyingSubscribe()
                 Log.i("Flashback", "Auto enrol push notifications qualifying - $result")
@@ -100,7 +111,7 @@ class FlashbackApplication: Application() {
         }
 
         // Enrol for qualifying push notifications
-        if (prefs.notificationsMisc == null && BuildConfig.AUTO_ENROL_PUSH_NOTIFICATIONS) {
+        if (prefsNotification.notificationsMisc == null && BuildConfig.AUTO_ENROL_PUSH_NOTIFICATIONS) {
             GlobalScope.launch {
                 val result = notificationManager.appSupportSubscribe()
                 Log.i("Flashback", "Auto enrol push notifications misc - $result")

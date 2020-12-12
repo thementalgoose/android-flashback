@@ -14,9 +14,10 @@ import tmg.flashback.extensions.label
 import tmg.flashback.notifications.FirebasePushNotificationManager.Companion.topicQualifying
 import tmg.flashback.notifications.FirebasePushNotificationManager.Companion.topicRace
 import tmg.flashback.repo.toggle.ToggleDB
-import tmg.flashback.repo.pref.PrefsDB
+import tmg.flashback.repo.pref.PrefCustomisationDB
 import tmg.flashback.repo.enums.BarAnimation.*
 import tmg.flashback.repo.enums.ThemePref.*
+import tmg.flashback.repo.pref.PrefDeviceDB
 import tmg.flashback.settings.SettingsOptions.*
 import tmg.flashback.testutils.BaseTest
 import tmg.flashback.testutils.assertDataEventValue
@@ -29,22 +30,23 @@ class SettingsViewModelTest: BaseTest() {
 
     lateinit var sut: SettingsViewModel
 
-    private val mockPrefs: PrefsDB = mock()
+    private val mockPrefsCustomisation: PrefCustomisationDB = mock()
+    private val mockPrefsDevice: PrefDeviceDB = mock()
     private val mockToggle: ToggleDB = mock()
 
     @BeforeEach
     internal fun setUp() {
 
-        whenever(mockPrefs.showQualifyingDelta).thenReturn(false)
-        whenever(mockPrefs.showGridPenaltiesInQualifying).thenReturn(false)
-        whenever(mockPrefs.showBottomSheetExpanded).thenReturn(false)
-        whenever(mockPrefs.showBottomSheetFavourited).thenReturn(false)
-        whenever(mockPrefs.showBottomSheetAll).thenReturn(false)
-        whenever(mockPrefs.crashReporting).thenReturn(false)
-        whenever(mockPrefs.shakeToReport).thenReturn(false)
+        whenever(mockPrefsCustomisation.showQualifyingDelta).thenReturn(false)
+        whenever(mockPrefsCustomisation.showGridPenaltiesInQualifying).thenReturn(false)
+        whenever(mockPrefsCustomisation.showBottomSheetExpanded).thenReturn(false)
+        whenever(mockPrefsCustomisation.showBottomSheetFavourited).thenReturn(false)
+        whenever(mockPrefsCustomisation.showBottomSheetAll).thenReturn(false)
+        whenever(mockPrefsDevice.crashReporting).thenReturn(false)
+        whenever(mockPrefsDevice.shakeToReport).thenReturn(false)
 
-        whenever(mockPrefs.theme).thenReturn(AUTO)
-        whenever(mockPrefs.barAnimation).thenReturn(MEDIUM)
+        whenever(mockPrefsCustomisation.theme).thenReturn(AUTO)
+        whenever(mockPrefsCustomisation.barAnimation).thenReturn(MEDIUM)
 
         whenever(mockToggle.isRSSEnabled).thenReturn(true)
         whenever(mockToggle.isNotificationChannelsSupported).thenReturn(true)
@@ -52,7 +54,7 @@ class SettingsViewModelTest: BaseTest() {
 
     private fun initSUT() {
 
-        sut = SettingsViewModel(mockPrefs, mockToggle, testScopeProvider)
+        sut = SettingsViewModel(mockPrefsCustomisation, mockPrefsDevice, mockToggle, testScopeProvider)
     }
 
     /**
@@ -174,7 +176,7 @@ class SettingsViewModelTest: BaseTest() {
         initSUT()
 
         sut.pickTheme(NIGHT)
-        verify(mockPrefs).theme = NIGHT
+        verify(mockPrefsCustomisation).theme = NIGHT
 
         sut.outputs.themeChanged.test {
             assertEventFired()
@@ -187,7 +189,7 @@ class SettingsViewModelTest: BaseTest() {
         initSUT()
 
         sut.pickAnimationSpeed(SLOW)
-        verify(mockPrefs).barAnimation = SLOW
+        verify(mockPrefsCustomisation).barAnimation = SLOW
 
         sut.outputs.animationChanged.test {
             assertEventFired()
@@ -225,7 +227,7 @@ class SettingsViewModelTest: BaseTest() {
 
         sut.inputs.preferenceClicked(QUALIFYING_DELTAS, true)
 
-        verify(mockPrefs).showQualifyingDelta = true
+        verify(mockPrefsCustomisation).showQualifyingDelta = true
     }
 
     @Test
@@ -235,7 +237,7 @@ class SettingsViewModelTest: BaseTest() {
 
         sut.inputs.preferenceClicked(QUALIFYING_GRID_PENALTY, true)
 
-        verify(mockPrefs).showGridPenaltiesInQualifying = true
+        verify(mockPrefsCustomisation).showGridPenaltiesInQualifying = true
     }
 
     @Test
@@ -245,7 +247,7 @@ class SettingsViewModelTest: BaseTest() {
 
         sut.inputs.preferenceClicked(SEASON_BOTTOM_SHEET_EXPANDED, true)
 
-        verify(mockPrefs).showBottomSheetExpanded = true
+        verify(mockPrefsCustomisation).showBottomSheetExpanded = true
     }
 
     @Test
@@ -255,7 +257,7 @@ class SettingsViewModelTest: BaseTest() {
 
         sut.inputs.preferenceClicked(SEASON_BOTTOM_SHEET_FAVOURITED, true)
 
-        verify(mockPrefs).showBottomSheetFavourited = true
+        verify(mockPrefsCustomisation).showBottomSheetFavourited = true
     }
 
     @Test
@@ -265,7 +267,7 @@ class SettingsViewModelTest: BaseTest() {
 
         sut.inputs.preferenceClicked(SEASON_BOTTOM_SHEET_ALL, true)
 
-        verify(mockPrefs).showBottomSheetAll = true
+        verify(mockPrefsCustomisation).showBottomSheetAll = true
     }
 
     @Test
@@ -299,7 +301,7 @@ class SettingsViewModelTest: BaseTest() {
 
         sut.inputs.preferenceClicked(CRASH, true)
 
-        verify(mockPrefs).crashReporting = true
+        verify(mockPrefsDevice).crashReporting = true
     }
 
     @Test
@@ -321,7 +323,7 @@ class SettingsViewModelTest: BaseTest() {
 
         sut.inputs.preferenceClicked(SHAKE, true)
 
-        verify(mockPrefs).shakeToReport = true
+        verify(mockPrefsDevice).shakeToReport = true
     }
 
     @Test
@@ -374,6 +376,6 @@ class SettingsViewModelTest: BaseTest() {
 
     @AfterEach
     internal fun tearDown() {
-        reset(mockPrefs)
+        reset(mockPrefsCustomisation)
     }
 }

@@ -14,7 +14,7 @@ import tmg.flashback.R
 import tmg.flashback.overviews.*
 import tmg.flashback.overviews.driver.summary.PipeType.*
 import tmg.flashback.repo.NetworkConnectivityManager
-import tmg.flashback.repo.pref.PrefsDB
+import tmg.flashback.repo.pref.PrefCustomisationDB
 import tmg.flashback.repo.db.stats.DriverDB
 import tmg.flashback.repo.enums.BarAnimation
 import tmg.flashback.repo.models.stats.DriverOverviewRace
@@ -31,7 +31,7 @@ class DriverSeasonViewModelTest: BaseTest() {
 
     private var mockDriverDB: DriverDB = mock()
     private var mockConnectivityManager: NetworkConnectivityManager = mock()
-    private var mockPrefsDB: PrefsDB = mock()
+    private var mockPrefsDB: PrefCustomisationDB = mock()
 
     @BeforeEach
     internal fun setUp() {
