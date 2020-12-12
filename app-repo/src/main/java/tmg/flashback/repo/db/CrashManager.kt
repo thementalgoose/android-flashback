@@ -6,7 +6,7 @@ interface CrashManager {
 
     val enableCrashlytics: Boolean
 
-    fun initialise()
+    fun initialise(appOpenedCount: Int? = null, appFirstOpened: String? = null)
     fun log(msg: String)
     fun logError(error: Exception, context: String)
 }

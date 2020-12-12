@@ -177,7 +177,6 @@ dependencies {
 
 
 
-
     // ThreeTen
     implementation "com.jakewharton.threetenabp:threetenabp:$threeten"
     testImplementation ("org.threeten:threetenbp:$threetenbp") {

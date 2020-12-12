@@ -26,10 +26,14 @@ class FirebaseCrashManager(
     private val keyManufacturer: String = "manufacturer"
     private val keyProduct: String = "product"
     private val keyDevice: String = "device"
+    private val keyAppFirstOpen: String = "appFirstOpen"
+    private val keyAppOpenCount: String = "appFirstOpen"
 
-    override fun initialise() {
+    override fun initialise(appOpenedCount: Int?, appFirstOpened: String?) {
 
-        FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(enableCrashlytics)
+        val instance = FirebaseCrashlytics.getInstance()
+
+        instance.setCrashlyticsCollectionEnabled(enableCrashlytics)
         if (enableCrashlytics) {
             Log.i("Flashback", "Enabling crashlytics")
         }
@@ -37,15 +41,22 @@ class FirebaseCrashManager(
             Log.i("Flashback", "Disabling crashlytics")
         }
 
-        FirebaseCrashlytics.getInstance().setCustomKey(keyEmulator, isEmulator)
-        FirebaseCrashlytics.getInstance().setCustomKey(keyDebug, isDebug)
+        instance.setCustomKey(keyEmulator, isEmulator)
+        instance.setCustomKey(keyDebug, isDebug)
 
-        FirebaseCrashlytics.getInstance().setUserId(prefsDB.deviceUdid)
-        FirebaseCrashlytics.getInstance().setCustomKey(keyDeviceUuid, prefsDB.deviceUdid)
-        FirebaseCrashlytics.getInstance().setCustomKey(keyModel, Build.MODEL)
-        FirebaseCrashlytics.getInstance().setCustomKey(keyManufacturer, Build.MANUFACTURER)
-        FirebaseCrashlytics.getInstance().setCustomKey(keyProduct, Build.PRODUCT)
-        FirebaseCrashlytics.getInstance().setCustomKey(keyDevice, Build.DEVICE)
+        instance.setUserId(prefsDB.deviceUdid)
+        instance.setCustomKey(keyDeviceUuid, prefsDB.deviceUdid)
+        instance.setCustomKey(keyModel, Build.MODEL)
+        instance.setCustomKey(keyManufacturer, Build.MANUFACTURER)
+        instance.setCustomKey(keyProduct, Build.PRODUCT)
+        instance.setCustomKey(keyDevice, Build.DEVICE)
+
+        appFirstOpened?.let {
+            instance.setCustomKey(keyAppFirstOpen, it)
+        }
+        appOpenedCount?.let {
+            instance.setCustomKey(keyAppOpenCount, it)
+        }
     }
 
     override fun log(msg: String) {
