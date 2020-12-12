@@ -11,8 +11,6 @@
     <!-- Padding -->
 
     <dimen name="paddingXLarge">64dp</dimen>
-    <dimen name="paddingVLarge">48dp</dimen>
-    <dimen name="paddingLarge">32dp</dimen>
     <dimen name="paddingMedLarge">24dp</dimen>
     <dimen name="paddingMedium">16dp</dimen>
     <dimen name="paddingNSmall">16dp</dimen>

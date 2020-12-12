@@ -6,7 +6,7 @@ import tmg.flashback.allYears
 import tmg.flashback.base.BaseViewModel
 import tmg.flashback.currentYear
 import tmg.flashback.repo.ScopeProvider
-import tmg.flashback.repo.pref.PrefsDB
+import tmg.flashback.repo.pref.PrefCustomisationDB
 import tmg.utilities.lifecycle.DataEvent
 
 //region Inputs
@@ -29,8 +29,8 @@ interface SeasonViewModelOutputs {
 //endregion
 
 class SeasonViewModel(
-    private val prefDB: PrefsDB,
-    scopeProvider: ScopeProvider
+        private val prefDB: PrefCustomisationDB,
+        scopeProvider: ScopeProvider
 ) : BaseViewModel(scopeProvider), SeasonViewModelInputs, SeasonViewModelOutputs {
 
     var headerSectionFavourited: Boolean = prefDB.showBottomSheetFavourited

@@ -113,24 +113,6 @@
         <item name="android:textColor">?attr/rssTextSecondary</item>
     </style>
 
-    <style name="RSS.Configure.QuickAdd.SourceThumb" parent="RSS.Text">
-        <item name="android:textSize">@dimen/textSizeMedium</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textColor">#ffffff</item>
-    </style>
-
-    <style name="RSS.Configure.QuickAdd.Url" parent="RSS.Text">
-        <item name="android:textSize">@dimen/textSizeMedium</item>
-        <item name="android:textColor">?attr/rssTextPrimary</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="RSS.Configure.Item.SourceThumb" parent="RSS.Text">
-        <item name="android:textSize">@dimen/textSizeMedium</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textColor">#ffffff</item>
-    </style>
-
     <style name="RSS.Configure.Item.Url" parent="RSS.Text">
         <item name="android:textSize">@dimen/textSizeMedium</item>
         <item name="android:textColor">?attr/rssTextPrimary</item>
