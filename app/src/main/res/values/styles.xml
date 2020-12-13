@@ -326,6 +326,11 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="Text.ConstructorOverview.Stats.InProgress" parent="Text">
+        <item name="android:textSize">10sp</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+
     <!--#endregion -->
 
     <!-- =========================================== -->

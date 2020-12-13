@@ -43,6 +43,16 @@
         app:layout_constraintTop_toTopOf="@id/year"
         tools:text="1st" />
 
+    <TextView
+        style="@style/Text.ConstructorOverview.Stats.InProgress"
+        app:layout_constraintStart_toStartOf="@id/year"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/year"
+        android:text="@string/constructor_overview_in_progress"
+        android:layout_width="0dp"
+        android:id="@+id/inProgress"
+        android:layout_height="wrap_content" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/drivers"
         android:layout_width="0dp"
@@ -54,7 +64,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/year"
-        app:layout_constraintTop_toBottomOf="@id/year"
+        app:layout_constraintTop_toBottomOf="@id/inProgress"
         tools:itemCount="4"
         tools:listitem="@layout/layout_constructor_driver_label" />
 

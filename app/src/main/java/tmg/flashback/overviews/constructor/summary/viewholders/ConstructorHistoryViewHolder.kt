@@ -7,6 +7,7 @@ import kotlinx.android.synthetic.main.view_constructor_summary_history.view.*
 import tmg.flashback.overviews.constructor.summary.ConstructorSummaryItem
 import tmg.flashback.overviews.driver.summary.PipeType
 import tmg.flashback.shared.driverlist.DriverListStatAdapter
+import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.ordinalAbbreviation
 import tmg.utilities.extensions.views.invisible
 import tmg.utilities.extensions.views.show
@@ -27,6 +28,8 @@ class ConstructorHistoryViewHolder(itemView: View): RecyclerView.ViewHolder(item
             year.text = item.season.toString()
             points.text = item.points.toString()
             standing.text = item.championshipPosition.ordinalAbbreviation
+
+            inProgress.show(item.isInProgress)
 
             championship.show(item.championshipPosition == 1 && !item.isInProgress)
 
