@@ -221,6 +221,7 @@
     <string name="constructor_overview_stat_points_finishes">Points finishes</string>
     <string name="constructor_overview_stat_best_finish">Best finish</string>
     <string name="constructor_overview_stat_best_championship_position">Best championship position</string>
+    <string name="constructor_overview_in_progress">Season in progress</string>
 
     <string name="results_accurate_for" formatted="false">Results as of the %s (round %d)</string>
     <string name="results_accurate_for_round" formatted="false">Results as of the %d, round %s</string>
