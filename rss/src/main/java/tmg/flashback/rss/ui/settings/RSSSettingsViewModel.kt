@@ -21,7 +21,7 @@ interface RSSSettingsViewModelInputs {
 
 interface RSSSettingsViewModelOutputs {
     val goToConfigure: LiveData<Event>
-    val settings: MutableLiveData<List<AppPreferencesItem>>
+    val settings: LiveData<List<AppPreferencesItem>>
 }
 
 //endregion

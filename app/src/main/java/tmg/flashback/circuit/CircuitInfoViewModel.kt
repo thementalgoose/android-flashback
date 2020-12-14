@@ -31,9 +31,9 @@ interface CircuitInfoViewModelInputs {
 interface CircuitInfoViewModelOutputs {
     val list: LiveData<List<CircuitItem>>
     val circuitName: LiveData<String>
-    val isLoading: MutableLiveData<Boolean>
+    val isLoading: LiveData<Boolean>
 
-    val goToMap: MutableLiveData<DataEvent<Pair<String, String>>> // Maps URI, lat / lng
+    val goToMap: LiveData<DataEvent<Pair<String, String>>> // Maps URI, lat / lng
     val goToWikipediaPage: MutableLiveData<DataEvent<String>>
 }
 

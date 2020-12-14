@@ -22,7 +22,7 @@ interface SeasonViewModelInputs {
 
 interface SeasonViewModelOutputs {
     val list: LiveData<List<SeasonListItem>>
-    val showSeasonEvent: MutableLiveData<DataEvent<Int>>
+    val showSeasonEvent: LiveData<DataEvent<Int>>
 }
 
 //endregion
