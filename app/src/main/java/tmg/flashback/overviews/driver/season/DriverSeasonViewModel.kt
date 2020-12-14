@@ -37,7 +37,7 @@ interface DriverSeasonViewModelInputs {
 //region Outputs
 
 interface DriverSeasonViewModelOutputs {
-    val openSeasonRound: MutableLiveData<DataEvent<DriverSeasonItem.Result>>
+    val openSeasonRound: LiveData<DataEvent<DriverSeasonItem.Result>>
     val list: LiveData<List<DriverSeasonItem>>
 }
 

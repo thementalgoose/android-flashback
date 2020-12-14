@@ -46,10 +46,10 @@ interface HomeViewModelInputs {
 
 interface HomeViewModelOutputs {
     val list: LiveData<List<HomeItem>>
-    val openSeasonList: MutableLiveData<DataEvent<Boolean>>
+    val openSeasonList: LiveData<DataEvent<Boolean>>
     val label: LiveData<StringHolder>
-    val showLoading: MutableLiveData<Boolean>
-    val ensureOnCalendar: MutableLiveData<Event>
+    val showLoading: LiveData<Boolean>
+    val ensureOnCalendar: LiveData<Event>
     val openAppLockout: LiveData<Event>
     val openReleaseNotes: MutableLiveData<Event>
 }

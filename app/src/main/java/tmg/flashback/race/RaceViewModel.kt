@@ -37,11 +37,11 @@ interface RaceViewModelOutputs {
     val circuitInfo: LiveData<Round>
     val raceItems: LiveData<Triple<RaceAdapterType, List<RaceModel>, SeasonRound>>
     val seasonRoundData: LiveData<SeasonRound>
-    val goToDriverOverview: MutableLiveData<DataEvent<Pair<String, String>>>
-    val goToConstructorOverview: MutableLiveData<DataEvent<Pair<String, String>>>
+    val goToDriverOverview: LiveData<DataEvent<Pair<String, String>>>
+    val goToConstructorOverview: LiveData<DataEvent<Pair<String, String>>>
 
-    val showLinks: MutableLiveData<Boolean>
-    val goToWikipedia: MutableLiveData<DataEvent<String>>
+    val showLinks: LiveData<Boolean>
+    val goToWikipedia: LiveData<DataEvent<String>>
 }
 
 //endregion

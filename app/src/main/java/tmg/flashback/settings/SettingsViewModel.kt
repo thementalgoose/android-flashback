@@ -33,22 +33,22 @@ interface SettingsViewModelInputs {
 //region Outputs
 
 interface SettingsViewModelOutputs {
-    val settings: MutableLiveData<List<AppPreferencesItem>>
+    val settings: LiveData<List<AppPreferencesItem>>
 
-    val themePreferences: MutableLiveData<List<Selected<BottomSheetItem>>>
-    val animationPreference: MutableLiveData<List<Selected<BottomSheetItem>>>
+    val themePreferences: LiveData<List<Selected<BottomSheetItem>>>
+    val animationPreference: LiveData<List<Selected<BottomSheetItem>>>
 
-    val themeChanged: MutableLiveData<Event>
-    val animationChanged: MutableLiveData<Event>
+    val themeChanged: LiveData<Event>
+    val animationChanged: LiveData<Event>
 
-    val openThemePicker: MutableLiveData<Event>
-    val openAnimationPicker: MutableLiveData<Event>
-    val openAbout: MutableLiveData<Event>
-    val openReview: MutableLiveData<DataEvent<String>>
-    val openPrivacyPolicy: MutableLiveData<Event>
-    val openRelease: MutableLiveData<Event>
-    val openSuggestions: MutableLiveData<Event>
-    val openNews: MutableLiveData<Event>
+    val openThemePicker: LiveData<Event>
+    val openAnimationPicker: LiveData<Event>
+    val openAbout: LiveData<Event>
+    val openReview: LiveData<DataEvent<String>>
+    val openPrivacyPolicy: LiveData<Event>
+    val openRelease: LiveData<Event>
+    val openSuggestions: LiveData<Event>
+    val openNews: LiveData<Event>
 
     val openNotificationsChannel: LiveData<DataEvent<String>>
     val openNotifications: LiveData<Event>

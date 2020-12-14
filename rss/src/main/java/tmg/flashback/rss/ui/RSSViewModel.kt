@@ -26,7 +26,7 @@ interface RSSViewModelInputs {
 
 interface RSSViewModelOutputs {
     val list: LiveData<List<RSSItem>>
-    val isRefreshing: MutableLiveData<Boolean>
+    val isRefreshing: LiveData<Boolean>
 }
 
 //endregion
