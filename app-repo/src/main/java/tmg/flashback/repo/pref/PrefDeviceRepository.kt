@@ -30,6 +30,11 @@ interface PrefDeviceRepository {
     var deviceUdid: String
 
     /**
+     * Remote config has been initially synchronised
+     */
+    var remoteConfigInitialSync: Boolean
+
+    /**
      * App open events
      *   Should be set to first time accessed
      */
@@ -40,4 +45,9 @@ interface PrefDeviceRepository {
      *   Incremented when app is opened
      */
     var appOpenedCount: Int
+
+    /**
+     * Determine if notifications are supported on this device
+     */
+    val isNotificationChannelsSupported: Boolean
 }

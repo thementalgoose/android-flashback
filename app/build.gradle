@@ -59,17 +59,13 @@ android {
             applicationIdSuffix '.sand'
             versionNameSuffix '-sand'
 
-            resValue "bool", "toggle_rss", "true"
             buildConfigField "int", "ENVIRONMENT", '1'
-            buildConfigField "boolean", "AUTO_ENROL_PUSH_NOTIFICATIONS", 'true'
         }
 
         live {
             dimension 'version'
 
-            resValue "bool", "toggle_rss", "true"
             buildConfigField "int", "ENVIRONMENT", '0'
-            buildConfigField "boolean", "AUTO_ENROL_PUSH_NOTIFICATIONS", 'true'
         }
     }
 

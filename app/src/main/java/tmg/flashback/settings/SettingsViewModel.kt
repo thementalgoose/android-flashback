@@ -10,7 +10,7 @@ import tmg.flashback.extensions.label
 import tmg.flashback.notifications.FirebasePushNotificationManager.Companion.topicQualifying
 import tmg.flashback.notifications.FirebasePushNotificationManager.Companion.topicRace
 import tmg.flashback.playStoreUrl
-import tmg.flashback.repo.config.ToggleRepository
+import tmg.flashback.repo.config.RemoteConfigRepository
 import tmg.flashback.repo.pref.PrefCustomisationRepository
 import tmg.flashback.repo.enums.ThemePref
 import tmg.flashback.repo.enums.BarAnimation
@@ -59,7 +59,7 @@ interface SettingsViewModelOutputs {
 class SettingsViewModel(
         private val prefCustomisationRepository: PrefCustomisationRepository,
         private val prefDeviceRepository: PrefDeviceRepository,
-        private val toggleDB: ToggleRepository
+        private val remoteConfigRepository: RemoteConfigRepository
 ): BaseViewModel(), SettingsViewModelInputs, SettingsViewModelOutputs {
 
     var inputs: SettingsViewModelInputs = this
@@ -87,12 +87,12 @@ class SettingsViewModel(
 
     init {
         settings.value = mutableListOf<AppPreferencesItem>().apply {
-            if (toggleDB.isRSSEnabled) {
+            if (remoteConfigRepository.rss) {
                 add(AppPreferencesItem.Category(R.string.settings_customisation_rss))
                 add(SettingsOptions.NEWS.toPref())
             }
             add(AppPreferencesItem.Category(R.string.settings_notifications_title))
-            if (toggleDB.isNotificationChannelsSupported) {
+            if (prefDeviceRepository.isNotificationChannelsSupported) {
                 add(SettingsOptions.NOTIFICATIONS_CHANNEL_QUALIFYING.toPref())
                 add(SettingsOptions.NOTIFICATIONS_CHANNEL_RACE.toPref())
             }

@@ -10,6 +10,7 @@ import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.bottom_sheet_season.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
+import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.R
 import tmg.flashback.admin.lockout.LockoutActivity
@@ -22,6 +23,7 @@ import tmg.flashback.home.list.HomeAdapter
 import tmg.flashback.home.season.*
 import tmg.flashback.minimumSupportedYear
 import tmg.flashback.race.RaceActivity
+import tmg.flashback.repo.config.RemoteConfigRepository
 import tmg.flashback.rss.ui.RSSActivity
 import tmg.flashback.settings.SettingsActivity
 import tmg.flashback.settings.release.ReleaseBottomSheetFragment
@@ -33,6 +35,8 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback {
     private lateinit var adapter: HomeAdapter
     private var seasonBottomSheetBehavior: BottomSheetBehavior<*>? = null
     private lateinit var seasonAdapter: SeasonListAdapter
+
+    private val remoteConfigRepository: RemoteConfigRepository by inject()
 
     private val viewModel: HomeViewModel by viewModel()
     private val seasonViewModel: SeasonViewModel by viewModel()
@@ -72,7 +76,7 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback {
         dataList.adapter = adapter
         dataList.layoutManager = LinearLayoutManager(this)
 
-        if (!toggleDB.isRSSEnabled) {
+        if (!remoteConfigRepository.rss) {
             menu.menu.removeItem(R.id.nav_rss)
         }
         if (container_landscape != null) {

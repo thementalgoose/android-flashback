@@ -106,7 +106,7 @@ class FlashbackApplication: Application() {
         notificationManager.createChannels()
 
         // Enrol for race push notifications
-        if (prefsNotification.notificationsRace == null && BuildConfig.AUTO_ENROL_PUSH_NOTIFICATIONS) {
+        if (prefsNotification.notificationsRace == null) {
             GlobalScope.launch {
                 val result = notificationManager.raceSubscribe()
                 Log.i("Flashback", "Auto enrol push notifications race - $result")
@@ -114,7 +114,7 @@ class FlashbackApplication: Application() {
         }
 
         // Enrol for qualifying push notifications
-        if (prefsNotification.notificationsQualifying == null && BuildConfig.AUTO_ENROL_PUSH_NOTIFICATIONS) {
+        if (prefsNotification.notificationsQualifying == null) {
             GlobalScope.launch {
                 val result = notificationManager.qualifyingSubscribe()
                 Log.i("Flashback", "Auto enrol push notifications qualifying - $result")
@@ -122,7 +122,7 @@ class FlashbackApplication: Application() {
         }
 
         // Enrol for qualifying push notifications
-        if (prefsNotification.notificationsMisc == null && BuildConfig.AUTO_ENROL_PUSH_NOTIFICATIONS) {
+        if (prefsNotification.notificationsMisc == null) {
             GlobalScope.launch {
                 val result = notificationManager.appSupportSubscribe()
                 Log.i("Flashback", "Auto enrol push notifications misc - $result")

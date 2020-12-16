@@ -33,6 +33,7 @@ class FirebaseRemoteConfigRepository(
 
     private val keyDefaultYear: String = "default_year"
     private val keyDefaultBanner: String = "banner"
+    private val keyRss: String = "rss"
 
     init {
         remoteConfig.setDefaultsAsync(R.xml.remote_config_defaults)
@@ -46,6 +47,9 @@ class FirebaseRemoteConfigRepository(
 
     override val banner: String
         get() = remoteConfig.getString(keyDefaultBanner)
+
+    override val rss: Boolean
+        get() = remoteConfig.getBoolean(keyRss)
 
     //endregion
 

@@ -14,7 +14,7 @@ import tmg.flashback.extensions.icon
 import tmg.flashback.extensions.label
 import tmg.flashback.notifications.FirebasePushNotificationManager.Companion.topicQualifying
 import tmg.flashback.notifications.FirebasePushNotificationManager.Companion.topicRace
-import tmg.flashback.repo.config.ToggleRepository
+import tmg.flashback.repo.config.RemoteConfigRepository
 import tmg.flashback.repo.pref.PrefCustomisationRepository
 import tmg.flashback.repo.enums.BarAnimation.*
 import tmg.flashback.repo.enums.ThemePref.*
@@ -33,7 +33,7 @@ class SettingsViewModelTest: BaseTest() {
 
     private val mockPrefsCustomisation: PrefCustomisationRepository = mock()
     private val mockPrefsDevice: PrefDeviceRepository = mock()
-    private val mockToggle: ToggleRepository = mock()
+    private val mockRemoteConfigRepository: RemoteConfigRepository = mock()
 
     @BeforeEach
     internal fun setUp() {
@@ -45,17 +45,17 @@ class SettingsViewModelTest: BaseTest() {
         whenever(mockPrefsCustomisation.showBottomSheetAll).thenReturn(false)
         whenever(mockPrefsDevice.crashReporting).thenReturn(false)
         whenever(mockPrefsDevice.shakeToReport).thenReturn(false)
+        whenever(mockPrefsDevice.isNotificationChannelsSupported).thenReturn(true)
 
         whenever(mockPrefsCustomisation.theme).thenReturn(AUTO)
         whenever(mockPrefsCustomisation.barAnimation).thenReturn(MEDIUM)
 
-        whenever(mockToggle.isRSSEnabled).thenReturn(true)
-        whenever(mockToggle.isNotificationChannelsSupported).thenReturn(true)
+        whenever(mockRemoteConfigRepository.rss).thenReturn(true)
     }
 
     private fun initSUT() {
 
-        sut = SettingsViewModel(mockPrefsCustomisation, mockPrefsDevice, mockToggle)
+        sut = SettingsViewModel(mockPrefsCustomisation, mockPrefsDevice, mockRemoteConfigRepository)
     }
 
     /**
@@ -109,7 +109,7 @@ class SettingsViewModelTest: BaseTest() {
     @Test
     fun `SettingsViewModel setup with notification channels not supported doesnt show individual options`() {
 
-        whenever(mockToggle.isNotificationChannelsSupported).thenReturn(false)
+        whenever(mockPrefsDevice.isNotificationChannelsSupported).thenReturn(false)
 
         initSUT()
 
@@ -121,7 +121,7 @@ class SettingsViewModelTest: BaseTest() {
     @Test
     fun `SettingsViewModel setup populates settings list with toggle disabled hides the news`() {
 
-        whenever(mockToggle.isRSSEnabled).thenReturn(false)
+        whenever(mockRemoteConfigRepository.rss).thenReturn(false)
 
         initSUT()
 
