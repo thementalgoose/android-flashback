@@ -8,4 +8,8 @@
         <key>banner</key>
         <value />
     </entry>
+    <entry>
+        <key>rss</key>
+        <value>false</value>
+    </entry>
 </defaultsMap>

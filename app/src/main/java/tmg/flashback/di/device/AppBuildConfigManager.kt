@@ -9,7 +9,4 @@ class AppBuildConfigManager: BuildConfigManager {
 
     override val versionName: String
         get() = BuildConfig.VERSION_NAME
-
-    override val autoEnrolPushNotifications: Boolean
-        get() = BuildConfig.AUTO_ENROL_PUSH_NOTIFICATIONS
 }

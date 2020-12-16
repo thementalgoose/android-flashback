@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.annotation.StyleRes
 import org.koin.android.ext.android.inject
 import tmg.flashback.R
-import tmg.flashback.repo.config.ToggleRepository
 import tmg.flashback.repo.db.CrashManager
 import tmg.flashback.repo.pref.PrefCustomisationRepository
 import tmg.flashback.repo.enums.ThemePref
@@ -16,7 +15,6 @@ abstract class BaseActivity : CommonActivity() {
     private val prefsRepository: PrefCustomisationRepository by inject()
 
     val crashManager: CrashManager by inject()
-    val toggleDB: ToggleRepository by inject()
 
     protected var isLightTheme: Boolean = true
 

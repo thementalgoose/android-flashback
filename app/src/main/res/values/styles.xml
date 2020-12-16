@@ -15,6 +15,22 @@
         <item name="android:textColor">?attr/f1TextPrimary</item>
     </style>
 
+    <style name="Button.Splash" parent="Text">
+        <item name="android:paddingStart">@dimen/paddingMedLarge</item>
+        <item name="android:paddingTop">@dimen/paddingXSmall</item>
+        <item name="android:paddingBottom">@dimen/paddingXSmall</item>
+        <item name="android:paddingEnd">@dimen/paddingMedLarge</item>
+        <item name="android:background">@drawable/selector_inverse_button</item>
+        <item name="android:textColor">#fff</item>
+    </style>
+
+    <!-- =========================================== -->
+
+    <!-- =========================================== -->
+
+
+    <!--#endregion -->
+
     <!-- =========================================== -->
 
     <!-- =========================================== -->
