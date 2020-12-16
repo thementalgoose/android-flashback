@@ -6,6 +6,7 @@ import com.github.stkent.bugshaker.BugShaker
 import com.github.stkent.bugshaker.flow.dialog.AlertDialogType
 import com.jakewharton.threetenabp.AndroidThreeTen
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
@@ -14,6 +15,7 @@ import tmg.flashback.di.firebaseModule
 import tmg.flashback.di.flashbackModule
 import tmg.flashback.di.rssModule
 import tmg.flashback.notifications.PushNotificationManager
+import tmg.flashback.repo.config.RemoteConfigRepository
 import tmg.flashback.repo.db.CrashManager
 import tmg.flashback.repo.pref.PrefDeviceRepository
 import tmg.flashback.repo.pref.PrefNotificationRepository
@@ -52,6 +54,7 @@ class FlashbackApplication: Application() {
     private val prefsDevice: PrefDeviceRepository by inject()
     private val prefsNotification: PrefNotificationRepository by inject()
 
+    private val configRepository: RemoteConfigRepository by inject()
     private val crashManager: CrashManager by inject()
 
     private val notificationManager: PushNotificationManager by inject()
@@ -92,6 +95,12 @@ class FlashbackApplication: Application() {
             appFirstOpened = prefsDevice.appFirstBootTime.toString(),
             appOpenedCount = prefsDevice.appOpenedCount
         )
+
+        // Remote config
+        GlobalScope.launch {
+            val result = configRepository.update(false)
+            Log.i("Flashback", "Remote config updated $result")
+        }
 
         // Channels
         notificationManager.createChannels()

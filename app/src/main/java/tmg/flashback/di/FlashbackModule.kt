@@ -29,7 +29,7 @@ import tmg.flashback.settings.privacy.PrivacyPolicyViewModel
 var flashbackModule = module {
 
     // Home
-    viewModel { HomeViewModel(get(), get(), get(), get(), get(), get(), get()) }
+    viewModel { HomeViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
     viewModel { SeasonViewModel(get()) }
 
     // Circuit

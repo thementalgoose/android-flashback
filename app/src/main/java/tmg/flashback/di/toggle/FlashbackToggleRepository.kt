@@ -3,7 +3,7 @@ package tmg.flashback.di.toggle
 import android.content.Context
 import android.os.Build
 import tmg.flashback.R
-import tmg.flashback.repo.toggle.ToggleRepository
+import tmg.flashback.repo.config.ToggleRepository
 
 class FlashbackToggleRepository(
     private val applicationContext: Context
