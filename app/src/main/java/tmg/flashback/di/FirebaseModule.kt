@@ -2,8 +2,11 @@ package tmg.flashback.di
 
 import org.koin.dsl.module
 import tmg.flashback.di.toggle.FlashbackToggleRepository
+import tmg.flashback.firebase.config.FirebaseRemoteConfigRepository
 import tmg.flashback.firebase.repos.*
-import tmg.flashback.repo.toggle.ToggleRepository
+import tmg.flashback.repo.config.RemoteConfigRepository
+import tmg.flashback.repo.config.ToggleRepository
+import tmg.flashback.repo.db.DataRepository
 import tmg.flashback.repo.db.stats.*
 
 val firebaseModule = module {
@@ -15,5 +18,6 @@ val firebaseModule = module {
     single<DriverRepository> { DriverFirestore(get()) }
     single<ConstructorRepository> { ConstructorFirestore(get()) }
 
+    single<RemoteConfigRepository> { FirebaseRemoteConfigRepository(get()) }
     single<ToggleRepository> { FlashbackToggleRepository(get()) }
 }

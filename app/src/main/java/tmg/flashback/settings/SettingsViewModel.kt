@@ -10,7 +10,7 @@ import tmg.flashback.extensions.label
 import tmg.flashback.notifications.FirebasePushNotificationManager.Companion.topicQualifying
 import tmg.flashback.notifications.FirebasePushNotificationManager.Companion.topicRace
 import tmg.flashback.playStoreUrl
-import tmg.flashback.repo.toggle.ToggleRepository
+import tmg.flashback.repo.config.ToggleRepository
 import tmg.flashback.repo.pref.PrefCustomisationRepository
 import tmg.flashback.repo.enums.ThemePref
 import tmg.flashback.repo.enums.BarAnimation

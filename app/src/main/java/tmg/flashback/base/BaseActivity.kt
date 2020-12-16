@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.annotation.StyleRes
 import org.koin.android.ext.android.inject
 import tmg.flashback.R
-import tmg.flashback.repo.toggle.ToggleRepository
+import tmg.flashback.repo.config.ToggleRepository
 import tmg.flashback.repo.db.CrashManager
 import tmg.flashback.repo.pref.PrefCustomisationRepository
 import tmg.flashback.repo.enums.ThemePref

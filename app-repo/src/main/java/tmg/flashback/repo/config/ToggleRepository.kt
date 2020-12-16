@@ -1,4 +1,4 @@
-package tmg.flashback.repo.toggle
+package tmg.flashback.repo.config
 
 interface ToggleRepository {
 
