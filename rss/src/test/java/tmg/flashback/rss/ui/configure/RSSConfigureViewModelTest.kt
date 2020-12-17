@@ -1,8 +1,8 @@
 package tmg.flashback.rss.ui.configure
 
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.verify
-import com.nhaarman.mockitokotlin2.whenever
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -19,11 +19,11 @@ class RSSConfigureViewModelTest: BaseTest() {
 
     lateinit var sut: RSSConfigureViewModel
 
-    private val mockPrefs: RSSPrefsRepository = mock()
+    private val mockPrefs: RSSPrefsRepository = mockk(relaxed = true)
 
     @BeforeEach
     fun setUp() {
-        whenever(mockPrefs.rssUrls).thenReturn(emptySet())
+        every { mockPrefs.rssUrls } returns emptySet()
     }
 
     private fun initSUT() {
@@ -49,13 +49,13 @@ class RSSConfigureViewModelTest: BaseTest() {
     fun `RSSConfigureViewModel add quick item will update the prefs DB`() {
 
         val link = SupportedArticleSource.AUTOSPORT
-        whenever(mockPrefs.rssUrls).thenReturn(emptySet())
+        every { mockPrefs.rssUrls } returns emptySet()
 
         initSUT()
 
         sut.inputs.addQuickItem(link)
 
-        verify(mockPrefs).rssUrls = setOf(link.rssLink)
+        verify { mockPrefs.rssUrls = setOf(link.rssLink) }
     }
 
     @ParameterizedTest
@@ -67,12 +67,12 @@ class RSSConfigureViewModelTest: BaseTest() {
             quick = SupportedArticleSource.values()
                 .filter { it != source }
         )
-        whenever(mockPrefs.rssUrls).thenReturn(emptySet())
+        every { mockPrefs.rssUrls } returns emptySet()
 
         initSUT()
 
         // Assume PrefsDB is saving item properly (tested previously)
-        whenever(mockPrefs.rssUrls).thenReturn(setOf(source.rssLink))
+        every { mockPrefs.rssUrls } returns setOf(source.rssLink)
         sut.inputs.removeItem(source.rssLink)
 
         sut.outputs.list.test {
@@ -84,13 +84,13 @@ class RSSConfigureViewModelTest: BaseTest() {
     fun `RSSConfigureViewModel removing item will update the prefs DB`() {
 
         val link = SupportedArticleSource.AUTOSPORT.rssLink
-        whenever(mockPrefs.rssUrls).thenReturn(setOf(link))
+        every { mockPrefs.rssUrls } returns setOf(link)
 
         initSUT()
 
         sut.inputs.removeItem(link)
 
-        verify(mockPrefs).rssUrls = emptySet()
+        verify { mockPrefs.rssUrls = emptySet() }
     }
 
     @ParameterizedTest
@@ -103,16 +103,18 @@ class RSSConfigureViewModelTest: BaseTest() {
                 .map { it.rssLink },
             quick = listOf(source)
         )
-        whenever(mockPrefs.rssUrls).thenReturn(SupportedArticleSource.values().map { it.rssLink }.toSet())
+        every { mockPrefs.rssUrls } returns SupportedArticleSource.values()
+            .map { it.rssLink }
+            .toSet()
 
         initSUT()
 
         // Assume PrefsDB is saving item properly (tested previously)
-        whenever(mockPrefs.rssUrls).thenReturn(SupportedArticleSource.values()
+        every { mockPrefs.rssUrls } returns SupportedArticleSource.values()
             .filter { it != source }
             .map { it.rssLink }
             .toSet()
-        )
+
         sut.inputs.removeItem(source.rssLink)
 
         sut.outputs.list.test {
@@ -127,12 +129,12 @@ class RSSConfigureViewModelTest: BaseTest() {
         val expected = buildList(
             added = listOf(item)
         )
-        whenever(mockPrefs.rssUrls).thenReturn(emptySet())
+        every { mockPrefs.rssUrls } returns emptySet()
 
         initSUT()
 
         // Assume preferences updated
-        whenever(mockPrefs.rssUrls).thenReturn(setOf(item))
+        every { mockPrefs.rssUrls } returns setOf(item)
         sut.inputs.addCustomItem(item)
 
         sut.outputs.list.test {
@@ -147,11 +149,11 @@ class RSSConfigureViewModelTest: BaseTest() {
         val expected = buildList(
             added = emptyList()
         )
-        whenever(mockPrefs.rssUrls).thenReturn(setOf(item))
+        every { mockPrefs.rssUrls } returns setOf(item)
 
         initSUT()
         // Assume preferences updated
-        whenever(mockPrefs.rssUrls).thenReturn(emptySet())
+        every { mockPrefs.rssUrls } returns emptySet()
         sut.inputs.removeItem(item)
 
         sut.outputs.list.test {
@@ -164,12 +166,12 @@ class RSSConfigureViewModelTest: BaseTest() {
 
         val item = "https://www.google.com/testlink"
         val expected = setOf(item)
-        whenever(mockPrefs.rssUrls).thenReturn(emptySet())
+        every { mockPrefs.rssUrls } returns emptySet()
 
         initSUT()
         sut.inputs.addCustomItem(item)
 
-        verify(mockPrefs).rssUrls = expected
+        verify { mockPrefs.rssUrls = expected }
     }
 
     @Test
@@ -177,12 +179,12 @@ class RSSConfigureViewModelTest: BaseTest() {
 
         val item = "https://www.google.com/testlink"
         val expected = emptySet<String>()
-        whenever(mockPrefs.rssUrls).thenReturn(setOf(item))
+        every { mockPrefs.rssUrls } returns setOf(item)
 
         initSUT()
         sut.inputs.removeItem(item)
 
-        verify(mockPrefs).rssUrls = expected
+        verify { mockPrefs.rssUrls = expected }
     }
 
     companion object {
