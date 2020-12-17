@@ -1,8 +1,6 @@
 package tmg.flashback
 
-import com.nhaarman.mockitokotlin2.*
-import kotlinx.coroutines.test.runBlockingTest
-import org.junit.jupiter.api.AfterEach
+import io.mockk.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.managers.AppShortcutManager
@@ -15,16 +13,16 @@ import tmg.flashback.testutils.test
 
 class SplashViewModelTest: BaseTest() {
 
-    private var mockAppShortcutManager: AppShortcutManager = mock()
-    private var mockPrefDeviceRepository: PrefDeviceRepository = mock()
-    private var mockRemoteConfigRepository: RemoteConfigRepository = mock()
+    private var mockAppShortcutManager: AppShortcutManager = mockk(relaxed = true)
+    private var mockPrefDeviceRepository: PrefDeviceRepository = mockk(relaxed = true)
+    private var mockRemoteConfigRepository: RemoteConfigRepository = mockk(relaxed = true)
 
     private lateinit var sut: SplashViewModel
 
     @BeforeEach
     internal fun setUp() {
-        whenever(mockAppShortcutManager.enable()).thenReturn(true)
-        whenever(mockAppShortcutManager.disable()).thenReturn(true)
+        every { mockAppShortcutManager.enable() } returns true
+        every { mockAppShortcutManager.disable() } returns true
     }
 
     private fun initSUT() {
@@ -47,10 +45,8 @@ class SplashViewModelTest: BaseTest() {
     @Test
     fun `SplashViewModel start fetch and activate enables show loading`() = coroutineTest {
 
-        whenever(mockPrefDeviceRepository.remoteConfigInitialSync).thenReturn(false)
-        mockRemoteConfigRepository.stub {
-            onBlocking { update(true) } doReturn true
-        }
+        every { mockPrefDeviceRepository.remoteConfigInitialSync } returns false
+        coEvery { mockRemoteConfigRepository.update(any()) } returns true
 
         initSUT()
         sut.inputs.start()
@@ -63,12 +59,8 @@ class SplashViewModelTest: BaseTest() {
     @Test
     fun `SplashViewModel start fetch and activate disables show resync`() = coroutineTest {
 
-        whenever(mockPrefDeviceRepository.remoteConfigInitialSync).thenReturn(false)
-        runBlockingTest {
-            mockRemoteConfigRepository.stub {
-                onBlocking { update(true) } doReturn true
-            }
-        }
+        every { mockPrefDeviceRepository.remoteConfigInitialSync } returns false
+        coEvery { mockRemoteConfigRepository.update(any()) } returns true
 
         initSUT()
         sut.inputs.start()
@@ -81,55 +73,45 @@ class SplashViewModelTest: BaseTest() {
     @Test
     fun `SplashViewModel start fetch and activate calls remote config repo`() = coroutineTest {
 
-        whenever(mockPrefDeviceRepository.remoteConfigInitialSync).thenReturn(false)
-        mockRemoteConfigRepository.stub {
-            onBlocking { update(true) } doReturn true
-        }
+        every { mockPrefDeviceRepository.remoteConfigInitialSync } returns false
+        coEvery { mockRemoteConfigRepository.update(any()) } returns true
 
         initSUT()
         sut.inputs.start()
 
-        runBlockingTest {
-            verify(mockRemoteConfigRepository).update(true)
-        }
+        coVerify { mockRemoteConfigRepository.update(true) }
     }
 
     @Test
     fun `SplashViewModel start fetch and activate when success sets initial remote initial config to true`() = coroutineTest {
 
-        whenever(mockPrefDeviceRepository.remoteConfigInitialSync).thenReturn(false)
-        mockRemoteConfigRepository.stub {
-            onBlocking { update(true) } doReturn true
-        }
+        every { mockPrefDeviceRepository.remoteConfigInitialSync } returns false
+        coEvery { mockRemoteConfigRepository.update(any()) } returns true
 
         initSUT()
         sut.inputs.start()
 
-        verify(mockPrefDeviceRepository).remoteConfigInitialSync = true
+        verify { mockPrefDeviceRepository.remoteConfigInitialSync = true }
     }
 
     @Test
     fun `SplashViewModel start fetch and activate when success sets updates shortcut manager`() = coroutineTest {
 
-        whenever(mockPrefDeviceRepository.remoteConfigInitialSync).thenReturn(false)
-        whenever(mockRemoteConfigRepository.rss).thenReturn(true)
-        mockRemoteConfigRepository.stub {
-            onBlocking { update(true) } doReturn true
-        }
+        every { mockPrefDeviceRepository.remoteConfigInitialSync } returns false
+        every { mockRemoteConfigRepository.rss } returns true
+        coEvery { mockRemoteConfigRepository.update(any()) } returns true
 
         initSUT()
         sut.inputs.start()
 
-        verify(mockAppShortcutManager).enable()
+        verify { mockAppShortcutManager.enable() }
     }
 
     @Test
     fun `SplashViewModel start fetch and activate when success it fires go to next screen`() = coroutineTest {
 
-        whenever(mockPrefDeviceRepository.remoteConfigInitialSync).thenReturn(false)
-        mockRemoteConfigRepository.stub {
-            onBlocking { update(true) } doReturn true
-        }
+        every { mockPrefDeviceRepository.remoteConfigInitialSync } returns false
+        coEvery { mockRemoteConfigRepository.update(any()) } returns true
 
         initSUT()
         sut.inputs.start()
@@ -142,10 +124,8 @@ class SplashViewModelTest: BaseTest() {
     @Test
     fun `SplashViewModel start fetch and activate when failure then show resync sets to true`() = coroutineTest {
 
-        whenever(mockPrefDeviceRepository.remoteConfigInitialSync).thenReturn(false)
-        mockRemoteConfigRepository.stub {
-            onBlocking { update(true) } doReturn false
-        }
+        every { mockPrefDeviceRepository.remoteConfigInitialSync } returns false
+        coEvery { mockRemoteConfigRepository.update(any()) } returns false
 
         initSUT()
         sut.inputs.start()
@@ -161,10 +141,8 @@ class SplashViewModelTest: BaseTest() {
     @Test
     fun `SplashViewModel start fetch and activate when failure then show loading is set to false`() = coroutineTest {
 
-        whenever(mockPrefDeviceRepository.remoteConfigInitialSync).thenReturn(false)
-        mockRemoteConfigRepository.stub {
-            onBlocking { update(true) } doReturn false
-        }
+        every { mockPrefDeviceRepository.remoteConfigInitialSync } returns false
+        coEvery { mockRemoteConfigRepository.update(any()) } returns false
 
         initSUT()
         sut.inputs.start()
@@ -180,40 +158,32 @@ class SplashViewModelTest: BaseTest() {
     @Test
     fun `SplashViewModel start activate then remote config activate called`() = coroutineTest {
 
-        whenever(mockPrefDeviceRepository.remoteConfigInitialSync).thenReturn(true)
-        mockRemoteConfigRepository.stub {
-            onBlocking { activate() } doReturn true
-        }
+        every { mockPrefDeviceRepository.remoteConfigInitialSync } returns true
+        coEvery { mockRemoteConfigRepository.activate() } returns true
 
         initSUT()
         sut.inputs.start()
 
-        runBlockingTest {
-            verify(mockRemoteConfigRepository).activate()
-        }
+        coVerify { mockRemoteConfigRepository.activate() }
     }
 
     @Test
     fun `SplashViewModel start activate then app shortcut manager disable interacted with`() = coroutineTest {
 
-        whenever(mockPrefDeviceRepository.remoteConfigInitialSync).thenReturn(true)
-        mockRemoteConfigRepository.stub {
-            onBlocking { activate() } doReturn false
-        }
+        every { mockPrefDeviceRepository.remoteConfigInitialSync } returns true
+        coEvery { mockRemoteConfigRepository.activate() } returns false
 
         initSUT()
         sut.inputs.start()
 
-        verify(mockAppShortcutManager).disable()
+        coVerify { mockAppShortcutManager.disable() }
     }
 
     @Test
     fun `SplashViewModel start activate go to next screen fired if activate fails`() = coroutineTest {
 
-        whenever(mockPrefDeviceRepository.remoteConfigInitialSync).thenReturn(true)
-        mockRemoteConfigRepository.stub {
-            onBlocking { activate() } doReturn false
-        }
+        every { mockPrefDeviceRepository.remoteConfigInitialSync } returns true
+        coEvery { mockRemoteConfigRepository.activate() } returns false
 
         initSUT()
         sut.inputs.start()
@@ -226,10 +196,8 @@ class SplashViewModelTest: BaseTest() {
     @Test
     fun `SplashViewModel start activate go to next screen fired if activate passes`() = coroutineTest {
 
-        whenever(mockPrefDeviceRepository.remoteConfigInitialSync).thenReturn(true)
-        mockRemoteConfigRepository.stub {
-            onBlocking { activate() } doReturn true
-        }
+        every { mockPrefDeviceRepository.remoteConfigInitialSync } returns true
+        coEvery { mockRemoteConfigRepository.activate() } returns true
 
         initSUT()
         sut.inputs.start()
@@ -237,10 +205,5 @@ class SplashViewModelTest: BaseTest() {
         sut.outputs.goToNextScreen.test {
             assertEventFired()
         }
-    }
-
-    @AfterEach
-    internal fun tearDown() {
-        reset(mockRemoteConfigRepository, mockPrefDeviceRepository, mockAppShortcutManager)
     }
 }

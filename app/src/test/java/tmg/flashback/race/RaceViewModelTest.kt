@@ -1,9 +1,7 @@
 package tmg.flashback.race
 
-import com.nhaarman.mockitokotlin2.any
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.reset
-import com.nhaarman.mockitokotlin2.whenever
+import io.mockk.every
+import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.flow
@@ -30,17 +28,17 @@ class RaceViewModelTest: BaseTest() {
 
     lateinit var sut: RaceViewModel
 
-    private val mockSeasonOverviewRepository: SeasonOverviewRepository = mock()
-    private val mockPrefsRepository: PrefCustomisationRepository = mock()
-    private val mockConnectivityManager: NetworkConnectivityManager = mock()
+    private val mockSeasonOverviewRepository: SeasonOverviewRepository = mockk(relaxed = true)
+    private val mockPrefsRepository: PrefCustomisationRepository = mockk(relaxed = true)
+    private val mockConnectivityManager: NetworkConnectivityManager = mockk(relaxed = true)
 
     private val expectedSeasonRound: SeasonRound = SeasonRound(2019, 1)
 
     @BeforeEach
     internal fun setUp() {
 
-        whenever(mockConnectivityManager.isConnected).thenReturn(true)
-        whenever(mockPrefsRepository.barAnimation).thenReturn(BarAnimation.NONE)
+        every { mockConnectivityManager.isConnected } returns true
+        every { mockPrefsRepository.barAnimation } returns BarAnimation.NONE
     }
 
     private fun initSUT(roundDate: LocalDate? = null, orderBy: RaceAdapterType = RACE) {
@@ -53,8 +51,8 @@ class RaceViewModelTest: BaseTest() {
     @Test
     fun `RaceViewModel init no network error shown when network isnt available`() = coroutineTest {
 
-        whenever(mockSeasonOverviewRepository.getSeasonRound(any(), any())).thenReturn(flow { emit(null) })
-        whenever(mockConnectivityManager.isConnected).thenReturn(false)
+        every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow { emit(null) }
+        every { mockConnectivityManager.isConnected } returns false
 
         initSUT()
 
@@ -70,7 +68,7 @@ class RaceViewModelTest: BaseTest() {
     @Test
     fun `RaceViewModel when round data is null and date supplied is in the future, show race in future unavailable message`() = coroutineTest {
 
-        whenever(mockSeasonOverviewRepository.getSeasonRound(any(), any())).thenReturn(flow { emit(null) })
+        every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow { emit(null) }
 
         initSUT(LocalDate.now().plusDays(1L))
 
@@ -86,7 +84,7 @@ class RaceViewModelTest: BaseTest() {
     @Test
     fun `RaceViewModel when round data is null and round date is in the past, show coming soon race data unavailable message`() = coroutineTest {
 
-        whenever(mockSeasonOverviewRepository.getSeasonRound(any(), any())).thenReturn(flow { emit(null) })
+        every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow { emit(null) }
 
         initSUT(LocalDate.now().minusDays(1L))
 
@@ -98,7 +96,7 @@ class RaceViewModelTest: BaseTest() {
     @Test
     fun `RaceViewModel when round data is null and date supplied is null, show missing race data unavailable message`() = coroutineTest {
 
-        whenever(mockSeasonOverviewRepository.getSeasonRound(any(), any())).thenReturn(flow { emit(null) })
+        every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow { emit(null) }
 
         initSUT(null)
 
@@ -110,7 +108,7 @@ class RaceViewModelTest: BaseTest() {
     @Test
     fun `RaceViewModel when round data is null and the round happened within the past 10 days, show the race is coming soon message`() = coroutineTest {
 
-        whenever(mockSeasonOverviewRepository.getSeasonRound(any(), any())).thenReturn(flow { emit(null) })
+        every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow { emit(null) }
         val showComingSoonMessageForNextDays = 10
 
         initSUT(LocalDate.now().minusDays(showComingSoonMessageForNextDays - 1L))
@@ -123,7 +121,7 @@ class RaceViewModelTest: BaseTest() {
     @Test
     fun `RaceViewModel when round data is null and the round is happening or happened today, show the race is coming soon message`() = coroutineTest {
 
-        whenever(mockSeasonOverviewRepository.getSeasonRound(any(), any())).thenReturn(flow { emit(null) })
+        every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow { emit(null) }
 
         initSUT(LocalDate.now())
 
@@ -135,7 +133,8 @@ class RaceViewModelTest: BaseTest() {
     @Test
     fun `RaceViewModel when view type is (happy) constructor, standings show constructor standings items with list of drivers`() = coroutineTest {
 
-        whenever(mockSeasonOverviewRepository.getSeasonRound(any(), any())).thenReturn(flow { emit(mockRound1) })
+        every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow { emit(mockRound1) }
+
         val expected = listOf<RaceModel>(
             RaceModel.ConstructorStandings(
                 mockConstructorBeta, 30, listOf(
@@ -161,10 +160,12 @@ class RaceViewModelTest: BaseTest() {
     @Test
     fun `RaceViewModel when view type is race (error) and round date is in the future, show race in future unavailable message`() = coroutineTest {
 
-        whenever(mockSeasonOverviewRepository.getSeasonRound(any(), any())).thenReturn(flow { emit(mockRound1.copy(
-            date = LocalDate.now().plusDays(5L),
-            race = emptyMap()
-        )) })
+        every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow {
+            emit(mockRound1.copy(
+                date = LocalDate.now().plusDays(5L),
+                race = emptyMap()
+            ))
+        }
         val expected = listOf<RaceModel>(
             RaceModel.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.IN_FUTURE_RACE)),
             RaceModel.ErrorItem(SyncDataItem.ProvidedBy)
@@ -180,10 +181,12 @@ class RaceViewModelTest: BaseTest() {
     @Test
     fun `RaceViewModel when view type is race (error) and round date is in the past, show race data coming soon unavailable message`() = coroutineTest {
 
-        whenever(mockSeasonOverviewRepository.getSeasonRound(any(), any())).thenReturn(flow { emit(mockRound1.copy(
-            date = LocalDate.now().minusDays(5L),
-            race = emptyMap()
-        )) })
+        every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow {
+            emit(mockRound1.copy(
+                date = LocalDate.now().minusDays(5L),
+                race = emptyMap()
+            ))
+        }
         val expected = listOf<RaceModel>(
             RaceModel.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.COMING_SOON_RACE)),
             RaceModel.ErrorItem(SyncDataItem.ProvidedBy)
@@ -199,9 +202,10 @@ class RaceViewModelTest: BaseTest() {
     @Test
     fun `RaceViewModel when view type is race (happy) and roundData race is not empty, show podium + race results in list`() = coroutineTest {
 
-        whenever(mockPrefsRepository.showQualifyingDelta).thenReturn(false)
-        whenever(mockPrefsRepository.showGridPenaltiesInQualifying).thenReturn(false)
-        whenever(mockSeasonOverviewRepository.getSeasonRound(any(), any())).thenReturn(flow { emit(mockRound1) })
+        every { mockPrefsRepository.showQualifyingDelta } returns false
+        every { mockPrefsRepository.showGridPenaltiesInQualifying } returns false
+        every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow { emit(mockRound1) }
+
         val expected = listOf(
             RaceModel.Podium(
                 convertDriverToSingle(round = mockRound1, roundDriver = mockDriver4,
@@ -239,11 +243,11 @@ class RaceViewModelTest: BaseTest() {
     @Test
     fun `RaceViewModel when view type is qualifying (happy) Q3, items are ordered properly`() = coroutineTest {
 
-        val showQualifying = ShowQualifying(true, true, true, false, false)
+        every { mockPrefsRepository.showQualifyingDelta } returns false
+        every { mockPrefsRepository.showGridPenaltiesInQualifying } returns false
+        every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow { emit(mockRound1) }
 
-        whenever(mockPrefsRepository.showQualifyingDelta).thenReturn(false)
-        whenever(mockPrefsRepository.showGridPenaltiesInQualifying).thenReturn(false)
-        whenever(mockSeasonOverviewRepository.getSeasonRound(any(), any())).thenReturn(flow { emit(mockRound1) })
+        val showQualifying = ShowQualifying(true, true, true, false, false)
         val expected = mutableListOf<RaceModel>(RaceModel.QualifyingHeader(showQualifying))
         expected.addAll(expectedQ3Order)
         expected.add(RaceModel.ErrorItem(SyncDataItem.ProvidedBy))
@@ -258,11 +262,11 @@ class RaceViewModelTest: BaseTest() {
     @Test
     fun `RaceViewModel when view type is qualifying (happy) Q2, items are ordered properly`() = coroutineTest {
 
-        val showQualifying = ShowQualifying(true, true, true, false, false)
+        every { mockPrefsRepository.showQualifyingDelta } returns false
+        every { mockPrefsRepository.showGridPenaltiesInQualifying } returns false
+        every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow { emit(mockRound1) }
 
-        whenever(mockPrefsRepository.showQualifyingDelta).thenReturn(false)
-        whenever(mockPrefsRepository.showGridPenaltiesInQualifying).thenReturn(false)
-        whenever(mockSeasonOverviewRepository.getSeasonRound(any(), any())).thenReturn(flow { emit(mockRound1) })
+        val showQualifying = ShowQualifying(true, true, true, false, false)
         val expected = mutableListOf<RaceModel>(RaceModel.QualifyingHeader(showQualifying))
         expected.addAll(expectedQ2Order)
         expected.add(RaceModel.ErrorItem(SyncDataItem.ProvidedBy))
@@ -277,11 +281,11 @@ class RaceViewModelTest: BaseTest() {
     @Test
     fun `RaceViewModel when view type is qualifying (happy) Q1, items are ordered properly`() = coroutineTest {
 
-        val showQualifying = ShowQualifying(true, true, true, false, false)
+        every { mockPrefsRepository.showQualifyingDelta } returns false
+        every { mockPrefsRepository.showGridPenaltiesInQualifying } returns false
+        every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow { emit(mockRound1) }
 
-        whenever(mockPrefsRepository.showQualifyingDelta).thenReturn(false)
-        whenever(mockPrefsRepository.showGridPenaltiesInQualifying).thenReturn(false)
-        whenever(mockSeasonOverviewRepository.getSeasonRound(any(), any())).thenReturn(flow { emit(mockRound1) })
+        val showQualifying = ShowQualifying(true, true, true, false, false)
         val expected = mutableListOf<RaceModel>(RaceModel.QualifyingHeader(showQualifying))
         expected.addAll(expectedQ1Order)
         expected.add(RaceModel.ErrorItem(SyncDataItem.ProvidedBy))
@@ -296,18 +300,19 @@ class RaceViewModelTest: BaseTest() {
     @Test
     fun `RaceViewModel when order by is changed list content updates`() = coroutineTest {
 
+        every { mockPrefsRepository.showQualifyingDelta } returns false
+        every { mockPrefsRepository.showGridPenaltiesInQualifying } returns false
+        every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow { emit(mockRound1) }
+
         val showQualifying = ShowQualifying(true, true, true, false, false)
-
-        whenever(mockPrefsRepository.showQualifyingDelta).thenReturn(false)
-        whenever(mockPrefsRepository.showGridPenaltiesInQualifying).thenReturn(false)
-        whenever(mockSeasonOverviewRepository.getSeasonRound(any(), any())).thenReturn(flow { emit(mockRound1) })
-
         val expectedQ3 = mutableListOf<RaceModel>(RaceModel.QualifyingHeader(showQualifying))
         expectedQ3.addAll(expectedQ3Order)
         expectedQ3.add(RaceModel.ErrorItem(SyncDataItem.ProvidedBy))
+
         val expectedQ2 = mutableListOf<RaceModel>(RaceModel.QualifyingHeader(showQualifying))
         expectedQ2.addAll(expectedQ2Order)
         expectedQ2.add(RaceModel.ErrorItem(SyncDataItem.ProvidedBy))
+
         val expectedQ1 = mutableListOf<RaceModel>(RaceModel.QualifyingHeader(showQualifying))
         expectedQ1.addAll(expectedQ1Order)
         expectedQ1.add(RaceModel.ErrorItem(SyncDataItem.ProvidedBy))
@@ -336,11 +341,11 @@ class RaceViewModelTest: BaseTest() {
     @Test
     fun `RaceViewModel when show qualifying delta is enabled, qualifying delta is supplied`() = coroutineTest {
 
-        val showQualifying = ShowQualifying(true, true, true, true, false)
+        every { mockPrefsRepository.showQualifyingDelta } returns true
+        every { mockPrefsRepository.showGridPenaltiesInQualifying } returns false
+        every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow { emit(mockRound1) }
 
-        whenever(mockPrefsRepository.showQualifyingDelta).thenReturn(true)
-        whenever(mockPrefsRepository.showGridPenaltiesInQualifying).thenReturn(false)
-        whenever(mockSeasonOverviewRepository.getSeasonRound(any(), any())).thenReturn(flow { emit(mockRound1) })
+        val showQualifying = ShowQualifying(true, true, true, true, false)
         val expected = mutableListOf<RaceModel>(RaceModel.QualifyingHeader(showQualifying))
         expected.addAll(expectedQ3OrderWithQualifyingDeltas)
         expected.add(RaceModel.ErrorItem(SyncDataItem.ProvidedBy))
@@ -355,11 +360,11 @@ class RaceViewModelTest: BaseTest() {
     @Test
     fun `RaceViewModel when only q1 data is supplied, ordering for multiple qualifying types always does the same order`() = coroutineTest {
 
-        val showQualifying = ShowQualifying(true, false, false, false, false)
+        every { mockPrefsRepository.showQualifyingDelta } returns false
+        every { mockPrefsRepository.showGridPenaltiesInQualifying } returns false
+        every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow { emit(mockRound3) }
 
-        whenever(mockPrefsRepository.showQualifyingDelta).thenReturn(false)
-        whenever(mockPrefsRepository.showGridPenaltiesInQualifying).thenReturn(false)
-        whenever(mockSeasonOverviewRepository.getSeasonRound(any(), any())).thenReturn(flow { emit(mockRound3) })
+        val showQualifying = ShowQualifying(true, false, false, false, false)
         val expected = mutableListOf<RaceModel>(RaceModel.QualifyingHeader(showQualifying))
         expected.addAll(expectedQ3Order(round = mockRound3, showQualifying = showQualifying))
         expected.add(RaceModel.ErrorItem(SyncDataItem.ProvidedBy))
@@ -437,7 +442,7 @@ class RaceViewModelTest: BaseTest() {
     @Ignore
     fun `RaceViewModel initialisation sets wikipedia button to true if round data contains wikipedia link`() = coroutineTest {
 
-        whenever(mockSeasonOverviewRepository.getSeasonRound(any(), any())).thenReturn(flow { emit(mockRound1) })
+        every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow { emit(mockRound1) }
 
         initSUT()
 
@@ -450,7 +455,7 @@ class RaceViewModelTest: BaseTest() {
     @Test
     fun `RaceViewModel clicking wikipedia button fires goToWikipedia event`() = coroutineTest {
 
-        whenever(mockSeasonOverviewRepository.getSeasonRound(any(), any())).thenReturn(flow { emit(mockRound1) })
+        every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow { emit(mockRound1) }
 
         initSUT()
 
@@ -460,13 +465,6 @@ class RaceViewModelTest: BaseTest() {
             assertEventFired()
         }
     }
-
-    @AfterEach
-    internal fun tearDown() = coroutineTest {
-
-        reset(mockSeasonOverviewRepository, mockPrefsRepository, mockConnectivityManager)
-    }
-
 
 
 

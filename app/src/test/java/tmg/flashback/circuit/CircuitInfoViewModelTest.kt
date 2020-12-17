@@ -1,10 +1,9 @@
 package tmg.flashback.circuit
 
-import com.nhaarman.mockitokotlin2.*
-import kotlinx.coroutines.*
+import io.mockk.every
+import io.mockk.mockk
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
@@ -23,8 +22,8 @@ class CircuitInfoViewModelTest: BaseTest() {
 
     lateinit var sut: CircuitInfoViewModel
 
-    private val mockCircuitRepository: CircuitRepository = mock()
-    private val mockConnectivityManager: NetworkConnectivityManager = mock()
+    private val mockCircuitRepository: CircuitRepository = mockk(relaxed = true)
+    private val mockConnectivityManager: NetworkConnectivityManager = mockk(relaxed = true)
 
     private val mockCircuitId: String = MONACO.circuitId
     private val mockInvalidCircuitId: String = "mockCircuitId"
@@ -57,7 +56,7 @@ class CircuitInfoViewModelTest: BaseTest() {
     @BeforeEach
     internal fun setUp() {
 
-        whenever(mockCircuitRepository.getCircuit(any())).thenReturn(circuitWithTrackFlow)
+        every { mockCircuitRepository.getCircuit(any()) } returns circuitWithTrackFlow
     }
 
     private fun initSUT() {
@@ -78,8 +77,8 @@ class CircuitInfoViewModelTest: BaseTest() {
     @Test
     fun `CircuitInfoViewModel when circuit provided is null and network isn't connected show no network error`() = coroutineTest {
 
-        whenever(mockCircuitRepository.getCircuit(any())).thenReturn(emptyCircuitFlow)
-        whenever(mockConnectivityManager.isConnected).thenReturn(false)
+        every { mockCircuitRepository.getCircuit(any()) } returns emptyCircuitFlow
+        every { mockConnectivityManager.isConnected } returns false
 
         initSUT()
 
@@ -95,8 +94,8 @@ class CircuitInfoViewModelTest: BaseTest() {
     @Test
     fun `CircuitInfoViewModel when circuit provided is null and network is connected show internal error state`() = coroutineTest {
 
-        whenever(mockCircuitRepository.getCircuit(any())).thenReturn(emptyCircuitFlow)
-        whenever(mockConnectivityManager.isConnected).thenReturn(true)
+        every { mockCircuitRepository.getCircuit(any()) } returns emptyCircuitFlow
+        every { mockConnectivityManager.isConnected } returns true
 
         initSUT()
 
@@ -123,8 +122,9 @@ class CircuitInfoViewModelTest: BaseTest() {
                 time = mockCircuitRace.time
             )
         )
-        whenever(mockCircuitRepository.getCircuit(any())).thenReturn(circuitWithTrackFlow)
-        whenever(mockConnectivityManager.isConnected).thenReturn(true)
+
+        every { mockCircuitRepository.getCircuit(any()) } returns circuitWithTrackFlow
+        every { mockConnectivityManager.isConnected } returns true
 
         initSUT()
 
@@ -151,8 +151,8 @@ class CircuitInfoViewModelTest: BaseTest() {
             )
         )
 
-        whenever(mockCircuitRepository.getCircuit(any())).thenReturn(circuitWithoutTrackFlow)
-        whenever(mockConnectivityManager.isConnected).thenReturn(true)
+        every { mockCircuitRepository.getCircuit(any()) } returns circuitWithoutTrackFlow
+        every { mockConnectivityManager.isConnected } returns true
 
         initSUT()
 
@@ -168,8 +168,8 @@ class CircuitInfoViewModelTest: BaseTest() {
     @Test
     fun `CircuitInfoViewModel loading gets set to false once data has appeared`() = coroutineTest {
 
-        whenever(mockCircuitRepository.getCircuit(any())).thenReturn(circuitWithTrackFlow)
-        whenever(mockConnectivityManager.isConnected).thenReturn(true)
+        every { mockCircuitRepository.getCircuit(any()) } returns circuitWithTrackFlow
+        every { mockConnectivityManager.isConnected } returns true
 
         initSUT()
 
@@ -211,11 +211,5 @@ class CircuitInfoViewModelTest: BaseTest() {
         sut.outputs.goToWikipediaPage.test {
             assertEventFired()
         }
-    }
-
-    @AfterEach
-    internal fun tearDown() {
-
-        reset(mockCircuitRepository, mockConnectivityManager)
     }
 }
