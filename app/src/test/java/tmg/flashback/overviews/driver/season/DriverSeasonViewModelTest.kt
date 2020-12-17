@@ -1,9 +1,7 @@
 package tmg.flashback.overviews.driver.season
 
-import com.nhaarman.mockitokotlin2.any
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.reset
-import com.nhaarman.mockitokotlin2.whenever
+import io.mockk.every
+import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.flow
@@ -27,15 +25,15 @@ class DriverSeasonViewModelTest: BaseTest() {
 
     lateinit var sut: DriverSeasonViewModel
 
-    private var mockDriverRepository: DriverRepository = mock()
-    private var mockConnectivityManager: NetworkConnectivityManager = mock()
-    private var mockPrefsRepository: PrefCustomisationRepository = mock()
+    private var mockDriverRepository: DriverRepository = mockk(relaxed = true)
+    private var mockConnectivityManager: NetworkConnectivityManager = mockk(relaxed = true)
+    private var mockPrefsRepository: PrefCustomisationRepository = mockk(relaxed = true)
 
     @BeforeEach
     internal fun setUp() {
 
-        whenever(mockConnectivityManager.isConnected).thenReturn(true)
-        whenever(mockPrefsRepository.barAnimation).thenReturn(BarAnimation.NONE)
+        every { mockConnectivityManager.isConnected } returns true
+        every { mockPrefsRepository.barAnimation } returns BarAnimation.NONE
     }
 
     private fun initSUT() {
@@ -50,8 +48,9 @@ class DriverSeasonViewModelTest: BaseTest() {
     @Test
     fun `DriverSeasonViewModel no network connection shows no network error`() = coroutineTest {
 
-        whenever(mockConnectivityManager.isConnected).thenReturn(false)
-        whenever(mockDriverRepository.getDriverOverview(any())).thenReturn(flow { emit(null) })
+        every { mockConnectivityManager.isConnected } returns false
+        every { mockDriverRepository.getDriverOverview(any()) } returns flow { emit(null) }
+
         val expected = listOf<DriverSeasonItem>(
                 DriverSeasonItem.ErrorItem(SyncDataItem.NoNetwork)
         )
@@ -66,7 +65,8 @@ class DriverSeasonViewModelTest: BaseTest() {
     @Test
     fun `DriverSeasonViewModel no driver overview found but valid network connections shows driver not exist error`() = coroutineTest {
 
-        whenever(mockDriverRepository.getDriverOverview(any())).thenReturn(flow { emit(null) })
+        every { mockDriverRepository.getDriverOverview(any()) } returns flow { emit(null) }
+
         val expected = listOf<DriverSeasonItem>(
                 DriverSeasonItem.ErrorItem(SyncDataItem.Unavailable(DRIVER_NOT_EXIST))
         )
@@ -88,7 +88,9 @@ class DriverSeasonViewModelTest: BaseTest() {
                         )
                 ))
         )
-        whenever(mockDriverRepository.getDriverOverview(any())).thenReturn(flow { emit(conditionedDriverOverview) })
+
+        every { mockDriverRepository.getDriverOverview(any()) } returns flow { emit(conditionedDriverOverview) }
+
         val expected = listOf(
                 DriverSeasonItem.RacedFor(null, mockDriverOverviewConstructor, SINGLE, false)
         )
@@ -111,7 +113,9 @@ class DriverSeasonViewModelTest: BaseTest() {
                         )
                 ))
         )
-        whenever(mockDriverRepository.getDriverOverview(any())).thenReturn(flow { emit(conditionedDriverOverview) })
+
+        every { mockDriverRepository.getDriverOverview(any()) } returns flow { emit(conditionedDriverOverview) }
+
         val expected = listOf(
                 DriverSeasonItem.RacedFor(null, mockDriverOverviewConstructor2, START, false),
                 DriverSeasonItem.RacedFor(null, mockDriverOverviewConstructor, END, false)
@@ -136,7 +140,9 @@ class DriverSeasonViewModelTest: BaseTest() {
                         )
                 ))
         )
-        whenever(mockDriverRepository.getDriverOverview(any())).thenReturn(flow { emit(conditionedDriverOverview) })
+
+        every { mockDriverRepository.getDriverOverview(any()) } returns flow { emit(conditionedDriverOverview) }
+
         val expected = listOf(
                 DriverSeasonItem.RacedFor(null, mockDriverOverviewConstructor2, START, false),
                 DriverSeasonItem.RacedFor(null, mockDriverOverviewConstructor3, SINGLE_PIPE, false),
@@ -153,7 +159,8 @@ class DriverSeasonViewModelTest: BaseTest() {
     @Test
     fun `DriverSeasonViewModel init for season contains season summary`() = coroutineTest {
 
-        whenever(mockDriverRepository.getDriverOverview(any())).thenReturn(flow { emit(mockDriverOverview) })
+        every { mockDriverRepository.getDriverOverview(any()) } returns flow { emit(mockDriverOverview) }
+
         val expected = listOf(
                 DriverSeasonItem.Stat(icon = R.drawable.ic_team, label = R.string.driver_overview_stat_career_team, value = ""),
                 DriverSeasonItem.Stat(icon = R.drawable.ic_standings, label = R.string.driver_overview_stat_career_wins, value = mockDriverOverview2019Standing.wins.toString()),
@@ -177,7 +184,8 @@ class DriverSeasonViewModelTest: BaseTest() {
     @Test
     fun `DriverSeasonViewModel init contains result header `() = coroutineTest {
 
-        whenever(mockDriverRepository.getDriverOverview(any())).thenReturn(flow { emit(mockDriverOverview) })
+        every { mockDriverRepository.getDriverOverview(any()) } returns flow { emit(mockDriverOverview) }
+
         val expected = listOf(
                 DriverSeasonItem.ResultHeader
         )
@@ -193,7 +201,8 @@ class DriverSeasonViewModelTest: BaseTest() {
     @Test
     fun `DriverSeasonViewModel init contains race overview summary cards`() = coroutineTest {
 
-        whenever(mockDriverRepository.getDriverOverview(any())).thenReturn(flow { emit(mockDriverOverview) })
+        every { mockDriverRepository.getDriverOverview(any()) } returns flow { emit(mockDriverOverview) }
+
         val expected = listOf(
                 DriverSeasonItem.ResultHeader
         )
@@ -209,7 +218,9 @@ class DriverSeasonViewModelTest: BaseTest() {
 
     @Test
     fun `DriverSeasonViewModel init contains rounds that summarise driver overview`() = coroutineTest {
-        whenever(mockDriverRepository.getDriverOverview(any())).thenReturn(flow { emit(mockDriverOverview) })
+
+        every { mockDriverRepository.getDriverOverview(any()) } returns flow { emit(mockDriverOverview) }
+
         val expected = listOf<DriverSeasonItem>(
                 expectedFirstRound,
                 expectedSecondRound
@@ -233,12 +244,6 @@ class DriverSeasonViewModelTest: BaseTest() {
         sut.outputs.openSeasonRound.test {
             assertDataEventValue(expectedFirstRound)
         }
-    }
-
-    @AfterEach
-    internal fun tearDown() {
-
-        reset(mockDriverRepository, mockConnectivityManager)
     }
 
     private val expectedFirstRound: DriverSeasonItem.Result
