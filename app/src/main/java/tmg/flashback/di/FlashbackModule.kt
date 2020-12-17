@@ -16,6 +16,7 @@ import tmg.flashback.firebase.FirebaseCrashManager
 import tmg.flashback.home.HomeViewModel
 import tmg.flashback.home.season.SeasonViewModel
 import tmg.flashback.managers.AppShortcutManager
+import tmg.flashback.managers.AndroidAppShortcutManager
 import tmg.flashback.notifications.FirebasePushNotificationManager
 import tmg.flashback.notifications.PushNotificationManager
 import tmg.flashback.prefs.SharedPrefsRepository
@@ -60,7 +61,7 @@ var flashbackModule = module {
 
     // Managers
     single<PushNotificationManager> { FirebasePushNotificationManager(get(), get()) }
-    single { AppShortcutManager(get()) }
+    single<AppShortcutManager> { AndroidAppShortcutManager(get()) }
 
     // Shared Prefs
     single<PrefCustomisationRepository> { SharedPrefsRepository(get()) }
