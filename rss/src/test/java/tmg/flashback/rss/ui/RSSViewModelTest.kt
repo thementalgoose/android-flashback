@@ -1,8 +1,7 @@
 package tmg.flashback.rss.ui
 
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.reset
-import com.nhaarman.mockitokotlin2.whenever
+import io.mockk.every
+import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.flow
@@ -24,9 +23,9 @@ class RSSViewModelTest: BaseTest() {
 
     private lateinit var sut: RSSViewModel
 
-    private val mockRSSDB: RSSRepository = mock()
-    private val mockPrefsRepository: RSSPrefsRepository = mock()
-    private val mockConnectivityManager: NetworkConnectivityManager = mock()
+    private val mockRSSDB: RSSRepository = mockk()
+    private val mockPrefsRepository: RSSPrefsRepository = mockk()
+    private val mockConnectivityManager: NetworkConnectivityManager = mockk()
 
     private val mockLocalDate: LocalDateTime = LocalDateTime.of(2020, 1, 1, 1, 2, 3, 0)
     private val mockArticleSource = ArticleSource(
@@ -52,10 +51,10 @@ class RSSViewModelTest: BaseTest() {
     @BeforeEach
     internal fun setUp() {
 
-        whenever(mockConnectivityManager.isConnected).thenReturn(true)
-        whenever(mockPrefsRepository.rssUrls).thenReturn(SupportedArticleSource.values().map { it.rssLink }.toSet())
-        whenever(mockPrefsRepository.rssShowDescription).thenReturn(true)
-        whenever(mockRSSDB.getNews()).thenReturn(mockResponse200)
+        every { mockConnectivityManager.isConnected } returns true
+        every { mockPrefsRepository.rssUrls } returns SupportedArticleSource.values().map { it.rssLink }.toSet()
+        every { mockPrefsRepository.rssShowDescription } returns true
+        every { mockRSSDB.getNews() } returns mockResponse200
     }
 
     private fun initSUT() {
@@ -104,8 +103,8 @@ class RSSViewModelTest: BaseTest() {
     @Test
     fun `RSSViewModel init all sources disabled if excludes list contains all news sources`() = coroutineTest {
 
-        whenever(mockRSSDB.getNews()).thenReturn(mockResponse500)
-        whenever(mockPrefsRepository.rssUrls).thenReturn(emptySet())
+        every { mockRSSDB.getNews() } returns mockResponse500
+        every { mockPrefsRepository.rssUrls } returns emptySet()
 
         val expected = listOf<RSSItem>(
             RSSItem.SourcesDisabled
@@ -122,7 +121,7 @@ class RSSViewModelTest: BaseTest() {
     @Test
     fun `RSSViewModel init internal error is thrown if results are empty`() = coroutineTest {
 
-        whenever(mockRSSDB.getNews()).thenReturn(mockResponse500)
+        every { mockRSSDB.getNews() } returns mockResponse500
 
         val expected = listOf<RSSItem>(
             RSSItem.InternalError
@@ -139,7 +138,7 @@ class RSSViewModelTest: BaseTest() {
     @Test
     fun `RSSViewModel no network error shown when network response code is no network`() = coroutineTest {
 
-        whenever(mockRSSDB.getNews()).thenReturn(mockResponseNoNetwork)
+        every { mockRSSDB.getNews() } returns mockResponseNoNetwork
 
         val expected = listOf<RSSItem>(
             RSSItem.NoNetwork
@@ -156,7 +155,7 @@ class RSSViewModelTest: BaseTest() {
     @Test
     fun `RSSViewModel no network error shown when network connectivity check returns false`() = coroutineTest {
 
-        whenever(mockConnectivityManager.isConnected).thenReturn(false)
+        every { mockConnectivityManager.isConnected } returns false
 
         val expected = listOf<RSSItem>(
             RSSItem.NoNetwork
@@ -168,12 +167,5 @@ class RSSViewModelTest: BaseTest() {
         sut.outputs.list.test {
             assertValue(expected)
         }
-    }
-
-
-    @AfterEach
-    internal fun tearDown() {
-
-        reset(mockRSSDB, mockPrefsRepository, mockConnectivityManager)
     }
 }

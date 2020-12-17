@@ -18,7 +18,7 @@ class BuildConfigProviderTest {
         }
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "{0} >= {1} is {2}")
     @CsvSource(
             "10,11,false",
             "11,11,true",

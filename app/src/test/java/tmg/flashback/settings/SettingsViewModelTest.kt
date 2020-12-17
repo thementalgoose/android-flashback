@@ -1,9 +1,8 @@
 package tmg.flashback.settings
 
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.reset
-import com.nhaarman.mockitokotlin2.verify
-import com.nhaarman.mockitokotlin2.whenever
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -31,26 +30,26 @@ class SettingsViewModelTest: BaseTest() {
 
     lateinit var sut: SettingsViewModel
 
-    private val mockPrefsCustomisation: PrefCustomisationRepository = mock()
-    private val mockPrefsDevice: PrefDeviceRepository = mock()
-    private val mockRemoteConfigRepository: RemoteConfigRepository = mock()
+    private val mockPrefsCustomisation: PrefCustomisationRepository = mockk(relaxed = true)
+    private val mockPrefsDevice: PrefDeviceRepository = mockk(relaxed = true)
+    private val mockRemoteConfigRepository: RemoteConfigRepository = mockk(relaxed = true)
 
     @BeforeEach
     internal fun setUp() {
 
-        whenever(mockPrefsCustomisation.showQualifyingDelta).thenReturn(false)
-        whenever(mockPrefsCustomisation.showGridPenaltiesInQualifying).thenReturn(false)
-        whenever(mockPrefsCustomisation.showBottomSheetExpanded).thenReturn(false)
-        whenever(mockPrefsCustomisation.showBottomSheetFavourited).thenReturn(false)
-        whenever(mockPrefsCustomisation.showBottomSheetAll).thenReturn(false)
-        whenever(mockPrefsDevice.crashReporting).thenReturn(false)
-        whenever(mockPrefsDevice.shakeToReport).thenReturn(false)
-        whenever(mockPrefsDevice.isNotificationChannelsSupported).thenReturn(true)
+        every { mockPrefsCustomisation.showQualifyingDelta } returns false
+        every { mockPrefsCustomisation.showGridPenaltiesInQualifying } returns false
+        every { mockPrefsCustomisation.showBottomSheetExpanded } returns false
+        every { mockPrefsCustomisation.showBottomSheetFavourited } returns false
+        every { mockPrefsCustomisation.showBottomSheetAll } returns false
+        every { mockPrefsDevice.crashReporting } returns false
+        every { mockPrefsDevice.shakeToReport } returns false
+        every { mockPrefsDevice.isNotificationChannelsSupported } returns true
 
-        whenever(mockPrefsCustomisation.theme).thenReturn(AUTO)
-        whenever(mockPrefsCustomisation.barAnimation).thenReturn(MEDIUM)
+        every { mockPrefsCustomisation.theme } returns AUTO
+        every { mockPrefsCustomisation.barAnimation } returns MEDIUM
 
-        whenever(mockRemoteConfigRepository.rss).thenReturn(true)
+        every { mockRemoteConfigRepository.rss } returns true
     }
 
     private fun initSUT() {
@@ -109,7 +108,7 @@ class SettingsViewModelTest: BaseTest() {
     @Test
     fun `SettingsViewModel setup with notification channels not supported doesnt show individual options`() {
 
-        whenever(mockPrefsDevice.isNotificationChannelsSupported).thenReturn(false)
+        every { mockPrefsDevice.isNotificationChannelsSupported } returns false
 
         initSUT()
 
@@ -121,7 +120,7 @@ class SettingsViewModelTest: BaseTest() {
     @Test
     fun `SettingsViewModel setup populates settings list with toggle disabled hides the news`() {
 
-        whenever(mockRemoteConfigRepository.rss).thenReturn(false)
+        every { mockRemoteConfigRepository.rss} returns false
 
         initSUT()
 
@@ -178,7 +177,8 @@ class SettingsViewModelTest: BaseTest() {
         initSUT()
 
         sut.pickTheme(NIGHT)
-        verify(mockPrefsCustomisation).theme = NIGHT
+
+        verify { mockPrefsCustomisation.theme = NIGHT }
 
         sut.outputs.themeChanged.test {
             assertEventFired()
@@ -191,7 +191,7 @@ class SettingsViewModelTest: BaseTest() {
         initSUT()
 
         sut.pickAnimationSpeed(SLOW)
-        verify(mockPrefsCustomisation).barAnimation = SLOW
+        verify { mockPrefsCustomisation.barAnimation = SLOW }
 
         sut.outputs.animationChanged.test {
             assertEventFired()
@@ -203,7 +203,7 @@ class SettingsViewModelTest: BaseTest() {
 
         initSUT()
 
-        sut.inputs.preferenceClicked(SettingsOptions.THEME, null)
+        sut.inputs.preferenceClicked(THEME, null)
 
         sut.outputs.openThemePicker.test {
             assertEventFired()
@@ -229,7 +229,7 @@ class SettingsViewModelTest: BaseTest() {
 
         sut.inputs.preferenceClicked(QUALIFYING_DELTAS, true)
 
-        verify(mockPrefsCustomisation).showQualifyingDelta = true
+        verify { mockPrefsCustomisation.showQualifyingDelta = true }
     }
 
     @Test
@@ -239,7 +239,7 @@ class SettingsViewModelTest: BaseTest() {
 
         sut.inputs.preferenceClicked(QUALIFYING_GRID_PENALTY, true)
 
-        verify(mockPrefsCustomisation).showGridPenaltiesInQualifying = true
+        verify { mockPrefsCustomisation.showGridPenaltiesInQualifying = true }
     }
 
     @Test
@@ -249,7 +249,7 @@ class SettingsViewModelTest: BaseTest() {
 
         sut.inputs.preferenceClicked(SEASON_BOTTOM_SHEET_EXPANDED, true)
 
-        verify(mockPrefsCustomisation).showBottomSheetExpanded = true
+        verify { mockPrefsCustomisation.showBottomSheetExpanded = true }
     }
 
     @Test
@@ -259,7 +259,7 @@ class SettingsViewModelTest: BaseTest() {
 
         sut.inputs.preferenceClicked(SEASON_BOTTOM_SHEET_FAVOURITED, true)
 
-        verify(mockPrefsCustomisation).showBottomSheetFavourited = true
+        verify { mockPrefsCustomisation.showBottomSheetFavourited = true }
     }
 
     @Test
@@ -269,7 +269,7 @@ class SettingsViewModelTest: BaseTest() {
 
         sut.inputs.preferenceClicked(SEASON_BOTTOM_SHEET_ALL, true)
 
-        verify(mockPrefsCustomisation).showBottomSheetAll = true
+        verify { mockPrefsCustomisation.showBottomSheetAll = true }
     }
 
     @Test
@@ -315,7 +315,7 @@ class SettingsViewModelTest: BaseTest() {
 
         sut.inputs.preferenceClicked(CRASH, true)
 
-        verify(mockPrefsDevice).crashReporting = true
+        verify { mockPrefsDevice.crashReporting = true }
     }
 
     @Test
@@ -337,7 +337,7 @@ class SettingsViewModelTest: BaseTest() {
 
         sut.inputs.preferenceClicked(SHAKE, true)
 
-        verify(mockPrefsDevice).shakeToReport = true
+        verify { mockPrefsDevice.shakeToReport = true }
     }
 
     @Test
@@ -386,10 +386,5 @@ class SettingsViewModelTest: BaseTest() {
         sut.outputs.openNotifications.test {
             assertEventFired()
         }
-    }
-
-    @AfterEach
-    internal fun tearDown() {
-        reset(mockPrefsCustomisation)
     }
 }
