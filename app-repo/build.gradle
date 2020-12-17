@@ -12,8 +12,7 @@ dependencies {
     testImplementation "org.junit.jupiter:junit-jupiter-engine:$junit"
     testImplementation "org.junit.jupiter:junit-jupiter-params:$junit"
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junit"
-    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0"
-    testImplementation 'org.mockito:mockito-core:3.0.0'
+    testImplementation "io.mockk:mockk:$mockk"
 
     // ThreeTen
     implementation "com.jakewharton.threetenabp:threetenabp:$threeten"

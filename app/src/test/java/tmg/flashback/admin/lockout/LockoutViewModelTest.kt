@@ -1,12 +1,9 @@
 package tmg.flashback.admin.lockout
 
-import com.nhaarman.mockitokotlin2.any
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.reset
-import com.nhaarman.mockitokotlin2.whenever
+import io.mockk.every
+import io.mockk.mockk
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.di.device.BuildConfigManager
@@ -18,8 +15,8 @@ class LockoutViewModelTest : BaseTest() {
 
     lateinit var sut: LockoutViewModel
 
-    private val mockDataRepository: DataRepository = mock()
-    private val mockBuildConfigProvider: BuildConfigManager = mock()
+    private val mockDataRepository: DataRepository = mockk(relaxed = true)
+    private val mockBuildConfigProvider: BuildConfigManager = mockk(relaxed = true)
 
     private val mockTitle: String = "mock title"
     private val mockMessage: String = "mock description"
@@ -63,9 +60,9 @@ class LockoutViewModelTest : BaseTest() {
     @BeforeEach
     internal fun setUp() {
 
-        whenever(mockDataRepository.appLockout()).thenReturn(flow { emit(mockAppLockoutVersionEqualToCurrent) })
-        whenever(mockBuildConfigProvider.versionCode).thenReturn(mockAppVersion)
-        whenever(mockBuildConfigProvider.shouldLockoutBasedOnVersion(any())).thenReturn(true)
+        every { mockDataRepository.appLockout() } returns flow { emit(mockAppLockoutVersionEqualToCurrent) }
+        every { mockBuildConfigProvider.versionCode } returns mockAppVersion
+        every { mockBuildConfigProvider.shouldLockoutBasedOnVersion(version = any()) } returns true
     }
 
     private fun initSUT() {
@@ -77,8 +74,8 @@ class LockoutViewModelTest : BaseTest() {
     @Test
     fun `LockoutViewModel app lockout shown when show is true and lockout version is higher than current app version`() = coroutineTest {
 
-        whenever(mockDataRepository.appLockout()).thenReturn(flow { emit(mockAppLockoutVersionHigherThanCurrent) })
-        whenever(mockBuildConfigProvider.shouldLockoutBasedOnVersion(any())).thenReturn(true)
+        every { mockDataRepository.appLockout() } returns flow { emit(mockAppLockoutVersionHigherThanCurrent) }
+        every { mockBuildConfigProvider.shouldLockoutBasedOnVersion(version = any()) } returns true
 
         initSUT()
         advanceUntilIdle()
@@ -91,8 +88,8 @@ class LockoutViewModelTest : BaseTest() {
     @Test
     fun `LockoutViewModel app lockout shown when show is true and lockout version is equal to current app version`() = coroutineTest {
 
-        whenever(mockDataRepository.appLockout()).thenReturn(flow { emit(mockAppLockoutVersionEqualToCurrent) })
-        whenever(mockBuildConfigProvider.shouldLockoutBasedOnVersion(any())).thenReturn(true)
+        every { mockDataRepository.appLockout() } returns flow { emit(mockAppLockoutVersionEqualToCurrent) }
+        every { mockBuildConfigProvider.shouldLockoutBasedOnVersion(version = any()) } returns true
 
         initSUT()
         advanceUntilIdle()
@@ -105,8 +102,8 @@ class LockoutViewModelTest : BaseTest() {
     @Test
     fun `LockoutViewModel app lockout not shown when show is true and lockout version is lower than current app version`() = coroutineTest {
 
-        whenever(mockDataRepository.appLockout()).thenReturn(flow { emit(mockAppLockoutVersionLessThanCurrent) })
-        whenever(mockBuildConfigProvider.shouldLockoutBasedOnVersion(any())).thenReturn(false)
+        every { mockDataRepository.appLockout() } returns flow { emit(mockAppLockoutVersionLessThanCurrent) }
+        every { mockBuildConfigProvider.shouldLockoutBasedOnVersion(version = any()) } returns false
 
         initSUT()
         advanceUntilIdle()
@@ -119,8 +116,8 @@ class LockoutViewModelTest : BaseTest() {
     @Test
     fun `LockoutViewModel app lockout not shown when show is true and version is null`() = coroutineTest {
 
-        whenever(mockDataRepository.appLockout()).thenReturn(flow { emit(mockAppLockoutVersionNull) })
-        whenever(mockBuildConfigProvider.shouldLockoutBasedOnVersion(any())).thenReturn(false)
+        every { mockDataRepository.appLockout() } returns flow { emit(mockAppLockoutVersionNull) }
+        every { mockBuildConfigProvider.shouldLockoutBasedOnVersion(version = any()) } returns false
 
         initSUT()
         advanceUntilIdle()
@@ -133,8 +130,8 @@ class LockoutViewModelTest : BaseTest() {
     @Test
     fun `LockoutViewModel app lockout not shown when show is false`() = coroutineTest {
 
-        whenever(mockDataRepository.appLockout()).thenReturn(flow { emit(mockAppLockoutShowFalse) })
-        whenever(mockBuildConfigProvider.shouldLockoutBasedOnVersion(any())).thenReturn(true)
+        every { mockDataRepository.appLockout() } returns flow { emit(mockAppLockoutShowFalse) }
+        every { mockBuildConfigProvider.shouldLockoutBasedOnVersion(version = any()) } returns true
 
         initSUT()
         advanceUntilIdle()
@@ -176,7 +173,7 @@ class LockoutViewModelTest : BaseTest() {
     @Test
     fun `LockoutViewModel app lockout link empty (not shown) when link text or link url is not included`() = coroutineTest {
 
-        whenever(mockDataRepository.appLockout()).thenReturn(flow { emit(mockAppLockoutWithoutLink) })
+        every { mockDataRepository.appLockout() } returns flow { emit(mockAppLockoutWithoutLink) }
 
         val expected: Pair<String, String> = Pair("", "")
 
@@ -202,13 +199,5 @@ class LockoutViewModelTest : BaseTest() {
         sut.outputs.openLinkEvent.test {
             assertDataEventValue(expected)
         }
-    }
-
-
-
-    @AfterEach
-    internal fun tearDown() {
-
-        reset(mockDataRepository, mockBuildConfigProvider)
     }
 }

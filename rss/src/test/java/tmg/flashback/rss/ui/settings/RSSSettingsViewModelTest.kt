@@ -1,10 +1,9 @@
 package tmg.flashback.rss.ui.settings
 
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.reset
-import com.nhaarman.mockitokotlin2.verify
-import com.nhaarman.mockitokotlin2.whenever
-import org.junit.jupiter.api.AfterEach
+import io.mockk.confirmVerified
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.components.prefs.AppPreferencesItem
@@ -18,7 +17,7 @@ class RSSSettingsViewModelTest: BaseTest() {
 
     lateinit var sut: RSSSettingsViewModel
 
-    private val mockPrefs: RSSPrefsRepository = mock()
+    private val mockPrefs: RSSPrefsRepository = mockk(relaxed = true)
 
     private val keyConfigureSources: String = "keyConfigureSources"
     private val keyShowDescription: String = "keyShowDescription"
@@ -28,13 +27,11 @@ class RSSSettingsViewModelTest: BaseTest() {
     @BeforeEach
     internal fun setUp() {
 
-        whenever(mockPrefs.rssShowDescription).thenReturn(false)
-        whenever(mockPrefs.inAppEnableJavascript).thenReturn(false)
-        whenever(mockPrefs.rssUrls).thenReturn(emptySet())
+        every { mockPrefs.rssShowDescription } returns false
+        every { mockPrefs.inAppEnableJavascript } returns false
+        every { mockPrefs.rssUrls } returns emptySet()
 
-        sut = RSSSettingsViewModel(
-            mockPrefs
-        )
+        sut = RSSSettingsViewModel(mockPrefs)
     }
 
     @Test
@@ -89,7 +86,7 @@ class RSSSettingsViewModelTest: BaseTest() {
 
         sut.updatePref(keyShowDescription, true)
 
-        verify(mockPrefs).rssShowDescription = true
+        verify { mockPrefs.rssShowDescription = true }
     }
 
     @Test
@@ -97,7 +94,7 @@ class RSSSettingsViewModelTest: BaseTest() {
 
         sut.updatePref(keyJavascript, true)
 
-        verify(mockPrefs).inAppEnableJavascript = true
+        verify { mockPrefs.inAppEnableJavascript = true }
     }
 
     @Test
@@ -105,11 +102,6 @@ class RSSSettingsViewModelTest: BaseTest() {
 
         sut.updatePref(keyOpenInExternalBrowser, true)
 
-        verify(mockPrefs).newsOpenInExternalBrowser = true
-    }
-
-    @AfterEach
-    internal fun tearDown() {
-        reset(mockPrefs)
+        verify { mockPrefs.newsOpenInExternalBrowser = true}
     }
 }
