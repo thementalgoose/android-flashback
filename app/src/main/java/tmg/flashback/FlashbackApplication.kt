@@ -6,6 +6,7 @@ import com.github.stkent.bugshaker.BugShaker
 import com.github.stkent.bugshaker.flow.dialog.AlertDialogType
 import com.jakewharton.threetenabp.AndroidThreeTen
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
@@ -14,6 +15,7 @@ import tmg.flashback.di.firebaseModule
 import tmg.flashback.di.flashbackModule
 import tmg.flashback.di.rssModule
 import tmg.flashback.notifications.PushNotificationManager
+import tmg.flashback.repo.config.RemoteConfigRepository
 import tmg.flashback.repo.db.CrashManager
 import tmg.flashback.repo.pref.PrefDeviceRepository
 import tmg.flashback.repo.pref.PrefNotificationRepository
@@ -52,6 +54,7 @@ class FlashbackApplication: Application() {
     private val prefsDevice: PrefDeviceRepository by inject()
     private val prefsNotification: PrefNotificationRepository by inject()
 
+    private val configRepository: RemoteConfigRepository by inject()
     private val crashManager: CrashManager by inject()
 
     private val notificationManager: PushNotificationManager by inject()
@@ -93,11 +96,17 @@ class FlashbackApplication: Application() {
             appOpenedCount = prefsDevice.appOpenedCount
         )
 
+        // Remote config
+        GlobalScope.launch {
+            val result = configRepository.update(false)
+            Log.i("Flashback", "Remote config updated $result")
+        }
+
         // Channels
         notificationManager.createChannels()
 
         // Enrol for race push notifications
-        if (prefsNotification.notificationsRace == null && BuildConfig.AUTO_ENROL_PUSH_NOTIFICATIONS) {
+        if (prefsNotification.notificationsRace == null) {
             GlobalScope.launch {
                 val result = notificationManager.raceSubscribe()
                 Log.i("Flashback", "Auto enrol push notifications race - $result")
@@ -105,7 +114,7 @@ class FlashbackApplication: Application() {
         }
 
         // Enrol for qualifying push notifications
-        if (prefsNotification.notificationsQualifying == null && BuildConfig.AUTO_ENROL_PUSH_NOTIFICATIONS) {
+        if (prefsNotification.notificationsQualifying == null) {
             GlobalScope.launch {
                 val result = notificationManager.qualifyingSubscribe()
                 Log.i("Flashback", "Auto enrol push notifications qualifying - $result")
@@ -113,7 +122,7 @@ class FlashbackApplication: Application() {
         }
 
         // Enrol for qualifying push notifications
-        if (prefsNotification.notificationsMisc == null && BuildConfig.AUTO_ENROL_PUSH_NOTIFICATIONS) {
+        if (prefsNotification.notificationsMisc == null) {
             GlobalScope.launch {
                 val result = notificationManager.appSupportSubscribe()
                 Log.i("Flashback", "Auto enrol push notifications misc - $result")

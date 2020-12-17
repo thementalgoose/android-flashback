@@ -10,8 +10,6 @@ class BuildConfigProviderTest {
 
     private fun initSUT(versionCode: Int) {
         sut = object : BuildConfigManager {
-            override val autoEnrolPushNotifications: Boolean
-                get() = true
             override val versionCode: Int
                 get() = versionCode
             override val versionName: String

@@ -1,6 +1,7 @@
 package tmg.flashback.prefs
 
 import android.content.Context
+import android.os.Build
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.BuildConfig
@@ -51,13 +52,13 @@ class SharedPrefsRepository(context: Context) : SharedPrefManager(context),
     private val keyAppFirstBoot: String = "APP_STARTUP_FIRST_BOOT"
     private val keyAppOpenCount: String = "APP_STARTUP_OPEN_COUNT"
 
+    private val keyRemoteConfigInitialSync: String = "REMOTE_CONFIG_INITIAL_SYNC"
+
+
 
     private val dateFormat = DateTimeFormatter.ofPattern("yyyy/MM/dd")
 
-
-    override var theme: ThemePref
-        get() = getString(keyTheme)?.toEnum<ThemePref> { it.key } ?: ThemePref.AUTO
-        set(value) = save(keyTheme, value.key)
+    //region Customise
 
     override var showQualifyingDelta: Boolean
         get() = getBoolean(keyShowQualifyingDelta, defaultShowQualifying)
@@ -79,21 +80,9 @@ class SharedPrefsRepository(context: Context) : SharedPrefManager(context),
         get() = getString(keyBarAnimation)?.toEnum<BarAnimation> { it.key } ?: BarAnimation.MEDIUM
         set(value) = save(keyBarAnimation, value.key)
 
-    override var crashReporting: Boolean
-        get() = getBoolean(keyCrashReporting, defaultShakeToReport)
-        set(value) = save(keyCrashReporting, value)
-
     override var showGridPenaltiesInQualifying: Boolean
         get() = getBoolean(keyShowGridPenaltiesInQualifying, true)
         set(value) = save(keyShowGridPenaltiesInQualifying, value)
-
-    override var shakeToReport: Boolean
-        get() = getBoolean(keyShakeToReport, defaultCrashReporting)
-        set(value) = save(keyShakeToReport, value)
-
-    override var lastAppVersion: Int
-        get() = getInt(keyReleaseNotes, 0)
-        set(value) = save(keyReleaseNotes, value)
 
     override val shouldShowReleaseNotes: Boolean
         get() {
@@ -104,6 +93,25 @@ class SharedPrefsRepository(context: Context) : SharedPrefManager(context),
                 BuildConfig.VERSION_CODE > lastAppVersion && releaseNotes.keys.count { it > lastAppVersion } > 0
             }
         }
+
+    override var favouriteSeasons: Set<Int>
+        set(value) = save(keyFavouriteSeasons, value.map { it.toString() }.toSet())
+        get() {
+            val value = getSet(keyFavouriteSeasons, setOf())
+            return value
+                    .mapNotNull { it.toIntOrNull() }
+                    .toSet()
+        }
+
+    override var theme: ThemePref
+        get() = getString(keyTheme)?.toEnum<ThemePref> { it.key } ?: ThemePref.AUTO
+        set(value) = save(keyTheme, value.key)
+
+    //endregion
+
+
+
+    //region Device
 
     override var deviceUdid: String
         set(value) = save(keyDeviceUDID, value)
@@ -117,36 +125,25 @@ class SharedPrefsRepository(context: Context) : SharedPrefManager(context),
             return key
         }
 
-    override var favouriteSeasons: Set<Int>
-        set(value) = save(keyFavouriteSeasons, value.map { it.toString() }.toSet())
-        get() {
-            val value = getSet(keyFavouriteSeasons, setOf())
-            return value
-                    .mapNotNull { it.toIntOrNull() }
-                    .toSet()
-        }
+    override var crashReporting: Boolean
+        get() = getBoolean(keyCrashReporting, defaultShakeToReport)
+        set(value) = save(keyCrashReporting, value)
 
-    override var rssUrls: Set<String>
-        set(value) = save(keyRSSList, value.toSet())
-        get() = getSet(keyRSSList, setOf())
+    override var shakeToReport: Boolean
+        get() = getBoolean(keyShakeToReport, defaultCrashReporting)
+        set(value) = save(keyShakeToReport, value)
 
-    override var inAppEnableJavascript: Boolean
-        get() = getBoolean(keyInAppEnableJavascript, false)
-        set(value) = save(keyInAppEnableJavascript, value)
-
-    override var rssShowDescription: Boolean
-        get() = getBoolean(keyNewsShowDescription, true)
-        set(value) = save(keyNewsShowDescription, value)
-
-    override var newsOpenInExternalBrowser: Boolean
-        get() = getBoolean(keyNewsOpenInExternalBrowser, false)
-        set(value) = save(keyNewsOpenInExternalBrowser, value)
+    override var lastAppVersion: Int
+        get() = getInt(keyReleaseNotes, 0)
+        set(value) = save(keyReleaseNotes, value)
 
     override var appFirstBootTime: LocalDate
         get() {
             val value = getString(keyAppFirstBoot, null)
             if (value == null) {
-                appFirstBootTime = LocalDate.now()
+                val result = LocalDate.now()
+                save(keyAppFirstBoot, result.format(dateFormat))
+                return result
             }
             return LocalDate.parse(value, dateFormat)
         }
@@ -155,6 +152,17 @@ class SharedPrefsRepository(context: Context) : SharedPrefManager(context),
     override var appOpenedCount: Int
         get() = getInt(keyAppOpenCount, 0)
         set(value) = save(keyAppOpenCount, value)
+
+    override var remoteConfigInitialSync: Boolean
+        get() = getBoolean(keyRemoteConfigInitialSync, false)
+        set(value) = save(keyRemoteConfigInitialSync, value)
+
+    override val isNotificationChannelsSupported: Boolean
+        get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
+
+    //endregion
+
+
 
     //region Notifications
 
@@ -181,6 +189,28 @@ class SharedPrefsRepository(context: Context) : SharedPrefManager(context),
         } else {
             save(keyNotificationMisc, "")
         }
+
+    //endregion
+
+
+
+    //region RSS
+
+    override var rssUrls: Set<String>
+        set(value) = save(keyRSSList, value.toSet())
+        get() = getSet(keyRSSList, setOf())
+
+    override var inAppEnableJavascript: Boolean
+        get() = getBoolean(keyInAppEnableJavascript, false)
+        set(value) = save(keyInAppEnableJavascript, value)
+
+    override var rssShowDescription: Boolean
+        get() = getBoolean(keyNewsShowDescription, true)
+        set(value) = save(keyNewsShowDescription, value)
+
+    override var newsOpenInExternalBrowser: Boolean
+        get() = getBoolean(keyNewsOpenInExternalBrowser, false)
+        set(value) = save(keyNewsOpenInExternalBrowser, value)
 
     //endregion
 }

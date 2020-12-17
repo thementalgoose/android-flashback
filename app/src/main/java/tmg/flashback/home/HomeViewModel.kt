@@ -16,18 +16,17 @@ import tmg.flashback.daysUntilDataProvidedBannerMovedToBottom
 import tmg.flashback.home.list.HomeItem
 import tmg.flashback.home.list.addError
 import tmg.flashback.repo.pref.PrefCustomisationRepository
-import tmg.flashback.repo.db.stats.DataRepository
+import tmg.flashback.repo.db.DataRepository
 import tmg.flashback.repo.db.stats.HistoryRepository
 import tmg.flashback.repo.db.stats.SeasonOverviewRepository
-import tmg.flashback.repo.models.AppBanner
 import tmg.flashback.repo.models.stats.*
 import tmg.flashback.shared.sync.SyncDataItem
 import tmg.flashback.shared.viewholders.DataUnavailable
 import tmg.flashback.di.device.BuildConfigManager
 import tmg.flashback.repo.NetworkConnectivityManager
+import tmg.flashback.repo.config.RemoteConfigRepository
 import tmg.flashback.repo.pref.PrefDeviceRepository
 import tmg.flashback.utils.StringHolder
-import tmg.utilities.extensions.combinePair
 import tmg.utilities.extensions.combineTriple
 import tmg.utilities.extensions.then
 import tmg.utilities.lifecycle.DataEvent
@@ -58,13 +57,14 @@ interface HomeViewModelOutputs {
 
 @Suppress("EXPERIMENTAL_API_USAGE")
 class HomeViewModel(
-        private val seasonOverviewRepository: SeasonOverviewRepository,
-        private val historyRepository: HistoryRepository,
-        dataRepository: DataRepository,
-        private val prefCustomisationRepository: PrefCustomisationRepository,
-        private val prefDeviceRepository: PrefDeviceRepository,
-        private val connectivityManager: NetworkConnectivityManager,
-        private val buildConfigProvider: BuildConfigManager
+    private val seasonOverviewRepository: SeasonOverviewRepository,
+    private val historyRepository: HistoryRepository,
+    remoteConfigRepository: RemoteConfigRepository,
+    dataRepository: DataRepository,
+    private val prefCustomisationRepository: PrefCustomisationRepository,
+    private val prefDeviceRepository: PrefDeviceRepository,
+    private val connectivityManager: NetworkConnectivityManager,
+    private val buildConfigProvider: BuildConfigManager
 ) : BaseViewModel(), HomeViewModelInputs, HomeViewModelOutputs {
 
     // true = new season has been requested so don't progress
@@ -73,8 +73,7 @@ class HomeViewModel(
     private val currentTab: ConflatedBroadcastChannel<HomeMenuItem> =
         ConflatedBroadcastChannel()
     private val currentTabFlow: Flow<HomeMenuItem> = currentTab.asFlow()
-    private val appBanner: Flow<AppBanner?> = dataRepository.appBanner()
-    private var _season: Int = currentYear
+    private var _season: Int = remoteConfigRepository.defaultYear
     private val season: ConflatedBroadcastChannel<Int> = ConflatedBroadcastChannel()
     private val currentHistory: Flow<History> = season.asFlow()
             .flatMapLatest { historyRepository.historyFor(it) }
@@ -105,9 +104,8 @@ class HomeViewModel(
             currentTabFlow,
             currentHistory
         )
-        .combinePair(appBanner)
-        .map { (seasonRoundMenuItemListHistoryTriple, appBanner) ->
-            val (season, menuItemType, history) = seasonRoundMenuItemListHistoryTriple
+        .map { (season, menuItemType, history) ->
+            val appBannerMessage = remoteConfigRepository.banner
             val list: MutableList<HomeItem> = mutableListOf()
             if (showBannerAtTop) {
                 list.add(HomeItem.ErrorItem(SyncDataItem.ProvidedBy))
@@ -116,9 +114,9 @@ class HomeViewModel(
 
             val rounds = season.rounds
 
-            appBanner?.let {
-                if (it.show && !it.message.isNullOrEmpty()) {
-                    list.addError(SyncDataItem.Message(it.message ?: ""))
+            appBannerMessage?.let {
+                if (it.isNotEmpty()) {
+                    list.addError(SyncDataItem.Message(it))
                 }
             }
 

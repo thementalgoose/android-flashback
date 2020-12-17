@@ -182,6 +182,19 @@ internal fun <T> LiveDataTestScope<List<T>>.assertListMatchesItem(predicate: (it
  * Assert that given the subject is a list that only one list has been
  *  emitted and the list contains the following item
  */
+internal fun <T> LiveDataTestScope<List<T>>.assertListDoesNotMatchItem(predicate: (item: T) -> Boolean) {
+    assertNotNull(latestValue)
+    var assertionValue = false
+    latestValue!!.forEach {
+        if (predicate(it)) assertionValue = true
+    }
+    assertFalse(assertionValue, "List does contains an item that matches the predicate - (${latestValue!!.size} items)")
+}
+
+/**
+ * Assert that given the subject is a list that only one list has been
+ *  emitted and the list contains the following item
+ */
 internal fun <T> LiveDataTestScope<List<T>>.assertListExcludesItem(item: T) {
     assertNotNull(latestValue)
     latestValue!!.forEach {

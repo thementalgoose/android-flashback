@@ -3,6 +3,7 @@ package tmg.flashback.di
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import tmg.flashback.BuildConfig
+import tmg.flashback.SplashViewModel
 import tmg.flashback.admin.lockout.LockoutViewModel
 import tmg.flashback.circuit.CircuitInfoViewModel
 import tmg.flashback.overviews.constructor.ConstructorViewModel
@@ -14,6 +15,8 @@ import tmg.flashback.overviews.driver.season.DriverSeasonViewModel
 import tmg.flashback.firebase.FirebaseCrashManager
 import tmg.flashback.home.HomeViewModel
 import tmg.flashback.home.season.SeasonViewModel
+import tmg.flashback.managers.AppShortcutManager
+import tmg.flashback.managers.AndroidAppShortcutManager
 import tmg.flashback.notifications.FirebasePushNotificationManager
 import tmg.flashback.notifications.PushNotificationManager
 import tmg.flashback.prefs.SharedPrefsRepository
@@ -28,8 +31,11 @@ import tmg.flashback.settings.privacy.PrivacyPolicyViewModel
 
 var flashbackModule = module {
 
+    // Splash
+    viewModel { SplashViewModel(get(), get(), get()) }
+
     // Home
-    viewModel { HomeViewModel(get(), get(), get(), get(), get(), get(), get()) }
+    viewModel { HomeViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
     viewModel { SeasonViewModel(get()) }
 
     // Circuit
@@ -53,8 +59,9 @@ var flashbackModule = module {
     // Network connectivity
     single<NetworkConnectivityManager> { AndroidConnectivityManager(get()) }
 
-    // Push notifications
+    // Managers
     single<PushNotificationManager> { FirebasePushNotificationManager(get(), get()) }
+    single<AppShortcutManager> { AndroidAppShortcutManager(get()) }
 
     // Shared Prefs
     single<PrefCustomisationRepository> { SharedPrefsRepository(get()) }
