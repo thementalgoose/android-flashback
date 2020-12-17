@@ -10,7 +10,7 @@ import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.di.device.BuildConfigManager
-import tmg.flashback.repo.db.stats.DataRepository
+import tmg.flashback.repo.db.DataRepository
 import tmg.flashback.repo.models.AppLockout
 import tmg.flashback.testutils.*
 

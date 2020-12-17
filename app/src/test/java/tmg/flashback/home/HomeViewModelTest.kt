@@ -18,12 +18,12 @@ import tmg.flashback.di.device.BuildConfigManager
 import tmg.flashback.home.HomeMenuItem.*
 import tmg.flashback.home.list.HomeItem
 import tmg.flashback.repo.NetworkConnectivityManager
+import tmg.flashback.repo.config.RemoteConfigRepository
 import tmg.flashback.repo.pref.PrefCustomisationRepository
-import tmg.flashback.repo.db.stats.DataRepository
+import tmg.flashback.repo.db.DataRepository
 import tmg.flashback.repo.db.stats.HistoryRepository
 import tmg.flashback.repo.db.stats.SeasonOverviewRepository
 import tmg.flashback.repo.enums.BarAnimation
-import tmg.flashback.repo.models.AppBanner
 import tmg.flashback.repo.models.AppLockout
 import tmg.flashback.repo.models.stats.History
 import tmg.flashback.repo.pref.PrefDeviceRepository
@@ -43,10 +43,14 @@ class HomeViewModelTest : BaseTest() {
     private val mockPrefsCustomiseRepository: PrefCustomisationRepository = mock()
     private val mockPrefsDeviceRepository: PrefDeviceRepository = mock()
     private val mockConnectivityManager: NetworkConnectivityManager = mock()
+    private val mockRemoteConfigRepository: RemoteConfigRepository = mock()
     private val mockBuildConfigProvider: BuildConfigManager = mock()
 
     @BeforeEach
     internal fun setUp() {
+
+        whenever(mockRemoteConfigRepository.defaultYear).thenReturn(2021)
+        whenever(mockRemoteConfigRepository.banner).thenReturn(null)
 
         whenever(mockConnectivityManager.isConnected).thenReturn(true)
         whenever(mockPrefsDeviceRepository.shouldShowReleaseNotes).thenReturn(false)
@@ -54,13 +58,12 @@ class HomeViewModelTest : BaseTest() {
         whenever(mockPrefsCustomiseRepository.barAnimation).thenReturn(BarAnimation.NONE)
         whenever(mockSeasonOverviewRepository.getSeasonOverview(any())).thenReturn(flow { emit(mockSeason) })
         whenever(mockHistoryRepository.historyFor(any())).thenReturn(flow { emit(mockHistory) })
-        whenever(mockDataRepository.appBanner()).thenReturn(flow { emit(null) })
         whenever(mockDataRepository.appLockout()).thenReturn(flow { emit(null) })
     }
 
     private fun initSUT() {
 
-        sut = HomeViewModel(mockSeasonOverviewRepository, mockHistoryRepository, mockDataRepository, mockPrefsCustomiseRepository, mockPrefsDeviceRepository, mockConnectivityManager, mockBuildConfigProvider)
+        sut = HomeViewModel(mockSeasonOverviewRepository, mockHistoryRepository, mockRemoteConfigRepository, mockDataRepository, mockPrefsCustomiseRepository, mockPrefsDeviceRepository, mockConnectivityManager, mockBuildConfigProvider)
     }
 
     //region Open release notes
@@ -172,7 +175,7 @@ class HomeViewModelTest : BaseTest() {
     fun `HomeViewModel when app banner model exists and show is true then it's added to the data`() = coroutineTest {
 
         val expectedMessage = "Testing the custom app banner!"
-        whenever(mockDataRepository.appBanner()).thenReturn(flow { emit(AppBanner(show = true, message = expectedMessage)) })
+        whenever(mockRemoteConfigRepository.banner).thenReturn(expectedMessage)
 
         initSUT()
 
@@ -182,41 +185,12 @@ class HomeViewModelTest : BaseTest() {
     }
 
     @Test
-    fun `HomeViewModel when app banner model exists and show is false then it's not available in the list`() = coroutineTest {
-
-        val expectedMessage = "Testing the custom app banner!"
-        whenever(mockDataRepository.appBanner()).thenReturn(flow { emit(AppBanner(show = false, message = expectedMessage)) })
-
-        initSUT()
-
-        sut.outputs.list.test {
-            assertListExcludesItem(HomeItem.ErrorItem(SyncDataItem.Message(expectedMessage)))
-        }
-    }
-
-    @Test
-    fun `HomeViewModel when app banner model exists with empty message and show is true then it's not available in the list`() = coroutineTest {
-
-        val expectedMessage = ""
-        whenever(mockDataRepository.appBanner()).thenReturn(flow { emit(AppBanner(show = true, message = expectedMessage)) })
-
-        initSUT()
-
-        sut.outputs.list.test {
-            assertListExcludesItem(HomeItem.ErrorItem(SyncDataItem.Message(expectedMessage)))
-        }
-    }
-
-    @Test
     fun `HomeViewModel when app banner model is null then it's not available in the list`() = coroutineTest {
 
-        val expectedMessage = "Testing the custom app banner!"
-        whenever(mockDataRepository.appBanner()).thenReturn(flow { emit(null) })
-
         initSUT()
 
         sut.outputs.list.test {
-            assertListExcludesItem(HomeItem.ErrorItem(SyncDataItem.Message(expectedMessage)))
+            assertListDoesNotMatchItem { it is HomeItem.ErrorItem && it.item is SyncDataItem.Message }
         }
     }
 
