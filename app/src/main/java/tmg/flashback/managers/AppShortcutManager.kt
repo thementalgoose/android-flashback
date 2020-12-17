@@ -11,9 +11,14 @@ import androidx.annotation.RequiresApi
 import tmg.flashback.R
 import tmg.flashback.rss.ui.RSSActivity
 
-open class AppShortcutManager(
-    val context: Context
-) {
+interface AppShortcutManager {
+    fun enable(): Boolean
+    fun disable(): Boolean
+}
+
+class AndroidAppShortcutManager(
+    private val context: Context
+): AppShortcutManager {
     private val shortcutIdRss: String = "rss"
 
     @RequiresApi(Build.VERSION_CODES.N_MR1)
@@ -33,23 +38,24 @@ open class AppShortcutManager(
     /**
      * Enable all app shortcuts
      */
-    fun enable() {
+    override fun enable(): Boolean {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
             val shortcut = buildRssShortcut()
             if (shortcutManager?.dynamicShortcuts?.size != 1) {
                 shortcutManager?.dynamicShortcuts = listOf(shortcut)
             }
         }
+        return true
     }
 
     /**
      * Disable any and all app shortcuts
      */
-    fun disable() {
+    override fun disable(): Boolean {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
             shortcutManager?.removeAllDynamicShortcuts()
             shortcutManager?.disableShortcuts(listOf(shortcutIdRss))
         }
+        return true
     }
-
 }

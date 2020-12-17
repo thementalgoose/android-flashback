@@ -2,6 +2,8 @@ package tmg.flashback
 
 import com.nhaarman.mockitokotlin2.*
 import kotlinx.coroutines.test.runBlockingTest
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.managers.AppShortcutManager
 import tmg.flashback.repo.config.RemoteConfigRepository
@@ -18,6 +20,12 @@ class SplashViewModelTest: BaseTest() {
     private var mockRemoteConfigRepository: RemoteConfigRepository = mock()
 
     private lateinit var sut: SplashViewModel
+
+    @BeforeEach
+    internal fun setUp() {
+        whenever(mockAppShortcutManager.enable()).thenReturn(true)
+        whenever(mockAppShortcutManager.disable()).thenReturn(true)
+    }
 
     private fun initSUT() {
         sut = SplashViewModel(mockAppShortcutManager, mockPrefDeviceRepository, mockRemoteConfigRepository)
@@ -56,8 +64,10 @@ class SplashViewModelTest: BaseTest() {
     fun `SplashViewModel start fetch and activate disables show resync`() = coroutineTest {
 
         whenever(mockPrefDeviceRepository.remoteConfigInitialSync).thenReturn(false)
-        mockRemoteConfigRepository.stub {
-            onBlocking { update(true) } doReturn true
+        runBlockingTest {
+            mockRemoteConfigRepository.stub {
+                onBlocking { update(true) } doReturn true
+            }
         }
 
         initSUT()
@@ -102,6 +112,7 @@ class SplashViewModelTest: BaseTest() {
     fun `SplashViewModel start fetch and activate when success sets updates shortcut manager`() = coroutineTest {
 
         whenever(mockPrefDeviceRepository.remoteConfigInitialSync).thenReturn(false)
+        whenever(mockRemoteConfigRepository.rss).thenReturn(true)
         mockRemoteConfigRepository.stub {
             onBlocking { update(true) } doReturn true
         }
@@ -148,10 +159,9 @@ class SplashViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `SplashViewModel start fetch and activate when failure then show loading sets to false`() = coroutineTest {
+    fun `SplashViewModel start fetch and activate when failure then show loading is set to false`() = coroutineTest {
 
         whenever(mockPrefDeviceRepository.remoteConfigInitialSync).thenReturn(false)
-        whenever(mockRemoteConfigRepository.rss).thenReturn(true)
         mockRemoteConfigRepository.stub {
             onBlocking { update(true) } doReturn false
         }
@@ -227,5 +237,10 @@ class SplashViewModelTest: BaseTest() {
         sut.outputs.goToNextScreen.test {
             assertEventFired()
         }
+    }
+
+    @AfterEach
+    internal fun tearDown() {
+        reset(mockRemoteConfigRepository, mockPrefDeviceRepository, mockAppShortcutManager)
     }
 }

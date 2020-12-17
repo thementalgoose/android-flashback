@@ -186,7 +186,7 @@ class SettingsViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `SettingsViewModel select a bar animation updates the pref`() {
+    fun `SettingsViewModel select a bar animation updates the preference`() {
 
         initSUT()
 
@@ -263,7 +263,7 @@ class SettingsViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `SettingsViewModel selecting season bottom sheet all updates value`() {
+    fun `SettingsViewModel selecting season bottom sheet all updates value properly`() {
 
         initSUT()
 
