@@ -157,6 +157,16 @@ enum class SupportedArticleSource(
                 false -> this
             }
         }
+
+        fun valuesSorted(): List<SupportedArticleSource> {
+            return values()
+                .sortedBy { it.rssLink
+                    .replace("https://www.", "")
+                    .replace("http://www.", "")
+                    .replace("https://", "")
+                    .replace("http://", "")
+                }
+        }
     }
 
 
