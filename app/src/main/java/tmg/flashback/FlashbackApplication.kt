@@ -11,9 +11,7 @@ import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
-import tmg.flashback.di.firebaseModule
-import tmg.flashback.di.flashbackModule
-import tmg.flashback.di.rssModule
+import tmg.flashback.di.*
 import tmg.flashback.notifications.PushNotificationManager
 import tmg.flashback.repo.config.RemoteConfigRepository
 import tmg.flashback.repo.db.CrashManager
@@ -65,7 +63,17 @@ class FlashbackApplication: Application() {
         // Start Koin
         startKoin {
             androidContext(this@FlashbackApplication)
-            modules(flashbackModule, rssModule, firebaseModule)
+            modules(
+                configurationModule,
+                deviceModule,
+                firebaseModule,
+                shortcutModule,
+                viewModelModule
+            )
+            modules(
+                rssModule,
+                rssViewModelModule
+            )
         }
 
         // ThreeTen
