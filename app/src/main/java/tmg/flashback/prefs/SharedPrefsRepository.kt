@@ -201,7 +201,7 @@ class SharedPrefsRepository(context: Context) : SharedPrefManager(context),
         get() = getSet(keyRSSList, setOf())
 
     override var inAppEnableJavascript: Boolean
-        get() = getBoolean(keyInAppEnableJavascript, false)
+        get() = getBoolean(keyInAppEnableJavascript, true)
         set(value) = save(keyInAppEnableJavascript, value)
 
     override var rssShowDescription: Boolean

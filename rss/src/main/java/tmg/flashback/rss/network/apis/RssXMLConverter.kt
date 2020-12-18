@@ -11,7 +11,7 @@ import tmg.flashback.rss.repo.model.Article
 import tmg.flashback.rss.repo.model.ArticleSource
 import java.net.URL
 
-private const val dateFormat = "EEE, dd MMM yyyy HH:mm:ss Z"
+private const val dateFormat = "EEE, d MMM yyyy HH:mm:ss Z"
 
 fun RssXMLModel.convert(fromSource: String, showDescription: Boolean): List<Article> {
 
@@ -52,10 +52,10 @@ fun RssXMLModel.convert(fromSource: String, showDescription: Boolean): List<Arti
                 title = it.title.replace("&#039;", "'"),
                 description = when (showDescription) {
                     false -> null
-                    true -> it.description
+                    true -> it.description?.trim()
                 },
                 link = it.link!!.replace("http://", "https://"),
-                date = LocalDateTime.parse(it.pubDate!!, DateTimeFormatter.ofPattern(dateFormat)),
+                date = LocalDateTime.parse(it.pubDate!!.replace("GMT", "+0000"), DateTimeFormatter.ofPattern(dateFormat)),
                 source = source
             )
         } ?: emptyList()

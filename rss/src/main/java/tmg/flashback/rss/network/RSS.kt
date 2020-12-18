@@ -4,8 +4,10 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
+import okhttp3.Headers
 import retrofit2.HttpException
 import tmg.flashback.repo.models.Response
+import tmg.flashback.rss.BuildConfig
 import tmg.flashback.rss.network.apis.convert
 import tmg.flashback.rss.network.shared.RssXMLRetrofit
 import tmg.flashback.rss.network.shared.buildRetrofit
@@ -23,6 +25,11 @@ import javax.xml.stream.XMLStreamException
 class RSS(
     private val prefsRepository: RSSPrefsRepository
 ) : RSSRepository {
+
+    private val headers: Map<String, String> = mapOf(
+            "Accept" to "application/rss+xml, application/xml"
+    )
+
     override fun getNews(): Flow<Response<List<Article>>> = flow {
 
         withContext(GlobalScope.coroutineContext) {
@@ -32,23 +39,47 @@ class RSS(
             val responses: MutableList<Response<List<Article>>> = mutableListOf()
             for (x in prefsRepository.rssUrls) {
                 try {
-                    val response = xmlRetrofit.getRssXML(x).convert(x, prefsRepository.rssShowDescription)
+                    val response = xmlRetrofit.getRssXML(headers, x).convert(x, prefsRepository.rssShowDescription)
                     responses.add(Response(response))
                 } catch (e: XMLStreamException) {
+                    if (BuildConfig.DEBUG) {
+                        e.printStackTrace()
+                    }
                     responses.add(Response(null, -1))
                 } catch (e: SocketTimeoutException) {
+                    if (BuildConfig.DEBUG) {
+                        e.printStackTrace()
+                    }
                     responses.add(Response(null, -1))
                 } catch (e: SSLHandshakeException) {
+                    if (BuildConfig.DEBUG) {
+                        e.printStackTrace()
+                    }
                     responses.add(Response(null, -1))
                 } catch (e: ConnectException) {
+                    if (BuildConfig.DEBUG) {
+                        e.printStackTrace()
+                    }
                     responses.add(Response(null, -1))
                 } catch (e: RuntimeException) {
+                    if (BuildConfig.DEBUG) {
+                        e.printStackTrace()
+                    }
                     responses.add(Response(null, -1))
                 } catch (e: UnknownHostException) {
+                    if (BuildConfig.DEBUG) {
+                        e.printStackTrace()
+                    }
                     responses.add(Response(null, -1))
                 } catch (e: HttpException) {
+                    if (BuildConfig.DEBUG) {
+                        e.printStackTrace()
+                    }
                     responses.add(Response(null, e.code()))
                 } catch (e: NullPointerException) {
+                    if (BuildConfig.DEBUG) {
+                        e.printStackTrace()
+                    }
                     responses.add(Response(null, -1))
                 }
             }
