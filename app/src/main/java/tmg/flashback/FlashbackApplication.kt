@@ -21,6 +21,7 @@ import tmg.flashback.repo.pref.PrefDeviceRepository
 import tmg.flashback.repo.pref.PrefNotificationRepository
 
 val releaseNotes: Map<Int, Int> = mapOf(
+    36 to R.string.release_36,
     34 to R.string.release_34,
     33 to R.string.release_33,
     32 to R.string.release_32,
