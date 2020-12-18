@@ -31,7 +31,7 @@ class SupportedArticleSourceTest {
     @Test
     fun `SupportedArticleSource getByRssFeedURL returns correct supported source with valid RSS feeds`() {
 
-        val supportedItems = 5
+        val supportedItems = 14
 
         assertEquals(supportedItems, SupportedArticleSource.values().size)
 

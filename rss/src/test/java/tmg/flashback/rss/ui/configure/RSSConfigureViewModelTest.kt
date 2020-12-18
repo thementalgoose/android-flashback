@@ -98,19 +98,19 @@ class RSSConfigureViewModelTest: BaseTest() {
     fun `RSSConfigureViewModel simulate removing single item to update the list properly`(source: SupportedArticleSource) {
 
         val expected = buildList(
-            added = SupportedArticleSource.values()
+            added = SupportedArticleSource.valuesSorted()
                 .filter { it != source }
                 .map { it.rssLink },
             quick = listOf(source)
         )
-        every { mockPrefs.rssUrls } returns SupportedArticleSource.values()
+        every { mockPrefs.rssUrls } returns SupportedArticleSource.valuesSorted()
             .map { it.rssLink }
             .toSet()
 
         initSUT()
 
         // Assume PrefsDB is saving item properly (tested previously)
-        every { mockPrefs.rssUrls } returns SupportedArticleSource.values()
+        every { mockPrefs.rssUrls } returns SupportedArticleSource.valuesSorted()
             .filter { it != source }
             .map { it.rssLink }
             .toSet()
@@ -210,7 +210,12 @@ class RSSConfigureViewModelTest: BaseTest() {
         }
         else {
             list.addAll(added
-                .sortedBy { it }
+                .sortedBy { it
+                    .replace("https://www.", "")
+                    .replace("http://www.", "")
+                    .replace("https://", "")
+                    .replace("http://", "")
+                }
                 .map {
                     RSSConfigureItem.Item(it)
                 }
@@ -220,7 +225,12 @@ class RSSConfigureViewModelTest: BaseTest() {
         list.add(RSSConfigureItem.Add)
         list.add(RSSConfigureItem.Header(R.string.rss_configure_header_quick_add, R.string.rss_configure_header_quick_add_subtitle))
         list.addAll(quick
-            .sortedBy { it.source }
+            .sortedBy { it.rssLink
+                .replace("https://www.", "")
+                .replace("http://www.", "")
+                .replace("https://", "")
+                .replace("http://", "")
+            }
             .map {
                 RSSConfigureItem.QuickAdd(it)
             }
