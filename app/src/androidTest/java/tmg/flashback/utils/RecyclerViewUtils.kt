@@ -8,27 +8,62 @@ import androidx.test.espresso.contrib.RecyclerViewActions.scrollTo
 import androidx.test.espresso.matcher.ViewMatchers.*
 import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
 import tmg.flashback.utils.EspressoUtils.getString
+import tmg.flashback.utils.assertions.RecyclerViewItemCountAssertion
+import tmg.flashback.utils.assertions.RecyclerViewItemGreaterThanAssertion
 
-class RecyclerViewUtils(
+open class RecyclerViewUtils(
     @IdRes val recyclerView: Int
 ) {
-    fun assertTextDisplayed(text: String) {
-        scrollToText(text)
-        assertDisplayed(text)
-    }
 
-    fun scrollToText(text: String) {
+    //region Scrolling
+
+    fun scrollToListText(text: String) {
         onView(withId(recyclerView))
             .perform(scrollTo<RecyclerView.ViewHolder>(hasDescendant(withText(text))))
     }
 
-    fun scrollToText(@StringRes id: Int) {
+    fun scrollToListText(@StringRes id: Int) {
         val text = getString(id)
-        scrollToText(text)
+        scrollToListText(text)
     }
 
-    fun assertTextDisplayed(@IdRes id: Int) {
-        val text = getString(id)
-        assertTextDisplayed(text)
+    //endregion
+
+    //region Text Assertions / Actions
+
+    fun assertTextDisplayedInList(text: String?) {
+        scrollToListText(text ?: "ERROR - TEXT NOT FOUND")
+        assertDisplayed(text ?: "ERROR - TEXT NOT FOUND")
     }
+
+    fun assertTextDisplayedInList(@IdRes id: Int) {
+        val text = getString(id)
+        assertTextDisplayedInList(text)
+    }
+
+    fun clickOnListText(@StringRes id: Int) {
+        val text = getString(id)
+        clickOnListText(text)
+    }
+
+    fun clickOnListText(text: String) {
+        scrollToListText(text)
+        EspressoUtils.clickOnText(text)
+    }
+
+    //endregion
+
+    //region RecyclerView actions
+
+    fun assertItemsAtLeast(count: Int) {
+        onView(withId(recyclerView))
+            .check(RecyclerViewItemGreaterThanAssertion(count))
+    }
+
+    fun assertItemsEquals(count: Int) {
+        onView(withId(recyclerView))
+            .check(RecyclerViewItemCountAssertion(count))
+    }
+
+    //endregion
 }

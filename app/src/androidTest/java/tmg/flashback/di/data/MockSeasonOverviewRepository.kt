@@ -1,4 +1,4 @@
-package tmg.flashback.di.repositories
+package tmg.flashback.di.data
 
 import tmg.flashback.repo.db.stats.SeasonOverviewRepository
 
