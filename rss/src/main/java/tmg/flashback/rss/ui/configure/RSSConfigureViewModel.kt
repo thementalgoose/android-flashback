@@ -82,7 +82,12 @@ class RSSConfigureViewModel(
         ))
         if (rssUrls.isNotEmpty()) {
             itemList.addAll(rssUrls
-                .sortedBy { it }
+                .sortedBy {
+                    it.replace("https://www.", "")
+                            .replace("http://www.", "")
+                            .replace("https://", "")
+                            .replace("http://", "")
+                }
                 .map {
                     RSSConfigureItem.Item(it, SupportedArticleSource.getByRssFeedURL(it))
                 }
@@ -103,7 +108,12 @@ class RSSConfigureViewModel(
         itemList.addAll(SupportedArticleSource
             .values()
             .filter { !rssUrls.contains(it.rssLink) }
-            .sortedBy { it }
+            .sortedBy {
+                it.rssLink.replace("https://www.", "")
+                        .replace("http://www.", "")
+                        .replace("https://", "")
+                        .replace("http://", "")
+            }
             .map {
                 RSSConfigureItem.QuickAdd(it)
             }

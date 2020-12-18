@@ -12,4 +12,8 @@
         <key>rss</key>
         <value>false</value>
     </entry>
+    <entry>
+        <key>data_provided</key>
+        <value>Data provided by Ergast API</value>
+    </entry>
 </defaultsMap>

@@ -53,7 +53,7 @@
     <string name="settings_help_suggestions_title">Have a suggestion?</string>
     <string name="settings_help_suggestions_description">Send the developer an email with any suggestions you may have. Alternately turn on shake to report and shake your device</string>
     <string name="settings_help_shake_to_report_title">Shake the app to report a bug or a feature?</string>
-    <string name="settings_help_shake_to_report_description">Shake the app at any time to screenshot and send me any bugs, issues, or suggestions you may have for this app!</string>
+    <string name="settings_help_shake_to_report_description">Shake the app at any time to screenshot and send us any bugs, issues, or suggestions you may have for this app!</string>
     <string name="settings_help_shake_to_report_notify">Your shake to report preference will be applied once the app has restarted</string>
     <string name="settings_help_privacy_policy_title">Privacy Policy</string>
     <string name="settings_help_privacy_policy_description">View our privacy policy here</string>
@@ -64,13 +64,13 @@
     <!-- About -->
     <string name="about_name">Flashback</string>
     <string name="about_desc">Formula 1 statistics</string>
-    <string name="dependency_thank_you">The statistics provided throughout this app are supported by the Ergast API and cached by the flashback team in firebase. Like the Ergast API, we cannot guarantee the accuracy of the data provided (please let us know however if you spot an issue). You can get in contact with the Ergast API by clicking the item in the list below to visit their API.\n\nA big thank you to the Ergast team and everyone listed below for making this app possible!</string>
+    <string name="dependency_thank_you">The statistics provided throughout this app are supported by the Ergast API and cached by the flashback team in firebase. Like the Ergast API, we cannot guarantee the accuracy of the data provided (please let us know however if you spot an issue by emailing us below). Alternatively you can contact the Ergast API team by clicking the item in the list below to visit their API.\n\nA big thank you to the Ergast team and everyone listed below for making this app possible!</string>
     <string name="about_additional">Special thanks to\n
     - Icons made by Freepik from www.flaticon.com\n
     - Icons made by Vitaly Gorbachev from www.flaticon.com\n
     - Animations made by LottieFiles from www.lottiefiles.com\n
     - Animations made by Abhishek Kaushal from www.lottiefiles.com\n\n
-    If we\'ve missed anyone or anything please let me know!</string>
+    If we\'ve missed anyone or anything please let us know!</string>
 
     <!-- Privacy Policy -->
     <string name="privacy_policy_title">Privacy Policy</string>
@@ -242,7 +242,6 @@
     <string name="notification_channel_info">Miscellaneous</string>
 
     <!-- Data Provided -->
-    <string name="shared_provided_by"><![CDATA[Data provided with <font color="red">♥</font> by Ergast API]]></string>
-    <string name="shared_provided_by_cached" />
+    <string name="shared_provided_by">Data provided by Ergast API</string>
 
 </resources>
