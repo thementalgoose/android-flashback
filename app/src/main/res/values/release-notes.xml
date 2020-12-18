@@ -125,5 +125,8 @@
         <br/>• Fixes typos in notification channels
         <br/>• Fixes some crashes in RSS configure screen
         <br/>• Tweaked layout for driver overview constructor tab to make progression clearer]]></string>
+    <string name="release_36"><![CDATA[<b>5.3.6</b>
+        <br/>• Adds window for default season being shown to be previous year until calendar is confirmed
+        <br/>• Usual assortment dependency updates, bug fixes and small typos]]></string>
 
 </resources>
