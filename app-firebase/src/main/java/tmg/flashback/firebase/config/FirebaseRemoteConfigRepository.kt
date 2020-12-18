@@ -18,7 +18,7 @@ import java.lang.Exception
  * TODO: Move app lockout over to using this remote config repository!
  */
 class FirebaseRemoteConfigRepository(
-        val crashManager: CrashManager
+        val crashManager: CrashManager?
 ): RemoteConfigRepository {
 
     private val remoteConfig: FirebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
@@ -34,6 +34,7 @@ class FirebaseRemoteConfigRepository(
     private val keyDefaultYear: String = "default_year"
     private val keyDefaultBanner: String = "banner"
     private val keyRss: String = "rss"
+    private val keyDataProvidedBy: String = "data_provided"
 
     init {
         remoteConfig.setDefaultsAsync(R.xml.remote_config_defaults)
@@ -50,6 +51,9 @@ class FirebaseRemoteConfigRepository(
 
     override val rss: Boolean
         get() = remoteConfig.getBoolean(keyRss)
+
+    override val dataProvidedBy: String
+        get() = remoteConfig.getString(keyDataProvidedBy)
 
     //endregion
 
@@ -83,7 +87,7 @@ class FirebaseRemoteConfigRepository(
             if (BuildConfig.DEBUG) {
                 e.printStackTrace()
             } else {
-                crashManager.logError(e, "FirebaseRemoteConfigRepository unsupported exception thrown")
+                crashManager?.logError(e, "FirebaseRemoteConfigRepository unsupported exception thrown")
             }
             false
         }
@@ -112,7 +116,7 @@ class FirebaseRemoteConfigRepository(
                 e.printStackTrace()
             }
             else {
-                crashManager.logError(e, "FirebaseRemoteConfigRepository unsupported exception thrown")
+                crashManager?.logError(e, "FirebaseRemoteConfigRepository unsupported exception thrown")
             }
             false
         }
