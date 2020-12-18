@@ -6,6 +6,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory
 import tmg.flashback.rss.BuildConfig
+import tmg.flashback.rss.network.interceptor.CleanupXmlInterceptor
 
 inline fun <reified T> buildRetrofit(isXML: Boolean = true): T {
     var builder = Retrofit.Builder()
@@ -18,12 +19,12 @@ inline fun <reified T> buildRetrofit(isXML: Boolean = true): T {
         builder.addConverterFactory(GsonConverterFactory.create())
     }
     val client = OkHttpClient.Builder()
+    client.addInterceptor(CleanupXmlInterceptor)
     if (BuildConfig.DEBUG) {
         val interceptor = HttpLoggingInterceptor()
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
         client.addInterceptor(interceptor)
     }
-
     builder.client(client.build())
 
     val retrofit: Retrofit = builder.build()
