@@ -1,6 +1,6 @@
 package tmg.flashback
 
-import androidx.test.espresso.action.ViewActions.scrollTo
+import android.content.Intent
 import de.mannodermaus.junit5.ActivityScenarioExtension
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
@@ -10,8 +10,12 @@ import org.koin.core.context.loadKoinModules
 import org.koin.core.context.unloadKoinModules
 import org.koin.test.KoinTest
 import tmg.flashback.di.mockModules
-import tmg.flashback.scenarios.settingsScreen
+import tmg.flashback.di.rss.mockRssGoogle
+import tmg.flashback.scenarios.startup
+import tmg.flashback.utils.EspressoUtils.assertViewDisplayed
+import tmg.flashback.utils.EspressoUtils.assertTextDisplayed
 import tmg.flashback.utils.EspressoUtils.clickOn
+import tmg.flashback.utils.EspressoUtils.assertIntentFired
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -33,22 +37,75 @@ class AppScenario: KoinTest {
     @Test
     fun runThroughApp() {
 
-        clickOn(R.id.settings)
-        settingsScreen {
-            checkRss()
-            checkNotifications()
-            checkTheme()
-            checkCustomisation()
-            checkSeasonList()
-            checkAbout()
-            checkFeedback()
-        }
+        startup {
 
-        settingsScreen {
-            clickOnPrivacyPolicy()
-        }
+            this.goToRss {
 
+                assertTextDisplayedInList(mockRssGoogle.title)
+                assertTextDisplayedInList(mockRssGoogle.description)
+
+                this.clickOnArtitle(mockRssGoogle.title) {
+
+                    assertViewDisplayed(R.id.share)
+                    assertViewDisplayed(R.id.openInBrowser)
+
+                    assertIntentFired(Intent.ACTION_CHOOSER) {
+
+                        clickOn(R.id.share)
+                    }
+                }
+
+                this.goToRSSSettings {
+
+                    assertTextDisplayedInList(R.string.settings_rss_configure)
+                    assertTextDisplayedInList(R.string.settings_rss_appearance_title)
+                    assertTextDisplayedInList(R.string.settings_rss_browser)
+
+                    this.goToRSSConfigure {
+
+                        assertTextDisplayedInList(R.string.rss_configure_header_items)
+                        assertTextDisplayedInList(R.string.rss_configure_header_add)
+                        assertTextDisplayedInList(R.string.rss_configure_header_quick_add)
+                    }
+                }
+            }
+
+            this.goToSettings {
+
+                assertTextDisplayedInList(R.string.settings_customisation_rss)
+                assertTextDisplayedInList(R.string.settings_notifications_title)
+                assertTextDisplayedInList(R.string.settings_theme)
+                assertTextDisplayedInList(R.string.settings_customisation)
+                assertTextDisplayedInList(R.string.settings_season_list)
+                assertTextDisplayedInList(R.string.settings_help)
+                assertTextDisplayedInList(R.string.settings_feedback)
+
+                this.goToPrivacyPolicy {
+
+                    assertTextDisplayed(R.string.privacy_policy_title)
+                }
+
+                this.goToReleaseNotes {
+
+                    assertTextDisplayed(R.string.settings_help_release_notes_title)
+                }
+
+                this.goToAboutThisApp {
+
+                    assertTextDisplayed(R.string.about_name)
+                    assertTextDisplayed(R.string.about_desc)
+                }
+
+                this.goToRSSSettings {
+
+                    assertTextDisplayed(R.string.settings_rss_title)
+                }
+            }
+
+        }
     }
+
+
 
     @AfterEach
     internal fun tearDown() {
