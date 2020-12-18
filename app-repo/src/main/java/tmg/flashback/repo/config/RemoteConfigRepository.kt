@@ -19,4 +19,9 @@ interface RemoteConfigRepository {
      * Enable the RSS feed functionality
      */
     val rss: Boolean
+
+    /**
+     * Data provided by tag
+     */
+    val dataProvidedBy: String?
 }

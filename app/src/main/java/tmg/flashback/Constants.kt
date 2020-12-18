@@ -24,7 +24,7 @@ const val playStoreUrl: String = "https://play.google.com/store/apps/details?id=
 /**
  * Days until the app banner gets displayed at the bottom
  */
-const val daysUntilDataProvidedBannerMovedToBottom = 10
+const val daysUntilDataProvidedBannerMovedToBottom = 5
 
 /**
  * Coming soon message for race statistics that are not synchronised

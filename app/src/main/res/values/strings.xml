@@ -64,7 +64,7 @@
     <!-- About -->
     <string name="about_name">Flashback</string>
     <string name="about_desc">Formula 1 statistics</string>
-    <string name="dependency_thank_you">The statistics provided throughout this app are supported by the Ergast API and cached by the flashback team in firebase. Like the Ergast API, we cannot guarantee the accuracy of the data provided (please let us know however if you spot an issue). You can get in contact with the Ergast API by clicking the item in the list below to visit their API.\n\nA big thank you to the Ergast team and everyone listed below for making this app possible!</string>
+    <string name="dependency_thank_you">The statistics provided throughout this app are supported by the Ergast API and cached by the flashback team in firebase. Like the Ergast API, we cannot guarantee the accuracy of the data provided (please let us know however if you spot an issue by emailing us below). You can get in contact with the Ergast API by clicking the item in the list below to visit their API.\n\nA big thank you to the Ergast team and everyone listed below for making this app possible!</string>
     <string name="about_additional">Special thanks to\n
     - Icons made by Freepik from www.flaticon.com\n
     - Icons made by Vitaly Gorbachev from www.flaticon.com\n
@@ -242,7 +242,6 @@
     <string name="notification_channel_info">Miscellaneous</string>
 
     <!-- Data Provided -->
-    <string name="shared_provided_by"><![CDATA[Data provided with <font color="red">♥</font> by Ergast API]]></string>
-    <string name="shared_provided_by_cached" />
+    <string name="shared_provided_by">Data provided by Ergast API</string>
 
 </resources>

@@ -31,23 +31,11 @@
         android:importantForAccessibility="no"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/provided_by_cached"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toEndOf="@id/provided_by"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ergast" />
-
-    <TextView
-        android:id="@+id/provided_by_cached"
-        style="@style/Text.Home.Message"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/shared_provided_by_cached"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toEndOf="@id/icon"
-        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
