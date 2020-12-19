@@ -167,7 +167,22 @@ class DriverViewModel(
             value = overview.careerPodiums.toString()
         )
         list.addStat(
-            icon = R.drawable.ic_status_finished,
+            icon = R.drawable.ic_race_starts,
+            label = R.string.driver_overview_stat_race_starts,
+            value = overview.raceStarts.toString()
+        )
+        list.addStat(
+            icon = R.drawable.ic_race_finishes,
+            label = R.string.driver_overview_stat_race_finishes,
+            value = overview.raceFinishes.toString()
+        )
+        list.addStat(
+            icon = R.drawable.ic_race_retirements,
+            label = R.string.driver_overview_stat_race_retirements,
+            value = overview.raceRetirements.toString()
+        )
+        list.addStat(
+            icon = R.drawable.ic_best_finish,
             label = R.string.driver_overview_stat_career_best_finish,
             value = overview.careerBestFinish.position()
         )

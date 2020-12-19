@@ -201,6 +201,9 @@
     <string name="driver_overview_stat_career_championship_standing_so_far">Current championship standing</string>
     <string name="driver_overview_stat_career_wins">Wins</string>
     <string name="driver_overview_stat_career_podiums">Podiums</string>
+    <string name="driver_overview_stat_race_starts">Race starts</string>
+    <string name="driver_overview_stat_race_finishes">Race finishes</string>
+    <string name="driver_overview_stat_race_retirements">Race retirements</string>
     <string name="driver_overview_stat_career_points">Points</string>
     <string name="driver_overview_stat_career_best_finish">Best finish</string>
     <string name="driver_overview_stat_career_points_finishes">Points finishes</string>
