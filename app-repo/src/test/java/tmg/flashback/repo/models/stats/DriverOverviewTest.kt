@@ -7,9 +7,7 @@ import org.junit.jupiter.params.provider.CsvSource
 
 class DriverOverviewTest {
 
-    // TODO: Implement all the tests for these classes
-
-    @ParameterizedTest
+    @ParameterizedTest(name = "Expected {3} when SeasonA=[{0},inProgress=true] and SeasonB=[{1},inProgress={2}]")
     @CsvSource(
             "0,1,false,1",
             "1,1,false,2",
@@ -26,7 +24,7 @@ class DriverOverviewTest {
         assertEquals(expected, sut.championshipWins)
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "Expected {3} when SeasonA=[{0},inProgress=true] and SeasonB=[{1},inProgress={2}]")
     @CsvSource(
             "0,1,false,1",
             "1,1,false,1",
@@ -45,7 +43,7 @@ class DriverOverviewTest {
         assertEquals(expected, sut.careerBestChampionship)
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "Expected {2} when SeasonA=[{0}] and SeasonB=[{1}]")
     @CsvSource(
             "true,false,true",
             "true,true,true",
@@ -60,7 +58,7 @@ class DriverOverviewTest {
         assertEquals(expected, sut.hasChampionshipCurrentlyInProgress)
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "Expected {2} when SeasonA=[{0}] and SeasonB=[{1}]")
     @CsvSource(
             "3,1,4",
             "1,2,3",
@@ -76,7 +74,7 @@ class DriverOverviewTest {
         assertEquals(expected, sut.careerWins)
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "Expected {2} when SeasonA=[{0}] and SeasonB=[{1}]")
     @CsvSource(
             "3,1,4",
             "1,2,3",
@@ -92,7 +90,7 @@ class DriverOverviewTest {
         assertEquals(expected, sut.careerPodiums)
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "Expected {2} when SeasonA=[{0}] and SeasonB=[{1}]")
     @CsvSource(
             "3,1,4",
             "1,2,3",
@@ -108,7 +106,7 @@ class DriverOverviewTest {
         assertEquals(expected, sut.careerPoints)
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "Expected {2} when SeasonA=[{0}] and SeasonB=[{1}]")
     @CsvSource(
             "3,1,4",
             "1,2,3",
@@ -124,7 +122,7 @@ class DriverOverviewTest {
         assertEquals(expected, sut.careerRaces)
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "Expected {2} when SeasonA=[{0}] and SeasonB=[{1}]")
     @CsvSource(
             "3,1,1",
             "1,2,1",
@@ -139,7 +137,7 @@ class DriverOverviewTest {
         assertEquals(expected, sut.careerBestFinish)
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "Expected {2} when SeasonA=[{0}] and SeasonB=[{1}]")
     @CsvSource(
             "3,1,1",
             "1,2,1",
@@ -154,7 +152,7 @@ class DriverOverviewTest {
         assertEquals(expected, sut.careerBestQualifying)
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "Expected {2} when SeasonA=[{0}] and SeasonB=[{1}]")
     @CsvSource(
             "3,1,1",
             "1,2,1",
@@ -169,7 +167,7 @@ class DriverOverviewTest {
         assertEquals(expected, sut.careerConstructorStanding)
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "Expected {5} when SeasonA=[{0},{1}] and SeasonB=[{2},{3}] finishes in {4}")
     @CsvSource(
             "0,1,-1,1,3,0",
             "1,2,3,4,1,1",
@@ -191,7 +189,7 @@ class DriverOverviewTest {
         assertEquals(expected, sut.totalFinishesIn(finishesIn))
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "Expected {5} when SeasonA=[{0},{1}] and SeasonB=[{2},{3}] finishes above {4}")
     @CsvSource(
             "0,1,-1,1,3,2",
             "1,2,3,4,1,1",
@@ -214,7 +212,7 @@ class DriverOverviewTest {
         assertEquals(expected, sut.totalFinishesAbove(finishesIn))
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "Expected {5} when SeasonA=[{0},{1}] and SeasonB=[{2},{3}] qualifying above {4}")
     @CsvSource(
             "0,1,-1,0,2,1",
             "1,2,3,4,1,1",
@@ -237,7 +235,7 @@ class DriverOverviewTest {
         assertEquals(expected, sut.totalQualifyingAbove(finishesIn))
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "Expected {5} when SeasonA=[{0},{1}] and SeasonB=[{2},{3}] qualifying in {4}")
     @CsvSource(
             "0,1,-1,1,3,0",
             "1,2,3,4,1,1",
@@ -257,6 +255,67 @@ class DriverOverviewTest {
                 ))
         ))
         assertEquals(expected, sut.totalQualifyingIn(finishesIn))
+    }
+
+    @ParameterizedTest(name = "Expected {2} when SeasonA=[{0}] and SeasonB=[{1}]")
+    @CsvSource(
+            "3,1,4",
+            "1,2,3",
+            "4,5,9",
+            "1,1,2"
+    )
+    fun `DriverOverview race starts`(s1: Int, s2: Int, expected: Int) {
+        val sut = mockDriverOverview.copy(standings = listOf(
+                mockDriverStanding1.copy(races = s1),
+                mockDriverStanding1.copy(races = s2)
+        ))
+        assertEquals(expected, sut.raceStarts)
+    }
+
+    @ParameterizedTest(name = "Expected {4} when SeasonA=[{0},{1}] and SeasonB=[{2},{3}]")
+    @CsvSource(
+            "Finished,Finished,Finished,Finished,4",
+            "+1 Lap,Finished,+1 Lap,Finished,4",
+            "Engine,Finished,Finished,Finished,3",
+            "Finished,Finished,Retired,Retired,2",
+            "+2 Laps,+5 Laps,Finished,+3 Laps,4",
+            "Retired,Engine,Cooling,Retired,0"
+    )
+    fun `DriverOverview race finishes`(s1r1: String, s1r2: String, s2r1: String, s2r2: String, expected: Int) {
+        val sut = mockDriverOverview.copy(standings = listOf(
+                mockDriverStanding1.copy(raceOverview = listOf(
+                        mockDriverRound11.copy(status = s1r1),
+                        mockDriverRound12.copy(status = s1r2)
+                )),
+                mockDriverStanding2.copy(raceOverview = listOf(
+                        mockDriverRound21.copy(status = s2r1),
+                        mockDriverRound22.copy(status = s2r2)
+                ))
+        ))
+        assertEquals(expected, sut.raceFinishes)
+    }
+
+    @ParameterizedTest(name = "Expected {4} when SeasonA=[{0},{1}] and SeasonB=[{2},{3}]")
+    @CsvSource(
+            "Finished,Finished,Finished,Finished,0",
+            "+1 Lap,Finished,+1 Lap,Finished,0",
+            "Engine,Finished,Finished,Finished,1",
+            "Finished,Finished,Retired,Retired,2",
+            "+2 Laps,+5 Laps,Finished,+3 Laps,0",
+            "Retired,Engine,Cooling,Retired,4"
+    )
+    fun `DriverOverview race retirements`(s1r1: String, s1r2: String, s2r1: String, s2r2: String, expected: Int) {
+        val sut = mockDriverOverview.copy(standings = listOf(
+                mockDriverStanding1.copy(raceOverview = listOf(
+                        mockDriverRound11.copy(status = s1r1),
+                        mockDriverRound12.copy(status = s1r2)
+                )),
+                mockDriverStanding2.copy(raceOverview = listOf(
+                        mockDriverRound21.copy(status = s2r1),
+                        mockDriverRound22.copy(status = s2r2)
+                ))
+        ))
+        assertEquals(expected, sut.raceRetirements)
     }
 
     @Test
