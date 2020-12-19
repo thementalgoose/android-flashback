@@ -89,14 +89,14 @@ class AppScenario: KoinTest {
 
                 this.clickOnDriver(mockDriverDaniel.name) {
 
-                    assertItemsAtLeast(10)
+                    assertItemsAtLeast(12)
                     assertTextDisplayed(mockDriverDaniel.name)
                     collapseAppBar()
                     assertTextDisplayedInList(mockSeason.season.toString())
 
                     this.clickOnYear(mockSeason.season) {
 
-                        assertItemsAtLeast(10)
+                        assertItemsAtLeast(12)
                         assertTextDisplayed("${mockDriverDaniel.name} ${mockSeason.season}")
                         collapseAppBar()
                         assertTextDisplayedInList(mockRound1.name)
@@ -105,7 +105,7 @@ class AppScenario: KoinTest {
 
                 this.clickOnConstructor(mockConstructorBlue.name) {
 
-                    assertItemsAtLeast(10)
+                    assertItemsAtLeast(12)
                     assertTextDisplayed(mockConstructorBlue.name)
                     collapseAppBar()
                     assertTextDisplayedInList(mockSeason.season.toString())
@@ -122,12 +122,11 @@ class AppScenario: KoinTest {
                 assertItemsAtLeast(10)
             }
 
-            // TODO: Banner text resolving needs to be injected and is currently being hacked in so can't be tested
-//            this.clickOnDataProvidedBanner {
-//
-//                assertTextDisplayed(R.string.about_name)
-//                assertTextDisplayed(R.string.about_desc)
-//            }
+            this.clickOnDataProvidedBanner {
+
+                assertTextDisplayed(R.string.about_name)
+                assertTextDisplayed(R.string.about_desc)
+            }
 
             this.goToRss {
 
