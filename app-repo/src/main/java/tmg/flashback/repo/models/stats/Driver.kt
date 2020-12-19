@@ -18,7 +18,7 @@ data class Driver(
         val nationalityISO: String,
         val constructorAtEndOfSeason: Constructor
 ) {
-    fun forRound(constructor: Constructor): RoundDriver {
+    fun forRound(constructor: Constructor = constructorAtEndOfSeason): RoundDriver {
         return RoundDriver(
                 id = id,
                 firstName = firstName,

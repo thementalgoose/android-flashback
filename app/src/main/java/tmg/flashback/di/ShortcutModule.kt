@@ -29,48 +29,8 @@ import tmg.flashback.repo.pref.PrefNotificationRepository
 import tmg.flashback.settings.SettingsViewModel
 import tmg.flashback.settings.privacy.PrivacyPolicyViewModel
 
-var flashbackModule = module {
+var shortcutModule = module {
 
-    // Splash
-    viewModel { SplashViewModel(get(), get(), get()) }
-
-    // Home
-    viewModel { HomeViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
-    viewModel { SeasonViewModel(get()) }
-
-    // Circuit
-    viewModel { CircuitInfoViewModel(get(), get()) }
-
-    // Race
-    viewModel { RaceViewModel(get(), get(), get()) }
-
-    // Driver
-    viewModel { DriverViewModel(get(), get()) }
-    viewModel { DriverSeasonViewModel(get(), get(), get()) }
-
-    // Constructor
-    viewModel { ConstructorViewModel(get(), get()) }
-
-    // Settings
-    viewModel { SettingsViewModel(get(), get(), get()) }
-    viewModel { LockoutViewModel(get(), get()) }
-    viewModel { PrivacyPolicyViewModel() }
-
-    // Network connectivity
-    single<NetworkConnectivityManager> { AndroidConnectivityManager(get()) }
-
-    // Managers
-    single<PushNotificationManager> { FirebasePushNotificationManager(get(), get()) }
+    // App shortcuts
     single<AppShortcutManager> { AndroidAppShortcutManager(get()) }
-
-    // Shared Prefs
-    single<PrefCustomisationRepository> { SharedPrefsRepository(get()) }
-    single<PrefDeviceRepository> { SharedPrefsRepository(get()) }
-    single<PrefNotificationRepository> { SharedPrefsRepository(get()) }
-
-    // Build Config
-    single<BuildConfigManager> { AppBuildConfigManager() }
-
-    // Crash Reporting
-    single<CrashManager> { FirebaseCrashManager(get(), BuildConfig.ENVIRONMENT != 1) }
 }

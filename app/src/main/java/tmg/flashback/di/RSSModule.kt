@@ -12,10 +12,6 @@ import tmg.flashback.rss.ui.settings.RSSSettingsViewModel
 
 val rssModule = module {
 
-    viewModel { RSSViewModel(get(), get(), get()) }
-    viewModel { RSSSettingsViewModel(get()) }
-    viewModel { RSSConfigureViewModel(get()) }
-
     single<RSSPrefsRepository> { SharedPrefsRepository(get()) }
     single<RSSRepository> { RSS(get()) }
 }

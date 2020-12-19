@@ -8,6 +8,7 @@
     android:background="?attr/f1BackgroundPrimary">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@null"
@@ -48,8 +49,8 @@
                     android:layout_marginEnd="@dimen/paddingMedium"
                     android:layout_marginBottom="@dimen/paddingSmall"
                     android:background="@null"
-                    android:foreground="@drawable/ripple_rounded"
                     android:contentDescription="@string/settings_title"
+                    android:foreground="@drawable/ripple_rounded"
                     android:scaleType="center"
                     android:src="@drawable/ic_back"
                     android:tint="?attr/f1TextPrimary"
@@ -67,8 +68,8 @@
         android:id="@+id/rvSettings"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
         android:clipToPadding="false"
+        android:fitsSystemWindows="true"
         android:overScrollMode="never"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
 
