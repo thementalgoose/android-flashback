@@ -15,6 +15,4 @@ val firebaseModule = module {
     single<DataRepository> { DataFirestore(get()) }
     single<DriverRepository> { DriverFirestore(get()) }
     single<ConstructorRepository> { ConstructorFirestore(get()) }
-
-    single<RemoteConfigRepository> { FirebaseRemoteConfigRepository(get()) }
 }

@@ -21,6 +21,10 @@ class ProvidedByViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnC
 
     private var isLightMode: Boolean = false
 
+    init {
+        view.provided_by.setOnClickListener(this)
+    }
+
     fun bind(text: String?, theme: ThemePref) {
         isLightMode = theme.isLightMode(context)
         itemView.provided_by.text = text?.fromHtml() ?: getString(R.string.shared_provided_by)

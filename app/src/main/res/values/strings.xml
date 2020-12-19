@@ -6,10 +6,10 @@
     <!-- Settings -->
     <string name="settings_title">Settings</string>
     <string name="settings_notifications_title">Notifications</string>
-    <string name="settings_notifications_channel_race_title">Race</string>
-    <string name="settings_notifications_channel_race_description">Receive notifications 30 minutes before a race starts. Configure them here</string>
     <string name="settings_notifications_channel_qualifying_title">Qualifying</string>
     <string name="settings_notifications_channel_qualifying_description">Receive notifications 30 minutes before qualifying starts. Configure them here</string>
+    <string name="settings_notifications_channel_race_title">Race</string>
+    <string name="settings_notifications_channel_race_description">Receive notifications 30 minutes before a race starts. Configure them here</string>
     <string name="settings_notifications_nonchannel_title">Notifications</string>
     <string name="settings_notifications_nonchannel_description">Turn off the app notifications by turning them off in your settings</string>
     <string name="settings_customisation">Customisation</string>
@@ -30,7 +30,7 @@
     <string name="settings_customisation_qualifying_grid_penalties_title">Qualifying grid penalties</string>
     <string name="settings_customisation_qualifying_grid_penalties_description">Shows the grid penalty that a driver has in the qualifying view</string>
     <string name="settings_customisation_rss">RSS</string>
-    <string name="settings_customisation_rss_title">RSS</string>
+    <string name="settings_customisation_rss_title">RSS feed</string>
     <string name="settings_customisation_rss_description">Open the RSS feed settings</string>
     <string name="settings_season_list">Season list</string>
     <string name="settings_customisation_season_expanded_title">Expand sheet to full screen</string>
