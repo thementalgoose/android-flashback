@@ -1,6 +1,7 @@
 package tmg.flashback.repo.models.stats
 
 import org.threeten.bp.LocalDate
+import tmg.flashback.repo.enums.isStatusFinished
 
 data class DriverOverview(
         val id: String,
@@ -60,6 +61,22 @@ data class DriverOverview(
                 .flatten()
     }
 
+    val raceStarts: Int by lazy {
+        return@lazy standings
+                .map { it.raceStarts }
+                .sum()
+    }
+    val raceFinishes: Int by lazy {
+        return@lazy standings
+                .map { it.raceFinishes }
+                .sum()
+    }
+    val raceRetirements: Int by lazy {
+        return@lazy standings
+                .map { it.raceRetirements }
+                .sum()
+    }
+
     val careerBestFinish: Int by lazy {
         return@lazy standings.minByOrNull { it.bestFinish }?.bestFinish ?: -1
     }
@@ -108,14 +125,20 @@ data class DriverOverview(
         return standings
                 .map { it.raceOverview }
                 .flatten()
-                .count { it.finished >= 1 && it.finished <= position }
+                .count {
+                    @Suppress("ConvertTwoComparisonsToRangeCheck")
+                    it.finished >= 1 && it.finished <= position
+                }
     }
 
     fun totalQualifyingAbove(position: Int): Int {
         return standings
                 .map { it.raceOverview }
                 .flatten()
-                .count { it.qualified >= 1 && it.qualified <= position }
+                .count {
+                    @Suppress("ConvertTwoComparisonsToRangeCheck")
+                    it.qualified >= 1 && it.qualified <= position
+                }
     }
 
     fun totalQualifyingIn(position: Int): Int {
@@ -170,6 +193,16 @@ data class DriverOverviewStanding(
         return@lazy totalFinishesAbove(5)
     }
 
+    val raceStarts: Int by lazy {
+        return@lazy races
+    }
+    val raceFinishes: Int by lazy {
+        return@lazy raceOverview.filter { it.status.isStatusFinished() }.size
+    }
+    val raceRetirements: Int by lazy {
+        return@lazy raceOverview.filter { !it.status.isStatusFinished() }.size
+    }
+
     fun totalFinishesIn(position: Int): Int {
         return raceOverview
                 .count { it.finished == position }
@@ -177,11 +210,17 @@ data class DriverOverviewStanding(
 
     fun totalFinishesAbove(position: Int): Int {
         return raceOverview
-                .count { it.finished >= 1 && it.finished <= position }
+                .count {
+                    @Suppress("ConvertTwoComparisonsToRangeCheck")
+                    it.finished >= 1 && it.finished <= position
+                }
     }
     fun totalQualifyingAbove(position: Int): Int {
         return raceOverview
-                .count { it.qualified >= 1 && it.qualified <= position }
+                .count {
+                    @Suppress("ConvertTwoComparisonsToRangeCheck")
+                    it.qualified >= 1 && it.qualified <= position
+                }
     }
 
     fun totalQualifyingIn(position: Int): Int {
