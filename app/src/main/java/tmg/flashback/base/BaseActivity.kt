@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.annotation.StyleRes
 import org.koin.android.ext.android.inject
 import tmg.flashback.R
+import tmg.flashback.extensions.isLightMode
 import tmg.flashback.repo.db.CrashManager
 import tmg.flashback.repo.pref.PrefCustomisationRepository
 import tmg.flashback.repo.enums.ThemePref
@@ -26,7 +27,7 @@ abstract class BaseActivity : CommonActivity() {
 
     @StyleRes
     private fun getThemeStyle(): Int {
-        isLightTheme = prefsRepository.theme == ThemePref.DAY || (prefsRepository.theme == ThemePref.AUTO && isInDayMode())
+        isLightTheme = prefsRepository.theme.isLightMode(this)
         return when (isLightTheme) {
             true -> R.style.LightTheme
             false -> R.style.DarkTheme

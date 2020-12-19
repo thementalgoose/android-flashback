@@ -1,7 +1,9 @@
 package tmg.flashback.extensions
 
+import android.content.Context
 import tmg.flashback.R
 import tmg.flashback.repo.enums.ThemePref
+import tmg.utilities.extensions.isInDayMode
 
 val ThemePref.label: Int
     get() = when (this) {
@@ -16,3 +18,7 @@ val ThemePref.icon: Int
         ThemePref.AUTO -> R.drawable.ic_theme_auto
         ThemePref.NIGHT -> R.drawable.ic_theme_dark
     }
+
+fun ThemePref.isLightMode(context: Context): Boolean {
+    return this == ThemePref.DAY || (this == ThemePref.AUTO && context.isInDayMode())
+}
