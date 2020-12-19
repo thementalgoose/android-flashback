@@ -9,13 +9,21 @@ import org.junit.jupiter.api.extension.RegisterExtension
 import org.koin.core.context.loadKoinModules
 import org.koin.core.context.unloadKoinModules
 import org.koin.test.KoinTest
+import tmg.flashback.di.data.*
+import tmg.flashback.di.data.mockConstructorBlue
+import tmg.flashback.di.data.mockDriverAlex
+import tmg.flashback.di.data.mockDriverBrian
+import tmg.flashback.di.data.mockDriverCharlie
+import tmg.flashback.di.data.mockDriverDaniel
 import tmg.flashback.di.mockModules
+import tmg.flashback.di.remoteconfig.MockRemoteConfigRepository
 import tmg.flashback.di.rss.mockRssGoogle
 import tmg.flashback.scenarios.startup
 import tmg.flashback.utils.EspressoUtils.assertViewDisplayed
 import tmg.flashback.utils.EspressoUtils.assertTextDisplayed
 import tmg.flashback.utils.EspressoUtils.clickOn
 import tmg.flashback.utils.EspressoUtils.assertIntentFired
+import tmg.flashback.utils.EspressoUtils.collapseAppBar
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -38,6 +46,88 @@ class AppScenario: KoinTest {
     fun runThroughApp() {
 
         startup {
+
+            assertTextDisplayedInList(MockRemoteConfigRepository.banner)
+
+            this.clickOnCalendar()
+
+            assertTextDisplayedInList(mockRound1.name)
+            assertTextDisplayedInList(mockRound2.name)
+
+            this.clickOnDriver()
+
+            assertTextDisplayedInList(mockDriverAlex.name)
+            assertTextDisplayedInList(mockDriverBrian.name)
+            assertTextDisplayedInList(mockDriverCharlie.name)
+            assertTextDisplayedInList(mockDriverDaniel.name)
+
+            this.clickOnConstructor()
+
+            assertTextDisplayedInList(mockConstructorBlue.name)
+            assertTextDisplayedInList(mockConstructorGreen.name)
+
+            this.clickOnRace(mockRound1.name) {
+
+                this.clickOnRace()
+
+                assertTextDisplayedInList(mockDriverAlex.name)
+                assertTextDisplayedInList(mockDriverBrian.name)
+                assertTextDisplayedInList(mockDriverCharlie.name)
+                assertTextDisplayedInList(mockDriverDaniel.name)
+
+                this.clickOnQualifying()
+
+                assertTextDisplayedInList(mockDriverAlex.name)
+                assertTextDisplayedInList(mockDriverBrian.name)
+                assertTextDisplayedInList(mockDriverCharlie.name)
+                assertTextDisplayedInList(mockDriverDaniel.name)
+
+                this.clickOnConstructors()
+
+                assertTextDisplayedInList(mockConstructorGreen.name)
+                assertTextDisplayedInList(mockConstructorBlue.name)
+
+                this.clickOnDriver(mockDriverDaniel.name) {
+
+                    assertItemsAtLeast(10)
+                    assertTextDisplayed(mockDriverDaniel.name)
+                    collapseAppBar()
+                    assertTextDisplayedInList(mockSeason.season.toString())
+
+                    this.clickOnYear(mockSeason.season) {
+
+                        assertItemsAtLeast(10)
+                        assertTextDisplayed("${mockDriverDaniel.name} ${mockSeason.season}")
+                        collapseAppBar()
+                        assertTextDisplayedInList(mockRound1.name)
+                    }
+                }
+
+                this.clickOnConstructor(mockConstructorBlue.name) {
+
+                    assertItemsAtLeast(10)
+                    assertTextDisplayed(mockConstructorBlue.name)
+                    collapseAppBar()
+                    assertTextDisplayedInList(mockSeason.season.toString())
+                }
+            }
+
+            this.clickOnConstructor(mockConstructorBlue.name) {
+
+                assertItemsAtLeast(10)
+            }
+
+            this.clickOnDriver(mockDriverDaniel.name) {
+
+                assertItemsAtLeast(10)
+            }
+
+            // TODO: Banner text resolving needs to be injected and is currently being hacked in so can't be tested
+//            this.clickOnDataProvidedBanner {
+//
+//                assertTextDisplayed(R.string.about_name)
+//                assertTextDisplayed(R.string.about_desc)
+//            }
 
             this.goToRss {
 
@@ -66,6 +156,7 @@ class AppScenario: KoinTest {
                         assertTextDisplayedInList(R.string.rss_configure_header_items)
                         assertTextDisplayedInList(R.string.rss_configure_header_add)
                         assertTextDisplayedInList(R.string.rss_configure_header_quick_add)
+                        assertItemsAtLeast(10)
                     }
                 }
             }

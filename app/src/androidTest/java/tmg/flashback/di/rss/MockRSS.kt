@@ -9,7 +9,7 @@ import tmg.flashback.rss.repo.model.Article
 /**
  * Mock data for RSS feed
  */
-object MockRSS: RSSRepository {
+internal object MockRSS: RSSRepository {
     override fun getNews(): Flow<Response<List<Article>>> = flow {
         emit(Response(listOf(mockRssGoogle)))
     }

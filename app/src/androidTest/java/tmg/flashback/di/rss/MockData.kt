@@ -4,7 +4,7 @@ import org.threeten.bp.LocalDateTime
 import tmg.flashback.rss.repo.model.Article
 import tmg.flashback.rss.repo.model.ArticleSource
 
-val mockRssGoogle: Article = Article(
+internal val mockRssGoogle: Article = Article(
     id = "google",
     title = "www.google.com",
     description = "Google search engine",
