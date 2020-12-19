@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.R
 import tmg.flashback.overviews.*
+import tmg.flashback.overviews.driver.summary.DriverSummaryItem
 import tmg.flashback.overviews.driver.summary.PipeType.*
 import tmg.flashback.repo.NetworkConnectivityManager
 import tmg.flashback.repo.pref.PrefCustomisationRepository
@@ -162,15 +163,66 @@ class DriverSeasonViewModelTest: BaseTest() {
         every { mockDriverRepository.getDriverOverview(any()) } returns flow { emit(mockDriverOverview) }
 
         val expected = listOf(
-                DriverSeasonItem.Stat(icon = R.drawable.ic_team, label = R.string.driver_overview_stat_career_team, value = ""),
-                DriverSeasonItem.Stat(icon = R.drawable.ic_standings, label = R.string.driver_overview_stat_career_wins, value = mockDriverOverview2019Standing.wins.toString()),
-                DriverSeasonItem.Stat(icon = R.drawable.ic_podium, label = R.string.driver_overview_stat_career_podiums, value = mockDriverOverview2019Standing.podiums.toString()),
-                DriverSeasonItem.Stat(icon = R.drawable.ic_status_finished, label = R.string.driver_overview_stat_career_best_finish, value = mockDriverOverview2019Standing.bestFinish.position()),
-                DriverSeasonItem.Stat(icon = R.drawable.ic_finishes_in_points, label = R.string.driver_overview_stat_career_points_finishes, value = mockDriverOverview2019Standing.finishesInPoints.toString()),
-                DriverSeasonItem.Stat(icon = R.drawable.ic_race_points, label = R.string.driver_overview_stat_career_points, value = mockDriverOverview2019Standing.points.toString()),
-                DriverSeasonItem.Stat(icon = R.drawable.ic_qualifying_pole, label = R.string.driver_overview_stat_career_qualifying_pole, value = mockDriverOverview2019Standing.qualifyingPoles.toString()),
-                DriverSeasonItem.Stat(icon = R.drawable.ic_qualifying_front_row, label = R.string.driver_overview_stat_career_qualifying_top_3, value = mockDriverOverview2019Standing.qualifyingTop3.toString()),
-                DriverSeasonItem.Stat(icon = R.drawable.ic_qualifying_top_ten, label = R.string.driver_overview_stat_career_qualifying_top_10, value = mockDriverOverview2019Standing.totalQualifyingAbove(10).toString())
+                DriverSeasonItem.Stat(
+                        icon = R.drawable.ic_team,
+                        label = R.string.driver_overview_stat_career_team,
+                        value = ""
+                ),
+                DriverSeasonItem.Stat(
+                        icon = R.drawable.ic_standings,
+                        label = R.string.driver_overview_stat_career_wins,
+                        value = mockDriverOverview2019Standing.wins.toString()
+                ),
+                DriverSeasonItem.Stat(
+                        icon = R.drawable.ic_podium,
+                        label = R.string.driver_overview_stat_career_podiums,
+                        value = mockDriverOverview2019Standing.podiums.toString()
+                ),
+                DriverSeasonItem.Stat(
+                        icon = R.drawable.ic_race_starts,
+                        label = R.string.driver_overview_stat_race_starts,
+                        value = mockDriverOverview2019Standing.raceStarts.toString()
+                ),
+                DriverSeasonItem.Stat(
+                        icon = R.drawable.ic_race_finishes,
+                        label = R.string.driver_overview_stat_race_finishes,
+                        value = mockDriverOverview2019Standing.raceFinishes.toString()
+                ),
+                DriverSeasonItem.Stat(
+                        icon = R.drawable.ic_race_retirements,
+                        label = R.string.driver_overview_stat_race_retirements,
+                        value = mockDriverOverview2019Standing.raceRetirements.toString()
+                ),
+                DriverSeasonItem.Stat(
+                        icon = R.drawable.ic_best_finish,
+                        label = R.string.driver_overview_stat_career_best_finish,
+                        value = mockDriverOverview2019Standing.bestFinish.position()
+                ),
+                DriverSeasonItem.Stat(
+                        icon = R.drawable.ic_finishes_in_points,
+                        label = R.string.driver_overview_stat_career_points_finishes,
+                        value = mockDriverOverview2019Standing.finishesInPoints.toString()
+                ),
+                DriverSeasonItem.Stat(
+                        icon = R.drawable.ic_race_points,
+                        label = R.string.driver_overview_stat_career_points,
+                        value = mockDriverOverview2019Standing.points.toString()
+                ),
+                DriverSeasonItem.Stat(
+                        icon = R.drawable.ic_qualifying_pole,
+                        label = R.string.driver_overview_stat_career_qualifying_pole,
+                        value = mockDriverOverview2019Standing.qualifyingPoles.toString()
+                ),
+                DriverSeasonItem.Stat(
+                        icon = R.drawable.ic_qualifying_front_row,
+                        label = R.string.driver_overview_stat_career_qualifying_top_3,
+                        value = mockDriverOverview2019Standing.qualifyingTop3.toString()
+                ),
+                DriverSeasonItem.Stat(
+                        icon = R.drawable.ic_qualifying_top_ten,
+                        label = R.string.driver_overview_stat_career_qualifying_top_10,
+                        value = mockDriverOverview2019Standing.totalQualifyingAbove(10).toString()
+                )
         )
 
         initSUT()
