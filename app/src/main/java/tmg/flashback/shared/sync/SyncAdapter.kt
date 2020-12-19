@@ -3,10 +3,17 @@ package tmg.flashback.shared.sync
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 import tmg.flashback.R
+import tmg.flashback.repo.config.RemoteConfigRepository
+import tmg.flashback.repo.pref.PrefCustomisationRepository
 import tmg.flashback.shared.viewholders.*
 
-abstract class SyncAdapter<T>: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+abstract class SyncAdapter<T> : RecyclerView.Adapter<RecyclerView.ViewHolder>(), KoinComponent {
+
+    private val prefsRepo: PrefCustomisationRepository by inject()
+    private val remoteConfigRepo: RemoteConfigRepository by inject()
 
     abstract var list: List<T>
 
@@ -30,7 +37,9 @@ abstract class SyncAdapter<T>: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             is SyncDataItem.Unavailable -> (holder as DataUnavailableViewHolder).bind(item.type)
             is SyncDataItem.Message -> (holder as MessageViewHolder).bind(item.msg)
             is SyncDataItem.MessageRes -> (holder as MessageViewHolder).bind(item.msg, item.values)
-            else -> {}
+            is SyncDataItem.ProvidedBy -> (holder as ProvidedByViewHolder).bind(remoteConfigRepo.dataProvidedBy, prefsRepo.theme)
+            else -> {
+            }
         }
     }
 

@@ -52,8 +52,14 @@ class FirebaseRemoteConfigRepository(
     override val rss: Boolean
         get() = remoteConfig.getBoolean(keyRss)
 
-    override val dataProvidedBy: String
-        get() = remoteConfig.getString(keyDataProvidedBy)
+    override val dataProvidedBy: String?
+        get() {
+            val text = remoteConfig.getString(keyDataProvidedBy)
+            return when {
+                text.isEmpty() -> null
+                else -> text
+            }
+        }
 
     //endregion
 
