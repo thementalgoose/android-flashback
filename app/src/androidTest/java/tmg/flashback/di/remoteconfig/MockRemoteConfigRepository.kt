@@ -2,7 +2,7 @@ package tmg.flashback.di.remoteconfig
 
 import tmg.flashback.repo.config.RemoteConfigRepository
 
-object MockRemoteConfigRepository: RemoteConfigRepository {
+internal object MockRemoteConfigRepository: RemoteConfigRepository {
 
     override suspend fun update(andActivate: Boolean): Boolean {
         return true
@@ -18,6 +18,6 @@ object MockRemoteConfigRepository: RemoteConfigRepository {
         get() = "MOCK BANNER"
     override val rss: Boolean
         get() = true
-    override val dataProvidedBy: String?
+    override val dataProvidedBy: String
         get() = "Mock"
 }

@@ -4,6 +4,7 @@ import org.koin.core.context.loadKoinModules
 import org.koin.core.context.unloadKoinModules
 import tmg.flashback.R
 import tmg.flashback.di.mockModules
+import tmg.flashback.di.remoteconfig.MockRemoteConfigRepository
 import tmg.flashback.utils.EspressoUtils.clickOn
 import tmg.flashback.utils.EspressoUtils.collapseAppBar
 import tmg.flashback.utils.EspressoUtils.pressBack
@@ -13,7 +14,7 @@ fun startup(block: Home.() -> Unit) {
     block(Home)
 }
 
-object Home {
+object Home: RecyclerViewUtils(R.id.dataList) {
 
     fun goToSettings(block: Settings.() -> Unit) {
         clickOn(R.id.settings)
@@ -27,7 +28,89 @@ object Home {
         block(RSS)
         pressBack()
     }
+
+    fun clickOnRace(raceName: String, block: Race.() -> Unit) {
+        clickOnCalendar()
+        clickOnListText(raceName)
+        collapseAppBar()
+        block(Race)
+        pressBack()
+    }
+
+    fun clickOnDriver(name: String, block: DriverOverview.() -> Unit) {
+        clickOnDriver()
+        clickOnListText(name)
+        collapseAppBar()
+        block(DriverOverview)
+        pressBack()
+    }
+
+    fun clickOnConstructor(name: String, block: ConstructorOverview.() -> Unit) {
+        clickOnConstructor()
+        clickOnListText(name)
+        collapseAppBar()
+        block(ConstructorOverview)
+        pressBack()
+    }
+
+    fun clickOnDataProvidedBanner(block: SettingsAbout.() -> Unit) {
+        clickOnListText(MockRemoteConfigRepository.dataProvidedBy)
+        block(SettingsAbout)
+        pressBack()
+    }
+
+    fun clickOnCalendar() = clickOn(R.id.nav_calendar)
+    fun clickOnDriver() = clickOn(R.id.nav_drivers)
+    fun clickOnConstructor() = clickOn(R.id.nav_constructor)
 }
+
+object Race: RecyclerViewUtils(R.id.rvContent) {
+
+    fun clickOnDriver(name: String, block: DriverOverview.() -> Unit) {
+        clickOnRace()
+        clickOnListText(name)
+        block(DriverOverview)
+        pressBack()
+    }
+
+    fun clickOnConstructor(name: String, block: ConstructorOverview.() -> Unit) {
+        clickOnConstructors()
+        clickOnListText(name)
+        block(ConstructorOverview)
+        pressBack()
+    }
+
+    fun clickOnQualifying() = clickOn(R.id.nav_qualifying)
+    fun clickOnRace() = clickOn(R.id.nav_race)
+    fun clickOnConstructors() = clickOn(R.id.nav_constructor)
+}
+
+object DriverOverview: RecyclerViewUtils(R.id.list) {
+
+    fun clickOnYear(year: Int, block: DriverSeasonOverview.() -> Unit) {
+        clickOnListText(year.toString())
+        block(DriverSeasonOverview)
+        pressBack()
+    }
+}
+
+object DriverSeasonOverview: RecyclerViewUtils(R.id.list) {
+
+    fun clickOnRace(raceName: String, block: Race.() -> Unit) {
+
+        clickOnListText(raceName)
+        collapseAppBar()
+        block(Race)
+        pressBack()
+    }
+}
+
+object ConstructorOverview: RecyclerViewUtils(R.id.list) {
+
+
+}
+
+//region Settings
 
 object Settings: RecyclerViewUtils(R.id.rvSettings) {
 
@@ -58,17 +141,15 @@ object Settings: RecyclerViewUtils(R.id.rvSettings) {
     }
 }
 
-object SettingsPrivacyPolicy {
+object SettingsPrivacyPolicy
 
-}
+object SettingsReleaseNotes
 
-object SettingsReleaseNotes {
+object SettingsAbout
 
-}
+//endregion
 
-object SettingsAbout {
-
-}
+//region RSS
 
 object RSSSettings: RecyclerViewUtils(R.id.rvSettings) {
 
@@ -79,10 +160,7 @@ object RSSSettings: RecyclerViewUtils(R.id.rvSettings) {
     }
 }
 
-object RSSSettingsConfigure: RecyclerViewUtils(R.id.configuration) {
-
-
-}
+object RSSSettingsConfigure: RecyclerViewUtils(R.id.configuration)
 
 object RSS: RecyclerViewUtils(R.id.list) {
 
@@ -99,6 +177,7 @@ object RSS: RecyclerViewUtils(R.id.list) {
     }
 }
 
-
 object RSSBrowser
+
+//endregion
 
