@@ -36,6 +36,7 @@ class RaceViewModelTest: BaseTest() {
 
         every { mockConnectivityManager.isConnected } returns true
         every { mockPrefsRepository.barAnimation } returns BarAnimation.NONE
+        every { mockPrefsRepository.fadeDNF } returns true
     }
 
     private fun initSUT(roundDate: LocalDate? = null, orderBy: RaceAdapterType = RACE) {
@@ -244,7 +245,7 @@ class RaceViewModelTest: BaseTest() {
         every { mockPrefsRepository.showGridPenaltiesInQualifying } returns false
         every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow { emit(mockRound1) }
 
-        val showQualifying = DisplayPrefs(true, true, true, false, false)
+        val showQualifying = DisplayPrefs(true, true, true, false, false, true)
         val expected = mutableListOf<RaceModel>(RaceModel.QualifyingHeader(showQualifying))
         expected.addAll(expectedQ3Order)
         expected.add(RaceModel.ErrorItem(SyncDataItem.ProvidedBy))
@@ -263,7 +264,7 @@ class RaceViewModelTest: BaseTest() {
         every { mockPrefsRepository.showGridPenaltiesInQualifying } returns false
         every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow { emit(mockRound1) }
 
-        val showQualifying = DisplayPrefs(true, true, true, false, false)
+        val showQualifying = DisplayPrefs(true, true, true, false, false, true)
         val expected = mutableListOf<RaceModel>(RaceModel.QualifyingHeader(showQualifying))
         expected.addAll(expectedQ2Order)
         expected.add(RaceModel.ErrorItem(SyncDataItem.ProvidedBy))
@@ -282,7 +283,7 @@ class RaceViewModelTest: BaseTest() {
         every { mockPrefsRepository.showGridPenaltiesInQualifying } returns false
         every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow { emit(mockRound1) }
 
-        val showQualifying = DisplayPrefs(true, true, true, false, false)
+        val showQualifying = DisplayPrefs(true, true, true, false, false, true)
         val expected = mutableListOf<RaceModel>(RaceModel.QualifyingHeader(showQualifying))
         expected.addAll(expectedQ1Order)
         expected.add(RaceModel.ErrorItem(SyncDataItem.ProvidedBy))
@@ -301,7 +302,7 @@ class RaceViewModelTest: BaseTest() {
         every { mockPrefsRepository.showGridPenaltiesInQualifying } returns false
         every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow { emit(mockRound1) }
 
-        val showQualifying = DisplayPrefs(true, true, true, false, false)
+        val showQualifying = DisplayPrefs(true, true, true, false, false, true)
         val expectedQ3 = mutableListOf<RaceModel>(RaceModel.QualifyingHeader(showQualifying))
         expectedQ3.addAll(expectedQ3Order)
         expectedQ3.add(RaceModel.ErrorItem(SyncDataItem.ProvidedBy))
@@ -342,7 +343,7 @@ class RaceViewModelTest: BaseTest() {
         every { mockPrefsRepository.showGridPenaltiesInQualifying } returns false
         every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow { emit(mockRound1) }
 
-        val showQualifying = DisplayPrefs(true, true, true, true, false)
+        val showQualifying = DisplayPrefs(true, true, true, true, false, true)
         val expected = mutableListOf<RaceModel>(RaceModel.QualifyingHeader(showQualifying))
         expected.addAll(expectedQ3OrderWithQualifyingDeltas)
         expected.add(RaceModel.ErrorItem(SyncDataItem.ProvidedBy))
@@ -361,7 +362,7 @@ class RaceViewModelTest: BaseTest() {
         every { mockPrefsRepository.showGridPenaltiesInQualifying } returns false
         every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow { emit(mockRound3) }
 
-        val showQualifying = DisplayPrefs(true, false, false, false, false)
+        val showQualifying = DisplayPrefs(true, false, false, false, false, true)
         val expected = mutableListOf<RaceModel>(RaceModel.QualifyingHeader(showQualifying))
         expected.addAll(expectedQ3Order(round = mockRound3, displayPrefs = showQualifying))
         expected.add(RaceModel.ErrorItem(SyncDataItem.ProvidedBy))
@@ -495,7 +496,8 @@ class RaceViewModelTest: BaseTest() {
         q2 = true,
         q3 = true,
         penalties = false,
-        deltas = false
+        deltas = false,
+        fadeDNF = true
     )): List<RaceModel> = listOf(
         convertDriverToSingle(round = round, roundDriver = mockDriver1,
             expectedQualified = 1,
@@ -581,7 +583,7 @@ class RaceViewModelTest: BaseTest() {
             expectedQ1Delta = null,
             expectedQ2Delta = "+1.000",
             expectedQ3Delta = null,
-            displayPrefs = DisplayPrefs(true, true, true, true, false)
+            displayPrefs = DisplayPrefs(true, true, true, true, false, true)
         ),
         convertDriverToSingle(round = mockRound1, roundDriver = mockDriver2,
             expectedQualified = 2,
@@ -590,7 +592,7 @@ class RaceViewModelTest: BaseTest() {
             expectedQ1Delta = "+2.000",
             expectedQ2Delta = null,
             expectedQ3Delta = "+1.000",
-            displayPrefs = DisplayPrefs(true, true, true, true, false)
+            displayPrefs = DisplayPrefs(true, true, true, true, false, true)
         ),
         convertDriverToSingle(round = mockRound1, roundDriver = mockDriver3,
             expectedQualified = 3,
@@ -599,7 +601,7 @@ class RaceViewModelTest: BaseTest() {
             expectedQ1Delta = "+1.000",
             expectedQ2Delta = "+2.000",
             expectedQ3Delta = null,
-            displayPrefs = DisplayPrefs(true, true, true, true, false)
+            displayPrefs = DisplayPrefs(true, true, true, true, false, true)
         ),
         convertDriverToSingle(round = mockRound1, roundDriver = mockDriver4,
             expectedQualified = 4,
@@ -608,7 +610,7 @@ class RaceViewModelTest: BaseTest() {
             expectedQ1Delta = "+3.000",
             expectedQ2Delta = null,
             expectedQ3Delta = null,
-            displayPrefs = DisplayPrefs(true, true, true, true, false)
+            displayPrefs = DisplayPrefs(true, true, true, true, false, true)
         )
     )
 
@@ -628,7 +630,8 @@ class RaceViewModelTest: BaseTest() {
                                           q2 = true,
                                           q3 = true,
                                           penalties = false,
-                                          deltas = false
+                                          deltas = false,
+                                          fadeDNF = true
                                       )
     ): RaceModel.Single {
         val overview = round.driverOverview(roundDriver.id)
