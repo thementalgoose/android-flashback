@@ -79,9 +79,6 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback {
         if (!remoteConfigRepository.rss) {
             menu.menu.removeItem(R.id.nav_rss)
         }
-        if (container_landscape != null) {
-            menu.menu.removeItem(R.id.nav_seasons)
-        }
         menu.setOnNavigationItemSelectedListener {
             return@setOnNavigationItemSelectedListener when (it.itemId) {
                 R.id.nav_rss -> {
@@ -100,22 +97,15 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback {
                     viewModel.inputs.clickItem(HomeMenuItem.CONSTRUCTORS)
                     true
                 }
-                R.id.nav_seasons -> {
-                    viewModel.inputs.clickItem(HomeMenuItem.SEASONS)
-                    when (menu.selectedItemId) {
-                        R.id.nav_calendar,
-                        R.id.nav_drivers,
-                        R.id.nav_constructor -> {
-                        }
-                        else -> menu.selectedItemId = R.id.nav_calendar
-                    }
-                    false
-                }
                 else -> false
             }
         }
 
         setupBottomSheetSeason()
+
+        season.setOnClickListener {
+            viewModel.inputs.clickItem(HomeMenuItem.SEASONS)
+        }
 
         settings.setOnClickListener {
             startActivity(Intent(this, SettingsActivity::class.java))
@@ -132,7 +122,7 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback {
         }
 
         observe(viewModel.outputs.label) {
-            season.text = it.resolve(context = this)
+            season.text = getString(R.string.home_season_arrow, it.resolve(context = this))
         }
 
         observeEvent(viewModel.outputs.openSeasonList) {

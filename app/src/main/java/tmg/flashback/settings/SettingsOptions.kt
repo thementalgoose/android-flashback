@@ -33,6 +33,10 @@ enum class SettingsOptions(
             title = R.string.settings_customisation_qualifying_delta_title,
             description = R.string.settings_customisation_qualifying_delta_description
     ),
+    FADE_OUT_DNF("fadeOutDNF",
+            title = R.string.settings_customisation_fade_dnf_title,
+            description = R.string.settings_customisation_fade_dnf_description
+    ),
     QUALIFYING_GRID_PENALTY("qualifyingGridPenalty",
             title = R.string.settings_customisation_qualifying_grid_penalties_title,
             description = R.string.settings_customisation_qualifying_grid_penalties_description

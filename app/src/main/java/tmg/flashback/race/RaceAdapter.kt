@@ -63,7 +63,7 @@ class RaceAdapter(
                 }
             }
             is RaceModel.RaceHeader -> { }
-            is RaceModel.QualifyingHeader -> (holder as QualifyingHeaderViewHolder).bind(item.showQualifyingDeltas, viewType)
+            is RaceModel.QualifyingHeader -> (holder as QualifyingHeaderViewHolder).bind(item.displayPrefs, viewType)
             is RaceModel.ConstructorStandings -> (holder as ConstructorStandingsViewholder).bind(item, maxPointsByAnyTeam())
             is RaceModel.ErrorItem -> super.bindErrors(holder, item.item)
         }

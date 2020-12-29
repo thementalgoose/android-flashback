@@ -120,12 +120,13 @@ class RaceViewModel(
                 else {
                     val driverIds: List<String> = getOrderedDriverIds(roundData, viewType)
                     val list: MutableList<RaceModel> = mutableListOf()
-                    val showQualifying = ShowQualifying(
+                    val showQualifying = DisplayPrefs(
                         q1 = roundData.q1.count { it.value.time != null } > 0,
                         q2 = roundData.q2.count { it.value.time != null } > 0,
                         q3 = roundData.q3.count { it.value.time != null } > 0,
                         deltas = prefsRepository.showQualifyingDelta,
-                        penalties = prefsRepository.showGridPenaltiesInQualifying
+                        penalties = prefsRepository.showGridPenaltiesInQualifying,
+                        fadeDNF = prefsRepository.fadeDNF
                     )
 
                     when (viewType) {
@@ -305,11 +306,11 @@ class RaceViewModel(
      * Get a [RaceModel.Single] instance for a given driver
      */
     private fun getDriverModel(
-        round: Round,
-        @Suppress("UNUSED_PARAMETER")
+            round: Round,
+            @Suppress("UNUSED_PARAMETER")
         viewType: RaceAdapterType,
-        driverId: String,
-        showQualifying: ShowQualifying
+            driverId: String,
+            displayPrefs: DisplayPrefs
     ): RaceModel.Single {
         val overview = round.driverOverview(driverId)
         val race = overview.race?.let {
@@ -334,7 +335,7 @@ class RaceViewModel(
             q1Delta = if (prefsRepository.showQualifyingDelta) round.q1FastestLap?.deltaTo(overview.q1?.time) else null,
             q2Delta = if (prefsRepository.showQualifyingDelta) round.q2FastestLap?.deltaTo(overview.q2?.time) else null,
             q3Delta = if (prefsRepository.showQualifyingDelta) round.q3FastestLap?.deltaTo(overview.q3?.time) else null,
-            showQualifying = showQualifying
+            displayPrefs = displayPrefs
         )
     }
 
