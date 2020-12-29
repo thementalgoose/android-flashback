@@ -6,14 +6,14 @@
 
         <item name="colorPrimary">#4A34B6</item>
         <item name="colorPrimaryDark">#4A34B6</item>
-        <item name="colorAccent">#4A34B6</item>
+        <item name="colorAccent">#745BE9</item>
 
         <item name="android:statusBarColor">?attr/rssBackground</item>
         <item name="android:navigationBarColor">?attr/rssBackground</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:windowLightNavigationBar">true</item>
 
-        <item name="rssBrandPrimary">#4A34B6</item>
+        <item name="rssBrandPrimary">#745BE9</item>
 
         <item name="rssAdd">#4CAF50</item>
         <item name="rssRemove">#f44336</item>
