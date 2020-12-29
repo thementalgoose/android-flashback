@@ -35,6 +35,7 @@ class FirebaseRemoteConfigRepository(
     private val keyDefaultBanner: String = "banner"
     private val keyRss: String = "rss"
     private val keyDataProvidedBy: String = "data_provided"
+    private val keySearch: String = "search"
 
     init {
         remoteConfig.setDefaultsAsync(R.xml.remote_config_defaults)
@@ -60,6 +61,9 @@ class FirebaseRemoteConfigRepository(
                 else -> text
             }
         }
+
+    override val search: Boolean
+        get() = remoteConfig.getBoolean(keySearch)
 
     //endregion
 
