@@ -3,17 +3,12 @@ package tmg.flashback.shared.viewholders
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.view_shared_provided.view.*
-import org.koin.experimental.property.inject
 import tmg.components.about.AboutThisAppActivity
 import tmg.flashback.R
-import tmg.flashback.configuration
+import tmg.flashback.constants.configuration
 import tmg.flashback.extensions.isLightMode
-import tmg.flashback.firebase.config.FirebaseRemoteConfigRepository
-import tmg.flashback.prefs.SharedPrefsRepository
-import tmg.flashback.repo.config.RemoteConfigRepository
 import tmg.flashback.repo.enums.ThemePref
 import tmg.utilities.extensions.fromHtml
-import tmg.utilities.extensions.isInDayMode
 import tmg.utilities.extensions.views.context
 import tmg.utilities.extensions.views.getString
 

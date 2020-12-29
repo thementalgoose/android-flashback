@@ -13,9 +13,9 @@ import org.koin.android.ext.android.inject
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.R
-import tmg.flashback.TrackLayout
 import tmg.flashback.base.BaseActivity
 import tmg.flashback.circuit.CircuitInfoActivity
+import tmg.flashback.constants.TrackLayout
 import tmg.flashback.overviews.constructor.ConstructorActivity
 import tmg.flashback.overviews.driver.DriverActivity
 import tmg.flashback.shared.pill.PillAdapter
