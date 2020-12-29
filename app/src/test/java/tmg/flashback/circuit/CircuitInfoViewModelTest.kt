@@ -8,8 +8,8 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
-import tmg.flashback.TrackLayout.MONACO
 import tmg.flashback.circuit.list.CircuitItem
+import tmg.flashback.constants.TrackLayout
 import tmg.flashback.extensions.circuitIcon
 import tmg.flashback.repo.NetworkConnectivityManager
 import tmg.flashback.repo.db.stats.CircuitRepository
@@ -25,7 +25,7 @@ class CircuitInfoViewModelTest: BaseTest() {
     private val mockCircuitRepository: CircuitRepository = mockk(relaxed = true)
     private val mockConnectivityManager: NetworkConnectivityManager = mockk(relaxed = true)
 
-    private val mockCircuitId: String = MONACO.circuitId
+    private val mockCircuitId: String = TrackLayout.MONACO.circuitId
     private val mockInvalidCircuitId: String = "mockCircuitId"
     private val mockLocalDate: LocalDate = LocalDate.now()
     private val mockLocalTime: LocalTime = LocalTime.now()
