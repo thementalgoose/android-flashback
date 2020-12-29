@@ -104,6 +104,18 @@ class HomeViewModelTest : BaseTest() {
         }
     }
 
+    @Test
+    fun `HomeViewModel defaults to value in remote config and not current year`() = coroutineTest {
+
+        every { mockRemoteConfigRepository.defaultYear } returns 2018
+
+        initSUT()
+
+        sut.outputs.label.test {
+            assertValue(StringHolder(null, "2018"))
+        }
+    }
+
     //endregion
 
     //region App lockout
