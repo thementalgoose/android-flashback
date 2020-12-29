@@ -28,7 +28,7 @@ sealed class RaceModel(
         val q1Delta: String?,
         val q2Delta: String?,
         val q3Delta: String?,
-        val showQualifying: ShowQualifying
+        val displayPrefs: DisplayPrefs
     ) : RaceModel(0) {
 
         @LayoutRes
@@ -49,7 +49,7 @@ sealed class RaceModel(
     ) : RaceModel(R.layout.view_race_race_header)
 
     data class QualifyingHeader(
-        val showQualifyingDeltas: ShowQualifying
+        val displayPrefs: DisplayPrefs
     ) : RaceModel(R.layout.view_race_qualifying_header)
 
     data class ConstructorStandings(
@@ -75,12 +75,13 @@ data class SingleRace(
     val fastestLap: Boolean
 )
 
-data class ShowQualifying(
+data class DisplayPrefs(
     val q1: Boolean,
     val q2: Boolean,
     val q3: Boolean,
     val deltas: Boolean,
-    val penalties: Boolean
+    val penalties: Boolean,
+    val fadeDNF: Boolean
 ) {
     val none: Boolean
         get() = !q1 && !q2 && !q3

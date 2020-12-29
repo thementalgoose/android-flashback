@@ -104,6 +104,7 @@ class SettingsViewModel(
             add(AppPreferencesItem.Category(R.string.settings_customisation))
             add(SettingsOptions.BAR_ANIMATION_SPEED.toPref())
             add(SettingsOptions.QUALIFYING_DELTAS.toSwitch(prefCustomisationRepository.showQualifyingDelta))
+            add(SettingsOptions.FADE_OUT_DNF.toSwitch(prefCustomisationRepository.fadeDNF))
             add(SettingsOptions.QUALIFYING_GRID_PENALTY.toSwitch(prefCustomisationRepository.showGridPenaltiesInQualifying))
             add(AppPreferencesItem.Category(R.string.settings_season_list))
             add(SettingsOptions.SEASON_BOTTOM_SHEET_EXPANDED.toSwitch(prefCustomisationRepository.showBottomSheetExpanded))
@@ -133,6 +134,7 @@ class SettingsViewModel(
             SettingsOptions.NOTIFICATIONS_CHANNEL_QUALIFYING -> openNotificationsChannel.value = DataEvent(topicQualifying)
             SettingsOptions.NOTIFICATIONS_SETTINGS -> openNotifications.value = Event()
             SettingsOptions.QUALIFYING_DELTAS -> prefCustomisationRepository.showQualifyingDelta = value ?: false
+            SettingsOptions.FADE_OUT_DNF -> prefCustomisationRepository.fadeDNF = value ?: false
             SettingsOptions.QUALIFYING_GRID_PENALTY -> prefCustomisationRepository.showGridPenaltiesInQualifying = value ?: true
             SettingsOptions.SEASON_BOTTOM_SHEET_EXPANDED -> prefCustomisationRepository.showBottomSheetExpanded = value ?: true
             SettingsOptions.SEASON_BOTTOM_SHEET_FAVOURITED -> prefCustomisationRepository.showBottomSheetFavourited = value ?: true

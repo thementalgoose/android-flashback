@@ -16,6 +16,11 @@ interface PrefCustomisationRepository {
     var showQualifyingDelta: Boolean
 
     /**
+     * Fade the race results where the driver results in DNF
+     */
+    var fadeDNF: Boolean
+
+    /**
      * Bottom sheet expanded default behavior
      */
     var showBottomSheetExpanded: Boolean

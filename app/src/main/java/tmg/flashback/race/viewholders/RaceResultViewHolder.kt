@@ -13,9 +13,7 @@ import tmg.flashback.utils.getColor
 import tmg.flashback.utils.getFlagResourceAlpha3
 import tmg.flashback.utils.position
 import tmg.utilities.extensions.toEmptyIfZero
-import tmg.utilities.extensions.views.getString
-import tmg.utilities.extensions.views.gone
-import tmg.utilities.extensions.views.visible
+import tmg.utilities.extensions.views.*
 import tmg.utilities.utils.ColorUtils.Companion.darken
 import kotlin.math.abs
 
@@ -101,6 +99,14 @@ class RaceResultViewHolder(
             } else {
                 imgFastestLap.gone()
             }
+
+            // Alpha for DNFs
+            if (status.isNotEmpty() && !status.isStatusFinished() && model.displayPrefs.fadeDNF) {
+                setAlphaToAllViews(0.55f)
+            }
+            else {
+                setAlphaToAllViews(1.0f)
+            }
         }
     }
 
@@ -115,5 +121,18 @@ class RaceResultViewHolder(
                 driverClicked(driverId, driverName)
             }
         }
+    }
+
+    private fun setAlphaToAllViews(alpha: Float) {
+        itemView.tvPosition.alpha = alpha
+        itemView.layoutDriver.alpha = alpha
+        itemView.tvDriverNumber.alpha = alpha
+        itemView.imgDriverFlag.alpha = alpha
+        itemView.tvConstructor.alpha = alpha
+        itemView.constructorColor.alpha = alpha
+        itemView.imgStarted.alpha = alpha
+        itemView.tvPoints.alpha = alpha
+        itemView.llPosition.alpha = alpha
+        itemView.llTime.alpha = alpha
     }
 }
