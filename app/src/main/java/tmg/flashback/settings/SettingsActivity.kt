@@ -20,7 +20,7 @@ import org.koin.android.ext.android.inject
 import tmg.components.about.AboutThisAppActivity
 import tmg.flashback.R
 import tmg.flashback.base.BaseActivity
-import tmg.flashback.configuration
+import tmg.flashback.constants.configuration
 import tmg.flashback.repo.enums.BarAnimation
 import tmg.flashback.repo.enums.ThemePref
 import tmg.flashback.rss.ui.settings.RSSSettingsActivity
