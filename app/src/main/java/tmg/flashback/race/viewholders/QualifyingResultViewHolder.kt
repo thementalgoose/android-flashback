@@ -10,7 +10,7 @@ import tmg.flashback.repo.models.stats.RoundQualifyingResult
 import tmg.flashback.race.RaceAdapterCallback
 import tmg.flashback.race.RaceAdapterType
 import tmg.flashback.race.RaceModel
-import tmg.flashback.race.ShowQualifying
+import tmg.flashback.race.DisplayPrefs
 import tmg.flashback.utils.getFlagResourceAlpha3
 import tmg.utilities.extensions.ordinalAbbreviation
 import tmg.utilities.extensions.views.getString
@@ -28,10 +28,10 @@ class QualifyingResultViewHolder(view: View, private val updateAdapterType: Race
         itemView.filterQuali.setOnClickListener(this)
     }
 
-    private lateinit var showQualifying: ShowQualifying
+    private lateinit var displayPrefs: DisplayPrefs
 
     fun bind(model: RaceModel.Single, type: RaceAdapterType) {
-        this.showQualifying = model.showQualifying
+        this.displayPrefs = model.displayPrefs
 
         itemView.apply {
 
@@ -51,7 +51,7 @@ class QualifyingResultViewHolder(view: View, private val updateAdapterType: Race
 
             constructorColor.setBackgroundColor(model.driver.constructor.color)
 
-            if (model.race != null && showQualifying.penalties && (model.qualified != null && model.qualified != model.race.gridPos && model.race.gridPos > model.qualified)) {
+            if (model.race != null && displayPrefs.penalties && (model.qualified != null && model.qualified != model.race.gridPos && model.race.gridPos > model.qualified)) {
                 penalty.show(true)
                 penalty.text = getString(R.string.qualifying_grid_penalty, model.race.gridPos - model.qualified, model.race.gridPos.ordinalAbbreviation)
             }
@@ -61,24 +61,24 @@ class QualifyingResultViewHolder(view: View, private val updateAdapterType: Race
 
             imgFlag.setImageResource(context.getFlagResourceAlpha3(model.driver.nationalityISO))
 
-            applyTo(model.showQualifying, type) { q1, q2, q3 ->
-                bind(model.q1, q1, model.q1Delta, model.showQualifying)
-                bind(model.q2, q2, model.q2Delta, model.showQualifying)
-                bind(model.q3, q3, model.q3Delta, model.showQualifying)
+            applyTo(model.displayPrefs, type) { q1, q2, q3 ->
+                bind(model.q1, q1, model.q1Delta, model.displayPrefs)
+                bind(model.q2, q2, model.q2Delta, model.displayPrefs)
+                bind(model.q3, q3, model.q3Delta, model.displayPrefs)
             }
 
-            if (model.showQualifying.none) {
+            if (model.displayPrefs.none) {
                 itemView.layoutQ3.tvQualifyingTime.text = itemView.context.getString(R.string.race_qualifying_no_data)
             }
         }
     }
 
-    private fun bind(qualifying: RoundQualifyingResult?, layout: View?, delta: String?, showQualifying: ShowQualifying): Boolean {
+    private fun bind(qualifying: RoundQualifyingResult?, layout: View?, delta: String?, displayPrefs: DisplayPrefs): Boolean {
         if (layout == null) return false
         val label = qualifying?.time?.toString() ?: ""
         layout.tvQualifyingTime.text = label
 
-        if (showQualifying.deltas) {
+        if (displayPrefs.deltas) {
             layout.tvQualifyingDelta.show()
         }
         else {
@@ -91,8 +91,8 @@ class QualifyingResultViewHolder(view: View, private val updateAdapterType: Race
         return label.isNotEmpty()
     }
 
-    private fun applyTo(showQualifying: ShowQualifying, type: RaceAdapterType, callback: (q1: View, q2: View?, q3: View?) -> Unit) {
-        if (showQualifying.q1 && !showQualifying.q2 && !showQualifying.q3) {
+    private fun applyTo(displayPrefs: DisplayPrefs, type: RaceAdapterType, callback: (q1: View, q2: View?, q3: View?) -> Unit) {
+        if (displayPrefs.q1 && !displayPrefs.q2 && !displayPrefs.q3) {
             callback(itemView.layoutQ3, null, null)
             itemView.layoutQ1.show(false, isGone = false)
             itemView.layoutQ2.show(false, isGone = false)
@@ -102,7 +102,7 @@ class QualifyingResultViewHolder(view: View, private val updateAdapterType: Race
             itemView.layoutQ3.setBackgroundResource(R.drawable.background_qualifying_item)
             return
         }
-        if (showQualifying.q1 && showQualifying.q2 && !showQualifying.q3) {
+        if (displayPrefs.q1 && displayPrefs.q2 && !displayPrefs.q3) {
             callback(itemView.layoutQ3, itemView.layoutQ2, null)
             itemView.layoutQ1.show(false, isGone = false)
             itemView.layoutQ2.show(true, isGone = false)
@@ -125,7 +125,7 @@ class QualifyingResultViewHolder(view: View, private val updateAdapterType: Race
     //region View.OnClickListener
 
     override fun onClick(p0: View?) {
-        if (showQualifying.q1 && showQualifying.q2 && !showQualifying.q3) {
+        if (displayPrefs.q1 && displayPrefs.q2 && !displayPrefs.q3) {
             when (p0) {
                 itemView.layoutQ2 -> updateAdapterType.orderBy(RaceAdapterType.QUALIFYING_POS_1)
                 itemView.layoutQ3 -> updateAdapterType.orderBy(RaceAdapterType.QUALIFYING_POS_2)

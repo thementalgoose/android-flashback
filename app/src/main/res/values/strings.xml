@@ -27,6 +27,8 @@
     <string name="settings_bar_animation_slow">2x</string>
     <string name="settings_customisation_qualifying_delta_title">Qualifying delta</string>
     <string name="settings_customisation_qualifying_delta_description">Show the lap time delta alongside the qualifying time when displaying qualifying results</string>
+    <string name="settings_customisation_fade_dnf_title">Fade race DNFs</string>
+    <string name="settings_customisation_fade_dnf_description">Fade out the drivers who fail to finish a race when looking at race results</string>
     <string name="settings_customisation_qualifying_grid_penalties_title">Qualifying grid penalties</string>
     <string name="settings_customisation_qualifying_grid_penalties_description">Shows the grid penalty that a driver has in the qualifying view</string>
     <string name="settings_customisation_rss">RSS</string>
@@ -126,6 +128,7 @@
     <string name="home_season_header_favourited">Favourites</string>
     <string name="home_season_header_All">All</string>
     <string name="home_constructor_penalty">%d point penalty</string>
+    <string name="home_season_arrow">%s</string>
 
     <!-- On pole or 4th -->
     <!-- On pole or 2nd -->

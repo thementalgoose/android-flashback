@@ -54,7 +54,7 @@
                     android:layout_marginTop="@dimen/paddingSmall"
                     android:layout_marginEnd="@dimen/paddingMedium"
                     android:layout_marginBottom="@dimen/paddingSmall"
-                    android:background="@drawable/ripple"
+                    android:background="@drawable/ripple_rounded"
                     android:contentDescription="@string/settings_title"
                     android:scaleType="center"
                     android:src="@drawable/ic_back"

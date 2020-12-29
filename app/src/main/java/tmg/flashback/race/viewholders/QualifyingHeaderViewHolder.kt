@@ -6,7 +6,7 @@ import kotlinx.android.synthetic.main.view_race_qualifying_header.view.*
 import tmg.flashback.R
 import tmg.flashback.race.RaceAdapterCallback
 import tmg.flashback.race.RaceAdapterType
-import tmg.flashback.race.ShowQualifying
+import tmg.flashback.race.DisplayPrefs
 import tmg.utilities.extensions.views.show
 
 class QualifyingHeaderViewHolder(view: View, private val updateAdapterType: RaceAdapterCallback) : RecyclerView.ViewHolder(view), View.OnClickListener {
@@ -17,12 +17,12 @@ class QualifyingHeaderViewHolder(view: View, private val updateAdapterType: Race
         itemView.tvQ3.setOnClickListener(this)
     }
 
-    private lateinit var showQualifying: ShowQualifying
+    private lateinit var displayPrefs: DisplayPrefs
 
-    fun bind(showQualifying: ShowQualifying, type: RaceAdapterType) {
-        this.showQualifying = showQualifying
+    fun bind(displayPrefs: DisplayPrefs, type: RaceAdapterType) {
+        this.displayPrefs = displayPrefs
         when {
-            !showQualifying.q2 && !showQualifying.q3 -> {
+            !displayPrefs.q2 && !displayPrefs.q3 -> {
                 itemView.tvQ1.show(false, isGone = false)
                 itemView.tvQ2.show(false, isGone = false)
                 itemView.tvQ3.show(true, isGone = false)
@@ -31,7 +31,7 @@ class QualifyingHeaderViewHolder(view: View, private val updateAdapterType: Race
                 itemView.tvQ3.setBackgroundResource(R.drawable.background_qualifying_header)
                 itemView.tvQ3.text = itemView.context.getString(R.string.qualifying_q1)
             }
-            showQualifying.q1 && showQualifying.q2 && !showQualifying.q3 -> {
+            displayPrefs.q1 && displayPrefs.q2 && !displayPrefs.q3 -> {
                 itemView.tvQ1.show(false, isGone = false)
                 itemView.tvQ2.show(true, isGone = false)
                 itemView.tvQ3.show(true, isGone = false)
@@ -56,7 +56,7 @@ class QualifyingHeaderViewHolder(view: View, private val updateAdapterType: Race
     }
 
     override fun onClick(p0: View?) {
-        if (showQualifying.q1 && showQualifying.q2 && !showQualifying.q3) {
+        if (displayPrefs.q1 && displayPrefs.q2 && !displayPrefs.q3) {
             when (p0) {
                 itemView.vOther -> updateAdapterType.orderBy(RaceAdapterType.QUALIFYING_POS)
                 itemView.tvQ2 -> updateAdapterType.orderBy(RaceAdapterType.QUALIFYING_POS_1)
