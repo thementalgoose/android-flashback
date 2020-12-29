@@ -17,7 +17,7 @@ class ProvidedByViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnC
     private var isLightMode: Boolean = false
 
     init {
-        view.provided_by.setOnClickListener(this)
+        view.container.setOnClickListener(this)
     }
 
     fun bind(text: String?, theme: ThemePref) {
