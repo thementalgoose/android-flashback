@@ -2,6 +2,7 @@ package tmg.flashback.shared.viewholders
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.view_shared_provided.view.*
 import tmg.components.about.AboutThisAppActivity
 import tmg.flashback.R
