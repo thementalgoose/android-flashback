@@ -85,7 +85,6 @@
         android:id="@+id/swipeContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="?attr/actionBarSize"
         android:fitsSystemWindows="false"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
@@ -95,6 +94,7 @@
             android:layout_height="match_parent"
             android:clipToPadding="false"
             android:overScrollMode="never"
+            android:paddingBottom="@dimen/paddingXLarge"
             tools:listitem="@layout/view_home_track" />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
