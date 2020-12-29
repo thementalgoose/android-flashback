@@ -16,4 +16,8 @@
         <key>data_provided</key>
         <value>Data provided by Ergast API</value>
     </entry>
+    <entry>
+        <key>search</key>
+        <value>false</value>
+    </entry>
 </defaultsMap>

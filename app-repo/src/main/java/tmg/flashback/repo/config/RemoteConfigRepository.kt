@@ -24,4 +24,9 @@ interface RemoteConfigRepository {
      * Data provided by tag
      */
     val dataProvidedBy: String?
+
+    /**
+     * Enable the search functionality
+     */
+    val search: Boolean
 }
