@@ -75,9 +75,8 @@ class HomeViewModel(
     private val currentTabFlow: Flow<HomeMenuItem> = currentTab.asFlow()
     private var _season: Int = remoteConfigRepository.defaultYear
     private val season: ConflatedBroadcastChannel<Int> = ConflatedBroadcastChannel()
-    private val currentHistory: Flow<History> = season.asFlow()
+    private val currentHistory: Flow<History?> = season.asFlow()
             .flatMapLatest { historyRepository.historyFor(it) }
-            .filterNotNull()
 
     override val ensureOnCalendar: MutableLiveData<Event> = MutableLiveData()
     override val showLoading: MutableLiveData<Boolean> = MutableLiveData()
@@ -110,8 +109,7 @@ class HomeViewModel(
             if (showBannerAtTop) {
                 list.add(HomeItem.ErrorItem(SyncDataItem.ProvidedBy))
             }
-            val historyRounds = history.rounds
-
+            val historyRounds = history?.rounds ?: emptyList()
             val rounds = season.rounds
 
             appBannerMessage?.let {
@@ -212,7 +210,7 @@ class HomeViewModel(
     var outputs: HomeViewModelOutputs = this
 
     init {
-        season.offer(currentYear)
+        season.offer(remoteConfigRepository.defaultYear)
         currentTab.offer(HomeMenuItem.CALENDAR)
         showLoading.value = true
 
