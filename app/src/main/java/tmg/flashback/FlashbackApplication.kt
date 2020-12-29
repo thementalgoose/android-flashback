@@ -1,9 +1,11 @@
 package tmg.flashback
 
 import android.app.Application
+import android.os.Build
 import android.util.Log
 import com.github.stkent.bugshaker.BugShaker
 import com.github.stkent.bugshaker.flow.dialog.AlertDialogType
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.jakewharton.threetenabp.AndroidThreeTen
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.coroutineScope
@@ -11,6 +13,7 @@ import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
+import tmg.flashback.analytics.AnalyticsUserProperties
 import tmg.flashback.di.*
 import tmg.flashback.notifications.PushNotificationManager
 import tmg.flashback.repo.config.RemoteConfigRepository
@@ -56,6 +59,7 @@ class FlashbackApplication: Application() {
 
     private val configRepository: RemoteConfigRepository by inject()
     private val crashManager: CrashManager by inject()
+    private val analyticsUserProperties: AnalyticsUserProperties by inject()
 
     private val notificationManager: PushNotificationManager by inject()
 
@@ -70,7 +74,8 @@ class FlashbackApplication: Application() {
                 deviceModule,
                 firebaseModule,
                 shortcutModule,
-                viewModelModule
+                viewModelModule,
+                analyticsModule
             )
             modules(
                 rssModule,
@@ -138,5 +143,9 @@ class FlashbackApplication: Application() {
                 Log.i("Flashback", "Auto enrol push notifications misc - $result")
             }
         }
+
+        // Initialise user properties
+        analyticsUserProperties.setDeviceModel(Build.MODEL)
+        analyticsUserProperties.setOsVersion(Build.VERSION.SDK_INT.toString())
     }
 }

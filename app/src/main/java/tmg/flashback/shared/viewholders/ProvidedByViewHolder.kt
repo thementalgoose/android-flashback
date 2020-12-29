@@ -24,6 +24,11 @@ class ProvidedByViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnC
     fun bind(text: String?, theme: ThemePref) {
         isLightMode = theme.isLightMode(context)
         itemView.provided_by.text = text?.fromHtml() ?: getString(R.string.shared_provided_by)
+        if (text != null) {
+            Glide.with(itemView.icon)
+                    .load(R.drawable.ergast)
+                    .into(itemView.icon)
+        }
     }
 
     override fun onClick(p0: View?) {
