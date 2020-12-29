@@ -32,16 +32,20 @@ val RaceStatus.iconRes: Int
             "Water leak" -> R.drawable.ic_status_water_leak
             "Mechanical" -> R.drawable.ic_status_mechanical
             "Gearbox" -> R.drawable.ic_status_gearbox
+            "Illness" -> R.drawable.ic_status_illness
+            "Debris",
             "Collision",
             "Collision damage" -> R.drawable.ic_status_collision
             "Power loss" -> R.drawable.ic_status_power_loss
             "Withdrew" -> R.drawable.ic_status_retired
             "Accident" -> R.drawable.ic_status_accident
-            "ERS" -> R.drawable.ic_status_electrical
             "Oil pressure" -> R.drawable.ic_status_oil_pressure
             "Disqualified" -> R.drawable.ic_status_disqualified
             "Puncture" -> R.drawable.ic_status_puncture
-            "Electrical" -> R.drawable.ic_status_electrical
+            "ERS",
+            "Electrical",
+            "Electronics",
+            "Electronic" -> R.drawable.ic_status_electrical
             "Driveshaft" -> R.drawable.ic_status_driveshaft
             "Fuel pressure" -> R.drawable.ic_status_fuel_system
             "Spun off" -> R.drawable.ic_status_spun_off

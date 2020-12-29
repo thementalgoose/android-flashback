@@ -23,25 +23,33 @@
                 android:id="@+id/titlebar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?attr/f1BackgroundPrimary">
+                android:background="?attr/f1BackgroundPrimary"
+                android:paddingTop="@dimen/paddingXSmall"
+                android:paddingBottom="@dimen/paddingXSmall">
 
                 <TextView
                     android:id="@+id/season"
                     style="@style/Text.Toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
                     android:layout_marginStart="@dimen/paddingMedium"
                     android:layout_marginEnd="@dimen/paddingMedium"
+                    android:clickable="true"
+                    android:drawablePadding="@dimen/paddingNSmall"
                     android:ellipsize="end"
                     android:fitsSystemWindows="true"
+                    android:focusable="true"
+                    android:foreground="@drawable/ripple_rounded"
                     android:gravity="center"
-                    android:lines="1"
                     android:maxLines="1"
-                    android:paddingStart="@dimen/toolbarSettingsIcon"
-                    android:paddingTop="@dimen/paddingMedium"
-                    android:paddingEnd="@dimen/toolbarSettingsIcon"
-                    android:paddingBottom="@dimen/paddingMedium"
+                    android:paddingStart="@dimen/paddingMedium"
+                    android:paddingEnd="@dimen/paddingMedium"
+                    app:drawableEndCompat="@drawable/arrow_down"
+                    app:drawableStartCompat="@drawable/arrow_down"
+                    app:drawableTint="?attr/f1TextPrimary"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/settings"
+                    app:layout_constraintStart_toEndOf="@id/spacer"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="2020" />
 
@@ -56,6 +64,15 @@
                     android:tint="?attr/f1TextPrimary"
                     app:layout_constraintBottom_toBottomOf="@id/season"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/season" />
+
+                <View
+                    android:id="@+id/spacer"
+                    android:layout_width="@dimen/toolbarSettingsIcon"
+                    android:layout_height="@dimen/toolbarSettingsIcon"
+                    android:layout_marginStart="@dimen/paddingMedium"
+                    app:layout_constraintBottom_toBottomOf="@id/season"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@id/season" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
