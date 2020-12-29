@@ -38,7 +38,7 @@ class SeasonViewHolder(
         itemView.pipeTop.setBackgroundColor(colour)
         itemView.pipeBottom.setBackgroundColor(colour)
         itemView.pipeTop.show(!currentSeason.toString().endsWith('9') && currentSeason != currentYear && season.fixed == HeaderType.ALL)
-        itemView.pipeBottom.show(!currentSeason.toString().endsWith('0') && currentSeason != currentYear && season.fixed == HeaderType.ALL)
+        itemView.pipeBottom.show(!currentSeason.toString().endsWith('0') && (currentSeason != currentYear || !currentYear.toString().endsWith("0")) && season.fixed == HeaderType.ALL)
 
         if (isCurrentlyOnScreen) {
             if (indentState) { // true = indent it!
