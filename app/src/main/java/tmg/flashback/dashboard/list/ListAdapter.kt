@@ -51,8 +51,8 @@ class ListAdapter(
         payloads: MutableList<Any>
     ) {
         when (val item = list[position]) {
-            is ListItem.Season -> (holder as SeasonViewHolder).bind(item, payloads.isNotEmpty(), toggle)
-            is ListItem.Header -> (holder as HeaderViewHolder).bind(item, payloads.isNotEmpty(), toggle)
+            is ListItem.Season -> (holder as SeasonViewHolder).bind(item)
+            is ListItem.Header -> (holder as HeaderViewHolder).bind(item)
         }
     }
 

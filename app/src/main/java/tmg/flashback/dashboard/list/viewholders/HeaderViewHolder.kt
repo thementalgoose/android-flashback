@@ -22,7 +22,7 @@ class HeaderViewHolder(
     private lateinit var type: HeaderType
     private var expanded: Boolean? = null
 
-    fun bind(header: ListItem.Header, isCurrentlyOnScreen: Boolean, indentState: Boolean) {
+    fun bind(header: ListItem.Header) {
 
         type = header.type
         expanded = header.expanded
@@ -35,30 +35,6 @@ class HeaderViewHolder(
             }
             false -> {
                 itemView.arrow.setImageResource(R.drawable.arrow_up)
-            }
-        }
-
-        if (isCurrentlyOnScreen) {
-            if (indentState) { // true = indent it!
-                itemView.arrow
-                    .animate()
-                    .translationX(-itemView.context.dimensionPx(R.dimen.bottomSheetFastScrollWidth))
-                    .setDuration(bottomSheetFastScrollDuration.toLong())
-                    .start()
-            }
-            else {
-                itemView.arrow
-                    .animate()
-                    .translationX(0.0f)
-                    .setDuration(bottomSheetFastScrollDuration.toLong())
-                    .start()
-            }
-        }
-        else {
-            itemView.arrow.translationX = if (indentState) {
-                -itemView.context.dimensionPx(R.dimen.bottomSheetFastScrollWidth)
-            } else {
-                0.0f
             }
         }
     }

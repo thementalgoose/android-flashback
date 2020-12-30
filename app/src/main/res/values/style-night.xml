@@ -18,6 +18,7 @@
         <item name="f1PipeColor">#787878</item>
         <item name="f1BackgroundNavPrimary">#303030</item>
         <item name="f1BackgroundPrimary">#18181A</item>
+        <item name="f1BackgroundPanel">#040404</item>
         <item name="f1BackgroundSecondary">#303030</item>
 
         <item name="f1Favourite">@color/favourite</item>
