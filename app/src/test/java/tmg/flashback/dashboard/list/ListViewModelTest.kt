@@ -1,48 +1,59 @@
-package tmg.flashback.home.season
+package tmg.flashback.dashboard.list
 
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.flashback.home.season.HeaderType.*
 import tmg.flashback.repo.pref.PrefCustomisationRepository
 import tmg.flashback.testutils.*
+import tmg.flashback.testutils.assertDataEventValue
+import tmg.flashback.testutils.test
+import tmg.flashback.testutils.testObserve
 
-class SeasonViewModelTest: BaseTest() {
+internal class ListViewModelTest: BaseTest() {
+
+    lateinit var sut: ListViewModel
 
     private var currentYear: Int = 2020
     private var minYear: Int = 1950
 
-    lateinit var sut: SeasonViewModel
-
-    private val mockPrefsRepository: PrefCustomisationRepository = mockk(relaxed = true)
-
-    private val headerFavouriteOpen: SeasonListItem.Header = SeasonListItem.Header(FAVOURITED, true)
-    private val headerFavouriteClose: SeasonListItem.Header = SeasonListItem.Header(FAVOURITED, false)
-    private val headerAllOpen: SeasonListItem.Header = SeasonListItem.Header(ALL, true)
-    private val headerAllClose: SeasonListItem.Header = SeasonListItem.Header(ALL, false)
-
+    private val mockPrefCustomisationRepository: PrefCustomisationRepository = mockk(relaxed = true)
 
     @BeforeEach
     internal fun setUp() {
 
-        every { mockPrefsRepository.favouriteSeasons } returns setOf()
-        every { mockPrefsRepository.showBottomSheetFavourited } returns true
-        every { mockPrefsRepository.showBottomSheetAll } returns true
+        every { mockPrefCustomisationRepository.favouriteSeasons } returns setOf()
+        every { mockPrefCustomisationRepository.showBottomSheetFavourited } returns true
+        every { mockPrefCustomisationRepository.showBottomSheetAll } returns true
     }
 
     private fun initSUT() {
-        sut = SeasonViewModel(mockPrefsRepository)
+        sut = ListViewModel(mockPrefCustomisationRepository)
     }
+
+    //region Navigation
+
+    @Test
+    fun `SeasonViewModel settings inside hero fires open settings event`() {
+
+        initSUT()
+
+        sut.inputs.clickSettings()
+
+        sut.outputs.openSettings.test {
+            assertEventFired()
+        }
+    }
+
+    //endregion
 
     @Test
     fun `SeasonViewModel header section favourited and all are false when prefs are false on initial load`() {
 
-        every { mockPrefsRepository.showBottomSheetFavourited } returns false
-        every { mockPrefsRepository.showBottomSheetAll } returns false
+        every { mockPrefCustomisationRepository.showBottomSheetFavourited } returns false
+        every { mockPrefCustomisationRepository.showBottomSheetAll } returns false
 
         initSUT()
 
@@ -53,8 +64,8 @@ class SeasonViewModelTest: BaseTest() {
     @Test
     fun `SeasonViewModel header section favourited and all are true when prefs are true on initial load`() {
 
-        every { mockPrefsRepository.showBottomSheetFavourited } returns true
-        every { mockPrefsRepository.showBottomSheetAll } returns true
+        every { mockPrefCustomisationRepository.showBottomSheetFavourited } returns true
+        every { mockPrefCustomisationRepository.showBottomSheetAll } returns true
 
         initSUT()
 
@@ -81,7 +92,7 @@ class SeasonViewModelTest: BaseTest() {
         val favourites = setOf(2017, 2012, 20150)
         val expected = expectedList(favourites)
 
-        every { mockPrefsRepository.favouriteSeasons } returns favourites
+        every { mockPrefCustomisationRepository.favouriteSeasons } returns favourites
 
         initSUT()
 
@@ -96,9 +107,9 @@ class SeasonViewModelTest: BaseTest() {
         val favourites: Set<Int> = setOf(2012, 2018, 2014)
         val expected = expectedList(favourites, showFavourites = false, showAll = false)
 
-        every { mockPrefsRepository.favouriteSeasons } returns favourites
-        every { mockPrefsRepository.showBottomSheetFavourited } returns false
-        every { mockPrefsRepository.showBottomSheetAll } returns false
+        every { mockPrefCustomisationRepository.favouriteSeasons } returns favourites
+        every { mockPrefCustomisationRepository.showBottomSheetFavourited } returns false
+        every { mockPrefCustomisationRepository.showBottomSheetAll } returns false
 
         initSUT()
 
@@ -112,7 +123,7 @@ class SeasonViewModelTest: BaseTest() {
 
         val favourites = setOf(2017, 2012, 2010)
 
-        every { mockPrefsRepository.favouriteSeasons } returns favourites
+        every { mockPrefCustomisationRepository.favouriteSeasons } returns favourites
 
         initSUT()
 
@@ -120,16 +131,16 @@ class SeasonViewModelTest: BaseTest() {
 
         observer.assertValue(expectedList(favourites))
 
-        sut.inputs.toggleHeader(FAVOURITED, false)
+        sut.inputs.toggleHeader(HeaderType.FAVOURITED, false)
         observer.assertValue(expectedList(favourites, showFavourites = false))
 
-        sut.inputs.toggleHeader(ALL, false)
+        sut.inputs.toggleHeader(HeaderType.ALL, false)
         observer.assertValue(expectedList(favourites, showFavourites = false, showAll = false))
 
-        sut.inputs.toggleHeader(FAVOURITED, true)
+        sut.inputs.toggleHeader(HeaderType.FAVOURITED, true)
         observer.assertValue(expectedList(favourites, showAll = false))
 
-        sut.inputs.toggleHeader(ALL, true)
+        sut.inputs.toggleHeader(HeaderType.ALL, true)
         observer.assertValue(expectedList(favourites))
     }
 
@@ -138,26 +149,26 @@ class SeasonViewModelTest: BaseTest() {
 
         val favourites = mutableSetOf(2020, 2018)
 
-        every { mockPrefsRepository.favouriteSeasons } returns favourites
+        every { mockPrefCustomisationRepository.favouriteSeasons } returns favourites
 
         initSUT()
 
         sut.toggleFavourite(2020)
 
-        verify { mockPrefsRepository.favouriteSeasons = setOf(2018) }
+        verify { mockPrefCustomisationRepository.favouriteSeasons = setOf(2018) }
     }
 
     @Test
     fun `SeasonViewModel toggling a favourite season that does not exists adds it from favourites shared prefs`() {
 
         val favourites = mutableSetOf(2020, 2018)
-        every { mockPrefsRepository.favouriteSeasons } returns favourites
+        every { mockPrefCustomisationRepository.favouriteSeasons } returns favourites
 
         initSUT()
 
         sut.toggleFavourite(2019)
 
-        verify { mockPrefsRepository.favouriteSeasons = setOf(2020, 2018, 2019) }
+        verify { mockPrefCustomisationRepository.favouriteSeasons = setOf(2020, 2018, 2019) }
     }
 
     @Test
@@ -165,7 +176,7 @@ class SeasonViewModelTest: BaseTest() {
 
         val favourites = setOf(2017, 2012, 2010)
 
-        every { mockPrefsRepository.favouriteSeasons } returns favourites
+        every { mockPrefCustomisationRepository.favouriteSeasons } returns favourites
 
         initSUT()
 
@@ -192,9 +203,11 @@ class SeasonViewModelTest: BaseTest() {
         }
     }
 
-    private fun expectedList(favourites: Set<Int> = emptySet(), showFavourites: Boolean = true, showAll: Boolean = true): List<SeasonListItem> {
-        val expected = mutableListOf<SeasonListItem>()
-        expected.add(SeasonListItem.Top)
+    //region Mock Data - Expected list
+
+    private fun expectedList(favourites: Set<Int> = emptySet(), showFavourites: Boolean = true, showAll: Boolean = true): List<ListItem> {
+        val expected = mutableListOf<ListItem>()
+        expected.add(ListItem.Hero)
         if (showFavourites) {
             expected.add(headerFavouriteOpen)
             expected.addAll(favouriteSeasons(favourites.toList().sorted()))
@@ -212,14 +225,25 @@ class SeasonViewModelTest: BaseTest() {
         return expected
     }
 
-    private fun favouriteSeasons(favouriteItems: List<Int>): List<SeasonListItem> = List(favouriteItems.size) {
+    private fun favouriteSeasons(favouriteItems: List<Int>): List<ListItem> = List(favouriteItems.size) {
         val year = favouriteItems[it]
-        SeasonListItem.Season(year, true, FAVOURITED)
+        ListItem.Season(year, true, HeaderType.FAVOURITED)
     }.reversed()
 
-    private fun allSeasons(favouriteItems: List<Int> = emptyList()): List<SeasonListItem> = List((currentYear - minYear) + 1) {
+    private fun allSeasons(favouriteItems: List<Int> = emptyList()): List<ListItem> = List((currentYear - minYear) + 1) {
         val year = minYear + it
-        SeasonListItem.Season(year, favouriteItems.contains(year), ALL)
+        ListItem.Season(year, favouriteItems.contains(year), HeaderType.ALL)
     }.reversed()
 
+    //endregion
+
+    //region Mock Data - Headers
+
+    private val headerFavouriteOpen: ListItem.Header = ListItem.Header(HeaderType.FAVOURITED, true)
+    private val headerFavouriteClose: ListItem.Header =
+        ListItem.Header(HeaderType.FAVOURITED, false)
+    private val headerAllOpen: ListItem.Header = ListItem.Header(HeaderType.ALL, true)
+    private val headerAllClose: ListItem.Header = ListItem.Header(HeaderType.ALL, false)
+
+    //endregion
 }

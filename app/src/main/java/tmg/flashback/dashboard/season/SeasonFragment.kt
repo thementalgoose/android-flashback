@@ -1,20 +1,31 @@
 package tmg.flashback.dashboard.season
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_dashboard_season.*
+import kotlinx.android.synthetic.main.fragment_dashboard_season.dataList
+import kotlinx.android.synthetic.main.fragment_dashboard_season.season
+import kotlinx.android.synthetic.main.fragment_dashboard_season.swipeContainer
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.R
 import tmg.flashback.base.BaseFragment
+import tmg.flashback.currentYear
 import tmg.flashback.dashboard.DashboardNavigationCallback
-import tmg.flashback.home.HomeMenuItem
+import tmg.flashback.overviews.constructor.ConstructorActivity
+import tmg.flashback.overviews.driver.DriverActivity
+import tmg.flashback.race.RaceActivity
 import tmg.flashback.rss.ui.RSSActivity
+import tmg.flashback.settings.SettingsActivity
+import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
+import tmg.utilities.extensions.views.visible
 
 class SeasonFragment: BaseFragment() {
 
+    private lateinit var adapter: SeasonAdapter
     private var dashboardNavigation: DashboardNavigationCallback? = null
 
     private val viewModel: SeasonViewModel by viewModel()
@@ -31,7 +42,21 @@ class SeasonFragment: BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        swipeContainer.isEnabled = false
+        adapter = SeasonAdapter(
+            trackClicked = viewModel.inputs::clickTrack,
+            driverClicked = viewModel.inputs::clickDriver,
+            constructorClicked = viewModel.inputs::clickConstructor
+        )
+        dataList.layoutManager = LinearLayoutManager(context)
+        dataList.adapter = adapter
 
+        if (!remoteConfigRepository.rss) {
+            navigation.menu.removeItem(R.id.nav_rss)
+        }
+        if (remoteConfigRepository.search) {
+            searchButton.visible()
+        }
         navigation.setOnNavigationItemSelectedListener {
             return@setOnNavigationItemSelectedListener when (it.itemId) {
                 R.id.nav_rss -> {
@@ -41,27 +66,26 @@ class SeasonFragment: BaseFragment() {
                     false
                 }
                 R.id.nav_calendar -> {
-//                    viewModel.inputs.clickItem(HomeMenuItem.CALENDAR)
+                    viewModel.inputs.clickItem(SeasonNavItem.CALENDAR)
                     true
                 }
                 R.id.nav_drivers -> {
-//                    viewModel.inputs.clickItem(HomeMenuItem.DRIVERS)
+                    viewModel.inputs.clickItem(SeasonNavItem.DRIVERS)
                     true
                 }
                 R.id.nav_constructor -> {
-//                    viewModel.inputs.clickItem(HomeMenuItem.CONSTRUCTORS)
+                    viewModel.inputs.clickItem(SeasonNavItem.CONSTRUCTORS)
                     true
                 }
                 else -> false
             }
         }
 
-        menu.setOnClickListener {
+        menuButton.setOnClickListener {
             viewModel.inputs.clickMenu()
         }
-
-        settings.setOnClickListener {
-            viewModel.inputs.clickSettings()
+        searchButton.setOnClickListener {
+            viewModel.inputs.clickSearch()
         }
 
 
@@ -69,10 +93,70 @@ class SeasonFragment: BaseFragment() {
             dashboardNavigation?.openSeasonList()
         }
 
-        observeEvent(viewModel.outputs.openSettings) {
-
+        observe(viewModel.outputs.label) {
+            season.text = getString(R.string.home_season_arrow, it.msg ?: currentYear.toString())
         }
+
+        observeEvent(viewModel.outputs.openSearch) {
+            startActivity(Intent(context, SettingsActivity::class.java))
+        }
+
+        observe(viewModel.outputs.list) {
+            adapter.list = it
+        }
+
+        observe(viewModel.outputs.showLoading) {
+            if (it) {
+                showLoading()
+            } else {
+                hideLoading()
+            }
+        }
+
+        observeEvent(viewModel.outputs.openRace) { track ->
+            context?.let {
+                val intent = RaceActivity.intent(
+                    context = it,
+                    season = track.season,
+                    round = track.round,
+                    circuitId = track.circuitId,
+                    country = track.raceCountry,
+                    raceName = track.raceName,
+                    trackName = track.circuitName,
+                    countryISO = track.raceCountryISO,
+                    date = track.date,
+                    defaultToRace = track.hasResults || !track.hasQualifying
+                )
+                startActivity(intent)
+            }
+        }
+        observeEvent(viewModel.outputs.openDriver) { driver ->
+            context?.let {
+                val intent = DriverActivity.intent(
+                    context = it,
+                    driverId = driver.driverId,
+                    driverName = driver.driver.name
+                )
+                startActivity(intent)
+            }
+        }
+        observeEvent(viewModel.outputs.openConstructor) { constructor ->
+            context?.let {
+                val intent = ConstructorActivity.intent(
+                    context = it,
+                    constructorId = constructor.constructorId,
+                    constructorName = constructor.constructor.name
+                )
+                startActivity(intent)
+            }
+        }
+
+        showLoading()
+
+        navigation.selectedItemId = R.id.nav_calendar
     }
+
+    //region Accessible
 
     /**
      * Publicly accessible method for changing which season this fragment displays
@@ -80,6 +164,23 @@ class SeasonFragment: BaseFragment() {
      */
     fun selectSeason(season: Int) {
         viewModel.inputs.selectSeason(season)
-        Toast.makeText(context, "SELECTING SEASON $season", Toast.LENGTH_LONG).show()
+    }
+
+    //endregion
+
+    private fun showLoading() {
+        swipeContainer.isRefreshing = true
+        searchButton.isEnabled = false
+        menuButton.isEnabled = false
+        navigation.isEnabled = false
+        dataList.alpha = 0.7f
+    }
+
+    private fun hideLoading() {
+        swipeContainer.isRefreshing = false
+        searchButton.isEnabled = true
+        menuButton.isEnabled = true
+        navigation.isEnabled = true
+        dataList.alpha = 1.0f
     }
 }

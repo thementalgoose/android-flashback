@@ -28,16 +28,15 @@
 
     <!-- =========================================== -->
 
-
-    <!--#endregion -->
-
-    <!-- =========================================== -->
-
-    <!-- =========================================== -->
-
     <!--#region Home -->
 
     <style name="Text.Toolbar" parent="Text">
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:textSize">@dimen/textSizeXLarge</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Text.Hero" parent="Text">
         <item name="android:fontFamily">@font/montserrat</item>
         <item name="android:textSize">@dimen/textSizeXLarge</item>
         <item name="android:textStyle">bold</item>

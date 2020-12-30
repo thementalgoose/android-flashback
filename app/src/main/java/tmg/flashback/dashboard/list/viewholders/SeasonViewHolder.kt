@@ -6,9 +6,9 @@ import androidx.core.graphics.toColorInt
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.view_season_list_season.view.*
 import tmg.flashback.*
+import tmg.flashback.dashboard.list.HeaderType
+import tmg.flashback.dashboard.list.ListItem
 import tmg.flashback.extensions.dimensionPx
-import tmg.flashback.home.season.HeaderType
-import tmg.flashback.home.season.SeasonListItem
 import tmg.utilities.extensions.views.show
 
 class SeasonViewHolder(
@@ -25,7 +25,7 @@ class SeasonViewHolder(
     private var currentSeason: Int = -1
     private var isFavourited: Boolean = false
 
-    fun bind(season: SeasonListItem.Season, isCurrentlyOnScreen: Boolean, indentState: Boolean) {
+    fun bind(season: ListItem.Season, isCurrentlyOnScreen: Boolean, indentState: Boolean) {
         currentSeason = season.season
         isFavourited = season.isFavourited
 

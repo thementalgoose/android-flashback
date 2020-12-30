@@ -9,7 +9,6 @@ import tmg.flashback.dashboard.DashboardViewModel
 import tmg.flashback.dashboard.list.ListViewModel
 import tmg.flashback.dashboard.search.SearchViewModel
 import tmg.flashback.dashboard.season.SeasonViewModel
-import tmg.flashback.home.HomeViewModel
 import tmg.flashback.overviews.constructor.ConstructorViewModel
 import tmg.flashback.overviews.driver.DriverViewModel
 import tmg.flashback.overviews.driver.season.DriverSeasonViewModel
@@ -24,13 +23,9 @@ val viewModelModule = module {
 
     // Dashboard
     viewModel { DashboardViewModel(get(), get(), get()) }
-    viewModel { SeasonViewModel() }
+    viewModel { SeasonViewModel(get(), get(), get(), get(), get(), get()) }
     viewModel { ListViewModel(get()) }
     viewModel { SearchViewModel() }
-
-    // Home
-    viewModel { HomeViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
-    viewModel { tmg.flashback.home.season.SeasonViewModel(get()) }
 
     // Circuit
     viewModel { CircuitInfoViewModel(get(), get()) }

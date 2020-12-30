@@ -1,25 +1,20 @@
-package tmg.flashback.home.list.viewholders
+package tmg.flashback.dashboard.season.viewholders
 
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.layout_constructor_driver.view.*
-import kotlinx.android.synthetic.main.view_home_constructor.view.*
+import kotlinx.android.synthetic.main.view_dashboard_season_constructor.view.*
 import tmg.flashback.R
-import tmg.flashback.home.list.HomeItem
+import tmg.flashback.dashboard.season.SeasonItem
 import tmg.flashback.repo.enums.BarAnimation
-import tmg.flashback.repo.models.stats.Driver
 import tmg.flashback.shared.driverlist.DriverListAdapter
 import tmg.flashback.utils.getColor
-import tmg.flashback.utils.getFlagResourceAlpha3
 import tmg.utilities.extensions.views.context
 import tmg.utilities.extensions.views.getString
 import tmg.utilities.extensions.views.show
 
 class ConstructorViewHolder(
-        private val constructorClicked: (constructorId: String, constructorName: String) -> Unit,
+        private val constructorClicked: (constructor: SeasonItem.Constructor) -> Unit,
         itemView: View
 ): RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
@@ -27,8 +22,7 @@ class ConstructorViewHolder(
         itemView.container.setOnClickListener(this)
     }
 
-    private lateinit var constructorId: String
-    private lateinit var constructorName: String
+    private lateinit var constructor: SeasonItem.Constructor
 
     var adapter = DriverListAdapter()
 
@@ -37,10 +31,9 @@ class ConstructorViewHolder(
         itemView.driverList.layoutManager = LinearLayoutManager(itemView.context)
     }
 
-    fun bind(item: HomeItem.Constructor) {
+    fun bind(item: SeasonItem.Constructor) {
 
-        constructorId = item.constructorId
-        constructorName = item.constructor.name
+        constructor = item
 
         val maxPoints = item.maxPointsInSeason
 
@@ -70,6 +63,6 @@ class ConstructorViewHolder(
     }
 
     override fun onClick(p0: View?) {
-        constructorClicked(constructorId, constructorName)
+        constructorClicked(constructor)
     }
 }

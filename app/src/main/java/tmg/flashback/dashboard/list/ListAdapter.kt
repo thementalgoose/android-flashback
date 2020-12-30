@@ -6,16 +6,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.R
 import tmg.flashback.dashboard.list.viewholders.HeaderViewHolder
+import tmg.flashback.dashboard.list.viewholders.HeroViewHolder
 import tmg.flashback.dashboard.list.viewholders.SeasonViewHolder
 import tmg.flashback.dashboard.list.viewholders.TopViewHolder
-import tmg.flashback.home.season.HeaderType
-import tmg.flashback.home.season.SeasonListItem
-
-private const val viewTypeSeason = 0
-private const val viewTypeTop = 1
-private const val viewTypeHeader = 2
+import tmg.flashback.utils.GenericDiffCallback
 
 class ListAdapter(
+    val settingsClicked: () -> Unit,
     var featureToggled: ((type: HeaderType) -> Unit)? = null,
     var favouriteToggled: ((season: Int) -> Unit)? = null,
     var seasonClicked: ((season: Int) -> Unit)? = null
@@ -23,9 +20,9 @@ class ListAdapter(
 
     private var toggle: Boolean = false
 
-    var list: List<SeasonListItem> = emptyList()
+    var list: List<ListItem> = emptyList()
         set(value) {
-            val result = DiffUtil.calculateDiff(DiffCallback(field, value))
+            val result = DiffUtil.calculateDiff(GenericDiffCallback(field, value))
             field = value
             result.dispatchUpdatesTo(this)
         }
@@ -38,19 +35,12 @@ class ListAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(viewType, parent, false)
         return when (viewType) {
-            viewTypeSeason -> SeasonViewHolder(
-                favouriteToggled,
-                seasonClicked,
-                LayoutInflater.from(parent.context).inflate(R.layout.view_season_list_season, parent, false)
-            )
-            viewTypeHeader -> HeaderViewHolder(
-                featureToggled,
-                LayoutInflater.from(parent.context).inflate(R.layout.view_season_list_header, parent, false)
-            )
-            viewTypeTop -> TopViewHolder(
-                LayoutInflater.from(parent.context).inflate(R.layout.view_season_list_top, parent, false)
-            )
+            R.layout.view_season_list_season -> SeasonViewHolder(favouriteToggled, seasonClicked, view)
+            R.layout.view_season_list_header -> HeaderViewHolder(featureToggled, view)
+            R.layout.view_season_list_top -> TopViewHolder(view)
+            R.layout.view_season_list_hero -> HeroViewHolder(view, settingsClicked)
             else -> throw Exception("View type not implemented")
         }
     }
@@ -60,9 +50,9 @@ class ListAdapter(
         position: Int,
         payloads: MutableList<Any>
     ) {
-        when (getItemViewType(position)) {
-            viewTypeSeason -> (holder as SeasonViewHolder).bind(list[position] as SeasonListItem.Season, payloads.isNotEmpty(), toggle)
-            viewTypeHeader -> (holder as HeaderViewHolder).bind(list[position] as SeasonListItem.Header, payloads.isNotEmpty(), toggle)
+        when (val item = list[position]) {
+            is ListItem.Season -> (holder as SeasonViewHolder).bind(item, payloads.isNotEmpty(), toggle)
+            is ListItem.Header -> (holder as HeaderViewHolder).bind(item, payloads.isNotEmpty(), toggle)
         }
     }
 
@@ -71,29 +61,8 @@ class ListAdapter(
     }
 
     override fun getItemViewType(position: Int): Int {
-        return when (list[position]) {
-            is SeasonListItem.Season -> viewTypeSeason
-            is SeasonListItem.Header -> viewTypeHeader
-            SeasonListItem.Top -> viewTypeTop
-        }
+        return list[position].layoutId
     }
 
     override fun getItemCount() = list.size
-
-    inner class DiffCallback(
-        private val oldList: List<SeasonListItem>,
-        private val newList: List<SeasonListItem>
-    ): DiffUtil.Callback() {
-        override fun areItemsTheSame(old: Int, new: Int): Boolean {
-            return oldList[old] == newList[new]
-        }
-
-        override fun areContentsTheSame(old: Int, new: Int): Boolean {
-            return oldList[old] == newList[new]
-        }
-
-        override fun getOldListSize() = oldList.size
-
-        override fun getNewListSize() = newList.size
-    }
 }

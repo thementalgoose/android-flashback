@@ -6,7 +6,7 @@ import tmg.flashback.testutils.BaseTest
 import tmg.flashback.testutils.assertEventFired
 import tmg.flashback.testutils.test
 
-class PrivacyPolicyViewModelTest: BaseTest() {
+internal class PrivacyPolicyViewModelTest: BaseTest() {
 
     private lateinit var sut: PrivacyPolicyViewModel
 
