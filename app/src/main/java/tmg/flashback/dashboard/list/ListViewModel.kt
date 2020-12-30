@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import tmg.flashback.allYears
 import tmg.flashback.base.BaseViewModel
+import tmg.flashback.repo.config.RemoteConfigRepository
 import tmg.flashback.repo.pref.PrefCustomisationRepository
 import tmg.utilities.lifecycle.DataEvent
 import tmg.utilities.lifecycle.Event
@@ -32,12 +33,14 @@ interface ListViewModelOutputs {
 //endregion
 
 class ListViewModel(
-    private val prefRepository: PrefCustomisationRepository
+    private val prefRepository: PrefCustomisationRepository,
+    private val remoteConfigRepository: RemoteConfigRepository
 ) : BaseViewModel(), ListViewModelInputs, ListViewModelOutputs {
 
-    var headerSectionFavourited: Boolean = prefRepository.showBottomSheetFavourited
-    var headerSectionAll: Boolean = prefRepository.showBottomSheetAll
+    private var headerSectionFavourited: Boolean = prefRepository.showBottomSheetFavourited
+    private var headerSectionAll: Boolean = prefRepository.showBottomSheetAll
 
+    private var currentSeason: Int = remoteConfigRepository.defaultYear
     private val favouriteSeasons = prefRepository.favouriteSeasons.toMutableSet()
 
     override val list: MutableLiveData<List<ListItem>> = MutableLiveData()
@@ -74,6 +77,8 @@ class ListViewModel(
 
     override fun clickSeason(season: Int) {
         showSeasonEvent.value = DataEvent(season)
+        currentSeason = season
+        list.value = buildList(favouriteSeasons, headerSectionFavourited, headerSectionAll)
     }
 
     override fun clickSettings() {
@@ -120,7 +125,8 @@ class ListViewModel(
                     ListItem.Season(
                         season = it,
                         isFavourited = favouritedSet.contains(it),
-                        fixed = HeaderType.ALL
+                        fixed = HeaderType.ALL,
+                        selected = currentSeason == it
                     )
                 }
                 .sortedByDescending { it.season }

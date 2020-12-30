@@ -9,6 +9,9 @@ import tmg.flashback.*
 import tmg.flashback.dashboard.list.HeaderType
 import tmg.flashback.dashboard.list.ListItem
 import tmg.flashback.extensions.dimensionPx
+import tmg.utilities.extensions.fromHtml
+import tmg.utilities.extensions.getColor
+import tmg.utilities.extensions.views.context
 import tmg.utilities.extensions.views.show
 
 class SeasonViewHolder(
@@ -25,13 +28,17 @@ class SeasonViewHolder(
     private var currentSeason: Int = -1
     private var isFavourited: Boolean = false
 
-    fun bind(season: ListItem.Season, isCurrentlyOnScreen: Boolean, indentState: Boolean) {
+    fun bind(season: ListItem.Season) {
         currentSeason = season.season
         isFavourited = season.isFavourited
 
         val colour = coloursDecade["${season.season.toString().substring(0, 3)}0"]?.toColorInt() ?: ContextCompat.getColor(itemView.context, R.color.colorTheme)
 
         itemView.label.text = season.season.toString()
+        when (season.selected) {
+            true -> itemView.label.setTextColor(context.theme.getColor(R.attr.f1TextPrimary))
+            false -> itemView.label.setTextColor(context.theme.getColor(R.attr.f1TextTertiary))
+        }
         itemView.favourite.setImageResource(if (season.isFavourited) R.drawable.ic_star_filled_coloured else R.drawable.ic_star_outline)
         itemView.cardview.setCircleColour(colour)
 
@@ -39,30 +46,6 @@ class SeasonViewHolder(
         itemView.pipeBottom.setBackgroundColor(colour)
         itemView.pipeTop.show(!currentSeason.toString().endsWith('9') && currentSeason != currentYear && season.fixed == HeaderType.ALL)
         itemView.pipeBottom.show(!currentSeason.toString().endsWith('0') && (currentSeason != currentYear || !currentYear.toString().endsWith("0")) && season.fixed == HeaderType.ALL)
-
-        if (isCurrentlyOnScreen) {
-            if (indentState) { // true = indent it!
-                itemView.favourite
-                    .animate()
-                    .translationX(-itemView.context.dimensionPx(R.dimen.bottomSheetFastScrollWidth))
-                    .setDuration(bottomSheetFastScrollDuration.toLong())
-                    .start()
-            }
-            else {
-                itemView.favourite
-                    .animate()
-                    .translationX(0.0f)
-                    .setDuration(bottomSheetFastScrollDuration.toLong())
-                    .start()
-            }
-        }
-        else {
-            itemView.favourite.translationX = if (indentState) {
-                -itemView.context.dimensionPx(R.dimen.bottomSheetFastScrollWidth)
-            } else {
-                0.0f
-            }
-        }
     }
 
     override fun onClick(p0: View?) {
