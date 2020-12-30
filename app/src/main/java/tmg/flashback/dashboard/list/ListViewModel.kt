@@ -4,10 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import tmg.flashback.allYears
 import tmg.flashback.base.BaseViewModel
-import tmg.flashback.home.season.HeaderType
-import tmg.flashback.home.season.SeasonListItem
 import tmg.flashback.repo.pref.PrefCustomisationRepository
 import tmg.utilities.lifecycle.DataEvent
+import tmg.utilities.lifecycle.Event
 
 //region Inputs
 
@@ -15,6 +14,8 @@ interface ListViewModelInputs {
     fun toggleHeader(header: HeaderType, to: Boolean? = null)
     fun toggleFavourite(season: Int)
     fun clickSeason(season: Int)
+
+    fun clickSettings()
 }
 
 //endregion
@@ -22,8 +23,10 @@ interface ListViewModelInputs {
 //region Outputs
 
 interface ListViewModelOutputs {
-    val list: LiveData<List<SeasonListItem>>
+    val list: LiveData<List<ListItem>>
     val showSeasonEvent: LiveData<DataEvent<Int>>
+
+    val openSettings: LiveData<Event>
 }
 
 //endregion
@@ -36,8 +39,10 @@ class ListViewModel(
     var headerSectionAll: Boolean = prefRepository.showBottomSheetAll
 
     private val favouriteSeasons = prefRepository.favouriteSeasons.toMutableSet()
-    override val list: MutableLiveData<List<SeasonListItem>> = MutableLiveData()
+
+    override val list: MutableLiveData<List<ListItem>> = MutableLiveData()
     override val showSeasonEvent: MutableLiveData<DataEvent<Int>> = MutableLiveData()
+    override val openSettings: MutableLiveData<Event> = MutableLiveData()
 
     var inputs: ListViewModelInputs = this
     var outputs: ListViewModelOutputs = this
@@ -52,7 +57,6 @@ class ListViewModel(
         when (header) {
             HeaderType.FAVOURITED -> headerSectionFavourited = to ?: !headerSectionFavourited
             HeaderType.ALL -> headerSectionAll = to ?: !headerSectionAll
-            else -> {}
         }
         list.value = buildList(favouriteSeasons, headerSectionFavourited, headerSectionAll)
     }
@@ -72,19 +76,23 @@ class ListViewModel(
         showSeasonEvent.value = DataEvent(season)
     }
 
+    override fun clickSettings() {
+        openSettings.value = Event()
+    }
+
     //endregion
 
     private fun buildList(
         favouritedSet: Set<Int>,
         headerSectionFavourites: Boolean,
         headerSectionAll: Boolean
-    ): List<SeasonListItem> {
+    ): List<ListItem> {
 
-        val list: MutableList<SeasonListItem> = mutableListOf()
+        val list: MutableList<ListItem> = mutableListOf(ListItem.Hero)
 
         // Favourites
         list.add(
-            SeasonListItem.Header(
+            ListItem.Header(
                 HeaderType.FAVOURITED,
                 headerSectionFavourites
             )
@@ -94,7 +102,7 @@ class ListViewModel(
                 .toList()
                 .sortedByDescending { it }
                 .map {
-                    SeasonListItem.Season(
+                    ListItem.Season(
                         season = it,
                         isFavourited = true,
                         fixed = HeaderType.FAVOURITED
@@ -104,12 +112,12 @@ class ListViewModel(
         }
 
         // All
-        list.add(SeasonListItem.Header(HeaderType.ALL, headerSectionAll))
+        list.add(ListItem.Header(HeaderType.ALL, headerSectionAll))
         if (headerSectionAll) {
             list.addAll(
                 allYears
                 .map {
-                    SeasonListItem.Season(
+                    ListItem.Season(
                         season = it,
                         isFavourited = favouritedSet.contains(it),
                         fixed = HeaderType.ALL

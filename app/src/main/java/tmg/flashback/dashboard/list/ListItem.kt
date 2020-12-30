@@ -1,23 +1,27 @@
-package tmg.flashback.home.season
+package tmg.flashback.dashboard.list
 
+import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
 import tmg.flashback.R
 
-sealed class SeasonListItem {
+sealed class ListItem(
+    @LayoutRes val layoutId: Int
+) {
+    object Hero: ListItem(R.layout.view_season_list_hero)
 
-    object Top: SeasonListItem()
+    object Top: ListItem(R.layout.view_season_list_top)
 
     data class Season(
         val season: Int,
         val isFavourited: Boolean,
         val fixed: HeaderType,
         val selected: Boolean = false
-    ): SeasonListItem()
+    ): ListItem(R.layout.view_season_list_season)
 
     data class Header(
         val type: HeaderType,
         val expanded: Boolean? // null = hide option
-    ): SeasonListItem()
+    ): ListItem(R.layout.view_season_list_header)
 }
 
 enum class HeaderType(

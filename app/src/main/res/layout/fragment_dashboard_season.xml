@@ -19,6 +19,7 @@
             android:layout_height="wrap_content"
             app:layout_scrollFlags="exitUntilCollapsed|scroll|enterAlways">
 
+            <!-- Relative layout due to layout weirdness with discord overlapping panels -->
             <RelativeLayout
                 android:id="@+id/titlebar"
                 android:layout_width="match_parent"
@@ -32,12 +33,12 @@
                     style="@style/Text.Toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignTop="@id/menu"
-                    android:layout_alignBottom="@id/menu"
+                    android:layout_alignTop="@id/menuButton"
+                    android:layout_alignBottom="@id/menuButton"
                     android:layout_marginStart="@dimen/paddingMedium"
                     android:layout_marginEnd="@dimen/paddingMedium"
-                    android:layout_toStartOf="@id/settings"
-                    android:layout_toEndOf="@id/menu"
+                    android:layout_toStartOf="@id/searchButton"
+                    android:layout_toEndOf="@id/menuButton"
                     android:clickable="true"
                     android:drawablePadding="@dimen/paddingNSmall"
                     android:ellipsize="end"
@@ -51,26 +52,28 @@
                     tools:text="2020" />
 
                 <ImageButton
-                    android:id="@+id/settings"
+                    android:id="@+id/searchButton"
                     android:layout_width="@dimen/toolbarSettingsIcon"
                     android:layout_height="@dimen/toolbarSettingsIcon"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginEnd="@dimen/paddingMedium"
+                    android:layout_marginEnd="@dimen/paddingNSmall"
                     android:background="@drawable/ripple_rounded"
-                    android:contentDescription="@string/settings_title"
-                    android:src="@drawable/nav_settings"
-                    android:tint="?attr/f1TextPrimary" />
+                    android:contentDescription="@string/nav_search"
+                    android:src="@drawable/nav_search"
+                    android:tint="?attr/f1TextPrimary"
+                    android:visibility="invisible"
+                    tools:visibility="visible" />
 
                 <ImageButton
-                    android:id="@+id/menu"
+                    android:id="@+id/menuButton"
                     android:layout_width="@dimen/toolbarSettingsIcon"
                     android:layout_height="@dimen/toolbarSettingsIcon"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginStart="@dimen/paddingMedium"
+                    android:layout_marginStart="@dimen/paddingNSmall"
                     android:background="@drawable/ripple_rounded"
                     android:contentDescription="@string/menu_title"
                     android:src="@drawable/ic_menu"
@@ -97,7 +100,7 @@
             android:clipToPadding="false"
             android:overScrollMode="never"
             android:paddingBottom="@dimen/paddingXLarge"
-            tools:listitem="@layout/view_home_track" />
+            tools:listitem="@layout/view_dashboard_season_track" />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

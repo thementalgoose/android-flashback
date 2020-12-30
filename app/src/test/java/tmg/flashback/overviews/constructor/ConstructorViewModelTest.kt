@@ -22,7 +22,7 @@ import tmg.flashback.shared.viewholders.DataUnavailable
 import tmg.flashback.testutils.*
 import tmg.flashback.utils.position
 
-class ConstructorViewModelTest: BaseTest() {
+internal class ConstructorViewModelTest: BaseTest() {
 
     lateinit var sut: ConstructorViewModel
 

@@ -24,7 +24,7 @@ import tmg.flashback.shared.viewholders.DataUnavailable
 import tmg.flashback.testutils.*
 import tmg.flashback.utils.position
 
-class DriverViewModelTest: BaseTest() {
+internal class DriverViewModelTest: BaseTest() {
 
     lateinit var sut: DriverViewModel
 

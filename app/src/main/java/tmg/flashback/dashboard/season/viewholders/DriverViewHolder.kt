@@ -1,4 +1,4 @@
-package tmg.flashback.home.list.viewholders
+package tmg.flashback.dashboard.season.viewholders
 
 import android.view.View
 import android.widget.Toast
@@ -6,10 +6,10 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.layout_driver.view.*
-import kotlinx.android.synthetic.main.view_home_driver.view.*
-import kotlinx.android.synthetic.main.view_home_driver.view.lpvProgress
+import kotlinx.android.synthetic.main.view_dashboard_season_driver.view.*
+import kotlinx.android.synthetic.main.view_dashboard_season_driver.view.lpvProgress
 import tmg.flashback.R
-import tmg.flashback.home.list.HomeItem
+import tmg.flashback.dashboard.season.SeasonItem
 import tmg.flashback.repo.enums.BarAnimation
 import tmg.flashback.showDriverSummary
 import tmg.flashback.utils.getColor
@@ -20,7 +20,7 @@ import tmg.utilities.extensions.views.getString
 import tmg.utilities.extensions.views.show
 
 class DriverViewHolder(
-        val driverClicked: (season: Int, driverId: String, firstName: String?, lastName: String?) -> Unit,
+        val driverClicked: (driver: SeasonItem.Driver) -> Unit,
         itemView: View
 ): RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
@@ -31,20 +31,14 @@ class DriverViewHolder(
         itemView.containerMore.setOnClickListener(this)
     }
 
-    private lateinit var driverId: String
-    private var season: Int = -1
-    private var firstName: String? = null
-    private var lastName: String? = null
+    private lateinit var driver: SeasonItem.Driver
 
     private var qualiList: String? = null
     private var finishList: String? = null
 
-    fun bind(item: HomeItem.Driver) {
+    fun bind(item: SeasonItem.Driver) {
 
-        driverId = item.driverId
-        season = item.season
-        firstName = item.driver.firstName
-        lastName = item.driver.lastName
+        driver = item
 
         itemView.tvPosition.text = item.position.toString()
         itemView.layoutDriver.tvName.text = item.driver.name
@@ -115,7 +109,7 @@ class DriverViewHolder(
                     itemView.stats.show(!itemView.stats.isVisible)
                 }
                 else {
-                    driverClicked(season, driverId, firstName, lastName)
+                    driverClicked(driver)
                 }
             }
             itemView.containerQuali -> {
@@ -129,7 +123,7 @@ class DriverViewHolder(
                 }
             }
             itemView.containerMore -> {
-                driverClicked(season, driverId, firstName, lastName)
+                driverClicked(driver)
             }
         }
     }

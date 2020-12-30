@@ -30,15 +30,6 @@ internal class DashboardViewModelTest: BaseTest() {
         )
     }
 
-    private val expectedAppLockout = AppLockout(
-        show = true,
-        title = "msg",
-        message = "Another msg",
-        linkText = null,
-        link = null,
-        version = 10
-    )
-
     //region Release Notes
 
     @Test
@@ -67,10 +58,10 @@ internal class DashboardViewModelTest: BaseTest() {
 
     //endregion
 
-    //region
+    //region App Lockout
 
     @Test
-    fun `HomeViewModel app lockout event is fired if show is true and build config provider says version is should lockout`() = coroutineTest {
+    fun `DashboardViewModel app lockout event is fired if show is true and build config provider says version is should lockout`() = coroutineTest {
 
         every { mockDataRepository.appLockout() } returns flow { emit(expectedAppLockout) }
         every { mockBuildConfigManager.shouldLockoutBasedOnVersion(any()) } returns true
@@ -84,7 +75,7 @@ internal class DashboardViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `HomeViewModel app lockout event is not fired if show is false and build config provider says version is should lockout`() = coroutineTest {
+    fun `DashboardViewModel app lockout event is not fired if show is false and build config provider says version is should lockout`() = coroutineTest {
 
         every { mockDataRepository.appLockout() } returns flow { emit(expectedAppLockout.copy(show = false)) }
         every { mockBuildConfigManager.shouldLockoutBasedOnVersion(any()) } returns true
@@ -98,7 +89,7 @@ internal class DashboardViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `HomeViewModel app lockout event is not fired if show is true and build config provider says version is should not lockout`() = coroutineTest {
+    fun `DashboardViewModel app lockout event is not fired if show is true and build config provider says version is should not lockout`() = coroutineTest {
 
         every { mockDataRepository.appLockout() } returns flow { emit(expectedAppLockout.copy()) }
         every { mockBuildConfigManager.shouldLockoutBasedOnVersion(any()) } returns false
@@ -112,7 +103,7 @@ internal class DashboardViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `HomeViewModel app lockout event is not fired if app lockout value is null`() = coroutineTest {
+    fun `DashboardViewModel app lockout event is not fired if app lockout value is null`() = coroutineTest {
 
         every { mockDataRepository.appLockout() } returns flow { emit(null) }
         every { mockBuildConfigManager.shouldLockoutBasedOnVersion(any()) } returns true
@@ -125,4 +116,18 @@ internal class DashboardViewModelTest: BaseTest() {
         }
     }
 
+    //endregion
+
+    //region Mock Data - App lockout
+
+    private val expectedAppLockout = AppLockout(
+        show = true,
+        title = "msg",
+        message = "Another msg",
+        linkText = null,
+        link = null,
+        version = 10
+    )
+
+    //endregion
 }

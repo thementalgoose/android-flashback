@@ -1,22 +1,22 @@
-package tmg.flashback.home.list
+package tmg.flashback.dashboard.season
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.R
-import tmg.flashback.home.list.viewholders.ConstructorViewHolder
-import tmg.flashback.home.list.viewholders.DriverViewHolder
-import tmg.flashback.home.list.viewholders.TrackViewHolder
+import tmg.flashback.dashboard.season.viewholders.ConstructorViewHolder
+import tmg.flashback.dashboard.season.viewholders.DriverViewHolder
+import tmg.flashback.dashboard.season.viewholders.TrackViewHolder
 import tmg.flashback.shared.sync.SyncAdapter
 
-class HomeAdapter(
-        private val trackClicked: (track: HomeItem.Track) -> Unit,
-        private val driverClicked: (season: Int, driverId: String, firstName: String?, lastName: String?) -> Unit,
-        private val constructorClicked: (constructorId: String, constructorName: String) -> Unit
-): SyncAdapter<HomeItem>() {
+class SeasonAdapter(
+    private val trackClicked: (track: SeasonItem.Track) -> Unit,
+    private val driverClicked: (driver: SeasonItem.Driver) -> Unit,
+    private val constructorClicked: (constructor: SeasonItem.Constructor) -> Unit
+): SyncAdapter<SeasonItem>() {
 
-    override var list: List<HomeItem> = emptyList()
+    override var list: List<SeasonItem> = emptyList()
         set(value) {
             val result = DiffUtil.calculateDiff(DiffCallback(field, value))
             field = value
@@ -25,15 +25,15 @@ class HomeAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            R.layout.view_home_track -> TrackViewHolder(
+            R.layout.view_dashboard_season_track -> TrackViewHolder(
                 trackClicked,
                 LayoutInflater.from(parent.context).inflate(viewType, parent, false)
             )
-            R.layout.view_home_driver -> DriverViewHolder(
+            R.layout.view_dashboard_season_driver -> DriverViewHolder(
                 driverClicked,
                 LayoutInflater.from(parent.context).inflate(viewType, parent, false)
             )
-            R.layout.view_home_constructor -> ConstructorViewHolder(
+            R.layout.view_dashboard_season_constructor -> ConstructorViewHolder(
                 constructorClicked,
                 LayoutInflater.from(parent.context).inflate(viewType, parent, false)
             )
@@ -44,18 +44,18 @@ class HomeAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (val item = list[position]) {
-            is HomeItem.Track -> (holder as TrackViewHolder).bind(item)
-            is HomeItem.Driver -> (holder as DriverViewHolder).bind(item)
-            is HomeItem.Constructor -> (holder as ConstructorViewHolder).bind(item)
-            is HomeItem.ErrorItem -> bindErrors(holder, item.item)
+            is SeasonItem.Track -> (holder as TrackViewHolder).bind(item)
+            is SeasonItem.Driver -> (holder as DriverViewHolder).bind(item)
+            is SeasonItem.Constructor -> (holder as ConstructorViewHolder).bind(item)
+            is SeasonItem.ErrorItem -> bindErrors(holder, item.item)
         }
     }
 
     override fun viewType(position: Int) = list[position].layoutId
 
     inner class DiffCallback(
-        private val oldList: List<HomeItem>,
-        private val newList: List<HomeItem>
+        private val oldList: List<SeasonItem>,
+        private val newList: List<SeasonItem>
     ) : DiffUtil.Callback() {
         override fun areItemsTheSame(o: Int, n: Int) = oldList[o] == newList[n] ||
                 areTracksTheSame(o, n)
@@ -67,8 +67,8 @@ class HomeAdapter(
         override fun getNewListSize(): Int = newList.size
 
         private fun areTracksTheSame(old: Int, new: Int): Boolean {
-            val oldItem = oldList[old] as? HomeItem.Track
-            val newItem = newList[new] as? HomeItem.Track
+            val oldItem = oldList[old] as? SeasonItem.Track
+            val newItem = newList[new] as? SeasonItem.Track
             if (oldItem != null && newItem != null) {
                 return oldItem.raceName == newItem.raceName &&
                         oldItem.raceCountryISO == newItem.raceCountryISO

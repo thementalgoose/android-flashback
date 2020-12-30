@@ -26,7 +26,7 @@ import tmg.flashback.testutils.test
 import tmg.flashback.utils.Selected
 import tmg.flashback.utils.bottomsheet.BottomSheetItem
 
-class SettingsViewModelTest: BaseTest() {
+internal class SettingsViewModelTest: BaseTest() {
 
     lateinit var sut: SettingsViewModel
 

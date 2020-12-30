@@ -1,28 +1,28 @@
-package tmg.flashback.home.list.viewholders
+package tmg.flashback.dashboard.season.viewholders
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.view_home_track.view.*
+import kotlinx.android.synthetic.main.view_dashboard_season_track.view.*
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.R
-import tmg.flashback.home.list.HomeItem
+import tmg.flashback.dashboard.season.SeasonItem
 import tmg.flashback.utils.getColor
 import tmg.flashback.utils.getFlagResourceAlpha3
 import tmg.utilities.extensions.ordinalAbbreviation
 
 class TrackViewHolder(
-    val trackClicked: (HomeItem.Track) -> Unit,
+    val trackClicked: (SeasonItem.Track) -> Unit,
     itemView: View
 ): RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
-    private lateinit var data: HomeItem.Track
+    private lateinit var data: SeasonItem.Track
 
     init {
         itemView.container.setOnClickListener(this)
     }
 
-    fun bind(item: HomeItem.Track) {
+    fun bind(item: SeasonItem.Track) {
         data = item
         itemView.apply {
             country.setImageResource(context.getFlagResourceAlpha3(item.raceCountryISO))

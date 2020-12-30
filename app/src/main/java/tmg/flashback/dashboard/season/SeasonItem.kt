@@ -1,4 +1,4 @@
-package tmg.flashback.home.list
+package tmg.flashback.dashboard.season
 
 import androidx.annotation.LayoutRes
 import org.threeten.bp.LocalDate
@@ -7,7 +7,7 @@ import tmg.flashback.repo.enums.BarAnimation
 import tmg.flashback.repo.models.stats.Round
 import tmg.flashback.shared.sync.SyncDataItem
 
-sealed class HomeItem(
+sealed class SeasonItem(
         @LayoutRes val layoutId: Int
 ) {
     data class Track(
@@ -21,7 +21,7 @@ sealed class HomeItem(
             val round: Int,
             val hasQualifying: Boolean,
             val hasResults: Boolean
-    ) : HomeItem(R.layout.view_home_track)
+    ) : SeasonItem(R.layout.view_dashboard_season_track)
 
     data class Driver(
             val season: Int,
@@ -33,7 +33,7 @@ sealed class HomeItem(
             val bestFinish: Pair<Int, List<Round>>?,
             val maxPointsInSeason: Int,
             val barAnimation: BarAnimation
-    ) : HomeItem(R.layout.view_home_driver)
+    ) : SeasonItem(R.layout.view_dashboard_season_driver)
 
     data class Constructor(
             val season: Int,
@@ -44,13 +44,13 @@ sealed class HomeItem(
             val points: Int,
             val maxPointsInSeason: Int,
             val barAnimation: BarAnimation
-    ) : HomeItem(R.layout.view_home_constructor)
+    ) : SeasonItem(R.layout.view_dashboard_season_constructor)
 
     data class ErrorItem(
             val item: SyncDataItem
-    ) : HomeItem(item.layoutId)
+    ) : SeasonItem(item.layoutId)
 }
 
-fun MutableList<HomeItem>.addError(item: SyncDataItem) {
-    this.add(HomeItem.ErrorItem(item))
+fun MutableList<SeasonItem>.addError(item: SyncDataItem) {
+    this.add(SeasonItem.ErrorItem(item))
 }

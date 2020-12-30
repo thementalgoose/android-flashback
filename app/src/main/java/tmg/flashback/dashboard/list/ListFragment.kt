@@ -1,6 +1,7 @@
 package tmg.flashback.dashboard.list
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -9,6 +10,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.R
 import tmg.flashback.base.BaseFragment
 import tmg.flashback.dashboard.DashboardNavigationCallback
+import tmg.flashback.settings.SettingsActivity
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 
@@ -32,6 +34,7 @@ class ListFragment: BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         adapter = ListAdapter(
+            settingsClicked = viewModel.inputs::clickSettings,
             featureToggled = viewModel.inputs::toggleHeader,
             favouriteToggled = viewModel.inputs::toggleFavourite,
             seasonClicked = viewModel.inputs::clickSeason
@@ -47,6 +50,12 @@ class ListFragment: BaseFragment() {
             dashboardNavigationCallback?.let {
                 it.seasonSelected(season)
                 it.closeSeasonList()
+            }
+        }
+
+        observeEvent(viewModel.outputs.openSettings) {
+            context?.let {
+                startActivity(Intent(it, SettingsActivity::class.java))
             }
         }
     }

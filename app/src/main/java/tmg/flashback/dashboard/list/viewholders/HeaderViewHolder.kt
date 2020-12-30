@@ -5,9 +5,9 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.view_season_list_header.view.*
 import tmg.flashback.R
 import tmg.flashback.bottomSheetFastScrollDuration
+import tmg.flashback.dashboard.list.HeaderType
+import tmg.flashback.dashboard.list.ListItem
 import tmg.flashback.extensions.dimensionPx
-import tmg.flashback.home.season.HeaderType
-import tmg.flashback.home.season.SeasonListItem
 import tmg.utilities.extensions.views.show
 
 class HeaderViewHolder(
@@ -22,7 +22,7 @@ class HeaderViewHolder(
     private lateinit var type: HeaderType
     private var expanded: Boolean? = null
 
-    fun bind(header: SeasonListItem.Header, isCurrentlyOnScreen: Boolean, indentState: Boolean) {
+    fun bind(header: ListItem.Header, isCurrentlyOnScreen: Boolean, indentState: Boolean) {
 
         type = header.type
         expanded = header.expanded
