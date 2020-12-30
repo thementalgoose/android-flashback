@@ -20,4 +20,6 @@ internal object MockRemoteConfigRepository: RemoteConfigRepository {
         get() = true
     override val dataProvidedBy: String
         get() = "Mock"
+    override val search: Boolean
+        get() = false
 }
