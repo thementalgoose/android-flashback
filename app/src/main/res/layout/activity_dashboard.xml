@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.discord.panels.OverlappingPanelsLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/panels"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <!-- Set layout_gravity on the start panel to "start" -->
+    <FrameLayout
+        android:id="@+id/season_list"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start" />
+
+    <FrameLayout
+        android:id="@+id/season"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent" />
+
+    <!-- Set layout_gravity on the end panel to "end" -->
+    <FrameLayout
+        android:id="@+id/search"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="end" />
+
+</com.discord.panels.OverlappingPanelsLayout>
