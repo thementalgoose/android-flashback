@@ -2,20 +2,18 @@ package tmg.flashback.home
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.reddit.indicatorfastscroll.FastScrollItemIndicator
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.bottom_sheet_season.*
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.FlowPreview
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.R
 import tmg.flashback.admin.lockout.LockoutActivity
 import tmg.flashback.base.BaseActivity
 import tmg.flashback.bottomSheetFastScrollDuration
+import tmg.flashback.dashboard.list.ListAdapter
 import tmg.flashback.overviews.constructor.ConstructorActivity
 import tmg.flashback.overviews.driver.DriverActivity
 import tmg.flashback.extensions.dimensionPx
@@ -34,7 +32,7 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback {
 
     private lateinit var adapter: HomeAdapter
     private var seasonBottomSheetBehavior: BottomSheetBehavior<*>? = null
-    private lateinit var seasonAdapter: SeasonListAdapter
+    private lateinit var seasonAdapter: ListAdapter
 
     private val remoteConfigRepository: RemoteConfigRepository by inject()
 
@@ -79,6 +77,7 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback {
         if (!remoteConfigRepository.rss) {
             menu.menu.removeItem(R.id.nav_rss)
         }
+        menu.menu.removeItem(R.id.nav_search)
         menu.setOnNavigationItemSelectedListener {
             return@setOnNavigationItemSelectedListener when (it.itemId) {
                 R.id.nav_rss -> {
@@ -212,7 +211,7 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback {
             ))
         }
 
-        seasonAdapter = SeasonListAdapter(
+        seasonAdapter = ListAdapter(
                 featureToggled = {
                     seasonViewModel.inputs.toggleHeader(it)
                 },

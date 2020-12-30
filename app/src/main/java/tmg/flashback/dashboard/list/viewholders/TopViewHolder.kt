@@ -1,4 +1,4 @@
-package tmg.flashback.home.season.viewholders
+package tmg.flashback.dashboard.list.viewholders
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView

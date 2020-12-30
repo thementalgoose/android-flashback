@@ -118,10 +118,12 @@
     <string name="nav_drivers">Drivers</string>
     <string name="nav_constructors">Constructors</string>
     <string name="nav_seasons">Seasons</string>
+    <string name="nav_search">Search</string>
     <string name="nav_rss">RSS</string>
     <string name="nav_calendar">Calendar</string>
     <string name="nav_race">Race</string>
     <string name="nav_qualifying">Qualifying</string>
+
 
     <!-- Home -->
     <string name="home_season_header_current">Now</string>
@@ -129,6 +131,8 @@
     <string name="home_season_header_All">All</string>
     <string name="home_constructor_penalty">%d point penalty</string>
     <string name="home_season_arrow">%s</string>
+
+    <string name="menu_title">Season list</string>
 
     <!-- On pole or 4th -->
     <!-- On pole or 2nd -->
