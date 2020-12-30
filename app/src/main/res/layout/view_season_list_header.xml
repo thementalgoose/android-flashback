@@ -14,6 +14,7 @@
         style="@style/Text.BottomSheet.Header"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:alpha="0.6"
         android:paddingStart="@dimen/paddingMedium"
         android:paddingTop="@dimen/paddingSmall"
         android:paddingEnd="@dimen/paddingMedium"
@@ -25,17 +26,17 @@
         tools:text="Header" />
 
     <ImageView
-        app:tint="?attr/f1TextSecondary"
-        android:paddingTop="@dimen/paddingSmall"
-        android:paddingBottom="@dimen/paddingSmall"
-        android:paddingStart="@dimen/paddingSmall"
-        android:paddingEnd="@dimen/paddingSmall"
         android:id="@+id/arrow"
         android:layout_width="@dimen/bottomSheetIconSize"
         android:layout_height="@dimen/bottomSheetIconSize"
         android:layout_marginEnd="@dimen/paddingMedium"
+        android:paddingStart="@dimen/paddingSmall"
+        android:paddingTop="@dimen/paddingSmall"
+        android:paddingEnd="@dimen/paddingSmall"
+        android:paddingBottom="@dimen/paddingSmall"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="?attr/f1TextSecondary" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

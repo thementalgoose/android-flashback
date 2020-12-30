@@ -39,7 +39,6 @@ internal class SettingsViewModelTest: BaseTest() {
 
         every { mockPrefsCustomisation.showQualifyingDelta } returns false
         every { mockPrefsCustomisation.showGridPenaltiesInQualifying } returns false
-        every { mockPrefsCustomisation.showBottomSheetExpanded } returns false
         every { mockPrefsCustomisation.fadeDNF } returns false
         every { mockPrefsCustomisation.showBottomSheetFavourited } returns false
         every { mockPrefsCustomisation.showBottomSheetAll } returns false
@@ -81,7 +80,6 @@ internal class SettingsViewModelTest: BaseTest() {
             add(FADE_OUT_DNF.toSwitch(false))
             add(QUALIFYING_GRID_PENALTY.toSwitch(false))
             add(AppPreferencesItem.Category(R.string.settings_season_list))
-            add(SEASON_BOTTOM_SHEET_EXPANDED.toSwitch(false))
             add(SEASON_BOTTOM_SHEET_FAVOURITED.toSwitch(false))
             add(SEASON_BOTTOM_SHEET_ALL.toSwitch(false))
             add(AppPreferencesItem.Category(R.string.settings_help))
@@ -252,16 +250,6 @@ internal class SettingsViewModelTest: BaseTest() {
         sut.inputs.preferenceClicked(QUALIFYING_GRID_PENALTY, true)
 
         verify { mockPrefsCustomisation.showGridPenaltiesInQualifying = true }
-    }
-
-    @Test
-    fun `SettingsViewModel selecting season bottom sheet expand updates value`() {
-
-        initSUT()
-
-        sut.inputs.preferenceClicked(SEASON_BOTTOM_SHEET_EXPANDED, true)
-
-        verify { mockPrefsCustomisation.showBottomSheetExpanded = true }
     }
 
     @Test

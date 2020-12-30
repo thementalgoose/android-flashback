@@ -31,7 +31,6 @@ class SharedPrefsRepository(context: Context) : SharedPrefManager(context),
     private val keyShowQualifyingDelta: String = "SHOW_QUALIFYING_DELTA"
     private val keyFadeDNF: String = "FADE_DNF"
     private val keyShowGridPenaltiesInQualifying: String = "SHOW_GRID_PENALTIES_IN_QUALIFYING"
-    private val keyBottomSheetExpanded: String = "BOTTOM_SHEET_EXPANDED"
     private val keyBottomSheetAll: String = "BOTTOM_SHEET_ALL"
     private val keyBottomSheetFavourited: String = "BOTTOM_SHEET_FAVOURITED"
     private val keyBarAnimation: String = "BAR_ANIMATION"
@@ -65,16 +64,12 @@ class SharedPrefsRepository(context: Context) : SharedPrefManager(context),
         get() = getBoolean(keyShowQualifyingDelta, defaultShowQualifying)
         set(value) = save(keyShowQualifyingDelta, value)
 
-    override var showBottomSheetExpanded: Boolean
-        get() = getBoolean(keyBottomSheetExpanded, true)
-        set(value) = save(keyBottomSheetExpanded, value)
-
     override var fadeDNF: Boolean
         get() = getBoolean(keyFadeDNF, true)
         set(value) = save(keyFadeDNF, value)
 
     override var showBottomSheetFavourited: Boolean
-        get() = getBoolean(keyBottomSheetFavourited, false)
+        get() = getBoolean(keyBottomSheetFavourited, true)
         set(value) = save(keyBottomSheetFavourited, value)
 
     override var showBottomSheetAll: Boolean
