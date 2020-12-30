@@ -23,7 +23,6 @@ sealed class SeasonListItem {
 enum class HeaderType(
     @StringRes val label: Int
 ) {
-    CURRENT(R.string.home_season_header_current),
     FAVOURITED(R.string.home_season_header_favourited),
     ALL(R.string.home_season_header_All)
 }

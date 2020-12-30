@@ -81,14 +81,6 @@ class SeasonViewModel(
 
         val list: MutableList<SeasonListItem> = mutableListOf(SeasonListItem.Top)
 
-        // Current
-        list.add(SeasonListItem.Header(HeaderType.CURRENT, null))
-        list.add(SeasonListItem.Season(
-            season = currentYear,
-            isFavourited = favouritedSet.contains(currentYear),
-            fixed = HeaderType.CURRENT
-        ))
-
         // Favourites
         list.add(
             SeasonListItem.Header(
