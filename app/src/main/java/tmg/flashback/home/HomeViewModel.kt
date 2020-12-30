@@ -48,7 +48,6 @@ interface HomeViewModelOutputs {
     val openSeasonList: LiveData<DataEvent<Boolean>>
     val label: LiveData<StringHolder>
     val showLoading: LiveData<Boolean>
-    val ensureOnCalendar: LiveData<Event>
     val openAppLockout: LiveData<Event>
     val openReleaseNotes: MutableLiveData<Event>
 }
@@ -78,7 +77,6 @@ class HomeViewModel(
     private val currentHistory: Flow<History?> = season.asFlow()
             .flatMapLatest { historyRepository.historyFor(it) }
 
-    override val ensureOnCalendar: MutableLiveData<Event> = MutableLiveData()
     override val showLoading: MutableLiveData<Boolean> = MutableLiveData()
     override val openSeasonList: MutableLiveData<DataEvent<Boolean>> = MutableLiveData()
 
