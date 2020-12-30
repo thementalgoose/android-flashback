@@ -11,6 +11,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
+import tmg.flashback.dashboard.DashboardActivity
 import tmg.flashback.home.HomeActivity
 import tmg.flashback.repo.config.RemoteConfigRepository
 import tmg.utilities.extensions.observe
@@ -36,7 +37,7 @@ class SplashActivity: AppCompatActivity() {
         }
 
         observeEvent(viewModel.outputs.goToNextScreen) {
-            startActivity(Intent(this@SplashActivity, HomeActivity::class.java))
+            startActivity(Intent(this@SplashActivity, DashboardActivity::class.java))
             finish()
         }
 

@@ -11,6 +11,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.R
 import tmg.flashback.base.BaseBottomSheetFragment
 import tmg.flashback.bottomSheetFastScrollDuration
+import tmg.flashback.dashboard.list.ListAdapter
 import tmg.flashback.extensions.dimensionPx
 import tmg.flashback.minimumSupportedYear
 import tmg.utilities.extensions.observe
@@ -19,7 +20,7 @@ import tmg.utilities.extensions.observeEvent
 
 class SeasonBottomSheetFragment: BaseBottomSheetFragment() {
 
-    private lateinit var adapter: SeasonListAdapter
+    private lateinit var adapter: ListAdapter
     private var callback: SeasonRequestedCallback? = null
 
     private val viewModel: SeasonViewModel by viewModel()
@@ -44,7 +45,7 @@ class SeasonBottomSheetFragment: BaseBottomSheetFragment() {
     }
 
     override fun initViews() {
-        adapter = SeasonListAdapter(
+        adapter = ListAdapter(
             featureToggled = {
                 viewModel.inputs.toggleHeader(it)
             },

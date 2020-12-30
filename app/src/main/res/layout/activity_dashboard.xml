@@ -7,7 +7,7 @@
 
     <!-- Set layout_gravity on the start panel to "start" -->
     <FrameLayout
-        android:id="@+id/season_list"
+        android:id="@+id/list"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start" />

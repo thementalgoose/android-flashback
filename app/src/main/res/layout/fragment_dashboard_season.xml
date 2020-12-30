@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             app:layout_scrollFlags="exitUntilCollapsed|scroll|enterAlways">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <RelativeLayout
                 android:id="@+id/titlebar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -30,10 +30,14 @@
                 <TextView
                     android:id="@+id/season"
                     style="@style/Text.Toolbar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/menu"
+                    android:layout_alignBottom="@id/menu"
                     android:layout_marginStart="@dimen/paddingMedium"
                     android:layout_marginEnd="@dimen/paddingMedium"
+                    android:layout_toStartOf="@id/settings"
+                    android:layout_toEndOf="@id/menu"
                     android:clickable="true"
                     android:drawablePadding="@dimen/paddingNSmall"
                     android:ellipsize="end"
@@ -44,39 +48,35 @@
                     android:maxLines="1"
                     android:paddingStart="@dimen/paddingMedium"
                     android:paddingEnd="@dimen/paddingMedium"
-                    app:drawableEndCompat="@drawable/arrow_down"
-                    app:drawableStartCompat="@drawable/arrow_down"
-                    app:drawableTint="?attr/f1TextPrimary"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/settings"
-                    app:layout_constraintStart_toEndOf="@id/menu"
-                    app:layout_constraintTop_toTopOf="parent"
                     tools:text="2020" />
 
                 <ImageButton
                     android:id="@+id/settings"
                     android:layout_width="@dimen/toolbarSettingsIcon"
                     android:layout_height="@dimen/toolbarSettingsIcon"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
                     android:layout_marginEnd="@dimen/paddingMedium"
                     android:background="@drawable/ripple_rounded"
                     android:contentDescription="@string/settings_title"
                     android:src="@drawable/nav_settings"
-                    android:tint="?attr/f1TextPrimary"
-                    app:layout_constraintBottom_toBottomOf="@id/season"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/season" />
+                    android:tint="?attr/f1TextPrimary" />
 
                 <ImageButton
-                    android:src="@drawable/ic_menu"
                     android:id="@+id/menu"
                     android:layout_width="@dimen/toolbarSettingsIcon"
                     android:layout_height="@dimen/toolbarSettingsIcon"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentBottom="true"
                     android:layout_marginStart="@dimen/paddingMedium"
-                    app:layout_constraintBottom_toBottomOf="@id/season"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/season" />
+                    android:background="@drawable/ripple_rounded"
+                    android:contentDescription="@string/menu_title"
+                    android:src="@drawable/ic_menu"
+                    android:tint="?attr/f1TextPrimary" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            </RelativeLayout>
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 

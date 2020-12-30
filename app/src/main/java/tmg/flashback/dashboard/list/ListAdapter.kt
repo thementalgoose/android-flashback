@@ -1,19 +1,21 @@
-package tmg.flashback.home.season
+package tmg.flashback.dashboard.list
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.R
-import tmg.flashback.home.season.viewholders.HeaderViewHolder
-import tmg.flashback.home.season.viewholders.SeasonViewHolder
-import tmg.flashback.home.season.viewholders.TopViewHolder
+import tmg.flashback.dashboard.list.viewholders.HeaderViewHolder
+import tmg.flashback.dashboard.list.viewholders.SeasonViewHolder
+import tmg.flashback.dashboard.list.viewholders.TopViewHolder
+import tmg.flashback.home.season.HeaderType
+import tmg.flashback.home.season.SeasonListItem
 
 private const val viewTypeSeason = 0
 private const val viewTypeTop = 1
 private const val viewTypeHeader = 2
 
-class SeasonListAdapter(
+class ListAdapter(
     var featureToggled: ((type: HeaderType) -> Unit)? = null,
     var favouriteToggled: ((season: Int) -> Unit)? = null,
     var seasonClicked: ((season: Int) -> Unit)? = null

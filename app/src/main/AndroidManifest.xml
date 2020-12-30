@@ -35,6 +35,10 @@
             android:label="" />
 
         <activity
+            android:name=".dashboard.DashboardActivity"
+            android:label="" />
+
+        <activity
             android:name=".race.RaceActivity"
             android:label="" />
 
