@@ -151,16 +151,6 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback {
             }
         }
 
-        observeEvent(viewModel.outputs.ensureOnCalendar) {
-            when (menu.selectedItemId) {
-                R.id.nav_calendar,
-                R.id.nav_constructor,
-                R.id.nav_drivers -> {
-                }
-                else -> menu.selectedItemId = R.id.nav_calendar
-            }
-        }
-
         //endregion
 
         //region SeasonViewModel
