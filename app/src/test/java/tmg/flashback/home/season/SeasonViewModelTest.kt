@@ -20,8 +20,6 @@ class SeasonViewModelTest: BaseTest() {
 
     private val mockPrefsRepository: PrefCustomisationRepository = mockk(relaxed = true)
 
-    private val headerCurrent: SeasonListItem.Header = SeasonListItem.Header(CURRENT, null)
-    private val seasonCurrent: SeasonListItem.Season = SeasonListItem.Season(currentYear, false, CURRENT)
     private val headerFavouriteOpen: SeasonListItem.Header = SeasonListItem.Header(FAVOURITED, true)
     private val headerFavouriteClose: SeasonListItem.Header = SeasonListItem.Header(FAVOURITED, false)
     private val headerAllOpen: SeasonListItem.Header = SeasonListItem.Header(ALL, true)
@@ -197,8 +195,6 @@ class SeasonViewModelTest: BaseTest() {
     private fun expectedList(favourites: Set<Int> = emptySet(), showFavourites: Boolean = true, showAll: Boolean = true): List<SeasonListItem> {
         val expected = mutableListOf<SeasonListItem>()
         expected.add(SeasonListItem.Top)
-        expected.add(headerCurrent)
-        expected.add(seasonCurrent)
         if (showFavourites) {
             expected.add(headerFavouriteOpen)
             expected.addAll(favouriteSeasons(favourites.toList().sorted()))

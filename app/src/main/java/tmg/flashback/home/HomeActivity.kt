@@ -241,7 +241,6 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback {
                 SeasonListItem.Top -> FastScrollItemIndicator.Icon(R.drawable.ic_bottom_sheet_current)
                 is SeasonListItem.Season -> {
                     when (item.fixed) {
-                        HeaderType.CURRENT -> FastScrollItemIndicator.Icon(R.drawable.ic_bottom_sheet_current)
                         HeaderType.FAVOURITED -> FastScrollItemIndicator.Icon(R.drawable.ic_bottom_sheet_favourite)
                         HeaderType.ALL -> {
                             if (item.season != minimumSupportedYear) {
@@ -254,7 +253,6 @@ class HomeActivity : BaseActivity(), SeasonRequestedCallback {
                 }
                 is SeasonListItem.Header -> {
                     when (item.type) {
-                        HeaderType.CURRENT -> FastScrollItemIndicator.Icon(R.drawable.ic_bottom_sheet_current)
                         HeaderType.FAVOURITED -> FastScrollItemIndicator.Icon(R.drawable.ic_bottom_sheet_favourite)
                         HeaderType.ALL -> null
                     }
