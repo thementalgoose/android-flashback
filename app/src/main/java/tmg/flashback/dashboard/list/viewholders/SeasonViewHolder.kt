@@ -12,7 +12,9 @@ import tmg.flashback.extensions.dimensionPx
 import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.getColor
 import tmg.utilities.extensions.views.context
+import tmg.utilities.extensions.views.invisible
 import tmg.utilities.extensions.views.show
+import tmg.utilities.extensions.views.visible
 
 class SeasonViewHolder(
     private var favouriteToggled: ((season: Int) -> Unit)? = null,
@@ -35,10 +37,19 @@ class SeasonViewHolder(
         val colour = coloursDecade["${season.season.toString().substring(0, 3)}0"]?.toColorInt() ?: ContextCompat.getColor(itemView.context, R.color.colorTheme)
 
         itemView.label.text = season.season.toString()
+        itemView.highlight.setCircleColour(context.theme.getColor(R.attr.f1BackgroundPrimary))
+
         when (season.selected) {
-            true -> itemView.label.setTextColor(context.theme.getColor(R.attr.f1TextPrimary))
-            false -> itemView.label.setTextColor(context.theme.getColor(R.attr.f1TextTertiary))
+            true -> {
+                itemView.label.setTextColor(context.theme.getColor(R.attr.f1TextPrimary))
+                itemView.highlight.invisible()
+            }
+            false -> {
+                itemView.label.setTextColor(context.theme.getColor(R.attr.f1TextTertiary))
+                itemView.highlight.visible()
+            }
         }
+
         itemView.favourite.setImageResource(if (season.isFavourited) R.drawable.ic_star_filled_coloured else R.drawable.ic_star_outline)
         itemView.cardview.setCircleColour(colour)
 
@@ -46,6 +57,7 @@ class SeasonViewHolder(
         itemView.pipeBottom.setBackgroundColor(colour)
         itemView.pipeTop.show(!currentSeason.toString().endsWith('9') && currentSeason != currentYear && season.fixed == HeaderType.ALL)
         itemView.pipeBottom.show(!currentSeason.toString().endsWith('0') && (currentSeason != currentYear || !currentYear.toString().endsWith("0")) && season.fixed == HeaderType.ALL)
+
     }
 
     override fun onClick(p0: View?) {

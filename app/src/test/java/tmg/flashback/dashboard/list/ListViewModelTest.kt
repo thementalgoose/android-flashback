@@ -6,6 +6,7 @@ import io.mockk.verify
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import tmg.flashback.repo.config.RemoteConfigRepository
 import tmg.flashback.repo.pref.PrefCustomisationRepository
 import tmg.flashback.testutils.*
 import tmg.flashback.testutils.assertDataEventValue
@@ -20,6 +21,7 @@ internal class ListViewModelTest: BaseTest() {
     private var minYear: Int = 1950
 
     private val mockPrefCustomisationRepository: PrefCustomisationRepository = mockk(relaxed = true)
+    private val mockRemoteConfigRepository: RemoteConfigRepository = mockk(relaxed = true)
 
     @BeforeEach
     internal fun setUp() {
@@ -27,11 +29,27 @@ internal class ListViewModelTest: BaseTest() {
         every { mockPrefCustomisationRepository.favouriteSeasons } returns setOf()
         every { mockPrefCustomisationRepository.showBottomSheetFavourited } returns true
         every { mockPrefCustomisationRepository.showBottomSheetAll } returns true
+
+        every { mockRemoteConfigRepository.defaultYear } returns 2018
     }
 
     private fun initSUT() {
-        sut = ListViewModel(mockPrefCustomisationRepository)
+        sut = ListViewModel(mockPrefCustomisationRepository, mockRemoteConfigRepository)
     }
+
+    //region Default
+
+    @Test
+    fun `SeasonViewModel defaults to remote config default`() {
+
+        initSUT()
+
+        sut.outputs.list.test {
+            assertListMatchesItem { it is ListItem.Season && it.selected && it.season == 2018 }
+        }
+    }
+
+    //endregion
 
     //region Navigation
 
@@ -227,12 +245,12 @@ internal class ListViewModelTest: BaseTest() {
 
     private fun favouriteSeasons(favouriteItems: List<Int>): List<ListItem> = List(favouriteItems.size) {
         val year = favouriteItems[it]
-        ListItem.Season(year, true, HeaderType.FAVOURITED)
+        ListItem.Season(year, true, HeaderType.FAVOURITED, year == 2018)
     }.reversed()
 
     private fun allSeasons(favouriteItems: List<Int> = emptyList()): List<ListItem> = List((currentYear - minYear) + 1) {
         val year = minYear + it
-        ListItem.Season(year, favouriteItems.contains(year), HeaderType.ALL)
+        ListItem.Season(year, favouriteItems.contains(year), HeaderType.ALL, year == 2018)
     }.reversed()
 
     //endregion

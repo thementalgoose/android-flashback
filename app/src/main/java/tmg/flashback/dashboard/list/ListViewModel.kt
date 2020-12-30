@@ -37,8 +37,8 @@ class ListViewModel(
     private val remoteConfigRepository: RemoteConfigRepository
 ) : BaseViewModel(), ListViewModelInputs, ListViewModelOutputs {
 
-    private var headerSectionFavourited: Boolean = prefRepository.showBottomSheetFavourited
-    private var headerSectionAll: Boolean = prefRepository.showBottomSheetAll
+    var headerSectionFavourited: Boolean = prefRepository.showBottomSheetFavourited
+    var headerSectionAll: Boolean = prefRepository.showBottomSheetAll
 
     private var currentSeason: Int = remoteConfigRepository.defaultYear
     private val favouriteSeasons = prefRepository.favouriteSeasons.toMutableSet()
@@ -110,7 +110,8 @@ class ListViewModel(
                     ListItem.Season(
                         season = it,
                         isFavourited = true,
-                        fixed = HeaderType.FAVOURITED
+                        fixed = HeaderType.FAVOURITED,
+                        selected = currentSeason == it
                     )
                 }
             )

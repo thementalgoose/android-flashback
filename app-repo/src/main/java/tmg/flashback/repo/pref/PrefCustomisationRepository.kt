@@ -21,11 +21,6 @@ interface PrefCustomisationRepository {
     var fadeDNF: Boolean
 
     /**
-     * Bottom sheet expanded default behavior
-     */
-    var showBottomSheetExpanded: Boolean
-
-    /**
      * Show the favourited bottom sheet section expanded by default
      */
     var showBottomSheetFavourited: Boolean
