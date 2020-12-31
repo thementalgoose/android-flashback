@@ -134,5 +134,11 @@
         <br/>• Adds circuit diagrams for Buddh and Fuji circuits
         <br/>• Adds option to fade drivers who retire from a Grand Prix in race overview
         <br/>• Bug fixes to address initial load issues with images]]></string>
+    <string name="release_40"><![CDATA[<b>5.5.0</b> - New homescreen
+        <br/>• Adds a new dashboard homescreen with sliding panes for season list
+        <br/>• Adds a new \'Up Next\' section to the season list so you can see how long it is until the next race
+        <br/>• Adds ability to show qualifying delta by long clicking qualifying results
+        <br/>• Fix for progress bar values sometimes being fractionally incorrect after animation
+        <br/>• Other minor bug fixes and performance improvements]]></string>
 
 </resources>
