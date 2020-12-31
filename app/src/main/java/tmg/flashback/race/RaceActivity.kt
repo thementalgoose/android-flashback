@@ -6,6 +6,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_race.*
@@ -219,6 +220,12 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
             startActivity(intent)
         }
 
+        observeEvent(viewModel.outputs.showAppHintLongPress) {
+            // TODO
+            Toast.makeText(applicationContext, "SHOW APP HINT LONG PRESS!", Toast.LENGTH_LONG).show()
+        }
+
+
         if (defaultToRace) {
             menu.selectedItemId = R.id.nav_race
         } else {
@@ -245,6 +252,10 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
 
     override fun constructorClicked(constructorId: String, constructorName: String) {
         viewModel.inputs.goToConstructor(constructorId, constructorName)
+    }
+
+    override fun toggleQualifyingDeltas(toNewState: Boolean) {
+        viewModel.inputs.toggleQualifyingDelta(toNewState)
     }
 
     //endregion

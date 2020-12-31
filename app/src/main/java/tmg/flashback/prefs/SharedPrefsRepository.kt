@@ -6,6 +6,7 @@ import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.BuildConfig
 import tmg.flashback.releaseNotes
+import tmg.flashback.repo.enums.AppHints
 import tmg.flashback.repo.pref.PrefCustomisationRepository
 import tmg.flashback.repo.enums.BarAnimation
 import tmg.flashback.repo.enums.NotificationRegistration
@@ -44,6 +45,7 @@ class SharedPrefsRepository(context: Context) : SharedPrefManager(context),
     private val keyNewsOpenInExternalBrowser: String = "NEWS_OPEN_IN_EXTERNAL_BROWSER"
     private val keyInAppEnableJavascript: String = "IN_APP_ENABLE_JAVASCRIPT"
     private val keyNewsShowDescription: String = "NEWS_SHOW_DESCRIPTIONS"
+    private val keyAppHints: String = "APP_HINTS"
 
     private val keyNotificationRace: String = "NOTIFICATION_RACE"
     private val keyNotificationQualifying: String = "NOTIFICATION_QUALIFYING"
@@ -106,6 +108,15 @@ class SharedPrefsRepository(context: Context) : SharedPrefManager(context),
     override var theme: ThemePref
         get() = getString(keyTheme)?.toEnum<ThemePref> { it.key } ?: ThemePref.AUTO
         set(value) = save(keyTheme, value.key)
+
+    override var appHints: Set<AppHints>
+        set(value) = save(keyAppHints, value.map { it.id }.toSet())
+        get() {
+            val value = getSet(keyAppHints, setOf())
+            return value
+                .mapNotNull { id -> id.toEnum<AppHints> { it.id } }
+                .toSet()
+        }
 
     //endregion
 
