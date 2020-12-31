@@ -26,7 +26,7 @@
     <string name="settings_bar_animation_medium">1x</string>
     <string name="settings_bar_animation_slow">2x</string>
     <string name="settings_customisation_qualifying_delta_title">Qualifying delta</string>
-    <string name="settings_customisation_qualifying_delta_description">Default to showing the lap time delta alongside the qualifying time when displaying qualifying results. You can long press qualifying results to toggle this manually</string>
+    <string name="settings_customisation_qualifying_delta_description">Default to showing the lap time delta alongside the qualifying time when displaying qualifying results. You can long press qualifying results to toggle this per race</string>
     <string name="settings_customisation_fade_dnf_title">Fade race DNFs</string>
     <string name="settings_customisation_fade_dnf_description">Fade out the drivers who fail to finish a race when looking at race results</string>
     <string name="settings_customisation_qualifying_grid_penalties_title">Qualifying grid penalties</string>
@@ -129,6 +129,11 @@
     <string name="home_season_header_All">All</string>
     <string name="home_constructor_penalty">%d point penalty</string>
     <string name="home_season_arrow">%s</string>
+
+    <string name="dashboard_up_next_title">Up next</string>
+    <string name="dashboard_up_next_days_to_go">days to go</string>
+    <string name="dashboard_up_next_today">Today</string>
+    <string name="dashboard_up_next_date"><![CDATA[Round <b>%d</b><br/><b>%s</b>]]></string>
 
     <string name="menu_title">Season list</string>
 

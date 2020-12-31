@@ -29,7 +29,7 @@
         android:id="@+id/arrow"
         android:layout_width="@dimen/bottomSheetIconSize"
         android:layout_height="@dimen/bottomSheetIconSize"
-        android:layout_marginEnd="@dimen/paddingMedium"
+        android:layout_marginEnd="@dimen/paddingNSmall"
         android:paddingStart="@dimen/paddingSmall"
         android:paddingTop="@dimen/paddingSmall"
         android:paddingEnd="@dimen/paddingSmall"
