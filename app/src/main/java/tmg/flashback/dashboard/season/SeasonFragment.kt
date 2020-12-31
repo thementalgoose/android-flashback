@@ -98,7 +98,7 @@ class SeasonFragment: BaseFragment() {
         }
 
         observeEvent(viewModel.outputs.openSearch) {
-            startActivity(Intent(context, SettingsActivity::class.java))
+            dashboardNavigation?.openSearch()
         }
 
         observe(viewModel.outputs.list) {

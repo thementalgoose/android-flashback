@@ -3,11 +3,10 @@ package tmg.flashback.dashboard
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.flow.flow
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import tmg.flashback.di.device.BuildConfigManager
 import tmg.flashback.repo.db.DataRepository
-import tmg.flashback.repo.models.AppLockout
+import tmg.flashback.repo.models.remoteconfig.AppLockout
 import tmg.flashback.repo.pref.PrefDeviceRepository
 import tmg.flashback.testutils.BaseTest
 import tmg.flashback.testutils.assertEventFired

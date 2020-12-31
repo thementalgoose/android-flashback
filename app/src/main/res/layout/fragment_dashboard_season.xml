@@ -5,9 +5,11 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/f1BackgroundPrimary">
+    android:background="?attr/f1BackgroundPrimary"
+    android:elevation="2dp">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@null"
@@ -25,8 +27,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?attr/f1BackgroundPrimary"
-                android:paddingTop="@dimen/paddingXSmall"
-                android:paddingBottom="@dimen/paddingXSmall">
+                android:paddingTop="@dimen/paddingSmall"
+                android:paddingBottom="@dimen/paddingSmall">
 
                 <TextView
                     android:id="@+id/season"
