@@ -6,7 +6,9 @@ import io.mockk.verify
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.threeten.bp.LocalDate
 import tmg.flashback.repo.config.RemoteConfigRepository
+import tmg.flashback.repo.models.remoteconfig.UpNextSchedule
 import tmg.flashback.repo.pref.PrefCustomisationRepository
 import tmg.flashback.testutils.*
 import tmg.flashback.testutils.assertDataEventValue
@@ -30,6 +32,7 @@ internal class ListViewModelTest: BaseTest() {
         every { mockPrefCustomisationRepository.showBottomSheetFavourited } returns true
         every { mockPrefCustomisationRepository.showBottomSheetAll } returns true
 
+        every { mockRemoteConfigRepository.upNext } returns emptyList()
         every { mockRemoteConfigRepository.defaultYear } returns 2018
     }
 
@@ -62,6 +65,61 @@ internal class ListViewModelTest: BaseTest() {
 
         sut.outputs.openSettings.test {
             assertEventFired()
+        }
+    }
+
+    //endregion
+
+    //region Up Next section
+
+    @Test
+    fun `SeasonViewModel up next section not shown when empty list returned from remote config`() {
+
+        every { mockRemoteConfigRepository.upNext } returns emptyList()
+
+        initSUT()
+
+        sut.outputs.list.test {
+            assertListDoesNotMatchItem { it is ListItem.UpNext }
+        }
+    }
+
+    @Test
+    fun `SeasonViewModel up next section not shown when only up next item is in the past`() {
+
+        val upNextList = listOf(mockUpNextYesterday)
+        every { mockRemoteConfigRepository.upNext } returns upNextList
+
+        initSUT()
+
+        sut.outputs.list.test {
+            assertListDoesNotMatchItem { it is ListItem.UpNext }
+        }
+    }
+
+    @Test
+    fun `SeasonViewModel up next section shown when theres an item in the future`() {
+
+        val upNextList = listOf(mockUpNextTomorrow)
+        every { mockRemoteConfigRepository.upNext } returns upNextList
+
+        initSUT()
+
+        sut.outputs.list.test {
+            assertListContainsItem(ListItem.UpNext(mockUpNextTomorrow))
+        }
+    }
+
+    @Test
+    fun `SeasonViewModel up next section shows the correct up next item`() {
+
+        val upNextList = listOf(mockUpNextYesterday, mockUpNextToday, mockUpNextTomorrow)
+        every { mockRemoteConfigRepository.upNext } returns upNextList
+
+        initSUT()
+
+        sut.outputs.list.test {
+            assertListContainsItem(ListItem.UpNext(mockUpNextToday))
         }
     }
 
@@ -162,6 +220,8 @@ internal class ListViewModelTest: BaseTest() {
         observer.assertValue(expectedList(favourites))
     }
 
+    //region Toggle favourites
+
     @Test
     fun `SeasonViewModel toggling a favourite season that exists removed it from favourites shared prefs`() {
 
@@ -209,6 +269,10 @@ internal class ListViewModelTest: BaseTest() {
         observer.assertValue(expectedList(setOf(2012, 2010, 2018)))
     }
 
+    //endregion
+
+    //region Clicking season
+
     @Test
     fun `SeasonViewModel clicking season fires show season event`() {
 
@@ -220,6 +284,8 @@ internal class ListViewModelTest: BaseTest() {
             assertDataEventValue(2020)
         }
     }
+
+    //endregion
 
     //region Mock Data - Expected list
 
@@ -252,6 +318,14 @@ internal class ListViewModelTest: BaseTest() {
         val year = minYear + it
         ListItem.Season(year, favouriteItems.contains(year), HeaderType.ALL, year == 2018)
     }.reversed()
+
+    //endregion
+
+    //region Mock Data - Up Next
+
+    private val mockUpNextYesterday = UpNextSchedule(1, 1, "Test", LocalDate.now().minusDays(1), null, null, null, null)
+    private val mockUpNextToday = UpNextSchedule(1, 2, "Second", LocalDate.now(), null, null, null, null)
+    private val mockUpNextTomorrow = UpNextSchedule(1, 3, "Second", LocalDate.now().plusDays(1), null, null, null, null)
 
     //endregion
 
