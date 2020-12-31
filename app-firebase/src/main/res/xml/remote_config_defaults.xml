@@ -5,6 +5,10 @@
         <value />
     </entry>
     <entry>
+        <key>up_next</key>
+        <value>{"schedule":[]}</value>
+    </entry>
+    <entry>
         <key>banner</key>
         <value />
     </entry>
