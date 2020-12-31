@@ -2,9 +2,12 @@ package tmg.flashback.dashboard.list
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import org.threeten.bp.LocalDate
+import org.threeten.bp.LocalDateTime
 import tmg.flashback.allYears
 import tmg.flashback.base.BaseViewModel
 import tmg.flashback.repo.config.RemoteConfigRepository
+import tmg.flashback.repo.models.remoteconfig.UpNextSchedule
 import tmg.flashback.repo.pref.PrefCustomisationRepository
 import tmg.utilities.lifecycle.DataEvent
 import tmg.utilities.lifecycle.Event
@@ -67,8 +70,7 @@ class ListViewModel(
     override fun toggleFavourite(season: Int) {
         if (favouriteSeasons.contains(season)) {
             favouriteSeasons.remove(season)
-        }
-        else {
+        } else {
             favouriteSeasons.add(season)
         }
         prefRepository.favouriteSeasons = favouriteSeasons
@@ -95,6 +97,10 @@ class ListViewModel(
 
         val list: MutableList<ListItem> = mutableListOf(ListItem.Hero)
 
+        getNextRace()?.let {
+            list.add(ListItem.UpNext(it))
+        }
+
         // Favourites
         list.add(
             ListItem.Header(
@@ -120,8 +126,7 @@ class ListViewModel(
         // All
         list.add(ListItem.Header(HeaderType.ALL, headerSectionAll))
         if (headerSectionAll) {
-            list.addAll(
-                allYears
+            list.addAll(allYears
                 .map {
                     ListItem.Season(
                         season = it,
@@ -135,5 +140,14 @@ class ListViewModel(
         }
 
         return list
+    }
+
+    private fun getNextRace(): UpNextSchedule? {
+        return remoteConfigRepository
+            .upNext
+            .filter { schedule ->
+                return@filter schedule.date >= LocalDate.now()
+            }
+            .minByOrNull { it.date }
     }
 }

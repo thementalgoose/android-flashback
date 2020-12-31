@@ -50,25 +50,22 @@ class ConstructorStandingsViewholder(
 
             lpvProgress.progressColour = model.constructor.color
             lpvProgress.textBackgroundColour = context.theme.getColor(R.attr.f1TextSecondary)
-            val progress = model.points.toFloat() / maxPointsByAnyTeam.toFloat()
+            var maxPercentage = model.points.toFloat() / maxPointsByAnyTeam.toFloat()
+            if (maxPercentage.isNaN()) {
+                maxPercentage = 0.05f
+            }
 
             when (model.barAnimation) {
                 BarAnimation.NONE -> {
-                    lpvProgress.setProgress(progress) {
-                        when {
-                            progress.isNaN() -> "0"
-                            progress != 0.0f -> ((it / progress) * model.points).roundToInt().toString()
-                            else -> "0"
-                        }
-                    }
+                    lpvProgress.setProgress(maxPercentage) { model.points.toString() }
                 }
                 else -> {
                     lpvProgress.timeLimit = model.barAnimation.millis
-                    lpvProgress.animateProgress(progress) {
-                        when {
-                            progress.isNaN() -> "0"
-                            progress != 0.0f -> ((it / progress) * model.points).roundToInt().toString()
-                            else -> "0"
+                    lpvProgress.animateProgress(maxPercentage) {
+                        when (it) {
+                            maxPercentage -> model.points.toString()
+                            0.0f -> "0"
+                            else -> (it * maxPointsByAnyTeam.toFloat()).toInt().coerceIn(0, model.points).toString()
                         }
                     }
                 }

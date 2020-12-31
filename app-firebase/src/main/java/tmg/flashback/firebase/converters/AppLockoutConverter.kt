@@ -1,6 +1,6 @@
 package tmg.flashback.firebase.converters
 
-import tmg.flashback.repo.models.AppLockout
+import tmg.flashback.repo.models.remoteconfig.AppLockout
 import tmg.flashback.firebase.models.FAppLockout
 
 fun FAppLockout.convert(): AppLockout {

@@ -67,6 +67,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/guideline"
         app:layout_constraintTop_toTopOf="parent"
+        app:lpb_sliverWidth="1dp"
         app:lpb_backgroundColour="?attr/f1BackgroundPrimary"
         app:lpb_radius="@dimen/radiusSmall" />
 

@@ -4,12 +4,18 @@ import com.google.firebase.FirebaseException
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigException
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
+import com.google.gson.Gson
 import kotlinx.coroutines.tasks.await
 import tmg.flashback.firebase.BuildConfig
 import tmg.flashback.firebase.R
+import tmg.flashback.firebase.converters.convert
 import tmg.flashback.firebase.currentYear
+import tmg.flashback.firebase.extensions.toJson
+import tmg.flashback.firebase.models.FUpNext
+import tmg.flashback.firebase.models.FUpNextSchedule
 import tmg.flashback.repo.config.RemoteConfigRepository
 import tmg.flashback.repo.db.CrashManager
+import tmg.flashback.repo.models.remoteconfig.UpNextSchedule
 import java.lang.Exception
 
 /**
@@ -32,6 +38,7 @@ class FirebaseRemoteConfigRepository(
             .build()
 
     private val keyDefaultYear: String = "default_year"
+    private val keyUpNext: String = "up_next"
     private val keyDefaultBanner: String = "banner"
     private val keyRss: String = "rss"
     private val keyDataProvidedBy: String = "data_provided"
@@ -46,6 +53,9 @@ class FirebaseRemoteConfigRepository(
 
     override val defaultYear: Int
         get() = remoteConfig.getString(keyDefaultYear).toIntOrNull() ?: currentYear
+
+    override val upNext: List<UpNextSchedule>
+        get() = remoteConfig.getString(keyUpNext).toJson<FUpNext>()?.convert() ?: emptyList()
 
     override val banner: String
         get() = remoteConfig.getString(keyDefaultBanner)

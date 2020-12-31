@@ -1,4 +1,4 @@
-package tmg.flashback.repo.models
+package tmg.flashback.repo.models.remoteconfig
 
 data class AppLockout(
     val show: Boolean,
