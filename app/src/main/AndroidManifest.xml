@@ -31,10 +31,6 @@
         </activity>
 
         <activity
-            android:name=".home.HomeActivity"
-            android:label="" />
-
-        <activity
             android:name=".dashboard.DashboardActivity"
             android:label="" />
 
