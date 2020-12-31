@@ -75,7 +75,7 @@
         android:id="@+id/links"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/paddingXSmall"
+        android:layout_marginTop="@dimen/paddingSmall"
         android:clipToPadding="false"
         android:overScrollMode="never"
         android:paddingStart="@dimen/paddingMedium"

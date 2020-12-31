@@ -17,7 +17,7 @@ fun FUpNext.convert(): List<UpNextSchedule> {
 }
 
 fun FUpNextSchedule.convert(): UpNextSchedule? {
-    if (this.r == null || this.name == null || this.date == null) {
+    if (this.s == null || this.r == null || this.name == null || this.date == null) {
         return null
     }
 
@@ -29,11 +29,13 @@ fun FUpNextSchedule.convert(): UpNextSchedule? {
     }
 
     return UpNextSchedule(
+        season = this.s,
         round = this.r,
         name = this.name,
         date = date,
         time = fromTime(this.time),
         flag = flag,
-        circuitId = circuit
+        circuitId = circuit,
+        circuitName = circuitName
     )
 }

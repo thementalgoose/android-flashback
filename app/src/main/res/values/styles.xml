@@ -48,7 +48,37 @@
 
     <!-- =========================================== -->
 
-    <!--#region Dashboard -->
+    <!--#region Dashboard - List Up Next -->
+
+    <style name="Text.UpNext.Title" parent="Text.BottomSheet.Header" />
+
+    <style name="Text.UpNext.RaceName" parent="Text">
+        <item name="android:textColor">?attr/f1TextSecondary</item>
+        <item name="android:textSize">@dimen/textSizeMedium</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Text.UpNext.Circuit" parent="Text">
+        <item name="android:textColor">?attr/f1TextTertiary</item>
+        <item name="android:textSize">@dimen/textSizeSmall</item>
+    </style>
+
+    <style name="Text.UpNext.Countdown" parent="Text">
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:textSize">28sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="Text.UpNext.CountdownLabel" parent="Text">
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:textColor">?attr/f1TextSecondary</item>
+        <item name="android:textSize">@dimen/textSizeLarge</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Text.UpNext.Date" parent="Text">
+        <item name="android:textSize">@dimen/textSizeSmall</item>
+        <item name="android:textColor">?attr/f1TextTertiary</item>
+    </style>
 
     <!--#endregion -->
 
@@ -387,7 +417,7 @@
     <!--#region Settings -->
 
     <style name="Text.Settings.Category" parent="Text">
-        <item name="android:textColor">@color/logo_gradient_1</item>
+        <item name="android:textColor">?attr/rssBrandPrimary</item>
         <item name="android:textStyle">bold</item>
     </style>
 

@@ -1,5 +1,6 @@
 package tmg.flashback.dashboard.season.viewholders
 
+import android.annotation.SuppressLint
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.view_dashboard_season_track.view.*
@@ -48,6 +49,8 @@ class TrackViewHolder(
             circuitName.text = item.circuitName
             raceCountry.text = item.raceCountry
             round.text = context.getString(R.string.race_round, item.round)
+
+            @SuppressLint("SetTextI18n")
             date.text = "${item.date.dayOfMonth.ordinalAbbreviation} ${item.date.format(DateTimeFormatter.ofPattern("MMM yy"))}"
         }
     }

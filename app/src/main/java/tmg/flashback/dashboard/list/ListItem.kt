@@ -2,14 +2,19 @@ package tmg.flashback.dashboard.list
 
 import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
+import org.threeten.bp.LocalDate
+import org.threeten.bp.LocalTime
 import tmg.flashback.R
+import tmg.flashback.repo.models.remoteconfig.UpNextSchedule
 
 sealed class ListItem(
     @LayoutRes val layoutId: Int
 ) {
     object Hero: ListItem(R.layout.view_season_list_hero)
 
-    object Top: ListItem(R.layout.view_season_list_top)
+    data class UpNext(
+        val upNextSchedule: UpNextSchedule
+    ): ListItem(R.layout.view_season_list_up_next)
 
     data class Season(
         val season: Int,
