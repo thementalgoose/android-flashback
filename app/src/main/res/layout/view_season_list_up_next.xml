@@ -78,7 +78,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/paddingSmall"
-        android:text="@string/dashboard_up_next_days_to_go"
         app:layout_constraintBottom_toBottomOf="@id/days"
         app:layout_constraintEnd_toStartOf="@id/date"
         app:layout_constraintStart_toEndOf="@id/days"

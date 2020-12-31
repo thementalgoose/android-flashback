@@ -59,6 +59,7 @@ class UpNextViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
             val days = ChronoUnit.DAYS.between(item.upNextSchedule.date, LocalDate.now()).toInt().absoluteValue
             itemView.days.text = days.toString()
             itemView.daysToGoLabel.show()
+            itemView.daysToGoLabel.text = context.resources.getQuantityString(R.plurals.dashboard_up_next_days_to_go, if (days >= 1) days else 1)
         }
     }
 }
