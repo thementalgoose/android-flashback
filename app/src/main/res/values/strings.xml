@@ -252,4 +252,7 @@
     <!-- Data Provided -->
     <string name="shared_provided_by">Data provided by Ergast API</string>
 
+    <!-- App Hints -->
+    <string name="app_hint_race_qualifying_long_click">Tip: You can long press on qualifying data to show the lap time deltas</string>
+
 </resources>
