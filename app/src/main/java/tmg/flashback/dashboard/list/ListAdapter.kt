@@ -22,7 +22,7 @@ class ListAdapter(
 
     var list: List<ListItem> = emptyList()
         set(value) {
-            val result = DiffUtil.calculateDiff(GenericDiffCallback(field, value))
+            val result = DiffUtil.calculateDiff(DiffCallback(field, value))
             field = value
             result.dispatchUpdatesTo(this)
         }
@@ -65,4 +65,27 @@ class ListAdapter(
     }
 
     override fun getItemCount() = list.size
+
+    inner class DiffCallback(
+        private val oldList: List<ListItem>,
+        private val newList: List<ListItem>
+    ): DiffUtil.Callback() {
+        override fun getOldListSize() = oldList.size
+
+        override fun getNewListSize() = newList.size
+
+        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            val oldItem = oldList[oldItemPosition]
+            val newItem = newList[newItemPosition]
+            return oldItem == newItem || itemsAreHeadersWithOnlyDifferentToggleState(oldItem, newItem)
+        }
+
+        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            return oldList[oldItemPosition] == newList[newItemPosition]
+        }
+
+        private fun itemsAreHeadersWithOnlyDifferentToggleState(oldItem: ListItem, newItem: ListItem): Boolean {
+            return oldItem is ListItem.Header && newItem is ListItem.Header && oldItem.type == newItem.type
+        }
+    }
 }
