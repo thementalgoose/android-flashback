@@ -8,7 +8,7 @@ import org.junit.rules.TestWatcher
 import org.junit.runner.Description
 import org.junit.runners.model.Statement
 
-class CoroutineRule : TestRule {
+internal class CoroutineRule : TestRule {
 
     val testDispatcher: TestCoroutineDispatcher = TestCoroutineDispatcher()
     val testScope: TestCoroutineScope = TestCoroutineScope(testDispatcher)

@@ -5,8 +5,10 @@ import org.koin.dsl.module
 import tmg.flashback.SplashViewModel
 import tmg.flashback.admin.lockout.LockoutViewModel
 import tmg.flashback.circuit.CircuitInfoViewModel
-import tmg.flashback.home.HomeViewModel
-import tmg.flashback.home.season.SeasonViewModel
+import tmg.flashback.dashboard.DashboardViewModel
+import tmg.flashback.dashboard.list.ListViewModel
+import tmg.flashback.dashboard.search.SearchViewModel
+import tmg.flashback.dashboard.season.SeasonViewModel
 import tmg.flashback.overviews.constructor.ConstructorViewModel
 import tmg.flashback.overviews.driver.DriverViewModel
 import tmg.flashback.overviews.driver.season.DriverSeasonViewModel
@@ -19,9 +21,11 @@ val viewModelModule = module {
     // Splash
     viewModel { SplashViewModel(get(), get(), get()) }
 
-    // Home
-    viewModel { HomeViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
-    viewModel { SeasonViewModel(get()) }
+    // Dashboard
+    viewModel { DashboardViewModel(get(), get(), get()) }
+    viewModel { SeasonViewModel(get(), get(), get(), get(), get(), get()) }
+    viewModel { ListViewModel(get(), get()) }
+    viewModel { SearchViewModel() }
 
     // Circuit
     viewModel { CircuitInfoViewModel(get(), get()) }

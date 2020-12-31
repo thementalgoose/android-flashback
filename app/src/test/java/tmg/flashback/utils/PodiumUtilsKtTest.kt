@@ -5,7 +5,7 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 import tmg.flashback.testutils.BaseTest
 
-class PodiumUtilsKtTest: BaseTest() {
+internal class PodiumUtilsKtTest: BaseTest() {
 
     @ParameterizedTest(name = "{0} as ordinal abbreviation is {1}")
     @CsvSource(

@@ -6,13 +6,16 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_race.*
 import org.koin.android.ext.android.inject
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.R
+import tmg.flashback.appHintDelay
 import tmg.flashback.base.BaseActivity
 import tmg.flashback.circuit.CircuitInfoActivity
 import tmg.flashback.constants.TrackLayout
@@ -108,7 +111,7 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
         viewModel.inputs.initialise(season, round, initialDate)
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint("SetTextI18n", "WrongConstant")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -219,6 +222,13 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
             startActivity(intent)
         }
 
+        observeEvent(viewModel.outputs.showAppHintLongPress) {
+            Snackbar.make(appbar, getString(R.string.app_hint_race_qualifying_long_click), appHintDelay)
+                .setAnchorView(menu)
+                .show()
+        }
+
+
         if (defaultToRace) {
             menu.selectedItemId = R.id.nav_race
         } else {
@@ -245,6 +255,10 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
 
     override fun constructorClicked(constructorId: String, constructorName: String) {
         viewModel.inputs.goToConstructor(constructorId, constructorName)
+    }
+
+    override fun toggleQualifyingDeltas(toNewState: Boolean) {
+        viewModel.inputs.toggleQualifyingDelta(toNewState)
     }
 
     //endregion

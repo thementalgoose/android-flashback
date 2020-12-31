@@ -92,7 +92,7 @@
             android:clipToPadding="false"
             android:fitsSystemWindows="false"
             android:overScrollMode="never"
-            tools:listitem="@layout/view_home_track" />
+            tools:listitem="@layout/view_dashboard_season_track" />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
