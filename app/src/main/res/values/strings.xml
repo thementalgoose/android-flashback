@@ -131,7 +131,10 @@
     <string name="home_season_arrow">%s</string>
 
     <string name="dashboard_up_next_title">Up next</string>
-    <string name="dashboard_up_next_days_to_go">days to go</string>
+    <plurals name="dashboard_up_next_days_to_go">
+        <item quantity="one">day to go</item>
+        <item quantity="other">days to go</item>
+    </plurals>
     <string name="dashboard_up_next_today">Today</string>
     <string name="dashboard_up_next_date"><![CDATA[Round <b>%d</b><br/><b>%s</b>]]></string>
 

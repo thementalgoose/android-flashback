@@ -60,6 +60,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:minHeight="30dp"
+        app:lpb_sliverWidth="1dp"
         app:layout_constraintBottom_toBottomOf="@id/penalty"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/guideline"
