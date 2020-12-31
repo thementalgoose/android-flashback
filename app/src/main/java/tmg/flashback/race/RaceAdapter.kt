@@ -102,4 +102,5 @@ interface RaceAdapterCallback {
     fun orderBy(adapterType: RaceAdapterType)
     fun driverClicked(driverId: String, driverName: String)
     fun constructorClicked(constructorId: String, constructorName: String)
+    fun toggleQualifyingDeltas(toNewState: Boolean)
 }

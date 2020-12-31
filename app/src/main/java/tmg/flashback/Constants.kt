@@ -53,6 +53,11 @@ fun maxPointsBySeason(season: Int): Int {
 }
 
 /**
+ * Duration that an app hint shows up on the screen for
+ */
+const val appHintDelay: Int = 5000
+
+/**
  * Compile time feature toggles
  */
 const val showDriverSummary: Boolean = false

@@ -1,6 +1,7 @@
 package tmg.flashback.race.viewholders
 
 import android.view.View
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.layout_driver.view.*
 import kotlinx.android.synthetic.main.layout_qualifying_time.view.*
@@ -13,19 +14,27 @@ import tmg.flashback.race.RaceModel
 import tmg.flashback.race.DisplayPrefs
 import tmg.flashback.utils.getFlagResourceAlpha3
 import tmg.utilities.extensions.ordinalAbbreviation
+import tmg.utilities.extensions.views.context
 import tmg.utilities.extensions.views.getString
 import tmg.utilities.extensions.views.gone
 import tmg.utilities.extensions.views.show
 import tmg.utilities.utils.ColorUtils.Companion.darken
 
-class QualifyingResultViewHolder(view: View, private val updateAdapterType: RaceAdapterCallback) :
-    RecyclerView.ViewHolder(view), View.OnClickListener {
+class QualifyingResultViewHolder(
+    view: View,
+    private val updateAdapterType: RaceAdapterCallback
+) : RecyclerView.ViewHolder(view), View.OnClickListener, View.OnLongClickListener {
 
     init {
         itemView.layoutQ1.setOnClickListener(this)
         itemView.layoutQ2.setOnClickListener(this)
         itemView.layoutQ3.setOnClickListener(this)
         itemView.filterQuali.setOnClickListener(this)
+
+        itemView.layoutQ1.setOnLongClickListener(this)
+        itemView.layoutQ2.setOnLongClickListener(this)
+        itemView.layoutQ3.setOnLongClickListener(this)
+        itemView.filterQuali.setOnLongClickListener(this)
     }
 
     private lateinit var displayPrefs: DisplayPrefs
@@ -140,6 +149,11 @@ class QualifyingResultViewHolder(view: View, private val updateAdapterType: Race
                 itemView.filterQuali -> updateAdapterType.orderBy(RaceAdapterType.QUALIFYING_POS)
             }
         }
+    }
+
+    override fun onLongClick(p0: View?): Boolean {
+        updateAdapterType.toggleQualifyingDeltas(!displayPrefs.deltas)
+        return true
     }
 
     //endregion

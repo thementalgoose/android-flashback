@@ -18,7 +18,7 @@ import tmg.flashback.repo.models.stats.CircuitRace
 import tmg.flashback.shared.sync.SyncDataItem
 import tmg.flashback.testutils.*
 
-class CircuitInfoViewModelTest: BaseTest() {
+internal class CircuitInfoViewModelTest: BaseTest() {
 
     lateinit var sut: CircuitInfoViewModel
 

@@ -77,6 +77,13 @@ val dependencies = listOf(
                 imageUrl = "https://avatars0.githubusercontent.com/u/66577"
         ),
         AboutThisAppDependency(
+                order = 8,
+                dependencyName = "OverlappingPanels",
+                author = "Discord",
+                url = "https://github.com/discord",
+                imageUrl = "https://avatars3.githubusercontent.com/u/1965106"
+        ),
+        AboutThisAppDependency(
                 order = 9,
                 dependencyName = "SkeletonLayout",
                 author = "Faltenreich",

@@ -11,13 +11,18 @@ import tmg.flashback.base.BaseViewModel
 import tmg.flashback.repo.NetworkConnectivityManager
 import tmg.flashback.repo.pref.PrefCustomisationRepository
 import tmg.flashback.repo.db.stats.SeasonOverviewRepository
+import tmg.flashback.repo.enums.AppHints
+import tmg.flashback.repo.enums.AppHints.RACE_QUALIFYING_LONG_CLICK
 import tmg.flashback.repo.models.stats.*
 import tmg.flashback.shared.viewholders.DataUnavailable
 import tmg.flashback.showComingSoonMessageForNextDays
 import tmg.flashback.shared.sync.SyncDataItem
 import tmg.flashback.utils.SeasonRound
+import tmg.utilities.extensions.combinePair
 import tmg.utilities.extensions.combineTriple
 import tmg.utilities.lifecycle.DataEvent
+import tmg.utilities.lifecycle.Event
+import java.util.*
 
 //region Inputs
 
@@ -26,6 +31,7 @@ interface RaceViewModelInputs {
     fun orderBy(seasonRaceAdapterType: RaceAdapterType)
     fun goToDriver(driverId: String, driverName: String)
     fun goToConstructor(constructorId: String, constructorName: String)
+    fun toggleQualifyingDelta(toNewState: Boolean)
     fun clickWikipedia()
 }
 
@@ -40,6 +46,8 @@ interface RaceViewModelOutputs {
     val goToDriverOverview: LiveData<DataEvent<Pair<String, String>>>
     val goToConstructorOverview: LiveData<DataEvent<Pair<String, String>>>
 
+    val showAppHintLongPress: LiveData<Event>
+
     val showLinks: LiveData<Boolean>
     val goToWikipedia: LiveData<DataEvent<String>>
 }
@@ -47,23 +55,28 @@ interface RaceViewModelOutputs {
 //endregion
 
 class RaceViewModel(
-        seasonOverviewRepository: SeasonOverviewRepository,
-        private val prefsRepository: PrefCustomisationRepository,
-        connectivityManager: NetworkConnectivityManager
+    seasonOverviewRepository: SeasonOverviewRepository,
+    private val prefsCustomisationRepository: PrefCustomisationRepository,
+    connectivityManager: NetworkConnectivityManager
 ) : BaseViewModel(), RaceViewModelInputs, RaceViewModelOutputs {
 
     var inputs: RaceViewModelInputs = this
     var outputs: RaceViewModelOutputs = this
 
     private var wikipedia: String? = null
-
     private var roundDate: LocalDate? = null
+    private var toggleQualifyingDelta: Boolean? = null
     private val seasonRound: ConflatedBroadcastChannel<SeasonRound> = ConflatedBroadcastChannel()
+
     private var viewType: ConflatedBroadcastChannel<RaceAdapterType> = ConflatedBroadcastChannel()
+    private var viewTypeRefresh: ConflatedBroadcastChannel<String> = ConflatedBroadcastChannel(UUID.randomUUID().toString())
+
+    private var viewTypeFlow = viewType.asFlow()
+        .combinePair(viewTypeRefresh.asFlow())
 
     override val goToDriverOverview: MutableLiveData<DataEvent<Pair<String, String>>> = MutableLiveData()
     override val goToConstructorOverview: MutableLiveData<DataEvent<Pair<String, String>>> = MutableLiveData()
-
+    override val showAppHintLongPress: MutableLiveData<Event> = MutableLiveData()
     override val showLinks: MutableLiveData<Boolean> = MutableLiveData(false)
     override val goToWikipedia: MutableLiveData<DataEvent<String>> = MutableLiveData()
 
@@ -80,8 +93,9 @@ class RaceViewModel(
         .asLiveData(viewModelScope.coroutineContext)
 
     override val raceItems: LiveData<Triple<RaceAdapterType, List<RaceModel>, SeasonRound>> = seasonRoundFlow
-            .combineTriple(viewType.asFlow(), seasonRound.asFlow())
-            .map { (roundData, viewType, seasonRoundValue) ->
+            .combineTriple(viewTypeFlow, seasonRound.asFlow())
+            .map { (roundData, refreshableViewType, seasonRoundValue) ->
+                val (viewType, _) = refreshableViewType
                 if (roundData == null) {
                     val list = mutableListOf<RaceModel>()
                     when {
@@ -106,7 +120,7 @@ class RaceViewModel(
                         .constructorStandings
                         .map {
                             val drivers: List<Pair<Driver, Int>> = getDriverFromConstructor(roundData, it.constructor.id)
-                            RaceModel.ConstructorStandings(it.constructor, it.points, drivers, prefsRepository.barAnimation)
+                            RaceModel.ConstructorStandings(it.constructor, it.points, drivers, prefsCustomisationRepository.barAnimation)
                         }
                         .sortedByDescending { it.points }
 
@@ -124,9 +138,9 @@ class RaceViewModel(
                         q1 = roundData.q1.count { it.value.time != null } > 0,
                         q2 = roundData.q2.count { it.value.time != null } > 0,
                         q3 = roundData.q3.count { it.value.time != null } > 0,
-                        deltas = prefsRepository.showQualifyingDelta,
-                        penalties = prefsRepository.showGridPenaltiesInQualifying,
-                        fadeDNF = prefsRepository.fadeDNF
+                        deltas = toggleQualifyingDelta ?: prefsCustomisationRepository.showQualifyingDelta,
+                        penalties = prefsCustomisationRepository.showGridPenaltiesInQualifying,
+                        fadeDNF = prefsCustomisationRepository.fadeDNF
                     )
 
                     when (viewType) {
@@ -197,6 +211,9 @@ class RaceViewModel(
                                 )
                             })
                             list.add(RaceModel.ErrorItem(SyncDataItem.ProvidedBy))
+                            if (driverIds.isNotEmpty()) {
+                                appHintNotifyQualifying()
+                            }
                         }
                         else -> throw Error("Unsupported view type")
                     }
@@ -235,7 +252,22 @@ class RaceViewModel(
         goToWikipedia.postValue(DataEvent(wikipedia ?: ""))
     }
 
+    override fun toggleQualifyingDelta(toNewState: Boolean) {
+        toggleQualifyingDelta = toNewState
+        viewTypeRefresh.offer(UUID.randomUUID().toString())
+    }
+
     //endregion
+
+    /**
+     * Check if we need to notify the user for the long click qualifying delta seasons!
+     */
+    private fun appHintNotifyQualifying() {
+        if (!prefsCustomisationRepository.appHints.contains(RACE_QUALIFYING_LONG_CLICK)) {
+            prefsCustomisationRepository.markAppHintShown(RACE_QUALIFYING_LONG_CLICK)
+            showAppHintLongPress.value = Event()
+        }
+    }
 
     private fun getDriverFromConstructor(round: Round, constructorId: String): List<Pair<Driver, Int>> {
         return round
@@ -332,9 +364,9 @@ class RaceViewModel(
             q3 = overview.q3,
             race = race,
             qualified = overview.race?.qualified ?: round.getQualifyingOnlyPosByDriverId(driverId),
-            q1Delta = if (prefsRepository.showQualifyingDelta) round.q1FastestLap?.deltaTo(overview.q1?.time) else null,
-            q2Delta = if (prefsRepository.showQualifyingDelta) round.q2FastestLap?.deltaTo(overview.q2?.time) else null,
-            q3Delta = if (prefsRepository.showQualifyingDelta) round.q3FastestLap?.deltaTo(overview.q3?.time) else null,
+            q1Delta = if (toggleQualifyingDelta ?: prefsCustomisationRepository.showQualifyingDelta) round.q1FastestLap?.deltaTo(overview.q1?.time) else null,
+            q2Delta = if (toggleQualifyingDelta ?: prefsCustomisationRepository.showQualifyingDelta) round.q2FastestLap?.deltaTo(overview.q2?.time) else null,
+            q3Delta = if (toggleQualifyingDelta ?: prefsCustomisationRepository.showQualifyingDelta) round.q3FastestLap?.deltaTo(overview.q3?.time) else null,
             displayPrefs = displayPrefs
         )
     }

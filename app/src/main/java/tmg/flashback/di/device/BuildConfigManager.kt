@@ -6,7 +6,6 @@ interface BuildConfigManager {
     val versionName: String
 
     fun shouldLockoutBasedOnVersion(version: Int?): Boolean {
-        return version != null && (version >= versionCode)
+        return version == null || version >= versionCode || version <= 0
     }
-
 }

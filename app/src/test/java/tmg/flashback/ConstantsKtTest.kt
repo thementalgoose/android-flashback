@@ -6,7 +6,7 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 import tmg.flashback.constants.TrackLayout
 
-class ConstantsKtTest {
+internal class ConstantsKtTest {
 
     @ParameterizedTest(name = "Max points in {0} season is {1}")
     @CsvSource(

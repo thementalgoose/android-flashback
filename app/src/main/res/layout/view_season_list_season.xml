@@ -9,18 +9,6 @@
     android:focusable="true"
     android:foreground="@drawable/ripple">
 
-    <tmg.flashback.views.CircleView
-        android:id="@+id/cardview"
-        android:layout_width="@dimen/bottomSheetBoxSize"
-        android:layout_height="@dimen/bottomSheetBoxSize"
-        android:layout_marginStart="@dimen/paddingMedium"
-        android:layout_marginTop="@dimen/paddingSmall"
-        android:layout_marginBottom="@dimen/paddingSmall"
-        android:elevation="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <View
         android:id="@+id/pipeTop"
         android:layout_width="@dimen/bottomSheetBoxPipeSize"
@@ -66,9 +54,32 @@
         android:paddingTop="@dimen/paddingSmall"
         android:paddingEnd="@dimen/paddingSmall"
         android:paddingBottom="@dimen/paddingSmall"
+        android:scaleType="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@drawable/ic_star_filled" />
+
+    <tmg.flashback.views.CircleView
+        android:id="@+id/cardview"
+        android:layout_width="@dimen/seasonListCircleSize"
+        android:layout_height="@dimen/seasonListCircleSize"
+        android:layout_marginStart="@dimen/paddingMedium"
+        android:layout_marginTop="@dimen/paddingSmall"
+        android:layout_marginBottom="@dimen/paddingSmall"
+        android:elevation="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <tmg.flashback.views.CircleView
+        android:id="@+id/highlight"
+        android:layout_width="@dimen/seasonListCircleSelectedSize"
+        android:layout_height="@dimen/seasonListCircleSelectedSize"
+        android:elevation="0dp"
+        app:layout_constraintTop_toTopOf="@id/cardview"
+        app:layout_constraintBottom_toBottomOf="@id/cardview"
+        app:layout_constraintStart_toStartOf="@id/cardview"
+        app:layout_constraintEnd_toEndOf="@id/cardview" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

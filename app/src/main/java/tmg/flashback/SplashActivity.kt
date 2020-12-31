@@ -2,17 +2,10 @@ package tmg.flashback
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.marginBottom
 import kotlinx.android.synthetic.main.activity_splash.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
-import tmg.flashback.home.HomeActivity
-import tmg.flashback.repo.config.RemoteConfigRepository
+import tmg.flashback.dashboard.DashboardActivity
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 import tmg.utilities.extensions.views.show
@@ -36,7 +29,7 @@ class SplashActivity: AppCompatActivity() {
         }
 
         observeEvent(viewModel.outputs.goToNextScreen) {
-            startActivity(Intent(this@SplashActivity, HomeActivity::class.java))
+            startActivity(Intent(this@SplashActivity, DashboardActivity::class.java))
             finish()
         }
 
