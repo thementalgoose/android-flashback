@@ -80,7 +80,7 @@ val dependencies = listOf(
                 order = 8,
                 dependencyName = "OverlappingPanels",
                 author = "Discord",
-                url = "https://github.com/discord",
+                url = "https://github.com/discord/OverlappingPanels",
                 imageUrl = "https://avatars3.githubusercontent.com/u/1965106"
         ),
         AboutThisAppDependency(
