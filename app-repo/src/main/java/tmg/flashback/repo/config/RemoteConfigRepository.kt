@@ -1,5 +1,7 @@
 package tmg.flashback.repo.config
 
+import tmg.flashback.repo.models.remoteconfig.UpNextSchedule
+
 interface RemoteConfigRepository {
 
     suspend fun update(andActivate: Boolean = false): Boolean
@@ -9,6 +11,12 @@ interface RemoteConfigRepository {
      * What year we should default too when opening the app
      */
     val defaultYear: Int
+
+    /**
+     * Up next schedule to be shown in the app
+     * - Contains name, a date, an optional time and potentially a flag
+     */
+    val upNext: List<UpNextSchedule>
 
     /**
      * Banner to be shown at the top of the home screen
