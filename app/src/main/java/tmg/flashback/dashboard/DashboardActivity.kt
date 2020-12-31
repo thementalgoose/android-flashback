@@ -48,6 +48,15 @@ class DashboardActivity: BaseActivity(), DashboardNavigationCallback {
         }
     }
 
+    override fun onBackPressed() {
+        if (panels.getSelectedPanel() != OverlappingPanelsLayout.Panel.CENTER) {
+            panels.closePanels()
+        }
+        else {
+            super.onBackPressed()
+        }
+    }
+
     //region DashboardNavigationCallback
 
     override fun openSeasonList() {
