@@ -60,13 +60,25 @@ class DriverViewHolder(
         itemView.lpvProgress.backgroundColour = itemView.context.theme.getColor(R.attr.f1BackgroundPrimary)
         itemView.lpvProgress.progressColour = item.driver.constructorAtEndOfSeason.color
         itemView.lpvProgress.textBackgroundColour = context.theme.getColor(R.attr.f1TextSecondary)
+
+        var maxProgress = item.points.toFloat() / item.maxPointsInSeason.toFloat()
+        if (maxProgress.isNaN()) {
+            maxProgress = 0.0f
+        }
+
         when (item.barAnimation) {
             BarAnimation.NONE -> {
-                itemView.lpvProgress.setProgress(item.points.toFloat() / item.maxPointsInSeason.toFloat()) { (it * item.maxPointsInSeason.toFloat()).toInt().coerceIn(0, item.points).toString() }
+                itemView.lpvProgress.setProgress(maxProgress) { item.points.toString() }
             }
             else -> {
                 itemView.lpvProgress.timeLimit = item.barAnimation.millis
-                itemView.lpvProgress.animateProgress(item.points.toFloat() / item.maxPointsInSeason.toFloat()) { (it * item.maxPointsInSeason.toFloat()).toInt().coerceIn(0, item.points).toString() }
+                itemView.lpvProgress.animateProgress(maxProgress) {
+                    when (it) {
+                        maxProgress -> item.points.toString()
+                        0.0f -> "0"
+                        else -> (it * item.maxPointsInSeason.toFloat()).toInt().coerceIn(0, item.points).toString()
+                    }
+                }
             }
         }
 
