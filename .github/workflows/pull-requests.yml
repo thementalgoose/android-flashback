@@ -28,6 +28,7 @@ jobs:
           paths: rss
         env:
           SOURCE: main
+
       - name: Unit tests - RSS
         run: ./gradlew :rss:testDebugUnitTest
         if: steps.changed-rss.outputs.changed == 'true'
@@ -40,6 +41,7 @@ jobs:
           paths: app-repo
         env:
           SOURCE: main
+
       - name: Unit tests - Repo
         run: ./gradlew :app-repo:test
         if: steps.changed-repo.outputs.changed == 'true'
@@ -52,6 +54,7 @@ jobs:
           paths: app
         env:
           SOURCE: main
+
       - name: Unit tests - App
         run: ./gradlew :app:testSandDebugUnitTest
         if: steps.changed-app.outputs.changed == 'true

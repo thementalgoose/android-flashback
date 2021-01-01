@@ -4,7 +4,7 @@ name: Main
     branches:
       - main
 jobs:
-  pr_builder:
+  unit_tests:
     runs-on: ubuntu-latest
     steps:
       # Checkout
