@@ -57,7 +57,7 @@ jobs:
 
       - name: Unit tests - App
         run: ./gradlew :app:testSandDebugUnitTest
-        if: steps.changed-app.outputs.changed == 'true
+        if: steps.changed-app.outputs.changed == 'true'
 
       # Leaving comment if failed
       - name: Notify PR
