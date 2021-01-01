@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
+import org.threeten.bp.Year
 import tmg.flashback.repo.config.RemoteConfigRepository
 import tmg.flashback.repo.models.remoteconfig.UpNextSchedule
 import tmg.flashback.repo.pref.PrefCustomisationRepository
@@ -19,7 +20,7 @@ internal class ListViewModelTest: BaseTest() {
 
     lateinit var sut: ListViewModel
 
-    private var currentYear: Int = 2020
+    private var currentYear: Int = Year.now().value
     private var minYear: Int = 1950
 
     private val mockPrefCustomisationRepository: PrefCustomisationRepository = mockk(relaxed = true)

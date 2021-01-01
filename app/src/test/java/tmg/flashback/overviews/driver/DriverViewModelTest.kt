@@ -11,6 +11,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
+import org.threeten.bp.Year
 import tmg.flashback.R
 import tmg.flashback.currentYear
 import tmg.flashback.overviews.*
@@ -264,31 +265,31 @@ internal class DriverViewModelTest: BaseTest() {
 
         val expected = listOf<DriverSummaryItem>(
             DriverSummaryItem.RacedFor(
-                2020,
+                Year.now().value,
                 listOf(mockDriverOverviewConstructor2),
                 START,
                 false
             ),
             DriverSummaryItem.RacedFor(
-                2019,
+                Year.now().value - 1,
                 listOf(mockDriverOverviewConstructor),
                 START_END,
                 false
             ),
             DriverSummaryItem.RacedFor(
-                2018,
+                Year.now().value - 2,
                 listOf(mockDriverOverviewConstructor2, mockDriverOverviewConstructor),
                 START_END,
                 false
             ),
             DriverSummaryItem.RacedFor(
-                2017,
+                Year.now().value - 3,
                 listOf(mockDriverOverviewConstructor),
                 START_END,
                 false
             ),
             DriverSummaryItem.RacedFor(
-                2016,
+                Year.now().value - 4,
                 listOf(mockDriverOverviewConstructor, mockDriverOverviewConstructor2, mockDriverOverviewConstructor),
                 END,
                 false

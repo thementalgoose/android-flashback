@@ -219,7 +219,7 @@ val mockDriverOverviewConstructorChangeThenYearOffEndingInCurrentSeason = mockDr
                         )
                 ),
                 mockDriverOverviewStanding.copy(
-                        season = 2016,
+                        season = currentYear - 4,
                         constructors = listOf(
                                 mockDriverOverviewConstructor,
                                 mockDriverOverviewConstructor2,
@@ -227,20 +227,20 @@ val mockDriverOverviewConstructorChangeThenYearOffEndingInCurrentSeason = mockDr
                         )
                 ),
                 mockDriverOverviewStanding.copy(
-                        season = 2017,
+                        season = currentYear - 3,
                         constructors = listOf(
                                 mockDriverOverviewConstructor
                         )
                 ),
                 mockDriverOverviewStanding.copy(
-                        season = 2018,
+                        season = currentYear - 2,
                         constructors = listOf(
                                 mockDriverOverviewConstructor,
                                 mockDriverOverviewConstructor2
                         )
                 ),
                 mockDriverOverviewStanding.copy(
-                        season = 2019,
+                        season = currentYear - 1,
                         constructors = listOf(
                                 mockDriverOverviewConstructor
                         )
