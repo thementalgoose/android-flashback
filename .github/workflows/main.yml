@@ -1,0 +1,29 @@
+name: Main
+'on':
+  pull_request:
+    branches:
+      - main
+jobs:
+  pr_builder:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout
+      - uses: actions/checkout@v2
+
+      # Caching gradle
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      # Running unit tests
+      - name: Unit tests - Repo
+        run: ./gradlew :app-repo:test
+      - name: Unit tests - RSS
+        run: ./gradlew :rss:testDebugUnitTest
+      - name: Unit tests - App
+        run: ./gradlew :app:testSandDebugUnitTest

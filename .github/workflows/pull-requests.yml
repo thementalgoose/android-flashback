@@ -1,0 +1,62 @@
+name: Pull Request
+'on':
+  pull_request:
+    branches:
+      - main
+jobs:
+  pr_builder:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout
+      - uses: actions/checkout@v2
+
+      # Caching gradle
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      # Unit Tests - RSS
+      - uses: marceloprado/has-changed-path@v1
+        id: changed-rss
+        with:
+          paths: rss
+        env:
+          SOURCE: main
+      - name: Unit tests - RSS
+        run: ./gradlew :rss:testDebugUnitTest
+        if: steps.changed-rss.outputs.changed == 'true'
+
+      # Unit Tests - Repo
+      - uses: marceloprado/has-changed-path@v1
+        id: changed-repo
+        with:
+          paths: app-repo
+        env:
+          SOURCE: main
+      - name: Unit tests - Repo
+        run: ./gradlew :app-repo:test
+        if: steps.changed-repo.outputs.changed == 'true'
+
+      # Unit Tests - App
+      - uses: marceloprado/has-changed-path@v1
+        id: changed-app
+        with:
+          paths: app
+        env:
+          SOURCE: main
+      - name: Unit tests - App
+        run: ./gradlew :app:testSandDebugUnitTest
+        if: steps.changed-app.outputs.changed == 'true
+
+      # Leaving comment if failed
+      - name: Notify PR
+        if: ${{ failure() }}
+        uses: peter-evans/commit-comment@v1
+        with:
+          body: |
+            Unit tests failed for commit ${{ github.sha }}
