@@ -11,18 +11,18 @@ jobs:
       - uses: actions/checkout@v2
 
       # Caching gradle
-      - uses: actions/cache@v2
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
+#      - uses: actions/cache@v2
+#        with:
+#          path: |
+#            ~/.gradle/caches
+#            ~/.gradle/wrapper
+#          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+#          restore-keys: |
+#            ${{ runner.os }}-gradle-
 
       # Unit Tests - RSS
 #      - name: Unit tests - Checking difference
-      - run: git diff --name-only ${{ github.head_ref }} ${{ github.base_ref }} | grep -E '^rss/' -c
+      - run: git diff --name-only HEAD ${{ github.base_ref }} | grep -E '^rss/' -c
       - run: echo "lines_rss=$(git diff --name-only ${{ github.head_ref }} ${{ github.base_ref }} | grep -E '^rss/' -c)" >> $GITHUB_ENV
       - run: echo "lines_repo=$(git diff --name-only ${{ github.head_ref }} ${{ github.base_ref }} | grep -E '^app-repo/' -c)" >> $GITHUB_ENV
       - run: echo "lines_app=$(git diff --name-only ${{ github.head_ref }} ${{ github.base_ref }} | grep -E '^app/' -c)" >> $GITHUB_ENV
