@@ -36,13 +36,13 @@ jobs:
       - name: Unit tests - RSS
         run: echo "RUNNING RSS"
 #        run: ./gradlew :rss:testDebugUnitTest
-        if: ${{ env.lines_repo }} != 0
+        if: ${{ env.lines_rss }} != "0"
 
       # Unit Tests - Repo
       - name: Unit tests - Repo
         run: echo "RUNNING REPO"
 #        run: ./gradlew :app-repo:test
-        if: ${{ env.lines_repo }} != 0
+        if: ${{ env.lines_repo }} != "0"
 #
 #      # Unit Tests - App
 #      - name: Unit tests - App - Checking difference
