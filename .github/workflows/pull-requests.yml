@@ -22,10 +22,10 @@ jobs:
 
       # Unit Tests - RSS
 #      - name: Unit tests - Checking difference
-      - run: git diff --name-only HEAD ${{ github.base_ref }} | grep -E '^rss/' -c
-      - run: echo "lines_rss=$(git diff --name-only ${{ github.head_ref }} ${{ github.base_ref }} | grep -E '^rss/' -c)" >> $GITHUB_ENV
-      - run: echo "lines_repo=$(git diff --name-only ${{ github.head_ref }} ${{ github.base_ref }} | grep -E '^app-repo/' -c)" >> $GITHUB_ENV
-      - run: echo "lines_app=$(git diff --name-only ${{ github.head_ref }} ${{ github.base_ref }} | grep -E '^app/' -c)" >> $GITHUB_ENV
+      - run: git diff --name-only HEAD ^${{ github.base_ref }} | grep -E '^rss/' -c
+      - run: echo "lines_rss=$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }} | grep -E '^rss/' -c)" >> $GITHUB_ENV
+      - run: echo "lines_repo=$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }} | grep -E '^app-repo/' -c)" >> $GITHUB_ENV
+      - run: echo "lines_app=$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }} | grep -E '^app/' -c)" >> $GITHUB_ENV
 
       - run: echo $lines_rss
       - run: echo $lines_repo
