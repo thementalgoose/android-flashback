@@ -14,6 +14,7 @@ buildscript {
     ext.android_lifecycle = "2.3.0-rc01"
 
     ext.swipe_refresh = "1.1.0"
+    ext.slidr = "2.1.0"
 
     ext.tmg_utils = "2.0.1"
     ext.tmg_components = "3.0.0"

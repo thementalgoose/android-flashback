@@ -3,6 +3,7 @@ package tmg.flashback.race
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.view.MenuItem
@@ -10,6 +11,9 @@ import android.widget.Toast
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
+import com.r0adkll.slidr.Slidr
+import com.r0adkll.slidr.model.SlidrConfig
+import com.r0adkll.slidr.model.SlidrPosition
 import kotlinx.android.synthetic.main.activity_race.*
 import org.koin.android.ext.android.inject
 import org.threeten.bp.LocalDate
@@ -234,6 +238,8 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
         } else {
             menu.selectedItemId = R.id.nav_qualifying
         }
+
+        Slidr.attach(this)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

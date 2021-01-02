@@ -17,6 +17,7 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/ic_notification" />
+
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/logo_gradient_1" />
@@ -36,58 +37,71 @@
 
         <activity
             android:name=".race.RaceActivity"
-            android:label="" />
+            android:label=""
+            android:theme="@style/Translucent" />
 
         <activity
             android:name=".circuit.CircuitInfoActivity"
-            android:label="" />
+            android:label=""
+            android:theme="@style/Translucent" />
 
         <activity
             android:name=".settings.release.ReleaseActivity"
-            android:label="" />
+            android:label=""
+            android:theme="@style/Translucent" />
 
         <activity
             android:name=".settings.SettingsActivity"
-            android:label="" />
+            android:label=""
+            android:theme="@style/Translucent" />
 
         <activity
             android:name=".settings.privacy.PrivacyPolicyActivity"
-            android:label="" />
+            android:label=""
+            android:theme="@style/Translucent" />
 
         <activity
             android:name=".overviews.driver.DriverActivity"
-            android:label="" />
+            android:label=""
+            android:theme="@style/Translucent" />
 
         <activity
             android:name=".overviews.driver.season.DriverSeasonActivity"
-            android:label="" />
+            android:label=""
+            android:theme="@style/Translucent" />
 
         <activity
             android:name=".overviews.constructor.ConstructorActivity"
-            android:label="" />
+            android:label=""
+            android:theme="@style/Translucent" />
 
         <activity
             android:name=".admin.lockout.LockoutActivity"
-            android:label="" />
+            android:label=""
+            android:theme="@style/Translucent" />
 
         <activity
             android:name="tmg.components.about.AboutThisAppActivity"
-            android:label="" />
+            android:label=""
+            android:theme="@style/Translucent" />
 
 
 
         <activity
             android:name=".rss.ui.RSSActivity"
             android:exported="false"
-            android:label="" />
+            android:label=""
+            android:theme="@style/Translucent" />
 
         <activity
             android:name=".rss.ui.configure.RSSConfigureActivity"
-            android:label="" />
+            android:label=""
+            android:theme="@style/Translucent" />
 
         <activity
             android:name=".rss.ui.settings.RSSSettingsActivity"
-            android:label="" />
+            android:label=""
+            android:theme="@style/Translucent" />
 
         <!-- Subscribing -->
 

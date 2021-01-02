@@ -10,6 +10,9 @@
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:windowLightNavigationBar">true</item>
 
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">#00ffffff</item>
+
         <item name="f1BackgroundHighlighted">#334A34B6</item>
 
         <item name="f1TextPrimary">#181818</item>
