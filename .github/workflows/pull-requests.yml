@@ -10,7 +10,7 @@ jobs:
       # Checkout
       - uses: actions/checkout@v2
         with:
-          fetch-depth: 100
+          fetch-depth: 0
 
       - run: git checkout ${{ github.base_ref }}
       - run: git checkout ${{ github.head_ref }}
