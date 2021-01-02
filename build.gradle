@@ -61,3 +61,8 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+task testModules {
+    dependsOn ':app-repo:test', ':rss:testDebugUnitTest', ':app:testSandDebugUnitTest'
+    print "Tests passed successfully!"
+}
