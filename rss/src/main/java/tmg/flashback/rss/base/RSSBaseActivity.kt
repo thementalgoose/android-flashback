@@ -2,6 +2,8 @@ package tmg.flashback.rss.base
 
 import android.os.Bundle
 import androidx.annotation.StyleRes
+import com.r0adkll.slidr.Slidr
+import com.r0adkll.slidr.model.SlidrInterface
 import org.koin.android.ext.android.inject
 import tmg.flashback.repo.enums.ThemePref
 import tmg.flashback.rss.R
@@ -15,9 +17,29 @@ abstract class RSSBaseActivity: CommonActivity() {
 
     private var isLightTheme: Boolean = true
 
+    //region Slidr
+
+    private var swipeDismissInterface: SlidrInterface? = null
+    open val slidrInit: Boolean = true
+    var slidrLock: Boolean = false
+        set(value) {
+            field = value
+            when (value) {
+                true -> swipeDismissInterface?.lock()
+                false -> swipeDismissInterface?.unlock()
+            }
+        }
+
+    //endregion
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(getThemeStyle())
         super.onCreate(savedInstanceState)
+
+        if (slidrInit) {
+            swipeDismissInterface = Slidr.attach(this)
+        }
     }
 
     @StyleRes

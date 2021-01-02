@@ -115,6 +115,9 @@ dependencies {
     // Swipe refresh
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:$swipe_refresh"
 
+    // Swipe dismiss
+    implementation "com.r0adkll:slidableactivity:$slidr"
+
     // Koin
     implementation "org.koin:koin-android:$koin_version"
     implementation "org.koin:koin-android-scope:$koin_version"

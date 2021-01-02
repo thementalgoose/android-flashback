@@ -72,6 +72,7 @@ class RSSActivity: RSSBaseActivity(), FragmentRequestBack {
         if (webFrag != null) {
             webFrag.exitWeb()
             supportFragmentManager.popBackStack()
+            slidrLock = false
         }
         else {
             super.onBackPressed()
@@ -79,6 +80,7 @@ class RSSActivity: RSSBaseActivity(), FragmentRequestBack {
     }
 
     private fun loadWebView(article: Article) {
+        slidrLock = true
         supportFragmentManager
                 .beginTransaction()
                 .setCustomAnimations(R.anim.in_from_bottom, -1, -1, R.anim.out_to_bottom)
