@@ -10,7 +10,10 @@ jobs:
       # Checkout
       - uses: actions/checkout@v2
         with:
-          fetch-depth: '50'
+          fetch-depth: 0
+
+      - run: git checkout ${{ github.base_ref }}
+      - run: git checkout ${{ github.head_ref }}
 
       # Caching gradle
 #      - uses: actions/cache@v2
