@@ -238,8 +238,6 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
         } else {
             menu.selectedItemId = R.id.nav_qualifying
         }
-
-        Slidr.attach(this)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
