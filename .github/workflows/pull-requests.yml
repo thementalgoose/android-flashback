@@ -10,7 +10,7 @@ jobs:
       # Checkout
       - uses: actions/checkout@v2
         with:
-          fetch-depth: 0
+          fetch-depth: 100
 
       - run: git checkout ${{ github.base_ref }}
       - run: git checkout ${{ github.head_ref }}
@@ -26,32 +26,23 @@ jobs:
 #            ${{ runner.os }}-gradle-
 
       # Unit Tests - RSS
-#      - name: Unit tests - Checking difference
-      - run: git diff --name-only HEAD ^${{ github.base_ref }} | grep -E '^rss/' -c
-      - run: echo "lines_rss=$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }} | grep -E '^rss/' -c)" >> $GITHUB_ENV
-      - run: echo "lines_repo=$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }} | grep -E '^app-repo/' -c)" >> $GITHUB_ENV
-      - run: echo "lines_app=$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }} | grep -E '^app/' -c)" >> $GITHUB_ENV
+      - name: Unit tests - Checking difference
+        run: |
+          echo "lines_rss=$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }} | grep -E '^rss/' -c)" >> $GITHUB_ENV
+          echo "lines_repo=$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }} | grep -E '^app-repo/' -c)" >> $GITHUB_ENV
+          echo "lines_app=$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }} | grep -E '^app/' -c)" >> $GITHUB_ENV
 
-      - run: echo $lines_rss
-      - run: echo $lines_repo
-      - run: echo $lines_app
-
-#      - name: Unit tests - RSS
+      # Unit Tests - RSS
+      - name: Unit tests - RSS
+        run: echo "RUNNING RSS"
 #        run: ./gradlew :rss:testDebugUnitTest
-#        if: steps.changed-rss.outputs.changed == 'true'
-#
-#      # Unit Tests - Repo
-#      - name: Unit tests - Repo - Checking difference
-#        uses: marceloprado/has-changed-path@v1
-#        id: changed-repo
-#        with:
-#          paths: app-repo
-#        env:
-#          SOURCE: main
-#
-#      - name: Unit tests - Repo
+        if: $lines_rss != '0'
+
+      # Unit Tests - Repo
+      - name: Unit tests - Repo
+        run: echo "RUNNING REPO"
 #        run: ./gradlew :app-repo:test
-#        if: steps.changed-repo.outputs.changed == 'true'
+        if: $lines_repo != '0'
 #
 #      # Unit Tests - App
 #      - name: Unit tests - App - Checking difference
