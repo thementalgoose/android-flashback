@@ -9,8 +9,8 @@ jobs:
     steps:
       # Checkout
       - uses: actions/checkout@v2
-      - run: git checkout ${{ github.base_ref }} && git pull origin ${{ github.base_ref }}
-      - run: git checkout ${{ github.head_ref }} && git pull origin ${{ github.head_ref }}
+        with:
+          fetch-depth: 0
 
       # Caching gradle
 #      - uses: actions/cache@v2
