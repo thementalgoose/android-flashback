@@ -2,6 +2,7 @@ name: Release
 'on':
   release:
     types: [published]
+  workflow_dispatch:
 jobs:
   build_test_deploy:
     runs-on: ubuntu-latest
