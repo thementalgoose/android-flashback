@@ -21,9 +21,5 @@ jobs:
             ${{ runner.os }}-gradle-
 
       # Running unit tests
-      - name: Unit tests - Repo
-        run: ./gradlew :app-repo:test
-      - name: Unit tests - RSS
-        run: ./gradlew :rss:testDebugUnitTest
-      - name: Unit tests - App
-        run: ./gradlew :app:testSandDebugUnitTest
+      - name: Unit tests
+        run: ./gradlew testModules

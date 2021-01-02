@@ -63,6 +63,6 @@ task clean(type: Delete) {
 }
 
 task testModules {
-    dependsOn 'clean', ':app-repo:test', ':rss:testDebugUnitTest', ':app:testSandDebugUnitTest'
+    dependsOn ':app-repo:test', ':rss:testDebugUnitTest', ':app:testSandDebugUnitTest'
     print "Tests passed successfully!"
 }

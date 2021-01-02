@@ -26,9 +26,9 @@ jobs:
           echo ${{ secrets.ENCODED_KEYSTORE }} | base64 --decode >> flashback.keystore
           echo ${{ secrets.ENCODED_DEPLOYMENT_KEY }} | base64 --decode >> deployment_private_key.json
 
-      # Unit tests
+      # Running unit tests
       - name: Unit tests
-        run: ./gradlew testLiveDebugUnitTest
+        run: ./gradlew testModules
 
       # Release
       - name: Release to internal test track
