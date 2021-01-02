@@ -140,7 +140,6 @@ enum class SupportedArticleSource(
         }
 
         private fun findFallback(url: URL): SupportedArticleSource? {
-            println("Trying to find fallback for ${url.host.stripWWW()}")
             return supportedFallbackDomains
                     .entries
                     .firstOrNull { it.key == url.host.stripWWW() }

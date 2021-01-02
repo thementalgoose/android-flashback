@@ -80,7 +80,7 @@ android {
     testOptions {
         junitPlatform {
             testLogging {
-                events "skipped", "failed", "standardOut", "standardError"
+                events "passed", "skipped", "failed", "standardOut", "standardError"
             }
         }
         unitTests {
@@ -102,7 +102,7 @@ android {
                 useJUnitPlatform()
                 testLogging {
                     showStandardStreams = true
-                    events "skipped", "failed", "standardOut", "standardError"
+                    events "passed", "skipped", "failed", "standardOut", "standardError"
                 }
             }
         }

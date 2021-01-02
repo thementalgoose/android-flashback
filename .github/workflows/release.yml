@@ -1,0 +1,40 @@
+name: Release
+'on':
+  release:
+    types: [published]
+jobs:
+  build_test_deploy:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout
+      - uses: actions/checkout@v2
+
+      # Caching gradle
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      # Environment
+      - name: Environment variables
+        run: |
+          echo ${{ secrets.ENCODED_GOOGLE_SERVICES_LIVE }} | base64 --decode >> app/src/live/google-services.json
+          echo ${{ secrets.ENCODED_KEYSTORE }} | base64 --decode >> flashback.keystore
+          echo ${{ secrets.ENCODED_DEPLOYMENT_KEY }} | base64 --decode >> deployment_private_key.json
+
+      # Running unit tests
+      - name: Unit tests
+        run: ./gradlew testModules
+
+      # Release
+      - name: Release to internal test track
+        env:
+          KEYSTORE: ${{ github.workspace }}/flashback.keystore
+          PRIVATE_KEY: ${{ github.workspace }}/deployment_private_key.json
+          KEYSTORE_ALIAS: ${{ secrets.KEYSTORE_ALIAS }}
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+        run: ./gradlew publishLiveReleaseBundle
