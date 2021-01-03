@@ -3,7 +3,6 @@ package tmg.flashback.settings
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.components.prefs.AppPreferencesItem
@@ -40,8 +39,8 @@ internal class SettingsViewModelTest: BaseTest() {
         every { mockPrefsCustomisation.showQualifyingDelta } returns false
         every { mockPrefsCustomisation.showGridPenaltiesInQualifying } returns false
         every { mockPrefsCustomisation.fadeDNF } returns false
-        every { mockPrefsCustomisation.showBottomSheetFavourited } returns false
-        every { mockPrefsCustomisation.showBottomSheetAll } returns false
+        every { mockPrefsCustomisation.showListFavourited } returns false
+        every { mockPrefsCustomisation.showListAll } returns false
         every { mockPrefsDevice.crashReporting } returns false
         every { mockPrefsDevice.shakeToReport } returns false
         every { mockPrefsDevice.isNotificationChannelsSupported } returns true
@@ -259,7 +258,7 @@ internal class SettingsViewModelTest: BaseTest() {
 
         sut.inputs.preferenceClicked(SEASON_BOTTOM_SHEET_FAVOURITED, true)
 
-        verify { mockPrefsCustomisation.showBottomSheetFavourited = true }
+        verify { mockPrefsCustomisation.showListFavourited = true }
     }
 
     @Test
@@ -269,7 +268,7 @@ internal class SettingsViewModelTest: BaseTest() {
 
         sut.inputs.preferenceClicked(SEASON_BOTTOM_SHEET_ALL, true)
 
-        verify { mockPrefsCustomisation.showBottomSheetAll = true }
+        verify { mockPrefsCustomisation.showListAll = true }
     }
 
     @Test

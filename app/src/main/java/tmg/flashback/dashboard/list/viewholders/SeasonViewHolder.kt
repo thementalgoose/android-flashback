@@ -1,6 +1,8 @@
 package tmg.flashback.dashboard.list.viewholders
 
+import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.toColorInt
 import androidx.recyclerview.widget.RecyclerView
@@ -9,23 +11,30 @@ import tmg.flashback.*
 import tmg.flashback.dashboard.list.HeaderType
 import tmg.flashback.dashboard.list.ListItem
 import tmg.flashback.extensions.dimensionPx
+import tmg.flashback.utils.popup.popupMenu
 import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.getColor
 import tmg.utilities.extensions.views.*
 
 class SeasonViewHolder(
-    private var favouriteToggled: ((season: Int) -> Unit)? = null,
-    private var seasonClicked: ((season: Int) -> Unit)? = null,
+    private var favouriteToggled: (season: Int) -> Unit,
+    private var seasonClicked: (season: Int) -> Unit,
+    private var setDefault: (season: Int) -> Unit,
     itemView: View
-): RecyclerView.ViewHolder(itemView), View.OnClickListener {
+): RecyclerView.ViewHolder(itemView), View.OnClickListener, PopupMenu.OnMenuItemClickListener {
 
     init {
         itemView.container.setOnClickListener(this)
         itemView.favourite.setOnClickListener(this)
+        itemView.more.setOnClickListener(this)
     }
 
     private var currentSeason: Int = -1
     private var isFavourited: Boolean = false
+    private var popupMenu: PopupMenu = PopupMenu(context, itemView.more).apply {
+        inflate(R.menu.season_list_item)
+        setOnMenuItemClickListener(this@SeasonViewHolder)
+    }
 
     fun bind(season: ListItem.Season) {
         currentSeason = season.season
@@ -63,17 +72,36 @@ class SeasonViewHolder(
         itemView.pipeBottom.setBackgroundColor(colour)
         itemView.pipeTop.show(!currentSeason.toString().endsWith('9') && currentSeason != currentYear && season.fixed == HeaderType.ALL)
         itemView.pipeBottom.show(!currentSeason.toString().endsWith('0') && (currentSeason != currentYear || !currentYear.toString().endsWith("0")) && season.fixed == HeaderType.ALL)
-
     }
+
+    //region View.OnClickListener
 
     override fun onClick(p0: View?) {
         when (p0) {
             itemView.container -> {
-                seasonClicked?.invoke(currentSeason)
+                seasonClicked.invoke(currentSeason)
             }
             itemView.favourite -> {
-                favouriteToggled?.invoke(currentSeason)
+                favouriteToggled.invoke(currentSeason)
+            }
+            itemView.more -> {
+                popupMenu.show()
             }
         }
     }
+
+    //endregion
+
+    //region PopupMenu.OnMenuItemClickListener
+
+    override fun onMenuItemClick(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            R.id.season_list_item_default -> {
+                setDefault.invoke(currentSeason)
+            }
+        }
+        return true
+    }
+
+    //endregion
 }
