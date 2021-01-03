@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test
 import tmg.flashback.di.device.BuildConfigManager
 import tmg.flashback.repo.db.DataRepository
 import tmg.flashback.repo.models.remoteconfig.AppLockout
-import tmg.flashback.repo.pref.PrefDeviceRepository
+import tmg.flashback.repo.pref.DeviceRepository
 import tmg.flashback.testutils.BaseTest
 import tmg.flashback.testutils.assertEventFired
 import tmg.flashback.testutils.assertEventNotFired
@@ -19,13 +19,13 @@ internal class DashboardViewModelTest: BaseTest() {
 
     private val mockDataRepository: DataRepository = mockk(relaxed = true)
     private val mockBuildConfigManager: BuildConfigManager = mockk(relaxed = true)
-    private val mockPrefDeviceRepository: PrefDeviceRepository = mockk(relaxed = true)
+    private val mockDeviceRepository: DeviceRepository = mockk(relaxed = true)
 
     private fun initSUT() {
         sut = DashboardViewModel(
             mockDataRepository,
             mockBuildConfigManager,
-            mockPrefDeviceRepository
+            mockDeviceRepository
         )
     }
 
@@ -34,7 +34,7 @@ internal class DashboardViewModelTest: BaseTest() {
     @Test
     fun `DashboardViewModel open release notes fires when release notes are different`() {
 
-        every { mockPrefDeviceRepository.shouldShowReleaseNotes } returns true
+        every { mockDeviceRepository.shouldShowReleaseNotes } returns true
 
         initSUT()
 
@@ -46,7 +46,7 @@ internal class DashboardViewModelTest: BaseTest() {
     @Test
     fun `DashboardViewModel open release notes doesnt fire when no release notes difference`() {
 
-        every { mockPrefDeviceRepository.shouldShowReleaseNotes } returns false
+        every { mockDeviceRepository.shouldShowReleaseNotes } returns false
 
         initSUT()
 

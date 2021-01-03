@@ -7,15 +7,12 @@ import com.r0adkll.slidr.model.SlidrInterface
 import org.koin.android.ext.android.inject
 import tmg.flashback.R
 import tmg.flashback.extensions.isLightMode
-import tmg.flashback.repo.db.CrashManager
-import tmg.flashback.repo.pref.PrefCustomisationRepository
-import tmg.flashback.repo.enums.ThemePref
-import tmg.utilities.extensions.isInDayMode
+import tmg.flashback.repo.pref.UserRepository
 import tmg.utilities.lifecycle.common.CommonActivity
 
 abstract class BaseActivity : CommonActivity() {
 
-    private val prefsRepository: PrefCustomisationRepository by inject()
+    private val prefsRepository: UserRepository by inject()
 
     protected var isLightTheme: Boolean = true
 

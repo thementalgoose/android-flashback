@@ -11,7 +11,7 @@ import org.threeten.bp.LocalDate
 import tmg.flashback.*
 import tmg.flashback.race.RaceAdapterType.*
 import tmg.flashback.repo.NetworkConnectivityManager
-import tmg.flashback.repo.pref.PrefCustomisationRepository
+import tmg.flashback.repo.pref.UserRepository
 import tmg.flashback.repo.db.stats.SeasonOverviewRepository
 import tmg.flashback.repo.enums.AppHints
 import tmg.flashback.repo.enums.BarAnimation
@@ -28,7 +28,7 @@ internal class RaceViewModelTest: BaseTest() {
     lateinit var sut: RaceViewModel
 
     private val mockSeasonOverviewRepository: SeasonOverviewRepository = mockk(relaxed = true)
-    private val mockPrefsCustomisationRepository: PrefCustomisationRepository = mockk(relaxed = true)
+    private val mockPrefsCustomisationRepository: UserRepository = mockk(relaxed = true)
     private val mockConnectivityManager: NetworkConnectivityManager = mockk(relaxed = true)
 
     private val expectedSeasonRound: SeasonRound = SeasonRound(2019, 1)

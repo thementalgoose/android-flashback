@@ -15,8 +15,8 @@ import tmg.flashback.repo.db.stats.HistoryRepository
 import tmg.flashback.repo.db.stats.SeasonOverviewRepository
 import tmg.flashback.repo.enums.BarAnimation
 import tmg.flashback.repo.models.stats.History
-import tmg.flashback.repo.pref.PrefCustomisationRepository
-import tmg.flashback.repo.pref.PrefDeviceRepository
+import tmg.flashback.repo.pref.UserRepository
+import tmg.flashback.repo.pref.DeviceRepository
 import tmg.flashback.shared.sync.SyncDataItem
 import tmg.flashback.shared.viewholders.DataUnavailable
 import tmg.flashback.testutils.*
@@ -29,11 +29,11 @@ internal class SeasonViewModelTest: BaseTest() {
 
     lateinit var sut: SeasonViewModel
 
-    private val mockPrefDeviceRepository: PrefDeviceRepository = mockk(relaxed = true)
+    private val mockDeviceRepository: DeviceRepository = mockk(relaxed = true)
     private val mockHistoryRepository: HistoryRepository = mockk(relaxed = true)
     private val mockSeasonOverviewRepository: SeasonOverviewRepository = mockk(relaxed = true)
     private val mockRemoteConfigRepository: RemoteConfigRepository = mockk(relaxed = true)
-    private val mockPrefCustomisationRepository: PrefCustomisationRepository = mockk(relaxed = true)
+    private val mockUserRepository: UserRepository = mockk(relaxed = true)
     private val mockNetworkConnectivityManager: NetworkConnectivityManager = mockk(relaxed = true)
 
     @BeforeEach
@@ -43,18 +43,18 @@ internal class SeasonViewModelTest: BaseTest() {
 
         every { mockNetworkConnectivityManager.isConnected } returns true
 
-        every { mockPrefCustomisationRepository.barAnimation } returns BarAnimation.NONE
+        every { mockUserRepository.barAnimation } returns BarAnimation.NONE
         every { mockSeasonOverviewRepository.getSeasonOverview(any()) } returns flow { emit(mockSeason) }
         every { mockHistoryRepository.historyFor(any()) } returns flow { emit(mockHistory) }
     }
 
     private fun initSUT() {
         sut = SeasonViewModel(
-            mockPrefDeviceRepository,
+            mockDeviceRepository,
             mockHistoryRepository,
             mockSeasonOverviewRepository,
             mockRemoteConfigRepository,
-            mockPrefCustomisationRepository,
+            mockUserRepository,
             mockNetworkConnectivityManager
         )
     }
@@ -147,7 +147,7 @@ internal class SeasonViewModelTest: BaseTest() {
     @Test
     fun `SeasonViewModel defaults to calendar type by default`() = coroutineTest {
 
-        every { mockPrefDeviceRepository.shouldShowReleaseNotes } returns true
+        every { mockDeviceRepository.shouldShowReleaseNotes } returns true
 
         initSUT()
 
@@ -502,7 +502,7 @@ internal class SeasonViewModelTest: BaseTest() {
     @Test
     fun `SeasonViewModel banner moves to the bottom when first boot time is greater than 10 days after`() = coroutineTest {
 
-        every { mockPrefDeviceRepository.appFirstBootTime } returns LocalDate.now().minusDays(daysUntilDataProvidedBannerMovedToBottom.toLong() + 1L)
+        every { mockDeviceRepository.appFirstBootTime } returns LocalDate.now().minusDays(daysUntilDataProvidedBannerMovedToBottom.toLong() + 1L)
 
         initSUT()
 
@@ -514,7 +514,7 @@ internal class SeasonViewModelTest: BaseTest() {
     @Test
     fun `SeasonViewModel banner is at the top when first boot time is less than or equal to 10 days after`() = coroutineTest {
 
-        every { mockPrefDeviceRepository.appFirstBootTime } returns LocalDate.now().minusDays(daysUntilDataProvidedBannerMovedToBottom.toLong())
+        every { mockDeviceRepository.appFirstBootTime } returns LocalDate.now().minusDays(daysUntilDataProvidedBannerMovedToBottom.toLong())
 
         initSUT()
 

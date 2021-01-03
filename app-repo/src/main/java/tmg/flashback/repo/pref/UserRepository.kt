@@ -4,7 +4,7 @@ import tmg.flashback.repo.enums.AppHints
 import tmg.flashback.repo.enums.BarAnimation
 import tmg.flashback.repo.enums.ThemePref
 
-interface PrefCustomisationRepository {
+interface UserRepository {
 
     /**
      * Dark mode preference
@@ -55,4 +55,10 @@ interface PrefCustomisationRepository {
         existing.add(appHint)
         appHints = existing.toSet()
     }
+
+    /**
+     * Default season to be shown in the app
+     *  null = no default set
+     */
+    var defaultSeason: Int?
 }

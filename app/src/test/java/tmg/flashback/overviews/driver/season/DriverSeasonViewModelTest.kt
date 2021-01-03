@@ -2,18 +2,14 @@ package tmg.flashback.overviews.driver.season
 
 import io.mockk.every
 import io.mockk.mockk
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.flow
-import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.R
 import tmg.flashback.overviews.*
-import tmg.flashback.overviews.driver.summary.DriverSummaryItem
 import tmg.flashback.overviews.driver.summary.PipeType.*
 import tmg.flashback.repo.NetworkConnectivityManager
-import tmg.flashback.repo.pref.PrefCustomisationRepository
+import tmg.flashback.repo.pref.UserRepository
 import tmg.flashback.repo.db.stats.DriverRepository
 import tmg.flashback.repo.enums.BarAnimation
 import tmg.flashback.repo.models.stats.DriverOverviewRace
@@ -28,7 +24,7 @@ internal class DriverSeasonViewModelTest: BaseTest() {
 
     private var mockDriverRepository: DriverRepository = mockk(relaxed = true)
     private var mockConnectivityManager: NetworkConnectivityManager = mockk(relaxed = true)
-    private var mockPrefsRepository: PrefCustomisationRepository = mockk(relaxed = true)
+    private var mockPrefsRepository: UserRepository = mockk(relaxed = true)
 
     @BeforeEach
     internal fun setUp() {

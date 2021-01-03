@@ -7,7 +7,7 @@ import tmg.flashback.allYears
 import tmg.flashback.base.BaseViewModel
 import tmg.flashback.repo.config.RemoteConfigRepository
 import tmg.flashback.repo.models.remoteconfig.UpNextSchedule
-import tmg.flashback.repo.pref.PrefCustomisationRepository
+import tmg.flashback.repo.pref.UserRepository
 import tmg.utilities.lifecycle.DataEvent
 import tmg.utilities.lifecycle.Event
 
@@ -37,8 +37,8 @@ interface ListViewModelOutputs {
 //endregion
 
 class ListViewModel(
-    private val prefRepository: PrefCustomisationRepository,
-    private val remoteConfigRepository: RemoteConfigRepository
+        private val prefRepository: UserRepository,
+        private val remoteConfigRepository: RemoteConfigRepository
 ) : BaseViewModel(), ListViewModelInputs, ListViewModelOutputs {
 
     var headerSectionFavourited: Boolean = prefRepository.showListFavourited

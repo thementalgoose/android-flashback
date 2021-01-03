@@ -4,11 +4,11 @@ import android.os.Build
 import android.util.Log
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import tmg.flashback.repo.db.CrashManager
-import tmg.flashback.repo.pref.PrefDeviceRepository
+import tmg.flashback.repo.pref.DeviceRepository
 import java.lang.Exception
 
 class FirebaseCrashManager(
-        private val prefsRepository: PrefDeviceRepository,
+        private val prefsRepository: DeviceRepository,
         private val isProd: Boolean
 ): CrashManager {
 
