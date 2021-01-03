@@ -107,8 +107,8 @@ class SettingsViewModel(
             add(SettingsOptions.FADE_OUT_DNF.toSwitch(prefCustomisationRepository.fadeDNF))
             add(SettingsOptions.QUALIFYING_GRID_PENALTY.toSwitch(prefCustomisationRepository.showGridPenaltiesInQualifying))
             add(AppPreferencesItem.Category(R.string.settings_season_list))
-            add(SettingsOptions.SEASON_BOTTOM_SHEET_FAVOURITED.toSwitch(prefCustomisationRepository.showBottomSheetFavourited))
-            add(SettingsOptions.SEASON_BOTTOM_SHEET_ALL.toSwitch(prefCustomisationRepository.showBottomSheetAll))
+            add(SettingsOptions.SEASON_BOTTOM_SHEET_FAVOURITED.toSwitch(prefCustomisationRepository.showListFavourited))
+            add(SettingsOptions.SEASON_BOTTOM_SHEET_ALL.toSwitch(prefCustomisationRepository.showListAll))
             add(AppPreferencesItem.Category(R.string.settings_help))
             add(SettingsOptions.ABOUT.toPref())
             add(SettingsOptions.REVIEW.toPref())
@@ -135,8 +135,8 @@ class SettingsViewModel(
             SettingsOptions.QUALIFYING_DELTAS -> prefCustomisationRepository.showQualifyingDelta = value ?: false
             SettingsOptions.FADE_OUT_DNF -> prefCustomisationRepository.fadeDNF = value ?: false
             SettingsOptions.QUALIFYING_GRID_PENALTY -> prefCustomisationRepository.showGridPenaltiesInQualifying = value ?: true
-            SettingsOptions.SEASON_BOTTOM_SHEET_FAVOURITED -> prefCustomisationRepository.showBottomSheetFavourited = value ?: true
-            SettingsOptions.SEASON_BOTTOM_SHEET_ALL -> prefCustomisationRepository.showBottomSheetAll = value ?: true
+            SettingsOptions.SEASON_BOTTOM_SHEET_FAVOURITED -> prefCustomisationRepository.showListFavourited = value ?: true
+            SettingsOptions.SEASON_BOTTOM_SHEET_ALL -> prefCustomisationRepository.showListAll = value ?: true
             SettingsOptions.BAR_ANIMATION_SPEED -> openAnimationPicker.value = Event()
             SettingsOptions.ABOUT -> openAbout.value = Event()
             SettingsOptions.REVIEW -> openReview.value = DataEvent(playStoreUrl)

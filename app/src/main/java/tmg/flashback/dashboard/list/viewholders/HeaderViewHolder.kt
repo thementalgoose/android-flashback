@@ -12,7 +12,7 @@ import tmg.utilities.extensions.views.getString
 import tmg.utilities.extensions.views.show
 
 class HeaderViewHolder(
-    private var featureToggled: ((type: HeaderType) -> Unit)? = null,
+    private var featureToggled: (type: HeaderType) -> Unit,
     itemView: View
 ): RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
@@ -44,7 +44,7 @@ class HeaderViewHolder(
 
     override fun onClick(p0: View?) {
         if (p0 == itemView.container) {
-            featureToggled?.invoke(type)
+            featureToggled.invoke(type)
         }
     }
 }

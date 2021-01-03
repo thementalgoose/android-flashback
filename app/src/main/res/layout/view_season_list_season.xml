@@ -58,14 +58,12 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/ic_star_filled" />
+        app:srcCompat="@drawable/ic_more" />
 
     <ImageButton
-
         android:id="@+id/favourite"
         android:layout_width="@dimen/bottomSheetIconSize"
         android:layout_height="@dimen/bottomSheetIconSize"
-        android:layout_marginEnd="@dimen/paddingNSmall"
         android:background="@drawable/ripple_rounded"
         android:paddingStart="@dimen/paddingSmall"
         android:paddingTop="@dimen/paddingSmall"

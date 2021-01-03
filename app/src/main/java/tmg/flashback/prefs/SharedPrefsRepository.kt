@@ -70,11 +70,11 @@ class SharedPrefsRepository(context: Context) : SharedPrefManager(context),
         get() = getBoolean(keyFadeDNF, true)
         set(value) = save(keyFadeDNF, value)
 
-    override var showBottomSheetFavourited: Boolean
+    override var showListFavourited: Boolean
         get() = getBoolean(keyBottomSheetFavourited, true)
         set(value) = save(keyBottomSheetFavourited, value)
 
-    override var showBottomSheetAll: Boolean
+    override var showListAll: Boolean
         get() = getBoolean(keyBottomSheetAll, true)
         set(value) = save(keyBottomSheetAll, value)
 

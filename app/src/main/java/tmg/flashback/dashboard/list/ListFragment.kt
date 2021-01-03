@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_dashboard_list.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -34,10 +35,13 @@ class ListFragment: BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         adapter = ListAdapter(
-            settingsClicked = viewModel.inputs::clickSettings,
-            featureToggled = viewModel.inputs::toggleHeader,
-            favouriteToggled = viewModel.inputs::toggleFavourite,
-            seasonClicked = viewModel.inputs::clickSeason
+                settingsClicked = viewModel.inputs::clickSettings,
+                featureToggled = viewModel.inputs::toggleHeader,
+                favouriteToggled = viewModel.inputs::toggleFavourite,
+                seasonClicked = viewModel.inputs::clickSeason,
+                setDefaultClicked = {
+                    Toast.makeText(context, "SET DEFAULT", Toast.LENGTH_LONG).show()
+                }
         )
         list.layoutManager = LinearLayoutManager(context)
         list.adapter = adapter

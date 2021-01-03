@@ -12,9 +12,10 @@ import tmg.flashback.dashboard.list.viewholders.UpNextViewHolder
 
 class ListAdapter(
     val settingsClicked: () -> Unit,
-    var featureToggled: ((type: HeaderType) -> Unit)? = null,
-    var favouriteToggled: ((season: Int) -> Unit)? = null,
-    var seasonClicked: ((season: Int) -> Unit)? = null
+    var featureToggled: (type: HeaderType) -> Unit,
+    var favouriteToggled: (season: Int) -> Unit,
+    var seasonClicked: (season: Int) -> Unit,
+    var setDefaultClicked: (season: Int) -> Unit
 ): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var toggle: Boolean = false
@@ -36,7 +37,7 @@ class ListAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(viewType, parent, false)
         return when (viewType) {
-            R.layout.view_season_list_season -> SeasonViewHolder(favouriteToggled, seasonClicked, view)
+            R.layout.view_season_list_season -> SeasonViewHolder(favouriteToggled, seasonClicked, setDefaultClicked, view)
             R.layout.view_season_list_header -> HeaderViewHolder(featureToggled, view)
             R.layout.view_season_list_hero -> HeroViewHolder(view, settingsClicked)
             R.layout.view_season_list_up_next -> UpNextViewHolder(view)

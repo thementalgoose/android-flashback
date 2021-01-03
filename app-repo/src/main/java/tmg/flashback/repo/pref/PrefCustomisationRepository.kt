@@ -24,12 +24,12 @@ interface PrefCustomisationRepository {
     /**
      * Show the favourited bottom sheet section expanded by default
      */
-    var showBottomSheetFavourited: Boolean
+    var showListFavourited: Boolean
 
     /**
      * Show the all bottom sheet section expanded by default
      */
-    var showBottomSheetAll: Boolean
+    var showListAll: Boolean
 
     /**
      * Bar animation preference
@@ -45,18 +45,6 @@ interface PrefCustomisationRepository {
      * Favourited seasons in the list
      */
     var favouriteSeasons: Set<Int>
-    fun addFavouriteSeason(season: Int) {
-        val existing: MutableSet<Int> = favouriteSeasons.toMutableSet()
-        existing.add(season)
-        favouriteSeasons = existing.toSet()
-    }
-    fun removeFavouriteSeason(season: Int) {
-        val existing: MutableSet<Int> = favouriteSeasons.toMutableSet()
-        if (existing.contains(season)) {
-            existing.remove(season)
-            favouriteSeasons = existing.toSet()
-        }
-    }
 
     /**
      * App hints that have been shown in the app

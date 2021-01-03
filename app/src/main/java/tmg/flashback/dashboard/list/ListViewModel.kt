@@ -3,7 +3,6 @@ package tmg.flashback.dashboard.list
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import org.threeten.bp.LocalDate
-import org.threeten.bp.LocalDateTime
 import tmg.flashback.allYears
 import tmg.flashback.base.BaseViewModel
 import tmg.flashback.repo.config.RemoteConfigRepository
@@ -18,6 +17,8 @@ interface ListViewModelInputs {
     fun toggleHeader(header: HeaderType, to: Boolean? = null)
     fun toggleFavourite(season: Int)
     fun clickSeason(season: Int)
+
+    fun clickSetDefaultSeason(season: Int)
 
     fun clickSettings()
 }
@@ -40,8 +41,8 @@ class ListViewModel(
     private val remoteConfigRepository: RemoteConfigRepository
 ) : BaseViewModel(), ListViewModelInputs, ListViewModelOutputs {
 
-    var headerSectionFavourited: Boolean = prefRepository.showBottomSheetFavourited
-    var headerSectionAll: Boolean = prefRepository.showBottomSheetAll
+    var headerSectionFavourited: Boolean = prefRepository.showListFavourited
+    var headerSectionAll: Boolean = prefRepository.showListAll
 
     private var currentSeason: Int = remoteConfigRepository.defaultYear
     private val favouriteSeasons = prefRepository.favouriteSeasons.toMutableSet()
@@ -81,6 +82,10 @@ class ListViewModel(
         showSeasonEvent.value = DataEvent(season)
         currentSeason = season
         list.value = buildList(favouriteSeasons, headerSectionFavourited, headerSectionAll)
+    }
+
+    override fun clickSetDefaultSeason(season: Int) {
+
     }
 
     override fun clickSettings() {

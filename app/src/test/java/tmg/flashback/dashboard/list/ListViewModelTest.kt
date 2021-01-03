@@ -30,8 +30,8 @@ internal class ListViewModelTest: BaseTest() {
     internal fun setUp() {
 
         every { mockPrefCustomisationRepository.favouriteSeasons } returns setOf()
-        every { mockPrefCustomisationRepository.showBottomSheetFavourited } returns true
-        every { mockPrefCustomisationRepository.showBottomSheetAll } returns true
+        every { mockPrefCustomisationRepository.showListFavourited } returns true
+        every { mockPrefCustomisationRepository.showListAll } returns true
 
         every { mockRemoteConfigRepository.upNext } returns emptyList()
         every { mockRemoteConfigRepository.defaultYear } returns 2018
@@ -129,8 +129,8 @@ internal class ListViewModelTest: BaseTest() {
     @Test
     fun `SeasonViewModel header section favourited and all are false when prefs are false on initial load`() {
 
-        every { mockPrefCustomisationRepository.showBottomSheetFavourited } returns false
-        every { mockPrefCustomisationRepository.showBottomSheetAll } returns false
+        every { mockPrefCustomisationRepository.showListFavourited } returns false
+        every { mockPrefCustomisationRepository.showListAll } returns false
 
         initSUT()
 
@@ -141,8 +141,8 @@ internal class ListViewModelTest: BaseTest() {
     @Test
     fun `SeasonViewModel header section favourited and all are true when prefs are true on initial load`() {
 
-        every { mockPrefCustomisationRepository.showBottomSheetFavourited } returns true
-        every { mockPrefCustomisationRepository.showBottomSheetAll } returns true
+        every { mockPrefCustomisationRepository.showListFavourited } returns true
+        every { mockPrefCustomisationRepository.showListAll } returns true
 
         initSUT()
 
@@ -185,8 +185,8 @@ internal class ListViewModelTest: BaseTest() {
         val expected = expectedList(favourites, showFavourites = false, showAll = false)
 
         every { mockPrefCustomisationRepository.favouriteSeasons } returns favourites
-        every { mockPrefCustomisationRepository.showBottomSheetFavourited } returns false
-        every { mockPrefCustomisationRepository.showBottomSheetAll } returns false
+        every { mockPrefCustomisationRepository.showListFavourited } returns false
+        every { mockPrefCustomisationRepository.showListAll } returns false
 
         initSUT()
 
