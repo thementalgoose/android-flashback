@@ -204,6 +204,9 @@ dependencies {
         exclude group:'com.jakewharton.threetenabp', module:'threetenabp'
     }
 
+    // Swipe dismiss
+    implementation "com.r0adkll:slidableactivity:$slidr"
+
     // Progress bar
     implementation 'com.aswin:CustomArc:1.0.2'
 

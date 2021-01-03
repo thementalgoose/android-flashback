@@ -19,6 +19,8 @@ import tmg.utilities.extensions.observeEvent
 
 class DashboardActivity: BaseActivity(), DashboardNavigationCallback {
 
+    override val initialiseSlidr: Boolean = false
+
     private val remoteConfigRepository: RemoteConfigRepository by inject()
 
     private val viewModel: DashboardViewModel by viewModel()
