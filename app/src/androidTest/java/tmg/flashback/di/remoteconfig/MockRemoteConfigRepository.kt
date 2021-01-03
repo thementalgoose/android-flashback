@@ -1,6 +1,7 @@
 package tmg.flashback.di.remoteconfig
 
 import tmg.flashback.repo.config.RemoteConfigRepository
+import tmg.flashback.repo.models.remoteconfig.UpNextSchedule
 
 internal object MockRemoteConfigRepository: RemoteConfigRepository {
 
@@ -12,6 +13,8 @@ internal object MockRemoteConfigRepository: RemoteConfigRepository {
         return true
     }
 
+    override val upNext: List<UpNextSchedule>
+        get() = emptyList()
     override val defaultYear: Int
         get() = 2021
     override val banner: String

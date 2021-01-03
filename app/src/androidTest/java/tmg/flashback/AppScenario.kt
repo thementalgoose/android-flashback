@@ -160,38 +160,40 @@ class AppScenario: KoinTest {
                 }
             }
 
-            this.goToSettings {
+            this.goToSeasonList {
 
-                assertTextDisplayedInList(R.string.settings_customisation_rss)
-                assertTextDisplayedInList(R.string.settings_notifications_title)
-                assertTextDisplayedInList(R.string.settings_theme)
-                assertTextDisplayedInList(R.string.settings_customisation)
-                assertTextDisplayedInList(R.string.settings_season_list)
-                assertTextDisplayedInList(R.string.settings_help)
-                assertTextDisplayedInList(R.string.settings_feedback)
+                this.goToSettings {
 
-                this.goToPrivacyPolicy {
+                    assertTextDisplayedInList(R.string.settings_customisation_rss)
+                    assertTextDisplayedInList(R.string.settings_notifications_title)
+                    assertTextDisplayedInList(R.string.settings_theme)
+                    assertTextDisplayedInList(R.string.settings_customisation)
+                    assertTextDisplayedInList(R.string.settings_season_list)
+                    assertTextDisplayedInList(R.string.settings_help)
+                    assertTextDisplayedInList(R.string.settings_feedback)
 
-                    assertTextDisplayed(R.string.privacy_policy_title)
-                }
+                    this.goToPrivacyPolicy {
 
-                this.goToReleaseNotes {
+                        assertTextDisplayed(R.string.privacy_policy_title)
+                    }
 
-                    assertTextDisplayed(R.string.settings_help_release_notes_title)
-                }
+                    this.goToReleaseNotes {
 
-                this.goToAboutThisApp {
+                        assertTextDisplayed(R.string.settings_help_release_notes_title)
+                    }
 
-                    assertTextDisplayed(R.string.about_name)
-                    assertTextDisplayed(R.string.about_desc)
-                }
+                    this.goToAboutThisApp {
 
-                this.goToRSSSettings {
+                        assertTextDisplayed(R.string.about_name)
+                        assertTextDisplayed(R.string.about_desc)
+                    }
 
-                    assertTextDisplayed(R.string.settings_rss_title)
+                    this.goToRSSSettings {
+
+                        assertTextDisplayed(R.string.settings_rss_title)
+                    }
                 }
             }
-
         }
     }
 
