@@ -16,10 +16,9 @@ fun startup(block: Home.() -> Unit) {
 
 object Home: RecyclerViewUtils(R.id.dataList) {
 
-    fun goToSettings(block: Settings.() -> Unit) {
-        clickOn(R.id.settings)
-        collapseAppBar()
-        block(Settings)
+    fun goToSeasonList(block: SeasonList.() -> Unit) {
+        clickOn(R.id.menuButton)
+        block(SeasonList)
         pressBack()
     }
 
@@ -62,6 +61,16 @@ object Home: RecyclerViewUtils(R.id.dataList) {
     fun clickOnCalendar() = clickOn(R.id.nav_calendar)
     fun clickOnDriver() = clickOn(R.id.nav_drivers)
     fun clickOnConstructor() = clickOn(R.id.nav_constructor)
+}
+
+object SeasonList: RecyclerViewUtils(R.id.rvContent) {
+
+    fun goToSettings(block: Settings.() -> Unit) {
+        clickOn(R.id.settingsButton)
+        collapseAppBar()
+        block(Settings)
+        pressBack()
+    }
 }
 
 object Race: RecyclerViewUtils(R.id.rvContent) {
