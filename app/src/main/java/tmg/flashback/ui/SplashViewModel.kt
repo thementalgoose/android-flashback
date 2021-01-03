@@ -4,9 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import tmg.flashback.controllers.FeatureController
 import tmg.flashback.ui.base.BaseViewModel
 import tmg.flashback.managers.appshortcuts.AppShortcutManager
-import tmg.flashback.repo.config.RemoteConfigRepository
+import tmg.flashback.managers.remoteconfig.RemoteConfigManager
 import tmg.flashback.repo.pref.DeviceRepository
 import tmg.utilities.lifecycle.Event
 
@@ -30,8 +31,8 @@ interface SplashViewModelOutputs {
 
 class SplashViewModel(
         private val shortcutManager: AppShortcutManager,
-        private val prefsDeviceDB: DeviceRepository,
-        private val remoteConfigRepository: RemoteConfigRepository
+        private val featureController: FeatureController,
+        private val remoteConfigManager: RemoteConfigManager
 ): BaseViewModel(), SplashViewModelInputs, SplashViewModelOutputs {
 
     var inputs: SplashViewModelInputs = this
@@ -44,14 +45,14 @@ class SplashViewModel(
     //region Inputs
 
     override fun start() {
-        if (!prefsDeviceDB.remoteConfigInitialSync) {
+        if (!remoteConfigManager.remoteConfigInitialSync) {
             showLoading.value = true
             showResync.value = false
             viewModelScope.launch {
-                val result = remoteConfigRepository.update(true)
+                val result = remoteConfigManager.update(true)
                 performConfigUpdates()
                 if (result) {
-                    prefsDeviceDB.remoteConfigInitialSync = true
+                    remoteConfigManager.remoteConfigInitialSync = true
                     goToNextScreen.value = Event()
                 }
                 else {
@@ -62,7 +63,7 @@ class SplashViewModel(
         }
         else {
             viewModelScope.launch {
-                val result = remoteConfigRepository.activate()
+                val result = remoteConfigManager.activate()
                 performConfigUpdates()
                 goToNextScreen.value = Event()
             }
@@ -77,7 +78,7 @@ class SplashViewModel(
     private fun performConfigUpdates() {
 
         // Shortcuts for RSS
-        when (remoteConfigRepository.rss) {
+        when (featureController.rssEnabled) {
             true -> shortcutManager.enable()
             false -> shortcutManager.disable()
         }

@@ -1,30 +1,29 @@
-package tmg.flashback.firebase.config
+package tmg.flashback.managers.remoteconfig
 
 import com.google.firebase.FirebaseException
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigException
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import kotlinx.coroutines.tasks.await
+import tmg.flashback.currentYear
 import tmg.flashback.firebase.BuildConfig
 import tmg.flashback.firebase.R
 import tmg.flashback.firebase.converters.convert
 import tmg.flashback.firebase.crash.FirebaseCrashManager
-import tmg.flashback.firebase.currentYear
 import tmg.flashback.firebase.extensions.toJson
 import tmg.flashback.firebase.models.FUpNext
 import tmg.flashback.repo.config.RemoteConfigRepository
 import tmg.flashback.repo.models.remoteconfig.UpNextSchedule
+import tmg.flashback.repo.pref.DeviceRepository
 import java.lang.Exception
 
-/**
- * Read the default values from remote config
- */
-class FirebaseRemoteConfigRepository(
-        val crashManager: FirebaseCrashManager?
-): RemoteConfigRepository {
+class FirebaseRemoteConfigManager(
+        private val crashManager: FirebaseCrashManager?,
+        private val deviceRepository: DeviceRepository
+): RemoteConfigManager, RemoteConfigRepository {
 
     private val remoteConfig: FirebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
-    private val configSettings = FirebaseRemoteConfigSettings
+    private val remoteConfigSettings = FirebaseRemoteConfigSettings
             .Builder()
             .apply {
                 if (BuildConfig.DEBUG) {
@@ -42,8 +41,18 @@ class FirebaseRemoteConfigRepository(
 
     init {
         remoteConfig.setDefaultsAsync(R.xml.remote_config_defaults)
-        remoteConfig.setConfigSettingsAsync(configSettings)
+        remoteConfig.setConfigSettingsAsync(remoteConfigSettings)
     }
+
+    //region Remote sync initial
+
+    override var remoteConfigInitialSync: Boolean
+        get() = deviceRepository.remoteConfigInitialSync
+        set(value) {
+            deviceRepository.remoteConfigInitialSync = value
+        }
+
+    //endregion
 
     //region Variables inside remote config
 
@@ -78,7 +87,7 @@ class FirebaseRemoteConfigRepository(
      */
     override suspend fun update(andActivate: Boolean): Boolean {
         return try {
-             when (andActivate) {
+            when (andActivate) {
                 true -> remoteConfig
                         .fetchAndActivate()
                         .await()

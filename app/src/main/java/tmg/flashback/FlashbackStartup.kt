@@ -12,13 +12,14 @@ import tmg.flashback.controllers.CrashController
 import tmg.flashback.controllers.DeviceController
 import tmg.flashback.controllers.NotificationController
 import tmg.flashback.managers.analytics.UserPropertiesManager
+import tmg.flashback.managers.remoteconfig.RemoteConfigManager
 import tmg.flashback.notifications.PushNotificationManager
 import tmg.flashback.repo.config.RemoteConfigRepository
 
 class FlashbackStartup(
         private val deviceController: DeviceController,
         private val prefsNotification: NotificationController,
-        private val configRepository: RemoteConfigRepository,
+        private val configRepository: RemoteConfigManager,
         private val crashController: CrashController,
         private val analyticsUserProperties: UserPropertiesManager,
         private val notificationManager: PushNotificationManager,
