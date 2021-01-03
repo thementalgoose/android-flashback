@@ -2,14 +2,11 @@ package tmg.flashback.rss.ui
 
 import io.mockk.every
 import io.mockk.mockk
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.flow
-import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDateTime
-import tmg.flashback.repo.NetworkConnectivityManager
+import tmg.flashback.managers.networkconnectivity.NetworkConnectivityManager
 import tmg.flashback.repo.models.Response
 import tmg.flashback.rss.prefs.RSSPrefsRepository
 import tmg.flashback.rss.repo.RSSRepository
@@ -25,7 +22,7 @@ class RSSViewModelTest: BaseTest() {
 
     private val mockRSSDB: RSSRepository = mockk()
     private val mockPrefsRepository: RSSPrefsRepository = mockk()
-    private val mockConnectivityManager: NetworkConnectivityManager = mockk()
+    private val mockConnectivityManager: tmg.flashback.managers.networkconnectivity.NetworkConnectivityManager = mockk()
 
     private val mockLocalDate: LocalDateTime = LocalDateTime.of(2020, 1, 1, 1, 2, 3, 0)
     private val mockArticleSource = ArticleSource(
