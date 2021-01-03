@@ -106,7 +106,7 @@
         <!-- Subscribing -->
 
         <service
-            android:name=".notifications.RaceNotificationService"
+            android:name=".services.RaceNotificationService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

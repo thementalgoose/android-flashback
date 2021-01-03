@@ -24,7 +24,6 @@ class FirebasePushNotificationManager(
         const val topicMisc: String = "misc"
     }
 
-
     override suspend fun raceSubscribe(): Boolean {
         return suspendCoroutine { continuation ->
             FirebaseMessaging

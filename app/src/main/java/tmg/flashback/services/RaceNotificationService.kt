@@ -1,4 +1,4 @@
-package tmg.flashback.notifications
+package tmg.flashback.services
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
