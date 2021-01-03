@@ -1,4 +1,4 @@
-package tmg.flashback.managers
+package tmg.flashback.controllers
 
 import org.threeten.bp.LocalDate
 import tmg.flashback.repo.config.RemoteConfigRepository
@@ -6,7 +6,7 @@ import tmg.flashback.repo.config.RemoteConfigRepository
 /**
  * All major features in the app
  */
-class FeatureManager(
+class FeatureController(
         private val remoteConfigRepository: RemoteConfigRepository
 ) {
     /**

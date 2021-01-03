@@ -8,15 +8,18 @@ import tmg.flashback.repo.pref.DeviceRepository
 import java.lang.Exception
 
 class FirebaseCrashManager(
-        private val prefsRepository: DeviceRepository,
+        private val deviceRepository: DeviceRepository,
         private val isProd: Boolean
 ): CrashManager {
 
     private val isDebug: Boolean
         get() = BuildConfig.DEBUG
 
-    override val enableCrashlytics: Boolean
-        get() = prefsRepository.crashReporting || !isProd
+    override var enableCrashReporting: Boolean
+        get() = deviceRepository.crashReporting || !isProd
+        set(value) {
+            deviceRepository.crashReporting = value
+        }
 
     private val keyDebug: String = "debug"
     private val keyEmulator: String = "emulator"
@@ -32,8 +35,8 @@ class FirebaseCrashManager(
 
         val instance = FirebaseCrashlytics.getInstance()
 
-        instance.setCrashlyticsCollectionEnabled(enableCrashlytics)
-        if (enableCrashlytics) {
+        instance.setCrashlyticsCollectionEnabled(enableCrashReporting)
+        if (enableCrashReporting) {
             Log.i("Flashback", "Enabling crashlytics")
         }
         else {
@@ -43,8 +46,8 @@ class FirebaseCrashManager(
         instance.setCustomKey(keyEmulator, isEmulator)
         instance.setCustomKey(keyDebug, isDebug)
 
-        instance.setUserId(prefsRepository.deviceUdid)
-        instance.setCustomKey(keyDeviceUuid, prefsRepository.deviceUdid)
+        instance.setUserId(deviceRepository.deviceUdid)
+        instance.setCustomKey(keyDeviceUuid, deviceRepository.deviceUdid)
         instance.setCustomKey(keyModel, Build.MODEL)
         instance.setCustomKey(keyManufacturer, Build.MANUFACTURER)
         instance.setCustomKey(keyProduct, Build.PRODUCT)
@@ -59,7 +62,7 @@ class FirebaseCrashManager(
     }
 
     override fun log(msg: String) {
-        if (enableCrashlytics) {
+        if (enableCrashReporting) {
             if (isDebug) {
                 Log.i("Flashback", "Crashlytics \"${msg}\"")
             }
@@ -72,7 +75,7 @@ class FirebaseCrashManager(
             Log.e("Flashback", "Crashlytics \"${context}\"")
             error.printStackTrace()
         }
-        if (enableCrashlytics) {
+        if (enableCrashReporting) {
             FirebaseCrashlytics.getInstance().log("E/Crashlytics: ${error.message}")
             FirebaseCrashlytics.getInstance().recordException(error)
         }

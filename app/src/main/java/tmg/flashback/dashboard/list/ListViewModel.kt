@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import org.threeten.bp.LocalDate
 import tmg.flashback.allYears
 import tmg.flashback.base.BaseViewModel
+import tmg.flashback.controllers.SeasonController
+import tmg.flashback.controllers.UpNextController
 import tmg.flashback.repo.config.RemoteConfigRepository
 import tmg.flashback.repo.models.remoteconfig.UpNextSchedule
 import tmg.flashback.repo.pref.UserRepository
@@ -37,15 +39,15 @@ interface ListViewModelOutputs {
 //endregion
 
 class ListViewModel(
-        private val prefRepository: UserRepository,
-        private val remoteConfigRepository: RemoteConfigRepository
+        private val seasonController: SeasonController,
+        private val upNextController: UpNextController
 ) : BaseViewModel(), ListViewModelInputs, ListViewModelOutputs {
 
-    var headerSectionFavourited: Boolean = prefRepository.showListFavourited
-    var headerSectionAll: Boolean = prefRepository.showListAll
+    var headerSectionFavourited: Boolean = seasonController.defaultFavouritesExpanded
+    var headerSectionAll: Boolean = seasonController.defaultAllExpanded
 
-    private var currentSeason: Int = remoteConfigRepository.defaultYear
-    private val favouriteSeasons = prefRepository.favouriteSeasons.toMutableSet()
+    private var currentSeason: Int = seasonController.defaultYear
+    private val favouriteSeasons = seasonController.favouriteSeasons.toMutableSet()
 
     override val list: MutableLiveData<List<ListItem>> = MutableLiveData()
     override val showSeasonEvent: MutableLiveData<DataEvent<Int>> = MutableLiveData()
@@ -71,10 +73,11 @@ class ListViewModel(
     override fun toggleFavourite(season: Int) {
         if (favouriteSeasons.contains(season)) {
             favouriteSeasons.remove(season)
+            seasonController.removeFavourite(season)
         } else {
             favouriteSeasons.add(season)
+            seasonController.addFavourite(season)
         }
-        prefRepository.favouriteSeasons = favouriteSeasons
         list.value = buildList(favouriteSeasons, headerSectionFavourited, headerSectionAll)
     }
 
@@ -102,7 +105,7 @@ class ListViewModel(
 
         val list: MutableList<ListItem> = mutableListOf(ListItem.Hero)
 
-        getNextRace()?.let {
+        upNextController.getNextRace()?.let {
             list.add(ListItem.UpNext(it))
         }
 
@@ -145,14 +148,5 @@ class ListViewModel(
         }
 
         return list
-    }
-
-    private fun getNextRace(): UpNextSchedule? {
-        return remoteConfigRepository
-            .upNext
-            .filter { schedule ->
-                return@filter schedule.date >= LocalDate.now()
-            }
-            .minByOrNull { it.date }
     }
 }

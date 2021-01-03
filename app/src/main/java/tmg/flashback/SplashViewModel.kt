@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import tmg.flashback.base.BaseViewModel
-import tmg.flashback.managers.AppShortcutManager
+import tmg.flashback.managers.appshortcuts.AppShortcutManager
 import tmg.flashback.repo.config.RemoteConfigRepository
 import tmg.flashback.repo.pref.DeviceRepository
 import tmg.utilities.lifecycle.Event

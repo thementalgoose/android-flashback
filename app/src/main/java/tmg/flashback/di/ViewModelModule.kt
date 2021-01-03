@@ -31,7 +31,7 @@ val viewModelModule = module {
     viewModel { CircuitInfoViewModel(get(), get()) }
 
     // Race
-    viewModel { RaceViewModel(get(), get(), get()) }
+    viewModel { RaceViewModel(get(), get(), get(), get(), get()) }
 
     // Driver
     viewModel { DriverViewModel(get(), get()) }
@@ -41,7 +41,7 @@ val viewModelModule = module {
     viewModel { ConstructorViewModel(get(), get()) }
 
     // Settings
-    viewModel { SettingsViewModel(get(), get(), get()) }
+    viewModel { SettingsViewModel(get(), get(), get(), get(), get(), get(), get()) }
     viewModel { LockoutViewModel(get(), get()) }
     viewModel { PrivacyPolicyViewModel() }
 }

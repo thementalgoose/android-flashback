@@ -1,4 +1,4 @@
-package tmg.flashback.di.device
+package tmg.flashback.managers.buildconfig
 
 import tmg.flashback.BuildConfig
 

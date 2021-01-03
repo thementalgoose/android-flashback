@@ -4,6 +4,10 @@ import tmg.flashback.repo.enums.AppHints
 import tmg.flashback.repo.enums.BarAnimation
 import tmg.flashback.repo.enums.ThemePref
 
+/**
+ * Storage variables that the user interacts with or manipulates through
+ *   the usage of the app
+ */
 interface UserRepository {
 
     /**
@@ -50,11 +54,6 @@ interface UserRepository {
      * App hints that have been shown in the app
      */
     var appHints: Set<AppHints>
-    fun markAppHintShown(appHint: AppHints) {
-        val existing: MutableSet<AppHints> = appHints.toMutableSet()
-        existing.add(appHint)
-        appHints = existing.toSet()
-    }
 
     /**
      * Default season to be shown in the app

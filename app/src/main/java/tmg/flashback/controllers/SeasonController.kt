@@ -1,4 +1,4 @@
-package tmg.flashback.managers
+package tmg.flashback.controllers
 
 import androidx.annotation.IntRange
 import tmg.flashback.currentYear
@@ -9,7 +9,7 @@ import tmg.flashback.repo.pref.UserRepository
 /**
  * All the preferences surrounding the season, list of all seasons
  */
-class SeasonPrefManager(
+class SeasonController(
         val userRepository: UserRepository,
         val remoteConfigRepository: RemoteConfigRepository
 ) {
@@ -49,11 +49,17 @@ class SeasonPrefManager(
 
     //region Showing favourites / all
 
-    val defaultFavouritesExpanded: Boolean
+    var defaultFavouritesExpanded: Boolean
         get() = userRepository.showListFavourited
+        set(value) {
+            userRepository.showListFavourited = value
+        }
 
-    val defaultAllExpanded: Boolean
+    var defaultAllExpanded: Boolean
         get() = userRepository.showListAll
+        set(value) {
+            userRepository.showListAll = value
+        }
 
     //endregion
 
@@ -67,6 +73,15 @@ class SeasonPrefManager(
 
     fun isFavourite(season: Int): Boolean {
         return favouriteSeasons.contains(season)
+    }
+
+    fun toggle(season: Int) {
+        val set = favouriteSeasons.toMutableSet()
+        when (set.contains(season)) {
+            true -> set.remove(season)
+            false -> set.add(season)
+        }
+        favouriteSeasons = set.toSet()
     }
 
     fun addFavourite(season: Int) {

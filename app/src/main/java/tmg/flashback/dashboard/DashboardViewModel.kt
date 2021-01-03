@@ -7,7 +7,8 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 import tmg.flashback.base.BaseViewModel
-import tmg.flashback.di.device.BuildConfigManager
+import tmg.flashback.controllers.ReleaseNotesController
+import tmg.flashback.managers.buildconfig.BuildConfigManager
 import tmg.flashback.repo.db.DataRepository
 import tmg.flashback.repo.pref.DeviceRepository
 import tmg.utilities.lifecycle.Event
@@ -31,9 +32,9 @@ interface DashboardViewModelOutputs {
 
 
 class DashboardViewModel(
-    private val dataRepository: DataRepository,
-    private val buildConfigManager: BuildConfigManager,
-    private val deviceRepository: DeviceRepository
+        private val dataRepository: DataRepository,
+        private val buildConfigManager: BuildConfigManager,
+        private val releaseNotesController: ReleaseNotesController
 ): BaseViewModel(), DashboardViewModelInputs, DashboardViewModelOutputs {
 
     override val openAppLockout: LiveData<Event> = dataRepository
@@ -54,7 +55,7 @@ class DashboardViewModel(
     var outputs: DashboardViewModelOutputs = this
 
     init {
-        if (deviceRepository.shouldShowReleaseNotes) {
+        if (releaseNotesController.showReleaseNotes) {
             openReleaseNotes.value = Event()
         }
     }

@@ -11,6 +11,8 @@ import org.threeten.bp.temporal.ChronoUnit
 import tmg.flashback.R
 import tmg.flashback.base.BaseViewModel
 import tmg.flashback.constructorChampionshipStarts
+import tmg.flashback.controllers.AppearanceController
+import tmg.flashback.controllers.DeviceController
 import tmg.flashback.currentYear
 import tmg.flashback.daysUntilDataProvidedBannerMovedToBottom
 import tmg.flashback.repo.NetworkConnectivityManager
@@ -62,11 +64,11 @@ interface SeasonViewModelOutputs {
 
 
 class SeasonViewModel(
-        private val deviceRepository: DeviceRepository,
+        private val deviceController: DeviceController,
+        private val appearanceController: AppearanceController,
         private val historyRepository: HistoryRepository,
         private val seasonOverviewRepository: SeasonOverviewRepository,
         private val remoteConfigRepository: RemoteConfigRepository,
-        private val userRepository: UserRepository,
         private val networkConnectivityManager: NetworkConnectivityManager
 ): BaseViewModel(), SeasonViewModelInputs, SeasonViewModelOutputs {
 
@@ -242,7 +244,7 @@ class SeasonViewModel(
      * Should show the "Data provided by" banner at the top or the bottom
      */
     private fun showBannerAtTop(): Boolean {
-        val daysBetween = ChronoUnit.DAYS.between(deviceRepository.appFirstBootTime, LocalDate.now())
+        val daysBetween = ChronoUnit.DAYS.between(deviceController.appFirstBoot, LocalDate.now())
         return daysBetween <= daysUntilDataProvidedBannerMovedToBottom
     }
 
@@ -286,7 +288,7 @@ class SeasonViewModel(
                     bestQualifying = rounds.bestQualifyingResultFor(roundDriver.id),
                     bestFinish = rounds.bestRaceResultFor(roundDriver.id),
                     maxPointsInSeason = this.maxDriverPointsInSeason(),
-                    barAnimation = userRepository.barAnimation
+                    barAnimation = appearanceController.barAnimation
                 )
             }
     }
@@ -307,7 +309,7 @@ class SeasonViewModel(
                     driver = driverPoints.values.sortedByDescending { it.second },
                     points = constructorPoints,
                     maxPointsInSeason = this.maxConstructorPointsInSeason(),
-                    barAnimation = userRepository.barAnimation
+                    barAnimation = appearanceController.barAnimation
                 )
             }
             .sortedByDescending { it.points }

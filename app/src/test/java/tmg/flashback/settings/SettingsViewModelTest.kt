@@ -8,11 +8,13 @@ import org.junit.jupiter.api.Test
 import tmg.components.prefs.AppPreferencesItem
 import tmg.flashback.BuildConfig
 import tmg.flashback.R
+import tmg.flashback.controllers.*
 import tmg.flashback.extensions.icon
 import tmg.flashback.extensions.label
 import tmg.flashback.notifications.FirebasePushNotificationManager.Companion.topicQualifying
 import tmg.flashback.notifications.FirebasePushNotificationManager.Companion.topicRace
 import tmg.flashback.repo.config.RemoteConfigRepository
+import tmg.flashback.repo.db.CrashManager
 import tmg.flashback.repo.pref.UserRepository
 import tmg.flashback.repo.enums.BarAnimation.*
 import tmg.flashback.repo.enums.ThemePref.*
@@ -29,31 +31,43 @@ internal class SettingsViewModelTest: BaseTest() {
 
     lateinit var sut: SettingsViewModel
 
-    private val mockPrefsCustomisation: UserRepository = mockk(relaxed = true)
-    private val mockPrefsDevice: DeviceRepository = mockk(relaxed = true)
-    private val mockRemoteConfigRepository: RemoteConfigRepository = mockk(relaxed = true)
+    private val notificationController: NotificationController = mockk(relaxed = true)
+    private val appearanceController: AppearanceController = mockk(relaxed = true)
+    private val deviceController: DeviceController = mockk(relaxed = true)
+    private val raceController: RaceController = mockk(relaxed = true)
+    private val crashManager: CrashManager = mockk(relaxed = true)
+    private val seasonController: SeasonController = mockk(relaxed = true)
+    private val featureController: FeatureController = mockk(relaxed = true)
 
     @BeforeEach
     internal fun setUp() {
 
-        every { mockPrefsCustomisation.showQualifyingDelta } returns false
-        every { mockPrefsCustomisation.showGridPenaltiesInQualifying } returns false
-        every { mockPrefsCustomisation.fadeDNF } returns false
-        every { mockPrefsCustomisation.showListFavourited } returns false
-        every { mockPrefsCustomisation.showListAll } returns false
-        every { mockPrefsDevice.crashReporting } returns false
-        every { mockPrefsDevice.shakeToReport } returns false
-        every { mockPrefsDevice.isNotificationChannelsSupported } returns true
+        every { raceController.showQualifyingDelta } returns false
+        every { raceController.showGridPenaltiesInQualifying } returns false
+        every { raceController.fadeDNF } returns false
+        every { seasonController.defaultFavouritesExpanded } returns false
+        every { seasonController.defaultAllExpanded } returns false
+        every { crashManager.enableCrashReporting } returns false
+        every { deviceController.shakeToReport } returns false
+        every { notificationController.isNotificationChannelsSupported } returns true
 
-        every { mockPrefsCustomisation.theme } returns AUTO
-        every { mockPrefsCustomisation.barAnimation } returns MEDIUM
+        every { appearanceController.currentTheme } returns AUTO
+        every { appearanceController.barAnimation } returns MEDIUM
 
-        every { mockRemoteConfigRepository.rss } returns true
+        every { featureController.rssEnabled } returns true
     }
 
     private fun initSUT() {
 
-        sut = SettingsViewModel(mockPrefsCustomisation, mockPrefsDevice, mockRemoteConfigRepository)
+        sut = SettingsViewModel(
+                notificationController,
+                appearanceController,
+                deviceController,
+                raceController,
+                crashManager,
+                seasonController,
+                featureController
+        )
     }
 
     /**
@@ -107,7 +121,7 @@ internal class SettingsViewModelTest: BaseTest() {
     @Test
     fun `SettingsViewModel setup with notification channels not supported doesnt show individual options`() {
 
-        every { mockPrefsDevice.isNotificationChannelsSupported } returns false
+        every { notificationController.isNotificationChannelsSupported } returns false
 
         initSUT()
 
@@ -119,7 +133,7 @@ internal class SettingsViewModelTest: BaseTest() {
     @Test
     fun `SettingsViewModel setup populates settings list with toggle disabled hides the news`() {
 
-        every { mockRemoteConfigRepository.rss} returns false
+        every { featureController.rssEnabled } returns false
 
         initSUT()
 
@@ -177,7 +191,7 @@ internal class SettingsViewModelTest: BaseTest() {
 
         sut.pickTheme(NIGHT)
 
-        verify { mockPrefsCustomisation.theme = NIGHT }
+        verify { appearanceController.currentTheme = NIGHT }
 
         sut.outputs.themeChanged.test {
             assertEventFired()
@@ -190,7 +204,7 @@ internal class SettingsViewModelTest: BaseTest() {
         initSUT()
 
         sut.pickAnimationSpeed(SLOW)
-        verify { mockPrefsCustomisation.barAnimation = SLOW }
+        verify { appearanceController.barAnimation = SLOW }
 
         sut.outputs.animationChanged.test {
             assertEventFired()
@@ -228,7 +242,7 @@ internal class SettingsViewModelTest: BaseTest() {
 
         sut.inputs.preferenceClicked(QUALIFYING_DELTAS, true)
 
-        verify { mockPrefsCustomisation.showQualifyingDelta = true }
+        verify { raceController.showQualifyingDelta = true }
     }
 
     @Test
@@ -238,7 +252,7 @@ internal class SettingsViewModelTest: BaseTest() {
 
         sut.inputs.preferenceClicked(FADE_OUT_DNF, true)
 
-        verify { mockPrefsCustomisation.fadeDNF = true }
+        verify { raceController.fadeDNF = true }
     }
 
     @Test
@@ -248,7 +262,7 @@ internal class SettingsViewModelTest: BaseTest() {
 
         sut.inputs.preferenceClicked(QUALIFYING_GRID_PENALTY, true)
 
-        verify { mockPrefsCustomisation.showGridPenaltiesInQualifying = true }
+        verify { raceController.showGridPenaltiesInQualifying = true }
     }
 
     @Test
@@ -258,7 +272,7 @@ internal class SettingsViewModelTest: BaseTest() {
 
         sut.inputs.preferenceClicked(SEASON_BOTTOM_SHEET_FAVOURITED, true)
 
-        verify { mockPrefsCustomisation.showListFavourited = true }
+        verify { seasonController.defaultFavouritesExpanded = true }
     }
 
     @Test
@@ -268,7 +282,7 @@ internal class SettingsViewModelTest: BaseTest() {
 
         sut.inputs.preferenceClicked(SEASON_BOTTOM_SHEET_ALL, true)
 
-        verify { mockPrefsCustomisation.showListAll = true }
+        verify { seasonController.defaultAllExpanded = true }
     }
 
     @Test
@@ -314,7 +328,7 @@ internal class SettingsViewModelTest: BaseTest() {
 
         sut.inputs.preferenceClicked(CRASH, true)
 
-        verify { mockPrefsDevice.crashReporting = true }
+        verify { crashManager.enableCrashReporting = true }
     }
 
     @Test
@@ -336,7 +350,7 @@ internal class SettingsViewModelTest: BaseTest() {
 
         sut.inputs.preferenceClicked(SHAKE, true)
 
-        verify { mockPrefsDevice.shakeToReport = true }
+        verify { deviceController.shakeToReport = true }
     }
 
     @Test

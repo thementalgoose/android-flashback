@@ -1,4 +1,4 @@
-package tmg.flashback.di.device
+package tmg.flashback.managers.buildconfig
 
 interface BuildConfigManager {
 

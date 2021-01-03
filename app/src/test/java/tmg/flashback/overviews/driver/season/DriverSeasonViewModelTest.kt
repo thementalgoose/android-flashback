@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.flow
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.R
+import tmg.flashback.controllers.AppearanceController
 import tmg.flashback.overviews.*
 import tmg.flashback.overviews.driver.summary.PipeType.*
 import tmg.flashback.repo.NetworkConnectivityManager
@@ -24,20 +25,20 @@ internal class DriverSeasonViewModelTest: BaseTest() {
 
     private var mockDriverRepository: DriverRepository = mockk(relaxed = true)
     private var mockConnectivityManager: NetworkConnectivityManager = mockk(relaxed = true)
-    private var mockPrefsRepository: UserRepository = mockk(relaxed = true)
+    private var mockAppearanceController: AppearanceController = mockk(relaxed = true)
 
     @BeforeEach
     internal fun setUp() {
 
         every { mockConnectivityManager.isConnected } returns true
-        every { mockPrefsRepository.barAnimation } returns BarAnimation.NONE
+        every { mockAppearanceController.barAnimation } returns BarAnimation.NONE
     }
 
     private fun initSUT() {
         sut = DriverSeasonViewModel(
                 mockDriverRepository,
                 mockConnectivityManager,
-                mockPrefsRepository
+                mockAppearanceController
         )
         sut.inputs.setup(mockDriverId, 2019)
     }

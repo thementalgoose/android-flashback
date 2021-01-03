@@ -1,10 +1,11 @@
-package tmg.flashback.prefs
+package tmg.flashback.managers.sharedprefs
 
 import android.content.Context
 import android.os.Build
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.BuildConfig
+import tmg.flashback.constants.Defaults
 import tmg.flashback.releaseNotes
 import tmg.flashback.repo.enums.AppHints
 import tmg.flashback.repo.pref.UserRepository
@@ -12,20 +13,14 @@ import tmg.flashback.repo.enums.BarAnimation
 import tmg.flashback.repo.enums.NotificationRegistration
 import tmg.flashback.repo.enums.ThemePref
 import tmg.flashback.repo.pref.DeviceRepository
-import tmg.flashback.repo.pref.NotificationRepository
 import tmg.flashback.rss.prefs.RSSPrefsRepository
 import tmg.utilities.extensions.toEnum
 import tmg.utilities.prefs.SharedPrefManager
 import java.util.*
 
-private const val defaultShowQualifying: Boolean = false
-private const val defaultShakeToReport: Boolean = true
-private const val defaultCrashReporting: Boolean = true
-
-class SharedPrefsRepository(context: Context) : SharedPrefManager(context),
+class SharedPreferenceManager(context: Context) : SharedPrefManager(context),
         UserRepository,
         DeviceRepository,
-        NotificationRepository,
         RSSPrefsRepository {
 
     override val prefsKey: String = "Flashback"
@@ -64,38 +59,28 @@ class SharedPrefsRepository(context: Context) : SharedPrefManager(context),
     //region Customise
 
     override var showQualifyingDelta: Boolean
-        get() = getBoolean(keyShowQualifyingDelta, defaultShowQualifying)
+        get() = getBoolean(keyShowQualifyingDelta, Defaults.showQualifyingDelta)
         set(value) = save(keyShowQualifyingDelta, value)
 
     override var fadeDNF: Boolean
-        get() = getBoolean(keyFadeDNF, true)
+        get() = getBoolean(keyFadeDNF, Defaults.fadeDNF)
         set(value) = save(keyFadeDNF, value)
 
     override var showListFavourited: Boolean
-        get() = getBoolean(keyBottomSheetFavourited, true)
+        get() = getBoolean(keyBottomSheetFavourited, Defaults.showListFavourited)
         set(value) = save(keyBottomSheetFavourited, value)
 
     override var showListAll: Boolean
-        get() = getBoolean(keyBottomSheetAll, true)
+        get() = getBoolean(keyBottomSheetAll, Defaults.showListAll)
         set(value) = save(keyBottomSheetAll, value)
 
     override var barAnimation: BarAnimation
-        get() = getString(keyBarAnimation)?.toEnum<BarAnimation> { it.key } ?: BarAnimation.MEDIUM
+        get() = getString(keyBarAnimation)?.toEnum<BarAnimation> { it.key } ?: Defaults.barAnimation
         set(value) = save(keyBarAnimation, value.key)
 
     override var showGridPenaltiesInQualifying: Boolean
-        get() = getBoolean(keyShowGridPenaltiesInQualifying, true)
+        get() = getBoolean(keyShowGridPenaltiesInQualifying, Defaults.showGridPenaltiesInQualifying)
         set(value) = save(keyShowGridPenaltiesInQualifying, value)
-
-    override val shouldShowReleaseNotes: Boolean
-        get() {
-            return if (lastAppVersion == 0) {
-                lastAppVersion = BuildConfig.VERSION_CODE
-                false
-            } else {
-                BuildConfig.VERSION_CODE > lastAppVersion && releaseNotes.keys.count { it > lastAppVersion } > 0
-            }
-        }
 
     override var favouriteSeasons: Set<Int>
         set(value) = save(keyFavouriteSeasons, value.map { it.toString() }.toSet())
@@ -107,7 +92,7 @@ class SharedPrefsRepository(context: Context) : SharedPrefManager(context),
         }
 
     override var theme: ThemePref
-        get() = getString(keyTheme)?.toEnum<ThemePref> { it.key } ?: ThemePref.AUTO
+        get() = getString(keyTheme)?.toEnum<ThemePref> { it.key } ?: Defaults.theme
         set(value) = save(keyTheme, value.key)
 
     override var appHints: Set<AppHints>
@@ -152,11 +137,11 @@ class SharedPrefsRepository(context: Context) : SharedPrefManager(context),
         }
 
     override var crashReporting: Boolean
-        get() = getBoolean(keyCrashReporting, defaultShakeToReport)
+        get() = getBoolean(keyCrashReporting, Defaults.crashReporting)
         set(value) = save(keyCrashReporting, value)
 
     override var shakeToReport: Boolean
-        get() = getBoolean(keyShakeToReport, defaultCrashReporting)
+        get() = getBoolean(keyShakeToReport, Defaults.shakeToReport)
         set(value) = save(keyShakeToReport, value)
 
     override var lastAppVersion: Int
@@ -182,9 +167,6 @@ class SharedPrefsRepository(context: Context) : SharedPrefManager(context),
     override var remoteConfigInitialSync: Boolean
         get() = getBoolean(keyRemoteConfigInitialSync, false)
         set(value) = save(keyRemoteConfigInitialSync, value)
-
-    override val isNotificationChannelsSupported: Boolean
-        get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
 
     //endregion
 

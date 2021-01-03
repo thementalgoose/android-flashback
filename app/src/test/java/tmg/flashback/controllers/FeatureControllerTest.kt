@@ -1,22 +1,22 @@
-package tmg.flashback.managers
+package tmg.flashback.controllers
 
-import com.google.android.gms.common.Feature
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
+import tmg.flashback.controllers.FeatureController
 import tmg.flashback.repo.config.RemoteConfigRepository
 import tmg.flashback.testutils.BaseTest
 
-internal class FeatureManagerTest: BaseTest() {
+internal class FeatureControllerTest: BaseTest() {
 
     private var mockRemoteConfigRepository: RemoteConfigRepository = mockk(relaxed = true)
 
-    private lateinit var sut: FeatureManager
+    private lateinit var sut: FeatureController
 
     private fun initSUT() {
-        sut = FeatureManager(mockRemoteConfigRepository)
+        sut = FeatureController(mockRemoteConfigRepository)
     }
 
     //region RSS

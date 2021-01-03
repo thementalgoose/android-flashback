@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import tmg.flashback.R
 import tmg.flashback.base.BaseViewModel
+import tmg.flashback.controllers.AppearanceController
 import tmg.flashback.overviews.driver.summary.PipeType
 import tmg.flashback.maxPointsBySeason
 import tmg.flashback.repo.NetworkConnectivityManager
@@ -47,7 +48,7 @@ interface DriverSeasonViewModelOutputs {
 class DriverSeasonViewModel(
         private val driverRepository: DriverRepository,
         private val connectivityManager: NetworkConnectivityManager,
-        private val prefsRepository: UserRepository
+        private val appearanceController: AppearanceController
 ) : BaseViewModel(),
         DriverSeasonViewModelInputs,
         DriverSeasonViewModelOutputs {
@@ -155,7 +156,7 @@ class DriverSeasonViewModel(
                                 raceStatus = it.status,
                                 points = it.points,
                                 maxPoints = maxPointsBySeason(it.season),
-                                barAnimation = prefsRepository.barAnimation
+                                barAnimation = appearanceController.barAnimation
                             )
                         }
                         .sortedBy { it.round }

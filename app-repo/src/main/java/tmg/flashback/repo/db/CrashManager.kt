@@ -4,7 +4,7 @@ import java.lang.Exception
 
 interface CrashManager {
 
-    val enableCrashlytics: Boolean
+    var enableCrashReporting: Boolean
 
     fun initialise(appOpenedCount: Int? = null, appFirstOpened: String? = null)
     fun log(msg: String)

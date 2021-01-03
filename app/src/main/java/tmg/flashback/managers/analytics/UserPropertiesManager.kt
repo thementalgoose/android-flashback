@@ -1,6 +1,6 @@
-package tmg.flashback.analytics
+package tmg.flashback.managers.analytics
 
-interface AnalyticsUserProperties {
+interface UserPropertiesManager {
 
     fun setOsVersion(osVersion: String)
     fun setDeviceModel(model: String)
