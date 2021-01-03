@@ -8,6 +8,7 @@ import tmg.flashback.bottomSheetFastScrollDuration
 import tmg.flashback.dashboard.list.HeaderType
 import tmg.flashback.dashboard.list.ListItem
 import tmg.flashback.extensions.dimensionPx
+import tmg.utilities.extensions.views.getString
 import tmg.utilities.extensions.views.show
 
 class HeaderViewHolder(
@@ -31,9 +32,11 @@ class HeaderViewHolder(
         itemView.arrow.show(header.expanded != null)
         when (header.expanded) {
             true -> {
+                itemView.header.contentDescription = getString(R.string.ab_season_list_header_toggle_expanded, getString(header.type.label))
                 itemView.arrow.setImageResource(R.drawable.arrow_down)
             }
             false -> {
+                itemView.header.contentDescription = getString(R.string.ab_season_list_header_toggle_collapsed, getString(header.type.label))
                 itemView.arrow.setImageResource(R.drawable.arrow_up)
             }
         }

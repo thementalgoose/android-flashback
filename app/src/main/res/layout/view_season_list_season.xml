@@ -45,7 +45,7 @@
         tools:text="2019" />
 
     <ImageButton
-        android:id="@+id/favourite"
+        android:id="@+id/more"
         android:layout_width="@dimen/bottomSheetIconSize"
         android:layout_height="@dimen/bottomSheetIconSize"
         android:layout_marginEnd="@dimen/paddingNSmall"
@@ -57,6 +57,23 @@
         android:scaleType="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/ic_star_filled" />
+
+    <ImageButton
+
+        android:id="@+id/favourite"
+        android:layout_width="@dimen/bottomSheetIconSize"
+        android:layout_height="@dimen/bottomSheetIconSize"
+        android:layout_marginEnd="@dimen/paddingNSmall"
+        android:background="@drawable/ripple_rounded"
+        android:paddingStart="@dimen/paddingSmall"
+        android:paddingTop="@dimen/paddingSmall"
+        android:paddingEnd="@dimen/paddingSmall"
+        android:paddingBottom="@dimen/paddingSmall"
+        android:scaleType="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/more"
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@drawable/ic_star_filled" />
 
@@ -77,9 +94,9 @@
         android:layout_width="@dimen/seasonListCircleSelectedSize"
         android:layout_height="@dimen/seasonListCircleSelectedSize"
         android:elevation="0dp"
-        app:layout_constraintTop_toTopOf="@id/cardview"
         app:layout_constraintBottom_toBottomOf="@id/cardview"
+        app:layout_constraintEnd_toEndOf="@id/cardview"
         app:layout_constraintStart_toStartOf="@id/cardview"
-        app:layout_constraintEnd_toEndOf="@id/cardview" />
+        app:layout_constraintTop_toTopOf="@id/cardview" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -30,6 +30,7 @@
         android:layout_width="@dimen/bottomSheetIconSize"
         android:layout_height="@dimen/bottomSheetIconSize"
         android:layout_marginEnd="@dimen/paddingNSmall"
+        android:importantForAccessibility="no"
         android:paddingStart="@dimen/paddingSmall"
         android:paddingTop="@dimen/paddingSmall"
         android:paddingEnd="@dimen/paddingSmall"
