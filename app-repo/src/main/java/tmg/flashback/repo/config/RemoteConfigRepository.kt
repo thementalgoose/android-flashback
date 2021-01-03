@@ -4,9 +4,6 @@ import tmg.flashback.repo.models.remoteconfig.UpNextSchedule
 
 interface RemoteConfigRepository {
 
-    suspend fun update(andActivate: Boolean = false): Boolean
-    suspend fun activate(): Boolean
-
     /**
      * What year we should default too when opening the app
      */
