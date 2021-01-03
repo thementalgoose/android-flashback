@@ -11,10 +11,7 @@ import tmg.flashback.dashboard.list.ListItem
 import tmg.flashback.extensions.dimensionPx
 import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.getColor
-import tmg.utilities.extensions.views.context
-import tmg.utilities.extensions.views.invisible
-import tmg.utilities.extensions.views.show
-import tmg.utilities.extensions.views.visible
+import tmg.utilities.extensions.views.*
 
 class SeasonViewHolder(
     private var favouriteToggled: ((season: Int) -> Unit)? = null,
@@ -50,9 +47,18 @@ class SeasonViewHolder(
             }
         }
 
-        itemView.favourite.setImageResource(if (season.isFavourited) R.drawable.ic_star_filled_coloured else R.drawable.ic_star_outline)
-        itemView.cardview.setCircleColour(colour)
+        if (season.isFavourited) {
+            itemView.favourite.setImageResource(R.drawable.ic_star_filled_coloured)
+            itemView.favourite.contentDescription = getString(R.string.ab_season_list_unfavourite, season.season)
+        }
+        else {
+            itemView.favourite.setImageResource(R.drawable.ic_star_outline)
+            itemView.favourite.contentDescription = getString(R.string.ab_season_list_favourite, season.season)
+        }
 
+        itemView.more.contentDescription = getString(R.string.ab_season_list_more, season.season)
+
+        itemView.cardview.setCircleColour(colour)
         itemView.pipeTop.setBackgroundColor(colour)
         itemView.pipeBottom.setBackgroundColor(colour)
         itemView.pipeTop.show(!currentSeason.toString().endsWith('9') && currentSeason != currentYear && season.fixed == HeaderType.ALL)
