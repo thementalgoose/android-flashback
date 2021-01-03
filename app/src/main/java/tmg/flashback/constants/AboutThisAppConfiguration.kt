@@ -56,6 +56,13 @@ val dependencies = listOf(
                 imageUrl = "https://avatars1.githubusercontent.com/u/38280958"
         ),
         AboutThisAppDependency(
+                order = 3,
+                dependencyName = "Slidr",
+                author = "Drew Heavner",
+                url = "https://github.com/r0adkll/Slidr",
+                imageUrl = "https://avatars1.githubusercontent.com/u/1237372"
+        ),
+        AboutThisAppDependency(
                 order = 4,
                 dependencyName = "FlagKit",
                 author = "WANG Jie",
@@ -103,12 +110,5 @@ val dependencies = listOf(
                 author = "Jordan Fisher",
                 url = "https://github.com/thementalgoose/android-utilities",
                 imageUrl = "https://avatars1.githubusercontent.com/u/5982159"
-        ),
-        AboutThisAppDependency(
-                order = 12,
-                dependencyName = "IndicatorFastScroll",
-                author = "Reddit",
-                url = "https://github.com/reddit/IndicatorFastScroll",
-                imageUrl = "https://avatars3.githubusercontent.com/u/14248"
         )
 )
