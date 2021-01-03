@@ -1,4 +1,4 @@
-package tmg.flashback.managers
+package tmg.flashback.controllers
 
 import tmg.flashback.repo.enums.AppHints
 import tmg.flashback.repo.pref.UserRepository
@@ -6,7 +6,7 @@ import tmg.flashback.repo.pref.UserRepository
 /**
  * Manager to handle app hints around the app
  */
-class AppHintsManager(
+class AppHintsController(
         val userRepository: UserRepository
 ) {
     /**

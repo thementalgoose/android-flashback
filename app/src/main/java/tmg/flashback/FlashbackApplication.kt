@@ -11,13 +11,14 @@ import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
-import tmg.flashback.analytics.AnalyticsUserProperties
+import tmg.flashback.controllers.DeviceController
+import tmg.flashback.controllers.NotificationController
+import tmg.flashback.managers.analytics.UserPropertiesManager
 import tmg.flashback.di.*
 import tmg.flashback.notifications.PushNotificationManager
 import tmg.flashback.repo.config.RemoteConfigRepository
 import tmg.flashback.repo.db.CrashManager
 import tmg.flashback.repo.pref.DeviceRepository
-import tmg.flashback.repo.pref.NotificationRepository
 
 val releaseNotes: Map<Int, Int> = mapOf(
     40 to R.string.release_40,
@@ -53,12 +54,12 @@ val releaseNotes: Map<Int, Int> = mapOf(
 
 class FlashbackApplication: Application() {
 
-    private val prefsDevice: DeviceRepository by inject()
-    private val prefsNotification: NotificationRepository by inject()
+    private val deviceController: DeviceController by inject()
+    private val prefsNotification: NotificationController by inject()
 
     private val configRepository: RemoteConfigRepository by inject()
     private val crashManager: CrashManager by inject()
-    private val analyticsUserProperties: AnalyticsUserProperties by inject()
+    private val analyticsUserProperties: UserPropertiesManager by inject()
 
     private val notificationManager: PushNotificationManager by inject()
 
@@ -86,7 +87,7 @@ class FlashbackApplication: Application() {
         AndroidThreeTen.init(this)
 
         // Shake to report a bug
-        if (prefsDevice.shakeToReport) {
+        if (deviceController.shakeToReport) {
             BugShaker.get(this)
                 .setEmailAddresses("thementalgoose@gmail.com")
                 .setEmailSubjectLine("${getString(R.string.app_name)} - App Feedback")
@@ -97,17 +98,18 @@ class FlashbackApplication: Application() {
         }
 
         // App bootup stats
-        prefsDevice.appFirstBootTime
-        prefsDevice.appOpenedCount = prefsDevice.appOpenedCount + 1
+
+        deviceController.appFirstBoot
+        deviceController.appOpened()
         if (BuildConfig.DEBUG) {
-            Log.i("Flashback", "First boot time ${prefsDevice.appFirstBootTime}")
-            Log.i("Flashback", "App open count ${prefsDevice.appOpenedCount}")
+            Log.i("Flashback", "First boot time ${deviceController.appFirstBoot}")
+            Log.i("Flashback", "App open count ${deviceController.appOpenedCount}")
         }
 
         // Crash Reporting
         crashManager.initialise(
-            appFirstOpened = prefsDevice.appFirstBootTime.toString(),
-            appOpenedCount = prefsDevice.appOpenedCount
+            appFirstOpened = deviceController.appFirstBoot.toString(),
+            appOpenedCount = deviceController.appOpenedCount
         )
 
         // Remote config
@@ -120,7 +122,7 @@ class FlashbackApplication: Application() {
         notificationManager.createChannels()
 
         // Enrol for race push notifications
-        if (prefsNotification.notificationsRace == null) {
+        if (prefsNotification.raceOptInUndecided) {
             GlobalScope.launch {
                 val result = notificationManager.raceSubscribe()
                 Log.i("Flashback", "Auto enrol push notifications race - $result")
@@ -128,7 +130,7 @@ class FlashbackApplication: Application() {
         }
 
         // Enrol for qualifying push notifications
-        if (prefsNotification.notificationsQualifying == null) {
+        if (prefsNotification.qualifyingOptInUndecided) {
             GlobalScope.launch {
                 val result = notificationManager.qualifyingSubscribe()
                 Log.i("Flashback", "Auto enrol push notifications qualifying - $result")
@@ -136,7 +138,7 @@ class FlashbackApplication: Application() {
         }
 
         // Enrol for qualifying push notifications
-        if (prefsNotification.notificationsMisc == null) {
+        if (prefsNotification.miscOptInUndecided) {
             GlobalScope.launch {
                 val result = notificationManager.appSupportSubscribe()
                 Log.i("Flashback", "Auto enrol push notifications misc - $result")

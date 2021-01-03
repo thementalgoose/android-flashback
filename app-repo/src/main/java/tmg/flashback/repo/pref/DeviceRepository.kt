@@ -1,18 +1,20 @@
 package tmg.flashback.repo.pref
 
 import org.threeten.bp.LocalDate
+import tmg.flashback.repo.enums.NotificationRegistration
 
+/**
+ * Storage variables that the user does not manipulate or
+ *   interact with.
+ *
+ * These are tracking variables / automatically set / used under the hood
+ */
 interface DeviceRepository {
 
     /**
      * Last booted version
      */
     var lastAppVersion: Int
-
-    /**
-     * Are we starting the app up in a new version
-     */
-    val shouldShowReleaseNotes: Boolean
 
     /**
      * Automatic crash reporting functionality
@@ -46,8 +48,25 @@ interface DeviceRepository {
      */
     var appOpenedCount: Int
 
+    //region Notifications
+
     /**
-     * Determine if notifications are supported on this device
+     * Race Notification preference
+     *   null = hasn't been set
      */
-    val isNotificationChannelsSupported: Boolean
+    var notificationsRace: NotificationRegistration?
+
+    /**
+     * Qualifying Notification preference
+     *   null = hasn't been set
+     */
+    var notificationsQualifying: NotificationRegistration?
+
+    /**
+     * Miscellaneous Notification preference
+     *   null = hasn't been set
+     */
+    var notificationsMisc: NotificationRegistration?
+
+    //endregion
 }

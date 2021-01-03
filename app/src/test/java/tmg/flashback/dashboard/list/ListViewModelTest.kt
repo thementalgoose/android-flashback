@@ -8,6 +8,9 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
 import org.threeten.bp.Year
+import tmg.flashback.controllers.SeasonController
+import tmg.flashback.controllers.UpNextController
+import tmg.flashback.mockSeason
 import tmg.flashback.repo.config.RemoteConfigRepository
 import tmg.flashback.repo.models.remoteconfig.UpNextSchedule
 import tmg.flashback.repo.pref.UserRepository
@@ -23,22 +26,22 @@ internal class ListViewModelTest: BaseTest() {
     private var currentYear: Int = Year.now().value
     private var minYear: Int = 1950
 
-    private val mockUserRepository: UserRepository = mockk(relaxed = true)
-    private val mockRemoteConfigRepository: RemoteConfigRepository = mockk(relaxed = true)
+    private val mockSeasonController: SeasonController = mockk(relaxed = true)
+    private val mockUpNextController: UpNextController = mockk(relaxed = true)
 
     @BeforeEach
     internal fun setUp() {
 
-        every { mockUserRepository.favouriteSeasons } returns setOf()
-        every { mockUserRepository.showListFavourited } returns true
-        every { mockUserRepository.showListAll } returns true
+        every { mockSeasonController.favouriteSeasons } returns setOf()
+        every { mockSeasonController.defaultFavouritesExpanded } returns true
+        every { mockSeasonController.defaultAllExpanded } returns true
 
-        every { mockRemoteConfigRepository.upNext } returns emptyList()
-        every { mockRemoteConfigRepository.defaultYear } returns 2018
+        every { mockSeasonController.defaultYear } returns 2018
+        every { mockUpNextController.getNextRace() } returns null
     }
 
     private fun initSUT() {
-        sut = ListViewModel(mockUserRepository, mockRemoteConfigRepository)
+        sut = ListViewModel(mockSeasonController, mockUpNextController)
     }
 
     //region Default
@@ -74,22 +77,9 @@ internal class ListViewModelTest: BaseTest() {
     //region Up Next section
 
     @Test
-    fun `SeasonViewModel up next section not shown when empty list returned from remote config`() {
+    fun `SeasonViewModel up next section not shown item is null`() {
 
-        every { mockRemoteConfigRepository.upNext } returns emptyList()
-
-        initSUT()
-
-        sut.outputs.list.test {
-            assertListDoesNotMatchItem { it is ListItem.UpNext }
-        }
-    }
-
-    @Test
-    fun `SeasonViewModel up next section not shown when only up next item is in the past`() {
-
-        val upNextList = listOf(mockUpNextYesterday)
-        every { mockRemoteConfigRepository.upNext } returns upNextList
+        every { mockUpNextController.getNextRace() } returns null
 
         initSUT()
 
@@ -99,28 +89,15 @@ internal class ListViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `SeasonViewModel up next section shown when theres an item in the future`() {
+    fun `SeasonViewModel up next section shown when valid next race item found`() {
 
-        val upNextList = listOf(mockUpNextTomorrow)
-        every { mockRemoteConfigRepository.upNext } returns upNextList
-
-        initSUT()
-
-        sut.outputs.list.test {
-            assertListContainsItem(ListItem.UpNext(mockUpNextTomorrow))
-        }
-    }
-
-    @Test
-    fun `SeasonViewModel up next section shows the correct up next item`() {
-
-        val upNextList = listOf(mockUpNextYesterday, mockUpNextToday, mockUpNextTomorrow)
-        every { mockRemoteConfigRepository.upNext } returns upNextList
+        val expected = UpNextSchedule(1,2,"test", LocalDate.now(),null,null,null,null)
+        every { mockUpNextController.getNextRace() } returns expected
 
         initSUT()
 
         sut.outputs.list.test {
-            assertListContainsItem(ListItem.UpNext(mockUpNextToday))
+            assertListMatchesItem { it is ListItem.UpNext }
         }
     }
 
@@ -129,8 +106,8 @@ internal class ListViewModelTest: BaseTest() {
     @Test
     fun `SeasonViewModel header section favourited and all are false when prefs are false on initial load`() {
 
-        every { mockUserRepository.showListFavourited } returns false
-        every { mockUserRepository.showListAll } returns false
+        every { mockSeasonController.defaultFavouritesExpanded } returns false
+        every { mockSeasonController.defaultAllExpanded } returns false
 
         initSUT()
 
@@ -141,8 +118,8 @@ internal class ListViewModelTest: BaseTest() {
     @Test
     fun `SeasonViewModel header section favourited and all are true when prefs are true on initial load`() {
 
-        every { mockUserRepository.showListFavourited } returns true
-        every { mockUserRepository.showListAll } returns true
+        every { mockSeasonController.defaultFavouritesExpanded } returns true
+        every { mockSeasonController.defaultAllExpanded } returns true
 
         initSUT()
 
@@ -169,7 +146,7 @@ internal class ListViewModelTest: BaseTest() {
         val favourites = setOf(2017, 2012, 20150)
         val expected = expectedList(favourites)
 
-        every { mockUserRepository.favouriteSeasons } returns favourites
+        every { mockSeasonController.favouriteSeasons } returns favourites
 
         initSUT()
 
@@ -184,9 +161,9 @@ internal class ListViewModelTest: BaseTest() {
         val favourites: Set<Int> = setOf(2012, 2018, 2014)
         val expected = expectedList(favourites, showFavourites = false, showAll = false)
 
-        every { mockUserRepository.favouriteSeasons } returns favourites
-        every { mockUserRepository.showListFavourited } returns false
-        every { mockUserRepository.showListAll } returns false
+        every { mockSeasonController.favouriteSeasons } returns favourites
+        every { mockSeasonController.defaultFavouritesExpanded } returns false
+        every { mockSeasonController.defaultAllExpanded } returns false
 
         initSUT()
 
@@ -200,7 +177,7 @@ internal class ListViewModelTest: BaseTest() {
 
         val favourites = setOf(2017, 2012, 2010)
 
-        every { mockUserRepository.favouriteSeasons } returns favourites
+        every { mockSeasonController.favouriteSeasons } returns favourites
 
         initSUT()
 
@@ -228,26 +205,30 @@ internal class ListViewModelTest: BaseTest() {
 
         val favourites = mutableSetOf(2020, 2018)
 
-        every { mockUserRepository.favouriteSeasons } returns favourites
+        every { mockSeasonController.favouriteSeasons } returns favourites
 
         initSUT()
 
         sut.toggleFavourite(2020)
 
-        verify { mockUserRepository.favouriteSeasons = setOf(2018) }
+        verify {
+            mockSeasonController.removeFavourite(2020)
+        }
     }
 
     @Test
     fun `SeasonViewModel toggling a favourite season that does not exists adds it from favourites shared prefs`() {
 
         val favourites = mutableSetOf(2020, 2018)
-        every { mockUserRepository.favouriteSeasons } returns favourites
+        every { mockSeasonController.favouriteSeasons } returns favourites
 
         initSUT()
 
         sut.toggleFavourite(2019)
 
-        verify { mockUserRepository.favouriteSeasons = setOf(2020, 2018, 2019) }
+        verify {
+            mockSeasonController.addFavourite(2019)
+        }
     }
 
     @Test
@@ -255,7 +236,7 @@ internal class ListViewModelTest: BaseTest() {
 
         val favourites = setOf(2017, 2012, 2010)
 
-        every { mockUserRepository.favouriteSeasons } returns favourites
+        every { mockSeasonController.favouriteSeasons } returns favourites
 
         initSUT()
 
@@ -319,14 +300,6 @@ internal class ListViewModelTest: BaseTest() {
         val year = minYear + it
         ListItem.Season(year, favouriteItems.contains(year), HeaderType.ALL, year == 2018)
     }.reversed()
-
-    //endregion
-
-    //region Mock Data - Up Next
-
-    private val mockUpNextYesterday = UpNextSchedule(1, 1, "Test", LocalDate.now().minusDays(1), null, null, null, null)
-    private val mockUpNextToday = UpNextSchedule(1, 2, "Second", LocalDate.now(), null, null, null, null)
-    private val mockUpNextTomorrow = UpNextSchedule(1, 3, "Second", LocalDate.now().plusDays(1), null, null, null, null)
 
     //endregion
 

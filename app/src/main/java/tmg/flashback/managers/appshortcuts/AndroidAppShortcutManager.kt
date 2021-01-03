@@ -1,4 +1,4 @@
-    package tmg.flashback.managers
+package tmg.flashback.managers.appshortcuts
 
 import android.content.Context
 import android.content.Intent
@@ -11,13 +11,8 @@ import androidx.annotation.RequiresApi
 import tmg.flashback.R
 import tmg.flashback.rss.ui.RSSActivity
 
-interface AppShortcutManager {
-    fun enable(): Boolean
-    fun disable(): Boolean
-}
-
 class AndroidAppShortcutManager(
-    private val context: Context
+        private val context: Context
 ): AppShortcutManager {
     private val shortcutIdRss: String = "rss"
 
@@ -27,12 +22,12 @@ class AndroidAppShortcutManager(
     @RequiresApi(Build.VERSION_CODES.N_MR1)
     private fun buildRssShortcut(): ShortcutInfo {
         return ShortcutInfo.Builder(context, shortcutIdRss)
-            .setShortLabel(context.getString(R.string.app_shortcut_rss_shorttitle))
-            .setLongLabel(context.getString(R.string.app_shortcut_rss_longtitle))
-            .setIcon(Icon.createWithResource(context, R.drawable.ic_rss))
-            .setDisabledMessage(context.getString(R.string.app_shortcut_rss_disabled))
-            .setIntent(Intent(Intent.ACTION_MAIN, Uri.EMPTY, context, RSSActivity::class.java))
-            .build()
+                .setShortLabel(context.getString(R.string.app_shortcut_rss_shorttitle))
+                .setLongLabel(context.getString(R.string.app_shortcut_rss_longtitle))
+                .setIcon(Icon.createWithResource(context, R.drawable.ic_rss))
+                .setDisabledMessage(context.getString(R.string.app_shortcut_rss_disabled))
+                .setIntent(Intent(Intent.ACTION_MAIN, Uri.EMPTY, context, RSSActivity::class.java))
+                .build()
     }
 
     /**

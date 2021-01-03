@@ -1,22 +1,23 @@
-package tmg.flashback.managers
+package tmg.flashback.controllers
 
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
+import tmg.flashback.controllers.AppHintsController
 import tmg.flashback.repo.enums.AppHints
 import tmg.flashback.repo.pref.UserRepository
 import tmg.flashback.testutils.BaseTest
 
-internal class AppHintsManagerTest: BaseTest() {
+internal class AppHintsControllerTest: BaseTest() {
 
     private var mockUserRepository: UserRepository = mockk(relaxed = true)
 
-    private lateinit var sut: AppHintsManager
+    private lateinit var sut: AppHintsController
 
     private fun initSUT() {
-        sut = AppHintsManager(mockUserRepository)
+        sut = AppHintsController(mockUserRepository)
     }
 
     //region Qualifying Long Press

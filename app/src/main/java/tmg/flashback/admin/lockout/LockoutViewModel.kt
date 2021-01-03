@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.*
 import tmg.flashback.base.BaseViewModel
 import tmg.flashback.repo.db.DataRepository
 import tmg.flashback.repo.models.remoteconfig.AppLockout
-import tmg.flashback.di.device.BuildConfigManager
+import tmg.flashback.managers.buildconfig.BuildConfigManager
 import tmg.utilities.lifecycle.DataEvent
 import tmg.utilities.lifecycle.Event
 
@@ -43,8 +43,8 @@ interface LockoutViewModelOutputs {
 
 @Suppress("EXPERIMENTAL_API_USAGE")
 class LockoutViewModel(
-    dataRepository: DataRepository,
-    buildConfigProvider: BuildConfigManager
+    private val dataRepository: DataRepository,
+    private val buildConfigProvider: BuildConfigManager
 ): BaseViewModel(), LockoutViewModelInputs, LockoutViewModelOutputs {
 
     private val clickLinkEvent: ConflatedBroadcastChannel<DataEvent<String>> = ConflatedBroadcastChannel()

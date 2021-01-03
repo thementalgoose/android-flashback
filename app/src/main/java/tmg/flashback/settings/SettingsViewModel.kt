@@ -5,16 +5,15 @@ import androidx.lifecycle.MutableLiveData
 import tmg.components.prefs.AppPreferencesItem
 import tmg.flashback.R
 import tmg.flashback.base.BaseViewModel
+import tmg.flashback.controllers.*
 import tmg.flashback.extensions.icon
 import tmg.flashback.extensions.label
 import tmg.flashback.notifications.FirebasePushNotificationManager.Companion.topicQualifying
 import tmg.flashback.notifications.FirebasePushNotificationManager.Companion.topicRace
 import tmg.flashback.playStoreUrl
-import tmg.flashback.repo.config.RemoteConfigRepository
-import tmg.flashback.repo.pref.UserRepository
+import tmg.flashback.repo.db.CrashManager
 import tmg.flashback.repo.enums.ThemePref
 import tmg.flashback.repo.enums.BarAnimation
-import tmg.flashback.repo.pref.DeviceRepository
 import tmg.flashback.utils.Selected
 import tmg.flashback.utils.bottomsheet.BottomSheetItem
 import tmg.utilities.lifecycle.DataEvent
@@ -57,9 +56,13 @@ interface SettingsViewModelOutputs {
 //endregion
 
 class SettingsViewModel(
-        private val userRepository: UserRepository,
-        private val deviceRepository: DeviceRepository,
-        private val remoteConfigRepository: RemoteConfigRepository
+        private val notificationController: NotificationController,
+        private val appearanceController: AppearanceController,
+        private val deviceController: DeviceController,
+        private val raceController: RaceController,
+        private val crashManager: CrashManager,
+        private val seasonController: SeasonController,
+        private val featureController: FeatureController
 ): BaseViewModel(), SettingsViewModelInputs, SettingsViewModelOutputs {
 
     var inputs: SettingsViewModelInputs = this
@@ -87,12 +90,12 @@ class SettingsViewModel(
 
     init {
         settings.value = mutableListOf<AppPreferencesItem>().apply {
-            if (remoteConfigRepository.rss) {
+            if (featureController.rssEnabled) {
                 add(AppPreferencesItem.Category(R.string.settings_customisation_rss))
                 add(SettingsOptions.NEWS.toPref())
             }
             add(AppPreferencesItem.Category(R.string.settings_notifications_title))
-            if (deviceRepository.isNotificationChannelsSupported) {
+            if (notificationController.isNotificationChannelsSupported) {
                 add(SettingsOptions.NOTIFICATIONS_CHANNEL_QUALIFYING.toPref())
                 add(SettingsOptions.NOTIFICATIONS_CHANNEL_RACE.toPref())
             }
@@ -103,21 +106,21 @@ class SettingsViewModel(
             add(SettingsOptions.THEME.toPref())
             add(AppPreferencesItem.Category(R.string.settings_customisation))
             add(SettingsOptions.BAR_ANIMATION_SPEED.toPref())
-            add(SettingsOptions.QUALIFYING_DELTAS.toSwitch(userRepository.showQualifyingDelta))
-            add(SettingsOptions.FADE_OUT_DNF.toSwitch(userRepository.fadeDNF))
-            add(SettingsOptions.QUALIFYING_GRID_PENALTY.toSwitch(userRepository.showGridPenaltiesInQualifying))
+            add(SettingsOptions.QUALIFYING_DELTAS.toSwitch(raceController.showQualifyingDelta))
+            add(SettingsOptions.FADE_OUT_DNF.toSwitch(raceController.fadeDNF))
+            add(SettingsOptions.QUALIFYING_GRID_PENALTY.toSwitch(raceController.showGridPenaltiesInQualifying))
             add(AppPreferencesItem.Category(R.string.settings_season_list))
-            add(SettingsOptions.SEASON_BOTTOM_SHEET_FAVOURITED.toSwitch(userRepository.showListFavourited))
-            add(SettingsOptions.SEASON_BOTTOM_SHEET_ALL.toSwitch(userRepository.showListAll))
+            add(SettingsOptions.SEASON_BOTTOM_SHEET_FAVOURITED.toSwitch(seasonController.defaultFavouritesExpanded))
+            add(SettingsOptions.SEASON_BOTTOM_SHEET_ALL.toSwitch(seasonController.defaultAllExpanded))
             add(AppPreferencesItem.Category(R.string.settings_help))
             add(SettingsOptions.ABOUT.toPref())
             add(SettingsOptions.REVIEW.toPref())
             add(SettingsOptions.PRIVACY_POLICY.toPref())
             add(SettingsOptions.RELEASE.toPref())
             add(AppPreferencesItem.Category(R.string.settings_feedback))
-            add(SettingsOptions.CRASH.toSwitch(deviceRepository.crashReporting))
+            add(SettingsOptions.CRASH.toSwitch(crashManager.enableCrashReporting))
             add(SettingsOptions.SUGGESTION.toPref())
-            add(SettingsOptions.SHAKE.toSwitch(deviceRepository.shakeToReport))
+            add(SettingsOptions.SHAKE.toSwitch(deviceController.shakeToReport))
         }
 
         updateThemeList()
@@ -132,31 +135,31 @@ class SettingsViewModel(
             SettingsOptions.NOTIFICATIONS_CHANNEL_RACE -> openNotificationsChannel.value = DataEvent(topicRace)
             SettingsOptions.NOTIFICATIONS_CHANNEL_QUALIFYING -> openNotificationsChannel.value = DataEvent(topicQualifying)
             SettingsOptions.NOTIFICATIONS_SETTINGS -> openNotifications.value = Event()
-            SettingsOptions.QUALIFYING_DELTAS -> userRepository.showQualifyingDelta = value ?: false
-            SettingsOptions.FADE_OUT_DNF -> userRepository.fadeDNF = value ?: false
-            SettingsOptions.QUALIFYING_GRID_PENALTY -> userRepository.showGridPenaltiesInQualifying = value ?: true
-            SettingsOptions.SEASON_BOTTOM_SHEET_FAVOURITED -> userRepository.showListFavourited = value ?: true
-            SettingsOptions.SEASON_BOTTOM_SHEET_ALL -> userRepository.showListAll = value ?: true
+            SettingsOptions.QUALIFYING_DELTAS -> raceController.showQualifyingDelta = value ?: false
+            SettingsOptions.FADE_OUT_DNF -> raceController.fadeDNF = value ?: false
+            SettingsOptions.QUALIFYING_GRID_PENALTY -> raceController.showGridPenaltiesInQualifying = value ?: true
+            SettingsOptions.SEASON_BOTTOM_SHEET_FAVOURITED -> seasonController.defaultFavouritesExpanded = value ?: true
+            SettingsOptions.SEASON_BOTTOM_SHEET_ALL -> seasonController.defaultAllExpanded = value ?: true
             SettingsOptions.BAR_ANIMATION_SPEED -> openAnimationPicker.value = Event()
             SettingsOptions.ABOUT -> openAbout.value = Event()
             SettingsOptions.REVIEW -> openReview.value = DataEvent(playStoreUrl)
             SettingsOptions.PRIVACY_POLICY -> openPrivacyPolicy.value = Event()
             SettingsOptions.RELEASE -> openRelease.value = Event()
-            SettingsOptions.CRASH -> deviceRepository.crashReporting = value ?: true
+            SettingsOptions.CRASH -> crashManager.enableCrashReporting = value ?: true
             SettingsOptions.SUGGESTION -> openSuggestions.value = Event()
-            SettingsOptions.SHAKE -> deviceRepository.shakeToReport = value ?: true
+            SettingsOptions.SHAKE -> deviceController.shakeToReport = value ?: true
             SettingsOptions.NEWS -> openNews.value = Event()
         }
     }
 
     override fun pickTheme(theme: ThemePref) {
-        userRepository.theme = theme
+        appearanceController.currentTheme = theme
         updateThemeList()
         themeChanged.value = Event()
     }
 
     override fun pickAnimationSpeed(animation: BarAnimation) {
-        userRepository.barAnimation = animation
+        appearanceController.barAnimation = animation
         updateAnimationList()
         animationChanged.value = Event()
     }
@@ -166,14 +169,14 @@ class SettingsViewModel(
     private fun updateThemeList() {
         themePreferences.value = ThemePref.values()
                 .map {
-                    Selected(BottomSheetItem(it.ordinal, it.icon, it.label), it == userRepository.theme)
+                    Selected(BottomSheetItem(it.ordinal, it.icon, it.label), it == appearanceController.currentTheme)
                 }
     }
 
     private fun updateAnimationList() {
         animationPreference.value = BarAnimation.values()
                 .map {
-                    Selected(BottomSheetItem(it.ordinal, it.icon, it.label), it == userRepository.barAnimation)
+                    Selected(BottomSheetItem(it.ordinal, it.icon, it.label), it == appearanceController.barAnimation)
                 }
     }
 

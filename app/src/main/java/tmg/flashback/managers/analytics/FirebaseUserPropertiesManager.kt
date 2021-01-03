@@ -1,11 +1,12 @@
-package tmg.flashback.analytics
+package tmg.flashback.managers.analytics
 
 import android.content.Context
 import com.google.firebase.analytics.FirebaseAnalytics
+import tmg.flashback.managers.analytics.UserPropertiesManager
 
-class FirebaseAnalyticsUserProperties(
+class FirebaseUserPropertiesManager(
     val context: Context
-): AnalyticsUserProperties {
+): UserPropertiesManager {
 
     private val keyOsVersion = "os_version"
     private val keyDeviceModel = "device_model"

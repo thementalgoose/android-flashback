@@ -1,8 +1,8 @@
 package tmg.flashback.di
 
 import org.koin.dsl.module
-import tmg.flashback.managers.AndroidAppShortcutManager
-import tmg.flashback.managers.AppShortcutManager
+import tmg.flashback.managers.appshortcuts.AndroidAppShortcutManager
+import tmg.flashback.managers.appshortcuts.AppShortcutManager
 
 var shortcutModule = module {
 

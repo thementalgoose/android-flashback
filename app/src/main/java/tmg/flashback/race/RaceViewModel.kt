@@ -8,6 +8,9 @@ import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.*
 import org.threeten.bp.LocalDate
 import tmg.flashback.base.BaseViewModel
+import tmg.flashback.controllers.AppHintsController
+import tmg.flashback.controllers.AppearanceController
+import tmg.flashback.controllers.RaceController
 import tmg.flashback.repo.NetworkConnectivityManager
 import tmg.flashback.repo.pref.UserRepository
 import tmg.flashback.repo.db.stats.SeasonOverviewRepository
@@ -54,9 +57,11 @@ interface RaceViewModelOutputs {
 //endregion
 
 class RaceViewModel(
-        seasonOverviewRepository: SeasonOverviewRepository,
-        private val prefsCustomisationRepository: UserRepository,
-        connectivityManager: NetworkConnectivityManager
+        private val seasonOverviewRepository: SeasonOverviewRepository,
+        private val appHintsController: AppHintsController,
+        private val raceController: RaceController,
+        private val appearanceController: AppearanceController,
+        private val connectivityManager: NetworkConnectivityManager
 ) : BaseViewModel(), RaceViewModelInputs, RaceViewModelOutputs {
 
     var inputs: RaceViewModelInputs = this
@@ -119,7 +124,7 @@ class RaceViewModel(
                         .constructorStandings
                         .map {
                             val drivers: List<Pair<Driver, Int>> = getDriverFromConstructor(roundData, it.constructor.id)
-                            RaceModel.ConstructorStandings(it.constructor, it.points, drivers, prefsCustomisationRepository.barAnimation)
+                            RaceModel.ConstructorStandings(it.constructor, it.points, drivers, appearanceController.barAnimation)
                         }
                         .sortedByDescending { it.points }
 
@@ -137,9 +142,9 @@ class RaceViewModel(
                         q1 = roundData.q1.count { it.value.time != null } > 0,
                         q2 = roundData.q2.count { it.value.time != null } > 0,
                         q3 = roundData.q3.count { it.value.time != null } > 0,
-                        deltas = toggleQualifyingDelta ?: prefsCustomisationRepository.showQualifyingDelta,
-                        penalties = prefsCustomisationRepository.showGridPenaltiesInQualifying,
-                        fadeDNF = prefsCustomisationRepository.fadeDNF
+                        deltas = toggleQualifyingDelta ?: raceController.showQualifyingDelta,
+                        penalties = raceController.showGridPenaltiesInQualifying,
+                        fadeDNF = raceController.fadeDNF
                     )
 
                     when (viewType) {
@@ -262,8 +267,9 @@ class RaceViewModel(
      * Check if we need to notify the user for the long click qualifying delta seasons!
      */
     private fun appHintNotifyQualifying() {
-        if (!prefsCustomisationRepository.appHints.contains(RACE_QUALIFYING_LONG_CLICK)) {
-            prefsCustomisationRepository.markAppHintShown(RACE_QUALIFYING_LONG_CLICK)
+
+        if (appHintsController.showQualifyingLongPress) {
+            appHintsController.showQualifyingLongPress = true
             showAppHintLongPress.value = Event()
         }
     }
@@ -363,9 +369,9 @@ class RaceViewModel(
             q3 = overview.q3,
             race = race,
             qualified = overview.race?.qualified ?: round.getQualifyingOnlyPosByDriverId(driverId),
-            q1Delta = if (toggleQualifyingDelta ?: prefsCustomisationRepository.showQualifyingDelta) round.q1FastestLap?.deltaTo(overview.q1?.time) else null,
-            q2Delta = if (toggleQualifyingDelta ?: prefsCustomisationRepository.showQualifyingDelta) round.q2FastestLap?.deltaTo(overview.q2?.time) else null,
-            q3Delta = if (toggleQualifyingDelta ?: prefsCustomisationRepository.showQualifyingDelta) round.q3FastestLap?.deltaTo(overview.q3?.time) else null,
+            q1Delta = if (toggleQualifyingDelta ?: raceController.showQualifyingDelta) round.q1FastestLap?.deltaTo(overview.q1?.time) else null,
+            q2Delta = if (toggleQualifyingDelta ?: raceController.showQualifyingDelta) round.q2FastestLap?.deltaTo(overview.q2?.time) else null,
+            q3Delta = if (toggleQualifyingDelta ?: raceController.showQualifyingDelta) round.q3FastestLap?.deltaTo(overview.q3?.time) else null,
             displayPrefs = displayPrefs
         )
     }

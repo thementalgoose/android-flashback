@@ -9,6 +9,9 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
 import tmg.flashback.*
+import tmg.flashback.controllers.AppHintsController
+import tmg.flashback.controllers.AppearanceController
+import tmg.flashback.controllers.RaceController
 import tmg.flashback.race.RaceAdapterType.*
 import tmg.flashback.repo.NetworkConnectivityManager
 import tmg.flashback.repo.pref.UserRepository
@@ -28,7 +31,9 @@ internal class RaceViewModelTest: BaseTest() {
     lateinit var sut: RaceViewModel
 
     private val mockSeasonOverviewRepository: SeasonOverviewRepository = mockk(relaxed = true)
-    private val mockPrefsCustomisationRepository: UserRepository = mockk(relaxed = true)
+    private val mockAppearanceController: AppearanceController = mockk(relaxed = true)
+    private val mockRaceController: RaceController = mockk(relaxed = true)
+    private val mockAppHintsController: AppHintsController = mockk(relaxed = true)
     private val mockConnectivityManager: NetworkConnectivityManager = mockk(relaxed = true)
 
     private val expectedSeasonRound: SeasonRound = SeasonRound(2019, 1)
@@ -37,12 +42,12 @@ internal class RaceViewModelTest: BaseTest() {
     internal fun setUp() {
 
         every { mockConnectivityManager.isConnected } returns true
-        every { mockPrefsCustomisationRepository.barAnimation } returns BarAnimation.NONE
-        every { mockPrefsCustomisationRepository.fadeDNF } returns true
+        every { mockAppearanceController.barAnimation } returns BarAnimation.NONE
+        every { mockRaceController.fadeDNF } returns true
     }
 
     private fun initSUT(roundDate: LocalDate? = null, orderBy: RaceAdapterType = RACE) {
-        sut = RaceViewModel(mockSeasonOverviewRepository, mockPrefsCustomisationRepository, mockConnectivityManager)
+        sut = RaceViewModel(mockSeasonOverviewRepository, mockAppHintsController, mockRaceController, mockAppearanceController, mockConnectivityManager)
         val (season, round) = expectedSeasonRound
         sut.inputs.initialise(season, round, roundDate)
         sut.inputs.orderBy(orderBy)
@@ -206,8 +211,8 @@ internal class RaceViewModelTest: BaseTest() {
     @Test
     fun `RaceViewModel when view type is race (happy) and roundData race is not empty, show podium + race results in list`() = coroutineTest {
 
-        every { mockPrefsCustomisationRepository.showQualifyingDelta } returns false
-        every { mockPrefsCustomisationRepository.showGridPenaltiesInQualifying } returns false
+        every { mockRaceController.showQualifyingDelta } returns false
+        every { mockRaceController.showGridPenaltiesInQualifying } returns false
         every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow { emit(mockRound1) }
 
         val expected = listOf(
@@ -247,8 +252,8 @@ internal class RaceViewModelTest: BaseTest() {
     @Test
     fun `RaceViewModel when view type is qualifying (happy) Q3, items are ordered properly`() = coroutineTest {
 
-        every { mockPrefsCustomisationRepository.showQualifyingDelta } returns false
-        every { mockPrefsCustomisationRepository.showGridPenaltiesInQualifying } returns false
+        every { mockRaceController.showQualifyingDelta } returns false
+        every { mockRaceController.showGridPenaltiesInQualifying } returns false
         every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow { emit(mockRound1) }
 
         val showQualifying = DisplayPrefs(true, true, true, false, false, true)
@@ -266,8 +271,8 @@ internal class RaceViewModelTest: BaseTest() {
     @Test
     fun `RaceViewModel when view type is qualifying (happy) Q2, items are ordered properly`() = coroutineTest {
 
-        every { mockPrefsCustomisationRepository.showQualifyingDelta } returns false
-        every { mockPrefsCustomisationRepository.showGridPenaltiesInQualifying } returns false
+        every { mockRaceController.showQualifyingDelta } returns false
+        every { mockRaceController.showGridPenaltiesInQualifying } returns false
         every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow { emit(mockRound1) }
 
         val showQualifying = DisplayPrefs(true, true, true, false, false, true)
@@ -285,8 +290,8 @@ internal class RaceViewModelTest: BaseTest() {
     @Test
     fun `RaceViewModel when view type is qualifying (happy) Q1, items are ordered properly`() = coroutineTest {
 
-        every { mockPrefsCustomisationRepository.showQualifyingDelta } returns false
-        every { mockPrefsCustomisationRepository.showGridPenaltiesInQualifying } returns false
+        every { mockRaceController.showQualifyingDelta } returns false
+        every { mockRaceController.showGridPenaltiesInQualifying } returns false
         every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow { emit(mockRound1) }
 
         val showQualifying = DisplayPrefs(true, true, true, false, false, true)
@@ -304,8 +309,8 @@ internal class RaceViewModelTest: BaseTest() {
     @Test
     fun `RaceViewModel when order by is changed list content updates`() = coroutineTest {
 
-        every { mockPrefsCustomisationRepository.showQualifyingDelta } returns false
-        every { mockPrefsCustomisationRepository.showGridPenaltiesInQualifying } returns false
+        every { mockRaceController.showQualifyingDelta } returns false
+        every { mockRaceController.showGridPenaltiesInQualifying } returns false
         every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow { emit(mockRound1) }
 
         val showQualifying = DisplayPrefs(true, true, true, false, false, true)
@@ -345,8 +350,8 @@ internal class RaceViewModelTest: BaseTest() {
     @Test
     fun `RaceViewModel when show qualifying delta is enabled, qualifying delta is supplied`() = coroutineTest {
 
-        every { mockPrefsCustomisationRepository.showQualifyingDelta } returns true
-        every { mockPrefsCustomisationRepository.showGridPenaltiesInQualifying } returns false
+        every { mockRaceController.showQualifyingDelta } returns true
+        every { mockRaceController.showGridPenaltiesInQualifying } returns false
         every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow { emit(mockRound1) }
 
         val showQualifying = DisplayPrefs(true, true, true, true, false, true)
@@ -364,8 +369,8 @@ internal class RaceViewModelTest: BaseTest() {
     @Test
     fun `RaceViewModel when show qualifying delta is disabled, toggling it shows it's enabled`() = coroutineTest {
 
-        every { mockPrefsCustomisationRepository.showQualifyingDelta } returns false
-        every { mockPrefsCustomisationRepository.showGridPenaltiesInQualifying } returns false
+        every { mockRaceController.showQualifyingDelta } returns false
+        every { mockRaceController.showGridPenaltiesInQualifying } returns false
         every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow { emit(mockRound1) }
 
         val showQualifying = DisplayPrefs(true, true, true, true, false, true)
@@ -385,8 +390,8 @@ internal class RaceViewModelTest: BaseTest() {
     @Test
     fun `RaceViewModel when only q1 data is supplied, ordering for multiple qualifying types always does the same order`() = coroutineTest {
 
-        every { mockPrefsCustomisationRepository.showQualifyingDelta } returns false
-        every { mockPrefsCustomisationRepository.showGridPenaltiesInQualifying } returns false
+        every { mockRaceController.showQualifyingDelta } returns false
+        every { mockRaceController.showGridPenaltiesInQualifying } returns false
         every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow { emit(mockRound3) }
 
         val showQualifying = DisplayPrefs(true, false, false, false, false, true)
@@ -494,8 +499,9 @@ internal class RaceViewModelTest: BaseTest() {
     @Test
     fun `RaceViewModel notify app show qualifying long click hint when never been done before`() = coroutineTest {
 
-        every { mockPrefsCustomisationRepository.showQualifyingDelta } returns false
-        every { mockPrefsCustomisationRepository.showGridPenaltiesInQualifying } returns false
+        every { mockAppHintsController.showQualifyingLongPress } returns true
+        every { mockRaceController.showQualifyingDelta } returns false
+        every { mockRaceController.showGridPenaltiesInQualifying } returns false
         every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow { emit(mockRound3) }
 
         val showQualifying = DisplayPrefs(true, false, false, false, false, true)
@@ -513,15 +519,15 @@ internal class RaceViewModelTest: BaseTest() {
         sut.outputs.showAppHintLongPress.test {
             assertEventFired()
         }
-        verify { mockPrefsCustomisationRepository.markAppHintShown(AppHints.RACE_QUALIFYING_LONG_CLICK) }
+        verify { mockAppHintsController.showQualifyingLongPress = true }
     }
 
     @Test
     fun `RaceViewModel notify app show qualifying not shown if it's been shown before`() = coroutineTest {
 
-        every { mockPrefsCustomisationRepository.appHints } returns setOf(AppHints.RACE_QUALIFYING_LONG_CLICK)
-        every { mockPrefsCustomisationRepository.showQualifyingDelta } returns false
-        every { mockPrefsCustomisationRepository.showGridPenaltiesInQualifying } returns false
+        every { mockAppHintsController.showQualifyingLongPress } returns false
+        every { mockRaceController.showQualifyingDelta } returns false
+        every { mockRaceController.showGridPenaltiesInQualifying } returns false
         every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow { emit(mockRound3) }
 
         val showQualifying = DisplayPrefs(true, false, false, false, false, true)

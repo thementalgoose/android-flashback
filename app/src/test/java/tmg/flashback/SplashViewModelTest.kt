@@ -3,7 +3,7 @@ package tmg.flashback
 import io.mockk.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.flashback.managers.AppShortcutManager
+import tmg.flashback.managers.appshortcuts.AppShortcutManager
 import tmg.flashback.repo.config.RemoteConfigRepository
 import tmg.flashback.repo.pref.DeviceRepository
 import tmg.flashback.testutils.BaseTest

@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.flashback.di.device.BuildConfigManager
+import tmg.flashback.managers.buildconfig.BuildConfigManager
 import tmg.flashback.repo.db.DataRepository
 import tmg.flashback.repo.models.remoteconfig.AppLockout
 import tmg.flashback.testutils.*
