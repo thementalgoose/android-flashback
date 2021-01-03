@@ -13,10 +13,10 @@ import tmg.flashback.extensions.label
 import tmg.flashback.notifications.FirebasePushNotificationManager.Companion.topicQualifying
 import tmg.flashback.notifications.FirebasePushNotificationManager.Companion.topicRace
 import tmg.flashback.repo.config.RemoteConfigRepository
-import tmg.flashback.repo.pref.PrefCustomisationRepository
+import tmg.flashback.repo.pref.UserRepository
 import tmg.flashback.repo.enums.BarAnimation.*
 import tmg.flashback.repo.enums.ThemePref.*
-import tmg.flashback.repo.pref.PrefDeviceRepository
+import tmg.flashback.repo.pref.DeviceRepository
 import tmg.flashback.settings.SettingsOptions.*
 import tmg.flashback.testutils.*
 import tmg.flashback.testutils.assertDataEventValue
@@ -29,8 +29,8 @@ internal class SettingsViewModelTest: BaseTest() {
 
     lateinit var sut: SettingsViewModel
 
-    private val mockPrefsCustomisation: PrefCustomisationRepository = mockk(relaxed = true)
-    private val mockPrefsDevice: PrefDeviceRepository = mockk(relaxed = true)
+    private val mockPrefsCustomisation: UserRepository = mockk(relaxed = true)
+    private val mockPrefsDevice: DeviceRepository = mockk(relaxed = true)
     private val mockRemoteConfigRepository: RemoteConfigRepository = mockk(relaxed = true)
 
     @BeforeEach

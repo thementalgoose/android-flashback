@@ -7,12 +7,12 @@ import org.koin.core.KoinComponent
 import org.koin.core.inject
 import tmg.flashback.R
 import tmg.flashback.repo.config.RemoteConfigRepository
-import tmg.flashback.repo.pref.PrefCustomisationRepository
+import tmg.flashback.repo.pref.UserRepository
 import tmg.flashback.shared.viewholders.*
 
 abstract class SyncAdapter<T> : RecyclerView.Adapter<RecyclerView.ViewHolder>(), KoinComponent {
 
-    private val prefsRepo: PrefCustomisationRepository by inject()
+    private val prefsRepo: UserRepository by inject()
     private val remoteConfigRepo: RemoteConfigRepository by inject()
 
     abstract var list: List<T>

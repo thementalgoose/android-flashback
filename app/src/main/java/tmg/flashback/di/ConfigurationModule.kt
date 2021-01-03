@@ -6,9 +6,9 @@ import tmg.flashback.di.device.BuildConfigManager
 import tmg.flashback.firebase.config.FirebaseRemoteConfigRepository
 import tmg.flashback.prefs.SharedPrefsRepository
 import tmg.flashback.repo.config.RemoteConfigRepository
-import tmg.flashback.repo.pref.PrefCustomisationRepository
-import tmg.flashback.repo.pref.PrefDeviceRepository
-import tmg.flashback.repo.pref.PrefNotificationRepository
+import tmg.flashback.repo.pref.UserRepository
+import tmg.flashback.repo.pref.DeviceRepository
+import tmg.flashback.repo.pref.NotificationRepository
 
 val configurationModule = module {
 
@@ -19,7 +19,7 @@ val configurationModule = module {
     single<RemoteConfigRepository> { FirebaseRemoteConfigRepository(get()) }
 
     // Shared Prefs
-    single<PrefCustomisationRepository> { SharedPrefsRepository(get()) }
-    single<PrefDeviceRepository> { SharedPrefsRepository(get()) }
-    single<PrefNotificationRepository> { SharedPrefsRepository(get()) }
+    single<UserRepository> { SharedPrefsRepository(get()) }
+    single<DeviceRepository> { SharedPrefsRepository(get()) }
+    single<NotificationRepository> { SharedPrefsRepository(get()) }
 }

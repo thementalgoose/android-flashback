@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.map
 import tmg.flashback.base.BaseViewModel
 import tmg.flashback.di.device.BuildConfigManager
 import tmg.flashback.repo.db.DataRepository
-import tmg.flashback.repo.pref.PrefDeviceRepository
+import tmg.flashback.repo.pref.DeviceRepository
 import tmg.utilities.lifecycle.Event
 
 //region Inputs
@@ -33,7 +33,7 @@ interface DashboardViewModelOutputs {
 class DashboardViewModel(
     private val dataRepository: DataRepository,
     private val buildConfigManager: BuildConfigManager,
-    private val prefDeviceRepository: PrefDeviceRepository
+    private val deviceRepository: DeviceRepository
 ): BaseViewModel(), DashboardViewModelInputs, DashboardViewModelOutputs {
 
     override val openAppLockout: LiveData<Event> = dataRepository
@@ -54,7 +54,7 @@ class DashboardViewModel(
     var outputs: DashboardViewModelOutputs = this
 
     init {
-        if (prefDeviceRepository.shouldShowReleaseNotes) {
+        if (deviceRepository.shouldShowReleaseNotes) {
             openReleaseNotes.value = Event()
         }
     }

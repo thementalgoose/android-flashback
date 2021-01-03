@@ -10,7 +10,7 @@ import org.threeten.bp.LocalDate
 import org.threeten.bp.Year
 import tmg.flashback.repo.config.RemoteConfigRepository
 import tmg.flashback.repo.models.remoteconfig.UpNextSchedule
-import tmg.flashback.repo.pref.PrefCustomisationRepository
+import tmg.flashback.repo.pref.UserRepository
 import tmg.flashback.testutils.*
 import tmg.flashback.testutils.assertDataEventValue
 import tmg.flashback.testutils.test
@@ -23,22 +23,22 @@ internal class ListViewModelTest: BaseTest() {
     private var currentYear: Int = Year.now().value
     private var minYear: Int = 1950
 
-    private val mockPrefCustomisationRepository: PrefCustomisationRepository = mockk(relaxed = true)
+    private val mockUserRepository: UserRepository = mockk(relaxed = true)
     private val mockRemoteConfigRepository: RemoteConfigRepository = mockk(relaxed = true)
 
     @BeforeEach
     internal fun setUp() {
 
-        every { mockPrefCustomisationRepository.favouriteSeasons } returns setOf()
-        every { mockPrefCustomisationRepository.showListFavourited } returns true
-        every { mockPrefCustomisationRepository.showListAll } returns true
+        every { mockUserRepository.favouriteSeasons } returns setOf()
+        every { mockUserRepository.showListFavourited } returns true
+        every { mockUserRepository.showListAll } returns true
 
         every { mockRemoteConfigRepository.upNext } returns emptyList()
         every { mockRemoteConfigRepository.defaultYear } returns 2018
     }
 
     private fun initSUT() {
-        sut = ListViewModel(mockPrefCustomisationRepository, mockRemoteConfigRepository)
+        sut = ListViewModel(mockUserRepository, mockRemoteConfigRepository)
     }
 
     //region Default
@@ -129,8 +129,8 @@ internal class ListViewModelTest: BaseTest() {
     @Test
     fun `SeasonViewModel header section favourited and all are false when prefs are false on initial load`() {
 
-        every { mockPrefCustomisationRepository.showListFavourited } returns false
-        every { mockPrefCustomisationRepository.showListAll } returns false
+        every { mockUserRepository.showListFavourited } returns false
+        every { mockUserRepository.showListAll } returns false
 
         initSUT()
 
@@ -141,8 +141,8 @@ internal class ListViewModelTest: BaseTest() {
     @Test
     fun `SeasonViewModel header section favourited and all are true when prefs are true on initial load`() {
 
-        every { mockPrefCustomisationRepository.showListFavourited } returns true
-        every { mockPrefCustomisationRepository.showListAll } returns true
+        every { mockUserRepository.showListFavourited } returns true
+        every { mockUserRepository.showListAll } returns true
 
         initSUT()
 
@@ -169,7 +169,7 @@ internal class ListViewModelTest: BaseTest() {
         val favourites = setOf(2017, 2012, 20150)
         val expected = expectedList(favourites)
 
-        every { mockPrefCustomisationRepository.favouriteSeasons } returns favourites
+        every { mockUserRepository.favouriteSeasons } returns favourites
 
         initSUT()
 
@@ -184,9 +184,9 @@ internal class ListViewModelTest: BaseTest() {
         val favourites: Set<Int> = setOf(2012, 2018, 2014)
         val expected = expectedList(favourites, showFavourites = false, showAll = false)
 
-        every { mockPrefCustomisationRepository.favouriteSeasons } returns favourites
-        every { mockPrefCustomisationRepository.showListFavourited } returns false
-        every { mockPrefCustomisationRepository.showListAll } returns false
+        every { mockUserRepository.favouriteSeasons } returns favourites
+        every { mockUserRepository.showListFavourited } returns false
+        every { mockUserRepository.showListAll } returns false
 
         initSUT()
 
@@ -200,7 +200,7 @@ internal class ListViewModelTest: BaseTest() {
 
         val favourites = setOf(2017, 2012, 2010)
 
-        every { mockPrefCustomisationRepository.favouriteSeasons } returns favourites
+        every { mockUserRepository.favouriteSeasons } returns favourites
 
         initSUT()
 
@@ -228,26 +228,26 @@ internal class ListViewModelTest: BaseTest() {
 
         val favourites = mutableSetOf(2020, 2018)
 
-        every { mockPrefCustomisationRepository.favouriteSeasons } returns favourites
+        every { mockUserRepository.favouriteSeasons } returns favourites
 
         initSUT()
 
         sut.toggleFavourite(2020)
 
-        verify { mockPrefCustomisationRepository.favouriteSeasons = setOf(2018) }
+        verify { mockUserRepository.favouriteSeasons = setOf(2018) }
     }
 
     @Test
     fun `SeasonViewModel toggling a favourite season that does not exists adds it from favourites shared prefs`() {
 
         val favourites = mutableSetOf(2020, 2018)
-        every { mockPrefCustomisationRepository.favouriteSeasons } returns favourites
+        every { mockUserRepository.favouriteSeasons } returns favourites
 
         initSUT()
 
         sut.toggleFavourite(2019)
 
-        verify { mockPrefCustomisationRepository.favouriteSeasons = setOf(2020, 2018, 2019) }
+        verify { mockUserRepository.favouriteSeasons = setOf(2020, 2018, 2019) }
     }
 
     @Test
@@ -255,7 +255,7 @@ internal class ListViewModelTest: BaseTest() {
 
         val favourites = setOf(2017, 2012, 2010)
 
-        every { mockPrefCustomisationRepository.favouriteSeasons } returns favourites
+        every { mockUserRepository.favouriteSeasons } returns favourites
 
         initSUT()
 

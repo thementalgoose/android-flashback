@@ -1,4 +1,4 @@
-package tmg.flashback.managers
+    package tmg.flashback.managers
 
 import android.content.Context
 import android.content.Intent

@@ -9,9 +9,8 @@ import kotlinx.coroutines.flow.*
 import org.threeten.bp.LocalDate
 import tmg.flashback.base.BaseViewModel
 import tmg.flashback.repo.NetworkConnectivityManager
-import tmg.flashback.repo.pref.PrefCustomisationRepository
+import tmg.flashback.repo.pref.UserRepository
 import tmg.flashback.repo.db.stats.SeasonOverviewRepository
-import tmg.flashback.repo.enums.AppHints
 import tmg.flashback.repo.enums.AppHints.RACE_QUALIFYING_LONG_CLICK
 import tmg.flashback.repo.models.stats.*
 import tmg.flashback.shared.viewholders.DataUnavailable
@@ -55,9 +54,9 @@ interface RaceViewModelOutputs {
 //endregion
 
 class RaceViewModel(
-    seasonOverviewRepository: SeasonOverviewRepository,
-    private val prefsCustomisationRepository: PrefCustomisationRepository,
-    connectivityManager: NetworkConnectivityManager
+        seasonOverviewRepository: SeasonOverviewRepository,
+        private val prefsCustomisationRepository: UserRepository,
+        connectivityManager: NetworkConnectivityManager
 ) : BaseViewModel(), RaceViewModelInputs, RaceViewModelOutputs {
 
     var inputs: RaceViewModelInputs = this

@@ -7,12 +7,12 @@ import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.BuildConfig
 import tmg.flashback.releaseNotes
 import tmg.flashback.repo.enums.AppHints
-import tmg.flashback.repo.pref.PrefCustomisationRepository
+import tmg.flashback.repo.pref.UserRepository
 import tmg.flashback.repo.enums.BarAnimation
 import tmg.flashback.repo.enums.NotificationRegistration
 import tmg.flashback.repo.enums.ThemePref
-import tmg.flashback.repo.pref.PrefDeviceRepository
-import tmg.flashback.repo.pref.PrefNotificationRepository
+import tmg.flashback.repo.pref.DeviceRepository
+import tmg.flashback.repo.pref.NotificationRepository
 import tmg.flashback.rss.prefs.RSSPrefsRepository
 import tmg.utilities.extensions.toEnum
 import tmg.utilities.prefs.SharedPrefManager
@@ -23,9 +23,9 @@ private const val defaultShakeToReport: Boolean = true
 private const val defaultCrashReporting: Boolean = true
 
 class SharedPrefsRepository(context: Context) : SharedPrefManager(context),
-        PrefCustomisationRepository,
-        PrefDeviceRepository,
-        PrefNotificationRepository,
+        UserRepository,
+        DeviceRepository,
+        NotificationRepository,
         RSSPrefsRepository {
 
     override val prefsKey: String = "Flashback"
@@ -46,6 +46,7 @@ class SharedPrefsRepository(context: Context) : SharedPrefManager(context),
     private val keyInAppEnableJavascript: String = "IN_APP_ENABLE_JAVASCRIPT"
     private val keyNewsShowDescription: String = "NEWS_SHOW_DESCRIPTIONS"
     private val keyAppHints: String = "APP_HINTS"
+    private val keyDefaultSeason: String = "DEFAULT_SEASON"
 
     private val keyNotificationRace: String = "NOTIFICATION_RACE"
     private val keyNotificationQualifying: String = "NOTIFICATION_QUALIFYING"
@@ -116,6 +117,20 @@ class SharedPrefsRepository(context: Context) : SharedPrefManager(context),
             return value
                 .mapNotNull { id -> id.toEnum<AppHints> { it.id } }
                 .toSet()
+        }
+
+    override var defaultSeason: Int?
+        get() {
+            val value = getInt(keyDefaultSeason, -1)
+            if (value == -1) return null
+            return value
+        }
+        set(value) {
+            val valueToSave = when (value) {
+                null -> -1
+                else -> value
+            }
+            save(keyDefaultSeason, valueToSave)
         }
 
     //endregion

@@ -1,17 +1,13 @@
 package tmg.flashback
 
-import android.content.Context
-import android.content.pm.ShortcutManager
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import tmg.flashback.base.BaseViewModel
 import tmg.flashback.managers.AppShortcutManager
 import tmg.flashback.repo.config.RemoteConfigRepository
-import tmg.flashback.repo.pref.PrefDeviceRepository
+import tmg.flashback.repo.pref.DeviceRepository
 import tmg.utilities.lifecycle.Event
 
 //region Inputs
@@ -34,7 +30,7 @@ interface SplashViewModelOutputs {
 
 class SplashViewModel(
         private val shortcutManager: AppShortcutManager,
-        private val prefsDeviceDB: PrefDeviceRepository,
+        private val prefsDeviceDB: DeviceRepository,
         private val remoteConfigRepository: RemoteConfigRepository
 ): BaseViewModel(), SplashViewModelInputs, SplashViewModelOutputs {
 

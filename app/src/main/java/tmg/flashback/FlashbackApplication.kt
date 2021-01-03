@@ -5,10 +5,8 @@ import android.os.Build
 import android.util.Log
 import com.github.stkent.bugshaker.BugShaker
 import com.github.stkent.bugshaker.flow.dialog.AlertDialogType
-import com.google.firebase.analytics.FirebaseAnalytics
 import com.jakewharton.threetenabp.AndroidThreeTen
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
@@ -18,8 +16,8 @@ import tmg.flashback.di.*
 import tmg.flashback.notifications.PushNotificationManager
 import tmg.flashback.repo.config.RemoteConfigRepository
 import tmg.flashback.repo.db.CrashManager
-import tmg.flashback.repo.pref.PrefDeviceRepository
-import tmg.flashback.repo.pref.PrefNotificationRepository
+import tmg.flashback.repo.pref.DeviceRepository
+import tmg.flashback.repo.pref.NotificationRepository
 
 val releaseNotes: Map<Int, Int> = mapOf(
     40 to R.string.release_40,
@@ -55,8 +53,8 @@ val releaseNotes: Map<Int, Int> = mapOf(
 
 class FlashbackApplication: Application() {
 
-    private val prefsDevice: PrefDeviceRepository by inject()
-    private val prefsNotification: PrefNotificationRepository by inject()
+    private val prefsDevice: DeviceRepository by inject()
+    private val prefsNotification: NotificationRepository by inject()
 
     private val configRepository: RemoteConfigRepository by inject()
     private val crashManager: CrashManager by inject()

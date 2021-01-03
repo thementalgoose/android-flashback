@@ -18,8 +18,8 @@ import tmg.flashback.repo.config.RemoteConfigRepository
 import tmg.flashback.repo.db.stats.HistoryRepository
 import tmg.flashback.repo.db.stats.SeasonOverviewRepository
 import tmg.flashback.repo.models.stats.*
-import tmg.flashback.repo.pref.PrefCustomisationRepository
-import tmg.flashback.repo.pref.PrefDeviceRepository
+import tmg.flashback.repo.pref.UserRepository
+import tmg.flashback.repo.pref.DeviceRepository
 import tmg.flashback.shared.sync.SyncDataItem
 import tmg.flashback.shared.viewholders.DataUnavailable
 import tmg.flashback.utils.StringHolder
@@ -62,12 +62,12 @@ interface SeasonViewModelOutputs {
 
 
 class SeasonViewModel(
-    private val prefDeviceRepository: PrefDeviceRepository,
-    private val historyRepository: HistoryRepository,
-    private val seasonOverviewRepository: SeasonOverviewRepository,
-    private val remoteConfigRepository: RemoteConfigRepository,
-    private val prefCustomisationRepository: PrefCustomisationRepository,
-    private val networkConnectivityManager: NetworkConnectivityManager
+        private val deviceRepository: DeviceRepository,
+        private val historyRepository: HistoryRepository,
+        private val seasonOverviewRepository: SeasonOverviewRepository,
+        private val remoteConfigRepository: RemoteConfigRepository,
+        private val userRepository: UserRepository,
+        private val networkConnectivityManager: NetworkConnectivityManager
 ): BaseViewModel(), SeasonViewModelInputs, SeasonViewModelOutputs {
 
     private val showBannerAtTop: Boolean = showBannerAtTop()
@@ -242,7 +242,7 @@ class SeasonViewModel(
      * Should show the "Data provided by" banner at the top or the bottom
      */
     private fun showBannerAtTop(): Boolean {
-        val daysBetween = ChronoUnit.DAYS.between(prefDeviceRepository.appFirstBootTime, LocalDate.now())
+        val daysBetween = ChronoUnit.DAYS.between(deviceRepository.appFirstBootTime, LocalDate.now())
         return daysBetween <= daysUntilDataProvidedBannerMovedToBottom
     }
 
@@ -286,7 +286,7 @@ class SeasonViewModel(
                     bestQualifying = rounds.bestQualifyingResultFor(roundDriver.id),
                     bestFinish = rounds.bestRaceResultFor(roundDriver.id),
                     maxPointsInSeason = this.maxDriverPointsInSeason(),
-                    barAnimation = prefCustomisationRepository.barAnimation
+                    barAnimation = userRepository.barAnimation
                 )
             }
     }
@@ -307,7 +307,7 @@ class SeasonViewModel(
                     driver = driverPoints.values.sortedByDescending { it.second },
                     points = constructorPoints,
                     maxPointsInSeason = this.maxConstructorPointsInSeason(),
-                    barAnimation = prefCustomisationRepository.barAnimation
+                    barAnimation = userRepository.barAnimation
                 )
             }
             .sortedByDescending { it.points }

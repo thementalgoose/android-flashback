@@ -11,10 +11,10 @@ import tmg.flashback.notifications.FirebasePushNotificationManager.Companion.top
 import tmg.flashback.notifications.FirebasePushNotificationManager.Companion.topicRace
 import tmg.flashback.playStoreUrl
 import tmg.flashback.repo.config.RemoteConfigRepository
-import tmg.flashback.repo.pref.PrefCustomisationRepository
+import tmg.flashback.repo.pref.UserRepository
 import tmg.flashback.repo.enums.ThemePref
 import tmg.flashback.repo.enums.BarAnimation
-import tmg.flashback.repo.pref.PrefDeviceRepository
+import tmg.flashback.repo.pref.DeviceRepository
 import tmg.flashback.utils.Selected
 import tmg.flashback.utils.bottomsheet.BottomSheetItem
 import tmg.utilities.lifecycle.DataEvent
@@ -57,8 +57,8 @@ interface SettingsViewModelOutputs {
 //endregion
 
 class SettingsViewModel(
-        private val prefCustomisationRepository: PrefCustomisationRepository,
-        private val prefDeviceRepository: PrefDeviceRepository,
+        private val userRepository: UserRepository,
+        private val deviceRepository: DeviceRepository,
         private val remoteConfigRepository: RemoteConfigRepository
 ): BaseViewModel(), SettingsViewModelInputs, SettingsViewModelOutputs {
 
@@ -92,7 +92,7 @@ class SettingsViewModel(
                 add(SettingsOptions.NEWS.toPref())
             }
             add(AppPreferencesItem.Category(R.string.settings_notifications_title))
-            if (prefDeviceRepository.isNotificationChannelsSupported) {
+            if (deviceRepository.isNotificationChannelsSupported) {
                 add(SettingsOptions.NOTIFICATIONS_CHANNEL_QUALIFYING.toPref())
                 add(SettingsOptions.NOTIFICATIONS_CHANNEL_RACE.toPref())
             }
@@ -103,21 +103,21 @@ class SettingsViewModel(
             add(SettingsOptions.THEME.toPref())
             add(AppPreferencesItem.Category(R.string.settings_customisation))
             add(SettingsOptions.BAR_ANIMATION_SPEED.toPref())
-            add(SettingsOptions.QUALIFYING_DELTAS.toSwitch(prefCustomisationRepository.showQualifyingDelta))
-            add(SettingsOptions.FADE_OUT_DNF.toSwitch(prefCustomisationRepository.fadeDNF))
-            add(SettingsOptions.QUALIFYING_GRID_PENALTY.toSwitch(prefCustomisationRepository.showGridPenaltiesInQualifying))
+            add(SettingsOptions.QUALIFYING_DELTAS.toSwitch(userRepository.showQualifyingDelta))
+            add(SettingsOptions.FADE_OUT_DNF.toSwitch(userRepository.fadeDNF))
+            add(SettingsOptions.QUALIFYING_GRID_PENALTY.toSwitch(userRepository.showGridPenaltiesInQualifying))
             add(AppPreferencesItem.Category(R.string.settings_season_list))
-            add(SettingsOptions.SEASON_BOTTOM_SHEET_FAVOURITED.toSwitch(prefCustomisationRepository.showListFavourited))
-            add(SettingsOptions.SEASON_BOTTOM_SHEET_ALL.toSwitch(prefCustomisationRepository.showListAll))
+            add(SettingsOptions.SEASON_BOTTOM_SHEET_FAVOURITED.toSwitch(userRepository.showListFavourited))
+            add(SettingsOptions.SEASON_BOTTOM_SHEET_ALL.toSwitch(userRepository.showListAll))
             add(AppPreferencesItem.Category(R.string.settings_help))
             add(SettingsOptions.ABOUT.toPref())
             add(SettingsOptions.REVIEW.toPref())
             add(SettingsOptions.PRIVACY_POLICY.toPref())
             add(SettingsOptions.RELEASE.toPref())
             add(AppPreferencesItem.Category(R.string.settings_feedback))
-            add(SettingsOptions.CRASH.toSwitch(prefDeviceRepository.crashReporting))
+            add(SettingsOptions.CRASH.toSwitch(deviceRepository.crashReporting))
             add(SettingsOptions.SUGGESTION.toPref())
-            add(SettingsOptions.SHAKE.toSwitch(prefDeviceRepository.shakeToReport))
+            add(SettingsOptions.SHAKE.toSwitch(deviceRepository.shakeToReport))
         }
 
         updateThemeList()
@@ -132,31 +132,31 @@ class SettingsViewModel(
             SettingsOptions.NOTIFICATIONS_CHANNEL_RACE -> openNotificationsChannel.value = DataEvent(topicRace)
             SettingsOptions.NOTIFICATIONS_CHANNEL_QUALIFYING -> openNotificationsChannel.value = DataEvent(topicQualifying)
             SettingsOptions.NOTIFICATIONS_SETTINGS -> openNotifications.value = Event()
-            SettingsOptions.QUALIFYING_DELTAS -> prefCustomisationRepository.showQualifyingDelta = value ?: false
-            SettingsOptions.FADE_OUT_DNF -> prefCustomisationRepository.fadeDNF = value ?: false
-            SettingsOptions.QUALIFYING_GRID_PENALTY -> prefCustomisationRepository.showGridPenaltiesInQualifying = value ?: true
-            SettingsOptions.SEASON_BOTTOM_SHEET_FAVOURITED -> prefCustomisationRepository.showListFavourited = value ?: true
-            SettingsOptions.SEASON_BOTTOM_SHEET_ALL -> prefCustomisationRepository.showListAll = value ?: true
+            SettingsOptions.QUALIFYING_DELTAS -> userRepository.showQualifyingDelta = value ?: false
+            SettingsOptions.FADE_OUT_DNF -> userRepository.fadeDNF = value ?: false
+            SettingsOptions.QUALIFYING_GRID_PENALTY -> userRepository.showGridPenaltiesInQualifying = value ?: true
+            SettingsOptions.SEASON_BOTTOM_SHEET_FAVOURITED -> userRepository.showListFavourited = value ?: true
+            SettingsOptions.SEASON_BOTTOM_SHEET_ALL -> userRepository.showListAll = value ?: true
             SettingsOptions.BAR_ANIMATION_SPEED -> openAnimationPicker.value = Event()
             SettingsOptions.ABOUT -> openAbout.value = Event()
             SettingsOptions.REVIEW -> openReview.value = DataEvent(playStoreUrl)
             SettingsOptions.PRIVACY_POLICY -> openPrivacyPolicy.value = Event()
             SettingsOptions.RELEASE -> openRelease.value = Event()
-            SettingsOptions.CRASH -> prefDeviceRepository.crashReporting = value ?: true
+            SettingsOptions.CRASH -> deviceRepository.crashReporting = value ?: true
             SettingsOptions.SUGGESTION -> openSuggestions.value = Event()
-            SettingsOptions.SHAKE -> prefDeviceRepository.shakeToReport = value ?: true
+            SettingsOptions.SHAKE -> deviceRepository.shakeToReport = value ?: true
             SettingsOptions.NEWS -> openNews.value = Event()
         }
     }
 
     override fun pickTheme(theme: ThemePref) {
-        prefCustomisationRepository.theme = theme
+        userRepository.theme = theme
         updateThemeList()
         themeChanged.value = Event()
     }
 
     override fun pickAnimationSpeed(animation: BarAnimation) {
-        prefCustomisationRepository.barAnimation = animation
+        userRepository.barAnimation = animation
         updateAnimationList()
         animationChanged.value = Event()
     }
@@ -166,14 +166,14 @@ class SettingsViewModel(
     private fun updateThemeList() {
         themePreferences.value = ThemePref.values()
                 .map {
-                    Selected(BottomSheetItem(it.ordinal, it.icon, it.label), it == prefCustomisationRepository.theme)
+                    Selected(BottomSheetItem(it.ordinal, it.icon, it.label), it == userRepository.theme)
                 }
     }
 
     private fun updateAnimationList() {
         animationPreference.value = BarAnimation.values()
                 .map {
-                    Selected(BottomSheetItem(it.ordinal, it.icon, it.label), it == prefCustomisationRepository.barAnimation)
+                    Selected(BottomSheetItem(it.ordinal, it.icon, it.label), it == userRepository.barAnimation)
                 }
     }
 

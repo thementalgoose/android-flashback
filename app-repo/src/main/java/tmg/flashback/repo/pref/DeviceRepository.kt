@@ -2,7 +2,7 @@ package tmg.flashback.repo.pref
 
 import org.threeten.bp.LocalDate
 
-interface PrefDeviceRepository {
+interface DeviceRepository {
 
     /**
      * Last booted version
