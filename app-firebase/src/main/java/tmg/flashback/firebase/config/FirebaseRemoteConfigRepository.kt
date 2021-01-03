@@ -73,7 +73,7 @@ class FirebaseRemoteConfigRepository(
         }
 
     override val search: Boolean
-        get() = remoteConfig.getBoolean(keySearch)
+        get() = false // remoteConfig.getBoolean(keySearch)
 
     //endregion
 
