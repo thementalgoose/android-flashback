@@ -13,7 +13,7 @@
         android:id="@+id/appbar"
         android:background="@null"
         app:elevation="0dp"
-        app:layout_behavior="tmg.flashback.utils.AppBarLockableBehavior">
+        app:layout_behavior="tmg.flashback.ui.utils.AppBarLockableBehavior">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"

@@ -8,8 +8,8 @@ import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.*
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
-import tmg.flashback.repo.NetworkConnectivityManager
 import tmg.flashback.rss.base.RSSBaseViewModel
+import tmg.flashback.rss.managers.RSSNetworkConnectivityManager
 import tmg.flashback.rss.prefs.RSSPrefsRepository
 import tmg.flashback.rss.repo.RSSRepository
 import tmg.utilities.extensions.then
@@ -35,7 +35,7 @@ interface RSSViewModelOutputs {
 class RSSViewModel(
         private val RSSDB: RSSRepository,
         private val prefRepository: RSSPrefsRepository,
-        private val connectivityManager: NetworkConnectivityManager
+        private val connectivityManager: RSSNetworkConnectivityManager
 ): RSSBaseViewModel(), RSSViewModelInputs,
     RSSViewModelOutputs {
 

@@ -1,12 +1,9 @@
 package tmg.flashback.managers.sharedprefs
 
 import android.content.Context
-import android.os.Build
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
-import tmg.flashback.BuildConfig
 import tmg.flashback.constants.Defaults
-import tmg.flashback.releaseNotes
 import tmg.flashback.repo.enums.AppHints
 import tmg.flashback.repo.pref.UserRepository
 import tmg.flashback.repo.enums.BarAnimation

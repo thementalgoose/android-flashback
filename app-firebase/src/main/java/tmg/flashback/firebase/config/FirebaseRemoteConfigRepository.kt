@@ -4,27 +4,23 @@ import com.google.firebase.FirebaseException
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigException
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
-import com.google.gson.Gson
 import kotlinx.coroutines.tasks.await
 import tmg.flashback.firebase.BuildConfig
 import tmg.flashback.firebase.R
 import tmg.flashback.firebase.converters.convert
+import tmg.flashback.firebase.crash.FirebaseCrashManager
 import tmg.flashback.firebase.currentYear
 import tmg.flashback.firebase.extensions.toJson
 import tmg.flashback.firebase.models.FUpNext
-import tmg.flashback.firebase.models.FUpNextSchedule
 import tmg.flashback.repo.config.RemoteConfigRepository
-import tmg.flashback.repo.db.CrashManager
 import tmg.flashback.repo.models.remoteconfig.UpNextSchedule
 import java.lang.Exception
 
 /**
  * Read the default values from remote config
- *
- * TODO: Move app lockout over to using this remote config repository!
  */
 class FirebaseRemoteConfigRepository(
-        val crashManager: CrashManager?
+        val crashManager: FirebaseCrashManager?
 ): RemoteConfigRepository {
 
     private val remoteConfig: FirebaseRemoteConfig = FirebaseRemoteConfig.getInstance()

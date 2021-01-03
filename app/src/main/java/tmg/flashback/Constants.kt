@@ -1,11 +1,6 @@
 package tmg.flashback
 
-import android.content.Context
-import androidx.annotation.DrawableRes
 import org.threeten.bp.Year
-import tmg.components.about.AboutThisAppConfiguration
-import tmg.components.about.AboutThisAppDependency
-import tmg.flashback.utils.SeasonRound
 
 /**
  * Constants

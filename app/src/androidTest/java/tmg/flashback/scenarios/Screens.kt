@@ -1,14 +1,11 @@
 package tmg.flashback.scenarios
 
-import org.koin.core.context.loadKoinModules
-import org.koin.core.context.unloadKoinModules
 import tmg.flashback.R
-import tmg.flashback.di.mockModules
 import tmg.flashback.di.remoteconfig.MockRemoteConfigRepository
-import tmg.flashback.utils.EspressoUtils.clickOn
-import tmg.flashback.utils.EspressoUtils.collapseAppBar
-import tmg.flashback.utils.EspressoUtils.pressBack
-import tmg.flashback.utils.RecyclerViewUtils
+import tmg.flashback.ui.utils.EspressoUtils.clickOn
+import tmg.flashback.ui.utils.EspressoUtils.collapseAppBar
+import tmg.flashback.ui.utils.EspressoUtils.pressBack
+import tmg.flashback.ui.utils.RecyclerViewUtils
 
 fun startup(block: Home.() -> Unit) {
     block(Home)

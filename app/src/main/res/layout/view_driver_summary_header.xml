@@ -37,7 +37,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <tmg.flashback.views.RaceNumberView
+        <tmg.flashback.ui.views.RaceNumberView
             android:id="@+id/tvNumber"
             style="@style/Text.Podium.Number"
             android:layout_width="wrap_content"
