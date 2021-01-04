@@ -30,10 +30,10 @@ internal class ListViewModelTest: BaseTest() {
     internal fun setUp() {
 
         every { mockSeasonController.favouriteSeasons } returns setOf()
-        every { mockSeasonController.defaultFavouritesExpanded } returns true
-        every { mockSeasonController.defaultAllExpanded } returns true
+        every { mockSeasonController.favouritesExpanded } returns true
+        every { mockSeasonController.allExpanded } returns true
 
-        every { mockSeasonController.defaultYear } returns 2018
+        every { mockSeasonController.defaultSeason } returns 2018
         every { mockUpNextController.getNextRace() } returns null
 
         every { mockSeasonController.allSeasons } returns List(currentYear - 1949) { it + 1950 }.toSet()
@@ -105,8 +105,8 @@ internal class ListViewModelTest: BaseTest() {
     @Test
     fun `SeasonViewModel header section favourited and all are false when prefs are false on initial load`() {
 
-        every { mockSeasonController.defaultFavouritesExpanded } returns false
-        every { mockSeasonController.defaultAllExpanded } returns false
+        every { mockSeasonController.favouritesExpanded } returns false
+        every { mockSeasonController.allExpanded } returns false
 
         initSUT()
 
@@ -117,8 +117,8 @@ internal class ListViewModelTest: BaseTest() {
     @Test
     fun `SeasonViewModel header section favourited and all are true when prefs are true on initial load`() {
 
-        every { mockSeasonController.defaultFavouritesExpanded } returns true
-        every { mockSeasonController.defaultAllExpanded } returns true
+        every { mockSeasonController.favouritesExpanded } returns true
+        every { mockSeasonController.allExpanded } returns true
 
         initSUT()
 
@@ -162,8 +162,8 @@ internal class ListViewModelTest: BaseTest() {
         val expected = expectedList(favourites, showFavourites = false, showAll = false)
 
         every { mockSeasonController.favouriteSeasons } returns favourites
-        every { mockSeasonController.defaultFavouritesExpanded } returns false
-        every { mockSeasonController.defaultAllExpanded } returns false
+        every { mockSeasonController.favouritesExpanded } returns false
+        every { mockSeasonController.allExpanded } returns false
 
         initSUT()
 

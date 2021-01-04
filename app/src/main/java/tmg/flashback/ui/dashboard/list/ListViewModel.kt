@@ -38,10 +38,10 @@ class ListViewModel(
         private val upNextController: UpNextController
 ) : BaseViewModel(), ListViewModelInputs, ListViewModelOutputs {
 
-    var headerSectionFavourited: Boolean = seasonController.defaultFavouritesExpanded
-    var headerSectionAll: Boolean = seasonController.defaultAllExpanded
+    var headerSectionFavourited: Boolean = seasonController.favouritesExpanded
+    var headerSectionAll: Boolean = seasonController.allExpanded
 
-    private var currentSeason: Int = seasonController.defaultYear
+    private var currentSeason: Int = seasonController.defaultSeason
     private val favouriteSeasons = seasonController.favouriteSeasons.toMutableSet()
 
     override val list: MutableLiveData<List<ListItem>> = MutableLiveData()
@@ -83,7 +83,7 @@ class ListViewModel(
     }
 
     override fun clickSetDefaultSeason(season: Int) {
-        seasonController.setDefaultSeason(season)
+        seasonController.setUserDefaultSeason(season)
     }
 
     override fun clickSettings() {

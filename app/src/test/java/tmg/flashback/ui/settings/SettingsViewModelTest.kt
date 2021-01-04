@@ -42,8 +42,8 @@ internal class SettingsViewModelTest: BaseTest() {
         every { raceController.showQualifyingDelta } returns false
         every { raceController.showGridPenaltiesInQualifying } returns false
         every { raceController.fadeDNF } returns false
-        every { seasonController.defaultFavouritesExpanded } returns false
-        every { seasonController.defaultAllExpanded } returns false
+        every { seasonController.favouritesExpanded } returns false
+        every { seasonController.allExpanded } returns false
         every { crashManager.crashReporting } returns false
         every { deviceController.shakeToReport } returns false
         every { notificationController.isNotificationChannelsSupported } returns true
@@ -326,7 +326,7 @@ internal class SettingsViewModelTest: BaseTest() {
 
         sut.inputs.preferenceClicked(SEASON_BOTTOM_SHEET_FAVOURITED, true)
 
-        verify { seasonController.defaultFavouritesExpanded = true }
+        verify { seasonController.favouritesExpanded = true }
     }
 
     @Test
@@ -336,7 +336,7 @@ internal class SettingsViewModelTest: BaseTest() {
 
         sut.inputs.preferenceClicked(SEASON_BOTTOM_SHEET_ALL, true)
 
-        verify { seasonController.defaultAllExpanded = true }
+        verify { seasonController.allExpanded = true }
     }
 
     @Test

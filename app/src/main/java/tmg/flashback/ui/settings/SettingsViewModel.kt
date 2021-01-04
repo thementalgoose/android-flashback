@@ -118,8 +118,8 @@ class SettingsViewModel(
             add(SettingsOptions.FADE_OUT_DNF.toSwitch(raceController.fadeDNF))
             add(SettingsOptions.QUALIFYING_GRID_PENALTY.toSwitch(raceController.showGridPenaltiesInQualifying))
             add(AppPreferencesItem.Category(R.string.settings_season_list))
-            add(SettingsOptions.SEASON_BOTTOM_SHEET_FAVOURITED.toSwitch(seasonController.defaultFavouritesExpanded))
-            add(SettingsOptions.SEASON_BOTTOM_SHEET_ALL.toSwitch(seasonController.defaultAllExpanded))
+            add(SettingsOptions.SEASON_BOTTOM_SHEET_FAVOURITED.toSwitch(seasonController.favouritesExpanded))
+            add(SettingsOptions.SEASON_BOTTOM_SHEET_ALL.toSwitch(seasonController.allExpanded))
             add(AppPreferencesItem.Category(R.string.settings_help))
             add(SettingsOptions.ABOUT.toPref())
             add(SettingsOptions.REVIEW.toPref())
@@ -148,8 +148,8 @@ class SettingsViewModel(
             SettingsOptions.QUALIFYING_DELTAS -> raceController.showQualifyingDelta = value ?: false
             SettingsOptions.FADE_OUT_DNF -> raceController.fadeDNF = value ?: false
             SettingsOptions.QUALIFYING_GRID_PENALTY -> raceController.showGridPenaltiesInQualifying = value ?: true
-            SettingsOptions.SEASON_BOTTOM_SHEET_FAVOURITED -> seasonController.defaultFavouritesExpanded = value ?: true
-            SettingsOptions.SEASON_BOTTOM_SHEET_ALL -> seasonController.defaultAllExpanded = value ?: true
+            SettingsOptions.SEASON_BOTTOM_SHEET_FAVOURITED -> seasonController.favouritesExpanded = value ?: true
+            SettingsOptions.SEASON_BOTTOM_SHEET_ALL -> seasonController.allExpanded = value ?: true
             SettingsOptions.BAR_ANIMATION_SPEED -> openAnimationPicker.value = Event()
             SettingsOptions.ABOUT -> openAbout.value = Event()
             SettingsOptions.REVIEW -> openReview.value = DataEvent(playStoreUrl)
@@ -179,7 +179,7 @@ class SettingsViewModel(
             null -> seasonController.clearDefault()
             -1 -> seasonController.clearDefault()
             0 -> seasonController.clearDefault()
-            else -> seasonController.setDefaultSeason(season)
+            else -> seasonController.setUserDefaultSeason(season)
         }
         updateDefaultSeasonList()
         defaultSeasonChanged.value = Event()
@@ -212,7 +212,7 @@ class SettingsViewModel(
             .toList()
             .sortedByDescending { it }
             .map {
-                Selected(BottomSheetItem(id = it, text = StringHolder(msg = it.toString())), !seasonController.isDefaultNotSet && seasonController.defaultYear == it)
+                Selected(BottomSheetItem(id = it, text = StringHolder(msg = it.toString())), !seasonController.isDefaultNotSet && seasonController.defaultSeason == it)
             })
         defaultSeasonPreference.value = seasons
     }
