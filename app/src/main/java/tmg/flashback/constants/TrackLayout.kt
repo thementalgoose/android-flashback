@@ -10,7 +10,7 @@ enum class TrackLayout(
         val circuitId: String,
         @DrawableRes
         val icon: Int,
-        val override: List<String> = emptyList() // "2020 Sakhir Grand Prix" - Should be "${year} ${raceName}"
+        val override: List<String> = emptyList() // "2020 Sakhir Grand Prix" - Should be "${year} ${raceName}". Update unit tests!
 ) {
     ADELAIDE("adelaide", R.drawable.circuit_adelaide),
     ALBERT_PARK("albert_park", R.drawable.circuit_albert_park),

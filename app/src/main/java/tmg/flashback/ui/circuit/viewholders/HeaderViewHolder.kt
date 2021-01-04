@@ -6,8 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.view_circuit_info_header.view.*
 import org.threeten.bp.LocalDate
 import tmg.flashback.R
+import tmg.flashback.constants.App.currentYear
 import tmg.flashback.ui.circuit.CircuitItem
-import tmg.flashback.currentYear
 import tmg.flashback.ui.shared.pill.PillAdapter
 import tmg.flashback.ui.shared.pill.PillItem
 import tmg.flashback.ui.utils.getFlagResourceAlpha3
@@ -43,8 +43,8 @@ class HeaderViewHolder(
         itemView.imgCountry.setImageResource(context.getFlagResourceAlpha3(item.circuit.countryISO))
         itemView.country.text = item.circuit.country
         val previouslyHosted = item.circuit.results.count { it.date <= LocalDate.now() }
-        val minYear = item.circuit.results.minBy { it.season }?.season
-        val maxYear = item.circuit.results.maxBy { it.season }?.season
+        val minYear = item.circuit.results.minByOrNull { it.season }?.season
+        val maxYear = item.circuit.results.maxByOrNull { it.season }?.season
 
         var subtitle = ""
         subtitle += if (minYear == null || maxYear == null) {

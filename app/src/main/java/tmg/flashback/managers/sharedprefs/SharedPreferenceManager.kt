@@ -29,7 +29,7 @@ class SharedPreferenceManager(context: Context) : SharedPrefManager(context),
     private val keyBarAnimation: String = "BAR_ANIMATION"
     private val keyCrashReporting: String = "CRASH_REPORTING"
     private val keyShakeToReport: String = "SHAKE_TO_REPORT"
-    private val keyReleaseNotes: String = "RELEASE_NOTES"
+    private val keyAppVersion: String = "RELEASE_NOTES" // Used to be release notes
     private val keyDeviceUDID: String = "UDID"
     private val keyTheme: String = "THEME"
     private val keyFavouriteSeasons: String = "FAVOURITE_SEASONS"
@@ -39,6 +39,7 @@ class SharedPreferenceManager(context: Context) : SharedPrefManager(context),
     private val keyNewsShowDescription: String = "NEWS_SHOW_DESCRIPTIONS"
     private val keyAppHints: String = "APP_HINTS"
     private val keyDefaultSeason: String = "DEFAULT_SEASON"
+    private val keyReleaseNotesSeenVersion: String = "RELEASE_NOTES_SEEN_VERSION"
 
     private val keyNotificationRace: String = "NOTIFICATION_RACE"
     private val keyNotificationQualifying: String = "NOTIFICATION_QUALIFYING"
@@ -142,8 +143,8 @@ class SharedPreferenceManager(context: Context) : SharedPrefManager(context),
         set(value) = save(keyShakeToReport, value)
 
     override var lastAppVersion: Int
-        get() = getInt(keyReleaseNotes, 0)
-        set(value) = save(keyReleaseNotes, value)
+        get() = getInt(keyAppVersion, 0)
+        set(value) = save(keyAppVersion, value)
 
     override var appFirstBootTime: LocalDate
         get() {
@@ -165,11 +166,9 @@ class SharedPreferenceManager(context: Context) : SharedPrefManager(context),
         get() = getBoolean(keyRemoteConfigInitialSync, false)
         set(value) = save(keyRemoteConfigInitialSync, value)
 
-    //endregion
-
-
-
-    //region Notifications
+    override var releaseNotesSeenAppVersion: Int
+        get() = getInt(keyReleaseNotesSeenVersion, 0)
+        set(value) = save(keyReleaseNotesSeenVersion, value)
 
     override var notificationsQualifying: NotificationRegistration?
         get() = getString(keyNotificationQualifying, null)?.toEnum<NotificationRegistration>()

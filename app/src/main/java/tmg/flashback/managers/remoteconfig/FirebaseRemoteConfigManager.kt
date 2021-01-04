@@ -5,8 +5,7 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigException
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import kotlinx.coroutines.tasks.await
-import tmg.flashback.allYears
-import tmg.flashback.currentYear
+import tmg.flashback.constants.App.currentYear
 import tmg.flashback.firebase.BuildConfig
 import tmg.flashback.firebase.R
 import tmg.flashback.firebase.converters.convert
@@ -28,8 +27,10 @@ class FirebaseRemoteConfigManager(
     private val remoteConfigSettings = FirebaseRemoteConfigSettings
             .Builder()
             .apply {
-                if (BuildConfig.DEBUG) {
-                    minimumFetchIntervalInSeconds = 10L
+                minimumFetchIntervalInSeconds = if (BuildConfig.DEBUG) {
+                    10L
+                } else {
+                    21600L // 6h
                 }
             }
             .build()

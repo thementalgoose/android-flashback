@@ -6,7 +6,7 @@ import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.view_shared_provided.view.*
 import tmg.components.about.AboutThisAppActivity
 import tmg.flashback.R
-import tmg.flashback.constants.configuration
+import tmg.flashback.constants.AboutThisAppConfig
 import tmg.flashback.extensions.isLightMode
 import tmg.flashback.repo.enums.ThemePref
 import tmg.utilities.extensions.fromHtml
@@ -34,7 +34,7 @@ class ProvidedByViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnC
     override fun onClick(p0: View?) {
         context.startActivity(AboutThisAppActivity.intent(
                 context = context,
-                configuration = configuration(context, !isLightMode)
+                configuration = AboutThisAppConfig.configuration(context, !isLightMode)
         ))
     }
 }

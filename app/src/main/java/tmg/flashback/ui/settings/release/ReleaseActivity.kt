@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_release_notes.*
 import tmg.flashback.R
-import tmg.flashback.constants.releaseNotes
+import tmg.flashback.constants.Releases
 import tmg.flashback.ui.base.BaseActivity
 import tmg.utilities.extensions.fromHtml
 
@@ -17,9 +17,10 @@ class ReleaseActivity : BaseActivity() {
 
         header.text = getString(R.string.settings_help_release_notes_title)
 
-        val list = releaseNotes
-            .sortedByDescending { it.versionCode }
-            .map { it.releaseText }
+        val list = Releases
+            .values()
+            .sortedByDescending { it.version }
+            .map { it.release }
 
         back.setOnClickListener { finish() }
 

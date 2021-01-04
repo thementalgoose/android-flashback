@@ -2,7 +2,6 @@ package tmg.flashback.ui.dashboard.list
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import tmg.flashback.allYears
 import tmg.flashback.ui.base.BaseViewModel
 import tmg.flashback.controllers.SeasonController
 import tmg.flashback.controllers.UpNextController

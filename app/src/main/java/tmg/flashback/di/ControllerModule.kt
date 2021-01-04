@@ -19,9 +19,9 @@ val controllerModule = module {
     single { CrashController(get(), get()) }
     single { DeviceController(get()) }
     single { FeatureController(get()) }
-    single { NotificationController(get()) }
+    single { NotificationController(get(), get()) }
     single { RaceController(get()) }
-    single { ReleaseNotesController(get()) }
+    single { ReleaseNotesController(get(), get()) }
     single { SeasonController(get(), get()) }
     single { UpNextController(get()) }
 }

@@ -8,6 +8,8 @@ import androidx.core.graphics.toColorInt
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.view_season_list_season.view.*
 import tmg.flashback.*
+import tmg.flashback.constants.App.coloursDecade
+import tmg.flashback.constants.App.currentYear
 import tmg.flashback.ui.dashboard.list.HeaderType
 import tmg.flashback.ui.dashboard.list.ListItem
 import tmg.utilities.extensions.getColor

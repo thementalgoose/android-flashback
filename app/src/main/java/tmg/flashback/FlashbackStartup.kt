@@ -16,6 +16,11 @@ import tmg.flashback.managers.remoteconfig.RemoteConfigManager
 import tmg.flashback.notifications.PushNotificationManager
 import tmg.flashback.repo.config.RemoteConfigRepository
 
+/**
+ * Startup handler
+ *
+ * Ran when the application is first started
+ */
 class FlashbackStartup(
         private val deviceController: DeviceController,
         private val prefsNotification: NotificationController,
@@ -65,7 +70,7 @@ class FlashbackStartup(
         analyticsUserProperties.setOsVersion(Build.VERSION.SDK_INT.toString())
     }
 
-    private fun notificationsOptIn() {
+    fun notificationsOptIn() {
 
         // Enrol for race push notifications
         if (prefsNotification.raceOptInUndecided) {

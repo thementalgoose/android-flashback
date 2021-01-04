@@ -12,10 +12,10 @@ import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import tmg.flashback.R
+import tmg.flashback.constants.Formula1.maxPointsBySeason
 import tmg.flashback.ui.base.BaseViewModel
 import tmg.flashback.controllers.AppearanceController
 import tmg.flashback.ui.overviews.driver.summary.PipeType
-import tmg.flashback.maxPointsBySeason
 import tmg.flashback.managers.networkconnectivity.NetworkConnectivityManager
 import tmg.flashback.repo.db.stats.DriverRepository
 import tmg.flashback.repo.models.stats.DriverOverviewStanding
@@ -79,7 +79,7 @@ class DriverSeasonViewModel(
                 else -> {
 
                     if (standing.isInProgress) {
-                        standing.raceOverview.maxBy { it.round }?.let {
+                        standing.raceOverview.maxByOrNull { it.round }?.let {
                             list.add(
                                 DriverSeasonItem.ErrorItem(
                                     SyncDataItem.MessageRes(
@@ -161,7 +161,7 @@ class DriverSeasonViewModel(
                         .sortedBy { it.round }
                     )
 
-                    list.add(DriverSeasonItem.ErrorItem(SyncDataItem.ProvidedBy))
+                    list.add(DriverSeasonItem.ErrorItem(SyncDataItem.ProvidedBy()))
                 }
             }
             return@map list

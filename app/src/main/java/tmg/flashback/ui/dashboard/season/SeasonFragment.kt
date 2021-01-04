@@ -10,8 +10,8 @@ import kotlinx.android.synthetic.main.fragment_dashboard_season.season
 import kotlinx.android.synthetic.main.fragment_dashboard_season.swipeContainer
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.R
+import tmg.flashback.constants.App.currentYear
 import tmg.flashback.ui.base.BaseFragment
-import tmg.flashback.currentYear
 import tmg.flashback.ui.dashboard.DashboardNavigationCallback
 import tmg.flashback.ui.overviews.constructor.ConstructorActivity
 import tmg.flashback.ui.overviews.driver.DriverActivity

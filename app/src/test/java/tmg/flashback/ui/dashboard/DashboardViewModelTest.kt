@@ -35,7 +35,7 @@ internal class DashboardViewModelTest: BaseTest() {
     @Test
     fun `DashboardViewModel open release notes fires when release notes are different`() {
 
-        every { mockReleaseNotesController.showReleaseNotes } returns true
+        every { mockReleaseNotesController.pendingReleaseNotes } returns true
 
         initSUT()
 
@@ -47,7 +47,7 @@ internal class DashboardViewModelTest: BaseTest() {
     @Test
     fun `DashboardViewModel open release notes doesnt fire when no release notes difference`() {
 
-        every { mockReleaseNotesController.showReleaseNotes } returns false
+        every { mockReleaseNotesController.pendingReleaseNotes } returns false
 
         initSUT()
 

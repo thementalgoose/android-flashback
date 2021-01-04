@@ -101,7 +101,7 @@ class DriverViewModel(
                 }
             }
 
-            list.add(DriverSummaryItem.ErrorItem(SyncDataItem.ProvidedBy))
+            list.add(DriverSummaryItem.ErrorItem(SyncDataItem.ProvidedBy()))
 
             return@map list
         }

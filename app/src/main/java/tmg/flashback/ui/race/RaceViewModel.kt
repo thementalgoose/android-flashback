@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.*
 import org.threeten.bp.LocalDate
+import tmg.flashback.constants.App.showComingSoonMessageForNextDays
 import tmg.flashback.ui.base.BaseViewModel
 import tmg.flashback.controllers.AppHintsController
 import tmg.flashback.controllers.AppearanceController
@@ -15,7 +16,6 @@ import tmg.flashback.managers.networkconnectivity.NetworkConnectivityManager
 import tmg.flashback.repo.db.stats.SeasonOverviewRepository
 import tmg.flashback.repo.models.stats.*
 import tmg.flashback.ui.shared.viewholders.DataUnavailable
-import tmg.flashback.showComingSoonMessageForNextDays
 import tmg.flashback.ui.shared.sync.SyncDataItem
 import tmg.flashback.ui.utils.SeasonRound
 import tmg.utilities.extensions.combinePair
@@ -190,14 +190,14 @@ class RaceViewModel(
                                         )
                                     )
                                 }
-                                list.add(RaceModel.ErrorItem(SyncDataItem.ProvidedBy))
+                                list.add(RaceModel.ErrorItem(SyncDataItem.ProvidedBy()))
                             }
                             else {
                                 when {
                                     roundData.date > LocalDate.now() -> list.add(RaceModel.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.IN_FUTURE_RACE)))
                                     else -> list.add(RaceModel.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.COMING_SOON_RACE)))
                                 }
-                                list.add(RaceModel.ErrorItem(SyncDataItem.ProvidedBy))
+                                list.add(RaceModel.ErrorItem(SyncDataItem.ProvidedBy()))
                             }
                         }
                         RaceAdapterType.QUALIFYING_POS_1,
@@ -212,7 +212,7 @@ class RaceViewModel(
                                     showQualifying
                                 )
                             })
-                            list.add(RaceModel.ErrorItem(SyncDataItem.ProvidedBy))
+                            list.add(RaceModel.ErrorItem(SyncDataItem.ProvidedBy()))
                             if (driverIds.isNotEmpty()) {
                                 appHintNotifyQualifying()
                             }

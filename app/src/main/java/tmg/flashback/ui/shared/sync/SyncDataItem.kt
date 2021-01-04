@@ -4,6 +4,7 @@ import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
 import tmg.flashback.R
 import tmg.flashback.ui.shared.viewholders.DataUnavailable
+import java.util.*
 
 sealed class SyncDataItem(
     @LayoutRes val layoutId: Int
@@ -28,5 +29,7 @@ sealed class SyncDataItem(
         val type: DataUnavailable
     ): SyncDataItem(R.layout.view_shared_data_unavailable)
 
-    object ProvidedBy: SyncDataItem(R.layout.view_shared_provided)
+    data class ProvidedBy(
+        val uuid: String = "provided_by"
+    ): SyncDataItem(R.layout.view_shared_provided)
 }

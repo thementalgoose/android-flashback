@@ -1,8 +1,8 @@
 package tmg.flashback.controllers
 
 import androidx.annotation.IntRange
-import tmg.flashback.currentYear
-import tmg.flashback.minimumSupportedYear
+import tmg.flashback.constants.App.currentYear
+import tmg.flashback.constants.Formula1.minimumSupportedYear
 import tmg.flashback.repo.config.RemoteConfigRepository
 import tmg.flashback.repo.pref.UserRepository
 
