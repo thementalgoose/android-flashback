@@ -11,6 +11,8 @@ import org.threeten.bp.LocalDate
 import tmg.flashback.*
 import tmg.flashback.controllers.AppearanceController
 import tmg.flashback.controllers.DeviceController
+import tmg.flashback.controllers.FeatureController
+import tmg.flashback.controllers.SeasonController
 import tmg.flashback.managers.networkconnectivity.NetworkConnectivityManager
 import tmg.flashback.repo.config.RemoteConfigRepository
 import tmg.flashback.repo.db.stats.HistoryRepository
@@ -31,8 +33,10 @@ internal class SeasonViewModelTest: BaseTest() {
 
     private val mockDeviceController: DeviceController = mockk(relaxed = true)
     private val mockAppearanceController: AppearanceController = mockk(relaxed = true)
+    private val mockFeatureController: FeatureController = mockk(relaxed = true)
     private val mockHistoryRepository: HistoryRepository = mockk(relaxed = true)
     private val mockSeasonOverviewRepository: SeasonOverviewRepository = mockk(relaxed = true)
+    private val mockSeasonController: SeasonController = mockk(relaxed = true)
     private val mockRemoteConfigRepository: RemoteConfigRepository = mockk(relaxed = true)
     private val mockNetworkConnectivityManager: NetworkConnectivityManager = mockk(relaxed = true)
 
@@ -52,8 +56,10 @@ internal class SeasonViewModelTest: BaseTest() {
         sut = SeasonViewModel(
             mockDeviceController,
             mockAppearanceController,
+            mockFeatureController,
             mockHistoryRepository,
             mockSeasonOverviewRepository,
+            mockSeasonController,
             mockRemoteConfigRepository,
             mockNetworkConnectivityManager
         )
@@ -76,7 +82,7 @@ internal class SeasonViewModelTest: BaseTest() {
     @Test
     fun `SeasonViewModel clickSearch fires open search event if remote config field enabled`() {
 
-        every { mockRemoteConfigRepository.search } returns true
+        every { mockFeatureController.searchEnabled } returns true
 
         initSUT()
 
@@ -168,7 +174,7 @@ internal class SeasonViewModelTest: BaseTest() {
     @Test
     fun `SeasonViewModel defaults to value in remote config and not current year`() = coroutineTest {
 
-        every { mockRemoteConfigRepository.defaultYear } returns 2018
+        every { mockSeasonController.defaultYear } returns 2018
 
         initSUT()
 

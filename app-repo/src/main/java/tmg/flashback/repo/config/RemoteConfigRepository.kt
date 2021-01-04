@@ -5,6 +5,11 @@ import tmg.flashback.repo.models.remoteconfig.UpNextSchedule
 interface RemoteConfigRepository {
 
     /**
+     * Get a list of all the seasons to show in the list
+     */
+    val allSeasons: Set<Int>
+
+    /**
      * What year we should default too when opening the app
      */
     val defaultYear: Int

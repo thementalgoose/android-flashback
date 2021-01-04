@@ -86,4 +86,6 @@
 
     <include layout="@layout/bottom_sheet_animation" />
 
+    <include layout="@layout/bottom_sheet_default_season" />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

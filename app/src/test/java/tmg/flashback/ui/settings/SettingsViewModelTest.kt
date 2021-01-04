@@ -21,6 +21,7 @@ import tmg.flashback.testutils.assertDataEventValue
 import tmg.flashback.testutils.assertEventFired
 import tmg.flashback.testutils.test
 import tmg.flashback.ui.utils.Selected
+import tmg.flashback.ui.utils.StringHolder
 import tmg.flashback.ui.utils.bottomsheet.BottomSheetItem
 
 internal class SettingsViewModelTest: BaseTest() {
@@ -84,6 +85,7 @@ internal class SettingsViewModelTest: BaseTest() {
             add(AppPreferencesItem.Category(R.string.settings_theme))
             add(THEME.toPref())
             add(AppPreferencesItem.Category(R.string.settings_customisation))
+            add(DEFAULT_SEASON.toPref())
             add(BAR_ANIMATION_SPEED.toPref())
             add(QUALIFYING_DELTAS.toSwitch(false))
             add(FADE_OUT_DNF.toSwitch(false))
@@ -153,9 +155,9 @@ internal class SettingsViewModelTest: BaseTest() {
         initSUT()
 
         val expected = listOf(
-                Selected(BottomSheetItem(DAY.ordinal, DAY.icon, DAY.label), false),
-                Selected(BottomSheetItem(AUTO.ordinal, AUTO.icon, AUTO.label), true),
-                Selected(BottomSheetItem(NIGHT.ordinal, NIGHT.icon, NIGHT.label), false)
+                Selected(BottomSheetItem(DAY.ordinal, DAY.icon, StringHolder(DAY.label)), false),
+                Selected(BottomSheetItem(AUTO.ordinal, AUTO.icon, StringHolder(AUTO.label)), true),
+                Selected(BottomSheetItem(NIGHT.ordinal, NIGHT.icon, StringHolder(NIGHT.label)), false)
         )
 
         sut.outputs.themePreferences.test {
@@ -169,13 +171,31 @@ internal class SettingsViewModelTest: BaseTest() {
         initSUT()
 
         val expected = listOf(
-                Selected(BottomSheetItem(NONE.ordinal, NONE.icon, NONE.label), false),
-                Selected(BottomSheetItem(QUICK.ordinal, QUICK.icon, QUICK.label), false),
-                Selected(BottomSheetItem(MEDIUM.ordinal, MEDIUM.icon, MEDIUM.label), true),
-                Selected(BottomSheetItem(SLOW.ordinal, SLOW.icon, SLOW.label), false)
+            Selected(BottomSheetItem(NONE.ordinal, NONE.icon, StringHolder(NONE.label)), false),
+            Selected(BottomSheetItem(QUICK.ordinal, QUICK.icon, StringHolder(QUICK.label)), false),
+            Selected(BottomSheetItem(MEDIUM.ordinal, MEDIUM.icon, StringHolder(MEDIUM.label)), true),
+            Selected(BottomSheetItem(SLOW.ordinal, SLOW.icon, StringHolder(SLOW.label)), false)
         )
 
         sut.outputs.animationPreference.test {
+            assertValue(expected)
+        }
+    }
+
+    @Test
+    fun `SettingsViewModel setup populates default season`() {
+
+        every { seasonController.allSeasons } returns setOf(2019, 2020)
+
+        initSUT()
+
+        val expected = mutableListOf<Selected<BottomSheetItem>>().apply {
+            add(Selected(BottomSheetItem(id = -1, text = StringHolder(R.string.settings_bar_default_season_option))))
+            add(Selected(BottomSheetItem(id = 2020, text = StringHolder(msg = "2020"))))
+            add(Selected(BottomSheetItem(id = 2019, text = StringHolder(msg = "2019"))))
+        }
+
+        sut.outputs.defaultSeasonPreference.test {
             assertValue(expected)
         }
     }
@@ -208,6 +228,32 @@ internal class SettingsViewModelTest: BaseTest() {
     }
 
     @Test
+    fun `SettingsViewModel select a default season updates the preference to auto`() {
+
+        initSUT()
+
+        sut.pickSeason(null)
+        verify { seasonController.clearDefault() }
+
+        sut.outputs.defaultSeasonChanged.test {
+            assertEventFired()
+        }
+    }
+
+    @Test
+    fun `SettingsViewModel select a default season updates the preference with year`() {
+
+        initSUT()
+
+        sut.pickSeason(2018)
+        verify { seasonController.setDefaultSeason(2018) }
+
+        sut.outputs.defaultSeasonChanged.test {
+            assertEventFired()
+        }
+    }
+
+    @Test
     fun `SettingsViewModel selecting theme pref opens picker`() {
 
         initSUT()
@@ -227,6 +273,18 @@ internal class SettingsViewModelTest: BaseTest() {
         sut.inputs.preferenceClicked(BAR_ANIMATION_SPEED, null)
 
         sut.outputs.openAnimationPicker.test {
+            assertEventFired()
+        }
+    }
+
+    @Test
+    fun `SettingsViewModel selecting default season pref opens picker`() {
+
+        initSUT()
+
+        sut.inputs.preferenceClicked(DEFAULT_SEASON, null)
+
+        sut.outputs.openDefaultSeasonPicker.test {
             assertEventFired()
         }
     }

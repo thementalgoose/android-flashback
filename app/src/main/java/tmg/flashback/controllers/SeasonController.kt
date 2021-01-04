@@ -29,6 +29,9 @@ class SeasonController(
         userRepository.defaultSeason = season
     }
 
+    val isDefaultNotSet: Boolean
+        get() = userRepository.defaultSeason == null
+
     var defaultYear: Int
         get() {
             val prefSeason = userRepository.defaultSeason
@@ -44,6 +47,13 @@ class SeasonController(
         private set(value) {
             userRepository.defaultSeason = value
         }
+
+    //endregion
+
+    //region All Seasons
+
+    val allSeasons: Set<Int>
+        get() = remoteConfigRepository.allSeasons
 
     //endregion
 

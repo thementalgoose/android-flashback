@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
 import org.threeten.bp.Year
+import tmg.flashback.allYears
 import tmg.flashback.controllers.SeasonController
 import tmg.flashback.controllers.UpNextController
 import tmg.flashback.repo.models.remoteconfig.UpNextSchedule
@@ -35,6 +36,8 @@ internal class ListViewModelTest: BaseTest() {
 
         every { mockSeasonController.defaultYear } returns 2018
         every { mockUpNextController.getNextRace() } returns null
+
+        every { mockSeasonController.allSeasons } returns allYears.toSet()
     }
 
     private fun initSUT() {
@@ -140,8 +143,9 @@ internal class ListViewModelTest: BaseTest() {
     @Test
     fun `SeasonViewModel list of all seasons with some favourites is output`() {
 
-        val favourites = setOf(2017, 2012, 20150)
+        val favourites = setOf(2017, 2012, 2015)
         val expected = expectedList(favourites)
+
 
         every { mockSeasonController.favouriteSeasons } returns favourites
 

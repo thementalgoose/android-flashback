@@ -5,6 +5,8 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.view_bottom_sheet_item.view.*
 import tmg.flashback.R
 import tmg.flashback.ui.utils.Selected
+import tmg.utilities.extensions.views.gone
+import tmg.utilities.extensions.views.show
 
 class BottomSheetViewHolder(
     itemView: View,
@@ -20,8 +22,15 @@ class BottomSheetViewHolder(
     fun bind(selected: Selected<BottomSheetItem>) {
         this.currentItem = selected.value
         itemView.apply {
-            menuItemIcon.setImageResource(selected.value.image)
-            menuItemLabel.setText(selected.value.text)
+            if (selected.value.image != null) {
+                menuItemIcon.show()
+                menuItemIcon.setImageResource(selected.value.image)
+            }
+            else {
+                menuItemIcon.gone()
+            }
+
+            menuItemLabel.text = selected.value.text.resolve(context)
 
             if (selected.isSelected) {
                 container.setBackgroundResource(R.drawable.background_selected)

@@ -22,7 +22,7 @@ val viewModelModule = module {
 
     // Dashboard
     viewModel { DashboardViewModel(get(), get(), get()) }
-    viewModel { SeasonViewModel(get(), get(), get(), get(), get(), get()) }
+    viewModel { SeasonViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
     viewModel { ListViewModel(get(), get()) }
     viewModel { SearchViewModel() }
 

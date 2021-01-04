@@ -84,7 +84,7 @@ class ListViewModel(
     }
 
     override fun clickSetDefaultSeason(season: Int) {
-
+        seasonController.setDefaultSeason(season)
     }
 
     override fun clickSettings() {
@@ -105,6 +105,8 @@ class ListViewModel(
             list.add(ListItem.UpNext(it))
         }
 
+        val supportedSeasons = seasonController.allSeasons
+
         // Favourites
         list.add(
             ListItem.Header(
@@ -115,6 +117,7 @@ class ListViewModel(
         if (headerSectionFavourites) {
             list.addAll(favouritedSet
                 .toList()
+                .filter { supportedSeasons.contains(it) }
                 .sortedByDescending { it }
                 .map {
                     ListItem.Season(
@@ -130,7 +133,7 @@ class ListViewModel(
         // All
         list.add(ListItem.Header(HeaderType.ALL, headerSectionAll))
         if (headerSectionAll) {
-            list.addAll(allYears
+            list.addAll(supportedSeasons
                 .map {
                     ListItem.Season(
                         season = it,

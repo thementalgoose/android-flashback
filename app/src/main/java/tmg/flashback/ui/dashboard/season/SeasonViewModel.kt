@@ -13,9 +13,12 @@ import tmg.flashback.ui.base.BaseViewModel
 import tmg.flashback.constructorChampionshipStarts
 import tmg.flashback.controllers.AppearanceController
 import tmg.flashback.controllers.DeviceController
+import tmg.flashback.controllers.FeatureController
+import tmg.flashback.controllers.SeasonController
 import tmg.flashback.currentYear
 import tmg.flashback.daysUntilDataProvidedBannerMovedToBottom
 import tmg.flashback.managers.networkconnectivity.NetworkConnectivityManager
+import tmg.flashback.managers.remoteconfig.RemoteConfigManager
 import tmg.flashback.repo.config.RemoteConfigRepository
 import tmg.flashback.repo.db.stats.HistoryRepository
 import tmg.flashback.repo.db.stats.SeasonOverviewRepository
@@ -60,12 +63,14 @@ interface SeasonViewModelOutputs {
 
 //endregion
 
-
 class SeasonViewModel(
         private val deviceController: DeviceController,
         private val appearanceController: AppearanceController,
+        private val featureController: FeatureController,
         private val historyRepository: HistoryRepository,
         private val seasonOverviewRepository: SeasonOverviewRepository,
+        private val seasonController: SeasonController,
+        // TODO: REMOVE THIS DEPENDENCY
         private val remoteConfigRepository: RemoteConfigRepository,
         private val networkConnectivityManager: NetworkConnectivityManager
 ): BaseViewModel(), SeasonViewModelInputs, SeasonViewModelOutputs {
@@ -74,7 +79,7 @@ class SeasonViewModel(
     private val currentTab: ConflatedBroadcastChannel<SeasonNavItem> =
         ConflatedBroadcastChannel(SeasonNavItem.CALENDAR)
     private val currentTabFlow: Flow<SeasonNavItem> = currentTab.asFlow()
-    private val season: ConflatedBroadcastChannel<Int> = ConflatedBroadcastChannel(remoteConfigRepository.defaultYear)
+    private val season: ConflatedBroadcastChannel<Int> = ConflatedBroadcastChannel(seasonController.defaultYear)
     private val currentHistory: Flow<History?> = season.asFlow()
         .flatMapLatest { historyRepository.historyFor(it) }
 
@@ -165,7 +170,7 @@ class SeasonViewModel(
                         else -> {
                             val maxRound = rounds
                                 .filter { it.race.isNotEmpty() }
-                                .maxBy { it.round }
+                                .maxByOrNull { it.round }
                             if (maxRound != null && historyRounds.size != rounds.size) {
                                 list.addError(SyncDataItem.MessageRes(R.string.results_accurate_for, listOf(maxRound.name, maxRound.round)))
                             }
@@ -173,8 +178,6 @@ class SeasonViewModel(
                             list.addAll(constructorStandings.toConstructorList())
                         }
                     }
-                }
-                else -> {
                 }
             }
             if (!showBannerAtTop) {
@@ -207,7 +210,7 @@ class SeasonViewModel(
     }
 
     override fun clickSearch() {
-        if (remoteConfigRepository.search) {
+        if (featureController.searchEnabled) {
             openSearch.value = Event()
         }
     }

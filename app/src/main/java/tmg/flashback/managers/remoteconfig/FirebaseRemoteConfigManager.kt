@@ -5,12 +5,14 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigException
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import kotlinx.coroutines.tasks.await
+import tmg.flashback.allYears
 import tmg.flashback.currentYear
 import tmg.flashback.firebase.BuildConfig
 import tmg.flashback.firebase.R
 import tmg.flashback.firebase.converters.convert
 import tmg.flashback.firebase.crash.FirebaseCrashManager
 import tmg.flashback.firebase.extensions.toJson
+import tmg.flashback.firebase.models.FAllSeasons
 import tmg.flashback.firebase.models.FUpNext
 import tmg.flashback.repo.config.RemoteConfigRepository
 import tmg.flashback.repo.models.remoteconfig.UpNextSchedule
@@ -38,6 +40,7 @@ class FirebaseRemoteConfigManager(
     private val keyRss: String = "rss"
     private val keyDataProvidedBy: String = "data_provided"
     private val keySearch: String = "search"
+    private val keyAllSeasons: String = "all_seasons"
 
     init {
         remoteConfig.setDefaultsAsync(R.xml.remote_config_defaults)
@@ -79,6 +82,9 @@ class FirebaseRemoteConfigManager(
 
     override val search: Boolean
         get() = remoteConfig.getBoolean(keySearch)
+
+    override val allSeasons: Set<Int>
+        get() = remoteConfig.getString(keyAllSeasons).toJson<FAllSeasons>()?.convert() ?: emptySet()
 
     //endregion
 
