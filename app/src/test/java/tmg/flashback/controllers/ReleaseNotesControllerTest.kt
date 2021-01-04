@@ -10,7 +10,7 @@ import tmg.flashback.managers.buildconfig.BuildConfigManager
 import tmg.flashback.repo.pref.DeviceRepository
 import tmg.flashback.testutils.BaseTest
 
-internal class ReleasesControllerTest: BaseTest() {
+internal class ReleaseNotesControllerTest: BaseTest() {
 
     private var mockDeviceRepository: DeviceRepository = mockk(relaxed = true)
     private var mockBuildConfigManager: BuildConfigManager = mockk(relaxed = true)
@@ -46,6 +46,15 @@ internal class ReleasesControllerTest: BaseTest() {
         initSUT()
 
         assertEquals(listOf(Releases.VERSION_28), sut.majorReleaseNotes)
+    }
+
+    @Test
+    fun `ReleaseNotesController major release version doesn't include last version`() {
+        every { mockBuildConfigManager.versionCode } returns 31
+        every { mockDeviceRepository.releaseNotesSeenAppVersion } returns 28
+        initSUT()
+
+        assertEquals(listOf(Releases.VERSION_31), sut.majorReleaseNotes)
     }
 
     @Test
