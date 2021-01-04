@@ -3,6 +3,8 @@ package tmg.flashback.ui.dashboard
 import android.content.Intent
 import android.os.Bundle
 import com.discord.panels.OverlappingPanelsLayout
+import com.discord.panels.OverlappingPanelsLayout.Panel.CENTER
+import com.discord.panels.OverlappingPanelsLayout.Panel.END
 import kotlinx.android.synthetic.main.activity_dashboard.*
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -50,11 +52,10 @@ class DashboardActivity: BaseActivity(), DashboardNavigationCallback {
     }
 
     override fun onBackPressed() {
-        if (panels.getSelectedPanel() != OverlappingPanelsLayout.Panel.CENTER) {
-            panels.closePanels()
-        }
-        else {
-            super.onBackPressed()
+        when {
+            panels.getSelectedPanel() == END -> panels.closePanels()
+            panels.getSelectedPanel() == CENTER -> panels.openStartPanel()
+            else -> super.onBackPressed()
         }
     }
 

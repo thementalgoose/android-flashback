@@ -23,7 +23,6 @@ class SeasonController(
 
     var defaultSeason: Int
         get() {
-
             val supportedSeasons = remoteConfigRepository.supportedSeasons
             val userPrefSeason = userRepository.defaultSeason
             val serverSeason = remoteConfigRepository.defaultSeason
@@ -31,7 +30,6 @@ class SeasonController(
             if (supportedSeasons.isEmpty()) {
                 return currentYear
             }
-
             if (userPrefSeason != null) {
                 if (supportedSeasons.contains(userPrefSeason)) {
                     return userPrefSeason
@@ -40,7 +38,6 @@ class SeasonController(
                     clearDefault()
                 }
             }
-
             return if (!supportedSeasons.contains(serverSeason)) {
                 supportedSeasons.maxOrNull()!!
             } else {
