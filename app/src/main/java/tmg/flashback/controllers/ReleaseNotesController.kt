@@ -31,7 +31,7 @@ class ReleaseNotesController(
             return if (currentVersion > lastVersion) {
                 Releases.values()
                         .sortedByDescending { it.version }
-                        .filter { it.version in lastVersion..currentVersion }
+                        .filter { it.version in (lastVersion + 1)..currentVersion }
                         .filter { it.isMajor }
                         .take(3)
             } else {
