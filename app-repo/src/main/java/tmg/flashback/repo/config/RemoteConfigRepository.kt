@@ -7,12 +7,12 @@ interface RemoteConfigRepository {
     /**
      * Get a list of all the seasons to show in the list
      */
-    val allSeasons: Set<Int>
+    val supportedSeasons: Set<Int>
 
     /**
      * What year we should default too when opening the app
      */
-    val defaultYear: Int
+    val defaultSeason: Int
 
     /**
      * Up next schedule to be shown in the app

@@ -1,3 +1,6 @@
+import groovy.xml.MarkupBuilder
+import groovy.json.JsonBuilder
+
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 

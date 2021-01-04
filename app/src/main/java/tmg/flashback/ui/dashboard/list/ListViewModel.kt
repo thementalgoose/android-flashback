@@ -15,6 +15,7 @@ interface ListViewModelInputs {
     fun toggleFavourite(season: Int)
     fun clickSeason(season: Int)
 
+    fun clickClearDefaultSeason()
     fun clickSetDefaultSeason(season: Int)
 
     fun clickSettings()
@@ -27,6 +28,8 @@ interface ListViewModelInputs {
 interface ListViewModelOutputs {
     val list: LiveData<List<ListItem>>
     val showSeasonEvent: LiveData<DataEvent<Int>>
+
+    val defaultSeasonUpdated: LiveData<DataEvent<Int?>>
 
     val openSettings: LiveData<Event>
 }
@@ -47,6 +50,7 @@ class ListViewModel(
     override val list: MutableLiveData<List<ListItem>> = MutableLiveData()
     override val showSeasonEvent: MutableLiveData<DataEvent<Int>> = MutableLiveData()
     override val openSettings: MutableLiveData<Event> = MutableLiveData()
+    override val defaultSeasonUpdated: MutableLiveData<DataEvent<Int?>> = MutableLiveData()
 
     var inputs: ListViewModelInputs = this
     var outputs: ListViewModelOutputs = this
@@ -84,6 +88,12 @@ class ListViewModel(
 
     override fun clickSetDefaultSeason(season: Int) {
         seasonController.setUserDefaultSeason(season)
+        defaultSeasonUpdated.value = DataEvent(season)
+    }
+
+    override fun clickClearDefaultSeason() {
+        seasonController.clearDefault()
+        defaultSeasonUpdated.value = DataEvent(null)
     }
 
     override fun clickSettings() {
@@ -104,7 +114,7 @@ class ListViewModel(
             list.add(ListItem.UpNext(it))
         }
 
-        val supportedSeasons = seasonController.allSeasons
+        val supportedSeasons = seasonController.supportedSeasons
 
         // Favourites
         list.add(

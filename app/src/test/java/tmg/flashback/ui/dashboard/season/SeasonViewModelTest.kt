@@ -176,7 +176,7 @@ internal class SeasonViewModelTest: BaseTest() {
         initSUT()
 
         sut.outputs.label.test {
-            assertValue(StringHolder(null, "2018"))
+            assertValue(StringHolder( "2018"))
         }
     }
 
