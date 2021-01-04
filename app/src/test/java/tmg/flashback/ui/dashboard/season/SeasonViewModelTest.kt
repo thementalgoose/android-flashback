@@ -13,7 +13,6 @@ import tmg.flashback.constants.App.currentYear
 import tmg.flashback.controllers.*
 import tmg.flashback.controllers.NotificationController.Companion.daysUntilDataProvidedBannerMovedToBottom
 import tmg.flashback.managers.networkconnectivity.NetworkConnectivityManager
-import tmg.flashback.repo.config.RemoteConfigRepository
 import tmg.flashback.repo.db.stats.HistoryRepository
 import tmg.flashback.repo.db.stats.SeasonOverviewRepository
 import tmg.flashback.repo.enums.BarAnimation
@@ -172,12 +171,12 @@ internal class SeasonViewModelTest: BaseTest() {
     @Test
     fun `SeasonViewModel defaults to value in remote config and not current year`() = coroutineTest {
 
-        every { mockSeasonController.defaultYear } returns 2018
+        every { mockSeasonController.defaultSeason } returns 2018
 
         initSUT()
 
         sut.outputs.label.test {
-            assertValue(StringHolder(null, "2018"))
+            assertValue(StringHolder( "2018"))
         }
     }
 

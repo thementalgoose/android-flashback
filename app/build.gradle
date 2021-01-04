@@ -1,4 +1,6 @@
 import com.github.triplet.gradle.androidpublisher.ResolutionStrategy
+import groovy.json.JsonBuilder
+import groovy.xml.MarkupBuilder
 
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
@@ -128,6 +130,72 @@ tasks.withType(Test) {
         showExceptions true
         showStackTraces true
         showStandardStreams true
+    }
+}
+
+task generateRemoteConfigDefaults {
+
+    println("Remote config default - Generating file")
+
+    def year = new Date().format('yyyy')
+
+    def supportedSeasonsModel = new Object()
+    supportedSeasonsModel.metaClass.seasons = []
+    for (item in 1950..year.toInteger()) {
+        def season = new Object()
+        season.metaClass.s = item
+        supportedSeasonsModel.seasons.add(season)
+    }
+    def jsonBuilder = new JsonBuilder()
+    jsonBuilder(supportedSeasonsModel)
+    def supportedSeasons = jsonBuilder.toString()
+
+    def filePath = project.projectDir.absolutePath + "/../app-firebase/src/main/res/xml/remote_config_defaults.xml"
+    new File(filePath).getParentFile().mkdirs()
+    new File(filePath).withWriter { writer ->
+        def xmlBuilder = new MarkupBuilder(writer)
+        xmlBuilder.doubleQuotes = true
+        xmlBuilder.mkp.xmlDeclaration(version: '1.0', encoding: 'utf-8')
+
+        xmlBuilder.defaultsMap {
+            entry {
+                key('default_year')
+                value(year)
+            }
+            entry {
+                key('up_next')
+                value()
+            }
+            entry {
+                key('banner')
+                value()
+            }
+            entry {
+                key('rss')
+                value('false')
+            }
+            entry {
+                key('data_provided')
+                value('Data provided by Ergast API')
+            }
+            entry {
+                key('search')
+                value('false')
+            }
+            entry {
+                key('supported_seasons')
+                value(supportedSeasons)
+            }
+        }
+    }
+
+    println("Remote config defaults - file generated")
+    println(new File(filePath).text)
+}
+
+tasks.whenTaskAdded { task ->
+    if (task.name.contains("assemble")) {
+        task.dependsOn generateRemoteConfigDefaults
     }
 }
 

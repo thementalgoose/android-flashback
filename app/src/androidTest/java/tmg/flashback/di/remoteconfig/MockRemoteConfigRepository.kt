@@ -15,7 +15,7 @@ internal object MockRemoteConfigRepository: RemoteConfigRepository {
 
     override val upNext: List<UpNextSchedule>
         get() = emptyList()
-    override val defaultYear: Int
+    override val defaultSeason: Int
         get() = 2021
     override val banner: String
         get() = "MOCK BANNER"

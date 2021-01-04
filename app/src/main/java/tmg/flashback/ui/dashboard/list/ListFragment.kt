@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_dashboard_list.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.R
@@ -58,6 +59,20 @@ class ListFragment: BaseFragment() {
         observeEvent(viewModel.outputs.openSettings) {
             context?.let {
                 startActivity(Intent(it, SettingsActivity::class.java))
+            }
+        }
+
+        observeEvent(viewModel.outputs.defaultSeasonUpdated) {
+            when (it) {
+                null -> Snackbar
+                        .make(list, getString(R.string.dashboard_season_list_default_banner_automatic), Snackbar.LENGTH_LONG)
+                        .show()
+                else -> Snackbar
+                        .make(list, getString(R.string.dashboard_season_list_default_banner_user, it), Snackbar.LENGTH_LONG)
+                        .setAction(R.string.dashboard_season_list_default_banner_revert) {
+                            viewModel.inputs.clickClearDefaultSeason()
+                        }
+                        .show()
             }
         }
     }
