@@ -21,7 +21,7 @@
     <string name="settings_theme_theme_dark">Dark mode</string>
     <string name="settings_default_season_title">Default season</string>
     <string name="settings_default_season_description">Pick a default season that the app shows when you first load it up</string>
-    <string name="settings_default_season_bottom_sheet">You can set a default season to load into the app with from the home screen, or you can let flashback follow the formula 1 calendar and change default seasons as the season gets underway</string>
+    <string name="settings_default_season_bottom_sheet">You can set a default season to load into the app with from the home screen, or you can let flashback follow the formula 1 calendar and change the default season as the season gets underway</string>
     <string name="settings_default_season_option_automatic">Follow formula 1</string>
     <string name="settings_default_season_option_user">User defined (%d)</string>
     <string name="settings_bar_animation_animation_title">Bar Animation</string>
