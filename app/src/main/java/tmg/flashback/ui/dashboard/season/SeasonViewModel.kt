@@ -15,8 +15,6 @@ import tmg.flashback.ui.base.BaseViewModel
 import tmg.flashback.controllers.*
 import tmg.flashback.controllers.NotificationController.Companion.daysUntilDataProvidedBannerMovedToBottom
 import tmg.flashback.managers.networkconnectivity.NetworkConnectivityManager
-import tmg.flashback.managers.remoteconfig.RemoteConfigManager
-import tmg.flashback.repo.config.RemoteConfigRepository
 import tmg.flashback.repo.db.stats.HistoryRepository
 import tmg.flashback.repo.db.stats.SeasonOverviewRepository
 import tmg.flashback.repo.models.stats.*
@@ -75,7 +73,7 @@ class SeasonViewModel(
     private val currentTab: ConflatedBroadcastChannel<SeasonNavItem> =
         ConflatedBroadcastChannel(SeasonNavItem.CALENDAR)
     private val currentTabFlow: Flow<SeasonNavItem> = currentTab.asFlow()
-    private val season: ConflatedBroadcastChannel<Int> = ConflatedBroadcastChannel(seasonController.defaultYear)
+    private val season: ConflatedBroadcastChannel<Int> = ConflatedBroadcastChannel(seasonController.defaultSeason)
     private val currentHistory: Flow<History?> = season.asFlow()
         .flatMapLatest { historyRepository.historyFor(it) }
 

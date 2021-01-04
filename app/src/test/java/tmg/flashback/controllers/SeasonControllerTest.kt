@@ -29,7 +29,7 @@ internal class SeasonControllerTest: BaseTest() {
         every { mockUserRepository.defaultSeason } returns null
         initSUT()
 
-        assertEquals(2019, sut.defaultYear)
+        assertEquals(2019, sut.defaultSeason)
 
         verify {
             mockRemoteConfigRepository.defaultYear
@@ -43,7 +43,7 @@ internal class SeasonControllerTest: BaseTest() {
         every { mockUserRepository.defaultSeason } returns 2017
         initSUT()
 
-        assertEquals(2017, sut.defaultYear)
+        assertEquals(2017, sut.defaultSeason)
 
         verify {
             mockUserRepository.defaultSeason
@@ -56,7 +56,7 @@ internal class SeasonControllerTest: BaseTest() {
         every { mockUserRepository.defaultSeason } returns 1921
         initSUT()
 
-        assertEquals(2019, sut.defaultYear)
+        assertEquals(2019, sut.defaultSeason)
 
         verify {
             mockRemoteConfigRepository.defaultYear
@@ -70,7 +70,7 @@ internal class SeasonControllerTest: BaseTest() {
         every { mockUserRepository.defaultSeason } returns 1921
         initSUT()
 
-        assertEquals(currentYear, sut.defaultYear)
+        assertEquals(currentYear, sut.defaultSeason)
 
         verify {
             mockRemoteConfigRepository.defaultYear
@@ -92,7 +92,7 @@ internal class SeasonControllerTest: BaseTest() {
     fun `SeasonController set default season updates prefs`() {
         every { mockUserRepository.defaultSeason } returns 2018
         initSUT()
-        sut.setDefaultSeason(2019)
+        sut.defaultSeason = 2019
         verify {
             mockUserRepository.defaultSeason = 2019
         }
@@ -110,6 +110,16 @@ internal class SeasonControllerTest: BaseTest() {
         every { mockUserRepository.defaultSeason } returns 2018
         initSUT()
         assertFalse(sut.isDefaultNotSet)
+    }
+
+    @Test
+    fun `SeasonController default year from server returns it from remote config`() {
+        every { mockRemoteConfigRepository.defaultYear } returns 2020
+        initSUT()
+        assertEquals(2020, sut.defaultSeasonAutomatic)
+        verify {
+            mockRemoteConfigRepository.defaultYear
+        }
     }
 
     //endregion
@@ -136,7 +146,7 @@ internal class SeasonControllerTest: BaseTest() {
         every { mockUserRepository.showListFavourited } returns true
         initSUT()
 
-        assertTrue(sut.defaultFavouritesExpanded)
+        assertTrue(sut.favouritesExpanded)
         verify { mockUserRepository.showListFavourited }
     }
 
@@ -145,14 +155,14 @@ internal class SeasonControllerTest: BaseTest() {
         every { mockUserRepository.showListFavourited } returns false
         initSUT()
 
-        assertFalse(sut.defaultFavouritesExpanded)
+        assertFalse(sut.favouritesExpanded)
         verify { mockUserRepository.showListFavourited }
     }
 
     @Test
     fun `SeasonController default show favourites update interacts with prefs`() {
         initSUT()
-        sut.defaultFavouritesExpanded = true
+        sut.favouritesExpanded = true
         verify { mockUserRepository.showListFavourited = true }
     }
 
@@ -161,7 +171,7 @@ internal class SeasonControllerTest: BaseTest() {
         every { mockUserRepository.showListAll } returns true
         initSUT()
 
-        assertTrue(sut.defaultAllExpanded)
+        assertTrue(sut.allExpanded)
         verify { mockUserRepository.showListAll }
     }
 
@@ -170,14 +180,14 @@ internal class SeasonControllerTest: BaseTest() {
         every { mockUserRepository.showListAll } returns false
         initSUT()
 
-        assertFalse(sut.defaultAllExpanded)
+        assertFalse(sut.allExpanded)
         verify { mockUserRepository.showListAll }
     }
 
     @Test
     fun `SeasonController default show all update interacts with prefs`() {
         initSUT()
-        sut.defaultAllExpanded = true
+        sut.allExpanded = true
         verify { mockUserRepository.showListAll = true }
     }
 
@@ -208,9 +218,9 @@ internal class SeasonControllerTest: BaseTest() {
         every { mockUserRepository.favouriteSeasons } returns setOf(2019)
         initSUT()
 
-        sut.toggle(2018)
+        sut.toggleFavourite(2018)
         verify { mockUserRepository.favouriteSeasons = setOf(2019, 2018) }
-        sut.toggle(2019)
+        sut.toggleFavourite(2019)
         verify { mockUserRepository.favouriteSeasons = emptySet() }
     }
 
