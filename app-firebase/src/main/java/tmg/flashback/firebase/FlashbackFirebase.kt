@@ -6,7 +6,7 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
-import tmg.flashback.repo.db.CrashManager
+import tmg.flashback.firebase.crash.FirebaseCrashManager
 
 val firebaseApp: FirebaseApp = FirebaseApp.getInstance()
 
@@ -25,7 +25,7 @@ fun <T, E : Any> addDocument(collectionPath: String, model: T, toModel: (model: 
 
 
 
-suspend inline fun <reified E, T> getDocument(documentPath: String, crashManager: CrashManager? = null, default: T, crossinline convertTo: (firebaseModel: E, id: String) -> T): Flow<T> = callbackFlow {
+suspend inline fun <reified E, T> getDocument(documentPath: String, crashManager: FirebaseCrashManager? = null, default: T, crossinline convertTo: (firebaseModel: E, id: String) -> T): Flow<T> = callbackFlow {
     val subscription = document(documentPath)
         .addSnapshotListener { documentSnapshot, exception ->
         when {
@@ -67,7 +67,7 @@ suspend inline fun <reified E, T> getDocument(documentPath: String, crashManager
 //    }
 //}
 
-suspend inline fun <T, reified E> getDocumentMap(zClass: Class<E>, documentPath: String, crashManager: CrashManager? = null, convertTo: (firebaseModel: E) -> T): List<T> {
+suspend inline fun <T, reified E> getDocumentMap(zClass: Class<E>, documentPath: String, crashManager: FirebaseCrashManager? = null, convertTo: (firebaseModel: E) -> T): List<T> {
     return try {
         val snapshot = document(documentPath).get().await()
         val keys = snapshot?.data?.keys
@@ -83,7 +83,7 @@ suspend inline fun <T, reified E> getDocumentMap(zClass: Class<E>, documentPath:
     }
 }
 
-suspend inline fun <T, reified E> getDocuments(firebaseClass: Class<E>, collectionPath: String, crashManager: CrashManager? = null, convertTo: (firebaseModel: E, id: String) -> T): List<T> {
+suspend inline fun <T, reified E> getDocuments(firebaseClass: Class<E>, collectionPath: String, crashManager: FirebaseCrashManager? = null, convertTo: (firebaseModel: E, id: String) -> T): List<T> {
     return try {
         val snapshot = collection(collectionPath).get().await()
         snapshot?.documents
@@ -104,7 +104,7 @@ suspend inline fun <T, reified E> getDocuments(firebaseClass: Class<E>, collecti
     }
 }
 
-fun handleError(exception: FirebaseFirestoreException, crashManager: CrashManager? = null, path: String) {
+fun handleError(exception: FirebaseFirestoreException, crashManager: FirebaseCrashManager? = null, path: String) {
     exception.printStackTrace()
     when (exception.code) {
         FirebaseFirestoreException.Code.OK -> {}

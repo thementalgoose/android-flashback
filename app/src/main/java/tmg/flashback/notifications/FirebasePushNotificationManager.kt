@@ -7,15 +7,15 @@ import android.os.Build
 import androidx.annotation.StringRes
 import com.google.firebase.messaging.FirebaseMessaging
 import tmg.flashback.R
+import tmg.flashback.controllers.NotificationController
 import tmg.flashback.repo.enums.NotificationRegistration.OPT_IN
 import tmg.flashback.repo.enums.NotificationRegistration.OPT_OUT
-import tmg.flashback.repo.pref.PrefNotificationRepository
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
 class FirebasePushNotificationManager(
     private val applicationContext: Context,
-    private val prefNotificationRepository: PrefNotificationRepository
+    private val notificationController: NotificationController
 ): PushNotificationManager {
 
     companion object {
@@ -24,7 +24,6 @@ class FirebasePushNotificationManager(
         const val topicMisc: String = "misc"
     }
 
-
     override suspend fun raceSubscribe(): Boolean {
         return suspendCoroutine { continuation ->
             FirebaseMessaging
@@ -32,7 +31,7 @@ class FirebasePushNotificationManager(
                 .subscribeToTopic(topicRace)
                 .addOnCompleteListener {
                     if (it.isSuccessful) {
-                        prefNotificationRepository.notificationsRace = OPT_IN
+                        notificationController.raceOptIn = true
                     }
                     continuation.resume(it.isSuccessful)
                 }
@@ -46,7 +45,7 @@ class FirebasePushNotificationManager(
                 .unsubscribeFromTopic(topicRace)
                 .addOnCompleteListener {
                     if (it.isSuccessful) {
-                        prefNotificationRepository.notificationsRace = OPT_OUT
+                        notificationController.raceOptIn = false
                     }
                     continuation.resume(it.isSuccessful)
                 }
@@ -60,7 +59,7 @@ class FirebasePushNotificationManager(
                 .subscribeToTopic(topicQualifying)
                 .addOnCompleteListener {
                     if (it.isSuccessful) {
-                        prefNotificationRepository.notificationsQualifying = OPT_IN
+                        notificationController.qualifyingOptIn = true
                     }
                     continuation.resume(it.isSuccessful)
                 }
@@ -74,7 +73,7 @@ class FirebasePushNotificationManager(
                 .unsubscribeFromTopic(topicQualifying)
                 .addOnCompleteListener {
                     if (it.isSuccessful) {
-                        prefNotificationRepository.notificationsQualifying = OPT_OUT
+                        notificationController.qualifyingOptIn = false
                     }
                     continuation.resume(it.isSuccessful)
                 }
@@ -88,7 +87,7 @@ class FirebasePushNotificationManager(
                 .unsubscribeFromTopic(topicMisc)
                 .addOnCompleteListener {
                     if (it.isSuccessful) {
-                        prefNotificationRepository.notificationsMisc = OPT_IN
+                        notificationController.miscOptIn = true
                     }
                     continuation.resume(it.isSuccessful)
                 }
@@ -102,7 +101,7 @@ class FirebasePushNotificationManager(
                 .unsubscribeFromTopic(topicMisc)
                 .addOnCompleteListener {
                     if (it.isSuccessful) {
-                        prefNotificationRepository.notificationsMisc = OPT_OUT
+                        notificationController.miscOptIn = false
                     }
                     continuation.resume(it.isSuccessful)
                 }

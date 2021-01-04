@@ -23,7 +23,7 @@
             android:resource="@color/logo_gradient_1" />
 
         <activity
-            android:name=".SplashActivity"
+            android:name=".ui.SplashActivity"
             android:theme="@style/Launcher">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,51 +32,51 @@
         </activity>
 
         <activity
-            android:name=".dashboard.DashboardActivity"
+            android:name=".ui.dashboard.DashboardActivity"
             android:label="" />
 
         <activity
-            android:name=".race.RaceActivity"
+            android:name=".ui.race.RaceActivity"
             android:label=""
             android:theme="@style/Translucent" />
 
         <activity
-            android:name=".circuit.CircuitInfoActivity"
+            android:name=".ui.circuit.CircuitInfoActivity"
             android:label=""
             android:theme="@style/Translucent" />
 
         <activity
-            android:name=".settings.release.ReleaseActivity"
+            android:name=".ui.settings.release.ReleaseActivity"
             android:label=""
             android:theme="@style/Translucent" />
 
         <activity
-            android:name=".settings.SettingsActivity"
+            android:name=".ui.settings.SettingsActivity"
             android:label=""
             android:theme="@style/Translucent" />
 
         <activity
-            android:name=".settings.privacy.PrivacyPolicyActivity"
+            android:name=".ui.settings.privacy.PrivacyPolicyActivity"
             android:label=""
             android:theme="@style/Translucent" />
 
         <activity
-            android:name=".overviews.driver.DriverActivity"
+            android:name=".ui.overviews.driver.DriverActivity"
             android:label=""
             android:theme="@style/Translucent" />
 
         <activity
-            android:name=".overviews.driver.season.DriverSeasonActivity"
+            android:name=".ui.overviews.driver.season.DriverSeasonActivity"
             android:label=""
             android:theme="@style/Translucent" />
 
         <activity
-            android:name=".overviews.constructor.ConstructorActivity"
+            android:name=".ui.overviews.constructor.ConstructorActivity"
             android:label=""
             android:theme="@style/Translucent" />
 
         <activity
-            android:name=".admin.lockout.LockoutActivity"
+            android:name=".ui.admin.LockoutActivity"
             android:label=""
             android:theme="@style/Translucent" />
 
@@ -106,7 +106,7 @@
         <!-- Subscribing -->
 
         <service
-            android:name=".notifications.RaceNotificationService"
+            android:name=".services.RaceNotificationService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
