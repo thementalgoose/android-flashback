@@ -42,8 +42,8 @@ internal class SettingsViewModelTest: BaseTest() {
         every { raceController.showQualifyingDelta } returns false
         every { raceController.showGridPenaltiesInQualifying } returns false
         every { raceController.fadeDNF } returns false
-        every { seasonController.defaultFavouritesExpanded } returns false
-        every { seasonController.defaultAllExpanded } returns false
+        every { seasonController.favouritesExpanded } returns false
+        every { seasonController.allExpanded } returns false
         every { crashManager.crashReporting } returns false
         every { deviceController.shakeToReport } returns false
         every { notificationController.isNotificationChannelsSupported } returns true
@@ -85,12 +85,12 @@ internal class SettingsViewModelTest: BaseTest() {
             add(AppPreferencesItem.Category(R.string.settings_theme))
             add(THEME.toPref())
             add(AppPreferencesItem.Category(R.string.settings_customisation))
-            add(DEFAULT_SEASON.toPref())
             add(BAR_ANIMATION_SPEED.toPref())
             add(QUALIFYING_DELTAS.toSwitch(false))
             add(FADE_OUT_DNF.toSwitch(false))
             add(QUALIFYING_GRID_PENALTY.toSwitch(false))
             add(AppPreferencesItem.Category(R.string.settings_season_list))
+            add(DEFAULT_SEASON.toPref())
             add(SEASON_BOTTOM_SHEET_FAVOURITED.toSwitch(false))
             add(SEASON_BOTTOM_SHEET_ALL.toSwitch(false))
             add(AppPreferencesItem.Category(R.string.settings_help))
@@ -185,14 +185,32 @@ internal class SettingsViewModelTest: BaseTest() {
     @Test
     fun `SettingsViewModel setup populates default season`() {
 
-        every { seasonController.allSeasons } returns setOf(2019, 2020)
+        every { seasonController.supportedSeasons } returns setOf(2019, 2020)
+        every { seasonController.isUserDefinedValueSet } returns false
 
         initSUT()
 
         val expected = mutableListOf<Selected<BottomSheetItem>>().apply {
-            add(Selected(BottomSheetItem(id = -1, text = StringHolder(R.string.settings_bar_default_season_option))))
-            add(Selected(BottomSheetItem(id = 2020, text = StringHolder(msg = "2020"))))
-            add(Selected(BottomSheetItem(id = 2019, text = StringHolder(msg = "2019"))))
+            add(Selected(BottomSheetItem(id = -1, text = StringHolder(R.string.settings_default_season_option_automatic)), true))
+        }
+
+        sut.outputs.defaultSeasonPreference.test {
+            assertValue(expected)
+        }
+    }
+
+    @Test
+    fun `SettingsViewModel setup populates default season when user default set`() {
+
+        every { seasonController.supportedSeasons } returns setOf(2019, 2020)
+        every { seasonController.isUserDefinedValueSet } returns true
+        every { seasonController.defaultSeason } returns 2019
+
+        initSUT()
+
+        val expected = mutableListOf<Selected<BottomSheetItem>>().apply {
+            add(Selected(BottomSheetItem(id = -1, text = StringHolder(R.string.settings_default_season_option_automatic)), false))
+            add(Selected(BottomSheetItem(id = 0, text = StringHolder(R.string.settings_default_season_option_user, 2019)), true))
         }
 
         sut.outputs.defaultSeasonPreference.test {
@@ -234,19 +252,6 @@ internal class SettingsViewModelTest: BaseTest() {
 
         sut.pickSeason(null)
         verify { seasonController.clearDefault() }
-
-        sut.outputs.defaultSeasonChanged.test {
-            assertEventFired()
-        }
-    }
-
-    @Test
-    fun `SettingsViewModel select a default season updates the preference with year`() {
-
-        initSUT()
-
-        sut.pickSeason(2018)
-        verify { seasonController.setDefaultSeason(2018) }
 
         sut.outputs.defaultSeasonChanged.test {
             assertEventFired()
@@ -326,7 +331,7 @@ internal class SettingsViewModelTest: BaseTest() {
 
         sut.inputs.preferenceClicked(SEASON_BOTTOM_SHEET_FAVOURITED, true)
 
-        verify { seasonController.defaultFavouritesExpanded = true }
+        verify { seasonController.favouritesExpanded = true }
     }
 
     @Test
@@ -336,7 +341,7 @@ internal class SettingsViewModelTest: BaseTest() {
 
         sut.inputs.preferenceClicked(SEASON_BOTTOM_SHEET_ALL, true)
 
-        verify { seasonController.defaultAllExpanded = true }
+        verify { seasonController.allExpanded = true }
     }
 
     @Test

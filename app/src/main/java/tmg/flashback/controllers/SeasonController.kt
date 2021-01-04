@@ -1,8 +1,6 @@
 package tmg.flashback.controllers
 
-import androidx.annotation.IntRange
 import tmg.flashback.constants.App.currentYear
-import tmg.flashback.constants.Formula1.minimumSupportedYear
 import tmg.flashback.repo.config.RemoteConfigRepository
 import tmg.flashback.repo.pref.UserRepository
 
@@ -10,62 +8,70 @@ import tmg.flashback.repo.pref.UserRepository
  * All the preferences surrounding the season, list of all seasons
  */
 class SeasonController(
-        val userRepository: UserRepository,
-        val remoteConfigRepository: RemoteConfigRepository
+        private val userRepository: UserRepository,
+        private val remoteConfigRepository: RemoteConfigRepository
 ) {
     //region Default season shown
 
-    /**
-     * Undo setting a default year being shown
-     */
     fun clearDefault() {
         userRepository.defaultSeason = null
     }
 
-    /**
-     * Set a user customised default season to load the app into
-     */
-    fun setDefaultSeason(@IntRange(from = 1950, to = Long.MAX_VALUE) season: Int) {
-        userRepository.defaultSeason = season
+    fun setUserDefaultSeason(season: Int) {
+        defaultSeason = season
     }
 
-    val isDefaultNotSet: Boolean
-        get() = userRepository.defaultSeason == null
-
-    var defaultYear: Int
+    var defaultSeason: Int
         get() {
-            val prefSeason = userRepository.defaultSeason
-            if (prefSeason == null || prefSeason < minimumSupportedYear) {
-                val remoteConfigSeason = remoteConfigRepository.defaultYear
-                if (remoteConfigSeason < minimumSupportedYear) {
-                    return currentYear
-                }
-                return remoteConfigSeason
+            val supportedSeasons = remoteConfigRepository.supportedSeasons
+            val userPrefSeason = userRepository.defaultSeason
+            val serverSeason = remoteConfigRepository.defaultSeason
+
+            if (supportedSeasons.isEmpty()) {
+                return currentYear
             }
-            return prefSeason
+            if (userPrefSeason != null) {
+                if (supportedSeasons.contains(userPrefSeason)) {
+                    return userPrefSeason
+                }
+                else {
+                    clearDefault()
+                }
+            }
+            return if (!supportedSeasons.contains(serverSeason)) {
+                supportedSeasons.maxOrNull()!!
+            } else {
+                serverSeason
+            }
         }
         private set(value) {
             userRepository.defaultSeason = value
         }
 
+    val serverDefaultSeason: Int
+        get() = remoteConfigRepository.defaultSeason
+
+    val isUserDefinedValueSet: Boolean
+        get() = userRepository.defaultSeason != null
+
     //endregion
 
     //region All Seasons
 
-    val allSeasons: Set<Int>
-        get() = remoteConfigRepository.allSeasons
+    val supportedSeasons: Set<Int>
+        get() = remoteConfigRepository.supportedSeasons
 
     //endregion
 
     //region Showing favourites / all
 
-    var defaultFavouritesExpanded: Boolean
+    var favouritesExpanded: Boolean
         get() = userRepository.showListFavourited
         set(value) {
             userRepository.showListFavourited = value
         }
 
-    var defaultAllExpanded: Boolean
+    var allExpanded: Boolean
         get() = userRepository.showListAll
         set(value) {
             userRepository.showListAll = value
@@ -85,7 +91,7 @@ class SeasonController(
         return favouriteSeasons.contains(season)
     }
 
-    fun toggle(season: Int) {
+    fun toggleFavourite(season: Int) {
         val set = favouriteSeasons.toMutableSet()
         when (set.contains(season)) {
             true -> set.remove(season)

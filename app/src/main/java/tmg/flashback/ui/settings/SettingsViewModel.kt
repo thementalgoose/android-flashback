@@ -112,14 +112,14 @@ class SettingsViewModel(
             add(AppPreferencesItem.Category(R.string.settings_theme))
             add(SettingsOptions.THEME.toPref())
             add(AppPreferencesItem.Category(R.string.settings_customisation))
-            add(SettingsOptions.DEFAULT_SEASON.toPref())
             add(SettingsOptions.BAR_ANIMATION_SPEED.toPref())
             add(SettingsOptions.QUALIFYING_DELTAS.toSwitch(raceController.showQualifyingDelta))
             add(SettingsOptions.FADE_OUT_DNF.toSwitch(raceController.fadeDNF))
             add(SettingsOptions.QUALIFYING_GRID_PENALTY.toSwitch(raceController.showGridPenaltiesInQualifying))
             add(AppPreferencesItem.Category(R.string.settings_season_list))
-            add(SettingsOptions.SEASON_BOTTOM_SHEET_FAVOURITED.toSwitch(seasonController.defaultFavouritesExpanded))
-            add(SettingsOptions.SEASON_BOTTOM_SHEET_ALL.toSwitch(seasonController.defaultAllExpanded))
+            add(SettingsOptions.DEFAULT_SEASON.toPref())
+            add(SettingsOptions.SEASON_BOTTOM_SHEET_FAVOURITED.toSwitch(seasonController.favouritesExpanded))
+            add(SettingsOptions.SEASON_BOTTOM_SHEET_ALL.toSwitch(seasonController.allExpanded))
             add(AppPreferencesItem.Category(R.string.settings_help))
             add(SettingsOptions.ABOUT.toPref())
             add(SettingsOptions.REVIEW.toPref())
@@ -148,8 +148,8 @@ class SettingsViewModel(
             SettingsOptions.QUALIFYING_DELTAS -> raceController.showQualifyingDelta = value ?: false
             SettingsOptions.FADE_OUT_DNF -> raceController.fadeDNF = value ?: false
             SettingsOptions.QUALIFYING_GRID_PENALTY -> raceController.showGridPenaltiesInQualifying = value ?: true
-            SettingsOptions.SEASON_BOTTOM_SHEET_FAVOURITED -> seasonController.defaultFavouritesExpanded = value ?: true
-            SettingsOptions.SEASON_BOTTOM_SHEET_ALL -> seasonController.defaultAllExpanded = value ?: true
+            SettingsOptions.SEASON_BOTTOM_SHEET_FAVOURITED -> seasonController.favouritesExpanded = value ?: true
+            SettingsOptions.SEASON_BOTTOM_SHEET_ALL -> seasonController.allExpanded = value ?: true
             SettingsOptions.BAR_ANIMATION_SPEED -> openAnimationPicker.value = Event()
             SettingsOptions.ABOUT -> openAbout.value = Event()
             SettingsOptions.REVIEW -> openReview.value = DataEvent(playStoreUrl)
@@ -178,14 +178,10 @@ class SettingsViewModel(
         when (season) {
             null -> seasonController.clearDefault()
             -1 -> seasonController.clearDefault()
-            0 -> seasonController.clearDefault()
-            else -> seasonController.setDefaultSeason(season)
         }
         updateDefaultSeasonList()
         defaultSeasonChanged.value = Event()
     }
-
-
 
     //endregion
 
@@ -206,15 +202,10 @@ class SettingsViewModel(
     private fun updateDefaultSeasonList() {
 
         val seasons = mutableListOf<Selected<BottomSheetItem>>()
-        seasons.add(Selected(BottomSheetItem(id = -1, text = StringHolder(R.string.settings_bar_default_season_option)), seasonController.isDefaultNotSet))
-        seasons.addAll(seasonController
-            .allSeasons
-            .toList()
-            .sortedByDescending { it }
-            .map {
-                Selected(BottomSheetItem(id = it, text = StringHolder(msg = it.toString())), !seasonController.isDefaultNotSet && seasonController.defaultYear == it)
-            })
+        seasons.add(Selected(BottomSheetItem(id = -1, text = StringHolder(R.string.settings_default_season_option_automatic)), !seasonController.isUserDefinedValueSet))
+        if (seasonController.isUserDefinedValueSet) {
+            seasons.add(Selected(BottomSheetItem(id = 0, text = StringHolder(R.string.settings_default_season_option_user, seasonController.defaultSeason)), true))
+        }
         defaultSeasonPreference.value = seasons
     }
-
 }
