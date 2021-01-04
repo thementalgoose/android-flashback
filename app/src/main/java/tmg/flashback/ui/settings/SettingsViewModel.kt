@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import tmg.components.prefs.AppPreferencesItem
 import tmg.flashback.R
+import tmg.flashback.allYears
 import tmg.flashback.ui.base.BaseViewModel
 import tmg.flashback.controllers.*
 import tmg.flashback.extensions.icon
@@ -14,6 +15,7 @@ import tmg.flashback.playStoreUrl
 import tmg.flashback.repo.enums.ThemePref
 import tmg.flashback.repo.enums.BarAnimation
 import tmg.flashback.ui.utils.Selected
+import tmg.flashback.ui.utils.StringHolder
 import tmg.flashback.ui.utils.bottomsheet.BottomSheetItem
 import tmg.utilities.lifecycle.DataEvent
 import tmg.utilities.lifecycle.Event
@@ -24,6 +26,7 @@ interface SettingsViewModelInputs {
     fun preferenceClicked(pref: SettingsOptions?, value: Boolean?)
     fun pickTheme(theme: ThemePref)
     fun pickAnimationSpeed(animation: BarAnimation)
+    fun pickSeason(season: Int?)
 }
 
 //endregion
@@ -35,12 +38,15 @@ interface SettingsViewModelOutputs {
 
     val themePreferences: LiveData<List<Selected<BottomSheetItem>>>
     val animationPreference: LiveData<List<Selected<BottomSheetItem>>>
+    val defaultSeasonPreference: LiveData<List<Selected<BottomSheetItem>>>
 
     val themeChanged: LiveData<Event>
     val animationChanged: LiveData<Event>
+    val defaultSeasonChanged: LiveData<Event>
 
     val openThemePicker: LiveData<Event>
     val openAnimationPicker: LiveData<Event>
+    val openDefaultSeasonPicker: LiveData<Event>
     val openAbout: LiveData<Event>
     val openReview: LiveData<DataEvent<String>>
     val openPrivacyPolicy: LiveData<Event>
@@ -69,12 +75,15 @@ class SettingsViewModel(
 
     override val themeChanged: MutableLiveData<Event> = MutableLiveData()
     override val animationChanged: MutableLiveData<Event> = MutableLiveData()
+    override val defaultSeasonChanged: MutableLiveData<Event> = MutableLiveData()
 
     override val themePreferences: MutableLiveData<List<Selected<BottomSheetItem>>> = MutableLiveData()
     override val animationPreference: MutableLiveData<List<Selected<BottomSheetItem>>> = MutableLiveData()
+    override val defaultSeasonPreference: MutableLiveData<List<Selected<BottomSheetItem>>> = MutableLiveData()
 
     override val openThemePicker: MutableLiveData<Event> = MutableLiveData()
     override val openAnimationPicker: MutableLiveData<Event> = MutableLiveData()
+    override val openDefaultSeasonPicker: MutableLiveData<Event> = MutableLiveData()
     override val openAbout: MutableLiveData<Event> = MutableLiveData()
     override val openReview: MutableLiveData<DataEvent<String>> = MutableLiveData()
     override val openPrivacyPolicy: MutableLiveData<Event> = MutableLiveData()
@@ -104,6 +113,7 @@ class SettingsViewModel(
             add(AppPreferencesItem.Category(R.string.settings_theme))
             add(SettingsOptions.THEME.toPref())
             add(AppPreferencesItem.Category(R.string.settings_customisation))
+            add(SettingsOptions.DEFAULT_SEASON.toPref())
             add(SettingsOptions.BAR_ANIMATION_SPEED.toPref())
             add(SettingsOptions.QUALIFYING_DELTAS.toSwitch(raceController.showQualifyingDelta))
             add(SettingsOptions.FADE_OUT_DNF.toSwitch(raceController.fadeDNF))
@@ -124,6 +134,7 @@ class SettingsViewModel(
 
         updateThemeList()
         updateAnimationList()
+        updateDefaultSeasonList()
     }
 
     //region Inputs
@@ -131,6 +142,7 @@ class SettingsViewModel(
     override fun preferenceClicked(pref: SettingsOptions?, value: Boolean?) {
         when (pref) {
             SettingsOptions.THEME -> openThemePicker.value = Event()
+            SettingsOptions.DEFAULT_SEASON -> openDefaultSeasonPicker.value = Event()
             SettingsOptions.NOTIFICATIONS_CHANNEL_RACE -> openNotificationsChannel.value = DataEvent(topicRace)
             SettingsOptions.NOTIFICATIONS_CHANNEL_QUALIFYING -> openNotificationsChannel.value = DataEvent(topicQualifying)
             SettingsOptions.NOTIFICATIONS_SETTINGS -> openNotifications.value = Event()
@@ -163,20 +175,47 @@ class SettingsViewModel(
         animationChanged.value = Event()
     }
 
+    override fun pickSeason(season: Int?) {
+        when (season) {
+            null -> seasonController.clearDefault()
+            -1 -> seasonController.clearDefault()
+            0 -> seasonController.clearDefault()
+            else -> seasonController.setDefaultSeason(season)
+        }
+        updateDefaultSeasonList()
+        defaultSeasonChanged.value = Event()
+    }
+
+
+
     //endregion
 
     private fun updateThemeList() {
         themePreferences.value = ThemePref.values()
                 .map {
-                    Selected(BottomSheetItem(it.ordinal, it.icon, it.label), it == appearanceController.currentTheme)
+                    Selected(BottomSheetItem(it.ordinal, it.icon, StringHolder(it.label)), it == appearanceController.currentTheme)
                 }
     }
 
     private fun updateAnimationList() {
         animationPreference.value = BarAnimation.values()
                 .map {
-                    Selected(BottomSheetItem(it.ordinal, it.icon, it.label), it == appearanceController.barAnimation)
+                    Selected(BottomSheetItem(it.ordinal, it.icon, StringHolder(it.label)), it == appearanceController.barAnimation)
                 }
+    }
+
+    private fun updateDefaultSeasonList() {
+
+        val seasons = mutableListOf<Selected<BottomSheetItem>>()
+        seasons.add(Selected(BottomSheetItem(id = -1, text = StringHolder(R.string.settings_bar_default_season_option)), seasonController.isDefaultNotSet))
+        seasons.addAll(seasonController
+            .allSeasons
+            .toList()
+            .sortedByDescending { it }
+            .map {
+                Selected(BottomSheetItem(id = it, text = StringHolder(msg = it.toString())), !seasonController.isDefaultNotSet && seasonController.defaultYear == it)
+            })
+        defaultSeasonPreference.value = seasons
     }
 
 }

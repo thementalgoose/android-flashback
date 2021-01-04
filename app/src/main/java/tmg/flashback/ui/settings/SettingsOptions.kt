@@ -41,9 +41,13 @@ enum class SettingsOptions(
             title = R.string.settings_customisation_qualifying_grid_penalties_title,
             description = R.string.settings_customisation_qualifying_grid_penalties_description
     ),
+    DEFAULT_SEASON("defaultSeason",
+        title = R.string.settings_bar_default_season_title,
+        description = R.string.settings_bar_default_season_description
+    ),
     BAR_ANIMATION_SPEED("barAnimationSpeed",
-            title = R.string.settings_bar_animation_animation_title,
-            description = R.string.settings_bar_animation_animation_description
+        title = R.string.settings_bar_animation_animation_title,
+        description = R.string.settings_bar_animation_animation_description
     ),
     SEASON_BOTTOM_SHEET_FAVOURITED("bottomSheetFavourited",
             title = R.string.settings_customisation_season_favourited_expanded_title,

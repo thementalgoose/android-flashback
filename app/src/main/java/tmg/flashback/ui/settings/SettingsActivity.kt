@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.activity_settings.*
 import kotlinx.android.synthetic.main.bottom_sheet_animation.*
+import kotlinx.android.synthetic.main.bottom_sheet_default_season.*
 import kotlinx.android.synthetic.main.bottom_sheet_theme.*
 import org.koin.android.ext.android.inject
 import tmg.components.about.AboutThisAppActivity
@@ -35,8 +36,10 @@ class SettingsActivity : BaseActivity() {
 
     private lateinit var themeBottomSheet: BottomSheetBehavior<LinearLayout>
     private lateinit var animationBottomSheet: BottomSheetBehavior<LinearLayout>
+    private lateinit var defaultSeasonBottomSheet: BottomSheetBehavior<LinearLayout>
     private lateinit var themeAdapter: BottomSheetAdapter
     private lateinit var animationAdapter: BottomSheetAdapter
+    private lateinit var defaultSeasonAdapter: BottomSheetAdapter
 
     override fun layoutId(): Int = R.layout.activity_settings
 
@@ -67,6 +70,16 @@ class SettingsActivity : BaseActivity() {
         observeEvent(viewModel.outputs.openAnimationPicker) {
             animationBottomSheet.expand()
         }
+
+        observe(viewModel.outputs.defaultSeasonPreference) {
+            defaultSeasonAdapter.list = it
+        }
+
+        observeEvent(viewModel.outputs.openDefaultSeasonPicker) {
+            defaultSeasonBottomSheet.state = BottomSheetBehavior.STATE_HALF_EXPANDED
+        }
+
+
 
         observeEvent(viewModel.outputs.openAbout) {
             showAbout()
@@ -167,10 +180,12 @@ class SettingsActivity : BaseActivity() {
     private fun setupBottomSheet() {
         setupBottomSheetTheme()
         setupBottomSheetAnimation()
+        setupBottomSheetDefaultSeasons()
 
         vBackground.setOnClickListener {
             themeBottomSheet.hidden()
             animationBottomSheet.hidden()
+            defaultSeasonBottomSheet.hidden()
         }
     }
 
@@ -203,6 +218,23 @@ class SettingsActivity : BaseActivity() {
         animationBottomSheet.isHideable = true
         animationBottomSheet.hidden()
         animationBottomSheet.addBottomSheetCallback(BottomSheetFader(vBackground, "animation"))
+    }
+
+    private fun setupBottomSheetDefaultSeasons() {
+        defaultSeasonAdapter = BottomSheetAdapter(
+            itemClicked = {
+                viewModel.inputs.pickSeason(it.id)
+            }
+        )
+
+        defaultSeasonList.adapter = defaultSeasonAdapter
+        defaultSeasonList.layoutManager = LinearLayoutManager(this)
+
+        defaultSeasonBottomSheet = BottomSheetBehavior.from(defaultSeasonLayout)
+        defaultSeasonBottomSheet.isHideable = true
+        defaultSeasonBottomSheet.hidden()
+        defaultSeasonBottomSheet.addBottomSheetCallback(BottomSheetFader(vBackground, "defaultSeasons"))
+
     }
 
     private fun showAbout() {

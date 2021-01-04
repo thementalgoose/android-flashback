@@ -39,9 +39,7 @@ class ListFragment: BaseFragment() {
                 featureToggled = viewModel.inputs::toggleHeader,
                 favouriteToggled = viewModel.inputs::toggleFavourite,
                 seasonClicked = viewModel.inputs::clickSeason,
-                setDefaultClicked = {
-                    Toast.makeText(context, "SET DEFAULT", Toast.LENGTH_LONG).show()
-                }
+                setDefaultClicked = viewModel.inputs::clickSetDefaultSeason
         )
         list.layoutManager = LinearLayoutManager(context)
         list.adapter = adapter

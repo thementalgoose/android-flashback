@@ -6,7 +6,7 @@ import tmg.flashback.repo.enums.ThemePref
 internal object Defaults {
 
     const val showQualifyingDelta: Boolean = false
-    const val fadeDNF: Boolean = false
+    const val fadeDNF: Boolean = true
     const val showGridPenaltiesInQualifying: Boolean = true
 
     val barAnimation: BarAnimation = BarAnimation.MEDIUM

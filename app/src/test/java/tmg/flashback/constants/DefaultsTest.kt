@@ -12,7 +12,7 @@ internal class DefaultsTest: BaseTest() {
     fun `Defaults validate defaults`() {
 
         assertFalse(Defaults.showQualifyingDelta)
-        assertFalse(Defaults.fadeDNF)
+        assertTrue(Defaults.fadeDNF)
         assertTrue(Defaults.showGridPenaltiesInQualifying)
 
         assertEquals(BarAnimation.MEDIUM, Defaults.barAnimation)
