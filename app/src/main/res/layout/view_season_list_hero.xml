@@ -39,6 +39,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="@dimen/paddingXSmall"
+        android:importantForAccessibility="no"
         android:layout_marginBottom="@dimen/paddingSmall"
         android:background="?attr/f1BackgroundSecondary"
         app:layout_constraintBottom_toBottomOf="parent"
