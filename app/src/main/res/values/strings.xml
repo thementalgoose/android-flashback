@@ -19,10 +19,11 @@
     <string name="settings_theme_theme_follow_system">Follow system preferences</string>
     <string name="settings_theme_theme_light">Light mode</string>
     <string name="settings_theme_theme_dark">Dark mode</string>
-    <string name="settings_bar_default_season_title">Default season</string>
-    <string name="settings_bar_default_season_description">Pick a default season that the app shows when you first load it up</string>
-    <string name="settings_bar_default_season_bottom_sheet">Pick which season the app loads too. Select \'Automatic\' if you want flashback to update this to new seasons when they become available</string>
-    <string name="settings_bar_default_season_option">Automatic</string>
+    <string name="settings_default_season_title">Default season</string>
+    <string name="settings_default_season_description">Pick a default season that the app shows when you first load it up</string>
+    <string name="settings_default_season_bottom_sheet">You can set a default season to load into the app with from the home screen, or you can let flashback follow the formula 1 calendar and change default seasons as the season gets underway</string>
+    <string name="settings_default_season_option_automatic">Follow formula 1</string>
+    <string name="settings_default_season_option_user">User defined (%d)</string>
     <string name="settings_bar_animation_animation_title">Bar Animation</string>
     <string name="settings_bar_animation_animation_description">Pick the speed of the points bar animations throughout the app</string>
     <string name="settings_bar_animation_instant">No animation</string>
@@ -142,6 +143,9 @@
     <string name="dashboard_up_next_today">Today</string>
     <string name="dashboard_up_next_date"><![CDATA[Round <b>%d</b><br/><b>%s</b>]]></string>
 
+    <string name="dashboard_season_list_default_banner_automatic">No default season set</string>
+    <string name="dashboard_season_list_default_banner_user">Default season set to %d</string>
+    <string name="dashboard_season_list_default_banner_revert">Undo</string>
     <string name="dashboard_season_list_option_set_default">Set as default</string>
 
     <string name="menu_title">Season list</string>

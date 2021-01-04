@@ -33,7 +33,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/paddingSmall"
             android:gravity="center"
-            android:text="@string/settings_bar_default_season_title"
+            android:text="@string/settings_default_season_title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/pill" />
@@ -48,7 +48,7 @@
             android:paddingTop="@dimen/paddingSmall"
             android:paddingEnd="@dimen/paddingMedium"
             android:paddingBottom="@dimen/paddingNSmall"
-            android:text="@string/settings_bar_default_season_bottom_sheet"
+            android:text="@string/settings_default_season_bottom_sheet"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/bottomSheetTitle" />

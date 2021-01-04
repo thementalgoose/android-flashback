@@ -1,8 +1,6 @@
 package tmg.flashback.controllers
 
-import androidx.annotation.IntRange
 import tmg.flashback.constants.App.currentYear
-import tmg.flashback.constants.Formula1.minimumSupportedYear
 import tmg.flashback.repo.config.RemoteConfigRepository
 import tmg.flashback.repo.pref.UserRepository
 
@@ -25,32 +23,46 @@ class SeasonController(
 
     var defaultSeason: Int
         get() {
-            val prefSeason = userRepository.defaultSeason
-            if (prefSeason == null || prefSeason < minimumSupportedYear) {
-                val remoteConfigSeason = remoteConfigRepository.defaultYear
-                if (remoteConfigSeason < minimumSupportedYear) {
-                    return currentYear
-                }
-                return remoteConfigSeason
+
+            val supportedSeasons = remoteConfigRepository.supportedSeasons
+            val userPrefSeason = userRepository.defaultSeason
+            val serverSeason = remoteConfigRepository.defaultSeason
+
+            if (supportedSeasons.isEmpty()) {
+                return currentYear
             }
-            return prefSeason
+
+            if (userPrefSeason != null) {
+                if (supportedSeasons.contains(userPrefSeason)) {
+                    return userPrefSeason
+                }
+                else {
+                    clearDefault()
+                }
+            }
+
+            return if (!supportedSeasons.contains(serverSeason)) {
+                supportedSeasons.maxOrNull()!!
+            } else {
+                serverSeason
+            }
         }
         private set(value) {
             userRepository.defaultSeason = value
         }
 
-    val defaultSeasonAutomatic: Int
-        get() = remoteConfigRepository.defaultYear
+    val serverDefaultSeason: Int
+        get() = remoteConfigRepository.defaultSeason
 
-    val isDefaultNotSet: Boolean
-        get() = userRepository.defaultSeason == null
+    val isUserDefinedValueSet: Boolean
+        get() = userRepository.defaultSeason != null
 
     //endregion
 
     //region All Seasons
 
-    val allSeasons: Set<Int>
-        get() = remoteConfigRepository.allSeasons
+    val supportedSeasons: Set<Int>
+        get() = remoteConfigRepository.supportedSeasons
 
     //endregion
 

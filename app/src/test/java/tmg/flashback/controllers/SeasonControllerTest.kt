@@ -24,63 +24,70 @@ internal class SeasonControllerTest: BaseTest() {
     //region Default year
 
     @Test
-    fun `SeasonController default year reads from remote config by default`() {
-        every { mockRemoteConfigRepository.defaultYear } returns 2019
-        every { mockUserRepository.defaultSeason } returns null
+    fun `SeasonController returns current year if supported season list is empty`() {
+        every { mockRemoteConfigRepository.supportedSeasons } returns emptySet()
+        every { mockRemoteConfigRepository.defaultSeason } returns 2018
+        every { mockUserRepository.defaultSeason } returns 2017
         initSUT()
 
-        assertEquals(2019, sut.defaultSeason)
-
-        verify {
-            mockRemoteConfigRepository.defaultYear
-            mockUserRepository.defaultSeason
-        }
+        assertEquals(currentYear, sut.defaultSeason)
     }
 
     @Test
-    fun `SeasonController default season is returned from prefs if contains a valid value`() {
-        every { mockRemoteConfigRepository.defaultYear } returns 2019
+    fun `SeasonController returns user defined value if its supported`() {
+        every { mockRemoteConfigRepository.supportedSeasons } returns setOf(2017, 2018)
+        every { mockRemoteConfigRepository.defaultSeason } returns 2018
         every { mockUserRepository.defaultSeason } returns 2017
         initSUT()
 
         assertEquals(2017, sut.defaultSeason)
-
-        verify {
-            mockUserRepository.defaultSeason
-        }
     }
 
     @Test
-    fun `SeasonController default season is returned from remote config if contains an invalid value`() {
-        every { mockRemoteConfigRepository.defaultYear } returns 2019
-        every { mockUserRepository.defaultSeason } returns 1921
+    fun `SeasonController runs clear default method if user defined value found to be invalid`() {
+        every { mockRemoteConfigRepository.supportedSeasons } returns setOf(2019)
+        every { mockRemoteConfigRepository.defaultSeason } returns 2018
+        every { mockUserRepository.defaultSeason } returns 2017
         initSUT()
 
         assertEquals(2019, sut.defaultSeason)
-
         verify {
-            mockRemoteConfigRepository.defaultYear
-            mockUserRepository.defaultSeason
+            mockUserRepository.defaultSeason = null
         }
     }
 
     @Test
-    fun `SeasonController current year if both remote config and prefs are invalid`() {
-        every { mockRemoteConfigRepository.defaultYear } returns 1921
+    fun `SeasonController if user defined value invalid, return server value if in supported seasons`() {
+        every { mockRemoteConfigRepository.supportedSeasons } returns setOf(2018,2019)
+        every { mockRemoteConfigRepository.defaultSeason } returns 2018
         every { mockUserRepository.defaultSeason } returns 1921
         initSUT()
 
-        assertEquals(currentYear, sut.defaultSeason)
-
-        verify {
-            mockRemoteConfigRepository.defaultYear
-            mockUserRepository.defaultSeason
-        }
+        assertEquals(2018, sut.defaultSeason)
     }
 
     @Test
-    fun `SeasonController clear default sets default season in prefs to null`() {
-        every { mockUserRepository.defaultSeason } returns 2018
+    fun `SeasonController if user defined value is null, return server value if in supported seasons`() {
+        every { mockRemoteConfigRepository.supportedSeasons } returns setOf(2018,2019)
+        every { mockRemoteConfigRepository.defaultSeason } returns 2018
+        every { mockUserRepository.defaultSeason } returns null
+        initSUT()
+
+        assertEquals(2018, sut.defaultSeason)
+    }
+
+    @Test
+    fun `SeasonController if user defined value invalid or null, return max in supported seasons value if server value is not valid`() {
+        every { mockRemoteConfigRepository.supportedSeasons } returns setOf(2018,2019)
+        every { mockRemoteConfigRepository.defaultSeason } returns 2017
+        every { mockUserRepository.defaultSeason } returns null
+        initSUT()
+
+        assertEquals(2019, sut.defaultSeason)
+    }
+
+    @Test
+    fun `SeasonController set user default session updates user repository`() {
         initSUT()
         sut.clearDefault()
         verify {
@@ -89,36 +96,41 @@ internal class SeasonControllerTest: BaseTest() {
     }
 
     @Test
-    fun `SeasonController set default season updates prefs`() {
-        every { mockUserRepository.defaultSeason } returns 2018
+    fun `SeasonController clear default sets default season to null in user repo`() {
         initSUT()
-        sut.defaultSeason = 2019
+        sut.setUserDefaultSeason(2018)
         verify {
-            mockUserRepository.defaultSeason = 2019
+            mockUserRepository.defaultSeason = 2018
         }
     }
 
     @Test
-    fun `SeasonController is default option not set`() {
-        every { mockUserRepository.defaultSeason } returns null
+    fun `SeasonController default season server returns the server configured default season`() {
+        every { mockRemoteConfigRepository.defaultSeason } returns 2018
         initSUT()
-        assertTrue(sut.isDefaultNotSet)
+        assertEquals(2018, sut.serverDefaultSeason)
+        verify {
+            mockRemoteConfigRepository.defaultSeason
+        }
     }
 
     @Test
-    fun `SeasonController is default option set`() {
+    fun `SeasonController is user defined season value set value`() {
         every { mockUserRepository.defaultSeason } returns 2018
         initSUT()
-        assertFalse(sut.isDefaultNotSet)
+        assertTrue(sut.isUserDefinedValueSet)
+        verify {
+            mockUserRepository.defaultSeason
+        }
     }
 
     @Test
-    fun `SeasonController default year from server returns it from remote config`() {
-        every { mockRemoteConfigRepository.defaultYear } returns 2020
+    fun `SeasonController is user defined season value set null`() {
+        every { mockUserRepository.defaultSeason } returns null
         initSUT()
-        assertEquals(2020, sut.defaultSeasonAutomatic)
+        assertFalse(sut.isUserDefinedValueSet)
         verify {
-            mockRemoteConfigRepository.defaultYear
+            mockUserRepository.defaultSeason
         }
     }
 
@@ -128,12 +140,12 @@ internal class SeasonControllerTest: BaseTest() {
 
     @Test
     fun `SeasonController all seasons are pulled from remote config`() {
-        every { mockRemoteConfigRepository.allSeasons } returns setOf(2020)
+        every { mockRemoteConfigRepository.supportedSeasons } returns setOf(2020)
         initSUT()
 
-        assertEquals(setOf(2020), sut.allSeasons)
+        assertEquals(setOf(2020), sut.supportedSeasons)
         verify {
-            mockRemoteConfigRepository.allSeasons
+            mockRemoteConfigRepository.supportedSeasons
         }
     }
 
