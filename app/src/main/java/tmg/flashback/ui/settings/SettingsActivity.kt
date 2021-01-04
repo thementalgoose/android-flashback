@@ -17,9 +17,10 @@ import kotlinx.android.synthetic.main.bottom_sheet_default_season.*
 import kotlinx.android.synthetic.main.bottom_sheet_theme.*
 import org.koin.android.ext.android.inject
 import tmg.components.about.AboutThisAppActivity
+import tmg.components.about.AboutThisAppConfiguration
 import tmg.flashback.R
+import tmg.flashback.constants.AboutThisAppConfig
 import tmg.flashback.ui.base.BaseActivity
-import tmg.flashback.constants.configuration
 import tmg.flashback.repo.enums.BarAnimation
 import tmg.flashback.repo.enums.ThemePref
 import tmg.flashback.rss.ui.settings.RSSSettingsActivity
@@ -241,7 +242,7 @@ class SettingsActivity : BaseActivity() {
         startActivity(
             AboutThisAppActivity.intent(
                 context = this,
-                configuration = configuration(this, !isLightTheme)
+                configuration = AboutThisAppConfig.configuration(this, !isLightTheme)
             )
         )
     }

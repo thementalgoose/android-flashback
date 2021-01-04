@@ -9,10 +9,9 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 import org.threeten.bp.LocalDate
 import tmg.flashback.*
-import tmg.flashback.controllers.AppearanceController
-import tmg.flashback.controllers.DeviceController
-import tmg.flashback.controllers.FeatureController
-import tmg.flashback.controllers.SeasonController
+import tmg.flashback.constants.App.currentYear
+import tmg.flashback.controllers.*
+import tmg.flashback.controllers.NotificationController.Companion.daysUntilDataProvidedBannerMovedToBottom
 import tmg.flashback.managers.networkconnectivity.NetworkConnectivityManager
 import tmg.flashback.repo.config.RemoteConfigRepository
 import tmg.flashback.repo.db.stats.HistoryRepository
@@ -37,13 +36,12 @@ internal class SeasonViewModelTest: BaseTest() {
     private val mockHistoryRepository: HistoryRepository = mockk(relaxed = true)
     private val mockSeasonOverviewRepository: SeasonOverviewRepository = mockk(relaxed = true)
     private val mockSeasonController: SeasonController = mockk(relaxed = true)
-    private val mockRemoteConfigRepository: RemoteConfigRepository = mockk(relaxed = true)
+    private val mockNotificationController: NotificationController = mockk(relaxed = true)
     private val mockNetworkConnectivityManager: NetworkConnectivityManager = mockk(relaxed = true)
 
     @BeforeEach
     internal fun setUp() {
-        every { mockRemoteConfigRepository.defaultYear } returns 2021
-        every { mockRemoteConfigRepository.banner } returns null
+        every { mockNotificationController.banner } returns null
 
         every { mockNetworkConnectivityManager.isConnected } returns true
 
@@ -59,8 +57,8 @@ internal class SeasonViewModelTest: BaseTest() {
             mockFeatureController,
             mockHistoryRepository,
             mockSeasonOverviewRepository,
+            mockNotificationController,
             mockSeasonController,
-            mockRemoteConfigRepository,
             mockNetworkConnectivityManager
         )
     }
@@ -96,7 +94,7 @@ internal class SeasonViewModelTest: BaseTest() {
     @Test
     fun `SeasonViewModel clickSearch does nothing if remote config field disabled`() {
 
-        every { mockRemoteConfigRepository.search } returns false
+        every { mockFeatureController.searchEnabled } returns false
 
         initSUT()
 
@@ -191,7 +189,7 @@ internal class SeasonViewModelTest: BaseTest() {
     fun `SeasonViewModel when app banner model exists and show is true then it's added to the data`() = coroutineTest {
 
         val expectedMessage = "Testing the custom app banner!"
-        every { mockRemoteConfigRepository.banner } returns expectedMessage
+        every { mockNotificationController.banner } returns expectedMessage
 
         initSUT()
 
@@ -223,7 +221,7 @@ internal class SeasonViewModelTest: BaseTest() {
         every { mockHistoryRepository.historyFor(any()) } returns flow { emit(historyListWithEmptyRound) }
 
         val expected = listOf<SeasonItem>(
-                SeasonItem.ErrorItem(SyncDataItem.ProvidedBy),
+                SeasonItem.ErrorItem(SyncDataItem.ProvidedBy()),
                 SeasonItem.ErrorItem(SyncDataItem.NoNetwork)
         )
 
@@ -243,7 +241,7 @@ internal class SeasonViewModelTest: BaseTest() {
         every { mockHistoryRepository.historyFor(any()) } returns flow { emit(historyItemWithEmptyRound) }
 
         val expected = listOf<SeasonItem>(
-                SeasonItem.ErrorItem(SyncDataItem.ProvidedBy),
+                SeasonItem.ErrorItem(SyncDataItem.ProvidedBy()),
                 SeasonItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.EARLY_IN_SEASON))
         )
 
@@ -262,7 +260,7 @@ internal class SeasonViewModelTest: BaseTest() {
         every { mockHistoryRepository.historyFor(any()) } returns flow { emit(historyListWithEmptyRound) }
 
         val expected = listOf<SeasonItem>(
-                SeasonItem.ErrorItem(SyncDataItem.ProvidedBy),
+                SeasonItem.ErrorItem(SyncDataItem.ProvidedBy()),
                 SeasonItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.MISSING_RACE))
         )
 
@@ -321,7 +319,7 @@ internal class SeasonViewModelTest: BaseTest() {
         every { mockSeasonOverviewRepository.getSeasonOverview(any()) } returns flow { emit(mockSeason.copy(rounds = emptyList())) }
 
         val expected = listOf<SeasonItem>(
-                SeasonItem.ErrorItem(SyncDataItem.ProvidedBy),
+                SeasonItem.ErrorItem(SyncDataItem.ProvidedBy()),
                 SeasonItem.ErrorItem(SyncDataItem.NoNetwork)
         )
 
@@ -340,7 +338,7 @@ internal class SeasonViewModelTest: BaseTest() {
         every { mockSeasonOverviewRepository.getSeasonOverview(any()) } returns flow { emit(mockSeason.copy(rounds = emptyList())) }
 
         val expected = listOf<SeasonItem>(
-                SeasonItem.ErrorItem(SyncDataItem.ProvidedBy),
+                SeasonItem.ErrorItem(SyncDataItem.ProvidedBy()),
                 SeasonItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.IN_FUTURE_SEASON))
         )
 
@@ -357,7 +355,7 @@ internal class SeasonViewModelTest: BaseTest() {
     fun `SeasonViewModel when home type is drivers list driver standings in order`() = coroutineTest {
 
         val expected = listOf<SeasonItem>(
-                SeasonItem.ErrorItem(SyncDataItem.ProvidedBy),
+                SeasonItem.ErrorItem(SyncDataItem.ProvidedBy()),
             expectedDriver3,
             expectedDriver4,
             expectedDriver1,
@@ -400,7 +398,7 @@ internal class SeasonViewModelTest: BaseTest() {
         every { mockSeasonOverviewRepository.getSeasonOverview(any()) } returns flow { emit(mockSeason.copy(rounds = emptyList())) }
 
         val expected = listOf<SeasonItem>(
-                SeasonItem.ErrorItem(SyncDataItem.ProvidedBy),
+                SeasonItem.ErrorItem(SyncDataItem.ProvidedBy()),
                 SeasonItem.ErrorItem(SyncDataItem.NoNetwork)
         )
 
@@ -419,7 +417,7 @@ internal class SeasonViewModelTest: BaseTest() {
         every { mockSeasonOverviewRepository.getSeasonOverview(any()) } returns flow { emit(mockSeason.copy(rounds = emptyList())) }
 
         val expected = listOf<SeasonItem>(
-                SeasonItem.ErrorItem(SyncDataItem.ProvidedBy),
+                SeasonItem.ErrorItem(SyncDataItem.ProvidedBy()),
                 SeasonItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.IN_FUTURE_SEASON))
         )
 
@@ -436,7 +434,7 @@ internal class SeasonViewModelTest: BaseTest() {
     fun `SeasonViewModel when home type is constructors list driver standings in order`() = coroutineTest {
 
         val expected = listOf<SeasonItem>(
-                SeasonItem.ErrorItem(SyncDataItem.ProvidedBy),
+                SeasonItem.ErrorItem(SyncDataItem.ProvidedBy()),
             expectedConstructorAlpha,
             expectedConstructorBeta
         )
@@ -478,7 +476,7 @@ internal class SeasonViewModelTest: BaseTest() {
 
         sut.outputs.list.test {
             assertValue(listOf(
-                    SeasonItem.ErrorItem(SyncDataItem.ProvidedBy),
+                    SeasonItem.ErrorItem(SyncDataItem.ProvidedBy()),
                     SeasonItem.ErrorItem(SyncDataItem.ConstructorsChampionshipNotAwarded)
             ))
         }
@@ -504,14 +502,14 @@ internal class SeasonViewModelTest: BaseTest() {
     //region Data provided by banner
 
     @Test
-    fun `SeasonViewModel banner moves to the bottom when first boot time is greater than 10 days after`() = coroutineTest {
+    fun `SeasonViewModel banner moves to the bottom when first boot time is greater than 5 days after`() = coroutineTest {
 
         every { mockDeviceController.appFirstBoot } returns LocalDate.now().minusDays(daysUntilDataProvidedBannerMovedToBottom.toLong() + 1L)
 
         initSUT()
 
         sut.outputs.list.test {
-            assertListHasLastItem(SeasonItem.ErrorItem(SyncDataItem.ProvidedBy))
+            assertListHasLastItem(SeasonItem.ErrorItem(SyncDataItem.ProvidedBy("calendar")))
         }
     }
 
@@ -523,7 +521,7 @@ internal class SeasonViewModelTest: BaseTest() {
         initSUT()
 
         sut.outputs.list.test {
-            assertListHasFirstItem(SeasonItem.ErrorItem(SyncDataItem.ProvidedBy))
+            assertListHasFirstItem(SeasonItem.ErrorItem(SyncDataItem.ProvidedBy()))
         }
     }
 

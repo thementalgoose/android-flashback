@@ -91,9 +91,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/paddingSmall"
-            android:drawableStart="@drawable/ic_small_constructor"
             android:drawablePadding="@dimen/paddingXSmall"
-            android:drawableTint="?attr/f1TextTertiary"
+            app:drawableStartCompat="@drawable/ic_small_constructor"
+            app:drawableTint="?attr/f1TextTertiary"
             app:layout_constraintBottom_toBottomOf="@id/tvDriverNumber"
             app:layout_constraintStart_toEndOf="@id/tvDriverNumber"
             app:layout_constraintTop_toBottomOf="@id/layoutDriver"
@@ -108,118 +108,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/guideline"
             app:layout_constraintTop_toTopOf="parent"
-            app:lpb_sliverWidth="1dp"
             app:lpb_backgroundColour="?attr/f1BackgroundPrimary"
-            app:lpb_radius="@dimen/radiusSmall" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/stats"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/container">
-
-        <LinearLayout
-            android:id="@+id/containerQuali"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="@drawable/ripple"
-            android:orientation="vertical"
-            android:paddingTop="@dimen/paddingSmall"
-            android:paddingBottom="@dimen/paddingSmall"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/containerFinish"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:id="@+id/qualifying"
-                style="@style/Text.Driver.Statistic"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                tools:text="1st" />
-
-            <TextView
-                style="@style/Text.Driver.StatisticSubtitle"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="@string/home_driver_best_quali" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/containerFinish"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="@drawable/ripple"
-            android:orientation="vertical"
-            android:paddingTop="@dimen/paddingSmall"
-            android:paddingBottom="@dimen/paddingSmall"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/containerMore"
-            app:layout_constraintStart_toEndOf="@id/containerQuali"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:id="@+id/finish"
-                style="@style/Text.Driver.Statistic"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                tools:text="1st" />
-
-            <TextView
-                style="@style/Text.Driver.StatisticSubtitle"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="@string/home_driver_best_finish" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/containerMore"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="@drawable/ripple"
-            android:orientation="vertical"
-            android:paddingTop="@dimen/paddingSmall"
-            android:paddingBottom="@dimen/paddingSmall"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/containerFinish"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                style="@style/Text.Driver.Statistic"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:drawableEnd="@drawable/ic_view_more"
-                android:drawableTint="?attr/f1TextPrimary"
-                android:gravity="center"
-                android:src="@drawable/ic_view_more" />
-
-            <TextView
-                style="@style/Text.Driver.StatisticSubtitle"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="@string/home_driver_best_view_more" />
-
-        </LinearLayout>
-
+            app:lpb_radius="@dimen/radiusSmall"
+            app:lpb_sliverWidth="1dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

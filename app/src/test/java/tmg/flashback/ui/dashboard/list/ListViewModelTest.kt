@@ -8,7 +8,6 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
 import org.threeten.bp.Year
-import tmg.flashback.allYears
 import tmg.flashback.controllers.SeasonController
 import tmg.flashback.controllers.UpNextController
 import tmg.flashback.repo.models.remoteconfig.UpNextSchedule
@@ -37,7 +36,7 @@ internal class ListViewModelTest: BaseTest() {
         every { mockSeasonController.defaultYear } returns 2018
         every { mockUpNextController.getNextRace() } returns null
 
-        every { mockSeasonController.allSeasons } returns allYears.toSet()
+        every { mockSeasonController.allSeasons } returns List(currentYear - 1949) { it + 1950 }.toSet()
     }
 
     private fun initSUT() {

@@ -13,10 +13,10 @@ import org.koin.android.ext.android.inject
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.R
-import tmg.flashback.appHintDelay
 import tmg.flashback.ui.base.BaseActivity
 import tmg.flashback.ui.circuit.CircuitInfoActivity
 import tmg.flashback.constants.TrackLayout
+import tmg.flashback.controllers.AppHintsController.Companion.appHintDelay
 import tmg.flashback.ui.overviews.constructor.ConstructorActivity
 import tmg.flashback.ui.overviews.driver.DriverActivity
 import tmg.flashback.ui.shared.pill.PillAdapter

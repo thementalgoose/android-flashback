@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.ValueSource
+import tmg.flashback.repo.config.RemoteConfigRepository
 import tmg.flashback.repo.enums.NotificationRegistration
 import tmg.flashback.repo.pref.DeviceRepository
 import tmg.flashback.testutils.BaseTest
@@ -16,12 +17,27 @@ import tmg.flashback.testutils.BaseTest
 internal class NotificationControllerTest: BaseTest() {
 
     private var mockDeviceRepository: DeviceRepository = mockk(relaxed = true)
+    private var mockRemoteConfigRepository: RemoteConfigRepository = mockk(relaxed = true)
 
     private lateinit var sut: NotificationController
 
     private fun initSUT() {
-        sut = NotificationController(mockDeviceRepository)
+        sut = NotificationController(mockDeviceRepository, mockRemoteConfigRepository)
     }
+
+    //region App Banner
+
+    @Test
+    fun `NotificationController app banner reads from remote config`() {
+        every { mockRemoteConfigRepository.banner } returns "test"
+        initSUT()
+        assertEquals("test", sut.banner)
+        verify {
+            mockRemoteConfigRepository.banner
+        }
+    }
+
+    //endregion
 
     //region Race
 

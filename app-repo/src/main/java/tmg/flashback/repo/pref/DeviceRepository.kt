@@ -48,6 +48,11 @@ interface DeviceRepository {
      */
     var appOpenedCount: Int
 
+    /**
+     * App version for which the release notes had last been seen
+     */
+    var releaseNotesSeenAppVersion: Int
+
     //region Notifications
 
     /**

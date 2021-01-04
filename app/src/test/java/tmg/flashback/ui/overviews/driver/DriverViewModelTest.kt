@@ -10,7 +10,7 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 import org.threeten.bp.Year
 import tmg.flashback.R
-import tmg.flashback.currentYear
+import tmg.flashback.constants.App.currentYear
 import tmg.flashback.ui.overviews.*
 import tmg.flashback.ui.overviews.driver.summary.DriverSummaryItem
 import tmg.flashback.ui.overviews.driver.summary.PipeType
@@ -48,7 +48,7 @@ internal class DriverViewModelTest: BaseTest() {
 
         val expected = listOf(
             DriverSummaryItem.ErrorItem(SyncDataItem.NoNetwork),
-            DriverSummaryItem.ErrorItem(SyncDataItem.ProvidedBy)
+            DriverSummaryItem.ErrorItem(SyncDataItem.ProvidedBy())
         )
 
         initSUT()
@@ -64,7 +64,7 @@ internal class DriverViewModelTest: BaseTest() {
         every { mockDriverRepository.getDriverOverview(any()) } returns flow { emit(null) }
         val expected = listOf(
             DriverSummaryItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.DRIVER_NOT_EXIST)),
-            DriverSummaryItem.ErrorItem(SyncDataItem.ProvidedBy)
+            DriverSummaryItem.ErrorItem(SyncDataItem.ProvidedBy())
         )
 
         initSUT()

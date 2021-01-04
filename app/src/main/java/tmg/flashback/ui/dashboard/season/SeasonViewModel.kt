@@ -9,14 +9,11 @@ import kotlinx.coroutines.flow.*
 import org.threeten.bp.LocalDate
 import org.threeten.bp.temporal.ChronoUnit
 import tmg.flashback.R
+import tmg.flashback.constants.App.currentYear
+import tmg.flashback.constants.Formula1.constructorChampionshipStarts
 import tmg.flashback.ui.base.BaseViewModel
-import tmg.flashback.constructorChampionshipStarts
-import tmg.flashback.controllers.AppearanceController
-import tmg.flashback.controllers.DeviceController
-import tmg.flashback.controllers.FeatureController
-import tmg.flashback.controllers.SeasonController
-import tmg.flashback.currentYear
-import tmg.flashback.daysUntilDataProvidedBannerMovedToBottom
+import tmg.flashback.controllers.*
+import tmg.flashback.controllers.NotificationController.Companion.daysUntilDataProvidedBannerMovedToBottom
 import tmg.flashback.managers.networkconnectivity.NetworkConnectivityManager
 import tmg.flashback.managers.remoteconfig.RemoteConfigManager
 import tmg.flashback.repo.config.RemoteConfigRepository
@@ -69,9 +66,8 @@ class SeasonViewModel(
         private val featureController: FeatureController,
         private val historyRepository: HistoryRepository,
         private val seasonOverviewRepository: SeasonOverviewRepository,
+        private val notificationController: NotificationController,
         private val seasonController: SeasonController,
-        // TODO: REMOVE THIS DEPENDENCY
-        private val remoteConfigRepository: RemoteConfigRepository,
         private val networkConnectivityManager: NetworkConnectivityManager
 ): BaseViewModel(), SeasonViewModelInputs, SeasonViewModelOutputs {
 
@@ -114,10 +110,10 @@ class SeasonViewModel(
             currentHistory
         )
         .map { (season, menuItemType, history) ->
-            val appBannerMessage = remoteConfigRepository.banner
+            val appBannerMessage = notificationController.banner
             val list: MutableList<SeasonItem> = mutableListOf()
             if (showBannerAtTop) {
-                list.add(SeasonItem.ErrorItem(SyncDataItem.ProvidedBy))
+                list.add(SeasonItem.ErrorItem(SyncDataItem.ProvidedBy()))
             }
             val historyRounds = history?.rounds ?: emptyList()
             val rounds = season.rounds
@@ -140,6 +136,9 @@ class SeasonViewModel(
                         else ->
                             list.addAll(historyRounds.toCalendarList())
                     }
+                    if (!showBannerAtTop) {
+                        list.add(SeasonItem.ErrorItem(SyncDataItem.ProvidedBy("calendar")))
+                    }
                 }
                 SeasonNavItem.DRIVERS -> {
                     when {
@@ -157,6 +156,9 @@ class SeasonViewModel(
                             val driverStandings = rounds.driverStandings()
                             list.addAll(driverStandings.toDriverList(rounds))
                         }
+                    }
+                    if (!showBannerAtTop) {
+                        list.add(SeasonItem.ErrorItem(SyncDataItem.ProvidedBy("drivers")))
                     }
                 }
                 SeasonNavItem.CONSTRUCTORS -> {
@@ -178,10 +180,10 @@ class SeasonViewModel(
                             list.addAll(constructorStandings.toConstructorList())
                         }
                     }
+                    if (!showBannerAtTop) {
+                        list.add(SeasonItem.ErrorItem(SyncDataItem.ProvidedBy("constructors")))
+                    }
                 }
-            }
-            if (!showBannerAtTop) {
-                list.add(SeasonItem.ErrorItem(SyncDataItem.ProvidedBy))
             }
             return@map list
         }

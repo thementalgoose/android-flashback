@@ -116,7 +116,7 @@ internal class RaceViewModelTest: BaseTest() {
     fun `RaceViewModel when round data is null and the round happened within the past 10 days, show the race is coming soon message`() = coroutineTest {
 
         every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow { emit(null) }
-        val showComingSoonMessageForNextDays = 10
+        val showComingSoonMessageForNextDays = 5
 
         initSUT(LocalDate.now().minusDays(showComingSoonMessageForNextDays - 1L))
 
@@ -175,7 +175,7 @@ internal class RaceViewModelTest: BaseTest() {
         }
         val expected = listOf<RaceModel>(
             RaceModel.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.IN_FUTURE_RACE)),
-            RaceModel.ErrorItem(SyncDataItem.ProvidedBy)
+            RaceModel.ErrorItem(SyncDataItem.ProvidedBy())
         )
 
         initSUT()
@@ -196,7 +196,7 @@ internal class RaceViewModelTest: BaseTest() {
         }
         val expected = listOf<RaceModel>(
             RaceModel.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.COMING_SOON_RACE)),
-            RaceModel.ErrorItem(SyncDataItem.ProvidedBy)
+            RaceModel.ErrorItem(SyncDataItem.ProvidedBy())
         )
 
         initSUT()
@@ -237,7 +237,7 @@ internal class RaceViewModelTest: BaseTest() {
                 expectedGrid = 1,
                 expectedFinish = 4
             ),
-            RaceModel.ErrorItem(SyncDataItem.ProvidedBy)
+            RaceModel.ErrorItem(SyncDataItem.ProvidedBy())
         )
 
         initSUT()
@@ -257,7 +257,7 @@ internal class RaceViewModelTest: BaseTest() {
         val showQualifying = DisplayPrefs(true, true, true, false, false, true)
         val expected = mutableListOf<RaceModel>(RaceModel.QualifyingHeader(showQualifying))
         expected.addAll(expectedQ3Order)
-        expected.add(RaceModel.ErrorItem(SyncDataItem.ProvidedBy))
+        expected.add(RaceModel.ErrorItem(SyncDataItem.ProvidedBy()))
 
         initSUT(orderBy = QUALIFYING_POS)
 
@@ -276,7 +276,7 @@ internal class RaceViewModelTest: BaseTest() {
         val showQualifying = DisplayPrefs(true, true, true, false, false, true)
         val expected = mutableListOf<RaceModel>(RaceModel.QualifyingHeader(showQualifying))
         expected.addAll(expectedQ2Order)
-        expected.add(RaceModel.ErrorItem(SyncDataItem.ProvidedBy))
+        expected.add(RaceModel.ErrorItem(SyncDataItem.ProvidedBy()))
 
         initSUT(orderBy = QUALIFYING_POS_2)
 
@@ -295,7 +295,7 @@ internal class RaceViewModelTest: BaseTest() {
         val showQualifying = DisplayPrefs(true, true, true, false, false, true)
         val expected = mutableListOf<RaceModel>(RaceModel.QualifyingHeader(showQualifying))
         expected.addAll(expectedQ1Order)
-        expected.add(RaceModel.ErrorItem(SyncDataItem.ProvidedBy))
+        expected.add(RaceModel.ErrorItem(SyncDataItem.ProvidedBy()))
 
         initSUT(orderBy = QUALIFYING_POS_1)
 
@@ -314,15 +314,15 @@ internal class RaceViewModelTest: BaseTest() {
         val showQualifying = DisplayPrefs(true, true, true, false, false, true)
         val expectedQ3 = mutableListOf<RaceModel>(RaceModel.QualifyingHeader(showQualifying))
         expectedQ3.addAll(expectedQ3Order)
-        expectedQ3.add(RaceModel.ErrorItem(SyncDataItem.ProvidedBy))
+        expectedQ3.add(RaceModel.ErrorItem(SyncDataItem.ProvidedBy()))
 
         val expectedQ2 = mutableListOf<RaceModel>(RaceModel.QualifyingHeader(showQualifying))
         expectedQ2.addAll(expectedQ2Order)
-        expectedQ2.add(RaceModel.ErrorItem(SyncDataItem.ProvidedBy))
+        expectedQ2.add(RaceModel.ErrorItem(SyncDataItem.ProvidedBy()))
 
         val expectedQ1 = mutableListOf<RaceModel>(RaceModel.QualifyingHeader(showQualifying))
         expectedQ1.addAll(expectedQ1Order)
-        expectedQ1.add(RaceModel.ErrorItem(SyncDataItem.ProvidedBy))
+        expectedQ1.add(RaceModel.ErrorItem(SyncDataItem.ProvidedBy()))
 
         initSUT(orderBy = QUALIFYING_POS)
 
@@ -355,7 +355,7 @@ internal class RaceViewModelTest: BaseTest() {
         val showQualifying = DisplayPrefs(true, true, true, true, false, true)
         val expected = mutableListOf<RaceModel>(RaceModel.QualifyingHeader(showQualifying))
         expected.addAll(expectedQ3OrderWithQualifyingDeltas)
-        expected.add(RaceModel.ErrorItem(SyncDataItem.ProvidedBy))
+        expected.add(RaceModel.ErrorItem(SyncDataItem.ProvidedBy()))
 
         initSUT(orderBy = QUALIFYING_POS)
 
@@ -374,7 +374,7 @@ internal class RaceViewModelTest: BaseTest() {
         val showQualifying = DisplayPrefs(true, true, true, true, false, true)
         val expected = mutableListOf<RaceModel>(RaceModel.QualifyingHeader(showQualifying))
         expected.addAll(expectedQ3OrderWithQualifyingDeltas)
-        expected.add(RaceModel.ErrorItem(SyncDataItem.ProvidedBy))
+        expected.add(RaceModel.ErrorItem(SyncDataItem.ProvidedBy()))
 
         initSUT(orderBy = QUALIFYING_POS)
 
@@ -395,7 +395,7 @@ internal class RaceViewModelTest: BaseTest() {
         val showQualifying = DisplayPrefs(true, false, false, false, false, true)
         val expected = mutableListOf<RaceModel>(RaceModel.QualifyingHeader(showQualifying))
         expected.addAll(expectedQ3Order(round = mockRound3, displayPrefs = showQualifying))
-        expected.add(RaceModel.ErrorItem(SyncDataItem.ProvidedBy))
+        expected.add(RaceModel.ErrorItem(SyncDataItem.ProvidedBy()))
 
         initSUT(orderBy = QUALIFYING_POS)
 
@@ -505,7 +505,7 @@ internal class RaceViewModelTest: BaseTest() {
         val showQualifying = DisplayPrefs(true, false, false, false, false, true)
         val expected = mutableListOf<RaceModel>(RaceModel.QualifyingHeader(showQualifying))
         expected.addAll(expectedQ3Order(round = mockRound3, displayPrefs = showQualifying))
-        expected.add(RaceModel.ErrorItem(SyncDataItem.ProvidedBy))
+        expected.add(RaceModel.ErrorItem(SyncDataItem.ProvidedBy()))
 
         initSUT(orderBy = QUALIFYING_POS)
 
@@ -531,7 +531,7 @@ internal class RaceViewModelTest: BaseTest() {
         val showQualifying = DisplayPrefs(true, false, false, false, false, true)
         val expected = mutableListOf<RaceModel>(RaceModel.QualifyingHeader(showQualifying))
         expected.addAll(expectedQ3Order(round = mockRound3, displayPrefs = showQualifying))
-        expected.add(RaceModel.ErrorItem(SyncDataItem.ProvidedBy))
+        expected.add(RaceModel.ErrorItem(SyncDataItem.ProvidedBy()))
 
         initSUT(orderBy = QUALIFYING_POS)
 

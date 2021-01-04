@@ -54,7 +54,7 @@ class DashboardViewModel(
     var outputs: DashboardViewModelOutputs = this
 
     init {
-        if (releaseNotesController.showReleaseNotes) {
+        if (releaseNotesController.pendingReleaseNotes) {
             openReleaseNotes.value = Event()
         }
     }

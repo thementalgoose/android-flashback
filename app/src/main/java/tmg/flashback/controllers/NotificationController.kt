@@ -1,22 +1,29 @@
 package tmg.flashback.controllers
 
 import android.os.Build
+import tmg.flashback.repo.config.RemoteConfigRepository
 import tmg.flashback.repo.enums.NotificationRegistration
 import tmg.flashback.repo.pref.DeviceRepository
 
 /**
- * Control the notifications in the app
+ * Control the notifications in the app / letting the user know something
  */
 class NotificationController(
-        private val deviceRepository: DeviceRepository
+        private val deviceRepository: DeviceRepository,
+        private val remoteConfigRepository: RemoteConfigRepository
 ) {
+
+    /**
+     * Get the banner that we display to the user
+     */
+    val banner: String?
+        get() = remoteConfigRepository.banner
 
     /**
      * Notifications channels supported
      */
     val isNotificationChannelsSupported: Boolean
         get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
-
 
     /**
      * Race
@@ -54,4 +61,11 @@ class NotificationController(
             false -> deviceRepository.notificationsMisc = NotificationRegistration.OPT_OUT
         }
 
+    companion object {
+
+        /**
+         * Days until the app banner gets displayed at the bottom of the home page
+         */
+        const val daysUntilDataProvidedBannerMovedToBottom = 5
+    }
 }

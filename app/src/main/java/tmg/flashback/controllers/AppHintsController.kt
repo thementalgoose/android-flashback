@@ -22,4 +22,12 @@ class AppHintsController(
             }
             userRepository.appHints = set.toSet()
         }
+
+    companion object {
+
+        /**
+         * Duration that an app hint shows up on the screen for
+         */
+        const val appHintDelay: Int = 5000
+    }
 }

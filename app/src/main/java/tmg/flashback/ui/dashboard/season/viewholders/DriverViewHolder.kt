@@ -1,22 +1,16 @@
 package tmg.flashback.ui.dashboard.season.viewholders
 
 import android.view.View
-import android.widget.Toast
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.layout_driver.view.*
 import kotlinx.android.synthetic.main.view_dashboard_season_driver.view.*
-import kotlinx.android.synthetic.main.view_dashboard_season_driver.view.lpvProgress
 import tmg.flashback.R
-import tmg.flashback.ui.dashboard.season.SeasonItem
 import tmg.flashback.repo.enums.BarAnimation
-import tmg.flashback.showDriverSummary
+import tmg.flashback.ui.dashboard.season.SeasonItem
 import tmg.flashback.ui.utils.getColor
 import tmg.flashback.ui.utils.getFlagResourceAlpha3
-import tmg.utilities.extensions.ordinalAbbreviation
 import tmg.utilities.extensions.views.context
-import tmg.utilities.extensions.views.getString
 import tmg.utilities.extensions.views.show
 
 class DriverViewHolder(
@@ -26,9 +20,6 @@ class DriverViewHolder(
 
     init {
         itemView.container.setOnClickListener(this)
-        itemView.containerQuali.setOnClickListener(this)
-        itemView.containerFinish.setOnClickListener(this)
-        itemView.containerMore.setOnClickListener(this)
     }
 
     private lateinit var driver: SeasonItem.Driver
@@ -81,60 +72,11 @@ class DriverViewHolder(
                 }
             }
         }
-
-        itemView.stats.show(false)
-
-        // Qualifying
-        val (qualiPosition, qualiCircuits) = item.bestQualifying ?: Pair(0, emptyList())
-        if (qualiPosition == 0) {
-            itemView.qualifying.text = getString(R.string.endash)
-            qualiList = null
-        }
-        else {
-            itemView.qualifying.text = qualiPosition.ordinalAbbreviation
-            qualiList = qualiCircuits
-                    .map { it.name }
-                    .distinct()
-                    .joinToString(separator = ", ")
-        }
-
-        // Finish
-        val (position, circuits) = item.bestFinish ?: Pair(0, emptyList())
-        if (position == 0) {
-            itemView.finish.text = getString(R.string.endash)
-            finishList = null
-        }
-        else {
-            itemView.finish.text = position.ordinalAbbreviation
-            finishList = circuits
-                    .map { it.name }
-                    .distinct()
-                    .joinToString(separator = ", ")
-        }
     }
 
     override fun onClick(v: View?) {
         when (v) {
             itemView.container -> {
-                @Suppress("ConstantConditionIf")
-                if (showDriverSummary) {
-                    itemView.stats.show(!itemView.stats.isVisible)
-                }
-                else {
-                    driverClicked(driver)
-                }
-            }
-            itemView.containerQuali -> {
-                if (qualiList != null) {
-                    Toast.makeText(context, qualiList, Toast.LENGTH_LONG).show()
-                }
-            }
-            itemView.containerFinish -> {
-                if (finishList != null) {
-                    Toast.makeText(context, finishList, Toast.LENGTH_LONG).show()
-                }
-            }
-            itemView.containerMore -> {
                 driverClicked(driver)
             }
         }

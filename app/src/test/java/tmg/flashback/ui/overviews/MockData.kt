@@ -2,7 +2,7 @@ package tmg.flashback.ui.overviews
 
 import android.graphics.Color
 import org.threeten.bp.LocalDate
-import tmg.flashback.currentYear
+import tmg.flashback.constants.App.currentYear
 import tmg.flashback.repo.models.stats.*
 
 const val mockDriverId: String = "mockDriver"
