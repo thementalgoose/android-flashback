@@ -150,8 +150,9 @@ task generateRemoteConfigDefaults {
     jsonBuilder(supportedSeasonsModel)
     def supportedSeasons = jsonBuilder.toString()
 
-    def resDir = project.projectDir.absolutePath + "/../app-firebase/src/main/res"
-    new File(resDir + "/xml/remote_config_defaults.xml").withWriter { writer ->
+    def filePath = project.projectDir.absolutePath + "/../app-firebase/src/main/res/xml/remote_config_defaults.xml"
+    new File(filePath).getParentFile().mkdirs()
+    new File(filePath).withWriter { writer ->
         def xmlBuilder = new MarkupBuilder(writer)
         xmlBuilder.doubleQuotes = true
         xmlBuilder.mkp.xmlDeclaration(version: '1.0', encoding: 'utf-8')
@@ -189,7 +190,7 @@ task generateRemoteConfigDefaults {
     }
 
     println("Remote config defaults - file generated")
-    println(new File(resDir + "/xml/remote_config_defaults.xml").text)
+    println(new File(filePath).text)
 }
 
 tasks.whenTaskAdded { task ->
