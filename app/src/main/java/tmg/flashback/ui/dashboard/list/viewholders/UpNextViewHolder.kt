@@ -18,6 +18,7 @@ import kotlin.math.absoluteValue
 
 class UpNextViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
+    @SuppressLint("SetTextI18n")
     fun bind(item: ListItem.UpNext) {
 
         itemView.name.text = item.upNextSchedule.name
@@ -50,7 +51,12 @@ class UpNextViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         // Days to go
         @SuppressLint("SetTextI18n")
         val dateString = "${item.upNextSchedule.date.dayOfMonth.ordinalAbbreviation} ${DateTimeFormatter.ofPattern("MMM yyyy").format(item.upNextSchedule.date)}"
-        itemView.date.text = getString(R.string.dashboard_up_next_date, item.upNextSchedule.round, dateString).fromHtml()
+        if (item.upNextSchedule.round != 0) {
+            itemView.date.text = getString(R.string.dashboard_up_next_date, item.upNextSchedule.round, dateString).fromHtml()
+        }
+        else {
+            itemView.date.text = "<br/><b>${dateString}</b>".fromHtml()
+        }
         if (item.upNextSchedule.date == LocalDate.now()) {
             itemView.days.text = getString(R.string.dashboard_up_next_today)
             itemView.daysToGoLabel.gone()
