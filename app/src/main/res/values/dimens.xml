@@ -44,6 +44,7 @@
 
     <dimen name="seasonListCircleSize">20dp</dimen>
     <dimen name="seasonListCircleSelectedSize">10dp</dimen>
+    <dimen name="seasonListCircleDefaultSize">6dp</dimen>
 
     <dimen name="bottomSheetBoxPipeSize">6dp</dimen>
     <dimen name="bottomSheetPillHeight">4dp</dimen>

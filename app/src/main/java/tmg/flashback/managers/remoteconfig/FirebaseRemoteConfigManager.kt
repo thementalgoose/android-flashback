@@ -1,5 +1,6 @@
 package tmg.flashback.managers.remoteconfig
 
+import android.util.Log
 import com.google.firebase.FirebaseException
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigException
@@ -29,8 +30,7 @@ class FirebaseRemoteConfigManager(
             .Builder()
             .apply {
                 minimumFetchIntervalInSeconds = if (BuildConfig.DEBUG) {
-                    // TODO: Change this back
-                    21600L // 10s
+                    10L // 10s
                 } else {
                     21600L // 6h
                 }
@@ -56,7 +56,7 @@ class FirebaseRemoteConfigManager(
     override val requiresRemoteSync: Boolean
         get() = Migrations.remoteConfigSyncCount != deviceRepository.remoteConfigSync
 
-    override fun setRemoteSyncPerformed() {
+    fun setRemoteSyncPerformed() {
         deviceRepository.remoteConfigSync = Migrations.remoteConfigSyncCount
     }
 
@@ -100,10 +100,10 @@ class FirebaseRemoteConfigManager(
         return try {
             when (andActivate) {
                 true -> {
-                    val fetch = remoteConfig.fetch(0L).await()
+                    remoteConfig.fetch(0L).await()
                     val activate = remoteConfig.activate().await()
-                    println("Fetch $fetch Activate $activate")
-                    true
+                    setRemoteSyncPerformed()
+                    activate
                 }
                 false -> {
                     remoteConfig
@@ -137,9 +137,10 @@ class FirebaseRemoteConfigManager(
      */
     override suspend fun activate(): Boolean {
         return try {
-            remoteConfig
+            val result = remoteConfig
                     .activate()
                     .await()
+            result
         } catch (e: FirebaseRemoteConfigException) {
             if (BuildConfig.DEBUG) {
                 e.printStackTrace()
