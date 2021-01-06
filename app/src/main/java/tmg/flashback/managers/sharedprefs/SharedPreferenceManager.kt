@@ -48,7 +48,7 @@ class SharedPreferenceManager(context: Context) : SharedPrefManager(context),
     private val keyAppFirstBoot: String = "APP_STARTUP_FIRST_BOOT"
     private val keyAppOpenCount: String = "APP_STARTUP_OPEN_COUNT"
 
-    private val keyRemoteConfigInitialSync: String = "REMOTE_CONFIG_INITIAL_SYNC"
+    private val keyRemoteConfigSyncCount: String = "REMOTE_CONFIG_SYNC_COUNT"
 
 
 
@@ -133,6 +133,9 @@ class SharedPreferenceManager(context: Context) : SharedPrefManager(context),
             }
             return key
         }
+    override var remoteConfigSync: Int
+        get() = getInt(keyRemoteConfigSyncCount, 0)
+        set(value) = save(keyRemoteConfigSyncCount, value)
 
     override var crashReporting: Boolean
         get() = getBoolean(keyCrashReporting, Defaults.crashReporting)
@@ -161,10 +164,6 @@ class SharedPreferenceManager(context: Context) : SharedPrefManager(context),
     override var appOpenedCount: Int
         get() = getInt(keyAppOpenCount, 0)
         set(value) = save(keyAppOpenCount, value)
-
-    override var remoteConfigInitialSync: Boolean
-        get() = getBoolean(keyRemoteConfigInitialSync, false)
-        set(value) = save(keyRemoteConfigInitialSync, value)
 
     override var releaseNotesSeenAppVersion: Int
         get() = getInt(keyReleaseNotesSeenVersion, 0)

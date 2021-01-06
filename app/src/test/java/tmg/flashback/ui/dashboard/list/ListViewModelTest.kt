@@ -87,6 +87,32 @@ internal class ListViewModelTest: BaseTest() {
         }
     }
 
+    @Test
+    fun `ListViewModel with no user defined default set the option to show clear is false`() {
+
+        every { mockSeasonController.isUserDefinedValueSet } returns true
+
+        initSUT()
+        sut.outputs.list.test {
+            assertListMatchesItem {
+                it is ListItem.Season && it.showClearDefault
+            }
+        }
+    }
+
+    @Test
+    fun `ListViewModel with no user defined default set the option to show clear is true`() {
+
+        every { mockSeasonController.isUserDefinedValueSet } returns false
+
+        initSUT()
+        sut.outputs.list.test {
+            assertListMatchesItem {
+                it is ListItem.Season && !it.showClearDefault
+            }
+        }
+    }
+
     //endregion
 
     //region Navigation
@@ -325,12 +351,12 @@ internal class ListViewModelTest: BaseTest() {
 
     private fun favouriteSeasons(favouriteItems: List<Int>): List<ListItem> = List(favouriteItems.size) {
         val year = favouriteItems[it]
-        ListItem.Season(year, true, HeaderType.FAVOURITED, year == 2018)
+        ListItem.Season(year, true, HeaderType.FAVOURITED, year == 2018, year == 2018)
     }.reversed()
 
     private fun allSeasons(favouriteItems: List<Int> = emptyList()): List<ListItem> = List((currentYear - minYear) + 1) {
         val year = minYear + it
-        ListItem.Season(year, favouriteItems.contains(year), HeaderType.ALL, year == 2018)
+        ListItem.Season(year, favouriteItems.contains(year), HeaderType.ALL, year == 2018, year == 2018)
     }.reversed()
 
     //endregion

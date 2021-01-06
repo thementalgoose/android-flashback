@@ -40,7 +40,8 @@ class ListFragment: BaseFragment() {
                 featureToggled = viewModel.inputs::toggleHeader,
                 favouriteToggled = viewModel.inputs::toggleFavourite,
                 seasonClicked = viewModel.inputs::clickSeason,
-                setDefaultClicked = viewModel.inputs::clickSetDefaultSeason
+                setDefaultClicked = viewModel.inputs::clickSetDefaultSeason,
+                clearDefaultClicked = viewModel.inputs::clickClearDefaultSeason
         )
         list.layoutManager = LinearLayoutManager(context)
         list.adapter = adapter
@@ -75,5 +76,9 @@ class ListFragment: BaseFragment() {
                         .show()
             }
         }
+    }
+
+    fun refresh() {
+        viewModel.inputs.refresh()
     }
 }

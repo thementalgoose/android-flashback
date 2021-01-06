@@ -53,12 +53,6 @@ class FlashbackStartup(
         // Crash Reporting
         crashController.initialiseCrashReporting()
 
-        // Remote config
-        GlobalScope.launch {
-            val result = configRepository.update(false)
-            Log.i("Flashback", "Remote config updated $result")
-        }
-
         // Channels
         notificationManager.createChannels()
 

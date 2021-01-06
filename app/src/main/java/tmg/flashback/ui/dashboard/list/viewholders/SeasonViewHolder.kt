@@ -4,12 +4,15 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.toColor
 import androidx.core.graphics.toColorInt
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.layout_podium.view.*
 import kotlinx.android.synthetic.main.view_season_list_season.view.*
 import tmg.flashback.*
 import tmg.flashback.constants.App.coloursDecade
 import tmg.flashback.constants.App.currentYear
+import tmg.flashback.extensions.brightness
 import tmg.flashback.ui.dashboard.list.HeaderType
 import tmg.flashback.ui.dashboard.list.ListItem
 import tmg.utilities.extensions.getColor
@@ -19,6 +22,7 @@ class SeasonViewHolder(
     private var favouriteToggled: (season: Int) -> Unit,
     private var seasonClicked: (season: Int) -> Unit,
     private var setDefault: (season: Int) -> Unit,
+    private var clearDefault: () -> Unit,
     itemView: View
 ): RecyclerView.ViewHolder(itemView), View.OnClickListener, PopupMenu.OnMenuItemClickListener {
 
@@ -38,6 +42,8 @@ class SeasonViewHolder(
     fun bind(season: ListItem.Season) {
         currentSeason = season.season
         isFavourited = season.isFavourited
+
+        popupMenu.menu.findItem(R.id.season_list_clear_default).isEnabled = season.showClearDefault
 
         val colour = coloursDecade["${season.season.toString().substring(0, 3)}0"]?.toColorInt() ?: ContextCompat.getColor(itemView.context, R.color.colorTheme)
 
@@ -62,6 +68,13 @@ class SeasonViewHolder(
         else {
             itemView.favourite.setImageResource(R.drawable.ic_star_outline)
             itemView.favourite.contentDescription = getString(R.string.ab_season_list_favourite, season.season)
+        }
+
+        if (season.default) {
+            itemView.defaultIndicator.show()
+        }
+        else {
+            itemView.defaultIndicator.gone()
         }
 
         itemView.more.contentDescription = getString(R.string.ab_season_list_more, season.season)
@@ -97,6 +110,9 @@ class SeasonViewHolder(
         when (item?.itemId) {
             R.id.season_list_item_default -> {
                 setDefault.invoke(currentSeason)
+            }
+            R.id.season_list_clear_default -> {
+                clearDefault.invoke()
             }
         }
         return true

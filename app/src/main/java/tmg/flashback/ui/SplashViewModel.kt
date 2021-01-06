@@ -1,9 +1,11 @@
 package tmg.flashback.ui
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import tmg.flashback.BuildConfig
 import tmg.flashback.controllers.FeatureController
 import tmg.flashback.ui.base.BaseViewModel
 import tmg.flashback.managers.appshortcuts.AppShortcutManager
@@ -45,14 +47,13 @@ class SplashViewModel(
     //region Inputs
 
     override fun start() {
-        if (!remoteConfigManager.remoteConfigInitialSync) {
+        if (remoteConfigManager.requiresRemoteSync) {
             showLoading.value = true
             showResync.value = false
             viewModelScope.launch {
                 val result = remoteConfigManager.update(true)
                 performConfigUpdates()
                 if (result) {
-                    remoteConfigManager.remoteConfigInitialSync = true
                     goToNextScreen.value = Event()
                 }
                 else {
@@ -72,9 +73,6 @@ class SplashViewModel(
 
     //endregion
 
-    /**
-     * Perform any configuration updates off the back of a fresh activate or synchronisation
-     */
     private fun performConfigUpdates() {
 
         // Shortcuts for RSS
