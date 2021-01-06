@@ -45,14 +45,14 @@ class SplashViewModel(
     //region Inputs
 
     override fun start() {
-        if (!remoteConfigManager.remoteConfigInitialSync) {
+        if (remoteConfigManager.requiresRemoteSync) {
             showLoading.value = true
             showResync.value = false
             viewModelScope.launch {
                 val result = remoteConfigManager.update(true)
                 performConfigUpdates()
                 if (result) {
-                    remoteConfigManager.remoteConfigInitialSync = true
+                    remoteConfigManager.setRemoteSyncPerformed()
                     goToNextScreen.value = Event()
                 }
                 else {
@@ -72,9 +72,6 @@ class SplashViewModel(
 
     //endregion
 
-    /**
-     * Perform any configuration updates off the back of a fresh activate or synchronisation
-     */
     private fun performConfigUpdates() {
 
         // Shortcuts for RSS
