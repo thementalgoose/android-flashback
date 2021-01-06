@@ -97,4 +97,17 @@
         app:layout_constraintStart_toStartOf="@id/cardview"
         app:layout_constraintTop_toTopOf="@id/cardview" />
 
+    <ImageView
+        android:id="@+id/defaultIndicator"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/seasonListCircleSize"
+        android:alpha="0.4"
+        android:importantForAccessibility="no"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/cardview"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_default_indicator" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
