@@ -18,7 +18,9 @@ sealed class ListItem(
         val season: Int,
         val isFavourited: Boolean,
         val fixed: HeaderType,
-        val selected: Boolean = false
+        val selected: Boolean = false,
+        val default: Boolean = false,
+        val showClearDefault: Boolean = false
     ): ListItem(R.layout.view_season_list_season)
 
     data class Header(

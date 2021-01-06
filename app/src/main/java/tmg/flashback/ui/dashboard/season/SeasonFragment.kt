@@ -164,6 +164,13 @@ class SeasonFragment: BaseFragment() {
         viewModel.inputs.selectSeason(season)
     }
 
+    /**
+     * Publically accessible method for refreshing the season
+     */
+    fun refresh() {
+        viewModel.inputs.refresh()
+    }
+
     //endregion
 
     private fun showLoading() {
