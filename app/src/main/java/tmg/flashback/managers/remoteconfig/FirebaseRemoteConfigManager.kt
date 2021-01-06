@@ -6,6 +6,7 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfigException
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import kotlinx.coroutines.tasks.await
 import tmg.flashback.constants.App.currentYear
+import tmg.flashback.constants.Migrations
 import tmg.flashback.firebase.BuildConfig
 import tmg.flashback.firebase.R
 import tmg.flashback.firebase.converters.convert
@@ -21,14 +22,15 @@ import java.lang.Exception
 class FirebaseRemoteConfigManager(
         private val crashManager: FirebaseCrashManager?,
         private val deviceRepository: DeviceRepository
-): RemoteConfigManager, RemoteConfigRepository {
+): RemoteConfigRepository(), RemoteConfigManager {
 
     private val remoteConfig: FirebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
     private val remoteConfigSettings = FirebaseRemoteConfigSettings
             .Builder()
             .apply {
                 minimumFetchIntervalInSeconds = if (BuildConfig.DEBUG) {
-                    10L
+                    // TODO: Change this back
+                    21600L // 10s
                 } else {
                     21600L // 6h
                 }
@@ -51,29 +53,30 @@ class FirebaseRemoteConfigManager(
 
     //region Remote sync initial
 
-    override var remoteConfigInitialSync: Boolean
-        get() = deviceRepository.remoteConfigInitialSync
-        set(value) {
-            deviceRepository.remoteConfigInitialSync = value
-        }
+    override val requiresRemoteSync: Boolean
+        get() = Migrations.remoteConfigSyncCount != deviceRepository.remoteConfigSync
+
+    override fun setRemoteSyncPerformed() {
+        deviceRepository.remoteConfigSync = Migrations.remoteConfigSyncCount
+    }
 
     //endregion
 
     //region Variables inside remote config
 
-    override val defaultSeason: Int
+    override val defaultSeasonRC: Int
         get() = remoteConfig.getString(keyDefaultYear).toIntOrNull() ?: currentYear
 
-    override val upNext: List<UpNextSchedule>
+    override val upNextRC: List<UpNextSchedule>
         get() = remoteConfig.getString(keyUpNext).toJson<FUpNext>()?.convert() ?: emptyList()
 
-    override val banner: String
+    override val bannerRC: String
         get() = remoteConfig.getString(keyDefaultBanner)
 
-    override val rss: Boolean
+    override val rssRC: Boolean
         get() = remoteConfig.getBoolean(keyRss)
 
-    override val dataProvidedBy: String?
+    override val dataProvidedByRC: String?
         get() {
             val text = remoteConfig.getString(keyDataProvidedBy)
             return when {
@@ -82,10 +85,10 @@ class FirebaseRemoteConfigManager(
             }
         }
 
-    override val search: Boolean
+    override val searchRC: Boolean
         get() = remoteConfig.getBoolean(keySearch)
 
-    override val supportedSeasons: Set<Int>
+    override val supportedSeasonsRC: Set<Int>
         get() = remoteConfig.getString(keySupportedSeasons).toJson<FAllSeasons>()?.convert() ?: emptySet()
 
     //endregion
@@ -96,9 +99,12 @@ class FirebaseRemoteConfigManager(
     override suspend fun update(andActivate: Boolean): Boolean {
         return try {
             when (andActivate) {
-                true -> remoteConfig
-                        .fetchAndActivate()
-                        .await()
+                true -> {
+                    val fetch = remoteConfig.fetch(0L).await()
+                    val activate = remoteConfig.activate().await()
+                    println("Fetch $fetch Activate $activate")
+                    true
+                }
                 false -> {
                     remoteConfig
                             .fetch()
