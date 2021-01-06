@@ -12,6 +12,11 @@ import tmg.utilities.lifecycle.common.CommonActivity
 
 abstract class BaseActivity : CommonActivity() {
 
+    /**
+     * Should we use the translucent variant of the theme or not
+     */
+    open val themeType: ThemeTypes = ThemeTypes.TRANSLUCENT
+
     private val prefsRepository: UserRepository by inject()
 
     protected var isLightTheme: Boolean = true
@@ -44,9 +49,15 @@ abstract class BaseActivity : CommonActivity() {
     @StyleRes
     private fun getThemeStyle(): Int {
         isLightTheme = prefsRepository.theme.isLightMode(this)
+
         return when (isLightTheme) {
-            true -> R.style.LightTheme
-            false -> R.style.DarkTheme
+            true -> themeType.lightTheme
+            false -> themeType.darkTheme
         }
+    }
+
+    override fun finish() {
+        super.finish()
+        overridePendingTransition(R.anim.activity_enter, R.anim.activity_exit)
     }
 }
