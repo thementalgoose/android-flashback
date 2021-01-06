@@ -32,7 +32,6 @@ abstract class RSSBaseActivity: CommonActivity() {
 
     //endregion
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(getThemeStyle())
         super.onCreate(savedInstanceState)
@@ -49,5 +48,10 @@ abstract class RSSBaseActivity: CommonActivity() {
             true -> R.style.RSS_LightTheme
             false -> R.style.RSS_DarkTheme
         }
+    }
+
+    override fun finish() {
+        super.finish()
+        overridePendingTransition(R.anim.activity_enter, R.anim.activity_exit)
     }
 }
