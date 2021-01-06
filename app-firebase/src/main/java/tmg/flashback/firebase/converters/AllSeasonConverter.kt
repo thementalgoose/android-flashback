@@ -4,6 +4,6 @@ import tmg.flashback.firebase.models.FAllSeasons
 
 fun FAllSeasons.convert(): Set<Int> {
     return this.seasons
-        ?.map { it.s }
+        ?.mapNotNull { it.s }
         ?.toSet() ?: emptySet()
 }
