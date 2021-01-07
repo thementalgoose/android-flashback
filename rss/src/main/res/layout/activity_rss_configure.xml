@@ -49,7 +49,7 @@
                     android:layout_marginEnd="@dimen/paddingMedium"
                     android:layout_marginBottom="@dimen/paddingSmall"
                     android:background="@null"
-                    android:contentDescription="@string/ab_settings"
+                    android:contentDescription="@string/ab_rss_back"
                     android:scaleType="center"
                     android:src="@drawable/ic_rss_back"
                     android:tint="?attr/rssTextPrimary"
