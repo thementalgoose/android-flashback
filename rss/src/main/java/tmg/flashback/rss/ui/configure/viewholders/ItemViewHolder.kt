@@ -30,6 +30,7 @@ class ItemViewHolder(
 
     fun bind(item: RSSConfigureItem.Item) {
         this.item = item
+        itemView.alpha = 1.0f
         if (item.supportedArticleSource != null) {
             itemView.imageBackground.setBackgroundColor(item.supportedArticleSource.colour.toColorInt())
             itemView.label.text = item.supportedArticleSource.sourceShort

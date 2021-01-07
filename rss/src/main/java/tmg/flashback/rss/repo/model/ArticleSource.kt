@@ -7,5 +7,5 @@ data class ArticleSource(
         val rssLink: String,
         val source: String,
         val shortSource: String?,
-        val policyLink: String?
+        val contactLink: String?
 )

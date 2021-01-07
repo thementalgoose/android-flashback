@@ -41,7 +41,7 @@ fun RssXMLModel.convert(fromSource: String, showDescription: Boolean): List<Arti
         source = url,
         shortSource = null,
         rssLink = fromSource,
-        policyLink = null
+        contactLink = null
     )
 
     return this.channel
