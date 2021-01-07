@@ -37,7 +37,7 @@
     <string name="rss_configure_header_add">Add custom</string>
     <string name="rss_configure_header_add_subtitle">Add your own RSS link or feed to curate your own formula 1 news.</string>
     <string name="rss_configure_header_quick_add">Quick links</string>
-    <string name="rss_configure_header_quick_add_subtitle">Quick links for some popular news sources for fomula 1. Flashback is in no way affiliated with any sources listed, you can visit the websites of these sources by clicking the website button below for more information. If you wish to include another RSS feed in this list, send us an email!</string>
+    <string name="rss_configure_header_quick_add_subtitle">Quick links for some popular news sources for formula 1. Flashback is in no way affiliated with any sources listed, you can visit the websites and contact information of these sources by clicking the website link next each item below. If you wish to include another RSS feed in this list, send us an email!</string>
     <string name="rss_configure_malformed_url">Error in URL</string>
     <string name="rss_configure_hint">www.formula1.com/link/to/rss</string>
     <string name="rss_configure_valid_url">Valid URL required</string>
