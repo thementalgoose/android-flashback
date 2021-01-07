@@ -10,7 +10,8 @@ enum class SupportedArticleSource(
         val source: String,
         val colour: String,
         val textColour: String,
-        val title: String
+        val title: String,
+        val policyLink: String = source
 ) {
     AUTOSPORT(
             rssLink = "https://www.autosport.com/rss/feed/f1",
@@ -177,7 +178,8 @@ enum class SupportedArticleSource(
                     textColor = this.textColour,
                     source = source,
                     shortSource = this.sourceShort,
-                    rssLink = this.rssLink
+                    rssLink = this.rssLink,
+                    policyLink = this.policyLink
             )
         }
 }

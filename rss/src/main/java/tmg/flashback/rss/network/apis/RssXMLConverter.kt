@@ -40,7 +40,8 @@ fun RssXMLModel.convert(fromSource: String, showDescription: Boolean): List<Arti
         textColor = "#FFFFFF",
         source = url,
         shortSource = null,
-        rssLink = fromSource
+        rssLink = fromSource,
+        policyLink = null
     )
 
     return this.channel
