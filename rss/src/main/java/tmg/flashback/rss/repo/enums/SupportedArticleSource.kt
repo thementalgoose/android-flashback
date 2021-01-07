@@ -127,8 +127,7 @@ enum class SupportedArticleSource(
             source = "https://beyondtheflag.com",
             colour = "#01304C",
             textColour = "#ffffff",
-            title = "Beyond The Flag",
-            contactLink = "https://fansided.com/contact/"
+            title = "Beyond The Flag"
     ),
     GRANDPRIX(
             rssLink = "https://www.grandprix.com/rss.xml",
