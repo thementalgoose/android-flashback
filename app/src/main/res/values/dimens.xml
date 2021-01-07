@@ -49,7 +49,7 @@
     <dimen name="bottomSheetBoxPipeSize">6dp</dimen>
     <dimen name="bottomSheetPillHeight">4dp</dimen>
 
-    <dimen name="bottomSheetIconSize">32dp</dimen>
+    <dimen name="bottomSheetIconSize">36dp</dimen>
     <dimen name="bottomSheetFastScrollWidth">28dp</dimen>
 
     <!--===============================================================-->
