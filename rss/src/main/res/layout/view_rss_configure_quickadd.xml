@@ -67,9 +67,34 @@
         android:foreground="?attr/selectableItemBackground"
         android:paddingStart="@dimen/paddingSmall"
         android:paddingEnd="@dimen/paddingSmall"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/description"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_rss_configure_add" />
+
+    <TextView
+        android:id="@+id/visit_website"
+        style="@style/RSS.Configure.Item.VisitWebsite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/paddingXSmall"
+        android:background="@drawable/rss_background_input"
+        android:clickable="true"
+        android:text="@string/rss_configure_visit_website"
+        android:drawablePadding="@dimen/paddingXSmall"
+        android:focusable="true"
+        android:foreground="@drawable/rss_rounded_ripple"
+        android:gravity="start|center"
+        android:paddingStart="@dimen/paddingSmall"
+        android:paddingTop="@dimen/paddingXSmall"
+        android:paddingEnd="@dimen/paddingSmall"
+        android:paddingBottom="@dimen/paddingXSmall"
+        app:drawableStartCompat="@drawable/ic_rss_visit_website"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/add"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/title"
+        app:layout_constraintTop_toBottomOf="@id/description"
+        tools:text="Visit website" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
