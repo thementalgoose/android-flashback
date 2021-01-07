@@ -6,11 +6,13 @@ import tmg.flashback.rss.R
 import tmg.flashback.rss.base.RSSBaseViewModel
 import tmg.flashback.rss.prefs.RSSPrefsRepository
 import tmg.flashback.rss.repo.enums.SupportedArticleSource
+import tmg.utilities.lifecycle.DataEvent
 
 //region Inputs
 
 interface RSSConfigureViewModelInputs {
     fun addQuickItem(supportedArticle: SupportedArticleSource)
+    fun visitWebsite(supportedArticle: SupportedArticleSource)
     fun removeItem(link: String)
     fun addCustomItem(link: String)
 }
@@ -21,6 +23,7 @@ interface RSSConfigureViewModelInputs {
 
 interface RSSConfigureViewModelOutputs {
     val list: LiveData<List<RSSConfigureItem>>
+    val openWebsite: LiveData<DataEvent<SupportedArticleSource>>
 }
 
 //endregion
@@ -36,6 +39,7 @@ class RSSConfigureViewModel(
         get() = prefsRepository.rssUrls.toMutableSet()
 
     override val list: MutableLiveData<List<RSSConfigureItem>> = MutableLiveData()
+    override val openWebsite: MutableLiveData<DataEvent<SupportedArticleSource>> = MutableLiveData()
 
     init {
         loadState()
@@ -51,12 +55,15 @@ class RSSConfigureViewModel(
     override fun removeItem(link: String) {
         prefsRepository.rssUrls = rssUrls - link
         updateList()
-
     }
 
     override fun addCustomItem(link: String) {
         prefsRepository.rssUrls = rssUrls + link
         updateList()
+    }
+
+    override fun visitWebsite(supportedArticle: SupportedArticleSource) {
+        openWebsite.value = DataEvent(supportedArticle)
     }
 
     //endregion

@@ -6,5 +6,6 @@ data class ArticleSource(
         val textColor: String = "#ffffff",
         val rssLink: String,
         val source: String,
-        val shortSource: String?
+        val shortSource: String?,
+        val policyLink: String?
 )

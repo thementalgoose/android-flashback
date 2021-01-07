@@ -9,6 +9,7 @@ import tmg.flashback.rss.ui.configure.RSSConfigureItem
 
 class QuickAddViewHolder(
         private val quickAddItem: (SupportedArticleSource) -> Unit,
+        private val websiteLink: (SupportedArticleSource) -> Unit,
         itemView: View
 ): RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
@@ -16,6 +17,7 @@ class QuickAddViewHolder(
 
     init {
         itemView.add.setOnClickListener(this)
+        itemView.visit_website.setOnClickListener(this)
     }
 
     fun bind(item: RSSConfigureItem.QuickAdd) {
@@ -28,9 +30,17 @@ class QuickAddViewHolder(
         itemView.label.setTextColor(item.supportedArticleSource.textColour.toColorInt())
         itemView.title.text = item.supportedArticleSource.source
         itemView.description.text = item.supportedArticleSource.rssLink
+        itemView.description.isSelected = true
     }
 
     override fun onClick(p0: View?) {
-        quickAddItem(item)
+        when (p0) {
+            itemView.add -> {
+                quickAddItem(item)
+            }
+            itemView.visit_website -> {
+                websiteLink(item)
+            }
+        }
     }
 }
