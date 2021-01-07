@@ -5,6 +5,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginEnd="@dimen/paddingNSmall"
     android:clickable="true"
     android:focusable="true"
     android:foreground="@drawable/ripple">
@@ -47,9 +48,9 @@
     <ImageButton
         android:id="@+id/more"
         android:layout_width="@dimen/bottomSheetIconSize"
-        android:layout_height="@dimen/bottomSheetIconSize"
-        android:layout_marginEnd="@dimen/paddingNSmall"
+        android:layout_height="0dp"
         android:background="@drawable/ripple_rounded"
+        android:contentDescription="@string/ab_season_list_more"
         android:paddingStart="@dimen/paddingSmall"
         android:paddingTop="@dimen/paddingSmall"
         android:paddingEnd="@dimen/paddingSmall"
@@ -63,8 +64,9 @@
     <ImageButton
         android:id="@+id/favourite"
         android:layout_width="@dimen/bottomSheetIconSize"
-        android:layout_height="@dimen/bottomSheetIconSize"
+        android:layout_height="0dp"
         android:background="@drawable/ripple_rounded"
+        android:contentDescription="@string/ab_season_list_favourite"
         android:paddingStart="@dimen/paddingSmall"
         android:paddingTop="@dimen/paddingSmall"
         android:paddingEnd="@dimen/paddingSmall"
