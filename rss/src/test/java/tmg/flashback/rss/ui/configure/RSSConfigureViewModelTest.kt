@@ -12,6 +12,7 @@ import tmg.flashback.rss.R
 import tmg.flashback.rss.prefs.RSSPrefsRepository
 import tmg.flashback.rss.repo.enums.SupportedArticleSource
 import tmg.flashback.rss.testutils.BaseTest
+import tmg.flashback.rss.testutils.assertDataEventValue
 import tmg.flashback.rss.testutils.test
 import java.util.stream.Stream
 
@@ -58,7 +59,7 @@ class RSSConfigureViewModelTest: BaseTest() {
         verify { mockPrefs.rssUrls = setOf(link.rssLink) }
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "RSSConfigureViewModel simulate adding single item for {0} updates list")
     @MethodSource("allSupportedArticles")
     fun `RSSConfigureViewModel simulate adding single item to update the list properly`(source: SupportedArticleSource) {
 
@@ -93,7 +94,19 @@ class RSSConfigureViewModelTest: BaseTest() {
         verify { mockPrefs.rssUrls = emptySet() }
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "RSSConfigureViewModel visit website for {0} opens website event")
+    @MethodSource("allSupportedArticles")
+    fun `RSSConfigureViewModel visit website fires open website event`(source: SupportedArticleSource) {
+
+        initSUT()
+        sut.inputs.visitWebsite(source)
+
+        sut.outputs.openWebsite.test {
+            assertDataEventValue(source)
+        }
+    }
+
+    @ParameterizedTest(name = "RSSConfigureViewModel simulate removing single item for {0} updates list")
     @MethodSource("allSupportedArticles")
     fun `RSSConfigureViewModel simulate removing single item to update the list properly`(source: SupportedArticleSource) {
 
