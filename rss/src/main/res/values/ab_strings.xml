@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="ab_rss_configure_remote">Remove from feed</string>
+    <string name="ab_rss_configure_supported_remove">Remove from feed</string>
+    <string name="ab_rss_configure_supported_add">Add to feed</string>
+    <string name="ab_rss_configure_add">Add feed</string>
 </resources>

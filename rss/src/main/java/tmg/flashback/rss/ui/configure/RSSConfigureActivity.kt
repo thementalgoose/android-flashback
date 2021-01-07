@@ -6,18 +6,13 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.widget.Toast
-import androidx.annotation.StyleRes
-import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_rss_configure.*
 import kotlinx.android.synthetic.main.activity_rss_configure.header
-import kotlinx.android.synthetic.main.activity_rss_configure.titlebar
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.rss.R
 import tmg.flashback.rss.base.RSSBaseActivity
-import tmg.flashback.rss.ui.settings.RSSSettingsActivity
 import tmg.utilities.extensions.managerClipboard
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
@@ -55,12 +50,12 @@ class RSSConfigureActivity : RSSBaseActivity() {
 
         observeEvent(viewModel.outputs.openWebsite) {
             try {
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(it.article.source))
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(it.article.contactLink))
                 startActivity(intent)
             } catch (e: ActivityNotFoundException) {
                 Snackbar.make(configuration, R.string.rss_configure_cannot_open_page, Snackbar.LENGTH_INDEFINITE)
                         .setAction(R.string.rss_configure_cannot_open_page_action) { view ->
-                            val clipData = ClipData.newPlainText(it.article.title, it.article.policyLink ?: it.article.source)
+                            val clipData = ClipData.newPlainText(it.article.title, it.article.contactLink ?: it.article.source)
                             applicationContext.managerClipboard.setPrimaryClip(clipData)
                         }
                         .show()
