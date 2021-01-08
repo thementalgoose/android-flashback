@@ -63,11 +63,15 @@ class RSSConfigureActivity : RSSBaseActivity() {
         }
     }
 
+    override fun onBackPressed() {
+        setResult(RESULT_OK)
+        super.onBackPressed()
+    }
+
     companion object {
 
         fun intent(context: Context): Intent {
-            val intent = Intent(context, RSSConfigureActivity::class.java)
-            return intent
+            return Intent(context, RSSConfigureActivity::class.java)
         }
     }
 }
