@@ -2,6 +2,7 @@ package tmg.flashback.firebase.converters
 
 import androidx.core.graphics.toColorInt
 import tmg.flashback.firebase.base.ConverterUtils.fromDate
+import tmg.flashback.firebase.base.ConverterUtils.isDateValid
 import tmg.flashback.firebase.currentYear
 import tmg.flashback.firebase.models.*
 import tmg.flashback.repo.models.ConstructorDriver
@@ -39,7 +40,10 @@ fun FConstructorOverviewStandings.convert(data: FConstructorOverviewData, driver
             drivers = (this.drivers ?: emptyMap())
                     .map { entry ->
                         drivers[entry.key]?.let {
-                            return@map entry.value.convert(it.convert(data))
+                            val model = it.convert(data)
+                            if (model != null) {
+                                return@map entry.value.convert(model)
+                            }
                         }
                         return@map null
                     }
@@ -54,7 +58,10 @@ fun FConstructorOverviewStandings.convert(data: FConstructorOverviewData, driver
     )
 }
 
-fun FConstructorOverviewDrivers.convert(data: FConstructorOverviewData): ConstructorDriver {
+fun FConstructorOverviewDrivers.convert(data: FConstructorOverviewData): ConstructorDriver? {
+    if (!isDateValid(this.dob)) {
+        return null
+    }
     return ConstructorDriver(
             id = this.id,
             firstName = this.firstName,
@@ -63,7 +70,7 @@ fun FConstructorOverviewDrivers.convert(data: FConstructorOverviewData): Constru
             number = this.driverNumber?.toIntOrNull() ?: 0,
             wikiUrl = this.wikiUrl,
             photoUrl = this.photoUrl,
-            dateOfBirth = fromDate(this.dob),
+            dateOfBirth = fromDate(this.dob!!),
             nationality = this.nationality,
             nationalityISO = this.nationalityISO,
             constructor = Constructor(

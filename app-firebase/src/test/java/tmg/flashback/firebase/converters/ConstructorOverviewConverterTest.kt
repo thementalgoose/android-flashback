@@ -3,6 +3,9 @@ package tmg.flashback.firebase.converters
 import io.mockk.mockk
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
+import tmg.flashback.firebase.currentYear
+import tmg.flashback.firebase.models.FConstructorOverviewData
+import tmg.flashback.firebase.models.FConstructorOverviewStandings
 import tmg.flashback.firebase.models.FConstructorOverviewStandingsDriver
 import tmg.flashback.firebase.testutils.BaseTest
 import tmg.flashback.repo.models.ConstructorDriver
@@ -10,8 +13,19 @@ import tmg.flashback.repo.models.ConstructorDriver
 internal class ConstructorOverviewConverterTest: BaseTest() {
 
     @Test
-    fun `ConstructorOverviewDriver null driver number defaults to 0`() {
+    fun `ConstructorOverviewStandings in progress and current year shows true`() {
 
+        val mockOverviewData = mockk<FConstructorOverviewData>()
+        val model = FConstructorOverviewStandings(inProgress = true, s = currentYear)
+        assertTrue(model.convert(mockOverviewData, emptyMap()).isInProgress)
+    }
+
+    @Test
+    fun `ConstructorOverviewStandings in progress is true in old year means progress is false`() {
+
+        val mockOverviewData = mockk<FConstructorOverviewData>()
+        val model = FConstructorOverviewStandings(inProgress = true, s = 2019)
+        assertFalse(model.convert(mockOverviewData, emptyMap()).isInProgress)
     }
 
     @Test
