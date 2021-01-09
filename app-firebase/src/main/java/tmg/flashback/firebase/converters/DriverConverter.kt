@@ -1,5 +1,6 @@
 package tmg.flashback.firebase.converters
 
+import tmg.flashback.firebase.base.ConverterUtils.fromDate
 import tmg.flashback.repo.models.stats.Constructor
 import tmg.flashback.repo.models.stats.Driver
 import tmg.flashback.repo.models.stats.RoundDriver
