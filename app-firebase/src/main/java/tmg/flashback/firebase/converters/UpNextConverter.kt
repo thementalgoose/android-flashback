@@ -1,9 +1,8 @@
 package tmg.flashback.firebase.converters
 
-import com.google.type.DateTime
-import org.threeten.bp.LocalDate
-import org.threeten.bp.LocalTime
 import org.threeten.bp.format.DateTimeParseException
+import tmg.flashback.firebase.base.ConverterUtils.fromDate
+import tmg.flashback.firebase.base.ConverterUtils.fromTime
 import tmg.flashback.firebase.models.FUpNext
 import tmg.flashback.firebase.models.FUpNextSchedule
 import tmg.flashback.repo.models.remoteconfig.UpNextSchedule
