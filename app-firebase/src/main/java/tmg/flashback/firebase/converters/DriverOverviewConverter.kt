@@ -2,6 +2,7 @@ package tmg.flashback.firebase.converters
 
 import androidx.core.graphics.toColorInt
 import org.threeten.bp.LocalDate
+import tmg.flashback.firebase.base.ConverterUtils.fromDate
 import tmg.flashback.firebase.currentYear
 import tmg.flashback.firebase.models.*
 import tmg.flashback.repo.models.stats.DriverOverview
@@ -43,7 +44,6 @@ fun FDriverOverviewStanding.convert(): DriverOverviewStanding {
              raceOverview = this.history?.map { (_, value) -> value.convert(this.s, constructors) } ?: emptyList()
     )
 }
-
 
 fun FDriverOverviewStandingHistory.convert(season: Int, constructors: List<SlimConstructor>): DriverOverviewRace {
     return DriverOverviewRace(
