@@ -47,7 +47,7 @@ internal class SplashViewModelTest: BaseTest() {
     @Test
     fun `SplashViewModel start fetch and activate enables show loading`() = coroutineTest {
 
-        every { mockRemoteConfigManager.remoteConfigInitialSync } returns false
+        every { mockRemoteConfigManager.requiresRemoteSync } returns true
         coEvery { mockRemoteConfigManager.update(any()) } returns true
 
         initSUT()
@@ -61,7 +61,7 @@ internal class SplashViewModelTest: BaseTest() {
     @Test
     fun `SplashViewModel start fetch and activate disables show resync`() = coroutineTest {
 
-        every { mockRemoteConfigManager.remoteConfigInitialSync } returns false
+        every { mockRemoteConfigManager.requiresRemoteSync } returns true
         coEvery { mockRemoteConfigManager.update(any()) } returns true
 
         initSUT()
@@ -75,7 +75,7 @@ internal class SplashViewModelTest: BaseTest() {
     @Test
     fun `SplashViewModel start fetch and activate calls remote config repo`() = coroutineTest {
 
-        every { mockRemoteConfigManager.remoteConfigInitialSync } returns false
+        every { mockRemoteConfigManager.requiresRemoteSync } returns true
         coEvery { mockRemoteConfigManager.update(any()) } returns true
 
         initSUT()
@@ -85,21 +85,9 @@ internal class SplashViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `SplashViewModel start fetch and activate when success sets initial remote initial config to true`() = coroutineTest {
-
-        every { mockRemoteConfigManager.remoteConfigInitialSync } returns false
-        coEvery { mockRemoteConfigManager.update(any()) } returns true
-
-        initSUT()
-        sut.inputs.start()
-
-        verify { mockRemoteConfigManager.remoteConfigInitialSync = true }
-    }
-
-    @Test
     fun `SplashViewModel start fetch and activate when success sets updates shortcut manager`() = coroutineTest {
 
-        every { mockRemoteConfigManager.remoteConfigInitialSync } returns false
+        every { mockRemoteConfigManager.requiresRemoteSync } returns true
         every { mockFeatureController.rssEnabled } returns true
         coEvery { mockRemoteConfigManager.update(any()) } returns true
 
@@ -112,7 +100,7 @@ internal class SplashViewModelTest: BaseTest() {
     @Test
     fun `SplashViewModel start fetch and activate when success it fires go to next screen`() = coroutineTest {
 
-        every { mockRemoteConfigManager.remoteConfigInitialSync } returns false
+        every { mockRemoteConfigManager.requiresRemoteSync } returns true
         coEvery { mockRemoteConfigManager.update(any()) } returns true
 
         initSUT()
@@ -126,7 +114,7 @@ internal class SplashViewModelTest: BaseTest() {
     @Test
     fun `SplashViewModel start fetch and activate when failure then show resync sets to true`() = coroutineTest {
 
-        every { mockRemoteConfigManager.remoteConfigInitialSync } returns false
+        every { mockRemoteConfigManager.requiresRemoteSync } returns true
         coEvery { mockRemoteConfigManager.update(any()) } returns false
 
         initSUT()
@@ -143,7 +131,7 @@ internal class SplashViewModelTest: BaseTest() {
     @Test
     fun `SplashViewModel start fetch and activate when failure then show loading is set to false`() = coroutineTest {
 
-        every { mockRemoteConfigManager.remoteConfigInitialSync } returns false
+        every { mockRemoteConfigManager.requiresRemoteSync } returns true
         coEvery { mockRemoteConfigManager.update(any()) } returns false
 
         initSUT()
@@ -160,7 +148,7 @@ internal class SplashViewModelTest: BaseTest() {
     @Test
     fun `SplashViewModel start activate then remote config activate called`() = coroutineTest {
 
-        every { mockRemoteConfigManager.remoteConfigInitialSync } returns true
+        every { mockRemoteConfigManager.requiresRemoteSync } returns false
         coEvery { mockRemoteConfigManager.activate() } returns true
 
         initSUT()
@@ -172,7 +160,7 @@ internal class SplashViewModelTest: BaseTest() {
     @Test
     fun `SplashViewModel start activate then app shortcut manager disable interacted with`() = coroutineTest {
 
-        every { mockRemoteConfigManager.remoteConfigInitialSync } returns true
+        every { mockRemoteConfigManager.requiresRemoteSync } returns false
         coEvery { mockRemoteConfigManager.activate() } returns false
 
         initSUT()
@@ -184,7 +172,7 @@ internal class SplashViewModelTest: BaseTest() {
     @Test
     fun `SplashViewModel start activate go to next screen fired if activate fails`() = coroutineTest {
 
-        every { mockRemoteConfigManager.remoteConfigInitialSync } returns true
+        every { mockRemoteConfigManager.requiresRemoteSync } returns false
         coEvery { mockRemoteConfigManager.activate() } returns false
 
         initSUT()
@@ -198,7 +186,7 @@ internal class SplashViewModelTest: BaseTest() {
     @Test
     fun `SplashViewModel start activate go to next screen fired if activate passes`() = coroutineTest {
 
-        every { mockRemoteConfigManager.remoteConfigInitialSync } returns true
+        every { mockRemoteConfigManager.requiresRemoteSync } returns false
         coEvery { mockRemoteConfigManager.activate() } returns true
 
         initSUT()

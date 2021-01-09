@@ -3,6 +3,8 @@ package tmg.flashback.ui.dashboard
 import android.content.Intent
 import android.os.Bundle
 import android.transition.Transition
+import android.util.Log
+import android.widget.Toast
 import androidx.annotation.StyleRes
 import com.discord.panels.OverlappingPanelsLayout
 import com.discord.panels.OverlappingPanelsLayout.Panel.CENTER
@@ -31,14 +33,24 @@ class DashboardActivity: BaseActivity(), DashboardNavigationCallback {
 
     private val viewModel: DashboardViewModel by viewModel()
 
+    private val seasonTag: String = "season"
+    private val seasonFragment: SeasonFragment?
+        get() = supportFragmentManager.findFragmentByTag(seasonTag) as? SeasonFragment
+    private val listTag: String = "list"
+    private val listFragment: ListFragment?
+        get() = supportFragmentManager.findFragmentByTag(listTag) as? ListFragment
+    private val searchTag: String = "search"
+    private val searchFragment: SearchFragment?
+        get() = supportFragmentManager.findFragmentByTag(searchTag) as? SearchFragment
+
     override fun layoutId() = R.layout.activity_dashboard
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        loadFragment(SeasonFragment(), R.id.season, "season")
-        loadFragment(ListFragment(), R.id.list, "list")
-        loadFragment(SearchFragment(), R.id.search, "search")
+        loadFragment(SeasonFragment(), R.id.season, seasonTag)
+        loadFragment(ListFragment(), R.id.list, listTag)
+        loadFragment(SearchFragment(), R.id.search, searchTag)
 
         // Disable search functionality until toggled on
         if (!remoteConfigRepository.search) {
@@ -53,6 +65,11 @@ class DashboardActivity: BaseActivity(), DashboardNavigationCallback {
         observeEvent(viewModel.outputs.openReleaseNotes) {
             ReleaseBottomSheetFragment()
                 .show(supportFragmentManager, "releaseNotes")
+        }
+
+        observeEvent(viewModel.outputs.appConfigSynced) {
+            listFragment?.refresh()
+            seasonFragment?.refresh()
         }
     }
 

@@ -12,6 +12,7 @@ import java.lang.RuntimeException
 class RSSConfigureAdapter(
         private val customAddItem: (String) -> Unit,
         private val quickAddItem: (SupportedArticleSource) -> Unit,
+        private val visitWebsite: (SupportedArticleSource) -> Unit,
         private val removeItem: (String) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -26,8 +27,8 @@ class RSSConfigureAdapter(
         val view = LayoutInflater.from(parent.context).inflate(viewType, parent, false)
         return when (viewType) {
             R.layout.view_rss_configure_header -> HeaderViewHolder(view)
-            R.layout.view_rss_configure_item -> ItemViewHolder(removeItem, view)
-            R.layout.view_rss_configure_quickadd -> QuickAddViewHolder(quickAddItem, view)
+            R.layout.view_rss_configure_item -> ItemViewHolder(removeItem, visitWebsite, view)
+            R.layout.view_rss_configure_quickadd -> QuickAddViewHolder(quickAddItem, visitWebsite, view)
             R.layout.view_rss_configure_no_items -> NoItemsViewHolder(view)
             R.layout.view_rss_configure_add -> AddViewHolder(customAddItem, view)
             else -> throw RuntimeException("ViewType not supported by configuration adapter")

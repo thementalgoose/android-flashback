@@ -1,11 +1,13 @@
 package tmg.flashback.ui.dashboard
 
+import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.flow.flow
 import org.junit.jupiter.api.Test
 import tmg.flashback.controllers.ReleaseNotesController
 import tmg.flashback.managers.buildconfig.BuildConfigManager
+import tmg.flashback.managers.remoteconfig.RemoteConfigManager
 import tmg.flashback.repo.db.DataRepository
 import tmg.flashback.repo.models.remoteconfig.AppLockout
 import tmg.flashback.repo.pref.DeviceRepository
@@ -21,11 +23,13 @@ internal class DashboardViewModelTest: BaseTest() {
     private val mockDataRepository: DataRepository = mockk(relaxed = true)
     private val mockBuildConfigManager: BuildConfigManager = mockk(relaxed = true)
     private val mockReleaseNotesController: ReleaseNotesController = mockk(relaxed = true)
+    private val mockRemoteConfigManager: RemoteConfigManager = mockk(relaxed = true)
 
     private fun initSUT() {
         sut = DashboardViewModel(
             mockDataRepository,
             mockBuildConfigManager,
+            mockRemoteConfigManager,
             mockReleaseNotesController
         )
     }
@@ -113,6 +117,36 @@ internal class DashboardViewModelTest: BaseTest() {
 
         sut.outputs.openAppLockout.test {
             assertEventNotFired()
+        }
+    }
+
+    //endregion
+
+    //region Remote config fetch and sync
+
+    @Test
+    fun `DashboardViewModel init if update returns changes and activate fails nothing happens`() = coroutineTest {
+
+        coEvery { mockRemoteConfigManager.activate() } returns false
+
+        initSUT()
+        advanceUntilIdle()
+
+        sut.outputs.appConfigSynced.test {
+            assertEventNotFired()
+        }
+    }
+
+    @Test
+    fun `DashboardViewModel init if update returns changes and activate successfully then notify app config synced event`() = coroutineTest {
+
+        coEvery { mockRemoteConfigManager.activate() } returns true
+
+        initSUT()
+        advanceUntilIdle()
+
+        sut.outputs.appConfigSynced.test {
+            assertEventFired()
         }
     }
 

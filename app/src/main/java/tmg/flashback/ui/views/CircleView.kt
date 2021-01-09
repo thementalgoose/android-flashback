@@ -17,7 +17,9 @@ class CircleView: View {
     )
 
     private var circleColour: Int? = null
-    private val circlePaint: Paint = Paint()
+    private val circlePaint: Paint = Paint().apply {
+        isAntiAlias = true
+    }
 
     fun setCircleColour(@ColorInt circleColour: Int) {
         this.circleColour = circleColour
