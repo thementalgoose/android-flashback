@@ -6,7 +6,7 @@ import tmg.flashback.firebase.models.FHistorySeasonRound
 import tmg.flashback.repo.models.stats.History
 import tmg.flashback.repo.models.stats.HistoryRound
 
-const val allDataUpToo = 2019
+const val allDataUpToo = 2020
 
 fun FHistorySeason.convert(): List<History> {
     val list: MutableList<History> = mutableListOf()
