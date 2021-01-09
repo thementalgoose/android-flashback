@@ -43,6 +43,7 @@ abstract class BaseActivity : CommonActivity() {
 
         if (initialiseSlidr) {
             swipeDismissInterface = Slidr.attach(this)
+            overridePendingTransition(R.anim.activity_enter, R.anim.activity_exit)
         }
     }
 
