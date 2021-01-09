@@ -1,9 +1,12 @@
 package tmg.flashback.firebase.converters
 
+import tmg.flashback.firebase.base.ConverterUtils.fromDate
 import tmg.flashback.firebase.models.FHistorySeason
 import tmg.flashback.firebase.models.FHistorySeasonRound
 import tmg.flashback.repo.models.stats.History
 import tmg.flashback.repo.models.stats.HistoryRound
+
+const val allDataUpToo = 2020
 
 fun FHistorySeason.convert(): List<History> {
     val list: MutableList<History> = mutableListOf()
@@ -45,8 +48,8 @@ fun FHistorySeasonRound.convert(): Pair<Int, HistoryRound> {
             country = this.country,
             countryISO = this.countryISO,
             circuitName = this.circuit,
-            hasQualifying = this.hasQ ?: this.data ?: (s <= 2019),
-            hasResults = this.hasR ?: this.data ?: (s <= 2019)
+            hasQualifying = this.hasQ ?: this.data ?: (s <= allDataUpToo),
+            hasResults = this.hasR ?: this.data ?: (s <= allDataUpToo)
         )
     )
 }

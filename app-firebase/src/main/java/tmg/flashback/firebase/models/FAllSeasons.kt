@@ -5,5 +5,5 @@ data class FAllSeasons(
 )
 
 data class FAllSeason(
-    val s: Int
+    val s: Int?
 )
