@@ -5,6 +5,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginEnd="@dimen/paddingNSmall"
     android:clickable="true"
     android:focusable="true"
     android:foreground="@drawable/ripple">
@@ -47,9 +48,9 @@
     <ImageButton
         android:id="@+id/more"
         android:layout_width="@dimen/bottomSheetIconSize"
-        android:layout_height="@dimen/bottomSheetIconSize"
-        android:layout_marginEnd="@dimen/paddingNSmall"
+        android:layout_height="0dp"
         android:background="@drawable/ripple_rounded"
+        android:contentDescription="@string/ab_season_list_more"
         android:paddingStart="@dimen/paddingSmall"
         android:paddingTop="@dimen/paddingSmall"
         android:paddingEnd="@dimen/paddingSmall"
@@ -63,8 +64,9 @@
     <ImageButton
         android:id="@+id/favourite"
         android:layout_width="@dimen/bottomSheetIconSize"
-        android:layout_height="@dimen/bottomSheetIconSize"
+        android:layout_height="0dp"
         android:background="@drawable/ripple_rounded"
+        android:contentDescription="@string/ab_season_list_favourite"
         android:paddingStart="@dimen/paddingSmall"
         android:paddingTop="@dimen/paddingSmall"
         android:paddingEnd="@dimen/paddingSmall"
@@ -96,5 +98,18 @@
         app:layout_constraintEnd_toEndOf="@id/cardview"
         app:layout_constraintStart_toStartOf="@id/cardview"
         app:layout_constraintTop_toTopOf="@id/cardview" />
+
+    <ImageView
+        android:id="@+id/defaultIndicator"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/seasonListCircleSize"
+        android:alpha="0.4"
+        android:importantForAccessibility="no"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/cardview"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_default_indicator" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

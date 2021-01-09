@@ -32,9 +32,9 @@ interface DeviceRepository {
     var deviceUdid: String
 
     /**
-     * Remote config has been initially synchronised
+     * Remote config has been synchronised
      */
-    var remoteConfigInitialSync: Boolean
+    var remoteConfigSync: Int
 
     /**
      * App open events

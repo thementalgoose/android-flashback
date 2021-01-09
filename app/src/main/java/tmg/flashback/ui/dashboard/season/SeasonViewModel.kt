@@ -32,6 +32,8 @@ interface SeasonViewModelInputs {
     fun clickMenu()
     fun clickSearch()
     fun clickItem(item: SeasonNavItem)
+
+    fun refresh()
     fun selectSeason(season: Int)
 
     fun clickTrack(track: SeasonItem.Track)
@@ -219,6 +221,12 @@ class SeasonViewModel(
         if (item != currentTab.valueOrNull) {
             showLoading.value = true
             currentTab.offer(item)
+        }
+    }
+
+    override fun refresh() {
+        this.season.valueOrNull?.let {
+            this.season.offer(it)
         }
     }
 

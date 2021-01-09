@@ -30,7 +30,8 @@ class RSSViewModelTest: BaseTest() {
         colour = "#123456",
         shortSource = "short something here",
         rssLink = "https://www.google.com/rss",
-        source = "https://www.google.com/source"
+        source = "https://www.google.com/source",
+        contactLink = null
     )
     private val mockArticle = Article(
         id = "test",

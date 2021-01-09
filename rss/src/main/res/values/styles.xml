@@ -130,6 +130,12 @@
         <item name="android:textColor">?attr/rssTextSecondary</item>
     </style>
 
+    <style name="RSS.Configure.Item.VisitWebsite" parent="RSS.Text">
+        <item name="android:textColor">?attr/rssTextSecondary</item>
+        <item name="android:textSize">@dimen/textSizeSmall</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <!--#endregion -->
 
     <!-- =========================================== -->

@@ -11,6 +11,8 @@ import tmg.utilities.lifecycle.Event
 //region Inputs
 
 interface ListViewModelInputs {
+    fun refresh()
+
     fun toggleHeader(header: HeaderType, to: Boolean? = null)
     fun toggleFavourite(season: Int)
     fun clickSeason(season: Int)
@@ -61,12 +63,16 @@ class ListViewModel(
 
     //region Inputs
 
+    override fun refresh() {
+        list.value = buildList(favouriteSeasons, headerSectionFavourited, headerSectionAll)
+    }
+
     override fun toggleHeader(header: HeaderType, to: Boolean?) {
         when (header) {
             HeaderType.FAVOURITED -> headerSectionFavourited = to ?: !headerSectionFavourited
             HeaderType.ALL -> headerSectionAll = to ?: !headerSectionAll
         }
-        list.value = buildList(favouriteSeasons, headerSectionFavourited, headerSectionAll)
+        refresh()
     }
 
     override fun toggleFavourite(season: Int) {
@@ -77,23 +83,25 @@ class ListViewModel(
             favouriteSeasons.add(season)
             seasonController.addFavourite(season)
         }
-        list.value = buildList(favouriteSeasons, headerSectionFavourited, headerSectionAll)
+        refresh()
     }
 
     override fun clickSeason(season: Int) {
         showSeasonEvent.value = DataEvent(season)
         currentSeason = season
-        list.value = buildList(favouriteSeasons, headerSectionFavourited, headerSectionAll)
+        refresh()
     }
 
     override fun clickSetDefaultSeason(season: Int) {
         seasonController.setUserDefaultSeason(season)
         defaultSeasonUpdated.value = DataEvent(season)
+        refresh()
     }
 
     override fun clickClearDefaultSeason() {
         seasonController.clearDefault()
         defaultSeasonUpdated.value = DataEvent(null)
+        refresh()
     }
 
     override fun clickSettings() {
@@ -115,6 +123,8 @@ class ListViewModel(
         }
 
         val supportedSeasons = seasonController.supportedSeasons
+        val defaultSeason = seasonController.defaultSeason
+        val isUserDefinedValueSet = seasonController.isUserDefinedValueSet
 
         // Favourites
         list.add(
@@ -133,7 +143,9 @@ class ListViewModel(
                         season = it,
                         isFavourited = true,
                         fixed = HeaderType.FAVOURITED,
-                        selected = currentSeason == it
+                        selected = currentSeason == it,
+                        default = defaultSeason == it,
+                        showClearDefault = isUserDefinedValueSet
                     )
                 }
             )
@@ -148,7 +160,9 @@ class ListViewModel(
                         season = it,
                         isFavourited = favouritedSet.contains(it),
                         fixed = HeaderType.ALL,
-                        selected = currentSeason == it
+                        selected = currentSeason == it,
+                        default = defaultSeason == it,
+                        showClearDefault = isUserDefinedValueSet
                     )
                 }
                 .sortedByDescending { it.season }

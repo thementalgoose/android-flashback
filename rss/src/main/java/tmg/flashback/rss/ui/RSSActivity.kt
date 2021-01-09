@@ -24,6 +24,8 @@ class RSSActivity: RSSBaseActivity(), FragmentRequestBack {
 
     override fun layoutId(): Int = R.layout.activity_rss
 
+    private val REQUEST_CODE = 1001
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -31,7 +33,7 @@ class RSSActivity: RSSBaseActivity(), FragmentRequestBack {
 
         adapter = RSSAdapter(
             openConfigure = {
-                startActivity(Intent(this, RSSConfigureActivity::class.java))
+                startActivityForResult(Intent(this, RSSConfigureActivity::class.java), REQUEST_CODE)
             },
             articleClicked = { article, id ->
                 if (prefsRepository.newsOpenInExternalBrowser) {
@@ -67,7 +69,6 @@ class RSSActivity: RSSBaseActivity(), FragmentRequestBack {
     }
 
     override fun onBackPressed() {
-
         val webFrag = supportFragmentManager.findFragmentByTag("WebView") as? WebFragment
         if (webFrag != null) {
             webFrag.exitWeb()
@@ -76,6 +77,13 @@ class RSSActivity: RSSBaseActivity(), FragmentRequestBack {
         }
         else {
             super.onBackPressed()
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
+            viewModel.inputs.refresh()
         }
     }
 
