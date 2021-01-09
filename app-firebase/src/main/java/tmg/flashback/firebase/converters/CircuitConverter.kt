@@ -1,5 +1,8 @@
 package tmg.flashback.firebase.converters
 
+import tmg.flashback.firebase.base.ConverterUtils.fromDate
+import tmg.flashback.firebase.base.ConverterUtils.fromTime
+import tmg.flashback.firebase.base.ConverterUtils.isDateValid
 import tmg.flashback.firebase.models.FCircuit
 import tmg.flashback.firebase.models.FCircuitResult
 import tmg.flashback.repo.models.stats.CircuitSummary
@@ -15,8 +18,8 @@ fun FSeasonOverviewRaceCircuit.convert(): CircuitSummary {
         locality = locality,
         country = country,
         countryISO = countryISO,
-        locationLat = location.lat.toDoubleOrNull() ?: 0.0,
-        locationLng = location.lng.toDoubleOrNull() ?: 0.0
+        locationLat = location.lat?.toDoubleOrNull() ?: 0.0,
+        locationLng = location.lng?.toDoubleOrNull() ?: 0.0
     )
 }
 
@@ -30,17 +33,20 @@ fun FCircuit.convert(): Circuit {
         countryISO = this.countryISO ?: "",
         locationLat = this.locationLat,
         locationLng = this.locationLng,
-        results = this.results?.values?.map { it.convert() } ?: emptyList()
+        results = this.results?.values?.mapNotNull { it.convert() } ?: emptyList()
     )
 }
 
-fun FCircuitResult.convert(): CircuitRace {
+fun FCircuitResult.convert(): CircuitRace? {
+    if (!isDateValid(this.date)) {
+        return null
+    }
     return CircuitRace(
         name = this.name,
         season = this.season,
         round = this.round,
         wikiUrl = this.wikiUrl ?: "",
-        date = fromDate(this.date),
+        date = fromDate(this.date!!),
         time = fromTime(this.time)
     )
 }

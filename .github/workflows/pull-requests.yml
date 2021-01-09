@@ -31,6 +31,7 @@ jobs:
           echo "lines_rss=$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }} | grep -E '^rss/' -c)" >> $GITHUB_ENV
           echo "lines_repo=$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }} | grep -E '^app-repo/' -c)" >> $GITHUB_ENV
           echo "lines_app=$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }} | grep -E '^app/' -c)" >> $GITHUB_ENV
+          echo "lines_firebase=$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }} | grep -E '^app-firebase/' -c)" >> $GITHUB_ENV
 
       # Unit Tests - RSS
       - name: Unit tests - RSS
@@ -41,6 +42,11 @@ jobs:
       - name: Unit tests - Repo
         run: ./gradlew :app-repo:test
         if: ${{ env.lines_repo != 0 }}
+
+      # Unit Tests - Firebase
+      - name: Unit tests - Firebase
+        run: ./gradlew :app-firebase:testDebugUnitTest
+        if: ${{ env.lines_firebase != 0 }}
 
       # Unit Tests - App
       - name: Unit tests - App
