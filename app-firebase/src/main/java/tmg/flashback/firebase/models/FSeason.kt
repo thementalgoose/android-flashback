@@ -73,8 +73,8 @@ data class FSeasonOverviewRaceCircuit(
 )
 
 data class FSeasonOverviewRaceCircuitLocation(
-        val lat: String = "",
-        val lng: String = ""
+        val lat: String? = "",
+        val lng: String? = ""
 )
 
 data class FSeasonOverviewRaceQualifying(
