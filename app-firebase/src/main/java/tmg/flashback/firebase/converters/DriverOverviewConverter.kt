@@ -45,7 +45,6 @@ fun FDriverOverviewStanding.convert(): DriverOverviewStanding {
     )
 }
 
-
 fun FDriverOverviewStandingHistory.convert(season: Int, constructors: List<SlimConstructor>): DriverOverviewRace {
     return DriverOverviewRace(
             finished = this.f ?: 0,
