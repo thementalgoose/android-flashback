@@ -1,5 +1,6 @@
 package tmg.flashback.ui.dashboard.list
 
+import androidx.annotation.DrawableRes
 import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
 import tmg.flashback.R
@@ -13,6 +14,16 @@ sealed class ListItem(
     data class UpNext(
         val upNextSchedule: UpNextSchedule
     ): ListItem(R.layout.view_season_list_up_next)
+
+    object Divider: ListItem(R.layout.view_season_list_divider)
+
+    data class Button(
+        val itemId: String,
+        @StringRes
+        val label: Int,
+        @DrawableRes
+        val icon: Int
+    ): ListItem(R.layout.view_season_list_button)
 
     data class Season(
         val season: Int,
@@ -33,5 +44,7 @@ enum class HeaderType(
     @StringRes val label: Int
 ) {
     FAVOURITED(R.string.home_season_header_favourited),
-    ALL(R.string.home_season_header_All)
+    ALL(R.string.home_season_header_All),
+    UP_NEXT(R.string.dashboard_up_next_title),
+    EXTRA(R.string.dashboard_season_list_extra_title)
 }
