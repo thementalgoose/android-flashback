@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/paddingSmall">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/start"
@@ -20,26 +21,14 @@
         app:layout_constraintGuide_end="20dp" />
 
     <TextView
-        android:id="@+id/upNext"
-        style="@style/Text.UpNext.Title"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/paddingSmall"
-        android:alpha="0.6"
-        android:text="@string/dashboard_up_next_title"
-        app:layout_constraintEnd_toStartOf="@id/track"
-        app:layout_constraintStart_toStartOf="@id/start"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
         android:id="@+id/name"
         style="@style/Text.UpNext.RaceName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/paddingNSmall"
+        android:paddingTop="@dimen/paddingNSmall"
         app:layout_constraintEnd_toStartOf="@id/track"
         app:layout_constraintStart_toStartOf="@id/start"
-        app:layout_constraintTop_toBottomOf="@id/upNext"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="Australian Grand Prix" />
 
     <TextView
@@ -53,11 +42,11 @@
         tools:text="Albert Park Grand Prix Circuit" />
 
     <ImageView
-        app:layout_constraintTop_toBottomOf="@id/circuit"
-        app:layout_constraintStart_toStartOf="@id/start"
         android:id="@+id/flag"
         android:layout_width="@dimen/dashboardUpNextImageSize"
-        android:layout_height="@dimen/dashboardUpNextImageSize" />
+        android:layout_height="@dimen/dashboardUpNextImageSize"
+        app:layout_constraintStart_toStartOf="@id/start"
+        app:layout_constraintTop_toBottomOf="@id/circuit" />
 
     <TextView
         android:id="@+id/days"
@@ -102,19 +91,9 @@
         android:importantForAccessibility="no"
         app:layout_constraintBottom_toTopOf="@id/days"
         app:layout_constraintEnd_toEndOf="@id/end"
-        app:layout_constraintTop_toTopOf="@id/upNext"
+        app:layout_constraintTop_toTopOf="@id/name"
         app:layout_constraintVertical_bias="0.0"
         app:tint="?attr/f1TextSecondary"
         tools:src="@drawable/ic_map_unknown" />
-
-    <View
-        android:id="@+id/divider"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="@dimen/paddingNSmall"
-        android:layout_marginBottom="@dimen/paddingSmall"
-        android:background="?attr/f1BackgroundSecondary"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/days" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

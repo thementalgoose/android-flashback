@@ -5,10 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.R
-import tmg.flashback.ui.dashboard.list.viewholders.HeaderViewHolder
-import tmg.flashback.ui.dashboard.list.viewholders.HeroViewHolder
-import tmg.flashback.ui.dashboard.list.viewholders.SeasonViewHolder
-import tmg.flashback.ui.dashboard.list.viewholders.UpNextViewHolder
+import tmg.flashback.ui.dashboard.list.viewholders.*
 
 class ListAdapter(
     val settingsClicked: () -> Unit,
@@ -16,7 +13,8 @@ class ListAdapter(
     var favouriteToggled: (season: Int) -> Unit,
     var seasonClicked: (season: Int) -> Unit,
     var setDefaultClicked: (season: Int) -> Unit,
-    var clearDefaultClicked: () -> Unit
+    var clearDefaultClicked: () -> Unit,
+    val buttonClicked: (String) -> Unit
 ): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var toggle: Boolean = false
@@ -38,10 +36,12 @@ class ListAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(viewType, parent, false)
         return when (viewType) {
+            R.layout.view_season_list_divider -> DividerViewHolder(view)
             R.layout.view_season_list_season -> SeasonViewHolder(favouriteToggled, seasonClicked, setDefaultClicked, clearDefaultClicked, view)
             R.layout.view_season_list_header -> HeaderViewHolder(featureToggled, view)
             R.layout.view_season_list_hero -> HeroViewHolder(view, settingsClicked)
             R.layout.view_season_list_up_next -> UpNextViewHolder(view)
+            R.layout.view_season_list_button -> ButtonViewHolder(buttonClicked, view)
             else -> throw Exception("View type not implemented")
         }
     }
@@ -55,6 +55,7 @@ class ListAdapter(
             is ListItem.Season -> (holder as SeasonViewHolder).bind(item)
             is ListItem.Header -> (holder as HeaderViewHolder).bind(item)
             is ListItem.UpNext -> (holder as UpNextViewHolder).bind(item)
+            is ListItem.Button -> (holder as ButtonViewHolder).bind(item)
         }
     }
 
