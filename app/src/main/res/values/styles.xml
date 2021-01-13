@@ -447,7 +447,6 @@
     </style>
 
     <style name="Text.BottomSheet.Item" parent="Text">
-        <item name="android:textSize">@dimen/textSizeSmall</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">?attr/f1TextSecondary</item>
     </style>

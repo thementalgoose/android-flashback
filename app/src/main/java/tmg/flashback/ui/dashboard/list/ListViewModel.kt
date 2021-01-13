@@ -2,6 +2,8 @@ package tmg.flashback.ui.dashboard.list
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import tmg.flashback.R
+import tmg.flashback.controllers.FeatureController
 import tmg.flashback.ui.base.BaseViewModel
 import tmg.flashback.controllers.SeasonController
 import tmg.flashback.controllers.UpNextController
@@ -12,6 +14,8 @@ import tmg.utilities.lifecycle.Event
 
 interface ListViewModelInputs {
     fun refresh()
+
+    fun clickRss()
 
     fun toggleHeader(header: HeaderType, to: Boolean? = null)
     fun toggleFavourite(season: Int)
@@ -34,13 +38,15 @@ interface ListViewModelOutputs {
     val defaultSeasonUpdated: LiveData<DataEvent<Int?>>
 
     val openSettings: LiveData<Event>
+    val openRss: LiveData<Event>
 }
 
 //endregion
 
 class ListViewModel(
         private val seasonController: SeasonController,
-        private val upNextController: UpNextController
+        private val upNextController: UpNextController,
+        private val featureController: FeatureController
 ) : BaseViewModel(), ListViewModelInputs, ListViewModelOutputs {
 
     var headerSectionFavourited: Boolean = seasonController.favouritesExpanded
@@ -52,6 +58,7 @@ class ListViewModel(
     override val list: MutableLiveData<List<ListItem>> = MutableLiveData()
     override val showSeasonEvent: MutableLiveData<DataEvent<Int>> = MutableLiveData()
     override val openSettings: MutableLiveData<Event> = MutableLiveData()
+    override val openRss: MutableLiveData<Event> = MutableLiveData()
     override val defaultSeasonUpdated: MutableLiveData<DataEvent<Int?>> = MutableLiveData()
 
     var inputs: ListViewModelInputs = this
@@ -67,10 +74,16 @@ class ListViewModel(
         list.value = buildList(favouriteSeasons, headerSectionFavourited, headerSectionAll)
     }
 
+    override fun clickRss() {
+        openRss.value = Event()
+    }
+
     override fun toggleHeader(header: HeaderType, to: Boolean?) {
         when (header) {
             HeaderType.FAVOURITED -> headerSectionFavourited = to ?: !headerSectionFavourited
             HeaderType.ALL -> headerSectionAll = to ?: !headerSectionAll
+            HeaderType.UP_NEXT -> { /* Do nothing */ }
+            HeaderType.EXTRA -> { /* Do nothing */ }
         }
         refresh()
     }
@@ -118,8 +131,22 @@ class ListViewModel(
 
         val list: MutableList<ListItem> = mutableListOf(ListItem.Hero)
 
+        // Up next
         upNextController.getNextRace()?.let {
+            list.add(ListItem.Divider)
+            list.add(ListItem.Header(type = HeaderType.UP_NEXT, expanded = null))
             list.add(ListItem.UpNext(it))
+        }
+
+        // RSS
+        if (featureController.rssEnabled) {
+            list.add(ListItem.Divider)
+            list.add(ListItem.Header(type = HeaderType.EXTRA, expanded = null))
+            list.add(ListItem.Button(
+                    itemId = "rss",
+                    label = R.string.dashboard_season_list_extra_rss_title,
+                    icon = R.drawable.nav_rss
+            ))
         }
 
         val supportedSeasons = seasonController.supportedSeasons
@@ -127,6 +154,7 @@ class ListViewModel(
         val isUserDefinedValueSet = seasonController.isUserDefinedValueSet
 
         // Favourites
+        list.add(ListItem.Divider)
         list.add(
             ListItem.Header(
                 HeaderType.FAVOURITED,

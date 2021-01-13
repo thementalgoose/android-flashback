@@ -49,20 +49,11 @@ class SeasonFragment: BaseFragment() {
         dataList.layoutManager = LinearLayoutManager(context)
         dataList.adapter = adapter
 
-        if (!remoteConfigRepository.rss) {
-            navigation.menu.removeItem(R.id.nav_rss)
-        }
         if (remoteConfigRepository.search) {
             searchButton.visible()
         }
         navigation.setOnNavigationItemSelectedListener {
             return@setOnNavigationItemSelectedListener when (it.itemId) {
-                R.id.nav_rss -> {
-                    activity?.let { activity ->
-                        startActivity(RSSActivity.intent(activity))
-                    }
-                    false
-                }
                 R.id.nav_calendar -> {
                     viewModel.inputs.clickItem(SeasonNavItem.CALENDAR)
                     true

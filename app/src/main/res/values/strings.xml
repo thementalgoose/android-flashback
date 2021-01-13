@@ -144,11 +144,17 @@
     <string name="dashboard_up_next_today">Today</string>
     <string name="dashboard_up_next_date"><![CDATA[Round <b>%d</b><br/><b>%s</b>]]></string>
 
+    <string name="dashboard_season_list_extra_title">Extras</string>
+    <string name="dashboard_season_list_extra_rss_title">RSS feed</string>
+
+
     <string name="dashboard_season_list_default_banner_automatic">No default season set</string>
     <string name="dashboard_season_list_default_banner_user">Default season set to %d</string>
     <string name="dashboard_season_list_default_banner_revert">Undo</string>
     <string name="dashboard_season_list_option_set_default">Set as default</string>
     <string name="dashboard_season_list_option_clear_default">Clear default</string>
+
+
 
     <string name="menu_title">Season list</string>
 
