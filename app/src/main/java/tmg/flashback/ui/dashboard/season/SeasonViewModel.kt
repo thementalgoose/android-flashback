@@ -112,7 +112,7 @@ class SeasonViewModel(
         .map { (season, menuItemType, history) ->
             val appBannerMessage = notificationController.banner
             val list: MutableList<SeasonItem> = mutableListOf()
-            if (showBannerAtTop) {
+            if (showBannerAtTop && menuItemType != SeasonNavItem.GRAPH) {
                 list.add(SeasonItem.ErrorItem(SyncDataItem.ProvidedBy()))
             }
             val historyRounds = history?.rounds ?: emptyList()
@@ -183,6 +183,11 @@ class SeasonViewModel(
                     if (!showBannerAtTop) {
                         list.add(SeasonItem.ErrorItem(SyncDataItem.ProvidedBy("constructors")))
                     }
+                }
+                SeasonNavItem.GRAPH -> {
+                    list.add(SeasonItem.Graph())
+
+                    list.add(SeasonItem.ErrorItem(SyncDataItem.ProvidedBy("graph")))
                 }
             }
             return@map list

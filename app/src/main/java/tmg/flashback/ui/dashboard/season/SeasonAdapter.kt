@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.R
 import tmg.flashback.ui.dashboard.season.viewholders.ConstructorViewHolder
 import tmg.flashback.ui.dashboard.season.viewholders.DriverViewHolder
+import tmg.flashback.ui.dashboard.season.viewholders.GraphViewHolder
 import tmg.flashback.ui.dashboard.season.viewholders.TrackViewHolder
 import tmg.flashback.ui.shared.sync.SyncAdapter
 
@@ -24,19 +25,12 @@ class SeasonAdapter(
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(viewType, parent, false)
         return when (viewType) {
-            R.layout.view_dashboard_season_track -> TrackViewHolder(
-                trackClicked,
-                LayoutInflater.from(parent.context).inflate(viewType, parent, false)
-            )
-            R.layout.view_dashboard_season_driver -> DriverViewHolder(
-                driverClicked,
-                LayoutInflater.from(parent.context).inflate(viewType, parent, false)
-            )
-            R.layout.view_dashboard_season_constructor -> ConstructorViewHolder(
-                constructorClicked,
-                LayoutInflater.from(parent.context).inflate(viewType, parent, false)
-            )
+            R.layout.view_dashboard_season_track -> TrackViewHolder(trackClicked, view)
+            R.layout.view_dashboard_season_driver -> DriverViewHolder(driverClicked, view)
+            R.layout.view_dashboard_season_constructor -> ConstructorViewHolder(constructorClicked, view)
+            R.layout.view_dashboard_season_graph -> GraphViewHolder(view)
             else -> super.onCreateViewHolder(parent, viewType)
         }
     }
@@ -48,6 +42,7 @@ class SeasonAdapter(
             is SeasonItem.Driver -> (holder as DriverViewHolder).bind(item)
             is SeasonItem.Constructor -> (holder as ConstructorViewHolder).bind(item)
             is SeasonItem.ErrorItem -> bindErrors(holder, item.item)
+            is SeasonItem.Graph -> (holder as GraphViewHolder).bind()
         }
     }
 

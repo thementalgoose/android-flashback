@@ -46,6 +46,10 @@ sealed class SeasonItem(
             val barAnimation: BarAnimation
     ) : SeasonItem(R.layout.view_dashboard_season_constructor)
 
+    data class Graph(
+            val id: Int = 0
+    ): SeasonItem(R.layout.view_dashboard_season_graph)
+
     data class ErrorItem(
             val item: SyncDataItem
     ) : SeasonItem(item.layoutId)

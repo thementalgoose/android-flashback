@@ -75,6 +75,10 @@ class SeasonFragment: BaseFragment() {
                     viewModel.inputs.clickItem(SeasonNavItem.CONSTRUCTORS)
                     true
                 }
+                R.id.nav_graph -> {
+                    viewModel.inputs.clickItem(SeasonNavItem.GRAPH)
+                    true
+                }
                 else -> false
             }
         }
