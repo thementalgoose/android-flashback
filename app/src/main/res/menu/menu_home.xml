@@ -21,4 +21,9 @@
         android:icon="@drawable/nav_constructor"
         android:title="@string/nav_constructors" />
 
+    <item
+        android:id="@+id/nav_graph"
+        android:icon="@drawable/nav_graph"
+        android:title="@string/nav_graph" />
+
 </menu>
