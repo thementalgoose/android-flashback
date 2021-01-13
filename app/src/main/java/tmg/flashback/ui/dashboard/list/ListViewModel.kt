@@ -145,7 +145,7 @@ class ListViewModel(
             list.add(ListItem.Button(
                     itemId = "rss",
                     label = R.string.dashboard_season_list_extra_rss_title,
-                    icon = R.drawable.ic_rss
+                    icon = R.drawable.nav_rss
             ))
         }
 
