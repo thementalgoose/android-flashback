@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
 import org.threeten.bp.Year
+import tmg.flashback.controllers.FeatureController
 import tmg.flashback.controllers.SeasonController
 import tmg.flashback.controllers.UpNextController
 import tmg.flashback.repo.models.remoteconfig.UpNextSchedule
@@ -25,6 +26,7 @@ internal class ListViewModelTest: BaseTest() {
 
     private val mockSeasonController: SeasonController = mockk(relaxed = true)
     private val mockUpNextController: UpNextController = mockk(relaxed = true)
+    private val mockFeatureController: FeatureController = mockk(relaxed = true)
 
     @BeforeEach
     internal fun setUp() {
@@ -37,10 +39,12 @@ internal class ListViewModelTest: BaseTest() {
         every { mockUpNextController.getNextRace() } returns null
 
         every { mockSeasonController.supportedSeasons } returns List(currentYear - 1949) { it + 1950 }.toSet()
+
+        every { mockFeatureController.rssEnabled } returns false
     }
 
     private fun initSUT() {
-        sut = ListViewModel(mockSeasonController, mockUpNextController)
+        sut = ListViewModel(mockSeasonController, mockUpNextController, mockFeatureController)
     }
 
     //region Default
@@ -155,6 +159,32 @@ internal class ListViewModelTest: BaseTest() {
 
         sut.outputs.list.test {
             assertListMatchesItem { it is ListItem.UpNext }
+        }
+    }
+
+    //endregion
+
+    //region Extras section
+
+    @Test
+    fun `ListViewModel extras section is displayed when rss feature is enabled`() {
+
+        every { mockFeatureController.rssEnabled } returns true
+        initSUT()
+
+        sut.outputs.list.test {
+            assertListMatchesItem { it is ListItem.Header && it.type == HeaderType.EXTRA }
+        }
+    }
+
+    @Test
+    fun `ListViewModel extras section is hidden when rss feature is not enabled`() {
+
+        every { mockFeatureController.rssEnabled } returns false
+        initSUT()
+
+        sut.outputs.list.test {
+            assertListDoesNotMatchItem { it is ListItem.Header && it.type == HeaderType.EXTRA }
         }
     }
 
@@ -332,6 +362,7 @@ internal class ListViewModelTest: BaseTest() {
     private fun expectedList(favourites: Set<Int> = emptySet(), showFavourites: Boolean = true, showAll: Boolean = true): List<ListItem> {
         val expected = mutableListOf<ListItem>()
         expected.add(ListItem.Hero)
+        expected.add(ListItem.Divider)
         if (showFavourites) {
             expected.add(headerFavouriteOpen)
             expected.addAll(favouriteSeasons(favourites.toList().sorted()))

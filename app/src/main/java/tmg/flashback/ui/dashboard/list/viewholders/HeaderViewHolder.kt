@@ -7,7 +7,9 @@ import tmg.flashback.R
 import tmg.flashback.ui.dashboard.list.HeaderType
 import tmg.flashback.ui.dashboard.list.ListItem
 import tmg.utilities.extensions.views.getString
+import tmg.utilities.extensions.views.gone
 import tmg.utilities.extensions.views.show
+import tmg.utilities.extensions.views.visible
 
 class HeaderViewHolder(
     private var featureToggled: (type: HeaderType) -> Unit,
@@ -32,16 +34,21 @@ class HeaderViewHolder(
             true -> {
                 itemView.header.contentDescription = getString(R.string.ab_season_list_header_toggle_expanded, getString(header.type.label))
                 itemView.arrow.setImageResource(R.drawable.arrow_down)
+                itemView.arrow.visible()
             }
             false -> {
                 itemView.header.contentDescription = getString(R.string.ab_season_list_header_toggle_collapsed, getString(header.type.label))
                 itemView.arrow.setImageResource(R.drawable.arrow_up)
+                itemView.arrow.visible()
+            }
+            null -> {
+                itemView.arrow.gone()
             }
         }
     }
 
     override fun onClick(p0: View?) {
-        if (p0 == itemView.container) {
+        if (p0 == itemView.container && expanded != null) {
             featureToggled.invoke(type)
         }
     }

@@ -10,6 +10,7 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_dashboard_list.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.R
+import tmg.flashback.rss.ui.RSSActivity
 import tmg.flashback.ui.base.BaseFragment
 import tmg.flashback.ui.dashboard.DashboardNavigationCallback
 import tmg.flashback.ui.settings.SettingsActivity
@@ -41,7 +42,12 @@ class ListFragment: BaseFragment() {
                 favouriteToggled = viewModel.inputs::toggleFavourite,
                 seasonClicked = viewModel.inputs::clickSeason,
                 setDefaultClicked = viewModel.inputs::clickSetDefaultSeason,
-                clearDefaultClicked = viewModel.inputs::clickClearDefaultSeason
+                clearDefaultClicked = viewModel.inputs::clickClearDefaultSeason,
+                buttonClicked = {
+                     when (it) {
+                         "rss" -> viewModel.inputs.clickRss()
+                     }
+                }
         )
         list.layoutManager = LinearLayoutManager(context)
         list.adapter = adapter
@@ -60,6 +66,12 @@ class ListFragment: BaseFragment() {
         observeEvent(viewModel.outputs.openSettings) {
             context?.let {
                 startActivity(Intent(it, SettingsActivity::class.java))
+            }
+        }
+
+        observeEvent(viewModel.outputs.openRss) {
+            context?.let {
+                startActivity(Intent(it, RSSActivity::class.java))
             }
         }
 
