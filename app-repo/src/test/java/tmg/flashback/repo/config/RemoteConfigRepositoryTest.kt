@@ -3,6 +3,7 @@ package tmg.flashback.repo.config
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
+import tmg.flashback.repo.models.remoteconfig.SupportedArticleSource
 import tmg.flashback.repo.models.remoteconfig.UpNextSchedule
 
 internal class RemoteConfigRepositoryTest {
@@ -62,19 +63,6 @@ internal class RemoteConfigRepositoryTest {
     }
 
     @Test
-    fun `RemoteConfigRepository rss returns cached value`() {
-
-        val input1 = true
-        val input2 = false
-
-        stub.inputRss = input1
-        assertEquals(stub.rss, input1)
-
-        stub.inputRss = input2
-        assertEquals(stub.rss, input1)
-    }
-
-    @Test
     fun `RemoteConfigRepository data provided by returns non cached value`() {
 
         val input1 = "welp"
@@ -99,4 +87,35 @@ internal class RemoteConfigRepositoryTest {
         stub.inputSearch = input2
         assertEquals(stub.search, input1)
     }
+
+    //region RSS
+
+    @Test
+    fun `RemoteConfigRepository rss returns cached value`() {
+
+        val input1 = true
+        val input2 = false
+
+        stub.inputRss = input1
+        assertEquals(stub.rss, input1)
+
+        stub.inputRss = input2
+        assertEquals(stub.rss, input1)
+    }
+
+
+    @Test
+    fun `RemoteConfigRepository rss supported sources returns cached value`() {
+
+        val input1 = listOf(SupportedArticleSource("AGAIN", "", "", "", "", "", ""))
+        val input2 = listOf(SupportedArticleSource("INFO", "", "", "", "", "", ""))
+
+        stub.inputRssSupportedSources = input1
+        assertEquals(stub.rssSupportedSources, input1)
+
+        stub.inputRssSupportedSources = input2
+        assertEquals(stub.rssSupportedSources, input1)
+    }
+
+    //endregion
 }

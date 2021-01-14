@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import tmg.flashback.rss.R
 import tmg.flashback.rss.base.RSSBaseViewModel
+import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.rss.prefs.RSSPrefsRepository
 import tmg.flashback.rss.repo.enums.SupportedArticleSource
 import tmg.utilities.lifecycle.DataEvent
@@ -29,7 +30,8 @@ interface RSSConfigureViewModelOutputs {
 //endregion
 
 class RSSConfigureViewModel(
-        private val prefsRepository: RSSPrefsRepository
+        private val prefsRepository: RSSPrefsRepository,
+        private val rssController: RSSController
 ) : RSSBaseViewModel(), RSSConfigureViewModelInputs, RSSConfigureViewModelOutputs {
 
     var inputs: RSSConfigureViewModelInputs = this
@@ -96,7 +98,7 @@ class RSSConfigureViewModel(
                             .replace("http://", "")
                 }
                 .map {
-                    RSSConfigureItem.Item(it, SupportedArticleSource.getByRssFeedURL(it))
+                    RSSConfigureItem.Item(it, rssController.getSupportedSourceByRssUrl(it))
                 }
             )
         }
@@ -112,8 +114,8 @@ class RSSConfigureViewModel(
             text = R.string.rss_configure_header_quick_add,
             subtitle = R.string.rss_configure_header_quick_add_subtitle
         ))
-        itemList.addAll(SupportedArticleSource
-            .values()
+        itemList.addAll(rssController
+            .sources
             .filter { !rssUrls.contains(it.rssLink) }
             .sortedBy {
                 it.rssLink.replace("https://www.", "")
