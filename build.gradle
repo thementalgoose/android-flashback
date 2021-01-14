@@ -10,7 +10,7 @@ buildscript {
     ext.threetenbp = "1.4.1"
 
     ext.android_constraint = "2.0.4"
-    ext.android_material = "1.3.0-beta01"
+    ext.android_material = "1.3.0-rc01"
     ext.android_lifecycle = "2.3.0-rc01"
 
     ext.swipe_refresh = "1.1.0"
