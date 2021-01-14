@@ -11,27 +11,27 @@ internal class RSSControllerTest: BaseTest() {
 
     private val stub = RSSControllerStub()
 
-    @ParameterizedTest(name = "RSSSourceController strip host removes turns {0} into {1}")
+    @ParameterizedTest(name = "RSSController strip host removes turns {0} into {1}")
     @CsvSource(
         "https://www.google.com,google.com",
         "http://www.google.com,google.com",
         "https://google.com,google.com",
         "http://google.com,google.com"
     )
-    fun `RSSSourceController strip host removes www and https`(original: String, expected: String) {
+    fun `RSSController strip host removes www and https`(original: String, expected: String) {
 
         assertEquals(expected, stub.stripHost(original))
     }
 
 
     @Test
-    fun `RSSSourceController get supported source by rss link`() {
+    fun `RSSController get supported source by rss link`() {
 
         assertEquals(primary, stub.getSupportedSourceByRssUrl(primary.rssLink))
     }
 
     @Test
-    fun `RSSSourceController get supported source by link`() {
+    fun `RSSController get supported source by link`() {
 
         assertEquals(primary, stub.getSupportedSourceByLink("https://www.rss.com"))
 
