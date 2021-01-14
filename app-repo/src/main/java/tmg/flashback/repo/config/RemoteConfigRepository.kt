@@ -1,5 +1,6 @@
 package tmg.flashback.repo.config
 
+import tmg.flashback.repo.models.remoteconfig.SupportedArticleSource
 import tmg.flashback.repo.models.remoteconfig.UpNextSchedule
 
 /**
@@ -34,12 +35,6 @@ abstract class RemoteConfigRepository {
     protected abstract val bannerRC: String?
 
     /**
-     * Enable the RSS feed functionality
-     */
-    val rss: Boolean by lazy { rssRC }
-    protected abstract val rssRC: Boolean
-
-    /**
      * Data provided by tag
      */
     val dataProvidedBy: String? get() = dataProvidedByRC
@@ -50,4 +45,20 @@ abstract class RemoteConfigRepository {
      */
     val search: Boolean by lazy { searchRC }
     protected abstract val searchRC: Boolean
+
+    //region RSS
+
+    /**
+     * Enable the RSS feed functionality
+     */
+    val rss: Boolean by lazy { rssRC }
+    protected abstract val rssRC: Boolean
+
+    /**
+     * List of supported articles for the RSS configure functionality
+     */
+    val rssSupportedSources: List<SupportedArticleSource> by lazy { rssSupportedSourcesRC }
+    protected abstract val rssSupportedSourcesRC: List<SupportedArticleSource>
+
+    //endregion
 }

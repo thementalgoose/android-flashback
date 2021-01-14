@@ -171,10 +171,6 @@ task generateRemoteConfigDefaults {
                 value()
             }
             entry {
-                key('rss')
-                value('false')
-            }
-            entry {
                 key('data_provided')
                 value('Data provided by Ergast API')
             }
@@ -185,6 +181,14 @@ task generateRemoteConfigDefaults {
             entry {
                 key('supported_seasons')
                 value(supportedSeasons)
+            }
+            entry {
+                key('rss')
+                value('false')
+            }
+            entry {
+                key('rss_supported_sources')
+                value('{"sources":[{"rssLink":"https://www.autosport.com/rss/feed/f1","sourceShort":"AS","source":"https://www.autosport.com","colour":"#FF0000","textColour":"#ffffff","title":"Autosport","contactLink":"https://www.autosport.com/contact/"}]}')
             }
         }
     }

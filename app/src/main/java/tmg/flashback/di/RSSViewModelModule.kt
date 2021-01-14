@@ -10,5 +10,5 @@ val rssViewModelModule = module {
 
     viewModel { RSSViewModel(get(), get(), get()) }
     viewModel { RSSSettingsViewModel(get()) }
-    viewModel { RSSConfigureViewModel(get()) }
+    viewModel { RSSConfigureViewModel(get(), get()) }
 }

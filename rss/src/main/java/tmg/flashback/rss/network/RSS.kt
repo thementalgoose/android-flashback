@@ -8,6 +8,7 @@ import okhttp3.Headers
 import retrofit2.HttpException
 import tmg.flashback.repo.models.Response
 import tmg.flashback.rss.BuildConfig
+import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.rss.network.apis.convert
 import tmg.flashback.rss.network.shared.RssXMLRetrofit
 import tmg.flashback.rss.network.shared.buildRetrofit
@@ -23,7 +24,8 @@ import javax.net.ssl.SSLHandshakeException
 import javax.xml.stream.XMLStreamException
 
 class RSS(
-    private val prefsRepository: RSSPrefsRepository
+    private val prefsRepository: RSSPrefsRepository,
+    private val rssController: RSSController
 ) : RSSRepository {
 
     private val headers: Map<String, String> = mapOf(
@@ -39,7 +41,7 @@ class RSS(
             val responses: MutableList<Response<List<Article>>> = mutableListOf()
             for (x in prefsRepository.rssUrls) {
                 try {
-                    val response = xmlRetrofit.getRssXML(headers, x).convert(x, prefsRepository.rssShowDescription)
+                    val response = xmlRetrofit.getRssXML(headers, x).convert(rssController, x, prefsRepository.rssShowDescription)
                     responses.add(Response(response))
                 } catch (e: XMLStreamException) {
                     if (BuildConfig.DEBUG) {
