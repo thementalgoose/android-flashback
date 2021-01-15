@@ -54,6 +54,10 @@ class SeasonFragment: BaseFragment() {
         }
         navigation.setOnNavigationItemSelectedListener {
             return@setOnNavigationItemSelectedListener when (it.itemId) {
+                R.id.nav_rss -> {
+                    context?.let { context -> startActivity(RSSActivity.intent(context)) }
+                    false
+                }
                 R.id.nav_calendar -> {
                     viewModel.inputs.clickItem(SeasonNavItem.CALENDAR)
                     true
