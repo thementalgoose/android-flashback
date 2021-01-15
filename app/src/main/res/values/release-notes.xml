@@ -140,7 +140,7 @@
         <br/>• Adds ability to show qualifying delta by long clicking qualifying results
         <br/>• Fix for progress bar values sometimes being fractionally incorrect after animation
         <br/>• Other minor bug fixes and performance improvements]]></string>
-    <string name="release_44"><![CDATA[<b>5.5.8</b> - Bug fixes
+    <string name="release_45"><![CDATA[<b>5.6.1</b> - Bug fixes
         <br/>• Adds swipe to dismiss gesture throughout the app
         <br/>• Adds ability to set a default season to load the app into
         <br/>• Adds 6 more track layouts to races and circuit screens
