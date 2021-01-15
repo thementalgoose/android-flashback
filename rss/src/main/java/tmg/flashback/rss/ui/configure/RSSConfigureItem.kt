@@ -19,7 +19,7 @@ sealed class RSSConfigureItem(
 
     data class Item(
             val url: String,
-            val supportedArticleSource: SupportedArticleSource? = SupportedArticleSource.getByRssFeedURL(url)
+            val supportedArticleSource: SupportedArticleSource?
     ) : RSSConfigureItem(R.layout.view_rss_configure_item)
 
     data class QuickAdd(

@@ -9,6 +9,7 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 import tmg.flashback.rss.R
+import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.rss.prefs.RSSPrefsRepository
 import tmg.flashback.rss.repo.enums.SupportedArticleSource
 import tmg.flashback.rss.testutils.BaseTest
@@ -21,14 +22,19 @@ class RSSConfigureViewModelTest: BaseTest() {
     lateinit var sut: RSSConfigureViewModel
 
     private val mockPrefs: RSSPrefsRepository = mockk(relaxed = true)
+    private val mockRssController: RSSController = mockk(relaxed = true)
+
+    private val mockSupportedArticle = SupportedArticleSource("https://www.test.com/rss", "", "https://www.test.com", "", "", "", "https://www.test.com/contact")
+    private val mockListOfSupportedArticles: List<SupportedArticleSource> = listOf(mockSupportedArticle)
 
     @BeforeEach
     fun setUp() {
         every { mockPrefs.rssUrls } returns emptySet()
+        every { mockRssController.sources } returns mockListOfSupportedArticles
     }
 
     private fun initSUT() {
-        sut = RSSConfigureViewModel(mockPrefs)
+        sut = RSSConfigureViewModel(mockPrefs, mockRssController)
     }
 
     @Test
@@ -38,7 +44,7 @@ class RSSConfigureViewModelTest: BaseTest() {
 
         val expected = buildList(
             added = emptyList(),
-            quick = SupportedArticleSource.values().toList()
+            quick = mockListOfSupportedArticles
         )
 
         sut.outputs.list.test {
@@ -49,42 +55,19 @@ class RSSConfigureViewModelTest: BaseTest() {
     @Test
     fun `RSSConfigureViewModel add quick item will update the prefs DB`() {
 
-        val link = SupportedArticleSource.AUTOSPORT
         every { mockPrefs.rssUrls } returns emptySet()
 
         initSUT()
 
-        sut.inputs.addQuickItem(link)
+        sut.inputs.addQuickItem(mockListOfSupportedArticles.first())
 
-        verify { mockPrefs.rssUrls = setOf(link.rssLink) }
-    }
-
-    @ParameterizedTest(name = "RSSConfigureViewModel simulate adding single item for {0} updates list")
-    @MethodSource("allSupportedArticles")
-    fun `RSSConfigureViewModel simulate adding single item to update the list properly`(source: SupportedArticleSource) {
-
-        val expected = buildList(
-            added = listOf(source.rssLink),
-            quick = SupportedArticleSource.values()
-                .filter { it != source }
-        )
-        every { mockPrefs.rssUrls } returns emptySet()
-
-        initSUT()
-
-        // Assume PrefsDB is saving item properly (tested previously)
-        every { mockPrefs.rssUrls } returns setOf(source.rssLink)
-        sut.inputs.removeItem(source.rssLink)
-
-        sut.outputs.list.test {
-            assertValue(expected)
-        }
+        verify { mockPrefs.rssUrls = setOf(mockSupportedArticle.rssLink) }
     }
 
     @Test
     fun `RSSConfigureViewModel removing item will update the prefs DB`() {
 
-        val link = SupportedArticleSource.AUTOSPORT.rssLink
+        val link = mockSupportedArticle.rssLink
         every { mockPrefs.rssUrls } returns setOf(link)
 
         initSUT()
@@ -94,44 +77,14 @@ class RSSConfigureViewModelTest: BaseTest() {
         verify { mockPrefs.rssUrls = emptySet() }
     }
 
-    @ParameterizedTest(name = "RSSConfigureViewModel visit website for {0} opens website event")
-    @MethodSource("allSupportedArticles")
-    fun `RSSConfigureViewModel visit website fires open website event`(source: SupportedArticleSource) {
+    @Test
+    fun `RSSConfigureViewModel visit website fires open website event`() {
 
         initSUT()
-        sut.inputs.visitWebsite(source)
+        sut.inputs.visitWebsite(mockSupportedArticle)
 
         sut.outputs.openWebsite.test {
-            assertDataEventValue(source)
-        }
-    }
-
-    @ParameterizedTest(name = "RSSConfigureViewModel simulate removing single item for {0} updates list")
-    @MethodSource("allSupportedArticles")
-    fun `RSSConfigureViewModel simulate removing single item to update the list properly`(source: SupportedArticleSource) {
-
-        val expected = buildList(
-            added = SupportedArticleSource.valuesSorted()
-                .filter { it != source }
-                .map { it.rssLink },
-            quick = listOf(source)
-        )
-        every { mockPrefs.rssUrls } returns SupportedArticleSource.valuesSorted()
-            .map { it.rssLink }
-            .toSet()
-
-        initSUT()
-
-        // Assume PrefsDB is saving item properly (tested previously)
-        every { mockPrefs.rssUrls } returns SupportedArticleSource.valuesSorted()
-            .filter { it != source }
-            .map { it.rssLink }
-            .toSet()
-
-        sut.inputs.removeItem(source.rssLink)
-
-        sut.outputs.list.test {
-            assertValue(expected)
+            assertDataEventValue(mockSupportedArticle)
         }
     }
 
@@ -140,10 +93,10 @@ class RSSConfigureViewModelTest: BaseTest() {
 
         val item = "https://www.google.com/testlink"
         val expected = buildList(
-            added = listOf(item)
+            added = listOf(item),
+            quick = mockListOfSupportedArticles
         )
-        every { mockPrefs.rssUrls } returns emptySet()
-
+        every { mockRssController.getSupportedSourceByRssUrl(any()) } returns null
         initSUT()
 
         // Assume preferences updated
@@ -200,21 +153,10 @@ class RSSConfigureViewModelTest: BaseTest() {
         verify { mockPrefs.rssUrls = expected }
     }
 
-    companion object {
-        @JvmStatic
-        fun allSupportedArticles(): Stream<Arguments> = Stream.of(
-            *SupportedArticleSource.values()
-                .map {
-                    Arguments.of(it)
-                }
-                .toTypedArray()
-        )
-    }
-
 
     private fun buildList(
         added: List<String>,
-        quick: List<SupportedArticleSource> = SupportedArticleSource.values().toList()
+        quick: List<SupportedArticleSource> = mockListOfSupportedArticles
     ): List<RSSConfigureItem> {
         val list = mutableListOf<RSSConfigureItem>()
         list.add(RSSConfigureItem.Header(R.string.rss_configure_header_items, R.string.rss_configure_header_items_subtitle))
@@ -230,7 +172,7 @@ class RSSConfigureViewModelTest: BaseTest() {
                     .replace("http://", "")
                 }
                 .map {
-                    RSSConfigureItem.Item(it)
+                    RSSConfigureItem.Item(it, null)
                 }
             )
         }

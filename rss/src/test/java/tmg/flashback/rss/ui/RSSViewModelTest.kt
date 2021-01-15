@@ -50,7 +50,7 @@ class RSSViewModelTest: BaseTest() {
     internal fun setUp() {
 
         every { mockConnectivityManager.isConnected } returns true
-        every { mockPrefsRepository.rssUrls } returns SupportedArticleSource.values().map { it.rssLink }.toSet()
+        every { mockPrefsRepository.rssUrls } returns setOf("https://www.mock.rss.url.com")
         every { mockPrefsRepository.rssShowDescription } returns true
         every { mockRSSDB.getNews() } returns mockResponse200
     }
