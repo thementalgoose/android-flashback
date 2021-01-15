@@ -1,0 +1,22 @@
+package tmg.flashback.controllers
+
+import tmg.flashback.repo.config.RemoteConfigRepository
+import tmg.flashback.rss.controllers.RSSController
+import tmg.flashback.rss.repo.enums.SupportedArticleSource
+
+class RSSConfigurationController(
+    private val remoteConfigRepository: RemoteConfigRepository
+): RSSController() {
+    override val supportedSources: List<SupportedArticleSource>
+        get() = remoteConfigRepository.rssSupportedSources.map {
+            SupportedArticleSource(
+                rssLink = it.rssLink,
+                sourceShort = it.sourceShort,
+                source = it.source,
+                colour = it.colour,
+                textColour = it.textColour,
+                title = it.title,
+                contactLink = it.contactLink,
+            )
+        }
+}

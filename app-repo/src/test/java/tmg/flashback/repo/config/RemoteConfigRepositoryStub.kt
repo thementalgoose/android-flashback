@@ -1,6 +1,7 @@
 package tmg.flashback.repo.config
 
 import org.threeten.bp.LocalDate
+import tmg.flashback.repo.models.remoteconfig.SupportedArticleSource
 import tmg.flashback.repo.models.remoteconfig.UpNextSchedule
 
 class RemoteConfigRepositoryStub(
@@ -8,17 +9,19 @@ class RemoteConfigRepositoryStub(
         var inputDefaultSeason: Int = 2018,
         var inputUpNext: List<UpNextSchedule> = listOf(UpNextSchedule(0,0,"", LocalDate.now(),null,null,null,null)),
         var inputBanner: String? = "banner",
-        var inputRss: Boolean = true,
         var inputDataProvidedBy: String? = "provided_by",
-        var inputSearch: Boolean = true
+        var inputSearch: Boolean = true,
+        var inputRss: Boolean = true,
+        var inputRssSupportedSources: List<SupportedArticleSource> = listOf(SupportedArticleSource("", "", "", "", "", "", ""))
 ): RemoteConfigRepository() {
 
     override val supportedSeasonsRC: Set<Int> get() = inputSupportedSeasons
     override val defaultSeasonRC: Int get() = inputDefaultSeason
     override val upNextRC: List<UpNextSchedule> get() = inputUpNext
     override val bannerRC: String? get() = inputBanner
-    override val rssRC: Boolean get() = inputRss
     override val dataProvidedByRC: String? get() = inputDataProvidedBy
     override val searchRC: Boolean get() = inputSearch
 
+    override val rssRC: Boolean get() = inputRss
+    override val rssSupportedSourcesRC: List<SupportedArticleSource> get() = inputRssSupportedSources
 }
