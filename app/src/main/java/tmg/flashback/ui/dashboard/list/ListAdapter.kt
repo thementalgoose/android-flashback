@@ -80,7 +80,9 @@ class ListAdapter(
         override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
             val oldItem = oldList[oldItemPosition]
             val newItem = newList[newItemPosition]
-            return oldItem == newItem || itemsAreHeadersWithOnlyDifferentToggleState(oldItem, newItem)
+            return oldItem == newItem ||
+                    itemsAreHeadersWithOnlyDifferentToggleState(oldItem, newItem) ||
+                    itemsAreSeasonAndDefaultIsOnlyDifferent(oldItem, newItem)
         }
 
         override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
@@ -89,6 +91,10 @@ class ListAdapter(
 
         private fun itemsAreHeadersWithOnlyDifferentToggleState(oldItem: ListItem, newItem: ListItem): Boolean {
             return oldItem is ListItem.Header && newItem is ListItem.Header && oldItem.type == newItem.type
+        }
+
+        private fun itemsAreSeasonAndDefaultIsOnlyDifferent(oldItem: ListItem, newItem: ListItem): Boolean {
+            return oldItem is ListItem.Season && newItem is ListItem.Season && oldItem.season == newItem.season
         }
     }
 }
