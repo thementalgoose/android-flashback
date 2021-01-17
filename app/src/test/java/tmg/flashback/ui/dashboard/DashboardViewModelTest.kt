@@ -1,5 +1,6 @@
 package tmg.flashback.ui.dashboard
 
+import android.content.Context
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
@@ -10,7 +11,6 @@ import tmg.flashback.managers.buildconfig.BuildConfigManager
 import tmg.flashback.managers.remoteconfig.RemoteConfigManager
 import tmg.flashback.repo.db.DataRepository
 import tmg.flashback.repo.models.remoteconfig.AppLockout
-import tmg.flashback.repo.pref.DeviceRepository
 import tmg.flashback.testutils.BaseTest
 import tmg.flashback.testutils.assertEventFired
 import tmg.flashback.testutils.assertEventNotFired
@@ -20,6 +20,7 @@ internal class DashboardViewModelTest: BaseTest() {
 
     lateinit var sut: DashboardViewModel
 
+    private val mockContext: Context = mockk(relaxed = true)
     private val mockDataRepository: DataRepository = mockk(relaxed = true)
     private val mockBuildConfigManager: BuildConfigManager = mockk(relaxed = true)
     private val mockReleaseNotesController: ReleaseNotesController = mockk(relaxed = true)
@@ -27,6 +28,7 @@ internal class DashboardViewModelTest: BaseTest() {
 
     private fun initSUT() {
         sut = DashboardViewModel(
+            mockContext,
             mockDataRepository,
             mockBuildConfigManager,
             mockRemoteConfigManager,
