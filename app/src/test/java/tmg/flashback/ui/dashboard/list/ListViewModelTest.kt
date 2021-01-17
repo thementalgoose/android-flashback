@@ -36,7 +36,7 @@ internal class ListViewModelTest: BaseTest() {
         every { mockSeasonController.allExpanded } returns true
 
         every { mockSeasonController.defaultSeason } returns 2018
-        every { mockUpNextController.getNextRace() } returns null
+        every { mockUpNextController.getNextEvent() } returns null
 
         every { mockSeasonController.supportedSeasons } returns List(currentYear - 1949) { it + 1950 }.toSet()
 
@@ -140,7 +140,7 @@ internal class ListViewModelTest: BaseTest() {
     @Test
     fun `ListViewModel up next section not shown item is null`() {
 
-        every { mockUpNextController.getNextRace() } returns null
+        every { mockUpNextController.getNextEvent() } returns null
 
         initSUT()
 
@@ -153,7 +153,7 @@ internal class ListViewModelTest: BaseTest() {
     fun `ListViewModel up next section shown when valid next race item found`() {
 
         val expected = UpNextSchedule(1,2,"test", LocalDate.now(),null,null,null,null)
-        every { mockUpNextController.getNextRace() } returns expected
+        every { mockUpNextController.getNextEvent() } returns expected
 
         initSUT()
 

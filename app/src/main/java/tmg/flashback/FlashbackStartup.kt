@@ -11,6 +11,7 @@ import org.koin.android.ext.android.inject
 import tmg.flashback.controllers.CrashController
 import tmg.flashback.controllers.DeviceController
 import tmg.flashback.controllers.NotificationController
+import tmg.flashback.extensions.updateAllWidgets
 import tmg.flashback.managers.analytics.UserPropertiesManager
 import tmg.flashback.managers.remoteconfig.RemoteConfigManager
 import tmg.flashback.notifications.PushNotificationManager
@@ -62,6 +63,9 @@ class FlashbackStartup(
         // Initialise user properties
         analyticsUserProperties.setDeviceModel(Build.MODEL)
         analyticsUserProperties.setOsVersion(Build.VERSION.SDK_INT.toString())
+
+        // Update Widgets
+        application.updateAllWidgets()
     }
 
     fun notificationsOptIn() {

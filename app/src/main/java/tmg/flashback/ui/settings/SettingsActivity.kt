@@ -11,6 +11,7 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_settings.*
 import kotlinx.android.synthetic.main.bottom_sheet_animation.*
 import kotlinx.android.synthetic.main.bottom_sheet_default_season.*
@@ -20,6 +21,7 @@ import tmg.components.about.AboutThisAppActivity
 import tmg.components.about.AboutThisAppConfiguration
 import tmg.flashback.R
 import tmg.flashback.constants.AboutThisAppConfig
+import tmg.flashback.extensions.updateAllWidgets
 import tmg.flashback.ui.base.BaseActivity
 import tmg.flashback.repo.enums.BarAnimation
 import tmg.flashback.repo.enums.ThemePref
@@ -115,6 +117,11 @@ class SettingsActivity : BaseActivity() {
                 }
                 startActivity(intent)
             }
+        }
+
+        observeEvent(viewModel.outputs.refreshWidgets) {
+            updateAllWidgets()
+            Snackbar.make(rvSettings, R.string.settings_widgets_update_all_updated, Snackbar.LENGTH_SHORT).show()
         }
 
         observeEvent(viewModel.outputs.openSuggestions) {

@@ -57,6 +57,10 @@ enum class SettingsOptions(
             title = R.string.settings_customisation_season_all_expanded_title,
             description = R.string.settings_customisation_season_all_expanded_description
     ),
+    WIDGETS_REFRESH_ALL("widgetRefreshAll",
+            title = R.string.settings_widgets_update_all_title,
+            description = R.string.settings_widgets_update_all_description
+    ),
     ABOUT("about",
             title = R.string.settings_help_about_title,
             description = R.string.settings_help_about_description
