@@ -9,7 +9,7 @@ import tmg.flashback.firebase.crash.FirebaseCrashManager
 import tmg.flashback.firebase.crash.FirebaseCrashManagerImpl
 
 open class FirebaseRepo(
-    private val crashManager: FirebaseCrashManager
+    val crashManager: FirebaseCrashManager
 ) {
 
     //#region References
