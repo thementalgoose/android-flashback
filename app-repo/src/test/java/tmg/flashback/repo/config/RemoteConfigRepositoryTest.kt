@@ -103,6 +103,19 @@ internal class RemoteConfigRepositoryTest {
         assertEquals(stub.rss, input1)
     }
 
+    @Test
+    fun `RemoteConfigRepository rss add custom returns cached value`() {
+
+        val input1 = true
+        val input2 = false
+
+        stub.inputRssAddCustom = input1
+        assertEquals(stub.rssAddCustom, input1)
+
+        stub.inputRssAddCustom = input2
+        assertEquals(stub.rssAddCustom, input1)
+    }
+
 
     @Test
     fun `RemoteConfigRepository rss supported sources returns cached value`() {
