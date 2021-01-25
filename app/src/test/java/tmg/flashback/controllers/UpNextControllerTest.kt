@@ -25,7 +25,7 @@ internal class UpNextControllerTest: BaseTest() {
         every { mockRemoteConfigRepository.upNext } returns emptyList()
         initSUT()
 
-        assertNull(sut.getNextRace())
+        assertNull(sut.getNextEvent())
     }
 
     @Test
@@ -38,7 +38,7 @@ internal class UpNextControllerTest: BaseTest() {
         every { mockRemoteConfigRepository.upNext } returns list
         initSUT()
 
-        assertNull(sut.getNextRace())
+        assertNull(sut.getNextEvent())
     }
 
     @Test
@@ -51,7 +51,7 @@ internal class UpNextControllerTest: BaseTest() {
         every { mockRemoteConfigRepository.upNext } returns list
         initSUT()
 
-        assertEquals(generateUpNextItem(1), (sut.getNextRace()))
+        assertEquals(generateUpNextItem(1), (sut.getNextEvent()))
     }
 
     @Test
@@ -64,7 +64,7 @@ internal class UpNextControllerTest: BaseTest() {
         every { mockRemoteConfigRepository.upNext } returns list
         initSUT()
 
-        assertEquals(generateUpNextItem(0), (sut.getNextRace()))
+        assertEquals(generateUpNextItem(0), (sut.getNextEvent()))
     }
 
     @Test
@@ -78,7 +78,7 @@ internal class UpNextControllerTest: BaseTest() {
         every { mockRemoteConfigRepository.upNext } returns list
         initSUT()
 
-        assertEquals(generateUpNextItem(0), (sut.getNextRace()))
+        assertEquals(generateUpNextItem(0), (sut.getNextEvent()))
     }
 
     @Test
@@ -91,7 +91,7 @@ internal class UpNextControllerTest: BaseTest() {
         every { mockRemoteConfigRepository.upNext } returns list
         initSUT()
 
-        assertEquals(generateUpNextItem(1), (sut.getNextRace()))
+        assertEquals(generateUpNextItem(1), (sut.getNextEvent()))
     }
 
     private fun generateUpNextItem(daysDeltaFromNow: Long): UpNextSchedule {

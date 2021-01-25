@@ -32,6 +32,37 @@
 
     <!-- =========================================== -->
 
+    <!--#region Widgets -->
+
+    <style name="Text.Widget.Title" parent="Text">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/textSizeMedium</item>
+        <item name="android:textColor">#fcfcfc</item>
+    </style>
+
+    <style name="Text.Widget.Subtitle" parent="Text">
+        <item name="android:textSize">@dimen/textSizeMedium</item>
+        <item name="android:textColor">#fcfcfc</item>
+    </style>
+
+    <style name="Text.Widget.Days" parent="Text">
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:textSize">@dimen/textSizeXLarge</item>
+        <item name="android:textColor">#fcfcfc</item>
+    </style>
+
+    <style name="Text.Widget.DaysUntil" parent="Text">
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:textSize">@dimen/textSizeMedium</item>
+        <item name="android:textColor">#fcfcfc</item>
+    </style>
+
+    <!--#endregion -->
+
+    <!-- =========================================== -->
+
+    <!-- =========================================== -->
+
     <!--#region Home -->
 
     <style name="Text.Toolbar" parent="Text">

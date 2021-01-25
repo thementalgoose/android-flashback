@@ -93,6 +93,8 @@ internal class SettingsViewModelTest: BaseTest() {
             add(DEFAULT_SEASON.toPref())
             add(SEASON_BOTTOM_SHEET_FAVOURITED.toSwitch(false))
             add(SEASON_BOTTOM_SHEET_ALL.toSwitch(false))
+            add(AppPreferencesItem.Category(R.string.settings_widgets))
+            add(WIDGETS_REFRESH_ALL.toPref())
             add(AppPreferencesItem.Category(R.string.settings_help))
             add(ABOUT.toPref())
             add(REVIEW.toPref())
@@ -352,6 +354,18 @@ internal class SettingsViewModelTest: BaseTest() {
         sut.inputs.preferenceClicked(ABOUT, null)
 
         sut.outputs.openAbout.test {
+            assertEventFired()
+        }
+    }
+
+    @Test
+    fun `SettingsViewModel selecting refresh widgets fires refresh widgets event`() {
+
+        initSUT()
+
+        sut.inputs.preferenceClicked(WIDGETS_REFRESH_ALL, null)
+
+        sut.outputs.refreshWidgets.test {
             assertEventFired()
         }
     }
