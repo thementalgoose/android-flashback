@@ -15,7 +15,7 @@ class UpNextController(
      * Get the next race to display in the up next schedule
      *  Up to and including today
      */
-    fun getNextRace(): UpNextSchedule? {
+    fun getNextEvent(): UpNextSchedule? {
         return remoteConfigRepository
                 .upNext
                 .filter { schedule ->

@@ -44,6 +44,10 @@
     <string name="settings_customisation_season_favourited_expanded_description">Toggle if the favourites section inside the seasons list is expanded by default</string>
     <string name="settings_customisation_season_all_expanded_title">All section</string>
     <string name="settings_customisation_season_all_expanded_description">Toggle if the all section inside the seasons list is expanded by default</string>
+    <string name="settings_widgets">Widgets</string>
+    <string name="settings_widgets_update_all_title">Refresh all widgets</string>
+    <string name="settings_widgets_update_all_description">Manually refresh all active widgets. Widgets usually update every 3 hours</string>
+    <string name="settings_widgets_update_all_updated">All widgets refreshed</string>
     <string name="settings_help">About</string>
     <string name="settings_help_about_title">About this app</string>
     <string name="settings_help_about_description">About the application and the developer</string>
@@ -149,7 +153,6 @@
     <string name="dashboard_season_list_extra_title">Extras</string>
     <string name="dashboard_season_list_extra_rss_title">RSS feed</string>
 
-
     <string name="dashboard_season_list_default_banner_automatic">No default season set</string>
     <string name="dashboard_season_list_default_banner_user">Default season set to %d</string>
     <string name="dashboard_season_list_default_banner_revert">Undo</string>
@@ -157,6 +160,10 @@
     <string name="dashboard_season_list_option_clear_default">Clear default</string>
 
 
+    <!-- Widgets -->
+    <string name="widget_up_next_title">Up next</string>
+    <string name="widget_up_next_nothing_title">Nothing coming up</string>
+    <string name="widget_up_next_nothing_subtitle">We will get this information as soon as it\'s available. Click here to check for updates</string>
 
     <string name="menu_title">Season list</string>
 

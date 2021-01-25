@@ -1,5 +1,6 @@
 package tmg.flashback.ui.dashboard
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -12,6 +13,7 @@ import kotlinx.coroutines.launch
 import tmg.flashback.BuildConfig
 import tmg.flashback.ui.base.BaseViewModel
 import tmg.flashback.controllers.ReleaseNotesController
+import tmg.flashback.extensions.updateAllWidgets
 import tmg.flashback.managers.buildconfig.BuildConfigManager
 import tmg.flashback.managers.remoteconfig.RemoteConfigManager
 import tmg.flashback.repo.db.DataRepository
@@ -36,8 +38,8 @@ interface DashboardViewModelOutputs {
 
 //endregion
 
-
 class DashboardViewModel(
+        private val applicationContext: Context,
         private val dataRepository: DataRepository,
         private val buildConfigManager: BuildConfigManager,
         private val remoteConfigManager: RemoteConfigManager,
@@ -74,6 +76,7 @@ class DashboardViewModel(
                     Log.i("Flashback", "Remote config change detected")
                 }
                 appConfigSynced.value = Event()
+                applicationContext.updateAllWidgets()
             }
         }
     }

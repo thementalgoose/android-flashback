@@ -124,4 +124,13 @@
 
     <!--===============================================================-->
 
+    <!-- Widgets -->
+
+    <dimen name="widgetCircuitWidth">60dp</dimen>
+    <dimen name="widgetCircuitHeight">50dp</dimen>
+    <dimen name="widgetFlagSize">16dp</dimen>
+    <dimen name="widgetMinWidth">250dp</dimen>
+
+    <!--===============================================================-->
+
 </resources>

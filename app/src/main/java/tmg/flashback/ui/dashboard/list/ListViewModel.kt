@@ -132,7 +132,7 @@ class ListViewModel(
         val list: MutableList<ListItem> = mutableListOf(ListItem.Hero)
 
         // Up next
-        upNextController.getNextRace()?.let {
+        upNextController.getNextEvent()?.let {
             list.add(ListItem.Divider)
             list.add(ListItem.Header(type = HeaderType.UP_NEXT, expanded = null))
             list.add(ListItem.UpNext(it))

@@ -43,6 +43,8 @@ interface SettingsViewModelOutputs {
     val animationChanged: LiveData<Event>
     val defaultSeasonChanged: LiveData<Event>
 
+    val refreshWidgets: LiveData<Event>
+
     val openThemePicker: LiveData<Event>
     val openAnimationPicker: LiveData<Event>
     val openDefaultSeasonPicker: LiveData<Event>
@@ -83,6 +85,9 @@ class SettingsViewModel(
     override val openThemePicker: MutableLiveData<Event> = MutableLiveData()
     override val openAnimationPicker: MutableLiveData<Event> = MutableLiveData()
     override val openDefaultSeasonPicker: MutableLiveData<Event> = MutableLiveData()
+
+    override val refreshWidgets: MutableLiveData<Event> = MutableLiveData()
+
     override val openAbout: MutableLiveData<Event> = MutableLiveData()
     override val openReview: MutableLiveData<DataEvent<String>> = MutableLiveData()
     override val openPrivacyPolicy: MutableLiveData<Event> = MutableLiveData()
@@ -120,6 +125,8 @@ class SettingsViewModel(
             add(SettingsOptions.DEFAULT_SEASON.toPref())
             add(SettingsOptions.SEASON_BOTTOM_SHEET_FAVOURITED.toSwitch(seasonController.favouritesExpanded))
             add(SettingsOptions.SEASON_BOTTOM_SHEET_ALL.toSwitch(seasonController.allExpanded))
+            add(AppPreferencesItem.Category(R.string.settings_widgets))
+            add(SettingsOptions.WIDGETS_REFRESH_ALL.toPref())
             add(AppPreferencesItem.Category(R.string.settings_help))
             add(SettingsOptions.ABOUT.toPref())
             add(SettingsOptions.REVIEW.toPref())
@@ -151,6 +158,7 @@ class SettingsViewModel(
             SettingsOptions.SEASON_BOTTOM_SHEET_FAVOURITED -> seasonController.favouritesExpanded = value ?: true
             SettingsOptions.SEASON_BOTTOM_SHEET_ALL -> seasonController.allExpanded = value ?: true
             SettingsOptions.BAR_ANIMATION_SPEED -> openAnimationPicker.value = Event()
+            SettingsOptions.WIDGETS_REFRESH_ALL -> refreshWidgets.value = Event()
             SettingsOptions.ABOUT -> openAbout.value = Event()
             SettingsOptions.REVIEW -> openReview.value = DataEvent(playStoreUrl)
             SettingsOptions.PRIVACY_POLICY -> openPrivacyPolicy.value = Event()
