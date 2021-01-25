@@ -105,11 +105,14 @@ class RSSConfigureViewModel(
         else {
             itemList.add(RSSConfigureItem.NoItems)
         }
-        itemList.add(RSSConfigureItem.Header(
-                text = R.string.rss_configure_header_add,
-                subtitle = R.string.rss_configure_header_add_subtitle
-        ))
-        itemList.add(RSSConfigureItem.Add)
+
+        if (rssController.showAddCustomFeeds) {
+            itemList.add(RSSConfigureItem.Header(
+                    text = R.string.rss_configure_header_add,
+                    subtitle = R.string.rss_configure_header_add_subtitle
+            ))
+            itemList.add(RSSConfigureItem.Add)
+        }
         itemList.add(RSSConfigureItem.Header(
             text = R.string.rss_configure_header_quick_add,
             subtitle = R.string.rss_configure_header_quick_add_subtitle

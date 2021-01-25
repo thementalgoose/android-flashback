@@ -55,6 +55,12 @@ abstract class RemoteConfigRepository {
     protected abstract val rssRC: Boolean
 
     /**
+     * Enables the ability to add custom RSS feeds 
+     */
+    val rssAddCustom: Boolean by lazy { rssAddCustomRC }
+    protected abstract val rssAddCustomRC: Boolean
+
+    /**
      * List of supported articles for the RSS configure functionality
      */
     val rssSupportedSources: List<SupportedArticleSource> by lazy { rssSupportedSourcesRC }

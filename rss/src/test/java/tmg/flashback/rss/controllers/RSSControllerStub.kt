@@ -2,7 +2,12 @@ package tmg.flashback.rss.controllers
 
 import tmg.flashback.rss.repo.enums.SupportedArticleSource
 
-class RSSControllerStub: RSSController() {
+class RSSControllerStub(
+    private val inputShowAddCustom: Boolean = true
+): RSSController() {
+
+    override val showAddCustomFeeds: Boolean
+        get() = inputShowAddCustom
 
     override val supportedSources: List<SupportedArticleSource>
         get() = listOf(primary, secondary)

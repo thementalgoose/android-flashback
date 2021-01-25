@@ -46,6 +46,7 @@ class FirebaseRemoteConfigManager(
     private val keySearch: String = "search"
     private val keySupportedSeasons: String = "supported_seasons"
     private val keyRss: String = "rss"
+    private val keyRssAddCustom: String = "rss_add_custom"
     private val keyRssSupportedSources: String = "rss_supported_sources"
 
     init {
@@ -76,12 +77,6 @@ class FirebaseRemoteConfigManager(
     override val bannerRC: String
         get() = remoteConfig.getString(keyDefaultBanner)
 
-    override val rssRC: Boolean
-        get() = remoteConfig.getBoolean(keyRss)
-
-    override val rssSupportedSourcesRC: List<SupportedArticleSource>
-        get() = remoteConfig.getString(keyRssSupportedSources).toJson<FSupportedSources>()?.convert() ?: emptyList()
-
     override val dataProvidedByRC: String?
         get() {
             val text = remoteConfig.getString(keyDataProvidedBy)
@@ -96,6 +91,19 @@ class FirebaseRemoteConfigManager(
 
     override val supportedSeasonsRC: Set<Int>
         get() = remoteConfig.getString(keySupportedSeasons).toJson<FAllSeasons>()?.convert() ?: emptySet()
+
+    //endregion
+
+    //region Variables inside remote config - RSS
+
+    override val rssRC: Boolean
+        get() = remoteConfig.getBoolean(keyRss)
+
+    override val rssAddCustomRC: Boolean
+        get() = remoteConfig.getBoolean(keyRssAddCustom)
+
+    override val rssSupportedSourcesRC: List<SupportedArticleSource>
+        get() = remoteConfig.getString(keyRssSupportedSources).toJson<FSupportedSources>()?.convert() ?: emptyList()
 
     //endregion
 
