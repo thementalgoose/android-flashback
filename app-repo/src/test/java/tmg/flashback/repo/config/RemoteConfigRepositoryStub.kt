@@ -12,6 +12,7 @@ class RemoteConfigRepositoryStub(
         var inputDataProvidedBy: String? = "provided_by",
         var inputSearch: Boolean = true,
         var inputRss: Boolean = true,
+        var inputRssAddCustom: Boolean = true,
         var inputRssSupportedSources: List<SupportedArticleSource> = listOf(SupportedArticleSource("", "", "", "", "", "", ""))
 ): RemoteConfigRepository() {
 
@@ -23,5 +24,6 @@ class RemoteConfigRepositoryStub(
     override val searchRC: Boolean get() = inputSearch
 
     override val rssRC: Boolean get() = inputRss
+    override val rssAddCustomRC: Boolean get() = inputRssAddCustom
     override val rssSupportedSourcesRC: List<SupportedArticleSource> get() = inputRssSupportedSources
 }
