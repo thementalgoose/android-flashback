@@ -15,6 +15,7 @@ class DriverFirestore(
 ) : FirebaseRepo(crashManager), DriverRepository {
 
     override fun getDriverOverview(driverId: String): Flow<DriverOverview?> {
+        crashManager.log("DriverFirestore.getDriverOverview($driverId)")
         return document("drivers/$driverId")
                 .getDoc<FDriverOverview>()
                 .map {

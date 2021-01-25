@@ -14,6 +14,7 @@ import tmg.flashback.rss.prefs.RSSPrefsRepository
 import tmg.flashback.rss.repo.enums.SupportedArticleSource
 import tmg.flashback.rss.testutils.BaseTest
 import tmg.flashback.rss.testutils.assertDataEventValue
+import tmg.flashback.rss.testutils.assertListDoesNotMatchItem
 import tmg.flashback.rss.testutils.test
 import java.util.stream.Stream
 
@@ -29,6 +30,7 @@ class RSSConfigureViewModelTest: BaseTest() {
 
     @BeforeEach
     fun setUp() {
+        every { mockRssController.showAddCustomFeeds } returns true
         every { mockPrefs.rssUrls } returns emptySet()
         every { mockRssController.sources } returns mockListOfSupportedArticles
     }
@@ -89,12 +91,25 @@ class RSSConfigureViewModelTest: BaseTest() {
     }
 
     @Test
+    fun `RSSConfigureViewModel disabling add custom list toggle means section is not shown `() {
+
+        every { mockRssController.showAddCustomFeeds } returns false
+        every { mockRssController.getSupportedSourceByRssUrl(any()) } returns null
+        initSUT()
+
+        sut.outputs.list.test {
+            assertListDoesNotMatchItem { it is RSSConfigureItem.Add }
+            assertListDoesNotMatchItem { it is RSSConfigureItem.Header && it.text == R.string.rss_configure_header_add }
+        }
+    }
+
+    @Test
     fun `RSSConfigureViewModel adding custom item updates list`() {
 
         val item = "https://www.google.com/testlink"
         val expected = buildList(
-            added = listOf(item),
-            quick = mockListOfSupportedArticles
+                added = listOf(item),
+                quick = mockListOfSupportedArticles
         )
         every { mockRssController.getSupportedSourceByRssUrl(any()) } returns null
         initSUT()
