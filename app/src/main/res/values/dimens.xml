@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
+    
+    <!-- Dashboard --> 
+    
+    <dimen name="dashboardMaxWidth">360dp</dimen>
 
     <!--===============================================================-->
 
@@ -104,7 +108,7 @@
     <dimen name="podium1">140dp</dimen>
     <dimen name="podium2">95dp</dimen>
     <dimen name="podium3">60dp</dimen>
-    <dimen name="podiumDriverImage">96dp</dimen>
+    <dimen name="podiumDriverImage">86dp</dimen>
 
     <dimen name="qualifyingListPositionWidth">24dp</dimen>
     <dimen name="raceResultPointsWidth">24dp</dimen>

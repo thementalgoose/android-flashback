@@ -28,7 +28,7 @@ object ConverterUtils {
                         null
                     }
                 }
-                .firstOrNull() ?: throw DateTimeParseException("Failed to parse date string $dateString", "", 0)
+                .firstOrNull() ?: throw DateTimeParseException("Failed to parse date string $dateString with no supported patterns", "", 0)
     }
     @JvmName("fromDateNullable")
     fun fromDate(dateString: String?): LocalDate? {
@@ -64,7 +64,7 @@ object ConverterUtils {
                         null
                     }
                 }
-                .firstOrNull() ?: throw DateTimeParseException("Failed to parse time string $timeString", "", 0)
+                .firstOrNull() ?: throw DateTimeParseException("Failed to parse time string $timeString with no supported patterns.", "", 0)
     }
     @JvmName("fromTimeNullable")
     fun fromTime(timeString: String?): LocalTime? {

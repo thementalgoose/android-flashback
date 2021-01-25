@@ -54,7 +54,7 @@ data class FRound(
         val round: Int = -1,
         val name: String = "",
         val date: String = "",
-        val time: String = "",
+        val time: String? = "",
         val wiki: String? = null,
         val driverCon: Map<String, String>? = null,
         val circuit: FSeasonOverviewRaceCircuit = FSeasonOverviewRaceCircuit(),

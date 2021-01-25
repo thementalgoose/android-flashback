@@ -12,6 +12,11 @@ abstract class RSSController {
      */
     protected abstract val supportedSources: List<SupportedArticleSource>
 
+    /**
+     * Determine if we should show adding custom rss feeds functionality
+     */
+    abstract val showAddCustomFeeds: Boolean
+
     private val fallbackUrls: Map<String, String> = mapOf(
         "bbc.co.uk" to "https://www.bbc.co.uk",
         "f1i.com" to "https://en.f1i.com"

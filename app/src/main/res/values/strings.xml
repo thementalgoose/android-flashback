@@ -78,8 +78,11 @@
     - Icons made by Freepik from www.flaticon.com\n
     - Icons made by Vitaly Gorbachev from www.flaticon.com\n
     - Animations made by LottieFiles from www.lottiefiles.com\n
-    - Animations made by Abhishek Kaushal from www.lottiefiles.com\n\n
+    - Animations made by Abhishekb Kaushal from www.lottiefiles.com\n\n
     If we\'ve missed anyone or anything please let us know!</string>
+    <!-- About - Overrides -->
+    <string name="about_this_app_email">Email</string>
+    <string name="about_this_app_play">Play</string>
 
     <!-- Privacy Policy -->
     <string name="privacy_policy_title">Privacy Policy</string>

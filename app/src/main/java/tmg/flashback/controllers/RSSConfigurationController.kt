@@ -7,6 +7,10 @@ import tmg.flashback.rss.repo.enums.SupportedArticleSource
 class RSSConfigurationController(
     private val remoteConfigRepository: RemoteConfigRepository
 ): RSSController() {
+
+    /**
+     * Supported sources
+     */
     override val supportedSources: List<SupportedArticleSource>
         get() = remoteConfigRepository.rssSupportedSources.map {
             SupportedArticleSource(
@@ -19,4 +23,10 @@ class RSSConfigurationController(
                 contactLink = it.contactLink,
             )
         }
+
+    /**
+     * Show add custom RSS feeds
+     */
+    override val showAddCustomFeeds: Boolean
+        get() = remoteConfigRepository.rssAddCustom
 }
