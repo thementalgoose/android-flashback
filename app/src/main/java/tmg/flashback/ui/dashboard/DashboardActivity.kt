@@ -13,6 +13,7 @@ import kotlinx.android.synthetic.main.activity_dashboard.*
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.R
+import tmg.flashback.controllers.SeasonController
 import tmg.flashback.extensions.isLightMode
 import tmg.flashback.ui.base.BaseActivity
 import tmg.flashback.ui.dashboard.list.ListFragment
@@ -30,8 +31,16 @@ class DashboardActivity: BaseActivity(), DashboardNavigationCallback {
     override val themeType: ThemeTypes = ThemeTypes.DEFAULT
 
     private val remoteConfigRepository: RemoteConfigRepository by inject()
-
+    private val seasonController: SeasonController by inject()
     private val viewModel: DashboardViewModel by viewModel()
+
+    private var selectedSeason: Int? = seasonController.defaultSeason
+    override val analyticsScreenName: String
+        get() = "Dashboard"
+    override val analyticsCustomAttributes: Map<String, String>
+        get() = mapOf(
+                "extra_season" to "$selectedSeason"
+        )
 
     private val seasonTag: String = "season"
     private val seasonFragment: SeasonFragment?
@@ -93,7 +102,11 @@ class DashboardActivity: BaseActivity(), DashboardNavigationCallback {
 
     override fun seasonSelected(season: Int) {
         val seasonFragment = supportFragmentManager.findFragmentByTag("season") as? SeasonFragment
-        seasonFragment?.selectSeason(season)
+        seasonFragment?.let {
+            it.selectSeason(season)
+            selectedSeason = season
+            recordScreenViewed()
+        }
     }
 
     override fun closeSeasonList() {

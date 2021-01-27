@@ -23,10 +23,12 @@ class FirebaseCrashManagerImpl: FirebaseCrashManager {
     private val keyProduct: String = "product"
     private val keyDevice: String = "device"
     private val keyAppFirstOpen: String = "appFirstOpen"
-    private val keyAppOpenCount: String = "appFirstOpen"
+    private val keyAppOpenCount: String = "appOpenCount"
+    private val keyAnalyticsOptIn: String = "analytics"
 
     override fun initialise(
             enableCrashReporting: Boolean,
+            enableAnalytics: Boolean,
             deviceUdid: String,
             appFirstOpened: String,
             appOpenedCount: Int
@@ -51,6 +53,8 @@ class FirebaseCrashManagerImpl: FirebaseCrashManager {
         instance.setCustomKey(keyManufacturer, Build.MANUFACTURER)
         instance.setCustomKey(keyProduct, Build.PRODUCT)
         instance.setCustomKey(keyDevice, Build.DEVICE)
+
+        instance.setCustomKey(keyAnalyticsOptIn, enableAnalytics)
 
         appFirstOpened.let {
             instance.setCustomKey(keyAppFirstOpen, it)

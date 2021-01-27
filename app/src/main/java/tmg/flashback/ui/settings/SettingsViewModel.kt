@@ -9,6 +9,7 @@ import tmg.flashback.ui.base.BaseViewModel
 import tmg.flashback.controllers.*
 import tmg.flashback.extensions.icon
 import tmg.flashback.extensions.label
+import tmg.flashback.managers.analytics.AnalyticsManager
 import tmg.flashback.notifications.FirebasePushNotificationManager.Companion.topicQualifying
 import tmg.flashback.notifications.FirebasePushNotificationManager.Companion.topicRace
 import tmg.flashback.repo.enums.ThemePref
@@ -66,6 +67,7 @@ class SettingsViewModel(
         private val appearanceController: AppearanceController,
         private val deviceController: DeviceController,
         private val raceController: RaceController,
+        private val analyticsManager: AnalyticsManager,
         private val crashManager: CrashController,
         private val seasonController: SeasonController,
         private val featureController: FeatureController
@@ -134,6 +136,7 @@ class SettingsViewModel(
             add(SettingsOptions.RELEASE.toPref())
             add(AppPreferencesItem.Category(R.string.settings_feedback))
             add(SettingsOptions.CRASH.toSwitch(crashManager.crashReporting))
+            add(SettingsOptions.ANALYTICS.toSwitch(analyticsManager.enableAnalytics))
             add(SettingsOptions.SUGGESTION.toPref())
             add(SettingsOptions.SHAKE.toSwitch(deviceController.shakeToReport))
         }
@@ -164,6 +167,7 @@ class SettingsViewModel(
             SettingsOptions.PRIVACY_POLICY -> openPrivacyPolicy.value = Event()
             SettingsOptions.RELEASE -> openRelease.value = Event()
             SettingsOptions.CRASH -> crashManager.crashReporting = value ?: true
+            SettingsOptions.ANALYTICS -> analyticsManager.enableAnalytics = value ?: true
             SettingsOptions.SUGGESTION -> openSuggestions.value = Event()
             SettingsOptions.SHAKE -> deviceController.shakeToReport = value ?: true
             SettingsOptions.NEWS -> openNews.value = Event()

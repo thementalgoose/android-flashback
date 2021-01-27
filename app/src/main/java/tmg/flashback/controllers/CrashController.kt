@@ -21,6 +21,7 @@ class CrashController(
     fun initialiseCrashReporting() {
         firebaseCrashManager.initialise(
                 enableCrashReporting = crashReporting,
+                enableAnalytics = deviceRepository.optInAnalytics,
                 deviceUdid = deviceRepository.deviceUdid,
                 appFirstOpened = deviceRepository.appFirstBootTime.format(DateTimeFormatter.ofPattern("dd MMM yyyy")),
                 appOpenedCount = deviceRepository.appOpenedCount

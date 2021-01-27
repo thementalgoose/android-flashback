@@ -19,6 +19,9 @@ class RSSSettingsActivity : RSSBaseActivity() {
 
     private val viewModel: RSSSettingsViewModel by viewModel()
 
+    override val analyticsScreenName: String
+        get() = "RSS Settings"
+
     private lateinit var adapter: SettingsAdapter
 
     override fun layoutId(): Int = R.layout.activity_settings_news

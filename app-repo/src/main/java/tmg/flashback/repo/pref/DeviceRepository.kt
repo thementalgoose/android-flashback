@@ -27,6 +27,11 @@ interface DeviceRepository {
     var shakeToReport: Boolean
 
     /**
+     * Opt in to anonymous analytics tracking
+     */
+    var optInAnalytics: Boolean
+
+    /**
      * Get a unique identifier for the device
      */
     var deviceUdid: String

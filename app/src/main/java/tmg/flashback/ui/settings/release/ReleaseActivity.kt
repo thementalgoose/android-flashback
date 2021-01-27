@@ -10,6 +10,9 @@ import tmg.utilities.extensions.fromHtml
 
 class ReleaseActivity : BaseActivity() {
 
+    override val analyticsScreenName: String
+        get() = "Release notes"
+
     override fun layoutId(): Int = R.layout.activity_release_notes
 
     override fun onCreate(savedInstanceState: Bundle?) {

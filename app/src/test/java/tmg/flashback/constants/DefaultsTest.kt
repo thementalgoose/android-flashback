@@ -23,6 +23,7 @@ internal class DefaultsTest: BaseTest() {
 
         assertTrue(Defaults.crashReporting)
         assertTrue(Defaults.shakeToReport)
+        assertTrue(Defaults.analyticsOptIn)
 
     }
 }

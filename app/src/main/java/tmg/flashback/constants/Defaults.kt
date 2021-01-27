@@ -17,4 +17,5 @@ internal object Defaults {
 
     const val crashReporting: Boolean = true
     const val shakeToReport: Boolean = true
+    const val analyticsOptIn: Boolean = true
 }

@@ -35,6 +35,10 @@ import tmg.utilities.extensions.*
 class SettingsActivity : BaseActivity() {
 
     private val viewModel: SettingsViewModel by inject()
+
+    override val analyticsScreenName: String
+        get() = "Settings"
+
     private lateinit var adapter: SettingsAdapter
 
     private lateinit var themeBottomSheet: BottomSheetBehavior<LinearLayout>
