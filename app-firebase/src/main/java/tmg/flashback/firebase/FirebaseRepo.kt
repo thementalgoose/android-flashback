@@ -44,8 +44,12 @@ open class FirebaseRepo(
         val subscription = addSnapshotListener { snapshot, exception ->
             when {
                 exception != null -> {
-                    handleError(exception, path)
-                    offer(null)
+                    if (BuildConfig.DEBUG) {
+                        throw exception
+                    } else {
+                        handleError(exception, path)
+                        offer(null)
+                    }
                 }
                 snapshot != null -> {
                     try {
