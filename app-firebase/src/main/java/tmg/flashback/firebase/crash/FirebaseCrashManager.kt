@@ -3,6 +3,7 @@ package tmg.flashback.firebase.crash
 interface FirebaseCrashManager {
     fun initialise(
             enableCrashReporting: Boolean,
+            enableAnalytics: Boolean,
             deviceUdid: String,
             appFirstOpened: String,
             appOpenedCount: Int
