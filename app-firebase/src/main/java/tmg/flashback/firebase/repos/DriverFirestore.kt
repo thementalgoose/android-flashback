@@ -16,9 +16,6 @@ class DriverFirestore(
     override fun getDriverOverview(driverId: String): Flow<DriverOverview?> {
         crashManager.logInfo("DriverFirestore.getDriverOverview($driverId)")
         return document("drivers/$driverId")
-                .getDoc<FDriverOverview>()
-                .map {
-                    it?.convert()
-                }
+                .getDoc<FDriverOverview, DriverOverview> { it.convert() }
     }
 }

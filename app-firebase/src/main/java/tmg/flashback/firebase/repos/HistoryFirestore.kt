@@ -23,9 +23,9 @@ class HistoryFirestore(
         crashManager.logInfo("HistoryFirestore.historyFor($season)")
         val seasonKey = "${season.toString().substring(0, 3)}0"
         return document("overview/season$seasonKey")
-                .getDoc<FHistorySeason>()
-                .map {
-                    it?.convert()?.firstOrNull { it.season == season }
+                .getDoc<FHistorySeason,List<History>> { it.convert() }
+                .map { list ->
+                    list ?.firstOrNull { it.season == season }
                 }
     }
 

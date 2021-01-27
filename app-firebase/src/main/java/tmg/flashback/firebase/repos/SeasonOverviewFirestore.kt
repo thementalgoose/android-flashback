@@ -82,7 +82,6 @@ class SeasonOverviewFirestore(
     private fun getSeason(season: Int): Flow<Season?> {
         crashManager.logInfo("SeasonOverviewFirestore.getSeason($season)")
         return document("seasons/$season")
-                .getDoc<FSeason>()
-                .convertModel { it?.convert(season) }
+                .getDoc<FSeason, Season> { it.convert(season) }
     }
 }
