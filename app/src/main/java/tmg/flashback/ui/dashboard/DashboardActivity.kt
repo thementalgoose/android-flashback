@@ -29,8 +29,13 @@ class DashboardActivity: BaseActivity(), DashboardNavigationCallback {
     override val initialiseSlidr: Boolean = false
     override val themeType: ThemeTypes = ThemeTypes.DEFAULT
 
+    private var selectedSeason: Int? = null
     override val analyticsScreenName: String
         get() = "Dashboard"
+    override val analyticsCustomAttributes: Map<String, String>
+        get() = mapOf(
+                "extra_season" to "$selectedSeason"
+        )
 
     private val remoteConfigRepository: RemoteConfigRepository by inject()
     private val viewModel: DashboardViewModel by viewModel()
@@ -95,7 +100,11 @@ class DashboardActivity: BaseActivity(), DashboardNavigationCallback {
 
     override fun seasonSelected(season: Int) {
         val seasonFragment = supportFragmentManager.findFragmentByTag("season") as? SeasonFragment
-        seasonFragment?.selectSeason(season)
+        seasonFragment?.let {
+            it.selectSeason(season)
+            selectedSeason = season
+            recordScreenViewed()
+        }
     }
 
     override fun closeSeasonList() {
