@@ -15,12 +15,12 @@ class HistoryFirestore(
 ): FirebaseRepo(crashManager), HistoryRepository {
 
     override fun allHistory(): Flow<List<History>> {
-        crashManager.logError("HistoryFirestore.allHistory()")
+        crashManager.logInfo("HistoryFirestore.allHistory()")
         return getHistory()
     }
 
     override fun historyFor(season: Int): Flow<History?> {
-        crashManager.logError("HistoryFirestore.historyFor($season)")
+        crashManager.logInfo("HistoryFirestore.historyFor($season)")
         val seasonKey = "${season.toString().substring(0, 3)}0"
         return document("overview/season$seasonKey")
                 .getDoc<FHistorySeason>()
@@ -30,18 +30,18 @@ class HistoryFirestore(
     }
 
     override fun allWinners(): Flow<List<WinnerSeason>> {
-        crashManager.logError("HistoryFirestore.allWinners()")
+        crashManager.logInfo("HistoryFirestore.allWinners()")
         return getWinner()
     }
 
     override fun winnersFor(season: Int): Flow<WinnerSeason?> {
-        crashManager.logError("HistoryFirestore.winnersFor($season)")
+        crashManager.logInfo("HistoryFirestore.winnersFor($season)")
         return getWinner()
             .map { list -> list.firstOrNull { it.season == season } }
     }
 
     private fun getHistory(): Flow<List<History>> {
-        crashManager.logError("HistoryFirestore.getHistory()")
+        crashManager.logInfo("HistoryFirestore.getHistory()")
         return collection("overview")
             .getDocuments<FHistorySeason>()
             .map { list ->
@@ -52,7 +52,7 @@ class HistoryFirestore(
     }
 
     private fun getWinner(): Flow<List<WinnerSeason>> {
-        crashManager.logError("HistoryFirestore.getWinner()")
+        crashManager.logInfo("HistoryFirestore.getWinner()")
         return getHistory()
             .map { list -> list
                 .map { it.winner }

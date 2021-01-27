@@ -13,7 +13,7 @@ class DataFirestore(
 ): FirebaseRepo(crashManager), DataRepository {
 
     override fun appLockout(): Flow<AppLockout?> {
-        crashManager.logError("DataFirestore.appLockout()")
+        crashManager.logInfo("DataFirestore.appLockout()")
         return document("data/app-lockout")
             .getDoc<FAppLockout>()
             .convertModel { it?.convert() }
