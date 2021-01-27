@@ -13,50 +13,26 @@ open class FirebaseRepo(
 
     //#region References
 
+    /**
+     * Firestore document instance retreiver
+     * @param documentPath Path to document in firestore
+     */
     protected fun document(documentPath: String): DocumentReference = FirebaseFirestore
         .getInstance(firebaseApp)
         .document(documentPath)
 
+    /**
+     * Firestore collection instance retreiver
+     * @param collectionPath Path to collection in firestore
+     */
+    @Deprecated("This should not be used due to exponential cost concerns. Consider using document() to access dirctly",
+        ReplaceWith("document(documentPath)")
+    )
     protected fun collection(collectionPath: String): CollectionReference = FirebaseFirestore
         .getInstance(firebaseApp)
         .collection(collectionPath)
 
     //#endregion
-
-    // TODO: May be able to remove this?
-    inline fun <reified E> CollectionReference.getDocuments(
-        default: List<E> = emptyList(),
-        crossinline query: (ref: CollectionReference) -> Query = { it }
-    ): Flow<List<E>> = callbackFlow {
-        val subscription = query(this@getDocuments).addSnapshotListener { snapshot, exception ->
-            when {
-                exception != null -> {
-                    handleError(exception, "Collection $path")
-                    offer(emptyList<E>())
-                }
-                snapshot != null -> {
-                    try {
-                        val list: List<E?> = snapshot.documents.map { it.toObject(E::class.java) }
-                        @Suppress("SimplifiableCall")
-                        offer(list.filter { it != null }.map { it as E })
-                    } catch (e: RuntimeException) {
-                        if (BuildConfig.DEBUG) {
-                            throw e
-                        } else {
-                            handleError(e, "getDocuments under $path failed to parse")
-                            offer(default)
-                        }
-                    }
-                }
-                else -> {
-                    offer(default)
-                }
-            }
-        }
-        awaitClose {
-            subscription.remove()
-        }
-    }
 
     /**
      * Get a document from firestore and convert into a domain level model
@@ -116,7 +92,7 @@ open class FirebaseRepo(
         if (exception is FirebaseFirestoreException) {
             handleFirebaseError(exception, path)
         } else {
-            val context = "Error thrown that isn't a firebase error ${exception::class.simpleName} - Path $path"
+            val context = "Exception thrown whilst parsing model on $path"
             val wrappedException = Exception(context, exception)
             crashManager.logException(wrappedException, context)
         }

@@ -1,5 +1,6 @@
 package tmg.flashback.firebase.repos
 
+import android.content.Context
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import tmg.flashback.repo.db.stats.SeasonOverviewRepository
@@ -14,14 +15,13 @@ class SeasonOverviewFirestore(
 ) : FirebaseRepo(crashManager), SeasonOverviewRepository {
 
     override fun getCircuits(season: Int): Flow<List<CircuitSummary>> {
-        crashManager.logInfo("SeasonOverviewFirestore.getCircuits($season)")
-        return getSeason(season)
+        return getSeason(season, "getCircuits")
                 .map { it?.circuits ?: emptyList() }
     }
 
     override fun getCircuit(season: Int, round: Int): Flow<CircuitSummary?> {
-        crashManager.logInfo("SeasonOverviewFirestore.getCircuit($season, $round)")
-        return getSeasonRound(season, round)
+        return getRounds(season, "getCircuit $round")
+                .map { rounds -> rounds.firstOrNull { it.round == round } }
                 .map { it?.circuit }
     }
 
@@ -29,26 +29,22 @@ class SeasonOverviewFirestore(
             season: Int,
             constructorId: String
     ): Flow<Constructor?> {
-        crashManager.logInfo("SeasonOverviewFirestore.getConstructor($season, $constructorId)")
-        return getSeason(season)
+        return getSeason(season, "getConstructor $constructorId")
                 .map { seasonData -> seasonData?.constructors?.firstOrNull { it.id == constructorId } }
     }
 
     override fun getDriver(season: Int, driver: String): Flow<Driver?> {
-        crashManager.logInfo("SeasonOverviewFirestore.getDriver($season, $driver)")
-        return getSeason(season)
+        return getSeason(season, "getDriver $driver")
                 .map { seasonData -> seasonData?.drivers?.firstOrNull { it.id == driver } }
     }
 
     override fun getAllConstructors(season: Int): Flow<List<Constructor>> {
-        crashManager.logInfo("SeasonOverviewFirestore.getAllConstructors($season)")
-        return getSeason(season)
+        return getSeason(season, "getAllConstructors")
                 .map { it?.constructors ?: emptyList() }
     }
 
     override fun getSeasonOverview(season: Int): Flow<Season> {
-        crashManager.logInfo("SeasonOverviewFirestore.getSeasonOverview($season)")
-        return getSeason(season)
+        return getSeason(season, "getSeasonOverview")
                 .map {
                     return@map it ?: Season(
                             season = season,
@@ -62,25 +58,22 @@ class SeasonOverviewFirestore(
     }
 
     override fun getSeasonRound(season: Int, round: Int): Flow<Round?> {
-        crashManager.logInfo("SeasonOverviewFirestore.getSeasonRound($season, $round)")
-        return getRounds(season)
+        return getRounds(season, "getSeasonRound $round")
                 .map { rounds -> rounds.firstOrNull { it.round == round } }
     }
 
-    private fun getRounds(season: Int): Flow<List<Round>> {
-        crashManager.logInfo("SeasonOverviewFirestore.getRounds($season)")
-        return getSeason(season)
+    private fun getRounds(season: Int, context: String): Flow<List<Round>> {
+        return getSeason(season, context)
                 .map { it?.rounds ?: emptyList() }
     }
 
-    private fun getSeasonWithRounds(season: Int): Flow<Pair<Int, List<Round>>> {
-        crashManager.logInfo("SeasonOverviewFirestore.getSeasonWithRounds($season)")
-        return getSeason(season)
+    private fun getSeasonWithRounds(season: Int, context: String): Flow<Pair<Int, List<Round>>> {
+        return getSeason(season, context)
                 .map { Pair(season, it?.rounds ?: emptyList()) }
     }
 
-    private fun getSeason(season: Int): Flow<Season?> {
-        crashManager.logInfo("SeasonOverviewFirestore.getSeason($season)")
+    private fun getSeason(season: Int, context: String): Flow<Season?> {
+        crashManager.logInfo("document(seasons/$season) for $context")
         return document("seasons/$season")
                 .getDoc<FSeason, Season> { it.convert(season) }
     }
