@@ -7,11 +7,12 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import tmg.flashback.BuildConfig
 import tmg.flashback.managers.analytics.UserPropertiesManager
 import tmg.flashback.repo.pref.DeviceRepository
+import tmg.flashback.rss.managers.RSSAnalyticsManager
 
 class FirebaseAnalyticsManager(
     val context: Context,
     val deviceRepository: DeviceRepository
-): UserPropertiesManager, AnalyticsManager {
+): UserPropertiesManager, AnalyticsManager, RSSAnalyticsManager {
 
     private val keyOsVersion = "os_version"
     private val keyDeviceModel = "device_model"
@@ -42,5 +43,9 @@ class FirebaseAnalyticsManager(
             Log.i("Flashback", "Analytics Screen viewed $bundle")
         }
         FirebaseAnalytics.getInstance(context).logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, bundle)
+    }
+
+    override fun rssViewScreen(screenName: String, clazz: Class<*>, mapOfParams: Map<String, String>) {
+        viewScreen(screenName, clazz, mapOfParams)
     }
 }

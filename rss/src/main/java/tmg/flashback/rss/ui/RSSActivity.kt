@@ -20,6 +20,9 @@ class RSSActivity: RSSBaseActivity(), FragmentRequestBack {
 
     private val viewModel: RSSViewModel by viewModel()
 
+    override val analyticsScreenName: String
+        get() = "RSS Feed"
+
     private lateinit var adapter: RSSAdapter
 
     override fun layoutId(): Int = R.layout.activity_rss
