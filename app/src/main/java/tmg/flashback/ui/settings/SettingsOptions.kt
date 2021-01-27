@@ -81,6 +81,10 @@ enum class SettingsOptions(
             title = R.string.settings_help_crash_reporting_title,
             description = R.string.settings_help_crash_reporting_description
     ),
+    ANALYTICS("analytics",
+            title = R.string.settings_help_analytics_title,
+            description = R.string.settings_help_analytics_description
+    ),
     SUGGESTION("suggestions",
             title = R.string.settings_help_suggestions_title,
             description = R.string.settings_help_suggestions_description

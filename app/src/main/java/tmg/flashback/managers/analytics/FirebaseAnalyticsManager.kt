@@ -5,13 +5,21 @@ import android.os.Bundle
 import android.util.Log
 import com.google.firebase.analytics.FirebaseAnalytics
 import tmg.flashback.managers.analytics.UserPropertiesManager
+import tmg.flashback.repo.pref.DeviceRepository
 
 class FirebaseAnalyticsManager(
-    val context: Context
+    val context: Context,
+    val deviceRepository: DeviceRepository
 ): UserPropertiesManager, AnalyticsManager {
 
     private val keyOsVersion = "os_version"
     private val keyDeviceModel = "device_model"
+
+    override var enableAnalytics: Boolean
+        get() = deviceRepository.optInAnalytics
+        set(value) {
+            deviceRepository.optInAnalytics = value
+        }
 
     override fun setOsVersion(osVersion: String) {
         FirebaseAnalytics.getInstance(context).setUserProperty(keyOsVersion, osVersion)

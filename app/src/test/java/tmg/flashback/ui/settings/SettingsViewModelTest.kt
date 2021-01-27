@@ -11,6 +11,7 @@ import tmg.flashback.R
 import tmg.flashback.controllers.*
 import tmg.flashback.extensions.icon
 import tmg.flashback.extensions.label
+import tmg.flashback.managers.analytics.AnalyticsManager
 import tmg.flashback.notifications.FirebasePushNotificationManager.Companion.topicQualifying
 import tmg.flashback.notifications.FirebasePushNotificationManager.Companion.topicRace
 import tmg.flashback.repo.enums.BarAnimation.*
@@ -33,6 +34,7 @@ internal class SettingsViewModelTest: BaseTest() {
     private val deviceController: DeviceController = mockk(relaxed = true)
     private val raceController: RaceController = mockk(relaxed = true)
     private val crashManager: CrashController = mockk(relaxed = true)
+    private val analyticsManager: AnalyticsManager = mockk(relaxed = true)
     private val seasonController: SeasonController = mockk(relaxed = true)
     private val featureController: FeatureController = mockk(relaxed = true)
 
@@ -45,6 +47,7 @@ internal class SettingsViewModelTest: BaseTest() {
         every { seasonController.favouritesExpanded } returns false
         every { seasonController.allExpanded } returns false
         every { crashManager.crashReporting } returns false
+        every { analyticsManager.enableAnalytics } returns false
         every { deviceController.shakeToReport } returns false
         every { notificationController.isNotificationChannelsSupported } returns true
 
@@ -61,6 +64,7 @@ internal class SettingsViewModelTest: BaseTest() {
                 appearanceController,
                 deviceController,
                 raceController,
+                analyticsManager,
                 crashManager,
                 seasonController,
                 featureController
@@ -102,6 +106,7 @@ internal class SettingsViewModelTest: BaseTest() {
             add(RELEASE.toPref())
             add(AppPreferencesItem.Category(R.string.settings_feedback))
             add(CRASH.toSwitch(false))
+            add(ANALYTICS.toSwitch(false))
             add(SUGGESTION.toPref())
             add(SHAKE.toSwitch(false))
         }
@@ -402,6 +407,16 @@ internal class SettingsViewModelTest: BaseTest() {
         sut.inputs.preferenceClicked(CRASH, true)
 
         verify { crashManager.crashReporting = true }
+    }
+
+    @Test
+    fun `SettingsViewModel selecting analytics updates value`() {
+
+        initSUT()
+
+        sut.inputs.preferenceClicked(ANALYTICS, true)
+
+        verify { analyticsManager.enableAnalytics = true }
     }
 
     @Test
