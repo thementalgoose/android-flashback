@@ -81,7 +81,7 @@ internal class CrashControllerTest: BaseTest() {
         initSUT()
         sut.log("msg")
 
-        verify { mockFirebaseCrashReportManager.log("msg") }
+        verify { mockFirebaseCrashReportManager.logError("msg") }
     }
 
     @Test
@@ -90,7 +90,7 @@ internal class CrashControllerTest: BaseTest() {
         initSUT()
         sut.logError(exception, "msg")
 
-        verify { mockFirebaseCrashReportManager.logError(exception, "msg") }
+        verify { mockFirebaseCrashReportManager.logException(exception, "msg") }
     }
 
     //endregion

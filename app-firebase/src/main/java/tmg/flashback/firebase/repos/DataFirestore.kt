@@ -1,7 +1,6 @@
 package tmg.flashback.firebase.repos
 
 import kotlinx.coroutines.flow.Flow
-import tmg.flashback.firebase.crash.FirebaseCrashManagerImpl
 import tmg.flashback.repo.db.DataRepository
 import tmg.flashback.repo.models.remoteconfig.AppLockout
 import tmg.flashback.firebase.converters.convert
@@ -14,7 +13,7 @@ class DataFirestore(
 ): FirebaseRepo(crashManager), DataRepository {
 
     override fun appLockout(): Flow<AppLockout?> {
-        crashManager.log("DataFirestore.appLockout()")
+        crashManager.logError("DataFirestore.appLockout()")
         return document("data/app-lockout")
             .getDoc<FAppLockout>()
             .convertModel { it?.convert() }

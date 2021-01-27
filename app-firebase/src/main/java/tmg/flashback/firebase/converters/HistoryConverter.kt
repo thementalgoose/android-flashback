@@ -1,6 +1,7 @@
 package tmg.flashback.firebase.converters
 
 import tmg.flashback.firebase.base.ConverterUtils.fromDate
+import tmg.flashback.firebase.base.ConverterUtils.fromDateRequired
 import tmg.flashback.firebase.models.FHistorySeason
 import tmg.flashback.firebase.models.FHistorySeasonRound
 import tmg.flashback.repo.models.stats.History
@@ -40,7 +41,7 @@ fun FHistorySeason.convert(): List<History> {
 fun FHistorySeasonRound.convert(): Pair<Int, HistoryRound> {
     return Pair(
         this.s, HistoryRound(
-            date = fromDate(this.date),
+            date = fromDateRequired(this.date),
             season = this.s,
             round = this.r,
             circuitId = this.circuitId,

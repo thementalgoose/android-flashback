@@ -2,7 +2,6 @@ package tmg.flashback.firebase.repos
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import tmg.flashback.firebase.crash.FirebaseCrashManagerImpl
 import tmg.flashback.firebase.FirebaseRepo
 import tmg.flashback.firebase.converters.convert
 import tmg.flashback.firebase.crash.FirebaseCrashManager
@@ -16,12 +15,12 @@ class HistoryFirestore(
 ): FirebaseRepo(crashManager), HistoryRepository {
 
     override fun allHistory(): Flow<List<History>> {
-        crashManager.log("HistoryFirestore.allHistory()")
+        crashManager.logError("HistoryFirestore.allHistory()")
         return getHistory()
     }
 
     override fun historyFor(season: Int): Flow<History?> {
-        crashManager.log("HistoryFirestore.historyFor($season)")
+        crashManager.logError("HistoryFirestore.historyFor($season)")
         val seasonKey = "${season.toString().substring(0, 3)}0"
         return document("overview/season$seasonKey")
                 .getDoc<FHistorySeason>()
@@ -31,18 +30,18 @@ class HistoryFirestore(
     }
 
     override fun allWinners(): Flow<List<WinnerSeason>> {
-        crashManager.log("HistoryFirestore.allWinners()")
+        crashManager.logError("HistoryFirestore.allWinners()")
         return getWinner()
     }
 
     override fun winnersFor(season: Int): Flow<WinnerSeason?> {
-        crashManager.log("HistoryFirestore.winnersFor($season)")
+        crashManager.logError("HistoryFirestore.winnersFor($season)")
         return getWinner()
             .map { list -> list.firstOrNull { it.season == season } }
     }
 
     private fun getHistory(): Flow<List<History>> {
-        crashManager.log("HistoryFirestore.getHistory()")
+        crashManager.logError("HistoryFirestore.getHistory()")
         return collection("overview")
             .getDocuments<FHistorySeason>()
             .map { list ->
@@ -53,7 +52,7 @@ class HistoryFirestore(
     }
 
     private fun getWinner(): Flow<List<WinnerSeason>> {
-        crashManager.log("HistoryFirestore.getWinner()")
+        crashManager.logError("HistoryFirestore.getWinner()")
         return getHistory()
             .map { list -> list
                 .map { it.winner }

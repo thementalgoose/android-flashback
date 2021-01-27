@@ -15,7 +15,7 @@ object ConverterUtils {
      * @throws DateTimeParseException
      */
     @Throws(DateTimeParseException::class)
-    fun fromDate(dateString: String): LocalDate {
+    fun fromDateRequired(dateString: String): LocalDate {
         val validPatterns = listOf(
                 "yyyy-M-d",
                 "yyyy-MM-dd"
@@ -30,13 +30,12 @@ object ConverterUtils {
                 }
                 .firstOrNull() ?: throw DateTimeParseException("Failed to parse date string $dateString with no supported patterns", "", 0)
     }
-    @JvmName("fromDateNullable")
     fun fromDate(dateString: String?): LocalDate? {
         if (dateString == null) {
             return null
         }
         return try {
-            return fromDate(dateString)
+            return fromDateRequired(dateString)
         } catch (e: Exception) {
             null
         }
@@ -50,7 +49,7 @@ object ConverterUtils {
      * @throws DateTimeParseException
      */
     @Throws(DateTimeParseException::class)
-    fun fromTime(timeString: String): LocalTime {
+    fun fromTimeRequired(timeString: String): LocalTime {
         val validPatterns = listOf(
                 "HH:mm:ss'Z'",
                 "HH:mm:ss",
@@ -66,13 +65,12 @@ object ConverterUtils {
                 }
                 .firstOrNull() ?: throw DateTimeParseException("Failed to parse time string $timeString with no supported patterns.", "", 0)
     }
-    @JvmName("fromTimeNullable")
     fun fromTime(timeString: String?): LocalTime? {
         if (timeString == null) {
             return null
         }
         return try {
-            return fromTime(timeString)
+            return fromTimeRequired(timeString)
         } catch (e: Exception) {
             null
         }

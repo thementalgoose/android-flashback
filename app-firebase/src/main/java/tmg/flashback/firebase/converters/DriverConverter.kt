@@ -1,7 +1,7 @@
 package tmg.flashback.firebase.converters
 
 import tmg.flashback.firebase.base.ConverterUtils.fromDate
-import tmg.flashback.firebase.base.ConverterUtils.isDateValid
+import tmg.flashback.firebase.base.ConverterUtils.fromDateRequired
 import tmg.flashback.repo.models.stats.Constructor
 import tmg.flashback.repo.models.stats.Driver
 import tmg.flashback.repo.models.stats.RoundDriver
@@ -17,7 +17,7 @@ fun FSeasonOverviewDriver.convert(constructorAtEndOfSeason: Constructor): Driver
         number = number ?: 0,
         wikiUrl = wikiUrl,
         photoUrl = photoUrl,
-        dateOfBirth = fromDate(dob),
+        dateOfBirth = fromDateRequired(dob),
         nationality = nationality,
         nationalityISO = nationalityISO,
         constructorAtEndOfSeason = constructorAtEndOfSeason
@@ -33,7 +33,7 @@ fun FSeasonOverviewDriver.convert(constructors: Map<String, FSeasonOverviewConst
         number = number ?: 0,
         wikiUrl = wikiUrl,
         photoUrl = photoUrl,
-        dateOfBirth = fromDate(dob),
+        dateOfBirth = fromDateRequired(dob),
         nationality = nationality,
         nationalityISO = nationalityISO,
         constructor = constructors.values.first { it.id == overrideConstructorId ?: constructorId }

@@ -110,19 +110,19 @@ fun handleError(exception: FirebaseFirestoreException, crashManager: FirebaseCra
         FirebaseFirestoreException.Code.OK -> {}
         FirebaseFirestoreException.Code.CANCELLED -> {}
         FirebaseFirestoreException.Code.NOT_FOUND -> {
-            crashManager?.logError(exception, "Accessing $path resulted in not found")
+            crashManager?.logException(exception, "Accessing $path resulted in not found")
         } // this.onError(DoesntExistError(debugData))
         FirebaseFirestoreException.Code.ALREADY_EXISTS -> {
-            crashManager?.logError(exception, "Already exists accessing $path")
+            crashManager?.logException(exception, "Already exists accessing $path")
         } // this.onError(RecordAlreadyExistsError(debugData))
         FirebaseFirestoreException.Code.PERMISSION_DENIED -> {
-            crashManager?.logError(exception, "Permission denied while accessing $path")
+            crashManager?.logException(exception, "Permission denied while accessing $path")
         } // this.onError(PermissionError(debugData))
         FirebaseFirestoreException.Code.UNAUTHENTICATED -> {
-            crashManager?.logError(exception, "Unauthenticated while accessing $path")
+            crashManager?.logException(exception, "Unauthenticated while accessing $path")
         } // this.onError(UnauthenticatedError(debugData))
         else -> {
-            crashManager?.logError(exception, "Unsupported error thrown by Firebase $path")
+            crashManager?.logException(exception, "Unsupported error thrown by Firebase $path")
         } // this.onError(Error("Error occurred ${exception.code}"))
     }
 }

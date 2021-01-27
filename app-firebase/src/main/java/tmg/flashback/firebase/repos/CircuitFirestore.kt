@@ -2,7 +2,6 @@ package tmg.flashback.firebase.repos
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import tmg.flashback.firebase.crash.FirebaseCrashManagerImpl
 import tmg.flashback.firebase.FirebaseRepo
 import tmg.flashback.firebase.converters.convert
 import tmg.flashback.firebase.crash.FirebaseCrashManager
@@ -14,7 +13,7 @@ class CircuitFirestore(
     crashManager: FirebaseCrashManager
 ) : FirebaseRepo(crashManager), CircuitRepository {
     override fun getCircuit(id: String): Flow<Circuit?> {
-        crashManager.log("CircuitFirestore.getCircuit($id)")
+        crashManager.logError("CircuitFirestore.getCircuit($id)")
         return document("circuits/$id")
             .getDoc<FCircuit>()
             .map {

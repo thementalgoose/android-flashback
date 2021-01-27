@@ -1,6 +1,5 @@
 package tmg.flashback.managers.remoteconfig
 
-import android.util.Log
 import com.google.firebase.FirebaseException
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigException
@@ -140,7 +139,7 @@ class FirebaseRemoteConfigManager(
             if (BuildConfig.DEBUG) {
                 e.printStackTrace()
             } else {
-                crashManager?.logError(e, "FirebaseRemoteConfigRepository unsupported exception thrown")
+                crashManager?.logException(e, "FirebaseRemoteConfigRepository unsupported exception thrown")
             }
             false
         }
@@ -170,7 +169,7 @@ class FirebaseRemoteConfigManager(
                 e.printStackTrace()
             }
             else {
-                crashManager?.logError(e, "FirebaseRemoteConfigRepository unsupported exception thrown")
+                crashManager?.logException(e, "FirebaseRemoteConfigRepository unsupported exception thrown")
             }
             false
         }

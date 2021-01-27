@@ -1,8 +1,8 @@
 package tmg.flashback.firebase.converters
 
 import androidx.core.graphics.toColorInt
-import org.threeten.bp.LocalDate
 import tmg.flashback.firebase.base.ConverterUtils.fromDate
+import tmg.flashback.firebase.base.ConverterUtils.fromDateRequired
 import tmg.flashback.firebase.currentYear
 import tmg.flashback.firebase.models.*
 import tmg.flashback.repo.models.stats.DriverOverview
@@ -19,7 +19,7 @@ fun FDriverOverview.convert(): DriverOverview {
             number = this.driver.driverNumber?.toInt() ?: 0,
             wikiUrl = this.driver.wikiUrl,
             photoUrl = this.driver.photoUrl,
-            dateOfBirth = fromDate(this.driver.dob),
+            dateOfBirth = fromDateRequired(this.driver.dob),
             nationality = this.driver.nationality,
             nationalityISO = this.driver.nationalityISO ?: "",
             standings = this.standings?.map { (_, value) -> value.convert() } ?: emptyList()
@@ -53,7 +53,7 @@ fun FDriverOverviewStandingHistory.convert(season: Int, constructors: List<SlimC
             round = this.r,
             season = season,
             raceName = this.rName ?: "",
-            date = fromDate(this.date),
+            date = fromDateRequired(this.date),
             constructor = when (constructors.size) {
                 1 -> constructors.first()
                 else -> constructors.firstOrNull { it.id == this.con }
