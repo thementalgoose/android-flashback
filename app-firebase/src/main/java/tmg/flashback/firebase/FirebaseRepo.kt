@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.map
 import tmg.flashback.firebase.crash.FirebaseCrashManager
+import java.lang.RuntimeException
 
 open class FirebaseRepo(
     val crashManager: FirebaseCrashManager
@@ -61,7 +62,7 @@ open class FirebaseRepo(
                         else {
                             offer(null)
                         }
-                    } catch (e: RuntimeException) {
+                    } catch (e: java.lang.Exception) {
                         if (BuildConfig.DEBUG) {
                             throw e
                         } else {
@@ -96,9 +97,8 @@ open class FirebaseRepo(
         if (exception is FirebaseFirestoreException) {
             handleFirebaseError(exception, path)
         } else {
-            val context = "Exception thrown whilst parsing model on $path - ${exception.message}"
-            val wrappedException = Exception(context, exception)
-            crashManager.logException(wrappedException, context)
+            val wrappedException = FlashbackParseException("Model at $path failed to parse", exception)
+            crashManager.logException(wrappedException, "Exception thrown whilst parsing model on $path - ${exception.message}")
         }
     }
 
