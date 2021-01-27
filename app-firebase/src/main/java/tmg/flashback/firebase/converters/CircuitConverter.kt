@@ -47,7 +47,7 @@ fun FCircuitResult.convert(): CircuitRace? {
         season = this.season,
         round = this.round,
         wikiUrl = this.wikiUrl ?: "",
-        date = fromDateRequired(this.date),
+        date = fromDateRequired(this.date!!),
         time = fromTime(this.time)
     )
 }
