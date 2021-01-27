@@ -15,8 +15,8 @@ class HistoryFirestore(
 ): FirebaseRepo(crashManager), HistoryRepository {
 
     override fun historyFor(season: Int): Flow<History?> {
-        crashManager.logInfo("HistoryFirestore.historyFor($season)")
         val seasonKey = "${season.toString().substring(0, 3)}0"
+        crashManager.logInfo("document(overview/$seasonKey) $season")
         return document("overview/season$seasonKey")
                 .getDoc<FHistorySeason,List<History>> { it.convert() }
                 .map { list ->
