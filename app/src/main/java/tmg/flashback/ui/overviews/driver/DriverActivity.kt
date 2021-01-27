@@ -18,6 +18,14 @@ class DriverActivity: BaseActivity() {
 
     private val viewModel: DriverViewModel by viewModel()
 
+    override val analyticsScreenName: String
+        get() = "Driver Overview"
+    override val analyticsCustomAttributes: Map<String, String>
+        get() = mapOf(
+                "driverId" to driverId,
+                "driverName" to driverName
+        )
+
     private lateinit var driverId: String
     private lateinit var driverName: String
     private lateinit var adapter: DriverSummaryAdapter

@@ -33,6 +33,17 @@ private const val dateFormat: String = "yyyy/MM/dd"
 class RaceActivity : BaseActivity(), RaceAdapterCallback {
 
     private val viewModel: RaceViewModel by inject()
+
+    override val analyticsScreenName: String
+        get() = "Race Results"
+    override val analyticsCustomAttributes: Map<String, String>
+        get() = mapOf(
+                "season" to "$season",
+                "round" to "$round",
+                "circuitId" to circuitId,
+                "race" to initialRaceName
+        )
+
     private lateinit var raceAdapter: RaceAdapter
     private lateinit var linkAdapter: PillAdapter
 

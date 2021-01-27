@@ -20,6 +20,14 @@ class CircuitInfoActivity: BaseActivity() {
 
     private val viewModel: CircuitInfoViewModel by viewModel()
 
+    override val analyticsScreenName: String
+        get() = "Circuit Overview"
+    override val analyticsCustomAttributes: Map<String, String>
+        get() = mapOf(
+                "circuitId" to circuitId,
+                "circuitName" to circuitName
+        )
+
     private lateinit var circuitId: String
     private lateinit var circuitName: String
     private lateinit var adapter: CircuitInfoAdapter

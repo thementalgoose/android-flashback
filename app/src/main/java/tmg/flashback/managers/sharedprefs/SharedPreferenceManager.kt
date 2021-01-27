@@ -29,6 +29,7 @@ class SharedPreferenceManager(context: Context) : SharedPrefManager(context),
     private val keyBarAnimation: String = "BAR_ANIMATION"
     private val keyCrashReporting: String = "CRASH_REPORTING"
     private val keyShakeToReport: String = "SHAKE_TO_REPORT"
+    private val keyAnalyticsOptIn: String = "ANALYTICS_OPT_IN"
     private val keyAppVersion: String = "RELEASE_NOTES" // Used to be release notes
     private val keyDeviceUDID: String = "UDID"
     private val keyTheme: String = "THEME"
@@ -49,8 +50,6 @@ class SharedPreferenceManager(context: Context) : SharedPrefManager(context),
     private val keyAppOpenCount: String = "APP_STARTUP_OPEN_COUNT"
 
     private val keyRemoteConfigSyncCount: String = "REMOTE_CONFIG_SYNC_COUNT"
-
-
 
     private val dateFormat = DateTimeFormatter.ofPattern("yyyy/MM/dd")
 
@@ -144,6 +143,10 @@ class SharedPreferenceManager(context: Context) : SharedPrefManager(context),
     override var shakeToReport: Boolean
         get() = getBoolean(keyShakeToReport, Defaults.shakeToReport)
         set(value) = save(keyShakeToReport, value)
+
+    override var optInAnalytics: Boolean
+        get() = getBoolean(keyAnalyticsOptIn, Defaults.analyticsOptIn)
+        set(value) = save(keyAnalyticsOptIn, value)
 
     override var lastAppVersion: Int
         get() = getInt(keyAppVersion, 0)
