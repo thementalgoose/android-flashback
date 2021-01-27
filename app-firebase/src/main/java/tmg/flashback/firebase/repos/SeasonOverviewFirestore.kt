@@ -21,7 +21,8 @@ class SeasonOverviewFirestore(
 
     override fun getCircuit(season: Int, round: Int): Flow<CircuitSummary?> {
         crashManager.logInfo("SeasonOverviewFirestore.getCircuit($season, $round)")
-        return getSeasonRound(season, round)
+        return getRounds(season)
+                .map { rounds -> rounds.firstOrNull { it.round == round } }
                 .map { it?.circuit }
     }
 
@@ -70,11 +71,6 @@ class SeasonOverviewFirestore(
     private fun getRounds(season: Int): Flow<List<Round>> {
         return getSeason(season)
                 .map { it?.rounds ?: emptyList() }
-    }
-
-    private fun getSeasonWithRounds(season: Int): Flow<Pair<Int, List<Round>>> {
-        return getSeason(season)
-                .map { Pair(season, it?.rounds ?: emptyList()) }
     }
 
     private fun getSeason(season: Int): Flow<Season?> {
