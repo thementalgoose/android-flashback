@@ -5,7 +5,9 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 import org.threeten.bp.format.DateTimeParseException
 import tmg.flashback.firebase.base.ConverterUtils.fromDate
+import tmg.flashback.firebase.base.ConverterUtils.fromDateRequired
 import tmg.flashback.firebase.base.ConverterUtils.fromTime
+import tmg.flashback.firebase.base.ConverterUtils.fromTimeRequired
 import tmg.flashback.firebase.testutils.BaseTest
 
 internal class ConverterUtilsTest: BaseTest() {
@@ -33,7 +35,7 @@ internal class ConverterUtilsTest: BaseTest() {
     )
     fun `ConverterUtils fromDate throws exception for invalid`(dateString: String) {
         assertThrows(DateTimeParseException::class.java) {
-            fromDate(dateString)
+            fromDateRequired(dateString)
         }
     }
 
@@ -63,7 +65,7 @@ internal class ConverterUtilsTest: BaseTest() {
     )
     fun `ConverterUtils fromTime throws exception for invalid`(timeString: String) {
         assertThrows(DateTimeParseException::class.java) {
-            fromTime(timeString)
+            fromTimeRequired(timeString)
         }
     }
 
