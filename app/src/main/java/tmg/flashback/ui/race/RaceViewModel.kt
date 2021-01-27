@@ -85,6 +85,7 @@ class RaceViewModel(
     private val seasonRoundFlow: Flow<Round?> = seasonRound
         .asFlow()
         .flatMapLatest { (season, round) -> seasonOverviewRepository.getSeasonRound(season, round) }
+        .shareIn(viewModelScope, SharingStarted.Lazily)
 
     override val seasonRoundData: LiveData<SeasonRound> = seasonRound
         .asFlow()
