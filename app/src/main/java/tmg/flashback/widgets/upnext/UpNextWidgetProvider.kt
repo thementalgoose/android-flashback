@@ -66,7 +66,7 @@ class UpNextWidgetProvider : AppWidgetProvider() {
         catch (e: Exception) {
             Log.i("Flashback", "Failed to tint icon ${e.message}")
             e.printStackTrace()
-            crashManager?.logError(e, "Widget Up Next provider couldn't tint bitmap")
+            crashManager?.logException(e, "Widget Up Next provider couldn't tint bitmap")
         }
 
         appWidgetIds?.forEach { widgetId ->
@@ -109,7 +109,7 @@ class UpNextWidgetProvider : AppWidgetProvider() {
                 remoteView.setOnClickPendingIntent(R.id.container, getRefreshWidgetPendingIntent(context, widgetId, appWidgetIds))
                 appWidgetManager?.updateAppWidget(widgetId, remoteView)
             } catch (e: RuntimeException) {
-                crashManager?.logError(e, "Widget Up Next provider couldn't be set up")
+                crashManager?.logException(e, "Widget Up Next provider couldn't be set up")
                 remoteView.error(appWidgetManager, widgetId, context)
             }
         }

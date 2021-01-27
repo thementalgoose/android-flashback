@@ -28,10 +28,10 @@ class CrashController(
     }
 
     fun log(msg: String) {
-        firebaseCrashManager.log(msg)
+        firebaseCrashManager.logError(msg)
     }
 
     fun logError(error: Exception, msg: String) {
-        firebaseCrashManager.logError(error, msg)
+        firebaseCrashManager.logException(error, msg)
     }
 }

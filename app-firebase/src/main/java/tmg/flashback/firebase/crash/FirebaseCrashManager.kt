@@ -7,6 +7,7 @@ interface FirebaseCrashManager {
             appFirstOpened: String,
             appOpenedCount: Int
     )
-    fun log(msg: String)
-    fun logError(error: Exception, context: String)
+    fun logInfo(msg: String)
+    fun logError(msg: String)
+    fun logException(error: Exception, context: String)
 }

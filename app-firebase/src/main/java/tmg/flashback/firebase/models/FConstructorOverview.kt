@@ -16,7 +16,7 @@ data class FConstructorOverviewData(
 )
 
 data class FConstructorOverviewDrivers(
-        val dob: String? = null,
+        val dob: String = "",
         val driverCode: String? = null,
         val driverNumber: String? = null,
         val firstName: String = "",

@@ -2,7 +2,6 @@ package tmg.flashback.firebase.repos
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import tmg.flashback.firebase.crash.FirebaseCrashManagerImpl
 import tmg.flashback.firebase.FirebaseRepo
 import tmg.flashback.firebase.converters.convert
 import tmg.flashback.firebase.crash.FirebaseCrashManager
@@ -15,7 +14,7 @@ class DriverFirestore(
 ) : FirebaseRepo(crashManager), DriverRepository {
 
     override fun getDriverOverview(driverId: String): Flow<DriverOverview?> {
-        crashManager.log("DriverFirestore.getDriverOverview($driverId)")
+        crashManager.logError("DriverFirestore.getDriverOverview($driverId)")
         return document("drivers/$driverId")
                 .getDoc<FDriverOverview>()
                 .map {

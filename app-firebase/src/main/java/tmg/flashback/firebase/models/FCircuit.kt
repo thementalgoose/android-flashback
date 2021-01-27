@@ -13,7 +13,7 @@ data class FCircuit(
 )
 
 data class FCircuitResult(
-    val date: String? = "",
+    val date: String = "",
     val time: String? = null,
     val name: String = "",
     val season: Int = -1,

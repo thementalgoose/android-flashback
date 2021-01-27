@@ -2,6 +2,7 @@ package tmg.flashback.firebase.converters
 
 import androidx.core.graphics.toColorInt
 import tmg.flashback.firebase.base.ConverterUtils.fromDate
+import tmg.flashback.firebase.base.ConverterUtils.fromDateRequired
 import tmg.flashback.firebase.base.ConverterUtils.isDateValid
 import tmg.flashback.firebase.currentYear
 import tmg.flashback.firebase.models.*
@@ -70,7 +71,7 @@ fun FConstructorOverviewDrivers.convert(data: FConstructorOverviewData): Constru
             number = this.driverNumber?.toIntOrNull() ?: 0,
             wikiUrl = this.wikiUrl,
             photoUrl = this.photoUrl,
-            dateOfBirth = fromDate(this.dob!!),
+            dateOfBirth = fromDateRequired(this.dob),
             nationality = this.nationality,
             nationalityISO = this.nationalityISO,
             constructor = Constructor(

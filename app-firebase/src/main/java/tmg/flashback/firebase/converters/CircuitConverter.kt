@@ -1,6 +1,7 @@
 package tmg.flashback.firebase.converters
 
 import tmg.flashback.firebase.base.ConverterUtils.fromDate
+import tmg.flashback.firebase.base.ConverterUtils.fromDateRequired
 import tmg.flashback.firebase.base.ConverterUtils.fromTime
 import tmg.flashback.firebase.base.ConverterUtils.isDateValid
 import tmg.flashback.firebase.models.FCircuit
@@ -46,7 +47,7 @@ fun FCircuitResult.convert(): CircuitRace? {
         season = this.season,
         round = this.round,
         wikiUrl = this.wikiUrl ?: "",
-        date = fromDate(this.date!!),
+        date = fromDateRequired(this.date),
         time = fromTime(this.time)
     )
 }

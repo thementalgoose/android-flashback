@@ -1,6 +1,6 @@
 package tmg.flashback.firebase.converters
 
-import tmg.flashback.firebase.base.ConverterUtils.fromDate
+import tmg.flashback.firebase.base.ConverterUtils.fromDateRequired
 import tmg.flashback.firebase.base.ConverterUtils.fromTime
 import tmg.flashback.repo.enums.raceStatusUnknown
 import tmg.flashback.repo.models.stats.*
@@ -67,7 +67,7 @@ fun FRound.convert(
     return Round(
             season = season,
             round = round,
-            date = fromDate(date),
+            date = fromDateRequired(date),
             time = fromTime(time),
             name = name,
             wikipediaUrl = wiki,
@@ -127,7 +127,7 @@ private fun FSeasonOverviewRaceRaceFastestLap.convert(): FastestLap {
 private fun FSeason.constructorAtEndOfSeason(driverId: String): Constructor {
     val constructorId: String? = this.race
             ?.filter { it.value.driverCon?.get(driverId) != null }
-            ?.maxBy { it.value.round }
+            ?.maxByOrNull { it.value.round }
             ?.value
             ?.driverCon?.get(driverId)
     return this.constructors?.get(constructorId)!!.convert()

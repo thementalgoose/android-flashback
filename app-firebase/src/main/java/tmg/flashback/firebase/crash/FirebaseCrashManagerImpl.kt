@@ -2,9 +2,11 @@ package tmg.flashback.firebase.crash
 
 import android.os.Build
 import android.util.Log
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import tmg.flashback.firebase.BuildConfig
 import java.lang.Exception
+import kotlin.coroutines.coroutineContext
 
 class FirebaseCrashManagerImpl: FirebaseCrashManager {
 
@@ -58,7 +60,16 @@ class FirebaseCrashManagerImpl: FirebaseCrashManager {
         }
     }
 
-    override fun log(msg: String) {
+    override fun logError(msg: String) {
+        if (enableCrashReporting) {
+            if (isDebug) {
+                Log.e("Flashback", "Crashlytics \"${msg}\"")
+            }
+            FirebaseCrashlytics.getInstance().log("E/Crashlytics: $msg")
+        }
+    }
+
+    override fun logInfo(msg: String) {
         if (enableCrashReporting) {
             if (isDebug) {
                 Log.i("Flashback", "Crashlytics \"${msg}\"")
@@ -67,7 +78,7 @@ class FirebaseCrashManagerImpl: FirebaseCrashManager {
         }
     }
 
-    override fun logError(error: Exception, context: String) {
+    override fun logException(error: Exception, context: String) {
         if (isDebug) {
             Log.e("Flashback", "Crashlytics \"${context}\"")
             error.printStackTrace()
