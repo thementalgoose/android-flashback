@@ -40,7 +40,7 @@ val viewModelModule = module {
     viewModel { ConstructorViewModel(get(), get()) }
 
     // Settings
-    viewModel { SettingsViewModel(get(), get(), get(), get(), get(), get(), get()) }
+    viewModel { SettingsViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
     viewModel { tmg.flashback.ui.admin.LockoutViewModel(get(), get()) }
     viewModel { PrivacyPolicyViewModel() }
 }

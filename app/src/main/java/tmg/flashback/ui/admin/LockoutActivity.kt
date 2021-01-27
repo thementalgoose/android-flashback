@@ -19,6 +19,9 @@ class LockoutActivity: BaseActivity() {
 
     private val viewModel: LockoutViewModel by viewModel()
 
+    override val analyticsScreenName: String
+        get() = "App Lockout"
+
     private var maintenanceLink: String = ""
 
     override fun layoutId(): Int = R.layout.activity_lockout

@@ -60,6 +60,7 @@ internal class CrashControllerTest: BaseTest() {
     fun `CrashController initialise sends all data to firebase`() {
         val expectedDate = LocalDate.now().format(DateTimeFormatter.ofPattern("dd MMM yyyy"))
         every { mockDeviceRepository.appFirstBootTime } returns LocalDate.now()
+        every { mockDeviceRepository.optInAnalytics } returns true
         every { mockDeviceRepository.appOpenedCount } returns 1
         every { mockDeviceRepository.deviceUdid } returns "test-udid"
         every { mockDeviceRepository.crashReporting } returns true
@@ -68,7 +69,7 @@ internal class CrashControllerTest: BaseTest() {
         sut.initialiseCrashReporting()
 
         verify {
-            mockFirebaseCrashReportManager.initialise(true, "test-udid", expectedDate, 1)
+            mockFirebaseCrashReportManager.initialise(true, true, "test-udid", expectedDate, 1)
         }
     }
 

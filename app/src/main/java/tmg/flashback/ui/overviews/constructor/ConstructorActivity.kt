@@ -17,6 +17,13 @@ class ConstructorActivity: BaseActivity() {
 
     private val viewModel: ConstructorViewModel by viewModel()
 
+    override val analyticsScreenName: String
+        get() = "Constructor Overview"
+    override val analyticsCustomAttributes: Map<String, String>
+        get() = mapOf(
+                "extra_constructor" to constructorId
+        )
+
     private lateinit var constructorId: String
     private lateinit var constructorName: String
     private lateinit var adapter: ConstructorSummaryAdapter

@@ -13,7 +13,7 @@ import tmg.flashback.testutils.assertEventFired
 import tmg.flashback.testutils.assertEventNotFired
 import tmg.flashback.testutils.test
 
-internal class SplashViewModelTest: BaseTest() {
+internal class  SplashViewModelTest: BaseTest() {
 
     private var mockAppShortcutManager: AppShortcutManager = mockk(relaxed = true)
     private var mockFeatureController: FeatureController = mockk(relaxed = true)

@@ -14,10 +14,12 @@ import tmg.flashback.constants.Formula1.constructorChampionshipStarts
 import tmg.flashback.ui.base.BaseViewModel
 import tmg.flashback.controllers.*
 import tmg.flashback.controllers.NotificationController.Companion.daysUntilDataProvidedBannerMovedToBottom
+import tmg.flashback.managers.analytics.AnalyticsManager
 import tmg.flashback.managers.networkconnectivity.NetworkConnectivityManager
 import tmg.flashback.repo.db.stats.HistoryRepository
 import tmg.flashback.repo.db.stats.SeasonOverviewRepository
 import tmg.flashback.repo.models.stats.*
+import tmg.flashback.ui.dashboard.DashboardActivity
 import tmg.flashback.ui.shared.sync.SyncDataItem
 import tmg.flashback.ui.shared.viewholders.DataUnavailable
 import tmg.flashback.ui.utils.StringHolder
@@ -185,6 +187,7 @@ class SeasonViewModel(
                     }
                 }
             }
+
             return@map list
         }
         .onStart { emitAll(flow { emptyList<SeasonItem>() }) }
