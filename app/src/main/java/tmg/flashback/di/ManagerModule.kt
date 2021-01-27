@@ -19,6 +19,6 @@ val managerModule = module {
     single<BuildConfigManager> { AppBuildConfigManager() }
     single<NetworkConnectivityManager> { AndroidNetworkConnectivityManager(get()) }
     single<PushNotificationManager> { FirebasePushNotificationManager(get(), get()) }
-    single<UserPropertiesManager> { FirebaseAnalyticsManager(get()) }
-    single<AnalyticsManager> { FirebaseAnalyticsManager(get()) }
+    single<UserPropertiesManager> { FirebaseAnalyticsManager(get(), get()) }
+    single<AnalyticsManager> { FirebaseAnalyticsManager(get(), get()) }
 }
