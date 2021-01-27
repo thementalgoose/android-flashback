@@ -38,10 +38,8 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
         get() = "Race Results"
     override val analyticsCustomAttributes: Map<String, String>
         get() = mapOf(
-                "season" to "$season",
-                "round" to "$round",
-                "circuitId" to circuitId,
-                "race" to initialRaceName
+                "race_season" to "$season",
+                "race_round" to "$round"
         )
 
     private lateinit var raceAdapter: RaceAdapter

@@ -17,9 +17,8 @@ class DriverSeasonActivity: BaseActivity() {
         get() = "Driver Season Overview"
     override val analyticsCustomAttributes: Map<String, String>
         get() = mapOf(
-                "driverId" to driverId,
-                "driverName" to driverName,
-                "season" to "$season"
+                "extra_driver_id" to driverId,
+                "extra_season" to "$season"
         )
 
     private lateinit var driverId: String

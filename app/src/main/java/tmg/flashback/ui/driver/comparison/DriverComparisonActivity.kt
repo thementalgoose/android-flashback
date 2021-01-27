@@ -12,10 +12,10 @@ class DriverComparisonActivity: BaseActivity() {
         get() = "Driver Comparison"
     override val analyticsCustomAttributes: Map<String, String>
         get() = mapOf(
-                "season" to "$season",
-                "round" to "$round",
-                "driver1" to driverId1,
-                "driver2" to driverId2
+                "extra_season" to "$season",
+                "extra_round" to "$round",
+                "extra_driver1" to driverId1,
+                "extra_driver2" to driverId2
         )
 
     private var season: Int = -1
