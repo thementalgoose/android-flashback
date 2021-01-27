@@ -44,7 +44,7 @@ open class FirebaseRepo(
         val subscription = addSnapshotListener { snapshot, exception ->
             when {
                 exception != null -> {
-                    handleError(exception, "Collection $path")
+                    handleError(exception, path)
                     offer(null)
                 }
                 snapshot != null -> {
@@ -61,7 +61,7 @@ open class FirebaseRepo(
                         if (BuildConfig.DEBUG) {
                             throw e
                         } else {
-                            handleError(e, "getDoc under $path failed to parse")
+                            handleError(e, path)
                             offer(null)
                         }
                     }
@@ -92,7 +92,7 @@ open class FirebaseRepo(
         if (exception is FirebaseFirestoreException) {
             handleFirebaseError(exception, path)
         } else {
-            val context = "Exception thrown whilst parsing model on $path"
+            val context = "Exception thrown whilst parsing model on $path - ${exception.message}"
             val wrappedException = Exception(context, exception)
             crashManager.logException(wrappedException, context)
         }
