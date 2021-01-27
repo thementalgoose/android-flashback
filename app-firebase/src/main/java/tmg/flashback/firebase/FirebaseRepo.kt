@@ -94,6 +94,7 @@ open class FirebaseRepo(
     fun <E> Flow<E?>.defaultIfNull(to: E): Flow<E> {
         return this.map { it ?: to }
     }
+    // TODO: HANDLE THIS CRASHING GRACEFULLY CONVERT METHOD IS NOT CAUGHT ANYWHERE
 
     fun <E, T> Flow<E>.convertModel(convert: (model: E) -> T): Flow<T> {
         return this.map { convert(it) }
