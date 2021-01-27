@@ -13,7 +13,7 @@ class CircuitFirestore(
     crashManager: FirebaseCrashManager
 ) : FirebaseRepo(crashManager), CircuitRepository {
     override fun getCircuit(id: String): Flow<Circuit?> {
-        crashManager.logError("CircuitFirestore.getCircuit($id)")
+        crashManager.logInfo("CircuitFirestore.getCircuit($id)")
         return document("circuits/$id")
             .getDoc<FCircuit>()
             .map {

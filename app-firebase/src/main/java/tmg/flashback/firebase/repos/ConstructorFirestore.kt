@@ -14,7 +14,7 @@ class ConstructorFirestore(
 ) : FirebaseRepo(crashManager), ConstructorRepository {
 
     override fun getConstructorOverview(constructorId: String): Flow<ConstructorOverview?> {
-        crashManager.logError("ConstructorFirestore.getConstructorOverview($constructorId)")
+        crashManager.logInfo("ConstructorFirestore.getConstructorOverview($constructorId)")
         return document("constructors/$constructorId")
                 .getDoc<FConstructorOverview>()
                 .map {
