@@ -29,8 +29,10 @@ class DashboardActivity: BaseActivity(), DashboardNavigationCallback {
     override val initialiseSlidr: Boolean = false
     override val themeType: ThemeTypes = ThemeTypes.DEFAULT
 
-    private val remoteConfigRepository: RemoteConfigRepository by inject()
+    override val analyticsScreenName: String
+        get() = "Dashboard"
 
+    private val remoteConfigRepository: RemoteConfigRepository by inject()
     private val viewModel: DashboardViewModel by viewModel()
 
     private val seasonTag: String = "season"

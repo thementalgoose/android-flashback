@@ -68,19 +68,16 @@ class SeasonOverviewFirestore(
     }
 
     private fun getRounds(season: Int): Flow<List<Round>> {
-        crashManager.logInfo("SeasonOverviewFirestore.getRounds($season)")
         return getSeason(season)
                 .map { it?.rounds ?: emptyList() }
     }
 
     private fun getSeasonWithRounds(season: Int): Flow<Pair<Int, List<Round>>> {
-        crashManager.logInfo("SeasonOverviewFirestore.getSeasonWithRounds($season)")
         return getSeason(season)
                 .map { Pair(season, it?.rounds ?: emptyList()) }
     }
 
     private fun getSeason(season: Int): Flow<Season?> {
-        crashManager.logInfo("SeasonOverviewFirestore.getSeason($season)")
         return document("seasons/$season")
                 .getDoc<FSeason>()
                 .convertModel { it?.convert(season) }

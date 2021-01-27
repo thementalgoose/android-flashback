@@ -14,6 +14,9 @@ class PrivacyPolicyActivity: BaseActivity() {
 
     private val viewModel: PrivacyPolicyViewModel by viewModel()
 
+    override val analyticsScreenName: String
+        get() = "Privacy policy"
+
     override fun layoutId(): Int = R.layout.activity_privacy_policy
 
     override fun onCreate(savedInstanceState: Bundle?) {

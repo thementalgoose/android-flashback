@@ -7,8 +7,11 @@ import com.r0adkll.slidr.model.SlidrInterface
 import org.koin.android.ext.android.inject
 import tmg.flashback.R
 import tmg.flashback.extensions.isLightMode
+import tmg.flashback.managers.analytics.AnalyticsManager
+import tmg.flashback.repo.pref.DeviceRepository
 import tmg.flashback.repo.pref.UserRepository
 import tmg.utilities.lifecycle.common.CommonActivity
+import java.lang.NullPointerException
 
 abstract class BaseActivity : CommonActivity() {
 
@@ -17,7 +20,19 @@ abstract class BaseActivity : CommonActivity() {
      */
     open val themeType: ThemeTypes = ThemeTypes.TRANSLUCENT
 
-    private val prefsRepository: UserRepository by inject()
+    /**
+     * Custom attributes to be added to the screen view analytics
+     */
+    open val analyticsCustomAttributes: Map<String, String> = emptyMap()
+
+    /**
+     * Custom screen name to be added to the screen view metric
+     */
+    open val analyticsScreenName: String = this.javaClass.simpleName
+
+    private val userRepository: UserRepository by inject()
+    private val deviceRepository: DeviceRepository by inject()
+    private val analyticsManager: AnalyticsManager by inject()
 
     protected var isLightTheme: Boolean = true
 
@@ -47,9 +62,27 @@ abstract class BaseActivity : CommonActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        // Opt in to analytics view screen data
+        if (deviceRepository.optInAnalytics) {
+            val analyticsAttributes = try {
+                analyticsCustomAttributes
+            } catch (e: NullPointerException) {
+                emptyMap()
+            }
+            analyticsManager.viewScreen(
+                    screenName = analyticsScreenName,
+                    clazz = this.javaClass,
+                    mapOfParams = analyticsAttributes
+            )
+        }
+    }
+
     @StyleRes
     private fun getThemeStyle(): Int {
-        isLightTheme = prefsRepository.theme.isLightMode(this)
+        isLightTheme = userRepository.theme.isLightMode(this)
 
         return when (isLightTheme) {
             true -> themeType.lightTheme

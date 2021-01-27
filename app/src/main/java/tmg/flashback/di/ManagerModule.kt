@@ -1,7 +1,8 @@
 package tmg.flashback.di
 
 import org.koin.dsl.module
-import tmg.flashback.managers.analytics.FirebaseUserPropertiesManager
+import tmg.flashback.managers.analytics.AnalyticsManager
+import tmg.flashback.managers.analytics.FirebaseAnalyticsManager
 import tmg.flashback.managers.analytics.UserPropertiesManager
 import tmg.flashback.managers.appshortcuts.AndroidAppShortcutManager
 import tmg.flashback.managers.appshortcuts.AppShortcutManager
@@ -18,5 +19,6 @@ val managerModule = module {
     single<BuildConfigManager> { AppBuildConfigManager() }
     single<NetworkConnectivityManager> { AndroidNetworkConnectivityManager(get()) }
     single<PushNotificationManager> { FirebasePushNotificationManager(get(), get()) }
-    single<UserPropertiesManager> { FirebaseUserPropertiesManager(get()) }
+    single<UserPropertiesManager> { FirebaseAnalyticsManager(get()) }
+    single<AnalyticsManager> { FirebaseAnalyticsManager(get()) }
 }

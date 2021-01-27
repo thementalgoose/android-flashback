@@ -13,6 +13,15 @@ class DriverSeasonActivity: BaseActivity() {
 
     private val viewModel: DriverSeasonViewModel by viewModel()
 
+    override val analyticsScreenName: String
+        get() = "Driver Season Overview"
+    override val analyticsCustomAttributes: Map<String, String>
+        get() = mapOf(
+                "driverId" to driverId,
+                "driverName" to driverName,
+                "season" to "$season"
+        )
+
     private lateinit var driverId: String
     private lateinit var driverName: String
     private var season: Int = -1

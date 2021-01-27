@@ -8,6 +8,16 @@ import tmg.flashback.ui.base.BaseActivity
 
 class DriverComparisonActivity: BaseActivity() {
 
+    override val analyticsScreenName: String
+        get() = "Driver Comparison"
+    override val analyticsCustomAttributes: Map<String, String>
+        get() = mapOf(
+                "season" to "$season",
+                "round" to "$round",
+                "driver1" to driverId1,
+                "driver2" to driverId2
+        )
+
     private var season: Int = -1
     private var round: Int = -1
     private lateinit var driverId1: String
