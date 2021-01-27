@@ -22,8 +22,7 @@ class DriverActivity: BaseActivity() {
         get() = "Driver Overview"
     override val analyticsCustomAttributes: Map<String, String>
         get() = mapOf(
-                "driverId" to driverId,
-                "driverName" to driverName
+                "extra_driver_id" to driverId
         )
 
     private lateinit var driverId: String

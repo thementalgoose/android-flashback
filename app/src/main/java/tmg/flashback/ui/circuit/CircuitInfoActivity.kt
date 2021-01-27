@@ -24,8 +24,7 @@ class CircuitInfoActivity: BaseActivity() {
         get() = "Circuit Overview"
     override val analyticsCustomAttributes: Map<String, String>
         get() = mapOf(
-                "circuitId" to circuitId,
-                "circuitName" to circuitName
+                "extra_circuit" to circuitId
         )
 
     private lateinit var circuitId: String

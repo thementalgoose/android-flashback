@@ -21,8 +21,7 @@ class ConstructorActivity: BaseActivity() {
         get() = "Constructor Overview"
     override val analyticsCustomAttributes: Map<String, String>
         get() = mapOf(
-                "constructorId" to constructorId,
-                "constructorName" to constructorName
+                "extra_constructor" to constructorId
         )
 
     private lateinit var constructorId: String
