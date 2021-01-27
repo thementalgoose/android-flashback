@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import com.google.firebase.analytics.FirebaseAnalytics
+import tmg.flashback.BuildConfig
 import tmg.flashback.managers.analytics.UserPropertiesManager
 import tmg.flashback.repo.pref.DeviceRepository
 
@@ -36,6 +37,9 @@ class FirebaseAnalyticsManager(
             for (x in mapOfParams) {
                 putString(x.key, x.value)
             }
+        }
+        if (BuildConfig.DEBUG) {
+            Log.i("Flashback", "Analytics Screen viewed $bundle")
         }
         FirebaseAnalytics.getInstance(context).logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, bundle)
     }

@@ -31,7 +31,6 @@ abstract class BaseActivity : CommonActivity() {
     open val analyticsScreenName: String = this.javaClass.simpleName
 
     private val userRepository: UserRepository by inject()
-    private val deviceRepository: DeviceRepository by inject()
     private val analyticsManager: AnalyticsManager by inject()
 
     protected var isLightTheme: Boolean = true
@@ -64,9 +63,14 @@ abstract class BaseActivity : CommonActivity() {
 
     override fun onResume() {
         super.onResume()
+        recordScreenViewed()
+    }
 
-        // Opt in to analytics view screen data
-        if (deviceRepository.optInAnalytics) {
+    /**
+     * Method to be ran when you want to register that a new screen has been displayed in analytics
+     */
+    fun recordScreenViewed() {
+        if (analyticsManager.enableAnalytics) {
             val analyticsAttributes = try {
                 analyticsCustomAttributes
             } catch (e: NullPointerException) {
