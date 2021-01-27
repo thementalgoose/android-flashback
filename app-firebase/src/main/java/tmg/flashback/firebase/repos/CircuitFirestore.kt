@@ -15,9 +15,6 @@ class CircuitFirestore(
     override fun getCircuit(id: String): Flow<Circuit?> {
         crashManager.logInfo("CircuitFirestore.getCircuit($id)")
         return document("circuits/$id")
-            .getDoc<FCircuit>()
-            .map {
-                it?.convert()
-            }
+            .getDoc<FCircuit, Circuit> { it.convert() }
     }
 }

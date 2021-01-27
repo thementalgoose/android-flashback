@@ -23,6 +23,7 @@ open class FirebaseRepo(
 
     //#endregion
 
+    // TODO: May be able to remove this?
     inline fun <reified E> CollectionReference.getDocuments(
         default: List<E> = emptyList(),
         crossinline query: (ref: CollectionReference) -> Query = { it }
@@ -57,7 +58,13 @@ open class FirebaseRepo(
         }
     }
 
-    inline fun <reified E> DocumentReference.getDoc(): Flow<E?> = callbackFlow {
+    /**
+     * Get a document from firestore and convert into a domain level model
+     *
+     * @param converter Method which takes firestore model (denoted by prefix F (ie. FModel)) into a
+     *   domain model
+     */
+    inline fun <reified E,T> DocumentReference.getDoc(crossinline converter: (E) -> T): Flow<T?> = callbackFlow {
         val subscription = addSnapshotListener { snapshot, exception ->
             when {
                 exception != null -> {
@@ -67,7 +74,13 @@ open class FirebaseRepo(
                 snapshot != null -> {
                     try {
                         val item: E? = snapshot.toObject(E::class.java)
-                        offer(item)
+                        if (item != null) {
+                            val model = converter(item)
+                            offer(model)
+                        }
+                        else {
+                            offer(null)
+                        }
                     } catch (e: RuntimeException) {
                         if (BuildConfig.DEBUG) {
                             throw e
@@ -94,10 +107,9 @@ open class FirebaseRepo(
     fun <E> Flow<E?>.defaultIfNull(to: E): Flow<E> {
         return this.map { it ?: to }
     }
-    // TODO: HANDLE THIS CRASHING GRACEFULLY CONVERT METHOD IS NOT CAUGHT ANYWHERE
 
-    fun <E, T> Flow<E>.convertModel(convert: (model: E) -> T): Flow<T> {
-        return this.map { convert(it) }
+    fun <E> Flow<List<E>?>.emptyIfNull(): Flow<List<E>> {
+        return this.map { it ?: emptyList() }
     }
 
     fun handleError(exception: Exception, path: String) {
