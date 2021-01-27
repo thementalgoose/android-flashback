@@ -16,6 +16,7 @@ class FirebaseAnalyticsManager(
 
     private val keyOsVersion = "os_version"
     private val keyDeviceModel = "device_model"
+    private val keyAppVersion = "app_version"
 
     override var enableAnalytics: Boolean
         get() = deviceRepository.optInAnalytics
@@ -29,6 +30,10 @@ class FirebaseAnalyticsManager(
 
     override fun setDeviceModel(model: String) {
         FirebaseAnalytics.getInstance(context).setUserProperty(keyDeviceModel, model)
+    }
+
+    override fun setAppVersion(appVersion: String) {
+        FirebaseAnalytics.getInstance(context).setUserProperty(keyAppVersion, appVersion)
     }
 
     override fun viewScreen(screenName: String, clazz: Class<*>, mapOfParams: Map<String, String>) {

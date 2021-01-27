@@ -7,7 +7,6 @@ import com.github.stkent.bugshaker.flow.dialog.AlertDialogType
 import com.jakewharton.threetenabp.AndroidThreeTen
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import org.koin.android.ext.android.inject
 import tmg.flashback.controllers.CrashController
 import tmg.flashback.controllers.DeviceController
 import tmg.flashback.controllers.NotificationController
@@ -15,7 +14,6 @@ import tmg.flashback.extensions.updateAllWidgets
 import tmg.flashback.managers.analytics.UserPropertiesManager
 import tmg.flashback.managers.remoteconfig.RemoteConfigManager
 import tmg.flashback.notifications.PushNotificationManager
-import tmg.flashback.repo.config.RemoteConfigRepository
 
 /**
  * Startup handler
@@ -63,6 +61,7 @@ class FlashbackStartup(
         // Initialise user properties
         analyticsUserProperties.setDeviceModel(Build.MODEL)
         analyticsUserProperties.setOsVersion(Build.VERSION.SDK_INT.toString())
+        analyticsUserProperties.setAppVersion(BuildConfig.VERSION_NAME)
 
         // Update Widgets
         application.updateAllWidgets()
