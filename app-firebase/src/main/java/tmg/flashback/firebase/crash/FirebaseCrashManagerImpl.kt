@@ -65,7 +65,7 @@ class FirebaseCrashManagerImpl: FirebaseCrashManager {
             if (isDebug) {
                 Log.e("Flashback", "Crashlytics \"${msg}\"")
             }
-            FirebaseCrashlytics.getInstance().log("E/Crashlytics: $msg")
+            FirebaseCrashlytics.getInstance().log(msg)
         }
     }
 
@@ -74,7 +74,7 @@ class FirebaseCrashManagerImpl: FirebaseCrashManager {
             if (isDebug) {
                 Log.i("Flashback", "Crashlytics \"${msg}\"")
             }
-            FirebaseCrashlytics.getInstance().log("I/Crashlytics: $msg")
+            FirebaseCrashlytics.getInstance().log(msg)
         }
     }
 
@@ -84,7 +84,7 @@ class FirebaseCrashManagerImpl: FirebaseCrashManager {
             error.printStackTrace()
         }
         if (enableCrashReporting) {
-            FirebaseCrashlytics.getInstance().log("E/Crashlytics: ${error.message}")
+            FirebaseCrashlytics.getInstance().log(error.message ?: "Exception error $error")
             FirebaseCrashlytics.getInstance().recordException(error)
         }
     }
