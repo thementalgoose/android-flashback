@@ -50,12 +50,10 @@ class SplashActivity: AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        if (deviceRepository.optInAnalytics) {
-            analyticsManager.viewScreen(
-                    screenName = "Splash screen",
-                    clazz = this.javaClass,
-                    mapOfParams = emptyMap()
-            )
-        }
+        analyticsManager.viewScreen(
+                screenName = "Splash screen",
+                clazz = this.javaClass,
+                mapOfParams = emptyMap()
+        )
     }
 }
