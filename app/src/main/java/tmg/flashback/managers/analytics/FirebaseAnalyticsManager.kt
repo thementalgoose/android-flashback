@@ -14,40 +14,30 @@ class FirebaseAnalyticsManager(
     val deviceRepository: DeviceRepository
 ): UserPropertiesManager, AnalyticsManager, RSSAnalyticsManager {
 
-    private val keyOsVersion = "os_version"
-    private val keyDeviceModel = "device_model"
-    private val keyAppVersion = "app_version"
-
     override var enableAnalytics: Boolean
         get() = deviceRepository.optInAnalytics
         set(value) {
             deviceRepository.optInAnalytics = value
         }
 
-    override fun setOsVersion(osVersion: String) {
-        FirebaseAnalytics.getInstance(context).setUserProperty(keyOsVersion, osVersion)
-    }
-
-    override fun setDeviceModel(model: String) {
-        FirebaseAnalytics.getInstance(context).setUserProperty(keyDeviceModel, model)
-    }
-
-    override fun setAppVersion(appVersion: String) {
-        FirebaseAnalytics.getInstance(context).setUserProperty(keyAppVersion, appVersion)
+    override fun setProperty(key: UserProperty, value: String) {
+        FirebaseAnalytics.getInstance(context).setUserProperty(key.key, value)
     }
 
     override fun viewScreen(screenName: String, clazz: Class<*>, mapOfParams: Map<String, String>) {
-        val bundle = Bundle().apply {
-            putString(FirebaseAnalytics.Param.SCREEN_NAME, screenName)
-            putString(FirebaseAnalytics.Param.SCREEN_CLASS, clazz.simpleName)
-            for (x in mapOfParams) {
-                putString(x.key, x.value)
-            }
-        }
         if (BuildConfig.DEBUG) {
-            Log.i("Flashback", "Analytics Screen viewed $bundle")
+            Log.i("Flashback", "Analytics Screen viewed $screenName - $mapOfParams")
         }
-        FirebaseAnalytics.getInstance(context).logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, bundle)
+        if (enableAnalytics) {
+            val bundle = Bundle().apply {
+                putString(FirebaseAnalytics.Param.SCREEN_NAME, screenName)
+                putString(FirebaseAnalytics.Param.SCREEN_CLASS, clazz.simpleName)
+                for (x in mapOfParams) {
+                    putString(x.key, x.value)
+                }
+            }
+            FirebaseAnalytics.getInstance(context).logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, bundle)
+        }
     }
 
     override fun rssViewScreen(screenName: String, clazz: Class<*>, mapOfParams: Map<String, String>) {

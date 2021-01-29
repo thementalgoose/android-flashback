@@ -12,6 +12,8 @@ import tmg.flashback.controllers.DeviceController
 import tmg.flashback.controllers.NotificationController
 import tmg.flashback.extensions.updateAllWidgets
 import tmg.flashback.managers.analytics.UserPropertiesManager
+import tmg.flashback.managers.analytics.UserProperty
+import tmg.flashback.managers.analytics.UserProperty.*
 import tmg.flashback.managers.remoteconfig.RemoteConfigManager
 import tmg.flashback.notifications.PushNotificationManager
 
@@ -59,9 +61,9 @@ class FlashbackStartup(
         notificationsOptIn()
 
         // Initialise user properties
-        analyticsUserProperties.setDeviceModel(Build.MODEL)
-        analyticsUserProperties.setOsVersion(Build.VERSION.SDK_INT.toString())
-        analyticsUserProperties.setAppVersion(BuildConfig.VERSION_NAME)
+        analyticsUserProperties.setProperty(DEVICE_MODEL, Build.MODEL)
+        analyticsUserProperties.setProperty(OS_VERSION, Build.VERSION.SDK_INT.toString())
+        analyticsUserProperties.setProperty(APP_VERSION, BuildConfig.VERSION_NAME)
 
         // Update Widgets
         application.updateAllWidgets()
