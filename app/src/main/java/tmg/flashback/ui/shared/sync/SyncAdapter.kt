@@ -3,13 +3,15 @@ package tmg.flashback.ui.shared.sync
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import org.koin.core.KoinComponent
-import org.koin.core.inject
+import org.koin.core.component.KoinApiExtension
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import tmg.flashback.R
 import tmg.flashback.repo.config.RemoteConfigRepository
 import tmg.flashback.repo.pref.UserRepository
 import tmg.flashback.ui.shared.viewholders.*
 
+@KoinApiExtension
 abstract class SyncAdapter<T> : RecyclerView.Adapter<RecyclerView.ViewHolder>(), KoinComponent {
 
     private val prefsRepo: UserRepository by inject()
