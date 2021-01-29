@@ -70,18 +70,16 @@ abstract class BaseActivity : CommonActivity() {
      * Method to be ran when you want to register that a new screen has been displayed in analytics
      */
     fun recordScreenViewed() {
-        if (analyticsManager.enableAnalytics) {
-            val analyticsAttributes = try {
-                analyticsCustomAttributes
-            } catch (e: NullPointerException) {
-                emptyMap()
-            }
-            analyticsManager.viewScreen(
-                    screenName = analyticsScreenName,
-                    clazz = this.javaClass,
-                    mapOfParams = analyticsAttributes
-            )
+        val analyticsAttributes = try {
+            analyticsCustomAttributes
+        } catch (e: NullPointerException) {
+            emptyMap()
         }
+        analyticsManager.viewScreen(
+                screenName = analyticsScreenName,
+                clazz = this.javaClass,
+                mapOfParams = analyticsAttributes
+        )
     }
 
     @StyleRes
