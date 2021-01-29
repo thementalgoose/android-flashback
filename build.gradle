@@ -17,12 +17,12 @@ buildscript {
     ext.slidr = "2.1.0"
 
     ext.tmg_utils = "2.0.1"
-    ext.tmg_components = "3.0.0"
+    ext.tmg_components = "3.0.1"
     ext.tmg_labelled_progressbar = "1.0.6"
 
     ext.lottie = "3.4.0"
 
-    ext.firebase_bom = "26.1.0"
+    ext.firebase_bom = "26.4.0"
 
     ext.kotlinCompilerArgs = [
             "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi",
@@ -39,9 +39,9 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.1'
+        classpath 'com.android.tools.build:gradle:4.1.2'
         classpath "com.github.triplet.gradle:play-publisher:3.0.0"
-        classpath 'com.google.gms:google-services:4.3.4'
+        classpath 'com.google.gms:google-services:4.3.5'
         classpath "org.koin:koin-gradle-plugin:$koin_version"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'io.fabric.tools:gradle:1.31.2'
