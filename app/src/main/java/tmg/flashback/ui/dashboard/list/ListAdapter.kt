@@ -17,21 +17,12 @@ class ListAdapter(
     val buttonClicked: (String) -> Unit
 ): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private var toggle: Boolean = false
-
     var list: List<ListItem> = emptyList()
         set(value) {
             val result = DiffUtil.calculateDiff(DiffCallback(field, value))
             field = value
             result.dispatchUpdatesTo(this)
         }
-
-    fun setToggle(toggle: Boolean) {
-        this.toggle = toggle
-        List(list.size) {
-            notifyItemChanged(it, true)
-        }
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(viewType, parent, false)
@@ -73,6 +64,7 @@ class ListAdapter(
         private val oldList: List<ListItem>,
         private val newList: List<ListItem>
     ): DiffUtil.Callback() {
+
         override fun getOldListSize() = oldList.size
 
         override fun getNewListSize() = newList.size
