@@ -78,7 +78,9 @@ internal class CrashControllerTest: BaseTest() {
     //region Logging
 
     @Test
-    fun `CrashController log msg forwards to firebase`() {
+    fun `CrashController log msg forwards to firebase if toggle is enabled`() {
+        every { mockDeviceRepository.crashReporting } returns true
+
         initSUT()
         sut.log("msg")
 
@@ -86,12 +88,35 @@ internal class CrashControllerTest: BaseTest() {
     }
 
     @Test
-    fun `CrashController log msg with exception forwards to firebase`() {
+    fun `CrashController log msg forwards to firebase if toggle is disabled`() {
+        every { mockDeviceRepository.crashReporting } returns false
+
+        initSUT()
+        sut.log("msg")
+
+        verify(exactly = 0) { mockFirebaseCrashReportManager.logError("msg") }
+    }
+
+    @Test
+    fun `CrashController log msg with exception forwards to firebase if toggle is enabled`() {
+        every { mockDeviceRepository.crashReporting } returns true
+
         val exception = RuntimeException()
         initSUT()
         sut.logError(exception, "msg")
 
         verify { mockFirebaseCrashReportManager.logException(exception, "msg") }
+    }
+
+    @Test
+    fun `CrashController log msg with exception forwards to firebase if toggle is disabled`() {
+        every { mockDeviceRepository.crashReporting } returns false
+
+        val exception = RuntimeException()
+        initSUT()
+        sut.logError(exception, "msg")
+
+        verify(exactly = 0) { mockFirebaseCrashReportManager.logException(exception, "msg") }
     }
 
     //endregion
