@@ -147,7 +147,7 @@
         <br/>• Adds ability to view website link for RSS sources
         <br/>• Fixes back behavior through the app
         <br/>• Other minor bug fixes and crash fixes]]></string>
-    <string name="release_46"><![CDATA[<b>5.6.5</b> - Widget support!
+    <string name="release_47"><![CDATA[<b>5.6.7</b> - Widget support!
         <br/>• Adds an "up next" widget for your home screen!
         <br/>• Fixes over-animation throughout menu list when nothing seems to change
         <br/>• Minor optimisations for tablet layout sizing
