@@ -2,10 +2,6 @@ package tmg.flashback.ui.dashboard
 
 import android.content.Intent
 import android.os.Bundle
-import android.transition.Transition
-import android.util.Log
-import android.widget.Toast
-import androidx.annotation.StyleRes
 import com.discord.panels.OverlappingPanelsLayout
 import com.discord.panels.OverlappingPanelsLayout.Panel.CENTER
 import com.discord.panels.OverlappingPanelsLayout.Panel.END
@@ -14,7 +10,6 @@ import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.R
 import tmg.flashback.controllers.SeasonController
-import tmg.flashback.extensions.isLightMode
 import tmg.flashback.ui.base.BaseActivity
 import tmg.flashback.ui.dashboard.list.ListFragment
 import tmg.flashback.ui.dashboard.search.SearchFragment

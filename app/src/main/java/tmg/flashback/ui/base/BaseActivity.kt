@@ -8,7 +8,6 @@ import org.koin.android.ext.android.inject
 import tmg.flashback.R
 import tmg.flashback.extensions.isLightMode
 import tmg.flashback.managers.analytics.AnalyticsManager
-import tmg.flashback.data.pref.DeviceRepository
 import tmg.flashback.data.pref.UserRepository
 import tmg.utilities.lifecycle.common.CommonActivity
 import java.lang.NullPointerException

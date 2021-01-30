@@ -5,7 +5,6 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
-import tmg.flashback.controllers.AppHintsController
 import tmg.flashback.data.enums.AppHints
 import tmg.flashback.data.pref.UserRepository
 import tmg.flashback.testutils.BaseTest

@@ -1,16 +1,13 @@
 package tmg.flashback.ui
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import tmg.flashback.BuildConfig
 import tmg.flashback.controllers.FeatureController
 import tmg.flashback.ui.base.BaseViewModel
 import tmg.flashback.managers.appshortcuts.AppShortcutManager
 import tmg.flashback.managers.remoteconfig.RemoteConfigManager
-import tmg.flashback.data.pref.DeviceRepository
 import tmg.utilities.lifecycle.Event
 
 //region Inputs

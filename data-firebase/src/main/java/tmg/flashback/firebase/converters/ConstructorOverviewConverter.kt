@@ -1,7 +1,6 @@
 package tmg.flashback.firebase.converters
 
 import androidx.core.graphics.toColorInt
-import tmg.flashback.firebase.base.ConverterUtils.fromDate
 import tmg.flashback.firebase.base.ConverterUtils.fromDateRequired
 import tmg.flashback.firebase.base.ConverterUtils.isDateValid
 import tmg.flashback.firebase.currentYear

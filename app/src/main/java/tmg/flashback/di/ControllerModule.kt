@@ -3,7 +3,6 @@ package tmg.flashback.di
 import org.koin.dsl.module
 import tmg.flashback.controllers.*
 import tmg.flashback.managers.sharedprefs.SharedPreferenceManager
-import tmg.flashback.data.config.RemoteConfigRepository
 import tmg.flashback.data.pref.UserRepository
 import tmg.flashback.data.pref.DeviceRepository
 

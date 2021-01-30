@@ -10,7 +10,6 @@ import tmg.flashback.data.models.Response
 import tmg.flashback.rss.managers.RSSNetworkConnectivityManager
 import tmg.flashback.rss.prefs.RSSPrefsRepository
 import tmg.flashback.rss.repo.RSSRepository
-import tmg.flashback.rss.repo.enums.SupportedArticleSource
 import tmg.flashback.rss.repo.model.Article
 import tmg.flashback.rss.repo.model.ArticleSource
 import tmg.flashback.rss.testutils.BaseTest

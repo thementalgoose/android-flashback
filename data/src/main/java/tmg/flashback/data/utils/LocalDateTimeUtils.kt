@@ -3,7 +3,6 @@ package tmg.flashback.data.utils
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
 import org.threeten.bp.temporal.ChronoUnit
-import kotlin.math.absoluteValue
 
 /**
  * Days between start and end

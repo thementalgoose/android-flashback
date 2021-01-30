@@ -12,7 +12,6 @@ import tmg.flashback.data.db.stats.ConstructorRepository
 import tmg.flashback.data.db.stats.DriverRepository
 import tmg.flashback.data.db.stats.HistoryRepository
 import tmg.flashback.data.db.stats.SeasonOverviewRepository
-import tmg.flashback.rss.network.RSS
 import tmg.flashback.rss.repo.RSSRepository
 
 internal val mockModules = module(override = true) {
