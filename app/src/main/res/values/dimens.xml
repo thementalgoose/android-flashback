@@ -67,6 +67,7 @@
     <dimen name="dashboardTrackStatusSize">16dp</dimen>
 
     <dimen name="dashboardUpNextTrackWidth">80dp</dimen>
+    <dimen name="dashboardUpNextTrackHeight">60dp</dimen>
     <dimen name="dashboardUpNextImageSize">16dp</dimen>
 
     <dimen name="standingsDriverSize">32dp</dimen>

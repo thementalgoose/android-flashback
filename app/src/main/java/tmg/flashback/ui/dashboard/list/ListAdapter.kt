@@ -24,6 +24,13 @@ class ListAdapter(
             result.dispatchUpdatesTo(this)
         }
 
+    fun refreshUpNext() {
+        val index = list.indexOfFirst { it is ListItem.UpNext }
+        if (index != -1) {
+            notifyItemChanged(index)
+        }
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(viewType, parent, false)
         return when (viewType) {

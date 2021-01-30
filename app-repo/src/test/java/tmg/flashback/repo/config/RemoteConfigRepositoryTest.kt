@@ -3,6 +3,7 @@ package tmg.flashback.repo.config
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
+import tmg.flashback.repo.models.Timestamp
 import tmg.flashback.repo.models.remoteconfig.SupportedArticleSource
 import tmg.flashback.repo.models.remoteconfig.UpNextSchedule
 
@@ -39,8 +40,8 @@ internal class RemoteConfigRepositoryTest {
     @Test
     fun `RemoteConfigRepository up next list returns non cached value`() {
 
-        val input1 = listOf(UpNextSchedule(1,0,"", LocalDate.now(),null,null,null,null))
-        val input2 = listOf(UpNextSchedule(2,0,"", LocalDate.now(),null,null,null,null))
+        val input1 = listOf(UpNextSchedule(1,0,"", Timestamp(LocalDate.now()),null,null,null))
+        val input2 = listOf(UpNextSchedule(2,0,"", Timestamp(LocalDate.now()),null,null,null))
 
         stub.inputUpNext = input1
         assertEquals(stub.upNext, input1)

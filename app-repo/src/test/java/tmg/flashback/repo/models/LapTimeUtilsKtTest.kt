@@ -9,7 +9,7 @@ import tmg.flashback.repo.utils.addDelta
 import tmg.flashback.repo.utils.toLapTime
 import tmg.flashback.repo.utils.toLocalTime
 
-class TimeUtilsKtTest {
+class LapTimeUtilsKtTest {
 
 
     @ParameterizedTest(name = "Converting {0} to a standard format results in {1}")

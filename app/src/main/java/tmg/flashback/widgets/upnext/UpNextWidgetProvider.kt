@@ -15,6 +15,7 @@ import androidx.annotation.DrawableRes
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
 import org.threeten.bp.LocalDate
+import org.threeten.bp.format.DateTimeFormatter
 import org.threeten.bp.temporal.ChronoUnit
 import tmg.flashback.BuildConfig
 import tmg.flashback.R
@@ -25,8 +26,10 @@ import tmg.flashback.firebase.crash.FirebaseCrashManagerImpl
 import tmg.flashback.managers.remoteconfig.FirebaseRemoteConfigManager
 import tmg.flashback.managers.sharedprefs.SharedPreferenceManager
 import tmg.flashback.repo.models.remoteconfig.UpNextSchedule
+import tmg.flashback.repo.utils.daysBetween
 import tmg.flashback.ui.SplashActivity
 import tmg.flashback.ui.utils.getFlagResourceAlpha3
+import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.toEnum
 import java.lang.Exception
 import kotlin.math.absoluteValue
@@ -93,16 +96,28 @@ class UpNextWidgetProvider : AppWidgetProvider() {
 
                 }
 
-                when (val days = ChronoUnit.DAYS.between(nextEvent.date, LocalDate.now()).toInt().absoluteValue) {
+                when (val days = daysBetween(LocalDate.now(), nextEvent.timestamp.originalDate)) {
                     0 -> {
-                        remoteView.setTextViewText(R.id.days, context.getString(R.string.dashboard_up_next_today))
-                        remoteView.setTextViewText(R.id.daystogo, "")
-                        remoteView.setViewVisibility(R.id.daystogo, View.INVISIBLE)
+                        nextEvent.timestamp.ifDate {
+                            remoteView.setTextViewText(R.id.days, context.getString(R.string.dashboard_up_next_date_today))
+                            remoteView.setTextViewText(R.id.daystogo, "")
+                            remoteView.setViewVisibility(R.id.daystogo, View.INVISIBLE)
+                        }
+                        nextEvent.timestamp.ifDateAndTime { utc, local ->
+                            remoteView.setTextViewText(R.id.days, context.getString(R.string.dashboard_up_next_date_starts_at_today, local.toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm"))))
+                            if (local.toLocalTime() == utc.toLocalTime()) {
+                                remoteView.setTextViewText(R.id.daystogo, "")
+                                remoteView.setViewVisibility(R.id.daystogo, View.INVISIBLE)
+                            } else {
+                                remoteView.setTextViewText(R.id.daystogo, context.getString(R.string.dashboard_up_next_date_localtime).fromHtml())
+                                remoteView.setViewVisibility(R.id.daystogo, View.VISIBLE)
+                            }
+                        }
                     }
                     else -> {
                         remoteView.setTextViewText(R.id.days, days.toString())
                         remoteView.setViewVisibility(R.id.daystogo, View.VISIBLE)
-                        remoteView.setTextViewText(R.id.daystogo, context.resources.getQuantityText(R.plurals.dashboard_up_next_days_to_go, days))
+                        remoteView.setTextViewText(R.id.daystogo, context.resources.getQuantityText(R.plurals.dashboard_up_next_suffix_days, days))
                     }
                 }
 

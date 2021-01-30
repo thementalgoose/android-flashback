@@ -6,6 +6,7 @@ import tmg.flashback.firebase.base.ConverterUtils.fromDateRequired
 import tmg.flashback.firebase.base.ConverterUtils.fromTime
 import tmg.flashback.firebase.models.FUpNext
 import tmg.flashback.firebase.models.FUpNextSchedule
+import tmg.flashback.repo.models.Timestamp
 import tmg.flashback.repo.models.remoteconfig.UpNextSchedule
 
 fun FUpNext.convert(): List<UpNextSchedule> {
@@ -32,8 +33,7 @@ fun FUpNextSchedule.convert(): UpNextSchedule? {
         season = this.s,
         round = this.r ?: 0,
         name = this.name,
-        date = date,
-        time = fromTime(this.time),
+        timestamp = Timestamp(date, fromTime(this.time)),
         flag = flag,
         circuitId = circuit,
         circuitName = circuitName
