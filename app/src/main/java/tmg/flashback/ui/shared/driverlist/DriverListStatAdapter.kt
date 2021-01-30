@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.layout_constructor_driver_label.view.*
 import tmg.flashback.R
-import tmg.flashback.repo.models.stats.ConstructorOverviewDriverStanding
+import tmg.flashback.data.models.stats.ConstructorOverviewDriverStanding
 import tmg.flashback.ui.utils.getFlagResourceAlpha3
 import tmg.utilities.extensions.ordinalAbbreviation
 

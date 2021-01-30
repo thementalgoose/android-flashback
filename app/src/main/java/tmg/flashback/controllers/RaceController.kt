@@ -1,6 +1,6 @@
 package tmg.flashback.controllers
 
-import tmg.flashback.repo.pref.UserRepository
+import tmg.flashback.data.pref.UserRepository
 
 /**
  * Controller for any user preferences configured in the

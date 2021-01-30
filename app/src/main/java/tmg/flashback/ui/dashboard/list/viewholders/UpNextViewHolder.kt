@@ -9,9 +9,9 @@ import org.threeten.bp.format.DateTimeFormatter
 import org.threeten.bp.temporal.ChronoUnit
 import tmg.flashback.R
 import tmg.flashback.constants.TrackLayout
-import tmg.flashback.repo.utils.daysBetween
-import tmg.flashback.repo.utils.hoursAndMins
-import tmg.flashback.repo.utils.secondsBetween
+import tmg.flashback.data.utils.daysBetween
+import tmg.flashback.data.utils.hoursAndMins
+import tmg.flashback.data.utils.secondsBetween
 import tmg.flashback.ui.dashboard.list.ListItem
 import tmg.flashback.ui.utils.getFlagResourceAlpha3
 import tmg.utilities.extensions.fromHtml

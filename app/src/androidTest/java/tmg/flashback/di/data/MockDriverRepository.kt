@@ -2,8 +2,8 @@ package tmg.flashback.di.data
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import tmg.flashback.repo.db.stats.DriverRepository
-import tmg.flashback.repo.models.stats.DriverOverview
+import tmg.flashback.data.db.stats.DriverRepository
+import tmg.flashback.data.models.stats.DriverOverview
 
 internal object MockDriverRepository: DriverRepository {
     override fun getDriverOverview(driverId: String): Flow<DriverOverview?> = flow {

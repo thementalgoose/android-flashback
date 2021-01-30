@@ -6,9 +6,9 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
-import tmg.flashback.repo.enums.BarAnimation
-import tmg.flashback.repo.enums.ThemePref
-import tmg.flashback.repo.pref.UserRepository
+import tmg.flashback.data.enums.BarAnimation
+import tmg.flashback.data.enums.ThemePref
+import tmg.flashback.data.pref.UserRepository
 import tmg.flashback.testutils.BaseTest
 import tmg.utilities.extensions.isInDayMode
 

@@ -2,7 +2,7 @@ package tmg.flashback.controllers
 
 import org.threeten.bp.LocalDate
 import tmg.flashback.BuildConfig
-import tmg.flashback.repo.pref.DeviceRepository
+import tmg.flashback.data.pref.DeviceRepository
 import java.lang.RuntimeException
 import java.util.*
 

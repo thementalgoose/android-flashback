@@ -1,5 +1,5 @@
-include ':rss'
-include ':app-firebase'
-include ':app-repo'
+include ':app-rss'
+include ':data-firebase'
+include ':data'
 include ':app'
 rootProject.name = "android-flashback"

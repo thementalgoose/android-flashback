@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.firebase.crash.FirebaseCrashManager
-import tmg.flashback.repo.pref.DeviceRepository
+import tmg.flashback.data.pref.DeviceRepository
 import tmg.flashback.testutils.BaseTest
 import java.lang.RuntimeException
 

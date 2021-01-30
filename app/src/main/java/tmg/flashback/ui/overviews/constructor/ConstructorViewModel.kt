@@ -17,8 +17,8 @@ import tmg.flashback.ui.overviews.constructor.summary.ConstructorSummaryItem
 import tmg.flashback.ui.overviews.constructor.summary.addError
 import tmg.flashback.ui.overviews.driver.summary.PipeType
 import tmg.flashback.managers.networkconnectivity.NetworkConnectivityManager
-import tmg.flashback.repo.db.stats.ConstructorRepository
-import tmg.flashback.repo.models.stats.ConstructorOverview
+import tmg.flashback.data.db.stats.ConstructorRepository
+import tmg.flashback.data.models.stats.ConstructorOverview
 import tmg.flashback.ui.shared.sync.SyncDataItem
 import tmg.flashback.ui.shared.viewholders.DataUnavailable
 import tmg.flashback.ui.utils.position

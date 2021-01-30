@@ -6,7 +6,7 @@ import android.util.Log
 import com.google.firebase.analytics.FirebaseAnalytics
 import tmg.flashback.BuildConfig
 import tmg.flashback.managers.analytics.UserPropertiesManager
-import tmg.flashback.repo.pref.DeviceRepository
+import tmg.flashback.data.pref.DeviceRepository
 import tmg.flashback.rss.managers.RSSAnalyticsManager
 
 class FirebaseAnalyticsManager(

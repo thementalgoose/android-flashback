@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.view_dashboard_season_constructor.view.*
 import tmg.flashback.R
 import tmg.flashback.ui.dashboard.season.SeasonItem
-import tmg.flashback.repo.enums.BarAnimation
+import tmg.flashback.data.enums.BarAnimation
 import tmg.flashback.ui.shared.driverlist.DriverListAdapter
 import tmg.flashback.ui.utils.getColor
 import tmg.utilities.extensions.views.context

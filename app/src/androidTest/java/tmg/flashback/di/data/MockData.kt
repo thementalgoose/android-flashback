@@ -4,8 +4,8 @@ import android.graphics.Color
 import androidx.core.graphics.toColor
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
-import tmg.flashback.repo.models.ConstructorDriver
-import tmg.flashback.repo.models.stats.*
+import tmg.flashback.data.models.ConstructorDriver
+import tmg.flashback.data.models.stats.*
 import kotlin.math.round
 
 /**

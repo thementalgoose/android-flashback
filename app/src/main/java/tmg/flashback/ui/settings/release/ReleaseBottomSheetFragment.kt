@@ -5,7 +5,7 @@ import org.koin.android.ext.android.inject
 import tmg.flashback.R
 import tmg.flashback.constants.Releases
 import tmg.flashback.controllers.ReleaseNotesController
-import tmg.flashback.repo.pref.DeviceRepository
+import tmg.flashback.data.pref.DeviceRepository
 import tmg.flashback.ui.base.BaseBottomSheetFragment
 import tmg.utilities.extensions.fromHtml
 

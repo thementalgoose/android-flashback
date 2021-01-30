@@ -16,7 +16,7 @@ import tmg.flashback.controllers.ReleaseNotesController
 import tmg.flashback.extensions.updateAllWidgets
 import tmg.flashback.managers.buildconfig.BuildConfigManager
 import tmg.flashback.managers.remoteconfig.RemoteConfigManager
-import tmg.flashback.repo.db.DataRepository
+import tmg.flashback.data.db.DataRepository
 import tmg.utilities.lifecycle.Event
 
 //region Inputs

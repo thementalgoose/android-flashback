@@ -9,9 +9,9 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.ValueSource
-import tmg.flashback.repo.config.RemoteConfigRepository
-import tmg.flashback.repo.enums.NotificationRegistration
-import tmg.flashback.repo.pref.DeviceRepository
+import tmg.flashback.data.config.RemoteConfigRepository
+import tmg.flashback.data.enums.NotificationRegistration
+import tmg.flashback.data.pref.DeviceRepository
 import tmg.flashback.testutils.BaseTest
 
 internal class NotificationControllerTest: BaseTest() {

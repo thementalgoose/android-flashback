@@ -7,8 +7,8 @@ import org.koin.core.component.KoinApiExtension
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import tmg.flashback.R
-import tmg.flashback.repo.config.RemoteConfigRepository
-import tmg.flashback.repo.pref.UserRepository
+import tmg.flashback.data.config.RemoteConfigRepository
+import tmg.flashback.data.pref.UserRepository
 import tmg.flashback.ui.shared.viewholders.*
 
 @KoinApiExtension

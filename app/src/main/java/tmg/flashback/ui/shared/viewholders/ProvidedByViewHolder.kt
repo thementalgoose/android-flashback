@@ -8,7 +8,7 @@ import tmg.components.about.AboutThisAppActivity
 import tmg.flashback.R
 import tmg.flashback.constants.AboutThisAppConfig
 import tmg.flashback.extensions.isLightMode
-import tmg.flashback.repo.enums.ThemePref
+import tmg.flashback.data.enums.ThemePref
 import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.views.context
 import tmg.utilities.extensions.views.getString

@@ -1,9 +1,9 @@
 package tmg.flashback.controllers
 
 import android.content.Context
-import tmg.flashback.repo.enums.BarAnimation
-import tmg.flashback.repo.enums.ThemePref
-import tmg.flashback.repo.pref.UserRepository
+import tmg.flashback.data.enums.BarAnimation
+import tmg.flashback.data.enums.ThemePref
+import tmg.flashback.data.pref.UserRepository
 import tmg.utilities.extensions.isInDayMode
 
 /**

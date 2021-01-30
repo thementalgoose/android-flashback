@@ -23,8 +23,8 @@ import tmg.flashback.R
 import tmg.flashback.constants.AboutThisAppConfig
 import tmg.flashback.extensions.updateAllWidgets
 import tmg.flashback.ui.base.BaseActivity
-import tmg.flashback.repo.enums.BarAnimation
-import tmg.flashback.repo.enums.ThemePref
+import tmg.flashback.data.enums.BarAnimation
+import tmg.flashback.data.enums.ThemePref
 import tmg.flashback.rss.ui.settings.RSSSettingsActivity
 import tmg.flashback.ui.settings.privacy.PrivacyPolicyActivity
 import tmg.flashback.ui.settings.release.ReleaseActivity

@@ -4,9 +4,9 @@ import androidx.annotation.*
 import org.threeten.bp.LocalDate
 import tmg.flashback.R
 import tmg.flashback.ui.overviews.driver.summary.PipeType
-import tmg.flashback.repo.enums.BarAnimation
-import tmg.flashback.repo.enums.RaceStatus
-import tmg.flashback.repo.models.stats.SlimConstructor
+import tmg.flashback.data.enums.BarAnimation
+import tmg.flashback.data.enums.RaceStatus
+import tmg.flashback.data.models.stats.SlimConstructor
 import tmg.flashback.ui.shared.sync.SyncDataItem
 
 sealed class DriverSeasonItem(

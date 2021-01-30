@@ -25,8 +25,8 @@ import tmg.flashback.firebase.crash.FirebaseCrashManager
 import tmg.flashback.firebase.crash.FirebaseCrashManagerImpl
 import tmg.flashback.managers.remoteconfig.FirebaseRemoteConfigManager
 import tmg.flashback.managers.sharedprefs.SharedPreferenceManager
-import tmg.flashback.repo.models.remoteconfig.UpNextSchedule
-import tmg.flashback.repo.utils.daysBetween
+import tmg.flashback.data.models.remoteconfig.UpNextSchedule
+import tmg.flashback.data.utils.daysBetween
 import tmg.flashback.ui.SplashActivity
 import tmg.flashback.ui.utils.getFlagResourceAlpha3
 import tmg.utilities.extensions.fromHtml

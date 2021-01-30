@@ -8,7 +8,7 @@ import kotlinx.android.synthetic.main.view_race_race_result.view.*
 import tmg.flashback.R
 import tmg.flashback.extensions.iconRes
 import tmg.flashback.ui.race.RaceModel
-import tmg.flashback.repo.enums.isStatusFinished
+import tmg.flashback.data.enums.isStatusFinished
 import tmg.flashback.ui.utils.getColor
 import tmg.flashback.ui.utils.getFlagResourceAlpha3
 import tmg.flashback.ui.utils.position

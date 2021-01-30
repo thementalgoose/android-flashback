@@ -1,6 +1,6 @@
 package tmg.flashback.controllers
 
-import tmg.flashback.repo.config.RemoteConfigRepository
+import tmg.flashback.data.config.RemoteConfigRepository
 import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.rss.repo.enums.SupportedArticleSource
 

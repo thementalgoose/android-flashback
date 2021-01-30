@@ -14,11 +14,11 @@ import tmg.flashback.controllers.AppearanceController
 import tmg.flashback.controllers.RaceController
 import tmg.flashback.ui.race.RaceAdapterType.*
 import tmg.flashback.managers.networkconnectivity.NetworkConnectivityManager
-import tmg.flashback.repo.db.stats.SeasonOverviewRepository
-import tmg.flashback.repo.enums.BarAnimation
-import tmg.flashback.repo.models.stats.LapTime
-import tmg.flashback.repo.models.stats.Round
-import tmg.flashback.repo.models.stats.RoundDriver
+import tmg.flashback.data.db.stats.SeasonOverviewRepository
+import tmg.flashback.data.enums.BarAnimation
+import tmg.flashback.data.models.stats.LapTime
+import tmg.flashback.data.models.stats.Round
+import tmg.flashback.data.models.stats.RoundDriver
 import tmg.flashback.ui.shared.sync.SyncDataItem
 import tmg.flashback.ui.shared.viewholders.DataUnavailable
 import tmg.flashback.testutils.*

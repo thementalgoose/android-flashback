@@ -14,8 +14,8 @@ import tmg.flashback.extensions.label
 import tmg.flashback.managers.analytics.AnalyticsManager
 import tmg.flashback.notifications.FirebasePushNotificationManager.Companion.topicQualifying
 import tmg.flashback.notifications.FirebasePushNotificationManager.Companion.topicRace
-import tmg.flashback.repo.enums.BarAnimation.*
-import tmg.flashback.repo.enums.ThemePref.*
+import tmg.flashback.data.enums.BarAnimation.*
+import tmg.flashback.data.enums.ThemePref.*
 import tmg.flashback.ui.settings.SettingsOptions.*
 import tmg.flashback.testutils.*
 import tmg.flashback.testutils.assertDataEventValue

@@ -17,8 +17,8 @@ import tmg.flashback.ui.base.BaseViewModel
 import tmg.flashback.controllers.AppearanceController
 import tmg.flashback.ui.overviews.driver.summary.PipeType
 import tmg.flashback.managers.networkconnectivity.NetworkConnectivityManager
-import tmg.flashback.repo.db.stats.DriverRepository
-import tmg.flashback.repo.models.stats.DriverOverviewStanding
+import tmg.flashback.data.db.stats.DriverRepository
+import tmg.flashback.data.models.stats.DriverOverviewStanding
 import tmg.flashback.ui.shared.sync.SyncDataItem
 import tmg.flashback.ui.shared.viewholders.DataUnavailable
 import tmg.flashback.ui.utils.position

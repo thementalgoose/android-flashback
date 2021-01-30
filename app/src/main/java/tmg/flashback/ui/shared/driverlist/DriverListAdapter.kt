@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.layout_constructor_driver.view.*
 import tmg.flashback.R
-import tmg.flashback.repo.models.stats.Driver
+import tmg.flashback.data.models.stats.Driver
 import tmg.flashback.ui.utils.getFlagResourceAlpha3
 
 class DriverListAdapter: RecyclerView.Adapter<DriverListAdapter.ViewHolder>() {

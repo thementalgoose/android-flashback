@@ -19,7 +19,7 @@ import tmg.flashback.ui.base.BaseActivity
 import tmg.flashback.ui.dashboard.list.ListFragment
 import tmg.flashback.ui.dashboard.search.SearchFragment
 import tmg.flashback.ui.dashboard.season.SeasonFragment
-import tmg.flashback.repo.config.RemoteConfigRepository
+import tmg.flashback.data.config.RemoteConfigRepository
 import tmg.flashback.ui.base.ThemeTypes
 import tmg.flashback.ui.settings.release.ReleaseBottomSheetFragment
 import tmg.utilities.extensions.loadFragment

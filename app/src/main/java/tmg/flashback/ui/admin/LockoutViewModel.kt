@@ -6,8 +6,8 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.*
 import tmg.flashback.ui.base.BaseViewModel
-import tmg.flashback.repo.db.DataRepository
-import tmg.flashback.repo.models.remoteconfig.AppLockout
+import tmg.flashback.data.db.DataRepository
+import tmg.flashback.data.models.remoteconfig.AppLockout
 import tmg.flashback.managers.buildconfig.BuildConfigManager
 import tmg.utilities.lifecycle.DataEvent
 import tmg.utilities.lifecycle.Event

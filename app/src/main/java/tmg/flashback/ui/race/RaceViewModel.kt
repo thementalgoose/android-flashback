@@ -13,8 +13,8 @@ import tmg.flashback.controllers.AppHintsController
 import tmg.flashback.controllers.AppearanceController
 import tmg.flashback.controllers.RaceController
 import tmg.flashback.managers.networkconnectivity.NetworkConnectivityManager
-import tmg.flashback.repo.db.stats.SeasonOverviewRepository
-import tmg.flashback.repo.models.stats.*
+import tmg.flashback.data.db.stats.SeasonOverviewRepository
+import tmg.flashback.data.models.stats.*
 import tmg.flashback.ui.shared.viewholders.DataUnavailable
 import tmg.flashback.ui.shared.sync.SyncDataItem
 import tmg.flashback.ui.utils.SeasonRound

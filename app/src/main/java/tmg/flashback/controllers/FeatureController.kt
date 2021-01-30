@@ -1,7 +1,7 @@
 package tmg.flashback.controllers
 
 import org.threeten.bp.LocalDate
-import tmg.flashback.repo.config.RemoteConfigRepository
+import tmg.flashback.data.config.RemoteConfigRepository
 
 /**
  * All major features in the app
