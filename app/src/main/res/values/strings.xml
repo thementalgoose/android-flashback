@@ -150,8 +150,13 @@
         <item quantity="one">day to go</item>
         <item quantity="other">days to go</item>
     </plurals>
+    <string name="dashboard_up_next_time_hours">%dh %dm</string>
+    <string name="dashboard_up_next_time_minutes">%d mins</string>
+    <string name="dashboard_up_next_started_past">Started %s</string>
+    <string name="dashboard_up_next_now">Now</string>
     <string name="dashboard_up_next_today">Today</string>
     <string name="dashboard_up_next_date"><![CDATA[Round <b>%d</b><br/><b>%s</b>]]></string>
+    <string name="dashboard_up_next_date_time"><![CDATA[Round <b>%d</b><br/><b>%s</b><br/>%s]]></string>
 
     <string name="dashboard_season_list_extra_title">Extras</string>
     <string name="dashboard_season_list_extra_rss_title">RSS feed</string>
