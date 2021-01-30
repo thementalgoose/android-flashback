@@ -170,8 +170,8 @@
     <string name="dashboard_up_next_datetime_hour_min">%d hrs %d mins</string>
     <string name="dashboard_up_next_datetime_hour">%d hours</string>
     <plurals name="dashboard_up_next_datetime_started_mins">
-        <item quantity="one">Started a minute ago</item>
         <item quantity="zero">Starting now!</item>
+        <item quantity="one">Started a minute ago</item>
         <item quantity="other">Started %d minutes ago</item>
     </plurals>
     <plurals name="dashboard_up_next_datetime_started_hour">
