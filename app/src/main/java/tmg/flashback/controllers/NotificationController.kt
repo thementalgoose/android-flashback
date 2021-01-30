@@ -1,9 +1,9 @@
 package tmg.flashback.controllers
 
 import android.os.Build
-import tmg.flashback.repo.config.RemoteConfigRepository
-import tmg.flashback.repo.enums.NotificationRegistration
-import tmg.flashback.repo.pref.DeviceRepository
+import tmg.flashback.data.config.RemoteConfigRepository
+import tmg.flashback.data.enums.NotificationRegistration
+import tmg.flashback.data.pref.DeviceRepository
 
 /**
  * Control the notifications in the app / letting the user know something

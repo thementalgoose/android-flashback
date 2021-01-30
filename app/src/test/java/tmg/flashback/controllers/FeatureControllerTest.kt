@@ -6,7 +6,7 @@ import io.mockk.verify
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import tmg.flashback.controllers.FeatureController
-import tmg.flashback.repo.config.RemoteConfigRepository
+import tmg.flashback.data.config.RemoteConfigRepository
 import tmg.flashback.testutils.BaseTest
 
 internal class FeatureControllerTest: BaseTest() {

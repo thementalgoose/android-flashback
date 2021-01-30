@@ -6,8 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.layout_constructor_driver.view.*
 import kotlinx.android.synthetic.main.view_race_constructor.view.*
 import tmg.flashback.R
-import tmg.flashback.repo.enums.BarAnimation
-import tmg.flashback.repo.models.stats.Driver
+import tmg.flashback.data.enums.BarAnimation
+import tmg.flashback.data.models.stats.Driver
 import tmg.flashback.ui.race.RaceModel
 import tmg.flashback.ui.utils.getColor
 import tmg.flashback.ui.utils.getFlagResourceAlpha3

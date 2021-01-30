@@ -3,9 +3,9 @@ package tmg.flashback.di
 import org.koin.dsl.module
 import tmg.flashback.controllers.*
 import tmg.flashback.managers.sharedprefs.SharedPreferenceManager
-import tmg.flashback.repo.config.RemoteConfigRepository
-import tmg.flashback.repo.pref.UserRepository
-import tmg.flashback.repo.pref.DeviceRepository
+import tmg.flashback.data.config.RemoteConfigRepository
+import tmg.flashback.data.pref.UserRepository
+import tmg.flashback.data.pref.DeviceRepository
 
 val controllerModule = module {
 

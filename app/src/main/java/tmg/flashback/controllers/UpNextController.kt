@@ -1,8 +1,8 @@
 package tmg.flashback.controllers
 
 import org.threeten.bp.LocalDate
-import tmg.flashback.repo.config.RemoteConfigRepository
-import tmg.flashback.repo.models.remoteconfig.UpNextSchedule
+import tmg.flashback.data.config.RemoteConfigRepository
+import tmg.flashback.data.models.remoteconfig.UpNextSchedule
 
 /**
  * Up Next functionality on the home screen

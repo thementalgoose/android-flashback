@@ -1,8 +1,8 @@
 package tmg.flashback.controllers
 
 import tmg.flashback.constants.App.currentYear
-import tmg.flashback.repo.config.RemoteConfigRepository
-import tmg.flashback.repo.pref.UserRepository
+import tmg.flashback.data.config.RemoteConfigRepository
+import tmg.flashback.data.pref.UserRepository
 
 /**
  * All the preferences surrounding the season, list of all seasons

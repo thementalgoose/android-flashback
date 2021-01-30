@@ -2,7 +2,7 @@ package tmg.flashback.controllers
 
 import tmg.flashback.constants.Releases
 import tmg.flashback.managers.buildconfig.BuildConfigManager
-import tmg.flashback.repo.pref.DeviceRepository
+import tmg.flashback.data.pref.DeviceRepository
 
 /**
  * Controller around release notes being displayed in the app

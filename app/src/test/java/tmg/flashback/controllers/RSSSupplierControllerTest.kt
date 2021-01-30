@@ -5,8 +5,8 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import tmg.flashback.repo.config.RemoteConfigRepository
-import tmg.flashback.repo.models.remoteconfig.SupportedArticleSource
+import tmg.flashback.data.config.RemoteConfigRepository
+import tmg.flashback.data.models.remoteconfig.SupportedArticleSource
 import tmg.flashback.testutils.BaseTest
 
 internal class RSSSupplierControllerTest: BaseTest() {

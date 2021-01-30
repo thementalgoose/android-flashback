@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
 import tmg.flashback.BuildConfig
-import tmg.flashback.repo.pref.DeviceRepository
+import tmg.flashback.data.pref.DeviceRepository
 import tmg.flashback.testutils.BaseTest
 
 internal class DeviceControllerTest: BaseTest() {

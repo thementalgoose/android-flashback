@@ -11,9 +11,9 @@ import org.threeten.bp.LocalTime
 import tmg.flashback.constants.TrackLayout
 import tmg.flashback.extensions.circuitIcon
 import tmg.flashback.managers.networkconnectivity.NetworkConnectivityManager
-import tmg.flashback.repo.db.stats.CircuitRepository
-import tmg.flashback.repo.models.stats.Circuit
-import tmg.flashback.repo.models.stats.CircuitRace
+import tmg.flashback.data.db.stats.CircuitRepository
+import tmg.flashback.data.models.stats.Circuit
+import tmg.flashback.data.models.stats.CircuitRace
 import tmg.flashback.ui.shared.sync.SyncDataItem
 import tmg.flashback.testutils.*
 

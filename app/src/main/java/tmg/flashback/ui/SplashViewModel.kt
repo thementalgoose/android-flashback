@@ -10,7 +10,7 @@ import tmg.flashback.controllers.FeatureController
 import tmg.flashback.ui.base.BaseViewModel
 import tmg.flashback.managers.appshortcuts.AppShortcutManager
 import tmg.flashback.managers.remoteconfig.RemoteConfigManager
-import tmg.flashback.repo.pref.DeviceRepository
+import tmg.flashback.data.pref.DeviceRepository
 import tmg.utilities.lifecycle.Event
 
 //region Inputs

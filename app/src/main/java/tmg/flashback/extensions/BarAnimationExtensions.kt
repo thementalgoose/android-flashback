@@ -1,7 +1,7 @@
 package tmg.flashback.extensions
 
 import tmg.flashback.R
-import tmg.flashback.repo.enums.BarAnimation
+import tmg.flashback.data.enums.BarAnimation
 
 val BarAnimation.label: Int
     get() = when (this) {

@@ -15,10 +15,10 @@ import tmg.flashback.firebase.extensions.toJson
 import tmg.flashback.firebase.models.FAllSeasons
 import tmg.flashback.firebase.models.FSupportedSources
 import tmg.flashback.firebase.models.FUpNext
-import tmg.flashback.repo.config.RemoteConfigRepository
-import tmg.flashback.repo.models.remoteconfig.SupportedArticleSource
-import tmg.flashback.repo.models.remoteconfig.UpNextSchedule
-import tmg.flashback.repo.pref.DeviceRepository
+import tmg.flashback.data.config.RemoteConfigRepository
+import tmg.flashback.data.models.remoteconfig.SupportedArticleSource
+import tmg.flashback.data.models.remoteconfig.UpNextSchedule
+import tmg.flashback.data.pref.DeviceRepository
 import java.lang.Exception
 
 class FirebaseRemoteConfigManager(

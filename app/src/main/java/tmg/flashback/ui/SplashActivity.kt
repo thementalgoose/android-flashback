@@ -8,7 +8,7 @@ import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.R
 import tmg.flashback.managers.analytics.AnalyticsManager
-import tmg.flashback.repo.pref.DeviceRepository
+import tmg.flashback.data.pref.DeviceRepository
 import tmg.flashback.ui.dashboard.DashboardActivity
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent

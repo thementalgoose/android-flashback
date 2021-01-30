@@ -1,7 +1,7 @@
 package tmg.flashback.controllers
 
-import tmg.flashback.repo.enums.AppHints
-import tmg.flashback.repo.pref.UserRepository
+import tmg.flashback.data.enums.AppHints
+import tmg.flashback.data.pref.UserRepository
 
 /**
  * Manager to handle app hints around the app

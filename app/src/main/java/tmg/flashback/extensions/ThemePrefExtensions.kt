@@ -2,7 +2,7 @@ package tmg.flashback.extensions
 
 import android.content.Context
 import tmg.flashback.R
-import tmg.flashback.repo.enums.ThemePref
+import tmg.flashback.data.enums.ThemePref
 import tmg.utilities.extensions.isInDayMode
 
 val ThemePref.label: Int

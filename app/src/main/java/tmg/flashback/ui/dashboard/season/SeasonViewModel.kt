@@ -16,9 +16,9 @@ import tmg.flashback.controllers.*
 import tmg.flashback.controllers.NotificationController.Companion.daysUntilDataProvidedBannerMovedToBottom
 import tmg.flashback.managers.analytics.AnalyticsManager
 import tmg.flashback.managers.networkconnectivity.NetworkConnectivityManager
-import tmg.flashback.repo.db.stats.HistoryRepository
-import tmg.flashback.repo.db.stats.SeasonOverviewRepository
-import tmg.flashback.repo.models.stats.*
+import tmg.flashback.data.db.stats.HistoryRepository
+import tmg.flashback.data.db.stats.SeasonOverviewRepository
+import tmg.flashback.data.models.stats.*
 import tmg.flashback.ui.dashboard.DashboardActivity
 import tmg.flashback.ui.shared.sync.SyncDataItem
 import tmg.flashback.ui.shared.viewholders.DataUnavailable

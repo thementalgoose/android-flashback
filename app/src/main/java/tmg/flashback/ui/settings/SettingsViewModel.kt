@@ -12,8 +12,8 @@ import tmg.flashback.extensions.label
 import tmg.flashback.managers.analytics.AnalyticsManager
 import tmg.flashback.notifications.FirebasePushNotificationManager.Companion.topicQualifying
 import tmg.flashback.notifications.FirebasePushNotificationManager.Companion.topicRace
-import tmg.flashback.repo.enums.ThemePref
-import tmg.flashback.repo.enums.BarAnimation
+import tmg.flashback.data.enums.ThemePref
+import tmg.flashback.data.enums.BarAnimation
 import tmg.flashback.ui.utils.Selected
 import tmg.flashback.ui.utils.StringHolder
 import tmg.flashback.ui.utils.bottomsheet.BottomSheetItem

@@ -2,9 +2,9 @@ package tmg.flashback.ui.race
 
 import androidx.annotation.LayoutRes
 import tmg.flashback.R
-import tmg.flashback.repo.enums.BarAnimation
-import tmg.flashback.repo.enums.RaceStatus
-import tmg.flashback.repo.models.stats.*
+import tmg.flashback.data.enums.BarAnimation
+import tmg.flashback.data.enums.RaceStatus
+import tmg.flashback.data.models.stats.*
 import tmg.flashback.ui.shared.sync.SyncDataItem
 
 sealed class RaceModel(

@@ -8,8 +8,8 @@ import androidx.annotation.StringRes
 import com.google.firebase.messaging.FirebaseMessaging
 import tmg.flashback.R
 import tmg.flashback.controllers.NotificationController
-import tmg.flashback.repo.enums.NotificationRegistration.OPT_IN
-import tmg.flashback.repo.enums.NotificationRegistration.OPT_OUT
+import tmg.flashback.data.enums.NotificationRegistration.OPT_IN
+import tmg.flashback.data.enums.NotificationRegistration.OPT_OUT
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 

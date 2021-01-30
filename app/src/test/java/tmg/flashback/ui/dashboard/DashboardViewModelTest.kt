@@ -9,8 +9,8 @@ import org.junit.jupiter.api.Test
 import tmg.flashback.controllers.ReleaseNotesController
 import tmg.flashback.managers.buildconfig.BuildConfigManager
 import tmg.flashback.managers.remoteconfig.RemoteConfigManager
-import tmg.flashback.repo.db.DataRepository
-import tmg.flashback.repo.models.remoteconfig.AppLockout
+import tmg.flashback.data.db.DataRepository
+import tmg.flashback.data.models.remoteconfig.AppLockout
 import tmg.flashback.testutils.BaseTest
 import tmg.flashback.testutils.assertEventFired
 import tmg.flashback.testutils.assertEventNotFired

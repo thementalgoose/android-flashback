@@ -6,9 +6,9 @@ import tmg.flashback.firebase.crash.FirebaseCrashManager
 import tmg.flashback.firebase.repos.*
 import tmg.flashback.managers.remoteconfig.FirebaseRemoteConfigManager
 import tmg.flashback.managers.remoteconfig.RemoteConfigManager
-import tmg.flashback.repo.config.RemoteConfigRepository
-import tmg.flashback.repo.db.DataRepository
-import tmg.flashback.repo.db.stats.*
+import tmg.flashback.data.config.RemoteConfigRepository
+import tmg.flashback.data.db.DataRepository
+import tmg.flashback.data.db.stats.*
 
 val firebaseModule = module {
 

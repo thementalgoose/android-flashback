@@ -6,8 +6,8 @@ import kotlinx.android.synthetic.main.view_driver_season.view.*
 import kotlinx.android.synthetic.main.view_driver_season.view.lpvProgress
 import tmg.flashback.R
 import tmg.flashback.ui.overviews.driver.season.DriverSeasonItem
-import tmg.flashback.repo.enums.BarAnimation
-import tmg.flashback.repo.enums.isStatusFinished
+import tmg.flashback.data.enums.BarAnimation
+import tmg.flashback.data.enums.isStatusFinished
 import tmg.flashback.ui.utils.getColor
 import tmg.flashback.ui.utils.getFlagResourceAlpha3
 import tmg.utilities.extensions.ordinalAbbreviation

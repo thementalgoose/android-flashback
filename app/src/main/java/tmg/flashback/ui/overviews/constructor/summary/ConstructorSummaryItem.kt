@@ -3,7 +3,7 @@ package tmg.flashback.ui.overviews.constructor.summary
 import androidx.annotation.*
 import tmg.flashback.R
 import tmg.flashback.ui.overviews.driver.summary.PipeType
-import tmg.flashback.repo.models.stats.ConstructorOverviewDriverStanding
+import tmg.flashback.data.models.stats.ConstructorOverviewDriverStanding
 import tmg.flashback.ui.shared.sync.SyncDataItem
 
 sealed class ConstructorSummaryItem(

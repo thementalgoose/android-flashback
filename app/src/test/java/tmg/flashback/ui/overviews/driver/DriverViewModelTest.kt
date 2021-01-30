@@ -16,7 +16,7 @@ import tmg.flashback.ui.overviews.driver.summary.DriverSummaryItem
 import tmg.flashback.ui.overviews.driver.summary.PipeType
 import tmg.flashback.ui.overviews.driver.summary.PipeType.*
 import tmg.flashback.managers.networkconnectivity.NetworkConnectivityManager
-import tmg.flashback.repo.db.stats.DriverRepository
+import tmg.flashback.data.db.stats.DriverRepository
 import tmg.flashback.ui.shared.sync.SyncDataItem
 import tmg.flashback.ui.shared.viewholders.DataUnavailable
 import tmg.flashback.testutils.*

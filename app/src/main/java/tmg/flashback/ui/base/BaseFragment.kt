@@ -5,7 +5,7 @@ import android.view.View
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import org.koin.android.ext.android.inject
-import tmg.flashback.repo.config.RemoteConfigRepository
+import tmg.flashback.data.config.RemoteConfigRepository
 import tmg.utilities.lifecycle.common.CommonFragment
 
 abstract class BaseFragment: CommonFragment() {

@@ -6,7 +6,7 @@ import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.layout_driver.view.*
 import kotlinx.android.synthetic.main.view_dashboard_season_driver.view.*
 import tmg.flashback.R
-import tmg.flashback.repo.enums.BarAnimation
+import tmg.flashback.data.enums.BarAnimation
 import tmg.flashback.ui.dashboard.season.SeasonItem
 import tmg.flashback.ui.utils.getColor
 import tmg.flashback.ui.utils.getFlagResourceAlpha3

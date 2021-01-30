@@ -1,7 +1,7 @@
 package tmg.flashback.constants
 
-import tmg.flashback.repo.enums.BarAnimation
-import tmg.flashback.repo.enums.ThemePref
+import tmg.flashback.data.enums.BarAnimation
+import tmg.flashback.data.enums.ThemePref
 
 internal object Defaults {
 

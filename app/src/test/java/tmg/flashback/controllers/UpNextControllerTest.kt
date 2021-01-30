@@ -6,9 +6,9 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
-import tmg.flashback.repo.config.RemoteConfigRepository
-import tmg.flashback.repo.models.Timestamp
-import tmg.flashback.repo.models.remoteconfig.UpNextSchedule
+import tmg.flashback.data.config.RemoteConfigRepository
+import tmg.flashback.data.models.Timestamp
+import tmg.flashback.data.models.remoteconfig.UpNextSchedule
 import tmg.flashback.testutils.BaseTest
 
 internal class UpNextControllerTest: BaseTest() {

@@ -10,9 +10,9 @@ import tmg.flashback.controllers.AppearanceController
 import tmg.flashback.ui.overviews.*
 import tmg.flashback.ui.overviews.driver.summary.PipeType.*
 import tmg.flashback.managers.networkconnectivity.NetworkConnectivityManager
-import tmg.flashback.repo.db.stats.DriverRepository
-import tmg.flashback.repo.enums.BarAnimation
-import tmg.flashback.repo.models.stats.DriverOverviewRace
+import tmg.flashback.data.db.stats.DriverRepository
+import tmg.flashback.data.enums.BarAnimation
+import tmg.flashback.data.models.stats.DriverOverviewRace
 import tmg.flashback.ui.shared.sync.SyncDataItem
 import tmg.flashback.ui.shared.viewholders.DataUnavailable.DRIVER_NOT_EXIST
 import tmg.flashback.testutils.*
