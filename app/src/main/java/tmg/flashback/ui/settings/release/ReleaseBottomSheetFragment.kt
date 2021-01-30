@@ -3,9 +3,7 @@ package tmg.flashback.ui.settings.release
 import kotlinx.android.synthetic.main.fragment_release_notes.*
 import org.koin.android.ext.android.inject
 import tmg.flashback.R
-import tmg.flashback.constants.Releases
 import tmg.flashback.controllers.ReleaseNotesController
-import tmg.flashback.data.pref.DeviceRepository
 import tmg.flashback.ui.base.BaseBottomSheetFragment
 import tmg.utilities.extensions.fromHtml
 

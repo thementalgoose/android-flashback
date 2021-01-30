@@ -1,7 +1,6 @@
 package tmg.flashback.firebase.converters
 
 import org.threeten.bp.format.DateTimeParseException
-import tmg.flashback.firebase.base.ConverterUtils.fromDate
 import tmg.flashback.firebase.base.ConverterUtils.fromDateRequired
 import tmg.flashback.firebase.base.ConverterUtils.fromTime
 import tmg.flashback.firebase.models.FUpNext

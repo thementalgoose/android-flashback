@@ -10,7 +10,6 @@ import tmg.flashback.data.enums.BarAnimation
 import tmg.flashback.data.enums.ThemePref
 import tmg.flashback.data.pref.UserRepository
 import tmg.flashback.testutils.BaseTest
-import tmg.utilities.extensions.isInDayMode
 
 internal class AppearanceControllerTest: BaseTest() {
 

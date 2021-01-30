@@ -1,14 +1,10 @@
 package tmg.flashback.controllers
 
-import android.os.Build
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.CsvSource
-import org.junit.jupiter.params.provider.ValueSource
 import tmg.flashback.data.config.RemoteConfigRepository
 import tmg.flashback.data.enums.NotificationRegistration
 import tmg.flashback.data.pref.DeviceRepository

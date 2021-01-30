@@ -18,7 +18,6 @@ import kotlinx.android.synthetic.main.bottom_sheet_default_season.*
 import kotlinx.android.synthetic.main.bottom_sheet_theme.*
 import org.koin.android.ext.android.inject
 import tmg.components.about.AboutThisAppActivity
-import tmg.components.about.AboutThisAppConfiguration
 import tmg.flashback.R
 import tmg.flashback.constants.AboutThisAppConfig
 import tmg.flashback.extensions.updateAllWidgets

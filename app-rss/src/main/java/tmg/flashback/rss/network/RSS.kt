@@ -4,10 +4,8 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
-import okhttp3.Headers
 import retrofit2.HttpException
 import tmg.flashback.data.models.Response
-import tmg.flashback.rss.BuildConfig
 import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.rss.network.apis.convert
 import tmg.flashback.rss.network.shared.RssXMLRetrofit

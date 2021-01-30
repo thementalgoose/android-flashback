@@ -16,7 +16,6 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
-import org.threeten.bp.temporal.ChronoUnit
 import tmg.flashback.BuildConfig
 import tmg.flashback.R
 import tmg.flashback.constants.TrackLayout
@@ -32,7 +31,6 @@ import tmg.flashback.ui.utils.getFlagResourceAlpha3
 import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.toEnum
 import java.lang.Exception
-import kotlin.math.absoluteValue
 
 class UpNextWidgetProvider : AppWidgetProvider() {
 

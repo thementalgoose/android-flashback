@@ -1,6 +1,5 @@
 package tmg.flashback.controllers
 
-import org.threeten.bp.LocalDate
 import tmg.flashback.data.config.RemoteConfigRepository
 
 /**

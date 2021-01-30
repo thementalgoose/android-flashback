@@ -8,7 +8,6 @@ import tmg.flashback.firebase.crash.FirebaseCrashManager
 import tmg.flashback.firebase.models.FHistorySeason
 import tmg.flashback.data.db.stats.HistoryRepository
 import tmg.flashback.data.models.stats.History
-import tmg.flashback.data.models.stats.WinnerSeason
 
 class HistoryFirestore(
     crashManager: FirebaseCrashManager

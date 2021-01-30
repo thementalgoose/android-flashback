@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.view_season_list_up_next.view.*
 import org.threeten.bp.*
 import org.threeten.bp.format.DateTimeFormatter
-import org.threeten.bp.temporal.ChronoUnit
 import tmg.flashback.R
 import tmg.flashback.constants.TrackLayout
 import tmg.flashback.data.utils.daysBetween
@@ -15,11 +14,7 @@ import tmg.flashback.data.utils.secondsBetween
 import tmg.flashback.ui.dashboard.list.ListItem
 import tmg.flashback.ui.utils.getFlagResourceAlpha3
 import tmg.utilities.extensions.fromHtml
-import tmg.utilities.extensions.ordinalAbbreviation
 import tmg.utilities.extensions.views.*
-import kotlin.math.absoluteValue
-import kotlin.math.floor
-import kotlin.time.hours
 
 class UpNextViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
