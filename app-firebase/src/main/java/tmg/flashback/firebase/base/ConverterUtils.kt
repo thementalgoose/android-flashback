@@ -52,6 +52,7 @@ object ConverterUtils {
     fun fromTimeRequired(timeString: String): LocalTime {
         val validPatterns = listOf(
                 "HH:mm:ss'Z'",
+                "HH:mm:ssZ",
                 "HH:mm:ss",
                 "HH:mm"
         )
