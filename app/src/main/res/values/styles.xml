@@ -98,6 +98,11 @@
         <item name="android:textSize">@dimen/textSizeSmall</item>
     </style>
 
+    <style name="Text.UpNext.Round" parent="Text">
+        <item name="android:textSize">@dimen/textSizeSmall</item>
+        <item name="android:textColor">?attr/f1TextTertiary</item>
+    </style>
+
     <style name="Text.UpNext.Countdown" parent="Text">
         <item name="android:fontFamily">@font/montserrat</item>
         <item name="android:textSize">28sp</item>

@@ -48,6 +48,8 @@ internal class ConverterUtilsTest: BaseTest() {
             "23:59:00",
             "23:12",
             "12:00:00",
+            "12:00:00+0000",
+            "12:00:00+0100",
             "12:00:00Z"
     )
     fun `ConverterUtils fromTime doesnt throw exception for valid`(timeString: String) {

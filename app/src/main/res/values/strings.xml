@@ -145,13 +145,42 @@
     <string name="home_constructor_penalty">%d point penalty</string>
     <string name="home_season_arrow">%s</string>
 
+
+
     <string name="dashboard_up_next_title">Up next</string>
-    <plurals name="dashboard_up_next_days_to_go">
+
+    <string name="dashboard_up_next_suffix_ontheday">to go</string>
+    <plurals name="dashboard_up_next_suffix_days">
         <item quantity="one">day to go</item>
         <item quantity="other">days to go</item>
     </plurals>
-    <string name="dashboard_up_next_today">Today</string>
-    <string name="dashboard_up_next_date"><![CDATA[Round <b>%d</b><br/><b>%s</b>]]></string>
+
+    <string name="dashboard_up_next_date_today">Today</string>
+    <string name="dashboard_up_next_date_starts_at_today">Today at %s</string>
+    <string name="dashboard_up_next_date_localtime"><![CDATA[(local)]]></string>
+    <string name="dashboard_up_next_date_absolute"><![CDATA[<b>%s</b>]]></string>
+
+    <string name="dashboard_up_next_datetime_now">Now</string>
+    <string name="dashboard_up_next_datetime_started">Started</string>
+    <plurals name="dashboard_up_next_datetime_mins">
+        <item quantity="one">%d minute</item>
+        <item quantity="other">%d minutes</item>
+        <item quantity="zero">Starting now!</item>
+    </plurals>
+    <string name="dashboard_up_next_datetime_hour_min">%d hrs %d mins</string>
+    <string name="dashboard_up_next_datetime_hour">%d hours</string>
+    <plurals name="dashboard_up_next_datetime_started_mins">
+        <item quantity="zero">Starting now!</item>
+        <item quantity="one">Started a minute ago</item>
+        <item quantity="other">Started %d minutes ago</item>
+    </plurals>
+    <plurals name="dashboard_up_next_datetime_started_hour">
+        <item quantity="one">Started over an hour ago</item>
+        <item quantity="other">Started over %d hours ago</item>
+    </plurals>
+    <string name="dashboard_up_next_datetime_absolute"><![CDATA[<b>%s</b> at <b>%s</b> local time]]></string>
+
+
 
     <string name="dashboard_season_list_extra_title">Extras</string>
     <string name="dashboard_season_list_extra_rss_title">RSS feed</string>

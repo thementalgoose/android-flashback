@@ -1,13 +1,14 @@
 package tmg.flashback.repo.config
 
 import org.threeten.bp.LocalDate
+import tmg.flashback.repo.models.Timestamp
 import tmg.flashback.repo.models.remoteconfig.SupportedArticleSource
 import tmg.flashback.repo.models.remoteconfig.UpNextSchedule
 
 class RemoteConfigRepositoryStub(
         var inputSupportedSeasons: Set<Int> = setOf(2018),
         var inputDefaultSeason: Int = 2018,
-        var inputUpNext: List<UpNextSchedule> = listOf(UpNextSchedule(0,0,"", LocalDate.now(),null,null,null,null)),
+        var inputUpNext: List<UpNextSchedule> = listOf(UpNextSchedule(0,0,"", Timestamp(LocalDate.now()), null,null,null)),
         var inputBanner: String? = "banner",
         var inputDataProvidedBy: String? = "provided_by",
         var inputSearch: Boolean = true,

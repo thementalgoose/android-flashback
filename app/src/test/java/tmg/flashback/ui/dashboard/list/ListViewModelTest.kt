@@ -8,9 +8,12 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
 import org.threeten.bp.Year
+import org.threeten.bp.ZoneId
+import org.threeten.bp.ZoneOffset
 import tmg.flashback.controllers.FeatureController
 import tmg.flashback.controllers.SeasonController
 import tmg.flashback.controllers.UpNextController
+import tmg.flashback.repo.models.Timestamp
 import tmg.flashback.repo.models.remoteconfig.UpNextSchedule
 import tmg.flashback.testutils.*
 import tmg.flashback.testutils.assertDataEventValue
@@ -152,7 +155,7 @@ internal class ListViewModelTest: BaseTest() {
     @Test
     fun `ListViewModel up next section shown when valid next race item found`() {
 
-        val expected = UpNextSchedule(1,2,"test", LocalDate.now(),null,null,null,null)
+        val expected = UpNextSchedule(1,2,"test", Timestamp(LocalDate.now(), zone = ZoneId.ofOffset("", ZoneOffset.UTC)),null,null,null)
         every { mockUpNextController.getNextEvent() } returns expected
 
         initSUT()
