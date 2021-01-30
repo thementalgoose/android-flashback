@@ -47,7 +47,7 @@ class UpNextViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
         // If there's only a date available in the timestamp
         event.timestamp.ifDate { date ->
-            val days = daysBetween(date, LocalDate.now())
+            val days = daysBetween(LocalDate.now(), date)
             itemView.suffix.show(days > 0)
             itemView.spacer.show()
             itemView.countdown.show()
@@ -73,45 +73,61 @@ class UpNextViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
             val localDate = local.toLocalDate()
             val localTime = local.toLocalTime()
-            val now = LocalTime.now()
+            val nowTime = LocalTime.now()
+            val nowDate = LocalDate.now()
 
-            if (localTime >= now) {
-                // Upcoming
-                val (hours, minutes) = secondsBetween(now, localTime).hoursAndMins
-                itemView.suffix.show(hours != 0 || minutes != 0)
-                itemView.spacer.show()
-                itemView.countdown.show(true)
-                when {
-                    hours > 12 -> {
-                        itemView.countdown.text = getString(R.string.dashboard_up_next_datetime_hour, hours)
-                        itemView.suffix.text = getString(R.string.dashboard_up_next_suffix_ontheday)
+            when {
+                localDate > nowDate -> {
+                    val days = daysBetween(nowDate, localDate)
+                    itemView.suffix.show(days > 0)
+                    itemView.spacer.show()
+                    itemView.countdown.show()
+                    if (localDate == nowDate) {
+                        itemView.countdown.text = getString(R.string.dashboard_up_next_date_today)
+                        itemView.suffix.text = ""
                     }
-                    hours > 0 -> {
-                        itemView.countdown.text = getString(R.string.dashboard_up_next_datetime_hour_min, hours, minutes)
-                        itemView.suffix.text = getString(R.string.dashboard_up_next_suffix_ontheday)
-                    }
-                    minutes > 0 -> {
-                        itemView.countdown.text = context.resources.getQuantityString(R.plurals.dashboard_up_next_datetime_mins, minutes, minutes)
-                        itemView.suffix.text = getString(R.string.dashboard_up_next_suffix_ontheday)
-                    }
-                    else -> {
-                        itemView.countdown.text = getString(R.string.dashboard_up_next_datetime_now)
-                        itemView.suffix.text = getString(R.string.dashboard_up_next_suffix_ontheday)
+                    else {
+                        itemView.countdown.text = days.toString()
+                        itemView.suffix.text = context.resources.getQuantityString(R.plurals.dashboard_up_next_suffix_days, days)
                     }
                 }
-            }
-            else {
-                val (hoursSinceStart, minutesSinceStart) = secondsBetween(localTime, now).hoursAndMins
-                itemView.countdown.invisible()
-                itemView.countdown.text = ""
-                itemView.spacer.gone()
-                itemView.suffix.show(true)
-                when {
-                    hoursSinceStart > 0 -> {
-                        itemView.suffix.text = context.resources.getQuantityString(R.plurals.dashboard_up_next_datetime_started_hour, hoursSinceStart, hoursSinceStart)
+                localTime >= nowTime -> { // Upcoming
+                    val (hours, minutes) = secondsBetween(nowTime, localTime).hoursAndMins
+                    itemView.suffix.show(hours != 0 || minutes != 0)
+                    itemView.spacer.show()
+                    itemView.countdown.show(true)
+                    when {
+                        hours > 12 -> {
+                            itemView.countdown.text = getString(R.string.dashboard_up_next_datetime_hour, hours)
+                            itemView.suffix.text = getString(R.string.dashboard_up_next_suffix_ontheday)
+                        }
+                        hours > 0 -> {
+                            itemView.countdown.text = getString(R.string.dashboard_up_next_datetime_hour_min, hours, minutes)
+                            itemView.suffix.text = getString(R.string.dashboard_up_next_suffix_ontheday)
+                        }
+                        minutes > 0 -> {
+                            itemView.countdown.text = context.resources.getQuantityString(R.plurals.dashboard_up_next_datetime_mins, minutes, minutes)
+                            itemView.suffix.text = getString(R.string.dashboard_up_next_suffix_ontheday)
+                        }
+                        else -> {
+                            itemView.countdown.text = getString(R.string.dashboard_up_next_datetime_now)
+                            itemView.suffix.text = getString(R.string.dashboard_up_next_suffix_ontheday)
+                        }
                     }
-                    else -> {
-                        itemView.suffix.text = context.resources.getQuantityString(R.plurals.dashboard_up_next_datetime_started_mins, minutesSinceStart, minutesSinceStart)
+                }
+                else -> {
+                    val (hoursSinceStart, minutesSinceStart) = secondsBetween(localTime, nowTime).hoursAndMins
+                    itemView.countdown.invisible()
+                    itemView.countdown.text = ""
+                    itemView.spacer.gone()
+                    itemView.suffix.show(true)
+                    when {
+                        hoursSinceStart > 0 -> {
+                            itemView.suffix.text = context.resources.getQuantityString(R.plurals.dashboard_up_next_datetime_started_hour, hoursSinceStart, hoursSinceStart)
+                        }
+                        else -> {
+                            itemView.suffix.text = context.resources.getQuantityString(R.plurals.dashboard_up_next_datetime_started_mins, minutesSinceStart, minutesSinceStart)
+                        }
                     }
                 }
             }

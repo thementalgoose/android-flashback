@@ -14,9 +14,27 @@ data class Timestamp(
         get() = originalTime == null
 
     /**
+     * Get the best guess for the date that this item should apply too
+     *  - It will use original date in a lot of circumstances but if it has a time,
+     *    and that time with the timezone means the date falls on another day then
+     *    show it on that day
+     */
+    val deviceDate: LocalDate
+        get() = deviceLocalDateTime?.toLocalDate() ?: originalDate
+
+    /**
      * UTC instant that is provided. Only not null if both date and time are provided
      */
     private var _utcInstant: Instant? = null
+
+    /**
+     * Local date time object
+     */
+    private val deviceLocalDateTime: LocalDateTime?
+        get() {
+            val zone = _utcInstant?.atZone(zone)
+            return zone?.toLocalDateTime()
+        }
 
     init {
         if (originalTime != null) {
@@ -29,9 +47,10 @@ data class Timestamp(
      * @param callback Callback containing utc time and local device time
      */
     fun ifDateAndTime(callback: (utc: LocalDateTime, local: LocalDateTime) -> Unit) {
-        if (!isDateOnly && _utcInstant != null) {
-            val zone = _utcInstant!!.atZone(zone)
-            callback(originalDate.atTime(originalTime), zone.toLocalDateTime())
+        deviceLocalDateTime?.let {
+            if (!isDateOnly) {
+                callback(originalDate.atTime(originalTime), it)
+            }
         }
     }
 
@@ -40,7 +59,7 @@ data class Timestamp(
      * @param callback Callback containing only the date
      */
     fun ifDate(callback: (date: LocalDate) -> Unit) {
-        if (isDateOnly || _utcInstant == null) {
+        if (isDateOnly || deviceLocalDateTime == null) {
             callback(originalDate)
         }
     }
