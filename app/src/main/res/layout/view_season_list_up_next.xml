@@ -36,6 +36,7 @@
         style="@style/Text.UpNext.Circuit"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
         app:layout_constraintEnd_toStartOf="@id/track"
         app:layout_constraintStart_toStartOf="@id/start"
         app:layout_constraintTop_toBottomOf="@id/name"
@@ -45,56 +46,82 @@
         android:id="@+id/flag"
         android:layout_width="@dimen/dashboardUpNextImageSize"
         android:layout_height="@dimen/dashboardUpNextImageSize"
+        android:layout_marginTop="@dimen/paddingXSmall"
         android:importantForAccessibility="no"
         app:layout_constraintStart_toStartOf="@id/start"
         app:layout_constraintTop_toBottomOf="@id/circuit" />
 
     <TextView
-        android:id="@+id/days"
-        style="@style/Text.UpNext.Countdown"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/paddingXSmall"
-        android:layout_marginEnd="@dimen/paddingSmall"
-        android:paddingStart="0dp"
-        android:paddingEnd="@dimen/paddingSmall"
-        app:layout_constraintStart_toStartOf="@id/start"
-        app:layout_constraintTop_toBottomOf="@id/flag"
-        tools:text="43" />
-
-    <TextView
-        android:id="@+id/daysToGoLabel"
-        style="@style/Text.UpNext.CountdownLabel"
+        android:id="@+id/round"
+        style="@style/Text.UpNext.Round"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/paddingSmall"
-        app:layout_constraintBottom_toBottomOf="@id/days"
-        app:layout_constraintEnd_toStartOf="@id/date"
-        app:layout_constraintStart_toEndOf="@id/days"
-        app:layout_constraintTop_toTopOf="@id/days" />
-
-    <TextView
-        android:id="@+id/date"
-        style="@style/Text.UpNext.Date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="end"
-        android:lines="2"
-        app:layout_constraintBottom_toBottomOf="@id/days"
-        app:layout_constraintEnd_toEndOf="@id/end"
-        app:layout_constraintTop_toTopOf="@id/days"
-        tools:text="Round 1\n21 Mar 2021" />
+        android:layout_marginStart="@dimen/paddingSmall"
+        app:layout_constraintBottom_toBottomOf="@id/flag"
+        app:layout_constraintEnd_toEndOf="@id/circuit"
+        app:layout_constraintStart_toEndOf="@id/flag"
+        app:layout_constraintTop_toTopOf="@id/flag"
+        tools:text="Round 1" />
 
     <ImageView
         android:id="@+id/track"
         android:layout_width="@dimen/dashboardUpNextTrackWidth"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:importantForAccessibility="no"
-        app:layout_constraintBottom_toTopOf="@id/days"
+        android:minHeight="@dimen/dashboardUpNextTrackHeight"
         app:layout_constraintEnd_toEndOf="@id/end"
         app:layout_constraintTop_toTopOf="@id/name"
-        app:layout_constraintVertical_bias="0.0"
         app:tint="?attr/f1TextSecondary"
         tools:src="@drawable/ic_map_unknown" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="track,flag" />
+
+    <TextView
+        android:id="@+id/countdown"
+        style="@style/Text.UpNext.Countdown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/paddingSmall"
+        app:layout_constraintStart_toStartOf="@id/start"
+        app:layout_constraintTop_toBottomOf="@id/barrier"
+        tools:text="43" />
+
+    <View
+        android:id="@+id/spacer"
+        android:layout_width="8dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/countdown"
+        app:layout_constraintStart_toEndOf="@id/countdown"
+        app:layout_constraintTop_toTopOf="@id/countdown" />
+
+    <TextView
+        android:id="@+id/suffix"
+        style="@style/Text.UpNext.CountdownLabel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/paddingSmall"
+        android:paddingBottom="@dimen/paddingSmall"
+        app:layout_constraintBottom_toBottomOf="@id/countdown"
+        app:layout_constraintEnd_toEndOf="@id/end"
+        app:layout_constraintStart_toEndOf="@id/spacer"
+        app:layout_constraintTop_toTopOf="@id/countdown"
+        tools:text="until lights out" />
+
+    <TextView
+        android:id="@+id/scheduledat"
+        style="@style/Text.UpNext.Date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/paddingXSmall"
+        app:layout_constraintEnd_toEndOf="@id/end"
+        app:layout_constraintStart_toStartOf="@id/start"
+        app:layout_constraintTop_toBottomOf="@id/countdown"
+        tools:text="21st March 2021 at 13:00 local time" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

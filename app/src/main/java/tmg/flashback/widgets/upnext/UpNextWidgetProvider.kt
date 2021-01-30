@@ -96,14 +96,14 @@ class UpNextWidgetProvider : AppWidgetProvider() {
 
                 when (val days = daysBetween(nextEvent.timestamp.originalDate, LocalDate.now())) {
                     0 -> {
-                        remoteView.setTextViewText(R.id.days, context.getString(R.string.dashboard_up_next_today))
+                        remoteView.setTextViewText(R.id.days, context.getString(R.string.dashboard_up_next_date_today))
                         remoteView.setTextViewText(R.id.daystogo, "")
                         remoteView.setViewVisibility(R.id.daystogo, View.INVISIBLE)
                     }
                     else -> {
                         remoteView.setTextViewText(R.id.days, days.toString())
                         remoteView.setViewVisibility(R.id.daystogo, View.VISIBLE)
-                        remoteView.setTextViewText(R.id.daystogo, context.resources.getQuantityText(R.plurals.dashboard_up_next_days_to_go, days))
+                        remoteView.setTextViewText(R.id.daystogo, context.resources.getQuantityText(R.plurals.dashboard_up_next_suffix_days, days))
                     }
                 }
 

@@ -25,24 +25,23 @@ data class Timestamp(
     }
 
     /**
-     * Method to be called on timestamp object to perform certain actions depending on
-     *   the data supplied by the API
-     *
-     * If only a date is returned, then return the best guess date that was supplied.
-     *   Device / Instant metrics should not take affect
-     *
-     * If time is available, return both the UTC raw value as well as the device localdatetime
+     * Run the [callback] block if there is a date and a time set
+     * @param callback Callback containing utc time and local device time
      */
-    fun perform(
-            ifDateOnly: (date: LocalDate) -> Unit,
-            ifTime: (utc: LocalDateTime, device: LocalDateTime) -> Unit
-    ) {
+    fun ifDateAndTime(callback: (utc: LocalDateTime, local: LocalDateTime) -> Unit) {
         if (!isDateOnly && _utcInstant != null) {
             val zone = _utcInstant!!.atZone(zone)
-            ifTime(originalDate.atTime(originalTime), zone.toLocalDateTime())
+            callback(originalDate.atTime(originalTime), zone.toLocalDateTime())
         }
-        else {
-            ifDateOnly(originalDate)
+    }
+
+    /**
+     * Run the [callback] block if there is only a date set
+     * @param callback Callback containing only the date
+     */
+    fun ifDate(callback: (date: LocalDate) -> Unit) {
+        if (isDateOnly || _utcInstant == null) {
+            callback(originalDate)
         }
     }
 }
