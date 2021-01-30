@@ -1,14 +1,18 @@
 package tmg.flashback.ui.dashboard.list
 
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_dashboard_list.*
 import org.koin.android.viewmodel.ext.android.viewModel
+import tmg.flashback.BuildConfig
 import tmg.flashback.R
 import tmg.flashback.rss.ui.RSSActivity
 import tmg.flashback.ui.base.BaseFragment
@@ -21,8 +25,17 @@ class ListFragment: BaseFragment() {
 
     private val viewModel: ListViewModel by viewModel()
 
-    private lateinit var adapter: ListAdapter
+    private var adapter: ListAdapter? = null
     private var dashboardNavigationCallback: DashboardNavigationCallback? = null
+
+    private val tickReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
+        override fun onReceive(p0: Context?, p1: Intent?) {
+            if (BuildConfig.DEBUG) {
+                Log.i("Flashback", "Broadcast Receiver tick for time update")
+            }
+            adapter?.refreshUpNext()
+        }
+    }
 
     override fun layoutId() = R.layout.fragment_dashboard_list
 
@@ -53,7 +66,7 @@ class ListFragment: BaseFragment() {
         list.adapter = adapter
 
         observe(viewModel.outputs.list) {
-            adapter.list = it
+            adapter?.list = it
         }
 
         observeEvent(viewModel.outputs.showSeasonEvent) { season ->
@@ -87,6 +100,19 @@ class ListFragment: BaseFragment() {
                         }
                         .show()
             }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        adapter?.refreshUpNext()
+        context?.registerReceiver(tickReceiver, IntentFilter(Intent.ACTION_TIME_TICK))
+    }
+
+    override fun onPause() {
+        super.onPause()
+        if (tickReceiver != null) {
+            context?.unregisterReceiver(tickReceiver)
         }
     }
 
