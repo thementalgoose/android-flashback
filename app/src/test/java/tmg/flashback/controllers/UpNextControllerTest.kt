@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
 import tmg.flashback.repo.config.RemoteConfigRepository
+import tmg.flashback.repo.models.Timestamp
 import tmg.flashback.repo.models.remoteconfig.UpNextSchedule
 import tmg.flashback.testutils.BaseTest
 
@@ -99,8 +100,7 @@ internal class UpNextControllerTest: BaseTest() {
                 season = 1,
                 round = 3,
                 name = "Up next item $daysDeltaFromNow",
-                date = LocalDate.now().plusDays(daysDeltaFromNow),
-                time = null,
+                timestamp = Timestamp(LocalDate.now().plusDays(daysDeltaFromNow)),
                 flag = null,
                 circuitId = null,
                 circuitName = null
