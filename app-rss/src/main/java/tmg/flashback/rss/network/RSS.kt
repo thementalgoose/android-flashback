@@ -5,14 +5,15 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
-import tmg.flashback.data.models.Response
-import tmg.flashback.rss.controllers.RSSController
+import tmg.flashback.rss.BuildConfig
+import tmg.flashback.rss.controllers.RSSFeedController
 import tmg.flashback.rss.network.apis.convert
 import tmg.flashback.rss.network.shared.RssXMLRetrofit
 import tmg.flashback.rss.network.shared.buildRetrofit
-import tmg.flashback.rss.prefs.RSSPrefsRepository
-import tmg.flashback.rss.repo.RSSRepository
+import tmg.flashback.rss.prefs.RSSRepository
+import tmg.flashback.rss.repo.RssAPI
 import tmg.flashback.rss.repo.model.Article
+import tmg.flashback.rss.repo.model.Response
 import java.lang.NullPointerException
 import java.lang.RuntimeException
 import java.net.ConnectException
@@ -22,9 +23,9 @@ import javax.net.ssl.SSLHandshakeException
 import javax.xml.stream.XMLStreamException
 
 class RSS(
-    private val prefsRepository: RSSPrefsRepository,
-    private val rssController: RSSController
-) : RSSRepository {
+    private val repository: RSSRepository,
+    private val rssFeedController: RSSFeedController
+) : RssAPI {
 
     private val headers: Map<String, String> = mapOf(
             "Accept" to "application/rss+xml, application/xml"
@@ -37,9 +38,9 @@ class RSS(
             val xmlRetrofit: RssXMLRetrofit = buildRetrofit(true)
 
             val responses: MutableList<Response<List<Article>>> = mutableListOf()
-            for (x in prefsRepository.rssUrls) {
+            for (x in repository.rssUrls) {
                 try {
-                    val response = xmlRetrofit.getRssXML(headers, x).convert(rssController, x, prefsRepository.rssShowDescription)
+                    val response = xmlRetrofit.getRssXML(headers, x).convert(rssFeedController, x, repository.rssShowDescription)
                     responses.add(Response(response))
                 } catch (e: XMLStreamException) {
                     if (BuildConfig.DEBUG) {

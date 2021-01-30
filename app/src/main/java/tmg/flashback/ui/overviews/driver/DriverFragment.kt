@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_driver_season.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.R
-import tmg.flashback.ui.base.BaseFragment
+import tmg.flashback.core.ui.BaseFragment
 import tmg.flashback.ui.overviews.driver.summary.DriverSummaryAdapter
 import tmg.utilities.extensions.observe
 

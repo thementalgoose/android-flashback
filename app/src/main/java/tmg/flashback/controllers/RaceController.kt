@@ -1,30 +1,30 @@
 package tmg.flashback.controllers
 
-import tmg.flashback.data.pref.UserRepository
+import tmg.flashback.data.repositories.AppRepository
 
 /**
  * Controller for any user preferences configured in the
  *   settings of the app relating to the race overview
  */
 class RaceController(
-        val userRepository: UserRepository
+        val appRepository: AppRepository
 ) {
 
     var showQualifyingDelta: Boolean
-        get() = userRepository.showQualifyingDelta
+        get() = appRepository.showQualifyingDelta
         set(value) {
-            userRepository.showQualifyingDelta = value
+            appRepository.showQualifyingDelta = value
         }
 
     var fadeDNF: Boolean
-        get() = userRepository.fadeDNF
+        get() = appRepository.fadeDNF
         set(value) {
-            userRepository.fadeDNF = value
+            appRepository.fadeDNF = value
         }
 
     var showGridPenaltiesInQualifying: Boolean
-        get() = userRepository.showGridPenaltiesInQualifying
+        get() = appRepository.showGridPenaltiesInQualifying
         set(value) {
-            userRepository.showGridPenaltiesInQualifying = value
+            appRepository.showGridPenaltiesInQualifying = value
         }
 }

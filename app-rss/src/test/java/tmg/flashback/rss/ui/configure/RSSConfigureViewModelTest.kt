@@ -5,38 +5,34 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.Arguments
-import org.junit.jupiter.params.provider.MethodSource
 import tmg.flashback.rss.R
-import tmg.flashback.rss.controllers.RSSController
-import tmg.flashback.rss.prefs.RSSPrefsRepository
+import tmg.flashback.rss.controllers.RSSFeedController
+import tmg.flashback.rss.prefs.RSSRepository
 import tmg.flashback.rss.repo.enums.SupportedArticleSource
 import tmg.flashback.rss.testutils.BaseTest
 import tmg.flashback.rss.testutils.assertDataEventValue
 import tmg.flashback.rss.testutils.assertListDoesNotMatchItem
 import tmg.flashback.rss.testutils.test
-import java.util.stream.Stream
 
 class RSSConfigureViewModelTest: BaseTest() {
 
     lateinit var sut: RSSConfigureViewModel
 
-    private val mockPrefs: RSSPrefsRepository = mockk(relaxed = true)
-    private val mockRssController: RSSController = mockk(relaxed = true)
+    private val mock: RSSRepository = mockk(relaxed = true)
+    private val mockRssFeedController: RSSFeedController = mockk(relaxed = true)
 
     private val mockSupportedArticle = SupportedArticleSource("https://www.test.com/rss", "", "https://www.test.com", "", "", "", "https://www.test.com/contact")
     private val mockListOfSupportedArticles: List<SupportedArticleSource> = listOf(mockSupportedArticle)
 
     @BeforeEach
     fun setUp() {
-        every { mockRssController.showAddCustomFeeds } returns true
-        every { mockPrefs.rssUrls } returns emptySet()
-        every { mockRssController.sources } returns mockListOfSupportedArticles
+        every { mockRssFeedController.showAddCustomFeeds } returns true
+        every { mock.rssUrls } returns emptySet()
+        every { mockRssFeedController.sources } returns mockListOfSupportedArticles
     }
 
     private fun initSUT() {
-        sut = RSSConfigureViewModel(mockPrefs, mockRssController)
+        sut = RSSConfigureViewModel(mock, mockRssFeedController)
     }
 
     @Test
@@ -57,26 +53,26 @@ class RSSConfigureViewModelTest: BaseTest() {
     @Test
     fun `RSSConfigureViewModel add quick item will update the prefs DB`() {
 
-        every { mockPrefs.rssUrls } returns emptySet()
+        every { mock.rssUrls } returns emptySet()
 
         initSUT()
 
         sut.inputs.addQuickItem(mockListOfSupportedArticles.first())
 
-        verify { mockPrefs.rssUrls = setOf(mockSupportedArticle.rssLink) }
+        verify { mock.rssUrls = setOf(mockSupportedArticle.rssLink) }
     }
 
     @Test
     fun `RSSConfigureViewModel removing item will update the prefs DB`() {
 
         val link = mockSupportedArticle.rssLink
-        every { mockPrefs.rssUrls } returns setOf(link)
+        every { mock.rssUrls } returns setOf(link)
 
         initSUT()
 
         sut.inputs.removeItem(link)
 
-        verify { mockPrefs.rssUrls = emptySet() }
+        verify { mock.rssUrls = emptySet() }
     }
 
     @Test
@@ -93,8 +89,8 @@ class RSSConfigureViewModelTest: BaseTest() {
     @Test
     fun `RSSConfigureViewModel disabling add custom list toggle means section is not shown `() {
 
-        every { mockRssController.showAddCustomFeeds } returns false
-        every { mockRssController.getSupportedSourceByRssUrl(any()) } returns null
+        every { mockRssFeedController.showAddCustomFeeds } returns false
+        every { mockRssFeedController.getSupportedSourceByRssUrl(any()) } returns null
         initSUT()
 
         sut.outputs.list.test {
@@ -111,11 +107,11 @@ class RSSConfigureViewModelTest: BaseTest() {
                 added = listOf(item),
                 quick = mockListOfSupportedArticles
         )
-        every { mockRssController.getSupportedSourceByRssUrl(any()) } returns null
+        every { mockRssFeedController.getSupportedSourceByRssUrl(any()) } returns null
         initSUT()
 
         // Assume preferences updated
-        every { mockPrefs.rssUrls } returns setOf(item)
+        every { mock.rssUrls } returns setOf(item)
         sut.inputs.addCustomItem(item)
 
         sut.outputs.list.test {
@@ -130,11 +126,11 @@ class RSSConfigureViewModelTest: BaseTest() {
         val expected = buildList(
             added = emptyList()
         )
-        every { mockPrefs.rssUrls } returns setOf(item)
+        every { mock.rssUrls } returns setOf(item)
 
         initSUT()
         // Assume preferences updated
-        every { mockPrefs.rssUrls } returns emptySet()
+        every { mock.rssUrls } returns emptySet()
         sut.inputs.removeItem(item)
 
         sut.outputs.list.test {
@@ -147,12 +143,12 @@ class RSSConfigureViewModelTest: BaseTest() {
 
         val item = "https://www.google.com/testlink"
         val expected = setOf(item)
-        every { mockPrefs.rssUrls } returns emptySet()
+        every { mock.rssUrls } returns emptySet()
 
         initSUT()
         sut.inputs.addCustomItem(item)
 
-        verify { mockPrefs.rssUrls = expected }
+        verify { mock.rssUrls = expected }
     }
 
     @Test
@@ -160,12 +156,12 @@ class RSSConfigureViewModelTest: BaseTest() {
 
         val item = "https://www.google.com/testlink"
         val expected = emptySet<String>()
-        every { mockPrefs.rssUrls } returns setOf(item)
+        every { mock.rssUrls } returns setOf(item)
 
         initSUT()
         sut.inputs.removeItem(item)
 
-        verify { mockPrefs.rssUrls = expected }
+        verify { mock.rssUrls = expected }
     }
 
 

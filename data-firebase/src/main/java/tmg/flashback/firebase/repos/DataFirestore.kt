@@ -2,14 +2,14 @@ package tmg.flashback.firebase.repos
 
 import kotlinx.coroutines.flow.Flow
 import tmg.flashback.data.db.DataRepository
-import tmg.flashback.data.models.remoteconfig.AppLockout
+import tmg.flashback.data.models.AppLockout
 import tmg.flashback.firebase.converters.convert
 import tmg.flashback.firebase.FirebaseRepo
-import tmg.flashback.firebase.crash.FirebaseCrashManager
+import tmg.flashback.firebase.FirestoreCrashManager
 import tmg.flashback.firebase.models.FAppLockout
 
 class DataFirestore(
-    crashManager: FirebaseCrashManager
+    crashManager: FirestoreCrashManager
 ): FirebaseRepo(crashManager), DataRepository {
 
     override fun appLockout(): Flow<AppLockout?> {

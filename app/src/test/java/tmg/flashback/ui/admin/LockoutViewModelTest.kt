@@ -6,9 +6,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.flashback.managers.buildconfig.BuildConfigManager
 import tmg.flashback.data.db.DataRepository
-import tmg.flashback.data.models.remoteconfig.AppLockout
+import tmg.flashback.data.models.AppLockout
 import tmg.flashback.testutils.*
 
 internal class LockoutViewModelTest : BaseTest() {

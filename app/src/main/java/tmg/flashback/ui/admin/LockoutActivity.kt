@@ -6,8 +6,8 @@ import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_lockout.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.R
+import tmg.flashback.core.ui.BaseActivity
 import tmg.flashback.ui.SplashActivity
-import tmg.flashback.ui.base.BaseActivity
 import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent

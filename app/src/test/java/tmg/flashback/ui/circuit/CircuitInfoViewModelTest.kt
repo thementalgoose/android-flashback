@@ -10,7 +10,6 @@ import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
 import tmg.flashback.constants.TrackLayout
 import tmg.flashback.extensions.circuitIcon
-import tmg.flashback.managers.networkconnectivity.NetworkConnectivityManager
 import tmg.flashback.data.db.stats.CircuitRepository
 import tmg.flashback.data.models.stats.Circuit
 import tmg.flashback.data.models.stats.CircuitRace

@@ -3,17 +3,17 @@ package tmg.flashback.rss.network.apis
 import android.util.Log
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
-import tmg.flashback.data.utils.md5
-import tmg.flashback.rss.controllers.RSSController
+import tmg.flashback.rss.controllers.RSSFeedController
 import tmg.flashback.rss.network.apis.model.RssXMLModel
 import tmg.flashback.rss.network.apis.model.RssXMLModelItem
 import tmg.flashback.rss.repo.model.Article
 import tmg.flashback.rss.repo.model.ArticleSource
+import tmg.utilities.extensions.md5
 import java.net.URL
 
 private const val dateFormat = "EEE, d MMM yyyy HH:mm:ss Z"
 
-fun RssXMLModel.convert(rssController: RSSController, fromSource: String, showDescription: Boolean): List<Article> {
+fun RssXMLModel.convert(rssFeedController: RSSFeedController, fromSource: String, showDescription: Boolean): List<Article> {
 
     if (this.channel == null) {
         Log.e("Flashback", "Failed to parse RSS model from channel $fromSource")
@@ -34,7 +34,7 @@ fun RssXMLModel.convert(rssController: RSSController, fromSource: String, showDe
         }
     }
 
-    val source = rssController.getSupportedSourceByLink(url)?.article ?: ArticleSource(
+    val source = rssFeedController.getSupportedSourceByLink(url)?.article ?: ArticleSource(
         title = channel!!.title!!,
         colour = "#4A34B6",
         textColor = "#FFFFFF",
@@ -49,7 +49,7 @@ fun RssXMLModel.convert(rssController: RSSController, fromSource: String, showDe
         ?.filter { it.title != null && it.link != null && it.pubDate != null }
         ?.map {
             Article(
-                id = it.link!!.md5(),
+                id = it.link!!.md5,
                 title = it.title.replace("&#039;", "'"),
                 description = when (showDescription) {
                     false -> null

@@ -6,9 +6,11 @@ import android.net.Uri
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_rss.*
+import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
+import tmg.flashback.core.ui.BaseActivity
 import tmg.flashback.rss.R
-import tmg.flashback.rss.base.RSSBaseActivity
+import tmg.flashback.rss.prefs.RSSRepository
 import tmg.flashback.rss.repo.model.Article
 import tmg.flashback.rss.ui.configure.RSSConfigureActivity
 import tmg.flashback.rss.ui.settings.RSSSettingsActivity
@@ -16,9 +18,11 @@ import tmg.flashback.rss.web.FragmentRequestBack
 import tmg.flashback.rss.web.WebFragment
 import tmg.utilities.extensions.observe
 
-class RSSActivity: RSSBaseActivity(), FragmentRequestBack {
+class RSSActivity: BaseActivity(), FragmentRequestBack {
 
     private val viewModel: RSSViewModel by viewModel()
+
+    private val repository: RSSRepository by inject()
 
     override val analyticsScreenName: String
         get() = "RSS Feed"
@@ -39,7 +43,7 @@ class RSSActivity: RSSBaseActivity(), FragmentRequestBack {
                 startActivityForResult(Intent(this, RSSConfigureActivity::class.java), REQUEST_CODE)
             },
             articleClicked = { article, id ->
-                if (prefsRepository.newsOpenInExternalBrowser) {
+                if (repository.newsOpenInExternalBrowser) {
                     val intent = Intent(Intent.ACTION_VIEW, Uri.parse(article.link))
                     startActivity(intent)
                 } else {
@@ -76,7 +80,7 @@ class RSSActivity: RSSBaseActivity(), FragmentRequestBack {
         if (webFrag != null) {
             webFrag.exitWeb()
             supportFragmentManager.popBackStack()
-            slidrLock = false
+            swipeDismissLock = false
         }
         else {
             super.onBackPressed()
@@ -91,7 +95,7 @@ class RSSActivity: RSSBaseActivity(), FragmentRequestBack {
     }
 
     private fun loadWebView(article: Article) {
-        slidrLock = true
+        swipeDismissLock = true
         supportFragmentManager
                 .beginTransaction()
                 .setCustomAnimations(R.anim.in_from_bottom, -1, -1, R.anim.out_to_bottom)

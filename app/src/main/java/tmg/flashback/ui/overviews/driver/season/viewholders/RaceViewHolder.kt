@@ -5,8 +5,8 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.view_driver_season.view.*
 import kotlinx.android.synthetic.main.view_driver_season.view.lpvProgress
 import tmg.flashback.R
+import tmg.flashback.core.enums.AnimationSpeed
 import tmg.flashback.ui.overviews.driver.season.DriverSeasonItem
-import tmg.flashback.data.enums.BarAnimation
 import tmg.flashback.data.enums.isStatusFinished
 import tmg.flashback.ui.utils.getColor
 import tmg.flashback.ui.utils.getFlagResourceAlpha3
@@ -67,12 +67,12 @@ class RaceViewHolder(
             maxProgress = 0.0f
         }
 
-        when (item.barAnimation) {
-            BarAnimation.NONE -> {
+        when (item.animationSpeed) {
+            AnimationSpeed.NONE -> {
                 itemView.lpvProgress.setProgress(maxProgress) { item.points.toString() }
             }
             else -> {
-                itemView.lpvProgress.timeLimit = item.barAnimation.millis
+                itemView.lpvProgress.timeLimit = item.animationSpeed.millis
 
                 itemView.lpvProgress.animateProgress(maxProgress) {
                     when (it) {

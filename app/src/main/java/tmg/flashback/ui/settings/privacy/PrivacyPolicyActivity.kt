@@ -6,7 +6,7 @@ import kotlinx.android.synthetic.main.activity_privacy_policy.*
 import kotlinx.android.synthetic.main.activity_privacy_policy.header
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.R
-import tmg.flashback.ui.base.BaseActivity
+import tmg.flashback.core.ui.BaseActivity
 import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.observeEvent
 

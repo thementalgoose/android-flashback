@@ -1,7 +1,7 @@
 package tmg.flashback.constants
 
-import tmg.flashback.data.enums.BarAnimation
-import tmg.flashback.data.enums.ThemePref
+import tmg.flashback.core.enums.AnimationSpeed
+import tmg.flashback.core.enums.Theme
 
 internal object Defaults {
 
@@ -9,8 +9,8 @@ internal object Defaults {
     const val fadeDNF: Boolean = true
     const val showGridPenaltiesInQualifying: Boolean = true
 
-    val barAnimation: BarAnimation = BarAnimation.MEDIUM
-    val theme: ThemePref = ThemePref.AUTO
+    val animationSpeed: AnimationSpeed = AnimationSpeed.MEDIUM
+    val theme: Theme = Theme.AUTO
 
     const val showListFavourited: Boolean = true
     const val showListAll: Boolean = true

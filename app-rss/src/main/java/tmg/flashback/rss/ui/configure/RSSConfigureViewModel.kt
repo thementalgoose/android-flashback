@@ -2,10 +2,10 @@ package tmg.flashback.rss.ui.configure
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import tmg.flashback.core.ui.BaseViewModel
 import tmg.flashback.rss.R
-import tmg.flashback.rss.base.RSSBaseViewModel
-import tmg.flashback.rss.controllers.RSSController
-import tmg.flashback.rss.prefs.RSSPrefsRepository
+import tmg.flashback.rss.controllers.RSSFeedController
+import tmg.flashback.rss.prefs.RSSRepository
 import tmg.flashback.rss.repo.enums.SupportedArticleSource
 import tmg.utilities.lifecycle.DataEvent
 
@@ -30,15 +30,15 @@ interface RSSConfigureViewModelOutputs {
 //endregion
 
 class RSSConfigureViewModel(
-        private val prefsRepository: RSSPrefsRepository,
-        private val rssController: RSSController
-) : RSSBaseViewModel(), RSSConfigureViewModelInputs, RSSConfigureViewModelOutputs {
+    private val repository: RSSRepository,
+    private val rssFeedController: RSSFeedController
+) : BaseViewModel(), RSSConfigureViewModelInputs, RSSConfigureViewModelOutputs {
 
     var inputs: RSSConfigureViewModelInputs = this
     var outputs: RSSConfigureViewModelOutputs = this
 
     private val rssUrls: MutableSet<String>
-        get() = prefsRepository.rssUrls.toMutableSet()
+        get() = repository.rssUrls.toMutableSet()
 
     override val list: MutableLiveData<List<RSSConfigureItem>> = MutableLiveData()
     override val openWebsite: MutableLiveData<DataEvent<SupportedArticleSource>> = MutableLiveData()
@@ -50,17 +50,17 @@ class RSSConfigureViewModel(
     //region Inputs
 
     override fun addQuickItem(supportedArticle: SupportedArticleSource) {
-        prefsRepository.rssUrls = rssUrls + supportedArticle.rssLink
+        repository.rssUrls = rssUrls + supportedArticle.rssLink
         updateList()
     }
 
     override fun removeItem(link: String) {
-        prefsRepository.rssUrls = rssUrls - link
+        repository.rssUrls = rssUrls - link
         updateList()
     }
 
     override fun addCustomItem(link: String) {
-        prefsRepository.rssUrls = rssUrls + link
+        repository.rssUrls = rssUrls + link
         updateList()
     }
 
@@ -75,7 +75,7 @@ class RSSConfigureViewModel(
      */
     private fun loadState() {
         this.rssUrls.clear()
-        val urls = prefsRepository.rssUrls
+        val urls = repository.rssUrls
         this.rssUrls.addAll(urls)
         updateList()
     }
@@ -98,7 +98,7 @@ class RSSConfigureViewModel(
                             .replace("http://", "")
                 }
                 .map {
-                    RSSConfigureItem.Item(it, rssController.getSupportedSourceByRssUrl(it))
+                    RSSConfigureItem.Item(it, rssFeedController.getSupportedSourceByRssUrl(it))
                 }
             )
         }
@@ -106,7 +106,7 @@ class RSSConfigureViewModel(
             itemList.add(RSSConfigureItem.NoItems)
         }
 
-        if (rssController.showAddCustomFeeds) {
+        if (rssFeedController.showAddCustomFeeds) {
             itemList.add(RSSConfigureItem.Header(
                     text = R.string.rss_configure_header_add,
                     subtitle = R.string.rss_configure_header_add_subtitle
@@ -117,7 +117,7 @@ class RSSConfigureViewModel(
             text = R.string.rss_configure_header_quick_add,
             subtitle = R.string.rss_configure_header_quick_add_subtitle
         ))
-        itemList.addAll(rssController
+        itemList.addAll(rssFeedController
             .sources
             .filter { !rssUrls.contains(it.rssLink) }
             .sortedBy {

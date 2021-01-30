@@ -2,8 +2,8 @@ package tmg.flashback.constants
 
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
-import tmg.flashback.data.enums.BarAnimation
-import tmg.flashback.data.enums.ThemePref
+import tmg.flashback.core.enums.AnimationSpeed
+import tmg.flashback.core.enums.Theme
 import tmg.flashback.testutils.BaseTest
 
 internal class DefaultsTest: BaseTest() {
@@ -15,8 +15,8 @@ internal class DefaultsTest: BaseTest() {
         assertTrue(Defaults.fadeDNF)
         assertTrue(Defaults.showGridPenaltiesInQualifying)
 
-        assertEquals(BarAnimation.MEDIUM, Defaults.barAnimation)
-        assertEquals(ThemePref.AUTO, Defaults.theme)
+        assertEquals(AnimationSpeed.MEDIUM, Defaults.animationSpeed)
+        assertEquals(Theme.AUTO, Defaults.theme)
 
         assertTrue(Defaults.showListFavourited)
         assertTrue(Defaults.showListAll)

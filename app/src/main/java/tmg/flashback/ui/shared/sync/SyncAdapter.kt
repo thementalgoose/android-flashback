@@ -7,15 +7,15 @@ import org.koin.core.component.KoinApiExtension
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import tmg.flashback.R
-import tmg.flashback.data.config.RemoteConfigRepository
-import tmg.flashback.data.pref.UserRepository
+import tmg.flashback.core.controllers.AppearanceController
+import tmg.flashback.core.controllers.ConfigurationController
 import tmg.flashback.ui.shared.viewholders.*
 
 @KoinApiExtension
 abstract class SyncAdapter<T> : RecyclerView.Adapter<RecyclerView.ViewHolder>(), KoinComponent {
 
-    private val prefsRepo: UserRepository by inject()
-    private val remoteConfigRepo: RemoteConfigRepository by inject()
+    private val appearanceController: AppearanceController by inject()
+    private val configurationController: ConfigurationController by inject()
 
     abstract var list: List<T>
 
@@ -39,7 +39,7 @@ abstract class SyncAdapter<T> : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
             is SyncDataItem.Unavailable -> (holder as DataUnavailableViewHolder).bind(item.type)
             is SyncDataItem.Message -> (holder as MessageViewHolder).bind(item.msg)
             is SyncDataItem.MessageRes -> (holder as MessageViewHolder).bind(item.msg, item.values)
-            is SyncDataItem.ProvidedBy -> (holder as ProvidedByViewHolder).bind(remoteConfigRepo.dataProvidedBy, prefsRepo.theme)
+            is SyncDataItem.ProvidedBy -> (holder as ProvidedByViewHolder).bind(configurationController.dataProvidedBy, appearanceController.currentTheme)
             else -> {
             }
         }

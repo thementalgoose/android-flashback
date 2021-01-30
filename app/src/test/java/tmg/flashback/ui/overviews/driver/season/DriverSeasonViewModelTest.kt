@@ -9,7 +9,6 @@ import tmg.flashback.R
 import tmg.flashback.controllers.AppearanceController
 import tmg.flashback.ui.overviews.*
 import tmg.flashback.ui.overviews.driver.summary.PipeType.*
-import tmg.flashback.managers.networkconnectivity.NetworkConnectivityManager
 import tmg.flashback.data.db.stats.DriverRepository
 import tmg.flashback.data.enums.BarAnimation
 import tmg.flashback.data.models.stats.DriverOverviewRace
@@ -317,7 +316,7 @@ internal class DriverSeasonViewModelTest: BaseTest() {
                 raceStatus = race.status,
                 points = race.points,
                 maxPoints = 25,
-                barAnimation = BarAnimation.NONE
+                animationSpeed = BarAnimation.NONE
         )
     }
 }

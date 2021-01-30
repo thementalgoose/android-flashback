@@ -6,7 +6,6 @@ import io.mockk.verify
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import tmg.flashback.constants.Releases
-import tmg.flashback.managers.buildconfig.BuildConfigManager
 import tmg.flashback.data.pref.DeviceRepository
 import tmg.flashback.testutils.BaseTest
 

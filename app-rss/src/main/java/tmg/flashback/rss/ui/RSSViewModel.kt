@@ -8,10 +8,10 @@ import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.*
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
-import tmg.flashback.rss.base.RSSBaseViewModel
-import tmg.flashback.rss.managers.RSSNetworkConnectivityManager
-import tmg.flashback.rss.prefs.RSSPrefsRepository
-import tmg.flashback.rss.repo.RSSRepository
+import tmg.flashback.core.managers.NetworkConnectivityManager
+import tmg.flashback.core.ui.BaseViewModel
+import tmg.flashback.rss.prefs.RSSRepository
+import tmg.flashback.rss.repo.RssAPI
 import tmg.utilities.extensions.then
 
 //region Inputs
@@ -33,10 +33,10 @@ interface RSSViewModelOutputs {
 
 @Suppress("EXPERIMENTAL_API_USAGE")
 class RSSViewModel(
-        private val RSSDB: RSSRepository,
-        private val prefRepository: RSSPrefsRepository,
-        private val connectivityManager: RSSNetworkConnectivityManager
-): RSSBaseViewModel(), RSSViewModelInputs,
+    private val RSSDB: RssAPI,
+    private val prefRepository: RSSRepository,
+    private val connectivityManager: NetworkConnectivityManager
+): BaseViewModel(), RSSViewModelInputs,
     RSSViewModelOutputs {
 
     override val isRefreshing: MutableLiveData<Boolean> = MutableLiveData()

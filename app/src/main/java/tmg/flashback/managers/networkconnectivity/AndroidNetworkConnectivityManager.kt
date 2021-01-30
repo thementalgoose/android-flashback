@@ -2,12 +2,12 @@ package tmg.flashback.managers.networkconnectivity
 
 import android.content.Context
 import android.net.NetworkCapabilities
-import tmg.flashback.rss.managers.RSSNetworkConnectivityManager
+import tmg.flashback.core.managers.NetworkConnectivityManager
 import tmg.utilities.extensions.managerConnectivity
 
 class AndroidNetworkConnectivityManager(
     val context: Context
-) : NetworkConnectivityManager, RSSNetworkConnectivityManager {
+) : NetworkConnectivityManager {
     override val isConnected: Boolean
         get() {
             val connectivityManager = context.managerConnectivity

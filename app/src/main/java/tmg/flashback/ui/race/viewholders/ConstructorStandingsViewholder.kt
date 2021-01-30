@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.layout_constructor_driver.view.*
 import kotlinx.android.synthetic.main.view_race_constructor.view.*
 import tmg.flashback.R
-import tmg.flashback.data.enums.BarAnimation
+import tmg.flashback.core.enums.AnimationSpeed
 import tmg.flashback.data.models.stats.Driver
 import tmg.flashback.ui.race.RaceModel
 import tmg.flashback.ui.utils.getColor
@@ -54,12 +54,12 @@ class ConstructorStandingsViewholder(
                 maxPercentage = 0.05f
             }
 
-            when (model.barAnimation) {
-                BarAnimation.NONE -> {
+            when (model.animationSpeed) {
+                AnimationSpeed.NONE -> {
                     lpvProgress.setProgress(maxPercentage) { model.points.toString() }
                 }
                 else -> {
-                    lpvProgress.timeLimit = model.barAnimation.millis
+                    lpvProgress.timeLimit = model.animationSpeed.millis
                     lpvProgress.animateProgress(maxPercentage) {
                         when (it) {
                             maxPercentage -> model.points.toString()

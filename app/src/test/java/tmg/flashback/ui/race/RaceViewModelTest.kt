@@ -13,7 +13,6 @@ import tmg.flashback.controllers.AppHintsController
 import tmg.flashback.controllers.AppearanceController
 import tmg.flashback.controllers.RaceController
 import tmg.flashback.ui.race.RaceAdapterType.*
-import tmg.flashback.managers.networkconnectivity.NetworkConnectivityManager
 import tmg.flashback.data.db.stats.SeasonOverviewRepository
 import tmg.flashback.data.enums.BarAnimation
 import tmg.flashback.data.models.stats.LapTime

@@ -13,10 +13,10 @@ internal class RSSSupplierControllerTest: BaseTest() {
 
     private var mockRemoteConfigRepository: RemoteConfigRepository = mockk(relaxed = true)
 
-    private lateinit var sut: RSSConfigurationController
+    private lateinit var sut: RSSConfigurationFeedController
 
     private fun initSUT() {
-        sut = RSSConfigurationController(mockRemoteConfigRepository)
+        sut = RSSConfigurationFeedController(mockRemoteConfigRepository)
     }
 
     @Test

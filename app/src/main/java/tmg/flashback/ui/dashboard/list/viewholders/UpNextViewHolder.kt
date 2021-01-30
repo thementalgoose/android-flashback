@@ -33,7 +33,7 @@ class UpNextViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val track = TrackLayout.values().firstOrNull { it.circuitId == event.circuitId }?.icon ?: R.drawable.ic_map_unknown
         itemView.track.setImageResource(track)
 
-        item.upNextSchedule.flag?.let {
+        event.flag?.let {
             itemView.flag.setImageResource(context.getFlagResourceAlpha3(it))
             itemView.flag.visible()
         } ?: run {

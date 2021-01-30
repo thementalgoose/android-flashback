@@ -4,13 +4,13 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import tmg.flashback.firebase.FirebaseRepo
 import tmg.flashback.firebase.converters.convert
-import tmg.flashback.firebase.crash.FirebaseCrashManager
 import tmg.flashback.firebase.models.FHistorySeason
 import tmg.flashback.data.db.stats.HistoryRepository
 import tmg.flashback.data.models.stats.History
+import tmg.flashback.firebase.FirestoreCrashManager
 
 class HistoryFirestore(
-    crashManager: FirebaseCrashManager
+    crashManager: FirestoreCrashManager
 ): FirebaseRepo(crashManager), HistoryRepository {
 
     override fun historyFor(season: Int): Flow<History?> {
