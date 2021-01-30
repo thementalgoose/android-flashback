@@ -45,5 +45,4 @@ data class Timestamp(
             ifDateOnly(originalDate)
         }
     }
-
 }

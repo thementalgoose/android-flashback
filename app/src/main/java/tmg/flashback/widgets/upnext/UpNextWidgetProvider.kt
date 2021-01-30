@@ -25,6 +25,7 @@ import tmg.flashback.firebase.crash.FirebaseCrashManagerImpl
 import tmg.flashback.managers.remoteconfig.FirebaseRemoteConfigManager
 import tmg.flashback.managers.sharedprefs.SharedPreferenceManager
 import tmg.flashback.repo.models.remoteconfig.UpNextSchedule
+import tmg.flashback.repo.utils.daysBetween
 import tmg.flashback.ui.SplashActivity
 import tmg.flashback.ui.utils.getFlagResourceAlpha3
 import tmg.utilities.extensions.toEnum
@@ -93,7 +94,7 @@ class UpNextWidgetProvider : AppWidgetProvider() {
 
                 }
 
-                when (val days = ChronoUnit.DAYS.between(nextEvent.date, LocalDate.now()).toInt().absoluteValue) {
+                when (val days = daysBetween(nextEvent.timestamp.originalDate, LocalDate.now())) {
                     0 -> {
                         remoteView.setTextViewText(R.id.days, context.getString(R.string.dashboard_up_next_today))
                         remoteView.setTextViewText(R.id.daystogo, "")
