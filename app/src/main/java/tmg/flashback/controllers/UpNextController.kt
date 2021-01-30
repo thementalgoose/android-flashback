@@ -19,8 +19,8 @@ class UpNextController(
         return remoteConfigRepository
                 .upNext
                 .filter { schedule ->
-                    return@filter schedule.timestamp.originalDate >= LocalDate.now()
+                    return@filter schedule.timestamp.deviceDate >= LocalDate.now()
                 }
-                .minByOrNull { it.timestamp.originalDate }
+                .minByOrNull { it.timestamp.deviceDate }
     }
 }
