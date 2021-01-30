@@ -5,17 +5,17 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
-import tmg.flashback.data.pref.UserRepository
+import tmg.flashback.data.repositories.AppRepository
 import tmg.flashback.testutils.BaseTest
 
 internal class RaceControllerTest: BaseTest() {
 
-    private var mockUserRepository: UserRepository = mockk(relaxed = true)
+    private var mockAppRepository: AppRepository = mockk(relaxed = true)
 
     private lateinit var sut: RaceController
 
     private fun initSUT() {
-        sut = RaceController(mockUserRepository)
+        sut = RaceController(mockAppRepository)
     }
 
     //region Show Qualifying Delta
@@ -23,13 +23,13 @@ internal class RaceControllerTest: BaseTest() {
     @Test
     fun `RaceController show qualifying delta reads from prefs`() {
         initSUT()
-        every { mockUserRepository.showQualifyingDelta } returns true
-        assertTrue(mockUserRepository.showQualifyingDelta)
-        every { mockUserRepository.showQualifyingDelta } returns false
-        assertFalse(mockUserRepository.showQualifyingDelta)
+        every { mockAppRepository.showQualifyingDelta } returns true
+        assertTrue(mockAppRepository.showQualifyingDelta)
+        every { mockAppRepository.showQualifyingDelta } returns false
+        assertFalse(mockAppRepository.showQualifyingDelta)
 
         verify(exactly = 2) {
-            mockUserRepository.showQualifyingDelta
+            mockAppRepository.showQualifyingDelta
         }
     }
 
@@ -38,7 +38,7 @@ internal class RaceControllerTest: BaseTest() {
         initSUT()
         sut.showQualifyingDelta = true
         verify {
-            mockUserRepository.showQualifyingDelta = true
+            mockAppRepository.showQualifyingDelta = true
         }
     }
 
@@ -49,13 +49,13 @@ internal class RaceControllerTest: BaseTest() {
     @Test
     fun `RaceController fade dnf reads from prefs`() {
         initSUT()
-        every { mockUserRepository.fadeDNF } returns true
-        assertTrue(mockUserRepository.fadeDNF)
-        every { mockUserRepository.fadeDNF } returns false
-        assertFalse(mockUserRepository.fadeDNF)
+        every { mockAppRepository.fadeDNF } returns true
+        assertTrue(mockAppRepository.fadeDNF)
+        every { mockAppRepository.fadeDNF } returns false
+        assertFalse(mockAppRepository.fadeDNF)
 
         verify(exactly = 2) {
-            mockUserRepository.fadeDNF
+            mockAppRepository.fadeDNF
         }
     }
 
@@ -64,7 +64,7 @@ internal class RaceControllerTest: BaseTest() {
         initSUT()
         sut.fadeDNF = true
         verify {
-            mockUserRepository.fadeDNF = true
+            mockAppRepository.fadeDNF = true
         }
     }
 
@@ -75,13 +75,13 @@ internal class RaceControllerTest: BaseTest() {
     @Test
     fun `RaceController show grid penalties in qualifying reads from prefs`() {
         initSUT()
-        every { mockUserRepository.showGridPenaltiesInQualifying } returns true
-        assertTrue(mockUserRepository.showGridPenaltiesInQualifying)
-        every { mockUserRepository.showGridPenaltiesInQualifying } returns false
-        assertFalse(mockUserRepository.showGridPenaltiesInQualifying)
+        every { mockAppRepository.showGridPenaltiesInQualifying } returns true
+        assertTrue(mockAppRepository.showGridPenaltiesInQualifying)
+        every { mockAppRepository.showGridPenaltiesInQualifying } returns false
+        assertFalse(mockAppRepository.showGridPenaltiesInQualifying)
 
         verify(exactly = 2) {
-            mockUserRepository.showGridPenaltiesInQualifying
+            mockAppRepository.showGridPenaltiesInQualifying
         }
     }
 
@@ -90,7 +90,7 @@ internal class RaceControllerTest: BaseTest() {
         initSUT()
         sut.showGridPenaltiesInQualifying = true
         verify {
-            mockUserRepository.showGridPenaltiesInQualifying = true
+            mockAppRepository.showGridPenaltiesInQualifying = true
         }
     }
 

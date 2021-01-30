@@ -3,8 +3,8 @@ package tmg.flashback.ui.overviews.driver.season
 import androidx.annotation.*
 import org.threeten.bp.LocalDate
 import tmg.flashback.R
+import tmg.flashback.core.enums.AnimationSpeed
 import tmg.flashback.ui.overviews.driver.summary.PipeType
-import tmg.flashback.data.enums.BarAnimation
 import tmg.flashback.data.enums.RaceStatus
 import tmg.flashback.data.models.stats.SlimConstructor
 import tmg.flashback.ui.shared.sync.SyncDataItem
@@ -49,7 +49,7 @@ sealed class DriverSeasonItem(
             val raceStatus: RaceStatus,
             val points: Int,
             val maxPoints: Int,
-            val barAnimation: BarAnimation
+            val animationSpeed: AnimationSpeed
     ): DriverSeasonItem(R.layout.view_driver_season)
 
     object ResultHeader: DriverSeasonItem(R.layout.view_driver_season_header)

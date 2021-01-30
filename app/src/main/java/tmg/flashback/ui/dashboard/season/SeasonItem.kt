@@ -3,7 +3,7 @@ package tmg.flashback.ui.dashboard.season
 import androidx.annotation.LayoutRes
 import org.threeten.bp.LocalDate
 import tmg.flashback.R
-import tmg.flashback.data.enums.BarAnimation
+import tmg.flashback.core.enums.AnimationSpeed
 import tmg.flashback.data.models.stats.Round
 import tmg.flashback.ui.shared.sync.SyncDataItem
 
@@ -32,7 +32,7 @@ sealed class SeasonItem(
         val bestQualifying: Pair<Int, List<Round>>?,
         val bestFinish: Pair<Int, List<Round>>?,
         val maxPointsInSeason: Int,
-        val barAnimation: BarAnimation
+        val animationSpeed: AnimationSpeed
     ) : SeasonItem(R.layout.view_dashboard_season_driver)
 
     data class Constructor(
@@ -43,7 +43,7 @@ sealed class SeasonItem(
         val driver: List<Pair<tmg.flashback.data.models.stats.Driver, Int>>,
         val points: Int,
         val maxPointsInSeason: Int,
-        val barAnimation: BarAnimation
+        val barAnimation: AnimationSpeed
     ) : SeasonItem(R.layout.view_dashboard_season_constructor)
 
     data class ErrorItem(

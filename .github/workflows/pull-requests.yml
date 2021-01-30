@@ -28,25 +28,32 @@ jobs:
       # Unit Tests - Checking differences
       - name: Unit tests - Checking difference
         run: |
-          echo "lines_rss=$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }} | grep -E '^app-rss/' -c)" >> $GITHUB_ENV
-          echo "lines_data=$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }} | grep -E '^data/' -c)" >> $GITHUB_ENV
           echo "lines_app=$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }} | grep -E '^app/' -c)" >> $GITHUB_ENV
-          echo "lines_firebase=$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }} | grep -E '^data-firebase/' -c)" >> $GITHUB_ENV
+          echo "lines_app_rss=$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }} | grep -E '^app-rss/' -c)" >> $GITHUB_ENV
+          echo "lines_data=$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }} | grep -E '^data/' -c)" >> $GITHUB_ENV
+          echo "lines_data_firebase=$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }} | grep -E '^data-firebase/' -c)" >> $GITHUB_ENV
+          echo "lines_core=$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }} | grep -E '^core/' -c)" >> $GITHUB_ENV
 
-      # Unit Tests - RSS
-      - name: Unit tests - RSS
-        run: ./gradlew :app-rss:testDebugUnitTest
-        if: ${{ env.lines_rss != 0 }}
 
-      # Unit Tests - Repo
-      - name: Unit tests - Repo
-        run: ./gradlew :data:test
-        if: ${{ env.lines_repo != 0 }}
+      # Unit Tests - Core
+      - name: Unit tests - Core
+        run: ./gradlew :core:testDebugUnitTest
+        if: ${{ env.lines_core != 0 }}
 
-      # Unit Tests - Firebase
-      - name: Unit tests - Firebase
+      # Unit Tests - Data-Firebase
+      - name: Unit tests - Data-Firebase
         run: ./gradlew :data-firebase:testDebugUnitTest
-        if: ${{ env.lines_firebase != 0 }}
+        if: ${{ env.lines_data_firebase != 0 }}
+
+      # Unit Tests - Data
+      - name: Unit tests - Data
+        run: ./gradlew :data:test
+        if: ${{ env.lines_data != 0 }}
+
+      # Unit Tests - App-RSS
+      - name: Unit tests - App-RSS
+        run: ./gradlew :app-rss:testDebugUnitTest
+        if: ${{ env.lines_app_rss != 0 }}
 
       # Unit Tests - App
       - name: Unit tests - App

@@ -6,11 +6,11 @@ import tmg.flashback.data.db.stats.SeasonOverviewRepository
 import tmg.flashback.data.models.stats.*
 import tmg.flashback.firebase.converters.convert
 import tmg.flashback.firebase.FirebaseRepo
-import tmg.flashback.firebase.crash.FirebaseCrashManager
+import tmg.flashback.firebase.FirestoreCrashManager
 import tmg.flashback.firebase.models.FSeason
 
 class SeasonOverviewFirestore(
-    crashManager: FirebaseCrashManager
+    crashManager: FirestoreCrashManager
 ) : FirebaseRepo(crashManager), SeasonOverviewRepository {
 
     override fun getCircuits(season: Int): Flow<List<CircuitSummary>> {

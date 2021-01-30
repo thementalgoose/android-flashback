@@ -12,7 +12,7 @@ import tmg.flashback.data.db.stats.ConstructorRepository
 import tmg.flashback.data.db.stats.DriverRepository
 import tmg.flashback.data.db.stats.HistoryRepository
 import tmg.flashback.data.db.stats.SeasonOverviewRepository
-import tmg.flashback.rss.repo.RSSRepository
+import tmg.flashback.rss.repo.RssAPI
 
 internal val mockModules = module(override = true) {
     // Data
@@ -25,5 +25,5 @@ internal val mockModules = module(override = true) {
     single<RemoteConfigRepository> { MockRemoteConfigRepository }
 
     // RSS
-    single<RSSRepository> { MockRSS }
+    single<RssAPI> { MockRSS }
 }

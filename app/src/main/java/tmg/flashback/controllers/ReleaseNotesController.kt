@@ -1,15 +1,15 @@
 package tmg.flashback.controllers
 
 import tmg.flashback.constants.Releases
-import tmg.flashback.managers.buildconfig.BuildConfigManager
-import tmg.flashback.data.pref.DeviceRepository
+import tmg.flashback.core.managers.BuildConfigManager
+import tmg.flashback.core.repositories.CoreRepository
 
 /**
  * Controller around release notes being displayed in the app
  */
 class ReleaseNotesController(
-        private val deviceRepository: DeviceRepository,
-        private val buildConfigManager: BuildConfigManager
+    private val coreRepository: CoreRepository,
+    private val buildConfigManager: BuildConfigManager
 ) {
 
     /**
@@ -43,11 +43,11 @@ class ReleaseNotesController(
      * Mark that we have seen the release notes
      */
     fun markReleaseNotesSeen() {
-        deviceRepository.releaseNotesSeenAppVersion = buildConfigManager.versionCode
+        coreRepository.releaseNotesSeenAppVersion = buildConfigManager.versionCode
     }
 
     private val releaseNotesLastSeenVersionCode: Int
-        get() = when (val version = deviceRepository.releaseNotesSeenAppVersion) {
+        get() = when (val version = coreRepository.releaseNotesSeenAppVersion) {
             0 -> {
                 markReleaseNotesSeen()
                 buildConfigManager.versionCode

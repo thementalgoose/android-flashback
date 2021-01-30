@@ -3,7 +3,7 @@ package tmg.flashback.ui.dashboard.search
 import android.os.Bundle
 import android.view.View
 import tmg.flashback.R
-import tmg.flashback.ui.base.BaseFragment
+import tmg.flashback.core.ui.BaseFragment
 
 class SearchFragment: BaseFragment() {
 

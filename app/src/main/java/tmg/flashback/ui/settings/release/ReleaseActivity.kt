@@ -5,7 +5,7 @@ import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_release_notes.*
 import tmg.flashback.R
 import tmg.flashback.constants.Releases
-import tmg.flashback.ui.base.BaseActivity
+import tmg.flashback.core.ui.BaseActivity
 import tmg.utilities.extensions.fromHtml
 
 class ReleaseActivity : BaseActivity() {

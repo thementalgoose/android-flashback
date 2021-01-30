@@ -3,19 +3,16 @@ package tmg.flashback.rss.ui.settings
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.annotation.StyleRes
-import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_settings_news.*
 import tmg.flashback.rss.R
 import org.koin.android.viewmodel.ext.android.viewModel
-import tmg.flashback.rss.base.RSSBaseActivity
-import tmg.flashback.rss.ui.RSSActivity
+import tmg.flashback.core.ui.BaseActivity
 import tmg.flashback.rss.ui.configure.RSSConfigureActivity
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 
-class RSSSettingsActivity : RSSBaseActivity() {
+class RSSSettingsActivity : BaseActivity() {
 
     private val viewModel: RSSSettingsViewModel by viewModel()
 

@@ -9,11 +9,8 @@ import tmg.components.prefs.AppPreferencesItem
 import tmg.flashback.BuildConfig
 import tmg.flashback.R
 import tmg.flashback.controllers.*
-import tmg.flashback.extensions.icon
-import tmg.flashback.extensions.label
-import tmg.flashback.managers.analytics.AnalyticsManager
-import tmg.flashback.notifications.FirebasePushNotificationManager.Companion.topicQualifying
-import tmg.flashback.notifications.FirebasePushNotificationManager.Companion.topicRace
+import tmg.flashback.managers.notifications.FirebasePushNotificationManager.Companion.topicQualifying
+import tmg.flashback.managers.notifications.FirebasePushNotificationManager.Companion.topicRace
 import tmg.flashback.data.enums.BarAnimation.*
 import tmg.flashback.data.enums.ThemePref.*
 import tmg.flashback.ui.settings.SettingsOptions.*
@@ -89,7 +86,7 @@ internal class SettingsViewModelTest: BaseTest() {
             add(AppPreferencesItem.Category(R.string.settings_theme))
             add(THEME.toPref())
             add(AppPreferencesItem.Category(R.string.settings_customisation))
-            add(BAR_ANIMATION_SPEED.toPref())
+            add(ANIMATION_SPEED.toPref())
             add(QUALIFYING_DELTAS.toSwitch(false))
             add(FADE_OUT_DNF.toSwitch(false))
             add(QUALIFYING_GRID_PENALTY.toSwitch(false))
@@ -282,7 +279,7 @@ internal class SettingsViewModelTest: BaseTest() {
 
         initSUT()
 
-        sut.inputs.preferenceClicked(BAR_ANIMATION_SPEED, null)
+        sut.inputs.preferenceClicked(ANIMATION_SPEED, null)
 
         sut.outputs.openAnimationPicker.test {
             assertEventFired()

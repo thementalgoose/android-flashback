@@ -5,7 +5,6 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.controllers.FeatureController
 import tmg.flashback.managers.appshortcuts.AppShortcutManager
-import tmg.flashback.managers.remoteconfig.RemoteConfigManager
 import tmg.flashback.testutils.BaseTest
 import tmg.flashback.testutils.assertEventFired
 import tmg.flashback.testutils.assertEventNotFired

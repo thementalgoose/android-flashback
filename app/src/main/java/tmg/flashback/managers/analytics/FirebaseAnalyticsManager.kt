@@ -2,44 +2,33 @@ package tmg.flashback.managers.analytics
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import com.google.firebase.analytics.FirebaseAnalytics
-import tmg.flashback.BuildConfig
-import tmg.flashback.data.pref.DeviceRepository
-import tmg.flashback.rss.managers.RSSAnalyticsManager
+import tmg.flashback.core.managers.AnalyticsManager
 
 class FirebaseAnalyticsManager(
-    val context: Context,
-    val deviceRepository: DeviceRepository
-): UserPropertiesManager, AnalyticsManager, RSSAnalyticsManager {
+    val context: Context
+): AnalyticsManager {
 
-    override var enableAnalytics: Boolean
-        get() = deviceRepository.optInAnalytics
-        set(value) {
-            deviceRepository.optInAnalytics = value
-        }
-
-    override fun setProperty(key: UserProperty, value: String) {
-        FirebaseAnalytics.getInstance(context).setUserProperty(key.key, value)
+    override fun logEvent(key: String, bundle: Bundle) {
+        FirebaseAnalytics.getInstance(context).logEvent(key, bundle)
     }
 
-    override fun viewScreen(screenName: String, clazz: Class<*>, mapOfParams: Map<String, String>) {
-        if (BuildConfig.DEBUG) {
-            Log.i("Flashback", "Analytics Screen viewed $screenName - $mapOfParams")
-        }
-        if (enableAnalytics) {
-            val bundle = Bundle().apply {
-                putString(FirebaseAnalytics.Param.SCREEN_NAME, screenName)
-                putString(FirebaseAnalytics.Param.SCREEN_CLASS, clazz.simpleName)
-                for (x in mapOfParams) {
-                    putString(x.key, x.value)
-                }
+    override fun logViewScreen(
+        screenName: String,
+        clazz: Class<*>,
+        mapOfParams: Map<String, String>
+    ) {
+        val bundle = Bundle().apply {
+            putString(FirebaseAnalytics.Param.SCREEN_NAME, screenName)
+            putString(FirebaseAnalytics.Param.SCREEN_CLASS, clazz.simpleName)
+            for (x in mapOfParams) {
+                putString(x.key, x.value)
             }
-            FirebaseAnalytics.getInstance(context).logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, bundle)
         }
+        FirebaseAnalytics.getInstance(context).logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, bundle)
     }
 
-    override fun rssViewScreen(screenName: String, clazz: Class<*>, mapOfParams: Map<String, String>) {
-        viewScreen(screenName, clazz, mapOfParams)
+    override fun setProperty(key: String, value: String) {
+        FirebaseAnalytics.getInstance(context).setUserProperty(key, value)
     }
 }

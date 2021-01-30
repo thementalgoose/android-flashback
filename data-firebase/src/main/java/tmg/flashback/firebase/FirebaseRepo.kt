@@ -1,16 +1,17 @@
 package tmg.flashback.firebase
 
+import com.google.firebase.FirebaseApp
 import com.google.firebase.firestore.*
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.map
-import tmg.flashback.firebase.crash.FirebaseCrashManager
-import java.lang.RuntimeException
 
 open class FirebaseRepo(
-    val crashManager: FirebaseCrashManager
+    val crashManager: FirestoreCrashManager
 ) {
+
+    private val firebaseApp: FirebaseApp = FirebaseApp.getInstance()
 
     //#region References
 

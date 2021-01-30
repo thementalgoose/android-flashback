@@ -5,9 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import tmg.flashback.controllers.FeatureController
-import tmg.flashback.ui.base.BaseViewModel
+import tmg.flashback.core.controllers.ConfigurationController
+import tmg.flashback.core.ui.BaseViewModel
 import tmg.flashback.managers.appshortcuts.AppShortcutManager
-import tmg.flashback.managers.remoteconfig.RemoteConfigManager
 import tmg.utilities.lifecycle.Event
 
 //region Inputs
@@ -31,7 +31,7 @@ interface SplashViewModelOutputs {
 class SplashViewModel(
         private val shortcutManager: AppShortcutManager,
         private val featureController: FeatureController,
-        private val remoteConfigManager: RemoteConfigManager
+        private val configurationController: ConfigurationController
 ): BaseViewModel(), SplashViewModelInputs, SplashViewModelOutputs {
 
     var inputs: SplashViewModelInputs = this
@@ -44,11 +44,11 @@ class SplashViewModel(
     //region Inputs
 
     override fun start() {
-        if (remoteConfigManager.requiresRemoteSync) {
+        if (configurationController.requireSynchronisation) {
             showLoading.value = true
             showResync.value = false
             viewModelScope.launch {
-                val result = remoteConfigManager.update(true)
+                val result = configurationController.fetchAndApply()
                 performConfigUpdates()
                 if (result) {
                     goToNextScreen.value = Event()
@@ -61,7 +61,7 @@ class SplashViewModel(
         }
         else {
             viewModelScope.launch {
-                val result = remoteConfigManager.activate()
+                val result = configurationController.applyPending()
                 performConfigUpdates()
                 goToNextScreen.value = Event()
             }

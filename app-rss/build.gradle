@@ -83,7 +83,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.3.2'
     implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation project(path: ':data')
+    api project(path: ':core')
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     testImplementation "org.junit.jupiter:junit-jupiter-api:$junit"
@@ -115,9 +115,6 @@ dependencies {
     // Swipe refresh
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:$swipe_refresh"
 
-    // Swipe dismiss
-    implementation "com.r0adkll:slidableactivity:$slidr"
-
     // Koin
     implementation "org.koin:koin-android:$koin_version"
     implementation "org.koin:koin-android-scope:$koin_version"
@@ -145,7 +142,6 @@ dependencies {
 
     // TMG dependencies
     implementation "com.github.thementalgoose:android-components:$tmg_components"
-    implementation "com.github.thementalgoose:android-utilities:$tmg_utils"
     implementation "com.github.thementalgoose:android-labelled-progress-bar:$tmg_labelled_progressbar"
 
     // Lottie

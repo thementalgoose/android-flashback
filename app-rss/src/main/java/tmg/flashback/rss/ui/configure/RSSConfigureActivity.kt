@@ -11,13 +11,13 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_rss_configure.*
 import kotlinx.android.synthetic.main.activity_rss_configure.header
 import org.koin.android.viewmodel.ext.android.viewModel
+import tmg.flashback.core.ui.BaseActivity
 import tmg.flashback.rss.R
-import tmg.flashback.rss.base.RSSBaseActivity
 import tmg.utilities.extensions.managerClipboard
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 
-class RSSConfigureActivity : RSSBaseActivity() {
+class RSSConfigureActivity : BaseActivity() {
 
     private val viewModel: RSSConfigureViewModel by viewModel()
 

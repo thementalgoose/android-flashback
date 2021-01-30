@@ -8,8 +8,8 @@ import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDateTime
 import tmg.flashback.data.models.Response
 import tmg.flashback.rss.managers.RSSNetworkConnectivityManager
-import tmg.flashback.rss.prefs.RSSPrefsRepository
-import tmg.flashback.rss.repo.RSSRepository
+import tmg.flashback.rss.prefs.RSSRepository
+import tmg.flashback.rss.repo.RssAPI
 import tmg.flashback.rss.repo.model.Article
 import tmg.flashback.rss.repo.model.ArticleSource
 import tmg.flashback.rss.testutils.BaseTest
@@ -19,8 +19,8 @@ class RSSViewModelTest: BaseTest() {
 
     private lateinit var sut: RSSViewModel
 
-    private val mockRSSDB: RSSRepository = mockk()
-    private val mockPrefsRepository: RSSPrefsRepository = mockk()
+    private val mockRSSDB: RssAPI = mockk()
+    private val mockRepository: RSSRepository = mockk()
     private val mockConnectivityManager: RSSNetworkConnectivityManager = mockk()
 
     private val mockLocalDate: LocalDateTime = LocalDateTime.of(2020, 1, 1, 1, 2, 3, 0)
@@ -49,8 +49,8 @@ class RSSViewModelTest: BaseTest() {
     internal fun setUp() {
 
         every { mockConnectivityManager.isConnected } returns true
-        every { mockPrefsRepository.rssUrls } returns setOf("https://www.mock.rss.url.com")
-        every { mockPrefsRepository.rssShowDescription } returns true
+        every { mockRepository.rssUrls } returns setOf("https://www.mock.rss.url.com")
+        every { mockRepository.rssShowDescription } returns true
         every { mockRSSDB.getNews() } returns mockResponse200
     }
 
@@ -58,7 +58,7 @@ class RSSViewModelTest: BaseTest() {
 
         sut = RSSViewModel(
             mockRSSDB,
-            mockPrefsRepository,
+            mockRepository,
             mockConnectivityManager
         )
     }
@@ -101,7 +101,7 @@ class RSSViewModelTest: BaseTest() {
     fun `RSSViewModel init all sources disabled if excludes list contains all news sources`() = coroutineTest {
 
         every { mockRSSDB.getNews() } returns mockResponse500
-        every { mockPrefsRepository.rssUrls } returns emptySet()
+        every { mockRepository.rssUrls } returns emptySet()
 
         val expected = listOf<RSSItem>(
             RSSItem.SourcesDisabled

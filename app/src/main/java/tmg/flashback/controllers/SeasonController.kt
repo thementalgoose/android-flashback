@@ -1,20 +1,20 @@
 package tmg.flashback.controllers
 
 import tmg.flashback.constants.App.currentYear
-import tmg.flashback.data.config.RemoteConfigRepository
-import tmg.flashback.data.pref.UserRepository
+import tmg.flashback.core.controllers.ConfigurationController
+import tmg.flashback.data.repositories.AppRepository
 
 /**
  * All the preferences surrounding the season, list of all seasons
  */
 class SeasonController(
-        private val userRepository: UserRepository,
-        private val remoteConfigRepository: RemoteConfigRepository
+    private val appRepository: AppRepository,
+    private val configurationController: ConfigurationController
 ) {
     //region Default season shown
 
     fun clearDefault() {
-        userRepository.defaultSeason = null
+        appRepository.defaultSeason = null
     }
 
     fun setUserDefaultSeason(season: Int) {
@@ -23,9 +23,9 @@ class SeasonController(
 
     var defaultSeason: Int
         get() {
-            val supportedSeasons = remoteConfigRepository.supportedSeasons
-            val userPrefSeason = userRepository.defaultSeason
-            val serverSeason = remoteConfigRepository.defaultSeason
+            val supportedSeasons = configurationController.supportedSeasons
+            val userPrefSeason = appRepository.defaultSeason
+            val serverSeason = configurationController.defaultSeason
 
             if (supportedSeasons.isEmpty()) {
                 return currentYear
@@ -45,36 +45,36 @@ class SeasonController(
             }
         }
         private set(value) {
-            userRepository.defaultSeason = value
+            appRepository.defaultSeason = value
         }
 
     val serverDefaultSeason: Int
-        get() = remoteConfigRepository.defaultSeason
+        get() = configurationController.defaultSeason
 
     val isUserDefinedValueSet: Boolean
-        get() = userRepository.defaultSeason != null
+        get() = appRepository.defaultSeason != null
 
     //endregion
 
     //region All Seasons
 
     val supportedSeasons: Set<Int>
-        get() = remoteConfigRepository.supportedSeasons
+        get() = configurationController.supportedSeasons
 
     //endregion
 
     //region Showing favourites / all
 
     var favouritesExpanded: Boolean
-        get() = userRepository.showListFavourited
+        get() = appRepository.showListFavourited
         set(value) {
-            userRepository.showListFavourited = value
+            appRepository.showListFavourited = value
         }
 
     var allExpanded: Boolean
-        get() = userRepository.showListAll
+        get() = appRepository.showListAll
         set(value) {
-            userRepository.showListAll = value
+            appRepository.showListAll = value
         }
 
     //endregion
@@ -82,9 +82,9 @@ class SeasonController(
     //region Favourites
 
     var favouriteSeasons: Set<Int>
-        get() = userRepository.favouriteSeasons
+        get() = appRepository.favouriteSeasons
         private set(value) {
-            userRepository.favouriteSeasons = value
+            appRepository.favouriteSeasons = value
         }
 
     fun isFavourite(season: Int): Boolean {

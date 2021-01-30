@@ -14,17 +14,17 @@ import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
+import org.koin.core.component.KoinApiExtension
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.BuildConfig
 import tmg.flashback.R
 import tmg.flashback.constants.TrackLayout
 import tmg.flashback.controllers.UpNextController
-import tmg.flashback.firebase.crash.FirebaseCrashManager
-import tmg.flashback.firebase.crash.FirebaseCrashManagerImpl
-import tmg.flashback.managers.remoteconfig.FirebaseRemoteConfigManager
-import tmg.flashback.managers.sharedprefs.SharedPreferenceManager
-import tmg.flashback.data.models.remoteconfig.UpNextSchedule
+import tmg.flashback.core.controllers.CrashController
+import tmg.flashback.core.model.UpNextSchedule
 import tmg.flashback.data.utils.daysBetween
 import tmg.flashback.ui.SplashActivity
 import tmg.flashback.ui.utils.getFlagResourceAlpha3
@@ -32,9 +32,11 @@ import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.toEnum
 import java.lang.Exception
 
-class UpNextWidgetProvider : AppWidgetProvider() {
+@KoinApiExtension
+class UpNextWidgetProvider : AppWidgetProvider(), KoinComponent {
 
-    var crashManager: FirebaseCrashManager? = null
+    private val crashController: CrashController by inject()
+    private val upNextController: UpNextController by inject()
 
     override fun onReceive(context: Context?, intent: Intent?) {
         super.onReceive(context, intent)
@@ -43,8 +45,7 @@ class UpNextWidgetProvider : AppWidgetProvider() {
     override fun onUpdate(context: Context?, appWidgetManager: AppWidgetManager?, appWidgetIds: IntArray?) {
         Log.i("Flashback", "Updating up next widgets... ${appWidgetIds.toString()}")
 
-        val upNextController = getUpNextController(context)
-        val nextEvent: UpNextSchedule? = upNextController?.getNextEvent()
+        val nextEvent: UpNextSchedule? = upNextController.getNextEvent()
 
         if (context == null) {
             return
@@ -67,7 +68,7 @@ class UpNextWidgetProvider : AppWidgetProvider() {
         catch (e: Exception) {
             Log.i("Flashback", "Failed to tint icon ${e.message}")
             e.printStackTrace()
-            crashManager?.logException(e, "Widget Up Next provider couldn't tint bitmap")
+            crashController.logError(e, "Widget Up Next provider couldn't tint bitmap")
         }
 
         appWidgetIds?.forEach { widgetId ->
@@ -122,7 +123,7 @@ class UpNextWidgetProvider : AppWidgetProvider() {
                 remoteView.setOnClickPendingIntent(R.id.container, getRefreshWidgetPendingIntent(context, widgetId, appWidgetIds))
                 appWidgetManager?.updateAppWidget(widgetId, remoteView)
             } catch (e: RuntimeException) {
-                crashManager?.logException(e, "Widget Up Next provider couldn't be set up")
+                crashController.logError(e, "Widget Up Next provider couldn't be set up")
                 remoteView.error(appWidgetManager, widgetId, context)
             }
         }
@@ -171,15 +172,5 @@ class UpNextWidgetProvider : AppWidgetProvider() {
         intent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds ?: IntArray(0))
         return PendingIntent.getBroadcast(context, widgetId, intent, PendingIntent.FLAG_UPDATE_CURRENT)
-    }
-
-    private fun getUpNextController(context: Context?): UpNextController? {
-        if (context == null) {
-            return null
-        }
-        crashManager = FirebaseCrashManagerImpl()
-        val sharedPreferenceManager = SharedPreferenceManager(context)
-        val remoteConfig = FirebaseRemoteConfigManager(crashManager, sharedPreferenceManager)
-        return UpNextController(remoteConfig)
     }
 }

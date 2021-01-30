@@ -9,9 +9,9 @@ import android.os.Bundle
 import android.view.View
 import kotlinx.android.synthetic.main.fragment_web.*
 import org.koin.android.ext.android.inject
+import tmg.flashback.core.controllers.AnalyticsController
 import tmg.flashback.rss.R
-import tmg.flashback.rss.managers.RSSAnalyticsManager
-import tmg.flashback.rss.prefs.RSSPrefsRepository
+import tmg.flashback.rss.prefs.RSSRepository
 import tmg.utilities.extensions.getColor
 import tmg.utilities.extensions.views.show
 import tmg.utilities.lifecycle.common.CommonFragment
@@ -21,8 +21,8 @@ import java.net.MalformedURLException
 @SuppressLint("SetJavaScriptEnabled")
 class WebFragment : CommonFragment() {
 
-    private val prefsRepository: RSSPrefsRepository by inject()
-    private val analyticsManager: RSSAnalyticsManager by inject()
+    private val repository: RSSRepository by inject()
+    private val analyticsManager: AnalyticsController by inject()
 
     private var backCallback: FragmentRequestBack? = null
 
@@ -65,7 +65,7 @@ class WebFragment : CommonFragment() {
         webview.webChromeClient = webChromeClient
         webview.webViewClient = webViewClient
         webview.settings.loadsImagesAutomatically = true
-        webview.settings.javaScriptEnabled = prefsRepository.inAppEnableJavascript
+        webview.settings.javaScriptEnabled = repository.inAppEnableJavascript
         webview.scrollBarStyle = View.SCROLLBARS_INSIDE_OVERLAY
 
         load(pageTitle, pageUrl)
@@ -86,10 +86,10 @@ class WebFragment : CommonFragment() {
         try {
             val host = Uri.parse(pageUrl).host
             host?.let {
-                analyticsManager.rssViewScreen(
+                analyticsManager.viewScreen(
                         screenName = "Webpage",
                         clazz = WebFragment::class.java,
-                        mapOfParams = mapOf(
+                        params = mapOf(
                                 "host" to host
                         )
                 )

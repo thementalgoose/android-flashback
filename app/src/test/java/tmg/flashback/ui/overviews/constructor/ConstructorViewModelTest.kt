@@ -12,7 +12,6 @@ import tmg.flashback.R
 import tmg.flashback.ui.overviews.*
 import tmg.flashback.ui.overviews.constructor.summary.ConstructorSummaryItem
 import tmg.flashback.ui.overviews.driver.summary.PipeType
-import tmg.flashback.managers.networkconnectivity.NetworkConnectivityManager
 import tmg.flashback.data.db.stats.ConstructorRepository
 import tmg.flashback.ui.shared.sync.SyncDataItem
 import tmg.flashback.ui.shared.viewholders.DataUnavailable

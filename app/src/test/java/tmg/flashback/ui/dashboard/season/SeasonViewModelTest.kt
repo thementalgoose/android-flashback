@@ -12,7 +12,6 @@ import tmg.flashback.*
 import tmg.flashback.constants.App.currentYear
 import tmg.flashback.controllers.*
 import tmg.flashback.controllers.NotificationController.Companion.daysUntilDataProvidedBannerMovedToBottom
-import tmg.flashback.managers.networkconnectivity.NetworkConnectivityManager
 import tmg.flashback.data.db.stats.HistoryRepository
 import tmg.flashback.data.db.stats.SeasonOverviewRepository
 import tmg.flashback.data.enums.BarAnimation
@@ -539,7 +538,7 @@ internal class SeasonViewModelTest: BaseTest() {
             bestQualifying = Pair(1, listOf(mockRound1)),
             bestFinish = Pair(1, listOf(mockRound2)),
             maxPointsInSeason = 27,
-            barAnimation = BarAnimation.NONE
+            animationSpeed = BarAnimation.NONE
     )
     private val expectedDriver2 = SeasonItem.Driver(
             season = 2019,
@@ -550,7 +549,7 @@ internal class SeasonViewModelTest: BaseTest() {
             bestQualifying = Pair(2, listOf(mockRound1)),
             bestFinish = Pair(3, listOf(mockRound1, mockRound2)),
             maxPointsInSeason = 27,
-            barAnimation = BarAnimation.NONE
+            animationSpeed = BarAnimation.NONE
     )
     private val expectedDriver3 = SeasonItem.Driver(
             season = 2019,
@@ -561,7 +560,7 @@ internal class SeasonViewModelTest: BaseTest() {
             bestQualifying = Pair(3, listOf(mockRound1, mockRound2)),
             bestFinish = Pair(2, listOf(mockRound1, mockRound2)),
             maxPointsInSeason = 27,
-            barAnimation = BarAnimation.NONE
+            animationSpeed = BarAnimation.NONE
     )
     private val expectedDriver4 = SeasonItem.Driver(
             season = 2019,
@@ -572,7 +571,7 @@ internal class SeasonViewModelTest: BaseTest() {
             bestQualifying = Pair(1, listOf(mockRound2)),
             bestFinish = Pair(1, listOf(mockRound1)),
             maxPointsInSeason = 27,
-            barAnimation = BarAnimation.NONE
+            animationSpeed = BarAnimation.NONE
     )
 
     //endregion
