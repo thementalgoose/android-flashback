@@ -3,3 +3,4 @@ include ':data-firebase'
 include ':data'
 include ':app'
 rootProject.name = "android-flashback"
+include ':core'
