@@ -1,21 +1,35 @@
 package tmg.flashback.rss.controllers
 
-import android.util.Log
-import tmg.flashback.rss.repo.enums.SupportedArticleSource
+import tmg.flashback.core.controllers.ConfigurationController
+import tmg.flashback.rss.repo.model.SupportedArticleSource
 import java.net.MalformedURLException
 import java.net.URL
 
-abstract class RSSFeedController {
+class RSSFeedController(
+    val configurationController: ConfigurationController
+) {
 
     /**
      * Get a list of all the supported sources in the app
      */
-    protected abstract val supportedSources: List<SupportedArticleSource>
+    private val supportedSources: List<SupportedArticleSource> = configurationController
+        .rssSupportedSources
+        .map {
+            SupportedArticleSource(
+                rssLink = it.rssLink,
+                sourceShort = it.sourceShort,
+                source = it.source,
+                colour = it.colour,
+                textColour = it.textColour,
+                title = it.title,
+                contactLink = it.contactLink,
+            )
+        }
 
     /**
      * Determine if we should show adding custom rss feeds functionality
      */
-    abstract val showAddCustomFeeds: Boolean
+    val showAddCustomFeeds: Boolean = configurationController.rssAddCustom
 
     private val fallbackUrls: Map<String, String> = mapOf(
         "bbc.co.uk" to "https://www.bbc.co.uk",

@@ -23,7 +23,7 @@ internal class DeviceControllerTest {
     //region Shake to report
 
     @Test
-    fun `DeviceController shake to report reads from prefs`() {
+    fun `shake to report reads from prefs`() {
         initSUT()
         every { mockDeviceRepository.shakeToReport } returns true
         assertTrue(mockDeviceRepository.shakeToReport)
@@ -36,7 +36,7 @@ internal class DeviceControllerTest {
     }
 
     @Test
-    fun `DeviceController shake to report update saves to prefs`() {
+    fun `shake to report update saves to prefs`() {
         initSUT()
         sut.shakeToReport = true
         verify {
@@ -49,7 +49,7 @@ internal class DeviceControllerTest {
     //region First boot
 
     @Test
-    fun `DeviceController app opened count reads from prefs`() {
+    fun `app opened count reads from prefs`() {
         every { mockDeviceRepository.appOpenedCount } returns 6
         initSUT()
 
@@ -60,7 +60,7 @@ internal class DeviceControllerTest {
     }
 
     @Test
-    fun `DeviceController app first boot reads from prefs`() {
+    fun `app first boot reads from prefs`() {
         val expected = LocalDate.now().minusDays(2)
         every { mockDeviceRepository.appFirstBootTime } returns expected
         initSUT()
@@ -76,7 +76,7 @@ internal class DeviceControllerTest {
     //region App opened
 
     @Test
-    fun `DeviceController app opened increments app count`() {
+    fun `app opened increments app count`() {
         every { mockDeviceRepository.appOpenedCount } returns 4
         every { mockBuildConfigManager.versionCode } returns 10
         initSUT()
@@ -92,7 +92,7 @@ internal class DeviceControllerTest {
     //region Device UDID
 
     @Test
-    fun `DeviceController device udid is read from prefs`() {
+    fun `device udid is read from prefs`() {
         every { mockDeviceRepository.deviceUdid } returns "test"
         initSUT()
 
@@ -107,7 +107,7 @@ internal class DeviceControllerTest {
     //region Last app version
 
     @Test
-    fun `DeviceController last app version is read from prefs`() {
+    fun `last app version is read from prefs`() {
         every { mockDeviceRepository.lastAppVersion } returns 3
         initSUT()
 

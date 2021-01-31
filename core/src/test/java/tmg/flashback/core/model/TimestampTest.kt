@@ -9,7 +9,7 @@ import org.threeten.bp.*
 internal class TimestampTest {
 
     @Test
-    fun `Timestamp is date only returns true date if time is not supplied`() {
+    fun `is date only returns true date if time is not supplied`() {
         val localDate: LocalDate = LocalDate.of(2020, 1, 1)
 
         val sut = Timestamp(localDate)
@@ -18,7 +18,7 @@ internal class TimestampTest {
     }
 
     @Test
-    fun `Timestamp is date only returns false date if time is supplied`() {
+    fun `is date only returns false date if time is supplied`() {
         val localDate: LocalDate = LocalDate.of(2020, 1, 1)
         val localTime: LocalTime = LocalTime.of(12, 1, 1)
 
@@ -28,7 +28,7 @@ internal class TimestampTest {
     }
 
     @Test
-    fun `Timestamp perform runs if date only when only date is supplied`() {
+    fun `perform runs if date only when only date is supplied`() {
         val localDate: LocalDate = LocalDate.of(2020, 1, 1)
         val zone = ZoneId.ofOffset("", ZoneOffset.UTC)
 
@@ -49,7 +49,7 @@ internal class TimestampTest {
     }
 
     @Test
-    fun `Timestamp perform runs if time when time is supplied`() {
+    fun `perform runs if time when time is supplied`() {
         val localDate: LocalDate = LocalDate.of(2020, 1, 1)
         val localTime: LocalTime = LocalTime.of(12, 0, 0)
         val zone = ZoneId.ofOffset("", ZoneOffset.UTC)
@@ -70,7 +70,7 @@ internal class TimestampTest {
         assertEquals(LocalDateTime.of(2020, 1, 1, 12, 0), resultDateTimeDevice)
     }
 
-    @ParameterizedTest(name = "Timestamp {1}:00 hour for {0} zone is {2}:00")
+    @ParameterizedTest(name = "{1}:00 hour for {0} zone is {2}:00")
     @CsvSource(
         "-9,12,3",
         "-8,12,4",
@@ -92,7 +92,7 @@ internal class TimestampTest {
         "8,12,20",
         "9,12,21"
     )
-    fun `Timestamp perform runs if time when time is supplied and adheres to zone offset`(offset: Int, utcHour: Int, deviceHour: Int) {
+    fun `perform runs if time when time is supplied and adheres to zone offset`(offset: Int, utcHour: Int, deviceHour: Int) {
         val localDate: LocalDate = LocalDate.of(2020, 1, 1)
         val localTime: LocalTime = LocalTime.of(utcHour, 0, 0)
         val zone = ZoneId.ofOffset("", ZoneOffset.ofHours(offset))
@@ -114,7 +114,7 @@ internal class TimestampTest {
     }
 
     @Test
-    fun `Timestamp device date when time is not supplied returns original date`() {
+    fun `device date when time is not supplied returns original date`() {
         val localDate: LocalDate = LocalDate.of(2020, 1, 1)
         val zone = ZoneId.ofOffset("", ZoneOffset.UTC)
 
@@ -124,7 +124,7 @@ internal class TimestampTest {
     }
 
     @Test
-    fun `Timestamp device date when time is supplied returns device date`() {
+    fun `device date when time is supplied returns device date`() {
         val localDate: LocalDate = LocalDate.of(2020, 1, 1)
         val localTime: LocalTime = LocalTime.of(12, 0, 0)
         val zone = ZoneId.ofOffset("", ZoneOffset.UTC)
@@ -135,7 +135,7 @@ internal class TimestampTest {
     }
 
     @Test
-    fun `Timestamp device date when time is supplied that means with timezone it falls to different day, returns that different day`() {
+    fun `device date when time is supplied that means with timezone it falls to different day, returns that different day`() {
 
         val expectedDate = LocalDate.of(2010, 12, 10)
 

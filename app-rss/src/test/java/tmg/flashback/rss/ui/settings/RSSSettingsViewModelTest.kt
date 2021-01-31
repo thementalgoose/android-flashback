@@ -34,7 +34,7 @@ class RSSSettingsViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `RSSSettingsViewModel settings list is returned properly`() {
+    fun `settings list is returned properly`() {
 
         val expected = listOf(
             AppPreferencesItem.Category(R.string.settings_rss_configure),
@@ -71,7 +71,7 @@ class RSSSettingsViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `RSSSettingsViewModel clicking configure sources item notifies navigation`() {
+    fun `clicking configure sources item notifies navigation`() {
 
         sut.clickPref(keyConfigureSources)
 
@@ -81,7 +81,7 @@ class RSSSettingsViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `RSSSettingsViewModel update show description marks it enabled in prefs`() {
+    fun `update show description marks it enabled in prefs`() {
 
         sut.updatePref(keyShowDescription, true)
 
@@ -89,7 +89,7 @@ class RSSSettingsViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `RSSSettingsViewModel update enable javascript marks it enabled in prefs`() {
+    fun `update enable javascript marks it enabled in prefs`() {
 
         sut.updatePref(keyJavascript, true)
 
@@ -97,7 +97,7 @@ class RSSSettingsViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `RSSSettingsViewModel update enable open in external browser marks it enabled in prefs`() {
+    fun `update enable open in external browser marks it enabled in prefs`() {
 
         sut.updatePref(keyOpenInExternalBrowser, true)
 

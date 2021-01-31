@@ -25,7 +25,7 @@ internal class CrashControllerTest() {
     //region Crash reporting enabled
 
     @Test
-    fun `CrashController crash reporting enabled`() {
+    fun `crash reporting enabled`() {
         every { mockCoreRepository.crashReporting } returns true
         initSUT()
 
@@ -34,7 +34,7 @@ internal class CrashControllerTest() {
     }
 
     @Test
-    fun `CrashController crash reporting disabled`() {
+    fun `crash reporting disabled`() {
         every { mockCoreRepository.crashReporting } returns false
         initSUT()
 
@@ -43,7 +43,7 @@ internal class CrashControllerTest() {
     }
 
     @Test
-    fun `CrashController crash reporting update saves in prefs`() {
+    fun `crash reporting update saves in prefs`() {
 
         initSUT()
 
@@ -56,7 +56,7 @@ internal class CrashControllerTest() {
     //region Initialisation
 
     @Test
-    fun `CrashController initialise sends all data to firebase`() {
+    fun `initialise sends all data to firebase`() {
         val expectedDate = LocalDate.now().format(DateTimeFormatter.ofPattern("dd MMM yyyy"))
         every { mockCoreRepository.appFirstBootTime } returns LocalDate.now()
         every { mockCoreRepository.analytics } returns true
@@ -77,7 +77,7 @@ internal class CrashControllerTest() {
     //region Logging
 
     @Test
-    fun `CrashController log msg forwards to firebase if toggle is enabled`() {
+    fun `log msg forwards to firebase if toggle is enabled`() {
         every { mockCoreRepository.crashReporting } returns true
 
         initSUT()
@@ -87,7 +87,7 @@ internal class CrashControllerTest() {
     }
 
     @Test
-    fun `CrashController log msg forwards to firebase if toggle is disabled`() {
+    fun `log msg forwards to firebase if toggle is disabled`() {
         every { mockCoreRepository.crashReporting } returns false
 
         initSUT()
@@ -97,7 +97,7 @@ internal class CrashControllerTest() {
     }
 
     @Test
-    fun `CrashController log error forwards to firebase if toggle is enabled`() {
+    fun `log error forwards to firebase if toggle is enabled`() {
         every { mockCoreRepository.crashReporting } returns true
 
         initSUT()
@@ -107,7 +107,7 @@ internal class CrashControllerTest() {
     }
 
     @Test
-    fun `CrashController log error forwards to firebase if toggle is disabled`() {
+    fun `log error forwards to firebase if toggle is disabled`() {
         every { mockCoreRepository.crashReporting } returns false
 
         initSUT()
@@ -117,7 +117,7 @@ internal class CrashControllerTest() {
     }
 
     @Test
-    fun `CrashController log msg with exception forwards to firebase if toggle is enabled`() {
+    fun `log msg with exception forwards to firebase if toggle is enabled`() {
         every { mockCoreRepository.crashReporting } returns true
 
         val exception = RuntimeException()
@@ -128,7 +128,7 @@ internal class CrashControllerTest() {
     }
 
     @Test
-    fun `CrashController log msg with exception forwards to firebase if toggle is disabled`() {
+    fun `log msg with exception forwards to firebase if toggle is disabled`() {
         every { mockCoreRepository.crashReporting } returns false
 
         val exception = RuntimeException()

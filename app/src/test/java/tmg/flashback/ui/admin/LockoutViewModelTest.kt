@@ -72,7 +72,7 @@ internal class LockoutViewModelTest : BaseTest() {
 
 
     @Test
-    fun `LockoutViewModel app lockout shown when show is true and lockout version is higher than current app version`() = coroutineTest {
+    fun `app lockout shown when show is true and lockout version is higher than current app version`() = coroutineTest {
 
         every { mockDataRepository.appLockout() } returns flow { emit(mockAppLockoutVersionHigherThanCurrent) }
         every { mockBuildConfigProvider.shouldLockoutBasedOnVersion(version = any()) } returns true
@@ -86,7 +86,7 @@ internal class LockoutViewModelTest : BaseTest() {
     }
 
     @Test
-    fun `LockoutViewModel app lockout shown when show is true and lockout version is equal to current app version`() = coroutineTest {
+    fun `app lockout shown when show is true and lockout version is equal to current app version`() = coroutineTest {
 
         every { mockDataRepository.appLockout() } returns flow { emit(mockAppLockoutVersionEqualToCurrent) }
         every { mockBuildConfigProvider.shouldLockoutBasedOnVersion(version = any()) } returns true
@@ -100,7 +100,7 @@ internal class LockoutViewModelTest : BaseTest() {
     }
 
     @Test
-    fun `LockoutViewModel app lockout not shown when show is true and lockout version is lower than current app version`() = coroutineTest {
+    fun `app lockout not shown when show is true and lockout version is lower than current app version`() = coroutineTest {
 
         every { mockDataRepository.appLockout() } returns flow { emit(mockAppLockoutVersionLessThanCurrent) }
         every { mockBuildConfigProvider.shouldLockoutBasedOnVersion(version = any()) } returns false
@@ -114,7 +114,7 @@ internal class LockoutViewModelTest : BaseTest() {
     }
 
     @Test
-    fun `LockoutViewModel app lockout not shown when show is true and version is null`() = coroutineTest {
+    fun `app lockout not shown when show is true and version is null`() = coroutineTest {
 
         every { mockDataRepository.appLockout() } returns flow { emit(mockAppLockoutVersionNull) }
         every { mockBuildConfigProvider.shouldLockoutBasedOnVersion(version = any()) } returns false
@@ -128,7 +128,7 @@ internal class LockoutViewModelTest : BaseTest() {
     }
 
     @Test
-    fun `LockoutViewModel app lockout not shown when show is false`() = coroutineTest {
+    fun `app lockout not shown when show is false`() = coroutineTest {
 
         every { mockDataRepository.appLockout() } returns flow { emit(mockAppLockoutShowFalse) }
         every { mockBuildConfigProvider.shouldLockoutBasedOnVersion(version = any()) } returns true
@@ -143,7 +143,7 @@ internal class LockoutViewModelTest : BaseTest() {
 
 
     @Test
-    fun `LockoutViewModel app lockout title and message displayed on lockout startup`() = coroutineTest {
+    fun `app lockout title and message displayed on lockout startup`() = coroutineTest {
 
         val expected: Pair<String, String> = Pair(mockTitle, mockMessage)
 
@@ -158,7 +158,7 @@ internal class LockoutViewModelTest : BaseTest() {
 
 
     @Test
-    fun `LockoutViewModel app lockout link shown when link text and link url is visible`() = coroutineTest {
+    fun `app lockout link shown when link text and link url is visible`() = coroutineTest {
 
         val expected: Pair<String, String> = Pair(mockLinkText, mockLink)
 
@@ -171,7 +171,7 @@ internal class LockoutViewModelTest : BaseTest() {
     }
 
     @Test
-    fun `LockoutViewModel app lockout link empty (not shown) when link text or link url is not included`() = coroutineTest {
+    fun `app lockout link empty (not shown) when link text or link url is not included`() = coroutineTest {
 
         every { mockDataRepository.appLockout() } returns flow { emit(mockAppLockoutWithoutLink) }
 
@@ -188,7 +188,7 @@ internal class LockoutViewModelTest : BaseTest() {
 
 
     @Test
-    fun `LockoutViewModel clicking link opens link event`() = coroutineTest {
+    fun `clicking link opens link event`() = coroutineTest {
 
         val expected = mockLink
 

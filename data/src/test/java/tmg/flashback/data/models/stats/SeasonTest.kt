@@ -6,33 +6,33 @@ import org.junit.jupiter.api.Test
 class SeasonTest {
 
     @Test
-    fun `Season circuits returns list of circuits`() {
+    fun `circuits returns list of circuits`() {
         val expected = listOf(mockCircuitCharlie, mockCircuitDelta)
         assertEquals(expected, mockSeason.circuits)
     }
 
     @Test
-    fun `Season firstRound returns first round`() {
+    fun `firstRound returns first round`() {
         assertEquals(mockRound1, mockSeason.firstRound)
     }
 
     @Test
-    fun `Season firstRound with no rounds returns null`() {
+    fun `firstRound with no rounds returns null`() {
         assertNull(mockSeason.copy(rounds = emptyList()).firstRound)
     }
 
     @Test
-    fun `Season lastRound returns first round`() {
+    fun `lastRound returns first round`() {
         assertEquals(mockRound2, mockSeason.lastRound)
     }
 
     @Test
-    fun `Season lastRound with no rounds returns null`() {
+    fun `lastRound with no rounds returns null`() {
         assertNull(mockSeason.copy(rounds = emptyList()).lastRound)
     }
 
     @Test
-    fun `Season constructorStandings calculates standings properly with no constructor data provided`() {
+    fun `constructorStandings calculates standings properly with no constructor data provided`() {
 
         val driver1Points = mockSeason.rounds.sumBy { it.race[mockDriver1.id]?.points ?: 0 }
         val driver2Points = mockSeason.rounds.sumBy { it.race[mockDriver2.id]?.points ?: 0 }
@@ -61,7 +61,7 @@ class SeasonTest {
     }
 
     @Test
-    fun `Season constructorStandings calculates standings properly with no standings constructors data provided`() {
+    fun `constructorStandings calculates standings properly with no standings constructors data provided`() {
 
         val driver1Points = mockSeason.rounds.sumBy { it.race[mockDriver1.id]?.points ?: 0 }
         val driver2Points = mockSeason.rounds.sumBy { it.race[mockDriver2.id]?.points ?: 0 }

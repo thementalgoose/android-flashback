@@ -1,6 +1,6 @@
 package tmg.flashback.core.model
 
-data class SupportedArticleSource(
+data class SupportedSource(
     val rssLink: String,
     val sourceShort: String,
     val source: String,

@@ -6,7 +6,7 @@ import tmg.flashback.core.ui.BaseViewModel
 import tmg.flashback.rss.R
 import tmg.flashback.rss.controllers.RSSFeedController
 import tmg.flashback.rss.prefs.RSSRepository
-import tmg.flashback.rss.repo.enums.SupportedArticleSource
+import tmg.flashback.rss.repo.model.SupportedArticleSource
 import tmg.utilities.lifecycle.DataEvent
 
 //region Inputs

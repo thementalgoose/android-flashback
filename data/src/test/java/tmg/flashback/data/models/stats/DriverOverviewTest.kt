@@ -16,7 +16,7 @@ class DriverOverviewTest {
             "21,1,false,1",
             "21,1,true,0"
     )
-    fun `DriverOverview championship wins`(s1: Int, s2: Int, s2InProgress: Boolean, expected: Int) {
+    fun `championship wins`(s1: Int, s2: Int, s2InProgress: Boolean, expected: Int) {
         val sut = mockDriverOverview.copy(standings = listOf(
                 mockDriverStanding1.copy(championshipStanding = s1),
                 mockDriverStanding2.copy(championshipStanding = s2, isInProgress = s2InProgress)
@@ -35,7 +35,7 @@ class DriverOverviewTest {
             "21,1,false,1",
             "21,1,true,21"
     )
-    fun `DriverOverview career best championship`(s1: Int, s2: Int, s2InProgress: Boolean, expected: Int) {
+    fun `career best championship`(s1: Int, s2: Int, s2InProgress: Boolean, expected: Int) {
         val sut = mockDriverOverview.copy(standings = listOf(
                 mockDriverStanding1.copy(championshipStanding = s1),
                 mockDriverStanding2.copy(championshipStanding = s2, isInProgress = s2InProgress)
@@ -50,7 +50,7 @@ class DriverOverviewTest {
             "false,true,true",
             "false,false,false"
     )
-    fun `DriverOverview has championship currently in progress`(s1: Boolean, s2: Boolean, expected: Boolean) {
+    fun `has championship currently in progress`(s1: Boolean, s2: Boolean, expected: Boolean) {
         val sut = mockDriverOverview.copy(standings = listOf(
                 mockDriverStanding1.copy(isInProgress = s1),
                 mockDriverStanding2.copy(isInProgress = s2)
@@ -66,7 +66,7 @@ class DriverOverviewTest {
             "0,0,0",
             "0,3,3"
     )
-    fun `DriverOverview career wins`(s1: Int, s2: Int, expected: Int) {
+    fun `career wins`(s1: Int, s2: Int, expected: Int) {
         val sut = mockDriverOverview.copy(standings = listOf(
                 mockDriverStanding1.copy(wins = s1),
                 mockDriverStanding2.copy(wins = s2)
@@ -82,7 +82,7 @@ class DriverOverviewTest {
             "0,0,0",
             "0,3,3"
     )
-    fun `DriverOverview career podiums`(s1: Int, s2: Int, expected: Int) {
+    fun `career podiums`(s1: Int, s2: Int, expected: Int) {
         val sut = mockDriverOverview.copy(standings = listOf(
                 mockDriverStanding1.copy(podiums = s1),
                 mockDriverStanding2.copy(podiums = s2)
@@ -98,7 +98,7 @@ class DriverOverviewTest {
             "0,0,0",
             "0,3,3"
     )
-    fun `DriverOverview career points`(s1: Int, s2: Int, expected: Int) {
+    fun `career points`(s1: Int, s2: Int, expected: Int) {
         val sut = mockDriverOverview.copy(standings = listOf(
                 mockDriverStanding1.copy(points = s1),
                 mockDriverStanding2.copy(points = s2)
@@ -114,7 +114,7 @@ class DriverOverviewTest {
             "0,0,0",
             "0,3,3"
     )
-    fun `DriverOverview career races`(s1: Int, s2: Int, expected: Int) {
+    fun `career races`(s1: Int, s2: Int, expected: Int) {
         val sut = mockDriverOverview.copy(standings = listOf(
                 mockDriverStanding1.copy(races = s1),
                 mockDriverStanding2.copy(races = s2)
@@ -129,7 +129,7 @@ class DriverOverviewTest {
             "4,5,4",
             "1,1,1"
     )
-    fun `DriverOverview career best finish`(s1: Int, s2: Int, expected: Int) {
+    fun `career best finish`(s1: Int, s2: Int, expected: Int) {
         val sut = mockDriverOverview.copy(standings = listOf(
                 mockDriverStanding1.copy(bestFinish = s1),
                 mockDriverStanding2.copy(bestFinish = s2)
@@ -144,7 +144,7 @@ class DriverOverviewTest {
             "4,5,4",
             "1,1,1"
     )
-    fun `DriverOverview career best qualifying`(s1: Int, s2: Int, expected: Int) {
+    fun `career best qualifying`(s1: Int, s2: Int, expected: Int) {
         val sut = mockDriverOverview.copy(standings = listOf(
                 mockDriverStanding1.copy(bestQualifying = s1),
                 mockDriverStanding2.copy(bestQualifying = s2)
@@ -159,7 +159,7 @@ class DriverOverviewTest {
             "4,5,4",
             "1,1,1"
     )
-    fun `DriverOverview constructor standing`(s1: Int, s2: Int, expected: Int) {
+    fun `constructor standing`(s1: Int, s2: Int, expected: Int) {
         val sut = mockDriverOverview.copy(standings = listOf(
                 mockDriverStanding1.copy(championshipStanding = s1),
                 mockDriverStanding2.copy(championshipStanding = s2)
@@ -175,7 +175,7 @@ class DriverOverviewTest {
             "4,5,6,7,3,0",
             "1,1,1,1,1,4"
     )
-    fun `DriverOverview total finishes in`(s1r1: Int, s1r2: Int, s2r1: Int, s2r2: Int, finishesIn: Int, expected: Int) {
+    fun `total finishes in`(s1r1: Int, s1r2: Int, s2r1: Int, s2r2: Int, finishesIn: Int, expected: Int) {
         val sut = mockDriverOverview.copy(standings = listOf(
                 mockDriverStanding1.copy(raceOverview = listOf(
                         mockDriverRound11.copy(finished = s1r1),
@@ -198,7 +198,7 @@ class DriverOverviewTest {
             "1,1,1,1,1,4",
             "9,4,6,3,6,3"
     )
-    fun `DriverOverview total finishes above`(s1r1: Int, s1r2: Int, s2r1: Int, s2r2: Int, finishesIn: Int, expected: Int) {
+    fun `total finishes above`(s1r1: Int, s1r2: Int, s2r1: Int, s2r2: Int, finishesIn: Int, expected: Int) {
         val sut = mockDriverOverview.copy(standings = listOf(
                 mockDriverStanding1.copy(raceOverview = listOf(
                         mockDriverRound11.copy(finished = s1r1),
@@ -221,7 +221,7 @@ class DriverOverviewTest {
             "1,1,1,1,1,4",
             "9,4,6,3,6,3"
     )
-    fun `DriverOverview total qualifying above`(s1r1: Int, s1r2: Int, s2r1: Int, s2r2: Int, finishesIn: Int, expected: Int) {
+    fun `total qualifying above`(s1r1: Int, s1r2: Int, s2r1: Int, s2r2: Int, finishesIn: Int, expected: Int) {
         val sut = mockDriverOverview.copy(standings = listOf(
                 mockDriverStanding1.copy(raceOverview = listOf(
                         mockDriverRound11.copy(qualified = s1r1),
@@ -243,7 +243,7 @@ class DriverOverviewTest {
             "4,5,6,7,3,0",
             "1,1,1,1,1,4"
     )
-    fun `DriverOverview total qualifying in`(s1r1: Int, s1r2: Int, s2r1: Int, s2r2: Int, finishesIn: Int, expected: Int) {
+    fun `total qualifying in`(s1r1: Int, s1r2: Int, s2r1: Int, s2r2: Int, finishesIn: Int, expected: Int) {
         val sut = mockDriverOverview.copy(standings = listOf(
                 mockDriverStanding1.copy(raceOverview = listOf(
                         mockDriverRound11.copy(qualified = s1r1),
@@ -264,7 +264,7 @@ class DriverOverviewTest {
             "4,5,9",
             "1,1,2"
     )
-    fun `DriverOverview race starts`(s1: Int, s2: Int, expected: Int) {
+    fun `race starts`(s1: Int, s2: Int, expected: Int) {
         val sut = mockDriverOverview.copy(standings = listOf(
                 mockDriverStanding1.copy(races = s1),
                 mockDriverStanding1.copy(races = s2)
@@ -281,7 +281,7 @@ class DriverOverviewTest {
             "+2 Laps,+5 Laps,Finished,+3 Laps,4",
             "Retired,Engine,Cooling,Retired,0"
     )
-    fun `DriverOverview race finishes`(s1r1: String, s1r2: String, s2r1: String, s2r2: String, expected: Int) {
+    fun `race finishes`(s1r1: String, s1r2: String, s2r1: String, s2r2: String, expected: Int) {
         val sut = mockDriverOverview.copy(standings = listOf(
                 mockDriverStanding1.copy(raceOverview = listOf(
                         mockDriverRound11.copy(status = s1r1),
@@ -304,7 +304,7 @@ class DriverOverviewTest {
             "+2 Laps,+5 Laps,Finished,+3 Laps,0",
             "Retired,Engine,Cooling,Retired,4"
     )
-    fun `DriverOverview race retirements`(s1r1: String, s1r2: String, s2r1: String, s2r2: String, expected: Int) {
+    fun `race retirements`(s1r1: String, s1r2: String, s2r1: String, s2r2: String, expected: Int) {
         val sut = mockDriverOverview.copy(standings = listOf(
                 mockDriverStanding1.copy(raceOverview = listOf(
                         mockDriverRound11.copy(status = s1r1),
@@ -319,7 +319,7 @@ class DriverOverviewTest {
     }
 
     @Test
-    fun `DriverOverview is world champion for`() {
+    fun `is world champion for`() {
         val valid = mockDriverOverview.copy(standings = listOf(
                 mockDriverStanding1.copy(season = 2019, championshipStanding = 1, isInProgress = false)
         ))

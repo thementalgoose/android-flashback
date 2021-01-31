@@ -18,13 +18,13 @@ internal class Formula1Test: BaseTest() {
             "1990,8",
             "1950,8"
     )
-    fun `ConstantsKt maxPoints by season returns correct amount of points`(season: Int, expectedPoints: Int) {
+    fun `maxPoints by season returns correct amount of points`(season: Int, expectedPoints: Int) {
 
         assertEquals(expectedPoints, Formula1.maxPointsBySeason(season))
     }
 
     @Test
-    fun `ConstantsKt maxPoints by current year returns correct amounts of points`() {
+    fun `maxPoints by current year returns correct amounts of points`() {
 
         assertEquals(25, Formula1.maxPointsBySeason(currentYear))
     }

@@ -24,7 +24,7 @@ internal class AppearanceControllerTest {
     //region Theme
 
     @Test
-    fun `AppearanceController current theme reads from pref`() {
+    fun `current theme reads from pref`() {
         every { mockCoreRepository.theme } returns Theme.NIGHT
         initSUT()
 
@@ -33,14 +33,14 @@ internal class AppearanceControllerTest {
     }
 
     @Test
-    fun `AppearanceController current theme update saves pref`() {
+    fun `current theme update saves pref`() {
         initSUT()
         sut.currentTheme = Theme.NIGHT
         verify { mockCoreRepository.theme = Theme.NIGHT }
     }
 
     @Test
-    fun `AppearanceController is light mode in light mode returns true`() {
+    fun `is light mode in light mode returns true`() {
         every { mockCoreRepository.theme } returns Theme.DAY
         initSUT()
 
@@ -49,7 +49,7 @@ internal class AppearanceControllerTest {
     }
 
     @Test
-    fun `AppearanceController is dark mode in dark mode returns false`() {
+    fun `is dark mode in dark mode returns false`() {
         every { mockCoreRepository.theme } returns Theme.NIGHT
         initSUT()
 
@@ -62,7 +62,7 @@ internal class AppearanceControllerTest {
     //region Animation speed
 
     @Test
-    fun `AppearanceController read animation speed reads from prefs`() {
+    fun `read animation speed reads from prefs`() {
         every { mockCoreRepository.animationSpeed } returns AnimationSpeed.MEDIUM
         initSUT()
 
@@ -71,7 +71,7 @@ internal class AppearanceControllerTest {
     }
 
     @Test
-    fun `AppearanceController setting animation speed updates prefs`() {
+    fun `setting animation speed updates prefs`() {
         every { mockCoreRepository.animationSpeed } returns AnimationSpeed.MEDIUM
         initSUT()
 

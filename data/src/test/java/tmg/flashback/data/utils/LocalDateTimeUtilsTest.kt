@@ -18,7 +18,7 @@ internal class LocalDateTimeUtilsTest {
             "21-04-1993,11-01-2018,9031",
             "21-04-1993,11-01-1953,-14710"
     )
-    fun `LocalDateTimeUtils daysBetween`(start: String, end: String, expected: Int) {
+    fun `daysBetween test`(start: String, end: String, expected: Int) {
         val startDate = LocalDate.parse(start, DateTimeFormatter.ofPattern("dd-MM-yyyy"))
         val endDate = LocalDate.parse(end, DateTimeFormatter.ofPattern("dd-MM-yyyy"))
 
@@ -31,7 +31,7 @@ internal class LocalDateTimeUtilsTest {
             "12:00:00,12:00:00,0",
             "12:00:00,11:00:00,-3600"
     )
-    fun `LocalDateTimeUtils secondsBetween`(start: String, end: String, expected: Int) {
+    fun `secondsBetween test`(start: String, end: String, expected: Int) {
         val startDate = LocalTime.parse(start, DateTimeFormatter.ofPattern("HH:mm:ss"))
         val endDate = LocalTime.parse(end, DateTimeFormatter.ofPattern("HH:mm:ss"))
 

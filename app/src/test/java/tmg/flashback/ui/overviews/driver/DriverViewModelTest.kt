@@ -41,7 +41,7 @@ internal class DriverViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `DriverViewModel setup loads error state when network connectivity is down`() = coroutineTest {
+    fun `setup loads error state when network connectivity is down`() = coroutineTest {
 
         every { mockConnectivityManager.isConnected } returns false
         every { mockDriverRepository.getDriverOverview(any()) } returns flow { emit(null) }
@@ -59,7 +59,7 @@ internal class DriverViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `DriverViewModel setup loads an error state when driver overview is returned as null`() = coroutineTest {
+    fun `setup loads an error state when driver overview is returned as null`() = coroutineTest {
 
         every { mockDriverRepository.getDriverOverview(any()) } returns flow { emit(null) }
         val expected = listOf(
@@ -75,7 +75,7 @@ internal class DriverViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `DriverViewModel setup which contains championship item in progress`() = coroutineTest {
+    fun `setup which contains championship item in progress`() = coroutineTest {
 
         every { mockDriverRepository.getDriverOverview(any()) } returns flow { emit(mockDriverOverviewChampionshipInProgress) }
 
@@ -91,7 +91,7 @@ internal class DriverViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `DriverViewModel contains header item with appropriate mock data`() = coroutineTest {
+    fun `contains header item with appropriate mock data`() = coroutineTest {
 
         every { mockDriverRepository.getDriverOverview(any()) } returns flow { emit(mockDriverOverview) }
 
@@ -115,7 +115,7 @@ internal class DriverViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `DriverViewModel list contains highlighted championship quantity result when driver has championships`() = coroutineTest {
+    fun `list contains highlighted championship quantity result when driver has championships`() = coroutineTest {
 
         every { mockDriverRepository.getDriverOverview(any()) } returns flow { emit(mockDriverOverviewWonChampionship) }
 
@@ -132,7 +132,7 @@ internal class DriverViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `DriverViewModel list contains non highlighted championship quantity result when driver has not won championships`() = coroutineTest {
+    fun `list contains non highlighted championship quantity result when driver has not won championships`() = coroutineTest {
 
         every { mockDriverRepository.getDriverOverview(any()) } returns flow { emit(mockDriverOverviewNotWonChampionship) }
 
@@ -148,7 +148,7 @@ internal class DriverViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `DriverViewModel list doesn't contain career best championship if driver is in rookie season`() = coroutineTest {
+    fun `list doesn't contain career best championship if driver is in rookie season`() = coroutineTest {
 
         every { mockDriverRepository.getDriverOverview(any()) } returns flow { emit(mockDriverOverviewRookieSeason) }
 
@@ -165,7 +165,7 @@ internal class DriverViewModelTest: BaseTest() {
 
 
     @Test
-    fun `DriverViewModel list contains career best championship if driver has completed a season`() = coroutineTest {
+    fun `list contains career best championship if driver has completed a season`() = coroutineTest {
 
         every { mockDriverRepository.getDriverOverview(any()) } returns flow { emit(mockDriverOverview) }
 
@@ -181,7 +181,7 @@ internal class DriverViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `DriverViewModel setup loads standard list of statistics items`() = coroutineTest {
+    fun `setup loads standard list of statistics items`() = coroutineTest {
 
         every { mockDriverRepository.getDriverOverview(any()) } returns flow { emit(mockDriverOverview) }
         val expected = listOf(
@@ -256,7 +256,7 @@ internal class DriverViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `DriverViewModel team ordering and highlighting default setup`() = coroutineTest {
+    fun `team ordering and highlighting default setup`() = coroutineTest {
 
         every { mockDriverRepository.getDriverOverview(any()) } returns flow { emit(mockDriverOverviewConstructorChangeThenYearOffEndingInCurrentSeason) }
 
@@ -319,7 +319,7 @@ internal class DriverViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `DriverViewModel single team shown when 1 season for 1 year then year off`() = coroutineTest {
+    fun `single team shown when 1 season for 1 year then year off`() = coroutineTest {
 
         every { mockDriverRepository.getDriverOverview(any()) } returns flow { emit(mockDriverOverviewTwoSeasonWithYearBetweenThem) }
 
@@ -346,7 +346,7 @@ internal class DriverViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `DriverViewModel single team shown when 1 season for 1 year whilst current year in progress`() = coroutineTest {
+    fun `single team shown when 1 season for 1 year whilst current year in progress`() = coroutineTest {
 
         every { mockDriverRepository.getDriverOverview(any()) } returns flow { emit(mockDriverOverviewTwoSeasonWithYearBetweenThemEndingInCurrentYear) }
 
@@ -373,7 +373,7 @@ internal class DriverViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `DriverViewModel clicking open season opens season for driver`() = coroutineTest {
+    fun `clicking open season opens season for driver`() = coroutineTest {
 
         val expected = 2020
 
@@ -387,7 +387,7 @@ internal class DriverViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `DriverViewModel clicking open url forwards open url event`() = coroutineTest {
+    fun `clicking open url forwards open url event`() = coroutineTest {
 
         val expectUrl = "http://www.google.com"
 
@@ -412,7 +412,7 @@ internal class DriverViewModelTest: BaseTest() {
         "2019,2020,2022,START",
         "2019,2021,2022,END"
     )
-    fun `DriverViewModel getPipeType correct sequence of years returns the correct pipe type`(previous: Int?, current: Int, next: Int?, pipeType: PipeType) {
+    fun `getPipeType correct sequence of years returns the correct pipe type`(previous: Int?, current: Int, next: Int?, pipeType: PipeType) {
 
         initSUT()
 

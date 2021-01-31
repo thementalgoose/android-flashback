@@ -30,7 +30,7 @@ internal class  SplashViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `SplashViewModel show resync is default to false and show loading default to false`() = coroutineTest {
+    fun `show resync is default to false and show loading default to false`() = coroutineTest {
 
         initSUT()
 
@@ -43,7 +43,7 @@ internal class  SplashViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `SplashViewModel start fetch and activate enables show loading`() = coroutineTest {
+    fun `start fetch and activate enables show loading`() = coroutineTest {
 
         every { mockConfigurationManager.requireSynchronisation } returns true
         coEvery { mockConfigurationManager.fetchAndApply() } returns true
@@ -57,7 +57,7 @@ internal class  SplashViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `SplashViewModel start fetch and activate disables show resync`() = coroutineTest {
+    fun `start fetch and activate disables show resync`() = coroutineTest {
 
         every { mockConfigurationManager.requireSynchronisation } returns true
         coEvery { mockConfigurationManager.fetchAndApply() } returns true
@@ -71,7 +71,7 @@ internal class  SplashViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `SplashViewModel start fetch and activate calls remote config repo`() = coroutineTest {
+    fun `start fetch and activate calls remote config repo`() = coroutineTest {
 
         every { mockConfigurationManager.requireSynchronisation } returns true
         coEvery { mockConfigurationManager.fetchAndApply() } returns true
@@ -83,7 +83,7 @@ internal class  SplashViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `SplashViewModel start fetch and activate when success sets updates shortcut manager`() = coroutineTest {
+    fun `start fetch and activate when success sets updates shortcut manager`() = coroutineTest {
 
         every { mockConfigurationManager.requireSynchronisation } returns true
         every { mockFeatureController.rssEnabled } returns true
@@ -96,7 +96,7 @@ internal class  SplashViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `SplashViewModel start fetch and activate when success it fires go to next screen`() = coroutineTest {
+    fun `start fetch and activate when success it fires go to next screen`() = coroutineTest {
 
         every { mockConfigurationManager.requireSynchronisation } returns true
         coEvery { mockConfigurationManager.fetchAndApply() } returns true
@@ -110,7 +110,7 @@ internal class  SplashViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `SplashViewModel start fetch and activate when failure then show resync sets to true`() = coroutineTest {
+    fun `start fetch and activate when failure then show resync sets to true`() = coroutineTest {
 
         every { mockConfigurationManager.requireSynchronisation } returns true
         coEvery { mockConfigurationManager.fetchAndApply() } returns false
@@ -127,7 +127,7 @@ internal class  SplashViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `SplashViewModel start fetch and activate when failure then show loading is set to false`() = coroutineTest {
+    fun `start fetch and activate when failure then show loading is set to false`() = coroutineTest {
 
         every { mockConfigurationManager.requireSynchronisation } returns true
         coEvery { mockConfigurationManager.fetchAndApply() } returns false
@@ -144,7 +144,7 @@ internal class  SplashViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `SplashViewModel start activate then remote config activate called`() = coroutineTest {
+    fun `start activate then remote config activate called`() = coroutineTest {
 
         every { mockConfigurationManager.requireSynchronisation } returns false
         coEvery { mockConfigurationManager.applyPending() } returns true
@@ -156,7 +156,7 @@ internal class  SplashViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `SplashViewModel start activate then app shortcut manager disable interacted with`() = coroutineTest {
+    fun `start activate then app shortcut manager disable interacted with`() = coroutineTest {
 
         every { mockConfigurationManager.requireSynchronisation } returns false
         coEvery { mockConfigurationManager.applyPending() } returns false
@@ -168,7 +168,7 @@ internal class  SplashViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `SplashViewModel start activate go to next screen fired if activate fails`() = coroutineTest {
+    fun `start activate go to next screen fired if activate fails`() = coroutineTest {
 
         every { mockConfigurationManager.requireSynchronisation } returns false
         coEvery { mockConfigurationManager.applyPending() } returns false
@@ -182,7 +182,7 @@ internal class  SplashViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `SplashViewModel start activate go to next screen fired if activate passes`() = coroutineTest {
+    fun `start activate go to next screen fired if activate passes`() = coroutineTest {
 
         every { mockConfigurationManager.requireSynchronisation } returns false
         coEvery { mockConfigurationManager.applyPending() } returns true

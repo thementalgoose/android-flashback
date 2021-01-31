@@ -43,7 +43,7 @@ internal class DriverSeasonViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `DriverSeasonViewModel no network connection shows no network error`() = coroutineTest {
+    fun `no network connection shows no network error`() = coroutineTest {
 
         every { mockConnectivityManager.isConnected } returns false
         every { mockDriverRepository.getDriverOverview(any()) } returns flow { emit(null) }
@@ -60,7 +60,7 @@ internal class DriverSeasonViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `DriverSeasonViewModel no driver overview found but valid network connections shows driver not exist error`() = coroutineTest {
+    fun `no driver overview found but valid network connections shows driver not exist error`() = coroutineTest {
 
         every { mockDriverRepository.getDriverOverview(any()) } returns flow { emit(null) }
 
@@ -76,7 +76,7 @@ internal class DriverSeasonViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `DriverSeasonViewModel init shows driver split when theres one constructor changes`() = coroutineTest {
+    fun `init shows driver split when theres one constructor changes`() = coroutineTest {
 
         val conditionedDriverOverview = mockDriverOverview.copy(
                 standings = listOf(mockDriverOverview2019Standing.copy(
@@ -100,7 +100,7 @@ internal class DriverSeasonViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `DriverSeasonViewModel init shows driver split when theres two constructor changes`() = coroutineTest {
+    fun `init shows driver split when theres two constructor changes`() = coroutineTest {
 
         val conditionedDriverOverview = mockDriverOverview.copy(
                 standings = listOf(mockDriverOverview2019Standing.copy(
@@ -126,7 +126,7 @@ internal class DriverSeasonViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `DriverSeasonViewModel init shows driver split when theres three constructor changes`() = coroutineTest {
+    fun `init shows driver split when theres three constructor changes`() = coroutineTest {
 
         val conditionedDriverOverview = mockDriverOverview.copy(
                 standings = listOf(mockDriverOverview2019Standing.copy(
@@ -154,7 +154,7 @@ internal class DriverSeasonViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `DriverSeasonViewModel init for season contains season summary`() = coroutineTest {
+    fun `init for season contains season summary`() = coroutineTest {
 
         every { mockDriverRepository.getDriverOverview(any()) } returns flow { emit(mockDriverOverview) }
 
@@ -230,7 +230,7 @@ internal class DriverSeasonViewModelTest: BaseTest() {
 
 
     @Test
-    fun `DriverSeasonViewModel init contains result header `() = coroutineTest {
+    fun `init contains result header `() = coroutineTest {
 
         every { mockDriverRepository.getDriverOverview(any()) } returns flow { emit(mockDriverOverview) }
 
@@ -247,7 +247,7 @@ internal class DriverSeasonViewModelTest: BaseTest() {
 
 
     @Test
-    fun `DriverSeasonViewModel init contains race overview summary cards`() = coroutineTest {
+    fun `init contains race overview summary cards`() = coroutineTest {
 
         every { mockDriverRepository.getDriverOverview(any()) } returns flow { emit(mockDriverOverview) }
 
@@ -265,7 +265,7 @@ internal class DriverSeasonViewModelTest: BaseTest() {
 
 
     @Test
-    fun `DriverSeasonViewModel init contains rounds that summarise driver overview`() = coroutineTest {
+    fun `init contains rounds that summarise driver overview`() = coroutineTest {
 
         every { mockDriverRepository.getDriverOverview(any()) } returns flow { emit(mockDriverOverview) }
 
@@ -283,7 +283,7 @@ internal class DriverSeasonViewModelTest: BaseTest() {
 
 
     @Test
-    fun `DriverSeasonViewModel clicking season round fires go to season round event`() = coroutineTest {
+    fun `clicking season round fires go to season round event`() = coroutineTest {
 
         initSUT()
 

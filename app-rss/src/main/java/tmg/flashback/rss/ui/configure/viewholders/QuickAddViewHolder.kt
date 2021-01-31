@@ -4,13 +4,13 @@ import android.view.View
 import androidx.core.graphics.toColorInt
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.view_rss_configure_quickadd.view.*
-import tmg.flashback.rss.repo.enums.SupportedArticleSource
+import tmg.flashback.rss.repo.model.SupportedArticleSource
 import tmg.flashback.rss.ui.configure.RSSConfigureItem
 
 class QuickAddViewHolder(
-        private val quickAddItem: (SupportedArticleSource) -> Unit,
-        private val websiteLink: (SupportedArticleSource) -> Unit,
-        itemView: View
+    private val quickAddItem: (SupportedArticleSource) -> Unit,
+    private val websiteLink: (SupportedArticleSource) -> Unit,
+    itemView: View
 ): RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
     private lateinit var item: SupportedArticleSource

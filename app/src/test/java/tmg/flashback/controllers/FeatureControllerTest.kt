@@ -21,7 +21,7 @@ internal class FeatureControllerTest: BaseTest() {
     //region RSS
 
     @Test
-    fun `FeatureManager rss enabled`() {
+    fun `rss enabled`() {
         every { mockConfigurationController.rss } returns true
         initSUT()
         assertTrue(sut.rssEnabled)
@@ -29,7 +29,7 @@ internal class FeatureControllerTest: BaseTest() {
     }
 
     @Test
-    fun `FeatureManager rss disabled`() {
+    fun `rss disabled`() {
         every { mockConfigurationController.rss } returns false
         initSUT()
         assertFalse(sut.rssEnabled)
@@ -42,7 +42,7 @@ internal class FeatureControllerTest: BaseTest() {
 
     // TODO: Update this test when search functionality is enabled
     @Test
-    fun `FeatureManager search enabled`() {
+    fun `search enabled`() {
         every { mockConfigurationController.search } returns true
         initSUT()
         assertFalse(sut.searchEnabled)
@@ -51,7 +51,7 @@ internal class FeatureControllerTest: BaseTest() {
 
     // TODO: Update this test when search functionality is enabled
     @Test
-    fun `FeatureManager search disabled`() {
+    fun `search disabled`() {
         every { mockConfigurationController.search } returns false
         initSUT()
         assertFalse(sut.searchEnabled)

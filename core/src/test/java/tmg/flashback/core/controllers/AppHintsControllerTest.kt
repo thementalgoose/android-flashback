@@ -21,7 +21,7 @@ internal class AppHintsControllerTest {
     //region Qualifying Long Press
 
     @Test
-    fun `AppHintsManager show qualifying seen`() {
+    fun `show qualifying seen`() {
 
         every { mockCoreRepository.appHints } returns setOf(AppHints.RACE_QUALIFYING_LONG_CLICK)
 
@@ -32,7 +32,7 @@ internal class AppHintsControllerTest {
     }
 
     @Test
-    fun `AppHintsManager show qualifying not seen`() {
+    fun `show qualifying not seen`() {
 
         every { mockCoreRepository.appHints } returns setOf()
 
@@ -43,7 +43,7 @@ internal class AppHintsControllerTest {
     }
 
     @Test
-    fun `AppHintsManager marking show qualifying as seen`() {
+    fun `marking show qualifying as seen`() {
 
         every { mockCoreRepository.appHints } returns setOf()
 
@@ -54,7 +54,7 @@ internal class AppHintsControllerTest {
     }
 
     @Test
-    fun `AppHintsManager marking show qualifying as not seen`() {
+    fun `marking show qualifying as not seen`() {
 
         every { mockCoreRepository.appHints } returns setOf(AppHints.RACE_QUALIFYING_LONG_CLICK)
 

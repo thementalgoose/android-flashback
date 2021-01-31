@@ -8,7 +8,7 @@ class ResponseTest {
     lateinit var sut: Response<String>
 
     @Test
-    fun `Response if result is not null then response code is 200`() {
+    fun `if result is not null then response code is 200`() {
 
         val expected = "Not null"
         sut = Response(expected)
@@ -19,7 +19,7 @@ class ResponseTest {
     }
 
     @Test
-    fun `Response if result is null then response code is 500`() {
+    fun `if result is null then response code is 500`() {
 
         val expected = null
         sut = Response(expected)
@@ -30,7 +30,7 @@ class ResponseTest {
     }
 
     @Test
-    fun `Response if response code is set to -1 then response code is considered no network`() {
+    fun `if response code is set to -1 then response code is considered no network`() {
 
         val expected = null
         sut = Response(expected, -1)

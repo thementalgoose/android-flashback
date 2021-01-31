@@ -13,7 +13,7 @@ class ConstructorOverviewStandingTest {
             "2,2,2",
             "0,2,2"
     )
-    fun `ConstructorOverviewStanding best finish`(driver1: Int, driver2: Int, expected: Int) {
+    fun `best finish`(driver1: Int, driver2: Int, expected: Int) {
         val sut = mockConstructorOverviewStanding1.copy(drivers = mapOf(
                 mockDriver1.id to mockConstructorOverviewStanding1Driver1.copy(
                         bestFinish = driver1
@@ -25,14 +25,14 @@ class ConstructorOverviewStandingTest {
         assertEquals(expected, sut.bestFinish)
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "Best qualifying of {0} by first driver and {1} by second driver shows {2} as best")
     @CsvSource(
             "-1,9,9",
             "1,9,1",
             "2,2,2",
             "0,2,2"
     )
-    fun `ConstructorOverviewStanding best qualifying`(driver1: Int, driver2: Int, expected: Int) {
+    fun `best qualifying`(driver1: Int, driver2: Int, expected: Int) {
         val sut = mockConstructorOverviewStanding1.copy(drivers = mapOf(
                 mockDriver1.id to mockConstructorOverviewStanding1Driver1.copy(
                         bestQualifying = driver1
@@ -53,7 +53,7 @@ class ConstructorOverviewStandingTest {
             "0,0,0",
             "-1,0,0"
     )
-    fun `ConstructorOverviewStanding qualifying on pole`(driver1: Int, driver2: Int, expected: Int) {
+    fun `qualifying on pole`(driver1: Int, driver2: Int, expected: Int) {
         val sut = mockConstructorOverviewStanding1.copy(drivers = mapOf(
                 mockDriver1.id to mockConstructorOverviewStanding1Driver1.copy(
                         qualifyingP1 = driver1
@@ -73,7 +73,7 @@ class ConstructorOverviewStandingTest {
             "0,0,0,0,0",
             "-1,-1,-1,-1,0"
     )
-    fun `ConstructorOverviewStanding qualifying on front row`(driver1Pos1: Int, driver1Pos2: Int, driver2Pos1: Int, driver2Pos2: Int, expected: Int) {
+    fun `qualifying on front row`(driver1Pos1: Int, driver1Pos2: Int, driver2Pos1: Int, driver2Pos2: Int, expected: Int) {
         val sut = mockConstructorOverviewStanding1.copy(drivers = mapOf(
                 mockDriver1.id to mockConstructorOverviewStanding1Driver1.copy(
                         qualifyingP1 = driver1Pos1,
@@ -96,7 +96,7 @@ class ConstructorOverviewStandingTest {
             "0,0,0",
             "-1,0,0"
     )
-    fun `ConstructorOverviewStanding driver points`(driver1: Int, driver2: Int, expected: Int) {
+    fun `driver points`(driver1: Int, driver2: Int, expected: Int) {
         val sut = mockConstructorOverviewStanding1.copy(drivers = mapOf(
                 mockDriver1.id to mockConstructorOverviewStanding1Driver1.copy(
                         points = driver1
@@ -117,7 +117,7 @@ class ConstructorOverviewStandingTest {
             "0,0,0",
             "-1,0,0"
     )
-    fun `ConstructorOverviewStanding finishes in points`(driver1: Int, driver2: Int, expected: Int) {
+    fun `finishes in points`(driver1: Int, driver2: Int, expected: Int) {
         val sut = mockConstructorOverviewStanding1.copy(drivers = mapOf(
                 mockDriver1.id to mockConstructorOverviewStanding1Driver1.copy(
                         finishesInPoints = driver1
@@ -138,7 +138,7 @@ class ConstructorOverviewStandingTest {
             "0,0,0",
             "-1,0,0"
     )
-    fun `ConstructorOverviewStanding wins`(driver1: Int, driver2: Int, expected: Int) {
+    fun `wins`(driver1: Int, driver2: Int, expected: Int) {
         val sut = mockConstructorOverviewStanding1.copy(drivers = mapOf(
                 mockDriver1.id to mockConstructorOverviewStanding1Driver1.copy(
                         finishesInP1 = driver1
@@ -159,7 +159,7 @@ class ConstructorOverviewStandingTest {
             "0,0,0,0,0,0,0",
             "-1,0,0,0,-1,0,0"
     )
-    fun `ConstructorOverviewStanding podiums`(driver1P1: Int, driver1P2: Int, driver1P3: Int, driver2P1: Int, driver2P2: Int, driver2P3: Int, expected: Int) {
+    fun `podiums`(driver1P1: Int, driver1P2: Int, driver1P3: Int, driver2P1: Int, driver2P2: Int, driver2P3: Int, expected: Int) {
         val sut = mockConstructorOverviewStanding1.copy(drivers = mapOf(
                 mockDriver1.id to mockConstructorOverviewStanding1Driver1.copy(
                         finishesInP1 = driver1P1,
@@ -184,7 +184,7 @@ class ConstructorOverviewStandingTest {
             "0,0,0,0,0,0,0",
             "-1,0,0,0,-1,0,0"
     )
-    fun `ConstructorOverviewStanding qualified in top 3`(driver1P1: Int, driver1P2: Int, driver1P3: Int, driver2P1: Int, driver2P2: Int, driver2P3: Int, expected: Int) {
+    fun `qualified in top 3`(driver1P1: Int, driver1P2: Int, driver1P3: Int, driver2P1: Int, driver2P2: Int, driver2P3: Int, expected: Int) {
         val sut = mockConstructorOverviewStanding1.copy(drivers = mapOf(
                 mockDriver1.id to mockConstructorOverviewStanding1Driver1.copy(
                         qualifyingP1 = driver1P1,

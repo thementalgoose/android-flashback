@@ -6,7 +6,7 @@ import androidx.core.graphics.toColorInt
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.view_rss_configure_item.view.*
 import tmg.flashback.rss.R
-import tmg.flashback.rss.repo.enums.SupportedArticleSource
+import tmg.flashback.rss.repo.model.SupportedArticleSource
 import tmg.flashback.rss.ui.configure.RSSConfigureItem
 import tmg.utilities.extensions.getColor
 import tmg.utilities.extensions.views.context
@@ -16,9 +16,9 @@ import java.net.MalformedURLException
 import java.net.URL
 
 class ItemViewHolder(
-        private val removeItem: (String) -> Unit,
-        private val visitWebsite: (SupportedArticleSource) -> Unit,
-        itemView: View
+    private val removeItem: (String) -> Unit,
+    private val visitWebsite: (SupportedArticleSource) -> Unit,
+    itemView: View
 ): RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
     private lateinit var item: RSSConfigureItem.Item

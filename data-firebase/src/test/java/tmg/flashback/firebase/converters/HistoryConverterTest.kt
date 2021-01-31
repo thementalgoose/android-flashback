@@ -8,7 +8,7 @@ import tmg.flashback.firebase.testutils.BaseTest
 internal class HistoryConverterTest: BaseTest() {
 
     @Test
-    fun `HistoryConverter all data up too is one less than this year when all data confirmed`() {
+    fun `all data up too is one less than this year when all data confirmed`() {
 
         assertEquals(currentYear - 1, allDataUpToo)
     }

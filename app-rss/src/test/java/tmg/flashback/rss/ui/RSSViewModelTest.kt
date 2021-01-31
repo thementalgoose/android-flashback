@@ -64,7 +64,7 @@ class RSSViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `RSSViewModel is refreshing is initialised is reset after refresh flow`() = coroutineTest {
+    fun `is refreshing is initialised is reset after refresh flow`() = coroutineTest {
 
         initSUT()
 
@@ -86,7 +86,7 @@ class RSSViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `RSSViewModel init loads all news sources`() = coroutineTest {
+    fun `init loads all news sources`() = coroutineTest {
 
         initSUT()
         advanceUntilIdle()
@@ -98,7 +98,7 @@ class RSSViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `RSSViewModel init all sources disabled if excludes list contains all news sources`() = coroutineTest {
+    fun `init all sources disabled if excludes list contains all news sources`() = coroutineTest {
 
         every { mockRSSDB.getNews() } returns mockResponse500
         every { mockRepository.rssUrls } returns emptySet()
@@ -116,7 +116,7 @@ class RSSViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `RSSViewModel init internal error is thrown if results are empty`() = coroutineTest {
+    fun `init internal error is thrown if results are empty`() = coroutineTest {
 
         every { mockRSSDB.getNews() } returns mockResponse500
 
@@ -133,7 +133,7 @@ class RSSViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `RSSViewModel no network error shown when network response code is no network`() = coroutineTest {
+    fun `no network error shown when network response code is no network`() = coroutineTest {
 
         every { mockRSSDB.getNews() } returns mockResponseNoNetwork
 
@@ -150,7 +150,7 @@ class RSSViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `RSSViewModel no network error shown when network connectivity check returns false`() = coroutineTest {
+    fun `no network error shown when network connectivity check returns false`() = coroutineTest {
 
         every { mockConnectivityManager.isConnected } returns false
 

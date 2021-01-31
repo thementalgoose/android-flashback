@@ -13,7 +13,7 @@ import tmg.flashback.data.models.ConstructorDriver
 internal class ConstructorOverviewConverterTest: BaseTest() {
 
     @Test
-    fun `ConstructorOverviewStandings in progress and current year shows true`() {
+    fun `in progress and current year shows true`() {
 
         val mockOverviewData = mockk<FConstructorOverviewData>()
         val model = FConstructorOverviewStandings(inProgress = true, s = currentYear)
@@ -21,7 +21,7 @@ internal class ConstructorOverviewConverterTest: BaseTest() {
     }
 
     @Test
-    fun `ConstructorOverviewStandings in progress is true in old year means progress is false`() {
+    fun `in progress is true in old year means progress is false`() {
 
         val mockOverviewData = mockk<FConstructorOverviewData>()
         val model = FConstructorOverviewStandings(inProgress = true, s = 2019)
@@ -29,7 +29,7 @@ internal class ConstructorOverviewConverterTest: BaseTest() {
     }
 
     @Test
-    fun `ConstructorOverviewDriverStanding null values always default to 0`() {
+    fun `null values always default to 0`() {
 
         val constructorDriver: ConstructorDriver = mockk(relaxed = true)
         val model = FConstructorOverviewStandingsDriver(null, null, null, null, null, null, null, null, null, null, null, null, null).convert(constructorDriver)

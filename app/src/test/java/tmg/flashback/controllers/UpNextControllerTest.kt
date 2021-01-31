@@ -22,7 +22,7 @@ internal class UpNextControllerTest: BaseTest() {
     }
 
     @Test
-    fun `UpNextController no next race if remote config is empty`() {
+    fun `no next race if remote config is empty`() {
         every { mockRemoteConfigRepository.upNext } returns emptyList()
         initSUT()
 
@@ -30,7 +30,7 @@ internal class UpNextControllerTest: BaseTest() {
     }
 
     @Test
-    fun `UpNextController no next race if up next schedule is all in past `() {
+    fun `no next race if up next schedule is all in past `() {
         val list = listOf(
                 generateUpNextItem(-1),
                 generateUpNextItem(-2),
@@ -43,7 +43,7 @@ internal class UpNextControllerTest: BaseTest() {
     }
 
     @Test
-    fun `UpNextController next race returned if one found in future`() {
+    fun `next race returned if one found in future`() {
         val list = listOf(
                 generateUpNextItem(1),
                 generateUpNextItem(2),
@@ -56,7 +56,7 @@ internal class UpNextControllerTest: BaseTest() {
     }
 
     @Test
-    fun `UpNextController next race returned if one found today`() {
+    fun `next race returned if one found today`() {
         val list = listOf(
                 generateUpNextItem(0),
                 generateUpNextItem(2),
@@ -69,7 +69,7 @@ internal class UpNextControllerTest: BaseTest() {
     }
 
     @Test
-    fun `UpNextController next race returns correct one mid list including today`() {
+    fun `next race returns correct one mid list including today`() {
         val list = listOf(
                 generateUpNextItem(-2),
                 generateUpNextItem(0),
@@ -83,7 +83,7 @@ internal class UpNextControllerTest: BaseTest() {
     }
 
     @Test
-    fun `UpNextController next race returns correct one mid list not today`() {
+    fun `next race returns correct one mid list not today`() {
         val list = listOf(
                 generateUpNextItem(-2),
                 generateUpNextItem(1),

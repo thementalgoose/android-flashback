@@ -25,7 +25,7 @@ internal class BuildConfigProviderTest {
         "12,11,true",
         ",11,true"
     )
-    fun `BuildConfigProvider test versions lockout app properly`(suppliedVersion: Int?, appVersionCode: Int, expectedToPass: Boolean) {
+    fun `test versions lockout app properly`(suppliedVersion: Int?, appVersionCode: Int, expectedToPass: Boolean) {
 
         initSUT(appVersionCode)
 
@@ -38,7 +38,7 @@ internal class BuildConfigProviderTest {
         "-1,11",
         ",11"
     )
-    fun `BuildConfigProvider test versions when version are invalid`(suppliedVersion: Int?, appVersionCode: Int) {
+    fun `test versions when version are invalid`(suppliedVersion: Int?, appVersionCode: Int) {
 
         initSUT(appVersionCode)
 
