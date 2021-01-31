@@ -137,6 +137,13 @@ internal fun <T> LiveDataTestScope<DataEvent<T>>.assertDataEventMatches(predicat
 //region LiveDataTestScope<List<T>>
 
 /**
+ * If the scope allows nullable values, check that the item exposed is null
+ */
+internal fun <T> LiveDataTestScope<T?>.assertValueNull() {
+    assertNull(latestValue)
+}
+
+/**
  * Assert that given the subject is a list that only one list has been
  *  emitted and the list contains the following item
  */

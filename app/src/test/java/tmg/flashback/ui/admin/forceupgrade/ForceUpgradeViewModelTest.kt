@@ -42,7 +42,7 @@ internal class ForceUpgradeViewModelTest: BaseTest() {
             assertValue(Pair("Error :(", "Please restart the app"))
         }
         sut.outputs.showLink.test {
-            assertValue(null)
+            assertValueNull()
         }
     }
 
@@ -82,7 +82,7 @@ internal class ForceUpgradeViewModelTest: BaseTest() {
             assertValue(Pair("title", "message"))
         }
         sut.outputs.showLink.test {
-            assertValue(null)
+            assertValueNull()
         }
 
         verify {
