@@ -7,6 +7,8 @@ import io.mockk.mockk
 import kotlinx.coroutines.flow.flow
 import org.junit.jupiter.api.Test
 import tmg.flashback.controllers.ReleaseNotesController
+import tmg.flashback.core.controllers.ConfigurationController
+import tmg.flashback.core.managers.BuildConfigManager
 import tmg.flashback.data.db.DataRepository
 import tmg.flashback.data.models.AppLockout
 import tmg.flashback.testutils.BaseTest
@@ -22,14 +24,14 @@ internal class DashboardViewModelTest: BaseTest() {
     private val mockDataRepository: DataRepository = mockk(relaxed = true)
     private val mockBuildConfigManager: BuildConfigManager = mockk(relaxed = true)
     private val mockReleaseNotesController: ReleaseNotesController = mockk(relaxed = true)
-    private val mockRemoteConfigManager: RemoteConfigManager = mockk(relaxed = true)
+    private val mockConfigurationController: ConfigurationController = mockk(relaxed = true)
 
     private fun initSUT() {
         sut = DashboardViewModel(
             mockContext,
             mockDataRepository,
             mockBuildConfigManager,
-            mockRemoteConfigManager,
+            mockConfigurationController,
             mockReleaseNotesController
         )
     }
@@ -127,7 +129,7 @@ internal class DashboardViewModelTest: BaseTest() {
     @Test
     fun `DashboardViewModel init if update returns changes and activate fails nothing happens`() = coroutineTest {
 
-        coEvery { mockRemoteConfigManager.activate() } returns false
+        coEvery { mockConfigurationController.applyPending() } returns false
 
         initSUT()
         advanceUntilIdle()
@@ -140,7 +142,7 @@ internal class DashboardViewModelTest: BaseTest() {
     @Test
     fun `DashboardViewModel init if update returns changes and activate successfully then notify app config synced event`() = coroutineTest {
 
-        coEvery { mockRemoteConfigManager.activate() } returns true
+        coEvery { mockConfigurationController.applyPending() } returns true
 
         initSUT()
         advanceUntilIdle()

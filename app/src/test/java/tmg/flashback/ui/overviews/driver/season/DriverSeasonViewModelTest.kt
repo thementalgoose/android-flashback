@@ -6,11 +6,12 @@ import kotlinx.coroutines.flow.flow
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.R
-import tmg.flashback.controllers.AppearanceController
+import tmg.flashback.core.controllers.AppearanceController
+import tmg.flashback.core.enums.AnimationSpeed
+import tmg.flashback.core.managers.NetworkConnectivityManager
 import tmg.flashback.ui.overviews.*
 import tmg.flashback.ui.overviews.driver.summary.PipeType.*
 import tmg.flashback.data.db.stats.DriverRepository
-import tmg.flashback.data.enums.BarAnimation
 import tmg.flashback.data.models.stats.DriverOverviewRace
 import tmg.flashback.ui.shared.sync.SyncDataItem
 import tmg.flashback.ui.shared.viewholders.DataUnavailable.DRIVER_NOT_EXIST
@@ -29,7 +30,7 @@ internal class DriverSeasonViewModelTest: BaseTest() {
     internal fun setUp() {
 
         every { mockConnectivityManager.isConnected } returns true
-        every { mockAppearanceController.barAnimation } returns BarAnimation.NONE
+        every { mockAppearanceController.animationSpeed } returns AnimationSpeed.NONE
     }
 
     private fun initSUT() {
@@ -316,7 +317,7 @@ internal class DriverSeasonViewModelTest: BaseTest() {
                 raceStatus = race.status,
                 points = race.points,
                 maxPoints = 25,
-                animationSpeed = BarAnimation.NONE
+                animationSpeed = AnimationSpeed.NONE
         )
     }
 }

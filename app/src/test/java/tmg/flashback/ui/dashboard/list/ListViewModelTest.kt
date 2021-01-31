@@ -13,8 +13,8 @@ import org.threeten.bp.ZoneOffset
 import tmg.flashback.controllers.FeatureController
 import tmg.flashback.controllers.SeasonController
 import tmg.flashback.controllers.UpNextController
-import tmg.flashback.data.models.Timestamp
-import tmg.flashback.data.models.remoteconfig.UpNextSchedule
+import tmg.flashback.core.model.Timestamp
+import tmg.flashback.core.model.UpNextSchedule
 import tmg.flashback.testutils.*
 import tmg.flashback.testutils.assertDataEventValue
 import tmg.flashback.testutils.test

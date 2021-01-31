@@ -5,13 +5,14 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import tmg.flashback.data.config.RemoteConfigRepository
-import tmg.flashback.data.models.remoteconfig.SupportedArticleSource
+import tmg.flashback.core.controllers.ConfigurationController
+import tmg.flashback.core.model.SupportedArticleSource
 import tmg.flashback.testutils.BaseTest
 
+// TODO: Look at removing this as it shouldn't be needed anymore
 internal class RSSSupplierControllerTest: BaseTest() {
 
-    private var mockRemoteConfigRepository: RemoteConfigRepository = mockk(relaxed = true)
+    private var mockRemoteConfigRepository: ConfigurationController = mockk(relaxed = true)
 
     private lateinit var sut: RSSConfigurationFeedController
 

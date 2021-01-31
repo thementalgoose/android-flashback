@@ -5,35 +5,35 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
-import tmg.flashback.data.config.RemoteConfigRepository
+import tmg.flashback.core.controllers.ConfigurationController
 import tmg.flashback.testutils.BaseTest
 
 internal class FeatureControllerTest: BaseTest() {
 
-    private var mockRemoteConfigRepository: RemoteConfigRepository = mockk(relaxed = true)
+    private var mockConfigurationController: ConfigurationController = mockk(relaxed = true)
 
     private lateinit var sut: FeatureController
 
     private fun initSUT() {
-        sut = FeatureController(mockRemoteConfigRepository)
+        sut = FeatureController(mockConfigurationController)
     }
 
     //region RSS
 
     @Test
     fun `FeatureManager rss enabled`() {
-        every { mockRemoteConfigRepository.rss } returns true
+        every { mockConfigurationController.rss } returns true
         initSUT()
         assertTrue(sut.rssEnabled)
-        verify { mockRemoteConfigRepository.rss }
+        verify { mockConfigurationController.rss }
     }
 
     @Test
     fun `FeatureManager rss disabled`() {
-        every { mockRemoteConfigRepository.rss } returns false
+        every { mockConfigurationController.rss } returns false
         initSUT()
         assertFalse(sut.rssEnabled)
-        verify { mockRemoteConfigRepository.rss }
+        verify { mockConfigurationController.rss }
     }
 
     //endregion
@@ -43,7 +43,7 @@ internal class FeatureControllerTest: BaseTest() {
     // TODO: Update this test when search functionality is enabled
     @Test
     fun `FeatureManager search enabled`() {
-        every { mockRemoteConfigRepository.search } returns true
+        every { mockConfigurationController.search } returns true
         initSUT()
         assertFalse(sut.searchEnabled)
 //        verify { mockRemoteConfigRepository.search }
@@ -52,7 +52,7 @@ internal class FeatureControllerTest: BaseTest() {
     // TODO: Update this test when search functionality is enabled
     @Test
     fun `FeatureManager search disabled`() {
-        every { mockRemoteConfigRepository.search } returns false
+        every { mockConfigurationController.search } returns false
         initSUT()
         assertFalse(sut.searchEnabled)
 //        verify { mockRemoteConfigRepository.search }

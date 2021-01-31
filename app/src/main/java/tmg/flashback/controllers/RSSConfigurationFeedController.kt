@@ -4,6 +4,7 @@ import tmg.flashback.core.controllers.ConfigurationController
 import tmg.flashback.rss.controllers.RSSFeedController
 import tmg.flashback.rss.repo.enums.SupportedArticleSource
 
+// TODO: Is this needed?
 class RSSConfigurationFeedController(
     private val configurationController: ConfigurationController
 ): RSSFeedController() {

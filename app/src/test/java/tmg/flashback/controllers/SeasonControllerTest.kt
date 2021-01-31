@@ -6,14 +6,14 @@ import io.mockk.verify
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import tmg.flashback.constants.App.currentYear
-import tmg.flashback.data.config.RemoteConfigRepository
+import tmg.flashback.core.controllers.ConfigurationController
 import tmg.flashback.data.repositories.AppRepository
 import tmg.flashback.testutils.BaseTest
 
 internal class SeasonControllerTest: BaseTest() {
 
     private var mockAppRepository: AppRepository = mockk(relaxed = true)
-    private var mockRemoteConfigRepository: RemoteConfigRepository = mockk(relaxed = true)
+    private var mockRemoteConfigRepository: ConfigurationController = mockk(relaxed = true)
 
     private lateinit var sut: SeasonController
 
