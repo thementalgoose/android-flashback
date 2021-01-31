@@ -80,7 +80,12 @@
             android:theme="@style/Translucent" />
 
         <activity
-            android:name=".ui.admin.LockoutActivity"
+            android:name=".ui.admin.maintenance.MaintenanceActivity"
+            android:label=""
+            android:theme="@style/Translucent" />
+
+        <activity
+            android:name=".ui.admin.forceupgrade.ForceUpgradeActivity"
             android:label=""
             android:theme="@style/Translucent" />
 

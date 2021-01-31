@@ -1,4 +1,4 @@
-package tmg.flashback.ui.admin
+package tmg.flashback.ui.admin.maintenance
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
@@ -23,7 +23,7 @@ import tmg.utilities.lifecycle.Event
 
 //region Inputs
 
-interface LockoutViewModelInputs {
+interface MaintenanceViewModelInputs {
     fun clickLink(maintenanceLink: String)
 }
 
@@ -31,7 +31,7 @@ interface LockoutViewModelInputs {
 
 //region Outputs
 
-interface LockoutViewModelOutputs {
+interface MaintenanceViewModelOutputs {
     val data: LiveData<Pair<String, String>> // title, message
     val showLink: LiveData<Pair<String, String>> // linkText, link
 
@@ -41,11 +41,10 @@ interface LockoutViewModelOutputs {
 
 //endregion
 
-@Suppress("EXPERIMENTAL_API_USAGE")
-class LockoutViewModel(
+class MaintenanceViewModel(
     private val dataRepository: DataRepository,
     private val buildConfigProvider: BuildConfigManager
-): BaseViewModel(), LockoutViewModelInputs, LockoutViewModelOutputs {
+): BaseViewModel(), MaintenanceViewModelInputs, MaintenanceViewModelOutputs {
 
     private val clickLinkEvent: ConflatedBroadcastChannel<DataEvent<String>> = ConflatedBroadcastChannel()
 
@@ -77,8 +76,8 @@ class LockoutViewModel(
         .map { Event() }
         .asLiveData(viewModelScope.coroutineContext)
 
-    var inputs: LockoutViewModelInputs = this
-    var outputs: LockoutViewModelOutputs = this
+    var inputs: MaintenanceViewModelInputs = this
+    var outputs: MaintenanceViewModelOutputs = this
 
     //region Inputs
 

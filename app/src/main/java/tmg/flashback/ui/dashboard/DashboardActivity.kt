@@ -13,6 +13,7 @@ import tmg.flashback.controllers.FeatureController
 import tmg.flashback.controllers.SeasonController
 import tmg.flashback.core.enums.DisplayType
 import tmg.flashback.core.ui.BaseActivity
+import tmg.flashback.ui.admin.maintenance.MaintenanceActivity
 import tmg.flashback.ui.dashboard.list.ListFragment
 import tmg.flashback.ui.dashboard.search.SearchFragment
 import tmg.flashback.ui.dashboard.season.SeasonFragment
@@ -62,7 +63,7 @@ class DashboardActivity: BaseActivity(), DashboardNavigationCallback {
         }
 
         observeEvent(viewModel.outputs.openAppLockout) {
-            startActivity(Intent(this, tmg.flashback.ui.admin.LockoutActivity::class.java))
+            startActivity(Intent(this, MaintenanceActivity::class.java))
             finishAffinity()
         }
 

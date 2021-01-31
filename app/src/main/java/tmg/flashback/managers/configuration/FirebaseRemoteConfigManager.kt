@@ -11,13 +11,11 @@ import tmg.flashback.core.managers.ConfigurationManager
 import tmg.flashback.core.repositories.ConfigurationRepository
 import tmg.flashback.firebase.BuildConfig
 import tmg.flashback.R
+import tmg.flashback.core.model.ForceUpgrade
 import tmg.flashback.firebase.extensions.toJson
 import tmg.flashback.core.model.SupportedSource
 import tmg.flashback.core.model.UpNextSchedule
-import tmg.flashback.managers.configuration.models.RemoteConfigAllSeasons
-import tmg.flashback.managers.configuration.models.RemoteConfigSupportedSources
-import tmg.flashback.managers.configuration.models.RemoteConfigUpNext
-import tmg.flashback.managers.configuration.models.convert
+import tmg.flashback.managers.configuration.models.*
 import java.lang.Exception
 
 class FirebaseRemoteConfigManager(
@@ -39,6 +37,7 @@ class FirebaseRemoteConfigManager(
     private val keyDefaultYear: String = "default_year"
     private val keyUpNext: String = "up_next"
     private val keyDefaultBanner: String = "banner"
+    private val keyForceUpgrade: String = "force_upgrade"
     private val keyDataProvidedBy: String = "data_provided"
     private val keySearch: String = "search"
     private val keySupportedSeasons: String = "supported_seasons"
@@ -66,6 +65,9 @@ class FirebaseRemoteConfigManager(
 
     override val banner: String
         get() = remoteConfig.getString(keyDefaultBanner)
+
+    override val forceUpgrade: ForceUpgrade?
+        get() = remoteConfig.getString(keyForceUpgrade).toJson<RemoteConfigForceUpgrade>()?.convert()
 
     override val dataProvidedBy: String?
         get() {

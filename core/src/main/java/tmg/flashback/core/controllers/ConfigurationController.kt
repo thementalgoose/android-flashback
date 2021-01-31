@@ -2,6 +2,7 @@ package tmg.flashback.core.controllers
 
 import tmg.flashback.core.constants.Migrations
 import tmg.flashback.core.managers.ConfigurationManager
+import tmg.flashback.core.model.ForceUpgrade
 import tmg.flashback.core.model.SupportedSource
 import tmg.flashback.core.model.UpNextSchedule
 import tmg.flashback.core.repositories.ConfigurationRepository
@@ -66,6 +67,7 @@ class ConfigurationController(
 
     /**
      * What year we should default too when opening the app
+     *  This is the one flashback determines is the best to show
      */
     val defaultSeason: Int by lazy { configurationRepository.defaultSeason }
 
@@ -81,12 +83,25 @@ class ConfigurationController(
     val banner: String? get() = configurationRepository.banner
 
     /**
+     * Force upgrade message to be shown
+     * {
+     *   "title": "Upgrade now",
+     *   "message": "Message to explain the decision",
+     *   "link": "https://www.google.com"
+     *   "linkText": "Go to play store"
+     * }
+     */
+    val forceUpgrade: ForceUpgrade? by lazy { configurationRepository.forceUpgrade }
+
+    /**
      * Data provided by tag
+     *  Text to be displayed on every statistics screen of who the statistics are provided by
      */
     val dataProvidedBy: String? get() = configurationRepository.dataProvidedBy
 
     /**
      * Enable the search functionality
+     *  Enables the right hand functionality on the home screen (currently earmarked for search)
      */
     val search: Boolean by lazy { configurationRepository.search }
 
@@ -101,6 +116,7 @@ class ConfigurationController(
 
     /**
      * Enables the ability to add custom RSS feeds
+     *  Section gets removed from the RSS screen but custom URLs are still listed in the users preferences
      */
     val rssAddCustom: Boolean by lazy { configurationRepository.rssAddCustom }
 
