@@ -49,6 +49,7 @@ internal class SettingsViewModelTest: BaseTest() {
         every { raceController.fadeDNF } returns false
         every { seasonController.favouritesExpanded } returns false
         every { seasonController.allExpanded } returns false
+        every { seasonController.isUserDefinedValueSet } returns false
         every { crashController.enabled } returns false
         every { analyticsController.enabled } returns false
         every { deviceController.shakeToReport } returns false
@@ -77,7 +78,7 @@ internal class SettingsViewModelTest: BaseTest() {
     /**
      * Expected news list that should be displayed in the SettingsViewModel
      */
-    private fun expectedNewsList(isChannelsSupported: Boolean = true): List<AppPreferencesItem> {
+    private fun expectedNewsList(isChannelsSupported: Boolean = true, isUserDefinedDefaultSeason: Boolean = false): List<AppPreferencesItem> {
         return mutableListOf<AppPreferencesItem>().apply {
             add(AppPreferencesItem.Category(R.string.settings_customisation_rss))
             add(NEWS.toPref())
@@ -97,7 +98,9 @@ internal class SettingsViewModelTest: BaseTest() {
             add(FADE_OUT_DNF.toSwitch(false))
             add(QUALIFYING_GRID_PENALTY.toSwitch(false))
             add(AppPreferencesItem.Category(R.string.settings_season_list))
-            add(DEFAULT_SEASON.toPref())
+            if (isUserDefinedDefaultSeason) {
+                add(DEFAULT_SEASON.toPref())
+            }
             add(SEASON_BOTTOM_SHEET_FAVOURITED.toSwitch(false))
             add(SEASON_BOTTOM_SHEET_ALL.toSwitch(false))
             add(AppPreferencesItem.Category(R.string.settings_widgets))
@@ -123,6 +126,16 @@ internal class SettingsViewModelTest: BaseTest() {
 
         sut.outputs.settings.test {
             assertValue(expectedNewsList())
+        }
+    }
+
+    @Test
+    fun `setup populates settings list when default season is set`() {
+        every { seasonController.isUserDefinedValueSet } returns true
+        initSUT()
+
+        sut.outputs.settings.test {
+            assertValue(expectedNewsList(isUserDefinedDefaultSeason = true))
         }
     }
 
@@ -193,38 +206,16 @@ internal class SettingsViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `setup populates default season`() {
-
-        every { seasonController.supportedSeasons } returns setOf(2019, 2020)
-        every { seasonController.isUserDefinedValueSet } returns false
+    fun `select to clear the default season clears preference and fires event`() {
 
         initSUT()
+        sut.inputs.preferenceClicked(DEFAULT_SEASON, null)
 
-        val expected = mutableListOf<Selected<BottomSheetItem>>().apply {
-            add(Selected(BottomSheetItem(id = -1, text = StringHolder(R.string.settings_default_season_option_automatic)), true))
+        verify {
+            seasonController.clearDefault()
         }
-
-        sut.outputs.defaultSeasonPreference.test {
-            assertValue(expected)
-        }
-    }
-
-    @Test
-    fun `setup populates default season when user default set`() {
-
-        every { seasonController.supportedSeasons } returns setOf(2019, 2020)
-        every { seasonController.isUserDefinedValueSet } returns true
-        every { seasonController.defaultSeason } returns 2019
-
-        initSUT()
-
-        val expected = mutableListOf<Selected<BottomSheetItem>>().apply {
-            add(Selected(BottomSheetItem(id = -1, text = StringHolder(R.string.settings_default_season_option_automatic)), false))
-            add(Selected(BottomSheetItem(id = 0, text = StringHolder(R.string.settings_default_season_option_user, 2019)), true))
-        }
-
-        sut.outputs.defaultSeasonPreference.test {
-            assertValue(expected)
+        sut.outputs.defaultSeasonChanged.test {
+            assertEventFired()
         }
     }
 
@@ -243,7 +234,7 @@ internal class SettingsViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `select a bar animation updates the preference`() {
+    fun `select a animation speed updates the preference`() {
 
         initSUT()
 
@@ -251,19 +242,6 @@ internal class SettingsViewModelTest: BaseTest() {
         verify { appearanceController.animationSpeed = SLOW }
 
         sut.outputs.animationChanged.test {
-            assertEventFired()
-        }
-    }
-
-    @Test
-    fun `select a default season updates the preference to auto`() {
-
-        initSUT()
-
-        sut.pickSeason(null)
-        verify { seasonController.clearDefault() }
-
-        sut.outputs.defaultSeasonChanged.test {
             assertEventFired()
         }
     }
@@ -292,17 +270,7 @@ internal class SettingsViewModelTest: BaseTest() {
         }
     }
 
-    @Test
-    fun `selecting default season pref opens picker`() {
 
-        initSUT()
-
-        sut.inputs.preferenceClicked(DEFAULT_SEASON, null)
-
-        sut.outputs.openDefaultSeasonPicker.test {
-            assertEventFired()
-        }
-    }
 
     @Test
     fun `selecting qualifying delta pref updates value`() {

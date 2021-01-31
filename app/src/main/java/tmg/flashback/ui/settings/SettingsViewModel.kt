@@ -29,7 +29,6 @@ interface SettingsViewModelInputs {
     fun preferenceClicked(pref: SettingsOptions?, value: Boolean?)
     fun pickTheme(theme: Theme)
     fun pickAnimationSpeed(animation: AnimationSpeed)
-    fun pickSeason(season: Int?)
 }
 
 //endregion
@@ -41,7 +40,6 @@ interface SettingsViewModelOutputs {
 
     val themePreferences: LiveData<List<Selected<BottomSheetItem>>>
     val animationPreference: LiveData<List<Selected<BottomSheetItem>>>
-    val defaultSeasonPreference: LiveData<List<Selected<BottomSheetItem>>>
 
     val themeChanged: LiveData<Event>
     val animationChanged: LiveData<Event>
@@ -51,7 +49,6 @@ interface SettingsViewModelOutputs {
 
     val openThemePicker: LiveData<Event>
     val openAnimationPicker: LiveData<Event>
-    val openDefaultSeasonPicker: LiveData<Event>
     val openAbout: LiveData<Event>
     val openReview: LiveData<DataEvent<String>>
     val openPrivacyPolicy: LiveData<Event>
@@ -85,11 +82,9 @@ class SettingsViewModel(
 
     override val themePreferences: MutableLiveData<List<Selected<BottomSheetItem>>> = MutableLiveData()
     override val animationPreference: MutableLiveData<List<Selected<BottomSheetItem>>> = MutableLiveData()
-    override val defaultSeasonPreference: MutableLiveData<List<Selected<BottomSheetItem>>> = MutableLiveData()
 
     override val openThemePicker: MutableLiveData<Event> = MutableLiveData()
     override val openAnimationPicker: MutableLiveData<Event> = MutableLiveData()
-    override val openDefaultSeasonPicker: MutableLiveData<Event> = MutableLiveData()
 
     override val refreshWidgets: MutableLiveData<Event> = MutableLiveData()
 
@@ -127,7 +122,9 @@ class SettingsViewModel(
             add(SettingsOptions.FADE_OUT_DNF.toSwitch(raceController.fadeDNF))
             add(SettingsOptions.QUALIFYING_GRID_PENALTY.toSwitch(raceController.showGridPenaltiesInQualifying))
             add(AppPreferencesItem.Category(R.string.settings_season_list))
-            add(SettingsOptions.DEFAULT_SEASON.toPref())
+            if (seasonController.isUserDefinedValueSet) {
+                add(SettingsOptions.DEFAULT_SEASON.toPref())
+            }
             add(SettingsOptions.SEASON_BOTTOM_SHEET_FAVOURITED.toSwitch(seasonController.favouritesExpanded))
             add(SettingsOptions.SEASON_BOTTOM_SHEET_ALL.toSwitch(seasonController.allExpanded))
             add(AppPreferencesItem.Category(R.string.settings_widgets))
@@ -146,7 +143,6 @@ class SettingsViewModel(
 
         updateThemeList()
         updateAnimationList()
-        updateDefaultSeasonList()
     }
 
     //region Inputs
@@ -154,8 +150,12 @@ class SettingsViewModel(
     override fun preferenceClicked(pref: SettingsOptions?, value: Boolean?) {
         when (pref) {
             SettingsOptions.THEME -> openThemePicker.value = Event()
-            SettingsOptions.DEFAULT_SEASON -> openDefaultSeasonPicker.value = Event()
-            SettingsOptions.NOTIFICATIONS_CHANNEL_RACE -> openNotificationsChannel.value = DataEvent(topicRace)
+            SettingsOptions.DEFAULT_SEASON -> {
+                seasonController.clearDefault()
+                defaultSeasonChanged.value = Event()
+            }
+            SettingsOptions.NOTIFICATIONS_CHANNEL_RACE -> openNotificationsChannel.value =
+                DataEvent(topicRace)
             SettingsOptions.NOTIFICATIONS_CHANNEL_QUALIFYING -> openNotificationsChannel.value = DataEvent(topicQualifying)
             SettingsOptions.NOTIFICATIONS_SETTINGS -> openNotifications.value = Event()
             SettingsOptions.QUALIFYING_DELTAS -> raceController.showQualifyingDelta = value ?: false
@@ -189,15 +189,6 @@ class SettingsViewModel(
         animationChanged.value = Event()
     }
 
-    override fun pickSeason(season: Int?) {
-        when (season) {
-            null -> seasonController.clearDefault()
-            -1 -> seasonController.clearDefault()
-        }
-        updateDefaultSeasonList()
-        defaultSeasonChanged.value = Event()
-    }
-
     //endregion
 
     private fun updateThemeList() {
@@ -212,15 +203,5 @@ class SettingsViewModel(
                 .map {
                     Selected(BottomSheetItem(it.ordinal, it.icon, StringHolder(it.label)), it == appearanceController.animationSpeed)
                 }
-    }
-
-    private fun updateDefaultSeasonList() {
-
-        val seasons = mutableListOf<Selected<BottomSheetItem>>()
-        seasons.add(Selected(BottomSheetItem(id = -1, text = StringHolder(R.string.settings_default_season_option_automatic)), !seasonController.isUserDefinedValueSet))
-        if (seasonController.isUserDefinedValueSet) {
-            seasons.add(Selected(BottomSheetItem(id = 0, text = StringHolder(R.string.settings_default_season_option_user, seasonController.defaultSeason)), true))
-        }
-        defaultSeasonPreference.value = seasons
     }
 }
