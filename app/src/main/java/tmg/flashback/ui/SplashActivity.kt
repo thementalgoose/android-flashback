@@ -33,7 +33,12 @@ class SplashActivity: AppCompatActivity() {
             failedToSync.show(it)
         }
 
-        observeEvent(viewModel.outputs.goToNextScreen) {
+        observeEvent(viewModel.outputs.goToDashboard) {
+            startActivity(Intent(this@SplashActivity, DashboardActivity::class.java))
+            finish()
+        }
+
+        observeEvent(viewModel.outputs.goToForceUpgrade) {
             startActivity(Intent(this@SplashActivity, DashboardActivity::class.java))
             finish()
         }

@@ -18,13 +18,19 @@ internal class StringExtensionsKtTest {
 
         val expectedJson = """{"str":"test","int":2,"bool":true,"nullable":null,"list":["item-1"]}""".trimIndent()
         val exampleModel = TestPojo(
-            str = "test",
-            int = 2,
-            bool = true,
-            nullable = null,
-            list = listOf("item-1")
+                str = "test",
+                int = 2,
+                bool = true,
+                nullable = null,
+                list = listOf("item-1")
         )
 
         assertEquals(exampleModel, expectedJson.toJson<TestPojo>())
+    }
+
+    @Test
+    fun `toJson returns null if empty string is provided`() {
+
+        assertNull("".toJson<TestPojo>())
     }
 }

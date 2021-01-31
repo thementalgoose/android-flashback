@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
 import tmg.flashback.core.constants.Migrations
 import tmg.flashback.core.managers.ConfigurationManager
+import tmg.flashback.core.model.ForceUpgrade
 import tmg.flashback.core.model.SupportedSource
 import tmg.flashback.core.model.Timestamp
 import tmg.flashback.core.model.UpNextSchedule
@@ -159,6 +160,19 @@ internal class ConfigurationControllerTest {
         assertEquals(sut.banner, input1)
         every { mockConfigurationRepository.banner } returns input2
         assertEquals(sut.banner, input2)
+    }
+
+    @Test
+    fun `force upgrade returns cached value`() {
+
+        val input1 = ForceUpgrade("title1", "message", Pair("link", "https://www.google.com"))
+        val input2 = ForceUpgrade("title2", "message", Pair("link", "https://www.google.com"))
+
+        initSUT()
+        every { mockConfigurationRepository.forceUpgrade } returns input1
+        assertEquals(sut.forceUpgrade, input1)
+        every { mockConfigurationRepository.forceUpgrade } returns input2
+        assertEquals(sut.forceUpgrade, input1)
     }
 
     @Test
