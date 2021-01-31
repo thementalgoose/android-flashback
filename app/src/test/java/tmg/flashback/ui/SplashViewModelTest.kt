@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.controllers.FeatureController
 import tmg.flashback.core.controllers.ConfigurationController
+import tmg.flashback.core.model.ForceUpgrade
 import tmg.flashback.managers.appshortcuts.AppShortcutManager
 import tmg.flashback.testutils.BaseTest
 import tmg.flashback.testutils.assertEventFired
@@ -23,6 +24,7 @@ internal class  SplashViewModelTest: BaseTest() {
     internal fun setUp() {
         every { mockAppShortcutManager.enable() } returns true
         every { mockAppShortcutManager.disable() } returns true
+        every { mockConfigurationManager.forceUpgrade } returns null
     }
 
     private fun initSUT() {
@@ -104,7 +106,28 @@ internal class  SplashViewModelTest: BaseTest() {
         initSUT()
         sut.inputs.start()
 
-        sut.outputs.goToNextScreen.test {
+        sut.outputs.goToDashboard.test {
+            assertEventFired()
+        }
+        sut.outputs.goToForceUpgrade.test {
+            assertEventNotFired()
+        }
+    }
+
+    @Test
+    fun `start fetch and activate when success it fires go to force upgrade if force upgrade exists`() = coroutineTest {
+
+        every { mockConfigurationManager.forceUpgrade } returns ForceUpgrade("upgrade", "please", null)
+        every { mockConfigurationManager.requireSynchronisation } returns true
+        coEvery { mockConfigurationManager.fetchAndApply() } returns true
+
+        initSUT()
+        sut.inputs.start()
+
+        sut.outputs.goToDashboard.test {
+            assertEventNotFired()
+        }
+        sut.outputs.goToForceUpgrade.test {
             assertEventFired()
         }
     }
@@ -121,7 +144,10 @@ internal class  SplashViewModelTest: BaseTest() {
         sut.outputs.showResync.test {
             assertValue(true)
         }
-        sut.outputs.goToNextScreen.test {
+        sut.outputs.goToDashboard.test {
+            assertEventNotFired()
+        }
+        sut.outputs.goToForceUpgrade.test {
             assertEventNotFired()
         }
     }
@@ -138,7 +164,10 @@ internal class  SplashViewModelTest: BaseTest() {
         sut.outputs.showLoading.test {
             assertValue(false)
         }
-        sut.outputs.goToNextScreen.test {
+        sut.outputs.goToDashboard.test {
+            assertEventNotFired()
+        }
+        sut.outputs.goToForceUpgrade.test {
             assertEventNotFired()
         }
     }
@@ -176,7 +205,28 @@ internal class  SplashViewModelTest: BaseTest() {
         initSUT()
         sut.inputs.start()
 
-        sut.outputs.goToNextScreen.test {
+        sut.outputs.goToDashboard.test {
+            assertEventFired()
+        }
+        sut.outputs.goToForceUpgrade.test {
+            assertEventNotFired()
+        }
+    }
+
+    @Test
+    fun `start activate go to force upgrade fired if activate fails and force upgrade exists`() = coroutineTest {
+
+        every { mockConfigurationManager.forceUpgrade } returns ForceUpgrade("upgrade", "please", null)
+        every { mockConfigurationManager.requireSynchronisation } returns false
+        coEvery { mockConfigurationManager.applyPending() } returns false
+
+        initSUT()
+        sut.inputs.start()
+
+        sut.outputs.goToDashboard.test {
+            assertEventNotFired()
+        }
+        sut.outputs.goToForceUpgrade.test {
             assertEventFired()
         }
     }
@@ -190,7 +240,28 @@ internal class  SplashViewModelTest: BaseTest() {
         initSUT()
         sut.inputs.start()
 
-        sut.outputs.goToNextScreen.test {
+        sut.outputs.goToDashboard.test {
+            assertEventFired()
+        }
+        sut.outputs.goToForceUpgrade.test {
+            assertEventNotFired()
+        }
+    }
+
+    @Test
+    fun `start activate go to force upgrade fired if activate passes`() {
+
+        every { mockConfigurationManager.forceUpgrade } returns ForceUpgrade("upgrade", "please", null)
+        every { mockConfigurationManager.requireSynchronisation } returns false
+        coEvery { mockConfigurationManager.applyPending() } returns true
+
+        initSUT()
+        sut.inputs.start()
+
+        sut.outputs.goToDashboard.test {
+            assertEventNotFired()
+        }
+        sut.outputs.goToForceUpgrade.test {
             assertEventFired()
         }
     }

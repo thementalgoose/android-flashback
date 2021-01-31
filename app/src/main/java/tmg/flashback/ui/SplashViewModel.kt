@@ -23,7 +23,8 @@ interface SplashViewModelInputs {
 interface SplashViewModelOutputs {
     val showLoading: LiveData<Boolean>
     val showResync: LiveData<Boolean>
-    val goToNextScreen: LiveData<Event>
+    val goToDashboard: LiveData<Event>
+    val goToForceUpgrade: LiveData<Event>
 }
 
 //endregion
@@ -39,7 +40,8 @@ class SplashViewModel(
 
     override val showLoading: MutableLiveData<Boolean> = MutableLiveData(false)
     override val showResync: MutableLiveData<Boolean> = MutableLiveData(false)
-    override val goToNextScreen: MutableLiveData<Event> = MutableLiveData()
+    override val goToDashboard: MutableLiveData<Event> = MutableLiveData()
+    override val goToForceUpgrade: MutableLiveData<Event> = MutableLiveData()
 
     //region Inputs
 
@@ -51,7 +53,7 @@ class SplashViewModel(
                 val result = configurationController.fetchAndApply()
                 performConfigUpdates()
                 if (result) {
-                    goToNextScreen.value = Event()
+                    goToNextScreen()
                 }
                 else {
                     showResync.value = true
@@ -63,8 +65,17 @@ class SplashViewModel(
             viewModelScope.launch {
                 val result = configurationController.applyPending()
                 performConfigUpdates()
-                goToNextScreen.value = Event()
+                goToNextScreen()
             }
+        }
+    }
+
+    private fun goToNextScreen() {
+        if (configurationController.forceUpgrade != null) {
+            goToForceUpgrade.value = Event()
+        }
+        else {
+            goToDashboard.value = Event()
         }
     }
 
