@@ -10,10 +10,11 @@ import tmg.flashback.core.managers.BuildConfigManager
 import tmg.flashback.data.db.DataRepository
 import tmg.flashback.data.models.AppLockout
 import tmg.flashback.testutils.*
+import tmg.flashback.ui.admin.maintenance.MaintenanceViewModel
 
-internal class LockoutViewModelTest : BaseTest() {
+internal class MaintenanceViewModelTest : BaseTest() {
 
-    lateinit var sut: LockoutViewModel
+    lateinit var sut: MaintenanceViewModel
 
     private val mockDataRepository: DataRepository = mockk(relaxed = true)
     private val mockBuildConfigProvider: BuildConfigManager = mockk(relaxed = true)
@@ -67,7 +68,7 @@ internal class LockoutViewModelTest : BaseTest() {
 
     private fun initSUT() {
 
-        sut = LockoutViewModel(mockDataRepository, mockBuildConfigProvider)
+        sut = MaintenanceViewModel(mockDataRepository, mockBuildConfigProvider)
     }
 
 

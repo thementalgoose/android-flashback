@@ -1,4 +1,4 @@
-package tmg.flashback.ui.admin
+package tmg.flashback.ui.admin.maintenance
 
 import android.content.Intent
 import android.os.Bundle
@@ -15,9 +15,9 @@ import tmg.utilities.extensions.viewUrl
 import tmg.utilities.extensions.views.gone
 import tmg.utilities.extensions.views.visible
 
-class LockoutActivity: BaseActivity() {
+class MaintenanceActivity: BaseActivity() {
 
-    private val viewModel: LockoutViewModel by viewModel()
+    private val viewModel: MaintenanceViewModel by viewModel()
 
     override val analyticsScreenName: String
         get() = "App Lockout"

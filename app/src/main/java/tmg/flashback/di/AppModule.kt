@@ -19,6 +19,8 @@ import tmg.flashback.rss.ui.RSSViewModel
 import tmg.flashback.rss.ui.configure.RSSConfigureViewModel
 import tmg.flashback.rss.ui.settings.RSSSettingsViewModel
 import tmg.flashback.ui.SplashViewModel
+import tmg.flashback.ui.admin.forceupgrade.ForceUpgradeViewModel
+import tmg.flashback.ui.admin.maintenance.MaintenanceViewModel
 import tmg.flashback.ui.circuit.CircuitInfoViewModel
 import tmg.flashback.ui.dashboard.DashboardViewModel
 import tmg.flashback.ui.dashboard.list.ListViewModel
@@ -69,8 +71,10 @@ val appModule = module {
     viewModel { ConstructorViewModel(get(), get()) }
     // Settings
     viewModel { SettingsViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
-    viewModel { tmg.flashback.ui.admin.LockoutViewModel(get(), get()) }
     viewModel { PrivacyPolicyViewModel() }
+    // Admin
+    viewModel { ForceUpgradeViewModel(get()) }
+    viewModel { MaintenanceViewModel(get(), get()) }
 }
 
 val appRssModule = module {
