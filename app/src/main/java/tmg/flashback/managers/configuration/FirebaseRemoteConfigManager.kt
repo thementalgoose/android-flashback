@@ -11,7 +11,7 @@ import tmg.flashback.core.managers.ConfigurationManager
 import tmg.flashback.core.repositories.ConfigurationRepository
 import tmg.flashback.core.repositories.CoreRepository
 import tmg.flashback.firebase.BuildConfig
-import tmg.flashback.firebase.R
+import tmg.flashback.R
 import tmg.flashback.firebase.converters.convert
 import tmg.flashback.firebase.extensions.toJson
 import tmg.flashback.core.model.SupportedArticleSource

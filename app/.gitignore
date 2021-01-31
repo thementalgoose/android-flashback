@@ -3,3 +3,4 @@
 /src/live/google-services.json
 live/release
 sand/release
+/src/main/res/xml/remote_config_defaults.xml
