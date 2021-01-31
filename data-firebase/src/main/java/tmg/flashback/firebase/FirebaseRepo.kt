@@ -49,11 +49,10 @@ open class FirebaseRepo(
                 exception != null -> {
                     if (BuildConfig.DEBUG) {
                         Log.e("Flashback", "Snapshot exception ${exception.message}")
-                        throw exception
-                    } else {
-                        handleError(exception, path)
-                        offer(null)
+                        exception.printStackTrace()
                     }
+                    handleError(exception, path)
+                    offer(null)
                 }
                 snapshot != null -> {
                     try {
@@ -68,11 +67,10 @@ open class FirebaseRepo(
                     } catch (e: java.lang.Exception) {
                         if (BuildConfig.DEBUG) {
                             Log.e("Flashback", "Conversion exception ${e.message}")
-                            throw e
-                        } else {
-                            handleError(e, path)
-                            offer(null)
+                            e.printStackTrace()
                         }
+                        handleError(e, path)
+                        offer(null)
                     }
                 }
                 else -> {
@@ -107,7 +105,9 @@ open class FirebaseRepo(
     }
 
     private fun handleFirebaseError(exception: FirebaseFirestoreException, path: String) {
-        exception.printStackTrace()
+        if (BuildConfig.DEBUG) {
+            exception.printStackTrace()
+        }
         when (exception.code) {
             FirebaseFirestoreException.Code.OK -> { }
             FirebaseFirestoreException.Code.CANCELLED -> { }
