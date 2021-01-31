@@ -12,9 +12,12 @@ import tmg.flashback.*
 import tmg.flashback.constants.App.currentYear
 import tmg.flashback.controllers.*
 import tmg.flashback.controllers.NotificationController.Companion.daysUntilDataProvidedBannerMovedToBottom
+import tmg.flashback.core.controllers.AppearanceController
+import tmg.flashback.core.controllers.DeviceController
+import tmg.flashback.core.enums.AnimationSpeed
+import tmg.flashback.core.managers.NetworkConnectivityManager
 import tmg.flashback.data.db.stats.HistoryRepository
 import tmg.flashback.data.db.stats.SeasonOverviewRepository
-import tmg.flashback.data.enums.BarAnimation
 import tmg.flashback.data.models.stats.History
 import tmg.flashback.ui.shared.sync.SyncDataItem
 import tmg.flashback.ui.shared.viewholders.DataUnavailable
@@ -43,7 +46,7 @@ internal class SeasonViewModelTest: BaseTest() {
 
         every { mockNetworkConnectivityManager.isConnected } returns true
 
-        every { mockAppearanceController.barAnimation } returns BarAnimation.NONE
+        every { mockAppearanceController.animationSpeed } returns AnimationSpeed.NONE
         every { mockSeasonOverviewRepository.getSeasonOverview(any()) } returns flow { emit(mockSeason) }
         every { mockHistoryRepository.historyFor(any()) } returns flow { emit(mockHistory) }
     }
@@ -538,7 +541,7 @@ internal class SeasonViewModelTest: BaseTest() {
             bestQualifying = Pair(1, listOf(mockRound1)),
             bestFinish = Pair(1, listOf(mockRound2)),
             maxPointsInSeason = 27,
-            animationSpeed = BarAnimation.NONE
+            animationSpeed = AnimationSpeed.NONE
     )
     private val expectedDriver2 = SeasonItem.Driver(
             season = 2019,
@@ -549,7 +552,7 @@ internal class SeasonViewModelTest: BaseTest() {
             bestQualifying = Pair(2, listOf(mockRound1)),
             bestFinish = Pair(3, listOf(mockRound1, mockRound2)),
             maxPointsInSeason = 27,
-            animationSpeed = BarAnimation.NONE
+            animationSpeed = AnimationSpeed.NONE
     )
     private val expectedDriver3 = SeasonItem.Driver(
             season = 2019,
@@ -560,7 +563,7 @@ internal class SeasonViewModelTest: BaseTest() {
             bestQualifying = Pair(3, listOf(mockRound1, mockRound2)),
             bestFinish = Pair(2, listOf(mockRound1, mockRound2)),
             maxPointsInSeason = 27,
-            animationSpeed = BarAnimation.NONE
+            animationSpeed = AnimationSpeed.NONE
     )
     private val expectedDriver4 = SeasonItem.Driver(
             season = 2019,
@@ -571,7 +574,7 @@ internal class SeasonViewModelTest: BaseTest() {
             bestQualifying = Pair(1, listOf(mockRound2)),
             bestFinish = Pair(1, listOf(mockRound1)),
             maxPointsInSeason = 27,
-            animationSpeed = BarAnimation.NONE
+            animationSpeed = AnimationSpeed.NONE
     )
 
     //endregion
@@ -589,7 +592,7 @@ internal class SeasonViewModelTest: BaseTest() {
             ),
             points = 48,
             maxPointsInSeason = 48,
-            barAnimation = BarAnimation.NONE
+            barAnimation = AnimationSpeed.NONE
     )
     private val expectedConstructorBeta = SeasonItem.Constructor(
             season = 2019,
@@ -602,7 +605,7 @@ internal class SeasonViewModelTest: BaseTest() {
             ),
             points = 42,
             maxPointsInSeason = 48,
-            barAnimation = BarAnimation.NONE
+            barAnimation = AnimationSpeed.NONE
     )
 
     //endregion

@@ -11,6 +11,7 @@ import org.junit.jupiter.params.provider.CsvSource
 import org.threeten.bp.Year
 import tmg.flashback.R
 import tmg.flashback.constants.App.currentYear
+import tmg.flashback.core.managers.NetworkConnectivityManager
 import tmg.flashback.ui.overviews.*
 import tmg.flashback.ui.overviews.driver.summary.DriverSummaryItem
 import tmg.flashback.ui.overviews.driver.summary.PipeType

@@ -9,10 +9,16 @@ import tmg.components.prefs.AppPreferencesItem
 import tmg.flashback.BuildConfig
 import tmg.flashback.R
 import tmg.flashback.controllers.*
+import tmg.flashback.core.controllers.AnalyticsController
+import tmg.flashback.core.controllers.AppearanceController
+import tmg.flashback.core.controllers.CrashController
+import tmg.flashback.core.controllers.DeviceController
+import tmg.flashback.core.enums.AnimationSpeed.*
+import tmg.flashback.core.enums.Theme.*
+import tmg.flashback.extensions.icon
+import tmg.flashback.extensions.label
 import tmg.flashback.managers.notifications.FirebasePushNotificationManager.Companion.topicQualifying
 import tmg.flashback.managers.notifications.FirebasePushNotificationManager.Companion.topicRace
-import tmg.flashback.data.enums.BarAnimation.*
-import tmg.flashback.data.enums.ThemePref.*
 import tmg.flashback.ui.settings.SettingsOptions.*
 import tmg.flashback.testutils.*
 import tmg.flashback.testutils.assertDataEventValue
@@ -30,8 +36,8 @@ internal class SettingsViewModelTest: BaseTest() {
     private val appearanceController: AppearanceController = mockk(relaxed = true)
     private val deviceController: DeviceController = mockk(relaxed = true)
     private val raceController: RaceController = mockk(relaxed = true)
-    private val crashManager: CrashController = mockk(relaxed = true)
-    private val analyticsManager: AnalyticsManager = mockk(relaxed = true)
+    private val crashController: CrashController = mockk(relaxed = true)
+    private val analyticsController: AnalyticsController = mockk(relaxed = true)
     private val seasonController: SeasonController = mockk(relaxed = true)
     private val featureController: FeatureController = mockk(relaxed = true)
 
@@ -43,13 +49,13 @@ internal class SettingsViewModelTest: BaseTest() {
         every { raceController.fadeDNF } returns false
         every { seasonController.favouritesExpanded } returns false
         every { seasonController.allExpanded } returns false
-        every { crashManager.crashReporting } returns false
-        every { analyticsManager.enableAnalytics } returns false
+        every { crashController.enabled } returns false
+        every { analyticsController.enabled } returns false
         every { deviceController.shakeToReport } returns false
         every { notificationController.isNotificationChannelsSupported } returns true
 
         every { appearanceController.currentTheme } returns AUTO
-        every { appearanceController.barAnimation } returns MEDIUM
+        every { appearanceController.animationSpeed } returns MEDIUM
 
         every { featureController.rssEnabled } returns true
     }
@@ -61,8 +67,8 @@ internal class SettingsViewModelTest: BaseTest() {
                 appearanceController,
                 deviceController,
                 raceController,
-                analyticsManager,
-                crashManager,
+                analyticsController,
+                crashController,
                 seasonController,
                 featureController
         )
@@ -242,7 +248,7 @@ internal class SettingsViewModelTest: BaseTest() {
         initSUT()
 
         sut.pickAnimationSpeed(SLOW)
-        verify { appearanceController.barAnimation = SLOW }
+        verify { appearanceController.animationSpeed = SLOW }
 
         sut.outputs.animationChanged.test {
             assertEventFired()
@@ -403,7 +409,7 @@ internal class SettingsViewModelTest: BaseTest() {
 
         sut.inputs.preferenceClicked(CRASH, true)
 
-        verify { crashManager.crashReporting = true }
+        verify { crashController.enabled = true }
     }
 
     @Test
@@ -413,7 +419,7 @@ internal class SettingsViewModelTest: BaseTest() {
 
         sut.inputs.preferenceClicked(ANALYTICS, true)
 
-        verify { analyticsManager.enableAnalytics = true }
+        verify { analyticsController.enabled = true }
     }
 
     @Test

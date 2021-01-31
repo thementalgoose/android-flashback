@@ -6,14 +6,14 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
-import tmg.flashback.data.config.RemoteConfigRepository
-import tmg.flashback.data.models.Timestamp
-import tmg.flashback.data.models.remoteconfig.UpNextSchedule
+import tmg.flashback.core.controllers.ConfigurationController
+import tmg.flashback.core.model.Timestamp
+import tmg.flashback.core.model.UpNextSchedule
 import tmg.flashback.testutils.BaseTest
 
 internal class UpNextControllerTest: BaseTest() {
 
-    private var mockRemoteConfigRepository: RemoteConfigRepository = mockk(relaxed = true)
+    private var mockRemoteConfigRepository: ConfigurationController = mockk(relaxed = true)
 
     private lateinit var sut: UpNextController
 

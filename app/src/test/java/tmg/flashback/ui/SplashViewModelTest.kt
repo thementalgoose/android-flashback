@@ -4,6 +4,7 @@ import io.mockk.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.controllers.FeatureController
+import tmg.flashback.core.controllers.ConfigurationController
 import tmg.flashback.managers.appshortcuts.AppShortcutManager
 import tmg.flashback.testutils.BaseTest
 import tmg.flashback.testutils.assertEventFired
@@ -14,7 +15,7 @@ internal class  SplashViewModelTest: BaseTest() {
 
     private var mockAppShortcutManager: AppShortcutManager = mockk(relaxed = true)
     private var mockFeatureController: FeatureController = mockk(relaxed = true)
-    private var mockRemoteConfigManager: RemoteConfigManager = mockk(relaxed = true)
+    private var mockConfigurationManager: ConfigurationController = mockk(relaxed = true)
 
     private lateinit var sut: SplashViewModel
 
@@ -25,7 +26,7 @@ internal class  SplashViewModelTest: BaseTest() {
     }
 
     private fun initSUT() {
-        sut = SplashViewModel(mockAppShortcutManager, mockFeatureController, mockRemoteConfigManager)
+        sut = SplashViewModel(mockAppShortcutManager, mockFeatureController, mockConfigurationManager)
     }
 
     @Test
@@ -44,8 +45,8 @@ internal class  SplashViewModelTest: BaseTest() {
     @Test
     fun `SplashViewModel start fetch and activate enables show loading`() = coroutineTest {
 
-        every { mockRemoteConfigManager.requiresRemoteSync } returns true
-        coEvery { mockRemoteConfigManager.update(any()) } returns true
+        every { mockConfigurationManager.requireSynchronisation } returns true
+        coEvery { mockConfigurationManager.fetchAndApply() } returns true
 
         initSUT()
         sut.inputs.start()
@@ -58,8 +59,8 @@ internal class  SplashViewModelTest: BaseTest() {
     @Test
     fun `SplashViewModel start fetch and activate disables show resync`() = coroutineTest {
 
-        every { mockRemoteConfigManager.requiresRemoteSync } returns true
-        coEvery { mockRemoteConfigManager.update(any()) } returns true
+        every { mockConfigurationManager.requireSynchronisation } returns true
+        coEvery { mockConfigurationManager.fetchAndApply() } returns true
 
         initSUT()
         sut.inputs.start()
@@ -72,21 +73,21 @@ internal class  SplashViewModelTest: BaseTest() {
     @Test
     fun `SplashViewModel start fetch and activate calls remote config repo`() = coroutineTest {
 
-        every { mockRemoteConfigManager.requiresRemoteSync } returns true
-        coEvery { mockRemoteConfigManager.update(any()) } returns true
+        every { mockConfigurationManager.requireSynchronisation } returns true
+        coEvery { mockConfigurationManager.fetchAndApply() } returns true
 
         initSUT()
         sut.inputs.start()
 
-        coVerify { mockRemoteConfigManager.update(true) }
+        coVerify { mockConfigurationManager.fetchAndApply() }
     }
 
     @Test
     fun `SplashViewModel start fetch and activate when success sets updates shortcut manager`() = coroutineTest {
 
-        every { mockRemoteConfigManager.requiresRemoteSync } returns true
+        every { mockConfigurationManager.requireSynchronisation } returns true
         every { mockFeatureController.rssEnabled } returns true
-        coEvery { mockRemoteConfigManager.update(any()) } returns true
+        coEvery { mockConfigurationManager.fetchAndApply() } returns true
 
         initSUT()
         sut.inputs.start()
@@ -97,8 +98,8 @@ internal class  SplashViewModelTest: BaseTest() {
     @Test
     fun `SplashViewModel start fetch and activate when success it fires go to next screen`() = coroutineTest {
 
-        every { mockRemoteConfigManager.requiresRemoteSync } returns true
-        coEvery { mockRemoteConfigManager.update(any()) } returns true
+        every { mockConfigurationManager.requireSynchronisation } returns true
+        coEvery { mockConfigurationManager.fetchAndApply() } returns true
 
         initSUT()
         sut.inputs.start()
@@ -111,8 +112,8 @@ internal class  SplashViewModelTest: BaseTest() {
     @Test
     fun `SplashViewModel start fetch and activate when failure then show resync sets to true`() = coroutineTest {
 
-        every { mockRemoteConfigManager.requiresRemoteSync } returns true
-        coEvery { mockRemoteConfigManager.update(any()) } returns false
+        every { mockConfigurationManager.requireSynchronisation } returns true
+        coEvery { mockConfigurationManager.fetchAndApply() } returns false
 
         initSUT()
         sut.inputs.start()
@@ -128,8 +129,8 @@ internal class  SplashViewModelTest: BaseTest() {
     @Test
     fun `SplashViewModel start fetch and activate when failure then show loading is set to false`() = coroutineTest {
 
-        every { mockRemoteConfigManager.requiresRemoteSync } returns true
-        coEvery { mockRemoteConfigManager.update(any()) } returns false
+        every { mockConfigurationManager.requireSynchronisation } returns true
+        coEvery { mockConfigurationManager.fetchAndApply() } returns false
 
         initSUT()
         sut.inputs.start()
@@ -145,20 +146,20 @@ internal class  SplashViewModelTest: BaseTest() {
     @Test
     fun `SplashViewModel start activate then remote config activate called`() = coroutineTest {
 
-        every { mockRemoteConfigManager.requiresRemoteSync } returns false
-        coEvery { mockRemoteConfigManager.activate() } returns true
+        every { mockConfigurationManager.requireSynchronisation } returns false
+        coEvery { mockConfigurationManager.applyPending() } returns true
 
         initSUT()
         sut.inputs.start()
 
-        coVerify { mockRemoteConfigManager.activate() }
+        coVerify { mockConfigurationManager.applyPending() }
     }
 
     @Test
     fun `SplashViewModel start activate then app shortcut manager disable interacted with`() = coroutineTest {
 
-        every { mockRemoteConfigManager.requiresRemoteSync } returns false
-        coEvery { mockRemoteConfigManager.activate() } returns false
+        every { mockConfigurationManager.requireSynchronisation } returns false
+        coEvery { mockConfigurationManager.applyPending() } returns false
 
         initSUT()
         sut.inputs.start()
@@ -169,8 +170,8 @@ internal class  SplashViewModelTest: BaseTest() {
     @Test
     fun `SplashViewModel start activate go to next screen fired if activate fails`() = coroutineTest {
 
-        every { mockRemoteConfigManager.requiresRemoteSync } returns false
-        coEvery { mockRemoteConfigManager.activate() } returns false
+        every { mockConfigurationManager.requireSynchronisation } returns false
+        coEvery { mockConfigurationManager.applyPending() } returns false
 
         initSUT()
         sut.inputs.start()
@@ -183,8 +184,8 @@ internal class  SplashViewModelTest: BaseTest() {
     @Test
     fun `SplashViewModel start activate go to next screen fired if activate passes`() = coroutineTest {
 
-        every { mockRemoteConfigManager.requiresRemoteSync } returns false
-        coEvery { mockRemoteConfigManager.activate() } returns true
+        every { mockConfigurationManager.requireSynchronisation } returns false
+        coEvery { mockConfigurationManager.applyPending() } returns true
 
         initSUT()
         sut.inputs.start()

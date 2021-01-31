@@ -9,12 +9,13 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
 import tmg.flashback.*
-import tmg.flashback.controllers.AppHintsController
-import tmg.flashback.controllers.AppearanceController
 import tmg.flashback.controllers.RaceController
+import tmg.flashback.core.controllers.AppHintsController
+import tmg.flashback.core.controllers.AppearanceController
+import tmg.flashback.core.enums.AnimationSpeed
+import tmg.flashback.core.managers.NetworkConnectivityManager
 import tmg.flashback.ui.race.RaceAdapterType.*
 import tmg.flashback.data.db.stats.SeasonOverviewRepository
-import tmg.flashback.data.enums.BarAnimation
 import tmg.flashback.data.models.stats.LapTime
 import tmg.flashback.data.models.stats.Round
 import tmg.flashback.data.models.stats.RoundDriver
@@ -39,7 +40,7 @@ internal class RaceViewModelTest: BaseTest() {
     internal fun setUp() {
 
         every { mockConnectivityManager.isConnected } returns true
-        every { mockAppearanceController.barAnimation } returns BarAnimation.NONE
+        every { mockAppearanceController.animationSpeed } returns AnimationSpeed.NONE
         every { mockRaceController.fadeDNF } returns true
     }
 
@@ -146,13 +147,13 @@ internal class RaceViewModelTest: BaseTest() {
                 mockConstructorBeta, 30, listOf(
                     Pair(mockDriver4.toDriver(), 20),
                     Pair(mockDriver2.toDriver(), 10)
-                ), BarAnimation.NONE
+                ), AnimationSpeed.NONE
             ),
             RaceModel.ConstructorStandings(
                 mockConstructorAlpha, 20, listOf(
                     Pair(mockDriver3.toDriver(), 15),
                     Pair(mockDriver1.toDriver(), 5)
-                ), BarAnimation.NONE
+                ), AnimationSpeed.NONE
             )
         )
 
