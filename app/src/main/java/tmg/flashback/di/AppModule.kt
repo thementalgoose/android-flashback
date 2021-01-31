@@ -81,7 +81,7 @@ val appRssModule = module {
     // Managers
 
     // Controllers
-    single<RSSFeedController> { RSSConfigurationFeedController(get()) }
+    single { RSSFeedController(get()) }
 
     // Repositories
     single<RSSRepository> { SharedPreferenceRepository(get()) }
