@@ -5,6 +5,7 @@ import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.flow.flow
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.controllers.ReleaseNotesController
 import tmg.flashback.core.controllers.ConfigurationController
@@ -25,6 +26,11 @@ internal class DashboardViewModelTest: BaseTest() {
     private val mockBuildConfigManager: BuildConfigManager = mockk(relaxed = true)
     private val mockReleaseNotesController: ReleaseNotesController = mockk(relaxed = true)
     private val mockConfigurationController: ConfigurationController = mockk(relaxed = true)
+
+    @BeforeEach
+    internal fun setUp() {
+        coEvery { mockConfigurationController.applyPending() } returns false
+    }
 
     private fun initSUT() {
         sut = DashboardViewModel(
