@@ -13,12 +13,12 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import tmg.flashback.R
 import tmg.flashback.constants.Formula1.maxPointsBySeason
-import tmg.flashback.ui.base.BaseViewModel
-import tmg.flashback.controllers.AppearanceController
+import tmg.flashback.core.ui.BaseViewModel
+import tmg.flashback.core.controllers.AppearanceController
+import tmg.flashback.core.managers.NetworkConnectivityManager
 import tmg.flashback.ui.overviews.driver.summary.PipeType
-import tmg.flashback.managers.networkconnectivity.NetworkConnectivityManager
-import tmg.flashback.repo.db.stats.DriverRepository
-import tmg.flashback.repo.models.stats.DriverOverviewStanding
+import tmg.flashback.data.db.stats.DriverRepository
+import tmg.flashback.data.models.stats.DriverOverviewStanding
 import tmg.flashback.ui.shared.sync.SyncDataItem
 import tmg.flashback.ui.shared.viewholders.DataUnavailable
 import tmg.flashback.ui.utils.position
@@ -45,9 +45,9 @@ interface DriverSeasonViewModelOutputs {
 
 @Suppress("EXPERIMENTAL_API_USAGE")
 class DriverSeasonViewModel(
-        private val driverRepository: DriverRepository,
-        private val connectivityManager: NetworkConnectivityManager,
-        private val appearanceController: AppearanceController
+    private val driverRepository: DriverRepository,
+    private val connectivityManager: NetworkConnectivityManager,
+    private val appearanceController: AppearanceController
 ) : BaseViewModel(),
         DriverSeasonViewModelInputs,
         DriverSeasonViewModelOutputs {
@@ -155,7 +155,7 @@ class DriverSeasonViewModel(
                                 raceStatus = it.status,
                                 points = it.points,
                                 maxPoints = maxPointsBySeason(it.season),
-                                barAnimation = appearanceController.barAnimation
+                                animationSpeed = appearanceController.animationSpeed
                             )
                         }
                         .sortedBy { it.round }

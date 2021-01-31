@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_circuit_info.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.R
-import tmg.flashback.ui.base.BaseActivity
+import tmg.flashback.core.ui.BaseActivity
 import tmg.flashback.ui.race.RaceActivity
 import tmg.utilities.extensions.copyToClipboard
 import tmg.utilities.extensions.observe

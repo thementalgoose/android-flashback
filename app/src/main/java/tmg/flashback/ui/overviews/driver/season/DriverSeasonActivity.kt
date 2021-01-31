@@ -1,12 +1,13 @@
 package tmg.flashback.ui.overviews.driver.season
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_driver_season.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.R
-import tmg.flashback.ui.base.BaseActivity
+import tmg.flashback.core.ui.BaseActivity
 import tmg.utilities.extensions.loadFragment
 
 class DriverSeasonActivity: BaseActivity() {
@@ -39,6 +40,7 @@ class DriverSeasonActivity: BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        @SuppressLint("SetTextI18n")
         header.text = "$driverName $season"
 
         back.setOnClickListener {

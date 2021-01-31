@@ -6,7 +6,7 @@ import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
 import org.threeten.bp.LocalDate
 import tmg.flashback.R
-import tmg.flashback.repo.models.stats.SlimConstructor
+import tmg.flashback.data.models.stats.SlimConstructor
 import tmg.flashback.ui.shared.sync.SyncDataItem
 
 sealed class DriverSummaryItem(

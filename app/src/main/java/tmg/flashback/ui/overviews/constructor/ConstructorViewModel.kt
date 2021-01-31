@@ -12,13 +12,13 @@ import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import tmg.flashback.R
-import tmg.flashback.ui.base.BaseViewModel
+import tmg.flashback.core.managers.NetworkConnectivityManager
+import tmg.flashback.core.ui.BaseViewModel
 import tmg.flashback.ui.overviews.constructor.summary.ConstructorSummaryItem
 import tmg.flashback.ui.overviews.constructor.summary.addError
 import tmg.flashback.ui.overviews.driver.summary.PipeType
-import tmg.flashback.managers.networkconnectivity.NetworkConnectivityManager
-import tmg.flashback.repo.db.stats.ConstructorRepository
-import tmg.flashback.repo.models.stats.ConstructorOverview
+import tmg.flashback.data.db.stats.ConstructorRepository
+import tmg.flashback.data.models.stats.ConstructorOverview
 import tmg.flashback.ui.shared.sync.SyncDataItem
 import tmg.flashback.ui.shared.viewholders.DataUnavailable
 import tmg.flashback.ui.utils.position

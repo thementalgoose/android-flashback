@@ -7,8 +7,8 @@ import kotlinx.android.synthetic.main.view_shared_provided.view.*
 import tmg.components.about.AboutThisAppActivity
 import tmg.flashback.R
 import tmg.flashback.constants.AboutThisAppConfig
-import tmg.flashback.extensions.isLightMode
-import tmg.flashback.repo.enums.ThemePref
+import tmg.flashback.core.enums.Theme
+import tmg.flashback.core.extensions.isLightMode
 import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.views.context
 import tmg.utilities.extensions.views.getString
@@ -21,7 +21,7 @@ class ProvidedByViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnC
         view.container.setOnClickListener(this)
     }
 
-    fun bind(text: String?, theme: ThemePref) {
+    fun bind(text: String?, theme: Theme) {
         isLightMode = theme.isLightMode(context)
         itemView.provided_by.text = text?.fromHtml() ?: getString(R.string.shared_provided_by)
         if (text != null) {

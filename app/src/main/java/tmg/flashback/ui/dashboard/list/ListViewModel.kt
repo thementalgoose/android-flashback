@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import tmg.flashback.R
 import tmg.flashback.controllers.FeatureController
-import tmg.flashback.ui.base.BaseViewModel
+import tmg.flashback.core.ui.BaseViewModel
 import tmg.flashback.controllers.SeasonController
 import tmg.flashback.controllers.UpNextController
 import tmg.utilities.lifecycle.DataEvent

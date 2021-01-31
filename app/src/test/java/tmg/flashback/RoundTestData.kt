@@ -3,7 +3,7 @@ package tmg.flashback
 import android.graphics.Color
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
-import tmg.flashback.repo.models.stats.*
+import tmg.flashback.data.models.stats.*
 import tmg.utilities.extensions.hexColor
 
 

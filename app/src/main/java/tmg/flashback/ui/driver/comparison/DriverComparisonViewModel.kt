@@ -1,6 +1,6 @@
 package tmg.flashback.ui.driver.comparison
 
-import tmg.flashback.ui.base.BaseViewModel
+import tmg.flashback.core.ui.BaseViewModel
 
 //region Inputs
 

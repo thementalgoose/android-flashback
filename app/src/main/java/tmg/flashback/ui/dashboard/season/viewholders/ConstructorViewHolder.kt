@@ -5,8 +5,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.view_dashboard_season_constructor.view.*
 import tmg.flashback.R
+import tmg.flashback.core.enums.AnimationSpeed
 import tmg.flashback.ui.dashboard.season.SeasonItem
-import tmg.flashback.repo.enums.BarAnimation
 import tmg.flashback.ui.shared.driverlist.DriverListAdapter
 import tmg.flashback.ui.utils.getColor
 import tmg.utilities.extensions.views.context
@@ -49,7 +49,7 @@ class ConstructorViewHolder(
         }
 
         when (item.barAnimation) {
-            BarAnimation.NONE -> {
+            AnimationSpeed.NONE -> {
                 itemView.lpvProgress.setProgress(maxProgress) { item.points.toString() }
             }
             else -> {

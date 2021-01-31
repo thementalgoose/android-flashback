@@ -5,7 +5,7 @@ import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
 import tmg.flashback.R
 import tmg.flashback.constants.TrackLayout
-import tmg.flashback.repo.models.stats.Circuit
+import tmg.flashback.data.models.stats.Circuit
 import tmg.flashback.ui.shared.sync.SyncDataItem
 
 sealed class CircuitItem(

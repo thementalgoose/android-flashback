@@ -11,15 +11,15 @@ import org.threeten.bp.temporal.ChronoUnit
 import tmg.flashback.R
 import tmg.flashback.constants.App.currentYear
 import tmg.flashback.constants.Formula1.constructorChampionshipStarts
-import tmg.flashback.ui.base.BaseViewModel
+import tmg.flashback.core.ui.BaseViewModel
 import tmg.flashback.controllers.*
 import tmg.flashback.controllers.NotificationController.Companion.daysUntilDataProvidedBannerMovedToBottom
-import tmg.flashback.managers.analytics.AnalyticsManager
-import tmg.flashback.managers.networkconnectivity.NetworkConnectivityManager
-import tmg.flashback.repo.db.stats.HistoryRepository
-import tmg.flashback.repo.db.stats.SeasonOverviewRepository
-import tmg.flashback.repo.models.stats.*
-import tmg.flashback.ui.dashboard.DashboardActivity
+import tmg.flashback.core.controllers.AppearanceController
+import tmg.flashback.core.controllers.DeviceController
+import tmg.flashback.core.managers.NetworkConnectivityManager
+import tmg.flashback.data.db.stats.HistoryRepository
+import tmg.flashback.data.db.stats.SeasonOverviewRepository
+import tmg.flashback.data.models.stats.*
 import tmg.flashback.ui.shared.sync.SyncDataItem
 import tmg.flashback.ui.shared.viewholders.DataUnavailable
 import tmg.flashback.ui.utils.StringHolder
@@ -63,14 +63,14 @@ interface SeasonViewModelOutputs {
 //endregion
 
 class SeasonViewModel(
-        private val deviceController: DeviceController,
-        private val appearanceController: AppearanceController,
-        private val featureController: FeatureController,
-        private val historyRepository: HistoryRepository,
-        private val seasonOverviewRepository: SeasonOverviewRepository,
-        private val notificationController: NotificationController,
-        private val seasonController: SeasonController,
-        private val networkConnectivityManager: NetworkConnectivityManager
+    private val deviceController: DeviceController,
+    private val appearanceController: AppearanceController,
+    private val featureController: FeatureController,
+    private val historyRepository: HistoryRepository,
+    private val seasonOverviewRepository: SeasonOverviewRepository,
+    private val notificationController: NotificationController,
+    private val seasonController: SeasonController,
+    private val networkConnectivityManager: NetworkConnectivityManager
 ): BaseViewModel(), SeasonViewModelInputs, SeasonViewModelOutputs {
 
     private val showBannerAtTop: Boolean = showBannerAtTop()
@@ -300,7 +300,7 @@ class SeasonViewModel(
                     bestQualifying = rounds.bestQualifyingResultFor(roundDriver.id),
                     bestFinish = rounds.bestRaceResultFor(roundDriver.id),
                     maxPointsInSeason = this.maxDriverPointsInSeason(),
-                    barAnimation = appearanceController.barAnimation
+                    animationSpeed = appearanceController.animationSpeed
                 )
             }
     }
@@ -321,7 +321,7 @@ class SeasonViewModel(
                     driver = driverPoints.values.sortedByDescending { it.second },
                     points = constructorPoints,
                     maxPointsInSeason = this.maxConstructorPointsInSeason(),
-                    barAnimation = appearanceController.barAnimation
+                    barAnimation = appearanceController.animationSpeed
                 )
             }
             .sortedByDescending { it.points }

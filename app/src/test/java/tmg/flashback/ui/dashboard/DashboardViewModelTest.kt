@@ -5,12 +5,13 @@ import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.flow.flow
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.controllers.ReleaseNotesController
-import tmg.flashback.managers.buildconfig.BuildConfigManager
-import tmg.flashback.managers.remoteconfig.RemoteConfigManager
-import tmg.flashback.repo.db.DataRepository
-import tmg.flashback.repo.models.remoteconfig.AppLockout
+import tmg.flashback.core.controllers.ConfigurationController
+import tmg.flashback.core.managers.BuildConfigManager
+import tmg.flashback.data.db.DataRepository
+import tmg.flashback.data.models.AppLockout
 import tmg.flashback.testutils.BaseTest
 import tmg.flashback.testutils.assertEventFired
 import tmg.flashback.testutils.assertEventNotFired
@@ -24,14 +25,19 @@ internal class DashboardViewModelTest: BaseTest() {
     private val mockDataRepository: DataRepository = mockk(relaxed = true)
     private val mockBuildConfigManager: BuildConfigManager = mockk(relaxed = true)
     private val mockReleaseNotesController: ReleaseNotesController = mockk(relaxed = true)
-    private val mockRemoteConfigManager: RemoteConfigManager = mockk(relaxed = true)
+    private val mockConfigurationController: ConfigurationController = mockk(relaxed = true)
+
+    @BeforeEach
+    internal fun setUp() {
+        coEvery { mockConfigurationController.applyPending() } returns false
+    }
 
     private fun initSUT() {
         sut = DashboardViewModel(
             mockContext,
             mockDataRepository,
             mockBuildConfigManager,
-            mockRemoteConfigManager,
+            mockConfigurationController,
             mockReleaseNotesController
         )
     }
@@ -39,7 +45,7 @@ internal class DashboardViewModelTest: BaseTest() {
     //region Release Notes
 
     @Test
-    fun `DashboardViewModel open release notes fires when release notes are different`() {
+    fun `open release notes fires when release notes are different`() {
 
         every { mockReleaseNotesController.pendingReleaseNotes } returns true
 
@@ -51,7 +57,7 @@ internal class DashboardViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `DashboardViewModel open release notes doesnt fire when no release notes difference`() {
+    fun `open release notes doesnt fire when no release notes difference`() {
 
         every { mockReleaseNotesController.pendingReleaseNotes } returns false
 
@@ -67,7 +73,7 @@ internal class DashboardViewModelTest: BaseTest() {
     //region App Lockout
 
     @Test
-    fun `DashboardViewModel app lockout event is fired if show is true and build config provider says version is should lockout`() = coroutineTest {
+    fun `app lockout event is fired if show is true and build config provider says version is should lockout`() = coroutineTest {
 
         every { mockDataRepository.appLockout() } returns flow { emit(expectedAppLockout) }
         every { mockBuildConfigManager.shouldLockoutBasedOnVersion(any()) } returns true
@@ -81,7 +87,7 @@ internal class DashboardViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `DashboardViewModel app lockout event is not fired if show is false and build config provider says version is should lockout`() = coroutineTest {
+    fun `app lockout event is not fired if show is false and build config provider says version is should lockout`() = coroutineTest {
 
         every { mockDataRepository.appLockout() } returns flow { emit(expectedAppLockout.copy(show = false)) }
         every { mockBuildConfigManager.shouldLockoutBasedOnVersion(any()) } returns true
@@ -95,7 +101,7 @@ internal class DashboardViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `DashboardViewModel app lockout event is not fired if show is true and build config provider says version is should not lockout`() = coroutineTest {
+    fun `app lockout event is not fired if show is true and build config provider says version is should not lockout`() = coroutineTest {
 
         every { mockDataRepository.appLockout() } returns flow { emit(expectedAppLockout.copy()) }
         every { mockBuildConfigManager.shouldLockoutBasedOnVersion(any()) } returns false
@@ -109,7 +115,7 @@ internal class DashboardViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `DashboardViewModel app lockout event is not fired if app lockout value is null`() = coroutineTest {
+    fun `app lockout event is not fired if app lockout value is null`() = coroutineTest {
 
         every { mockDataRepository.appLockout() } returns flow { emit(null) }
         every { mockBuildConfigManager.shouldLockoutBasedOnVersion(any()) } returns true
@@ -127,9 +133,9 @@ internal class DashboardViewModelTest: BaseTest() {
     //region Remote config fetch and sync
 
     @Test
-    fun `DashboardViewModel init if update returns changes and activate fails nothing happens`() = coroutineTest {
+    fun `init if update returns changes and activate fails nothing happens`() = coroutineTest {
 
-        coEvery { mockRemoteConfigManager.activate() } returns false
+        coEvery { mockConfigurationController.applyPending() } returns false
 
         initSUT()
         advanceUntilIdle()
@@ -140,9 +146,9 @@ internal class DashboardViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `DashboardViewModel init if update returns changes and activate successfully then notify app config synced event`() = coroutineTest {
+    fun `init if update returns changes and activate successfully then notify app config synced event`() = coroutineTest {
 
-        coEvery { mockRemoteConfigManager.activate() } returns true
+        coEvery { mockConfigurationController.applyPending() } returns true
 
         initSUT()
         advanceUntilIdle()

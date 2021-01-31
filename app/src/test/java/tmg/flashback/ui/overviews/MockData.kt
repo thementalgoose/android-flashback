@@ -3,7 +3,7 @@ package tmg.flashback.ui.overviews
 import android.graphics.Color
 import org.threeten.bp.LocalDate
 import tmg.flashback.constants.App.currentYear
-import tmg.flashback.repo.models.stats.*
+import tmg.flashback.data.models.stats.*
 
 const val mockDriverId: String = "mockDriver"
 const val mockDriverFirstName: String = "firstname"

@@ -18,13 +18,12 @@ import kotlinx.android.synthetic.main.bottom_sheet_default_season.*
 import kotlinx.android.synthetic.main.bottom_sheet_theme.*
 import org.koin.android.ext.android.inject
 import tmg.components.about.AboutThisAppActivity
-import tmg.components.about.AboutThisAppConfiguration
 import tmg.flashback.R
 import tmg.flashback.constants.AboutThisAppConfig
+import tmg.flashback.core.enums.AnimationSpeed
+import tmg.flashback.core.enums.Theme
 import tmg.flashback.extensions.updateAllWidgets
-import tmg.flashback.ui.base.BaseActivity
-import tmg.flashback.repo.enums.BarAnimation
-import tmg.flashback.repo.enums.ThemePref
+import tmg.flashback.core.ui.BaseActivity
 import tmg.flashback.rss.ui.settings.RSSSettingsActivity
 import tmg.flashback.ui.settings.privacy.PrivacyPolicyActivity
 import tmg.flashback.ui.settings.release.ReleaseActivity
@@ -204,7 +203,7 @@ class SettingsActivity : BaseActivity() {
     private fun setupBottomSheetTheme() {
         themeAdapter = BottomSheetAdapter(
                 itemClicked = {
-                    viewModel.inputs.pickTheme(ThemePref.values()[it.id])
+                    viewModel.inputs.pickTheme(Theme.values()[it.id])
                 }
         )
         textList.adapter = themeAdapter
@@ -219,7 +218,7 @@ class SettingsActivity : BaseActivity() {
     private fun setupBottomSheetAnimation() {
         animationAdapter = BottomSheetAdapter(
                 itemClicked = {
-                    viewModel.inputs.pickAnimationSpeed(BarAnimation.values()[it.id])
+                    viewModel.inputs.pickAnimationSpeed(AnimationSpeed.values()[it.id])
                 }
         )
 

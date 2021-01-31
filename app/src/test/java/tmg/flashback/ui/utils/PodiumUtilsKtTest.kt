@@ -17,7 +17,7 @@ internal class PodiumUtilsKtTest: BaseTest() {
             "23,23rd",
             "31,31st"
     )
-    fun `PodiumUtils position int to podium`(position: Int, expectedValue: String) {
+    fun `position int to podium`(position: Int, expectedValue: String) {
 
         assertEquals(expectedValue, position.position())
     }

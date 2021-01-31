@@ -1,8 +1,8 @@
 package tmg.flashback.extensions
 
 import tmg.flashback.R
-import tmg.flashback.repo.enums.RaceStatus
-import tmg.flashback.repo.enums.raceStatusUnknown
+import tmg.flashback.data.enums.RaceStatus
+import tmg.flashback.data.enums.raceStatusUnknown
 
 val RaceStatus.iconRes: Int
     get() {

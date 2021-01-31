@@ -7,15 +7,14 @@ import com.github.stkent.bugshaker.flow.dialog.AlertDialogType
 import com.jakewharton.threetenabp.AndroidThreeTen
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import tmg.flashback.controllers.CrashController
-import tmg.flashback.controllers.DeviceController
 import tmg.flashback.controllers.NotificationController
+import tmg.flashback.core.controllers.AnalyticsController
+import tmg.flashback.core.controllers.ConfigurationController
+import tmg.flashback.core.controllers.CrashController
+import tmg.flashback.core.controllers.DeviceController
+import tmg.flashback.core.enums.UserProperty.*
 import tmg.flashback.extensions.updateAllWidgets
-import tmg.flashback.managers.analytics.UserPropertiesManager
-import tmg.flashback.managers.analytics.UserProperty
-import tmg.flashback.managers.analytics.UserProperty.*
-import tmg.flashback.managers.remoteconfig.RemoteConfigManager
-import tmg.flashback.notifications.PushNotificationManager
+import tmg.flashback.managers.notifications.PushNotificationManager
 
 /**
  * Startup handler
@@ -23,12 +22,11 @@ import tmg.flashback.notifications.PushNotificationManager
  * Ran when the application is first started
  */
 class FlashbackStartup(
-        private val deviceController: DeviceController,
-        private val prefsNotification: NotificationController,
-        private val configRepository: RemoteConfigManager,
-        private val crashController: CrashController,
-        private val analyticsUserProperties: UserPropertiesManager,
-        private val notificationManager: PushNotificationManager,
+    private val deviceController: DeviceController,
+    private val prefsNotification: NotificationController,
+    private val crashController: CrashController,
+    private val analyticsController: AnalyticsController,
+    private val notificationManager: PushNotificationManager,
 ) {
     fun startup(application: FlashbackApplication) {
 
@@ -52,7 +50,7 @@ class FlashbackStartup(
         deviceController.appOpened()
 
         // Crash Reporting
-        crashController.initialiseCrashReporting()
+        crashController.initialise()
 
         // Channels
         notificationManager.createChannels()
@@ -61,9 +59,9 @@ class FlashbackStartup(
         notificationsOptIn()
 
         // Initialise user properties
-        analyticsUserProperties.setProperty(DEVICE_MODEL, Build.MODEL)
-        analyticsUserProperties.setProperty(OS_VERSION, Build.VERSION.SDK_INT.toString())
-        analyticsUserProperties.setProperty(APP_VERSION, BuildConfig.VERSION_NAME)
+        analyticsController.setUserProperty(DEVICE_MODEL, Build.MODEL)
+        analyticsController.setUserProperty(OS_VERSION, Build.VERSION.SDK_INT.toString())
+        analyticsController.setUserProperty(APP_VERSION, BuildConfig.VERSION_NAME)
 
         // Update Widgets
         application.updateAllWidgets()

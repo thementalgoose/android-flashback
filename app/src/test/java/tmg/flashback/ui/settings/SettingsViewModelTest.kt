@@ -9,13 +9,16 @@ import tmg.components.prefs.AppPreferencesItem
 import tmg.flashback.BuildConfig
 import tmg.flashback.R
 import tmg.flashback.controllers.*
+import tmg.flashback.core.controllers.AnalyticsController
+import tmg.flashback.core.controllers.AppearanceController
+import tmg.flashback.core.controllers.CrashController
+import tmg.flashback.core.controllers.DeviceController
+import tmg.flashback.core.enums.AnimationSpeed.*
+import tmg.flashback.core.enums.Theme.*
 import tmg.flashback.extensions.icon
 import tmg.flashback.extensions.label
-import tmg.flashback.managers.analytics.AnalyticsManager
-import tmg.flashback.notifications.FirebasePushNotificationManager.Companion.topicQualifying
-import tmg.flashback.notifications.FirebasePushNotificationManager.Companion.topicRace
-import tmg.flashback.repo.enums.BarAnimation.*
-import tmg.flashback.repo.enums.ThemePref.*
+import tmg.flashback.managers.notifications.FirebasePushNotificationManager.Companion.topicQualifying
+import tmg.flashback.managers.notifications.FirebasePushNotificationManager.Companion.topicRace
 import tmg.flashback.ui.settings.SettingsOptions.*
 import tmg.flashback.testutils.*
 import tmg.flashback.testutils.assertDataEventValue
@@ -33,8 +36,8 @@ internal class SettingsViewModelTest: BaseTest() {
     private val appearanceController: AppearanceController = mockk(relaxed = true)
     private val deviceController: DeviceController = mockk(relaxed = true)
     private val raceController: RaceController = mockk(relaxed = true)
-    private val crashManager: CrashController = mockk(relaxed = true)
-    private val analyticsManager: AnalyticsManager = mockk(relaxed = true)
+    private val crashController: CrashController = mockk(relaxed = true)
+    private val analyticsController: AnalyticsController = mockk(relaxed = true)
     private val seasonController: SeasonController = mockk(relaxed = true)
     private val featureController: FeatureController = mockk(relaxed = true)
 
@@ -46,13 +49,13 @@ internal class SettingsViewModelTest: BaseTest() {
         every { raceController.fadeDNF } returns false
         every { seasonController.favouritesExpanded } returns false
         every { seasonController.allExpanded } returns false
-        every { crashManager.crashReporting } returns false
-        every { analyticsManager.enableAnalytics } returns false
+        every { crashController.enabled } returns false
+        every { analyticsController.enabled } returns false
         every { deviceController.shakeToReport } returns false
         every { notificationController.isNotificationChannelsSupported } returns true
 
         every { appearanceController.currentTheme } returns AUTO
-        every { appearanceController.barAnimation } returns MEDIUM
+        every { appearanceController.animationSpeed } returns MEDIUM
 
         every { featureController.rssEnabled } returns true
     }
@@ -64,8 +67,8 @@ internal class SettingsViewModelTest: BaseTest() {
                 appearanceController,
                 deviceController,
                 raceController,
-                analyticsManager,
-                crashManager,
+                analyticsController,
+                crashController,
                 seasonController,
                 featureController
         )
@@ -89,7 +92,7 @@ internal class SettingsViewModelTest: BaseTest() {
             add(AppPreferencesItem.Category(R.string.settings_theme))
             add(THEME.toPref())
             add(AppPreferencesItem.Category(R.string.settings_customisation))
-            add(BAR_ANIMATION_SPEED.toPref())
+            add(ANIMATION_SPEED.toPref())
             add(QUALIFYING_DELTAS.toSwitch(false))
             add(FADE_OUT_DNF.toSwitch(false))
             add(QUALIFYING_GRID_PENALTY.toSwitch(false))
@@ -114,7 +117,7 @@ internal class SettingsViewModelTest: BaseTest() {
 
 
     @Test
-    fun `SettingsViewModel setup populates settings list`() {
+    fun `setup populates settings list`() {
 
         initSUT()
 
@@ -124,7 +127,7 @@ internal class SettingsViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `SettingsViewModel setup with notification channels not supported doesnt show individual options`() {
+    fun `setup with notification channels not supported doesnt show individual options`() {
 
         every { notificationController.isNotificationChannelsSupported } returns false
 
@@ -136,7 +139,7 @@ internal class SettingsViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `SettingsViewModel setup populates settings list with toggle disabled hides the news`() {
+    fun `setup populates settings list with toggle disabled hides the news`() {
 
         every { featureController.rssEnabled } returns false
 
@@ -157,7 +160,7 @@ internal class SettingsViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `SettingsViewModel setup populates settings theme list`() {
+    fun `setup populates settings theme list`() {
 
         initSUT()
 
@@ -173,7 +176,7 @@ internal class SettingsViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `SettingsViewModel setup populates settings animation list`() {
+    fun `setup populates settings animation list`() {
 
         initSUT()
 
@@ -190,7 +193,7 @@ internal class SettingsViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `SettingsViewModel setup populates default season`() {
+    fun `setup populates default season`() {
 
         every { seasonController.supportedSeasons } returns setOf(2019, 2020)
         every { seasonController.isUserDefinedValueSet } returns false
@@ -207,7 +210,7 @@ internal class SettingsViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `SettingsViewModel setup populates default season when user default set`() {
+    fun `setup populates default season when user default set`() {
 
         every { seasonController.supportedSeasons } returns setOf(2019, 2020)
         every { seasonController.isUserDefinedValueSet } returns true
@@ -226,7 +229,7 @@ internal class SettingsViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `SettingsViewModel select a theme updates the pref`() {
+    fun `select a theme updates the pref`() {
 
         initSUT()
 
@@ -240,12 +243,12 @@ internal class SettingsViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `SettingsViewModel select a bar animation updates the preference`() {
+    fun `select a bar animation updates the preference`() {
 
         initSUT()
 
         sut.pickAnimationSpeed(SLOW)
-        verify { appearanceController.barAnimation = SLOW }
+        verify { appearanceController.animationSpeed = SLOW }
 
         sut.outputs.animationChanged.test {
             assertEventFired()
@@ -253,7 +256,7 @@ internal class SettingsViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `SettingsViewModel select a default season updates the preference to auto`() {
+    fun `select a default season updates the preference to auto`() {
 
         initSUT()
 
@@ -266,7 +269,7 @@ internal class SettingsViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `SettingsViewModel selecting theme pref opens picker`() {
+    fun `selecting theme pref opens picker`() {
 
         initSUT()
 
@@ -278,11 +281,11 @@ internal class SettingsViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `SettingsViewModel selecting animation pref opens picker`() {
+    fun `selecting animation pref opens picker`() {
 
         initSUT()
 
-        sut.inputs.preferenceClicked(BAR_ANIMATION_SPEED, null)
+        sut.inputs.preferenceClicked(ANIMATION_SPEED, null)
 
         sut.outputs.openAnimationPicker.test {
             assertEventFired()
@@ -290,7 +293,7 @@ internal class SettingsViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `SettingsViewModel selecting default season pref opens picker`() {
+    fun `selecting default season pref opens picker`() {
 
         initSUT()
 
@@ -302,7 +305,7 @@ internal class SettingsViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `SettingsViewModel selecting qualifying delta pref updates value`() {
+    fun `selecting qualifying delta pref updates value`() {
 
         initSUT()
 
@@ -312,7 +315,7 @@ internal class SettingsViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `SettingsViewModel selecting fade dnf updates value`() {
+    fun `selecting fade dnf updates value`() {
 
         initSUT()
 
@@ -322,7 +325,7 @@ internal class SettingsViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `SettingsViewModel selecting qualifying grid penalty updates value`() {
+    fun `selecting qualifying grid penalty updates value`() {
 
         initSUT()
 
@@ -332,7 +335,7 @@ internal class SettingsViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `SettingsViewModel selecting season bottom sheet favourited updates value`() {
+    fun `selecting season bottom sheet favourited updates value`() {
 
         initSUT()
 
@@ -342,7 +345,7 @@ internal class SettingsViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `SettingsViewModel selecting season bottom sheet all updates value properly`() {
+    fun `selecting season bottom sheet all updates value properly`() {
 
         initSUT()
 
@@ -352,7 +355,7 @@ internal class SettingsViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `SettingsViewModel selecting about fires open about event`() {
+    fun `selecting about fires open about event`() {
 
         initSUT()
 
@@ -364,7 +367,7 @@ internal class SettingsViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `SettingsViewModel selecting refresh widgets fires refresh widgets event`() {
+    fun `selecting refresh widgets fires refresh widgets event`() {
 
         initSUT()
 
@@ -376,7 +379,7 @@ internal class SettingsViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `SettingsViewModel selecting review fires open review event with package id`() {
+    fun `selecting review fires open review event with package id`() {
 
         initSUT()
 
@@ -388,7 +391,7 @@ internal class SettingsViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `SettingsViewModel selecting release fires open release notes event`() {
+    fun `selecting release fires open release notes event`() {
 
         initSUT()
 
@@ -400,27 +403,27 @@ internal class SettingsViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `SettingsViewModel selecting crash reporting updates value`() {
+    fun `selecting crash reporting updates value`() {
 
         initSUT()
 
         sut.inputs.preferenceClicked(CRASH, true)
 
-        verify { crashManager.crashReporting = true }
+        verify { crashController.enabled = true }
     }
 
     @Test
-    fun `SettingsViewModel selecting analytics updates value`() {
+    fun `selecting analytics updates value`() {
 
         initSUT()
 
         sut.inputs.preferenceClicked(ANALYTICS, true)
 
-        verify { analyticsManager.enableAnalytics = true }
+        verify { analyticsController.enabled = true }
     }
 
     @Test
-    fun `SettingsViewModel selecting suggestions fires open suggestions event`() {
+    fun `selecting suggestions fires open suggestions event`() {
 
         initSUT()
 
@@ -432,7 +435,7 @@ internal class SettingsViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `SettingsViewModel selecting shake to report updates value`() {
+    fun `selecting shake to report updates value`() {
 
         initSUT()
 
@@ -442,7 +445,7 @@ internal class SettingsViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `SettingsViewModel selecting news fires open news settings event`() {
+    fun `selecting news fires open news settings event`() {
 
         initSUT()
 
@@ -454,7 +457,7 @@ internal class SettingsViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `SettingsViewModel selecting notification qualifying channel fires notification event`() {
+    fun `selecting notification qualifying channel fires notification event`() {
 
         initSUT()
 
@@ -466,7 +469,7 @@ internal class SettingsViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `SettingsViewModel selecting notification race channel fires notification event`() {
+    fun `selecting notification race channel fires notification event`() {
 
         initSUT()
 
@@ -478,7 +481,7 @@ internal class SettingsViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `SettingsViewModel selecting notification settings fires notification event`() {
+    fun `selecting notification settings fires notification event`() {
 
         initSUT()
 

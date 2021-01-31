@@ -13,8 +13,8 @@ import org.threeten.bp.ZoneOffset
 import tmg.flashback.controllers.FeatureController
 import tmg.flashback.controllers.SeasonController
 import tmg.flashback.controllers.UpNextController
-import tmg.flashback.repo.models.Timestamp
-import tmg.flashback.repo.models.remoteconfig.UpNextSchedule
+import tmg.flashback.core.model.Timestamp
+import tmg.flashback.core.model.UpNextSchedule
 import tmg.flashback.testutils.*
 import tmg.flashback.testutils.assertDataEventValue
 import tmg.flashback.testutils.test
@@ -53,7 +53,7 @@ internal class ListViewModelTest: BaseTest() {
     //region Default
 
     @Test
-    fun `ListViewModel defaults to remote config default`() {
+    fun `defaults to remote config default`() {
 
         initSUT()
 
@@ -67,7 +67,7 @@ internal class ListViewModelTest: BaseTest() {
     //region Setting defaults
 
     @Test
-    fun `ListViewModel set user default season updates it in controller`() {
+    fun `set user default season updates it in controller`() {
 
         initSUT()
 
@@ -81,7 +81,7 @@ internal class ListViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `ListViewModel clear default updates it in controller`() {
+    fun `clear default updates it in controller`() {
 
         initSUT()
 
@@ -95,7 +95,7 @@ internal class ListViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `ListViewModel with no user defined default set the option to show clear is false`() {
+    fun `with no user defined default set the option to show clear is false`() {
 
         every { mockSeasonController.isUserDefinedValueSet } returns true
 
@@ -108,7 +108,7 @@ internal class ListViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `ListViewModel with no user defined default set the option to show clear is true`() {
+    fun `with no user defined default set the option to show clear is true`() {
 
         every { mockSeasonController.isUserDefinedValueSet } returns false
 
@@ -125,7 +125,7 @@ internal class ListViewModelTest: BaseTest() {
     //region Navigation
 
     @Test
-    fun `ListViewModel settings inside hero fires open settings event`() {
+    fun `settings inside hero fires open settings event`() {
 
         initSUT()
 
@@ -141,7 +141,7 @@ internal class ListViewModelTest: BaseTest() {
     //region Up Next section
 
     @Test
-    fun `ListViewModel up next section not shown item is null`() {
+    fun `up next section not shown item is null`() {
 
         every { mockUpNextController.getNextEvent() } returns null
 
@@ -153,7 +153,7 @@ internal class ListViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `ListViewModel up next section shown when valid next race item found`() {
+    fun `up next section shown when valid next race item found`() {
 
         val expected = UpNextSchedule(1,2,"test", Timestamp(LocalDate.now(), zone = ZoneId.ofOffset("", ZoneOffset.UTC)),null,null,null)
         every { mockUpNextController.getNextEvent() } returns expected
@@ -170,7 +170,7 @@ internal class ListViewModelTest: BaseTest() {
     //region Extras section
 
     @Test
-    fun `ListViewModel extras section is displayed when rss feature is enabled`() {
+    fun `extras section is displayed when rss feature is enabled`() {
 
         every { mockFeatureController.rssEnabled } returns true
         initSUT()
@@ -181,7 +181,7 @@ internal class ListViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `ListViewModel extras section is hidden when rss feature is not enabled`() {
+    fun `extras section is hidden when rss feature is not enabled`() {
 
         every { mockFeatureController.rssEnabled } returns false
         initSUT()
@@ -194,7 +194,7 @@ internal class ListViewModelTest: BaseTest() {
     //endregion
 
     @Test
-    fun `ListViewModel header section favourited and all are false when prefs are false on initial load`() {
+    fun `header section favourited and all are false when prefs are false on initial load`() {
 
         every { mockSeasonController.favouritesExpanded } returns false
         every { mockSeasonController.allExpanded } returns false
@@ -206,7 +206,7 @@ internal class ListViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `ListViewModel header section favourited and all are true when prefs are true on initial load`() {
+    fun `header section favourited and all are true when prefs are true on initial load`() {
 
         every { mockSeasonController.favouritesExpanded } returns true
         every { mockSeasonController.allExpanded } returns true
@@ -218,7 +218,7 @@ internal class ListViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `ListViewModel list of all seasons with empty favourites is output`() {
+    fun `list of all seasons with empty favourites is output`() {
 
         val favourites = emptySet<Int>()
         val expected = expectedList(favourites)
@@ -231,7 +231,7 @@ internal class ListViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `ListViewModel list of all seasons with some favourites is output`() {
+    fun `list of all seasons with some favourites is output`() {
 
         val favourites = setOf(2017, 2012, 2015)
         val expected = expectedList(favourites)
@@ -247,7 +247,7 @@ internal class ListViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `ListViewModel collapsing favourite and all section removes items from the list`() {
+    fun `collapsing favourite and all section removes items from the list`() {
 
         val favourites: Set<Int> = setOf(2012, 2018, 2014)
         val expected = expectedList(favourites, showFavourites = false, showAll = false)
@@ -264,7 +264,7 @@ internal class ListViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `ListViewModel list is emitted all items toggling each section removes list`() {
+    fun `list is emitted all items toggling each section removes list`() {
 
         val favourites = setOf(2017, 2012, 2010)
 
@@ -292,7 +292,7 @@ internal class ListViewModelTest: BaseTest() {
     //region Toggle favourites
 
     @Test
-    fun `ListViewModel toggling a favourite season that exists removed it from favourites shared prefs`() {
+    fun `toggling a favourite season that exists removed it from favourites shared prefs`() {
 
         val favourites = mutableSetOf(2020, 2018)
 
@@ -308,7 +308,7 @@ internal class ListViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `ListViewModel toggling a favourite season that does not exists adds it from favourites shared prefs`() {
+    fun `toggling a favourite season that does not exists adds it from favourites shared prefs`() {
 
         val favourites = mutableSetOf(2020, 2018)
         every { mockSeasonController.favouriteSeasons } returns favourites
@@ -323,7 +323,7 @@ internal class ListViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `ListViewModel toggling favourite updates list to contain new favourite`() {
+    fun `toggling favourite updates list to contain new favourite`() {
 
         val favourites = setOf(2017, 2012, 2010)
 
@@ -347,7 +347,7 @@ internal class ListViewModelTest: BaseTest() {
     //region Clicking season
 
     @Test
-    fun `ListViewModel clicking season fires show season event`() {
+    fun `clicking season fires show season event`() {
 
         initSUT()
 

@@ -6,7 +6,7 @@ import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.layout_driver.view.*
 import kotlinx.android.synthetic.main.view_dashboard_season_driver.view.*
 import tmg.flashback.R
-import tmg.flashback.repo.enums.BarAnimation
+import tmg.flashback.core.enums.AnimationSpeed
 import tmg.flashback.ui.dashboard.season.SeasonItem
 import tmg.flashback.ui.utils.getColor
 import tmg.flashback.ui.utils.getFlagResourceAlpha3
@@ -57,12 +57,12 @@ class DriverViewHolder(
             maxProgress = 0.0f
         }
 
-        when (item.barAnimation) {
-            BarAnimation.NONE -> {
+        when (item.animationSpeed) {
+            AnimationSpeed.NONE -> {
                 itemView.lpvProgress.setProgress(maxProgress) { item.points.toString() }
             }
             else -> {
-                itemView.lpvProgress.timeLimit = item.barAnimation.millis
+                itemView.lpvProgress.timeLimit = item.animationSpeed.millis
                 itemView.lpvProgress.animateProgress(maxProgress) {
                     when (it) {
                         maxProgress -> item.points.toString()

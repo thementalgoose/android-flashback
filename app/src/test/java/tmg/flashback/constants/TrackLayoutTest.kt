@@ -11,7 +11,7 @@ internal class TrackLayoutTest: BaseTest() {
     @CsvSource(
             "2020,Sakhir Grand Prix,SAKHIR"
     )
-    fun `TrackLayout testing override values pull overriden enum`(year: Int, raceName: String, expected: TrackLayout) {
+    fun `testing override values pull overriden enum`(year: Int, raceName: String, expected: TrackLayout) {
 
         val actual = TrackLayout.getOverride(year, raceName)
         assertEquals(expected, actual)

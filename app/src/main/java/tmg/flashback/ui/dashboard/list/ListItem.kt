@@ -4,7 +4,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
 import tmg.flashback.R
-import tmg.flashback.repo.models.remoteconfig.UpNextSchedule
+import tmg.flashback.core.model.UpNextSchedule
 
 sealed class ListItem(
     @LayoutRes val layoutId: Int

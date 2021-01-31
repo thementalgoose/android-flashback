@@ -9,11 +9,11 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 import tmg.flashback.R
+import tmg.flashback.core.managers.NetworkConnectivityManager
 import tmg.flashback.ui.overviews.*
 import tmg.flashback.ui.overviews.constructor.summary.ConstructorSummaryItem
 import tmg.flashback.ui.overviews.driver.summary.PipeType
-import tmg.flashback.managers.networkconnectivity.NetworkConnectivityManager
-import tmg.flashback.repo.db.stats.ConstructorRepository
+import tmg.flashback.data.db.stats.ConstructorRepository
 import tmg.flashback.ui.shared.sync.SyncDataItem
 import tmg.flashback.ui.shared.viewholders.DataUnavailable
 import tmg.flashback.testutils.*
@@ -39,7 +39,7 @@ internal class ConstructorViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `ConstructorViewModel setup loads error state when network connectivity is down`() = coroutineTest {
+    fun `setup loads error state when network connectivity is down`() = coroutineTest {
 
         every { mockConnectivityManager.isConnected } returns false
         every { mockConstructorRepository.getConstructorOverview(any()) } returns flow { emit(null) }
@@ -54,7 +54,7 @@ internal class ConstructorViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `ConstructorViewModel setup loads an error state when constructor overview is returned as null`() = coroutineTest {
+    fun `setup loads an error state when constructor overview is returned as null`() = coroutineTest {
 
         every { mockConstructorRepository.getConstructorOverview(any()) } returns flow { emit(null) }
         val expected = listOf(ConstructorSummaryItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.CONSTRUCTOR_NOT_EXIST)))
@@ -67,7 +67,7 @@ internal class ConstructorViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `ConstructorViewModel setup which contains championship item in progress`() = coroutineTest {
+    fun `setup which contains championship item in progress`() = coroutineTest {
 
         every { mockConstructorRepository.getConstructorOverview(any()) } returns flow { emit(mockConstructorOverviewChampionshipInProgress) }
 
@@ -83,7 +83,7 @@ internal class ConstructorViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `ConstructorViewModel contains header item with appropriate mock data`() = coroutineTest {
+    fun `contains header item with appropriate mock data`() = coroutineTest {
 
         every { mockConstructorRepository.getConstructorOverview(any()) } returns flow { emit(mockConstructorOverview) }
 
@@ -105,7 +105,7 @@ internal class ConstructorViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `ConstructorViewModel list contains highlighted championship quantity result when constructor has championships`() = coroutineTest {
+    fun `list contains highlighted championship quantity result when constructor has championships`() = coroutineTest {
 
         every { mockConstructorRepository.getConstructorOverview(any()) } returns flow { emit(mockConstructorOverviewChampionshipWon) }
 
@@ -122,7 +122,7 @@ internal class ConstructorViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `ConstructorViewModel list contains highlighted championship quantity result when constructor has not won championships`() = coroutineTest {
+    fun `list contains highlighted championship quantity result when constructor has not won championships`() = coroutineTest {
 
         every { mockConstructorRepository.getConstructorOverview(any()) } returns flow { emit(mockConstructorOverviewChampionshipNotWon) }
 
@@ -138,7 +138,7 @@ internal class ConstructorViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `ConstructorViewModel list doesn't contain career best championship if constructor is in progress`() = coroutineTest {
+    fun `list doesn't contain career best championship if constructor is in progress`() = coroutineTest {
 
         every { mockConstructorRepository.getConstructorOverview(any()) } returns flow { emit(mockConstructorOverviewChampionshipWonInProgress) }
 
@@ -154,7 +154,7 @@ internal class ConstructorViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `ConstructorViewModel list contains career best championship if constructor has completed a season`() = coroutineTest {
+    fun `list contains career best championship if constructor has completed a season`() = coroutineTest {
 
         every { mockConstructorRepository.getConstructorOverview(any()) } returns flow { emit(mockConstructorOverview) }
 
@@ -226,7 +226,7 @@ internal class ConstructorViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `ConstructorViewModel team ordering and highlighting default setup`() = coroutineTest {
+    fun `team ordering and highlighting default setup`() = coroutineTest {
 
         every { mockConstructorRepository.getConstructorOverview(any()) } returns flow { emit(mockConstructorOverviewStandings) }
         val expected = listOf<ConstructorSummaryItem>(
@@ -269,7 +269,7 @@ internal class ConstructorViewModelTest: BaseTest() {
 
 
     @Test
-    fun `ConstructorViewModel clicking open season opens season for driver`() = coroutineTest {
+    fun `clicking open season opens season for driver`() = coroutineTest {
 
         val expected = 2020
 
@@ -283,7 +283,7 @@ internal class ConstructorViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `ConstructorViewModel clicking open url forwards open url event`() = coroutineTest {
+    fun `clicking open url forwards open url event`() = coroutineTest {
 
         val expectUrl = "http://www.google.com"
 
@@ -308,7 +308,7 @@ internal class ConstructorViewModelTest: BaseTest() {
         "2019,2020,2022,START",
         "2019,2021,2022,END"
     )
-    fun `ConstructorViewModel getPipeType correct sequence of years returns the correct pipe type`(previous: Int?, current: Int, next: Int?, pipeType: PipeType) {
+    fun `getPipeType correct sequence of years returns the correct pipe type`(previous: Int?, current: Int, next: Int?, pipeType: PipeType) {
 
         initSUT()
 

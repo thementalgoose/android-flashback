@@ -7,8 +7,7 @@ import kotlinx.android.synthetic.main.activity_splash.*
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.R
-import tmg.flashback.managers.analytics.AnalyticsManager
-import tmg.flashback.repo.pref.DeviceRepository
+import tmg.flashback.core.controllers.AnalyticsController
 import tmg.flashback.ui.dashboard.DashboardActivity
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
@@ -18,8 +17,7 @@ class SplashActivity: AppCompatActivity() {
 
     private val viewModel: SplashViewModel by viewModel()
 
-    private val deviceRepository: DeviceRepository by inject()
-    private val analyticsManager: AnalyticsManager by inject()
+    private val analyticsManager: AnalyticsController by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,7 +51,7 @@ class SplashActivity: AppCompatActivity() {
         analyticsManager.viewScreen(
                 screenName = "Splash screen",
                 clazz = this.javaClass,
-                mapOfParams = emptyMap()
+                params = emptyMap()
         )
     }
 }
