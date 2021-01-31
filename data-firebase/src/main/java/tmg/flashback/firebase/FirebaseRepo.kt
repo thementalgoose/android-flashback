@@ -1,5 +1,6 @@
 package tmg.flashback.firebase
 
+import android.util.Log
 import com.google.firebase.FirebaseApp
 import com.google.firebase.firestore.*
 import kotlinx.coroutines.channels.awaitClose
@@ -47,6 +48,7 @@ open class FirebaseRepo(
             when {
                 exception != null -> {
                     if (BuildConfig.DEBUG) {
+                        Log.e("Flashback", "Snapshot exception ${exception.message}")
                         throw exception
                     } else {
                         handleError(exception, path)
@@ -65,6 +67,7 @@ open class FirebaseRepo(
                         }
                     } catch (e: java.lang.Exception) {
                         if (BuildConfig.DEBUG) {
+                            Log.e("Flashback", "Conversion exception ${e.message}")
                             throw e
                         } else {
                             handleError(e, path)
