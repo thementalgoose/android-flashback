@@ -1,5 +1,6 @@
 package tmg.flashback.core.repositories
 
+import tmg.flashback.core.model.ForceUpgrade
 import tmg.flashback.core.model.SupportedSource
 import tmg.flashback.core.model.UpNextSchedule
 
@@ -29,6 +30,11 @@ interface ConfigurationRepository {
      * Banner to be shown at the top of the home screen
      */
     val banner: String?
+
+    /**
+     * Force upgrade model
+     */
+    val forceUpgrade: ForceUpgrade?
 
     /**
      * Data provided by tag

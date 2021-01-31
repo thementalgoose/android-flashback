@@ -171,6 +171,10 @@ task generateRemoteConfigDefaults {
                 value()
             }
             entry {
+                key('force_upgrade')
+                value()
+            }
+            entry {
                 key('data_provided')
                 value('Data provided by Ergast API')
             }
