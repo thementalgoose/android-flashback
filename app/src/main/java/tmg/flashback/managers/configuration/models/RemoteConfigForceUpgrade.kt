@@ -20,7 +20,7 @@ fun RemoteConfigForceUpgrade.convert(): ForceUpgrade? {
             message = this.message,
             link = when {
                 link.isNullOrEmpty() || linkText.isNullOrEmpty() -> null
-                else -> Pair(link, linkText)
+                else -> Pair(linkText, link)
             }
     )
 }

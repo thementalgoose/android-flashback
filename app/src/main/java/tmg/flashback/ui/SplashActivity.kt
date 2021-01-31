@@ -8,6 +8,7 @@ import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.R
 import tmg.flashback.core.controllers.AnalyticsController
+import tmg.flashback.ui.admin.forceupgrade.ForceUpgradeActivity
 import tmg.flashback.ui.dashboard.DashboardActivity
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
@@ -39,7 +40,7 @@ class SplashActivity: AppCompatActivity() {
         }
 
         observeEvent(viewModel.outputs.goToForceUpgrade) {
-            startActivity(Intent(this@SplashActivity, DashboardActivity::class.java))
+            startActivity(Intent(this@SplashActivity, ForceUpgradeActivity::class.java))
             finish()
         }
 
