@@ -47,7 +47,7 @@ class WebFragment : CommonFragment() {
 
     override fun initViews() {
 
-        progressBar.progressColour = context?.theme?.getColor(R.attr.rssBrandPrimary) ?: Color.BLUE
+        progressBar.progressColour = context?.theme?.getColor(R.attr.colorPrimary) ?: Color.BLUE
         progressBar.timeLimit = 100
 
         val webViewClient = FlashbackWebViewClient(

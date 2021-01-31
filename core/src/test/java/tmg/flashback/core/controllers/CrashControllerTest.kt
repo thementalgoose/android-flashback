@@ -83,7 +83,7 @@ internal class CrashControllerTest() {
         initSUT()
         sut.log("msg")
 
-        verify { mockCrashManager.logError("msg") }
+        verify { mockCrashManager.logInfo("msg") }
     }
 
     @Test
@@ -92,6 +92,26 @@ internal class CrashControllerTest() {
 
         initSUT()
         sut.log("msg")
+
+        verify(exactly = 0) { mockCrashManager.logInfo("msg") }
+    }
+
+    @Test
+    fun `CrashController log error forwards to firebase if toggle is enabled`() {
+        every { mockCoreRepository.crashReporting } returns true
+
+        initSUT()
+        sut.logError("msg")
+
+        verify { mockCrashManager.logError("msg") }
+    }
+
+    @Test
+    fun `CrashController log error forwards to firebase if toggle is disabled`() {
+        every { mockCoreRepository.crashReporting } returns false
+
+        initSUT()
+        sut.logError("msg")
 
         verify(exactly = 0) { mockCrashManager.logError("msg") }
     }

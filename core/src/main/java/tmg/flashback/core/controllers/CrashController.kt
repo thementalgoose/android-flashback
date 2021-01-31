@@ -1,5 +1,6 @@
 package tmg.flashback.core.controllers
 
+import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.core.managers.CrashManager
 import tmg.flashback.core.repositories.CoreRepository
 import java.lang.Exception
@@ -20,7 +21,7 @@ class CrashController(
             enableAnalytics = coreRepository.analytics,
             deviceUdid = coreRepository.deviceUdid,
             appOpenedCount = coreRepository.appOpenedCount,
-            appFirstOpened = coreRepository.appFirstBootTime.toString()
+            appFirstOpened = coreRepository.appFirstBootTime.format(DateTimeFormatter.ofPattern("dd MMM yyyy"))
         )
     }
 

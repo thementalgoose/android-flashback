@@ -1,10 +1,12 @@
 package tmg.flashback.core.controllers
 
-import io.mockk.every
-import io.mockk.mockk
+import io.mockk.*
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runBlockingTest
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
+import tmg.flashback.core.constants.Migrations
 import tmg.flashback.core.managers.ConfigurationManager
 import tmg.flashback.core.model.SupportedArticleSource
 import tmg.flashback.core.model.Timestamp
@@ -25,9 +27,88 @@ internal class ConfigurationControllerTest {
     }
 
     @Test
-    fun `ConfigurationController`() {
-        TODO("Tests for requires sync, update, activate, etc.")
+    fun `ConfigurationController on init set defaults is called`() {
+
+        initSUT()
+
+        verify {
+            mockConfigurationManager.setDefaults()
+        }
     }
+
+    //region Require sync
+
+    @Test
+    fun `ConfigurationController require synchronisation reads value from remote config sync`() {
+
+        every { mockCoreRepository.remoteConfigSync } returns 0
+        initSUT()
+
+        assertTrue(sut.requireSynchronisation)
+        verify {
+            mockCoreRepository.remoteConfigSync
+        }
+    }
+
+    @Test
+    fun `ConfigurationController require synchronisation returns false when migrations match`() {
+
+        every { mockCoreRepository.remoteConfigSync } returns Migrations.configurationSyncCount
+        initSUT()
+
+        assertFalse(sut.requireSynchronisation)
+        verify {
+            mockCoreRepository.remoteConfigSync
+        }
+    }
+
+    //endregion
+
+    //region Fetching / updating logic
+
+    @Test
+    fun `ConfigurationController fetch calls update in manager`() {
+        initSUT()
+        runBlockingTest {
+            sut.fetch()
+        }
+
+        coVerify {
+            mockConfigurationManager.update(false)
+        }
+    }
+
+    @Test
+    fun `ConfigurationController fetch and apply calls update in manager and saves remote config sync`() {
+        coEvery { mockConfigurationManager.update(true) } returns true
+        initSUT()
+        runBlockingTest {
+            sut.fetchAndApply()
+        }
+
+        coVerify {
+            mockConfigurationManager.update(true)
+        }
+        verify {
+            mockCoreRepository.remoteConfigSync = Migrations.configurationSyncCount
+        }
+    }
+
+    @Test
+    fun `ConfigurationController apply pending calls manager`() {
+        initSUT()
+        runBlockingTest {
+            sut.applyPending()
+        }
+
+        coVerify {
+            mockConfigurationManager.activate()
+        }
+    }
+
+    //endregion
+
+    //region Variables
 
     @Test
     fun `ConfigurationController supported seasons returns non cached value`() {
@@ -107,7 +188,9 @@ internal class ConfigurationControllerTest {
         assertEquals(sut.search, input1)
     }
 
-    //region RSS
+    //endregion
+
+    //region Variables - RSS
 
     @Test
     fun `ConfigurationController rss returns cached value`() {

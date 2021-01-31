@@ -10,6 +10,5 @@ enum class DisplayType(
     val darkTheme: Int
 ) {
     DEFAULT(lightTheme = R.style.LightTheme, darkTheme = R.style.DarkTheme),
-    TRANSLUCENT(lightTheme = R.style.LightTheme_Translucent, darkTheme = R.style.DarkTheme_Translucent),
-    ABOUT_APP(lightTheme = R.style.LightTheme_AboutThisApp, darkTheme = R.style.DarkTheme_AboutThisApp)
+    TRANSLUCENT(lightTheme = R.style.LightTheme_Translucent, darkTheme = R.style.DarkTheme_Translucent)
 }

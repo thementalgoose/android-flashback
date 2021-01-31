@@ -1,32 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Text sizes -->
-
-    <dimen name="textSizeXLarge">20sp</dimen>
-    <dimen name="textSizeLarge">16sp</dimen>
-    <dimen name="textSizeMedium">14sp</dimen>
-    <dimen name="textSizeSmall">12sp</dimen>
-    <dimen name="textSizeXSmall">10sp</dimen>
-
-    <!-- Padding -->
-
-    <dimen name="paddingXLarge">64dp</dimen>
-    <dimen name="paddingMedLarge">24dp</dimen>
-    <dimen name="paddingMedium">16dp</dimen>
-    <dimen name="paddingNSmall">16dp</dimen>
-    <dimen name="paddingSmall">8dp</dimen>
-    <dimen name="paddingXSmall">4dp</dimen>
-
-    <!-- Radius -->
-
-    <dimen name="radiusLarge">24dp</dimen>
-    <dimen name="radiusMedium">12dp</dimen>
-    <dimen name="radiusSmall">6dp</dimen>
-
-    <!-- News icon size -->
-
-    <dimen name="toolbarHeight">54dp</dimen>
-    <dimen name="toolbarIconSize">36dp</dimen>
     <dimen name="newsIconSize">36dp</dimen>
-
 </resources>
