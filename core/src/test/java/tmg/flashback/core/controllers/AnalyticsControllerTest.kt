@@ -21,7 +21,7 @@ internal class AnalyticsControllerTest {
     }
 
     @Test
-    fun `AnalyticsController enabled reads value from core repository`() {
+    fun `enabled reads value from core repository`() {
 
         every { mockCoreRepository.analytics } returns true
         initSUT()
@@ -34,7 +34,7 @@ internal class AnalyticsControllerTest {
     }
 
     @Test
-    fun `AnalyticsController enabled updates value in core repository`() {
+    fun `enabled updates value in core repository`() {
 
         initSUT()
 
@@ -46,7 +46,7 @@ internal class AnalyticsControllerTest {
     }
 
     @Test
-    fun `AnalyticsController set user property called if enabled is true`() {
+    fun `set user property called if enabled is true`() {
 
         every { mockCoreRepository.analytics } returns true
         initSUT()
@@ -59,7 +59,7 @@ internal class AnalyticsControllerTest {
     }
 
     @Test
-    fun `AnalyticsController set user property not called if enabled is false`() {
+    fun `set user property not called if enabled is false`() {
 
         every { mockCoreRepository.analytics } returns false
         initSUT()
@@ -72,7 +72,7 @@ internal class AnalyticsControllerTest {
     }
 
     @Test
-    fun `AnalyticsController view screen called if enabled is true`() {
+    fun `view screen called if enabled is true`() {
 
         every { mockCoreRepository.analytics } returns true
         initSUT()
@@ -85,7 +85,7 @@ internal class AnalyticsControllerTest {
     }
 
     @Test
-    fun `AnalyticsController view screen not called if enabled is false`() {
+    fun `view screen not called if enabled is false`() {
 
         every { mockCoreRepository.analytics } returns false
         initSUT()

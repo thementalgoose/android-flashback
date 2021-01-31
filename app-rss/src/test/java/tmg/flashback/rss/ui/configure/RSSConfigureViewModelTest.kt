@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 import tmg.flashback.rss.R
 import tmg.flashback.rss.controllers.RSSFeedController
 import tmg.flashback.rss.prefs.RSSRepository
-import tmg.flashback.rss.repo.enums.SupportedArticleSource
+import tmg.flashback.rss.repo.model.SupportedArticleSource
 import tmg.flashback.rss.testutils.BaseTest
 import tmg.flashback.rss.testutils.assertDataEventValue
 import tmg.flashback.rss.testutils.assertListDoesNotMatchItem
@@ -36,7 +36,7 @@ class RSSConfigureViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `RSSConfigureViewModel list is initialised with no items shown by default`() {
+    fun `list is initialised with no items shown by default`() {
 
         initSUT()
 
@@ -51,7 +51,7 @@ class RSSConfigureViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `RSSConfigureViewModel add quick item will update the prefs DB`() {
+    fun `add quick item will update the prefs DB`() {
 
         every { mock.rssUrls } returns emptySet()
 
@@ -63,7 +63,7 @@ class RSSConfigureViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `RSSConfigureViewModel removing item will update the prefs DB`() {
+    fun `removing item will update the prefs DB`() {
 
         val link = mockSupportedArticle.rssLink
         every { mock.rssUrls } returns setOf(link)
@@ -76,7 +76,7 @@ class RSSConfigureViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `RSSConfigureViewModel visit website fires open website event`() {
+    fun `visit website fires open website event`() {
 
         initSUT()
         sut.inputs.visitWebsite(mockSupportedArticle)
@@ -87,7 +87,7 @@ class RSSConfigureViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `RSSConfigureViewModel disabling add custom list toggle means section is not shown `() {
+    fun `disabling add custom list toggle means section is not shown `() {
 
         every { mockRssFeedController.showAddCustomFeeds } returns false
         every { mockRssFeedController.getSupportedSourceByRssUrl(any()) } returns null
@@ -100,7 +100,7 @@ class RSSConfigureViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `RSSConfigureViewModel adding custom item updates list`() {
+    fun `adding custom item updates list`() {
 
         val item = "https://www.google.com/testlink"
         val expected = buildList(
@@ -120,7 +120,7 @@ class RSSConfigureViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `RSSConfigureViewModel removing custom item updates list`() {
+    fun `removing custom item updates list`() {
 
         val item = "https://www.google.com/testlink"
         val expected = buildList(
@@ -139,7 +139,7 @@ class RSSConfigureViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `RSSConfigureViewModel adding custom item updates value in preferences`() {
+    fun `adding custom item updates value in preferences`() {
 
         val item = "https://www.google.com/testlink"
         val expected = setOf(item)
@@ -152,7 +152,7 @@ class RSSConfigureViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `RSSConfigureViewModel removing custom item updates value in preferences`() {
+    fun `removing custom item updates value in preferences`() {
 
         val item = "https://www.google.com/testlink"
         val expected = emptySet<String>()

@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 class RoundTest {
 
     @Test
-    fun `Round driverOverview returns driver overview with relevant qualifying result for driver`() {
+    fun `driverOverview returns driver overview with relevant qualifying result for driver`() {
 
         assertEquals(expectedDriver1, mockRound1.driverOverview(mockDriver1.id))
         assertEquals(expectedDriver2, mockRound1.driverOverview(mockDriver2.id))
@@ -15,7 +15,7 @@ class RoundTest {
     }
 
     @Test
-    fun `Round fastest laps in q1, q2 and q3 return the fastest lap`() {
+    fun `fastest laps in q1, q2 and q3 return the fastest lap`() {
 
         assertEquals(LapTime(0, 1, 1, 0), mockRound1.q1FastestLap)
         assertEquals(LapTime(0, 1, 1, 0), mockRound1.q2FastestLap)
@@ -23,7 +23,7 @@ class RoundTest {
     }
 
     @Test
-    fun `Round constructorStandings returns correct standings`() {
+    fun `constructorStandings returns correct standings`() {
 
         val expected = listOf(
                 RoundConstructorStandings(constructor = mockConstructorAlpha, points = 20), // driver 1 + 3 as they have current constructor as mockConstructorAlpha
@@ -33,7 +33,7 @@ class RoundTest {
     }
 
     @Test
-    fun `Round driverStandings returns correct driver standings`() {
+    fun `driverStandings returns correct driver standings`() {
 
         val expected = listOf(
                 RoundDriverStandings(driver = mockDriver1, points = 5),
@@ -45,7 +45,7 @@ class RoundTest {
     }
 
     @Test
-    fun `Round (List) constructorStandings calculates constructor standings for season overview`() {
+    fun `(List) constructorStandings calculates constructor standings for season overview`() {
 
         val expected = mapOf(
                 "alpha" to Triple(
@@ -69,7 +69,7 @@ class RoundTest {
     }
 
     @Test
-    fun `Round (List) constructorStandings maxDriverPointsInSeason returns the most points `() {
+    fun `(List) constructorStandings maxDriverPointsInSeason returns the most points `() {
 
         val example = mapOf(
                 "alpha" to Triple(mockConstructorAlpha, mapOf(
@@ -85,7 +85,7 @@ class RoundTest {
     }
 
     @Test
-    fun `Round (List) driverStandings calculates driver standings for season overview`() {
+    fun `(List) driverStandings calculates driver standings for season overview`() {
 
         val driverStandings = mapOf(
                 "1" to Pair(mockDriver1, 21),
@@ -97,7 +97,7 @@ class RoundTest {
     }
 
     @Test
-    fun `Round (List) driverStandings maxDriverPointsInSeason returns the most points `() {
+    fun `(List) driverStandings maxDriverPointsInSeason returns the most points `() {
 
         val example = mapOf(
                 "1" to Pair(mockDriver1, 21),
@@ -109,7 +109,7 @@ class RoundTest {
     }
 
     @Test
-    fun `Round (List) allPoints for constructorStandings individual item returns the sum of the points`() {
+    fun `(List) allPoints for constructorStandings individual item returns the sum of the points`() {
 
         val example = mapOf(
                 "1" to Pair(mockDriver1.toDriver(), 21),
@@ -119,7 +119,7 @@ class RoundTest {
     }
 
     @Test
-    fun `Round (List) bestQualified for a driver id returns their best qualifying position`() {
+    fun `(List) bestQualified for a driver id returns their best qualifying position`() {
 
         assertEquals(1, listOf(mockRound1, mockRound2).bestQualified(mockDriver1.id))
         assertEquals(2, listOf(mockRound1, mockRound2).bestQualified(mockDriver2.id))
@@ -128,7 +128,7 @@ class RoundTest {
     }
 
     @Test
-    fun `Round (List) bestQualifyingResultFor for a driver id returns their best qualifying position`() {
+    fun `(List) bestQualifyingResultFor for a driver id returns their best qualifying position`() {
 
         assertEquals(Pair(1, listOf(mockRound1)), listOf(mockRound1, mockRound2).bestQualifyingResultFor(mockDriver1.id))
         assertEquals(Pair(2, listOf(mockRound1)), listOf(mockRound1, mockRound2).bestQualifyingResultFor(mockDriver2.id))
@@ -137,7 +137,7 @@ class RoundTest {
     }
 
     @Test
-    fun `Round (List) bestFinish for a driver id returns their best finish position`() {
+    fun `(List) bestFinish for a driver id returns their best finish position`() {
 
         assertEquals(1, listOf(mockRound1, mockRound2).bestFinish(mockDriver1.id))
         assertEquals(3, listOf(mockRound1, mockRound2).bestFinish(mockDriver2.id))
@@ -146,7 +146,7 @@ class RoundTest {
     }
 
     @Test
-    fun `Round (List) bestRaceResultFor for a driver id returns their best finish position`() {
+    fun `(List) bestRaceResultFor for a driver id returns their best finish position`() {
 
         assertEquals(Pair(1, listOf(mockRound2)), listOf(mockRound1, mockRound2).bestRaceResultFor(mockDriver1.id))
         assertEquals(Pair(3, listOf(mockRound1, mockRound2)), listOf(mockRound1, mockRound2).bestRaceResultFor(mockDriver2.id))

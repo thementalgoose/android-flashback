@@ -1,6 +1,6 @@
 package tmg.flashback.core.repositories
 
-import tmg.flashback.core.model.SupportedArticleSource
+import tmg.flashback.core.model.SupportedSource
 import tmg.flashback.core.model.UpNextSchedule
 
 /**
@@ -55,7 +55,7 @@ interface ConfigurationRepository {
     /**
      * List of supported articles for the RSS configure functionality
      */
-    val rssSupportedSources: List<SupportedArticleSource>
+    val rssSupportedSources: List<SupportedSource>
 
     //endregion
 }

@@ -5,15 +5,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.rss.R
-import tmg.flashback.rss.repo.enums.SupportedArticleSource
+import tmg.flashback.rss.repo.model.SupportedArticleSource
 import tmg.flashback.rss.ui.configure.viewholders.*
 import java.lang.RuntimeException
 
 class RSSConfigureAdapter(
-        private val customAddItem: (String) -> Unit,
-        private val quickAddItem: (SupportedArticleSource) -> Unit,
-        private val visitWebsite: (SupportedArticleSource) -> Unit,
-        private val removeItem: (String) -> Unit
+    private val customAddItem: (String) -> Unit,
+    private val quickAddItem: (SupportedArticleSource) -> Unit,
+    private val visitWebsite: (SupportedArticleSource) -> Unit,
+    private val removeItem: (String) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var list: List<RSSConfigureItem> = emptyList()

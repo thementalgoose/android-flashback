@@ -1,16 +1,16 @@
-package tmg.flashback.rss.repo.enums
+package tmg.flashback.rss.repo.model
 
 import tmg.flashback.rss.repo.model.ArticleSource
 import java.net.MalformedURLException
 import java.net.URL
 
 data class SupportedArticleSource(
-        val rssLink: String,
-        val sourceShort: String,
-        val source: String,
-        val colour: String,
-        val textColour: String,
-        val title: String,
+    val rssLink: String,
+    val sourceShort: String,
+    val source: String,
+    val colour: String,
+    val textColour: String,
+    val title: String,
     val contactLink: String = source
 ) {
     val article: ArticleSource

@@ -21,7 +21,7 @@ internal class RaceControllerTest: BaseTest() {
     //region Show Qualifying Delta
 
     @Test
-    fun `RaceController show qualifying delta reads from prefs`() {
+    fun `show qualifying delta reads from prefs`() {
         initSUT()
         every { mockAppRepository.showQualifyingDelta } returns true
         assertTrue(mockAppRepository.showQualifyingDelta)
@@ -34,7 +34,7 @@ internal class RaceControllerTest: BaseTest() {
     }
 
     @Test
-    fun `RaceController show qualifying update saves to prefs`() {
+    fun `show qualifying update saves to prefs`() {
         initSUT()
         sut.showQualifyingDelta = true
         verify {
@@ -47,7 +47,7 @@ internal class RaceControllerTest: BaseTest() {
     //region Fade DNF
 
     @Test
-    fun `RaceController fade dnf reads from prefs`() {
+    fun `fade dnf reads from prefs`() {
         initSUT()
         every { mockAppRepository.fadeDNF } returns true
         assertTrue(mockAppRepository.fadeDNF)
@@ -60,7 +60,7 @@ internal class RaceControllerTest: BaseTest() {
     }
 
     @Test
-    fun `RaceController fade dnf saves to prefs`() {
+    fun `fade dnf saves to prefs`() {
         initSUT()
         sut.fadeDNF = true
         verify {
@@ -73,7 +73,7 @@ internal class RaceControllerTest: BaseTest() {
     //region Show Grid Penalties
 
     @Test
-    fun `RaceController show grid penalties in qualifying reads from prefs`() {
+    fun `show grid penalties in qualifying reads from prefs`() {
         initSUT()
         every { mockAppRepository.showGridPenaltiesInQualifying } returns true
         assertTrue(mockAppRepository.showGridPenaltiesInQualifying)
@@ -86,7 +86,7 @@ internal class RaceControllerTest: BaseTest() {
     }
 
     @Test
-    fun `RaceController show grid penalties in qualifying saves to prefs`() {
+    fun `show grid penalties in qualifying saves to prefs`() {
         initSUT()
         sut.showGridPenaltiesInQualifying = true
         verify {

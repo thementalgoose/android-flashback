@@ -67,7 +67,7 @@ internal class SeasonViewModelTest: BaseTest() {
     //region Navigation
 
     @Test
-    fun `SeasonViewModel clickMenu fires open menu event`() {
+    fun `clickMenu fires open menu event`() {
 
         initSUT()
 
@@ -79,7 +79,7 @@ internal class SeasonViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `SeasonViewModel clickSearch fires open search event if remote config field enabled`() {
+    fun `clickSearch fires open search event if remote config field enabled`() {
 
         every { mockFeatureController.searchEnabled } returns true
 
@@ -93,7 +93,7 @@ internal class SeasonViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `SeasonViewModel clickSearch does nothing if remote config field disabled`() {
+    fun `clickSearch does nothing if remote config field disabled`() {
 
         every { mockFeatureController.searchEnabled } returns false
 
@@ -107,7 +107,7 @@ internal class SeasonViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `SeasonViewModel clickTrack fires show race event`() {
+    fun `clickTrack fires show race event`() {
 
         val mock: SeasonItem.Track = mockk(relaxed = true)
         initSUT()
@@ -120,7 +120,7 @@ internal class SeasonViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `SeasonViewModel clickDriver fires show driver event`() {
+    fun `clickDriver fires show driver event`() {
 
         val mock: SeasonItem.Driver = mockk(relaxed = true)
         initSUT()
@@ -133,7 +133,7 @@ internal class SeasonViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `SeasonViewModel clickConstructor fires show constructor event`() {
+    fun `clickConstructor fires show constructor event`() {
 
         val mock: SeasonItem.Constructor = mockk(relaxed = true)
         initSUT()
@@ -150,7 +150,7 @@ internal class SeasonViewModelTest: BaseTest() {
     //region Defaults
 
     @Test
-    fun `SeasonViewModel defaults to calendar type by default`() = coroutineTest {
+    fun `defaults to calendar type by default`() = coroutineTest {
 
         initSUT()
 
@@ -161,7 +161,7 @@ internal class SeasonViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `SeasonViewModel show loading is set to true initially`() = coroutineTest {
+    fun `show loading is set to true initially`() = coroutineTest {
 
         initSUT()
 
@@ -171,7 +171,7 @@ internal class SeasonViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `SeasonViewModel defaults to value in remote config and not current year`() = coroutineTest {
+    fun `defaults to value in remote config and not current year`() = coroutineTest {
 
         every { mockSeasonController.defaultSeason } returns 2018
 
@@ -187,7 +187,7 @@ internal class SeasonViewModelTest: BaseTest() {
     //region App Banner
 
     @Test
-    fun `SeasonViewModel when app banner model exists and show is true then it's added to the data`() = coroutineTest {
+    fun `when app banner model exists and show is true then it's added to the data`() = coroutineTest {
 
         val expectedMessage = "Testing the custom app banner!"
         every { mockNotificationController.banner } returns expectedMessage
@@ -200,7 +200,7 @@ internal class SeasonViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `SeasonViewModel when app banner model is null then it's not available in the list`() = coroutineTest {
+    fun `when app banner model is null then it's not available in the list`() = coroutineTest {
 
         initSUT()
 
@@ -214,7 +214,7 @@ internal class SeasonViewModelTest: BaseTest() {
     //region Calendar
 
     @Test
-    fun `SeasonViewModel when home type is calendar and history rounds is empty and network not connected, show no network error`() = coroutineTest {
+    fun `when home type is calendar and history rounds is empty and network not connected, show no network error`() = coroutineTest {
 
         val historyListWithEmptyRound = History(2019, null, emptyList())
 
@@ -234,7 +234,7 @@ internal class SeasonViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `SeasonViewModel when home type is calendar and history rounds is empty and network is connected and year is current year, show early in season error`() = coroutineTest {
+    fun `when home type is calendar and history rounds is empty and network is connected and year is current year, show early in season error`() = coroutineTest {
 
         val historyItemWithEmptyRound = History(currentYear, null, emptyList())
 
@@ -254,7 +254,7 @@ internal class SeasonViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `SeasonViewModel when home type is calendar and history rounds is empty and network is connected and year is in the past, show missing race data message`() = coroutineTest {
+    fun `when home type is calendar and history rounds is empty and network is connected and year is in the past, show missing race data message`() = coroutineTest {
 
         val historyListWithEmptyRound = History(2019, null, emptyList())
 
@@ -273,7 +273,7 @@ internal class SeasonViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `SeasonViewModel when home type is calendar show calendar history list`() = coroutineTest {
+    fun `when home type is calendar show calendar history list`() = coroutineTest {
 
         val expected = listOf<SeasonItem>(
                 SeasonItem.Track(
@@ -314,7 +314,7 @@ internal class SeasonViewModelTest: BaseTest() {
     //region Drivers
 
     @Test
-    fun `SeasonViewModel when home type is drivers and history rounds is empty and network not connected, show no network error`() = coroutineTest {
+    fun `when home type is drivers and history rounds is empty and network not connected, show no network error`() = coroutineTest {
 
         every { mockNetworkConnectivityManager.isConnected } returns false
         every { mockSeasonOverviewRepository.getSeasonOverview(any()) } returns flow { emit(mockSeason.copy(rounds = emptyList())) }
@@ -334,7 +334,7 @@ internal class SeasonViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `SeasonViewModel when home type is drivers and history rounds is empty, show in future season`() = coroutineTest {
+    fun `when home type is drivers and history rounds is empty, show in future season`() = coroutineTest {
 
         every { mockSeasonOverviewRepository.getSeasonOverview(any()) } returns flow { emit(mockSeason.copy(rounds = emptyList())) }
 
@@ -353,7 +353,7 @@ internal class SeasonViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `SeasonViewModel when home type is drivers list driver standings in order`() = coroutineTest {
+    fun `when home type is drivers list driver standings in order`() = coroutineTest {
 
         val expected = listOf<SeasonItem>(
                 SeasonItem.ErrorItem(SyncDataItem.ProvidedBy()),
@@ -374,7 +374,7 @@ internal class SeasonViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `SeasonViewModel when home type is drivers and history rounds size doesnt match rounds available, show results as of header box in response`() = coroutineTest {
+    fun `when home type is drivers and history rounds size doesnt match rounds available, show results as of header box in response`() = coroutineTest {
 
         every { mockHistoryRepository.historyFor(any()) } returns flow { emit(History(2019, null, listOf(mockHistoryRound1, mockHistoryRound2, mockHistoryRound3))) }
 
@@ -393,7 +393,7 @@ internal class SeasonViewModelTest: BaseTest() {
     //region Constructors
 
     @Test
-    fun `SeasonViewModel when home type is constructors and history rounds is empty and network not connected, show no network error`() = coroutineTest {
+    fun `when home type is constructors and history rounds is empty and network not connected, show no network error`() = coroutineTest {
 
         every { mockNetworkConnectivityManager.isConnected } returns false
         every { mockSeasonOverviewRepository.getSeasonOverview(any()) } returns flow { emit(mockSeason.copy(rounds = emptyList())) }
@@ -413,7 +413,7 @@ internal class SeasonViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `SeasonViewModel when home type is constructors and history rounds is empty, show in future season`() = coroutineTest {
+    fun `when home type is constructors and history rounds is empty, show in future season`() = coroutineTest {
 
         every { mockSeasonOverviewRepository.getSeasonOverview(any()) } returns flow { emit(mockSeason.copy(rounds = emptyList())) }
 
@@ -432,7 +432,7 @@ internal class SeasonViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `SeasonViewModel when home type is constructors list driver standings in order`() = coroutineTest {
+    fun `when home type is constructors list driver standings in order`() = coroutineTest {
 
         val expected = listOf<SeasonItem>(
                 SeasonItem.ErrorItem(SyncDataItem.ProvidedBy()),
@@ -451,7 +451,7 @@ internal class SeasonViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `SeasonViewModel when home type is constructors and history rounds size doesnt match rounds available, show results as of header box in response`() = coroutineTest {
+    fun `when home type is constructors and history rounds size doesnt match rounds available, show results as of header box in response`() = coroutineTest {
 
         every { mockHistoryRepository.historyFor(any()) } returns flow { emit(History(2019, null, listOf(mockHistoryRound1, mockHistoryRound2, mockHistoryRound3))) }
 
@@ -467,7 +467,7 @@ internal class SeasonViewModelTest: BaseTest() {
 
     @ParameterizedTest
     @ValueSource(ints = [1950, 1951, 1952, 1953, 1954, 1955, 1956, 1957])
-    fun `SeasonViewModel when season is before constructor standing season the championship did not start message is displayed`(season: Int) = coroutineTest {
+    fun `when season is before constructor standing season the championship did not start message is displayed`(season: Int) = coroutineTest {
 
         every { mockSeasonOverviewRepository.getSeasonOverview(any()) } returns flow { emit(mockSeason.copy(season = season)) }
 
@@ -484,7 +484,7 @@ internal class SeasonViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `SeasonViewModel when season is on border of constructor standing season the championship did not start message is not displayed`() = coroutineTest {
+    fun `when season is on border of constructor standing season the championship did not start message is not displayed`() = coroutineTest {
 
         val season = 1958
         every { mockSeasonOverviewRepository.getSeasonOverview(any()) } returns flow { emit(mockSeason.copy(season = season)) }
@@ -503,7 +503,7 @@ internal class SeasonViewModelTest: BaseTest() {
     //region Data provided by banner
 
     @Test
-    fun `SeasonViewModel banner moves to the bottom when first boot time is greater than 5 days after`() = coroutineTest {
+    fun `banner moves to the bottom when first boot time is greater than 5 days after`() = coroutineTest {
 
         every { mockDeviceController.appFirstBoot } returns LocalDate.now().minusDays(daysUntilDataProvidedBannerMovedToBottom.toLong() + 1L)
 
@@ -515,7 +515,7 @@ internal class SeasonViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `SeasonViewModel banner is at the top when first boot time is less than or equal to 10 days after`() = coroutineTest {
+    fun `banner is at the top when first boot time is less than or equal to 10 days after`() = coroutineTest {
 
         every { mockDeviceController.appFirstBoot } returns LocalDate.now().minusDays(daysUntilDataProvidedBannerMovedToBottom.toLong())
 

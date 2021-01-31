@@ -16,7 +16,7 @@ class IntUtilsKtTest {
         ",true",
         "0,true"
     )
-    fun `IntUtils toMaxIfZero wrapping integer to max value if it's null or zero`(value: Int?, expectedToBeIntMax: Boolean) {
+    fun `toMaxIfZero wrapping integer to max value if it's null or zero`(value: Int?, expectedToBeIntMax: Boolean) {
 
         val expectedValue: Int = if (expectedToBeIntMax) Int.MAX_VALUE else value!!
 
@@ -30,7 +30,7 @@ class IntUtilsKtTest {
         "02,1,2",
         "213,5,00213"
     )
-    fun `IntUtils extendTo extends characters with '0'`(value: Int, extension: Int, expectedValue: String) {
+    fun `extendTo extends characters with '0'`(value: Int, extension: Int, expectedValue: String) {
 
         assertEquals(expectedValue, value.extendTo(extension))
     }
@@ -45,7 +45,7 @@ class IntUtilsKtTest {
             "86400,24,0",
             "-2382,0,0"
     )
-    fun `IntUtils hoursAndMins returns hours and mins value assuming original is seconds`(seconds: Int, expectedHours: Int, expectedMinutes: Int) {
+    fun `hoursAndMins returns hours and mins value assuming original is seconds`(seconds: Int, expectedHours: Int, expectedMinutes: Int) {
 
         val (hours, minutes) = seconds.hoursAndMins
         assertEquals(expectedHours, hours)

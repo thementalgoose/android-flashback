@@ -2,7 +2,7 @@ package tmg.flashback.core.controllers
 
 import tmg.flashback.core.constants.Migrations
 import tmg.flashback.core.managers.ConfigurationManager
-import tmg.flashback.core.model.SupportedArticleSource
+import tmg.flashback.core.model.SupportedSource
 import tmg.flashback.core.model.UpNextSchedule
 import tmg.flashback.core.repositories.ConfigurationRepository
 import tmg.flashback.core.repositories.CoreRepository
@@ -107,7 +107,7 @@ class ConfigurationController(
     /**
      * List of supported articles for the RSS configure functionality
      */
-    val rssSupportedSources: List<SupportedArticleSource> by lazy { configurationRepository.rssSupportedSources }
+    val rssSupportedSources: List<SupportedSource> by lazy { configurationRepository.rssSupportedSources }
 
     //endregion
 }

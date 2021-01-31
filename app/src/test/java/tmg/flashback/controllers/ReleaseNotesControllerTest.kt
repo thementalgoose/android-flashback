@@ -22,7 +22,7 @@ internal class ReleaseNotesControllerTest: BaseTest() {
     }
 
     @Test
-    fun `ReleaseNotesController major release version not found if no change in version code`() {
+    fun `major release version not found if no change in version code`() {
         every { mockBuildConfigManager.versionCode } returns 30
         every { mockDeviceRepository.releaseNotesSeenAppVersion } returns 30
         initSUT()
@@ -31,7 +31,7 @@ internal class ReleaseNotesControllerTest: BaseTest() {
     }
 
     @Test
-    fun `ReleaseNotesController major release version not found no release notes between last and now are major`() {
+    fun `major release version not found no release notes between last and now are major`() {
         every { mockBuildConfigManager.versionCode } returns 27
         every { mockDeviceRepository.releaseNotesSeenAppVersion } returns 22
         initSUT()
@@ -40,7 +40,7 @@ internal class ReleaseNotesControllerTest: BaseTest() {
     }
 
     @Test
-    fun `ReleaseNotesController major release version found when major found between last and now`() {
+    fun `major release version found when major found between last and now`() {
         every { mockBuildConfigManager.versionCode } returns 30
         every { mockDeviceRepository.releaseNotesSeenAppVersion } returns 27
         initSUT()
@@ -49,7 +49,7 @@ internal class ReleaseNotesControllerTest: BaseTest() {
     }
 
     @Test
-    fun `ReleaseNotesController major release version doesn't include last version`() {
+    fun `major release version doesn't include last version`() {
         every { mockBuildConfigManager.versionCode } returns 31
         every { mockDeviceRepository.releaseNotesSeenAppVersion } returns 28
         initSUT()
@@ -58,7 +58,7 @@ internal class ReleaseNotesControllerTest: BaseTest() {
     }
 
     @Test
-    fun `ReleaseNotesController major release version only takes 3 latest items when multiple found`() {
+    fun `major release version only takes 3 latest items when multiple found`() {
         every { mockBuildConfigManager.versionCode } returns 40
         every { mockDeviceRepository.releaseNotesSeenAppVersion } returns 27
         initSUT()
@@ -67,7 +67,7 @@ internal class ReleaseNotesControllerTest: BaseTest() {
     }
 
     @Test
-    fun `ReleaseNotesController when release notes last seen version is 0 then mark release notes called`() {
+    fun `when release notes last seen version is 0 then mark release notes called`() {
         every { mockBuildConfigManager.versionCode } returns 20
         every { mockDeviceRepository.releaseNotesSeenAppVersion } returns 0
         initSUT()
@@ -78,7 +78,7 @@ internal class ReleaseNotesControllerTest: BaseTest() {
     }
 
     @Test
-    fun `ReleaseNotesController mark release notes seen saves current version in prefs`() {
+    fun `mark release notes seen saves current version in prefs`() {
         every { mockBuildConfigManager.versionCode } returns 20
         initSUT()
 

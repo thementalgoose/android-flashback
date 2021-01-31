@@ -9,12 +9,10 @@ import tmg.flashback.constants.App.currentYear
 import tmg.flashback.core.controllers.CrashController
 import tmg.flashback.core.managers.ConfigurationManager
 import tmg.flashback.core.repositories.ConfigurationRepository
-import tmg.flashback.core.repositories.CoreRepository
 import tmg.flashback.firebase.BuildConfig
 import tmg.flashback.R
-import tmg.flashback.firebase.converters.convert
 import tmg.flashback.firebase.extensions.toJson
-import tmg.flashback.core.model.SupportedArticleSource
+import tmg.flashback.core.model.SupportedSource
 import tmg.flashback.core.model.UpNextSchedule
 import tmg.flashback.managers.configuration.models.RemoteConfigAllSeasons
 import tmg.flashback.managers.configuration.models.RemoteConfigSupportedSources
@@ -94,7 +92,7 @@ class FirebaseRemoteConfigManager(
     override val rssAddCustom: Boolean
         get() = remoteConfig.getBoolean(keyRssAddCustom)
 
-    override val rssSupportedSources: List<SupportedArticleSource>
+    override val rssSupportedSources: List<SupportedSource>
         get() = remoteConfig.getString(keyRssSupportedSources).toJson<RemoteConfigSupportedSources>()?.convert() ?: emptyList()
 
     //endregion

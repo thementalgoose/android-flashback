@@ -9,7 +9,7 @@ import tmg.flashback.testutils.BaseTest
 internal class DefaultsTest: BaseTest() {
 
     @Test
-    fun `Defaults validate defaults`() {
+    fun `validate defaults`() {
 
         assertFalse(Defaults.showQualifyingDelta)
         assertTrue(Defaults.fadeDNF)

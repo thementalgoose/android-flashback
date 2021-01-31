@@ -14,7 +14,7 @@ internal class PrivacyPolicyViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `PrivacyPolicyViewModel goBack fires back event`() {
+    fun `goBack fires back event`() {
 
         initSUT()
 

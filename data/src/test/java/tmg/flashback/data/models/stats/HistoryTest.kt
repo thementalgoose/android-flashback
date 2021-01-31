@@ -23,7 +23,7 @@ class HistoryTest {
             "now,future,0",
             "future,future,0"
     )
-    fun `History completed test returns all items that have happened in the past`(mockState1: String, mockState2: String, expectedRoundsFound: Int) {
+    fun `completed test returns all items that have happened in the past`(mockState1: String, mockState2: String, expectedRoundsFound: Int) {
 
         initMockStates(mockState1, mockState2)
 
@@ -41,7 +41,7 @@ class HistoryTest {
             "now,future,2",
             "future,future,2"
     )
-    fun `History upcoming test returns all items that will happen in the future`(mockState1: String, mockState2: String, expectedRoundsFound: Int) {
+    fun `upcoming test returns all items that will happen in the future`(mockState1: String, mockState2: String, expectedRoundsFound: Int) {
 
         initMockStates(mockState1, mockState2)
 
@@ -59,7 +59,7 @@ class HistoryTest {
             "now,future,1",
             "future,future,0"
     )
-    fun `History scheduled today returns all items that are scheduled today`(mockState1: String, mockState2: String, expectedRoundsFound: Int) {
+    fun `scheduled today returns all items that are scheduled today`(mockState1: String, mockState2: String, expectedRoundsFound: Int) {
 
         initMockStates(mockState1, mockState2)
 

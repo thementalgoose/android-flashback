@@ -1,6 +1,6 @@
 package tmg.flashback.managers.configuration.models
 
-import tmg.flashback.core.model.SupportedArticleSource
+import tmg.flashback.core.model.SupportedSource
 
 data class RemoteConfigSupportedSources(
     val sources: List<RemoteConfigSupportedSource>? = null
@@ -18,16 +18,16 @@ data class RemoteConfigSupportedSource(
 
 //region Converters
 
-fun RemoteConfigSupportedSources.convert(): List<SupportedArticleSource> {
+fun RemoteConfigSupportedSources.convert(): List<SupportedSource> {
     return this.sources?.mapNotNull { it.convert() } ?: emptyList()
 }
 
-fun RemoteConfigSupportedSource.convert(): SupportedArticleSource? {
+fun RemoteConfigSupportedSource.convert(): SupportedSource? {
     if (this.source == null || this.title == null || this.rssLink == null || this.colour == null || this.textColour == null) {
         return null
     }
 
-    return SupportedArticleSource(
+    return SupportedSource(
         rssLink = this.rssLink,
         sourceShort = this.sourceShort ?: this.source.take(2),
         source = this.source,

@@ -6,7 +6,7 @@ import org.junit.jupiter.params.provider.CsvSource
 
 class LapTimeFormatsTest {
 
-    @ParameterizedTest(name = "{0} laptime is valid == {1}")
+    @ParameterizedTest(name = "regex for seconds {0} laptime is valid == {1}")
     @CsvSource(
             "00:000,true",
             "59:999,true",
@@ -20,12 +20,12 @@ class LapTimeFormatsTest {
             "1:34:120,false",
             "oo:02,false"
     )
-    fun `LapTimeFormats regex for seconds matches seconds properly`(lapTime: String, expectedIsValid: Boolean) {
+    fun `regex for seconds matches seconds properly`(lapTime: String, expectedIsValid: Boolean) {
 
         assertEquals(LapTimeFormats.SECOND_MILLIS.regex.matches(lapTime), expectedIsValid)
     }
 
-    @ParameterizedTest(name = "{0} laptime is valid == {1}")
+    @ParameterizedTest(name = "regex for minutes {0} laptime is valid == {1}")
     @CsvSource(
             "1:00:000,true",
             "59:59:999,true",
@@ -40,12 +40,12 @@ class LapTimeFormatsTest {
             "34:12,false",
             "oo:02,false"
     )
-    fun `LapTimeFormats regex for minutes matches minutes properly`(lapTime: String, expectedIsValid: Boolean) {
+    fun `regex for minutes matches minutes properly`(lapTime: String, expectedIsValid: Boolean) {
 
         assertEquals(LapTimeFormats.MIN_SECOND_MILLIS.regex.matches(lapTime), expectedIsValid)
     }
 
-    @ParameterizedTest(name = "{0} laptime is valid == {1}")
+    @ParameterizedTest(name = "regex for hours {0} laptime is valid == {1}")
     @CsvSource(
             "1:03:00:000,true",
             "23:02:59:999,true",
@@ -64,7 +64,7 @@ class LapTimeFormatsTest {
             "1:34:120,false",
             "oo:02,false"
     )
-    fun `LapTimeFormats regex for hours matches hours properly`(lapTime: String, expectedIsValid: Boolean) {
+    fun `regex for hours matches hours properly`(lapTime: String, expectedIsValid: Boolean) {
 
         assertEquals(LapTimeFormats.HOUR_MIN_SECOND_MILLIS.regex.matches(lapTime), expectedIsValid)
     }

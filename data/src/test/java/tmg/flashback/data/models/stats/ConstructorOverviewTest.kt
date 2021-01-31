@@ -15,7 +15,7 @@ class ConstructorOverviewTest {
             "21,1,false,1",
             "21,1,true,0"
     )
-    fun `ConstructorOverview championship wins`(s1: Int, s2: Int, s2InProgress: Boolean, expected: Int) {
+    fun `championship wins`(s1: Int, s2: Int, s2InProgress: Boolean, expected: Int) {
         val sut = mockConstructorOverview.copy(standings = listOf(
                 mockConstructorOverviewStanding1.copy(championshipStanding = s1),
                 mockConstructorOverviewStanding2.copy(championshipStanding = s2, isInProgress = s2InProgress)
@@ -34,7 +34,7 @@ class ConstructorOverviewTest {
             "21,1,false,1",
             "21,1,true,21"
     )
-    fun `ConstructorOverview career best championship`(s1: Int, s2: Int, s2InProgress: Boolean, expected: Int) {
+    fun `career best championship`(s1: Int, s2: Int, s2InProgress: Boolean, expected: Int) {
         val sut = mockConstructorOverview.copy(standings = listOf(
                 mockConstructorOverviewStanding1.copy(championshipStanding = s1),
                 mockConstructorOverviewStanding2.copy(championshipStanding = s2, isInProgress = s2InProgress)
@@ -49,7 +49,7 @@ class ConstructorOverviewTest {
             "false,true,true",
             "false,false,false"
     )
-    fun `ConstructorOverview has championship currently in progress`(s1: Boolean, s2: Boolean, expected: Boolean) {
+    fun `has championship currently in progress`(s1: Boolean, s2: Boolean, expected: Boolean) {
         val sut = mockConstructorOverview.copy(standings = listOf(
                 mockConstructorOverviewStanding1.copy(isInProgress = s1),
                 mockConstructorOverviewStanding2.copy(isInProgress = s2)
@@ -64,7 +64,7 @@ class ConstructorOverviewTest {
             "-1,0,0",
             "4,2,6"
     )
-    fun `ConstructorOverview races`(s1: Int, s2: Int, expected: Int) {
+    fun `races`(s1: Int, s2: Int, expected: Int) {
         val sut = mockConstructorOverview.copy(standings = listOf(
                 mockConstructorOverviewStanding1.copy(races = s1),
                 mockConstructorOverviewStanding2.copy(races = s2)
@@ -79,7 +79,7 @@ class ConstructorOverviewTest {
             "-1,0,0",
             "4,2,6"
     )
-    fun `ConstructorOverview points`(s1: Int, s2: Int, expected: Int) {
+    fun `points`(s1: Int, s2: Int, expected: Int) {
         val sut = mockConstructorOverview.copy(standings = listOf(
                 mockConstructorOverviewStanding1.copy(points = s1),
                 mockConstructorOverviewStanding2.copy(points = s2)
@@ -94,7 +94,7 @@ class ConstructorOverviewTest {
             "-1,0,0,0,0",
             "4,1,3,2,10"
     )
-    fun `ConstructorOverview race entries`(s1Driver1: Int, s1Driver2: Int, s2Driver1: Int, s2Driver2: Int, expected: Int) {
+    fun `race entries`(s1Driver1: Int, s1Driver2: Int, s2Driver1: Int, s2Driver2: Int, expected: Int) {
         val sut = mockConstructorOverview.copy(standings = listOf(
                 mockConstructorOverviewStanding1.copy(drivers = mapOf(
                         mockDriver1.id to mockConstructorOverviewStanding1Driver1.copy(
@@ -123,7 +123,7 @@ class ConstructorOverviewTest {
             "-1,0,0,0,0",
             "4,1,3,2,10"
     )
-    fun `ConstructorOverview wins`(s1Driver1: Int, s1Driver2: Int, s2Driver1: Int, s2Driver2: Int, expected: Int) {
+    fun `wins`(s1Driver1: Int, s1Driver2: Int, s2Driver1: Int, s2Driver2: Int, expected: Int) {
         val sut = mockConstructorOverview.copy(standings = listOf(
                 mockConstructorOverviewStanding1.copy(drivers = mapOf(
                         mockDriver1.id to mockConstructorOverviewStanding1Driver1.copy(
@@ -154,7 +154,7 @@ class ConstructorOverviewTest {
             "4,1,3,2,1",
             "4,8,3,6,3"
     )
-    fun `ConstructorOverview best finish`(s1Driver1: Int, s1Driver2: Int, s2Driver1: Int, s2Driver2: Int, expected: Int) {
+    fun `best finish`(s1Driver1: Int, s1Driver2: Int, s2Driver1: Int, s2Driver2: Int, expected: Int) {
         val sut = mockConstructorOverview.copy(standings = listOf(
                 mockConstructorOverviewStanding1.copy(drivers = mapOf(
                         mockDriver1.id to mockConstructorOverviewStanding1Driver1.copy(
@@ -184,7 +184,7 @@ class ConstructorOverviewTest {
             "4,1,3,2,1",
             "6,86,31,7,6"
     )
-    fun `ConstructorOverview best qualifying`(s1Driver1: Int, s1Driver2: Int, s2Driver1: Int, s2Driver2: Int, expected: Int) {
+    fun `best qualifying`(s1Driver1: Int, s1Driver2: Int, s2Driver1: Int, s2Driver2: Int, expected: Int) {
         val sut = mockConstructorOverview.copy(standings = listOf(
                 mockConstructorOverviewStanding1.copy(drivers = mapOf(
                         mockDriver1.id to mockConstructorOverviewStanding1Driver1.copy(
@@ -213,7 +213,7 @@ class ConstructorOverviewTest {
             "-1,0,0,0,0",
             "4,1,3,2,10"
     )
-    fun `ConstructorOverview total qualifying on pole`(s1Driver1: Int, s1Driver2: Int, s2Driver1: Int, s2Driver2: Int, expected: Int) {
+    fun `total qualifying on pole`(s1Driver1: Int, s1Driver2: Int, s2Driver1: Int, s2Driver2: Int, expected: Int) {
         val sut = mockConstructorOverview.copy(standings = listOf(
                 mockConstructorOverviewStanding1.copy(drivers = mapOf(
                         mockDriver1.id to mockConstructorOverviewStanding1Driver1.copy(
@@ -242,7 +242,7 @@ class ConstructorOverviewTest {
             "-1,0,0,0,0",
             "4,1,3,2,10"
     )
-    fun `ConstructorOverview finishes in the points`(s1Driver1: Int, s1Driver2: Int, s2Driver1: Int, s2Driver2: Int, expected: Int) {
+    fun `finishes in the points`(s1Driver1: Int, s1Driver2: Int, s2Driver1: Int, s2Driver2: Int, expected: Int) {
         val sut = mockConstructorOverview.copy(standings = listOf(
                 mockConstructorOverviewStanding1.copy(drivers = mapOf(
                         mockDriver1.id to mockConstructorOverviewStanding1Driver1.copy(
@@ -271,7 +271,7 @@ class ConstructorOverviewTest {
             "false,true,false",
             "false,false,false"
     )
-    fun `ConstructorOverview isWorldChampionFor`(championForSeason1: Boolean, championForSeason2: Boolean, expectedChampionForSeason1: Boolean) {
+    fun `isWorldChampionFor`(championForSeason1: Boolean, championForSeason2: Boolean, expectedChampionForSeason1: Boolean) {
         val sut = mockConstructorOverview.copy(standings = listOf(
                 mockConstructorOverviewStanding1.copy(championshipStanding = if (championForSeason1) 1 else 2),
                 mockConstructorOverviewStanding2.copy(championshipStanding = if (championForSeason2) 1 else 2))

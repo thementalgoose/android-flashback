@@ -1,14 +1,13 @@
 package tmg.flashback.core.controllers
 
 import io.mockk.*
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
 import tmg.flashback.core.constants.Migrations
 import tmg.flashback.core.managers.ConfigurationManager
-import tmg.flashback.core.model.SupportedArticleSource
+import tmg.flashback.core.model.SupportedSource
 import tmg.flashback.core.model.Timestamp
 import tmg.flashback.core.model.UpNextSchedule
 import tmg.flashback.core.repositories.ConfigurationRepository
@@ -27,7 +26,7 @@ internal class ConfigurationControllerTest {
     }
 
     @Test
-    fun `ConfigurationController on init set defaults is called`() {
+    fun `on init set defaults is called`() {
 
         initSUT()
 
@@ -39,7 +38,7 @@ internal class ConfigurationControllerTest {
     //region Require sync
 
     @Test
-    fun `ConfigurationController require synchronisation reads value from remote config sync`() {
+    fun `require synchronisation reads value from remote config sync`() {
 
         every { mockCoreRepository.remoteConfigSync } returns 0
         initSUT()
@@ -51,7 +50,7 @@ internal class ConfigurationControllerTest {
     }
 
     @Test
-    fun `ConfigurationController require synchronisation returns false when migrations match`() {
+    fun `require synchronisation returns false when migrations match`() {
 
         every { mockCoreRepository.remoteConfigSync } returns Migrations.configurationSyncCount
         initSUT()
@@ -67,7 +66,7 @@ internal class ConfigurationControllerTest {
     //region Fetching / updating logic
 
     @Test
-    fun `ConfigurationController fetch calls update in manager`() {
+    fun `fetch calls update in manager`() {
         initSUT()
         runBlockingTest {
             sut.fetch()
@@ -79,7 +78,7 @@ internal class ConfigurationControllerTest {
     }
 
     @Test
-    fun `ConfigurationController fetch and apply calls update in manager and saves remote config sync`() {
+    fun `fetch and apply calls update in manager and saves remote config sync`() {
         coEvery { mockConfigurationManager.update(true) } returns true
         initSUT()
         runBlockingTest {
@@ -95,7 +94,7 @@ internal class ConfigurationControllerTest {
     }
 
     @Test
-    fun `ConfigurationController apply pending calls manager`() {
+    fun `apply pending calls manager`() {
         initSUT()
         runBlockingTest {
             sut.applyPending()
@@ -111,7 +110,7 @@ internal class ConfigurationControllerTest {
     //region Variables
 
     @Test
-    fun `ConfigurationController supported seasons returns non cached value`() {
+    fun `supported seasons returns non cached value`() {
 
         val input1 = setOf(2018)
         val input2 = setOf(2017)
@@ -124,7 +123,7 @@ internal class ConfigurationControllerTest {
     }
 
     @Test
-    fun `ConfigurationController default season returns cached value`() {
+    fun `default season returns cached value`() {
 
         val input1 = 2018
         val input2 = 2017
@@ -137,7 +136,7 @@ internal class ConfigurationControllerTest {
     }
 
     @Test
-    fun `ConfigurationController up next list returns non cached value`() {
+    fun `up next list returns non cached value`() {
 
         val input1 = listOf(UpNextSchedule(1,0,"", Timestamp(LocalDate.now()),null,null,null))
         val input2 = listOf(UpNextSchedule(2,0,"", Timestamp(LocalDate.now()),null,null,null))
@@ -150,7 +149,7 @@ internal class ConfigurationControllerTest {
     }
 
     @Test
-    fun `ConfigurationController banner returns non cached value`() {
+    fun `banner returns non cached value`() {
 
         val input1 = "banner value 1"
         val input2 = "banner value 2"
@@ -163,7 +162,7 @@ internal class ConfigurationControllerTest {
     }
 
     @Test
-    fun `ConfigurationController data provided by returns non cached value`() {
+    fun `data provided by returns non cached value`() {
 
         val input1 = "welp"
         val input2 = "second"
@@ -176,7 +175,7 @@ internal class ConfigurationControllerTest {
     }
 
     @Test
-    fun `ConfigurationController search returns cached value`() {
+    fun `search returns cached value`() {
 
         val input1 = true
         val input2 = false
@@ -193,7 +192,7 @@ internal class ConfigurationControllerTest {
     //region Variables - RSS
 
     @Test
-    fun `ConfigurationController rss returns cached value`() {
+    fun `rss returns cached value`() {
 
         val input1 = true
         val input2 = false
@@ -206,7 +205,7 @@ internal class ConfigurationControllerTest {
     }
 
     @Test
-    fun `ConfigurationController rss add custom returns cached value`() {
+    fun `rss add custom returns cached value`() {
 
         val input1 = true
         val input2 = false
@@ -220,10 +219,10 @@ internal class ConfigurationControllerTest {
 
 
     @Test
-    fun `ConfigurationController rss supported sources returns cached value`() {
+    fun `rss supported sources returns cached value`() {
 
-        val input1 = listOf(SupportedArticleSource("AGAIN", "", "", "", "", "", ""))
-        val input2 = listOf(SupportedArticleSource("INFO", "", "", "", "", "", ""))
+        val input1 = listOf(SupportedSource("AGAIN", "", "", "", "", "", ""))
+        val input2 = listOf(SupportedSource("INFO", "", "", "", "", "", ""))
 
         initSUT()
         every { mockConfigurationRepository.rssSupportedSources } returns input1

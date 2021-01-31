@@ -15,14 +15,14 @@ internal class AppLockoutConverterTest: BaseTest() {
         assertFalse(FAppLockout(show = null).convert().show)
     }
 
-    @ParameterizedTest(name = "AppLockoutConverter version value {0} maps to {1}")
+    @ParameterizedTest(name = "version value {0} maps to {1}")
     @CsvSource(
         ",",
         "0,",
         "-1,",
         "3,3"
     )
-    fun `AppLockoutConverter version is null set version null in model`(firebaseValue: Int?, expected: Int?) {
+    fun `version is null set version null in model`(firebaseValue: Int?, expected: Int?) {
         assertEquals(FAppLockout(version = firebaseValue).convert().version, expected)
     }
 }
