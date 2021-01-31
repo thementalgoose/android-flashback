@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.fragment_dashboard_season.swipeContainer
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.R
 import tmg.flashback.constants.App.currentYear
-import tmg.flashback.ui.base.BaseFragment
+import tmg.flashback.core.ui.BaseFragment
 import tmg.flashback.ui.dashboard.DashboardNavigationCallback
 import tmg.flashback.ui.overviews.constructor.ConstructorActivity
 import tmg.flashback.ui.overviews.driver.DriverActivity
@@ -19,6 +19,7 @@ import tmg.flashback.ui.race.RaceActivity
 import tmg.flashback.rss.ui.RSSActivity
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
+import tmg.utilities.extensions.views.invisible
 import tmg.utilities.extensions.views.visible
 
 class SeasonFragment: BaseFragment() {
@@ -49,9 +50,9 @@ class SeasonFragment: BaseFragment() {
         dataList.layoutManager = LinearLayoutManager(context)
         dataList.adapter = adapter
 
-        if (remoteConfigRepository.search) {
-            searchButton.visible()
-        }
+//        if (remoteConfigRepository.search) {
+//            searchButton.visible()
+//        }
         navigation.setOnNavigationItemSelectedListener {
             return@setOnNavigationItemSelectedListener when (it.itemId) {
                 R.id.nav_rss -> {

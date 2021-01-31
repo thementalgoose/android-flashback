@@ -1,39 +1,35 @@
 package tmg.flashback.controllers
 
-import android.os.Build
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.CsvSource
-import org.junit.jupiter.params.provider.ValueSource
-import tmg.flashback.repo.config.RemoteConfigRepository
-import tmg.flashback.repo.enums.NotificationRegistration
-import tmg.flashback.repo.pref.DeviceRepository
+import tmg.flashback.core.controllers.ConfigurationController
+import tmg.flashback.data.enums.NotificationRegistration
+import tmg.flashback.data.repositories.AppRepository
 import tmg.flashback.testutils.BaseTest
 
 internal class NotificationControllerTest: BaseTest() {
 
-    private var mockDeviceRepository: DeviceRepository = mockk(relaxed = true)
-    private var mockRemoteConfigRepository: RemoteConfigRepository = mockk(relaxed = true)
+    private var mockAppRepository: AppRepository = mockk(relaxed = true)
+    private var mockConfigurationController: ConfigurationController = mockk(relaxed = true)
 
     private lateinit var sut: NotificationController
 
     private fun initSUT() {
-        sut = NotificationController(mockDeviceRepository, mockRemoteConfigRepository)
+        sut = NotificationController(mockAppRepository, mockConfigurationController)
     }
 
     //region App Banner
 
     @Test
-    fun `NotificationController app banner reads from remote config`() {
-        every { mockRemoteConfigRepository.banner } returns "test"
+    fun `app banner reads from remote config`() {
+        every { mockConfigurationController.banner } returns "test"
         initSUT()
         assertEquals("test", sut.banner)
         verify {
-            mockRemoteConfigRepository.banner
+            mockConfigurationController.banner
         }
     }
 
@@ -42,33 +38,33 @@ internal class NotificationControllerTest: BaseTest() {
     //region Race
 
     @Test
-    fun `NotificationController race opt in undecided`() {
-        every { mockDeviceRepository.notificationsRace } returns null
+    fun `race opt in undecided`() {
+        every { mockAppRepository.notificationsRace } returns null
         initSUT()
         assertTrue(sut.raceOptInUndecided)
     }
 
     @Test
-    fun `NotificationController race opt in has decided`() {
+    fun `race opt in has decided`() {
         initSUT()
-        every { mockDeviceRepository.notificationsRace } returns NotificationRegistration.OPT_IN
+        every { mockAppRepository.notificationsRace } returns NotificationRegistration.OPT_IN
         assertFalse(sut.raceOptInUndecided)
-        every { mockDeviceRepository.notificationsRace } returns NotificationRegistration.OPT_OUT
+        every { mockAppRepository.notificationsRace } returns NotificationRegistration.OPT_OUT
         assertFalse(sut.raceOptInUndecided)
     }
 
     @Test
-    fun `NotificationController race opt in true`() {
+    fun `race opt in true`() {
         initSUT()
         sut.raceOptIn = true
-        verify { mockDeviceRepository.notificationsRace = NotificationRegistration.OPT_IN }
+        verify { mockAppRepository.notificationsRace = NotificationRegistration.OPT_IN }
     }
 
     @Test
-    fun `NotificationController race opt in false`() {
+    fun `race opt in false`() {
         initSUT()
         sut.raceOptIn = false
-        verify { mockDeviceRepository.notificationsRace = NotificationRegistration.OPT_OUT }
+        verify { mockAppRepository.notificationsRace = NotificationRegistration.OPT_OUT }
     }
 
     //endregion
@@ -76,33 +72,33 @@ internal class NotificationControllerTest: BaseTest() {
     //region Qualifying
 
     @Test
-    fun `NotificationController qualifying opt in undecided`() {
-        every { mockDeviceRepository.notificationsQualifying } returns null
+    fun `qualifying opt in undecided`() {
+        every { mockAppRepository.notificationsQualifying } returns null
         initSUT()
         assertTrue(sut.qualifyingOptInUndecided)
     }
 
     @Test
-    fun `NotificationController qualifying opt in has decided`() {
+    fun `qualifying opt in has decided`() {
         initSUT()
-        every { mockDeviceRepository.notificationsQualifying } returns NotificationRegistration.OPT_IN
+        every { mockAppRepository.notificationsQualifying } returns NotificationRegistration.OPT_IN
         assertFalse(sut.qualifyingOptInUndecided)
-        every { mockDeviceRepository.notificationsQualifying } returns NotificationRegistration.OPT_OUT
+        every { mockAppRepository.notificationsQualifying } returns NotificationRegistration.OPT_OUT
         assertFalse(sut.qualifyingOptInUndecided)
     }
 
     @Test
-    fun `NotificationController qualifying opt in true`() {
+    fun `qualifying opt in true`() {
         initSUT()
         sut.qualifyingOptIn = true
-        verify { mockDeviceRepository.notificationsQualifying = NotificationRegistration.OPT_IN }
+        verify { mockAppRepository.notificationsQualifying = NotificationRegistration.OPT_IN }
     }
 
     @Test
-    fun `NotificationController qualifying opt in false`() {
+    fun `qualifying opt in false`() {
         initSUT()
         sut.qualifyingOptIn = false
-        verify { mockDeviceRepository.notificationsQualifying = NotificationRegistration.OPT_OUT }
+        verify { mockAppRepository.notificationsQualifying = NotificationRegistration.OPT_OUT }
     }
 
     //endregion
@@ -110,33 +106,33 @@ internal class NotificationControllerTest: BaseTest() {
     //region Misc
 
     @Test
-    fun `NotificationController misc opt in undecided`() {
-        every { mockDeviceRepository.notificationsMisc } returns null
+    fun `misc opt in undecided`() {
+        every { mockAppRepository.notificationsMisc } returns null
         initSUT()
         assertTrue(sut.miscOptInUndecided)
     }
 
     @Test
-    fun `NotificationController misc opt in has decided`() {
+    fun `misc opt in has decided`() {
         initSUT()
-        every { mockDeviceRepository.notificationsMisc } returns NotificationRegistration.OPT_IN
+        every { mockAppRepository.notificationsMisc } returns NotificationRegistration.OPT_IN
         assertFalse(sut.miscOptInUndecided)
-        every { mockDeviceRepository.notificationsMisc } returns NotificationRegistration.OPT_OUT
+        every { mockAppRepository.notificationsMisc } returns NotificationRegistration.OPT_OUT
         assertFalse(sut.miscOptInUndecided)
     }
 
     @Test
-    fun `NotificationController misc opt in true`() {
+    fun `misc opt in true`() {
         initSUT()
         sut.miscOptIn = true
-        verify { mockDeviceRepository.notificationsMisc = NotificationRegistration.OPT_IN }
+        verify { mockAppRepository.notificationsMisc = NotificationRegistration.OPT_IN }
     }
 
     @Test
-    fun `NotificationController misc opt in false`() {
+    fun `misc opt in false`() {
         initSUT()
         sut.miscOptIn = false
-        verify { mockDeviceRepository.notificationsMisc = NotificationRegistration.OPT_OUT }
+        verify { mockAppRepository.notificationsMisc = NotificationRegistration.OPT_OUT }
     }
 
     //endregion

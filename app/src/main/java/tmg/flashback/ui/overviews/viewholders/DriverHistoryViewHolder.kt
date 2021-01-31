@@ -13,7 +13,7 @@ import tmg.flashback.ui.overviews.driver.summary.DriverSummaryItem
 import tmg.flashback.ui.overviews.driver.summary.PipeType
 import tmg.flashback.ui.overviews.driver.summary.PipeType.*
 import tmg.flashback.ui.overviews.driver.season.DriverSeasonItem
-import tmg.flashback.repo.models.stats.SlimConstructor
+import tmg.flashback.data.models.stats.SlimConstructor
 import tmg.flashback.ui.shared.constructorlist.ConstructorListAdapter
 import tmg.utilities.extensions.views.context
 import tmg.utilities.extensions.views.invisible

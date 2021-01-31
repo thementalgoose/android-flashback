@@ -2,10 +2,6 @@ package tmg.flashback.ui.dashboard
 
 import android.content.Intent
 import android.os.Bundle
-import android.transition.Transition
-import android.util.Log
-import android.widget.Toast
-import androidx.annotation.StyleRes
 import com.discord.panels.OverlappingPanelsLayout
 import com.discord.panels.OverlappingPanelsLayout.Panel.CENTER
 import com.discord.panels.OverlappingPanelsLayout.Panel.END
@@ -13,14 +9,13 @@ import kotlinx.android.synthetic.main.activity_dashboard.*
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.R
+import tmg.flashback.controllers.FeatureController
 import tmg.flashback.controllers.SeasonController
-import tmg.flashback.extensions.isLightMode
-import tmg.flashback.ui.base.BaseActivity
+import tmg.flashback.core.enums.DisplayType
+import tmg.flashback.core.ui.BaseActivity
 import tmg.flashback.ui.dashboard.list.ListFragment
 import tmg.flashback.ui.dashboard.search.SearchFragment
 import tmg.flashback.ui.dashboard.season.SeasonFragment
-import tmg.flashback.repo.config.RemoteConfigRepository
-import tmg.flashback.ui.base.ThemeTypes
 import tmg.flashback.ui.settings.release.ReleaseBottomSheetFragment
 import tmg.utilities.extensions.loadFragment
 import tmg.utilities.extensions.observeEvent
@@ -28,9 +23,9 @@ import tmg.utilities.extensions.observeEvent
 class DashboardActivity: BaseActivity(), DashboardNavigationCallback {
 
     override val initialiseSlidr: Boolean = false
-    override val themeType: ThemeTypes = ThemeTypes.DEFAULT
+    override val themeType: DisplayType = DisplayType.DEFAULT
 
-    private val remoteConfigRepository: RemoteConfigRepository by inject()
+    private val featureController: FeatureController by inject()
     private val seasonController: SeasonController by inject()
     private val viewModel: DashboardViewModel by viewModel()
 
@@ -62,7 +57,7 @@ class DashboardActivity: BaseActivity(), DashboardNavigationCallback {
         loadFragment(SearchFragment(), R.id.search, searchTag)
 
         // Disable search functionality until toggled on
-        if (!remoteConfigRepository.search) {
+        if (!featureController.searchEnabled) {
             panels.setEndPanelLockState(lockState = OverlappingPanelsLayout.LockState.CLOSE)
         }
 

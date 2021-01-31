@@ -1,14 +1,14 @@
 package tmg.flashback.controllers
 
 import org.threeten.bp.LocalDate
-import tmg.flashback.repo.config.RemoteConfigRepository
-import tmg.flashback.repo.models.remoteconfig.UpNextSchedule
+import tmg.flashback.core.controllers.ConfigurationController
+import tmg.flashback.core.model.UpNextSchedule
 
 /**
  * Up Next functionality on the home screen
  */
 class UpNextController(
-        private val remoteConfigRepository: RemoteConfigRepository
+        private val configurationController: ConfigurationController
 ) {
 
     /**
@@ -16,7 +16,7 @@ class UpNextController(
      *  Up to and including today
      */
     fun getNextEvent(): UpNextSchedule? {
-        return remoteConfigRepository
+        return configurationController
                 .upNext
                 .filter { schedule ->
                     return@filter schedule.timestamp.deviceDate >= LocalDate.now()

@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.R
-import tmg.flashback.repo.models.stats.SlimConstructor
+import tmg.flashback.data.models.stats.SlimConstructor
 
 class ConstructorListAdapter: RecyclerView.Adapter<ConstructorListViewHolder>() {
 

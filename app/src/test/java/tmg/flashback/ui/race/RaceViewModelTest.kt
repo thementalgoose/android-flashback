@@ -9,16 +9,16 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
 import tmg.flashback.*
-import tmg.flashback.controllers.AppHintsController
-import tmg.flashback.controllers.AppearanceController
 import tmg.flashback.controllers.RaceController
+import tmg.flashback.core.controllers.AppHintsController
+import tmg.flashback.core.controllers.AppearanceController
+import tmg.flashback.core.enums.AnimationSpeed
+import tmg.flashback.core.managers.NetworkConnectivityManager
 import tmg.flashback.ui.race.RaceAdapterType.*
-import tmg.flashback.managers.networkconnectivity.NetworkConnectivityManager
-import tmg.flashback.repo.db.stats.SeasonOverviewRepository
-import tmg.flashback.repo.enums.BarAnimation
-import tmg.flashback.repo.models.stats.LapTime
-import tmg.flashback.repo.models.stats.Round
-import tmg.flashback.repo.models.stats.RoundDriver
+import tmg.flashback.data.db.stats.SeasonOverviewRepository
+import tmg.flashback.data.models.stats.LapTime
+import tmg.flashback.data.models.stats.Round
+import tmg.flashback.data.models.stats.RoundDriver
 import tmg.flashback.ui.shared.sync.SyncDataItem
 import tmg.flashback.ui.shared.viewholders.DataUnavailable
 import tmg.flashback.testutils.*
@@ -40,7 +40,7 @@ internal class RaceViewModelTest: BaseTest() {
     internal fun setUp() {
 
         every { mockConnectivityManager.isConnected } returns true
-        every { mockAppearanceController.barAnimation } returns BarAnimation.NONE
+        every { mockAppearanceController.animationSpeed } returns AnimationSpeed.NONE
         every { mockRaceController.fadeDNF } returns true
     }
 
@@ -54,7 +54,7 @@ internal class RaceViewModelTest: BaseTest() {
     //region Network
 
     @Test
-    fun `RaceViewModel init no network error shown when network isnt available`() = coroutineTest {
+    fun `init no network error shown when network isnt available`() = coroutineTest {
 
         every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow { emit(null) }
         every { mockConnectivityManager.isConnected } returns false
@@ -73,7 +73,7 @@ internal class RaceViewModelTest: BaseTest() {
     //endregion
 
     @Test
-    fun `RaceViewModel when round data is null and date supplied is in the future, show race in future unavailable message`() = coroutineTest {
+    fun `when round data is null and date supplied is in the future, show race in future unavailable message`() = coroutineTest {
 
         every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow { emit(null) }
 
@@ -89,7 +89,7 @@ internal class RaceViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `RaceViewModel when round data is null and round date is in the past, show coming soon race data unavailable message`() = coroutineTest {
+    fun `when round data is null and round date is in the past, show coming soon race data unavailable message`() = coroutineTest {
 
         every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow { emit(null) }
 
@@ -101,7 +101,7 @@ internal class RaceViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `RaceViewModel when round data is null and date supplied is null, show missing race data unavailable message`() = coroutineTest {
+    fun `when round data is null and date supplied is null, show missing race data unavailable message`() = coroutineTest {
 
         every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow { emit(null) }
 
@@ -113,7 +113,7 @@ internal class RaceViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `RaceViewModel when round data is null and the round happened within the past 10 days, show the race is coming soon message`() = coroutineTest {
+    fun `when round data is null and the round happened within the past 10 days, show the race is coming soon message`() = coroutineTest {
 
         every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow { emit(null) }
         val showComingSoonMessageForNextDays = 5
@@ -126,7 +126,7 @@ internal class RaceViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `RaceViewModel when round data is null and the round is happening or happened today, show the race is coming soon message`() = coroutineTest {
+    fun `when round data is null and the round is happening or happened today, show the race is coming soon message`() = coroutineTest {
 
         every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow { emit(null) }
 
@@ -138,7 +138,7 @@ internal class RaceViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `RaceViewModel when view type is (happy) constructor, standings show constructor standings items with list of drivers`() = coroutineTest {
+    fun `when view type is (happy) constructor, standings show constructor standings items with list of drivers`() = coroutineTest {
 
         every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow { emit(mockRound1) }
 
@@ -147,13 +147,13 @@ internal class RaceViewModelTest: BaseTest() {
                 mockConstructorBeta, 30, listOf(
                     Pair(mockDriver4.toDriver(), 20),
                     Pair(mockDriver2.toDriver(), 10)
-                ), BarAnimation.NONE
+                ), AnimationSpeed.NONE
             ),
             RaceModel.ConstructorStandings(
                 mockConstructorAlpha, 20, listOf(
                     Pair(mockDriver3.toDriver(), 15),
                     Pair(mockDriver1.toDriver(), 5)
-                ), BarAnimation.NONE
+                ), AnimationSpeed.NONE
             )
         )
 
@@ -165,7 +165,7 @@ internal class RaceViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `RaceViewModel when view type is race (error) and round date is in the future, show race in future unavailable message`() = coroutineTest {
+    fun `when view type is race (error) and round date is in the future, show race in future unavailable message`() = coroutineTest {
 
         every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow {
             emit(mockRound1.copy(
@@ -186,7 +186,7 @@ internal class RaceViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `RaceViewModel when view type is race (error) and round date is in the past, show race data coming soon unavailable message`() = coroutineTest {
+    fun `when view type is race (error) and round date is in the past, show race data coming soon unavailable message`() = coroutineTest {
 
         every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow {
             emit(mockRound1.copy(
@@ -207,7 +207,7 @@ internal class RaceViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `RaceViewModel when view type is race (happy) and roundData race is not empty, show podium + race results in list`() = coroutineTest {
+    fun `when view type is race (happy) and roundData race is not empty, show podium + race results in list`() = coroutineTest {
 
         every { mockRaceController.showQualifyingDelta } returns false
         every { mockRaceController.showGridPenaltiesInQualifying } returns false
@@ -248,7 +248,7 @@ internal class RaceViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `RaceViewModel when view type is qualifying (happy) Q3, items are ordered properly`() = coroutineTest {
+    fun `when view type is qualifying (happy) Q3, items are ordered properly`() = coroutineTest {
 
         every { mockRaceController.showQualifyingDelta } returns false
         every { mockRaceController.showGridPenaltiesInQualifying } returns false
@@ -267,7 +267,7 @@ internal class RaceViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `RaceViewModel when view type is qualifying (happy) Q2, items are ordered properly`() = coroutineTest {
+    fun `when view type is qualifying (happy) Q2, items are ordered properly`() = coroutineTest {
 
         every { mockRaceController.showQualifyingDelta } returns false
         every { mockRaceController.showGridPenaltiesInQualifying } returns false
@@ -286,7 +286,7 @@ internal class RaceViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `RaceViewModel when view type is qualifying (happy) Q1, items are ordered properly`() = coroutineTest {
+    fun `when view type is qualifying (happy) Q1, items are ordered properly`() = coroutineTest {
 
         every { mockRaceController.showQualifyingDelta } returns false
         every { mockRaceController.showGridPenaltiesInQualifying } returns false
@@ -305,7 +305,7 @@ internal class RaceViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `RaceViewModel when order by is changed list content updates`() = coroutineTest {
+    fun `when order by is changed list content updates`() = coroutineTest {
 
         every { mockRaceController.showQualifyingDelta } returns false
         every { mockRaceController.showGridPenaltiesInQualifying } returns false
@@ -346,7 +346,7 @@ internal class RaceViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `RaceViewModel when show qualifying delta is enabled, qualifying delta is supplied`() = coroutineTest {
+    fun `when show qualifying delta is enabled, qualifying delta is supplied`() = coroutineTest {
 
         every { mockRaceController.showQualifyingDelta } returns true
         every { mockRaceController.showGridPenaltiesInQualifying } returns false
@@ -365,7 +365,7 @@ internal class RaceViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `RaceViewModel when show qualifying delta is disabled, toggling it shows it's enabled`() = coroutineTest {
+    fun `when show qualifying delta is disabled, toggling it shows it's enabled`() = coroutineTest {
 
         every { mockRaceController.showQualifyingDelta } returns false
         every { mockRaceController.showGridPenaltiesInQualifying } returns false
@@ -386,7 +386,7 @@ internal class RaceViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `RaceViewModel when only q1 data is supplied, ordering for multiple qualifying types always does the same order`() = coroutineTest {
+    fun `when only q1 data is supplied, ordering for multiple qualifying types always does the same order`() = coroutineTest {
 
         every { mockRaceController.showQualifyingDelta } returns false
         every { mockRaceController.showGridPenaltiesInQualifying } returns false
@@ -414,7 +414,7 @@ internal class RaceViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `RaceViewModel clicking go to driver with driver id and name fires go to driver event`() {
+    fun `clicking go to driver with driver id and name fires go to driver event`() {
 
         val expectedDriverId = "driver-id"
         val expectedDriverName = "driver-name"
@@ -428,7 +428,7 @@ internal class RaceViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `RaceViewModel clicking go to constructor with constructor id and name fires go to constructor event`() {
+    fun `clicking go to constructor with constructor id and name fires go to constructor event`() {
 
         val expectedConstructorId = "driver-id"
         val expectedConstructorName = "driver-name"
@@ -442,7 +442,7 @@ internal class RaceViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `RaceViewModel initialise emits season round data`() = coroutineTest {
+    fun `initialise emits season round data`() = coroutineTest {
 
         initSUT()
 
@@ -455,7 +455,7 @@ internal class RaceViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `RaceViewModel initialisation sets wikipedia button to not be shown`() = coroutineTest {
+    fun `initialisation sets wikipedia button to not be shown`() = coroutineTest {
 
         initSUT()
 
@@ -466,7 +466,7 @@ internal class RaceViewModelTest: BaseTest() {
 
     @Test
     @Ignore("As of 24/10/2020 it works but it's because i'm doing it hacky (:")
-    fun `RaceViewModel initialisation sets wikipedia button to true if round data contains wikipedia link`() = coroutineTest {
+    fun `initialisation sets wikipedia button to true if round data contains wikipedia link`() = coroutineTest {
 
         every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow { emit(mockRound1) }
 
@@ -479,7 +479,7 @@ internal class RaceViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `RaceViewModel clicking wikipedia button fires goToWikipedia event`() = coroutineTest {
+    fun `clicking wikipedia button fires goToWikipedia event`() = coroutineTest {
 
         every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow { emit(mockRound1) }
 
@@ -495,7 +495,7 @@ internal class RaceViewModelTest: BaseTest() {
     //region App Hints - Long Press Race Qualifying
 
     @Test
-    fun `RaceViewModel notify app show qualifying long click hint when never been done before`() = coroutineTest {
+    fun `notify app show qualifying long click hint when never been done before`() = coroutineTest {
 
         every { mockAppHintsController.showQualifyingLongPress } returns true
         every { mockRaceController.showQualifyingDelta } returns false
@@ -521,7 +521,7 @@ internal class RaceViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `RaceViewModel notify app show qualifying not shown if it's been shown before`() = coroutineTest {
+    fun `notify app show qualifying not shown if it's been shown before`() = coroutineTest {
 
         every { mockAppHintsController.showQualifyingLongPress } returns false
         every { mockRaceController.showQualifyingDelta } returns false

@@ -2,9 +2,9 @@ package tmg.flashback.ui.race
 
 import androidx.annotation.LayoutRes
 import tmg.flashback.R
-import tmg.flashback.repo.enums.BarAnimation
-import tmg.flashback.repo.enums.RaceStatus
-import tmg.flashback.repo.models.stats.*
+import tmg.flashback.core.enums.AnimationSpeed
+import tmg.flashback.data.enums.RaceStatus
+import tmg.flashback.data.models.stats.*
 import tmg.flashback.ui.shared.sync.SyncDataItem
 
 sealed class RaceModel(
@@ -56,7 +56,7 @@ sealed class RaceModel(
         val constructor: Constructor,
         val points: Int,
         val driver: List<Pair<Driver, Int>>,
-        val barAnimation: BarAnimation
+        val animationSpeed: AnimationSpeed
     ) : RaceModel(R.layout.view_race_constructor)
 
     data class ErrorItem(

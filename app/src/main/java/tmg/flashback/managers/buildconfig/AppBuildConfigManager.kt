@@ -1,6 +1,7 @@
 package tmg.flashback.managers.buildconfig
 
 import tmg.flashback.BuildConfig
+import tmg.flashback.core.managers.BuildConfigManager
 
 class AppBuildConfigManager: BuildConfigManager {
 

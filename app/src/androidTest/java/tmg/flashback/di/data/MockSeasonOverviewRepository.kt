@@ -2,8 +2,8 @@ package tmg.flashback.di.data
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import tmg.flashback.repo.db.stats.SeasonOverviewRepository
-import tmg.flashback.repo.models.stats.*
+import tmg.flashback.data.db.stats.SeasonOverviewRepository
+import tmg.flashback.data.models.stats.*
 
 internal object MockSeasonOverviewRepository: SeasonOverviewRepository {
 

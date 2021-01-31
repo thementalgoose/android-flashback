@@ -6,11 +6,11 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.*
-import tmg.flashback.ui.base.BaseViewModel
+import tmg.flashback.core.managers.NetworkConnectivityManager
+import tmg.flashback.core.ui.BaseViewModel
 import tmg.flashback.extensions.circuitIcon
-import tmg.flashback.managers.networkconnectivity.NetworkConnectivityManager
-import tmg.flashback.repo.db.stats.CircuitRepository
-import tmg.flashback.repo.models.stats.Circuit
+import tmg.flashback.data.db.stats.CircuitRepository
+import tmg.flashback.data.models.stats.Circuit
 import tmg.flashback.ui.shared.sync.SyncDataItem
 import tmg.utilities.extensions.then
 import tmg.utilities.lifecycle.DataEvent

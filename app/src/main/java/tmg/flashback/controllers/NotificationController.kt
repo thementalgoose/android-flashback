@@ -1,23 +1,23 @@
 package tmg.flashback.controllers
 
 import android.os.Build
-import tmg.flashback.repo.config.RemoteConfigRepository
-import tmg.flashback.repo.enums.NotificationRegistration
-import tmg.flashback.repo.pref.DeviceRepository
+import tmg.flashback.core.controllers.ConfigurationController
+import tmg.flashback.data.enums.NotificationRegistration
+import tmg.flashback.data.repositories.AppRepository
 
 /**
  * Control the notifications in the app / letting the user know something
  */
 class NotificationController(
-        private val deviceRepository: DeviceRepository,
-        private val remoteConfigRepository: RemoteConfigRepository
+    private val appRepository: AppRepository,
+    private val configurationController: ConfigurationController
 ) {
 
     /**
      * Get the banner that we display to the user
      */
     val banner: String?
-        get() = remoteConfigRepository.banner
+        get() = configurationController.banner
 
     /**
      * Notifications channels supported
@@ -29,36 +29,36 @@ class NotificationController(
      * Race
      */
     val raceOptInUndecided: Boolean
-        get() = deviceRepository.notificationsRace == null
+        get() = appRepository.notificationsRace == null
     var raceOptIn: Boolean
-        get() = deviceRepository.notificationsRace == NotificationRegistration.OPT_IN
+        get() = appRepository.notificationsRace == NotificationRegistration.OPT_IN
         set(value) = when (value) {
-            true -> deviceRepository.notificationsRace = NotificationRegistration.OPT_IN
-            false -> deviceRepository.notificationsRace = NotificationRegistration.OPT_OUT
+            true -> appRepository.notificationsRace = NotificationRegistration.OPT_IN
+            false -> appRepository.notificationsRace = NotificationRegistration.OPT_OUT
         }
 
     /**
      * Qualifying
      */
     val qualifyingOptInUndecided: Boolean
-        get() = deviceRepository.notificationsQualifying == null
+        get() = appRepository.notificationsQualifying == null
     var qualifyingOptIn: Boolean
-        get() = deviceRepository.notificationsQualifying == NotificationRegistration.OPT_IN
+        get() = appRepository.notificationsQualifying == NotificationRegistration.OPT_IN
         set(value) = when (value) {
-            true -> deviceRepository.notificationsQualifying = NotificationRegistration.OPT_IN
-            false -> deviceRepository.notificationsQualifying = NotificationRegistration.OPT_OUT
+            true -> appRepository.notificationsQualifying = NotificationRegistration.OPT_IN
+            false -> appRepository.notificationsQualifying = NotificationRegistration.OPT_OUT
         }
 
     /**
      * Receive misc notifications
      */
     val miscOptInUndecided: Boolean
-        get() = deviceRepository.notificationsMisc == null
+        get() = appRepository.notificationsMisc == null
     var miscOptIn: Boolean
-        get() = deviceRepository.notificationsMisc == NotificationRegistration.OPT_IN
+        get() = appRepository.notificationsMisc == NotificationRegistration.OPT_IN
         set(value) = when (value) {
-            true -> deviceRepository.notificationsMisc = NotificationRegistration.OPT_IN
-            false -> deviceRepository.notificationsMisc = NotificationRegistration.OPT_OUT
+            true -> appRepository.notificationsMisc = NotificationRegistration.OPT_IN
+            false -> appRepository.notificationsMisc = NotificationRegistration.OPT_OUT
         }
 
     companion object {

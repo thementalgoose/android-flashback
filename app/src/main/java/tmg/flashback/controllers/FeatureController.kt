@@ -1,19 +1,18 @@
 package tmg.flashback.controllers
 
-import org.threeten.bp.LocalDate
-import tmg.flashback.repo.config.RemoteConfigRepository
+import tmg.flashback.core.controllers.ConfigurationController
 
 /**
  * All major features in the app
  */
 class FeatureController(
-        private val remoteConfigRepository: RemoteConfigRepository
+        private val configurationController: ConfigurationController
 ) {
     /**
      * Is the RSS feature enabled
      */
     val rssEnabled: Boolean
-        get() = remoteConfigRepository.rss
+        get() = configurationController.rss
 
     /**
      * Is the Search feature enabled

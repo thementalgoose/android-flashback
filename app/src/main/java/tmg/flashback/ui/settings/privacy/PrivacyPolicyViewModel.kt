@@ -2,7 +2,7 @@ package tmg.flashback.ui.settings.privacy
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import tmg.flashback.ui.base.BaseViewModel
+import tmg.flashback.core.ui.BaseViewModel
 import tmg.utilities.lifecycle.Event
 
 //region Inputs

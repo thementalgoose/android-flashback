@@ -7,13 +7,12 @@ import tmg.flashback.di.data.MockHistoryRepository
 import tmg.flashback.di.data.MockSeasonOverviewRepository
 import tmg.flashback.di.remoteconfig.MockRemoteConfigRepository
 import tmg.flashback.di.rss.MockRSS
-import tmg.flashback.repo.config.RemoteConfigRepository
-import tmg.flashback.repo.db.stats.ConstructorRepository
-import tmg.flashback.repo.db.stats.DriverRepository
-import tmg.flashback.repo.db.stats.HistoryRepository
-import tmg.flashback.repo.db.stats.SeasonOverviewRepository
-import tmg.flashback.rss.network.RSS
-import tmg.flashback.rss.repo.RSSRepository
+import tmg.flashback.data.config.RemoteConfigRepository
+import tmg.flashback.data.db.stats.ConstructorRepository
+import tmg.flashback.data.db.stats.DriverRepository
+import tmg.flashback.data.db.stats.HistoryRepository
+import tmg.flashback.data.db.stats.SeasonOverviewRepository
+import tmg.flashback.rss.repo.RssAPI
 
 internal val mockModules = module(override = true) {
     // Data
@@ -26,5 +25,5 @@ internal val mockModules = module(override = true) {
     single<RemoteConfigRepository> { MockRemoteConfigRepository }
 
     // RSS
-    single<RSSRepository> { MockRSS }
+    single<RssAPI> { MockRSS }
 }

@@ -9,11 +9,11 @@ import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
 import tmg.flashback.constants.TrackLayout
+import tmg.flashback.core.managers.NetworkConnectivityManager
 import tmg.flashback.extensions.circuitIcon
-import tmg.flashback.managers.networkconnectivity.NetworkConnectivityManager
-import tmg.flashback.repo.db.stats.CircuitRepository
-import tmg.flashback.repo.models.stats.Circuit
-import tmg.flashback.repo.models.stats.CircuitRace
+import tmg.flashback.data.db.stats.CircuitRepository
+import tmg.flashback.data.models.stats.Circuit
+import tmg.flashback.data.models.stats.CircuitRace
 import tmg.flashback.ui.shared.sync.SyncDataItem
 import tmg.flashback.testutils.*
 
@@ -64,7 +64,7 @@ internal class CircuitInfoViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `CircuitInfoViewModel isLoading defaults to true`() {
+    fun `isLoading defaults to true`() {
 
         initSUT()
 
@@ -74,7 +74,7 @@ internal class CircuitInfoViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `CircuitInfoViewModel when circuit provided is null and network isn't connected show no network error`() = coroutineTest {
+    fun `when circuit provided is null and network isn't connected show no network error`() = coroutineTest {
 
         every { mockCircuitRepository.getCircuit(any()) } returns emptyCircuitFlow
         every { mockConnectivityManager.isConnected } returns false
@@ -91,7 +91,7 @@ internal class CircuitInfoViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `CircuitInfoViewModel when circuit provided is null and network is connected show internal error state`() = coroutineTest {
+    fun `when circuit provided is null and network is connected show internal error state`() = coroutineTest {
 
         every { mockCircuitRepository.getCircuit(any()) } returns emptyCircuitFlow
         every { mockConnectivityManager.isConnected } returns true
@@ -108,7 +108,7 @@ internal class CircuitInfoViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `CircuitInfoViewModel when circuit provided is not null show correct circuit information with supported track image`() = coroutineTest {
+    fun `when circuit provided is not null show correct circuit information with supported track image`() = coroutineTest {
 
         val expected = listOf(
             CircuitItem.TrackImage(mockCircuit.circuitIcon!!),
@@ -137,7 +137,7 @@ internal class CircuitInfoViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `CircuitInfoViewModel when circuit provided is not null show correct circuit information with unsupported track image`() = coroutineTest {
+    fun `when circuit provided is not null show correct circuit information with unsupported track image`() = coroutineTest {
 
         val expected = listOf(
             CircuitItem.CircuitInfo(mockCircuit.copy(id = mockInvalidCircuitId)),
@@ -165,7 +165,7 @@ internal class CircuitInfoViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `CircuitInfoViewModel loading gets set to false once data has appeared`() = coroutineTest {
+    fun `loading gets set to false once data has appeared`() = coroutineTest {
 
         every { mockCircuitRepository.getCircuit(any()) } returns circuitWithTrackFlow
         every { mockConnectivityManager.isConnected } returns true
@@ -189,7 +189,7 @@ internal class CircuitInfoViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `CircuitInfoViewModel click showOnMap launches show map action`() = coroutineTest {
+    fun `click showOnMap launches show map action`() = coroutineTest {
 
         initSUT()
 
@@ -201,7 +201,7 @@ internal class CircuitInfoViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `CircuitInfoViewModel click wikipedia launches wikipedia action`() = coroutineTest {
+    fun `click wikipedia launches wikipedia action`() = coroutineTest {
 
         initSUT()
 

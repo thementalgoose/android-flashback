@@ -5,15 +5,18 @@ import androidx.lifecycle.MutableLiveData
 import tmg.components.prefs.AppPreferencesItem
 import tmg.flashback.R
 import tmg.flashback.constants.App.playStoreUrl
-import tmg.flashback.ui.base.BaseViewModel
+import tmg.flashback.core.ui.BaseViewModel
 import tmg.flashback.controllers.*
+import tmg.flashback.core.controllers.AnalyticsController
+import tmg.flashback.core.controllers.AppearanceController
+import tmg.flashback.core.controllers.CrashController
+import tmg.flashback.core.controllers.DeviceController
+import tmg.flashback.core.enums.AnimationSpeed
+import tmg.flashback.core.enums.Theme
+import tmg.flashback.managers.notifications.FirebasePushNotificationManager.Companion.topicQualifying
+import tmg.flashback.managers.notifications.FirebasePushNotificationManager.Companion.topicRace
 import tmg.flashback.extensions.icon
 import tmg.flashback.extensions.label
-import tmg.flashback.managers.analytics.AnalyticsManager
-import tmg.flashback.notifications.FirebasePushNotificationManager.Companion.topicQualifying
-import tmg.flashback.notifications.FirebasePushNotificationManager.Companion.topicRace
-import tmg.flashback.repo.enums.ThemePref
-import tmg.flashback.repo.enums.BarAnimation
 import tmg.flashback.ui.utils.Selected
 import tmg.flashback.ui.utils.StringHolder
 import tmg.flashback.ui.utils.bottomsheet.BottomSheetItem
@@ -24,8 +27,8 @@ import tmg.utilities.lifecycle.Event
 
 interface SettingsViewModelInputs {
     fun preferenceClicked(pref: SettingsOptions?, value: Boolean?)
-    fun pickTheme(theme: ThemePref)
-    fun pickAnimationSpeed(animation: BarAnimation)
+    fun pickTheme(theme: Theme)
+    fun pickAnimationSpeed(animation: AnimationSpeed)
     fun pickSeason(season: Int?)
 }
 
@@ -63,14 +66,14 @@ interface SettingsViewModelOutputs {
 //endregion
 
 class SettingsViewModel(
-        private val notificationController: NotificationController,
-        private val appearanceController: AppearanceController,
-        private val deviceController: DeviceController,
-        private val raceController: RaceController,
-        private val analyticsManager: AnalyticsManager,
-        private val crashManager: CrashController,
-        private val seasonController: SeasonController,
-        private val featureController: FeatureController
+    private val notificationController: NotificationController,
+    private val appearanceController: AppearanceController,
+    private val deviceController: DeviceController,
+    private val raceController: RaceController,
+    private val analyticsController: AnalyticsController,
+    private val crashManager: CrashController,
+    private val seasonController: SeasonController,
+    private val featureController: FeatureController
 ): BaseViewModel(), SettingsViewModelInputs, SettingsViewModelOutputs {
 
     var inputs: SettingsViewModelInputs = this
@@ -119,7 +122,7 @@ class SettingsViewModel(
             add(AppPreferencesItem.Category(R.string.settings_theme))
             add(SettingsOptions.THEME.toPref())
             add(AppPreferencesItem.Category(R.string.settings_customisation))
-            add(SettingsOptions.BAR_ANIMATION_SPEED.toPref())
+            add(SettingsOptions.ANIMATION_SPEED.toPref())
             add(SettingsOptions.QUALIFYING_DELTAS.toSwitch(raceController.showQualifyingDelta))
             add(SettingsOptions.FADE_OUT_DNF.toSwitch(raceController.fadeDNF))
             add(SettingsOptions.QUALIFYING_GRID_PENALTY.toSwitch(raceController.showGridPenaltiesInQualifying))
@@ -135,8 +138,8 @@ class SettingsViewModel(
             add(SettingsOptions.PRIVACY_POLICY.toPref())
             add(SettingsOptions.RELEASE.toPref())
             add(AppPreferencesItem.Category(R.string.settings_feedback))
-            add(SettingsOptions.CRASH.toSwitch(crashManager.crashReporting))
-            add(SettingsOptions.ANALYTICS.toSwitch(analyticsManager.enableAnalytics))
+            add(SettingsOptions.CRASH.toSwitch(crashManager.enabled))
+            add(SettingsOptions.ANALYTICS.toSwitch(analyticsController.enabled))
             add(SettingsOptions.SUGGESTION.toPref())
             add(SettingsOptions.SHAKE.toSwitch(deviceController.shakeToReport))
         }
@@ -160,28 +163,28 @@ class SettingsViewModel(
             SettingsOptions.QUALIFYING_GRID_PENALTY -> raceController.showGridPenaltiesInQualifying = value ?: true
             SettingsOptions.SEASON_BOTTOM_SHEET_FAVOURITED -> seasonController.favouritesExpanded = value ?: true
             SettingsOptions.SEASON_BOTTOM_SHEET_ALL -> seasonController.allExpanded = value ?: true
-            SettingsOptions.BAR_ANIMATION_SPEED -> openAnimationPicker.value = Event()
+            SettingsOptions.ANIMATION_SPEED -> openAnimationPicker.value = Event()
             SettingsOptions.WIDGETS_REFRESH_ALL -> refreshWidgets.value = Event()
             SettingsOptions.ABOUT -> openAbout.value = Event()
             SettingsOptions.REVIEW -> openReview.value = DataEvent(playStoreUrl)
             SettingsOptions.PRIVACY_POLICY -> openPrivacyPolicy.value = Event()
             SettingsOptions.RELEASE -> openRelease.value = Event()
-            SettingsOptions.CRASH -> crashManager.crashReporting = value ?: true
-            SettingsOptions.ANALYTICS -> analyticsManager.enableAnalytics = value ?: true
+            SettingsOptions.CRASH -> crashManager.enabled = value ?: true
+            SettingsOptions.ANALYTICS -> analyticsController.enabled = value ?: true
             SettingsOptions.SUGGESTION -> openSuggestions.value = Event()
             SettingsOptions.SHAKE -> deviceController.shakeToReport = value ?: true
             SettingsOptions.NEWS -> openNews.value = Event()
         }
     }
 
-    override fun pickTheme(theme: ThemePref) {
+    override fun pickTheme(theme: Theme) {
         appearanceController.currentTheme = theme
         updateThemeList()
         themeChanged.value = Event()
     }
 
-    override fun pickAnimationSpeed(animation: BarAnimation) {
-        appearanceController.barAnimation = animation
+    override fun pickAnimationSpeed(animation: AnimationSpeed) {
+        appearanceController.animationSpeed = animation
         updateAnimationList()
         animationChanged.value = Event()
     }
@@ -198,16 +201,16 @@ class SettingsViewModel(
     //endregion
 
     private fun updateThemeList() {
-        themePreferences.value = ThemePref.values()
+        themePreferences.value = Theme.values()
                 .map {
                     Selected(BottomSheetItem(it.ordinal, it.icon, StringHolder(it.label)), it == appearanceController.currentTheme)
                 }
     }
 
     private fun updateAnimationList() {
-        animationPreference.value = BarAnimation.values()
+        animationPreference.value = AnimationSpeed.values()
                 .map {
-                    Selected(BottomSheetItem(it.ordinal, it.icon, StringHolder(it.label)), it == appearanceController.barAnimation)
+                    Selected(BottomSheetItem(it.ordinal, it.icon, StringHolder(it.label)), it == appearanceController.animationSpeed)
                 }
     }
 

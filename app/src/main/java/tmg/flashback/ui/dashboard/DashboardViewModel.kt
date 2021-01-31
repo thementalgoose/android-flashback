@@ -6,17 +6,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import tmg.flashback.BuildConfig
-import tmg.flashback.ui.base.BaseViewModel
+import tmg.flashback.core.ui.BaseViewModel
 import tmg.flashback.controllers.ReleaseNotesController
+import tmg.flashback.core.controllers.ConfigurationController
+import tmg.flashback.core.managers.BuildConfigManager
 import tmg.flashback.extensions.updateAllWidgets
-import tmg.flashback.managers.buildconfig.BuildConfigManager
-import tmg.flashback.managers.remoteconfig.RemoteConfigManager
-import tmg.flashback.repo.db.DataRepository
+import tmg.flashback.data.db.DataRepository
 import tmg.utilities.lifecycle.Event
 
 //region Inputs
@@ -39,11 +38,11 @@ interface DashboardViewModelOutputs {
 //endregion
 
 class DashboardViewModel(
-        private val applicationContext: Context,
-        private val dataRepository: DataRepository,
-        private val buildConfigManager: BuildConfigManager,
-        private val remoteConfigManager: RemoteConfigManager,
-        private val releaseNotesController: ReleaseNotesController
+    private val applicationContext: Context,
+    private val dataRepository: DataRepository,
+    private val buildConfigManager: BuildConfigManager,
+    private val configurationController: ConfigurationController,
+    private val releaseNotesController: ReleaseNotesController
 ): BaseViewModel(), DashboardViewModelInputs, DashboardViewModelOutputs {
 
     override val openAppLockout: LiveData<Event> = dataRepository
@@ -69,8 +68,8 @@ class DashboardViewModel(
             openReleaseNotes.value = Event()
         }
         viewModelScope.launch {
-            remoteConfigManager.update(false)
-            val activate = remoteConfigManager.activate()
+            configurationController.fetch()
+            val activate = configurationController.applyPending()
             if (activate) {
                 if (BuildConfig.DEBUG) {
                     Log.i("Flashback", "Remote config change detected")

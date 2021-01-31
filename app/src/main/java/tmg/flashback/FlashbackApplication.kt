@@ -18,14 +18,9 @@ class FlashbackApplication: Application() {
             androidContext(this@FlashbackApplication)
             modules(
                 appModule,
-                managerModule,
-                firebaseModule,
-                controllerModule,
-                viewModelModule,
-            )
-            modules(
-                rssModule,
-                rssViewModelModule
+                appRssModule,
+                dataModule,
+                coreModule
             )
         }
 

@@ -14,8 +14,8 @@ import kotlinx.android.synthetic.main.fragment_dashboard_list.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.BuildConfig
 import tmg.flashback.R
+import tmg.flashback.core.ui.BaseFragment
 import tmg.flashback.rss.ui.RSSActivity
-import tmg.flashback.ui.base.BaseFragment
 import tmg.flashback.ui.dashboard.DashboardNavigationCallback
 import tmg.flashback.ui.settings.SettingsActivity
 import tmg.utilities.extensions.observe
