@@ -38,10 +38,16 @@ open class FirebaseRepo(
     //#endregion
 
     /**
-     * Get a document from firestore and convert into a domain level model
+     * Get a document from firestore and convert into a domain level model.
+     *
+     * If an exception is thrown either by the firebase SDK or during conversion (ie.
+     *   some data failed to parse) then the exceptions will be caught and handled via. the
+     *   [handleError] method, gracefully handling it as if the document doesn't exist.
+     *
+     * It will also log it to the injected [crashManager]
      *
      * @param converter Method which takes firestore model (denoted by prefix F (ie. FModel)) into a
-     *   domain model
+     *   domain model.
      */
     inline fun <reified E,T> DocumentReference.getDoc(crossinline converter: (E) -> T): Flow<T?> = callbackFlow {
         val subscription = addSnapshotListener { snapshot, exception ->
@@ -95,6 +101,11 @@ open class FirebaseRepo(
         return this.map { it ?: emptyList() }
     }
 
+    /**
+     * Handle any exception thrown by the [getDoc] method
+     * @param exception Exception that's thrown, either by firebase SDK or an issue in conversion
+     * @param path Some context around the firestore query that threw the exception
+     */
     fun handleError(exception: Exception, path: String) {
         if (exception is FirebaseFirestoreException) {
             handleFirebaseError(exception, path)
@@ -104,6 +115,11 @@ open class FirebaseRepo(
         }
     }
 
+    /**
+     * Handle the exception that is thrown by firebase with some context
+     * @param exception Exception detailing firestore query issue
+     * @param path Some context around the firestore query that threw the exception
+     */
     private fun handleFirebaseError(exception: FirebaseFirestoreException, path: String) {
         if (BuildConfig.DEBUG) {
             exception.printStackTrace()
