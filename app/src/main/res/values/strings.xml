@@ -4,6 +4,14 @@
     <string name="splash_sync_required_failed">We need to sync some information to continue. Please make sure you have an active internet connection and try again (you\'ll only need to do this once)</string>
 
     <!-- Settings -->
+    <string name="settings_all_rss">RSS</string>
+    <string name="settings_all_customisation">Customisation</string>
+    <string name="settings_all_statistics">Statistics</string>
+    <string name="settings_all_about">About</string>
+    <string name="settings_all_device">Device</string>
+    <string name="settings_all_notifications">Notifications</string>
+    <string name="settings_all_widgets">Widgets</string>
+
     <string name="settings_title">Settings</string>
     <string name="settings_notifications_title">Notifications</string>
     <string name="settings_notifications_channel_qualifying_title">Qualifying</string>
@@ -47,12 +55,16 @@
     <string name="settings_widgets_update_all_description">Manually refresh all active widgets. Widgets usually update every 3 hours</string>
     <string name="settings_widgets_update_all_updated">All widgets refreshed</string>
     <string name="settings_help">About</string>
+    <string name="settings_statistics">Statistics</string>
     <string name="settings_help_about_title">About this app</string>
     <string name="settings_help_about_description">About the application and the developer</string>
     <string name="settings_help_review_title">Review</string>
     <string name="settings_help_review_description">Rate the app on the google play store</string>
     <string name="settings_help_release_notes_title">Release notes</string>
     <string name="settings_help_release_notes_description">See the release notes history</string>
+
+    <string name="settings_device">Device</string>
+
     <string name="settings_feedback">Feedback</string>
     <string name="settings_help_analytics_title">Anonymous analytics</string>
     <string name="settings_help_analytics_description">Send anonymous analytics data about your app experience. This can also aid crash reporting</string>
@@ -319,5 +331,6 @@
 
     <!-- App Hints -->
     <string name="app_hint_race_qualifying_long_click">Tip: You can long press on qualifying data to show the lap time deltas</string>
+    <string name="settings_home">Home</string>
 
 </resources>

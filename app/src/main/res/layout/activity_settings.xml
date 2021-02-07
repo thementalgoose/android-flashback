@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
@@ -7,83 +7,58 @@
     android:layout_height="match_parent"
     android:background="?attr/f1BackgroundPrimary">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appbar"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/titlebar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@null"
-        app:elevation="0dp"
-        app:layout_behavior="tmg.flashback.ui.utils.AppBarLockableBehavior">
+        android:background="?attr/f1BackgroundPrimary"
+        android:fitsSystemWindows="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.appbar.CollapsingToolbarLayout
+        <TextView
+            android:id="@+id/header"
+            style="@style/Text.Toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_scrollFlags="exitUntilCollapsed|scroll|enterAlways">
+            android:fitsSystemWindows="true"
+            android:gravity="center"
+            android:paddingTop="@dimen/paddingMedium"
+            android:paddingBottom="@dimen/paddingMedium"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Indianapolis 500" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/titlebar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?attr/f1BackgroundPrimary"
-                android:fitsSystemWindows="false">
+        <ImageButton
+            android:id="@+id/back"
+            android:layout_width="@dimen/toolbarSettingsIcon"
+            android:layout_height="@dimen/toolbarSettingsIcon"
+            android:layout_marginStart="@dimen/paddingSmall"
+            android:layout_marginTop="@dimen/paddingSmall"
+            android:layout_marginEnd="@dimen/paddingMedium"
+            android:layout_marginBottom="@dimen/paddingSmall"
+            android:background="@null"
+            android:contentDescription="@string/settings_title"
+            android:foreground="@drawable/ripple_rounded"
+            android:scaleType="center"
+            android:src="@drawable/ic_back"
+            android:tint="?attr/f1TextPrimary"
+            app:layout_constraintBottom_toBottomOf="@id/header"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/header" />
 
-                <TextView
-                    android:id="@+id/header"
-                    style="@style/Text.Toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fitsSystemWindows="true"
-                    android:gravity="center"
-                    android:paddingTop="@dimen/paddingMedium"
-                    android:paddingBottom="@dimen/paddingMedium"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="Indianapolis 500" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <ImageButton
-                    android:id="@+id/back"
-                    android:layout_width="@dimen/toolbarSettingsIcon"
-                    android:layout_height="@dimen/toolbarSettingsIcon"
-                    android:layout_marginStart="@dimen/paddingSmall"
-                    android:layout_marginTop="@dimen/paddingSmall"
-                    android:layout_marginEnd="@dimen/paddingMedium"
-                    android:layout_marginBottom="@dimen/paddingSmall"
-                    android:background="@null"
-                    android:contentDescription="@string/settings_title"
-                    android:foreground="@drawable/ripple_rounded"
-                    android:scaleType="center"
-                    android:src="@drawable/ic_back"
-                    android:tint="?attr/f1TextPrimary"
-                    app:layout_constraintBottom_toBottomOf="@id/header"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/header" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
-
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvSettings"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragments"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:fitsSystemWindows="true"
-        android:overScrollMode="never"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
+        android:layout_height="0dp"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/graph_settings"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/titlebar" />
 
-    <View
-        android:id="@+id/vBackground"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/overlay"
-        android:clickable="true"
-        android:focusable="true"
-        android:visibility="gone" />
-
-    <include layout="@layout/bottom_sheet_theme" />
-
-    <include layout="@layout/bottom_sheet_animation" />
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

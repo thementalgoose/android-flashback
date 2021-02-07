@@ -1,4 +1,4 @@
-package tmg.flashback.ui.settings
+package tmg.flashback.core.ui.settings
 
 import android.view.View
 import kotlinx.android.synthetic.main.view_settings_category.view.tvTitle
@@ -7,13 +7,12 @@ import kotlinx.android.synthetic.main.view_settings_preference.view.tvDescriptio
 import kotlinx.android.synthetic.main.view_settings_preference_switch.view.*
 import tmg.components.prefs.AppPreferencesAdapter
 import tmg.components.prefs.AppPreferencesItem
-import tmg.flashback.R
+import tmg.flashback.core.R
 
 class SettingsAdapter(
-    prefClicked: (prefKey: String) -> Unit = { _ -> },
-    prefSwitchClicked: (prefKey: String, newState: Boolean) -> Unit = { _, _ -> }
+        prefClicked: (prefKey: String) -> Unit = { _ -> },
+        prefSwitchClicked: (prefKey: String, newState: Boolean) -> Unit = { _, _ -> }
 ) : AppPreferencesAdapter(prefClicked, prefSwitchClicked) {
-
 
     override val categoryLayoutId: Int = R.layout.view_settings_category
 
