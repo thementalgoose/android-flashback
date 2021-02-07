@@ -5,6 +5,7 @@ buildscript {
     ext.junit = "5.5.2"
     ext.koin_version = "2.2.2"
     ext.coroutines = "1.4.1"
+    ext.navigation = "2.3.3"
 
     ext.threeten = "1.2.2"
     ext.threetenbp = "1.4.1"
