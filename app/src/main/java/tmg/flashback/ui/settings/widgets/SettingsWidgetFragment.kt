@@ -3,11 +3,9 @@ package tmg.flashback.ui.settings.widgets
 import android.os.Bundle
 import android.view.View
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_settings.*
 import kotlinx.android.synthetic.main.fragment_settings.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.R
-import tmg.flashback.core.ui.BaseFragment
 import tmg.flashback.core.ui.settings.SettingsFragment
 import tmg.flashback.extensions.updateAllWidgets
 import tmg.utilities.extensions.observe
