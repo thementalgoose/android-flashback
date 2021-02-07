@@ -16,6 +16,7 @@ import tmg.flashback.R
 import tmg.flashback.core.ui.BaseFragment
 import tmg.flashback.rss.ui.RSSActivity
 import tmg.flashback.ui.dashboard.DashboardNavigationCallback
+import tmg.flashback.ui.settings.SettingsAllActivity
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 
@@ -76,7 +77,7 @@ class ListFragment: BaseFragment() {
 
         observeEvent(viewModel.outputs.openSettings) {
             context?.let {
-                startActivity(Intent(it, SettingsActivity::class.java))
+                startActivity(Intent(it, SettingsAllActivity::class.java))
             }
         }
 

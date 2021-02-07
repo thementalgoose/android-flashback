@@ -30,8 +30,14 @@ import tmg.flashback.ui.overviews.constructor.ConstructorViewModel
 import tmg.flashback.ui.overviews.driver.DriverViewModel
 import tmg.flashback.ui.overviews.driver.season.DriverSeasonViewModel
 import tmg.flashback.ui.race.RaceViewModel
-import tmg.flashback.ui.settings.SettingsViewModel
+import tmg.flashback.ui.settings.SettingsAllViewModel
+import tmg.flashback.ui.settings.about.SettingsAboutViewModel
+import tmg.flashback.ui.settings.customisation.SettingsCustomisationViewModel
+import tmg.flashback.ui.settings.device.SettingsDeviceViewModel
+import tmg.flashback.ui.settings.notifications.SettingsNotificationViewModel
 import tmg.flashback.ui.settings.privacy.PrivacyPolicyViewModel
+import tmg.flashback.ui.settings.statistics.SettingsStatisticsViewModel
+import tmg.flashback.ui.settings.widgets.SettingsWidgetViewModel
 
 val appModule = module {
 
@@ -70,7 +76,13 @@ val appModule = module {
     // Constructor
     viewModel { ConstructorViewModel(get(), get()) }
     // Settings
-    viewModel { SettingsViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
+    viewModel { SettingsAllViewModel() }
+    viewModel { SettingsAboutViewModel() }
+    viewModel { SettingsCustomisationViewModel(get()) }
+    viewModel { SettingsDeviceViewModel(get(), get(), get()) }
+    viewModel { SettingsNotificationViewModel(get()) }
+    viewModel { SettingsStatisticsViewModel(get(), get()) }
+    viewModel { SettingsWidgetViewModel() }
     viewModel { PrivacyPolicyViewModel() }
     // Admin
     viewModel { ForceUpgradeViewModel(get()) }
