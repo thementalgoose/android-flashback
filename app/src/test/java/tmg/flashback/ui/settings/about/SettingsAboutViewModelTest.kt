@@ -23,8 +23,7 @@ internal class SettingsAboutViewModelTest: BaseTest() {
                 AppPreferencesItem.Category(R.string.settings_help),
                 AppPreferencesItem.Preference("AboutThisApp", R.string.settings_help_about_title, R.string.settings_help_about_description),
                 AppPreferencesItem.Preference("Review", R.string.settings_help_review_title, R.string.settings_help_review_description),
-                AppPreferencesItem.Preference("PrivacyPolicy", R.string.settings_help_privacy_policy_title, R.string.settings_help_privacy_policy_description),
-                AppPreferencesItem.Preference("ReleaseNotes", R.string.settings_help_release_notes_title, R.string.settings_help_release_notes_description)
+                AppPreferencesItem.Preference("PrivacyPolicy", R.string.settings_help_privacy_policy_title, R.string.settings_help_privacy_policy_description)
             ))
         }
     }
@@ -52,15 +51,6 @@ internal class SettingsAboutViewModelTest: BaseTest() {
         initSUT()
         sut.inputs.preferenceClicked("PrivacyPolicy", null)
         sut.outputs.openPrivacyPolicy.test {
-            assertEventFired()
-        }
-    }
-
-    @Test
-    fun `clicking release notes launches open event`() {
-        initSUT()
-        sut.inputs.preferenceClicked("ReleaseNotes", null)
-        sut.outputs.openReleaseNotes.test {
             assertEventFired()
         }
     }

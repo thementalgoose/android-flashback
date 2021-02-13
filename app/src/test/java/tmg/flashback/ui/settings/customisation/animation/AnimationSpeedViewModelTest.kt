@@ -43,18 +43,6 @@ internal class AnimationSpeedViewModelTest: BaseTest() {
         }
     }
 
-
-    @Test
-    fun `selecting animation speed updates list`() {
-        initSUT()
-        sut.inputs.selectAnimationSpeed(AnimationSpeed.QUICK)
-        sut.outputs.animationSpeedPreference.test {
-            assertValue(AnimationSpeed.values().map {
-                Selected(BottomSheetItem(it.ordinal, it.icon, StringHolder(it.label)), it == AnimationSpeed.QUICK)
-            })
-        }
-    }
-
     @Test
     fun `selecting animation speed updates value in controller`() {
         initSUT()

@@ -42,17 +42,6 @@ internal class ThemeViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `selecting theme updates list`() {
-        initSUT()
-        sut.inputs.selectTheme(Theme.DAY)
-        sut.outputs.themePreferences.test {
-            assertValue(Theme.values().map {
-                Selected(BottomSheetItem(it.ordinal, it.icon, StringHolder(it.label)), it == Theme.DAY)
-            })
-        }
-    }
-
-    @Test
     fun `selecting theme updates value in controller`() {
         initSUT()
         sut.inputs.selectTheme(Theme.DAY)

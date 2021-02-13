@@ -40,6 +40,7 @@ internal class SettingsNotificationViewModelTest: BaseTest() {
 
     @Test
     fun `init without notification channels supported shows notification items`() {
+        every { mockNotificationController.isNotificationChannelsSupported } returns false
         initSUT()
         sut.outputs.settings.test {
             assertValue(listOf(
@@ -76,7 +77,7 @@ internal class SettingsNotificationViewModelTest: BaseTest() {
     @Test
     fun `click notification launches settings`() {
         initSUT()
-        sut.inputs.preferenceClicked("NotificationSetting", null)
+        sut.inputs.preferenceClicked("NotificationSettings", null)
         sut.outputs.openNotifications.test {
             assertEventFired()
         }

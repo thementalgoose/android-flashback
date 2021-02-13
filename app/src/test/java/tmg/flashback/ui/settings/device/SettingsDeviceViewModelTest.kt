@@ -15,7 +15,7 @@ import tmg.flashback.testutils.BaseTest
 import tmg.flashback.testutils.assertEventFired
 import tmg.flashback.testutils.test
 
-internal class SettingsDeviceViewModelTest: BaseTest() {
+internal class SettingsDeviceViewModelTest : BaseTest() {
 
     private var mockCrashController: CrashController = mockk(relaxed = true)
     private var mockAnalyticsController: AnalyticsController = mockk(relaxed = true)
@@ -39,10 +39,11 @@ internal class SettingsDeviceViewModelTest: BaseTest() {
         initSUT()
         sut.outputs.settings.test {
             assertValue(listOf(
-                AppPreferencesItem.Category(R.string.settings_device),
-                AppPreferencesItem.SwitchPreference("Crash", R.string.settings_help_crash_reporting_title, R.string.settings_help_crash_reporting_description, false),
-                AppPreferencesItem.SwitchPreference("Analytics", R.string.settings_help_analytics_title, R.string.settings_help_analytics_description, false),
-                AppPreferencesItem.SwitchPreference("Shake", R.string.settings_help_shake_to_report_title, R.string.settings_help_shake_to_report_description, false)
+                    AppPreferencesItem.Category(R.string.settings_device),
+                    AppPreferencesItem.Preference("ReleaseNotes", R.string.settings_help_release_notes_title, R.string.settings_help_release_notes_description),
+                    AppPreferencesItem.SwitchPreference("Crash", R.string.settings_help_crash_reporting_title, R.string.settings_help_crash_reporting_description, false),
+                    AppPreferencesItem.SwitchPreference("Analytics", R.string.settings_help_analytics_title, R.string.settings_help_analytics_description, false),
+                    AppPreferencesItem.SwitchPreference("ShakeToReport", R.string.settings_help_shake_to_report_title, R.string.settings_help_shake_to_report_description, false)
             ))
         }
     }
@@ -68,7 +69,7 @@ internal class SettingsDeviceViewModelTest: BaseTest() {
     @Test
     fun `clicking shake toggle marks device shake support enabled`() {
         initSUT()
-        sut.inputs.preferenceClicked("Shake", true)
+        sut.inputs.preferenceClicked("ShakeToReport", true)
         verify {
             mockDeviceController.shakeToReport = true
         }

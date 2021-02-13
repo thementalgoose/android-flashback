@@ -17,20 +17,20 @@
         android:clickable="true"
         android:focusable="true"
         android:foreground="@drawable/ripple_rounded">
-        
+
         <ImageView
-            android:tint="?attr/f1TextPrimary"
             android:id="@+id/menuItemIcon"
             android:layout_width="18dp"
             android:layout_height="18dp"
             android:layout_marginStart="@dimen/paddingSmall"
             app:layout_constraintBottom_toBottomOf="@id/menuItemLabel"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/menuItemLabel" />
+            app:layout_constraintTop_toTopOf="@id/menuItemLabel"
+            app:tint="?attr/f1TextPrimary" />
 
         <TextView
             android:id="@+id/menuItemLabel"
-            style="@style/Text.BottomSheet.Subtitle"
+            style="@style/Settings.BottomSheet.Item"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/paddingXSmall"
