@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Text">
+        <item name="android:textColor">?attr/f1TextPrimary</item>
+    </style>
+    
+    <!-- Settings -->
+
+    <style name="Settings.All.Title" parent="Text">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?attr/colorPrimary</item>
+    </style>
+
+    <style name="Settings.All.Subtitle" parent="Text">
+        <item name="android:textColor">?attr/f1TextSecondary</item>
+    </style>
+
+</resources>

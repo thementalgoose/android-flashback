@@ -22,7 +22,7 @@ import tmg.flashback.data.db.stats.SeasonOverviewRepository
 import tmg.flashback.data.models.stats.*
 import tmg.flashback.ui.shared.sync.SyncDataItem
 import tmg.flashback.ui.shared.viewholders.DataUnavailable
-import tmg.flashback.ui.utils.StringHolder
+import tmg.flashback.core.utils.StringHolder
 import tmg.utilities.extensions.combineTriple
 import tmg.utilities.extensions.then
 import tmg.utilities.lifecycle.DataEvent

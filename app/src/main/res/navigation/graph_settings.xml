@@ -10,22 +10,46 @@
         android:label="SettingsFragment" >
         <action
             android:id="@+id/graph_action_about"
-            app:destination="@id/settingsAboutFragment" />
+            app:destination="@id/settingsAboutFragment"
+            app:enterAnim="@anim/settings_enter"
+            app:exitAnim="@anim/settings_exit"
+            app:popEnterAnim="@anim/settings_pop_enter"
+            app:popExitAnim="@anim/settings_pop_exit" />
         <action
             android:id="@+id/graph_action_customisation"
-            app:destination="@id/settingsCustomisationFragment" />
+            app:destination="@id/settingsCustomisationFragment"
+            app:enterAnim="@anim/settings_enter"
+            app:exitAnim="@anim/settings_exit"
+            app:popEnterAnim="@anim/settings_pop_enter"
+            app:popExitAnim="@anim/settings_pop_exit" />
         <action
             android:id="@+id/graph_action_device"
-            app:destination="@id/settingsDeviceFragment" />
+            app:destination="@id/settingsDeviceFragment"
+            app:enterAnim="@anim/settings_enter"
+            app:exitAnim="@anim/settings_exit"
+            app:popEnterAnim="@anim/settings_pop_enter"
+            app:popExitAnim="@anim/settings_pop_exit" />
         <action
             android:id="@+id/graph_action_notifications"
-            app:destination="@id/settingsNotificationFragment" />
+            app:destination="@id/settingsNotificationFragment"
+            app:enterAnim="@anim/settings_enter"
+            app:exitAnim="@anim/settings_exit"
+            app:popEnterAnim="@anim/settings_pop_enter"
+            app:popExitAnim="@anim/settings_pop_exit" />
         <action
             android:id="@+id/graph_action_statistics"
-            app:destination="@id/settingsStatisticsFragment" />
+            app:destination="@id/settingsStatisticsFragment"
+            app:enterAnim="@anim/settings_enter"
+            app:exitAnim="@anim/settings_exit"
+            app:popEnterAnim="@anim/settings_pop_enter"
+            app:popExitAnim="@anim/settings_pop_exit" />
         <action
             android:id="@+id/graph_action_widgets"
-            app:destination="@id/settingsWidgetFragment" />
+            app:destination="@id/settingsWidgetFragment"
+            app:enterAnim="@anim/settings_enter"
+            app:exitAnim="@anim/settings_exit"
+            app:popEnterAnim="@anim/settings_pop_enter"
+            app:popExitAnim="@anim/settings_pop_exit" />
     </fragment>
 
     <fragment

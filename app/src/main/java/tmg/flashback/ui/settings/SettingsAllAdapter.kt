@@ -12,7 +12,7 @@ import tmg.flashback.ui.utils.GenericDiffCallback
 
 class SettingsAllAdapter(
     private val categoryClicked: (category: Category) -> Unit
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+) : RecyclerView.Adapter<SettingsAllAdapter.ViewHolder>() {
 
     var list: List<Category> = emptyList()
         set(value) {
@@ -21,17 +21,15 @@ class SettingsAllAdapter(
             result.dispatchUpdatesTo(this)
         }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
             LayoutInflater.from(parent.context)
                 .inflate(R.layout.view_settings_all_category, parent, false), categoryClicked
         )
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        holder.itemView.apply {
-            this.text.setText(list[position].title)
-        }
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.bind(list[position])
     }
 
     override fun getItemCount() = list.size
@@ -50,6 +48,7 @@ class SettingsAllAdapter(
         fun bind(item: Category) {
             this.category = item
             itemView.text.setText(item.title)
+            itemView.subtext.setText(item.subtitle)
         }
 
         override fun onClick(p0: View?) {
@@ -59,8 +58,35 @@ class SettingsAllAdapter(
 }
 
 enum class Category(
-    @StringRes val title: Int
+    @StringRes val title: Int,
+    @StringRes val subtitle: Int
 ) {
-    RSS(R.string.settings_all_rss),
-    ABOUT(R.string.settings_all_about),
+    CUSTOMISATION(
+            title = R.string.settings_all_customisation,
+            subtitle = R.string.settings_all_customisation_subtitle
+    ),
+    STATISTICS(
+            title = R.string.settings_all_statistics,
+            subtitle = R.string.settings_all_statistics_subtitle
+    ),
+    RSS(
+            title = R.string.settings_all_rss,
+            subtitle = R.string.settings_all_rss_subtitle
+    ),
+    NOTIFICATIONS(
+            title = R.string.settings_all_notifications,
+            subtitle = R.string.settings_all_notifications_subtitle
+    ),
+    WIDGETS(
+            title = R.string.settings_all_widgets,
+            subtitle = R.string.settings_all_widgets_subtitle
+    ),
+    DEVICE(
+            title = R.string.settings_all_device,
+            subtitle = R.string.settings_all_device_subtitle
+    ),
+    ABOUT(
+            title = R.string.settings_all_about,
+            subtitle = R.string.settings_all_about_subtitle
+    ),
 }

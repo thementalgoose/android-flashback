@@ -15,10 +15,6 @@
 
     <!-- =========================================== -->
 
-    <style name="Text">
-        <item name="android:textColor">?attr/f1TextPrimary</item>
-    </style>
-
     <style name="Button.Splash" parent="Text">
         <item name="android:paddingStart">@dimen/paddingMedLarge</item>
         <item name="android:paddingTop">@dimen/paddingXSmall</item>
