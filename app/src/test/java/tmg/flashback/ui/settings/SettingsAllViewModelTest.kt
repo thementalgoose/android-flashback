@@ -1,23 +1,47 @@
 package tmg.flashback.ui.settings
 
+import io.mockk.every
+import io.mockk.mockk
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import tmg.flashback.controllers.FeatureController
 import tmg.flashback.testutils.BaseTest
 import tmg.flashback.testutils.assertDataEventValue
 import tmg.flashback.testutils.test
 
 internal class SettingsAllViewModelTest: BaseTest() {
 
+    private var mockFeatureController: FeatureController = mockk(relaxed = true)
+
     private lateinit var sut: SettingsAllViewModel
 
+    @BeforeEach
+    internal fun setUp() {
+        every { mockFeatureController.rssEnabled } returns true
+    }
+
     private fun initSUT() {
-        sut = SettingsAllViewModel()
+        sut = SettingsAllViewModel(mockFeatureController)
     }
 
     @Test
-    fun `init loads all categories`() {
+    fun `init loads all categories with rss feature enabled`() {
         initSUT()
         sut.outputs.categories.test {
             assertValue(Category.values().toList())
+        }
+    }
+
+    @Test
+    fun `init loads all categories with rss feature disabled`() {
+        every { mockFeatureController.rssEnabled } returns false
+        initSUT()
+        sut.outputs.categories.test {
+            assertValue(Category
+                    .values()
+                    .filter { it != Category.RSS }
+                    .toList()
+            )
         }
     }
 

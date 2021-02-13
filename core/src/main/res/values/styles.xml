@@ -24,4 +24,24 @@
         <item name="android:textColor">?attr/f1TextSecondary</item>
     </style>
 
+    <style name="Settings.BottomSheet.Item" parent="Text">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?attr/f1TextSecondary</item>
+    </style>
+
+    <!--#region Settings -->
+
+    <style name="Text.Settings.Category" parent="Text">
+        <item name="android:textColor">?attr/rssBrandPrimary</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Text.Settings.Preference.Title" parent="Text">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="Text.Settings.Preference.Description" parent="Text" />
+
+    <!--#endregion -->
+
 </resources>
