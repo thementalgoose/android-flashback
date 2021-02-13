@@ -16,4 +16,12 @@
         <item name="android:textColor">?attr/f1TextSecondary</item>
     </style>
 
+    <style name="Settings.BottomSheet.Title" parent="Text">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Settings.BottomSheet.Subtitle" parent="Text">
+        <item name="android:textColor">?attr/f1TextSecondary</item>
+    </style>
+
 </resources>

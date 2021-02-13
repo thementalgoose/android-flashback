@@ -1,12 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:background="?attr/f1BackgroundPrimary"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/paddingMedium"
+    android:paddingBottom="@dimen/paddingMedLarge">
+
+    <TextView
+        style="@style/Settings.BottomSheet.Title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/paddingMedium"
+        android:layout_marginEnd="@dimen/paddingMedium"
+        android:gravity="center"
+        android:text="@string/settings_theme_theme_title" />
+
+    <TextView
+        style="@style/Settings.BottomSheet.Subtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/paddingMedium"
+        android:layout_marginTop="@dimen/paddingSmall"
+        android:layout_marginEnd="@dimen/paddingMedium"
+        android:layout_marginBottom="@dimen/paddingMedium"
+        android:gravity="center"
+        android:text="@string/settings_theme_theme_description" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:nestedScrollingEnabled="false"
         android:overScrollMode="never" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>
