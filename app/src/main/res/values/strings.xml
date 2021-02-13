@@ -4,15 +4,55 @@
     <string name="splash_sync_required_failed">We need to sync some information to continue. Please make sure you have an active internet connection and try again (you\'ll only need to do this once)</string>
 
     <!-- Settings -->
-    <string name="settings_all_rss">RSS</string>
-    <string name="settings_all_customisation">Customisation</string>
-    <string name="settings_all_statistics">Statistics</string>
-    <string name="settings_all_about">About</string>
-    <string name="settings_all_device">Device</string>
-    <string name="settings_all_notifications">Notifications</string>
-    <string name="settings_all_widgets">Widgets</string>
-
     <string name="settings_title">Settings</string>
+
+    <!-- All -->
+    <string name="settings_all_customisation">Appearance</string>
+    <string name="settings_all_customisation_subtitle">Theme and animation preferences</string>
+    <string name="settings_all_statistics">Statistics</string>
+    <string name="settings_all_statistics_subtitle">Customise how our race data is displayed to you</string>
+    <string name="settings_all_notifications">Notifications</string>
+    <string name="settings_all_notifications_subtitle">Customise what notifications you receive</string>
+    <string name="settings_all_widgets">Widgets</string>
+    <string name="settings_all_widgets_subtitle">Widget preferences</string>
+    <string name="settings_all_rss">RSS</string>
+    <string name="settings_all_rss_subtitle">Browser and RSS preferences</string>
+    <string name="settings_all_device">Support</string>
+    <string name="settings_all_device_subtitle">General app settings for crash reporting, analytics, etc.</string>
+    <string name="settings_all_about">About</string>
+    <string name="settings_all_about_subtitle">About Flashback</string>
+
+    <!-- Customisation -->
+    <string name="settings_customisation">Appearance</string>
+    <string name="settings_theme_theme_title">App theme</string>
+    <string name="settings_theme_theme_description">Pick your app theme preference</string>
+    <string name="settings_theme_theme_follow_system">Follow system preferences</string>
+    <string name="settings_theme_theme_light">Light mode</string>
+    <string name="settings_theme_theme_dark">Dark mode</string>
+    <string name="settings_animation_speed_animation_title">Animation speed</string>
+    <string name="settings_animation_speed_animation_description">Pick the speed of the animated views throughout the app</string>
+    <string name="settings_animation_speed_instant">No animation</string>
+    <string name="settings_animation_speed_quick">0.5x</string>
+    <string name="settings_animation_speed_medium">1x</string>
+    <string name="settings_animation_speed_slow">2x</string>
+
+    <!-- Statistics -->
+    <string name="settings_statistics">Statistics</string>
+    <string name="settings_customisation_qualifying_delta_title">Qualifying delta</string>
+    <string name="settings_customisation_qualifying_delta_description">Default to showing the lap time delta alongside the qualifying time when displaying qualifying results. You can long press qualifying results to toggle this per race</string>
+    <string name="settings_customisation_qualifying_grid_penalties_title">Qualifying grid penalties</string>
+    <string name="settings_customisation_qualifying_grid_penalties_description">Shows the grid penalty that a driver has in the qualifying view</string>
+    <string name="settings_customisation_fade_dnf_title">Fade race DNFs</string>
+    <string name="settings_customisation_fade_dnf_description">Fade out the drivers who fail to finish a race when looking at race results</string>
+    <string name="settings_default_season_title">Reset default season</string>
+    <string name="settings_default_season_description">Reset your default season selection and let the app follow the Formula 1 seasons</string>
+    <string name="settings_default_season_updated">Default season cleared</string>
+    <string name="settings_customisation_season_all_expanded_title">All section</string>
+    <string name="settings_customisation_season_all_expanded_description">Expand the all section in the menu by default</string>
+    <string name="settings_customisation_season_favourited_expanded_title">Favourites section</string>
+    <string name="settings_customisation_season_favourited_expanded_description">Expand the favourites section in the menu by default</string>
+
+    <!-- Notifications -->
     <string name="settings_notifications_title">Notifications</string>
     <string name="settings_notifications_channel_qualifying_title">Qualifying</string>
     <string name="settings_notifications_channel_qualifying_description">Receive notifications 30 minutes before qualifying starts. Configure them here</string>
@@ -20,63 +60,33 @@
     <string name="settings_notifications_channel_race_description">Receive notifications 30 minutes before a race starts. Configure them here</string>
     <string name="settings_notifications_nonchannel_title">Notifications</string>
     <string name="settings_notifications_nonchannel_description">Turn off the app notifications by turning them off in your settings</string>
-    <string name="settings_customisation">Customisation</string>
-    <string name="settings_theme">Theme</string>
-    <string name="settings_theme_theme_title">App theme</string>
-    <string name="settings_theme_theme_description">Pick your app theme preference</string>
-    <string name="settings_theme_theme_follow_system">Follow system preferences</string>
-    <string name="settings_theme_theme_light">Light mode</string>
-    <string name="settings_theme_theme_dark">Dark mode</string>
-    <string name="settings_default_season_title">Reset default season</string>
-    <string name="settings_default_season_description">Reset your default season selection and let the app follow the Formula 1 seasons</string>
-    <string name="settings_default_season_updated">Default season cleared</string>
-    <string name="settings_animation_speed_animation_title">Animation speed</string>
-    <string name="settings_animation_speed_animation_description">Pick the speed of the animated views throughout the app</string>
-    <string name="settings_animation_speed_instant">No animation</string>
-    <string name="settings_animation_speed_quick">0.5x</string>
-    <string name="settings_animation_speed_medium">1x</string>
-    <string name="settings_animation_speed_slow">2x</string>
-    <string name="settings_customisation_qualifying_delta_title">Qualifying delta</string>
-    <string name="settings_customisation_qualifying_delta_description">Default to showing the lap time delta alongside the qualifying time when displaying qualifying results. You can long press qualifying results to toggle this per race</string>
-    <string name="settings_customisation_fade_dnf_title">Fade race DNFs</string>
-    <string name="settings_customisation_fade_dnf_description">Fade out the drivers who fail to finish a race when looking at race results</string>
-    <string name="settings_customisation_qualifying_grid_penalties_title">Qualifying grid penalties</string>
-    <string name="settings_customisation_qualifying_grid_penalties_description">Shows the grid penalty that a driver has in the qualifying view</string>
-    <string name="settings_customisation_rss">RSS</string>
-    <string name="settings_customisation_rss_title">RSS feed</string>
-    <string name="settings_customisation_rss_description">Open the RSS feed settings</string>
-    <string name="settings_season_list">Season list</string>
-    <string name="settings_customisation_season_favourited_expanded_title">Favourites section</string>
-    <string name="settings_customisation_season_favourited_expanded_description">Toggle if the favourites section inside the seasons list is expanded by default</string>
-    <string name="settings_customisation_season_all_expanded_title">All section</string>
-    <string name="settings_customisation_season_all_expanded_description">Toggle if the all section inside the seasons list is expanded by default</string>
+
+    <!-- Widgets -->
     <string name="settings_widgets">Widgets</string>
     <string name="settings_widgets_update_all_title">Refresh all widgets</string>
     <string name="settings_widgets_update_all_description">Manually refresh all active widgets. Widgets usually update every 3 hours</string>
     <string name="settings_widgets_update_all_updated">All widgets refreshed</string>
+
+    <!-- Support -->
+    <string name="settings_device">Support</string>
+    <string name="settings_help_release_notes_title">Release notes</string>
+    <string name="settings_help_release_notes_description">See the release notes history</string>
+    <string name="settings_help_crash_reporting_title">Crash Reporting</string>
+    <string name="settings_help_crash_reporting_description">Send device information and crash stack traces to the developer</string>
+    <string name="settings_help_crash_reporting_notify">Your crash reporting preference will be applied once the app has restarted</string>
+    <string name="settings_help_analytics_title">Anonymous analytics</string>
+    <string name="settings_help_analytics_description">Send anonymous analytics data about your app experience. This can also aid crash reporting</string>
+    <string name="settings_help_analytics_notify">Your analytics preference will be applied once the app has restarted</string>
+    <string name="settings_help_shake_to_report_title">Shake the app to report a bug or a feature?</string>
+    <string name="settings_help_shake_to_report_description">Shake the app at any time to screenshot and send us any bugs, issues, or suggestions you may have for this app!</string>
+    <string name="settings_help_shake_to_report_notify">Your shake to report preference will be applied once the app has restarted</string>
+
+    <!-- About -->
     <string name="settings_help">About</string>
-    <string name="settings_statistics">Statistics</string>
     <string name="settings_help_about_title">About this app</string>
     <string name="settings_help_about_description">About the application and the developer</string>
     <string name="settings_help_review_title">Review</string>
     <string name="settings_help_review_description">Rate the app on the google play store</string>
-    <string name="settings_help_release_notes_title">Release notes</string>
-    <string name="settings_help_release_notes_description">See the release notes history</string>
-
-    <string name="settings_device">Device</string>
-
-    <string name="settings_feedback">Feedback</string>
-    <string name="settings_help_analytics_title">Anonymous analytics</string>
-    <string name="settings_help_analytics_description">Send anonymous analytics data about your app experience. This can also aid crash reporting</string>
-    <string name="settings_help_analytics_notify">Your analytics preference will be applied once the app has restarted</string>
-    <string name="settings_help_crash_reporting_title">Crash Reporting</string>
-    <string name="settings_help_crash_reporting_description">Send device information and crash stack traces to the developer</string>
-    <string name="settings_help_crash_reporting_notify">Your crash reporting preference will be applied once the app has restarted</string>
-    <string name="settings_help_suggestions_title">Have a suggestion?</string>
-    <string name="settings_help_suggestions_description">Send the developer an email with any suggestions you may have. Alternately turn on shake to report and shake your device</string>
-    <string name="settings_help_shake_to_report_title">Shake the app to report a bug or a feature?</string>
-    <string name="settings_help_shake_to_report_description">Shake the app at any time to screenshot and send us any bugs, issues, or suggestions you may have for this app!</string>
-    <string name="settings_help_shake_to_report_notify">Your shake to report preference will be applied once the app has restarted</string>
     <string name="settings_help_privacy_policy_title">Privacy Policy</string>
     <string name="settings_help_privacy_policy_description">View our privacy policy here</string>
 
@@ -93,7 +103,6 @@
     - Animations made by LottieFiles from www.lottiefiles.com\n
     - Animations made by Abhishekb Kaushal from www.lottiefiles.com\n\n
     If we\'ve missed anyone or anything please let us know!</string>
-    <!-- About - Overrides -->
     <string name="about_this_app_email">Email</string>
     <string name="about_this_app_play">Play</string>
 

@@ -3,7 +3,6 @@ package tmg.flashback.ui.settings.widgets
 import android.os.Bundle
 import android.view.View
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.fragment_settings.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.R
 import tmg.flashback.core.ui.settings.SettingsFragment
@@ -31,7 +30,7 @@ class SettingsWidgetFragment: SettingsFragment() {
 
         observeEvent(viewModel.outputs.refreshWidget) {
             context?.updateAllWidgets()
-            Snackbar.make(settingsList, R.string.settings_widgets_update_all_updated, Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(view, R.string.settings_widgets_update_all_updated, Snackbar.LENGTH_SHORT).show()
         }
     }
 

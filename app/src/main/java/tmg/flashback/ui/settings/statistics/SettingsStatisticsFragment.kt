@@ -3,13 +3,10 @@ package tmg.flashback.ui.settings.statistics
 import android.os.Bundle
 import android.view.View
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_settings.*
-import kotlinx.android.synthetic.main.fragment_settings.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.R
 import tmg.flashback.core.ui.BaseFragment
 import tmg.flashback.core.ui.settings.SettingsFragment
-import tmg.flashback.ui.settings.device.SettingsDeviceViewModel
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 
@@ -32,7 +29,7 @@ class SettingsStatisticsFragment: SettingsFragment() {
         }
 
         observeEvent(viewModel.outputs.defaultSeasonChanged) {
-            Snackbar.make(settingsList, R.string.settings_default_season_updated, Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(view, R.string.settings_default_season_updated, Snackbar.LENGTH_SHORT).show()
         }
     }
 }

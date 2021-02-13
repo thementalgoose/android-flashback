@@ -4,20 +4,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="@drawable/rounded_ripple">
 
     <TextView
         android:id="@+id/text"
+        style="@style/Settings.All.Title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingStart="@dimen/paddingMedium"
-        android:paddingTop="10dp"
+        android:paddingTop="@dimen/paddingNSmall"
         android:paddingEnd="@dimen/paddingMedium"
-        android:paddingBottom="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        tools:text="RSS" />
+
+    <TextView
+        android:id="@+id/subtext"
+        style="@style/Settings.All.Subtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/paddingMedium"
+        android:paddingTop="2dp"
+        android:paddingEnd="@dimen/paddingMedium"
+        android:paddingBottom="@dimen/paddingNSmall"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text"
         tools:text="RSS" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

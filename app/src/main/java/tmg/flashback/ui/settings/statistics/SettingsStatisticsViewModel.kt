@@ -49,15 +49,15 @@ class SettingsStatisticsViewModel(
     init {
         settings.value = mutableListOf<AppPreferencesItem>().apply {
             add(AppPreferencesItem.Category(R.string.settings_statistics))
-            add(AppPreferencesItem.SwitchPreference(keyQualifyingDeltas, R.string.settings_customisation_qualifying_delta_title, R.string.settings_customisation_qualifying_delta_description, false))
-            add(AppPreferencesItem.SwitchPreference(keyQualifyingGridPenalty, R.string.settings_customisation_qualifying_grid_penalties_title, R.string.settings_customisation_qualifying_grid_penalties_description, false))
-            add(AppPreferencesItem.SwitchPreference(keyFadeOutDNF, R.string.settings_customisation_fade_dnf_title, R.string.settings_customisation_fade_dnf_description, false))
+            add(AppPreferencesItem.SwitchPreference(keyQualifyingDeltas, R.string.settings_customisation_qualifying_delta_title, R.string.settings_customisation_qualifying_delta_description, raceController.showQualifyingDelta))
+            add(AppPreferencesItem.SwitchPreference(keyQualifyingGridPenalty, R.string.settings_customisation_qualifying_grid_penalties_title, R.string.settings_customisation_qualifying_grid_penalties_description, raceController.showGridPenaltiesInQualifying))
+            add(AppPreferencesItem.SwitchPreference(keyFadeOutDNF, R.string.settings_customisation_fade_dnf_title, R.string.settings_customisation_fade_dnf_description, raceController.fadeDNF))
             add(AppPreferencesItem.Category(R.string.settings_home))
             if (seasonController.isUserDefinedValueSet) {
                 add(AppPreferencesItem.Preference(keyDefaultSeason, R.string.settings_default_season_title, R.string.settings_default_season_description))
             }
-            add(AppPreferencesItem.SwitchPreference(keyBottomSheetAll, R.string.settings_customisation_season_all_expanded_title, R.string.settings_customisation_season_all_expanded_description, false))
-            add(AppPreferencesItem.SwitchPreference(keyBottomSheetFavourited, R.string.settings_customisation_season_favourited_expanded_title, R.string.settings_customisation_season_favourited_expanded_description, false))
+            add(AppPreferencesItem.SwitchPreference(keyBottomSheetAll, R.string.settings_customisation_season_all_expanded_title, R.string.settings_customisation_season_all_expanded_description, seasonController.allExpanded))
+            add(AppPreferencesItem.SwitchPreference(keyBottomSheetFavourited, R.string.settings_customisation_season_favourited_expanded_title, R.string.settings_customisation_season_favourited_expanded_description, seasonController.favouritesExpanded))
         }
     }
 
