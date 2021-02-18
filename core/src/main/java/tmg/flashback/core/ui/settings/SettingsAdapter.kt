@@ -1,26 +1,24 @@
-package tmg.flashback.rss.ui.settings
+package tmg.flashback.core.ui.settings
 
 import android.view.View
-import kotlinx.android.synthetic.main.view_rss_settings_category.view.*
-import kotlinx.android.synthetic.main.view_rss_settings_category.view.tvTitle
-import kotlinx.android.synthetic.main.view_rss_settings_preference.view.*
-import kotlinx.android.synthetic.main.view_rss_settings_preference.view.tvDescription
-import kotlinx.android.synthetic.main.view_rss_settings_preference_switch.view.*
-import tmg.flashback.rss.R
+import kotlinx.android.synthetic.main.view_settings_category.view.tvTitle
+import kotlinx.android.synthetic.main.view_settings_preference.view.*
+import kotlinx.android.synthetic.main.view_settings_preference.view.tvDescription
+import kotlinx.android.synthetic.main.view_settings_preference_switch.view.*
 import tmg.components.prefs.AppPreferencesAdapter
 import tmg.components.prefs.AppPreferencesItem
+import tmg.flashback.core.R
 
 class SettingsAdapter(
-    prefClicked: (prefKey: String) -> Unit = { _ -> },
-    prefSwitchClicked: (prefKey: String, newState: Boolean) -> Unit = { _, _ -> }
+        prefClicked: (prefKey: String) -> Unit = { _ -> },
+        prefSwitchClicked: (prefKey: String, newState: Boolean) -> Unit = { _, _ -> }
 ) : AppPreferencesAdapter(prefClicked, prefSwitchClicked) {
 
+    override val categoryLayoutId: Int = R.layout.view_settings_category
 
-    override val categoryLayoutId: Int = R.layout.view_rss_settings_category
+    override val preferenceLayoutId: Int = R.layout.view_settings_preference
 
-    override val preferenceLayoutId: Int = R.layout.view_rss_settings_preference
-
-    override val preferenceSwitchLayoutId: Int = R.layout.view_rss_settings_preference_switch
+    override val preferenceSwitchLayoutId: Int = R.layout.view_settings_preference_switch
 
     override fun bindCategory(view: View, model: AppPreferencesItem.Category) {
         view.apply {

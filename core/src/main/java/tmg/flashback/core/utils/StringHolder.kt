@@ -1,4 +1,4 @@
-package tmg.flashback.ui.utils
+package tmg.flashback.core.utils
 
 import android.content.Context
 import androidx.annotation.StringRes

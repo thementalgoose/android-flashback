@@ -8,6 +8,7 @@ import kotlinx.android.synthetic.main.activity_settings_news.*
 import tmg.flashback.rss.R
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.core.ui.BaseActivity
+import tmg.flashback.core.ui.settings.SettingsAdapter
 import tmg.flashback.rss.ui.configure.RSSConfigureActivity
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent

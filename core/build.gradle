@@ -117,4 +117,5 @@ dependencies {
 
     // Utilities
     api "com.github.thementalgoose:android-utilities:$tmg_utils"
+    implementation "com.github.thementalgoose:android-components:$tmg_components"
 }

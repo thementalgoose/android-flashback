@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/graph_settings"
+    app:startDestination="@id/settingsFragment">
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="tmg.flashback.ui.settings.SettingsAllFragment"
+        android:label="SettingsFragment" >
+        <action
+            android:id="@+id/graph_action_about"
+            app:destination="@id/settingsAboutFragment"
+            app:enterAnim="@anim/settings_enter"
+            app:exitAnim="@anim/settings_exit"
+            app:popEnterAnim="@anim/settings_pop_enter"
+            app:popExitAnim="@anim/settings_pop_exit" />
+        <action
+            android:id="@+id/graph_action_customisation"
+            app:destination="@id/settingsCustomisationFragment"
+            app:enterAnim="@anim/settings_enter"
+            app:exitAnim="@anim/settings_exit"
+            app:popEnterAnim="@anim/settings_pop_enter"
+            app:popExitAnim="@anim/settings_pop_exit" />
+        <action
+            android:id="@+id/graph_action_device"
+            app:destination="@id/settingsDeviceFragment"
+            app:enterAnim="@anim/settings_enter"
+            app:exitAnim="@anim/settings_exit"
+            app:popEnterAnim="@anim/settings_pop_enter"
+            app:popExitAnim="@anim/settings_pop_exit" />
+        <action
+            android:id="@+id/graph_action_notifications"
+            app:destination="@id/settingsNotificationFragment"
+            app:enterAnim="@anim/settings_enter"
+            app:exitAnim="@anim/settings_exit"
+            app:popEnterAnim="@anim/settings_pop_enter"
+            app:popExitAnim="@anim/settings_pop_exit" />
+        <action
+            android:id="@+id/graph_action_statistics"
+            app:destination="@id/settingsStatisticsFragment"
+            app:enterAnim="@anim/settings_enter"
+            app:exitAnim="@anim/settings_exit"
+            app:popEnterAnim="@anim/settings_pop_enter"
+            app:popExitAnim="@anim/settings_pop_exit" />
+        <action
+            android:id="@+id/graph_action_widgets"
+            app:destination="@id/settingsWidgetFragment"
+            app:enterAnim="@anim/settings_enter"
+            app:exitAnim="@anim/settings_exit"
+            app:popEnterAnim="@anim/settings_pop_enter"
+            app:popExitAnim="@anim/settings_pop_exit" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/settingsAboutFragment"
+        android:name="tmg.flashback.ui.settings.about.SettingsAboutFragment"
+        android:label="SettingsAboutFragment" />
+    <fragment
+        android:id="@+id/settingsCustomisationFragment"
+        android:name="tmg.flashback.ui.settings.customisation.SettingsCustomisationFragment"
+        android:label="SettingsCustomisationFragment" />
+    <fragment
+        android:id="@+id/settingsDeviceFragment"
+        android:name="tmg.flashback.ui.settings.device.SettingsDeviceFragment"
+        android:label="SettingsDeviceFragment" />
+    <fragment
+        android:id="@+id/settingsNotificationFragment"
+        android:name="tmg.flashback.ui.settings.notifications.SettingsNotificationFragment"
+        android:label="SettingsNotificationFragment" />
+    <fragment
+        android:id="@+id/settingsStatisticsFragment"
+        android:name="tmg.flashback.ui.settings.statistics.SettingsStatisticsFragment"
+        android:label="SettingsStatisticsFragment" />
+    <fragment
+        android:id="@+id/settingsWidgetFragment"
+        android:name="tmg.flashback.ui.settings.widgets.SettingsWidgetFragment"
+        android:label="SettingsWidgetFragment" />
+</navigation>

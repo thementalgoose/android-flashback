@@ -1,10 +1,10 @@
-package tmg.flashback.ui.utils.bottomsheet
+package tmg.flashback.core.ui.bottomsheet
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import tmg.flashback.R
-import tmg.flashback.ui.utils.Selected
+import tmg.flashback.core.R
+import tmg.flashback.core.utils.Selected
 
 class BottomSheetAdapter(
     private val itemClicked: (menuItem: BottomSheetItem) -> Unit
