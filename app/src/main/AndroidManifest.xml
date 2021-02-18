@@ -55,7 +55,7 @@
             android:theme="@style/Translucent" />
 
         <activity
-            android:name=".ui.settings.SettingsActivity"
+            android:name=".ui.settings.SettingsAllActivity"
             android:label=""
             android:theme="@style/Translucent" />
 

@@ -1,10 +1,10 @@
-package tmg.flashback.ui.utils.bottomsheet
+package tmg.flashback.core.ui.bottomsheet
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.view_bottom_sheet_item.view.*
-import tmg.flashback.R
-import tmg.flashback.ui.utils.Selected
+import tmg.flashback.core.R
+import tmg.flashback.core.utils.Selected
 import tmg.utilities.extensions.views.gone
 import tmg.utilities.extensions.views.show
 

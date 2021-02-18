@@ -25,7 +25,7 @@ import tmg.flashback.testutils.*
 import tmg.flashback.testutils.assertEventNotFired
 import tmg.flashback.testutils.assertListMatchesItem
 import tmg.flashback.testutils.test
-import tmg.flashback.ui.utils.StringHolder
+import tmg.flashback.core.utils.StringHolder
 
 internal class SeasonViewModelTest: BaseTest() {
 

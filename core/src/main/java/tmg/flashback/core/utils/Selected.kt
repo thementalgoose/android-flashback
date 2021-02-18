@@ -1,4 +1,4 @@
-package tmg.flashback.ui.utils
+package tmg.flashback.core.utils
 
 data class Selected<T>(
     val value: T,
