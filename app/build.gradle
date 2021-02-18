@@ -18,8 +18,8 @@ android {
         applicationId "tmg.flashback"
         minSdkVersion 23
         targetSdkVersion 30
-        versionCode 48
-        versionName "5.6.8"
+        versionCode 49
+        versionName "5.6.9"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunnerArgument "runnerBuilder", "de.mannodermaus.junit5.AndroidJUnit5Builder"
@@ -251,7 +251,7 @@ dependencies {
         exclude group: 'org.jetbrains.kotlin' // Only if you already use Kotlin in your project
     }
 
-    kaptTest "androidx.lifecycle:lifecycle-compiler:2.2.0"
+    kaptTest "androidx.lifecycle:lifecycle-compiler:2.3.0"
 
     // Coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines"

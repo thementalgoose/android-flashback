@@ -11,8 +11,8 @@ buildscript {
     ext.threetenbp = "1.4.1"
 
     ext.android_constraint = "2.0.4"
-    ext.android_material = "1.3.0-rc01"
-    ext.android_lifecycle = "2.3.0-rc01"
+    ext.android_material = "1.3.0"
+    ext.android_lifecycle = "2.3.0"
 
     ext.swipe_refresh = "1.1.0"
     ext.slidr = "2.1.0"
@@ -23,7 +23,7 @@ buildscript {
 
     ext.lottie = "3.4.0"
 
-    ext.firebase_bom = "26.4.0"
+    ext.firebase_bom = "26.5.0"
 
     ext.kotlinCompilerArgs = [
             "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi",
@@ -46,7 +46,7 @@ buildscript {
         classpath "org.koin:koin-gradle-plugin:$koin_version"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'io.fabric.tools:gradle:1.31.2'
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.4.1'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.5.0'
         classpath "de.mannodermaus.gradle.plugins:android-junit5:1.6.2.0"
     }
 }
