@@ -28,7 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingStart="@dimen/paddingMedium"
-        android:paddingTop="@dimen/paddingXSmall"
+        android:paddingTop="@dimen/paddingSmall"
         android:paddingEnd="@dimen/paddingMedium"
         android:paddingBottom="@dimen/paddingNSmall"
         app:layout_constraintBottom_toBottomOf="parent"
