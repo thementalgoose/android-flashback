@@ -1,4 +1,4 @@
-package tmg.flashback.rss.ui.configure.viewholders
+package tmg.flashback.rss.ui.settings.configure.viewholders
 
 import android.view.View
 import android.view.inputmethod.EditorInfo

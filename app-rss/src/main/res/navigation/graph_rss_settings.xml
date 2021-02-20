@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/graph_rss_settings"
+    app:startDestination="@id/rssSettingsFragment">
+
+    <fragment
+        android:id="@+id/rssSettingsFragment"
+        android:name="tmg.flashback.rss.ui.settings.settings.RSSSettingsFragment"
+        android:label="RSSSettingsFragment" >
+        <action
+            android:id="@+id/graph_action_configure"
+            app:destination="@id/rssSettingsConfigureFragment"
+            app:enterAnim="@anim/settings_enter"
+            app:exitAnim="@anim/settings_exit"
+            app:popEnterAnim="@anim/settings_pop_enter"
+            app:popExitAnim="@anim/settings_pop_exit" />
+    </fragment>
+    <fragment
+        android:id="@+id/rssSettingsConfigureFragment"
+        android:name="tmg.flashback.rss.ui.settings.configure.RSSConfigureFragment"
+        android:label="RSSConfigureFragment" />
+</navigation>

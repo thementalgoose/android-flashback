@@ -7,6 +7,7 @@ import tmg.flashback.rss.R
 import tmg.flashback.rss.controllers.RSSFeedController
 import tmg.flashback.rss.prefs.RSSRepository
 import tmg.flashback.rss.repo.model.SupportedArticleSource
+import tmg.flashback.rss.ui.settings.configure.RSSConfigureItem
 import tmg.utilities.lifecycle.DataEvent
 
 //region Inputs
@@ -85,7 +86,8 @@ class RSSConfigureViewModel(
      */
     private fun updateList() {
         val itemList = mutableListOf<RSSConfigureItem>()
-        itemList.add(RSSConfigureItem.Header(
+        itemList.add(
+            RSSConfigureItem.Header(
             text = R.string.rss_configure_header_items,
             subtitle = R.string.rss_configure_header_items_subtitle
         ))
@@ -107,13 +109,15 @@ class RSSConfigureViewModel(
         }
 
         if (rssFeedController.showAddCustomFeeds) {
-            itemList.add(RSSConfigureItem.Header(
+            itemList.add(
+                RSSConfigureItem.Header(
                     text = R.string.rss_configure_header_add,
                     subtitle = R.string.rss_configure_header_add_subtitle
             ))
             itemList.add(RSSConfigureItem.Add)
         }
-        itemList.add(RSSConfigureItem.Header(
+        itemList.add(
+            RSSConfigureItem.Header(
             text = R.string.rss_configure_header_quick_add,
             subtitle = R.string.rss_configure_header_quick_add_subtitle
         ))

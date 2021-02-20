@@ -3,8 +3,8 @@ package tmg.flashback.ui.settings
 import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
-import androidx.navigation.Navigation
-import kotlinx.android.synthetic.main.activity_settings.*
+import androidx.navigation.fragment.NavHostFragment
+import kotlinx.android.synthetic.main.activity_settings.back
 import tmg.flashback.R
 import tmg.flashback.core.ui.BaseActivity
 
@@ -17,9 +17,10 @@ class SettingsAllActivity: BaseActivity(), NavController.OnDestinationChangedLis
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        overridePendingTransition(tmg.flashback.core.R.anim.activity_enter, tmg.flashback.core.R.anim.activity_exit)
+        overridePendingTransition(R.anim.activity_enter, R.anim.activity_exit)
 
-        navController = Navigation.findNavController(this, R.id.fragments)
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragments) as NavHostFragment
+        navController = navHostFragment.navController
 
         back.setOnClickListener {
             onBackPressed()
