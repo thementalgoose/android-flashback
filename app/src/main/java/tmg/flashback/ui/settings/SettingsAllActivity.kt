@@ -4,10 +4,7 @@ import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.Navigation
-import androidx.navigation.findNavController
-import kotlinx.android.synthetic.main.activity_driver_season.*
 import kotlinx.android.synthetic.main.activity_settings.*
-import kotlinx.android.synthetic.main.activity_settings.back
 import tmg.flashback.R
 import tmg.flashback.core.ui.BaseActivity
 

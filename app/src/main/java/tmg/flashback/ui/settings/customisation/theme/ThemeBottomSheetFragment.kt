@@ -1,5 +1,6 @@
 package tmg.flashback.ui.settings.customisation.theme
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -9,6 +10,7 @@ import tmg.flashback.R
 import tmg.flashback.core.enums.Theme
 import tmg.flashback.core.ui.BaseBottomSheetFragment
 import tmg.flashback.core.ui.bottomsheet.BottomSheetAdapter
+import tmg.flashback.ui.SplashActivity
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 
@@ -35,7 +37,13 @@ class ThemeBottomSheetFragment: BaseBottomSheetFragment() {
             adapter.list = it
         }
 
-        observeEvent(viewModel.outputs.themeUpdated) {
+        observeEvent(viewModel.outputs.themeUpdated) { (_, isSameSelection) ->
+            if (!isSameSelection) {
+                activity?.let {
+                    it.finishAffinity()
+                    startActivity(Intent(it, SplashActivity::class.java))
+                }
+            }
             dismiss()
         }
     }
