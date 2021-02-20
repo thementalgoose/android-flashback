@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="DarkTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">#9575CD</item>
+        <item name="colorPrimary">#B585CF</item>
         <item name="colorPrimaryDark">#7E57C2</item>
         <item name="colorAccent">@color/logo_gradient_1</item>
 

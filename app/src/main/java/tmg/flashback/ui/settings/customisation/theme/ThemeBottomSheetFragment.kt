@@ -2,9 +2,11 @@ package tmg.flashback.ui.settings.customisation.theme
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_bottom_sheet_theme.*
 import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.dsl.koinApplication
 import tmg.flashback.R
 import tmg.flashback.core.enums.Theme
 import tmg.flashback.core.ui.BaseBottomSheetFragment
@@ -36,6 +38,7 @@ class ThemeBottomSheetFragment: BaseBottomSheetFragment() {
         }
 
         observeEvent(viewModel.outputs.themeUpdated) {
+            Toast.makeText(context, getString(R.string.settings_theme_updated), Toast.LENGTH_LONG).show()
             dismiss()
         }
     }
