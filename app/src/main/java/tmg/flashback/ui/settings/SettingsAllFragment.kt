@@ -39,11 +39,7 @@ class SettingsAllFragment: BaseFragment() {
                 Category.CUSTOMISATION -> findNavController().navigate(R.id.graph_action_customisation)
                 Category.STATISTICS -> findNavController().navigate(R.id.graph_action_statistics)
                 Category.NOTIFICATIONS -> findNavController().navigate(R.id.graph_action_notifications)
-                Category.RSS -> {
-                    context?.let {
-                        startActivity(RSSSettingsActivity.intent(it))
-                    }
-                }
+                Category.RSS -> findNavController().navigate(R.id.graph_action_rss)
                 Category.WIDGETS -> findNavController().navigate(R.id.graph_action_widgets)
                 Category.DEVICE -> findNavController().navigate(R.id.graph_action_device)
                 Category.ABOUT -> findNavController().navigate(R.id.graph_action_about)

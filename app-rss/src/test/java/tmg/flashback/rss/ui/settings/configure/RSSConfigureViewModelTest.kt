@@ -1,4 +1,4 @@
-package tmg.flashback.rss.ui.configure
+package tmg.flashback.rss.ui.settings.configure
 
 import io.mockk.every
 import io.mockk.mockk
@@ -13,6 +13,7 @@ import tmg.flashback.rss.testutils.BaseTest
 import tmg.flashback.rss.testutils.assertDataEventValue
 import tmg.flashback.rss.testutils.assertListDoesNotMatchItem
 import tmg.flashback.rss.testutils.test
+import tmg.flashback.rss.ui.configure.RSSConfigureViewModel
 
 class RSSConfigureViewModelTest: BaseTest() {
 

@@ -1,11 +1,11 @@
-package tmg.flashback.rss.ui.configure.viewholders
+package tmg.flashback.rss.ui.settings.configure.viewholders
 
 import android.view.View
 import androidx.core.graphics.toColorInt
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.view_rss_configure_quickadd.view.*
 import tmg.flashback.rss.repo.model.SupportedArticleSource
-import tmg.flashback.rss.ui.configure.RSSConfigureItem
+import tmg.flashback.rss.ui.settings.configure.RSSConfigureItem
 
 class QuickAddViewHolder(
     private val quickAddItem: (SupportedArticleSource) -> Unit,

@@ -1,4 +1,4 @@
-package tmg.flashback.rss.ui.configure
+package tmg.flashback.rss.ui.settings.configure
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.rss.R
 import tmg.flashback.rss.repo.model.SupportedArticleSource
-import tmg.flashback.rss.ui.configure.viewholders.*
+import tmg.flashback.rss.ui.settings.configure.viewholders.*
 import java.lang.RuntimeException
 
 class RSSConfigureAdapter(
