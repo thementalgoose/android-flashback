@@ -10,7 +10,7 @@ import tmg.flashback.extensions.label
 import tmg.flashback.core.utils.Selected
 import tmg.flashback.core.utils.StringHolder
 import tmg.flashback.core.ui.bottomsheet.BottomSheetItem
-import tmg.utilities.lifecycle.Event
+import tmg.utilities.lifecycle.DataEvent
 
 //region Inputs
 
@@ -25,7 +25,7 @@ interface ThemeViewModelInputs {
 interface ThemeViewModelOutputs {
 
     val themePreferences: LiveData<List<Selected<BottomSheetItem>>>
-    val themeUpdated: LiveData<Event>
+    val themeUpdated: LiveData<DataEvent<Pair<Theme, Boolean>>>
 }
 
 //endregion
@@ -38,7 +38,7 @@ class ThemeViewModel(
     var outputs: ThemeViewModelOutputs = this
 
     override val themePreferences: MutableLiveData<List<Selected<BottomSheetItem>>> = MutableLiveData()
-    override val themeUpdated: MutableLiveData<Event> = MutableLiveData()
+    override val themeUpdated: MutableLiveData<DataEvent<Pair<Theme, Boolean>>> = MutableLiveData()
 
     init {
 
@@ -48,9 +48,10 @@ class ThemeViewModel(
     //region Inputs
 
     override fun selectTheme(theme: Theme) {
+        val same = appearanceController.currentTheme == theme
         appearanceController.currentTheme = theme
         updateThemeList()
-        themeUpdated.value = Event()
+        themeUpdated.value = DataEvent(Pair(theme, same))
     }
 
     //endregion

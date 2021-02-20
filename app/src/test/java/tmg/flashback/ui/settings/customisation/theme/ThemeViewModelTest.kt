@@ -15,6 +15,7 @@ import tmg.flashback.testutils.test
 import tmg.flashback.core.utils.Selected
 import tmg.flashback.core.utils.StringHolder
 import tmg.flashback.core.ui.bottomsheet.BottomSheetItem
+import tmg.flashback.testutils.assertDataEventValue
 
 internal class ThemeViewModelTest: BaseTest() {
 
@@ -55,7 +56,17 @@ internal class ThemeViewModelTest: BaseTest() {
         initSUT()
         sut.inputs.selectTheme(Theme.DAY)
         sut.outputs.themeUpdated.test {
-            assertEventFired()
+            assertDataEventValue(Pair(Theme.DAY, false))
+        }
+    }
+
+    @Test
+    fun `selecting theme sends theme updated event with same selection`() {
+        every { mockAppearanceController.currentTheme } returns Theme.DAY
+        initSUT()
+        sut.inputs.selectTheme(Theme.DAY)
+        sut.outputs.themeUpdated.test {
+            assertDataEventValue(Pair(Theme.DAY, true))
         }
     }
 }
