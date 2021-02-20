@@ -8,6 +8,7 @@
     <!-- Settings -->
 
     <style name="Settings.All.Title" parent="Text">
+        <item name="android:textStyle">bold</item>
         <item name="android:textColor">?attr/colorPrimary</item>
     </style>
 

@@ -29,6 +29,7 @@
     <string name="settings_theme_theme_follow_system">Follow system preferences</string>
     <string name="settings_theme_theme_light">Light mode</string>
     <string name="settings_theme_theme_dark">Dark mode</string>
+    <string name="settings_theme_updated">Your theme preferences will be updated when the app restarts</string>
     <string name="settings_animation_speed_animation_title">Animation speed</string>
     <string name="settings_animation_speed_animation_description">Pick the speed of the animated views throughout the app.</string>
     <string name="settings_animation_speed_instant">No animation</string>
