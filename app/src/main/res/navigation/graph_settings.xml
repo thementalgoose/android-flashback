@@ -50,6 +50,13 @@
             app:exitAnim="@anim/settings_exit"
             app:popEnterAnim="@anim/settings_pop_enter"
             app:popExitAnim="@anim/settings_pop_exit" />
+        <action
+            android:id="@+id/graph_action_rss"
+            app:enterAnim="@anim/settings_enter"
+            app:exitAnim="@anim/settings_exit"
+            app:popEnterAnim="@anim/settings_pop_enter"
+            app:popExitAnim="@anim/settings_pop_exit"
+            app:destination="@id/graph_rss_settings" />
     </fragment>
 
     <fragment
@@ -76,4 +83,6 @@
         android:id="@+id/settingsWidgetFragment"
         android:name="tmg.flashback.ui.settings.widgets.SettingsWidgetFragment"
         android:label="SettingsWidgetFragment" />
+
+    <include app:graph="@navigation/graph_rss_settings" />
 </navigation>
