@@ -1,4 +1,4 @@
-package tmg.flashback.rss.ui.settings
+package tmg.flashback.rss.ui.settings.settings
 
 import io.mockk.every
 import io.mockk.mockk
@@ -11,6 +11,7 @@ import tmg.flashback.rss.prefs.RSSRepository
 import tmg.flashback.rss.testutils.BaseTest
 import tmg.flashback.rss.testutils.assertEventFired
 import tmg.flashback.rss.testutils.test
+import tmg.flashback.rss.ui.settings.RSSSettingsViewModel
 
 class RSSSettingsViewModelTest: BaseTest() {
 

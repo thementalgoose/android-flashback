@@ -5,45 +5,45 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/f1BackgroundPrimary">
+    android:background="?attr/rssBackground">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/titlebar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/f1BackgroundPrimary"
-        android:fitsSystemWindows="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:background="?attr/rssBackground"
+        android:fitsSystemWindows="false">
 
         <TextView
             android:id="@+id/header"
-            style="@style/Text.Toolbar"
+            style="@style/RSS.Toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fitsSystemWindows="true"
             android:gravity="center"
-            android:text="@string/settings_title"
             android:paddingTop="@dimen/paddingMedium"
             android:paddingBottom="@dimen/paddingMedium"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="News" />
 
         <ImageButton
             android:id="@+id/back"
-            android:layout_width="@dimen/toolbarSettingsIcon"
-            android:layout_height="@dimen/toolbarSettingsIcon"
+            android:foreground="?attr/selectableItemBackground"
+            android:layout_width="@dimen/toolbarIconSize"
+            android:layout_height="@dimen/toolbarIconSize"
             android:layout_marginStart="@dimen/paddingSmall"
             android:layout_marginTop="@dimen/paddingSmall"
             android:layout_marginEnd="@dimen/paddingMedium"
             android:layout_marginBottom="@dimen/paddingSmall"
             android:background="@null"
-            android:contentDescription="@string/settings_title"
-            android:foreground="@drawable/ripple_rounded"
+            android:contentDescription="@string/ab_rss_back"
             android:scaleType="center"
-            android:src="@drawable/ic_back"
-            android:tint="?attr/f1TextPrimary"
+            android:src="@drawable/ic_rss_back"
+            android:tint="?attr/rssTextPrimary"
             app:layout_constraintBottom_toBottomOf="@id/header"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/header" />
@@ -58,10 +58,8 @@
         app:defaultNavHost="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/titlebar"
-        app:layout_constraintVertical_bias="1.0"
-        app:navGraph="@navigation/graph_settings" />
+        app:navGraph="@navigation/graph_rss_settings" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,7 +12,7 @@ import tmg.flashback.core.ui.BaseActivity
 import tmg.flashback.rss.R
 import tmg.flashback.rss.prefs.RSSRepository
 import tmg.flashback.rss.repo.model.Article
-import tmg.flashback.rss.ui.configure.RSSConfigureActivity
+import tmg.flashback.rss.ui.settings.InitialScreen
 import tmg.flashback.rss.ui.settings.RSSSettingsActivity
 import tmg.flashback.rss.web.FragmentRequestBack
 import tmg.flashback.rss.web.WebFragment
@@ -31,8 +31,6 @@ class RSSActivity: BaseActivity(), FragmentRequestBack {
 
     override fun layoutId(): Int = R.layout.activity_rss
 
-    private val REQUEST_CODE = 1001
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -40,7 +38,7 @@ class RSSActivity: BaseActivity(), FragmentRequestBack {
 
         adapter = RSSAdapter(
             openConfigure = {
-                startActivityForResult(Intent(this, RSSConfigureActivity::class.java), REQUEST_CODE)
+                startActivityForResult(RSSSettingsActivity.intent(this, InitialScreen.CONFIGURE), REQUEST_CODE)
             },
             articleClicked = { article, id ->
                 if (repository.newsOpenInExternalBrowser) {
@@ -59,7 +57,7 @@ class RSSActivity: BaseActivity(), FragmentRequestBack {
         }
 
         settings.setOnClickListener {
-            startActivity(Intent(this, RSSSettingsActivity::class.java))
+            startActivity(RSSSettingsActivity.intent(this, InitialScreen.SETTINGS))
         }
 
         swipeContainer.setOnRefreshListener {
@@ -113,6 +111,8 @@ class RSSActivity: BaseActivity(), FragmentRequestBack {
     //endregion
 
     companion object {
+
+        private const val REQUEST_CODE = 1001
 
         fun intent(context: Context): Intent {
             val intent = Intent(context, RSSActivity::class.java)
