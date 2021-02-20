@@ -41,5 +41,5 @@ enum class Releases(
         VERSION_45(version = 45, isMajor = false, release = R.string.release_45),
         VERSION_47(version = 47, isMajor = true, release = R.string.release_47),
         VERSION_48(version = 48, isMajor = false, release = R.string.release_48),
-        VERSION_49(version = 49, isMajor = false, release = R.string.release_49);
+        VERSION_50(version = 50, isMajor = false, release = R.string.release_50);
 }
