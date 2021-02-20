@@ -8,9 +8,11 @@ import kotlinx.android.synthetic.main.fragment_dashboard_season.*
 import kotlinx.android.synthetic.main.fragment_dashboard_season.dataList
 import kotlinx.android.synthetic.main.fragment_dashboard_season.season
 import kotlinx.android.synthetic.main.fragment_dashboard_season.swipeContainer
+import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.R
 import tmg.flashback.constants.App.currentYear
+import tmg.flashback.controllers.FeatureController
 import tmg.flashback.core.ui.BaseFragment
 import tmg.flashback.ui.dashboard.DashboardNavigationCallback
 import tmg.flashback.ui.overviews.constructor.ConstructorActivity
@@ -28,6 +30,7 @@ class SeasonFragment: BaseFragment() {
     private var dashboardNavigation: DashboardNavigationCallback? = null
 
     private val viewModel: SeasonViewModel by viewModel()
+    private val featureController: FeatureController by inject()
 
     override fun layoutId() = R.layout.fragment_dashboard_season
 
@@ -50,6 +53,9 @@ class SeasonFragment: BaseFragment() {
         dataList.layoutManager = LinearLayoutManager(context)
         dataList.adapter = adapter
 
+        if (!featureController.rssEnabled) {
+            navigation.menu.removeItem(R.id.nav_rss)
+        }
 //        if (remoteConfigRepository.search) {
 //            searchButton.visible()
 //        }
