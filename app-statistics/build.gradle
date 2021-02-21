@@ -82,4 +82,5 @@ ext {
 
 dependencies {
 
+    api project(path: ':core')
 }

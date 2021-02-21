@@ -219,6 +219,7 @@ dependencies {
     implementation project(path: ':data-firebase')
     implementation project(path: ':app-rss')
     implementation project(path: ':core')
+    implementation project(path: ':app-statistics')
 
     // Android Test
     androidTestImplementation 'androidx.test:rules:1.3.0'
