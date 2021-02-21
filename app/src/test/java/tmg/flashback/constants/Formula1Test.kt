@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 import tmg.flashback.constants.App.currentYear
+import tmg.flashback.statistics.constants.Formula1
 import tmg.flashback.testutils.BaseTest
 
 internal class Formula1Test: BaseTest() {

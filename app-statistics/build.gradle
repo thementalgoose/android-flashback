@@ -75,11 +75,6 @@ android {
     }
 }
 
-ext {
-    retrofit = "2.9.0"
-    okhttp3 = "4.7.2"
-}
-
 dependencies {
 
     api project(path: ':core')

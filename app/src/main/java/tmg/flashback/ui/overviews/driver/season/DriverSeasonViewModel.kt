@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import tmg.flashback.R
-import tmg.flashback.constants.Formula1.maxPointsBySeason
+import tmg.flashback.statistics.constants.Formula1.maxPointsBySeason
 import tmg.flashback.core.ui.BaseViewModel
 import tmg.flashback.core.controllers.AppearanceController
 import tmg.flashback.core.managers.NetworkConnectivityManager

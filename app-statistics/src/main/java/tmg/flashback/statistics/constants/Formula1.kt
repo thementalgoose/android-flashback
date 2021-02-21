@@ -1,4 +1,4 @@
-package tmg.flashback.constants
+package tmg.flashback.statistics.constants
 
 object Formula1 {
 

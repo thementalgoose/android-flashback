@@ -10,7 +10,7 @@ import org.threeten.bp.LocalDate
 import org.threeten.bp.temporal.ChronoUnit
 import tmg.flashback.R
 import tmg.flashback.constants.App.currentYear
-import tmg.flashback.constants.Formula1.constructorChampionshipStarts
+import tmg.flashback.statistics.constants.Formula1.constructorChampionshipStarts
 import tmg.flashback.core.ui.BaseViewModel
 import tmg.flashback.controllers.*
 import tmg.flashback.controllers.NotificationController.Companion.daysUntilDataProvidedBannerMovedToBottom

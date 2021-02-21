@@ -4,7 +4,7 @@ import androidx.annotation.LayoutRes
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
 import tmg.flashback.R
-import tmg.flashback.constants.TrackLayout
+import tmg.flashback.statistics.enums.TrackLayout
 import tmg.flashback.data.models.stats.Circuit
 import tmg.flashback.ui.shared.sync.SyncDataItem
 
