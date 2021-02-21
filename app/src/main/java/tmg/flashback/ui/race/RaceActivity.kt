@@ -15,7 +15,7 @@ import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.R
 import tmg.flashback.core.ui.BaseActivity
 import tmg.flashback.ui.circuit.CircuitInfoActivity
-import tmg.flashback.constants.TrackLayout
+import tmg.flashback.statistics.enums.TrackLayout
 import tmg.flashback.core.controllers.AppHintsController.Companion.appHintDelay
 import tmg.flashback.ui.overviews.constructor.ConstructorActivity
 import tmg.flashback.ui.overviews.driver.DriverActivity

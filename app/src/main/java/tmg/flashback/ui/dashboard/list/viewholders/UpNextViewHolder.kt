@@ -7,7 +7,7 @@ import kotlinx.android.synthetic.main.view_season_list_up_next.view.*
 import org.threeten.bp.*
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.R
-import tmg.flashback.constants.TrackLayout
+import tmg.flashback.statistics.enums.TrackLayout
 import tmg.flashback.data.utils.daysBetween
 import tmg.flashback.data.utils.hoursAndMins
 import tmg.flashback.data.utils.secondsBetween

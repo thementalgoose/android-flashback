@@ -21,7 +21,7 @@ import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.BuildConfig
 import tmg.flashback.R
-import tmg.flashback.constants.TrackLayout
+import tmg.flashback.statistics.enums.TrackLayout
 import tmg.flashback.controllers.UpNextController
 import tmg.flashback.core.controllers.CrashController
 import tmg.flashback.core.model.UpNextSchedule

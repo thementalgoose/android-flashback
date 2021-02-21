@@ -1,7 +1,7 @@
-package tmg.flashback.constants
+package tmg.flashback.statistics.enums
 
 import androidx.annotation.DrawableRes
-import tmg.flashback.R
+import tmg.flashback.statistics.R
 
 /**
  * Supported track layouts
