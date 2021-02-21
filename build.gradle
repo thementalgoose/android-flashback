@@ -43,6 +43,6 @@ task clean(type: Delete) {
 }
 
 task testModules {
-    dependsOn ':app:testSandDebugUnitTest', ':app-rss:testDebugUnitTest', ':data-firebase:testDebugUnitTest', ':data:test', ':core:testDebugUnitTest', 'clean'
+    dependsOn ':app:testSandDebugUnitTest', ':app-rss:testDebugUnitTest', ':app-statistics:testDebugUnitTest', ':data-firebase:testDebugUnitTest', ':data:test', ':core:testDebugUnitTest', 'clean'
     print "Tests passed successfully!"
 }
