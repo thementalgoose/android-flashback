@@ -8,6 +8,10 @@
 
 Flashback is a Formula 1 statistics app!
 
+### Architecture
+
+![architecture](res/architecture.png)
+
 ### Configuring notifications
 
 - [Dashboard](https://console.firebase.google.com/project/f1stats-live/notification)
