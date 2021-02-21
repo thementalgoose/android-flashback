@@ -1,4 +1,4 @@
-package tmg.flashback.ui.views
+package tmg.flashback.statistics.ui.views
 
 import android.content.Context
 import android.graphics.Color
@@ -6,7 +6,7 @@ import android.util.AttributeSet
 import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
-import tmg.flashback.R
+import tmg.flashback.statistics.R
 import tmg.utilities.extensions.dpToPx
 import kotlin.math.roundToInt
 
@@ -36,10 +36,10 @@ class RaceNumberView: androidx.appcompat.widget.AppCompatTextView {
 
     private fun initView(attributeSet: AttributeSet?, defStyleAttr: Int = -1) {
         context.theme
-            .obtainStyledAttributes(attributeSet, R.styleable.GridPositionView, defStyleAttr, 0)
+            .obtainStyledAttributes(attributeSet, R.styleable.RaceNumberView, defStyleAttr, 0)
             .apply {
                 try {
-                    colorHighlight = getColor(R.styleable.GridPositionView_boxColor, colorHighlight)
+                    colorHighlight = getColor(R.styleable.RaceNumberView_boxColor, colorHighlight)
                 } finally {
                     recycle()
                 }
