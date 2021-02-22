@@ -1,10 +1,10 @@
-package tmg.flashback.constants
+package tmg.flashback.statistics.constants
 
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 import tmg.flashback.statistics.enums.TrackLayout
-import tmg.flashback.testutils.BaseTest
+import tmg.flashback.statistics.testutils.BaseTest
 
 internal class TrackLayoutTest: BaseTest() {
 

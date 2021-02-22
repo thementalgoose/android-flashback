@@ -11,6 +11,7 @@ import tmg.components.about.AboutThisAppActivity
 import tmg.flashback.constants.AboutThisAppConfig
 import tmg.flashback.constants.App.playStoreUrl
 import tmg.flashback.core.controllers.AppearanceController
+import tmg.flashback.core.managers.AppSettingsManager
 import tmg.flashback.core.ui.settings.SettingsFragment
 import tmg.flashback.ui.settings.privacy.PrivacyPolicyActivity
 import tmg.flashback.ui.settings.release.ReleaseActivity
@@ -21,7 +22,7 @@ class SettingsAboutFragment: SettingsFragment() {
 
     private val viewModel: SettingsAboutViewModel by viewModel()
 
-    private val appearanceController: AppearanceController by inject()
+    private val appSettingsManager: AppSettingsManager by inject()
 
     override val prefClicked: (prefKey: String) -> Unit = { prefKey ->
         viewModel.inputs.preferenceClicked(prefKey, null)
@@ -57,12 +58,7 @@ class SettingsAboutFragment: SettingsFragment() {
 
     private fun showAbout() {
         context?.let {
-            startActivity(
-                AboutThisAppActivity.intent(
-                    context = it,
-                    configuration = AboutThisAppConfig.configuration(it, !appearanceController.isLightMode)
-                )
-            )
+            appSettingsManager.openAboutThisApp(it)
         }
     }
 }
