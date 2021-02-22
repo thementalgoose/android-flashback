@@ -1,4 +1,4 @@
-package tmg.flashback.controllers
+package tmg.flashback.statistics.controllers
 
 import tmg.flashback.data.repositories.AppRepository
 

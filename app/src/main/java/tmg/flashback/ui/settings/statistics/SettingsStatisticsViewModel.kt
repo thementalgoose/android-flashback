@@ -4,9 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import tmg.components.prefs.AppPreferencesItem
 import tmg.flashback.R
-import tmg.flashback.constants.Defaults
-import tmg.flashback.controllers.RaceController
-import tmg.flashback.controllers.SeasonController
+import tmg.flashback.statistics.controllers.RaceController
+import tmg.flashback.statistics.controllers.SeasonController
 import tmg.flashback.core.ui.BaseViewModel
 import tmg.utilities.lifecycle.Event
 
@@ -29,8 +28,8 @@ interface SettingsStatisticsViewModelOutputs {
 
 
 class SettingsStatisticsViewModel(
-    private val raceController: RaceController,
-    private val seasonController: SeasonController
+        private val raceController: RaceController,
+        private val seasonController: SeasonController
 ): BaseViewModel(), SettingsStatisticsViewModelInputs, SettingsStatisticsViewModelOutputs {
 
     private val keyQualifyingDeltas: String = "QualifyingDelta"

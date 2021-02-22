@@ -1,6 +1,14 @@
 package tmg.flashback.statistics.constants
 
+import org.threeten.bp.Year
+
 object Formula1 {
+
+    /**
+     * Current Year season
+     */
+    val currentSeasonYear: Int
+        get() = Year.now().value
 
     /**
      * When did F1 start
