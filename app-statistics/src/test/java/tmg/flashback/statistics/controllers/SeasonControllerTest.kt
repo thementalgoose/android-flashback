@@ -1,14 +1,14 @@
-package tmg.flashback.controllers
+package tmg.flashback.statistics.controllers
 
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
-import tmg.flashback.constants.App.currentYear
 import tmg.flashback.core.controllers.ConfigurationController
 import tmg.flashback.data.repositories.AppRepository
-import tmg.flashback.testutils.BaseTest
+import tmg.flashback.statistics.constants.Formula1.currentSeasonYear
+import tmg.flashback.statistics.testutils.BaseTest
 
 internal class SeasonControllerTest: BaseTest() {
 
@@ -30,7 +30,7 @@ internal class SeasonControllerTest: BaseTest() {
         every { mockAppRepository.defaultSeason } returns 2017
         initSUT()
 
-        assertEquals(currentYear, sut.defaultSeason)
+        assertEquals(currentSeasonYear, sut.defaultSeason)
     }
 
     @Test

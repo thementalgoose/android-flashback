@@ -11,7 +11,7 @@ import org.threeten.bp.Year
 import org.threeten.bp.ZoneId
 import org.threeten.bp.ZoneOffset
 import tmg.flashback.controllers.FeatureController
-import tmg.flashback.controllers.SeasonController
+import tmg.flashback.statistics.controllers.SeasonController
 import tmg.flashback.controllers.UpNextController
 import tmg.flashback.core.model.Timestamp
 import tmg.flashback.core.model.UpNextSchedule

@@ -1,8 +1,8 @@
-package tmg.flashback.controllers
+package tmg.flashback.statistics.controllers
 
-import tmg.flashback.constants.App.currentYear
 import tmg.flashback.core.controllers.ConfigurationController
 import tmg.flashback.data.repositories.AppRepository
+import tmg.flashback.statistics.constants.Formula1.currentSeasonYear
 
 /**
  * All the preferences surrounding the season, list of all seasons
@@ -28,7 +28,7 @@ class SeasonController(
             val serverSeason = configurationController.defaultSeason
 
             if (supportedSeasons.isEmpty()) {
-                return currentYear
+                return currentSeasonYear
             }
             if (userPrefSeason != null) {
                 if (supportedSeasons.contains(userPrefSeason)) {

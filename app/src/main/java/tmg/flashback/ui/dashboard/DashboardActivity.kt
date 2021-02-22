@@ -10,7 +10,7 @@ import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.R
 import tmg.flashback.controllers.FeatureController
-import tmg.flashback.controllers.SeasonController
+import tmg.flashback.statistics.controllers.SeasonController
 import tmg.flashback.core.enums.DisplayType
 import tmg.flashback.core.ui.BaseActivity
 import tmg.flashback.ui.admin.maintenance.MaintenanceActivity

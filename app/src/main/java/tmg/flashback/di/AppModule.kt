@@ -20,6 +20,8 @@ import tmg.flashback.rss.repo.RssAPI
 import tmg.flashback.rss.ui.RSSViewModel
 import tmg.flashback.rss.ui.configure.RSSConfigureViewModel
 import tmg.flashback.rss.ui.settings.RSSSettingsViewModel
+import tmg.flashback.statistics.controllers.RaceController
+import tmg.flashback.statistics.controllers.SeasonController
 import tmg.flashback.ui.SplashViewModel
 import tmg.flashback.ui.admin.forceupgrade.ForceUpgradeViewModel
 import tmg.flashback.ui.admin.maintenance.MaintenanceViewModel

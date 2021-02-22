@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.*
 import org.threeten.bp.LocalDate
 import tmg.flashback.constants.App.showComingSoonMessageForNextDays
 import tmg.flashback.core.ui.BaseViewModel
-import tmg.flashback.controllers.RaceController
+import tmg.flashback.statistics.controllers.RaceController
 import tmg.flashback.core.controllers.AppHintsController
 import tmg.flashback.core.controllers.AppearanceController
 import tmg.flashback.core.managers.NetworkConnectivityManager
@@ -55,11 +55,11 @@ interface RaceViewModelOutputs {
 //endregion
 
 class RaceViewModel(
-    private val seasonOverviewRepository: SeasonOverviewRepository,
-    private val appHintsController: AppHintsController,
-    private val raceController: RaceController,
-    private val appearanceController: AppearanceController,
-    private val connectivityManager: NetworkConnectivityManager
+        private val seasonOverviewRepository: SeasonOverviewRepository,
+        private val appHintsController: AppHintsController,
+        private val raceController: RaceController,
+        private val appearanceController: AppearanceController,
+        private val connectivityManager: NetworkConnectivityManager
 ) : BaseViewModel(), RaceViewModelInputs, RaceViewModelOutputs {
 
     var inputs: RaceViewModelInputs = this

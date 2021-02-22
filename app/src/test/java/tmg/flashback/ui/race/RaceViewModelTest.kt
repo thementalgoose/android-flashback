@@ -9,7 +9,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
 import tmg.flashback.*
-import tmg.flashback.controllers.RaceController
+import tmg.flashback.statistics.controllers.RaceController
 import tmg.flashback.core.controllers.AppHintsController
 import tmg.flashback.core.controllers.AppearanceController
 import tmg.flashback.core.enums.AnimationSpeed

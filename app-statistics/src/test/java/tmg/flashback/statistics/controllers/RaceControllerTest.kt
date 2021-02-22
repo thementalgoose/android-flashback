@@ -1,4 +1,4 @@
-package tmg.flashback.controllers
+package tmg.flashback.statistics.controllers
 
 import io.mockk.every
 import io.mockk.mockk
@@ -6,7 +6,7 @@ import io.mockk.verify
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import tmg.flashback.data.repositories.AppRepository
-import tmg.flashback.testutils.BaseTest
+import tmg.flashback.statistics.testutils.BaseTest
 
 internal class RaceControllerTest: BaseTest() {
 

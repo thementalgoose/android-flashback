@@ -23,6 +23,7 @@ import tmg.flashback.data.models.stats.*
 import tmg.flashback.ui.shared.sync.SyncDataItem
 import tmg.flashback.ui.shared.viewholders.DataUnavailable
 import tmg.flashback.core.utils.StringHolder
+import tmg.flashback.statistics.controllers.SeasonController
 import tmg.utilities.extensions.combineTriple
 import tmg.utilities.extensions.then
 import tmg.utilities.lifecycle.DataEvent
@@ -63,14 +64,14 @@ interface SeasonViewModelOutputs {
 //endregion
 
 class SeasonViewModel(
-    private val deviceController: DeviceController,
-    private val appearanceController: AppearanceController,
-    private val featureController: FeatureController,
-    private val historyRepository: HistoryRepository,
-    private val seasonOverviewRepository: SeasonOverviewRepository,
-    private val notificationController: NotificationController,
-    private val seasonController: SeasonController,
-    private val networkConnectivityManager: NetworkConnectivityManager
+        private val deviceController: DeviceController,
+        private val appearanceController: AppearanceController,
+        private val featureController: FeatureController,
+        private val historyRepository: HistoryRepository,
+        private val seasonOverviewRepository: SeasonOverviewRepository,
+        private val notificationController: NotificationController,
+        private val seasonController: SeasonController,
+        private val networkConnectivityManager: NetworkConnectivityManager
 ): BaseViewModel(), SeasonViewModelInputs, SeasonViewModelOutputs {
 
     private val showBannerAtTop: Boolean = showBannerAtTop()
