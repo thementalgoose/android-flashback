@@ -19,14 +19,14 @@ import tmg.flashback.core.managers.NetworkConnectivityManager
 import tmg.flashback.data.db.stats.HistoryRepository
 import tmg.flashback.data.db.stats.SeasonOverviewRepository
 import tmg.flashback.data.models.stats.History
-import tmg.flashback.ui.shared.sync.SyncDataItem
-import tmg.flashback.ui.shared.viewholders.DataUnavailable
+import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.testutils.*
 import tmg.flashback.testutils.assertEventNotFired
 import tmg.flashback.testutils.assertListMatchesItem
 import tmg.flashback.testutils.test
 import tmg.flashback.core.utils.StringHolder
 import tmg.flashback.statistics.controllers.SeasonController
+import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
 
 internal class SeasonViewModelTest: BaseTest() {
 

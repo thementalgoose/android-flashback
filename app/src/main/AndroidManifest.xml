@@ -40,12 +40,12 @@
             android:label="" />
 
         <activity
-            android:name=".ui.race.RaceActivity"
+            android:name=".statistics.ui.race.RaceActivity"
             android:label=""
             android:theme="@style/Translucent" />
 
         <activity
-            android:name=".ui.circuit.CircuitInfoActivity"
+            android:name=".statistics.ui.circuit.CircuitInfoActivity"
             android:label=""
             android:theme="@style/Translucent" />
 
@@ -65,17 +65,17 @@
             android:theme="@style/Translucent" />
 
         <activity
-            android:name=".ui.overviews.driver.DriverActivity"
+            android:name=".statistics.ui.overview.driver.DriverActivity"
             android:label=""
             android:theme="@style/Translucent" />
 
         <activity
-            android:name=".ui.overviews.driver.season.DriverSeasonActivity"
+            android:name=".statistics.ui.overview.driver.season.DriverSeasonActivity"
             android:label=""
             android:theme="@style/Translucent" />
 
         <activity
-            android:name=".ui.overviews.constructor.ConstructorActivity"
+            android:name=".statistics.ui.overview.constructor.ConstructorActivity"
             android:label=""
             android:theme="@style/Translucent" />
 
@@ -93,8 +93,6 @@
             android:name="tmg.components.about.AboutThisAppActivity"
             android:label=""
             android:theme="@style/Translucent" />
-
-
 
         <activity
             android:name=".rss.ui.RSSActivity"

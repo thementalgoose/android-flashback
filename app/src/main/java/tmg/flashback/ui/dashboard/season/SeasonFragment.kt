@@ -15,14 +15,12 @@ import tmg.flashback.constants.App.currentYear
 import tmg.flashback.controllers.FeatureController
 import tmg.flashback.core.ui.BaseFragment
 import tmg.flashback.ui.dashboard.DashboardNavigationCallback
-import tmg.flashback.ui.overviews.constructor.ConstructorActivity
-import tmg.flashback.ui.overviews.driver.DriverActivity
-import tmg.flashback.ui.race.RaceActivity
+import tmg.flashback.statistics.ui.overview.constructor.ConstructorActivity
+import tmg.flashback.statistics.ui.overview.driver.DriverActivity
 import tmg.flashback.rss.ui.RSSActivity
+import tmg.flashback.statistics.ui.race.RaceActivity
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
-import tmg.utilities.extensions.views.invisible
-import tmg.utilities.extensions.views.visible
 
 class SeasonFragment: BaseFragment() {
 

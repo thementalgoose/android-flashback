@@ -80,7 +80,7 @@ internal class LiveDataTestScope<T>(
      * Assert that the number of items emitted is equal to the expected value
      */
     fun assertItemCount(expected: Int) {
-        assertEquals(listOfValues.size, expected)
+        assertEquals(expected, listOfValues.size)
     }
 
     /**

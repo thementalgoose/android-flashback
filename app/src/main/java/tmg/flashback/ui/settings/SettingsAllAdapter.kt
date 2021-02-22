@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.view_settings_all_category.view.*
 import tmg.flashback.R
-import tmg.flashback.ui.utils.GenericDiffCallback
+import tmg.flashback.core.ui.shared.GenericDiffCallback
 
 class SettingsAllAdapter(
     private val categoryClicked: (category: Category) -> Unit

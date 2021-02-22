@@ -20,10 +20,10 @@ import tmg.flashback.core.managers.NetworkConnectivityManager
 import tmg.flashback.data.db.stats.HistoryRepository
 import tmg.flashback.data.db.stats.SeasonOverviewRepository
 import tmg.flashback.data.models.stats.*
-import tmg.flashback.ui.shared.sync.SyncDataItem
-import tmg.flashback.ui.shared.viewholders.DataUnavailable
+import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.core.utils.StringHolder
 import tmg.flashback.statistics.controllers.SeasonController
+import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
 import tmg.utilities.extensions.combineTriple
 import tmg.utilities.extensions.then
 import tmg.utilities.lifecycle.DataEvent

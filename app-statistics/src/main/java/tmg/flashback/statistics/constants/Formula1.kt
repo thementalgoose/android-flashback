@@ -21,6 +21,11 @@ object Formula1 {
     const val constructorChampionshipStarts = 1958
 
     /**
+     * Coming soon message for race statistics that are not synchronised or an error has occurred for
+     */
+    const val showComingSoonMessageForNextDays = 10
+
+    /**
      * Maximum points awarded to a driver in a given season
      */
     fun maxPointsBySeason(season: Int): Int {

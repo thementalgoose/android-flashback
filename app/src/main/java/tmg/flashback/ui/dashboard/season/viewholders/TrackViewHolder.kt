@@ -8,8 +8,8 @@ import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.R
 import tmg.flashback.ui.dashboard.season.SeasonItem
-import tmg.flashback.ui.utils.getColor
-import tmg.flashback.ui.utils.getFlagResourceAlpha3
+import tmg.flashback.core.extensions.getColor
+import tmg.flashback.statistics.ui.util.getFlagResourceAlpha3
 import tmg.utilities.extensions.ordinalAbbreviation
 
 class TrackViewHolder(

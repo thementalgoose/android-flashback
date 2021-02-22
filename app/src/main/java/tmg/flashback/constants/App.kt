@@ -18,11 +18,6 @@ object App {
     const val playStoreUrl: String = "https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID
 
     /**
-     * Coming soon message for race statistics that are not synchronised or an error has occurred for
-     */
-    const val showComingSoonMessageForNextDays = 10
-
-    /**
      * Colours for the decades for the menu
      */
     val coloursDecade: Map<String, String> = mapOf(
