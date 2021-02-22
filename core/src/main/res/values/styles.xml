@@ -4,6 +4,12 @@
     <style name="Text">
         <item name="android:textColor">?attr/f1TextPrimary</item>
     </style>
+
+    <style name="Text.Toolbar" parent="Text">
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:textSize">@dimen/textSizeXLarge</item>
+        <item name="android:textStyle">bold</item>
+    </style>
     
     <!-- Settings -->
 

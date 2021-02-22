@@ -8,7 +8,7 @@ import tmg.flashback.R
 import tmg.flashback.ui.dashboard.season.viewholders.ConstructorViewHolder
 import tmg.flashback.ui.dashboard.season.viewholders.DriverViewHolder
 import tmg.flashback.ui.dashboard.season.viewholders.TrackViewHolder
-import tmg.flashback.ui.shared.sync.SyncAdapter
+import tmg.flashback.statistics.ui.shared.sync.SyncAdapter
 
 class SeasonAdapter(
     private val trackClicked: (track: SeasonItem.Track) -> Unit,

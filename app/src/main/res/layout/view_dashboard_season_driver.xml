@@ -72,8 +72,7 @@
             android:layout_height="@dimen/driverFlagSize"
             app:layout_constraintBottom_toBottomOf="@id/tvDriverNumber"
             app:layout_constraintStart_toStartOf="@id/layoutDriver"
-            app:layout_constraintTop_toTopOf="@id/tvDriverNumber"
-            tools:src="@drawable/gb" />
+            app:layout_constraintTop_toTopOf="@id/tvDriverNumber" />
 
         <tmg.flashback.statistics.ui.views.RaceNumberView
             android:id="@+id/tvDriverNumber"

@@ -5,7 +5,7 @@ import org.threeten.bp.LocalDate
 import tmg.flashback.R
 import tmg.flashback.core.enums.AnimationSpeed
 import tmg.flashback.data.models.stats.Round
-import tmg.flashback.ui.shared.sync.SyncDataItem
+import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 
 sealed class SeasonItem(
         @LayoutRes val layoutId: Int

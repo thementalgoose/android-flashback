@@ -16,6 +16,8 @@ ext {
     swipe_refresh = "1.1.0"
     slidr = "2.1.0"
 
+    glide = "4.11.0"
+
     tmg_utils = "2.0.1"
     tmg_components = "3.0.1"
     tmg_labelled_progressbar = "1.0.6"

@@ -7,8 +7,8 @@ import kotlinx.android.synthetic.main.view_dashboard_season_constructor.view.*
 import tmg.flashback.R
 import tmg.flashback.core.enums.AnimationSpeed
 import tmg.flashback.ui.dashboard.season.SeasonItem
-import tmg.flashback.ui.shared.driverlist.DriverListAdapter
-import tmg.flashback.ui.utils.getColor
+import tmg.flashback.statistics.ui.shared.driverlist.DriverListAdapter
+import tmg.flashback.core.extensions.getColor
 import tmg.utilities.extensions.views.context
 import tmg.utilities.extensions.views.getString
 import tmg.utilities.extensions.views.show

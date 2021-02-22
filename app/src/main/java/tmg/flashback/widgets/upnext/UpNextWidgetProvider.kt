@@ -27,7 +27,7 @@ import tmg.flashback.core.controllers.CrashController
 import tmg.flashback.core.model.UpNextSchedule
 import tmg.flashback.data.utils.daysBetween
 import tmg.flashback.ui.SplashActivity
-import tmg.flashback.ui.utils.getFlagResourceAlpha3
+import tmg.flashback.statistics.ui.util.getFlagResourceAlpha3
 import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.toEnum
 import java.lang.Exception

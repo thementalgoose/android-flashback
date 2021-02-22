@@ -12,7 +12,7 @@ import tmg.flashback.data.utils.daysBetween
 import tmg.flashback.data.utils.hoursAndMins
 import tmg.flashback.data.utils.secondsBetween
 import tmg.flashback.ui.dashboard.list.ListItem
-import tmg.flashback.ui.utils.getFlagResourceAlpha3
+import tmg.flashback.statistics.ui.util.getFlagResourceAlpha3
 import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.views.*
 

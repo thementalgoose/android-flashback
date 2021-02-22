@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="@drawable/ripple"
+    android:paddingStart="@dimen/paddingMedium"
+    android:paddingTop="@dimen/paddingSmall"
+    android:paddingEnd="@dimen/paddingMedium"
+    android:paddingBottom="@dimen/paddingSmall">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="@fraction/driverSeasonPoints" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/midpoint"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="@fraction/driverSeason" />
+
+    <tmg.labelledprogressbar.LabelledProgressBar
+        android:id="@+id/lpvProgress"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:minHeight="30dp"
+        app:lpb_sliverWidth="1dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/guideline"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lpb_backgroundColour="?attr/f1BackgroundPrimary"
+        app:lpb_radius="@dimen/radiusSmall" />
+
+    <TextView
+        android:id="@+id/qualified"
+        style="@style/Text.DriverSeason.Track.Qualified"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="@id/lpvProgress"
+        app:layout_constraintEnd_toStartOf="@id/finished"
+        app:layout_constraintStart_toEndOf="@id/midpoint"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="6th" />
+
+    <TextView
+        android:id="@+id/finished"
+        style="@style/Text.DriverSeason.Track.Finish"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="@id/lpvProgress"
+        app:layout_constraintEnd_toStartOf="@id/guideline"
+        app:layout_constraintStart_toEndOf="@id/qualified"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="1st" />
+
+    <TextView
+        android:id="@+id/raceStatus"
+        style="@style/Text.DriverSeason.Track.Status"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingStart="1dp"
+        android:paddingEnd="1dp"
+        app:layout_constraintEnd_toStartOf="@id/guideline"
+        app:layout_constraintStart_toEndOf="@id/qualified"
+        app:layout_constraintTop_toBottomOf="@id/finished" />
+
+    <ImageView
+        android:id="@+id/country"
+        android:layout_width="@dimen/countryImageSize"
+        android:layout_height="@dimen/countryImageSize"
+        app:layout_constraintBottom_toBottomOf="@id/circuitName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/raceName"
+        tools:src="@drawable/au" />
+
+    <TextView
+        android:id="@+id/raceName"
+        style="@style/Text.DriverSeason.Track.Title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/paddingMedium"
+        android:layout_marginEnd="@dimen/paddingMedium"
+        android:gravity="center|start"
+        app:layout_constraintEnd_toStartOf="@id/midpoint"
+        app:layout_constraintStart_toEndOf="@id/country"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Australian Grand Prix" />
+
+    <TextView
+        android:id="@+id/circuitName"
+        style="@style/Text.DriverSeason.Track.TrackName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@id/raceName"
+        app:layout_constraintStart_toStartOf="@id/raceName"
+        app:layout_constraintTop_toBottomOf="@id/raceName"
+        tools:text="Albert Park Circuit" />
+
+    <TextView
+        android:id="@+id/constructorLabel"
+        style="@style/Text.DriverSeason.Track.Status"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        tools:text="Constructor: Toro Rosso"
+        app:layout_constraintTop_toBottomOf="@id/circuitName"
+        app:layout_constraintStart_toStartOf="@id/circuitName"
+        app:layout_constraintEnd_toStartOf="@id/midpoint"/>
+
+    <TextView
+        android:id="@+id/penalty"
+        style="@style/Text.QualifyingTime.Delta"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:text="@string/qualifying_grid_penalty"
+        app:layout_constraintTop_toBottomOf="@id/constructorLabel"
+        app:layout_constraintStart_toStartOf="@id/circuitName"
+        app:layout_constraintEnd_toStartOf="@id/midpoint"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
