@@ -25,7 +25,8 @@ interface SettingsWidgetViewModelOutputs {
 
 //endregion
 
-class SettingsWidgetViewModel: BaseViewModel(), SettingsWidgetViewModelInputs, SettingsWidgetViewModelOutputs {
+class SettingsWidgetViewModel: BaseViewModel(), SettingsWidgetViewModelInputs,
+    SettingsWidgetViewModelOutputs {
 
     private val keyRefreshWidget: String = "Widgets"
 

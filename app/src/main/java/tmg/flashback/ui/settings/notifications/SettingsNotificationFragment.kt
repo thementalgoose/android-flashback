@@ -6,9 +6,7 @@ import android.os.Bundle
 import android.provider.Settings
 import android.view.View
 import org.koin.android.viewmodel.ext.android.viewModel
-import tmg.flashback.core.ui.BaseFragment
 import tmg.flashback.core.ui.settings.SettingsFragment
-import tmg.flashback.ui.settings.device.SettingsDeviceViewModel
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 

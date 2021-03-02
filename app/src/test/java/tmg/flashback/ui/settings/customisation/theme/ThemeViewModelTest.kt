@@ -10,7 +10,6 @@ import tmg.flashback.core.enums.Theme
 import tmg.flashback.extensions.icon
 import tmg.flashback.extensions.label
 import tmg.flashback.testutils.BaseTest
-import tmg.flashback.testutils.assertEventFired
 import tmg.flashback.testutils.test
 import tmg.flashback.core.utils.Selected
 import tmg.flashback.core.utils.StringHolder

@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:id="@+id/cell"
+    android:layout_height="wrap_content"
+    android:background="?attr/f1BackgroundPrimary"
+    android:paddingStart="0dp"
+    android:paddingEnd="@dimen/paddingSmall">
+
+    <TextView
+        android:id="@+id/tvPosition"
+        style="@style/Text.RaceResult.Position"
+        android:layout_width="@dimen/qualifyingListPositionWidth"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/paddingSmall"
+        android:layout_marginTop="@dimen/paddingSmall"
+        android:gravity="center"
+        android:maxLength="2"
+        app:layout_constraintBottom_toBottomOf="@id/tvConstructor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="88" />
+
+    <include
+        android:id="@+id/layoutDriver"
+        layout="@layout/layout_driver"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/paddingSmall"
+        android:paddingBottom="@dimen/paddingXSmall"
+        app:layout_constraintStart_toEndOf="@id/tvPosition"
+        app:layout_constraintTop_toTopOf="@id/tvPosition" />
+
+    <ImageView
+        android:id="@+id/imgDriverFlag"
+        android:layout_width="@dimen/driverFlagSize"
+        android:layout_height="@dimen/driverFlagSize"
+        app:layout_constraintBottom_toBottomOf="@id/tvDriverNumber"
+        app:layout_constraintStart_toEndOf="@id/constructorColor"
+        app:layout_constraintStart_toStartOf="@id/layoutDriver"
+        app:layout_constraintTop_toTopOf="@id/tvDriverNumber"
+        tools:src="@drawable/gb" />
+
+    <tmg.flashback.statistics.ui.views.RaceNumberView
+        android:id="@+id/tvDriverNumber"
+        style="@style/Text.Driver.Number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/paddingXSmall"
+        android:layout_marginBottom="@dimen/paddingSmall"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/imgDriverFlag"
+        app:layout_constraintTop_toBottomOf="@id/layoutDriver"
+        tools:text="44" />
+
+    <View
+        android:id="@+id/constructorColor"
+        android:layout_width="4dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:background="#88ff88" />
+
+    <TextView
+        android:id="@+id/tvConstructor"
+        style="@style/Text.RaceResult.Constructor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/paddingNSmall"
+        app:layout_constraintBottom_toBottomOf="@id/tvDriverNumber"
+        app:layout_constraintStart_toEndOf="@id/tvDriverNumber"
+        app:layout_constraintTop_toBottomOf="@id/layoutDriver"
+        tools:text="Mercedes" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <TextView
+        android:id="@+id/tvPoints"
+        style="@style/Text.RaceResult.Points"
+        android:layout_width="@dimen/raceResultPointsWidth"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/paddingMedium"
+        android:gravity="end"
+        android:paddingStart="0dp"
+        android:paddingEnd="@dimen/paddingSmall"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/llPosition"
+        app:layout_constraintStart_toStartOf="@id/guideline"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="15" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/llPosition"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/paddingSmall"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/llTime"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toEndOf="@id/tvPoints"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/posGuideline"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <TextView
+            android:id="@+id/tvStartedAbsolute"
+            style="@style/Text.RaceResult.Position.Absolute"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/posGuideline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="12th" />
+
+        <ImageView
+            android:id="@+id/imgStarted"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:src="@drawable/ic_pos_up"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/posGuideline"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvStartedRelative"
+            style="@style/Text.RaceResult.Position.Relative"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/imgStarted"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="11" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:id="@+id/llTime"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="end|center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toEndOf="@id/llPosition"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="UseCompoundDrawables">
+
+        <LinearLayout
+            android:id="@+id/layoutTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="end|center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imgFastestLap"
+                android:layout_width="@dimen/fastestLapSize"
+                android:layout_height="@dimen/fastestLapSize"
+                android:src="@drawable/ic_fastest_lap" />
+
+            <TextView
+                android:id="@+id/tvTime"
+                style="@style/Text.RaceResult.Time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                tools:text="+1.123" />
+
+            <ImageView
+                android:id="@+id/imgStatus"
+                android:layout_width="@dimen/raceStatusSize"
+                android:layout_height="@dimen/raceStatusSize"
+                android:layout_marginStart="3dp"
+                app:tint="?attr/f1TextSecondary" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:background="?attr/selectableItemBackground"
+        android:id="@+id/clickTarget"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

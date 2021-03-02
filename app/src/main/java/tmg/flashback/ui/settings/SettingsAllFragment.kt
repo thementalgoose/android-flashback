@@ -1,6 +1,5 @@
 package tmg.flashback.ui.settings
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.navigation.fragment.findNavController
@@ -9,7 +8,6 @@ import kotlinx.android.synthetic.main.fragment_all_settings.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.R
 import tmg.flashback.core.ui.BaseFragment
-import tmg.flashback.rss.ui.settings.RSSSettingsActivity
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 

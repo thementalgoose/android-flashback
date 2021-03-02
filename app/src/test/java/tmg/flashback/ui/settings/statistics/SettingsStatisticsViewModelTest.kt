@@ -3,14 +3,12 @@ package tmg.flashback.ui.settings.statistics
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.components.prefs.AppPreferencesItem
 import tmg.flashback.R
-import tmg.flashback.controllers.RaceController
-import tmg.flashback.controllers.SeasonController
-import tmg.flashback.mockSeason
+import tmg.flashback.statistics.controllers.RaceController
+import tmg.flashback.statistics.controllers.SeasonController
 import tmg.flashback.testutils.BaseTest
 import tmg.flashback.testutils.assertEventFired
 import tmg.flashback.testutils.test

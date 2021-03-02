@@ -1,0 +1,160 @@
+<resources>
+
+    <!-- Navigation -->
+    <string name="nav_drivers">Drivers</string>
+    <string name="nav_constructors">Constructors</string>
+    <string name="nav_seasons">Seasons</string>
+    <string name="nav_search">Search</string>
+    <string name="nav_rss">RSS</string>
+    <string name="nav_calendar">Calendar</string>
+    <string name="nav_race">Race</string>
+    <string name="nav_qualifying">Qualifying</string>
+
+    <!-- Widgets -->
+    <string name="widget_up_next_title">Up next</string>
+    <string name="widget_up_next_nothing_title">Nothing coming up</string>
+    <string name="widget_up_next_nothing_subtitle">We will get this information as soon as it\'s available. Click here to check for updates</string>
+
+    <!-- Dashboard -->
+    <string name="home_season_header_current">Now</string>
+    <string name="home_season_header_favourited">Favourites</string>
+    <string name="home_season_header_All">All</string>
+    <string name="home_constructor_penalty">%d point penalty</string>
+    <string name="home_season_arrow">%s</string>
+    <string name="dashboard_up_next_title">Up next</string>
+    <string name="dashboard_up_next_suffix_ontheday">to go</string>
+    <plurals name="dashboard_up_next_suffix_days">
+        <item quantity="one">day to go</item>
+        <item quantity="other">days to go</item>
+    </plurals>
+    <string name="dashboard_up_next_date_today">Today</string>
+    <string name="dashboard_up_next_date_starts_at_today">Today at %s</string>
+    <string name="dashboard_up_next_date_localtime"><![CDATA[(local)]]></string>
+    <string name="dashboard_up_next_date_absolute"><![CDATA[<b>%s</b>]]></string>
+    <string name="dashboard_up_next_datetime_now">Now</string>
+    <string name="dashboard_up_next_datetime_started">Started</string>
+    <plurals name="dashboard_up_next_datetime_mins">
+        <item quantity="one">%d minute</item>
+        <item quantity="other">%d minutes</item>
+        <item quantity="zero">Starting now!</item>
+    </plurals>
+    <string name="dashboard_up_next_datetime_hour_min">%d hrs %d mins</string>
+    <string name="dashboard_up_next_datetime_hour">%d hours</string>
+    <plurals name="dashboard_up_next_datetime_started_mins">
+        <item quantity="zero">Starting now!</item>
+        <item quantity="one">Started a minute ago</item>
+        <item quantity="other">Started %d minutes ago</item>
+    </plurals>
+    <plurals name="dashboard_up_next_datetime_started_hour">
+        <item quantity="one">Started over an hour ago</item>
+        <item quantity="other">Started over %d hours ago</item>
+    </plurals>
+    <string name="dashboard_up_next_datetime_absolute"><![CDATA[<b>%s</b> at <b>%s</b> local time]]></string>
+    <string name="dashboard_season_list_extra_title">Extras</string>
+    <string name="dashboard_season_list_extra_rss_title">RSS feed</string>
+    <string name="dashboard_season_list_default_banner_automatic">No default season set</string>
+    <string name="dashboard_season_list_default_banner_user">Default season set to %d</string>
+    <string name="dashboard_season_list_default_banner_revert">Undo</string>
+    <string name="dashboard_season_list_option_set_default">Set as default</string>
+    <string name="dashboard_season_list_option_clear_default">Clear default</string>
+
+    <!-- Loading -->
+    <string name="menu_title">Season list</string>
+
+    <!-- Driver overview -->
+    <string name="driver_overview_stat_career_drivers_title">Drivers championships</string>
+    <string name="driver_overview_stat_career_best_championship_position">Best championship position</string>
+    <string name="driver_overview_stat_career_championship_standing">Championship standing</string>
+    <string name="driver_overview_stat_career_championship_standing_so_far">Current championship standing</string>
+    <string name="driver_overview_stat_career_wins">Wins</string>
+    <string name="driver_overview_stat_career_podiums">Podiums</string>
+    <string name="driver_overview_stat_race_starts">Race starts</string>
+    <string name="driver_overview_stat_race_finishes">Race finishes</string>
+    <string name="driver_overview_stat_race_retirements">Race retirements</string>
+    <string name="driver_overview_stat_career_points">Points</string>
+    <string name="driver_overview_stat_career_best_finish">Best finish</string>
+    <string name="driver_overview_stat_career_points_finishes">Points finishes</string>
+    <string name="driver_overview_stat_career_qualifying_pole">Qualified on pole</string>
+    <string name="driver_overview_stat_career_qualifying_top_3">Qualified in top 3</string>
+    <string name="driver_overview_stat_career_qualifying_top_10">Qualified within top 10</string>
+    <string name="driver_overview_stat_career_team_history">History</string>
+    <string name="driver_overview_stat_career_team">Team</string>
+    <string name="driver_overview_constructor">Constructor: %s</string>
+    <string name="driver_overview_stat_birthday">Born %s</string>
+
+    <!-- Constructor Overview -->
+    <string name="constructor_overview_stat_titles">Constructors championships</string>
+    <string name="constructor_overview_stat_races">Races</string>
+    <string name="constructor_overview_stat_race_wins">Wins</string>
+    <string name="constructor_overview_stat_race_podiums">Podiums</string>
+    <string name="constructor_overview_stat_qualifying_poles">Qualifying on pole</string>
+    <string name="constructor_overview_stat_qualifying_top_3">Qualifying in the top 3</string>
+    <string name="constructor_overview_stat_points">Points</string>
+    <string name="constructor_overview_stat_points_finishes">Points finishes</string>
+    <string name="constructor_overview_stat_best_finish">Best finish</string>
+    <string name="constructor_overview_stat_best_championship_position">Best championship position</string>
+    <string name="constructor_overview_in_progress">Season in progress</string>
+
+    <!-- Overview disclaimer -->
+    <string name="results_accurate_for" formatted="false">Results as of the %s (round %d)</string>
+    <string name="results_accurate_for_round" formatted="false">Results as of the %d, round %s</string>
+    <string name="results_accurate_for_year" formatted="false">Results as of the %d %s (round %d)</string>
+    <string name="qualifying_header">Q</string>
+    <string name="endash">–</string>
+
+    <!-- Race -->
+    <string name="race_round" formatted="false">Round %d</string>
+    <string name="race_round_format" formatted="false"><![CDATA[Round <b>%s</b> /// %s]]></string>
+    <string name="race_qualifying_no_data">Not found</string>
+    <plurals name="race_points">
+        <item quantity="one">%d point</item>
+        <item quantity="other">%d points</item>
+    </plurals>
+
+    <!-- Circuit -->
+    <string name="circuit_info_status"><![CDATA[Hosted <b>%d</b> grand prix]]></string>
+    <string name="circuit_info_status_range" formatted="false"><![CDATA[Hosted <b>%d</b> grand prix between %d and %d]]></string>
+    <string name="circuit_info_status_this_year_single"><![CDATA[It will also host round <b>%s</b> of this season]]></string>
+    <string name="circuit_info_status_this_year_multiple"><![CDATA[It will also host the %s rounds of this season]]></string>
+
+    <string name="circuit_info_circuit">Circuit</string>
+    <string name="circuit_info_maps">Show on map</string>
+    <string name="circuit_info_wikipedia">Wikipedia</string>
+
+    <string name="no_app_copy_clipboard">Cannot find app. Coordinates have been copied to clipboard</string>
+
+    <!-- Race -->
+    <string name="round_podium_started">Started %s</string>
+    <string name="round_podium_points">%d points</string>
+    <string name="qualifying_q1">Q1</string>
+    <string name="qualifying_q2">Q2</string>
+    <string name="qualifying_q3">Q3</string>
+    <string name="qualifying_no">N/A</string>
+    <string name="round_podium_first">1st</string>
+    <string name="round_podium_second">2nd</string>
+    <string name="round_podium_third">3rd</string>
+    <string name="race_time_delta">+%s</string>
+    <string name="race_dnf_cause">DNF cause: %s</string>
+    <string name="race_dnf">DNF</string>
+    <string name="race_cause">%s</string>
+
+    <!-- Race Status -->
+    <string name="race_status_retired">DNF</string>
+    <string name="qualifying_grid_penalty" formatted="false">%d place grid penalty, starts %s</string>
+
+    <!-- Error states -->
+    <string name="shared_unavailable_circuit_not_found">We can\'t find any information on this circuit.</string>
+    <string name="shared_unavailable_driver_not_found">We can\'t find any information on this driver.</string>
+    <string name="shared_unavailable_constructor_not_found">We can\'t find any information on this constructor.</string>
+    <string name="shared_unavailable_future_season">This season has not started yet, please check back after the first race to see the results!</string>
+    <string name="shared_unavailable_early_season">We don\'t have any data on this season or the calendar has not been confirmed yet. We will add this information as soon it\'s available</string>
+    <string name="shared_unavailable_future_race">This race has not yet happened, please check back after the race to see the results</string>
+    <string name="shared_unavailable_coming_soon_race">We don\'t have this information yet, it should be available after the race (race results usually take between 2 – 6 hours to appear, but can take longer)</string>
+    <string name="shared_unavailable_missing_race">Unfortunately we don\'t have any information for this yet, please check back you have an internet connection and try again</string>
+    <string name="shared_network_error">A network error occurred! Please check you are connected to the internet and try again</string>
+    <string name="shared_network_internal_error">A network error occurred and we weren\'t able to find any articles. Please check your internet connection or try again later</string>
+    <string name="shared_constructor_championship_not_awarded">The constructors championship did not start until 1958</string>
+
+    <!-- Data Provided -->
+    <string name="shared_provided_by">Data provided by Ergast API</string>
+</resources>

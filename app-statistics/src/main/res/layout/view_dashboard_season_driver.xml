@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:animateLayoutChanges="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="@drawable/ripple"
+        android:paddingStart="@dimen/paddingNSmall"
+        android:paddingTop="@dimen/paddingSmall"
+        android:paddingEnd="@dimen/paddingMedium"
+        android:paddingBottom="@dimen/paddingSmall"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.6" />
+
+        <TextView
+            android:id="@+id/tvPosition"
+            style="@style/Text.RaceResult.Position"
+            android:layout_width="@dimen/qualifyingListPositionWidth"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:maxLength="2"
+            app:layout_constraintBottom_toBottomOf="@id/tvConstructor"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="88" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/profileImage"
+            android:layout_width="@dimen/standingsDriverSize"
+            android:layout_height="@dimen/standingsDriverSize"
+            android:layout_marginStart="@dimen/radiusSmall"
+            app:layout_constraintBottom_toBottomOf="@id/tvPosition"
+            app:layout_constraintStart_toEndOf="@id/tvPosition"
+            app:layout_constraintTop_toTopOf="@id/tvPosition">
+
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop" />
+
+        </androidx.cardview.widget.CardView>
+
+        <include
+            android:id="@+id/layoutDriver"
+            layout="@layout/layout_driver"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/radiusSmall"
+            app:layout_constraintStart_toEndOf="@id/profileImage"
+            app:layout_constraintTop_toTopOf="@id/tvPosition" />
+
+        <ImageView
+            android:id="@+id/imgDriverFlag"
+            android:layout_width="@dimen/driverFlagSize"
+            android:layout_height="@dimen/driverFlagSize"
+            app:layout_constraintBottom_toBottomOf="@id/tvDriverNumber"
+            app:layout_constraintStart_toStartOf="@id/layoutDriver"
+            app:layout_constraintTop_toTopOf="@id/tvDriverNumber" />
+
+        <tmg.flashback.statistics.ui.views.RaceNumberView
+            android:id="@+id/tvDriverNumber"
+            style="@style/Text.Driver.Number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/paddingXSmall"
+            app:layout_constraintStart_toEndOf="@id/imgDriverFlag"
+            app:layout_constraintTop_toBottomOf="@id/layoutDriver"
+            tools:text="44" />
+
+        <TextView
+            android:id="@+id/tvConstructor"
+            style="@style/Text.RaceResult.Constructor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/paddingSmall"
+            android:drawablePadding="@dimen/paddingXSmall"
+            app:drawableStartCompat="@drawable/ic_small_constructor"
+            app:drawableTint="?attr/f1TextTertiary"
+            app:layout_constraintBottom_toBottomOf="@id/tvDriverNumber"
+            app:layout_constraintStart_toEndOf="@id/tvDriverNumber"
+            app:layout_constraintTop_toBottomOf="@id/layoutDriver"
+            tools:text="Mercedes" />
+
+        <tmg.labelledprogressbar.LabelledProgressBar
+            android:id="@+id/lpvProgress"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:minHeight="30dp"
+            app:layout_constraintBottom_toBottomOf="@id/tvConstructor"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/guideline"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lpb_backgroundColour="?attr/f1BackgroundPrimary"
+            app:lpb_radius="@dimen/radiusSmall"
+            app:lpb_sliverWidth="1dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
