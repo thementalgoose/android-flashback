@@ -7,6 +7,7 @@ import androidx.annotation.IdRes
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.activity_rss_settings.*
 import tmg.flashback.rss.R
 import tmg.flashback.core.ui.BaseActivity
@@ -32,15 +33,17 @@ class RSSSettingsActivity : BaseActivity(), NavController.OnDestinationChangedLi
         } ?: SETTINGS
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragments) as NavHostFragment
-        navController = navHostFragment.navController
-        navController?.graph?.let { graph ->
+        navHostFragment.findNavController().apply {
+            val graph = navInflater.inflate(R.navigation.graph_rss_settings)
             graph.startDestination = initialScreen.startFragmentId
+            this.graph = graph
         }
 
         header.text = getString(R.string.settings_rss_title)
 
         back.setOnClickListener { onBackPressed() }
     }
+
 
     override fun onResume() {
         super.onResume()
