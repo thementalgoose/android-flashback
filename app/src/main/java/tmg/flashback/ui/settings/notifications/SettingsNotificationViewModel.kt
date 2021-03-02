@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import tmg.components.prefs.AppPreferencesItem
 import tmg.flashback.R
-import tmg.flashback.controllers.NotificationController
+import tmg.flashback.statistics.controllers.NotificationController
 import tmg.flashback.core.ui.BaseViewModel
 import tmg.flashback.managers.notifications.FirebasePushNotificationManager.Companion.topicQualifying
 import tmg.flashback.managers.notifications.FirebasePushNotificationManager.Companion.topicRace

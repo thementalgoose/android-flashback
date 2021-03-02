@@ -6,16 +6,15 @@ import androidx.recyclerview.widget.RecyclerView
 import org.koin.core.component.KoinApiExtension
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import tmg.flashback.core.controllers.AppearanceController
 import tmg.flashback.core.controllers.ConfigurationController
-import tmg.flashback.core.managers.AppSettingsManager
+import tmg.flashback.core.managers.NavigationManager
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.ui.shared.sync.viewholders.*
 
 @KoinApiExtension
 abstract class SyncAdapter<T> : RecyclerView.Adapter<RecyclerView.ViewHolder>(), KoinComponent {
 
-    private val appSettingsManager: AppSettingsManager by inject()
+    private val navigationManager: NavigationManager by inject()
     private val configurationController: ConfigurationController by inject()
 
     abstract var list: List<T>
@@ -30,7 +29,7 @@ abstract class SyncAdapter<T> : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
             R.layout.view_shared_internal_error -> InternalErrorOccurredViewHolder(view)
             R.layout.view_shared_message -> MessageViewHolder(view)
             R.layout.view_shared_constructor_championship_not_awarded -> ConstructorsChampionshipNotAwardedViewHolder(view)
-            R.layout.view_shared_provided -> ProvidedByViewHolder(appSettingsManager, view)
+            R.layout.view_shared_provided -> ProvidedByViewHolder(navigationManager, view)
             else -> throw Error("${this.javaClass.simpleName} Does not have a supported layout id to create a viewholder by")
         }
     }

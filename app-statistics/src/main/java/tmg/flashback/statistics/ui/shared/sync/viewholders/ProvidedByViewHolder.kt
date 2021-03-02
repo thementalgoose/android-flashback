@@ -4,16 +4,13 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.view_shared_provided.view.*
-import tmg.flashback.core.enums.Theme
-import tmg.flashback.core.extensions.isLightMode
-import tmg.flashback.core.managers.AppSettingsManager
+import tmg.flashback.core.managers.NavigationManager
 import tmg.flashback.statistics.R
 import tmg.utilities.extensions.fromHtml
-import tmg.utilities.extensions.views.context
 import tmg.utilities.extensions.views.getString
 
 class ProvidedByViewHolder(
-    private val appSettingsManager: AppSettingsManager,
+    private val navigationManager: NavigationManager,
     view: View
 ) : RecyclerView.ViewHolder(view), View.OnClickListener {
 
@@ -31,6 +28,8 @@ class ProvidedByViewHolder(
     }
 
     override fun onClick(p0: View?) {
-        appSettingsManager.openAboutThisApp(itemView.context)
+        itemView.context.apply {
+            startActivity(navigationManager.getAboutThisAppIntent(this))
+        }
     }
 }

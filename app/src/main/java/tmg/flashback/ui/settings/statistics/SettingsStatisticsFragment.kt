@@ -5,7 +5,6 @@ import android.view.View
 import com.google.android.material.snackbar.Snackbar
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.R
-import tmg.flashback.core.ui.BaseFragment
 import tmg.flashback.core.ui.settings.SettingsFragment
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent

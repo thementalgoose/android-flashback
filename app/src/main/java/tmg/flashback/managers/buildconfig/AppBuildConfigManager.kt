@@ -10,4 +10,7 @@ class AppBuildConfigManager : BuildConfigManager {
 
     override val versionName: String
         get() = BuildConfig.VERSION_NAME
+
+    override val applicationId: String
+        get() = BuildConfig.APPLICATION_ID
 }
