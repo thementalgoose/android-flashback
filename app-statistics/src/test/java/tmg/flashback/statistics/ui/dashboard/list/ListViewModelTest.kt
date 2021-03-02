@@ -1,4 +1,4 @@
-package tmg.flashback.ui.dashboard.list
+package tmg.flashback.statistics.ui.dashboard.list
 
 import io.mockk.every
 import io.mockk.mockk
@@ -15,10 +15,10 @@ import tmg.flashback.statistics.controllers.SeasonController
 import tmg.flashback.statistics.controllers.UpNextController
 import tmg.flashback.core.model.Timestamp
 import tmg.flashback.core.model.UpNextSchedule
-import tmg.flashback.testutils.*
-import tmg.flashback.testutils.assertDataEventValue
-import tmg.flashback.testutils.test
-import tmg.flashback.testutils.testObserve
+import tmg.flashback.statistics.testutils.*
+import tmg.flashback.statistics.testutils.assertDataEventValue
+import tmg.flashback.statistics.testutils.test
+import tmg.flashback.statistics.testutils.testObserve
 
 internal class ListViewModelTest: BaseTest() {
 

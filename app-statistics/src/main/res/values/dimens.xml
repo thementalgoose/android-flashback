@@ -1,6 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+
+    <!--===============================================================-->
+
+    <!-- Bottom sheet -->
+
+    <dimen name="bottomSheetPillWidth">36dp</dimen>
+
+    <dimen name="seasonListCircleSize">20dp</dimen>
+    <dimen name="seasonListCircleSelectedSize">10dp</dimen>
+    <dimen name="seasonListCircleDefaultSize">6dp</dimen>
+
+    <dimen name="bottomSheetBoxPipeSize">6dp</dimen>
+    <dimen name="bottomSheetPillHeight">4dp</dimen>
+
+    <dimen name="bottomSheetIconSize">36dp</dimen>
+    <dimen name="bottomSheetFastScrollWidth">28dp</dimen>
+
+    <!--===============================================================-->
+
+    <!-- Home -->
+
+    <dimen name="dashboardTrackImageSize">28dp</dimen>
+    <dimen name="dashboardTrackStatusSize">16dp</dimen>
+
+    <dimen name="dashboardUpNextTrackWidth">80dp</dimen>
+    <dimen name="dashboardUpNextTrackHeight">60dp</dimen>
+    <dimen name="dashboardUpNextImageSize">16dp</dimen>
+
+    <!-- Widgets -->
+
+    <dimen name="widgetCircuitWidth">60dp</dimen>
+    <dimen name="widgetCircuitHeight">50dp</dimen>
+    <dimen name="widgetFlagSize">16dp</dimen>
+    <dimen name="widgetMinWidth">250dp</dimen>
+
+    <!--===============================================================-->
+
+    <!-- Dashboard -->
+
+    <dimen name="dashboardMaxWidth">360dp</dimen>
     <dimen name="standingsDriverSize">32dp</dimen>
 
     <!--===============================================================-->

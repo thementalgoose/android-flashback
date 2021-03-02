@@ -11,6 +11,8 @@ internal class BuildConfigProviderTest {
 
     private fun initSUT(versionCode: Int) {
         sut = object : BuildConfigManager {
+            override val applicationId: String
+                get() = "tmg.flashback"
             override val versionCode: Int
                 get() = versionCode
             override val versionName: String

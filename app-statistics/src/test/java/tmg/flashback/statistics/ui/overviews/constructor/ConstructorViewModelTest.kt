@@ -1,4 +1,4 @@
-package tmg.flashback.ui.overviews.constructor
+package tmg.flashback.statistics.ui.overviews.constructor
 
 import io.mockk.every
 import io.mockk.mockk
@@ -19,7 +19,7 @@ import tmg.flashback.statistics.testutils.assertListContainsItem
 import tmg.flashback.statistics.testutils.assertListMatchesItem
 import tmg.flashback.statistics.testutils.test
 import tmg.flashback.statistics.ui.overview.constructor.ConstructorViewModel
-import tmg.flashback.ui.overviews.*
+import tmg.flashback.statistics.ui.overviews.*
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
 import tmg.flashback.statistics.ui.util.position

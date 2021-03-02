@@ -1,4 +1,4 @@
-package tmg.flashback.ui.overviews.driver.season
+package tmg.flashback.statistics.ui.overviews.driver.season
 
 import io.mockk.every
 import io.mockk.mockk
@@ -18,7 +18,7 @@ import tmg.flashback.statistics.testutils.assertListContainsItems
 import tmg.flashback.statistics.testutils.test
 import tmg.flashback.statistics.ui.overview.driver.season.DriverSeasonItem
 import tmg.flashback.statistics.ui.overview.driver.season.DriverSeasonViewModel
-import tmg.flashback.ui.overviews.*
+import tmg.flashback.statistics.ui.overviews.*
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
 import tmg.flashback.statistics.ui.util.position

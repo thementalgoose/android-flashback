@@ -1,4 +1,4 @@
-package tmg.flashback.ui.overviews
+package tmg.flashback.statistics.ui.overviews
 
 import android.graphics.Color
 import org.threeten.bp.LocalDate

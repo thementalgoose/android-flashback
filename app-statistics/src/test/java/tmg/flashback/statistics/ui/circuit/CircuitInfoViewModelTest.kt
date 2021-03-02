@@ -1,4 +1,4 @@
-package tmg.flashback.ui.circuit
+package tmg.flashback.statistics.ui.circuit
 
 import io.mockk.every
 import io.mockk.mockk

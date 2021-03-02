@@ -58,6 +58,8 @@
     <string name="dashboard_season_list_option_set_default">Set as default</string>
     <string name="dashboard_season_list_option_clear_default">Clear default</string>
 
+    <!-- Loading -->
+    <string name="menu_title">Season list</string>
 
     <!-- Driver overview -->
     <string name="driver_overview_stat_career_drivers_title">Drivers championships</string>

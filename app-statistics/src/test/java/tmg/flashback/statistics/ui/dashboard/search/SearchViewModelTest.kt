@@ -1,6 +1,6 @@
-package tmg.flashback.ui.dashboard.search
+package tmg.flashback.statistics.ui.dashboard.search
 
-import tmg.flashback.testutils.BaseTest
+import tmg.flashback.statistics.testutils.BaseTest
 
 internal class SearchViewModelTest: BaseTest() {
 
