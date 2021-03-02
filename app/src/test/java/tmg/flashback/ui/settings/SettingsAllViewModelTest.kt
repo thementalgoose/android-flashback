@@ -4,7 +4,7 @@ import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.flashback.controllers.FeatureController
+import tmg.flashback.core.controllers.FeatureController
 import tmg.flashback.testutils.BaseTest
 import tmg.flashback.testutils.assertDataEventValue
 import tmg.flashback.testutils.test
@@ -37,7 +37,8 @@ internal class SettingsAllViewModelTest: BaseTest() {
         every { mockFeatureController.rssEnabled } returns false
         initSUT()
         sut.outputs.categories.test {
-            assertValue(Category
+            assertValue(
+                Category
                     .values()
                     .filter { it != Category.RSS }
                     .toList()

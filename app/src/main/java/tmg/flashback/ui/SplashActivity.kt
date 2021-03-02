@@ -9,7 +9,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.R
 import tmg.flashback.core.controllers.AnalyticsController
 import tmg.flashback.ui.admin.forceupgrade.ForceUpgradeActivity
-import tmg.flashback.ui.dashboard.DashboardActivity
+import tmg.flashback.statistics.ui.dashboard.DashboardActivity
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 import tmg.utilities.extensions.views.show

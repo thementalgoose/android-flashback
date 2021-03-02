@@ -2,13 +2,11 @@ package tmg.flashback.di
 
 import org.koin.dsl.module
 import tmg.flashback.core.controllers.*
-import tmg.flashback.core.managers.AnalyticsManager
-import tmg.flashback.core.managers.BuildConfigManager
-import tmg.flashback.core.managers.CrashManager
-import tmg.flashback.core.managers.NetworkConnectivityManager
+import tmg.flashback.core.managers.*
 import tmg.flashback.core.repositories.ConfigurationRepository
 import tmg.flashback.core.repositories.CoreRepository
 import tmg.flashback.managers.analytics.FirebaseAnalyticsManager
+import tmg.flashback.managers.navigation.FlashbackNavigationManager
 import tmg.flashback.managers.buildconfig.AppBuildConfigManager
 import tmg.flashback.managers.configuration.FirebaseRemoteConfigManager
 import tmg.flashback.managers.crash.FirebaseCrashManager
@@ -21,6 +19,7 @@ val coreModule = module {
     single<AnalyticsManager> { FirebaseAnalyticsManager(get()) }
     single<BuildConfigManager> { AppBuildConfigManager() }
     single<CrashManager> { FirebaseCrashManager() }
+    single<NavigationManager> { FlashbackNavigationManager(get(), get()) }
     single<NetworkConnectivityManager> { AndroidNetworkConnectivityManager(get()) }
 
     // Controllers
@@ -32,6 +31,7 @@ val coreModule = module {
     single { ConfigurationController(get(), get(), get()) }
 
     // Repositories
-    single<ConfigurationRepository> { FirebaseRemoteConfigManager(get()) } // TODO: Look at removing this to it's own repository
+    // TODO: Look at removing this to it's own repository
+    single<ConfigurationRepository> { FirebaseRemoteConfigManager(get()) }
     single<CoreRepository> { SharedPreferenceRepository(get()) }
 }

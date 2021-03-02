@@ -4,7 +4,6 @@ import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import tmg.flashback.core.controllers.ConfigurationController
 import tmg.flashback.core.model.ForceUpgrade

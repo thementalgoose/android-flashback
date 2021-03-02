@@ -6,7 +6,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.components.prefs.AppPreferencesItem
 import tmg.flashback.R
-import tmg.flashback.controllers.NotificationController
+import tmg.flashback.statistics.controllers.NotificationController
 import tmg.flashback.managers.notifications.FirebasePushNotificationManager.Companion.topicQualifying
 import tmg.flashback.managers.notifications.FirebasePushNotificationManager.Companion.topicRace
 import tmg.flashback.testutils.*

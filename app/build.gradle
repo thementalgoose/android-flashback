@@ -11,6 +11,8 @@ apply plugin: 'com.google.firebase.crashlytics'
 apply plugin: 'de.mannodermaus.android-junit5'
 apply plugin: 'com.github.triplet.play'
 
+apply from: rootDir.absolutePath + "/dependencies.gradle"
+
 android {
     compileSdkVersion 30
 
@@ -213,24 +215,11 @@ tasks.whenTaskAdded { task ->
 
 dependencies {
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.core:core-ktx:1.3.2'
-    implementation 'androidx.appcompat:appcompat:1.2.0'
+    // Modules
     implementation project(path: ':data-firebase')
     implementation project(path: ':app-rss')
     implementation project(path: ':core')
-
-    // Unit Testing
-    testImplementation "org.junit.jupiter:junit-jupiter-api:$junit"
-    testImplementation "org.junit.jupiter:junit-jupiter-engine:$junit"
-    testImplementation "org.junit.jupiter:junit-jupiter-params:$junit"
-    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junit"
-    testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
-    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines"
-    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines"
-    testImplementation 'androidx.test:core:1.3.0'
-    testImplementation 'androidx.arch.core:core-testing:2.1.0'
-    testImplementation "io.mockk:mockk:$mockk"
+    implementation project(path: ':app-statistics')
 
     // Android Test
     androidTestImplementation 'androidx.test:rules:1.3.0'
@@ -251,46 +240,6 @@ dependencies {
         exclude group: 'org.jetbrains.kotlin' // Only if you already use Kotlin in your project
     }
 
-    kaptTest "androidx.lifecycle:lifecycle-compiler:2.3.0"
-
-    // Coroutines
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines"
-
-    // Lifecycle
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$android_lifecycle"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$android_lifecycle"
-
-    // Navigation
-    implementation "androidx.navigation:navigation-fragment-ktx:$navigation"
-    implementation "androidx.navigation:navigation-ui-ktx:$navigation"
-
-    // Material components
-    implementation "com.google.android.material:material:$android_material"
-
-    // ConstraintLayout
-    implementation "androidx.constraintlayout:constraintlayout:$android_constraint"
-
-    // Swipe refresh
-    implementation "androidx.swiperefreshlayout:swiperefreshlayout:$swipe_refresh"
-
-    // Koin
-    implementation "org.koin:koin-android:$koin_version"
-    implementation "org.koin:koin-android-scope:$koin_version"
-    implementation "org.koin:koin-android-viewmodel:$koin_version"
-    implementation "org.koin:koin-android-ext:$koin_version"
-
-
-
-    // ThreeTen
-    implementation "com.jakewharton.threetenabp:threetenabp:$threeten"
-    testImplementation ("org.threeten:threetenbp:$threetenbp") {
-        exclude group:'com.jakewharton.threetenabp', module:'threetenabp'
-    }
-
-    // Swipe dismiss
-    implementation "com.r0adkll:slidableactivity:$slidr"
-
     // Progress bar
     implementation 'com.aswin:CustomArc:1.0.2'
 
@@ -305,12 +254,9 @@ dependencies {
     // Preferences
     implementation "androidx.preference:preference-ktx:1.1.1"
 
-    // Flagkit
-    implementation 'com.jwang123.flagkit:flagkit:1.0'
-
     // Glide
-    implementation 'com.github.bumptech.glide:glide:4.11.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+    implementation "com.github.bumptech.glide:glide:$glide"
+    annotationProcessor "com.github.bumptech.glide:compiler:$glide"
 
     // BugShaker
     implementation 'com.github.stkent:bugshaker:1.4.1'
@@ -323,11 +269,6 @@ dependencies {
 
     // Skeleton Layout
     implementation 'com.faltenreich:skeletonlayout:2.0.1'
-
-
-    // Discord Overlapping panels
-    implementation 'com.github.discord:OverlappingPanels:0.1.1'
-
 
     // Notifications + Config
     implementation platform("com.google.firebase:firebase-bom:$firebase_bom")

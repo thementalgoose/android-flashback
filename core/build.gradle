@@ -4,6 +4,8 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'de.mannodermaus.android-junit5'
 apply plugin: 'kotlin-kapt'
 
+apply from: rootDir.absolutePath + "/dependencies.gradle"
+
 android {
     compileSdkVersion 30
 
@@ -75,47 +77,9 @@ android {
 
 dependencies {
 
-    implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.core:core-ktx:1.3.2'
-    implementation 'androidx.appcompat:appcompat:1.2.0'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-    testImplementation "org.junit.jupiter:junit-jupiter-api:$junit"
-    testImplementation "org.junit.jupiter:junit-jupiter-engine:$junit"
-    testImplementation "org.junit.jupiter:junit-jupiter-params:$junit"
-    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junit"
-    testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
-    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines"
-    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines"
-    testImplementation 'androidx.test:core:1.3.0'
-    testImplementation 'androidx.arch.core:core-testing:2.1.0'
-    testImplementation "io.mockk:mockk:$mockk"
-    kaptTest "androidx.lifecycle:lifecycle-compiler:2.3.0"
-
-    // Material components
-    implementation "com.google.android.material:material:$android_material"
-
-    // Coroutines
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines"
-
     // Swipe dismiss
-    implementation "com.r0adkll:slidableactivity:$slidr"
+    api "com.r0adkll:slidableactivity:$slidr"
 
-    // Koin
-    implementation "org.koin:koin-android:$koin_version"
-    implementation "org.koin:koin-android-scope:$koin_version"
-    implementation "org.koin:koin-android-viewmodel:$koin_version"
-    implementation "org.koin:koin-android-ext:$koin_version"
-
-    // ThreeTen
-    implementation "com.jakewharton.threetenabp:threetenabp:$threeten"
-    testImplementation ("org.threeten:threetenbp:$threetenbp") {
-        exclude group:'com.jakewharton.threetenabp', module:'threetenabp'
-    }
-
-    // Utilities
-    api "com.github.thementalgoose:android-utilities:$tmg_utils"
+    // Components
     implementation "com.github.thementalgoose:android-components:$tmg_components"
 }

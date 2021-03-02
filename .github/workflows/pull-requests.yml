@@ -30,6 +30,7 @@ jobs:
         run: |
           echo "lines_app=$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }} | grep -E '^app/' -c)" >> $GITHUB_ENV
           echo "lines_app_rss=$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }} | grep -E '^app-rss/' -c)" >> $GITHUB_ENV
+          echo "lines_app_statistics=$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }} | grep -E '^app-statistics/' -c)" >> $GITHUB_ENV
           echo "lines_data=$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }} | grep -E '^data/' -c)" >> $GITHUB_ENV
           echo "lines_data_firebase=$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }} | grep -E '^data-firebase/' -c)" >> $GITHUB_ENV
           echo "lines_core=$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }} | grep -E '^core/' -c)" >> $GITHUB_ENV
@@ -54,6 +55,11 @@ jobs:
       - name: Unit tests - App-RSS
         run: ./gradlew :app-rss:testDebugUnitTest
         if: ${{ env.lines_app_rss != 0 }}
+
+      # Unit Tests - App-Statistics
+      - name: Unit tests - App-Statistics
+        run: ./gradlew :app-statistics:testDebugUnitTest
+        if: ${{ env.lines_app_statistics != 0 }}
 
       # Unit Tests - App
       - name: Unit tests - App

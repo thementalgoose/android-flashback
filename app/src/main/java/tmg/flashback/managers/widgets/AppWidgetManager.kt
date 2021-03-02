@@ -3,7 +3,7 @@ package tmg.flashback.managers.widgets
 import android.appwidget.AppWidgetManager
 import android.content.ComponentName
 import android.content.Context
-import tmg.flashback.widgets.upnext.UpNextWidgetProvider
+import tmg.flashback.statistics.widgets.upnext.UpNextWidgetProvider
 
 class AppWidgetManager(
         private val applicationContext: Context

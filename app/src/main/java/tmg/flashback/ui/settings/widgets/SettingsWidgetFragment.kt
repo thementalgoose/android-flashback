@@ -6,7 +6,7 @@ import com.google.android.material.snackbar.Snackbar
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.R
 import tmg.flashback.core.ui.settings.SettingsFragment
-import tmg.flashback.extensions.updateAllWidgets
+import tmg.flashback.statistics.extensions.updateAllWidgets
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 

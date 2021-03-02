@@ -1,6 +1,5 @@
 package tmg.flashback.ui.settings.about
 
-import androidx.annotation.StringRes
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import tmg.components.prefs.AppPreferencesItem
@@ -28,7 +27,8 @@ interface SettingsAboutViewModelOutputs {
 
 //endregion
 
-class SettingsAboutViewModel: BaseViewModel(), SettingsAboutViewModelInputs, SettingsAboutViewModelOutputs {
+class SettingsAboutViewModel: BaseViewModel(), SettingsAboutViewModelInputs,
+    SettingsAboutViewModelOutputs {
 
     private val keyAboutThisApp: String = "AboutThisApp"
     private val keyReview: String = "Review"

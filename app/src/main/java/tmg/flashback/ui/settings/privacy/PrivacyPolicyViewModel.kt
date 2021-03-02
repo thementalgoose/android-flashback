@@ -22,7 +22,8 @@ interface PrivacyPolicyViewModelOutputs {
 //endregion
 
 
-class PrivacyPolicyViewModel: BaseViewModel(), PrivacyPolicyViewModelInputs, PrivacyPolicyViewModelOutputs {
+class PrivacyPolicyViewModel: BaseViewModel(), PrivacyPolicyViewModelInputs,
+    PrivacyPolicyViewModelOutputs {
 
     var inputs: PrivacyPolicyViewModelInputs = this
     var outputs: PrivacyPolicyViewModelOutputs = this

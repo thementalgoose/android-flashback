@@ -7,7 +7,6 @@ import kotlinx.coroutines.launch
 import tmg.flashback.core.controllers.ConfigurationController
 import tmg.flashback.core.ui.BaseViewModel
 import tmg.utilities.lifecycle.DataEvent
-import tmg.utilities.lifecycle.Event
 
 //region Inputs
 
