@@ -1,4 +1,4 @@
-package tmg.flashback.ui.race
+package tmg.flashback.statistics.ui.race
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

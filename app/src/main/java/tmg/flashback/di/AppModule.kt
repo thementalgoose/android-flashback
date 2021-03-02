@@ -20,20 +20,25 @@ import tmg.flashback.rss.repo.RssAPI
 import tmg.flashback.rss.ui.RSSViewModel
 import tmg.flashback.rss.ui.configure.RSSConfigureViewModel
 import tmg.flashback.rss.ui.settings.RSSSettingsViewModel
+import tmg.flashback.core.controllers.FeatureController
+import tmg.flashback.managers.navigation.FlashbackNavigationManager
+import tmg.flashback.statistics.controllers.NotificationController
 import tmg.flashback.statistics.controllers.RaceController
 import tmg.flashback.statistics.controllers.SeasonController
+import tmg.flashback.statistics.controllers.UpNextController
+import tmg.flashback.statistics.manager.StatisticsExternalNavigationManager
 import tmg.flashback.ui.SplashViewModel
 import tmg.flashback.ui.admin.forceupgrade.ForceUpgradeViewModel
 import tmg.flashback.ui.admin.maintenance.MaintenanceViewModel
 import tmg.flashback.statistics.ui.circuit.CircuitInfoViewModel
-import tmg.flashback.ui.dashboard.DashboardViewModel
-import tmg.flashback.ui.dashboard.list.ListViewModel
-import tmg.flashback.ui.dashboard.search.SearchViewModel
-import tmg.flashback.ui.dashboard.season.SeasonViewModel
+import tmg.flashback.statistics.ui.dashboard.DashboardViewModel
+import tmg.flashback.statistics.ui.dashboard.list.ListViewModel
+import tmg.flashback.statistics.ui.dashboard.search.SearchViewModel
+import tmg.flashback.statistics.ui.dashboard.season.SeasonViewModel
 import tmg.flashback.statistics.ui.overview.constructor.ConstructorViewModel
 import tmg.flashback.statistics.ui.overview.driver.DriverViewModel
 import tmg.flashback.statistics.ui.overview.driver.season.DriverSeasonViewModel
-import tmg.flashback.ui.race.RaceViewModel
+import tmg.flashback.statistics.ui.race.RaceViewModel
 import tmg.flashback.ui.settings.SettingsAllViewModel
 import tmg.flashback.ui.settings.about.SettingsAboutViewModel
 import tmg.flashback.ui.settings.customisation.SettingsCustomisationViewModel
@@ -51,6 +56,7 @@ val appModule = module {
     single<AppShortcutManager> { AndroidAppShortcutManager(get()) }
     single<ConfigurationManager> { FirebaseRemoteConfigManager(get()) }
     single<PushNotificationManager> { FirebasePushNotificationManager(get(), get()) }
+    single<StatisticsExternalNavigationManager> { FlashbackNavigationManager(get(), get()) }
     single<WidgetManager> { AppWidgetManager(get()) }
 
     // Controllers
@@ -69,7 +75,7 @@ val appModule = module {
     // Splash
     viewModel { SplashViewModel(get(), get(), get()) }
     // Dashboard
-    viewModel { DashboardViewModel(get(), get(), get(), get(), get()) }
+    viewModel { DashboardViewModel(get(), get(), get(), get()) }
     viewModel { SeasonViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
     viewModel { ListViewModel(get(), get(), get()) }
     viewModel { SearchViewModel() }

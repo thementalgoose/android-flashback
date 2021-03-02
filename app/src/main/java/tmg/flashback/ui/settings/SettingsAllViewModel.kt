@@ -2,9 +2,8 @@ package tmg.flashback.ui.settings
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import tmg.flashback.controllers.FeatureController
+import tmg.flashback.core.controllers.FeatureController
 import tmg.flashback.core.ui.BaseViewModel
-import tmg.flashback.rss.network.RSS
 import tmg.utilities.lifecycle.DataEvent
 
 //region Inputs

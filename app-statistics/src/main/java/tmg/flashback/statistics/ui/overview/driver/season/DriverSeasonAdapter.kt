@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import org.koin.core.component.KoinApiExtension
 import tmg.flashback.core.ui.shared.GenericDiffCallback
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.ui.overview.viewholders.StatsViewHolder

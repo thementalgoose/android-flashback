@@ -22,7 +22,6 @@ import tmg.flashback.statistics.ui.overview.driver.DriverActivity
 import tmg.flashback.statistics.ui.shared.pill.PillAdapter
 import tmg.flashback.statistics.ui.shared.pill.PillItem
 import tmg.flashback.statistics.ui.util.getFlagResourceAlpha3
-import tmg.flashback.ui.race.RaceViewModel
 import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
@@ -152,7 +151,7 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
                 pillClicked = {
                     when (it) {
                         is PillItem.Wikipedia -> viewModel.inputs.clickWikipedia()
-                        is PillItem.Circuit -> startActivity(CircuitInfoActivity.intent(this, circuitId, initialTrackName))
+                        is PillItem.Circuit -> startActivity(tmg.flashback.statistics.ui.circuit.CircuitInfoActivity.intent(this, circuitId, initialTrackName))
                         else -> {} /* Do nothing */
                     }
                 }
@@ -182,7 +181,7 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
         back.setOnClickListener { finish() }
 
         trackLayout.setOnClickListener {
-            startActivity(CircuitInfoActivity.intent(this, circuitId, initialTrackName))
+            startActivity(tmg.flashback.statistics.ui.circuit.CircuitInfoActivity.intent(this, circuitId, initialTrackName))
         }
 
         // Observe

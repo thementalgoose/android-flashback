@@ -3,7 +3,7 @@ package tmg.flashback.ui
 import io.mockk.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.flashback.controllers.FeatureController
+import tmg.flashback.core.controllers.FeatureController
 import tmg.flashback.core.controllers.ConfigurationController
 import tmg.flashback.core.model.ForceUpgrade
 import tmg.flashback.managers.appshortcuts.AppShortcutManager

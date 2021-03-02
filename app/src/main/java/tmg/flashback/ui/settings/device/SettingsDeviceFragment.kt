@@ -4,9 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import org.koin.android.viewmodel.ext.android.viewModel
-import tmg.flashback.core.ui.BaseFragment
 import tmg.flashback.core.ui.settings.SettingsFragment
-import tmg.flashback.ui.settings.customisation.SettingsCustomisationViewModel
 import tmg.flashback.ui.settings.release.ReleaseActivity
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent

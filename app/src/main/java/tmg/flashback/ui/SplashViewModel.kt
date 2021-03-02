@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import tmg.flashback.controllers.FeatureController
+import tmg.flashback.core.controllers.FeatureController
 import tmg.flashback.core.controllers.ConfigurationController
 import tmg.flashback.core.ui.BaseViewModel
 import tmg.flashback.managers.appshortcuts.AppShortcutManager
@@ -30,9 +30,9 @@ interface SplashViewModelOutputs {
 //endregion
 
 class SplashViewModel(
-        private val shortcutManager: AppShortcutManager,
-        private val featureController: FeatureController,
-        private val configurationController: ConfigurationController
+    private val shortcutManager: AppShortcutManager,
+    private val featureController: FeatureController,
+    private val configurationController: ConfigurationController
 ): BaseViewModel(), SplashViewModelInputs, SplashViewModelOutputs {
 
     var inputs: SplashViewModelInputs = this

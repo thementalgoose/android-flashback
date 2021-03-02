@@ -29,7 +29,8 @@ interface SettingsCustomisationViewModelOutputs {
 
 //endregion
 
-class SettingsCustomisationViewModel: BaseViewModel(), SettingsCustomisationViewModelInputs, SettingsCustomisationViewModelOutputs {
+class SettingsCustomisationViewModel: BaseViewModel(), SettingsCustomisationViewModelInputs,
+    SettingsCustomisationViewModelOutputs {
 
     private val keyTheme: String = "Theme"
     private val keyAnimationSpeed: String = "AnimationSpeed"

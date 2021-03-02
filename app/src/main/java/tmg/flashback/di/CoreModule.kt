@@ -6,7 +6,7 @@ import tmg.flashback.core.managers.*
 import tmg.flashback.core.repositories.ConfigurationRepository
 import tmg.flashback.core.repositories.CoreRepository
 import tmg.flashback.managers.analytics.FirebaseAnalyticsManager
-import tmg.flashback.managers.appsettings.FlashbackAppSettingsManager
+import tmg.flashback.managers.navigation.FlashbackNavigationManager
 import tmg.flashback.managers.buildconfig.AppBuildConfigManager
 import tmg.flashback.managers.configuration.FirebaseRemoteConfigManager
 import tmg.flashback.managers.crash.FirebaseCrashManager
@@ -19,7 +19,7 @@ val coreModule = module {
     single<AnalyticsManager> { FirebaseAnalyticsManager(get()) }
     single<BuildConfigManager> { AppBuildConfigManager() }
     single<CrashManager> { FirebaseCrashManager() }
-    single<AppSettingsManager> { FlashbackAppSettingsManager(get()) }
+    single<NavigationManager> { FlashbackNavigationManager(get(), get()) }
     single<NetworkConnectivityManager> { AndroidNetworkConnectivityManager(get()) }
 
     // Controllers

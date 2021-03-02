@@ -6,6 +6,8 @@ package tmg.flashback.core.managers
  */
 interface BuildConfigManager {
 
+    val applicationId: String
+
     val versionCode: Int
     val versionName: String
 

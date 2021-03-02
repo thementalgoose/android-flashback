@@ -270,9 +270,6 @@ dependencies {
     // Skeleton Layout
     implementation 'com.faltenreich:skeletonlayout:2.0.1'
 
-    // Discord Overlapping panels
-    implementation 'com.github.discord:OverlappingPanels:0.1.1'
-
     // Notifications + Config
     implementation platform("com.google.firebase:firebase-bom:$firebase_bom")
     implementation 'com.google.firebase:firebase-analytics'

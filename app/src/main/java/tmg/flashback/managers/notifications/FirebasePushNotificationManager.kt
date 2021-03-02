@@ -7,7 +7,7 @@ import android.os.Build
 import androidx.annotation.StringRes
 import com.google.firebase.messaging.FirebaseMessaging
 import tmg.flashback.R
-import tmg.flashback.controllers.NotificationController
+import tmg.flashback.statistics.controllers.NotificationController
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
