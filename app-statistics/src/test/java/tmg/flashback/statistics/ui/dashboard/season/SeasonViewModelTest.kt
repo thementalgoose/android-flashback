@@ -23,10 +23,6 @@ import tmg.flashback.statistics.*
 import tmg.flashback.statistics.constants.Formula1.currentSeasonYear
 import tmg.flashback.statistics.controllers.NotificationController
 import tmg.flashback.statistics.controllers.SeasonController
-import tmg.flashback.statistics.mockHistory
-import tmg.flashback.statistics.mockHistoryRound1
-import tmg.flashback.statistics.mockHistoryRound2
-import tmg.flashback.statistics.mockSeason
 import tmg.flashback.statistics.testutils.*
 import tmg.flashback.statistics.testutils.BaseTest
 import tmg.flashback.statistics.testutils.assertEventFired
