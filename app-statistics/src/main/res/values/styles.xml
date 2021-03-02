@@ -1,6 +1,146 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+
+
+    <!-- =========================================== -->
+
+    <!-- =========================================== -->
+
+    <!--#region Home -->
+
+    <style name="Text.Hero" parent="Text">
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:textSize">@dimen/textSizeXLarge</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!--#endregion -->
+
+    <!-- =========================================== -->
+
+    <!-- =========================================== -->
+
+    <!--#region Bottom sheets -->
+
+    <style name="Text.BottomSheet.Title" parent="Text">
+        <item name="android:textSize">@dimen/textSizeLarge</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Text.BottomSheet.Subtitle" parent="Text">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="Text.BottomSheet.Item" parent="Text">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?attr/f1TextSecondary</item>
+    </style>
+
+    <style name="Text.BottomSheet.Header" parent="Text">
+        <item name="android:textSize">@dimen/textSizeSmall</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?attr/f1TextTertiary</item>
+    </style>
+
+    <!--#endregion -->
+
+    <!-- =========================================== -->
+
+    <!-- =========================================== -->
+
+    <!--#region Dashboard - List Up Next -->
+
+    <style name="Text.UpNext.Title" parent="Text.BottomSheet.Header" />
+
+    <style name="Text.UpNext.RaceName" parent="Text">
+        <item name="android:textColor">?attr/f1TextSecondary</item>
+        <item name="android:textSize">@dimen/textSizeMedium</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Text.UpNext.Circuit" parent="Text">
+        <item name="android:textColor">?attr/f1TextTertiary</item>
+        <item name="android:textSize">@dimen/textSizeSmall</item>
+    </style>
+
+    <style name="Text.UpNext.Round" parent="Text">
+        <item name="android:textSize">@dimen/textSizeSmall</item>
+        <item name="android:textColor">?attr/f1TextTertiary</item>
+    </style>
+
+    <style name="Text.UpNext.Countdown" parent="Text">
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:textSize">28sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="Text.UpNext.CountdownLabel" parent="Text">
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:textColor">?attr/f1TextSecondary</item>
+        <item name="android:textSize">@dimen/textSizeLarge</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Text.UpNext.Date" parent="Text">
+        <item name="android:textSize">@dimen/textSizeSmall</item>
+        <item name="android:textColor">?attr/f1TextTertiary</item>
+    </style>
+
+    <!--#endregion -->
+
+    <!--#region Dashboard - Track -->
+
+    <style name="Text.Dashboard.Track.Title" parent="Text">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Text.Dashboard.Track.TrackName" parent="Text">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="Text.Dashboard.Track.Round" parent="Text">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Text.Dashboard.Track.Date" parent="Text">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <!--#endregion -->
+
+    <!-- =========================================== -->
+
+    <!-- =========================================== -->
+
+    <!--#region Widgets -->
+
+    <style name="Text.Widget.Title" parent="Text">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/textSizeMedium</item>
+        <item name="android:textColor">#fcfcfc</item>
+    </style>
+
+    <style name="Text.Widget.Subtitle" parent="Text">
+        <item name="android:textSize">@dimen/textSizeSmall</item>
+        <item name="android:textColor">#fcfcfc</item>
+    </style>
+
+    <style name="Text.Widget.Days" parent="Text">
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:textSize">@dimen/textSizeXLarge</item>
+        <item name="android:textColor">#fcfcfc</item>
+    </style>
+
+    <style name="Text.Widget.DaysUntil" parent="Text">
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:textSize">@dimen/textSizeMedium</item>
+        <item name="android:textColor">#fcfcfc</item>
+    </style>
+
+    <!--#endregion -->
+
     <!--#region Dashboard - Driver -->
 
     <style name="Text.Driver" parent="Text">

@@ -1,15 +1,12 @@
-package tmg.flashback.statistics.controllers
+package tmg.flashback.core.controllers
 
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
-import tmg.flashback.core.controllers.ConfigurationController
-import tmg.flashback.core.controllers.FeatureController
-import tmg.flashback.testutils.BaseTest
 
-internal class FeatureControllerTest: BaseTest() {
+internal class FeatureControllerTest {
 
     private var mockConfigurationController: ConfigurationController = mockk(relaxed = true)
 

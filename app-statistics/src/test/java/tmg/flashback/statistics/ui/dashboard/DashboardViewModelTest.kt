@@ -1,4 +1,4 @@
-package tmg.flashback.ui.dashboard
+package tmg.flashback.statistics.ui.dashboard
 
 import android.content.Context
 import io.mockk.coEvery
@@ -7,15 +7,14 @@ import io.mockk.mockk
 import kotlinx.coroutines.flow.flow
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.flashback.controllers.ReleaseNotesController
 import tmg.flashback.core.controllers.ConfigurationController
 import tmg.flashback.core.managers.BuildConfigManager
 import tmg.flashback.data.db.DataRepository
 import tmg.flashback.data.models.AppLockout
-import tmg.flashback.testutils.BaseTest
-import tmg.flashback.testutils.assertEventFired
-import tmg.flashback.testutils.assertEventNotFired
-import tmg.flashback.testutils.test
+import tmg.flashback.statistics.testutils.BaseTest
+import tmg.flashback.statistics.testutils.assertEventFired
+import tmg.flashback.statistics.testutils.assertEventNotFired
+import tmg.flashback.statistics.testutils.test
 
 internal class DashboardViewModelTest: BaseTest() {
 
@@ -24,7 +23,6 @@ internal class DashboardViewModelTest: BaseTest() {
     private val mockContext: Context = mockk(relaxed = true)
     private val mockDataRepository: DataRepository = mockk(relaxed = true)
     private val mockBuildConfigManager: BuildConfigManager = mockk(relaxed = true)
-    private val mockReleaseNotesController: ReleaseNotesController = mockk(relaxed = true)
     private val mockConfigurationController: ConfigurationController = mockk(relaxed = true)
 
     @BeforeEach
@@ -37,38 +35,9 @@ internal class DashboardViewModelTest: BaseTest() {
             mockContext,
             mockDataRepository,
             mockBuildConfigManager,
-            mockConfigurationController,
-            mockReleaseNotesController
+            mockConfigurationController
         )
     }
-
-    //region Release Notes
-
-    @Test
-    fun `open release notes fires when release notes are different`() {
-
-        every { mockReleaseNotesController.pendingReleaseNotes } returns true
-
-        initSUT()
-
-        sut.outputs.openReleaseNotes.test {
-            assertEventFired()
-        }
-    }
-
-    @Test
-    fun `open release notes doesnt fire when no release notes difference`() {
-
-        every { mockReleaseNotesController.pendingReleaseNotes } returns false
-
-        initSUT()
-
-        sut.outputs.openReleaseNotes.test {
-            assertEventNotFired()
-        }
-    }
-
-    //endregion
 
     //region App Lockout
 

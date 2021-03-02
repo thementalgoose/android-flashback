@@ -9,7 +9,7 @@ import tmg.flashback.core.controllers.ConfigurationController
 import tmg.flashback.data.enums.NotificationRegistration
 import tmg.flashback.data.repositories.AppRepository
 import tmg.flashback.statistics.controllers.NotificationController
-import tmg.flashback.testutils.BaseTest
+import tmg.flashback.statistics.testutils.BaseTest
 
 internal class NotificationControllerTest: BaseTest() {
 

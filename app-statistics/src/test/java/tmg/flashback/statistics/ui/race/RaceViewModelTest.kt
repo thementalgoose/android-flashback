@@ -1,4 +1,4 @@
-package tmg.flashback.ui.race
+package tmg.flashback.statistics.ui.race
 
 import io.mockk.every
 import io.mockk.mockk
@@ -23,7 +23,8 @@ import tmg.flashback.statistics.testutils.BaseTest
 import tmg.flashback.statistics.testutils.assertDataEventValue
 import tmg.flashback.statistics.testutils.assertEventFired
 import tmg.flashback.statistics.testutils.test
-import tmg.flashback.ui.overviews.*
+import tmg.flashback.statistics.ui.overviews.*
+import tmg.flashback.statistics.ui.race.*
 import tmg.flashback.statistics.ui.race.RaceAdapterType.*
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable

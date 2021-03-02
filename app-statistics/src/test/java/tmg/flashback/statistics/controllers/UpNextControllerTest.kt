@@ -10,7 +10,7 @@ import tmg.flashback.core.controllers.ConfigurationController
 import tmg.flashback.core.model.Timestamp
 import tmg.flashback.core.model.UpNextSchedule
 import tmg.flashback.statistics.controllers.UpNextController
-import tmg.flashback.testutils.BaseTest
+import tmg.flashback.statistics.testutils.BaseTest
 
 internal class UpNextControllerTest: BaseTest() {
 

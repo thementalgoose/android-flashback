@@ -1,4 +1,4 @@
-package tmg.flashback.ui.dashboard.season
+package tmg.flashback.statistics.ui.dashboard.season
 
 import io.mockk.every
 import io.mockk.mockk
@@ -8,8 +8,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 import org.threeten.bp.LocalDate
-import tmg.flashback.*
-import tmg.flashback.constants.App.currentYear
 import tmg.flashback.statistics.controllers.NotificationController.Companion.daysUntilDataProvidedBannerMovedToBottom
 import tmg.flashback.core.controllers.AppearanceController
 import tmg.flashback.core.controllers.DeviceController
@@ -19,14 +17,21 @@ import tmg.flashback.data.db.stats.HistoryRepository
 import tmg.flashback.data.db.stats.SeasonOverviewRepository
 import tmg.flashback.data.models.stats.History
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
-import tmg.flashback.testutils.*
-import tmg.flashback.testutils.assertEventNotFired
-import tmg.flashback.testutils.assertListMatchesItem
-import tmg.flashback.testutils.test
 import tmg.flashback.core.utils.StringHolder
 import tmg.flashback.core.controllers.FeatureController
+import tmg.flashback.statistics.*
+import tmg.flashback.statistics.constants.Formula1.currentSeasonYear
 import tmg.flashback.statistics.controllers.NotificationController
 import tmg.flashback.statistics.controllers.SeasonController
+import tmg.flashback.statistics.mockHistory
+import tmg.flashback.statistics.mockHistoryRound1
+import tmg.flashback.statistics.mockHistoryRound2
+import tmg.flashback.statistics.mockSeason
+import tmg.flashback.statistics.testutils.*
+import tmg.flashback.statistics.testutils.BaseTest
+import tmg.flashback.statistics.testutils.assertEventFired
+import tmg.flashback.statistics.testutils.assertEventNotFired
+import tmg.flashback.statistics.testutils.test
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
 
 internal class SeasonViewModelTest: BaseTest() {
@@ -238,9 +243,9 @@ internal class SeasonViewModelTest: BaseTest() {
     @Test
     fun `when home type is calendar and history rounds is empty and network is connected and year is current year, show early in season error`() = coroutineTest {
 
-        val historyItemWithEmptyRound = History(currentYear, null, emptyList())
+        val historyItemWithEmptyRound = History(currentSeasonYear, null, emptyList())
 
-        every { mockSeasonOverviewRepository.getSeasonOverview(any()) } returns flow { emit(mockSeason.copy(season = currentYear)) }
+        every { mockSeasonOverviewRepository.getSeasonOverview(any()) } returns flow { emit(mockSeason.copy(season = currentSeasonYear)) }
         every { mockHistoryRepository.historyFor(any()) } returns flow { emit(historyItemWithEmptyRound) }
 
         val expected = listOf<SeasonItem>(
