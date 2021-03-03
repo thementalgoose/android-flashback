@@ -16,7 +16,6 @@ import tmg.flashback.core.ui.BaseActivity
 import tmg.flashback.statistics.enums.TrackLayout
 import tmg.flashback.core.controllers.AppHintsController.Companion.appHintDelay
 import tmg.flashback.statistics.R
-import tmg.flashback.statistics.ui.circuit.CircuitInfoActivity
 import tmg.flashback.statistics.ui.overview.constructor.ConstructorActivity
 import tmg.flashback.statistics.ui.overview.driver.DriverActivity
 import tmg.flashback.statistics.ui.shared.pill.PillAdapter
