@@ -16,6 +16,7 @@ internal val mockRssGoogle: Article = Article(
         textColor = "#ffffff",
         rssLink = "https://www.google.com/rss/link",
         source = "https://www.google.com",
-        shortSource = "G"
+        shortSource = "G",
+        contactLink = "https://www.google.com"
     )
 )

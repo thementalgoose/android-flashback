@@ -118,7 +118,7 @@ object ConstructorOverview: RecyclerViewUtils(R.id.list) {
 
 //region Settings
 
-object Settings: RecyclerViewUtils(R.id.rvSettings) {
+object Settings: RecyclerViewUtils(R.id.settingsList) {
 
     fun goToPrivacyPolicy(block: SettingsPrivacyPolicy.() -> Unit) {
         clickOnListText(R.string.settings_help_privacy_policy_title)
@@ -141,7 +141,7 @@ object Settings: RecyclerViewUtils(R.id.rvSettings) {
     }
 
     fun goToRSSSettings(block: RSSSettings.() -> Unit) {
-        clickOnListText(R.string.settings_customisation_rss_title)
+        clickOnListText(R.string.settings_all_rss)
         block(RSSSettings)
         pressBack()
     }
@@ -157,7 +157,7 @@ object SettingsAbout
 
 //region RSS
 
-object RSSSettings: RecyclerViewUtils(R.id.rvSettings) {
+object RSSSettings: RecyclerViewUtils(R.id.settingsList) {
 
     fun goToRSSConfigure(block: RSSSettingsConfigure.() -> Unit) {
         clickOnListText(R.string.settings_rss_configure_sources_title)

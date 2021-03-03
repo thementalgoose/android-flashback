@@ -38,7 +38,7 @@ object EspressoUtils {
     //region AppBar
 
     fun collapseAppBar(@IdRes id: Int = R.id.appbar) {
-        onView(withId(id)).perform(CollapseAppBarLayoutAction())
+//        onView(withId(id)).perform(CollapseAppBarLayoutAction())
     }
 
     //endregion
