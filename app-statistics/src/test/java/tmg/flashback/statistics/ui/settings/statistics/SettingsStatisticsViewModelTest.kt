@@ -1,4 +1,4 @@
-package tmg.flashback.ui.settings.statistics
+package tmg.flashback.statistics.ui.settings.statistics
 
 import io.mockk.every
 import io.mockk.mockk

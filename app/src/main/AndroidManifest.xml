@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name="tmg.flashback.FlashbackApplication"
+        android:name=".FlashbackApplication"
         android:allowBackup="true"
         android:fullBackupContent="false"
         android:icon="@mipmap/logo"
@@ -55,7 +55,7 @@
             android:theme="@style/Translucent" />
 
         <activity
-            android:name=".ui.settings.SettingsAllActivity"
+            android:name=".statistics.ui.settings.SettingsAllActivity"
             android:label=""
             android:theme="@style/Translucent" />
 

@@ -1,4 +1,4 @@
-package tmg.flashback.ui.utils
+package tmg.flashback.ui
 
 import android.content.Context
 import android.content.Intent
@@ -18,7 +18,7 @@ import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertD
 import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.Matcher
 import tmg.flashback.R
-import tmg.flashback.ui.utils.actions.CollapseAppBarLayoutAction
+import tmg.flashback.ui.actions.CollapseAppBarLayoutAction
 import java.lang.Exception
 
 
