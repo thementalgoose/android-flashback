@@ -1,4 +1,4 @@
-package tmg.flashback.ui.settings
+package tmg.flashback.statistics.ui.settings
 
 import android.os.Bundle
 import android.view.View

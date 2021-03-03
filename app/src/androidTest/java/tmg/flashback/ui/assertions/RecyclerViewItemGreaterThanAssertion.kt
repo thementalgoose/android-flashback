@@ -1,12 +1,12 @@
-package tmg.flashback.ui.utils.assertions
+package tmg.flashback.ui.assertions
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.NoMatchingViewException
 import androidx.test.espresso.ViewAssertion
-import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 
-class RecyclerViewItemCountAssertion(
+class RecyclerViewItemGreaterThanAssertion(
     private val count: Int
 ): ViewAssertion {
     override fun check(view: View?, noViewFoundException: NoMatchingViewException?) {
@@ -14,6 +14,6 @@ class RecyclerViewItemCountAssertion(
 
         val recyclerView = view as RecyclerView
         val adapter = recyclerView.adapter!!
-        assertEquals(count, adapter.itemCount)
+        assertTrue(adapter.itemCount >= count, "Adapter only has ${adapter.itemCount} when we expect $count or more items")
     }
 }

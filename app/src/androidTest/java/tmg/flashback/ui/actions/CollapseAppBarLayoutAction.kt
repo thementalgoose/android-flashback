@@ -1,4 +1,4 @@
-package tmg.flashback.ui.utils.actions
+package tmg.flashback.ui.actions
 
 import android.view.View
 import androidx.test.espresso.UiController
