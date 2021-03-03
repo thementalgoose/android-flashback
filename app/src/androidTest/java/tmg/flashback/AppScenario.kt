@@ -165,13 +165,13 @@ class AppScenario: KoinTest {
 
                 this.goToSettings {
 
-                    assertTextDisplayedInList(R.string.settings_customisation_rss)
-                    assertTextDisplayedInList(R.string.settings_notifications_title)
-                    assertTextDisplayedInList(R.string.settings_theme)
-                    assertTextDisplayedInList(R.string.settings_customisation)
-                    assertTextDisplayedInList(R.string.settings_season_list)
-                    assertTextDisplayedInList(R.string.settings_help)
-                    assertTextDisplayedInList(R.string.settings_feedback)
+                    assertTextDisplayedInList(R.string.settings_all_customisation)
+                    assertTextDisplayedInList(R.string.settings_all_statistics)
+                    assertTextDisplayedInList(R.string.settings_all_rss)
+                    assertTextDisplayedInList(R.string.settings_all_notifications)
+                    assertTextDisplayedInList(R.string.settings_all_widgets)
+                    assertTextDisplayedInList(R.string.settings_all_device)
+                    assertTextDisplayedInList(R.string.settings_all_about)
 
                     this.goToPrivacyPolicy {
 
