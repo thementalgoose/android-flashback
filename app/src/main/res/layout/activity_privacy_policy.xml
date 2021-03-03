@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:background="@null"
         app:elevation="0dp"
-        app:layout_behavior="tmg.flashback.statistics.ui.utils.AppBarLockableBehavior">
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$Behavior">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/collapsingtoolbar"

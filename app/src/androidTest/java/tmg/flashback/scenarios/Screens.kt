@@ -2,10 +2,10 @@ package tmg.flashback.scenarios
 
 import tmg.flashback.R
 import tmg.flashback.di.remoteconfig.MockRemoteConfigRepository
-import tmg.flashback.statistics.ui.utils.EspressoUtils.clickOn
-import tmg.flashback.statistics.ui.utils.EspressoUtils.collapseAppBar
-import tmg.flashback.statistics.ui.utils.EspressoUtils.pressBack
-import tmg.flashback.statistics.ui.utils.RecyclerViewUtils
+import tmg.flashback.ui.EspressoUtils.clickOn
+import tmg.flashback.ui.EspressoUtils.collapseAppBar
+import tmg.flashback.ui.EspressoUtils.pressBack
+import tmg.flashback.ui.RecyclerViewUtils
 
 fun startup(block: Home.() -> Unit) {
     block(Home)
