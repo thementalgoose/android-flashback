@@ -37,22 +37,6 @@
     <string name="settings_animation_speed_medium">1x</string>
     <string name="settings_animation_speed_slow">2x</string>
 
-    <!-- Statistics -->
-    <string name="settings_statistics">Statistics</string>
-    <string name="settings_customisation_qualifying_delta_title">Qualifying delta</string>
-    <string name="settings_customisation_qualifying_delta_description">Default to showing the lap time delta alongside the qualifying time when displaying qualifying results. You can long press qualifying results to toggle this per race</string>
-    <string name="settings_customisation_qualifying_grid_penalties_title">Qualifying grid penalties</string>
-    <string name="settings_customisation_qualifying_grid_penalties_description">Shows the grid penalty that a driver has in the qualifying view</string>
-    <string name="settings_customisation_fade_dnf_title">Fade race DNFs</string>
-    <string name="settings_customisation_fade_dnf_description">Fade out the drivers who fail to finish a race when looking at race results</string>
-    <string name="settings_default_season_title">Reset default season</string>
-    <string name="settings_default_season_description">Reset your default season selection and let the app follow the Formula 1 seasons</string>
-    <string name="settings_default_season_updated">Default season cleared</string>
-    <string name="settings_customisation_season_all_expanded_title">All section</string>
-    <string name="settings_customisation_season_all_expanded_description">Expand the all section in the menu by default</string>
-    <string name="settings_customisation_season_favourited_expanded_title">Favourites section</string>
-    <string name="settings_customisation_season_favourited_expanded_description">Expand the favourites section in the menu by default</string>
-
     <!-- Notifications -->
     <string name="settings_notifications_title">Notifications</string>
     <string name="settings_notifications_channel_qualifying_title">Qualifying</string>
@@ -167,6 +151,5 @@
     <string name="notification_channel_race">Race starts</string>
     <string name="notification_channel_qualifying">Qualifying starts</string>
     <string name="notification_channel_info">Miscellaneous</string>
-    <string name="settings_home">Home</string>
 
 </resources>

@@ -80,7 +80,8 @@ dependencies {
     api project(path: ':core')
     implementation project(path: ':data-firebase')
 
-    // Labelled Progress Bar
+    // TMG dependencies
+    implementation "com.github.thementalgoose:android-components:$tmg_components"
     implementation "com.github.thementalgoose:android-labelled-progress-bar:$tmg_labelled_progressbar"
 
     // Glide

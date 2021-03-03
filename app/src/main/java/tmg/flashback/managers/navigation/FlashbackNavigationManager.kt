@@ -11,9 +11,9 @@ import tmg.flashback.core.extensions.isLightMode
 import tmg.flashback.core.managers.NavigationManager
 import tmg.flashback.rss.ui.RSSActivity
 import tmg.flashback.statistics.manager.StatisticsExternalNavigationManager
-import tmg.flashback.ui.SplashActivity
 import tmg.flashback.ui.admin.maintenance.MaintenanceActivity
-import tmg.flashback.ui.settings.SettingsAllActivity
+import tmg.flashback.statistics.ui.settings.SettingsAllActivity
+import tmg.flashback.ui.SplashActivity
 import tmg.flashback.ui.settings.release.ReleaseBottomSheetFragment
 
 class FlashbackNavigationManager(

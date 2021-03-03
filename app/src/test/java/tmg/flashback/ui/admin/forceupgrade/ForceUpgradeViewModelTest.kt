@@ -1,4 +1,4 @@
-package tmg.flashback.ui.admin.forceupgrade
+package tmg.flashback.statistics.ui.admin.forceupgrade
 
 import io.mockk.coVerify
 import io.mockk.every
@@ -11,6 +11,7 @@ import tmg.flashback.testutils.*
 import tmg.flashback.testutils.BaseTest
 import tmg.flashback.testutils.assertEventNotFired
 import tmg.flashback.testutils.test
+import tmg.flashback.ui.admin.forceupgrade.ForceUpgradeViewModel
 
 internal class ForceUpgradeViewModelTest: BaseTest() {
 

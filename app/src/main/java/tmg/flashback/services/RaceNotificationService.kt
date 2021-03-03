@@ -10,10 +10,10 @@ import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import tmg.flashback.R
-import tmg.flashback.ui.SplashActivity
 import tmg.flashback.managers.notifications.FirebasePushNotificationManager.Companion.topicMisc
 import tmg.flashback.managers.notifications.FirebasePushNotificationManager.Companion.topicQualifying
 import tmg.flashback.managers.notifications.FirebasePushNotificationManager.Companion.topicRace
+import tmg.flashback.ui.SplashActivity
 
 class RaceNotificationService: FirebaseMessagingService() {
 

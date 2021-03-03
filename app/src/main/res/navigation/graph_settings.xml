@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="tmg.flashback.ui.settings.SettingsAllFragment"
+        android:name="tmg.flashback.statistics.ui.settings.SettingsAllFragment"
         android:label="SettingsFragment" >
         <action
             android:id="@+id/graph_action_about"
@@ -77,7 +77,7 @@
         android:label="SettingsNotificationFragment" />
     <fragment
         android:id="@+id/settingsStatisticsFragment"
-        android:name="tmg.flashback.ui.settings.statistics.SettingsStatisticsFragment"
+        android:name="tmg.flashback.statistics.ui.settings.statistics.SettingsStatisticsFragment"
         android:label="SettingsStatisticsFragment" />
     <fragment
         android:id="@+id/settingsWidgetFragment"
