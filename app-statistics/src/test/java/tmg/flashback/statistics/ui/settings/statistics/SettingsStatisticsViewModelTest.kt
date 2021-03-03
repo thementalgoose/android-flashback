@@ -6,12 +6,12 @@ import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.components.prefs.AppPreferencesItem
-import tmg.flashback.R
+import tmg.flashback.statistics.R
 import tmg.flashback.statistics.controllers.RaceController
 import tmg.flashback.statistics.controllers.SeasonController
-import tmg.flashback.testutils.BaseTest
-import tmg.flashback.testutils.assertEventFired
-import tmg.flashback.testutils.test
+import tmg.flashback.statistics.testutils.BaseTest
+import tmg.flashback.statistics.testutils.assertEventFired
+import tmg.flashback.statistics.testutils.test
 
 internal class SettingsStatisticsViewModelTest: BaseTest() {
 
