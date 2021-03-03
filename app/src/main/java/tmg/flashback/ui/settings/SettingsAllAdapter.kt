@@ -1,4 +1,4 @@
-package tmg.flashback.ui.settings
+package tmg.flashback.statistics.ui.settings
 
 import android.view.LayoutInflater
 import android.view.View

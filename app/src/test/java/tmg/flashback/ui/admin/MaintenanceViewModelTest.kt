@@ -1,4 +1,4 @@
-package tmg.flashback.ui.admin
+package tmg.flashback.statistics.ui.admin
 
 import io.mockk.every
 import io.mockk.mockk

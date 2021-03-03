@@ -19,12 +19,12 @@ import tmg.flashback.di.mockModules
 import tmg.flashback.di.remoteconfig.MockRemoteConfigRepository
 import tmg.flashback.di.rss.mockRssGoogle
 import tmg.flashback.scenarios.startup
-import tmg.flashback.ui.SplashActivity
-import tmg.flashback.ui.utils.EspressoUtils.assertViewDisplayed
-import tmg.flashback.ui.utils.EspressoUtils.assertTextDisplayed
-import tmg.flashback.ui.utils.EspressoUtils.clickOn
-import tmg.flashback.ui.utils.EspressoUtils.assertIntentFired
-import tmg.flashback.ui.utils.EspressoUtils.collapseAppBar
+import tmg.flashback.statistics.ui.SplashActivity
+import tmg.flashback.statistics.ui.utils.EspressoUtils.assertViewDisplayed
+import tmg.flashback.statistics.ui.utils.EspressoUtils.assertTextDisplayed
+import tmg.flashback.statistics.ui.utils.EspressoUtils.clickOn
+import tmg.flashback.statistics.ui.utils.EspressoUtils.assertIntentFired
+import tmg.flashback.statistics.ui.utils.EspressoUtils.collapseAppBar
 
 /**
  * Instrumented test, which will execute on an Android device.
