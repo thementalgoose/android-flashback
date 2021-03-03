@@ -24,7 +24,6 @@ import tmg.flashback.statistics.testutils.assertDataEventValue
 import tmg.flashback.statistics.testutils.assertEventFired
 import tmg.flashback.statistics.testutils.test
 import tmg.flashback.statistics.ui.overviews.*
-import tmg.flashback.statistics.ui.race.*
 import tmg.flashback.statistics.ui.race.RaceAdapterType.*
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable

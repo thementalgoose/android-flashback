@@ -11,7 +11,6 @@ import kotlinx.android.synthetic.main.fragment_dashboard_season.swipeContainer
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.core.controllers.FeatureController
-import tmg.flashback.core.managers.NavigationManager
 import tmg.flashback.core.ui.BaseFragment
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.constants.Formula1.currentSeasonYear

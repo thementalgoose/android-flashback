@@ -1,4 +1,4 @@
-package tmg.flashback.ui.utils
+package tmg.flashback.ui
 
 import androidx.annotation.IdRes
 import androidx.annotation.StringRes
@@ -7,9 +7,9 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.contrib.RecyclerViewActions.scrollTo
 import androidx.test.espresso.matcher.ViewMatchers.*
 import com.schibsted.spain.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
-import tmg.flashback.ui.utils.EspressoUtils.getString
-import tmg.flashback.ui.utils.assertions.RecyclerViewItemCountAssertion
-import tmg.flashback.ui.utils.assertions.RecyclerViewItemGreaterThanAssertion
+import tmg.flashback.ui.assertions.RecyclerViewItemCountAssertion
+import tmg.flashback.ui.assertions.RecyclerViewItemGreaterThanAssertion
+import tmg.flashback.ui.EspressoUtils.getString
 
 open class RecyclerViewUtils(
     @IdRes val recyclerView: Int
