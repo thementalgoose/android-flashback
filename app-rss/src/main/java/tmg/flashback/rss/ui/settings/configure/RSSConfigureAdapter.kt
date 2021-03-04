@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.rss.R
+import tmg.flashback.rss.databinding.*
 import tmg.flashback.rss.repo.model.SupportedArticleSource
 import tmg.flashback.rss.ui.settings.configure.viewholders.*
 import java.lang.RuntimeException
@@ -24,13 +25,28 @@ class RSSConfigureAdapter(
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(viewType, parent, false)
+        val layoutInflater = LayoutInflater.from(parent.context)
         return when (viewType) {
-            R.layout.view_rss_configure_header -> HeaderViewHolder(view)
-            R.layout.view_rss_configure_item -> ItemViewHolder(removeItem, visitWebsite, view)
-            R.layout.view_rss_configure_quickadd -> QuickAddViewHolder(quickAddItem, visitWebsite, view)
-            R.layout.view_rss_configure_no_items -> NoItemsViewHolder(view)
-            R.layout.view_rss_configure_add -> AddViewHolder(customAddItem, view)
+            R.layout.view_rss_configure_header -> HeaderViewHolder(
+                ViewRssConfigureHeaderBinding.inflate(layoutInflater, parent, false)
+            )
+            R.layout.view_rss_configure_item -> ItemViewHolder(
+                removeItem,
+                visitWebsite,
+                ViewRssConfigureItemBinding.inflate(layoutInflater, parent, false)
+            )
+            R.layout.view_rss_configure_quickadd -> QuickAddViewHolder(
+                quickAddItem,
+                visitWebsite,
+                ViewRssConfigureQuickaddBinding.inflate(layoutInflater, parent, false)
+            )
+            R.layout.view_rss_configure_no_items -> NoItemsViewHolder(
+                ViewRssConfigureNoItemsBinding.inflate(layoutInflater, parent, false)
+            )
+            R.layout.view_rss_configure_add -> AddViewHolder(
+                customAddItem,
+                ViewRssConfigureAddBinding.inflate(layoutInflater, parent, false)
+            )
             else -> throw RuntimeException("ViewType not supported by configuration adapter")
         }
     }

@@ -1,6 +1,8 @@
 package tmg.flashback.rss.ui.settings.configure.viewholders
 
-import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import tmg.flashback.rss.databinding.ViewRssConfigureNoItemsBinding
 
-class NoItemsViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
+class NoItemsViewHolder(
+    private val binding: ViewRssConfigureNoItemsBinding
+): RecyclerView.ViewHolder(binding.root)
