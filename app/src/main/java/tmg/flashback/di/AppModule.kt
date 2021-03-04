@@ -38,7 +38,7 @@ import tmg.flashback.statistics.ui.overview.constructor.ConstructorViewModel
 import tmg.flashback.statistics.ui.overview.driver.DriverViewModel
 import tmg.flashback.statistics.ui.overview.driver.season.DriverSeasonViewModel
 import tmg.flashback.statistics.ui.race.RaceViewModel
-import tmg.flashback.statistics.ui.settings.SettingsAllViewModel
+import tmg.flashback.ui.settings.SettingsAllViewModel
 import tmg.flashback.ui.settings.about.SettingsAboutViewModel
 import tmg.flashback.ui.settings.customisation.SettingsCustomisationViewModel
 import tmg.flashback.ui.settings.customisation.animation.AnimationSpeedViewModel
