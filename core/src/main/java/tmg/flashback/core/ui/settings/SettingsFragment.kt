@@ -1,6 +1,7 @@
 package tmg.flashback.core.ui.settings
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import tmg.flashback.core.databinding.FragmentSettingsBinding
@@ -12,6 +13,9 @@ abstract class SettingsFragment: BaseFragment<FragmentSettingsBinding>() {
     abstract val prefSwitchClicked: (prefKey: String, newState: Boolean) -> Unit
 
     lateinit var adapter: SettingsAdapter
+
+    override fun inflateView(inflater: LayoutInflater) =
+        FragmentSettingsBinding.inflate(inflater)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

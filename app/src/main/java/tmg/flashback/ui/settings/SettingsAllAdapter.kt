@@ -1,4 +1,4 @@
-package tmg.flashback.statistics.ui.settings
+package tmg.flashback.ui.settings
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,9 +6,9 @@ import android.view.ViewGroup
 import androidx.annotation.StringRes
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.view_settings_all_category.view.*
 import tmg.flashback.R
 import tmg.flashback.core.ui.shared.GenericDiffCallback
+import tmg.flashback.databinding.ViewSettingsAllCategoryBinding
 
 class SettingsAllAdapter(
     private val categoryClicked: (category: Category) -> Unit
@@ -22,10 +22,8 @@ class SettingsAllAdapter(
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(
-            LayoutInflater.from(parent.context)
-                .inflate(R.layout.view_settings_all_category, parent, false), categoryClicked
-        )
+        val layoutInflater = LayoutInflater.from(parent.context)
+        return ViewHolder(ViewSettingsAllCategoryBinding.inflate(layoutInflater, parent, false), categoryClicked)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -35,20 +33,20 @@ class SettingsAllAdapter(
     override fun getItemCount() = list.size
 
     inner class ViewHolder(
-        view: View,
+        private val binding: ViewSettingsAllCategoryBinding,
         private val categoryClicked: (category: Category) -> Unit
-    ) : RecyclerView.ViewHolder(view), View.OnClickListener {
+    ) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
 
         private lateinit var category: Category
 
         init {
-            itemView.container.setOnClickListener(this)
+            binding.container.setOnClickListener(this)
         }
 
         fun bind(item: Category) {
             this.category = item
-            itemView.text.setText(item.title)
-            itemView.subtext.setText(item.subtitle)
+            binding.text.setText(item.title)
+            binding.subtext.setText(item.subtitle)
         }
 
         override fun onClick(p0: View?) {
@@ -88,5 +86,5 @@ enum class Category(
     ABOUT(
             title = R.string.settings_all_about,
             subtitle = R.string.settings_all_about_subtitle
-    ),
+    );
 }

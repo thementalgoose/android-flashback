@@ -1,23 +1,25 @@
-package tmg.flashback.statistics.ui.settings
+package tmg.flashback.ui.settings
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.fragment_all_settings.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.R
 import tmg.flashback.core.ui.BaseFragment
+import tmg.flashback.databinding.FragmentAllSettingsBinding
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 
-class SettingsAllFragment: BaseFragment() {
+class SettingsAllFragment: BaseFragment<FragmentAllSettingsBinding>() {
 
     private val viewModel: SettingsAllViewModel by viewModel()
 
     private lateinit var adapter: SettingsAllAdapter
 
-    override fun layoutId() = R.layout.fragment_all_settings
+    override fun inflateView(inflater: LayoutInflater) =
+        FragmentAllSettingsBinding.inflate(inflater)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -25,8 +27,8 @@ class SettingsAllFragment: BaseFragment() {
         adapter = SettingsAllAdapter(
                 categoryClicked = viewModel.inputs::clickCategory
         )
-        list.adapter = adapter
-        list.layoutManager = LinearLayoutManager(context)
+        binding.list.adapter = adapter
+        binding.list.layoutManager = LinearLayoutManager(context)
 
         observe(viewModel.outputs.categories) {
             adapter.list = it
