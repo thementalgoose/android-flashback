@@ -4,12 +4,13 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.LayoutInflater
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.activity_rss.*
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.core.ui.BaseActivity
 import tmg.flashback.rss.R
+import tmg.flashback.rss.databinding.ActivityRssBinding
 import tmg.flashback.rss.prefs.RSSRepository
 import tmg.flashback.rss.repo.model.Article
 import tmg.flashback.rss.ui.settings.InitialScreen
@@ -20,6 +21,7 @@ import tmg.utilities.extensions.observe
 
 class RSSActivity: BaseActivity(), FragmentRequestBack {
 
+    private lateinit var binding: ActivityRssBinding
     private val viewModel: RSSViewModel by viewModel()
 
     private val repository: RSSRepository by inject()
@@ -29,12 +31,12 @@ class RSSActivity: BaseActivity(), FragmentRequestBack {
 
     private lateinit var adapter: RSSAdapter
 
-    override fun layoutId(): Int = R.layout.activity_rss
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityRssBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        header.setText(R.string.title_rss)
+        binding.header.setText(R.string.title_rss)
 
         adapter = RSSAdapter(
             openConfigure = {
@@ -49,18 +51,18 @@ class RSSActivity: BaseActivity(), FragmentRequestBack {
                 }
             }
         )
-        list.adapter = adapter
-        list.layoutManager = LinearLayoutManager(this)
+        binding.list.adapter = adapter
+        binding.list.layoutManager = LinearLayoutManager(this)
 
-        back.setOnClickListener {
+        binding.back.setOnClickListener {
             onBackPressed()
         }
 
-        settings.setOnClickListener {
+        binding.settings.setOnClickListener {
             startActivity(RSSSettingsActivity.intent(this, InitialScreen.SETTINGS))
         }
 
-        swipeContainer.setOnRefreshListener {
+        binding.swipeContainer.setOnRefreshListener {
             viewModel.inputs.refresh()
         }
 
@@ -69,7 +71,7 @@ class RSSActivity: BaseActivity(), FragmentRequestBack {
         }
 
         observe(viewModel.outputs.isRefreshing) {
-            swipeContainer.isRefreshing = it
+            binding.swipeContainer.isRefreshing = it
         }
     }
 

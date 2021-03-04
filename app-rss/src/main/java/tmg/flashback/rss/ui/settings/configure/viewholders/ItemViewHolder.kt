@@ -4,8 +4,8 @@ import android.annotation.SuppressLint
 import android.view.View
 import androidx.core.graphics.toColorInt
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.view_rss_configure_item.view.*
 import tmg.flashback.rss.R
+import tmg.flashback.rss.databinding.ViewRssConfigureItemBinding
 import tmg.flashback.rss.repo.model.SupportedArticleSource
 import tmg.flashback.rss.ui.settings.configure.RSSConfigureItem
 import tmg.utilities.extensions.getColor
@@ -18,50 +18,50 @@ import java.net.URL
 class ItemViewHolder(
     private val removeItem: (String) -> Unit,
     private val visitWebsite: (SupportedArticleSource) -> Unit,
-    itemView: View
-): RecyclerView.ViewHolder(itemView), View.OnClickListener {
+    private val binding: ViewRssConfigureItemBinding
+): RecyclerView.ViewHolder(binding.root), View.OnClickListener {
 
     private lateinit var item: RSSConfigureItem.Item
 
     init {
-        itemView.remove.setOnClickListener(this)
-        itemView.visit_website.setOnClickListener(this)
+        binding.remove.setOnClickListener(this)
+        binding.visitWebsite.setOnClickListener(this)
     }
 
     fun bind(item: RSSConfigureItem.Item) {
         this.item = item
-        itemView.alpha = 1.0f
+        binding.root.alpha = 1.0f
         if (item.supportedArticleSource != null) {
-            itemView.imageBackground.setBackgroundColor(item.supportedArticleSource.colour.toColorInt())
-            itemView.label.text = item.supportedArticleSource.sourceShort
-            itemView.label.setTextColor(item.supportedArticleSource.textColour.toColorInt())
-            itemView.title.text = item.supportedArticleSource.source
-            itemView.description.text = item.supportedArticleSource.rssLink
-            itemView.visit_website.show()
+            binding.imageBackground.setBackgroundColor(item.supportedArticleSource.colour.toColorInt())
+            binding.label.text = item.supportedArticleSource.sourceShort
+            binding.label.setTextColor(item.supportedArticleSource.textColour.toColorInt())
+            binding.title.text = item.supportedArticleSource.source
+            binding.description.text = item.supportedArticleSource.rssLink
+            binding.visitWebsite.show()
         }
         else {
-            itemView.imageBackground.setBackgroundColor(context.theme.getColor(R.attr.rssBrandPrimary))
-            itemView.label.text = "..."
-            itemView.visit_website.gone()
+            binding.imageBackground.setBackgroundColor(context.theme.getColor(R.attr.rssBrandPrimary))
+            binding.label.text = "..."
+            binding.visitWebsite.gone()
 
             try {
                 val url = URL(item.url)
                 @SuppressLint("SetTextI18n")
-                itemView.title.text = "${url.protocol}://${url.host}"
-                itemView.description.text = item.url
+                binding.title.text = "${url.protocol}://${url.host}"
+                binding.description.text = item.url
             } catch (e: MalformedURLException) {
-                itemView.title.text = item.url
-                itemView.description.setText(R.string.rss_configure_malformed_url)
+                binding.title.text = item.url
+                binding.description.setText(R.string.rss_configure_malformed_url)
             }
         }
     }
 
     override fun onClick(p0: View?) {
         when (p0) {
-            itemView.remove -> {
+            binding.remove -> {
                 removeItem(item.supportedArticleSource?.rssLink ?: item.url)
             }
-            itemView.visit_website -> {
+            binding.visitWebsite -> {
                 this.item.supportedArticleSource?.let {
                     visitWebsite(it)
                 }
