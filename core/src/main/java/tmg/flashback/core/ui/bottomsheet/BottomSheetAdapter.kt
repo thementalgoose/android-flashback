@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.core.R
+import tmg.flashback.core.databinding.ViewBottomSheetItemBinding
 import tmg.flashback.core.utils.Selected
 
 class BottomSheetAdapter(
@@ -17,8 +18,10 @@ class BottomSheetAdapter(
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BottomSheetViewHolder {
+        val layoutInflater = LayoutInflater.from(parent.context)
+
         return BottomSheetViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.view_bottom_sheet_item, parent, false),
+            ViewBottomSheetItemBinding.inflate(layoutInflater, parent, false),
             itemClicked
         )
     }

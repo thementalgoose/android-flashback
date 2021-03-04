@@ -2,9 +2,9 @@ package tmg.flashback.core.ui
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import tmg.utilities.lifecycle.common.CommonBottomSheetFragment
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-abstract class BaseBottomSheetFragment: CommonBottomSheetFragment() {
+abstract class BaseBottomSheetFragment: BottomSheetDialogFragment() {
 
     val behavior: BottomSheetBehavior<*>
         get() {
