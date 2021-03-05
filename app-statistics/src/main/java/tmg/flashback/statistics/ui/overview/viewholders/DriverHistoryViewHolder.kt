@@ -7,9 +7,9 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.view_driver_summary_history.view.*
 import tmg.flashback.data.models.stats.SlimConstructor
 import tmg.flashback.statistics.R
+import tmg.flashback.statistics.databinding.ViewDriverSummaryHistoryBinding
 import tmg.flashback.statistics.ui.overview.driver.season.DriverSeasonItem
 import tmg.flashback.statistics.ui.overview.driver.summary.DriverSummaryItem
 import tmg.flashback.statistics.ui.overview.driver.summary.PipeType
@@ -21,8 +21,8 @@ import tmg.utilities.extensions.views.visible
 
 class OverviewDriverHistoryViewHolder(
     private val callback: (season: Int) -> Unit,
-    itemView: View
-): DriverHistoryViewHolder(itemView), View.OnClickListener {
+    binding: ViewDriverSummaryHistoryBinding
+): DriverHistoryViewHolder(binding), View.OnClickListener {
 
     init {
         container.isClickable = true
@@ -35,8 +35,9 @@ class OverviewDriverHistoryViewHolder(
     }
 }
 
-open class DriverHistoryViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-
+open class DriverHistoryViewHolder(
+    private val binding: ViewDriverSummaryHistoryBinding
+): RecyclerView.ViewHolder(binding.root) {
 
     private val adapter: ConstructorListAdapter = ConstructorListAdapter()
 
@@ -59,8 +60,8 @@ open class DriverHistoryViewHolder(itemView: View): RecyclerView.ViewHolder(item
     }
 
     init {
-        itemView.constructorList.layoutManager = LinearLayoutManager(context)
-        itemView.constructorList.adapter = adapter
+        binding.constructorList.layoutManager = LinearLayoutManager(context)
+        binding.constructorList.adapter = adapter
     }
 
     open fun bind(

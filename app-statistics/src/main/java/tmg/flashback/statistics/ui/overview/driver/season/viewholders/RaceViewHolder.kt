@@ -2,13 +2,12 @@ package tmg.flashback.statistics.ui.overview.driver.season.viewholders
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.view_driver_season.view.*
-import kotlinx.android.synthetic.main.view_driver_season.view.lpvProgress
 import tmg.flashback.core.enums.AnimationSpeed
 import tmg.flashback.statistics.ui.overview.driver.season.DriverSeasonItem
 import tmg.flashback.data.enums.isStatusFinished
 import tmg.flashback.core.extensions.getColor
 import tmg.flashback.statistics.R
+import tmg.flashback.statistics.databinding.ViewDriverSeasonBinding
 import tmg.flashback.statistics.ui.util.getFlagResourceAlpha3
 import tmg.utilities.extensions.ordinalAbbreviation
 import tmg.utilities.extensions.views.context
@@ -17,12 +16,11 @@ import tmg.utilities.extensions.views.show
 
 class RaceViewHolder(
     private val itemClicked: (result: DriverSeasonItem.Result) -> Unit,
-
-    itemView: View
-) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+    private val binding: ViewDriverSeasonBinding
+) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
 
     init {
-        itemView.container.setOnClickListener(this)
+        binding.container.setOnClickListener(this)
     }
 
     private lateinit var result: DriverSeasonItem.Result
@@ -31,36 +29,36 @@ class RaceViewHolder(
 
         this.result = item
 
-        itemView.raceName.text = item.raceName
-        itemView.country.setImageResource(context.getFlagResourceAlpha3(item.raceCountryISO))
-        itemView.circuitName.text = item.circuitName
+        binding.raceName.text = item.raceName
+        binding.country.setImageResource(context.getFlagResourceAlpha3(item.raceCountryISO))
+        binding.circuitName.text = item.circuitName
 
         if (item.qualified == 0) {
-            itemView.qualified.text = getString(R.string.qualifying_no)
+            binding.qualified.text = getString(R.string.qualifying_no)
         } else {
-            itemView.qualified.text = item.qualified.ordinalAbbreviation
+            binding.qualified.text = item.qualified.ordinalAbbreviation
         }
 
         if (item.raceStatus.isStatusFinished()) {
-            itemView.finished.text = item.finished?.ordinalAbbreviation
-            itemView.raceStatus.text = ""
+            binding.finished.text = item.finished?.ordinalAbbreviation
+            binding.raceStatus.text = ""
         } else {
-            itemView.finished.text = getString(R.string.race_dnf)
-            itemView.raceStatus.text = getString(R.string.race_cause, item.raceStatus)
+            binding.finished.text = getString(R.string.race_dnf)
+            binding.raceStatus.text = getString(R.string.race_cause, item.raceStatus)
         }
 
         if (item.showConstructorLabel) {
-            itemView.constructorLabel.show(true)
-            itemView.constructorLabel.text =
+            binding.constructorLabel.show(true)
+            binding.constructorLabel.text =
                 getString(R.string.driver_overview_constructor, item.constructor.name)
         } else {
-            itemView.constructorLabel.show(false)
+            binding.constructorLabel.show(false)
         }
 
-        itemView.lpvProgress.backgroundColour =
-            itemView.context.theme.getColor(R.attr.f1BackgroundPrimary)
-        itemView.lpvProgress.progressColour = item.constructor.color
-        itemView.lpvProgress.textBackgroundColour = context.theme.getColor(R.attr.f1TextSecondary)
+        binding.lpvProgress.backgroundColour =
+            context.theme.getColor(R.attr.f1BackgroundPrimary)
+        binding.lpvProgress.progressColour = item.constructor.color
+        binding.lpvProgress.textBackgroundColour = context.theme.getColor(R.attr.f1TextSecondary)
 
         var maxProgress = item.points.toFloat() / item.maxPoints.toFloat()
         if (maxProgress.isNaN()) {
@@ -69,12 +67,12 @@ class RaceViewHolder(
 
         when (item.animationSpeed) {
             AnimationSpeed.NONE -> {
-                itemView.lpvProgress.setProgress(maxProgress) { item.points.toString() }
+                binding.lpvProgress.setProgress(maxProgress) { item.points.toString() }
             }
             else -> {
-                itemView.lpvProgress.timeLimit = item.animationSpeed.millis
+                binding.lpvProgress.timeLimit = item.animationSpeed.millis
 
-                itemView.lpvProgress.animateProgress(maxProgress) {
+                binding.lpvProgress.animateProgress(maxProgress) {
                     when (it) {
                         maxProgress -> item.points.toString()
                         else -> (it * item.maxPoints.toFloat()).toInt().coerceIn(0, item.points)
@@ -90,7 +88,7 @@ class RaceViewHolder(
 //            itemView.penalty.text = getString(R.string.qualifying_grid_penalty, item.gridPos - item.qualified, item.gridPos.ordinalAbbreviation)
 //        }
 //        else {
-        itemView.penalty.show(false)
+        binding.penalty.show(false)
 //        }
     }
 

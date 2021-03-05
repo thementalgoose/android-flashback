@@ -1,12 +1,11 @@
 package tmg.flashback.statistics.ui.circuit.viewholders
 
-import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.view_circuit_info_header.view.*
 import org.threeten.bp.LocalDate
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.constants.Formula1.currentSeasonYear
+import tmg.flashback.statistics.databinding.ViewCircuitInfoHeaderBinding
 import tmg.flashback.statistics.ui.circuit.CircuitItem
 import tmg.flashback.statistics.ui.shared.pill.PillAdapter
 import tmg.flashback.statistics.ui.shared.pill.PillItem
@@ -19,8 +18,8 @@ import tmg.utilities.extensions.views.getString
 class HeaderViewHolder(
     private val clickShowOnMap: () -> Unit,
     private val clickWikipedia: () -> Unit,
-    itemView: View
-): RecyclerView.ViewHolder(itemView) {
+    private val binding: ViewCircuitInfoHeaderBinding
+): RecyclerView.ViewHolder(binding.root) {
 
     private var linkAdapter = PillAdapter(
             pillClicked = {
@@ -33,15 +32,15 @@ class HeaderViewHolder(
     )
 
     init {
-        itemView.links.adapter = linkAdapter
-        itemView.links.layoutManager = LinearLayoutManager(context).apply {
+        binding.links.adapter = linkAdapter
+        binding.links.layoutManager = LinearLayoutManager(context).apply {
             orientation = LinearLayoutManager.HORIZONTAL
         }
     }
 
     fun bind(item: CircuitItem.CircuitInfo) {
-        itemView.imgCountry.setImageResource(context.getFlagResourceAlpha3(item.circuit.countryISO))
-        itemView.country.text = item.circuit.country
+        binding.imgCountry.setImageResource(context.getFlagResourceAlpha3(item.circuit.countryISO))
+        binding.country.text = item.circuit.country
         val previouslyHosted = item.circuit.results.count { it.date <= LocalDate.now() }
         val minYear = item.circuit.results.minByOrNull { it.season }?.season
         val maxYear = item.circuit.results.maxByOrNull { it.season }?.season
@@ -70,7 +69,7 @@ class HeaderViewHolder(
                 "<br/>${getString(R.string.circuit_info_status_this_year_multiple, result)}"
             }
         }
-        itemView.status.text = subtitle.fromHtml()
+        binding.status.text = subtitle.fromHtml()
 
         linkAdapter.list = mutableListOf<PillItem>().apply {
             item.circuit.wikiUrl?.let { add(PillItem.Wikipedia(it)) }

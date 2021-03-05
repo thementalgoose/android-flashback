@@ -1,9 +1,8 @@
 package tmg.flashback.statistics.ui.shared.sync.viewholders
 
-import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.view_shared_data_unavailable.view.*
 import tmg.flashback.statistics.R
+import tmg.flashback.statistics.databinding.ViewSharedDataUnavailableBinding
 import tmg.utilities.extensions.views.getString
 
 enum class DataUnavailable {
@@ -17,10 +16,12 @@ enum class DataUnavailable {
     CIRCUIT_NOT_EXIST
 }
 
-class DataUnavailableViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+class DataUnavailableViewHolder(
+    private val binding: ViewSharedDataUnavailableBinding
+): RecyclerView.ViewHolder(binding.root) {
 
     fun bind(type: DataUnavailable) {
-        itemView.title.text = when (type) {
+        binding.title.text = when (type) {
             DataUnavailable.IN_FUTURE_SEASON -> getString(R.string.shared_unavailable_future_season)
             DataUnavailable.EARLY_IN_SEASON -> getString(R.string.shared_unavailable_early_season)
             DataUnavailable.IN_FUTURE_RACE -> getString(R.string.shared_unavailable_future_race)

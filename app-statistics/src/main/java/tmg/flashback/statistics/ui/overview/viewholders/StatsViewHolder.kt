@@ -1,19 +1,20 @@
 package tmg.flashback.statistics.ui.overview.viewholders
 
 import android.content.res.ColorStateList
-import android.view.View
 import androidx.annotation.AttrRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.view_overview_stat.view.*
 import tmg.flashback.core.extensions.getColor
+import tmg.flashback.statistics.databinding.ViewOverviewStatBinding
 import tmg.flashback.statistics.ui.overview.constructor.summary.ConstructorSummaryItem
 import tmg.flashback.statistics.ui.overview.driver.season.DriverSeasonItem
 import tmg.flashback.statistics.ui.overview.driver.summary.DriverSummaryItem
 import tmg.utilities.extensions.views.context
 
-class StatsViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+class StatsViewHolder(
+    private val binding: ViewOverviewStatBinding
+): RecyclerView.ViewHolder(binding.root) {
 
     fun bind(item: DriverSummaryItem.Stat) {
         this.bindItem(item.tint, item.icon, item.label, item.value)
@@ -33,9 +34,9 @@ class StatsViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
             @StringRes label: Int,
             value: String
     ) {
-        itemView.icon.imageTintList = ColorStateList.valueOf(context.theme.getColor(tint))
-        itemView.icon.setImageResource(drawable)
-        itemView.label.setText(label)
-        itemView.value.text = value
+        binding.icon.imageTintList = ColorStateList.valueOf(context.theme.getColor(tint))
+        binding.icon.setImageResource(drawable)
+        binding.label.setText(label)
+        binding.value.text = value
     }
 }

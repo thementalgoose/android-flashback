@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.statistics.R
+import tmg.flashback.statistics.databinding.*
 import tmg.flashback.statistics.ui.dashboard.list.viewholders.*
 
 class ListAdapter(
@@ -32,14 +33,33 @@ class ListAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(viewType, parent, false)
+        val layoutInflater = LayoutInflater.from(parent.context)
         return when (viewType) {
-            R.layout.view_season_list_divider -> DividerViewHolder(view)
-            R.layout.view_season_list_season -> SeasonViewHolder(favouriteToggled, seasonClicked, setDefaultClicked, clearDefaultClicked, view)
-            R.layout.view_season_list_header -> HeaderViewHolder(featureToggled, view)
-            R.layout.view_season_list_hero -> HeroViewHolder(view, settingsClicked)
-            R.layout.view_season_list_up_next -> UpNextViewHolder(view)
-            R.layout.view_season_list_button -> ButtonViewHolder(buttonClicked, view)
+            R.layout.view_season_list_divider -> DividerViewHolder(
+                ViewSeasonListDividerBinding.inflate(layoutInflater, parent, false)
+            )
+            R.layout.view_season_list_season -> SeasonViewHolder(
+                favouriteToggled,
+                seasonClicked,
+                setDefaultClicked,
+                clearDefaultClicked,
+                ViewSeasonListSeasonBinding.inflate(layoutInflater, parent, false)
+            )
+            R.layout.view_season_list_header -> HeaderViewHolder(
+                featureToggled,
+                ViewSeasonListHeaderBinding.inflate(layoutInflater, parent, false)
+            )
+            R.layout.view_season_list_hero -> HeroViewHolder(
+                ViewSeasonListHeroBinding.inflate(layoutInflater, parent, false),
+                settingsClicked
+            )
+            R.layout.view_season_list_up_next -> UpNextViewHolder(
+                ViewSeasonListUpNextBinding.inflate(layoutInflater, parent, false)
+            )
+            R.layout.view_season_list_button -> ButtonViewHolder(
+                buttonClicked,
+                ViewSeasonListButtonBinding.inflate(layoutInflater, parent, false)
+            )
             else -> throw Exception("View type not implemented")
         }
     }

@@ -6,11 +6,11 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.toColorInt
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.view_season_list_season.view.*
 import tmg.flashback.*
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.constants.Formula1.coloursDecade
 import tmg.flashback.statistics.constants.Formula1.currentSeasonYear
+import tmg.flashback.statistics.databinding.ViewSeasonListSeasonBinding
 import tmg.flashback.statistics.ui.dashboard.list.HeaderType
 import tmg.flashback.statistics.ui.dashboard.list.ListItem
 import tmg.utilities.extensions.getColor
@@ -21,18 +21,18 @@ class SeasonViewHolder(
     private var seasonClicked: (season: Int) -> Unit,
     private var setDefault: (season: Int) -> Unit,
     private var clearDefault: () -> Unit,
-    itemView: View
-): RecyclerView.ViewHolder(itemView), View.OnClickListener, PopupMenu.OnMenuItemClickListener {
+    private val binding: ViewSeasonListSeasonBinding
+): RecyclerView.ViewHolder(binding.root), View.OnClickListener, PopupMenu.OnMenuItemClickListener {
 
     init {
-        itemView.container.setOnClickListener(this)
-        itemView.favourite.setOnClickListener(this)
-        itemView.more.setOnClickListener(this)
+        binding.container.setOnClickListener(this)
+        binding.favourite.setOnClickListener(this)
+        binding.more.setOnClickListener(this)
     }
 
     private var currentSeason: Int = -1
     private var isFavourited: Boolean = false
-    private var popupMenu: PopupMenu = PopupMenu(context, itemView.more).apply {
+    private var popupMenu: PopupMenu = PopupMenu(context, binding.more).apply {
         inflate(R.menu.season_list_item)
         setOnMenuItemClickListener(this@SeasonViewHolder)
     }
@@ -45,56 +45,56 @@ class SeasonViewHolder(
 
         val colour = coloursDecade["${season.season.toString().substring(0, 3)}0"]?.toColorInt() ?: ContextCompat.getColor(itemView.context, R.color.colorTheme)
 
-        itemView.label.text = season.season.toString()
-        itemView.highlight.setCircleColour(context.theme.getColor(R.attr.f1BackgroundPrimary))
+        binding.label.text = season.season.toString()
+        binding.highlight.setCircleColour(context.theme.getColor(R.attr.f1BackgroundPrimary))
 
         when (season.selected) {
             true -> {
-                itemView.label.setTextColor(context.theme.getColor(R.attr.f1TextPrimary))
-                itemView.highlight.invisible()
+                binding.label.setTextColor(context.theme.getColor(R.attr.f1TextPrimary))
+                binding.highlight.invisible()
             }
             false -> {
-                itemView.label.setTextColor(context.theme.getColor(R.attr.f1TextTertiary))
-                itemView.highlight.visible()
+                binding.label.setTextColor(context.theme.getColor(R.attr.f1TextTertiary))
+                binding.highlight.visible()
             }
         }
 
         if (season.isFavourited) {
-            itemView.favourite.setImageResource(R.drawable.ic_star_filled_coloured)
-            itemView.favourite.contentDescription = getString(R.string.ab_season_list_unfavourite, season.season)
+            binding.favourite.setImageResource(R.drawable.ic_star_filled_coloured)
+            binding.favourite.contentDescription = getString(R.string.ab_season_list_unfavourite, season.season)
         }
         else {
-            itemView.favourite.setImageResource(R.drawable.ic_star_outline)
-            itemView.favourite.contentDescription = getString(R.string.ab_season_list_favourite, season.season)
+            binding.favourite.setImageResource(R.drawable.ic_star_outline)
+            binding.favourite.contentDescription = getString(R.string.ab_season_list_favourite, season.season)
         }
 
         if (season.default) {
-            itemView.defaultIndicator.show()
+            binding.defaultIndicator.show()
         }
         else {
-            itemView.defaultIndicator.gone()
+            binding.defaultIndicator.gone()
         }
 
-        itemView.more.contentDescription = getString(R.string.ab_season_list_more, season.season)
+        binding.more.contentDescription = getString(R.string.ab_season_list_more, season.season)
 
-        itemView.cardview.setCircleColour(colour)
-        itemView.pipeTop.setBackgroundColor(colour)
-        itemView.pipeBottom.setBackgroundColor(colour)
-        itemView.pipeTop.show(!currentSeason.toString().endsWith('9') && currentSeason != currentSeasonYear && season.fixed == HeaderType.ALL)
-        itemView.pipeBottom.show(!currentSeason.toString().endsWith('0') && (currentSeason != currentSeasonYear || !currentSeasonYear.toString().endsWith("0")) && season.fixed == HeaderType.ALL)
+        binding.cardview.setCircleColour(colour)
+        binding.pipeTop.setBackgroundColor(colour)
+        binding.pipeBottom.setBackgroundColor(colour)
+        binding.pipeTop.show(!currentSeason.toString().endsWith('9') && currentSeason != currentSeasonYear && season.fixed == HeaderType.ALL)
+        binding.pipeBottom.show(!currentSeason.toString().endsWith('0') && (currentSeason != currentSeasonYear || !currentSeasonYear.toString().endsWith("0")) && season.fixed == HeaderType.ALL)
     }
 
     //region View.OnClickListener
 
     override fun onClick(p0: View?) {
         when (p0) {
-            itemView.container -> {
+            binding.container -> {
                 seasonClicked.invoke(currentSeason)
             }
-            itemView.favourite -> {
+            binding.favourite -> {
                 favouriteToggled.invoke(currentSeason)
             }
-            itemView.more -> {
+            binding.more -> {
                 popupMenu.show()
             }
         }

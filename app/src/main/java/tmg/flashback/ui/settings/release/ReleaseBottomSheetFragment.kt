@@ -1,25 +1,30 @@
 package tmg.flashback.ui.settings.release
 
-import kotlinx.android.synthetic.main.fragment_release_notes.*
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
 import org.koin.android.ext.android.inject
-import tmg.flashback.R
 import tmg.flashback.controllers.ReleaseNotesController
 import tmg.flashback.core.ui.BaseBottomSheetFragment
+import tmg.flashback.databinding.FragmentReleaseNotesBinding
 import tmg.utilities.extensions.fromHtml
 
-class ReleaseBottomSheetFragment: BaseBottomSheetFragment() {
+class ReleaseBottomSheetFragment: BaseBottomSheetFragment<FragmentReleaseNotesBinding>() {
 
-    val releaseNotesController: ReleaseNotesController by inject()
+    private val releaseNotesController: ReleaseNotesController by inject()
 
-    override fun layoutId(): Int = R.layout.fragment_release_notes
+    override fun inflateView(inflater: LayoutInflater) =
+        FragmentReleaseNotesBinding.inflate(inflater)
 
-    override fun initViews() {
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         if (releaseNotesController.majorReleaseNotes.isEmpty()) {
             dismiss()
         }
 
-        tvReleaseNotesDescription.text = releaseNotesController
+        binding.tvReleaseNotesDescription.text = releaseNotesController
             .majorReleaseNotes
             .map { getString(it.release) }
             .joinToString("<br/><br/>")

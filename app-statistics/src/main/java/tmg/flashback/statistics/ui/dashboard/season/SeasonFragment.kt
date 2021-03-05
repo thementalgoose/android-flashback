@@ -2,18 +2,16 @@ package tmg.flashback.statistics.ui.dashboard.season
 
 import android.content.Context
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.fragment_dashboard_season.*
-import kotlinx.android.synthetic.main.fragment_dashboard_season.dataList
-import kotlinx.android.synthetic.main.fragment_dashboard_season.season
-import kotlinx.android.synthetic.main.fragment_dashboard_season.swipeContainer
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.core.controllers.FeatureController
 import tmg.flashback.core.ui.BaseFragment
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.constants.Formula1.currentSeasonYear
+import tmg.flashback.statistics.databinding.FragmentDashboardSeasonBinding
 import tmg.flashback.statistics.manager.StatisticsExternalNavigationManager
 import tmg.flashback.statistics.ui.dashboard.DashboardNavigationCallback
 import tmg.flashback.statistics.ui.overview.constructor.ConstructorActivity
@@ -22,17 +20,15 @@ import tmg.flashback.statistics.ui.race.RaceActivity
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 
-class SeasonFragment: BaseFragment() {
+class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
+
+    private val viewModel: SeasonViewModel by viewModel()
 
     private lateinit var adapter: SeasonAdapter
     private var dashboardNavigation: DashboardNavigationCallback? = null
 
-    private val viewModel: SeasonViewModel by viewModel()
-
     private val featureController: FeatureController by inject()
     private val statisticsNavigationManager: StatisticsExternalNavigationManager by inject()
-
-    override fun layoutId() = R.layout.fragment_dashboard_season
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -41,25 +37,28 @@ class SeasonFragment: BaseFragment() {
         }
     }
 
+    override fun inflateView(inflater: LayoutInflater) =
+        FragmentDashboardSeasonBinding.inflate(layoutInflater)
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        swipeContainer.isEnabled = false
+        binding.swipeContainer.isEnabled = false
         adapter = SeasonAdapter(
             trackClicked = viewModel.inputs::clickTrack,
             driverClicked = viewModel.inputs::clickDriver,
             constructorClicked = viewModel.inputs::clickConstructor
         )
-        dataList.layoutManager = LinearLayoutManager(context)
-        dataList.adapter = adapter
+        binding.dataList.layoutManager = LinearLayoutManager(context)
+        binding.dataList.adapter = adapter
 
         if (!featureController.rssEnabled) {
-            navigation.menu.removeItem(R.id.nav_rss)
+            binding.navigation.menu.removeItem(R.id.nav_rss)
         }
 //        if (remoteConfigRepository.search) {
-//            searchButton.visible()
+//            binding.searchButton.visible()
 //        }
-        navigation.setOnNavigationItemSelectedListener {
+        binding.navigation.setOnNavigationItemSelectedListener {
             return@setOnNavigationItemSelectedListener when (it.itemId) {
                 R.id.nav_rss -> {
                     context?.let { context -> startActivity(statisticsNavigationManager.getRSSIntent(context)) }
@@ -81,10 +80,10 @@ class SeasonFragment: BaseFragment() {
             }
         }
 
-        menuButton.setOnClickListener {
+        binding.menuButton.setOnClickListener {
             viewModel.inputs.clickMenu()
         }
-        searchButton.setOnClickListener {
+        binding.searchButton.setOnClickListener {
             viewModel.inputs.clickSearch()
         }
 
@@ -94,7 +93,7 @@ class SeasonFragment: BaseFragment() {
         }
 
         observe(viewModel.outputs.label) {
-            season.text = getString(R.string.home_season_arrow, it.msg ?: currentSeasonYear.toString())
+            binding.season.text = getString(R.string.home_season_arrow, it.msg ?: currentSeasonYear.toString())
         }
 
         observeEvent(viewModel.outputs.openSearch) {
@@ -153,7 +152,7 @@ class SeasonFragment: BaseFragment() {
 
         showLoading()
 
-        navigation.selectedItemId = R.id.nav_calendar
+        binding.navigation.selectedItemId = R.id.nav_calendar
     }
 
     //region Accessible
@@ -176,18 +175,18 @@ class SeasonFragment: BaseFragment() {
     //endregion
 
     private fun showLoading() {
-        swipeContainer.isRefreshing = true
-        searchButton.isEnabled = false
-        menuButton.isEnabled = false
-        navigation.isEnabled = false
-        dataList.alpha = 0.7f
+        binding.swipeContainer.isRefreshing = true
+        binding.searchButton.isEnabled = false
+        binding.menuButton.isEnabled = false
+        binding.navigation.isEnabled = false
+        binding.dataList.alpha = 0.7f
     }
 
     private fun hideLoading() {
-        swipeContainer.isRefreshing = false
-        searchButton.isEnabled = true
-        menuButton.isEnabled = true
-        navigation.isEnabled = true
-        dataList.alpha = 1.0f
+        binding.swipeContainer.isRefreshing = false
+        binding.searchButton.isEnabled = true
+        binding.menuButton.isEnabled = true
+        binding.navigation.isEnabled = true
+        binding.dataList.alpha = 1.0f
     }
 }

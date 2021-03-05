@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.statistics.R
+import tmg.flashback.statistics.databinding.*
 import tmg.flashback.statistics.ui.race.viewholders.*
 import tmg.flashback.statistics.ui.shared.sync.SyncAdapter
 
@@ -33,15 +34,34 @@ class RaceAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val inflatedView = LayoutInflater.from(parent.context).inflate(viewType, parent, false)
+        val layoutInflater = LayoutInflater.from(parent.context)
         return when (viewType) {
-            R.layout.view_race_race_podium -> RacePodiumViewHolder(callback::driverClicked, inflatedView)
-            R.layout.view_race_race_result -> RaceResultViewHolder(callback::driverClicked, inflatedView)
-            R.layout.view_race_race_header -> RaceResultHeaderViewHolder(inflatedView)
-            R.layout.view_race_qualifying_header -> QualifyingHeaderViewHolder(inflatedView, callback)
-            R.layout.view_race_qualifying_result -> QualifyingResultViewHolder(inflatedView, callback)
-            R.layout.view_race_constructor -> ConstructorStandingsViewholder(callback::constructorClicked, inflatedView)
-            R.layout.skeleton_race -> SkeletonLoadingViewHolder(inflatedView)
+            R.layout.view_race_race_podium -> RacePodiumViewHolder(
+                callback::driverClicked,
+                ViewRaceRacePodiumBinding.inflate(layoutInflater, parent, false)
+            )
+            R.layout.view_race_race_result -> RaceResultViewHolder(
+                callback::driverClicked,
+                ViewRaceRaceResultBinding.inflate(layoutInflater, parent, false)
+            )
+            R.layout.view_race_race_header -> RaceResultHeaderViewHolder(
+                ViewRaceRaceHeaderBinding.inflate(layoutInflater, parent, false)
+            )
+            R.layout.view_race_qualifying_header -> QualifyingHeaderViewHolder(
+                ViewRaceQualifyingHeaderBinding.inflate(layoutInflater, parent, false),
+                callback
+            )
+            R.layout.view_race_qualifying_result -> QualifyingResultViewHolder(
+                ViewRaceQualifyingResultBinding.inflate(layoutInflater, parent, false),
+                callback
+            )
+            R.layout.view_race_constructor -> ConstructorStandingsViewholder(
+                callback::constructorClicked,
+                ViewRaceConstructorBinding.inflate(layoutInflater, parent, false),
+            )
+            R.layout.skeleton_race -> SkeletonLoadingViewHolder(
+                SkeletonRaceBinding.inflate(layoutInflater, parent, false),
+            )
             else -> super.onCreateViewHolder(parent, viewType)
         }
     }

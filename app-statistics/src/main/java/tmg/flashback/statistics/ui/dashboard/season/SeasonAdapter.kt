@@ -5,6 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.statistics.R
+import tmg.flashback.statistics.databinding.ViewDashboardSeasonConstructorBinding
+import tmg.flashback.statistics.databinding.ViewDashboardSeasonDriverBinding
+import tmg.flashback.statistics.databinding.ViewDashboardSeasonTrackBinding
 import tmg.flashback.statistics.ui.dashboard.season.viewholders.ConstructorViewHolder
 import tmg.flashback.statistics.ui.dashboard.season.viewholders.DriverViewHolder
 import tmg.flashback.statistics.ui.dashboard.season.viewholders.TrackViewHolder
@@ -24,18 +27,19 @@ class SeasonAdapter(
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        val layoutInflater = LayoutInflater.from(parent.context)
         return when (viewType) {
             R.layout.view_dashboard_season_track -> TrackViewHolder(
                 trackClicked,
-                LayoutInflater.from(parent.context).inflate(viewType, parent, false)
+                ViewDashboardSeasonTrackBinding.inflate(layoutInflater, parent, false)
             )
             R.layout.view_dashboard_season_driver -> DriverViewHolder(
                 driverClicked,
-                LayoutInflater.from(parent.context).inflate(viewType, parent, false)
+                ViewDashboardSeasonDriverBinding.inflate(layoutInflater, parent, false)
             )
             R.layout.view_dashboard_season_constructor -> ConstructorViewHolder(
                 constructorClicked,
-                LayoutInflater.from(parent.context).inflate(viewType, parent, false)
+                ViewDashboardSeasonConstructorBinding.inflate(layoutInflater, parent, false)
             )
             else -> super.onCreateViewHolder(parent, viewType)
         }
