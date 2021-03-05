@@ -1,29 +1,28 @@
 package tmg.flashback.statistics.ui.overview.driver.summary.viewholders
 
-import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import kotlinx.android.synthetic.main.view_driver_summary_header.view.*
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.statistics.ui.overview.driver.summary.DriverSummaryItem
 import tmg.flashback.statistics.ui.shared.pill.PillAdapter
 import tmg.flashback.statistics.ui.shared.pill.PillItem
 import tmg.flashback.core.extensions.getColor
 import tmg.flashback.statistics.R
+import tmg.flashback.statistics.databinding.ViewDriverSummaryHeaderBinding
 import tmg.flashback.statistics.ui.util.getFlagResourceAlpha3
 import tmg.utilities.extensions.views.context
 
 class HeaderViewHolder(
         pillClicked: (PillItem) -> Unit,
-        itemView: View
-): RecyclerView.ViewHolder(itemView) {
+        private val binding: ViewDriverSummaryHeaderBinding
+): RecyclerView.ViewHolder(binding.root) {
 
     var adapter: PillAdapter = PillAdapter(pillClicked = pillClicked)
 
     init {
-        itemView.links.adapter = adapter
-        itemView.links.layoutManager = LinearLayoutManager(context).apply {
+        binding.links.adapter = adapter
+        binding.links.layoutManager = LinearLayoutManager(context).apply {
             orientation = LinearLayoutManager.HORIZONTAL
         }
     }
@@ -32,13 +31,13 @@ class HeaderViewHolder(
 
         Glide.with(itemView.context)
                 .load(item.driverImg)
-                .into(itemView.imgDriver)
+                .into(binding.imgDriver)
 
-        itemView.tvNumber.text = item.driverNumber.toString()
-        itemView.tvNumber.colorHighlight = context.theme.getColor(R.attr.colorPrimary)
-        itemView.driverBirthday.text = itemView.context.getString(R.string.driver_overview_stat_birthday, item.driverBirthday.format(DateTimeFormatter.ofPattern("dd MMMM yyyy")))
+        binding.tvNumber.text = item.driverNumber.toString()
+        binding.tvNumber.colorHighlight = context.theme.getColor(R.attr.colorPrimary)
+        binding.driverBirthday.text = itemView.context.getString(R.string.driver_overview_stat_birthday, item.driverBirthday.format(DateTimeFormatter.ofPattern("dd MMMM yyyy")))
 
-        itemView.imgNationality.setImageResource(context.getFlagResourceAlpha3(item.driverNationalityISO))
+        binding.imgNationality.setImageResource(context.getFlagResourceAlpha3(item.driverNationalityISO))
 
         adapter.list = mutableListOf(
                 PillItem.Wikipedia(item.driverWikiUrl)

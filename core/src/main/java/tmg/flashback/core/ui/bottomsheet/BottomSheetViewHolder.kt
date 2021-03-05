@@ -2,26 +2,27 @@ package tmg.flashback.core.ui.bottomsheet
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.view_bottom_sheet_item.view.*
 import tmg.flashback.core.R
+import tmg.flashback.core.databinding.ViewBottomSheetItemBinding
 import tmg.flashback.core.utils.Selected
+import tmg.utilities.extensions.views.context
 import tmg.utilities.extensions.views.gone
 import tmg.utilities.extensions.views.show
 
 class BottomSheetViewHolder(
-    itemView: View,
+    private val binding: ViewBottomSheetItemBinding,
     val menuItemClicked: (menuItem: BottomSheetItem) -> Unit
-): RecyclerView.ViewHolder(itemView), View.OnClickListener {
+): RecyclerView.ViewHolder(binding.root), View.OnClickListener {
 
     private lateinit var currentItem: BottomSheetItem
 
     init {
-        itemView.container.setOnClickListener(this)
+        binding.container.setOnClickListener(this)
     }
 
     fun bind(selected: Selected<BottomSheetItem>) {
         this.currentItem = selected.value
-        itemView.apply {
+        binding.apply {
             if (selected.value.image != null) {
                 menuItemIcon.show()
                 menuItemIcon.setImageResource(selected.value.image)

@@ -3,11 +3,10 @@ package tmg.flashback.ui
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_splash.*
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
-import tmg.flashback.R
 import tmg.flashback.core.controllers.AnalyticsController
+import tmg.flashback.databinding.ActivitySplashBinding
 import tmg.flashback.ui.admin.forceupgrade.ForceUpgradeActivity
 import tmg.flashback.statistics.ui.dashboard.DashboardActivity
 import tmg.utilities.extensions.observe
@@ -16,22 +15,24 @@ import tmg.utilities.extensions.views.show
 
 class SplashActivity: AppCompatActivity() {
 
+    private lateinit var binding: ActivitySplashBinding
     private val viewModel: SplashViewModel by viewModel()
 
     private val analyticsManager: AnalyticsController by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_splash)
+        binding = ActivitySplashBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         observe(viewModel.outputs.showLoading) {
-            splash.show(it)
+            binding.splash.show(it)
         }
 
         observe(viewModel.outputs.showResync) {
-            smiley.show(it)
-            tryAgain.show(it)
-            failedToSync.show(it)
+            binding.smiley.show(it)
+            binding.tryAgain.show(it)
+            binding.failedToSync.show(it)
         }
 
         observeEvent(viewModel.outputs.goToDashboard) {
@@ -44,7 +45,7 @@ class SplashActivity: AppCompatActivity() {
             finish()
         }
 
-        tryAgain.setOnClickListener {
+        binding.tryAgain.setOnClickListener {
             viewModel.inputs.start()
         }
 

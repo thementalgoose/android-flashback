@@ -2,31 +2,22 @@ package tmg.flashback.statistics.ui.overview.driver.season
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.fragment_driver_season.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.core.ui.BaseFragment
-import tmg.flashback.statistics.R
+import tmg.flashback.statistics.databinding.FragmentDriverSeasonBinding
 import tmg.flashback.statistics.ui.race.RaceActivity
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 
-class DriverSeasonFragment: BaseFragment() {
+class DriverSeasonFragment: BaseFragment<FragmentDriverSeasonBinding>() {
 
     private val viewModel: DriverSeasonViewModel by viewModel()
 
     private lateinit var seasonAdapter: DriverSeasonAdapter
-
-    override fun layoutId(): Int = R.layout.fragment_driver_season
-
-    override fun arguments(bundle: Bundle) {
-        super.arguments(bundle)
-        val driverId: String = bundle.getString(keyDriverId)!!
-        val season: Int = bundle.getInt(keySeason)
-        viewModel.inputs.setup(driverId, season)
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,13 +25,22 @@ class DriverSeasonFragment: BaseFragment() {
         seasonAdapter = DriverSeasonAdapter(
                 itemClicked = viewModel.inputs::clickSeasonRound
         )
+
+        arguments?.let {
+            val driverId: String = it.getString(keyDriverId)!!
+            val season: Int = it.getInt(keySeason)
+            viewModel.inputs.setup(driverId, season)
+        }
     }
+
+    override fun inflateView(inflater: LayoutInflater) =
+        FragmentDriverSeasonBinding.inflate(layoutInflater)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        list.adapter = seasonAdapter
-        list.layoutManager = LinearLayoutManager(context)
+        binding.list.adapter = seasonAdapter
+        binding.list.layoutManager = LinearLayoutManager(context)
 
         observe(viewModel.outputs.list) {
             seasonAdapter.list = it
@@ -62,8 +62,8 @@ class DriverSeasonFragment: BaseFragment() {
             }
         }
 
-        ViewCompat.setOnApplyWindowInsetsListener(list) { _, inset ->
-            list.setPadding(0, 0, 0, inset.systemWindowInsetBottom)
+        ViewCompat.setOnApplyWindowInsetsListener(binding.list) { _, inset ->
+            binding.list.setPadding(0, 0, 0, inset.systemWindowInsetBottom)
             inset
         }
     }

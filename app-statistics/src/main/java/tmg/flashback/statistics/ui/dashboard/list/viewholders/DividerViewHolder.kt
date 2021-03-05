@@ -2,5 +2,8 @@ package tmg.flashback.statistics.ui.dashboard.list.viewholders
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import tmg.flashback.statistics.databinding.ViewSeasonListDividerBinding
 
-class DividerViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
+class DividerViewHolder(
+    private val binding: ViewSeasonListDividerBinding
+): RecyclerView.ViewHolder(binding.root)

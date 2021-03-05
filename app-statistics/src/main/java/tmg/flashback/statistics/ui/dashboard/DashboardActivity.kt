@@ -4,7 +4,6 @@ import android.os.Bundle
 import com.discord.panels.OverlappingPanelsLayout
 import com.discord.panels.OverlappingPanelsLayout.Panel.CENTER
 import com.discord.panels.OverlappingPanelsLayout.Panel.END
-import kotlinx.android.synthetic.main.activity_dashboard.*
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.core.controllers.FeatureController
@@ -13,6 +12,7 @@ import tmg.flashback.core.enums.DisplayType
 import tmg.flashback.core.managers.NavigationManager
 import tmg.flashback.core.ui.BaseActivity
 import tmg.flashback.statistics.R
+import tmg.flashback.statistics.databinding.ActivityDashboardBinding
 import tmg.flashback.statistics.ui.dashboard.list.ListFragment
 import tmg.flashback.statistics.ui.dashboard.search.SearchFragment
 import tmg.flashback.statistics.ui.dashboard.season.SeasonFragment
@@ -21,14 +21,15 @@ import tmg.utilities.extensions.observeEvent
 
 class DashboardActivity: BaseActivity(), DashboardNavigationCallback {
 
+    private lateinit var binding: ActivityDashboardBinding
+    private val viewModel: DashboardViewModel by viewModel()
+
     override val initialiseSlidr: Boolean = false
     override val themeType: DisplayType = DisplayType.DEFAULT
 
     private val featureController: FeatureController by inject()
     private val seasonController: SeasonController by inject()
     private val navigationManager: NavigationManager by inject()
-
-    private val viewModel: DashboardViewModel by viewModel()
 
     private var selectedSeason: Int? = seasonController.defaultSeason
     override val analyticsScreenName: String
@@ -48,10 +49,10 @@ class DashboardActivity: BaseActivity(), DashboardNavigationCallback {
     private val searchFragment: SearchFragment?
         get() = supportFragmentManager.findFragmentByTag(searchTag) as? SearchFragment
 
-    override fun layoutId() = R.layout.activity_dashboard
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityDashboardBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         loadFragment(SeasonFragment(), R.id.season, seasonTag)
         loadFragment(ListFragment(), R.id.list, listTag)
@@ -59,7 +60,7 @@ class DashboardActivity: BaseActivity(), DashboardNavigationCallback {
 
         // Disable search functionality until toggled on
         if (!featureController.searchEnabled) {
-            panels.setEndPanelLockState(lockState = OverlappingPanelsLayout.LockState.CLOSE)
+            binding.panels.setEndPanelLockState(lockState = OverlappingPanelsLayout.LockState.CLOSE)
         }
 
         observeEvent(viewModel.outputs.openAppLockout) {
@@ -77,8 +78,8 @@ class DashboardActivity: BaseActivity(), DashboardNavigationCallback {
 
     override fun onBackPressed() {
         when {
-            panels.getSelectedPanel() == END -> panels.closePanels()
-            panels.getSelectedPanel() == CENTER -> panels.openStartPanel()
+            binding.panels.getSelectedPanel() == END -> binding.panels.closePanels()
+            binding.panels.getSelectedPanel() == CENTER -> binding.panels.openStartPanel()
             else -> super.onBackPressed()
         }
     }
@@ -86,11 +87,11 @@ class DashboardActivity: BaseActivity(), DashboardNavigationCallback {
     //region DashboardNavigationCallback
 
     override fun openSeasonList() {
-        panels.openStartPanel()
+        binding.panels.openStartPanel()
     }
 
     override fun openSearch() {
-        panels.openEndPanel()
+        binding.panels.openEndPanel()
     }
 
     override fun seasonSelected(season: Int) {
@@ -103,11 +104,11 @@ class DashboardActivity: BaseActivity(), DashboardNavigationCallback {
     }
 
     override fun closeSeasonList() {
-        panels.closePanels()
+        binding.panels.closePanels()
     }
 
     override fun closeSearch() {
-        panels.closePanels()
+        binding.panels.closePanels()
     }
 
     //endregion

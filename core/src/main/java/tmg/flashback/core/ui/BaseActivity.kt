@@ -2,6 +2,7 @@ package tmg.flashback.core.ui
 
 import android.os.Bundle
 import androidx.annotation.StyleRes
+import androidx.appcompat.app.AppCompatActivity
 import com.r0adkll.slidr.Slidr
 import com.r0adkll.slidr.model.SlidrInterface
 import org.koin.android.ext.android.inject
@@ -10,10 +11,9 @@ import tmg.flashback.core.controllers.AnalyticsController
 import tmg.flashback.core.enums.DisplayType
 import tmg.flashback.core.extensions.isLightMode
 import tmg.flashback.core.repositories.CoreRepository
-import tmg.utilities.lifecycle.common.CommonActivity
 import java.lang.NullPointerException
 
-abstract class BaseActivity : CommonActivity() {
+abstract class BaseActivity : AppCompatActivity() {
 
     /**
      * Should we use the translucent variant of the theme or not

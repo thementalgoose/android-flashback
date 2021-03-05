@@ -6,6 +6,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.core.ui.shared.GenericDiffCallback
 import tmg.flashback.statistics.R
+import tmg.flashback.statistics.databinding.SkeletonRaceBinding
+import tmg.flashback.statistics.databinding.ViewDriverSummaryHeaderBinding
+import tmg.flashback.statistics.databinding.ViewDriverSummaryHistoryBinding
+import tmg.flashback.statistics.databinding.ViewOverviewStatBinding
 import tmg.flashback.statistics.ui.overview.driver.summary.viewholders.HeaderViewHolder
 import tmg.flashback.statistics.ui.overview.viewholders.OverviewDriverHistoryViewHolder
 import tmg.flashback.statistics.ui.overview.viewholders.DriverHistoryViewHolder
@@ -28,6 +32,7 @@ class DriverSummaryAdapter(
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        val layoutInflater = LayoutInflater.from(parent.context)
         return when (viewType) {
             R.layout.view_driver_summary_header -> HeaderViewHolder(
                     pillClicked = {
@@ -36,22 +41,22 @@ class DriverSummaryAdapter(
                             else -> {} /* Not shown */
                         }
                     },
-                    itemView = LayoutInflater.from(parent.context).inflate(viewType, parent, false)
+                    binding = ViewDriverSummaryHeaderBinding.inflate(layoutInflater, parent, false)
             )
             R.layout.view_overview_stat -> StatsViewHolder(
-                    LayoutInflater.from(parent.context).inflate(viewType, parent, false)
+                    ViewOverviewStatBinding.inflate(layoutInflater, parent, false)
             )
             R.layout.view_driver_summary_history -> when (seasonClicked != null) {
                 true -> OverviewDriverHistoryViewHolder(
                         seasonClicked,
-                        LayoutInflater.from(parent.context).inflate(viewType, parent, false)
+                        ViewDriverSummaryHistoryBinding.inflate(layoutInflater, parent, false)
                 )
                 false -> DriverHistoryViewHolder(
-                        LayoutInflater.from(parent.context).inflate(viewType, parent, false)
+                        ViewDriverSummaryHistoryBinding.inflate(layoutInflater, parent, false)
                 )
             }
             R.layout.view_loading_podium -> SkeletonLoadingViewHolder(
-                    LayoutInflater.from(parent.context).inflate(viewType, parent, false)
+                    SkeletonRaceBinding.inflate(layoutInflater, parent, false)
             )
             else -> super.onCreateViewHolder(parent, viewType)
         }

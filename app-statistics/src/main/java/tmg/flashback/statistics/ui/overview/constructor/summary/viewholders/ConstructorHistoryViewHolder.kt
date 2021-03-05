@@ -3,7 +3,7 @@ package tmg.flashback.statistics.ui.overview.constructor.summary.viewholders
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.view_constructor_summary_history.view.*
+import tmg.flashback.statistics.databinding.ViewConstructorSummaryHistoryBinding
 import tmg.flashback.statistics.ui.overview.constructor.summary.ConstructorSummaryItem
 import tmg.flashback.statistics.ui.overview.driver.summary.PipeType
 import tmg.flashback.statistics.ui.shared.driverlist.DriverListStatAdapter
@@ -12,17 +12,19 @@ import tmg.utilities.extensions.views.invisible
 import tmg.utilities.extensions.views.show
 import tmg.utilities.extensions.views.visible
 
-class ConstructorHistoryViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+class ConstructorHistoryViewHolder(
+    private val binding: ViewConstructorSummaryHistoryBinding
+): RecyclerView.ViewHolder(binding.root) {
 
     var driverAdapter = DriverListStatAdapter()
 
     init {
-        itemView.drivers.adapter = driverAdapter
-        itemView.drivers.layoutManager = LinearLayoutManager(itemView.context)
+        binding.drivers.adapter = driverAdapter
+        binding.drivers.layoutManager = LinearLayoutManager(itemView.context)
     }
 
     fun bind(item: ConstructorSummaryItem.History) {
-        itemView.apply {
+        binding.apply {
 
             year.text = item.season.toString()
             points.text = item.points.toString()

@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.DiffUtil.calculateDiff
 import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.rss.R
+import tmg.flashback.rss.databinding.*
 import tmg.flashback.rss.repo.model.Article
 import tmg.flashback.rss.ui.viewholder.*
 import java.lang.RuntimeException
@@ -23,13 +24,25 @@ class RSSAdapter(
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(viewType, parent, false)
+        val layoutInflater = LayoutInflater.from(parent.context)
         return when (viewType) {
-            R.layout.view_rss_item -> ItemViewHolder(articleClicked, view)
-            R.layout.view_rss_sources_disabled -> SourcesDisabledViewHolder(openConfigure, view)
-            R.layout.view_rss_message -> MessageViewHolder(view)
-            R.layout.view_rss_internal_error -> InternalErrorViewHolder(view)
-            R.layout.view_rss_no_network -> NoNetworkViewHolder(view)
+            R.layout.view_rss_item -> ItemViewHolder(
+                articleClicked,
+                ViewRssItemBinding.inflate(layoutInflater, parent, false)
+            )
+            R.layout.view_rss_sources_disabled -> SourcesDisabledViewHolder(
+                openConfigure,
+                ViewRssSourcesDisabledBinding.inflate(layoutInflater, parent, false)
+            )
+            R.layout.view_rss_message -> MessageViewHolder(
+                ViewRssMessageBinding.inflate(layoutInflater, parent, false)
+            )
+            R.layout.view_rss_internal_error -> InternalErrorViewHolder(
+                ViewRssInternalErrorBinding.inflate(layoutInflater, parent, false)
+            )
+            R.layout.view_rss_no_network -> NoNetworkViewHolder(
+                ViewRssNoNetworkBinding.inflate(layoutInflater, parent, false)
+            )
             else -> throw RuntimeException("View not supported in RSS feed")
         }
     }

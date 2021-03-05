@@ -1,33 +1,36 @@
 package tmg.flashback.core.ui.settings
 
-import android.view.View
-import kotlinx.android.synthetic.main.view_settings_category.view.tvTitle
-import kotlinx.android.synthetic.main.view_settings_preference.view.*
-import kotlinx.android.synthetic.main.view_settings_preference.view.tvDescription
-import kotlinx.android.synthetic.main.view_settings_preference_switch.view.*
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.viewbinding.ViewBinding
 import tmg.components.prefs.AppPreferencesAdapter
 import tmg.components.prefs.AppPreferencesItem
-import tmg.flashback.core.R
+import tmg.flashback.core.databinding.ViewSettingsCategoryBinding
+import tmg.flashback.core.databinding.ViewSettingsPreferenceBinding
+import tmg.flashback.core.databinding.ViewSettingsPreferenceSwitchBinding
 
 class SettingsAdapter(
         prefClicked: (prefKey: String) -> Unit = { _ -> },
         prefSwitchClicked: (prefKey: String, newState: Boolean) -> Unit = { _, _ -> }
 ) : AppPreferencesAdapter(prefClicked, prefSwitchClicked) {
 
-    override val categoryLayoutId: Int = R.layout.view_settings_category
+    override fun categoryLayoutId(viewGroup: ViewGroup) =
+        ViewSettingsCategoryBinding.inflate(LayoutInflater.from(viewGroup.context), viewGroup, false)
 
-    override val preferenceLayoutId: Int = R.layout.view_settings_preference
+    override fun preferenceLayoutId(viewGroup: ViewGroup) =
+        ViewSettingsPreferenceBinding.inflate(LayoutInflater.from(viewGroup.context), viewGroup, false)
 
-    override val preferenceSwitchLayoutId: Int = R.layout.view_settings_preference_switch
+    override fun preferenceSwitchLayoutId(viewGroup: ViewGroup) =
+        ViewSettingsPreferenceSwitchBinding.inflate(LayoutInflater.from(viewGroup.context), viewGroup, false)
 
-    override fun bindCategory(view: View, model: AppPreferencesItem.Category) {
-        view.apply {
+    override fun bindCategory(view: ViewBinding, model: AppPreferencesItem.Category) {
+        (view as? ViewSettingsCategoryBinding)?.apply {
             this.tvTitle.setText(model.title)
         }
     }
 
-    override fun bindPreference(view: View, model: AppPreferencesItem.Preference) {
-        view.apply {
+    override fun bindPreference(view: ViewBinding, model: AppPreferencesItem.Preference) {
+        (view as? ViewSettingsPreferenceBinding)?.apply {
             this.clPref.setOnClickListener {
                 prefClicked(model.prefKey)
             }
@@ -36,8 +39,8 @@ class SettingsAdapter(
         }
     }
 
-    override fun bindPreferenceSwitch(view: View, model: AppPreferencesItem.SwitchPreference) {
-        view.apply {
+    override fun bindPreferenceSwitch(view: ViewBinding, model: AppPreferencesItem.SwitchPreference) {
+        (view as? ViewSettingsPreferenceSwitchBinding)?.apply {
             this.tvTitle.setText(model.title)
             this.tvDescription.setText(model.description)
             this.checkbox.isChecked = model.isChecked

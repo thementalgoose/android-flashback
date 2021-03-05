@@ -8,9 +8,9 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
-import kotlinx.android.synthetic.main.activity_rss_settings.*
 import tmg.flashback.rss.R
 import tmg.flashback.core.ui.BaseActivity
+import tmg.flashback.rss.databinding.ActivityRssSettingsBinding
 import tmg.flashback.rss.ui.settings.InitialScreen.CONFIGURE
 import tmg.flashback.rss.ui.settings.InitialScreen.SETTINGS
 import tmg.utilities.extensions.toEnum
@@ -20,13 +20,15 @@ class RSSSettingsActivity : BaseActivity(), NavController.OnDestinationChangedLi
     override val analyticsScreenName: String
         get() = "RSS Settings"
 
-    override fun layoutId(): Int = R.layout.activity_rss_settings
+    private lateinit var binding: ActivityRssSettingsBinding
 
     private var initialScreen: InitialScreen = SETTINGS
     private var navController: NavController? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityRssSettingsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         initialScreen = intent.extras?.let {
             it.getInt(keyInitial).toEnum<InitialScreen>() ?: SETTINGS
@@ -39,11 +41,10 @@ class RSSSettingsActivity : BaseActivity(), NavController.OnDestinationChangedLi
             this.graph = graph
         }
 
-        header.text = getString(R.string.settings_rss_title)
+        binding.header.text = getString(R.string.settings_rss_title)
 
-        back.setOnClickListener { onBackPressed() }
+        binding.back.setOnClickListener { onBackPressed() }
     }
-
 
     override fun onResume() {
         super.onResume()

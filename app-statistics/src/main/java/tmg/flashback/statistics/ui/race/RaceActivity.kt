@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_race.*
 import org.koin.android.ext.android.inject
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
@@ -16,6 +15,7 @@ import tmg.flashback.core.ui.BaseActivity
 import tmg.flashback.statistics.enums.TrackLayout
 import tmg.flashback.core.controllers.AppHintsController.Companion.appHintDelay
 import tmg.flashback.statistics.R
+import tmg.flashback.statistics.databinding.ActivityRaceBinding
 import tmg.flashback.statistics.ui.overview.constructor.ConstructorActivity
 import tmg.flashback.statistics.ui.overview.driver.DriverActivity
 import tmg.flashback.statistics.ui.shared.pill.PillAdapter
@@ -31,6 +31,7 @@ private const val dateFormat: String = "yyyy/MM/dd"
 
 class RaceActivity : BaseActivity(), RaceAdapterCallback {
 
+    private lateinit var binding: ActivityRaceBinding
     private val viewModel: RaceViewModel by inject()
 
     override val analyticsScreenName: String
@@ -96,51 +97,51 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
         }
     }
 
-    override fun layoutId(): Int = R.layout.activity_race
-
-    override fun arguments(bundle: Bundle) {
-        season = bundle.getInt(keySeason)
-        round = bundle.getInt(keyRound)
-        circuitId = bundle.getString(keyCircuitId)!!
-
-        defaultToRace = bundle.getBoolean(keyDefaultToRace)
-
-        initialCountry = bundle.getString(keyCountry, "")
-        initialCountryISO = bundle.getString(keyCountryISO, "")
-        initialRaceName = bundle.getString(keyRaceName, "")
-        initialTrackName = bundle.getString(keyTrackName, "")
-        val date = bundle.getString(keyDate, "")
-        if (date.isNotEmpty()) {
-            initialDate = LocalDate.parse(date, DateTimeFormatter.ofPattern(dateFormat))
-        }
-
-        viewModel.inputs.initialise(season, round, initialDate)
-    }
-
     @SuppressLint("SetTextI18n", "WrongConstant")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityRaceBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        intent?.extras?.let {
+            season = it.getInt(keySeason)
+            round = it.getInt(keyRound)
+            circuitId = it.getString(keyCircuitId)!!
+
+            defaultToRace = it.getBoolean(keyDefaultToRace)
+
+            initialCountry = it.getString(keyCountry, "")
+            initialCountryISO = it.getString(keyCountryISO, "")
+            initialRaceName = it.getString(keyRaceName, "")
+            initialTrackName = it.getString(keyTrackName, "")
+            val date = it.getString(keyDate, "")
+            if (date.isNotEmpty()) {
+                initialDate = LocalDate.parse(date, DateTimeFormatter.ofPattern(dateFormat))
+            }
+
+            viewModel.inputs.initialise(season, round, initialDate)
+        }
 
         // Setup
 
         raceAdapter = RaceAdapter(this)
-        rvContent.adapter = raceAdapter
-        rvContent.layoutManager = LinearLayoutManager(this)
+        binding.rvContent.adapter = raceAdapter
+        binding.rvContent.layoutManager = LinearLayoutManager(this)
 
-        grandprix.text = "$season $initialRaceName"
-        tvCircuitName.text = "$initialTrackName\n$initialCountry"
+        binding.grandprix.text = "$season $initialRaceName"
+        binding.tvCircuitName.text = "$initialTrackName\n$initialCountry"
         if (initialCountryISO.isNotEmpty()) {
-            imgCountry.setImageResource(getFlagResourceAlpha3(initialCountryISO))
+            binding.imgCountry.setImageResource(getFlagResourceAlpha3(initialCountryISO))
         }
         initialDate?.let {
-            tvDate.text = it.format(DateTimeFormatter.ofPattern("dd MMMM"))
+            binding.tvDate.text = it.format(DateTimeFormatter.ofPattern("dd MMMM"))
         }
 
         @Suppress("RemoveExplicitTypeArguments")
         val track = TrackLayout.getOverride(season, initialRaceName) ?: circuitId.toEnum<TrackLayout> { it.circuitId }
-        trackLayout.show(track != null)
+        binding.trackLayout.show(track != null)
         if (track != null) {
-            trackLayout.setImageResource(track.icon)
+            binding.trackLayout.setImageResource(track.icon)
         }
 
         /**
@@ -155,12 +156,12 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
                     }
                 }
         )
-        links.adapter = linkAdapter
-        links.layoutManager = LinearLayoutManager(this).apply {
+        binding.links.adapter = linkAdapter
+        binding.links.layoutManager = LinearLayoutManager(this).apply {
             orientation = LinearLayoutManager.HORIZONTAL
         }
 
-        menu.setOnNavigationItemSelectedListener {
+        binding.menu.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.nav_qualifying -> {
                     viewModel.inputs.orderBy(RaceAdapterType.QUALIFYING_POS)
@@ -177,9 +178,9 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
                 else -> false
             }
         }
-        back.setOnClickListener { finish() }
+        binding.back.setOnClickListener { finish() }
 
-        trackLayout.setOnClickListener {
+        binding.trackLayout.setOnClickListener {
             startActivity(tmg.flashback.statistics.ui.circuit.CircuitInfoActivity.intent(this, circuitId, initialTrackName))
         }
 
@@ -197,7 +198,7 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
         }
 
         observe(viewModel.outputs.seasonRoundData) { (season, round) ->
-            tvRoundInfo.text = getString(
+            binding.tvRoundInfo.text = getString(
                     R.string.race_round_format,
                     round.toString(),
                     season.toString()
@@ -205,10 +206,10 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
         }
 
         observe(viewModel.outputs.circuitInfo) {
-            imgCountry.setImageResource(getFlagResourceAlpha3(it.circuit.countryISO))
-            tvCircuitName.text = "${it.circuit.name}\n${it.circuit.country}"
-            grandprix.text = "${it.season} ${it.name}"
-            tvDate.text = it.date.format(DateTimeFormatter.ofPattern("dd MMMM"))
+            binding.imgCountry.setImageResource(getFlagResourceAlpha3(it.circuit.countryISO))
+            binding.tvCircuitName.text = "${it.circuit.name}\n${it.circuit.country}"
+            binding.grandprix.text = "${it.season} ${it.name}"
+            binding.tvDate.text = it.date.format(DateTimeFormatter.ofPattern("dd MMMM"))
         }
 
         observe(viewModel.outputs.raceItems) { (adapterType, list) ->
@@ -229,16 +230,16 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
         }
 
         observeEvent(viewModel.outputs.showAppHintLongPress) {
-            Snackbar.make(appbar, getString(R.string.app_hint_race_qualifying_long_click), appHintDelay)
-                .setAnchorView(menu)
+            Snackbar.make(binding.appbar, getString(R.string.app_hint_race_qualifying_long_click), appHintDelay)
+                .setAnchorView(binding.menu)
                 .show()
         }
 
 
         if (defaultToRace) {
-            menu.selectedItemId = R.id.nav_race
+            binding.menu.selectedItemId = R.id.nav_race
         } else {
-            menu.selectedItemId = R.id.nav_qualifying
+            binding.menu.selectedItemId = R.id.nav_qualifying
         }
     }
 

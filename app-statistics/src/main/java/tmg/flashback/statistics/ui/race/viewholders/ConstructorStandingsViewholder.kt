@@ -3,26 +3,27 @@ package tmg.flashback.statistics.ui.race.viewholders
 import android.view.View
 import androidx.annotation.ColorInt
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.layout_constructor_driver.view.*
-import kotlinx.android.synthetic.main.view_race_constructor.view.*
 import tmg.flashback.core.enums.AnimationSpeed
 import tmg.flashback.data.models.stats.Driver
 import tmg.flashback.statistics.ui.race.RaceModel
 import tmg.flashback.core.extensions.getColor
 import tmg.flashback.statistics.R
+import tmg.flashback.statistics.databinding.LayoutConstructorDriverBinding
+import tmg.flashback.statistics.databinding.ViewRaceConstructorBinding
 import tmg.flashback.statistics.ui.util.getFlagResourceAlpha3
+import tmg.utilities.extensions.views.context
 import tmg.utilities.extensions.views.show
 
 class ConstructorStandingsViewholder(
         val constructorClicked: (constructorId: String, constructorName: String) -> Unit,
-        itemView: View
-) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+        private val binding: ViewRaceConstructorBinding
+) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
 
     lateinit var constructorId: String
     lateinit var constructorName: String
 
     init {
-        itemView.container.setOnClickListener(this)
+        binding.container.setOnClickListener(this)
     }
 
     fun bind(model: RaceModel.ConstructorStandings, maxPointsByAnyTeam: Int) {
@@ -30,12 +31,12 @@ class ConstructorStandingsViewholder(
         constructorId = model.constructor.id
         constructorName = model.constructor.name
 
-        itemView.apply {
+        binding.apply {
             tvTitle.text = model.constructor.name
 
-            layoutDriver1.show(model.driver.isNotEmpty())
-            layoutDriver2.show(model.driver.size >= 2)
-            layoutDriver3.show(model.driver.size >= 3)
+            layoutDriver1.root.show(model.driver.isNotEmpty())
+            layoutDriver2.root.show(model.driver.size >= 2)
+            layoutDriver3.root.show(model.driver.size >= 3)
 
             if (model.driver.isNotEmpty()) {
                 setDriver(layoutDriver1, model.driver[0].first, model.driver[0].second, model.constructor.color)
@@ -72,10 +73,10 @@ class ConstructorStandingsViewholder(
         }
     }
 
-    private fun setDriver(layout: View, driver: Driver, points: Int, @ColorInt constructorColor: Int) {
+    private fun setDriver(layout: LayoutConstructorDriverBinding, driver: Driver, points: Int, @ColorInt constructorColor: Int) {
         layout.tvName.text = driver.name
-        layout.tvNumber.text = layout.context.resources.getQuantityString(R.plurals.race_points, points, points)
-        layout.imgFlag.setImageResource(layout.context.getFlagResourceAlpha3(driver.nationalityISO))
+        layout.tvNumber.text = context.resources.getQuantityString(R.plurals.race_points, points, points)
+        layout.imgFlag.setImageResource(context.getFlagResourceAlpha3(driver.nationalityISO))
     }
 
     override fun onClick(p0: View?) {

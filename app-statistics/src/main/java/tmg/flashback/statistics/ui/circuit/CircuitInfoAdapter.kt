@@ -5,6 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.core.ui.shared.calculateDiff
 import tmg.flashback.statistics.R
+import tmg.flashback.statistics.databinding.ViewCircuitInfoHeaderBinding
+import tmg.flashback.statistics.databinding.ViewCircuitInfoRaceBinding
+import tmg.flashback.statistics.databinding.ViewCircuitInfoTrackBinding
 import tmg.flashback.statistics.ui.circuit.viewholders.HeaderViewHolder
 import tmg.flashback.statistics.ui.circuit.viewholders.RaceViewHolder
 import tmg.flashback.statistics.ui.circuit.viewholders.TrackViewHolder
@@ -25,18 +28,19 @@ class CircuitInfoAdapter(
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        val layoutInflater = LayoutInflater.from(parent.context)
         return when (viewType) {
             R.layout.view_circuit_info_header -> HeaderViewHolder(
                 clickShowOnMap,
                 clickWikipedia,
-                LayoutInflater.from(parent.context).inflate(viewType, parent, false)
+                ViewCircuitInfoHeaderBinding.inflate(layoutInflater, parent, false)
             )
             R.layout.view_circuit_info_race -> RaceViewHolder(
                 clickRace,
-                LayoutInflater.from(parent.context).inflate(viewType, parent, false)
+                ViewCircuitInfoRaceBinding.inflate(layoutInflater, parent, false)
             )
             R.layout.view_circuit_info_track -> TrackViewHolder(
-                LayoutInflater.from(parent.context).inflate(viewType, parent, false)
+                ViewCircuitInfoTrackBinding.inflate(layoutInflater, parent, false)
             )
             else -> super.onCreateViewHolder(parent, viewType)
         }

@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.core.ui.shared.GenericDiffCallback
 import tmg.flashback.statistics.R
+import tmg.flashback.statistics.databinding.*
 import tmg.flashback.statistics.ui.overview.constructor.summary.viewholders.ConstructorListHeaderViewHolder
 import tmg.flashback.statistics.ui.overview.constructor.summary.viewholders.HeaderViewHolder
 import tmg.flashback.statistics.ui.overview.constructor.summary.viewholders.ConstructorHistoryViewHolder
@@ -28,6 +29,7 @@ class ConstructorSummaryAdapter(
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        val layoutInflater = LayoutInflater.from(parent.context)
         return when (viewType) {
             R.layout.view_constructor_summary_header -> HeaderViewHolder(
                     pillClicked = {
@@ -36,19 +38,19 @@ class ConstructorSummaryAdapter(
                             else -> {} /* Do nothing */
                         }
                     },
-                    itemView = LayoutInflater.from(parent.context).inflate(viewType, parent, false)
+                    binding = ViewConstructorSummaryHeaderBinding.inflate(layoutInflater, parent, false)
             )
             R.layout.view_overview_stat -> StatsViewHolder(
-                    LayoutInflater.from(parent.context).inflate(viewType, parent, false)
+                    ViewOverviewStatBinding.inflate(layoutInflater, parent, false)
             )
             R.layout.view_loading_podium -> SkeletonLoadingViewHolder(
-                    LayoutInflater.from(parent.context).inflate(viewType, parent, false)
+                    SkeletonRaceBinding.inflate(layoutInflater, parent, false)
             )
             R.layout.view_constructor_summary_list_header -> ConstructorListHeaderViewHolder(
-                    LayoutInflater.from(parent.context).inflate(viewType, parent, false)
+                    ViewConstructorSummaryListHeaderBinding.inflate(layoutInflater, parent, false)
             )
             R.layout.view_constructor_summary_history -> ConstructorHistoryViewHolder(
-                    LayoutInflater.from(parent.context).inflate(viewType, parent, false)
+                    ViewConstructorSummaryHistoryBinding.inflate(layoutInflater, parent, false)
             )
             else -> super.onCreateViewHolder(parent, viewType)
         }

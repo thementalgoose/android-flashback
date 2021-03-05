@@ -4,14 +4,15 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import kotlinx.android.synthetic.main.activity_driver_season.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.core.ui.BaseActivity
 import tmg.flashback.statistics.R
+import tmg.flashback.statistics.databinding.ActivityDriverSeasonBinding
 import tmg.utilities.extensions.loadFragment
 
 class DriverSeasonActivity: BaseActivity() {
 
+    private lateinit var binding: ActivityDriverSeasonBinding
     private val viewModel: DriverSeasonViewModel by viewModel()
 
     override val analyticsScreenName: String
@@ -26,24 +27,23 @@ class DriverSeasonActivity: BaseActivity() {
     private lateinit var driverName: String
     private var season: Int = -1
 
-    override fun layoutId(): Int = R.layout.activity_driver_season
-
-    override fun arguments(bundle: Bundle) {
-        super.arguments(bundle)
-        driverId = bundle.getString(keyDriverId)!!
-        driverName = bundle.getString(keyDriverName)!!
-        season = bundle.getInt(keyDriverSeason)
-
-        viewModel.inputs.setup(driverId, season)
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityDriverSeasonBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        intent?.extras?.let {
+            driverId = it.getString(keyDriverId)!!
+            driverName = it.getString(keyDriverName)!!
+            season = it.getInt(keyDriverSeason)
+
+            viewModel.inputs.setup(driverId, season)
+        }
 
         @SuppressLint("SetTextI18n")
-        header.text = "$driverName $season"
+        binding.header.text = "$driverName $season"
 
-        back.setOnClickListener {
+        binding.back.setOnClickListener {
             onBackPressed()
         }
 
