@@ -1,38 +1,32 @@
 package tmg.flashback.statistics.ui.race.viewholders
 
-import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import kotlinx.android.synthetic.main.layout_podium.view.*
-import kotlinx.android.synthetic.main.layout_podium.view.imgFastestLap
-import kotlinx.android.synthetic.main.layout_podium.view.imgStarted
-import kotlinx.android.synthetic.main.layout_podium.view.tvConstructor
-import kotlinx.android.synthetic.main.layout_podium.view.tvStartedAbsolute
-import kotlinx.android.synthetic.main.layout_podium.view.tvStartedRelative
-import kotlinx.android.synthetic.main.layout_podium.view.tvTime
-import kotlinx.android.synthetic.main.view_race_race_podium.view.*
 import tmg.flashback.statistics.ui.race.RaceModel
 import tmg.flashback.core.extensions.getColor
 import tmg.flashback.statistics.R
+import tmg.flashback.statistics.databinding.LayoutPodiumBinding
+import tmg.flashback.statistics.databinding.ViewRaceRacePodiumBinding
 import tmg.flashback.statistics.ui.util.getFlagResourceAlpha3
 import tmg.flashback.statistics.ui.util.positionStarted
+import tmg.utilities.extensions.views.context
 import tmg.utilities.extensions.views.gone
 import tmg.utilities.extensions.views.visible
 import kotlin.math.abs
 
 class RacePodiumViewHolder(
         val driverClicked: (driverId: String, driverName: String) -> Unit,
-        view: View
-) : RecyclerView.ViewHolder(view) {
+        private val binding: ViewRaceRacePodiumBinding
+) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(first: RaceModel.Single, second: RaceModel.Single, third: RaceModel.Single) {
-        bind(first, itemView.layoutFirst, itemView.tvPoint1)
-        bind(second, itemView.layoutSecond, itemView.tvPoints2)
-        bind(third, itemView.layoutThird, itemView.tvPoints3)
+        bind(first, binding.layoutFirst, binding.tvPoint1)
+        bind(second, binding.layoutSecond, binding.tvPoints2)
+        bind(third, binding.layoutThird, binding.tvPoints3)
     }
 
-    private fun bind(model: RaceModel.Single, layout: View, pointsLayout: TextView) {
+    private fun bind(model: RaceModel.Single, layout: LayoutPodiumBinding, pointsLayout: TextView) {
         layout.apply {
 
             pointsLayout.text = itemView.context.getString(R.string.round_podium_points, model.race?.points)

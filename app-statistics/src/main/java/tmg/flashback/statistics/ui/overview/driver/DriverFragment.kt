@@ -3,28 +3,31 @@ package tmg.flashback.statistics.ui.overview.driver
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.fragment_driver_season.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.core.ui.BaseFragment
-import tmg.flashback.statistics.R
+import tmg.flashback.statistics.databinding.FragmentDriverSeasonBinding
 import tmg.flashback.statistics.ui.overview.driver.summary.DriverSummaryAdapter
 import tmg.utilities.extensions.observe
 
-class DriverFragment: BaseFragment() {
+class DriverFragment: BaseFragment<FragmentDriverSeasonBinding>() {
 
     private lateinit var adapter: DriverSummaryAdapter
 
     private val viewModel: DriverViewModel by viewModel()
 
-    override fun layoutId(): Int = R.layout.fragment_driver_season
-
-    override fun arguments(bundle: Bundle) {
-        super.arguments(bundle)
-        val driverId: String = bundle.getString(keyDriverId)!!
-        viewModel.inputs.setup(driverId)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            val driverId: String = it.getString(keyDriverId)!!
+            viewModel.inputs.setup(driverId)
+        }
     }
+
+    override fun inflateView(inflater: LayoutInflater) =
+        FragmentDriverSeasonBinding.inflate(layoutInflater)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -35,8 +38,8 @@ class DriverFragment: BaseFragment() {
                     startActivity(intent)
                 }
         )
-        list.adapter = adapter
-        list.layoutManager = LinearLayoutManager(context)
+        binding.list.adapter = adapter
+        binding.list.layoutManager = LinearLayoutManager(context)
 
         observe(viewModel.outputs.list) {
             adapter.list = it

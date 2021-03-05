@@ -7,10 +7,10 @@ import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.activity_circuit_info.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.core.ui.BaseActivity
 import tmg.flashback.statistics.R
+import tmg.flashback.statistics.databinding.ActivityCircuitInfoBinding
 import tmg.flashback.statistics.ui.race.RaceActivity
 import tmg.utilities.extensions.copyToClipboard
 import tmg.utilities.extensions.observe
@@ -18,6 +18,7 @@ import tmg.utilities.extensions.observeEvent
 
 class CircuitInfoActivity: BaseActivity() {
 
+    private lateinit var binding: ActivityCircuitInfoBinding
     private val viewModel: CircuitInfoViewModel by viewModel()
 
     override val analyticsScreenName: String
@@ -31,20 +32,19 @@ class CircuitInfoActivity: BaseActivity() {
     private lateinit var circuitName: String
     private lateinit var adapter: CircuitInfoAdapter
 
-    override fun layoutId(): Int = R.layout.activity_circuit_info
-
-    override fun arguments(bundle: Bundle) {
-        super.arguments(bundle)
-        circuitId = bundle.getString(keyCircuit)!!
-        circuitName = bundle.getString(keyCircuitName)!!
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityCircuitInfoBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        header.text = circuitName
+        intent?.extras?.let {
+            circuitId = it.getString(keyCircuit)!!
+            circuitName = it.getString(keyCircuitName)!!
+        }
 
-        swipeContainer.isEnabled = false
+        binding.header.text = circuitName
+
+        binding.swipeContainer.isEnabled = false
         adapter = CircuitInfoAdapter(
             clickShowOnMap = viewModel.inputs::clickShowOnMap,
             clickWikipedia = viewModel.inputs::clickWikipedia,
@@ -61,10 +61,10 @@ class CircuitInfoActivity: BaseActivity() {
                 startActivity(raceIntent)
             }
         )
-        list.adapter = adapter
-        list.layoutManager = LinearLayoutManager(this)
+        binding.list.adapter = adapter
+        binding.list.layoutManager = LinearLayoutManager(this)
 
-        back.setOnClickListener {
+        binding.back.setOnClickListener {
             onBackPressed()
         }
 
@@ -74,11 +74,11 @@ class CircuitInfoActivity: BaseActivity() {
         }
 
         observe(viewModel.outputs.isLoading) {
-            swipeContainer.isRefreshing = it
+            binding.swipeContainer.isRefreshing = it
         }
 
         observe(viewModel.outputs.circuitName) {
-            header.text = it
+            binding.header.text = it
         }
 
         observeEvent(viewModel.outputs.goToMap) { (mapUri, coordinates) ->

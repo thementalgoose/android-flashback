@@ -1,9 +1,7 @@
 package tmg.flashback.statistics.ui.dashboard.list.viewholders
 
 import android.annotation.SuppressLint
-import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.view_season_list_up_next.view.*
 import org.threeten.bp.*
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.statistics.enums.TrackLayout
@@ -11,51 +9,54 @@ import tmg.flashback.data.utils.daysBetween
 import tmg.flashback.data.utils.hoursAndMins
 import tmg.flashback.data.utils.secondsBetween
 import tmg.flashback.statistics.R
+import tmg.flashback.statistics.databinding.ViewSeasonListUpNextBinding
 import tmg.flashback.statistics.ui.dashboard.list.ListItem
 import tmg.flashback.statistics.ui.util.getFlagResourceAlpha3
 import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.views.*
 
-class UpNextViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+class UpNextViewHolder(
+    private val binding: ViewSeasonListUpNextBinding
+): RecyclerView.ViewHolder(binding.root) {
 
     @SuppressLint("SetTextI18n")
     fun bind(item: ListItem.UpNext) {
 
         val event = item.upNextSchedule
 
-        itemView.name.text = event.name
-        itemView.circuit.text = event.circuitName ?: ""
-        itemView.circuit.show(event.circuitName != null)
-        itemView.round.text = event.round.toString()
-        itemView.round.show(event.round != 0)
+        binding.name.text = event.name
+        binding.circuit.text = event.circuitName ?: ""
+        binding.circuit.show(event.circuitName != null)
+        binding.round.text = event.round.toString()
+        binding.round.show(event.round != 0)
 
         // Track graphic
         val track = TrackLayout.values().firstOrNull { it.circuitId == event.circuitId }?.icon ?: R.drawable.ic_map_unknown
-        itemView.track.setImageResource(track)
+        binding.track.setImageResource(track)
 
         event.flag?.let {
-            itemView.flag.setImageResource(context.getFlagResourceAlpha3(it))
-            itemView.flag.visible()
+            binding.flag.setImageResource(context.getFlagResourceAlpha3(it))
+            binding.flag.visible()
         } ?: run {
-            itemView.flag.invisible()
+            binding.flag.invisible()
         }
 
         // If there's only a date available in the timestamp
         event.timestamp.ifDate { date ->
             val days = daysBetween(LocalDate.now(), date)
-            itemView.suffix.show(days > 0)
-            itemView.spacer.show()
-            itemView.countdown.show()
+            binding.suffix.show(days > 0)
+            binding.spacer.show()
+            binding.countdown.show()
             if (date == LocalDate.now()) {
-                itemView.countdown.text = getString(R.string.dashboard_up_next_date_today)
-                itemView.suffix.text = ""
+                binding.countdown.text = getString(R.string.dashboard_up_next_date_today)
+                binding.suffix.text = ""
             }
             else {
-                itemView.countdown.text = days.toString()
-                itemView.suffix.text = context.resources.getQuantityString(R.plurals.dashboard_up_next_suffix_days, days)
+                binding.countdown.text = days.toString()
+                binding.suffix.text = context.resources.getQuantityString(R.plurals.dashboard_up_next_suffix_days, days)
             }
 
-            itemView.scheduledat.text = getString(
+            binding.scheduledat.text = getString(
                     R.string.dashboard_up_next_date_absolute,
                     date.format(DateTimeFormatter.ofPattern("d MMMM yyyy"))
             ).fromHtml()
@@ -74,60 +75,60 @@ class UpNextViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
             when {
                 localDate > nowDate -> {
                     val days = daysBetween(nowDate, localDate)
-                    itemView.suffix.show(days > 0)
-                    itemView.spacer.show()
-                    itemView.countdown.show()
+                    binding.suffix.show(days > 0)
+                    binding.spacer.show()
+                    binding.countdown.show()
                     if (localDate == nowDate) {
-                        itemView.countdown.text = getString(R.string.dashboard_up_next_date_today)
-                        itemView.suffix.text = ""
+                        binding.countdown.text = getString(R.string.dashboard_up_next_date_today)
+                        binding.suffix.text = ""
                     }
                     else {
-                        itemView.countdown.text = days.toString()
-                        itemView.suffix.text = context.resources.getQuantityString(R.plurals.dashboard_up_next_suffix_days, days)
+                        binding.countdown.text = days.toString()
+                        binding.suffix.text = context.resources.getQuantityString(R.plurals.dashboard_up_next_suffix_days, days)
                     }
                 }
                 localTime >= nowTime -> { // Upcoming
                     val (hours, minutes) = secondsBetween(nowTime, localTime).hoursAndMins
-                    itemView.suffix.show(hours != 0 || minutes != 0)
-                    itemView.spacer.show()
-                    itemView.countdown.show(true)
+                    binding.suffix.show(hours != 0 || minutes != 0)
+                    binding.spacer.show()
+                    binding.countdown.show(true)
                     when {
                         hours > 12 -> {
-                            itemView.countdown.text = getString(R.string.dashboard_up_next_datetime_hour, hours)
-                            itemView.suffix.text = getString(R.string.dashboard_up_next_suffix_ontheday)
+                            binding.countdown.text = getString(R.string.dashboard_up_next_datetime_hour, hours)
+                            binding.suffix.text = getString(R.string.dashboard_up_next_suffix_ontheday)
                         }
                         hours > 0 -> {
-                            itemView.countdown.text = getString(R.string.dashboard_up_next_datetime_hour_min, hours, minutes)
-                            itemView.suffix.text = getString(R.string.dashboard_up_next_suffix_ontheday)
+                            binding.countdown.text = getString(R.string.dashboard_up_next_datetime_hour_min, hours, minutes)
+                            binding.suffix.text = getString(R.string.dashboard_up_next_suffix_ontheday)
                         }
                         minutes > 0 -> {
-                            itemView.countdown.text = context.resources.getQuantityString(R.plurals.dashboard_up_next_datetime_mins, minutes, minutes)
-                            itemView.suffix.text = getString(R.string.dashboard_up_next_suffix_ontheday)
+                            binding.countdown.text = context.resources.getQuantityString(R.plurals.dashboard_up_next_datetime_mins, minutes, minutes)
+                            binding.suffix.text = getString(R.string.dashboard_up_next_suffix_ontheday)
                         }
                         else -> {
-                            itemView.countdown.text = getString(R.string.dashboard_up_next_datetime_now)
-                            itemView.suffix.text = getString(R.string.dashboard_up_next_suffix_ontheday)
+                            binding.countdown.text = getString(R.string.dashboard_up_next_datetime_now)
+                            binding.suffix.text = getString(R.string.dashboard_up_next_suffix_ontheday)
                         }
                     }
                 }
                 else -> {
                     val (hoursSinceStart, minutesSinceStart) = secondsBetween(localTime, nowTime).hoursAndMins
-                    itemView.countdown.invisible()
-                    itemView.countdown.text = ""
-                    itemView.spacer.gone()
-                    itemView.suffix.show(true)
+                    binding.countdown.invisible()
+                    binding.countdown.text = ""
+                    binding.spacer.gone()
+                    binding.suffix.show(true)
                     when {
                         hoursSinceStart > 0 -> {
-                            itemView.suffix.text = context.resources.getQuantityString(R.plurals.dashboard_up_next_datetime_started_hour, hoursSinceStart, hoursSinceStart)
+                            binding.suffix.text = context.resources.getQuantityString(R.plurals.dashboard_up_next_datetime_started_hour, hoursSinceStart, hoursSinceStart)
                         }
                         else -> {
-                            itemView.suffix.text = context.resources.getQuantityString(R.plurals.dashboard_up_next_datetime_started_mins, minutesSinceStart, minutesSinceStart)
+                            binding.suffix.text = context.resources.getQuantityString(R.plurals.dashboard_up_next_datetime_started_mins, minutesSinceStart, minutesSinceStart)
                         }
                     }
                 }
             }
 
-            itemView.scheduledat.text = getString(
+            binding.scheduledat.text = getString(
                     R.string.dashboard_up_next_datetime_absolute,
                     localDate.format(DateTimeFormatter.ofPattern("d MMMM yyyy")),
                     localTime.format(DateTimeFormatter.ofPattern("HH:mm"))

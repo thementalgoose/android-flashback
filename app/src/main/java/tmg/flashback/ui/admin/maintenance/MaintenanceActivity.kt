@@ -3,10 +3,9 @@ package tmg.flashback.ui.admin.maintenance
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import kotlinx.android.synthetic.main.activity_lockout.*
 import org.koin.android.viewmodel.ext.android.viewModel
-import tmg.flashback.R
 import tmg.flashback.core.ui.BaseActivity
+import tmg.flashback.databinding.ActivityLockoutBinding
 import tmg.flashback.ui.SplashActivity
 import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.observe
@@ -17,6 +16,7 @@ import tmg.utilities.extensions.views.visible
 
 class MaintenanceActivity: BaseActivity() {
 
+    private lateinit var binding: ActivityLockoutBinding
     private val viewModel: MaintenanceViewModel by viewModel()
 
     override val analyticsScreenName: String
@@ -24,12 +24,12 @@ class MaintenanceActivity: BaseActivity() {
 
     private var maintenanceLink: String = ""
 
-    override fun layoutId(): Int = R.layout.activity_lockout
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityLockoutBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        btnLink.setOnClickListener {
+        binding.btnLink.setOnClickListener {
             viewModel.inputs.clickLink(maintenanceLink)
         }
 
@@ -37,17 +37,17 @@ class MaintenanceActivity: BaseActivity() {
             val (linkText, link) = it
             maintenanceLink = link
             if (linkText.isEmpty()) {
-                btnLink.gone()
+                binding.btnLink.gone()
             }
             else {
-                btnLink.text = linkText
-                btnLink.visible()
+                binding.btnLink.text = linkText
+                binding.btnLink.visible()
             }
         }
 
         observe(viewModel.outputs.data) { (title, content) ->
-            header.text = title
-            tvMessage.text = content.fromHtml()
+            binding.header.text = title
+            binding.tvMessage.text = content.fromHtml()
         }
 
         observeEvent(viewModel.outputs.openLinkEvent) {

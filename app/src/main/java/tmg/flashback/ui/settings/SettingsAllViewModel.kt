@@ -1,4 +1,4 @@
-package tmg.flashback.statistics.ui.settings
+package tmg.flashback.ui.settings
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

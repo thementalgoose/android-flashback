@@ -5,8 +5,11 @@ import android.content.Intent
 import android.os.Bundle
 import tmg.flashback.core.ui.BaseActivity
 import tmg.flashback.statistics.R
+import tmg.flashback.statistics.databinding.ActivityDriverComparisonBinding
 
 class DriverComparisonActivity: BaseActivity() {
+
+    private lateinit var binding: ActivityDriverComparisonBinding
 
     override val analyticsScreenName: String
         get() = "Driver Comparison"
@@ -23,18 +26,17 @@ class DriverComparisonActivity: BaseActivity() {
     private lateinit var driverId1: String
     private lateinit var driverId2: String
 
-    override fun layoutId(): Int = R.layout.activity_driver_comparison
-
-    override fun arguments(bundle: Bundle) {
-        super.arguments(bundle)
-        season = bundle.getInt(keySeason)
-        round = bundle.getInt(keyRound)
-        driverId1 = bundle.getString(keyDriver1)!!
-        driverId2 = bundle.getString(keyDriver2)!!
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityDriverComparisonBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        intent?.extras?.let {
+            season = it.getInt(keySeason)
+            round = it.getInt(keyRound)
+            driverId1 = it.getString(keyDriver1)!!
+            driverId2 = it.getString(keyDriver2)!!
+        }
     }
 
     companion object {

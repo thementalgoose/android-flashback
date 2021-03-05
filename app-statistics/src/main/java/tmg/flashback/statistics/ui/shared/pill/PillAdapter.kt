@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.statistics.R
+import tmg.flashback.statistics.databinding.ViewLinkPillBinding
 
 class PillAdapter(
         private val pillClicked: (PillItem) -> Unit
@@ -16,9 +17,10 @@ class PillAdapter(
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PillViewHolder {
+        val layoutInflater = LayoutInflater.from(parent.context)
         return PillViewHolder(
                 pillClicked,
-                LayoutInflater.from(parent.context).inflate(R.layout.view_link_pill, parent, false)
+                ViewLinkPillBinding.inflate(layoutInflater, parent, false)
         )
     }
 

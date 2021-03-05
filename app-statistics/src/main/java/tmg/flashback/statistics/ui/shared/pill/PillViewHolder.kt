@@ -2,23 +2,23 @@ package tmg.flashback.statistics.ui.shared.pill
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.view_link_pill.view.*
+import tmg.flashback.statistics.databinding.ViewLinkPillBinding
 
 class PillViewHolder(
         val linkClicked: (PillItem) -> Unit,
-        itemView: View
-): RecyclerView.ViewHolder(itemView), View.OnClickListener {
+        private val binding: ViewLinkPillBinding
+): RecyclerView.ViewHolder(binding.root), View.OnClickListener {
 
     lateinit var item: PillItem
 
     init {
-        itemView.container.setOnClickListener(this)
+        binding.container.setOnClickListener(this)
     }
 
     fun bind(item: PillItem) {
         this.item = item
-        itemView.text.setText(item.label)
-        itemView.image.setImageResource(item.icon)
+        binding.text.setText(item.label)
+        binding.image.setImageResource(item.icon)
     }
 
     override fun onClick(p0: View?) {

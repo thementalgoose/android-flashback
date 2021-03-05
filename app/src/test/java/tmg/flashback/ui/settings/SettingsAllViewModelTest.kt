@@ -8,6 +8,8 @@ import tmg.flashback.core.controllers.FeatureController
 import tmg.flashback.testutils.BaseTest
 import tmg.flashback.testutils.assertDataEventValue
 import tmg.flashback.testutils.test
+import tmg.flashback.ui.settings.Category
+import tmg.flashback.ui.settings.SettingsAllViewModel
 
 internal class SettingsAllViewModelTest: BaseTest() {
 

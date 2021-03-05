@@ -3,12 +3,11 @@ package tmg.flashback.statistics.ui.race.viewholders
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.layout_driver.view.*
-import kotlinx.android.synthetic.main.view_race_race_result.view.*
 import tmg.flashback.statistics.ui.race.RaceModel
 import tmg.flashback.data.enums.isStatusFinished
 import tmg.flashback.core.extensions.getColor
 import tmg.flashback.statistics.R
+import tmg.flashback.statistics.databinding.ViewRaceRaceResultBinding
 import tmg.flashback.statistics.extensions.iconRes
 import tmg.flashback.statistics.ui.util.getFlagResourceAlpha3
 import tmg.flashback.statistics.ui.util.position
@@ -19,12 +18,12 @@ import kotlin.math.abs
 
 class RaceResultViewHolder(
         val driverClicked: (driverId: String, driverName: String) -> Unit,
-        view: View
-) : RecyclerView.ViewHolder(view), View.OnClickListener {
+        private val binding: ViewRaceRaceResultBinding
+) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
 
     init {
-        itemView.layoutTime.setOnClickListener(this)
-        itemView.clickTarget.setOnClickListener(this)
+        binding.layoutTime.setOnClickListener(this)
+        binding.clickTarget.setOnClickListener(this)
     }
 
     private lateinit var driverId: String
@@ -36,7 +35,7 @@ class RaceResultViewHolder(
         driverId = model.driver.id
         driverName = model.driver.name
 
-        itemView.apply {
+        binding.apply {
             tvPosition.text = model.race?.pos.toString()
             layoutDriver.tvName.text = model.driver.name
             layoutDriver.tvNumber.gone()
@@ -112,27 +111,27 @@ class RaceResultViewHolder(
 
     override fun onClick(p0: View?) {
         when (p0) {
-            itemView.layoutTime -> {
+            binding.layoutTime -> {
                 if (status.isNotEmpty() && !status.isStatusFinished()) {
                     Toast.makeText(itemView.context, getString(R.string.race_dnf_cause, status), Toast.LENGTH_SHORT).show()
                 }
             }
-            itemView.clickTarget -> {
+            binding.clickTarget -> {
                 driverClicked(driverId, driverName)
             }
         }
     }
 
     private fun setAlphaToAllViews(alpha: Float) {
-        itemView.tvPosition.alpha = alpha
-        itemView.layoutDriver.alpha = alpha
-        itemView.tvDriverNumber.alpha = alpha
-        itemView.imgDriverFlag.alpha = alpha
-        itemView.tvConstructor.alpha = alpha
-        itemView.constructorColor.alpha = alpha
-        itemView.imgStarted.alpha = alpha
-        itemView.tvPoints.alpha = alpha
-        itemView.llPosition.alpha = alpha
-        itemView.llTime.alpha = alpha
+        binding.tvPosition.alpha = alpha
+        binding.layoutDriver.root.alpha = alpha
+        binding.tvDriverNumber.alpha = alpha
+        binding.imgDriverFlag.alpha = alpha
+        binding.tvConstructor.alpha = alpha
+        binding.constructorColor.alpha = alpha
+        binding.imgStarted.alpha = alpha
+        binding.tvPoints.alpha = alpha
+        binding.llPosition.alpha = alpha
+        binding.llTime.alpha = alpha
     }
 }

@@ -2,32 +2,34 @@ package tmg.flashback.ui.settings.release
 
 import android.os.Bundle
 import android.view.MenuItem
-import kotlinx.android.synthetic.main.activity_release_notes.*
 import tmg.flashback.R
 import tmg.flashback.constants.Releases
 import tmg.flashback.core.ui.BaseActivity
+import tmg.flashback.databinding.ActivityReleaseNotesBinding
 import tmg.utilities.extensions.fromHtml
 
 class ReleaseActivity : BaseActivity() {
 
+    private lateinit var binding: ActivityReleaseNotesBinding
+
     override val analyticsScreenName: String
         get() = "Release notes"
 
-    override fun layoutId(): Int = R.layout.activity_release_notes
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityReleaseNotesBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        header.text = getString(R.string.settings_help_release_notes_title)
+        binding.header.text = getString(R.string.settings_help_release_notes_title)
 
         val list = Releases
             .values()
             .sortedByDescending { it.version }
             .map { it.release }
 
-        back.setOnClickListener { finish() }
+        binding.back.setOnClickListener { finish() }
 
-        tvReleaseNotes.text = list.map { getString(it) }.joinToString("<br/><br/>").fromHtml()
+        binding.tvReleaseNotes.text = list.map { getString(it) }.joinToString("<br/><br/>").fromHtml()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

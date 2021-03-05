@@ -1,11 +1,10 @@
 package tmg.flashback.ui.admin.forceupgrade
 
 import android.os.Bundle
-import kotlinx.android.synthetic.main.activity_lockout.*
 import org.koin.android.viewmodel.ext.android.viewModel
-import tmg.flashback.R
 import tmg.flashback.core.enums.DisplayType
 import tmg.flashback.core.ui.BaseActivity
+import tmg.flashback.databinding.ActivityLockoutBinding
 import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
@@ -14,9 +13,8 @@ import tmg.utilities.extensions.views.show
 
 class ForceUpgradeActivity: BaseActivity() {
 
+    private lateinit var binding: ActivityLockoutBinding
     private val viewModel: ForceUpgradeViewModel by viewModel()
-
-    override fun layoutId(): Int = R.layout.activity_lockout
 
     override val themeType: DisplayType = DisplayType.DEFAULT
     override val analyticsScreenName: String
@@ -24,22 +22,24 @@ class ForceUpgradeActivity: BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityLockoutBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         swipeDismissLock = true
 
-        btnLink.setOnClickListener {
+        binding.btnLink.setOnClickListener {
             viewModel.inputs.clickLink()
         }
 
         observe(viewModel.outputs.data) { (title, message) ->
-            header.text = title
-            tvMessage.text = message.fromHtml()
+            binding.header.text = title
+            binding.tvMessage.text = message.fromHtml()
         }
 
         observe(viewModel.outputs.showLink) { link ->
-            btnLink.show(link != null)
+            binding.btnLink.show(link != null)
             link?.let { (linkText, _) ->
-                btnLink.text = linkText
+                binding.btnLink.text = linkText
             }
         }
 

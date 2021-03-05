@@ -2,15 +2,15 @@ package tmg.flashback.rss.ui.viewholder
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.view_rss_sources_disabled.view.*
+import tmg.flashback.rss.databinding.ViewRssSourcesDisabledBinding
 
 class SourcesDisabledViewHolder(
     private val configure: () -> Unit,
-    itemView: View
-): RecyclerView.ViewHolder(itemView),
+    private val binding: ViewRssSourcesDisabledBinding
+): RecyclerView.ViewHolder(binding.root),
     View.OnClickListener {
     init {
-        itemView.container.setOnClickListener(this)
+        binding.container.setOnClickListener(this)
     }
 
     override fun onClick(p0: View?) {

@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.data.models.stats.SlimConstructor
 import tmg.flashback.statistics.R
+import tmg.flashback.statistics.databinding.ViewDriverConstructorsBinding
 
 class ConstructorListAdapter: RecyclerView.Adapter<ConstructorListViewHolder>() {
 
@@ -15,7 +16,10 @@ class ConstructorListAdapter: RecyclerView.Adapter<ConstructorListViewHolder>() 
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ConstructorListViewHolder {
-        return ConstructorListViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.view_driver_constructors, parent, false))
+        val layoutInflater = LayoutInflater.from(parent.context)
+        return ConstructorListViewHolder(
+            ViewDriverConstructorsBinding.inflate(layoutInflater, parent, false)
+        )
     }
 
     override fun onBindViewHolder(holder: ConstructorListViewHolder, position: Int) {

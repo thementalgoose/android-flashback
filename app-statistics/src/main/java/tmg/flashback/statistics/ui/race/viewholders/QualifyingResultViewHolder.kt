@@ -2,37 +2,37 @@ package tmg.flashback.statistics.ui.race.viewholders
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.layout_driver.view.*
-import kotlinx.android.synthetic.main.layout_qualifying_time.view.*
-import kotlinx.android.synthetic.main.view_race_qualifying_result.view.*
 import tmg.flashback.data.models.stats.RoundQualifyingResult
 import tmg.flashback.statistics.R
+import tmg.flashback.statistics.databinding.LayoutQualifyingTimeBinding
+import tmg.flashback.statistics.databinding.ViewRaceQualifyingResultBinding
 import tmg.flashback.statistics.ui.race.RaceAdapterCallback
 import tmg.flashback.statistics.ui.race.RaceAdapterType
 import tmg.flashback.statistics.ui.race.RaceModel
 import tmg.flashback.statistics.ui.race.DisplayPrefs
 import tmg.flashback.statistics.ui.util.getFlagResourceAlpha3
 import tmg.utilities.extensions.ordinalAbbreviation
+import tmg.utilities.extensions.views.context
 import tmg.utilities.extensions.views.getString
 import tmg.utilities.extensions.views.gone
 import tmg.utilities.extensions.views.show
 import tmg.utilities.utils.ColorUtils.Companion.darken
 
 class QualifyingResultViewHolder(
-    view: View,
+    private val binding: ViewRaceQualifyingResultBinding,
     private val updateAdapterType: RaceAdapterCallback
-) : RecyclerView.ViewHolder(view), View.OnClickListener, View.OnLongClickListener {
+) : RecyclerView.ViewHolder(binding.root), View.OnClickListener, View.OnLongClickListener {
 
     init {
-        itemView.layoutQ1.setOnClickListener(this)
-        itemView.layoutQ2.setOnClickListener(this)
-        itemView.layoutQ3.setOnClickListener(this)
-        itemView.filterQuali.setOnClickListener(this)
+        binding.layoutQ1.root.setOnClickListener(this)
+        binding.layoutQ2.root.setOnClickListener(this)
+        binding.layoutQ3.root.setOnClickListener(this)
+        binding.filterQuali.setOnClickListener(this)
 
-        itemView.layoutQ1.setOnLongClickListener(this)
-        itemView.layoutQ2.setOnLongClickListener(this)
-        itemView.layoutQ3.setOnLongClickListener(this)
-        itemView.filterQuali.setOnLongClickListener(this)
+        binding.layoutQ1.root.setOnLongClickListener(this)
+        binding.layoutQ2.root.setOnLongClickListener(this)
+        binding.layoutQ3.root.setOnLongClickListener(this)
+        binding.filterQuali.setOnLongClickListener(this)
     }
 
     private lateinit var displayPrefs: DisplayPrefs
@@ -40,7 +40,7 @@ class QualifyingResultViewHolder(
     fun bind(model: RaceModel.Single, type: RaceAdapterType) {
         this.displayPrefs = model.displayPrefs
 
-        itemView.apply {
+        binding.apply {
 
             when (model.qualified) {
                 null -> tvPosition.text = "P"
@@ -53,8 +53,8 @@ class QualifyingResultViewHolder(
             layoutDriver.tvNumber.colorHighlight = darken(model.driver.constructor.color)
             layoutDriver.imgFlag.setImageResource(R.drawable.gb)
             tvConstructor.text = model.driver.constructor.name
-            tvNumber.text = model.driver.number.toString()
-            tvNumber.colorHighlight = model.driver.constructor.color
+            layoutDriver.tvNumber.text = model.driver.number.toString()
+            layoutDriver.tvNumber.colorHighlight = model.driver.constructor.color
 
             constructorColor.setBackgroundColor(model.driver.constructor.color)
 
@@ -66,7 +66,7 @@ class QualifyingResultViewHolder(
                 penalty.show(false)
             }
 
-            imgFlag.setImageResource(context.getFlagResourceAlpha3(model.driver.nationalityISO))
+            layoutDriver.imgFlag.setImageResource(context.getFlagResourceAlpha3(model.driver.nationalityISO))
 
             applyTo(model.displayPrefs, type) { q1, q2, q3 ->
                 bind(model.q1, q1, model.q1Delta, model.displayPrefs)
@@ -75,12 +75,12 @@ class QualifyingResultViewHolder(
             }
 
             if (model.displayPrefs.none) {
-                itemView.layoutQ3.tvQualifyingTime.text = itemView.context.getString(R.string.race_qualifying_no_data)
+                binding.layoutQ3.tvQualifyingTime.text = itemView.context.getString(R.string.race_qualifying_no_data)
             }
         }
     }
 
-    private fun bind(qualifying: RoundQualifyingResult?, layout: View?, delta: String?, displayPrefs: DisplayPrefs): Boolean {
+    private fun bind(qualifying: RoundQualifyingResult?, layout: LayoutQualifyingTimeBinding?, delta: String?, displayPrefs: DisplayPrefs): Boolean {
         if (layout == null) return false
         val label = qualifying?.time?.toString() ?: ""
         layout.tvQualifyingTime.text = label
@@ -98,34 +98,34 @@ class QualifyingResultViewHolder(
         return label.isNotEmpty()
     }
 
-    private fun applyTo(displayPrefs: DisplayPrefs, type: RaceAdapterType, callback: (q1: View, q2: View?, q3: View?) -> Unit) {
+    private fun applyTo(displayPrefs: DisplayPrefs, type: RaceAdapterType, callback: (q1: LayoutQualifyingTimeBinding, q2: LayoutQualifyingTimeBinding?, q3: LayoutQualifyingTimeBinding?) -> Unit) {
         if (displayPrefs.q1 && !displayPrefs.q2 && !displayPrefs.q3) {
-            callback(itemView.layoutQ3, null, null)
-            itemView.layoutQ1.show(false, isGone = false)
-            itemView.layoutQ2.show(false, isGone = false)
-            itemView.layoutQ3.show(true, isGone = false)
-            itemView.layoutQ1.setBackgroundResource(0)
-            itemView.layoutQ2.setBackgroundResource(0)
-            itemView.layoutQ3.setBackgroundResource(R.drawable.background_qualifying_item)
+            callback(binding.layoutQ3, null, null)
+            binding.layoutQ1.root.show(false, isGone = false)
+            binding.layoutQ2.root.show(false, isGone = false)
+            binding.layoutQ3.root.show(true, isGone = false)
+            binding.layoutQ1.root.setBackgroundResource(0)
+            binding.layoutQ2.root.setBackgroundResource(0)
+            binding.layoutQ3.root.setBackgroundResource(R.drawable.background_qualifying_item)
             return
         }
         if (displayPrefs.q1 && displayPrefs.q2 && !displayPrefs.q3) {
-            callback(itemView.layoutQ3, itemView.layoutQ2, null)
-            itemView.layoutQ1.show(false, isGone = false)
-            itemView.layoutQ2.show(true, isGone = false)
-            itemView.layoutQ3.show(true, isGone = false)
-            itemView.layoutQ1.setBackgroundResource(0)
-            itemView.layoutQ2.setBackgroundResource(if (type == RaceAdapterType.QUALIFYING_POS_1) R.drawable.background_qualifying_item else 0)
-            itemView.layoutQ3.setBackgroundResource(if (type == RaceAdapterType.QUALIFYING_POS_2) R.drawable.background_qualifying_item else 0)
+            callback(binding.layoutQ3, binding.layoutQ2, null)
+            binding.layoutQ1.root.show(false, isGone = false)
+            binding.layoutQ2.root.show(true, isGone = false)
+            binding.layoutQ3.root.show(true, isGone = false)
+            binding.layoutQ1.root.setBackgroundResource(0)
+            binding.layoutQ2.root.setBackgroundResource(if (type == RaceAdapterType.QUALIFYING_POS_1) R.drawable.background_qualifying_item else 0)
+            binding.layoutQ3.root.setBackgroundResource(if (type == RaceAdapterType.QUALIFYING_POS_2) R.drawable.background_qualifying_item else 0)
             return
         }
-        callback(itemView.layoutQ1, itemView.layoutQ2, itemView.layoutQ3)
-        itemView.layoutQ1.show(true, isGone = false)
-        itemView.layoutQ2.show(true, isGone = false)
-        itemView.layoutQ3.show(true, isGone = false)
-        itemView.layoutQ1.setBackgroundResource(if (type == RaceAdapterType.QUALIFYING_POS_1) R.drawable.background_qualifying_item else 0)
-        itemView.layoutQ2.setBackgroundResource(if (type == RaceAdapterType.QUALIFYING_POS_2) R.drawable.background_qualifying_item else 0)
-        itemView.layoutQ3.setBackgroundResource(if (type == RaceAdapterType.QUALIFYING_POS) R.drawable.background_qualifying_item else 0)
+        callback(binding.layoutQ1, binding.layoutQ2, binding.layoutQ3)
+        binding.layoutQ1.root.show(true, isGone = false)
+        binding.layoutQ2.root.show(true, isGone = false)
+        binding.layoutQ3.root.show(true, isGone = false)
+        binding.layoutQ1.root.setBackgroundResource(if (type == RaceAdapterType.QUALIFYING_POS_1) R.drawable.background_qualifying_item else 0)
+        binding.layoutQ2.root.setBackgroundResource(if (type == RaceAdapterType.QUALIFYING_POS_2) R.drawable.background_qualifying_item else 0)
+        binding.layoutQ3.root.setBackgroundResource(if (type == RaceAdapterType.QUALIFYING_POS) R.drawable.background_qualifying_item else 0)
         return
     }
 
@@ -134,17 +134,17 @@ class QualifyingResultViewHolder(
     override fun onClick(p0: View?) {
         if (displayPrefs.q1 && displayPrefs.q2 && !displayPrefs.q3) {
             when (p0) {
-                itemView.layoutQ2 -> updateAdapterType.orderBy(RaceAdapterType.QUALIFYING_POS_1)
-                itemView.layoutQ3 -> updateAdapterType.orderBy(RaceAdapterType.QUALIFYING_POS_2)
-                itemView.filterQuali -> updateAdapterType.orderBy(RaceAdapterType.QUALIFYING_POS)
+                binding.layoutQ2.root -> updateAdapterType.orderBy(RaceAdapterType.QUALIFYING_POS_1)
+                binding.layoutQ3.root -> updateAdapterType.orderBy(RaceAdapterType.QUALIFYING_POS_2)
+                binding.filterQuali -> updateAdapterType.orderBy(RaceAdapterType.QUALIFYING_POS)
             }
         }
         else {
             when (p0) {
-                itemView.layoutQ1 -> updateAdapterType.orderBy(RaceAdapterType.QUALIFYING_POS_1)
-                itemView.layoutQ2 -> updateAdapterType.orderBy(RaceAdapterType.QUALIFYING_POS_2)
-                itemView.layoutQ3 -> updateAdapterType.orderBy(RaceAdapterType.QUALIFYING_POS)
-                itemView.filterQuali -> updateAdapterType.orderBy(RaceAdapterType.QUALIFYING_POS)
+                binding.layoutQ1.root -> updateAdapterType.orderBy(RaceAdapterType.QUALIFYING_POS_1)
+                binding.layoutQ2.root -> updateAdapterType.orderBy(RaceAdapterType.QUALIFYING_POS_2)
+                binding.layoutQ3.root -> updateAdapterType.orderBy(RaceAdapterType.QUALIFYING_POS)
+                binding.filterQuali -> updateAdapterType.orderBy(RaceAdapterType.QUALIFYING_POS)
             }
         }
     }

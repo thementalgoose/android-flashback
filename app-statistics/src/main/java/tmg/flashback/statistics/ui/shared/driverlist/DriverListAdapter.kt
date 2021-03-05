@@ -1,12 +1,11 @@
 package tmg.flashback.statistics.ui.shared.driverlist
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.layout_constructor_driver.view.*
 import tmg.flashback.data.models.stats.Driver
 import tmg.flashback.statistics.R
+import tmg.flashback.statistics.databinding.LayoutConstructorDriverBinding
 import tmg.flashback.statistics.ui.util.getFlagResourceAlpha3
 
 class DriverListAdapter: RecyclerView.Adapter<DriverListAdapter.ViewHolder>() {
@@ -20,19 +19,24 @@ class DriverListAdapter: RecyclerView.Adapter<DriverListAdapter.ViewHolder>() {
     override fun getItemCount(): Int = list.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.layout_constructor_driver, parent, false))
+        val layoutInflater = LayoutInflater.from(parent.context)
+        return ViewHolder(
+            LayoutConstructorDriverBinding.inflate(layoutInflater, parent, false)
+        )
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(list[position])
     }
 
-    inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+    inner class ViewHolder(
+        private val binding: LayoutConstructorDriverBinding
+    ): RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Pair<Driver, Int>) {
             val (driver, points) = item
-            itemView.tvName.text = driver.name
-            itemView.imgFlag.setImageResource(itemView.context.getFlagResourceAlpha3(driver.nationalityISO))
-            itemView.tvNumber.text = itemView.context.resources.getQuantityString(R.plurals.race_points, points, points)
+            binding.tvName.text = driver.name
+            binding.imgFlag.setImageResource(itemView.context.getFlagResourceAlpha3(driver.nationalityISO))
+            binding.tvNumber.text = itemView.context.resources.getQuantityString(R.plurals.race_points, points, points)
         }
     }
 }
