@@ -1,9 +1,11 @@
 package tmg.flashback.ui
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import tmg.flashback.BuildConfig
 import tmg.flashback.core.controllers.FeatureController
 import tmg.flashback.core.controllers.ConfigurationController
 import tmg.flashback.core.ui.BaseViewModel
@@ -64,6 +66,9 @@ class SplashViewModel(
         else {
             viewModelScope.launch {
                 val result = configurationController.applyPending()
+                if (BuildConfig.DEBUG) {
+                    Log.i("Flashback", "Pending configuration applied $result")
+                }
                 performConfigUpdates()
                 goToNextScreen()
             }

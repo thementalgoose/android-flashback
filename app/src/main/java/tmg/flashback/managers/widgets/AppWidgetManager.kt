@@ -11,6 +11,7 @@ class AppWidgetManager(
 
     private val appWidgetManager: AppWidgetManager get() = AppWidgetManager.getInstance(applicationContext)
 
+    @Suppress("EXPERIMENTAL_API_USAGE")
     override val hasWidgets: Boolean
         get() {
             val currentIds = appWidgetManager.getAppWidgetIds(ComponentName(applicationContext, UpNextWidgetProvider::class.java))

@@ -5,16 +5,16 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.activity_constructor.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.core.ui.BaseActivity
-import tmg.flashback.statistics.R
+import tmg.flashback.statistics.databinding.ActivityConstructorBinding
 import tmg.flashback.statistics.ui.overview.constructor.summary.ConstructorSummaryAdapter
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 
 class ConstructorActivity: BaseActivity() {
 
+    private lateinit var binding: ActivityConstructorBinding
     private val viewModel: ConstructorViewModel by viewModel()
 
     override val analyticsScreenName: String
@@ -28,29 +28,28 @@ class ConstructorActivity: BaseActivity() {
     private lateinit var constructorName: String
     private lateinit var adapter: ConstructorSummaryAdapter
 
-    override fun layoutId(): Int = R.layout.activity_constructor
-
-    override fun arguments(bundle: Bundle) {
-        super.arguments(bundle)
-        constructorId = bundle.getString(keyConstructorId)!!
-        constructorName = bundle.getString(keyConstructorName)!!
-
-        viewModel.inputs.setup(constructorId)
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityConstructorBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        header.text = constructorName
+        intent?.extras?.let {
+            constructorId = it.getString(keyConstructorId)!!
+            constructorName = it.getString(keyConstructorName)!!
+
+            viewModel.inputs.setup(constructorId)
+        }
+
+        binding.header.text = constructorName
 
         adapter = ConstructorSummaryAdapter(
                 openUrl = viewModel.inputs::openUrl,
                 openSeason = viewModel.inputs::openSeason
         )
-        list.adapter = adapter
-        list.layoutManager = LinearLayoutManager(this)
+        binding.list.adapter = adapter
+        binding.list.layoutManager = LinearLayoutManager(this)
 
-        back.setOnClickListener {
+        binding.back.setOnClickListener {
             onBackPressed()
         }
 

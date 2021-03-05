@@ -1,10 +1,9 @@
 package tmg.flashback.statistics.ui.overview.constructor.summary.viewholders
 
-import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import kotlinx.android.synthetic.main.view_constructor_summary_header.view.*
+import tmg.flashback.statistics.databinding.ViewConstructorSummaryHeaderBinding
 import tmg.flashback.statistics.ui.overview.constructor.summary.ConstructorSummaryItem
 import tmg.flashback.statistics.ui.shared.pill.PillAdapter
 import tmg.flashback.statistics.ui.shared.pill.PillItem
@@ -13,14 +12,14 @@ import tmg.utilities.extensions.views.context
 
 class HeaderViewHolder(
         pillClicked: (PillItem) -> Unit,
-        itemView: View
-): RecyclerView.ViewHolder(itemView) {
+        private val binding: ViewConstructorSummaryHeaderBinding
+): RecyclerView.ViewHolder(binding.root) {
 
     var adapter: PillAdapter = PillAdapter(pillClicked = pillClicked)
 
     init {
-        itemView.links.adapter = adapter
-        itemView.links.layoutManager = LinearLayoutManager(context).apply {
+        binding.links.adapter = adapter
+        binding.links.layoutManager = LinearLayoutManager(context).apply {
             orientation = LinearLayoutManager.HORIZONTAL
         }
     }
@@ -28,9 +27,9 @@ class HeaderViewHolder(
     fun bind(item: ConstructorSummaryItem.Header) {
         Glide.with(context)
                 .load(context.getFlagResourceAlpha3(item.constructorNationalityISO))
-                .into(itemView.nationality)
+                .into(binding.nationality)
 
-        itemView.colour.setBackgroundColor(item.constructorColor)
+        binding.colour.setBackgroundColor(item.constructorColor)
 
         adapter.list = mutableListOf(
                 PillItem.Wikipedia(item.constructorWikiUrl)

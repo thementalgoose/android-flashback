@@ -1,6 +1,8 @@
 package tmg.flashback.statistics.ui.shared.sync.viewholders
 
-import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import tmg.flashback.statistics.databinding.ViewSharedInternalErrorBinding
 
-class InternalErrorOccurredViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
+class InternalErrorOccurredViewHolder(
+    private val binding: ViewSharedInternalErrorBinding
+): RecyclerView.ViewHolder(binding.root)

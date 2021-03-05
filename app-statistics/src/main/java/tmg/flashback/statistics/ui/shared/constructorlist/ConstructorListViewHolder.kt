@@ -1,13 +1,14 @@
 package tmg.flashback.statistics.ui.shared.constructorlist
 
-import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.view_driver_constructors.view.*
 import tmg.flashback.data.models.stats.SlimConstructor
+import tmg.flashback.statistics.databinding.ViewDriverConstructorsBinding
 
-class ConstructorListViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+class ConstructorListViewHolder(
+    private val binding: ViewDriverConstructorsBinding
+): RecyclerView.ViewHolder(binding.root) {
     fun bind(item: SlimConstructor) {
-        itemView.constructorColor.setBackgroundColor(item.color)
-        itemView.constructor.text = item.name
+        binding.constructorColor.setBackgroundColor(item.color)
+        binding.constructor.text = item.name
     }
 }

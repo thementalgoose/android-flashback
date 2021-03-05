@@ -6,22 +6,23 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.fragment_dashboard_list.*
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.core.managers.NavigationManager
 import tmg.flashback.core.ui.BaseFragment
 import tmg.flashback.statistics.BuildConfig
 import tmg.flashback.statistics.R
+import tmg.flashback.statistics.databinding.FragmentDashboardListBinding
 import tmg.flashback.statistics.manager.StatisticsExternalNavigationManager
 import tmg.flashback.statistics.ui.dashboard.DashboardNavigationCallback
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 
-class ListFragment: BaseFragment() {
+class ListFragment: BaseFragment<FragmentDashboardListBinding>() {
 
     private val viewModel: ListViewModel by viewModel()
 
@@ -31,6 +32,7 @@ class ListFragment: BaseFragment() {
     private var adapter: ListAdapter? = null
     private var dashboardNavigationCallback: DashboardNavigationCallback? = null
 
+    @Suppress("RedundantNullableReturnType")
     private val tickReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
         override fun onReceive(p0: Context?, p1: Intent?) {
             if (BuildConfig.DEBUG) {
@@ -40,14 +42,15 @@ class ListFragment: BaseFragment() {
         }
     }
 
-    override fun layoutId() = R.layout.fragment_dashboard_list
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is DashboardNavigationCallback) {
             dashboardNavigationCallback = context
         }
     }
+
+    override fun inflateView(inflater: LayoutInflater) =
+        FragmentDashboardListBinding.inflate(layoutInflater)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -65,8 +68,8 @@ class ListFragment: BaseFragment() {
                      }
                 }
         )
-        list.layoutManager = LinearLayoutManager(context)
-        list.adapter = adapter
+        binding.list.layoutManager = LinearLayoutManager(context)
+        binding.list.adapter = adapter
 
         observe(viewModel.outputs.list) {
             adapter?.list = it
@@ -94,10 +97,10 @@ class ListFragment: BaseFragment() {
         observeEvent(viewModel.outputs.defaultSeasonUpdated) {
             when (it) {
                 null -> Snackbar
-                        .make(list, getString(R.string.dashboard_season_list_default_banner_automatic), Snackbar.LENGTH_LONG)
+                        .make(binding.list, getString(R.string.dashboard_season_list_default_banner_automatic), Snackbar.LENGTH_LONG)
                         .show()
                 else -> Snackbar
-                        .make(list, getString(R.string.dashboard_season_list_default_banner_user, it), Snackbar.LENGTH_LONG)
+                        .make(binding.list, getString(R.string.dashboard_season_list_default_banner_user, it), Snackbar.LENGTH_LONG)
                         .setAction(R.string.dashboard_season_list_default_banner_revert) {
                             viewModel.inputs.clickClearDefaultSeason()
                         }

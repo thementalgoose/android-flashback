@@ -1,11 +1,12 @@
 package tmg.flashback.statistics.ui.race.viewholders
 
-import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.skeleton_race.view.*
+import tmg.flashback.statistics.databinding.SkeletonRaceBinding
 
-class SkeletonLoadingViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+class SkeletonLoadingViewHolder(
+    private val binding: SkeletonRaceBinding
+): RecyclerView.ViewHolder(binding.root) {
     init {
-        itemView.skeletonLayout.showSkeleton()
+        binding.skeletonLayout.showSkeleton()
     }
 }

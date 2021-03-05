@@ -6,6 +6,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.core.ui.shared.GenericDiffCallback
 import tmg.flashback.statistics.R
+import tmg.flashback.statistics.databinding.ViewDriverSeasonBinding
+import tmg.flashback.statistics.databinding.ViewDriverSeasonHeaderBinding
+import tmg.flashback.statistics.databinding.ViewDriverSummaryHistoryBinding
+import tmg.flashback.statistics.databinding.ViewOverviewStatBinding
 import tmg.flashback.statistics.ui.overview.viewholders.StatsViewHolder
 import tmg.flashback.statistics.ui.overview.driver.season.viewholders.RaceHeaderViewHolder
 import tmg.flashback.statistics.ui.overview.driver.season.viewholders.RaceViewHolder
@@ -25,19 +29,20 @@ class DriverSeasonAdapter(
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        val layoutInflater = LayoutInflater.from(parent.context)
         return when (viewType) {
             R.layout.view_overview_stat -> StatsViewHolder(
-                    LayoutInflater.from(parent.context).inflate(viewType, parent, false)
+                    ViewOverviewStatBinding.inflate(layoutInflater, parent, false)
             )
             R.layout.view_driver_summary_history -> DriverHistoryViewHolder(
-                    LayoutInflater.from(parent.context).inflate(viewType, parent, false)
+                    ViewDriverSummaryHistoryBinding.inflate(layoutInflater, parent, false)
             )
             R.layout.view_driver_season -> RaceViewHolder(
                     itemClicked,
-                    LayoutInflater.from(parent.context).inflate(viewType, parent, false)
+                    ViewDriverSeasonBinding.inflate(layoutInflater, parent, false)
             )
             R.layout.view_driver_season_header -> RaceHeaderViewHolder(
-                    LayoutInflater.from(parent.context).inflate(viewType, parent, false)
+                    ViewDriverSeasonHeaderBinding.inflate(layoutInflater, parent, false)
             )
             else -> super.onCreateViewHolder(parent, viewType)
         }
