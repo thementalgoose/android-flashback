@@ -11,23 +11,30 @@ import androidx.viewbinding.ViewBinding
 
 abstract class BaseFragment<T: ViewBinding>: Fragment() {
 
-    lateinit var binding: T
+    private var _binding: T? = null
+    protected val binding: T
+        get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = inflateView(inflater)
+        _binding = inflateView(inflater)
         return binding.root
     }
 
     abstract fun inflateView(inflater: LayoutInflater): T
 
     fun setInsets(callback: (insets: WindowInsetsCompat) -> Unit) {
-        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, insets ->
             callback(insets)
             insets
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
