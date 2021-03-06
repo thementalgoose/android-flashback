@@ -51,7 +51,7 @@ class RSSConfigureFragment: BaseFragment<FragmentRssSettingsConfigureBinding>() 
             } catch (e: ActivityNotFoundException) {
                 context?.let { context ->
                     Snackbar.make(binding.configuration, R.string.rss_configure_cannot_open_page, Snackbar.LENGTH_INDEFINITE)
-                        .setAction(R.string.rss_configure_cannot_open_page_action) { view ->
+                        .setAction(R.string.rss_configure_cannot_open_page_action) { _ ->
                             val clipData = ClipData.newPlainText(it.article.title, it.article.contactLink ?: it.article.source)
                             context.managerClipboard.setPrimaryClip(clipData)
                         }
