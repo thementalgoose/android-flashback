@@ -10,7 +10,7 @@ import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import tmg.flashback.R
-import tmg.flashback.managers.notifications.FirebasePushNotificationManager.Companion.topicMisc
+import tmg.flashback.managers.notifications.FirebasePushNotificationManager.Companion.topicSeasonInfo
 import tmg.flashback.managers.notifications.FirebasePushNotificationManager.Companion.topicQualifying
 import tmg.flashback.managers.notifications.FirebasePushNotificationManager.Companion.topicRace
 import tmg.flashback.ui.SplashActivity
@@ -60,7 +60,7 @@ class RaceNotificationService: FirebaseMessagingService() {
             val channel: NotificationChannel? = when (channelId) {
                 topicRace -> NotificationChannel(channelId, getString(R.string.notification_channel_race), NotificationManager.IMPORTANCE_DEFAULT)
                 topicQualifying -> NotificationChannel(channelId, getString(R.string.notification_channel_qualifying), NotificationManager.IMPORTANCE_DEFAULT)
-                topicMisc -> NotificationChannel(channelId, getString(R.string.notification_channel_info), NotificationManager.IMPORTANCE_DEFAULT)
+                topicSeasonInfo -> NotificationChannel(channelId, getString(R.string.notification_channel_info), NotificationManager.IMPORTANCE_DEFAULT)
                 else -> null
             }
             channel?.let {

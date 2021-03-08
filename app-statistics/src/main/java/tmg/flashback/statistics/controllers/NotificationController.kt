@@ -52,13 +52,13 @@ class NotificationController(
     /**
      * Receive misc notifications
      */
-    val miscOptInUndecided: Boolean
-        get() = appRepository.notificationsMisc == null
-    var miscOptIn: Boolean
-        get() = appRepository.notificationsMisc == NotificationRegistration.OPT_IN
+    val seasonInfoOptInUndecided: Boolean
+        get() = appRepository.notificationsSeasonInfo == null
+    var seasonInfoOptIn: Boolean
+        get() = appRepository.notificationsSeasonInfo == NotificationRegistration.OPT_IN
         set(value) = when (value) {
-            true -> appRepository.notificationsMisc = NotificationRegistration.OPT_IN
-            false -> appRepository.notificationsMisc = NotificationRegistration.OPT_OUT
+            true -> appRepository.notificationsSeasonInfo = NotificationRegistration.OPT_IN
+            false -> appRepository.notificationsSeasonInfo = NotificationRegistration.OPT_OUT
         }
 
     companion object {
