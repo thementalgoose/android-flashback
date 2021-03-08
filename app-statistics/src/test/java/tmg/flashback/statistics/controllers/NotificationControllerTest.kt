@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test
 import tmg.flashback.core.controllers.ConfigurationController
 import tmg.flashback.data.enums.NotificationRegistration
 import tmg.flashback.data.repositories.AppRepository
-import tmg.flashback.statistics.controllers.NotificationController
 import tmg.flashback.statistics.testutils.BaseTest
 
 internal class NotificationControllerTest: BaseTest() {
@@ -108,32 +107,32 @@ internal class NotificationControllerTest: BaseTest() {
 
     @Test
     fun `misc opt in undecided`() {
-        every { mockAppRepository.notificationsMisc } returns null
+        every { mockAppRepository.notificationsSeasonInfo } returns null
         initSUT()
-        assertTrue(sut.miscOptInUndecided)
+        assertTrue(sut.seasonInfoOptInUndecided)
     }
 
     @Test
     fun `misc opt in has decided`() {
         initSUT()
-        every { mockAppRepository.notificationsMisc } returns NotificationRegistration.OPT_IN
-        assertFalse(sut.miscOptInUndecided)
-        every { mockAppRepository.notificationsMisc } returns NotificationRegistration.OPT_OUT
-        assertFalse(sut.miscOptInUndecided)
+        every { mockAppRepository.notificationsSeasonInfo } returns NotificationRegistration.OPT_IN
+        assertFalse(sut.seasonInfoOptInUndecided)
+        every { mockAppRepository.notificationsSeasonInfo } returns NotificationRegistration.OPT_OUT
+        assertFalse(sut.seasonInfoOptInUndecided)
     }
 
     @Test
     fun `misc opt in true`() {
         initSUT()
-        sut.miscOptIn = true
-        verify { mockAppRepository.notificationsMisc = NotificationRegistration.OPT_IN }
+        sut.seasonInfoOptIn = true
+        verify { mockAppRepository.notificationsSeasonInfo = NotificationRegistration.OPT_IN }
     }
 
     @Test
     fun `misc opt in false`() {
         initSUT()
-        sut.miscOptIn = false
-        verify { mockAppRepository.notificationsMisc = NotificationRegistration.OPT_OUT }
+        sut.seasonInfoOptIn = false
+        verify { mockAppRepository.notificationsSeasonInfo = NotificationRegistration.OPT_OUT }
     }
 
     //endregion

@@ -150,6 +150,6 @@
     <!-- Notifications -->
     <string name="notification_channel_race">Race starts</string>
     <string name="notification_channel_qualifying">Qualifying starts</string>
-    <string name="notification_channel_info">Miscellaneous</string>
+    <string name="notification_channel_info">Season info</string>
 
 </resources>
