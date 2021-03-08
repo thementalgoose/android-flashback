@@ -19,7 +19,7 @@ class FirebasePushNotificationManager(
     companion object {
         const val topicRace: String = "race"
         const val topicQualifying: String = "qualifying"
-        const val topicMisc: String = "misc"
+        const val topicSeasonInfo: String = "seasonInfo"
     }
 
     override suspend fun raceSubscribe(): Boolean {
@@ -78,28 +78,28 @@ class FirebasePushNotificationManager(
         }
     }
 
-    override suspend fun appSupportSubscribe(): Boolean {
+    override suspend fun seasonInfoSubscribe(): Boolean {
         return suspendCoroutine { continuation ->
             FirebaseMessaging
                 .getInstance()
-                .unsubscribeFromTopic(topicMisc)
+                .subscribeToTopic(topicSeasonInfo)
                 .addOnCompleteListener {
                     if (it.isSuccessful) {
-                        notificationController.miscOptIn = true
+                        notificationController.seasonInfoOptIn = true
                     }
                     continuation.resume(it.isSuccessful)
                 }
         }
     }
 
-    override suspend fun appSupportUnsubscribe(): Boolean {
+    override suspend fun seasonInfoUnsubscribe(): Boolean {
         return suspendCoroutine { continuation ->
             FirebaseMessaging
                 .getInstance()
-                .unsubscribeFromTopic(topicMisc)
+                .unsubscribeFromTopic(topicSeasonInfo)
                 .addOnCompleteListener {
                     if (it.isSuccessful) {
-                        notificationController.miscOptIn = false
+                        notificationController.seasonInfoOptIn = false
                     }
                     continuation.resume(it.isSuccessful)
                 }
@@ -109,7 +109,7 @@ class FirebasePushNotificationManager(
     override fun createChannels() {
         createChannel(topicRace, R.string.notification_channel_race)
         createChannel(topicQualifying, R.string.notification_channel_qualifying)
-        createChannel(topicMisc, R.string.notification_channel_info)
+        createChannel(topicSeasonInfo, R.string.notification_channel_info)
     }
 
     private fun createChannel(channelId: String, @StringRes channelName: Int) {

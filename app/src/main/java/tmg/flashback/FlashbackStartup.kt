@@ -85,9 +85,9 @@ class FlashbackStartup(
         }
 
         // Enrol for qualifying push notifications
-        if (prefsNotification.miscOptInUndecided) {
+        if (prefsNotification.seasonInfoOptInUndecided) {
             GlobalScope.launch {
-                val result = notificationManager.appSupportSubscribe()
+                val result = notificationManager.seasonInfoSubscribe()
                 Log.i("Flashback", "Auto enrol push notifications misc - $result")
             }
         }
