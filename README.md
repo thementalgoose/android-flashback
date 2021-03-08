@@ -19,7 +19,7 @@ Flashback is a Formula 1 statistics app!
 - Channels:
     - `race`
     - `qualifying`
-    - `misc`
+    - `seasonInfo`
 
 ### Libraries
 
