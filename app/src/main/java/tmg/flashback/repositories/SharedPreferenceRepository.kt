@@ -44,7 +44,7 @@ class SharedPreferenceRepository(context: Context) : SharedPrefManager(context),
 
     private val keyNotificationRace: String = "NOTIFICATION_RACE"
     private val keyNotificationQualifying: String = "NOTIFICATION_QUALIFYING"
-    private val keyNotificationMisc: String = "NOTIFICATION_MISC"
+    private val keyNotificationSeasonInfo: String = "NOTIFICATION_SEASON_INFO"
 
     private val keyAppFirstBoot: String = "APP_STARTUP_FIRST_BOOT"
     private val keyAppOpenCount: String = "APP_STARTUP_OPEN_COUNT"
@@ -188,12 +188,12 @@ class SharedPreferenceRepository(context: Context) : SharedPrefManager(context),
             save(keyNotificationRace, "")
         }
 
-    override var notificationsMisc: NotificationRegistration?
-        get() = getString(keyNotificationMisc, null)?.toEnum<NotificationRegistration>()
+    override var notificationsSeasonInfo: NotificationRegistration?
+        get() = getString(keyNotificationSeasonInfo, null)?.toEnum<NotificationRegistration>()
         set(value) = if (value != null) {
-            save(keyNotificationMisc, value.key)
+            save(keyNotificationSeasonInfo, value.key)
         } else {
-            save(keyNotificationMisc, "")
+            save(keyNotificationSeasonInfo, "")
         }
 
     //endregion
