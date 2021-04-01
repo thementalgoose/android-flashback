@@ -1,6 +1,7 @@
 package tmg.flashback.core.model
 
 import org.threeten.bp.*
+import org.threeten.bp.format.DateTimeFormatter
 
 data class Timestamp(
     val originalDate: LocalDate,
@@ -63,4 +64,9 @@ data class Timestamp(
             callback(originalDate)
         }
     }
+}
+
+fun Timestamp.string(): String {
+    return this.originalDate.format(DateTimeFormatter.ofPattern("yyyyMMdd")) +
+            (this.originalTime?.format(DateTimeFormatter.ofPattern("HH:mm:ss")) ?: "00:00")
 }

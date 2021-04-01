@@ -15,6 +15,7 @@ import tmg.flashback.statistics.controllers.SeasonController
 import tmg.flashback.statistics.controllers.UpNextController
 import tmg.flashback.core.model.Timestamp
 import tmg.flashback.core.model.UpNextSchedule
+import tmg.flashback.core.model.UpNextScheduleTimestamp
 import tmg.flashback.statistics.testutils.*
 import tmg.flashback.statistics.testutils.assertDataEventValue
 import tmg.flashback.statistics.testutils.test
@@ -155,7 +156,7 @@ internal class ListViewModelTest: BaseTest() {
     @Test
     fun `up next section shown when valid next race item found`() {
 
-        val expected = UpNextSchedule(1,2,"test", Timestamp(LocalDate.now(), zone = ZoneId.ofOffset("", ZoneOffset.UTC)),null,null,null)
+        val expected = UpNextSchedule(1,2,"test", null, emptyList(),null,null)
         every { mockUpNextController.getNextEvent() } returns expected
 
         initSUT()

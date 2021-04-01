@@ -3,10 +3,14 @@ package tmg.flashback.core.model
 data class UpNextSchedule(
     val season: Int,
     val round: Int,
-    val name: String,
-    val timestamp: Timestamp,
+    val title: String,
+    val subtitle: String?,
+    val values: List<UpNextScheduleTimestamp>,
     val flag: String?,
-    val circuitId: String?,
-    val circuitName: String?
+    val circuitId: String?
 )
 
+data class UpNextScheduleTimestamp(
+    val label: String,
+    val timestamp: Timestamp
+)

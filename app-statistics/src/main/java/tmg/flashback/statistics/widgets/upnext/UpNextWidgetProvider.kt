@@ -78,8 +78,8 @@ class UpNextWidgetProvider : AppWidgetProvider(), KoinComponent {
             val remoteView = RemoteViews(buildConfigManager.applicationId, R.layout.widget_up_next)
 
             try {
-                remoteView.setTextViewText(R.id.name, nextEvent.name)
-                remoteView.setTextViewText(R.id.subtitle, nextEvent.circuitName ?: "")
+                remoteView.setTextViewText(R.id.name, nextEvent.title)
+                remoteView.setTextViewText(R.id.subtitle, nextEvent.subtitle ?: "")
 
                 if (tintedIcon != null) {
                     remoteView.setImageViewBitmap(R.id.circuit, tintedIcon)
@@ -97,30 +97,30 @@ class UpNextWidgetProvider : AppWidgetProvider(), KoinComponent {
 
                 }
 
-                when (val days = daysBetween(LocalDate.now(), nextEvent.timestamp.originalDate)) {
-                    0 -> {
-                        nextEvent.timestamp.ifDate {
-                            remoteView.setTextViewText(R.id.days, context.getString(R.string.dashboard_up_next_date_today))
-                            remoteView.setTextViewText(R.id.daystogo, "")
-                            remoteView.setViewVisibility(R.id.daystogo, View.INVISIBLE)
-                        }
-                        nextEvent.timestamp.ifDateAndTime { utc, local ->
-                            remoteView.setTextViewText(R.id.days, context.getString(R.string.dashboard_up_next_date_starts_at_today, local.toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm"))))
-                            if (local.toLocalTime() == utc.toLocalTime()) {
-                                remoteView.setTextViewText(R.id.daystogo, "")
-                                remoteView.setViewVisibility(R.id.daystogo, View.INVISIBLE)
-                            } else {
-                                remoteView.setTextViewText(R.id.daystogo, context.getString(R.string.dashboard_up_next_date_localtime).fromHtml())
-                                remoteView.setViewVisibility(R.id.daystogo, View.VISIBLE)
-                            }
-                        }
-                    }
-                    else -> {
-                        remoteView.setTextViewText(R.id.days, days.toString())
-                        remoteView.setViewVisibility(R.id.daystogo, View.VISIBLE)
-                        remoteView.setTextViewText(R.id.daystogo, context.resources.getQuantityText(R.plurals.dashboard_up_next_suffix_days, days))
-                    }
-                }
+//                when (val days = daysBetween(LocalDate.now(), nextEvent.timestamp.originalDate)) {
+//                    0 -> {
+//                        nextEvent.timestamp.ifDate {
+//                            remoteView.setTextViewText(R.id.days, context.getString(R.string.dashboard_up_next_date_today))
+//                            remoteView.setTextViewText(R.id.daystogo, "")
+//                            remoteView.setViewVisibility(R.id.daystogo, View.INVISIBLE)
+//                        }
+//                        nextEvent.timestamp.ifDateAndTime { utc, local ->
+//                            remoteView.setTextViewText(R.id.days, context.getString(R.string.dashboard_up_next_date_starts_at_today, local.toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm"))))
+//                            if (local.toLocalTime() == utc.toLocalTime()) {
+//                                remoteView.setTextViewText(R.id.daystogo, "")
+//                                remoteView.setViewVisibility(R.id.daystogo, View.INVISIBLE)
+//                            } else {
+//                                remoteView.setTextViewText(R.id.daystogo, context.getString(R.string.dashboard_up_next_date_localtime).fromHtml())
+//                                remoteView.setViewVisibility(R.id.daystogo, View.VISIBLE)
+//                            }
+//                        }
+//                    }
+//                    else -> {
+//                        remoteView.setTextViewText(R.id.days, days.toString())
+//                        remoteView.setViewVisibility(R.id.daystogo, View.VISIBLE)
+//                        remoteView.setTextViewText(R.id.daystogo, context.resources.getQuantityText(R.plurals.dashboard_up_next_suffix_days, days))
+//                    }
+//                }
 
                 remoteView.setOnClickPendingIntent(R.id.container, getRefreshWidgetPendingIntent(context, widgetId, appWidgetIds))
                 appWidgetManager?.updateAppWidget(widgetId, remoteView)
