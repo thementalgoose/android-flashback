@@ -56,7 +56,7 @@ class UpNextViewHolder(
 
         adapter.list = item.upNextSchedule.values
             .map {
-                TimeListItem(TimeListDisplayType.RELATIVE, it)
+                TimeListItem(TimeListDisplayType.LOCAL, it)
             }
             .sortedBy { it.item.timestamp.string() }
 

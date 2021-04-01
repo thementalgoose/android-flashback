@@ -41,7 +41,7 @@ class TimeViewHolder(
                 }
                 else -> {
                     val ordinal = date.dayOfMonth.ordinalAbbreviation
-                    binding.dates.text = date.format(DateTimeFormatter.ofPattern("d'${ordinal}' MMM"))
+                    binding.dates.text = date.format(DateTimeFormatter.ofPattern("'${ordinal}' MMM"))
                 }
             }
         }
@@ -50,13 +50,13 @@ class TimeViewHolder(
             when (item.type) {
                 TimeListDisplayType.UTC -> {
                     val ordinal = utc.dayOfMonth.ordinalAbbreviation
-                    val date = utc.format(DateTimeFormatter.ofPattern("d'${ordinal} MMM"))
+                    val date = utc.format(DateTimeFormatter.ofPattern("'${ordinal}' MMM"))
                     val time = utc.format(DateTimeFormatter.ofPattern("HH:mm"))
                     binding.dates.text = "$date at $time"
                 }
                 TimeListDisplayType.LOCAL -> {
                     val ordinal = local.dayOfMonth.ordinalAbbreviation
-                    val date = local.format(DateTimeFormatter.ofPattern("d'${ordinal} MMM"))
+                    val date = local.format(DateTimeFormatter.ofPattern("'${ordinal}' MMM"))
                     val time = local.format(DateTimeFormatter.ofPattern("HH:mm"))
                     binding.dates.text = "$date at $time"
                 }
