@@ -3,6 +3,7 @@ package tmg.flashback.ui.settings.widgets
 import androidx.preference.SwitchPreference
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.components.prefs.AppPreferencesItem
@@ -55,6 +56,11 @@ internal class SettingsWidgetViewModelTest: BaseTest() {
         initSUT()
         sut.inputs.preferenceClicked("OpenApp", true)
 
+        verify {
+            mockAppRepository.widgetOpenApp = true
+        }
+        every { mockAppRepository.widgetOpenApp } returns true
+
         sut.outputs.settings.test {
             assertListMatchesItem {
                 it is AppPreferencesItem.SwitchPreference && it.prefKey == "OpenApp" && it.isChecked
@@ -69,6 +75,10 @@ internal class SettingsWidgetViewModelTest: BaseTest() {
     fun `clicking open widget to false disables widget open and refresh event fired`() {
         initSUT()
         sut.inputs.preferenceClicked("OpenApp", false)
+
+        verify {
+            mockAppRepository.widgetOpenApp = false
+        }
 
         sut.outputs.settings.test {
             assertListMatchesItem {
