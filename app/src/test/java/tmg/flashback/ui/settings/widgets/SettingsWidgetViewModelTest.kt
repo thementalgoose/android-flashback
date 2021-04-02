@@ -52,26 +52,6 @@ internal class SettingsWidgetViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `clicking open widget to true enables widget open and refresh event fired`() {
-        initSUT()
-        sut.inputs.preferenceClicked("OpenApp", true)
-
-        verify {
-            mockAppRepository.widgetOpenApp = true
-        }
-        every { mockAppRepository.widgetOpenApp } returns true
-
-        sut.outputs.settings.test {
-            assertListMatchesItem {
-                it is AppPreferencesItem.SwitchPreference && it.prefKey == "OpenApp" && it.isChecked
-            }
-        }
-        sut.outputs.refreshWidget.test {
-            assertEventFired()
-        }
-    }
-
-    @Test
     fun `clicking open widget to false disables widget open and refresh event fired`() {
         initSUT()
         sut.inputs.preferenceClicked("OpenApp", false)
