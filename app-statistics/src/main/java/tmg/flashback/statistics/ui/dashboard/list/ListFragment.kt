@@ -66,7 +66,8 @@ class ListFragment: BaseFragment<FragmentDashboardListBinding>() {
                      when (it) {
                          "rss" -> viewModel.inputs.clickRss()
                      }
-                }
+                },
+                timeDisplayFormatClicked = viewModel.inputs::clickTimeDisplayType
         )
         binding.list.layoutManager = LinearLayoutManager(context)
         binding.list.adapter = adapter

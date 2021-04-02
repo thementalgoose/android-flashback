@@ -3,6 +3,7 @@ package tmg.flashback.statistics.ui.dashboard.list
 import androidx.annotation.DrawableRes
 import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
+import tmg.flashback.core.model.TimeListDisplayType
 import tmg.flashback.core.model.UpNextSchedule
 import tmg.flashback.statistics.R
 
@@ -12,7 +13,8 @@ sealed class ListItem(
     object Hero: ListItem(R.layout.view_season_list_hero)
 
     data class UpNext(
-        val upNextSchedule: UpNextSchedule
+        val upNextSchedule: UpNextSchedule,
+        val timeFormatType: TimeListDisplayType
     ): ListItem(R.layout.view_season_list_up_next)
 
     object Divider: ListItem(R.layout.view_season_list_divider)

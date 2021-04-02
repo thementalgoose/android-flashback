@@ -7,10 +7,7 @@ import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
 import tmg.flashback.core.constants.Migrations
 import tmg.flashback.core.managers.ConfigurationManager
-import tmg.flashback.core.model.ForceUpgrade
-import tmg.flashback.core.model.SupportedSource
-import tmg.flashback.core.model.Timestamp
-import tmg.flashback.core.model.UpNextSchedule
+import tmg.flashback.core.model.*
 import tmg.flashback.core.repositories.ConfigurationRepository
 import tmg.flashback.core.repositories.CoreRepository
 
@@ -139,8 +136,24 @@ internal class ConfigurationControllerTest {
     @Test
     fun `up next list returns non cached value`() {
 
-        val input1 = listOf(UpNextSchedule(1,0,"", Timestamp(LocalDate.now()),null,null,null))
-        val input2 = listOf(UpNextSchedule(2,0,"", Timestamp(LocalDate.now()),null,null,null))
+        val input1 = listOf(UpNextSchedule(
+            season = 1,
+            round = 0,
+            title = "",
+            subtitle = null,
+            values = listOf(UpNextScheduleTimestamp("timestamp", Timestamp(LocalDate.now()))),
+            flag = null,
+            circuitId = null)
+        )
+        val input2 = listOf(UpNextSchedule(
+            season = 2,
+            round = 0,
+            title = "",
+            subtitle = null,
+            listOf(UpNextScheduleTimestamp("timestamp", Timestamp(LocalDate.now()))),
+            flag = null,
+            circuitId = null)
+        )
 
         initSUT()
         every { mockConfigurationRepository.upNext } returns input1
