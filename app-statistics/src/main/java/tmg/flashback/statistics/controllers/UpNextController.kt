@@ -5,7 +5,6 @@ import org.threeten.bp.LocalTime
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.core.controllers.ConfigurationController
 import tmg.flashback.core.model.UpNextSchedule
-import tmg.flashback.core.model.string
 
 /**
  * Up Next functionality on the home screen
