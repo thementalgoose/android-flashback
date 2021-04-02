@@ -27,7 +27,7 @@ class UpNextViewHolder(
         binding.name.text = event.name
         binding.circuit.text = event.circuitName ?: ""
         binding.circuit.show(event.circuitName != null)
-        binding.round.text = event.round.toString()
+        binding.round.text = getString(R.string.dashboard_up_next_round, event.round.toString())
         binding.round.show(event.round != 0)
 
         // Track graphic

@@ -31,6 +31,7 @@
     <string name="dashboard_up_next_date_starts_at_today">Today at %s</string>
     <string name="dashboard_up_next_date_localtime"><![CDATA[(local)]]></string>
     <string name="dashboard_up_next_date_absolute"><![CDATA[<b>%s</b>]]></string>
+    <string name="dashboard_up_next_round">Round %s</string>
     <string name="dashboard_up_next_datetime_now">Now</string>
     <string name="dashboard_up_next_datetime_started">Started</string>
     <plurals name="dashboard_up_next_datetime_mins">
