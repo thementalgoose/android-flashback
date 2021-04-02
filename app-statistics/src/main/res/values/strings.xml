@@ -21,13 +21,19 @@
     <string name="home_season_header_All">All</string>
     <string name="home_constructor_penalty">%d point penalty</string>
     <string name="home_season_arrow">%s</string>
+
+    <!-- Up next -->
     <string name="dashboard_up_next_title">Up next</string>
     <plurals name="dashboard_up_next_suffix_days">
-        <item quantity="one">%d day to go</item>
+        <item quantity="one">Tomorrow</item>
         <item quantity="other">%d days to go</item>
     </plurals>
+
     <string name="dashboard_up_next_date_today">Today</string>
-    <string name="dashboard_up_next_date_starts_at_today">Today at %s</string>
+    <string name="dashboard_up_next_date_starts_at_tomorrow">%s tomorrow</string>
+    <string name="dashboard_up_next_date_starts_at_today">%s today</string>
+    <string name="dashboard_up_next_date_starts_at_yesterday">%s yesterday</string>
+    <string name="dashboard_up_next_date_date_on_time">%s on %s</string>
     <string name="dashboard_up_next_date_localtime"><![CDATA[(local)]]></string>
     <string name="dashboard_up_next_date_absolute"><![CDATA[<b>%s</b>]]></string>
     <string name="dashboard_up_next_datetime_now">Now</string>
@@ -48,7 +54,15 @@
         <item quantity="one">Started over an hour ago</item>
         <item quantity="other">Started over %d hours ago</item>
     </plurals>
+    <plurals name="dashboard_up_next_datetime_started_days">
+        <item quantity="one">Yesterday</item>
+        <item quantity="other">Started %d days ago</item>
+    </plurals>
     <string name="dashboard_up_next_datetime_absolute"><![CDATA[<b>%s</b> at <b>%s</b> local time]]></string>
+    <string name="dashboard_up_next_timefilter_utc">UTC</string>
+    <string name="dashboard_up_next_timefilter_local">Local</string>
+    <string name="dashboard_up_next_timefilter_delta">Relative</string>
+
     <string name="dashboard_season_list_extra_title">Extras</string>
     <string name="dashboard_season_list_extra_rss_title">RSS feed</string>
     <string name="dashboard_season_list_default_banner_automatic">No default season set</string>

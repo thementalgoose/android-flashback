@@ -3,23 +3,17 @@ package tmg.flashback.statistics.ui.dashboard.list
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.threeten.bp.LocalDate
 import org.threeten.bp.Year
-import org.threeten.bp.ZoneId
-import org.threeten.bp.ZoneOffset
 import tmg.flashback.core.controllers.FeatureController
+import tmg.flashback.core.model.TimeListDisplayType
+import tmg.flashback.core.model.UpNextSchedule
 import tmg.flashback.statistics.controllers.SeasonController
 import tmg.flashback.statistics.controllers.UpNextController
-import tmg.flashback.core.model.Timestamp
-import tmg.flashback.core.model.UpNextSchedule
-import tmg.flashback.core.model.UpNextScheduleTimestamp
 import tmg.flashback.statistics.testutils.*
-import tmg.flashback.statistics.testutils.assertDataEventValue
-import tmg.flashback.statistics.testutils.test
-import tmg.flashback.statistics.testutils.testObserve
 
 internal class ListViewModelTest: BaseTest() {
 
@@ -40,7 +34,9 @@ internal class ListViewModelTest: BaseTest() {
         every { mockSeasonController.allExpanded } returns true
 
         every { mockSeasonController.defaultSeason } returns 2018
+
         every { mockUpNextController.getNextEvent() } returns null
+        every { mockUpNextController.upNextDisplayType } returns TimeListDisplayType.LOCAL
 
         every { mockSeasonController.supportedSeasons } returns List(currentYear - 1949) { it + 1950 }.toSet()
 
@@ -163,6 +159,18 @@ internal class ListViewModelTest: BaseTest() {
 
         sut.outputs.list.test {
             assertListMatchesItem { it is ListItem.UpNext }
+        }
+    }
+
+    @Test
+    fun `clicking time display list format with type puts it in up next item`() {
+
+        initSUT()
+
+        sut.inputs.clickTimeDisplayType(TimeListDisplayType.RELATIVE)
+
+        sut.outputs.list.test {
+            assertListMatchesItem { it is ListItem.UpNext && it.timeFormatType == TimeListDisplayType.RELATIVE }
         }
     }
 

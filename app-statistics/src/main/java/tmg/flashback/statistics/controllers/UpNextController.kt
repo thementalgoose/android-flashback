@@ -4,14 +4,27 @@ import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.core.controllers.ConfigurationController
+import tmg.flashback.core.model.TimeListDisplayType
 import tmg.flashback.core.model.UpNextSchedule
+import tmg.flashback.core.repositories.CoreRepository
+import tmg.flashback.data.repositories.AppRepository
 
 /**
  * Up Next functionality on the home screen
  */
 class UpNextController(
+    private val coreRepository: CoreRepository,
     private val configurationController: ConfigurationController
 ) {
+
+    /**
+     * The value that the menu should default too when showing time list types
+     */
+    var upNextDisplayType: TimeListDisplayType
+        get() = coreRepository.displayListTypePref
+        set(value) {
+            coreRepository.displayListTypePref = value
+        }
 
     /**
      * Get the next race to display in the up next schedule

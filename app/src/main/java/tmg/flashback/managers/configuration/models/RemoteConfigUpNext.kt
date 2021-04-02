@@ -22,7 +22,7 @@ data class RemoteConfigUpNextSchedule(
 
 data class RemoteConfigUpNextItem(
     val type: String?,
-    val d: String,
+    val d: String?,
     val t: String?
 )
 
@@ -45,6 +45,9 @@ fun RemoteConfigUpNextSchedule.convert(): UpNextSchedule? {
     }
     val values = this.dates.mapNotNull {
         if (it.type == null) {
+            return@mapNotNull null
+        }
+        if (it.d == null) {
             return@mapNotNull null
         }
         val date = try {

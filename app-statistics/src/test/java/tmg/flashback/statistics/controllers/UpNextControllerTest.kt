@@ -2,6 +2,7 @@ package tmg.flashback.statistics.controllers
 
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.verify
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
@@ -9,20 +10,23 @@ import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.core.controllers.ConfigurationController
+import tmg.flashback.core.model.TimeListDisplayType
 import tmg.flashback.core.model.Timestamp
 import tmg.flashback.core.model.UpNextSchedule
 import tmg.flashback.core.model.UpNextScheduleTimestamp
+import tmg.flashback.core.repositories.CoreRepository
 import tmg.flashback.statistics.controllers.UpNextController
 import tmg.flashback.statistics.testutils.BaseTest
 
 internal class UpNextControllerTest : BaseTest() {
 
     private var mockRemoteConfigRepository: ConfigurationController = mockk(relaxed = true)
+    private var mockCoreRepository: CoreRepository = mockk(relaxed = true)
 
     private lateinit var sut: UpNextController
 
     private fun initSUT() {
-        sut = UpNextController(mockRemoteConfigRepository)
+        sut = UpNextController(mockCoreRepository, mockRemoteConfigRepository)
     }
 
     @Test
@@ -269,6 +273,29 @@ internal class UpNextControllerTest : BaseTest() {
         every { mockRemoteConfigRepository.upNext } returns list
 
         assertEquals(list[2], sut.getNextEvent())
+    }
+
+    //endregion
+
+    //region Up Next Display Type
+
+    @Test
+    fun `up next display type reads value from core`() {
+        every { mockCoreRepository.displayListTypePref } returns TimeListDisplayType.LOCAL
+        initSUT()
+
+        assertEquals(TimeListDisplayType.LOCAL, sut.upNextDisplayType)
+    }
+
+    @Test
+    fun `up next display type writes value to core when updated`() {
+        every { mockCoreRepository.displayListTypePref } returns TimeListDisplayType.LOCAL
+        initSUT()
+        sut.upNextDisplayType = TimeListDisplayType.RELATIVE
+
+        verify {
+            mockCoreRepository.displayListTypePref = TimeListDisplayType.RELATIVE
+        }
     }
 
     //endregion

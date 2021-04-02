@@ -14,3 +14,9 @@ data class UpNextScheduleTimestamp(
     val label: String,
     val timestamp: Timestamp
 )
+
+enum class TimeListDisplayType {
+    UTC,
+    LOCAL,
+    RELATIVE
+}
