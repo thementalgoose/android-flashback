@@ -5,6 +5,8 @@ import android.graphics.Typeface
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import org.threeten.bp.ZoneId
+import org.threeten.bp.format.TextStyle
 import tmg.flashback.core.model.TimeListDisplayType
 import tmg.flashback.statistics.enums.TrackLayout
 import tmg.flashback.statistics.R
@@ -14,6 +16,7 @@ import tmg.flashback.statistics.ui.shared.timelist.TimeListAdapter
 import tmg.flashback.statistics.ui.shared.timelist.TimeListItem
 import tmg.flashback.statistics.ui.util.getFlagResourceAlpha3
 import tmg.utilities.extensions.views.*
+import java.util.*
 
 class UpNextViewHolder(
     private val binding: ViewSeasonListUpNextBinding,
@@ -55,6 +58,8 @@ class UpNextViewHolder(
         } ?: run {
             binding.flag.invisible()
         }
+
+        binding.timeLocal.text = ZoneId.systemDefault().getDisplayName(TextStyle.SHORT_STANDALONE, Locale.getDefault())
 
         populateTimeList(item.timeFormatType)
     }

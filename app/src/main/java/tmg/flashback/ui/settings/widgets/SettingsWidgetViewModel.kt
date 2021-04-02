@@ -4,7 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import tmg.components.prefs.AppPreferencesItem
 import tmg.flashback.R
+import tmg.flashback.constants.Defaults
 import tmg.flashback.core.ui.BaseViewModel
+import tmg.flashback.data.repositories.AppRepository
 import tmg.utilities.lifecycle.Event
 
 //region Inputs
@@ -25,10 +27,13 @@ interface SettingsWidgetViewModelOutputs {
 
 //endregion
 
-class SettingsWidgetViewModel: BaseViewModel(), SettingsWidgetViewModelInputs,
+class SettingsWidgetViewModel(
+    private val appRepository: AppRepository
+): BaseViewModel(), SettingsWidgetViewModelInputs,
     SettingsWidgetViewModelOutputs {
 
     private val keyRefreshWidget: String = "Widgets"
+    private val keyOpenApp: String = "OpenApp"
 
     var inputs: SettingsWidgetViewModelInputs = this
     var outputs: SettingsWidgetViewModelOutputs = this
@@ -40,7 +45,8 @@ class SettingsWidgetViewModel: BaseViewModel(), SettingsWidgetViewModelInputs,
     init {
         settings.value = mutableListOf<AppPreferencesItem>().apply {
             add(AppPreferencesItem.Category(R.string.settings_widgets))
-            add(AppPreferencesItem.Preference("Widgets", R.string.settings_widgets_update_all_title, R.string.settings_widgets_update_all_description))
+            add(AppPreferencesItem.Preference(keyRefreshWidget, R.string.settings_widgets_update_all_title, R.string.settings_widgets_update_all_description))
+            add(AppPreferencesItem.SwitchPreference(keyOpenApp, R.string.settings_widgets_open_app_on_click_title, R.string.settings_widgets_open_app_on_click_description, appRepository.widgetOpenApp))
         }
     }
 
@@ -49,6 +55,10 @@ class SettingsWidgetViewModel: BaseViewModel(), SettingsWidgetViewModelInputs,
     override fun preferenceClicked(pref: String?, value: Boolean?) {
         when (pref) {
             keyRefreshWidget -> refreshWidget.value = Event()
+            keyOpenApp -> {
+                appRepository.widgetOpenApp = value ?: Defaults.widgetOpenApp
+                refreshWidget.value = Event()
+            }
         }
     }
 

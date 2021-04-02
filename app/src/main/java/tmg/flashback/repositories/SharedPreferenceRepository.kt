@@ -43,6 +43,7 @@ class SharedPreferenceRepository(context: Context) : SharedPrefManager(context),
     private val keyDefaultSeason: String = "DEFAULT_SEASON"
     private val keyReleaseNotesSeenVersion: String = "RELEASE_NOTES_SEEN_VERSION"
     private val keyTimeDisplayListType: String = "TIME_DISPLAY_LIST_TYPE"
+    private val keyWidgetOpenBehavior: String = "WIDGET_OPEN_BEHAVIOR"
 
     private val keyNotificationRace: String = "NOTIFICATION_RACE"
     private val keyNotificationQualifying: String = "NOTIFICATION_QUALIFYING"
@@ -120,6 +121,10 @@ class SharedPreferenceRepository(context: Context) : SharedPrefManager(context),
     override var displayListTypePref: TimeListDisplayType
         get() = getInt(keyTimeDisplayListType).toEnum<TimeListDisplayType>() ?: TimeListDisplayType.LOCAL
         set(value) = save(keyTimeDisplayListType, value.ordinal)
+
+    override var widgetOpenApp: Boolean
+        get() = getBoolean(keyWidgetOpenBehavior, Defaults.widgetOpenApp)
+        set(value) = save(keyWidgetOpenBehavior, value)
 
     //endregion
 

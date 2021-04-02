@@ -21,6 +21,8 @@ internal class DefaultsTest: BaseTest() {
         assertTrue(Defaults.showListFavourited)
         assertTrue(Defaults.showListAll)
 
+        assertTrue(Defaults.widgetOpenApp)
+
         assertTrue(Defaults.crashReporting)
         assertTrue(Defaults.shakeToReport)
         assertTrue(Defaults.analyticsOptIn)
