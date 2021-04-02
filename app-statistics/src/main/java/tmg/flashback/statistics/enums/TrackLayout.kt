@@ -34,6 +34,7 @@ enum class TrackLayout(
     IMOLA("imola", R.drawable.circuit_imola),
     ISTANBUL("istanbul", R.drawable.circuit_istanbul),
     JACAREPAGUA("jacarepagua", R.drawable.circuit_jacarepagua),
+    JEDDAH("jeddah", R.drawable.circuit_jeddah),
     JEREZ("jerez", R.drawable.circuit_jerez),
     MAGNY_COURS("magny_cours", R.drawable.circuit_magny_cours),
     MARINA_BAY("marina_bay", R.drawable.circuit_marina_bay),
