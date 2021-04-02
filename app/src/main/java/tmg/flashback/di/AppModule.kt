@@ -65,7 +65,7 @@ val appModule = module {
     single { RaceController(get()) }
     single { ReleaseNotesController(get(), get()) }
     single { SeasonController(get(), get()) }
-    single { UpNextController(get()) }
+    single { UpNextController(get(), get()) }
 
     // Repositories
 

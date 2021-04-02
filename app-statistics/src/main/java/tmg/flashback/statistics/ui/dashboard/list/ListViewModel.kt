@@ -3,6 +3,7 @@ package tmg.flashback.statistics.ui.dashboard.list
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import tmg.flashback.core.controllers.FeatureController
+import tmg.flashback.core.model.TimeListDisplayType
 import tmg.flashback.statistics.R
 import tmg.flashback.core.ui.BaseViewModel
 import tmg.flashback.statistics.controllers.SeasonController
@@ -23,6 +24,8 @@ interface ListViewModelInputs {
 
     fun clickClearDefaultSeason()
     fun clickSetDefaultSeason(season: Int)
+
+    fun clickTimeDisplayType(type: TimeListDisplayType)
 
     fun clickSettings()
 }
@@ -51,6 +54,8 @@ class ListViewModel(
 
     var headerSectionFavourited: Boolean = seasonController.favouritesExpanded
     var headerSectionAll: Boolean = seasonController.allExpanded
+
+    private var timeListDisplayType: TimeListDisplayType = upNextController.upNextDisplayType
 
     private var currentSeason: Int = seasonController.defaultSeason
     private val favouriteSeasons = seasonController.favouriteSeasons.toMutableSet()
@@ -121,6 +126,11 @@ class ListViewModel(
         openSettings.value = Event()
     }
 
+    override fun clickTimeDisplayType(type: TimeListDisplayType) {
+        timeListDisplayType = type
+        refresh()
+    }
+
     //endregion
 
     private fun buildList(
@@ -135,7 +145,7 @@ class ListViewModel(
         upNextController.getNextEvent()?.let {
             list.add(ListItem.Divider)
             list.add(ListItem.Header(type = HeaderType.UP_NEXT, expanded = null))
-            list.add(ListItem.UpNext(it))
+            list.add(ListItem.UpNext(it, timeListDisplayType))
         }
 
         // RSS

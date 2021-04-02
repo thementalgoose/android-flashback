@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
 import tmg.flashback.core.model.Timestamp
 import tmg.flashback.core.model.UpNextSchedule
+import tmg.flashback.core.model.UpNextScheduleTimestamp
 import tmg.flashback.firebase.base.ConverterUtils
 import tmg.flashback.testutils.BaseTest
 
@@ -25,23 +26,33 @@ internal class RemoteConfigUpNextTest: BaseTest() {
                 RemoteConfigUpNextSchedule(
                     s = 2020,
                     r = 1,
-                    name = "name",
-                    date = "2020-01-21",
-                    time = null,
+                    title = "name",
+                    dates = listOf(
+                        RemoteConfigUpNextItem(
+                            type = "Race",
+                            d = "2020-01-21",
+                            t = null
+                        )
+                    ),
                     flag = "GBR",
                     circuit = null,
-                    circuitName = null
+                    subtitle = null
                 )
             )
         )
         val expected = UpNextSchedule(
             season = 2020,
             round = 1,
-            name = "name",
-            timestamp = Timestamp(LocalDate.of(2020, 1, 21)),
+            title = "name",
+            values = listOf(
+                UpNextScheduleTimestamp(
+                    label = "Race",
+                    timestamp = Timestamp(LocalDate.of(2020, 1, 21))
+                )
+            ),
             flag = "GBR",
             circuitId = null,
-            circuitName = null
+            subtitle = null
         )
 
         assertEquals(listOf(expected), model.convert())
@@ -56,12 +67,17 @@ internal class RemoteConfigUpNextTest: BaseTest() {
         val model = RemoteConfigUpNextSchedule(
             s = null,
             r = null,
-            name = "name",
-            date = "21-01-2020",
-            time = null,
+            title = "name",
+            dates = listOf(
+                RemoteConfigUpNextItem(
+                    type = "Race",
+                    d = "2020-01-21",
+                    t = null
+                )
+            ),
             flag = null,
             circuit = null,
-            circuitName = null
+            subtitle = null
         )
         assertNull(model.convert())
     }
@@ -71,12 +87,17 @@ internal class RemoteConfigUpNextTest: BaseTest() {
         val model = RemoteConfigUpNextSchedule(
             s = 2020,
             r = null,
-            name = null,
-            date = "21-01-2020",
-            time = null,
+            title = null,
+            dates = listOf(
+                RemoteConfigUpNextItem(
+                    type = "Race",
+                    d = "2020-01-21",
+                    t = null
+                )
+            ),
             flag = null,
             circuit = null,
-            circuitName = null
+            subtitle = null
         )
         assertNull(model.convert())
     }
@@ -86,12 +107,17 @@ internal class RemoteConfigUpNextTest: BaseTest() {
         val model = RemoteConfigUpNextSchedule(
             s = 2020,
             r = null,
-            name = "name",
-            date = null,
-            time = null,
+            title = "name",
+            dates = listOf(
+                RemoteConfigUpNextItem(
+                    type = "Race",
+                    d = null,
+                    t = null
+                )
+            ),
             flag = null,
             circuit = null,
-            circuitName = null
+            subtitle = null
         )
         assertNull(model.convert())
     }
@@ -101,12 +127,17 @@ internal class RemoteConfigUpNextTest: BaseTest() {
         val model = RemoteConfigUpNextSchedule(
             s = 2020,
             r = null,
-            name = "name",
-            date = "something-random",
-            time = null,
+            title = "name",
+            dates = listOf(
+                RemoteConfigUpNextItem(
+                    type = "Race",
+                    d = "something-random",
+                    t = null
+                )
+            ),
             flag = null,
             circuit = null,
-            circuitName = null
+            subtitle = null
         )
         assertNull(model.convert())
     }

@@ -77,8 +77,7 @@
     <style name="Text.UpNext.CountdownLabel" parent="Text">
         <item name="android:fontFamily">@font/montserrat</item>
         <item name="android:textColor">?attr/f1TextSecondary</item>
-        <item name="android:textSize">@dimen/textSizeLarge</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/textSizeMedium</item>
     </style>
 
     <style name="Text.UpNext.Date" parent="Text">
