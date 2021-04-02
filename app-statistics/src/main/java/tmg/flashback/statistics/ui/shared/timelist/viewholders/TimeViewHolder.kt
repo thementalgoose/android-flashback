@@ -25,7 +25,7 @@ class TimeViewHolder(
             binding.container.alpha = 1.0f
         }
         else {
-            binding.container.alpha = 0.6f
+            binding.container.alpha = 0.5f
         }
 
         binding.title.text = item.item.label

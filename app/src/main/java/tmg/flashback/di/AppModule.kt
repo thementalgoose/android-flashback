@@ -97,7 +97,7 @@ val appModule = module {
     viewModel { SettingsDeviceViewModel(get(), get(), get()) }
     viewModel { SettingsNotificationViewModel(get()) }
     viewModel { SettingsStatisticsViewModel(get(), get()) }
-    viewModel { SettingsWidgetViewModel() }
+    viewModel { SettingsWidgetViewModel(get()) }
     viewModel { PrivacyPolicyViewModel() }
     // Admin
     viewModel { ForceUpgradeViewModel(get()) }

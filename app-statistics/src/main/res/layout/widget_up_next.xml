@@ -2,12 +2,15 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/container"
     android:layout_gravity="center"
     android:orientation="vertical"
-    android:padding="@dimen/paddingSmall"
+    android:paddingStart="@dimen/paddingSmall"
+    android:paddingTop="@dimen/paddingXSmall"
+    android:paddingEnd="@dimen/paddingSmall"
+    android:paddingBottom="@dimen/paddingXSmall"
     tools:background="#181818">
 
     <RelativeLayout
@@ -42,7 +45,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/subtitle"
-            android:layout_alignBottom="@id/flag"
             android:layout_alignParentStart="true"
             android:layout_marginEnd="@dimen/paddingSmall"
             android:gravity="center|start"
@@ -52,12 +54,10 @@
             android:id="@+id/daystogo"
             style="@style/Text.Widget.DaysUntil"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_below="@id/subtitle"
-            android:layout_alignTop="@id/days"
-            android:layout_alignBottom="@id/days"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/days"
+            android:layout_alignParentStart="true"
             android:layout_toStartOf="@id/circuit"
-            android:layout_toEndOf="@id/days"
             android:gravity="center|start"
             tools:text="days to go" />
 
