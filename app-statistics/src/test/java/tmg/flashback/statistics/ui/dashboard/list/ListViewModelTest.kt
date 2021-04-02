@@ -163,13 +163,16 @@ internal class ListViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `clicking time display list format with type puts it in up next item`() {
+    fun `clicking time display list format with type puts it in up next item`() = coroutineTest {
 
+        val expected = UpNextSchedule(1,2,"test", null, emptyList(),null,null)
+        every { mockUpNextController.getNextEvent() } returns expected
         initSUT()
 
         sut.inputs.clickTimeDisplayType(TimeListDisplayType.RELATIVE)
 
         sut.outputs.list.test {
+            println(latestValue)
             assertListMatchesItem { it is ListItem.UpNext && it.timeFormatType == TimeListDisplayType.RELATIVE }
         }
     }
