@@ -23,6 +23,14 @@ class TimeViewHolder(
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(item: TimeListItem) {
+
+        if (item.item.timestamp.isInPast) {
+            binding.container.alpha = 0.6f
+        }
+        else {
+            binding.container.alpha = 1.0f
+        }
+
         binding.title.text = item.item.label
 
         item.item.timestamp.ifDate { date ->
@@ -52,13 +60,13 @@ class TimeViewHolder(
                     val ordinal = utc.dayOfMonth.ordinalAbbreviation
                     val date = utc.format(DateTimeFormatter.ofPattern("'${ordinal}' MMM"))
                     val time = utc.format(DateTimeFormatter.ofPattern("HH:mm"))
-                    binding.dates.text = "$date at $time"
+                    binding.dates.text = "$time on $date"
                 }
                 TimeListDisplayType.LOCAL -> {
                     val ordinal = local.dayOfMonth.ordinalAbbreviation
                     val date = local.format(DateTimeFormatter.ofPattern("'${ordinal}' MMM"))
                     val time = local.format(DateTimeFormatter.ofPattern("HH:mm"))
-                    binding.dates.text = "$date at $time"
+                    binding.dates.text = "$time on $date"
                 }
                 TimeListDisplayType.RELATIVE -> {
                     val localDate = local.toLocalDate()

@@ -147,4 +147,110 @@ internal class TimestampTest {
 
         assertEquals(expectedDate, sut.deviceDate)
     }
+
+    @Test
+    fun `string representation of original time`() {
+        val localDate: LocalDate = LocalDate.of(2020, 1, 1)
+        val localTime: LocalTime = LocalTime.of(12, 0, 0)
+        val zone = ZoneId.ofOffset("", ZoneOffset.UTC)
+
+        val sut = Timestamp(localDate, localTime, zone)
+
+        assertEquals("2020010112:00:00", sut.string())
+    }
+
+    @Test
+    fun `string representation of original time with no supplied time`() {
+        val localDate: LocalDate = LocalDate.of(2020, 1, 1)
+        val zone = ZoneId.ofOffset("", ZoneOffset.UTC)
+
+        val sut = Timestamp(localDate, null, zone)
+
+        assertEquals("2020010100:00:00", sut.string())
+    }
+
+    @Test
+    fun `is in past returns true only date provided and date in past`() {
+        val date = LocalDate.now().minusDays(1L)
+        val zone = ZoneId.ofOffset("", ZoneOffset.UTC)
+
+        val sut = Timestamp(date, null, zone)
+
+        assertTrue(sut.isInPast)
+    }
+
+    @Test
+    fun `is in past returns false only date provided and date is today`() {
+        val date = LocalDate.now()
+        val zone = ZoneId.ofOffset("", ZoneOffset.UTC)
+
+        val sut = Timestamp(date, null, zone)
+
+        assertFalse(sut.isInPast)
+    }
+
+    @Test
+    fun `is in past returns false only date provided and date is tomorrow`() {
+        val date = LocalDate.now().plusDays(1L)
+        val zone = ZoneId.ofOffset("", ZoneOffset.UTC)
+
+        val sut = Timestamp(date, null, zone)
+
+        assertFalse(sut.isInPast)
+    }
+
+    @Test
+    fun `is in past returns true when date is yesterday and original time is before`() {
+        val date = LocalDate.now().minusDays(1L)
+        val time = LocalTime.now().plusMinutes(1L)
+        val zone = ZoneId.ofOffset("", ZoneOffset.UTC)
+
+        val sut = Timestamp(date, time, zone)
+
+        assertTrue(sut.isInPast)
+    }
+
+    @Test
+    fun `is in past returns true when date is today and original time is in past`() {
+        val date = LocalDate.now()
+        val time = LocalTime.now().minusMinutes(1L)
+        val zone = ZoneId.ofOffset("", ZoneOffset.UTC)
+
+        val sut = Timestamp(date, time, zone)
+
+        assertTrue(sut.isInPast)
+    }
+
+    @Test
+    fun `is in past returns false when date is today and original time is now`() {
+        val date = LocalDate.now()
+        val time = LocalTime.now().plusMinutes(1L)
+        val zone = ZoneId.ofOffset("", ZoneOffset.UTC)
+
+        val sut = Timestamp(date, time, zone)
+
+        assertFalse(sut.isInPast)
+    }
+
+    @Test
+    fun `is in past returns false when date is today and original time is in future`() {
+        val date = LocalDate.now()
+        val time = LocalTime.now().plusMinutes(1L)
+        val zone = ZoneId.ofOffset("", ZoneOffset.UTC)
+
+        val sut = Timestamp(date, time, zone)
+
+        assertFalse(sut.isInPast)
+    }
+
+    @Test
+    fun `is in past returns false when date is tomorrow and original time is later`() {
+        val date = LocalDate.now().plusDays(1L)
+        val time = LocalTime.now().minusMinutes(1L)
+        val zone = ZoneId.ofOffset("", ZoneOffset.UTC)
+
+        val sut = Timestamp(date, time, zone)
+
+        assertFalse(sut.isInPast)
+    }
 }

@@ -64,9 +64,25 @@ data class Timestamp(
             callback(originalDate)
         }
     }
-}
 
-fun Timestamp.string(): String {
-    return this.originalDate.format(DateTimeFormatter.ofPattern("yyyyMMdd")) +
-            (this.originalTime?.format(DateTimeFormatter.ofPattern("HH:mm:ss")) ?: "00:00")
+    /**
+     * Is the timestamp considered in the past based on UTC?
+     */
+    val isInPast: Boolean
+        get() {
+            return if (deviceLocalDateTime != null) {
+                deviceLocalDateTime!! < LocalDateTime.now()
+            } else {
+                println("Date ${LocalDate.now()} - ${originalDate}")
+                originalDate < LocalDate.now()
+            }
+        }
+
+    /**
+     * Get a string representation of the date
+     */
+    fun string(): String {
+        return this.originalDate.format(DateTimeFormatter.ofPattern("yyyyMMdd")) +
+                (this.originalTime?.format(DateTimeFormatter.ofPattern("HH:mm:ss")) ?: "00:00:00")
+    }
 }
