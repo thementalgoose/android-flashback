@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import tmg.flashback.core.model.TimeListDisplayType
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.*
 import tmg.flashback.statistics.ui.dashboard.list.viewholders.*
@@ -15,7 +16,8 @@ class ListAdapter(
     var seasonClicked: (season: Int) -> Unit,
     var setDefaultClicked: (season: Int) -> Unit,
     var clearDefaultClicked: () -> Unit,
-    val buttonClicked: (String) -> Unit
+    val buttonClicked: (String) -> Unit,
+    val timeDisplayFormatClicked: (TimeListDisplayType) -> Unit
 ): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var list: List<ListItem> = emptyList()
@@ -54,7 +56,8 @@ class ListAdapter(
                 settingsClicked
             )
             R.layout.view_season_list_up_next -> UpNextViewHolder(
-                ViewSeasonListUpNextBinding.inflate(layoutInflater, parent, false)
+                ViewSeasonListUpNextBinding.inflate(layoutInflater, parent, false),
+                timeDisplayFormatClicked
             )
             R.layout.view_season_list_button -> ButtonViewHolder(
                 buttonClicked,

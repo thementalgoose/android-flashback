@@ -7,6 +7,7 @@ import tmg.flashback.constants.Defaults
 import tmg.flashback.core.enums.AnimationSpeed
 import tmg.flashback.core.enums.AppHints
 import tmg.flashback.core.enums.Theme
+import tmg.flashback.core.model.TimeListDisplayType
 import tmg.flashback.core.repositories.CoreRepository
 import tmg.flashback.data.repositories.AppRepository
 import tmg.flashback.data.enums.NotificationRegistration
@@ -41,6 +42,7 @@ class SharedPreferenceRepository(context: Context) : SharedPrefManager(context),
     private val keyAppHints: String = "APP_HINTS"
     private val keyDefaultSeason: String = "DEFAULT_SEASON"
     private val keyReleaseNotesSeenVersion: String = "RELEASE_NOTES_SEEN_VERSION"
+    private val keyTimeDisplayListType: String = "TIME_DISPLAY_LIST_TYPE"
 
     private val keyNotificationRace: String = "NOTIFICATION_RACE"
     private val keyNotificationQualifying: String = "NOTIFICATION_QUALIFYING"
@@ -114,6 +116,10 @@ class SharedPreferenceRepository(context: Context) : SharedPrefManager(context),
             }
             save(keyDefaultSeason, valueToSave)
         }
+
+    override var displayListTypePref: TimeListDisplayType
+        get() = getInt(keyTimeDisplayListType).toEnum<TimeListDisplayType>() ?: TimeListDisplayType.LOCAL
+        set(value) = save(keyTimeDisplayListType, value.ordinal)
 
     //endregion
 

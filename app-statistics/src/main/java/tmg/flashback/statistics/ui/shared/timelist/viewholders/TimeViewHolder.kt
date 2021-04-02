@@ -4,16 +4,13 @@ import androidx.recyclerview.widget.RecyclerView
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
 import org.threeten.bp.format.DateTimeFormatter
-import tmg.flashback.core.model.UpNextScheduleTimestamp
+import tmg.flashback.core.model.TimeListDisplayType
 import tmg.flashback.data.utils.daysBetween
 import tmg.flashback.data.utils.hoursAndMins
 import tmg.flashback.data.utils.secondsBetween
 import tmg.flashback.statistics.R
-import tmg.flashback.statistics.databinding.ViewSeasonListUpNextBinding
 import tmg.flashback.statistics.databinding.ViewSeasonListUpNextTimelistBinding
-import tmg.flashback.statistics.ui.shared.timelist.TimeListDisplayType
 import tmg.flashback.statistics.ui.shared.timelist.TimeListItem
-import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.ordinalAbbreviation
 import tmg.utilities.extensions.views.context
 import tmg.utilities.extensions.views.getString
@@ -24,11 +21,11 @@ class TimeViewHolder(
 
     fun bind(item: TimeListItem) {
 
-        if (item.item.timestamp.isInPast) {
-            binding.container.alpha = 0.6f
+        if (!item.item.timestamp.isInPast || item.itemInList == item.totalList - 1) {
+            binding.container.alpha = 1.0f
         }
         else {
-            binding.container.alpha = 1.0f
+            binding.container.alpha = 0.6f
         }
 
         binding.title.text = item.item.label
@@ -60,13 +57,13 @@ class TimeViewHolder(
                     val ordinal = utc.dayOfMonth.ordinalAbbreviation
                     val date = utc.format(DateTimeFormatter.ofPattern("'${ordinal}' MMM"))
                     val time = utc.format(DateTimeFormatter.ofPattern("HH:mm"))
-                    binding.dates.text = "$time on $date"
+                    binding.dates.text = getString(R.string.dashboard_up_next_date_date_on_time, time, date)
                 }
                 TimeListDisplayType.LOCAL -> {
                     val ordinal = local.dayOfMonth.ordinalAbbreviation
                     val date = local.format(DateTimeFormatter.ofPattern("'${ordinal}' MMM"))
                     val time = local.format(DateTimeFormatter.ofPattern("HH:mm"))
-                    binding.dates.text = "$time on $date"
+                    binding.dates.text = getString(R.string.dashboard_up_next_date_date_on_time, time, date)
                 }
                 TimeListDisplayType.RELATIVE -> {
                     val localDate = local.toLocalDate()
@@ -86,12 +83,19 @@ class TimeViewHolder(
                             )
                         }
                     }
+                    else if (localDate < nowDate) {
+                        val days = daysBetween(localDate, nowDate)
+                        binding.dates.text = context.resources.getQuantityString(
+                            R.plurals.dashboard_up_next_datetime_started_days,
+                            days,
+                            days
+                        )
+                    }
                     else if (localTime >= nowTime) {
                         val (hours, minutes) = secondsBetween(nowTime, localTime).hoursAndMins
                         when {
                             hours > 12 -> {
-                                binding.dates.text =
-                                    getString(R.string.dashboard_up_next_datetime_hour, hours)
+                                binding.dates.text = getString(R.string.dashboard_up_next_datetime_hour, hours)
                             }
                             hours > 0 -> {
                                 binding.dates.text = getString(
@@ -108,8 +112,7 @@ class TimeViewHolder(
                                 )
                             }
                             else -> {
-                                binding.dates.text =
-                                    getString(R.string.dashboard_up_next_datetime_now)
+                                binding.dates.text = getString(R.string.dashboard_up_next_datetime_now)
                             }
                         }
                     }

@@ -30,7 +30,7 @@ internal class RemoteConfigUpNextTest: BaseTest() {
                     dates = listOf(
                         RemoteConfigUpNextItem(
                             type = "Race",
-                            d = "21-01-2020",
+                            d = "2020-01-21",
                             t = null
                         )
                     ),
@@ -71,7 +71,7 @@ internal class RemoteConfigUpNextTest: BaseTest() {
             dates = listOf(
                 RemoteConfigUpNextItem(
                     type = "Race",
-                    d = "21-01-2020",
+                    d = "2020-01-21",
                     t = null
                 )
             ),
@@ -91,7 +91,7 @@ internal class RemoteConfigUpNextTest: BaseTest() {
             dates = listOf(
                 RemoteConfigUpNextItem(
                     type = "Race",
-                    d = "21-01-2020",
+                    d = "2020-01-21",
                     t = null
                 )
             ),
@@ -111,7 +111,7 @@ internal class RemoteConfigUpNextTest: BaseTest() {
             dates = listOf(
                 RemoteConfigUpNextItem(
                     type = "Race",
-                    d = "21-01-2020",
+                    d = null,
                     t = null
                 )
             ),
