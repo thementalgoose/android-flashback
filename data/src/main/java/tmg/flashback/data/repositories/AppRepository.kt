@@ -44,6 +44,13 @@ interface AppRepository {
      */
     var defaultSeason: Int?
 
+    /**
+     * What should happen when the widget is clicked
+     * true = Open the app
+     * false = Refresh the widget
+     */
+    var widgetOpenApp: Boolean
+
     //region Notifications
 
     /**

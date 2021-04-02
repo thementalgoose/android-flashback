@@ -15,6 +15,8 @@ internal object Defaults {
     const val showListFavourited: Boolean = true
     const val showListAll: Boolean = true
 
+    const val widgetOpenApp: Boolean = true
+
     const val crashReporting: Boolean = true
     const val shakeToReport: Boolean = true
     const val analyticsOptIn: Boolean = true

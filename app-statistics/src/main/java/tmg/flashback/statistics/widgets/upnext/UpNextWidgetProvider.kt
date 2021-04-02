@@ -25,6 +25,7 @@ import tmg.flashback.core.controllers.CrashController
 import tmg.flashback.core.managers.BuildConfigManager
 import tmg.flashback.core.managers.NavigationManager
 import tmg.flashback.core.model.UpNextSchedule
+import tmg.flashback.data.repositories.AppRepository
 import tmg.flashback.data.utils.daysBetween
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.ui.util.getFlagResourceAlpha3
@@ -39,6 +40,8 @@ class UpNextWidgetProvider : AppWidgetProvider(), KoinComponent {
     private val upNextController: UpNextController by inject()
     private val buildConfigManager: BuildConfigManager by inject()
     private val navigationManager: NavigationManager by inject()
+
+    private val appRepository: AppRepository by inject()
 
     override fun onReceive(context: Context?, intent: Intent?) {
         super.onReceive(context, intent)
@@ -94,35 +97,64 @@ class UpNextWidgetProvider : AppWidgetProvider(), KoinComponent {
                 }
                 else {
                     remoteView.setViewVisibility(R.id.flag, View.GONE)
-
                 }
 
-//                when (val days = daysBetween(LocalDate.now(), nextEvent.timestamp.originalDate)) {
-//                    0 -> {
-//                        nextEvent.timestamp.ifDate {
-//                            remoteView.setTextViewText(R.id.days, context.getString(R.string.dashboard_up_next_date_today))
-//                            remoteView.setTextViewText(R.id.daystogo, "")
-//                            remoteView.setViewVisibility(R.id.daystogo, View.INVISIBLE)
-//                        }
-//                        nextEvent.timestamp.ifDateAndTime { utc, local ->
-//                            remoteView.setTextViewText(R.id.days, context.getString(R.string.dashboard_up_next_date_starts_at_today, local.toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm"))))
-//                            if (local.toLocalTime() == utc.toLocalTime()) {
-//                                remoteView.setTextViewText(R.id.daystogo, "")
-//                                remoteView.setViewVisibility(R.id.daystogo, View.INVISIBLE)
-//                            } else {
-//                                remoteView.setTextViewText(R.id.daystogo, context.getString(R.string.dashboard_up_next_date_localtime).fromHtml())
-//                                remoteView.setViewVisibility(R.id.daystogo, View.VISIBLE)
-//                            }
-//                        }
-//                    }
-//                    else -> {
-//                        remoteView.setTextViewText(R.id.days, days.toString())
-//                        remoteView.setViewVisibility(R.id.daystogo, View.VISIBLE)
-//                        remoteView.setTextViewText(R.id.daystogo, context.resources.getQuantityText(R.plurals.dashboard_up_next_suffix_days, days))
-//                    }
-//                }
+                val eventsToday = nextEvent.values
+                    .filter { it.timestamp.originalDate == LocalDate.now() }
+                    .sortedBy { it.timestamp.string() }
 
-                remoteView.setOnClickPendingIntent(R.id.container, getRefreshWidgetPendingIntent(context, widgetId, appWidgetIds))
+                val eventsInFuture = nextEvent.values
+                    .filter { it.timestamp.originalDate > LocalDate.now() }
+                    .sortedBy { it.timestamp.string() }
+
+                if (eventsToday.isNotEmpty()) {
+
+                    remoteView.setTextViewText(R.id.days, context.getString(R.string.dashboard_up_next_date_today))
+                    remoteView.setTextViewText(R.id.daystogo, eventsToday.joinToString(separator = ", ") {
+                        var result: String? = null
+                        it.timestamp.ifDateAndTime { utc, local ->
+                            result = local.toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm"))
+                        }
+                        if (result == null) {
+                            return@joinToString it.label
+                        }
+                        else {
+                            return@joinToString "${it.label} ($result)"
+                        }
+                    })
+                    remoteView.setViewVisibility(R.id.daystogo, View.VISIBLE)
+                }
+                if (eventsToday.isEmpty() && eventsInFuture.isNotEmpty()) {
+                    val next = nextEvent
+                        .values
+                        .sortedBy { it.timestamp.string() }
+                        .filter {
+                            it.timestamp.originalDate == eventsInFuture.first().timestamp.originalDate
+                        }
+                    val days = daysBetween(LocalDate.now(), eventsInFuture.first().timestamp.originalDate)
+
+                    remoteView.setTextViewText(R.id.days, context.resources.getQuantityString(R.plurals.dashboard_up_next_suffix_days, days, days))
+                    remoteView.setTextViewText(R.id.daystogo, next.joinToString(separator = ", ") {
+                        var result: String? = null
+                        it.timestamp.ifDateAndTime { utc, local ->
+                            result = local.toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm"))
+                        }
+                        if (result == null) {
+                            return@joinToString it.label
+                        }
+                        else {
+                            return@joinToString "${it.label} ($result)"
+                        }
+                    })
+                    remoteView.setViewVisibility(R.id.daystogo, View.VISIBLE)
+                }
+
+                if (appRepository.widgetOpenApp) {
+                    remoteView.setOnClickPendingIntent(R.id.container, getOpenAppPendingIntent(context))
+                }
+                else {
+                    remoteView.setOnClickPendingIntent(R.id.container, getRefreshWidgetPendingIntent(context, widgetId, appWidgetIds))
+                }
                 appWidgetManager?.updateAppWidget(widgetId, remoteView)
             } catch (e: RuntimeException) {
                 crashController.logError(e, "Widget Up Next provider couldn't be set up")
