@@ -41,7 +41,7 @@ class UpNextViewHolder(
         binding.title.text = event.title
         binding.subtitle.text = event.subtitle ?: ""
         binding.subtitle.show(event.subtitle != null)
-        binding.round.text = event.round.toString()
+        binding.round.text = getString(R.string.dashboard_up_next_round, event.round.toString())
         binding.round.show(event.round != 0)
 
         // Track graphic
