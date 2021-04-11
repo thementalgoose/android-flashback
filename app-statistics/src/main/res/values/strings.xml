@@ -61,8 +61,7 @@
     </plurals>
     <string name="dashboard_up_next_datetime_absolute"><![CDATA[<b>%s</b> at <b>%s</b> local time]]></string>
     <string name="dashboard_up_next_timefilter_utc">UTC</string>
-    <string name="dashboard_up_next_timefilter_local">Device</string>
-    <string name="dashboard_up_next_timefilter_delta">Relative</string>
+    <string name="dashboard_up_next_timefilter_delta">Now</string>
 
     <string name="dashboard_season_list_extra_title">Extras</string>
     <string name="dashboard_season_list_extra_rss_title">RSS feed</string>
