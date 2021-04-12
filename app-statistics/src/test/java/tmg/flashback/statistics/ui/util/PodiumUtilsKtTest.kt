@@ -1,4 +1,4 @@
-package tmg.flashback.statistics.ui.utils
+package tmg.flashback.statistics.ui.util
 
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.params.ParameterizedTest
