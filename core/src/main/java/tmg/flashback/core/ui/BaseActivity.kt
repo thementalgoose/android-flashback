@@ -27,7 +27,7 @@ abstract class BaseActivity : AppCompatActivity() {
     /**
      * Analytics data used in the recording of screen data
      */
-    open val screenAnalytics: ScreenAnalytics = ScreenAnalytics()
+    open val screenAnalytics: ScreenAnalytics? = ScreenAnalytics()
 
     /**
      * Should Slidr be initialised for the following activity
@@ -72,8 +72,12 @@ abstract class BaseActivity : AppCompatActivity() {
      * @param analytics Instance of the screen analytics we will be reporting. Defaults to class level value
      */
     open fun recordScreenViewed(
-        analytics: ScreenAnalytics = screenAnalytics
+        analytics: ScreenAnalytics? = screenAnalytics
     ) {
+        if (analytics == null) {
+            return
+        }
+
         analyticsController.viewScreen(
             screenName = analytics.screenName ?: this.javaClass.simpleName,
             clazz = this.javaClass,

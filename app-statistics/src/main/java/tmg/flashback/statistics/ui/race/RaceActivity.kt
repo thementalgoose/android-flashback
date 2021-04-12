@@ -17,6 +17,7 @@ import tmg.flashback.core.controllers.AppHintsController.Companion.appHintDelay
 import tmg.flashback.core.utils.ScreenAnalytics
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.ActivityRaceBinding
+import tmg.flashback.statistics.ui.circuit.CircuitInfoActivity
 import tmg.flashback.statistics.ui.overview.constructor.ConstructorActivity
 import tmg.flashback.statistics.ui.overview.driver.DriverActivity
 import tmg.flashback.statistics.ui.shared.pill.PillAdapter
@@ -152,7 +153,7 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
                 pillClicked = {
                     when (it) {
                         is PillItem.Wikipedia -> viewModel.inputs.clickWikipedia()
-                        is PillItem.Circuit -> startActivity(tmg.flashback.statistics.ui.circuit.CircuitInfoActivity.intent(this, circuitId, initialTrackName))
+                        is PillItem.Circuit -> startActivity(CircuitInfoActivity.intent(this, circuitId, initialTrackName))
                         else -> {} /* Do nothing */
                     }
                 }
@@ -182,7 +183,7 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
         binding.back.setOnClickListener { finish() }
 
         binding.trackLayout.setOnClickListener {
-            startActivity(tmg.flashback.statistics.ui.circuit.CircuitInfoActivity.intent(this, circuitId, initialTrackName))
+            startActivity(CircuitInfoActivity.intent(this, circuitId, initialTrackName))
         }
 
         // Observe
