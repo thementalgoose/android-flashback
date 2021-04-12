@@ -1,4 +1,4 @@
-package tmg.flashback.statistics.ui.admin.forceupgrade
+package tmg.flashback.ui.admin.forceupgrade
 
 import io.mockk.coVerify
 import io.mockk.every
