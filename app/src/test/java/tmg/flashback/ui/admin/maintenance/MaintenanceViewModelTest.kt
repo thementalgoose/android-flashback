@@ -1,16 +1,22 @@
-package tmg.flashback.statistics.ui.admin
+package tmg.flashback.ui.admin.maintenance
 
+import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.verify
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import tmg.flashback.core.controllers.ConfigurationController
 import tmg.flashback.core.managers.BuildConfigManager
+import tmg.flashback.core.model.ForceUpgrade
 import tmg.flashback.data.db.DataRepository
 import tmg.flashback.data.models.AppLockout
 import tmg.flashback.testutils.*
-import tmg.flashback.ui.admin.maintenance.MaintenanceViewModel
+import tmg.flashback.testutils.BaseTest
+import tmg.flashback.testutils.assertEventNotFired
+import tmg.flashback.testutils.test
 
 internal class MaintenanceViewModelTest : BaseTest() {
 
@@ -186,15 +192,20 @@ internal class MaintenanceViewModelTest : BaseTest() {
         }
     }
 
-
-
     @Test
     fun `clicking link opens link event`() = coroutineTest {
 
+        val expectedShowLink: Pair<String, String> = Pair(mockLinkText, mockLink)
         val expected = mockLink
 
         initSUT()
-        sut.inputs.clickLink(mockLink)
+        advanceUntilIdle()
+
+        sut.outputs.showLink.test {
+            assertValue(expectedShowLink)
+        }
+
+        sut.inputs.clickLink()
         advanceUntilIdle()
 
         sut.outputs.openLinkEvent.test {

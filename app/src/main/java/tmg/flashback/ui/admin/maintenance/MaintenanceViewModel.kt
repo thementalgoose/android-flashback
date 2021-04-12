@@ -24,7 +24,7 @@ import tmg.utilities.lifecycle.Event
 //region Inputs
 
 interface MaintenanceViewModelInputs {
-    fun clickLink(maintenanceLink: String)
+    fun clickLink()
 }
 
 //endregion
@@ -61,7 +61,7 @@ class MaintenanceViewModel(
         .map { Pair(it.title, it.message) }
         .asLiveData(viewModelScope.coroutineContext)
 
-    override val showLink: LiveData<Pair<String, String>> = appLockedData
+    override val showLink: LiveData<Pair<String, String>> = appLockedData // linkText, link
         .map { Pair(it?.linkText ?: "", it?.link ?: "") }
         .asLiveData(viewModelScope.coroutineContext)
 
@@ -81,8 +81,11 @@ class MaintenanceViewModel(
 
     //region Inputs
 
-    override fun clickLink(maintenanceLink: String) {
-        clickLinkEvent.offer(DataEvent(maintenanceLink))
+    override fun clickLink() {
+        val valueInShowLink = showLink.value
+        valueInShowLink?.second?.let {
+            clickLinkEvent.offer(DataEvent(it))
+        }
     }
 
     //endregion
