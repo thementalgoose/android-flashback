@@ -7,6 +7,7 @@ import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.core.ui.BaseActivity
+import tmg.flashback.core.utils.ScreenAnalytics
 import tmg.flashback.statistics.databinding.ActivityConstructorBinding
 import tmg.flashback.statistics.ui.overview.constructor.summary.ConstructorSummaryAdapter
 import tmg.utilities.extensions.observe
@@ -17,12 +18,12 @@ class ConstructorActivity: BaseActivity() {
     private lateinit var binding: ActivityConstructorBinding
     private val viewModel: ConstructorViewModel by viewModel()
 
-    override val analyticsScreenName: String
-        get() = "Constructor Overview"
-    override val analyticsCustomAttributes: Map<String, String>
-        get() = mapOf(
-                "extra_constructor" to constructorId
+    override val screenAnalytics get() = ScreenAnalytics(
+        screenName = "Constructor Overview",
+        attributes = mapOf(
+            "extra_constructor" to constructorId
         )
+    )
 
     private lateinit var constructorId: String
     private lateinit var constructorName: String

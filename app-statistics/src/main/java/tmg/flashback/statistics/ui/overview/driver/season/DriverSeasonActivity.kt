@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.core.ui.BaseActivity
+import tmg.flashback.core.utils.ScreenAnalytics
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.ActivityDriverSeasonBinding
 import tmg.utilities.extensions.loadFragment
@@ -15,13 +16,13 @@ class DriverSeasonActivity: BaseActivity() {
     private lateinit var binding: ActivityDriverSeasonBinding
     private val viewModel: DriverSeasonViewModel by viewModel()
 
-    override val analyticsScreenName: String
-        get() = "Driver Season Overview"
-    override val analyticsCustomAttributes: Map<String, String>
-        get() = mapOf(
-                "extra_driver_id" to driverId,
-                "extra_season" to "$season"
+    override val screenAnalytics get() = ScreenAnalytics(
+        screenName = "Driver Season Overview",
+        attributes = mapOf(
+            "extra_driver_id" to driverId,
+            "extra_season" to "$season"
         )
+    )
 
     private lateinit var driverId: String
     private lateinit var driverName: String

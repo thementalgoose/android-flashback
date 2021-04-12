@@ -5,6 +5,7 @@ import android.view.MenuItem
 import tmg.flashback.R
 import tmg.flashback.constants.Releases
 import tmg.flashback.core.ui.BaseActivity
+import tmg.flashback.core.utils.ScreenAnalytics
 import tmg.flashback.databinding.ActivityReleaseNotesBinding
 import tmg.utilities.extensions.fromHtml
 
@@ -12,8 +13,9 @@ class ReleaseActivity : BaseActivity() {
 
     private lateinit var binding: ActivityReleaseNotesBinding
 
-    override val analyticsScreenName: String
-        get() = "Release notes"
+    override val screenAnalytics = ScreenAnalytics(
+        screenName = "Release notes"
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -7,6 +7,7 @@ import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.core.ui.BaseActivity
+import tmg.flashback.core.utils.ScreenAnalytics
 import tmg.flashback.statistics.databinding.ActivityDriverBinding
 import tmg.flashback.statistics.ui.overview.driver.summary.DriverSummaryAdapter
 import tmg.flashback.statistics.ui.overview.driver.season.DriverSeasonActivity
@@ -18,12 +19,12 @@ class DriverActivity: BaseActivity() {
     private lateinit var binding: ActivityDriverBinding
     private val viewModel: DriverViewModel by viewModel()
 
-    override val analyticsScreenName: String
-        get() = "Driver Overview"
-    override val analyticsCustomAttributes: Map<String, String>
-        get() = mapOf(
-                "extra_driver_id" to driverId
+    override val screenAnalytics get() = ScreenAnalytics(
+        screenName = "Driver Overview",
+        attributes = mapOf(
+            "extra_driver_id" to driverId
         )
+    )
 
     private lateinit var driverId: String
     private lateinit var driverName: String

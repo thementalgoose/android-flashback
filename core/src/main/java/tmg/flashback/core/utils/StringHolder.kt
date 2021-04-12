@@ -3,7 +3,9 @@ package tmg.flashback.core.utils
 import android.content.Context
 import androidx.annotation.StringRes
 
-
+/**
+ * Wrapper around String resources to allow
+ */
 data class StringHolder(
         val msg: String
 ) {
