@@ -11,6 +11,7 @@ import tmg.flashback.statistics.controllers.SeasonController
 import tmg.flashback.core.enums.DisplayType
 import tmg.flashback.core.managers.NavigationManager
 import tmg.flashback.core.ui.BaseActivity
+import tmg.flashback.core.utils.ScreenAnalytics
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.ActivityDashboardBinding
 import tmg.flashback.statistics.ui.dashboard.list.ListFragment
@@ -24,7 +25,7 @@ class DashboardActivity: BaseActivity(), DashboardNavigationCallback {
     private lateinit var binding: ActivityDashboardBinding
     private val viewModel: DashboardViewModel by viewModel()
 
-    override val initialiseSlidr: Boolean = false
+    override val swipeDismissInitialise: Boolean = false
     override val themeType: DisplayType = DisplayType.DEFAULT
 
     private val featureController: FeatureController by inject()
@@ -32,12 +33,13 @@ class DashboardActivity: BaseActivity(), DashboardNavigationCallback {
     private val navigationManager: NavigationManager by inject()
 
     private var selectedSeason: Int? = seasonController.defaultSeason
-    override val analyticsScreenName: String
-        get() = "Dashboard"
-    override val analyticsCustomAttributes: Map<String, String>
-        get() = mapOf(
-                "extra_season" to "$selectedSeason"
+
+    override val screenAnalytics get() = ScreenAnalytics(
+        screenName = "Dashboard",
+        attributes = mapOf(
+            "extra_season" to "$selectedSeason"
         )
+    )
 
     private val seasonTag: String = "season"
     private val seasonFragment: SeasonFragment?
