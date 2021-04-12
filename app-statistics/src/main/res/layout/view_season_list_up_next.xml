@@ -134,7 +134,6 @@
         android:paddingTop="@dimen/paddingXSmall"
         android:paddingEnd="@dimen/paddingMedium"
         android:paddingBottom="@dimen/paddingXSmall"
-        android:text="@string/dashboard_up_next_timefilter_local"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/timeDelta"
         app:layout_constraintStart_toEndOf="@id/timeUTC"
