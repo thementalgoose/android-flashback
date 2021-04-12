@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.core.ui.BaseActivity
+import tmg.flashback.core.utils.ScreenAnalytics
 import tmg.flashback.databinding.ActivityLockoutBinding
 import tmg.flashback.ui.SplashActivity
 import tmg.utilities.extensions.fromHtml
@@ -19,9 +20,11 @@ class MaintenanceActivity: BaseActivity() {
     private lateinit var binding: ActivityLockoutBinding
     private val viewModel: MaintenanceViewModel by viewModel()
 
-    override val analyticsScreenName: String
-        get() = "App Lockout"
+    override val screenAnalytics = ScreenAnalytics(
+        screenName = "App Lockout"
+    )
 
+    // TODO: Remove this from the maintenance activity
     private var maintenanceLink: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {

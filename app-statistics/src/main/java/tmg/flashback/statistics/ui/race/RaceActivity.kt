@@ -14,6 +14,7 @@ import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.core.ui.BaseActivity
 import tmg.flashback.statistics.enums.TrackLayout
 import tmg.flashback.core.controllers.AppHintsController.Companion.appHintDelay
+import tmg.flashback.core.utils.ScreenAnalytics
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.ActivityRaceBinding
 import tmg.flashback.statistics.ui.overview.constructor.ConstructorActivity
@@ -34,13 +35,13 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
     private lateinit var binding: ActivityRaceBinding
     private val viewModel: RaceViewModel by inject()
 
-    override val analyticsScreenName: String
-        get() = "Race Results"
-    override val analyticsCustomAttributes: Map<String, String>
-        get() = mapOf(
-                "race_season" to "$season",
-                "race_round" to "$round"
+    override val screenAnalytics get() = ScreenAnalytics(
+        screenName = "Race Results",
+        attributes = mapOf(
+            "race_season" to "$season",
+            "race_round" to "$round"
         )
+    )
 
     private lateinit var raceAdapter: RaceAdapter
     private lateinit var linkAdapter: PillAdapter
