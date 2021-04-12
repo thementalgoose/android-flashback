@@ -33,5 +33,4 @@ class AnalyticsController(
             analyticsManager.logViewScreen(screenName, clazz, params)
         }
     }
-
 }

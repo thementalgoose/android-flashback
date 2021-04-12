@@ -5,6 +5,7 @@ import android.text.method.LinkMovementMethod
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.R
 import tmg.flashback.core.ui.BaseActivity
+import tmg.flashback.core.utils.ScreenAnalytics
 import tmg.flashback.databinding.ActivityPrivacyPolicyBinding
 import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.observeEvent
@@ -14,8 +15,9 @@ class PrivacyPolicyActivity: BaseActivity() {
     private lateinit var binding: ActivityPrivacyPolicyBinding
     private val viewModel: PrivacyPolicyViewModel by viewModel()
 
-    override val analyticsScreenName: String
-        get() = "Privacy policy"
+    override val screenAnalytics = ScreenAnalytics(
+        screenName = "Privacy policy"
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

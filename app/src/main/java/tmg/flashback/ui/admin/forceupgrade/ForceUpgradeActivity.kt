@@ -4,6 +4,7 @@ import android.os.Bundle
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.core.enums.DisplayType
 import tmg.flashback.core.ui.BaseActivity
+import tmg.flashback.core.utils.ScreenAnalytics
 import tmg.flashback.databinding.ActivityLockoutBinding
 import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.observe
@@ -17,8 +18,9 @@ class ForceUpgradeActivity: BaseActivity() {
     private val viewModel: ForceUpgradeViewModel by viewModel()
 
     override val themeType: DisplayType = DisplayType.DEFAULT
-    override val analyticsScreenName: String
-        get() = "Force upgrade"
+    override val screenAnalytics = ScreenAnalytics(
+        screenName = "Force upgrade"
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

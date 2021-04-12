@@ -10,6 +10,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import tmg.flashback.rss.R
 import tmg.flashback.core.ui.BaseActivity
+import tmg.flashback.core.utils.ScreenAnalytics
 import tmg.flashback.rss.databinding.ActivityRssSettingsBinding
 import tmg.flashback.rss.ui.settings.InitialScreen.CONFIGURE
 import tmg.flashback.rss.ui.settings.InitialScreen.SETTINGS
@@ -17,10 +18,11 @@ import tmg.utilities.extensions.toEnum
 
 class RSSSettingsActivity : BaseActivity(), NavController.OnDestinationChangedListener {
 
-    override val analyticsScreenName: String
-        get() = "RSS Settings"
-
     private lateinit var binding: ActivityRssSettingsBinding
+
+    override val screenAnalytics = ScreenAnalytics(
+        screenName = "RSS Settings"
+    )
 
     private var initialScreen: InitialScreen = SETTINGS
     private var navController: NavController? = null

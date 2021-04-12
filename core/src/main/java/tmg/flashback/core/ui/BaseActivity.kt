@@ -11,9 +11,13 @@ import tmg.flashback.core.controllers.AnalyticsController
 import tmg.flashback.core.enums.DisplayType
 import tmg.flashback.core.extensions.isLightMode
 import tmg.flashback.core.repositories.CoreRepository
-import java.lang.NullPointerException
+import tmg.flashback.core.utils.ScreenAnalytics
 
 abstract class BaseActivity : AppCompatActivity() {
+
+    private val coreRepository: CoreRepository by inject()
+    private val analyticsController: AnalyticsController by inject()
+    private var swipeDismissInterface: SlidrInterface? = null
 
     /**
      * Should we use the translucent variant of the theme or not
@@ -21,24 +25,18 @@ abstract class BaseActivity : AppCompatActivity() {
     open val themeType: DisplayType = DisplayType.TRANSLUCENT
 
     /**
-     * Custom attributes to be added to the screen view analytics
+     * Analytics data used in the recording of screen data
      */
-    open val analyticsCustomAttributes: Map<String, String> = emptyMap()
+    open val screenAnalytics: ScreenAnalytics = ScreenAnalytics()
 
     /**
-     * Custom screen name to be added to the screen view metric
+     * Should Slidr be initialised for the following activity
      */
-    open val analyticsScreenName: String = this.javaClass.simpleName
+    open val swipeDismissInitialise: Boolean = true
 
-    private val coreRepository: CoreRepository by inject()
-    private val analyticsController: AnalyticsController by inject()
-
-    protected var isLightTheme: Boolean = true
-
-    //region Slidr
-
-    private var swipeDismissInterface: SlidrInterface? = null
-    open val initialiseSlidr: Boolean = true
+    /**
+     * Override the swipe dismiss activity
+     */
     var swipeDismissLock: Boolean = false
         set(value) {
             field = value
@@ -48,14 +46,12 @@ abstract class BaseActivity : AppCompatActivity() {
             }
         }
 
-    //endregion
-
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(getThemeStyle())
 
         super.onCreate(savedInstanceState)
 
-        if (initialiseSlidr) {
+        if (swipeDismissInitialise) {
             swipeDismissInterface = Slidr.attach(this)
             overridePendingTransition(R.anim.activity_enter, R.anim.activity_exit)
         }
@@ -66,34 +62,34 @@ abstract class BaseActivity : AppCompatActivity() {
         recordScreenViewed()
     }
 
-    /**
-     * Method to be ran when you want to register that a new screen has been displayed in analytics
-     */
-    fun recordScreenViewed() {
-        val analyticsAttributes = try {
-            analyticsCustomAttributes
-        } catch (e: NullPointerException) {
-            emptyMap()
-        }
-        analyticsController.viewScreen(
-            screenName = analyticsScreenName,
-            clazz = this.javaClass,
-            params = analyticsAttributes
-        )
-    }
-
-    @StyleRes
-    private fun getThemeStyle(): Int {
-        isLightTheme = coreRepository.theme.isLightMode(this)
-
-        return when (isLightTheme) {
-            true -> themeType.lightTheme
-            false -> themeType.darkTheme
-        }
-    }
-
     override fun finish() {
         super.finish()
         overridePendingTransition(R.anim.activity_enter, R.anim.activity_exit)
+    }
+
+    /**
+     * Record that a screen has been viewed for analytics
+     * @param analytics Instance of the screen analytics we will be reporting. Defaults to class level value
+     */
+    open fun recordScreenViewed(
+        analytics: ScreenAnalytics = screenAnalytics
+    ) {
+        analyticsController.viewScreen(
+            screenName = analytics.screenName ?: this.javaClass.simpleName,
+            clazz = this.javaClass,
+            params = analytics.attributes
+        )
+    }
+
+    /**
+     * Get the current theme style dependent on the device preference
+     * @return style res
+     */
+    @StyleRes
+    private fun getThemeStyle(): Int {
+        return when (coreRepository.theme.isLightMode(this)) {
+            true -> themeType.lightTheme
+            false -> themeType.darkTheme
+        }
     }
 }

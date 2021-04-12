@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.core.ui.BaseActivity
+import tmg.flashback.core.utils.ScreenAnalytics
 import tmg.flashback.rss.R
 import tmg.flashback.rss.databinding.ActivityRssBinding
 import tmg.flashback.rss.prefs.RSSRepository
@@ -26,8 +27,9 @@ class RSSActivity: BaseActivity(), FragmentRequestBack {
 
     private val repository: RSSRepository by inject()
 
-    override val analyticsScreenName: String
-        get() = "RSS Feed"
+    override val screenAnalytics = ScreenAnalytics(
+        screenName = "RSS Feed"
+    )
 
     private lateinit var adapter: RSSAdapter
 

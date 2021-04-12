@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import tmg.flashback.core.ui.BaseActivity
+import tmg.flashback.core.utils.ScreenAnalytics
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.ActivityDriverComparisonBinding
 
@@ -11,15 +12,15 @@ class DriverComparisonActivity: BaseActivity() {
 
     private lateinit var binding: ActivityDriverComparisonBinding
 
-    override val analyticsScreenName: String
-        get() = "Driver Comparison"
-    override val analyticsCustomAttributes: Map<String, String>
-        get() = mapOf(
-                "extra_season" to "$season",
-                "extra_round" to "$round",
-                "extra_driver1" to driverId1,
-                "extra_driver2" to driverId2
+    override val screenAnalytics get() = ScreenAnalytics(
+        screenName = "Driver Comparison",
+        attributes = mapOf(
+            "extra_season" to "$season",
+            "extra_round" to "$round",
+            "extra_driver1" to driverId1,
+            "extra_driver2" to driverId2
         )
+    )
 
     private var season: Int = -1
     private var round: Int = -1
