@@ -26,7 +26,6 @@ import tmg.flashback.statistics.controllers.SeasonController
 import tmg.flashback.statistics.testutils.*
 import tmg.flashback.statistics.testutils.BaseTest
 import tmg.flashback.statistics.testutils.assertEventFired
-import tmg.flashback.statistics.testutils.assertEventNotFired
 import tmg.flashback.statistics.testutils.test
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
 
@@ -58,7 +57,6 @@ internal class SeasonViewModelTest: BaseTest() {
         sut = SeasonViewModel(
             mockDeviceController,
             mockAppearanceController,
-            mockFeatureController,
             mockHistoryRepository,
             mockSeasonOverviewRepository,
             mockNotificationController,
@@ -78,34 +76,6 @@ internal class SeasonViewModelTest: BaseTest() {
 
         sut.outputs.openMenu.test {
             assertEventFired()
-        }
-    }
-
-    @Test
-    fun `clickSearch fires open search event if remote config field enabled`() {
-
-        every { mockFeatureController.searchEnabled } returns true
-
-        initSUT()
-
-        sut.inputs.clickSearch()
-
-        sut.outputs.openSearch.test {
-            assertEventFired()
-        }
-    }
-
-    @Test
-    fun `clickSearch does nothing if remote config field disabled`() {
-
-        every { mockFeatureController.searchEnabled } returns false
-
-        initSUT()
-
-        sut.inputs.clickSearch()
-
-        sut.outputs.openSearch.test {
-            assertEventNotFired()
         }
     }
 

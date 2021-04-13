@@ -34,7 +34,7 @@ internal class LiveDataTestScope<T>(
     liveData: LiveData<T>
 ): Observer<T> {
 
-    private val listOfValues: MutableList<T> = mutableListOf()
+    internal val listOfValues: MutableList<T> = mutableListOf()
 
     init {
         liveData.observeForever(this)

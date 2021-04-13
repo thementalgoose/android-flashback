@@ -56,7 +56,6 @@ class ListFragment: BaseFragment<FragmentDashboardListBinding>() {
         super.onViewCreated(view, savedInstanceState)
 
         adapter = ListAdapter(
-                settingsClicked = viewModel.inputs::clickSettings,
                 featureToggled = viewModel.inputs::toggleHeader,
                 favouriteToggled = viewModel.inputs::toggleFavourite,
                 seasonClicked = viewModel.inputs::clickSeason,
@@ -65,6 +64,7 @@ class ListFragment: BaseFragment<FragmentDashboardListBinding>() {
                 buttonClicked = {
                      when (it) {
                          "rss" -> viewModel.inputs.clickRss()
+                         "settings" -> viewModel.inputs.clickSettings()
                      }
                 },
                 timeDisplayFormatClicked = viewModel.inputs::clickTimeDisplayType

@@ -10,7 +10,6 @@ import tmg.flashback.statistics.databinding.*
 import tmg.flashback.statistics.ui.dashboard.list.viewholders.*
 
 class ListAdapter(
-    val settingsClicked: () -> Unit,
     var featureToggled: (type: HeaderType) -> Unit,
     var favouriteToggled: (season: Int) -> Unit,
     var seasonClicked: (season: Int) -> Unit,
@@ -52,8 +51,7 @@ class ListAdapter(
                 ViewSeasonListHeaderBinding.inflate(layoutInflater, parent, false)
             )
             R.layout.view_season_list_hero -> HeroViewHolder(
-                ViewSeasonListHeroBinding.inflate(layoutInflater, parent, false),
-                settingsClicked
+                ViewSeasonListHeroBinding.inflate(layoutInflater, parent, false)
             )
             R.layout.view_season_list_up_next -> UpNextViewHolder(
                 ViewSeasonListUpNextBinding.inflate(layoutInflater, parent, false),
