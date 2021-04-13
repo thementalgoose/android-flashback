@@ -55,9 +55,6 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
         if (!featureController.rssEnabled) {
             binding.navigation.menu.removeItem(R.id.nav_rss)
         }
-//        if (remoteConfigRepository.search) {
-//            binding.searchButton.visible()
-//        }
         binding.navigation.setOnNavigationItemSelectedListener {
             return@setOnNavigationItemSelectedListener when (it.itemId) {
                 R.id.nav_rss -> {

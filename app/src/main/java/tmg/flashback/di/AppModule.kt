@@ -75,7 +75,7 @@ val appModule = module {
     viewModel { SplashViewModel(get(), get(), get()) }
     // Dashboard
     viewModel { DashboardViewModel(get(), get(), get(), get()) }
-    viewModel { SeasonViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
+    viewModel { SeasonViewModel(get(), get(), get(), get(), get(), get(), get()) }
     viewModel { ListViewModel(get(), get(), get()) }
     // Circuit
     viewModel { CircuitInfoViewModel(get(), get()) }

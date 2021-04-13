@@ -183,10 +183,8 @@ class ListViewModel(
             HeaderType.ALL -> {
                 selectionHeaderAll.postValue(to ?: (selectionHeaderAll.value != true))
             }
-            HeaderType.UP_NEXT -> { /* Do nothing */
-            }
-            HeaderType.LINKS -> { /* Do nothing */
-            }
+            HeaderType.UP_NEXT -> { /* Do nothing */ }
+            HeaderType.LINKS -> { /* Do nothing */ }
         }
     }
 

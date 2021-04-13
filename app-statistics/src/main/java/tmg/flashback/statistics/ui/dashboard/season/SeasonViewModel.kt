@@ -12,7 +12,6 @@ import tmg.flashback.statistics.constants.Formula1.constructorChampionshipStarts
 import tmg.flashback.core.ui.BaseViewModel
 import tmg.flashback.core.controllers.AppearanceController
 import tmg.flashback.core.controllers.DeviceController
-import tmg.flashback.core.controllers.FeatureController
 import tmg.flashback.core.managers.NetworkConnectivityManager
 import tmg.flashback.data.db.stats.HistoryRepository
 import tmg.flashback.data.db.stats.SeasonOverviewRepository
@@ -65,7 +64,6 @@ interface SeasonViewModelOutputs {
 class SeasonViewModel(
     private val deviceController: DeviceController,
     private val appearanceController: AppearanceController,
-    private val featureController: FeatureController,
     private val historyRepository: HistoryRepository,
     private val seasonOverviewRepository: SeasonOverviewRepository,
     private val notificationController: NotificationController,
