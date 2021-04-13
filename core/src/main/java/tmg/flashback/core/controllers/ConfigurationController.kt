@@ -99,12 +99,6 @@ class ConfigurationController(
      */
     val dataProvidedBy: String? get() = configurationRepository.dataProvidedBy
 
-    /**
-     * Enable the search functionality
-     *  Enables the right hand functionality on the home screen (currently earmarked for search)
-     */
-    val search: Boolean by lazy { configurationRepository.search }
-
     //endregion
 
     //region Variables - RSS
