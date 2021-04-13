@@ -32,7 +32,6 @@ import tmg.flashback.ui.admin.maintenance.MaintenanceViewModel
 import tmg.flashback.statistics.ui.circuit.CircuitInfoViewModel
 import tmg.flashback.statistics.ui.dashboard.DashboardViewModel
 import tmg.flashback.statistics.ui.dashboard.list.ListViewModel
-import tmg.flashback.statistics.ui.dashboard.search.SearchViewModel
 import tmg.flashback.statistics.ui.dashboard.season.SeasonViewModel
 import tmg.flashback.statistics.ui.overview.constructor.ConstructorViewModel
 import tmg.flashback.statistics.ui.overview.driver.DriverViewModel
@@ -76,9 +75,8 @@ val appModule = module {
     viewModel { SplashViewModel(get(), get(), get()) }
     // Dashboard
     viewModel { DashboardViewModel(get(), get(), get(), get()) }
-    viewModel { SeasonViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
+    viewModel { SeasonViewModel(get(), get(), get(), get(), get(), get(), get()) }
     viewModel { ListViewModel(get(), get(), get()) }
-    viewModel { SearchViewModel() }
     // Circuit
     viewModel { CircuitInfoViewModel(get(), get()) }
     // Race

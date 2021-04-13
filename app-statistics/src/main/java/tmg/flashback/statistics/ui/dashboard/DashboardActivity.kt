@@ -1,6 +1,7 @@
 package tmg.flashback.statistics.ui.dashboard
 
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import com.discord.panels.OverlappingPanelsLayout
 import com.discord.panels.OverlappingPanelsLayout.Panel.CENTER
 import com.discord.panels.OverlappingPanelsLayout.Panel.END
@@ -15,7 +16,6 @@ import tmg.flashback.core.utils.ScreenAnalytics
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.ActivityDashboardBinding
 import tmg.flashback.statistics.ui.dashboard.list.ListFragment
-import tmg.flashback.statistics.ui.dashboard.search.SearchFragment
 import tmg.flashback.statistics.ui.dashboard.season.SeasonFragment
 import tmg.utilities.extensions.loadFragment
 import tmg.utilities.extensions.observeEvent
@@ -47,9 +47,7 @@ class DashboardActivity: BaseActivity(), DashboardNavigationCallback {
     private val listTag: String = "list"
     private val listFragment: ListFragment?
         get() = supportFragmentManager.findFragmentByTag(listTag) as? ListFragment
-    private val searchTag: String = "search"
-    private val searchFragment: SearchFragment?
-        get() = supportFragmentManager.findFragmentByTag(searchTag) as? SearchFragment
+    private val rightPane: String = "rightPane"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,12 +56,10 @@ class DashboardActivity: BaseActivity(), DashboardNavigationCallback {
 
         loadFragment(SeasonFragment(), R.id.season, seasonTag)
         loadFragment(ListFragment(), R.id.list, listTag)
-        loadFragment(SearchFragment(), R.id.search, searchTag)
+        loadFragment(Fragment(), R.id.search, rightPane)
 
-        // Disable search functionality until toggled on
-        if (!featureController.searchEnabled) {
-            binding.panels.setEndPanelLockState(lockState = OverlappingPanelsLayout.LockState.CLOSE)
-        }
+        // Disable end panel
+        binding.panels.setEndPanelLockState(lockState = OverlappingPanelsLayout.LockState.CLOSE)
 
         observeEvent(viewModel.outputs.openAppLockout) {
             startActivity(navigationManager.getMaintenanceIntent(this))
@@ -92,10 +88,6 @@ class DashboardActivity: BaseActivity(), DashboardNavigationCallback {
         binding.panels.openStartPanel()
     }
 
-    override fun openSearch() {
-        binding.panels.openEndPanel()
-    }
-
     override fun seasonSelected(season: Int) {
         val seasonFragment = supportFragmentManager.findFragmentByTag("season") as? SeasonFragment
         seasonFragment?.let {
@@ -106,10 +98,6 @@ class DashboardActivity: BaseActivity(), DashboardNavigationCallback {
     }
 
     override fun closeSeasonList() {
-        binding.panels.closePanels()
-    }
-
-    override fun closeSearch() {
         binding.panels.closePanels()
     }
 

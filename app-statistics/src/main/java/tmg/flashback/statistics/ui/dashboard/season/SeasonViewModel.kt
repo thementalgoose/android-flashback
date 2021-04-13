@@ -12,7 +12,6 @@ import tmg.flashback.statistics.constants.Formula1.constructorChampionshipStarts
 import tmg.flashback.core.ui.BaseViewModel
 import tmg.flashback.core.controllers.AppearanceController
 import tmg.flashback.core.controllers.DeviceController
-import tmg.flashback.core.controllers.FeatureController
 import tmg.flashback.core.managers.NetworkConnectivityManager
 import tmg.flashback.data.db.stats.HistoryRepository
 import tmg.flashback.data.db.stats.SeasonOverviewRepository
@@ -34,7 +33,6 @@ import tmg.utilities.lifecycle.Event
 
 interface SeasonViewModelInputs {
     fun clickMenu()
-    fun clickSearch()
     fun clickItem(item: SeasonNavItem)
 
     fun refresh()
@@ -51,7 +49,6 @@ interface SeasonViewModelInputs {
 
 interface SeasonViewModelOutputs {
     val openMenu: LiveData<Event>
-    val openSearch: LiveData<Event>
 
     val openRace: LiveData<DataEvent<SeasonItem.Track>>
     val openDriver: LiveData<DataEvent<SeasonItem.Driver>>
@@ -67,7 +64,6 @@ interface SeasonViewModelOutputs {
 class SeasonViewModel(
     private val deviceController: DeviceController,
     private val appearanceController: AppearanceController,
-    private val featureController: FeatureController,
     private val historyRepository: HistoryRepository,
     private val seasonOverviewRepository: SeasonOverviewRepository,
     private val notificationController: NotificationController,
@@ -89,7 +85,6 @@ class SeasonViewModel(
 
     override val showLoading: MutableLiveData<Boolean> = MutableLiveData(true)
     override val openMenu: MutableLiveData<Event> = MutableLiveData()
-    override val openSearch: MutableLiveData<Event> = MutableLiveData()
 
     /**
      * Label to be shown at the top of the screen to indicate what year it is
@@ -214,12 +209,6 @@ class SeasonViewModel(
 
     override fun clickMenu() {
         openMenu.value = Event()
-    }
-
-    override fun clickSearch() {
-        if (featureController.searchEnabled) {
-            openSearch.value = Event()
-        }
     }
 
     override fun clickItem(item: SeasonNavItem) {

@@ -55,9 +55,6 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
         if (!featureController.rssEnabled) {
             binding.navigation.menu.removeItem(R.id.nav_rss)
         }
-//        if (remoteConfigRepository.search) {
-//            binding.searchButton.visible()
-//        }
         binding.navigation.setOnNavigationItemSelectedListener {
             return@setOnNavigationItemSelectedListener when (it.itemId) {
                 R.id.nav_rss -> {
@@ -83,10 +80,6 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
         binding.menuButton.setOnClickListener {
             viewModel.inputs.clickMenu()
         }
-        binding.searchButton.setOnClickListener {
-            viewModel.inputs.clickSearch()
-        }
-
 
         observeEvent(viewModel.outputs.openMenu) {
             dashboardNavigation?.openSeasonList()
@@ -94,10 +87,6 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
 
         observe(viewModel.outputs.label) {
             binding.season.text = getString(R.string.home_season_arrow, it.msg ?: currentSeasonYear.toString())
-        }
-
-        observeEvent(viewModel.outputs.openSearch) {
-            dashboardNavigation?.openSearch()
         }
 
         observe(viewModel.outputs.list) {
@@ -176,7 +165,6 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
 
     private fun showLoading() {
         binding.swipeContainer.isRefreshing = true
-        binding.searchButton.isEnabled = false
         binding.menuButton.isEnabled = false
         binding.navigation.isEnabled = false
         binding.dataList.alpha = 0.7f
@@ -184,7 +172,6 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
 
     private fun hideLoading() {
         binding.swipeContainer.isRefreshing = false
-        binding.searchButton.isEnabled = true
         binding.menuButton.isEnabled = true
         binding.navigation.isEnabled = true
         binding.dataList.alpha = 1.0f
