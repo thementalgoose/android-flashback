@@ -52,31 +52,6 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
         binding.dataList.layoutManager = LinearLayoutManager(context)
         binding.dataList.adapter = adapter
 
-        if (!featureController.rssEnabled) {
-            binding.navigation.menu.removeItem(R.id.nav_rss)
-        }
-        binding.navigation.setOnNavigationItemSelectedListener {
-            return@setOnNavigationItemSelectedListener when (it.itemId) {
-                R.id.nav_rss -> {
-                    context?.let { context -> startActivity(statisticsNavigationManager.getRSSIntent(context)) }
-                    false
-                }
-                R.id.nav_calendar -> {
-                    viewModel.inputs.clickItem(SeasonNavItem.CALENDAR)
-                    true
-                }
-                R.id.nav_drivers -> {
-                    viewModel.inputs.clickItem(SeasonNavItem.DRIVERS)
-                    true
-                }
-                R.id.nav_constructor -> {
-                    viewModel.inputs.clickItem(SeasonNavItem.CONSTRUCTORS)
-                    true
-                }
-                else -> false
-            }
-        }
-
         binding.menuButton.setOnClickListener {
             viewModel.inputs.clickMenu()
         }
@@ -140,8 +115,6 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
         }
 
         showLoading()
-
-        binding.navigation.selectedItemId = R.id.nav_calendar
     }
 
     //region Accessible
@@ -152,6 +125,25 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
      */
     fun selectSeason(season: Int) {
         viewModel.inputs.selectSeason(season)
+    }
+
+    /**
+     *
+     */
+    fun selectSchedule() {
+
+    }
+
+    fun selectDrivers() {
+
+    }
+
+    /**
+     * Publicaly accessible method for changing the display type for the list to be constructors
+     *  Called from DashboardActivity as a result of moving nav bar to activity for
+     */
+    fun selectConstructors() {
+
     }
 
     /**
@@ -166,14 +158,12 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
     private fun showLoading() {
         binding.swipeContainer.isRefreshing = true
         binding.menuButton.isEnabled = false
-        binding.navigation.isEnabled = false
         binding.dataList.alpha = 0.7f
     }
 
     private fun hideLoading() {
         binding.swipeContainer.isRefreshing = false
         binding.menuButton.isEnabled = true
-        binding.navigation.isEnabled = true
         binding.dataList.alpha = 1.0f
     }
 }

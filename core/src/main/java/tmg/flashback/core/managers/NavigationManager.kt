@@ -2,7 +2,7 @@ package tmg.flashback.core.managers
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentActivity
 
 /**
  * Delegate manager to be able access device settings screens from parts
@@ -23,5 +23,5 @@ interface NavigationManager {
     fun getMaintenanceIntent(context: Context): Intent
 
     // When there is pending release notes, launch the release notes
-    fun openContextualReleaseNotes(activity: AppCompatActivity)
+    fun openContextualReleaseNotes(activity: FragmentActivity)
 }
