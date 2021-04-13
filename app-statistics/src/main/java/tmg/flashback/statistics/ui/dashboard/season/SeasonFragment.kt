@@ -27,9 +27,6 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
     private lateinit var adapter: SeasonAdapter
     private var dashboardNavigation: DashboardNavigationCallback? = null
 
-    private val featureController: FeatureController by inject()
-    private val statisticsNavigationManager: StatisticsExternalNavigationManager by inject()
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is DashboardNavigationCallback) {
