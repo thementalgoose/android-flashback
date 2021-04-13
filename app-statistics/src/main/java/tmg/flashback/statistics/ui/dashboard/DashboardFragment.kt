@@ -1,12 +1,14 @@
 package tmg.flashback.statistics.ui.dashboard
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.discord.panels.OverlappingPanelsLayout
+import com.discord.panels.PanelState
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.core.managers.NavigationManager
@@ -15,10 +17,12 @@ import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.FragmentDashboardBinding
 import tmg.flashback.statistics.ui.dashboard.list.ListFragment
 import tmg.flashback.statistics.ui.dashboard.season.SeasonFragment
-import tmg.utilities.extensions.loadFragment
 import tmg.utilities.extensions.observeEvent
+import tmg.utilities.extensions.views.hide
+import tmg.utilities.extensions.views.show
 
-class DashboardFragment: BaseFragment<FragmentDashboardBinding>() {
+class DashboardFragment: BaseFragment<FragmentDashboardBinding>(),
+    OverlappingPanelsLayout.PanelStateListener {
 
     private val viewModel: DashboardViewModel by viewModel()
 
@@ -42,6 +46,7 @@ class DashboardFragment: BaseFragment<FragmentDashboardBinding>() {
         loadFragment(Fragment(), R.id.other, "rightPane")
 
         binding.panels.setEndPanelLockState(lockState = OverlappingPanelsLayout.LockState.CLOSE)
+        binding.panels.registerStartPanelStateListeners(this)
 
         binding.navigation.setOnNavigationItemSelectedListener {
             return@setOnNavigationItemSelectedListener when (it.itemId) {
@@ -72,4 +77,15 @@ class DashboardFragment: BaseFragment<FragmentDashboardBinding>() {
         }
         transaction.commit()
     }
+
+    //region OverlappingPanelsLayout.PanelStateListener
+
+    override fun onPanelStateChange(panelState: PanelState) {
+        when (panelState) {
+            PanelState.Closed -> binding.navigation.show(true)
+            else -> binding.navigation.hide()
+        }
+    }
+
+    //endregion
 }
