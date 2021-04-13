@@ -48,5 +48,5 @@ enum class HeaderType(
     FAVOURITED(R.string.home_season_header_favourited),
     ALL(R.string.home_season_header_All),
     UP_NEXT(R.string.dashboard_up_next_title),
-    EXTRA(R.string.dashboard_season_list_extra_title)
+    LINKS(R.string.dashboard_season_list_extra_title)
 }

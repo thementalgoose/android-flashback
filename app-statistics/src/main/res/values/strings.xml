@@ -63,8 +63,9 @@
     <string name="dashboard_up_next_timefilter_utc">UTC</string>
     <string name="dashboard_up_next_timefilter_delta">Now</string>
 
-    <string name="dashboard_season_list_extra_title">Extras</string>
+    <string name="dashboard_season_list_extra_title">Links</string>
     <string name="dashboard_season_list_extra_rss_title">RSS feed</string>
+    <string name="dashboard_season_list_extra_settings_title">Settings</string>
     <string name="dashboard_season_list_default_banner_automatic">No default season set</string>
     <string name="dashboard_season_list_default_banner_user">Default season set to %d</string>
     <string name="dashboard_season_list_default_banner_revert">Undo</string>
