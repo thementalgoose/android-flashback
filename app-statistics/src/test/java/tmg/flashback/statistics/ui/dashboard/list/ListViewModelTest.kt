@@ -3,14 +3,13 @@ package tmg.flashback.statistics.ui.dashboard.list
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import org.junit.jupiter.api.Assertions.assertFalse
-import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.Year
 import tmg.flashback.core.controllers.FeatureController
 import tmg.flashback.core.model.TimeListDisplayType
 import tmg.flashback.core.model.UpNextSchedule
+import tmg.flashback.statistics.R
 import tmg.flashback.statistics.controllers.SeasonController
 import tmg.flashback.statistics.controllers.UpNextController
 import tmg.flashback.statistics.testutils.*
@@ -119,22 +118,6 @@ internal class ListViewModelTest: BaseTest() {
 
     //endregion
 
-    //region Navigation
-
-    @Test
-    fun `settings inside hero fires open settings event`() {
-
-        initSUT()
-
-        sut.inputs.clickSettings()
-
-        sut.outputs.openSettings.test {
-            assertEventFired()
-        }
-    }
-
-    //endregion
-
     //region Up Next section
 
     @Test
@@ -179,27 +162,51 @@ internal class ListViewModelTest: BaseTest() {
 
     //endregion
 
-    //region Extras section
+    //region Links section
 
     @Test
-    fun `extras section is displayed when rss feature is enabled`() {
+    fun `links section is displayed when rss feature is enabled`() {
 
         every { mockFeatureController.rssEnabled } returns true
         initSUT()
 
         sut.outputs.list.test {
-            assertListMatchesItem { it is ListItem.Header && it.type == HeaderType.EXTRA }
+            assertListMatchesItem { it is ListItem.Button && it.itemId == "rss" }
         }
     }
 
     @Test
-    fun `extras section is hidden when rss feature is not enabled`() {
+    fun `links section is hidden when rss feature is not enabled`() {
 
         every { mockFeatureController.rssEnabled } returns false
         initSUT()
 
         sut.outputs.list.test {
-            assertListDoesNotMatchItem { it is ListItem.Header && it.type == HeaderType.EXTRA }
+            assertListDoesNotMatchItem { it is ListItem.Button && it.itemId == "rss" }
+        }
+    }
+
+    @Test
+    fun `rss inside links fires open rss event`() {
+
+        initSUT()
+
+        sut.inputs.clickRss()
+
+        sut.outputs.openRss.test {
+            assertEventFired()
+        }
+    }
+
+    @Test
+    fun `settings inside links fires open settings event`() {
+
+        initSUT()
+
+        sut.inputs.clickSettings()
+
+        sut.outputs.openSettings.test {
+            assertEventFired()
         }
     }
 
@@ -213,8 +220,10 @@ internal class ListViewModelTest: BaseTest() {
 
         initSUT()
 
-        assertFalse(sut.headerSectionFavourited)
-        assertFalse(sut.headerSectionAll)
+        sut.outputs.list.test {
+            assertListMatchesItem { it is ListItem.Header && it.type == HeaderType.ALL && it.expanded == false }
+            assertListMatchesItem { it is ListItem.Header && it.type == HeaderType.FAVOURITED && it.expanded == false }
+        }
     }
 
     @Test
@@ -225,8 +234,10 @@ internal class ListViewModelTest: BaseTest() {
 
         initSUT()
 
-        assertTrue(sut.headerSectionFavourited)
-        assertTrue(sut.headerSectionAll)
+        sut.outputs.list.test {
+            assertListMatchesItem { it is ListItem.Header && it.type == HeaderType.ALL && it.expanded == true }
+            assertListMatchesItem { it is ListItem.Header && it.type == HeaderType.FAVOURITED && it.expanded == true }
+        }
     }
 
     @Test
@@ -304,54 +315,53 @@ internal class ListViewModelTest: BaseTest() {
     //region Toggle favourites
 
     @Test
-    fun `toggling a favourite season that exists removed it from favourites shared prefs`() {
-
+    fun `toggling a favourite season that is already favourited removes it`() {
         val favourites = mutableSetOf(2020, 2018)
-
         every { mockSeasonController.favouriteSeasons } returns favourites
+        every { mockSeasonController.isFavourite(2018) } returns true
 
         initSUT()
 
-        sut.toggleFavourite(2020)
+        sut.inputs.toggleFavourite(2018)
 
         verify {
-            mockSeasonController.removeFavourite(2020)
+            mockSeasonController.removeFavourite(2018)
         }
     }
 
     @Test
-    fun `toggling a favourite season that does not exists adds it from favourites shared prefs`() {
-
-        val favourites = mutableSetOf(2020, 2018)
+    fun `toggling a favourite season that is not favourited yet adds it to the controller`() {
+        val favourites = mutableSetOf(2020)
         every { mockSeasonController.favouriteSeasons } returns favourites
+        every { mockSeasonController.isFavourite(2018) } returns false
 
         initSUT()
 
-        sut.toggleFavourite(2019)
+        sut.inputs.toggleFavourite(2018)
 
         verify {
-            mockSeasonController.addFavourite(2019)
+            mockSeasonController.addFavourite(2018)
         }
     }
 
     @Test
-    fun `toggling favourite updates list to contain new favourite`() {
-
-        val favourites = setOf(2017, 2012, 2010)
-
+    fun `toggling a favourite calls refresh`() {
+        val favourites = mutableSetOf(2020)
         every { mockSeasonController.favouriteSeasons } returns favourites
+        every { mockSeasonController.isFavourite(2018) } returns false
 
         initSUT()
 
         val observer = sut.outputs.list.testObserve()
-
-        observer.assertValue(expectedList(favourites))
-
-        sut.inputs.toggleFavourite(2017)
-        observer.assertValue(expectedList(setOf(2012, 2010)))
-
+        observer.assertListMatchesItem { it is ListItem.Season && it.season == 2018 && !it.isFavourited }
+        // Mock the favourite seasons update
+        every { mockSeasonController.favouriteSeasons } returns mutableSetOf(2020, 2018)
         sut.inputs.toggleFavourite(2018)
-        observer.assertValue(expectedList(setOf(2012, 2010, 2018)))
+        verify {
+            mockSeasonController.addFavourite(2018)
+        }
+
+        observer.assertListMatchesItem { it is ListItem.Season && it.season == 2018 && it.isFavourited }
     }
 
     //endregion
@@ -377,6 +387,9 @@ internal class ListViewModelTest: BaseTest() {
     private fun expectedList(favourites: Set<Int> = emptySet(), showFavourites: Boolean = true, showAll: Boolean = true): List<ListItem> {
         val expected = mutableListOf<ListItem>()
         expected.add(ListItem.Hero)
+        expected.add(ListItem.Divider)
+        expected.add(headerLinks)
+        expected.add(buttonSettings)
         expected.add(ListItem.Divider)
         if (showFavourites) {
             expected.add(headerFavouriteOpen)
@@ -405,13 +418,17 @@ internal class ListViewModelTest: BaseTest() {
         ListItem.Season(year, favouriteItems.contains(year), HeaderType.ALL, year == 2018, year == 2018)
     }.reversed()
 
+    private val buttonSettings = ListItem.Button("settings", R.string.dashboard_season_list_extra_settings_title, R.drawable.nav_settings)
+
     //endregion
 
     //region Mock Data - Headers
 
+    private val headerLinks: ListItem.Header =
+        ListItem.Header(HeaderType.LINKS, null)
     private val headerFavouriteOpen: ListItem.Header = ListItem.Header(HeaderType.FAVOURITED, true)
     private val headerFavouriteClose: ListItem.Header =
-            ListItem.Header(HeaderType.FAVOURITED, false)
+        ListItem.Header(HeaderType.FAVOURITED, false)
     private val headerAllOpen: ListItem.Header = ListItem.Header(HeaderType.ALL, true)
     private val headerAllClose: ListItem.Header = ListItem.Header(HeaderType.ALL, false)
 

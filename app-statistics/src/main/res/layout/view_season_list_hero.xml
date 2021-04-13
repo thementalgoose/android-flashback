@@ -8,30 +8,15 @@
     <TextView
         android:id="@+id/hero"
         style="@style/Text.Hero"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:paddingStart="@dimen/paddingMedium"
         android:paddingTop="@dimen/paddingSmall"
         android:paddingEnd="@dimen/paddingSmall"
         android:paddingBottom="@dimen/paddingNSmall"
         android:text="@string/app_name"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageButton
-        android:id="@+id/settingsButton"
-        android:layout_width="@dimen/toolbarSettingsIcon"
-        android:layout_height="@dimen/toolbarSettingsIcon"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="10dp"
-        android:background="@drawable/ripple_rounded"
-        android:contentDescription="@string/settings_title"
-        android:src="@drawable/nav_settings"
-        android:tint="?attr/f1TextPrimary"
-        app:layout_constraintBottom_toBottomOf="@id/hero"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
