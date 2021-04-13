@@ -26,7 +26,6 @@ import tmg.flashback.statistics.controllers.SeasonController
 import tmg.flashback.statistics.testutils.*
 import tmg.flashback.statistics.testutils.BaseTest
 import tmg.flashback.statistics.testutils.assertEventFired
-import tmg.flashback.statistics.testutils.assertEventNotFired
 import tmg.flashback.statistics.testutils.test
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
 
@@ -58,7 +57,6 @@ internal class SeasonViewModelTest: BaseTest() {
         sut = SeasonViewModel(
             mockDeviceController,
             mockAppearanceController,
-            mockFeatureController,
             mockHistoryRepository,
             mockSeasonOverviewRepository,
             mockNotificationController,

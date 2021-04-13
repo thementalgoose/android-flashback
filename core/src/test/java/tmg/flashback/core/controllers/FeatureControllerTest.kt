@@ -35,26 +35,4 @@ internal class FeatureControllerTest {
     }
 
     //endregion
-
-    //region Search
-
-    // TODO: Update this test when search functionality is enabled
-    @Test
-    fun `search enabled`() {
-        every { mockConfigurationController.search } returns true
-        initSUT()
-        assertFalse(sut.searchEnabled)
-//        verify { mockRemoteConfigRepository.search }
-    }
-
-    // TODO: Update this test when search functionality is enabled
-    @Test
-    fun `search disabled`() {
-        every { mockConfigurationController.search } returns false
-        initSUT()
-        assertFalse(sut.searchEnabled)
-//        verify { mockRemoteConfigRepository.search }
-    }
-
-    //endregion
 }
