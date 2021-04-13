@@ -78,9 +78,6 @@ class FirebaseRemoteConfigManager(
             }
         }
 
-    override val search: Boolean
-        get() = remoteConfig.getBoolean(keySearch)
-
     override val supportedSeasons: Set<Int>
         get() = remoteConfig.getString(keySupportedSeasons).toJson<RemoteConfigAllSeasons>()?.convert() ?: emptySet()
 

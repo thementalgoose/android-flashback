@@ -37,33 +37,18 @@
                     android:layout_height="wrap_content"
                     android:layout_alignTop="@id/menuButton"
                     android:layout_alignBottom="@id/menuButton"
+                    android:layout_alignParentEnd="true"
                     android:layout_marginStart="@dimen/paddingMedium"
                     android:layout_marginEnd="@dimen/paddingMedium"
-                    android:layout_toStartOf="@id/searchButton"
                     android:layout_toEndOf="@id/menuButton"
                     android:drawablePadding="@dimen/paddingNSmall"
                     android:ellipsize="end"
                     android:fitsSystemWindows="true"
-                    android:gravity="center"
+                    android:gravity="start|center"
                     android:maxLines="1"
                     android:paddingStart="@dimen/paddingMedium"
                     android:paddingEnd="@dimen/paddingMedium"
                     tools:text="2020" />
-
-                <ImageButton
-                    android:id="@+id/searchButton"
-                    android:layout_width="@dimen/toolbarSettingsIcon"
-                    android:layout_height="@dimen/toolbarSettingsIcon"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginEnd="@dimen/paddingNSmall"
-                    android:background="@drawable/ripple_rounded"
-                    android:contentDescription="@string/nav_search"
-                    android:src="@drawable/nav_search"
-                    android:tint="?attr/f1TextPrimary"
-                    android:visibility="invisible"
-                    tools:visibility="visible" />
 
                 <ImageButton
                     android:id="@+id/menuButton"
@@ -109,11 +94,11 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:background="?attr/f1BackgroundNavPrimary"
+        android:layoutMode="opticalBounds"
         app:itemBackground="?attr/f1BackgroundNavPrimary"
         app:itemIconTint="@drawable/selector_bottom_nav_color"
         app:itemTextColor="@drawable/selector_bottom_nav_color"
         app:labelVisibilityMode="labeled"
-        android:layoutMode="opticalBounds"
         app:menu="@menu/menu_home" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

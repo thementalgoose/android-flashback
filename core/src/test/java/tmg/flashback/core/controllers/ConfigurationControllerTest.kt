@@ -201,19 +201,6 @@ internal class ConfigurationControllerTest {
         assertEquals(sut.dataProvidedBy, input2)
     }
 
-    @Test
-    fun `search returns cached value`() {
-
-        val input1 = true
-        val input2 = false
-
-        initSUT()
-        every { mockConfigurationRepository.search } returns input1
-        assertEquals(sut.search, input1)
-        every { mockConfigurationRepository.search } returns input2
-        assertEquals(sut.search, input1)
-    }
-
     //endregion
 
     //region Variables - RSS

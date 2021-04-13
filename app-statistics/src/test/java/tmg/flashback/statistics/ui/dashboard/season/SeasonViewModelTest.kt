@@ -82,34 +82,6 @@ internal class SeasonViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `clickSearch fires open search event if remote config field enabled`() {
-
-        every { mockFeatureController.searchEnabled } returns true
-
-        initSUT()
-
-        sut.inputs.clickSearch()
-
-        sut.outputs.openSearch.test {
-            assertEventFired()
-        }
-    }
-
-    @Test
-    fun `clickSearch does nothing if remote config field disabled`() {
-
-        every { mockFeatureController.searchEnabled } returns false
-
-        initSUT()
-
-        sut.inputs.clickSearch()
-
-        sut.outputs.openSearch.test {
-            assertEventNotFired()
-        }
-    }
-
-    @Test
     fun `clickTrack fires show race event`() {
 
         val mock: SeasonItem.Track = mockk(relaxed = true)
