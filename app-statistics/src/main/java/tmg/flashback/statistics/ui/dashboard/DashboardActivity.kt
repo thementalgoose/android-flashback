@@ -58,10 +58,8 @@ class DashboardActivity: BaseActivity(), DashboardNavigationCallback {
         loadFragment(ListFragment(), R.id.list, listTag)
         loadFragment(Fragment(), R.id.search, rightPane)
 
-        // Disable search functionality until toggled on
-        if (!featureController.searchEnabled) {
-            binding.panels.setEndPanelLockState(lockState = OverlappingPanelsLayout.LockState.CLOSE)
-        }
+        // Disable end panel
+        binding.panels.setEndPanelLockState(lockState = OverlappingPanelsLayout.LockState.CLOSE)
 
         observeEvent(viewModel.outputs.openAppLockout) {
             startActivity(navigationManager.getMaintenanceIntent(this))
