@@ -184,10 +184,6 @@ task generateRemoteConfigDefaults {
                 value('Data provided by Ergast API')
             }
             entry {
-                key('search')
-                value('false')
-            }
-            entry {
                 key('supported_seasons')
                 value(supportedSeasons)
             }

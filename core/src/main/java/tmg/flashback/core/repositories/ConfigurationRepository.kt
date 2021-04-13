@@ -41,11 +41,6 @@ interface ConfigurationRepository {
      */
     val dataProvidedBy: String?
 
-    /**
-     * Enable the search functionality
-     */
-    val search: Boolean
-
     //region RSS
 
     /**
