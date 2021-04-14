@@ -2,12 +2,12 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:clickable="true"
     android:focusable="true"
     android:foreground="?attr/selectableItemBackground"
-    android:layout_height="wrap_content"
     android:paddingStart="@dimen/paddingMedium"
     android:paddingTop="@dimen/paddingSmall"
     android:paddingEnd="@dimen/paddingMedium"
@@ -33,8 +33,8 @@
     <tmg.flashback.core.ui.views.PassThroughRecyclerView
         android:id="@+id/driverList"
         android:layout_width="0dp"
-        android:clickable="false"
         android:layout_height="wrap_content"
+        android:clickable="false"
         android:overScrollMode="never"
         app:layout_constraintEnd_toStartOf="@id/guideline"
         app:layout_constraintStart_toStartOf="parent"
@@ -60,12 +60,12 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:minHeight="30dp"
-        app:lpb_sliverWidth="1dp"
         app:layout_constraintBottom_toBottomOf="@id/penalty"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/guideline"
         app:layout_constraintTop_toTopOf="parent"
         app:lpb_backgroundColour="?attr/f1BackgroundPrimary"
-        app:lpb_radius="@dimen/radiusSmall" />
+        app:lpb_radius="@dimen/radiusSmall"
+        app:lpb_sliverWidth="1dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

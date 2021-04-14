@@ -28,7 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:paddingStart="@dimen/paddingSmall"
+        android:paddingStart="@dimen/paddingMedium"
         android:paddingTop="@dimen/paddingXSmall"
         android:paddingEnd="@dimen/paddingMedium"
         android:paddingBottom="@dimen/paddingXSmall"
