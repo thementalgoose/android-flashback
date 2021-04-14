@@ -31,7 +31,6 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        binding.swipeContainer.isEnabled = false
         adapter = SeasonAdapter(
             trackClicked = viewModel.inputs::clickTrack,
             driverClicked = viewModel.inputs::clickDriver,
