@@ -30,13 +30,16 @@
             android:id="@+id/menu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="@dimen/paddingSmall"
             android:layout_marginStart="@dimen/paddingSmall"
+            android:clickable="true"
             android:contentDescription="@string/ab_dashboard_menu"
-            app:srcCompat="@drawable/ic_menu"
+            android:focusable="true"
+            android:foreground="@drawable/rounded_ripple"
+            android:padding="@dimen/paddingSmall"
             app:layout_constraintBottom_toBottomOf="@id/toolbarGuideline"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_menu"
             app:tint="?attr/f1TextPrimary" />
 
         <TextView

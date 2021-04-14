@@ -10,7 +10,7 @@ class PillAdapter(
         private val pillClicked: (PillItem) -> Unit
 ): RecyclerView.Adapter<PillViewHolder>() {
 
-    var list: MutableList<PillItem> = mutableListOf()
+    var list: List<PillItem> = mutableListOf()
         set(value) {
             field = value
             notifyDataSetChanged()
