@@ -18,11 +18,9 @@ import tmg.flashback.statistics.databinding.FragmentDashboardBinding
 import tmg.flashback.statistics.ui.dashboard.list.ListFragment
 import tmg.flashback.statistics.ui.dashboard.season.SeasonFragment
 import tmg.utilities.extensions.observeEvent
-import tmg.utilities.extensions.views.hide
-import tmg.utilities.extensions.views.show
 
 class DashboardFragment: BaseFragment<FragmentDashboardBinding>(),
-    OverlappingPanelsLayout.PanelStateListener {
+    OverlappingPanelsLayout.PanelStateListener, DashboardNavigationCallback {
 
     private val viewModel: DashboardViewModel by viewModel()
 
@@ -50,6 +48,18 @@ class DashboardFragment: BaseFragment<FragmentDashboardBinding>(),
 
         binding.navigation.setOnNavigationItemSelectedListener {
             return@setOnNavigationItemSelectedListener when (it.itemId) {
+                R.id.nav_calendar -> {
+                    seasonFragment?.selectSchedule()
+                    true
+                }
+                R.id.nav_drivers -> {
+                    seasonFragment?.selectDrivers()
+                    true
+                }
+                R.id.nav_constructor -> {
+                    seasonFragment?.selectConstructors()
+                    true
+                }
                 else -> false
             }
         }
@@ -81,10 +91,34 @@ class DashboardFragment: BaseFragment<FragmentDashboardBinding>(),
     //region OverlappingPanelsLayout.PanelStateListener
 
     override fun onPanelStateChange(panelState: PanelState) {
+        Log.i("Flashback", "Panel state change $panelState")
         when (panelState) {
-            PanelState.Closed -> binding.navigation.show(true)
-            else -> binding.navigation.hide()
+            PanelState.Opened, PanelState.Opening -> binding.navigation.animate()
+                .translationY(binding.navigation.height.toFloat())
+                .setDuration(250L)
+                .start()
+
+            else -> binding.navigation.animate()
+                .translationY(0.0f)
+                .setDuration(250L)
+                .start()
         }
+    }
+
+    //endregion
+
+    //region DashboardNavigationCallback
+
+    override fun openSeasonList() {
+        binding.panels.openStartPanel()
+    }
+
+    override fun seasonSelected(season: Int) {
+        seasonFragment?.selectSeason(season)
+    }
+
+    override fun closeSeasonList() {
+        binding.panels.closePanels()
     }
 
     //endregion

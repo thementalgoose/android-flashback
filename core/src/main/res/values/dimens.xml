@@ -37,6 +37,7 @@
     <dimen name="toolbarSettingsIcon">36dp</dimen>
     <dimen name="toolbarIconSize">36dp</dimen>
     <dimen name="toolbarHeight">54dp</dimen>
+    <dimen name="toolbarExpandedSpacer">16dp</dimen>
 
     <!--===============================================================-->
 </resources>

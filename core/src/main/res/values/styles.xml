@@ -10,6 +10,14 @@
         <item name="android:textSize">@dimen/textSizeXLarge</item>
         <item name="android:textStyle">bold</item>
     </style>
+
+    <style name="Text.Toolbar.Expanded" parent="Text.Toolbar">
+        <item name="android:textSize">32sp</item>
+    </style>
+
+    <style name="Text.Toolbar.Collapsed" parent="Text.Toolbar">
+        <item name="android:textSize">@dimen/textSizeLarge</item>
+    </style>
     
     <!-- Settings -->
 

@@ -73,7 +73,7 @@ class SeasonViewModel(
 
     private val showBannerAtTop: Boolean = showBannerAtTop()
     private val currentTab: ConflatedBroadcastChannel<SeasonNavItem> =
-        ConflatedBroadcastChannel(SeasonNavItem.CALENDAR)
+        ConflatedBroadcastChannel(SeasonNavItem.SCHEDULE)
     private val currentTabFlow: Flow<SeasonNavItem> = currentTab.asFlow()
     private val season: ConflatedBroadcastChannel<Int> = ConflatedBroadcastChannel(seasonController.defaultSeason)
     private val currentHistory: Flow<History?> = season.asFlow()
@@ -124,7 +124,7 @@ class SeasonViewModel(
             }
 
             when (menuItemType) {
-                SeasonNavItem.CALENDAR -> {
+                SeasonNavItem.SCHEDULE -> {
                     when {
                         historyRounds.isEmpty() && !networkConnectivityManager.isConnected ->
                             list.addError(SyncDataItem.NoNetwork)
