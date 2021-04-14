@@ -7,4 +7,5 @@
     <string name="ab_season_list_favourite">Mark %d as favourite</string>
     <string name="ab_season_list_unfavourite">Unmark %d as favourite</string>
     <string name="ab_season_list_more">More options for %d season</string>
+    <string name="ab_dashboard_menu">Menu</string>
 </resources>

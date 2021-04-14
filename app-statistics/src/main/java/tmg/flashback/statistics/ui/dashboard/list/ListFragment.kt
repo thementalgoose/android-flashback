@@ -18,6 +18,7 @@ import tmg.flashback.statistics.BuildConfig
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.FragmentDashboardListBinding
 import tmg.flashback.statistics.manager.StatisticsExternalNavigationManager
+import tmg.flashback.statistics.ui.dashboard.DashboardFragment
 import tmg.flashback.statistics.ui.dashboard.DashboardNavigationCallback
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
@@ -30,7 +31,7 @@ class ListFragment: BaseFragment<FragmentDashboardListBinding>() {
     private val statisticsNavigationManager: StatisticsExternalNavigationManager by inject()
 
     private var adapter: ListAdapter? = null
-    private var dashboardNavigationCallback: DashboardNavigationCallback? = null
+    private val dashboardNavigationCallback: DashboardNavigationCallback? get() = parentFragment as? DashboardNavigationCallback
 
     @Suppress("RedundantNullableReturnType")
     private val tickReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
@@ -39,13 +40,6 @@ class ListFragment: BaseFragment<FragmentDashboardListBinding>() {
                 Log.i("Flashback", "Broadcast Receiver tick for time update")
             }
             adapter?.refreshUpNext()
-        }
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is DashboardNavigationCallback) {
-            dashboardNavigationCallback = context
         }
     }
 
