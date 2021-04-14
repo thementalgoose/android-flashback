@@ -14,11 +14,15 @@ import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 import org.koin.core.component.KoinApiExtension
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
+import tmg.flashback.core.controllers.ConfigurationController
 import tmg.flashback.statistics.enums.TrackLayout
 import tmg.flashback.statistics.controllers.UpNextController
 import tmg.flashback.core.controllers.CrashController
@@ -41,6 +45,7 @@ class UpNextWidgetProvider : AppWidgetProvider(), KoinComponent {
     private val buildConfigManager: BuildConfigManager by inject()
     private val navigationManager: NavigationManager by inject()
 
+    private val configController: ConfigurationController by inject()
     private val appRepository: AppRepository by inject()
 
     override fun onReceive(context: Context?, intent: Intent?) {
@@ -48,10 +53,16 @@ class UpNextWidgetProvider : AppWidgetProvider(), KoinComponent {
     }
 
     override fun onUpdate(context: Context?, appWidgetManager: AppWidgetManager?, appWidgetIds: IntArray?) {
-        Log.i("Flashback", "Updating up next widgets... ${appWidgetIds.toString()}")
+        Log.i("Flashback", "Updating up next widgets [${appWidgetIds.toString()}]")
 
+        // Fire and forget remote config sync
+        GlobalScope.launch {
+            configController.applyPending()
+            configController.fetch()
+        }
+
+        // Pre app checks
         val nextEvent: UpNextSchedule? = upNextController.getNextEvent()
-
         if (context == null) {
             return
         }
@@ -63,6 +74,7 @@ class UpNextWidgetProvider : AppWidgetProvider(), KoinComponent {
             return
         }
 
+        // Given we have valid app widget ids and an up next item
         var tintedIcon: Bitmap? = null
         try {
             val icon: Int? = nextEvent.circuitId?.toEnum<TrackLayout> { it.circuitId }?.icon
@@ -76,6 +88,7 @@ class UpNextWidgetProvider : AppWidgetProvider(), KoinComponent {
             crashController.logError(e, "Widget Up Next provider couldn't tint bitmap")
         }
 
+        // Update all the widget ids
         appWidgetIds?.forEach { widgetId ->
 
             val remoteView = RemoteViews(buildConfigManager.applicationId, R.layout.widget_up_next)
