@@ -1,30 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.discord.panels.OverlappingPanelsLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/panels"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="?attr/f1BackgroundPanel"
-    app:maxSidePanelNonFullScreenWidth="@dimen/dashboardMaxWidth">
+    android:layout_height="match_parent">
 
-    <!-- Set layout_gravity on the start panel to "start" -->
-    <FrameLayout
-        android:id="@+id/list"
-        android:layout_width="wrap_content"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/dashboard"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="start" />
+        app:defaultNavHost="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navGraph="@navigation/graph_dashboard" />
 
-    <FrameLayout
-        android:id="@+id/season"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:elevation="4dp" />
-
-    <!-- Set layout_gravity on the end panel to "end" -->
-    <FrameLayout
-        android:id="@+id/search"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="end" />
-
-</com.discord.panels.OverlappingPanelsLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

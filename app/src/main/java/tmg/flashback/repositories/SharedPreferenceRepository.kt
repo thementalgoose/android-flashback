@@ -119,7 +119,7 @@ class SharedPreferenceRepository(context: Context) : SharedPrefManager(context),
         }
 
     override var displayListTypePref: TimeListDisplayType
-        get() = getInt(keyTimeDisplayListType).toEnum<TimeListDisplayType>() ?: TimeListDisplayType.LOCAL
+        get() = getInt(keyTimeDisplayListType).toEnum<TimeListDisplayType>() ?: TimeListDisplayType.RELATIVE
         set(value) = save(keyTimeDisplayListType, value.ordinal)
 
     override var widgetOpenApp: Boolean

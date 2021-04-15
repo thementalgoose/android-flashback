@@ -1,104 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/f1BackgroundPrimary"
-    android:elevation="2dp">
+    android:orientation="vertical">
+    <!-- Linear Layout parent required because of DiscordOverlappingPanels Weirdness -->
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appbar"
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@null"
-        app:elevation="0dp"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$Behavior">
+        android:layout_height="0dp" />
 
-        <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_scrollFlags="exitUntilCollapsed|scroll|enterAlways">
-
-            <!-- Relative layout due to layout weirdness with discord overlapping panels -->
-            <RelativeLayout
-                android:id="@+id/titlebar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?attr/f1BackgroundPrimary"
-                android:paddingTop="@dimen/paddingSmall"
-                android:paddingBottom="@dimen/paddingSmall">
-
-                <TextView
-                    android:id="@+id/season"
-                    style="@style/Text.Toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignTop="@id/menuButton"
-                    android:layout_alignBottom="@id/menuButton"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginStart="@dimen/paddingMedium"
-                    android:layout_marginEnd="@dimen/paddingMedium"
-                    android:layout_toEndOf="@id/menuButton"
-                    android:drawablePadding="@dimen/paddingNSmall"
-                    android:ellipsize="end"
-                    android:fitsSystemWindows="true"
-                    android:gravity="start|center"
-                    android:maxLines="1"
-                    android:paddingStart="@dimen/paddingMedium"
-                    android:paddingEnd="@dimen/paddingMedium"
-                    tools:text="2020" />
-
-                <ImageButton
-                    android:id="@+id/menuButton"
-                    android:layout_width="@dimen/toolbarSettingsIcon"
-                    android:layout_height="@dimen/toolbarSettingsIcon"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginStart="@dimen/paddingNSmall"
-                    android:background="@drawable/ripple_rounded"
-                    android:contentDescription="@string/menu_title"
-                    android:src="@drawable/ic_menu"
-                    android:tint="?attr/f1TextPrimary" />
-
-            </RelativeLayout>
-
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
-
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipeContainer"
+    <androidx.constraintlayout.motion.widget.MotionLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="?attr/actionBarSize"
-        android:fitsSystemWindows="false"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+        android:background="?attr/f1BackgroundPrimary"
+        app:layoutDescription="@xml/fragment_dashboard_season_scene"
+        tools:showPaths="true">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/toolbarGuideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="@dimen/toolbarHeight" />
+
+        <ImageView
+            android:id="@+id/menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/paddingSmall"
+            android:clickable="true"
+            android:contentDescription="@string/ab_dashboard_menu"
+            android:focusable="true"
+            android:foreground="@drawable/rounded_ripple"
+            android:padding="@dimen/paddingSmall"
+            app:layout_constraintBottom_toBottomOf="@id/toolbarGuideline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_menu"
+            app:tint="?attr/f1TextPrimary" />
+
+        <TextView
+            android:id="@+id/seasonCollapsed"
+            style="@style/Text.Toolbar.Collapsed"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/paddingSmall"
+            android:layout_marginEnd="@dimen/paddingMedium"
+            android:alpha="0.0"
+            app:layout_constraintBottom_toBottomOf="@id/toolbarGuideline"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/menu"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="2021" />
+
+        <TextView
+            android:id="@+id/seasonExpanded"
+            style="@style/Text.Toolbar.Expanded"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/toolbarExpandedSpacer"
+            android:paddingStart="@dimen/paddingMedium"
+            android:paddingTop="@dimen/paddingSmall"
+            android:paddingEnd="@dimen/paddingMedium"
+            android:paddingBottom="@dimen/paddingMedium"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/toolbarGuideline"
+            tools:text="2021" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/dataList"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:clipToPadding="false"
             android:overScrollMode="never"
             android:paddingBottom="@dimen/paddingXLarge"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/seasonExpanded"
             tools:listitem="@layout/view_dashboard_season_track" />
 
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </androidx.constraintlayout.motion.widget.MotionLayout>
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/navigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:background="?attr/f1BackgroundNavPrimary"
-        android:layoutMode="opticalBounds"
-        app:itemBackground="?attr/f1BackgroundNavPrimary"
-        app:itemIconTint="@drawable/selector_bottom_nav_color"
-        app:itemTextColor="@drawable/selector_bottom_nav_color"
-        app:labelVisibilityMode="labeled"
-        app:menu="@menu/menu_home" />
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</LinearLayout>

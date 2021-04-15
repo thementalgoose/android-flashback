@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:background="?attr/f1BackgroundPanel"
+    android:layout_height="match_parent">
+
+    <com.discord.panels.OverlappingPanelsLayout
+        android:id="@+id/panels"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?attr/f1BackgroundPanel"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:maxSidePanelNonFullScreenWidth="@dimen/dashboardMaxWidth">
+
+        <!-- Set layout_gravity on the start panel to "start" -->
+        <FrameLayout
+            android:id="@+id/list"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:background="?attr/f1BackgroundPanel" />
+
+        <FrameLayout
+            android:id="@+id/season"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="?attr/f1BackgroundPanel"
+            android:elevation="4dp" />
+
+        <!-- Set layout_gravity on the end panel to "end" -->
+        <FrameLayout
+            android:id="@+id/other"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:background="?attr/f1BackgroundPanel" />
+
+    </com.discord.panels.OverlappingPanelsLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="?attr/f1BackgroundNavPrimary"
+        android:layoutMode="opticalBounds"
+        app:itemBackground="?attr/f1BackgroundNavPrimary"
+        app:itemIconTint="@drawable/selector_bottom_nav_color"
+        app:itemTextColor="@drawable/selector_bottom_nav_color"
+        app:labelVisibilityMode="labeled"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/menu_home" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

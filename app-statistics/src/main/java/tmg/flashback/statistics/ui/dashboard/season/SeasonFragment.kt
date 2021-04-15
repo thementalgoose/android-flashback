@@ -1,18 +1,15 @@
 package tmg.flashback.statistics.ui.dashboard.season
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
-import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
-import tmg.flashback.core.controllers.FeatureController
 import tmg.flashback.core.ui.BaseFragment
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.constants.Formula1.currentSeasonYear
 import tmg.flashback.statistics.databinding.FragmentDashboardSeasonBinding
-import tmg.flashback.statistics.manager.StatisticsExternalNavigationManager
+import tmg.flashback.statistics.ui.dashboard.DashboardFragment
 import tmg.flashback.statistics.ui.dashboard.DashboardNavigationCallback
 import tmg.flashback.statistics.ui.overview.constructor.ConstructorActivity
 import tmg.flashback.statistics.ui.overview.driver.DriverActivity
@@ -25,17 +22,8 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
     private val viewModel: SeasonViewModel by viewModel()
 
     private lateinit var adapter: SeasonAdapter
-    private var dashboardNavigation: DashboardNavigationCallback? = null
-
-    private val featureController: FeatureController by inject()
-    private val statisticsNavigationManager: StatisticsExternalNavigationManager by inject()
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is DashboardNavigationCallback) {
-            dashboardNavigation = context
-        }
-    }
+    private val dashboardNavigation: DashboardNavigationCallback?
+        get() = parentFragment as? DashboardFragment
 
     override fun inflateView(inflater: LayoutInflater) =
         FragmentDashboardSeasonBinding.inflate(layoutInflater)
@@ -43,7 +31,6 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.swipeContainer.isEnabled = false
         adapter = SeasonAdapter(
             trackClicked = viewModel.inputs::clickTrack,
             driverClicked = viewModel.inputs::clickDriver,
@@ -52,32 +39,7 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
         binding.dataList.layoutManager = LinearLayoutManager(context)
         binding.dataList.adapter = adapter
 
-        if (!featureController.rssEnabled) {
-            binding.navigation.menu.removeItem(R.id.nav_rss)
-        }
-        binding.navigation.setOnNavigationItemSelectedListener {
-            return@setOnNavigationItemSelectedListener when (it.itemId) {
-                R.id.nav_rss -> {
-                    context?.let { context -> startActivity(statisticsNavigationManager.getRSSIntent(context)) }
-                    false
-                }
-                R.id.nav_calendar -> {
-                    viewModel.inputs.clickItem(SeasonNavItem.CALENDAR)
-                    true
-                }
-                R.id.nav_drivers -> {
-                    viewModel.inputs.clickItem(SeasonNavItem.DRIVERS)
-                    true
-                }
-                R.id.nav_constructor -> {
-                    viewModel.inputs.clickItem(SeasonNavItem.CONSTRUCTORS)
-                    true
-                }
-                else -> false
-            }
-        }
-
-        binding.menuButton.setOnClickListener {
+        binding.menu.setOnClickListener {
             viewModel.inputs.clickMenu()
         }
 
@@ -86,11 +48,13 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
         }
 
         observe(viewModel.outputs.label) {
-            binding.season.text = getString(R.string.home_season_arrow, it.msg ?: currentSeasonYear.toString())
+            binding.seasonCollapsed.text = getString(R.string.home_season_arrow, it.msg ?: currentSeasonYear.toString())
+            binding.seasonExpanded.text = getString(R.string.home_season_arrow, it.msg ?: currentSeasonYear.toString())
         }
 
         observe(viewModel.outputs.list) {
             adapter.list = it
+            binding.dataList.smoothScrollToPosition(0)
         }
 
         observe(viewModel.outputs.showLoading) {
@@ -140,8 +104,6 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
         }
 
         showLoading()
-
-        binding.navigation.selectedItemId = R.id.nav_calendar
     }
 
     //region Accessible
@@ -155,6 +117,30 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
     }
 
     /**
+     * Publicaly accessible method for changing the display type for the list to be calendar
+     *  Called from DashboardActivity as a result of moving nav bar to activity for
+     */
+    fun selectSchedule() {
+        viewModel.inputs.clickItem(SeasonNavItem.SCHEDULE)
+    }
+
+    /**
+     * Publicaly accessible method for changing the display type for the list to be drivers
+     *  Called from DashboardActivity as a result of moving nav bar to activity for
+     */
+    fun selectDrivers() {
+        viewModel.inputs.clickItem(SeasonNavItem.DRIVERS)
+    }
+
+    /**
+     * Publicaly accessible method for changing the display type for the list to be constructors
+     *  Called from DashboardActivity as a result of moving nav bar to activity for
+     */
+    fun selectConstructors() {
+        viewModel.inputs.clickItem(SeasonNavItem.CONSTRUCTORS)
+    }
+
+    /**
      * Publically accessible method for refreshing the season
      */
     fun refresh() {
@@ -164,16 +150,14 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
     //endregion
 
     private fun showLoading() {
-        binding.swipeContainer.isRefreshing = true
-        binding.menuButton.isEnabled = false
-        binding.navigation.isEnabled = false
+//        binding.swipeContainer.isRefreshing = true
+//        binding.menuButton.isEnabled = false
         binding.dataList.alpha = 0.7f
     }
 
     private fun hideLoading() {
-        binding.swipeContainer.isRefreshing = false
-        binding.menuButton.isEnabled = true
-        binding.navigation.isEnabled = true
+//        binding.swipeContainer.isRefreshing = false
+//        binding.menuButton.isEnabled = true
         binding.dataList.alpha = 1.0f
     }
 }
