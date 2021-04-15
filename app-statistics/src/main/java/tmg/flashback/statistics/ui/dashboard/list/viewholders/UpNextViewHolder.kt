@@ -62,8 +62,8 @@ class UpNextViewHolder(
         }
 
         pillAdapter.list = listOf(
-            PillItem.Label(ZoneId.systemDefault().getDisplayName(TextStyle.SHORT_STANDALONE, Locale.getDefault()), item.timeFormatType == TimeListDisplayType.LOCAL),
             PillItem.Label(getString(R.string.dashboard_up_next_timefilter_delta), item.timeFormatType == TimeListDisplayType.RELATIVE),
+            PillItem.Label(ZoneId.systemDefault().getDisplayName(TextStyle.SHORT_STANDALONE, Locale.getDefault()), item.timeFormatType == TimeListDisplayType.LOCAL),
             PillItem.Label(getString(R.string.dashboard_up_next_timefilter_utc), item.timeFormatType == TimeListDisplayType.UTC)
         )
 
