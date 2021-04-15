@@ -171,5 +171,9 @@
         <br/>• Adds FP1, FP2, FP3, Qualifying and Race times for up next section
         <br/>• Adds Saudi Arabia track layout
         <br/>• Fixed bugs in up next highlighting]]></string>
+    <string name="release_55"><![CDATA[<b>5.7.9</b>
+        <br/>• Updates layout of schedule view on the home screen
+        <br/>• Tidies up navigation when opening the app
+        <br/>• Minor tweaks and technical debt]]></string>
 
 </resources>
