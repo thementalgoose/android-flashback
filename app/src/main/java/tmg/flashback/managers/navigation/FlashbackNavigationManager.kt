@@ -1,8 +1,10 @@
 package tmg.flashback.managers.navigation
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentActivity
 import tmg.components.about.AboutThisAppActivity
 import tmg.flashback.constants.AboutThisAppConfig
 import tmg.flashback.controllers.ReleaseNotesController
@@ -42,7 +44,7 @@ class FlashbackNavigationManager(
         return Intent(context, SplashActivity::class.java)
     }
 
-    override fun openContextualReleaseNotes(activity: AppCompatActivity) {
+    override fun openContextualReleaseNotes(activity: FragmentActivity) {
         if (releaseNotesController.pendingReleaseNotes) {
             ReleaseBottomSheetFragment()
                 .show(activity.supportFragmentManager, "RELEASE_NOTES")

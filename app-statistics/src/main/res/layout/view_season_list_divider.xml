@@ -10,6 +10,7 @@
         android:layout_height="1dp"
         android:layout_marginTop="@dimen/paddingXSmall"
         android:layout_marginBottom="@dimen/paddingSmall"
+        android:alpha="0.5"
         android:background="?attr/f1BackgroundSecondary"
         android:importantForAccessibility="no"
         app:layout_constraintBottom_toBottomOf="parent"

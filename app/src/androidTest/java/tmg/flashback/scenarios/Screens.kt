@@ -55,7 +55,7 @@ object Home: RecyclerViewUtils(R.id.dataList) {
         pressBack()
     }
 
-    fun clickOnCalendar() = clickOn(R.id.nav_calendar)
+    fun clickOnCalendar() = clickOn(R.id.nav_schedule)
     fun clickOnDriver() = clickOn(R.id.nav_drivers)
     fun clickOnConstructor() = clickOn(R.id.nav_constructor)
 }
