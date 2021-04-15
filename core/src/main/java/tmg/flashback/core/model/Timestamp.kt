@@ -73,8 +73,19 @@ data class Timestamp(
             return if (deviceLocalDateTime != null) {
                 deviceLocalDateTime!! < LocalDateTime.now()
             } else {
-                println("Date ${LocalDate.now()} - ${originalDate}")
                 originalDate < LocalDate.now()
+            }
+        }
+
+    /**
+     * Is the timestamp considered to be today
+     */
+    val isToday: Boolean
+        get() {
+            return if (deviceLocalDateTime != null) {
+                deviceLocalDateTime!!.toLocalDate() == LocalDate.now()
+            } else {
+                originalDate == LocalDate.now()
             }
         }
 
