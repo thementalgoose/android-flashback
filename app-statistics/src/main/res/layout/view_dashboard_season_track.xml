@@ -91,5 +91,4 @@
         app:barrierDirection="start"
         app:constraint_referenced_ids="round,date" />
 
-
 </androidx.constraintlayout.widget.ConstraintLayout>

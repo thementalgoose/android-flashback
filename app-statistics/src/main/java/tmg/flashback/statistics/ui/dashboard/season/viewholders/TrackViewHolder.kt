@@ -54,9 +54,25 @@ class TrackViewHolder(
             @SuppressLint("SetTextI18n")
             date.text = "${item.date.dayOfMonth.ordinalAbbreviation} ${item.date.format(DateTimeFormatter.ofPattern("MMM yy"))}"
         }
+
+        fade(!data.hasQualifying && !data.hasResults)
     }
 
     override fun onClick(p0: View?) {
         trackClicked(data)
+    }
+
+    private fun fade(shouldFade: Boolean) {
+        binding.raceName.alpha = if (shouldFade) fadeAlpha else 1.0f
+        binding.circuitName.alpha = if (shouldFade) fadeAlpha else 1.0f
+        binding.raceCountry.alpha = if (shouldFade) fadeAlpha else 1.0f
+        binding.round.alpha = if (shouldFade) fadeAlpha else 1.0f
+        binding.date.alpha = if (shouldFade) fadeAlpha else 1.0f
+        binding.country.alpha = if (shouldFade) fadeAlpha else 1.0f
+        binding.status.alpha = if (shouldFade) fadeAlpha else 1.0f
+    }
+
+    companion object {
+        private const val fadeAlpha = 0.5f
     }
 }
