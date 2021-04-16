@@ -25,14 +25,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:indeterminate="true"
-            app:layout_constraintBottom_toBottomOf="@id/seasonExpanded"
+            app:layout_constraintBottom_toBottomOf="@+id/titleExpanded"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" >
             <PropertySet app:visibilityMode="ignore" />
         </Constraint>
 
         <Constraint
-            android:id="@+id/seasonExpanded"
+            android:id="@+id/titleExpanded"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:alpha="0.0"
@@ -45,7 +45,7 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <Constraint
-            android:id="@+id/seasonCollapsed"
+            android:id="@+id/titleCollapsed"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/paddingSmall"
@@ -73,11 +73,11 @@
             <KeyAttribute
                 android:alpha="0.0"
                 app:framePosition="60"
-                app:motionTarget="@+id/seasonExpanded" />
+                app:motionTarget="@+id/titleExpanded" />
             <KeyAttribute
                 android:alpha="0.0"
                 app:framePosition="60"
-                app:motionTarget="@+id/seasonCollapsed" />
+                app:motionTarget="@+id/titleCollapsed" />
         </KeyFrameSet>
 
     </Transition>

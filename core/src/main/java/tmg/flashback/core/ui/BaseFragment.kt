@@ -39,7 +39,7 @@ abstract class BaseFragment<T: ViewBinding>: Fragment() {
     override fun onResume() {
         super.onResume()
         // Commented out due to activities still being used throughout
-//        recordScreenViewed()
+        recordScreenViewed()
     }
 
     override fun onDestroyView() {
