@@ -4,7 +4,7 @@ ext {
     junit = "5.5.2"
     koin_version = "2.2.2"
     coroutines = "1.4.1"
-    navigation = "2.3.3"
+    navigation = "2.3.5"
 
     threeten = "1.2.2"
     threetenbp = "1.4.1"
