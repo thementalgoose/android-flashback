@@ -40,12 +40,7 @@ class RSSFragment: BaseFragment<FragmentRssBinding>() {
 
         adapter = RSSAdapter(
             openConfigure = {
-                activity?.let {
-                    startActivityForResult(
-                        RSSSettingsActivity.intent(it, InitialScreen.CONFIGURE),
-                        1001
-                    )
-                }
+                openConfigure()
             },
             articleClicked = { article, _ ->
                 if (repository.newsOpenInExternalBrowser) {
@@ -63,6 +58,14 @@ class RSSFragment: BaseFragment<FragmentRssBinding>() {
         binding.dataList.adapter = adapter
         binding.dataList.layoutManager = LinearLayoutManager(context)
 
+        binding.refresh.setOnClickListener {
+            viewModel.inputs.refresh()
+        }
+
+        binding.settings.setOnClickListener {
+            openConfigure()
+        }
+
         observe(viewModel.outputs.list) {
             adapter.list = it
         }
@@ -72,11 +75,32 @@ class RSSFragment: BaseFragment<FragmentRssBinding>() {
                 // Sub-optimal workaround for visibility issue in motion layout
                 binding.progress.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_YES
                 binding.progress.alpha = 1.0f
+
+                binding.dataList.alpha = dataListAlpha
+                binding.dataList.locked = true
             } else {
                 // Sub-optimal workaround for visibility issue in motion layout
                 binding.progress.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
                 binding.progress.alpha = 0.0f
+
+                binding.dataList.alpha = 1.0f
+                binding.dataList.locked = false
+
+                binding.dataList.smoothScrollToPosition(0)
             }
         }
+    }
+
+    private fun openConfigure() {
+        activity?.let {
+            startActivityForResult(
+                RSSSettingsActivity.intent(it, InitialScreen.CONFIGURE),
+                1001
+            )
+        }
+    }
+
+    companion object {
+        private const val dataListAlpha = 0.5f
     }
 }
