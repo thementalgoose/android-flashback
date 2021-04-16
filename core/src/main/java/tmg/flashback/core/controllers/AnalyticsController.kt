@@ -16,19 +16,15 @@ class AnalyticsController(
             coreRepository.analytics = value
         }
 
+
+
     fun setUserProperty(property: UserProperty, value: String) {
-        if (BuildConfig.DEBUG) {
-            Log.i("Flashback", "User property $property -> $value ($enabled)")
-        }
         if (enabled) {
             analyticsManager.setProperty(property.key, value)
         }
     }
 
     fun viewScreen(screenName: String, clazz: Class<*>, params: Map<String, String>) {
-        if (BuildConfig.DEBUG) {
-            Log.i("Flashback", "View screen $screenName -> $params ($enabled)")
-        }
         if (enabled) {
             analyticsManager.logViewScreen(screenName, clazz, params)
         }

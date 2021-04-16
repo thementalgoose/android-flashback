@@ -10,7 +10,7 @@ interface AnalyticsManager {
 
     fun setProperty(key: String, value: String)
 
-    fun logEvent(key: String, bundle: Bundle)
+    fun logEvent(key: String, bundle: Bundle? = null)
 
     fun logViewScreen(screenName: String, clazz: Class<*>, mapOfParams: Map<String, String>)
 }
