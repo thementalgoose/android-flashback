@@ -110,7 +110,8 @@
             android:indeterminate="true"
             app:layout_constraintBottom_toBottomOf="@id/titleExpanded"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/titleExpanded" />
 
         <tmg.flashback.core.ui.views.LockableRecyclerView
             android:id="@+id/dataList"
