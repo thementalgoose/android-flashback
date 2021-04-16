@@ -7,12 +7,17 @@ import android.provider.Settings
 import android.view.View
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.core.ui.settings.SettingsFragment
+import tmg.flashback.core.utils.ScreenAnalytics
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 
 class SettingsNotificationFragment: SettingsFragment() {
 
     private val viewModel: SettingsNotificationViewModel by viewModel()
+
+    override val screenAnalytics = ScreenAnalytics(
+        screenName = "Settings - Notification"
+    )
 
     override val prefClicked: (prefKey: String) -> Unit = { prefKey ->
         viewModel.inputs.preferenceClicked(prefKey, null)

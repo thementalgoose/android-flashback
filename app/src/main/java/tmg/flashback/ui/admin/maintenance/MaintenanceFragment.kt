@@ -9,6 +9,7 @@ import android.view.View
 import androidx.core.app.ActivityCompat.finishAffinity
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.core.ui.BaseFragment
+import tmg.flashback.core.utils.ScreenAnalytics
 import tmg.flashback.databinding.FragmentLockoutBinding
 import tmg.flashback.ui.SplashActivity
 import tmg.utilities.extensions.fromHtml
@@ -21,6 +22,10 @@ import tmg.utilities.extensions.views.visible
 class MaintenanceFragment: BaseFragment<FragmentLockoutBinding>() {
 
     private val viewModel: MaintenanceViewModel by viewModel()
+
+    override val screenAnalytics = ScreenAnalytics(
+        screenName = "Maintenance"
+    )
 
     override fun inflateView(inflater: LayoutInflater) = FragmentLockoutBinding
         .inflate(inflater)

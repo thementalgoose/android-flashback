@@ -6,6 +6,7 @@ import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import tmg.flashback.R
 import tmg.flashback.core.ui.BaseActivity
+import tmg.flashback.core.utils.ScreenAnalytics
 import tmg.flashback.databinding.ActivitySettingsBinding
 
 class SettingsAllActivity: BaseActivity(), NavController.OnDestinationChangedListener {
@@ -13,6 +14,8 @@ class SettingsAllActivity: BaseActivity(), NavController.OnDestinationChangedLis
     private lateinit var binding: ActivitySettingsBinding
 
     private var navController: NavController? = null
+
+    override val screenAnalytics: ScreenAnalytics? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -11,9 +11,11 @@ import tmg.flashback.statistics.controllers.NotificationController
 import tmg.flashback.core.controllers.AnalyticsController
 import tmg.flashback.core.controllers.CrashController
 import tmg.flashback.core.controllers.DeviceController
+import tmg.flashback.core.enums.Theme
 import tmg.flashback.core.enums.UserProperty.*
 import tmg.flashback.core.repositories.CoreRepository
 import tmg.flashback.managers.notifications.PushNotificationManager
+import tmg.flashback.managers.widgets.WidgetManager
 import tmg.flashback.statistics.extensions.updateAllWidgets
 import tmg.utilities.extensions.isInDayMode
 
@@ -26,6 +28,8 @@ class FlashbackStartup(
     private val deviceController: DeviceController,
     private val prefsNotification: NotificationController,
     private val crashController: CrashController,
+    private val widgetManager: WidgetManager,
+    private val coreRepository: CoreRepository,
     private val analyticsController: AnalyticsController,
     private val notificationManager: PushNotificationManager,
 ) {
@@ -63,13 +67,18 @@ class FlashbackStartup(
         analyticsController.setUserProperty(DEVICE_MODEL, Build.MODEL)
         analyticsController.setUserProperty(OS_VERSION, Build.VERSION.SDK_INT.toString())
         analyticsController.setUserProperty(APP_VERSION, BuildConfig.VERSION_NAME)
-        analyticsController.setUserProperty(DEVICE_THEME, if (application.isInDayMode()) "day" else "night")
+        analyticsController.setUserProperty(WIDGET_USAGE, if (widgetManager.hasWidgets) "true" else "false")
+        analyticsController.setUserProperty(DEVICE_THEME, when (coreRepository.theme) {
+            Theme.DAY -> "day"
+            Theme.NIGHT -> "night"
+            Theme.AUTO -> if (application.isInDayMode()) "day" else "night"
+        })
 
         // Update Widgets
         application.updateAllWidgets()
     }
 
-    fun notificationsOptIn() {
+    private fun notificationsOptIn() {
 
         // Enrol for race push notifications
         if (prefsNotification.raceOptInUndecided) {

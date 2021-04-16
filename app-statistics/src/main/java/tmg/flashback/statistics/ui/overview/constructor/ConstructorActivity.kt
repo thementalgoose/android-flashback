@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.core.ui.BaseActivity
 import tmg.flashback.core.utils.ScreenAnalytics
+import tmg.flashback.statistics.constants.ViewType
+import tmg.flashback.statistics.constants.logEvent
 import tmg.flashback.statistics.databinding.ActivityConstructorBinding
 import tmg.flashback.statistics.ui.overview.constructor.summary.ConstructorSummaryAdapter
 import tmg.utilities.extensions.observe
@@ -37,6 +39,11 @@ class ConstructorActivity: BaseActivity() {
         intent?.extras?.let {
             constructorId = it.getString(keyConstructorId)!!
             constructorName = it.getString(keyConstructorName)!!
+
+            analyticsController.logEvent(ViewType.CONSTRUCTOR, mapOf(
+                "constructor_id" to constructorId,
+                "constructor_name" to constructorName
+            ))
 
             viewModel.inputs.setup(constructorId)
         }

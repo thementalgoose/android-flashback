@@ -8,10 +8,14 @@ import android.view.View.IMPORTANT_FOR_ACCESSIBILITY_NO
 import android.view.View.IMPORTANT_FOR_ACCESSIBILITY_YES
 import android.widget.ProgressBar
 import androidx.recyclerview.widget.LinearLayoutManager
+import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.core.ui.BaseFragment
+import tmg.flashback.core.utils.ScreenAnalytics
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.constants.Formula1.currentSeasonYear
+import tmg.flashback.statistics.controllers.RaceController
+import tmg.flashback.statistics.controllers.SeasonController
 import tmg.flashback.statistics.databinding.FragmentDashboardSeasonBinding
 import tmg.flashback.statistics.ui.dashboard.DashboardFragment
 import tmg.flashback.statistics.ui.dashboard.DashboardNavigationCallback
@@ -26,9 +30,20 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
 
     private val viewModel: SeasonViewModel by viewModel()
 
+    private val seasonController: SeasonController by inject()
+    private val analyticsData: MutableMap<String, String> = mutableMapOf(
+        "extra_season_id" to seasonController.defaultSeason.toString(),
+        "extra_view_type" to SeasonNavItem.SCHEDULE.name
+    )
+
     private lateinit var adapter: SeasonAdapter
     private val dashboardNavigation: DashboardNavigationCallback?
         get() = parentFragment as? DashboardFragment
+
+    override val screenAnalytics get() = ScreenAnalytics(
+        screenName = "Dashboard",
+        attributes = analyticsData
+    )
 
     override fun inflateView(inflater: LayoutInflater) =
         FragmentDashboardSeasonBinding.inflate(layoutInflater)
@@ -119,6 +134,8 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
      *  Called from DashboardActivity as a result of an external season selection
      */
     fun selectSeason(season: Int) {
+        analyticsData["extra_season_id"] = season.toString()
+        recordScreenViewed()
         viewModel.inputs.selectSeason(season)
     }
 
@@ -127,6 +144,8 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
      *  Called from DashboardActivity as a result of moving nav bar to activity for
      */
     fun selectSchedule() {
+        analyticsData["extra_view_type"] = SeasonNavItem.SCHEDULE.name
+        recordScreenViewed()
         viewModel.inputs.clickItem(SeasonNavItem.SCHEDULE)
     }
 
@@ -135,6 +154,8 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
      *  Called from DashboardActivity as a result of moving nav bar to activity for
      */
     fun selectDrivers() {
+        analyticsData["extra_view_type"] = SeasonNavItem.DRIVERS.name
+        recordScreenViewed()
         viewModel.inputs.clickItem(SeasonNavItem.DRIVERS)
     }
 
@@ -143,6 +164,8 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
      *  Called from DashboardActivity as a result of moving nav bar to activity for
      */
     fun selectConstructors() {
+        analyticsData["extra_view_type"] = SeasonNavItem.CONSTRUCTORS.name
+        recordScreenViewed()
         viewModel.inputs.clickItem(SeasonNavItem.CONSTRUCTORS)
     }
 

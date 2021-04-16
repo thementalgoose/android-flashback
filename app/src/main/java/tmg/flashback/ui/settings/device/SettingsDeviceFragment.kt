@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.core.ui.settings.SettingsFragment
+import tmg.flashback.core.utils.ScreenAnalytics
 import tmg.flashback.ui.settings.release.ReleaseActivity
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
@@ -12,6 +13,10 @@ import tmg.utilities.extensions.observeEvent
 class SettingsDeviceFragment: SettingsFragment() {
 
     private val viewModel: SettingsDeviceViewModel by viewModel()
+
+    override val screenAnalytics = ScreenAnalytics(
+        screenName = "Settings - Device"
+    )
 
     override val prefClicked: (prefKey: String) -> Unit = { prefKey ->
         viewModel.inputs.preferenceClicked(prefKey, null)

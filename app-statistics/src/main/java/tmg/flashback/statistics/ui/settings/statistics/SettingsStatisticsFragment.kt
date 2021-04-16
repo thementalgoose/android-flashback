@@ -5,6 +5,7 @@ import android.view.View
 import com.google.android.material.snackbar.Snackbar
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.core.ui.settings.SettingsFragment
+import tmg.flashback.core.utils.ScreenAnalytics
 import tmg.flashback.statistics.R
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
@@ -12,6 +13,10 @@ import tmg.utilities.extensions.observeEvent
 class SettingsStatisticsFragment: SettingsFragment() {
 
     private val viewModel: SettingsStatisticsViewModel by viewModel()
+
+    override val screenAnalytics = ScreenAnalytics(
+        screenName = "Settings - Statistics"
+    )
 
     override val prefClicked: (prefKey: String) -> Unit = { prefKey ->
         viewModel.inputs.preferenceClicked(prefKey, null)
