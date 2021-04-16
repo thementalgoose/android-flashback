@@ -15,8 +15,8 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="?attr/f1BackgroundPrimary"
-        app:layoutDescription="@xml/fragment_dashboard_season_scene"
+        android:background="?attr/rssBackground"
+        app:layoutDescription="@xml/fragment_rss_scene"
         tools:showPaths="true">
 
         <androidx.constraintlayout.widget.Guideline
@@ -27,20 +27,20 @@
             app:layout_constraintGuide_begin="@dimen/toolbarHeight" />
 
         <ImageView
-            android:id="@+id/menu"
+            android:id="@+id/back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/paddingSmall"
             android:clickable="true"
-            android:contentDescription="@string/ab_dashboard_menu"
+            android:contentDescription="@string/ab_rss_back"
             android:focusable="true"
             android:foreground="@drawable/rounded_ripple"
             android:padding="@dimen/paddingSmall"
             app:layout_constraintBottom_toBottomOf="@id/toolbarGuideline"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_menu"
-            app:tint="?attr/f1TextPrimary" />
+            app:srcCompat="@drawable/ic_rss_back"
+            app:tint="?attr/rssTextPrimary" />
 
         <TextView
             android:id="@+id/titleCollapsed"
@@ -50,11 +50,11 @@
             android:layout_marginStart="@dimen/paddingSmall"
             android:layout_marginEnd="@dimen/paddingMedium"
             android:alpha="0.0"
+            android:text="@string/title_rss"
             app:layout_constraintBottom_toBottomOf="@id/toolbarGuideline"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/menu"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="2021" />
+            app:layout_constraintStart_toStartOf="@id/back"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/titleExpanded"
@@ -66,10 +66,10 @@
             android:paddingTop="@dimen/paddingSmall"
             android:paddingEnd="@dimen/paddingMedium"
             android:paddingBottom="@dimen/paddingMedium"
+            android:text="@string/title_rss"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/toolbarGuideline"
-            tools:text="2021" />
+            app:layout_constraintTop_toTopOf="@id/toolbarGuideline" />
 
         <ProgressBar
             android:id="@+id/progress"
@@ -91,8 +91,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/titleExpanded"
-            tools:listitem="@layout/view_dashboard_season_track" />
+            app:layout_constraintTop_toBottomOf="@id/titleExpanded" />
 
     </androidx.constraintlayout.motion.widget.MotionLayout>
 
