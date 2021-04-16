@@ -111,7 +111,11 @@ class WebFragment : Fragment() {
                 /* Do nothing */
             }
         }
+    }
 
+    override fun onDestroyView() {
+        binding = null
+        super.onDestroyView()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
