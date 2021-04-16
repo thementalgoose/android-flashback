@@ -7,6 +7,8 @@ import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.core.ui.settings.SettingsFragment
 import tmg.flashback.core.utils.ScreenAnalytics
 import tmg.flashback.statistics.R
+import tmg.flashback.statistics.constants.ViewType
+import tmg.flashback.statistics.constants.logEvent
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 
@@ -27,6 +29,8 @@ class SettingsStatisticsFragment: SettingsFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        analyticsController.logEvent(ViewType.SETTINGS_STATISTICS)
 
         observe(viewModel.outputs.settings) {
             adapter.list = it

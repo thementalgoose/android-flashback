@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.R
+import tmg.flashback.constants.ViewType
+import tmg.flashback.constants.logEvent
 import tmg.flashback.core.ui.BaseActivity
 import tmg.flashback.core.utils.ScreenAnalytics
 import tmg.flashback.databinding.ActivityPrivacyPolicyBinding
@@ -23,6 +25,8 @@ class PrivacyPolicyActivity: BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityPrivacyPolicyBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        analyticsController.logEvent(ViewType.SETTINGS_PRIVACY_POLICY)
 
         binding.header.text = getString(R.string.privacy_policy_title)
 

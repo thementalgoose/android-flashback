@@ -5,6 +5,8 @@ import android.view.View
 import com.google.android.material.snackbar.Snackbar
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.R
+import tmg.flashback.constants.ViewType
+import tmg.flashback.constants.logEvent
 import tmg.flashback.core.ui.settings.SettingsFragment
 import tmg.flashback.core.utils.ScreenAnalytics
 import tmg.flashback.statistics.extensions.updateAllWidgets
@@ -28,6 +30,8 @@ class SettingsWidgetFragment: SettingsFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        analyticsController.logEvent(ViewType.SETTINGS_WIDGET)
 
         observe(viewModel.outputs.settings) {
             adapter.list = it

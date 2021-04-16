@@ -11,7 +11,8 @@ enum class ViewType(
     CIRCUIT("view_circuit"),
     DASHBOARD_SEASON_SCHEDULE("view_season_schedule"),
     DASHBOARD_SEASON_DRIVER("view_season_driver"),
-    DASHBOARD_SEASON_CONSTRUCTOR("view_season_constructor")
+    DASHBOARD_SEASON_CONSTRUCTOR("view_season_constructor"),
+    SETTINGS_STATISTICS("view_settings_statistics")
 }
 
 fun AnalyticsController.logEvent(type: ViewType, attributes: Map<String, String> = emptyMap()) {

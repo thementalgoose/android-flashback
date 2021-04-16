@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import org.koin.android.viewmodel.ext.android.viewModel
+import tmg.flashback.constants.ViewType
+import tmg.flashback.constants.logEvent
 import tmg.flashback.core.ui.BaseFragment
 import tmg.flashback.core.utils.ScreenAnalytics
 import tmg.flashback.databinding.FragmentLockoutBinding
@@ -27,6 +29,8 @@ class ForceUpgradeFragment: BaseFragment<FragmentLockoutBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        analyticsController.logEvent(ViewType.FORCE_UPGRADE)
 
         binding.btnLink.setOnClickListener {
             viewModel.inputs.clickLink()

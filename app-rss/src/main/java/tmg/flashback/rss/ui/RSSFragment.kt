@@ -12,6 +12,8 @@ import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.core.ui.BaseFragment
 import tmg.flashback.core.utils.ScreenAnalytics
 import tmg.flashback.rss.R
+import tmg.flashback.rss.constants.ViewType
+import tmg.flashback.rss.constants.logEvent
 import tmg.flashback.rss.databinding.FragmentRssBinding
 import tmg.flashback.rss.prefs.RSSRepository
 import tmg.flashback.rss.repo.model.Article
@@ -37,6 +39,8 @@ class RSSFragment: BaseFragment<FragmentRssBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        analyticsController.logEvent(ViewType.RSS)
 
         adapter = RSSAdapter(
             openConfigure = {

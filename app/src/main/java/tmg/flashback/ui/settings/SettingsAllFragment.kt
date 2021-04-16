@@ -7,6 +7,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.R
+import tmg.flashback.constants.ViewType
+import tmg.flashback.constants.logEvent
 import tmg.flashback.core.ui.BaseFragment
 import tmg.flashback.core.utils.ScreenAnalytics
 import tmg.flashback.databinding.FragmentAllSettingsBinding
@@ -28,6 +30,8 @@ class SettingsAllFragment: BaseFragment<FragmentAllSettingsBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        analyticsController.logEvent(ViewType.SETTINGS_ALL)
 
         adapter = SettingsAllAdapter(
                 categoryClicked = viewModel.inputs::clickCategory
