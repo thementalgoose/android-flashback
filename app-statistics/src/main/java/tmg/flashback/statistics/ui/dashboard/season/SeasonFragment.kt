@@ -1,8 +1,12 @@
 package tmg.flashback.statistics.ui.dashboard.season
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.IMPORTANT_FOR_ACCESSIBILITY_NO
+import android.view.View.IMPORTANT_FOR_ACCESSIBILITY_YES
+import android.widget.ProgressBar
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.core.ui.BaseFragment
@@ -16,6 +20,7 @@ import tmg.flashback.statistics.ui.overview.driver.DriverActivity
 import tmg.flashback.statistics.ui.race.RaceActivity
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
+import tmg.utilities.extensions.views.show
 
 class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
 
@@ -58,6 +63,7 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
         }
 
         observe(viewModel.outputs.showLoading) {
+            Log.i("Flashback", "Dashboard show loading $it")
             if (it) {
                 showLoading()
             } else {
@@ -141,7 +147,7 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
     }
 
     /**
-     * Publically accessible method for refreshing the season
+     * Publicaly accessible method for refreshing the season
      */
     fun refresh() {
         viewModel.inputs.refresh()
@@ -150,14 +156,24 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
     //endregion
 
     private fun showLoading() {
-//        binding.swipeContainer.isRefreshing = true
-//        binding.menuButton.isEnabled = false
-        binding.dataList.alpha = 0.7f
+        // Sub-optimal workaround for visibility issue in motion layout
+        binding.progress.importantForAccessibility = IMPORTANT_FOR_ACCESSIBILITY_YES
+        binding.progress.alpha = 1.0f
+
+        binding.dataList.locked = true
+        binding.dataList.alpha = dataListAlpha
     }
 
     private fun hideLoading() {
-//        binding.swipeContainer.isRefreshing = false
-//        binding.menuButton.isEnabled = true
+        // Sub-optimal workaround for visibility issue in motion layout
+        binding.progress.importantForAccessibility = IMPORTANT_FOR_ACCESSIBILITY_NO
+        binding.progress.alpha = 0.0f
+
+        binding.dataList.locked = false
         binding.dataList.alpha = 1.0f
+    }
+
+    companion object {
+        private const val dataListAlpha = 0.5f
     }
 }
