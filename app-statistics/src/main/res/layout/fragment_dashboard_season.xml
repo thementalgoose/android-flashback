@@ -71,7 +71,17 @@
             app:layout_constraintTop_toTopOf="@id/toolbarGuideline"
             tools:text="2021" />
 
-        <androidx.recyclerview.widget.RecyclerView
+        <ProgressBar
+            android:id="@+id/progress"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            app:layout_constraintBottom_toBottomOf="@id/seasonExpanded"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <tmg.flashback.core.ui.views.LockableRecyclerView
             android:id="@+id/dataList"
             android:layout_width="match_parent"
             android:layout_height="0dp"
