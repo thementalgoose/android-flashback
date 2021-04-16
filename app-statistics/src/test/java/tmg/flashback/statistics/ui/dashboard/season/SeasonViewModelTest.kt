@@ -210,10 +210,6 @@ internal class SeasonViewModelTest: BaseTest() {
         sut.outputs.list.test {
             assertValue(expected)
         }
-
-        verify {
-            mockAnalyticsController.logEvent(ViewType.DASHBOARD_SEASON_SCHEDULE, any())
-        }
     }
 
     @Test
@@ -290,6 +286,10 @@ internal class SeasonViewModelTest: BaseTest() {
         sut.outputs.list.test {
             assertListHasSublist(expected)
         }
+
+        verify {
+            mockAnalyticsController.logEvent(ViewType.DASHBOARD_SEASON_SCHEDULE, any())
+        }
     }
 
     //endregion
@@ -313,10 +313,6 @@ internal class SeasonViewModelTest: BaseTest() {
 
         sut.outputs.list.test {
             assertValue(expected)
-        }
-
-        verify {
-            mockAnalyticsController.logEvent(ViewType.DASHBOARD_SEASON_DRIVER, any())
         }
     }
 
@@ -358,6 +354,10 @@ internal class SeasonViewModelTest: BaseTest() {
         sut.outputs.list.test {
             assertValue(expected)
         }
+
+        verify {
+            mockAnalyticsController.logEvent(ViewType.DASHBOARD_SEASON_DRIVER, any())
+        }
     }
 
     @Test
@@ -397,10 +397,6 @@ internal class SeasonViewModelTest: BaseTest() {
         sut.outputs.list.test {
             assertValue(expected)
         }
-
-        verify {
-            mockAnalyticsController.logEvent(ViewType.DASHBOARD_SEASON_CONSTRUCTOR, any())
-        }
     }
 
     @Test
@@ -438,6 +434,10 @@ internal class SeasonViewModelTest: BaseTest() {
 
         sut.outputs.list.test {
             assertValue(expected)
+        }
+
+        verify {
+            mockAnalyticsController.logEvent(ViewType.DASHBOARD_SEASON_CONSTRUCTOR, any())
         }
     }
 
