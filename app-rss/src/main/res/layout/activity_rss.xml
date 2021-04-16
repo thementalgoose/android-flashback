@@ -1,103 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/rssBackground">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@null"
-        app:elevation="0dp"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$Behavior">
-
-        <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_scrollFlags="exitUntilCollapsed|scroll|enterAlways">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/titlebar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?attr/rssBackground"
-                android:fitsSystemWindows="false">
-
-                <TextView
-                    android:id="@+id/header"
-                    style="@style/RSS.Toolbar"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:fitsSystemWindows="true"
-                    android:gravity="center"
-                    android:paddingTop="@dimen/paddingMedium"
-                    android:paddingBottom="@dimen/paddingMedium"
-                    app:layout_constraintStart_toEndOf="@id/back"
-                    app:layout_constraintEnd_toStartOf="@id/settings"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="News" />
-
-                <ImageButton
-                    android:id="@+id/back"
-                    android:layout_width="@dimen/toolbarIconSize"
-                    android:layout_height="@dimen/toolbarIconSize"
-                    android:layout_marginStart="@dimen/paddingSmall"
-                    android:layout_marginTop="@dimen/paddingSmall"
-                    android:layout_marginEnd="@dimen/paddingMedium"
-                    android:layout_marginBottom="@dimen/paddingSmall"
-                    android:background="@null"
-                    android:foreground="?attr/selectableItemBackground"
-                    android:contentDescription="@string/ab_rss_back"
-                    android:scaleType="center"
-                    android:src="@drawable/ic_rss_back"
-                    android:tint="?attr/rssTextPrimary"
-                    app:layout_constraintBottom_toBottomOf="@id/header"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/header" />
-
-                <ImageButton
-                    android:id="@+id/settings"
-                    android:layout_width="@dimen/toolbarIconSize"
-                    android:layout_height="@dimen/toolbarIconSize"
-                    android:layout_marginEnd="@dimen/paddingMedium"
-                    android:background="?attr/selectableItemBackground"
-                    android:contentDescription="@string/ab_rss_settings"
-                    android:src="@drawable/ic_rss_settings"
-                    android:tint="?attr/rssTextPrimary"
-                    app:layout_constraintBottom_toBottomOf="@id/back"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/back" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
-
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipeContainer"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/container"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="false"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+        app:defaultNavHost="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navGraph="@navigation/graph_rss" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:fitsSystemWindows="false"
-            android:overScrollMode="never" />
-
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-    <FrameLayout
-        android:id="@+id/webContainer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

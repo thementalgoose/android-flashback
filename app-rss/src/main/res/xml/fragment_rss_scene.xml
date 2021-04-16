@@ -28,7 +28,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/titleExpanded"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/titleExpanded">
+            app:layout_constraintTop_toBottomOf="@id/titleExpanded" >
             <PropertySet app:visibilityMode="ignore" />
         </Constraint>
 
@@ -54,7 +54,7 @@
             android:alpha="1.0"
             app:layout_constraintBottom_toBottomOf="@id/toolbarGuideline"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/menu"
+            app:layout_constraintStart_toEndOf="@id/back"
             app:layout_constraintTop_toTopOf="parent" />
 
     </ConstraintSet>
@@ -79,6 +79,14 @@
                 android:alpha="0.0"
                 app:framePosition="60"
                 app:motionTarget="@+id/titleCollapsed" />
+            <KeyAttribute
+                app:motionTarget="@+id/settings"
+                app:framePosition="100"
+                android:rotation="180" />
+            <KeyAttribute
+                app:motionTarget="@+id/refresh"
+                app:framePosition="100"
+                android:rotation="-180" />
         </KeyFrameSet>
 
     </Transition>

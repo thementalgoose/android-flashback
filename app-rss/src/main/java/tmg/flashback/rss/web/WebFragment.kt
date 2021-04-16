@@ -8,6 +8,9 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import org.koin.android.ext.android.inject
 import tmg.flashback.core.controllers.AnalyticsController
 import tmg.flashback.core.ui.BaseFragment
@@ -20,23 +23,25 @@ import java.lang.RuntimeException
 import java.net.MalformedURLException
 
 @SuppressLint("SetJavaScriptEnabled")
-class WebFragment : BaseFragment<FragmentWebBinding>() {
+class WebFragment : Fragment() {
+
+    // Binding stripped out and nullable due to loading of webpages and fragment lifecycle causing
+    // binding to throw NPE
+    private var binding: FragmentWebBinding? = null
 
     private val repository: RSSRepository by inject()
     private val analyticsManager: AnalyticsController by inject()
 
-    private var backCallback: FragmentRequestBack? = null
-
     private lateinit var pageTitle: String
     private lateinit var pageUrl: String
 
-    override fun inflateView(inflater: LayoutInflater) = FragmentWebBinding.inflate(inflater)
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is FragmentRequestBack) {
-            backCallback = context
-        }
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentWebBinding.inflate(inflater, container, false)
+        return binding!!.root
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,99 +55,119 @@ class WebFragment : BaseFragment<FragmentWebBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.progressBar.progressColour = context?.theme?.getColor(R.attr.colorPrimary) ?: Color.BLUE
-        binding.progressBar.timeLimit = 100
+        binding?.apply {
+            progressBar.progressColour = context?.theme?.getColor(R.attr.colorPrimary) ?: Color.BLUE
+            progressBar.timeLimit = 100
+        }
 
         val webViewClient = FlashbackWebViewClient(
-            domainChanged = { binding.domain.text = it },
-            titleChanged = { binding.title.text = it }
+            domainChanged = { binding?.domain?.text = it },
+            titleChanged = { binding?.title?.text = it }
         )
         val webChromeClient = FlashbackWebChromeClient(
             updateProgressToo = {
                 val result = it.toFloat() / 100f
-                binding.progressBar.animateProgress(result, false) { "" }
-                binding.progressBar.show(result != 1.0f)
+                binding?.progressBar?.animateProgress(result, false) { "" }
+                binding?.progressBar?.show(result != 1.0f)
             }
         )
 
-        binding.webview.webChromeClient = webChromeClient
-        binding.webview.webViewClient = webViewClient
-        binding.webview.settings.loadsImagesAutomatically = true
-        binding.webview.settings.javaScriptEnabled = repository.inAppEnableJavascript
-        binding.webview.scrollBarStyle = View.SCROLLBARS_INSIDE_OVERLAY
+        binding?.apply {
+            webview.webChromeClient = webChromeClient
+            webview.webViewClient = webViewClient
+            webview.settings.loadsImagesAutomatically = true
+            webview.settings.javaScriptEnabled = repository.inAppEnableJavascript
+            webview.scrollBarStyle = View.SCROLLBARS_INSIDE_OVERLAY
 
-        load(pageTitle, pageUrl)
+            load(pageTitle, pageUrl)
 
-        binding.back.setOnClickListener {
-            exitWeb()
-            backCallback?.fragmentBackPressed()
-        }
+            back.setOnClickListener {
+                exitWeb()
+                findNavController().navigateUp()
+            }
 
-        binding.openInBrowser.setOnClickListener {
-            openInBrowser()
-        }
+            openInBrowser.setOnClickListener {
+                openInBrowser()
+            }
 
-        binding.share.setOnClickListener {
-            share()
-        }
+            share.setOnClickListener {
+                share()
+            }
 
-        try {
-            val host = Uri.parse(pageUrl).host
-            host?.let {
-                analyticsManager.viewScreen(
-                    screenName = "Webpage",
-                    clazz = WebFragment::class.java,
-                    params = mapOf(
-                        "host" to host
+            try {
+                val host = Uri.parse(pageUrl).host
+                host?.let {
+                    analyticsManager.viewScreen(
+                        screenName = "Webpage",
+                        clazz = WebFragment::class.java,
+                        params = mapOf(
+                            "host" to host
+                        )
                     )
-                )
+                }
+            } catch (e: MalformedURLException) {
+                /* Do nothing */
+            } catch (e: RuntimeException) {
+                /* Do nothing */
             }
         }
-        catch (e: MalformedURLException) {/* Do nothing */ }
-        catch (e: RuntimeException) {/* Do nothing */ }
+    }
 
+    override fun onDestroyView() {
+        binding = null
+        super.onDestroyView()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putString(keyTitle, binding.title.text.toString())
-        outState.putString(keyUrl, binding.webview.url)
+        binding?.let {
+            outState.putString(keyTitle, it.title.text.toString())
+            outState.putString(keyUrl, it.webview.url)
+        }
         super.onSaveInstanceState(outState)
     }
 
     fun load(pageTitle: String, url: String) {
         this.pageTitle = pageTitle
         this.pageUrl = url
-        binding.webview.loadUrl(pageUrl)
 
-        binding.title.text = pageTitle
-        binding.domain.text = Uri.parse(pageUrl).host ?: "-"
+        binding!!.apply {
+            webview.loadUrl(pageUrl)
+            title.text = pageTitle
+            domain.text = Uri.parse(pageUrl).host ?: "-"
+        }
     }
 
     private fun openInBrowser() {
-        val intent: Intent = Intent(Intent.ACTION_VIEW, Uri.parse(binding.webview.url))
+        val intent: Intent = Intent(Intent.ACTION_VIEW, Uri.parse(binding!!.webview.url))
         startActivity(Intent.createChooser(intent, getString(R.string.choose_browser)))
     }
 
     private fun share() {
         val intent: Intent = Intent(Intent.ACTION_SEND)
         intent.type = "text/plain"
-        intent.putExtra(Intent.EXTRA_TEXT, binding.webview.url)
+        intent.putExtra(Intent.EXTRA_TEXT, binding!!.webview.url)
         startActivity(Intent.createChooser(intent, getString(R.string.choose_share)))
     }
 
     override fun onPause() {
         super.onPause()
-        binding.webview.onPause()
+        binding?.apply {
+            webview.onPause()
+        }
     }
 
     override fun onResume() {
         super.onResume()
-        binding.webview.onResume()
+        binding?.apply {
+            webview.onResume()
+        }
     }
 
     fun exitWeb() {
-        binding.webview.onPause()
-        binding.webview.stopLoading()
+        binding?.apply {
+            webview.onPause()
+            webview.stopLoading()
+        }
     }
 
     companion object {
