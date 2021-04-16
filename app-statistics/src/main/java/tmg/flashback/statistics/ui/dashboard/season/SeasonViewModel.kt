@@ -9,6 +9,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import org.threeten.bp.LocalDate
 import org.threeten.bp.temporal.ChronoUnit
+import tmg.flashback.core.controllers.AnalyticsController
 import tmg.flashback.statistics.constants.Formula1.constructorChampionshipStarts
 import tmg.flashback.core.ui.BaseViewModel
 import tmg.flashback.core.controllers.AppearanceController
@@ -21,6 +22,8 @@ import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.core.utils.StringHolder
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.constants.Formula1.currentSeasonYear
+import tmg.flashback.statistics.constants.ViewType
+import tmg.flashback.statistics.constants.logEvent
 import tmg.flashback.statistics.controllers.NotificationController
 import tmg.flashback.statistics.controllers.NotificationController.Companion.daysUntilDataProvidedBannerMovedToBottom
 import tmg.flashback.statistics.controllers.SeasonController
@@ -70,7 +73,8 @@ class SeasonViewModel(
     private val seasonOverviewRepository: SeasonOverviewRepository,
     private val notificationController: NotificationController,
     private val seasonController: SeasonController,
-    private val networkConnectivityManager: NetworkConnectivityManager
+    private val networkConnectivityManager: NetworkConnectivityManager,
+    private val analyticsController: AnalyticsController
 ): BaseViewModel(), SeasonViewModelInputs, SeasonViewModelOutputs {
 
     private val showBannerAtTop: Boolean = showBannerAtTop()
@@ -113,6 +117,19 @@ class SeasonViewModel(
         )
         .map { (seasonAndHistory, menuItemType) ->
             val (season, history) = seasonAndHistory
+
+            when (menuItemType) {
+                SeasonNavItem.SCHEDULE -> analyticsController.logEvent(ViewType.DASHBOARD_SEASON_SCHEDULE, mapOf(
+                    "season" to season.season.toString()
+                ))
+                SeasonNavItem.DRIVERS -> analyticsController.logEvent(ViewType.DASHBOARD_SEASON_SCHEDULE, mapOf(
+                    "season" to season.season.toString()
+                ))
+                SeasonNavItem.CONSTRUCTORS -> analyticsController.logEvent(ViewType.DASHBOARD_SEASON_SCHEDULE, mapOf(
+                    "season" to season.season.toString()
+                ))
+            }
+
             val appBannerMessage = notificationController.banner
             val list: MutableList<SeasonItem> = mutableListOf()
             if (showBannerAtTop) {

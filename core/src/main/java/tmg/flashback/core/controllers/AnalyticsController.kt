@@ -1,5 +1,6 @@
 package tmg.flashback.core.controllers
 
+import android.os.Bundle
 import android.util.Log
 import tmg.flashback.core.BuildConfig
 import tmg.flashback.core.enums.UserProperty
@@ -16,7 +17,21 @@ class AnalyticsController(
             coreRepository.analytics = value
         }
 
-
+    fun logEvent(key: String, params: Map<String, String> = emptyMap()) {
+        if (enabled) {
+            if (params.isNotEmpty()) {
+                val bundle = Bundle().apply {
+                    for (x in params) {
+                        putString(x.key, x.value)
+                    }
+                }
+                analyticsManager.logEvent(key, bundle)
+            }
+            else {
+                analyticsManager.logEvent(key)
+            }
+        }
+    }
 
     fun setUserProperty(property: UserProperty, value: String) {
         if (enabled) {

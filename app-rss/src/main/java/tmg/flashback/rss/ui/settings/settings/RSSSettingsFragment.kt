@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.core.ui.BaseFragment
 import tmg.flashback.core.ui.settings.SettingsAdapter
+import tmg.flashback.core.utils.ScreenAnalytics
 import tmg.flashback.rss.R
 import tmg.flashback.rss.databinding.FragmentRssSettingsBinding
 import tmg.flashback.rss.ui.settings.RSSSettingsViewModel
@@ -17,6 +18,10 @@ import tmg.utilities.extensions.observeEvent
 class RSSSettingsFragment: BaseFragment<FragmentRssSettingsBinding>() {
 
     private val viewModel: RSSSettingsViewModel by viewModel()
+
+    override val screenAnalytics = ScreenAnalytics(
+        screenName = "Settings - RSS"
+    )
 
     private lateinit var adapter: SettingsAdapter
 

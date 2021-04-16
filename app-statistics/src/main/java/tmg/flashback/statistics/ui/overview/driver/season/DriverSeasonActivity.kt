@@ -8,6 +8,8 @@ import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.core.ui.BaseActivity
 import tmg.flashback.core.utils.ScreenAnalytics
 import tmg.flashback.statistics.R
+import tmg.flashback.statistics.constants.ViewType
+import tmg.flashback.statistics.constants.logEvent
 import tmg.flashback.statistics.databinding.ActivityDriverSeasonBinding
 import tmg.utilities.extensions.loadFragment
 
@@ -37,6 +39,12 @@ class DriverSeasonActivity: BaseActivity() {
             driverId = it.getString(keyDriverId)!!
             driverName = it.getString(keyDriverName)!!
             season = it.getInt(keyDriverSeason)
+
+            analyticsController.logEvent(ViewType.DRIVER_SEASON, mapOf(
+                "driver_id" to driverId,
+                "driver_name" to driverName,
+                "season" to season.toString()
+            ))
 
             viewModel.inputs.setup(driverId, season)
         }

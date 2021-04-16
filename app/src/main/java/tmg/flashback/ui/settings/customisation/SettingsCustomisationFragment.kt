@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.core.ui.settings.SettingsFragment
+import tmg.flashback.core.utils.ScreenAnalytics
 import tmg.flashback.ui.settings.customisation.animation.AnimationSpeedBottomSheetFragment
 import tmg.flashback.ui.settings.customisation.theme.ThemeBottomSheetFragment
 import tmg.utilities.extensions.observe
@@ -12,6 +13,10 @@ import tmg.utilities.extensions.observeEvent
 class SettingsCustomisationFragment: SettingsFragment() {
 
     private val viewModel: SettingsCustomisationViewModel by viewModel()
+
+    override val screenAnalytics = ScreenAnalytics(
+        screenName = "Settings - Customisation"
+    )
 
     override val prefClicked: (prefKey: String) -> Unit = { prefKey ->
         viewModel.inputs.preferenceClicked(prefKey, null)

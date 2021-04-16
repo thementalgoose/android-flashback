@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.core.ui.BaseFragment
+import tmg.flashback.core.utils.ScreenAnalytics
 import tmg.flashback.databinding.FragmentLockoutBinding
 import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.observe
@@ -16,6 +17,10 @@ import tmg.utilities.extensions.views.show
 class ForceUpgradeFragment: BaseFragment<FragmentLockoutBinding>() {
 
     private val viewModel: ForceUpgradeViewModel by viewModel()
+
+    override val screenAnalytics = ScreenAnalytics(
+        screenName = "Force Upgrade"
+    )
 
     override fun inflateView(inflater: LayoutInflater) = FragmentLockoutBinding
         .inflate(inflater)

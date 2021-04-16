@@ -26,7 +26,7 @@ class FirebaseAnalyticsManager(
         mapOfParams: Map<String, String>
     ) {
         if (BuildConfig.DEBUG) {
-            Log.i("Flashback Analytics", "View screen $screenName ($clazz) -> $mapOfParams")
+            Log.i("Flashback Analytics", "View screen $screenName -> $mapOfParams")
         }
         val bundle = Bundle().apply {
             putString(FirebaseAnalytics.Param.SCREEN_NAME, screenName)

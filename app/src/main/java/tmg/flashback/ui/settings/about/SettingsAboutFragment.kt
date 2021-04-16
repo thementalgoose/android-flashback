@@ -10,6 +10,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.constants.App.playStoreUrl
 import tmg.flashback.core.managers.NavigationManager
 import tmg.flashback.core.ui.settings.SettingsFragment
+import tmg.flashback.core.utils.ScreenAnalytics
 import tmg.flashback.ui.settings.privacy.PrivacyPolicyActivity
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
@@ -19,6 +20,9 @@ class SettingsAboutFragment: SettingsFragment() {
     private val viewModel: SettingsAboutViewModel by viewModel()
 
     private val navigationManager: NavigationManager by inject()
+    override val screenAnalytics = ScreenAnalytics(
+        screenName = "Settings - About"
+    )
 
     override val prefClicked: (prefKey: String) -> Unit = { prefKey ->
         viewModel.inputs.preferenceClicked(prefKey, null)
