@@ -122,10 +122,10 @@ class SeasonViewModel(
                 SeasonNavItem.SCHEDULE -> analyticsController.logEvent(ViewType.DASHBOARD_SEASON_SCHEDULE, mapOf(
                     "season" to season.season.toString()
                 ))
-                SeasonNavItem.DRIVERS -> analyticsController.logEvent(ViewType.DASHBOARD_SEASON_SCHEDULE, mapOf(
+                SeasonNavItem.DRIVERS -> analyticsController.logEvent(ViewType.DASHBOARD_SEASON_DRIVER, mapOf(
                     "season" to season.season.toString()
                 ))
-                SeasonNavItem.CONSTRUCTORS -> analyticsController.logEvent(ViewType.DASHBOARD_SEASON_SCHEDULE, mapOf(
+                SeasonNavItem.CONSTRUCTORS -> analyticsController.logEvent(ViewType.DASHBOARD_SEASON_CONSTRUCTOR, mapOf(
                     "season" to season.season.toString()
                 ))
             }
