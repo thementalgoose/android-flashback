@@ -15,8 +15,8 @@ import tmg.flashback.core.utils.ScreenAnalytics
 
 abstract class BaseActivity : AppCompatActivity() {
 
+    protected val analyticsController: AnalyticsController by inject()
     private val coreRepository: CoreRepository by inject()
-    private val analyticsController: AnalyticsController by inject()
     private var swipeDismissInterface: SlidrInterface? = null
 
     /**

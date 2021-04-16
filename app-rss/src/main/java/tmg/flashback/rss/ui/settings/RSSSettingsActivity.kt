@@ -20,9 +20,7 @@ class RSSSettingsActivity : BaseActivity(), NavController.OnDestinationChangedLi
 
     private lateinit var binding: ActivityRssSettingsBinding
 
-    override val screenAnalytics = ScreenAnalytics(
-        screenName = "RSS Settings"
-    )
+    override val screenAnalytics: ScreenAnalytics? = null
 
     private var initialScreen: InitialScreen = SETTINGS
     private var navController: NavController? = null

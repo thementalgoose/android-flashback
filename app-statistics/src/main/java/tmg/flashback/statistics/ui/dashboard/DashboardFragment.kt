@@ -13,6 +13,7 @@ import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.core.managers.NavigationManager
 import tmg.flashback.core.ui.BaseFragment
+import tmg.flashback.core.utils.ScreenAnalytics
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.FragmentDashboardBinding
 import tmg.flashback.statistics.ui.dashboard.list.ListFragment

@@ -5,13 +5,20 @@ import android.view.View
 import com.google.android.material.snackbar.Snackbar
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.core.ui.settings.SettingsFragment
+import tmg.flashback.core.utils.ScreenAnalytics
 import tmg.flashback.statistics.R
+import tmg.flashback.statistics.constants.ViewType
+import tmg.flashback.statistics.constants.logEvent
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 
 class SettingsStatisticsFragment: SettingsFragment() {
 
     private val viewModel: SettingsStatisticsViewModel by viewModel()
+
+    override val screenAnalytics = ScreenAnalytics(
+        screenName = "Settings - Statistics"
+    )
 
     override val prefClicked: (prefKey: String) -> Unit = { prefKey ->
         viewModel.inputs.preferenceClicked(prefKey, null)
@@ -22,6 +29,8 @@ class SettingsStatisticsFragment: SettingsFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        analyticsController.logEvent(ViewType.SETTINGS_STATISTICS)
 
         observe(viewModel.outputs.settings) {
             adapter.list = it

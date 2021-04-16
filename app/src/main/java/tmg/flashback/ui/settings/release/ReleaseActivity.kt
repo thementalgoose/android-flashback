@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.MenuItem
 import tmg.flashback.R
 import tmg.flashback.constants.Releases
+import tmg.flashback.constants.ViewType
+import tmg.flashback.constants.logEvent
 import tmg.flashback.core.ui.BaseActivity
 import tmg.flashback.core.utils.ScreenAnalytics
 import tmg.flashback.databinding.ActivityReleaseNotesBinding
@@ -21,6 +23,8 @@ class ReleaseActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityReleaseNotesBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        analyticsController.logEvent(ViewType.SETTINGS_RELEASE_NOTES)
 
         binding.header.text = getString(R.string.settings_help_release_notes_title)
 

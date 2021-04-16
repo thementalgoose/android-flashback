@@ -11,6 +11,8 @@ import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.core.ui.BaseActivity
 import tmg.flashback.core.utils.ScreenAnalytics
 import tmg.flashback.statistics.R
+import tmg.flashback.statistics.constants.ViewType
+import tmg.flashback.statistics.constants.logEvent
 import tmg.flashback.statistics.databinding.ActivityCircuitInfoBinding
 import tmg.flashback.statistics.ui.race.RaceActivity
 import tmg.utilities.extensions.copyToClipboard
@@ -41,6 +43,11 @@ class CircuitInfoActivity: BaseActivity() {
         intent?.extras?.let {
             circuitId = it.getString(keyCircuit)!!
             circuitName = it.getString(keyCircuitName)!!
+
+            analyticsController.logEvent(ViewType.CIRCUIT, mapOf(
+                "circuit_id" to circuitId,
+                "circuit_name" to circuitName
+            ))
         }
 
         binding.header.text = circuitName

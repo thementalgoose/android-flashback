@@ -1,7 +1,9 @@
 package tmg.flashback.core.controllers
 
+import android.os.Bundle
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.slot
 import io.mockk.verify
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
@@ -19,6 +21,8 @@ internal class AnalyticsControllerTest {
     private fun initSUT() {
         sut = AnalyticsController(mockCoreRepository, mockAnalyticsManager)
     }
+
+    //region enabled
 
     @Test
     fun `enabled reads value from core repository`() {
@@ -44,6 +48,52 @@ internal class AnalyticsControllerTest {
             mockCoreRepository.analytics = false
         }
     }
+
+    //endregion
+
+    //region logEvent
+
+    @Test
+    fun `set event called if enabled is true`() {
+
+        every { mockCoreRepository.analytics } returns true
+        initSUT()
+
+        sut.logEvent("testKey")
+
+        verify {
+            mockAnalyticsManager.logEvent("testKey")
+        }
+    }
+
+    @Test
+    fun `set event called with params if enabled is true`() {
+        every { mockCoreRepository.analytics } returns true
+        initSUT()
+
+        sut.logEvent("testKey", mapOf("test" to "hello"))
+
+        verify {
+            mockAnalyticsManager.logEvent("testKey", any())
+        }
+    }
+
+    @Test
+    fun `set event not called if enabled is false`() {
+
+        every { mockCoreRepository.analytics } returns false
+        initSUT()
+
+        sut.logEvent("testKey")
+
+        verify(exactly = 0) {
+            mockAnalyticsManager.logEvent("testKey")
+        }
+    }
+
+    //endregion
+
+    //region userProperty
 
     @Test
     fun `set user property called if enabled is true`() {
@@ -71,6 +121,10 @@ internal class AnalyticsControllerTest {
         }
     }
 
+    //endregion
+
+    //region viewScreen
+
     @Test
     fun `view screen called if enabled is true`() {
 
@@ -96,4 +150,6 @@ internal class AnalyticsControllerTest {
             mockAnalyticsManager.logViewScreen(any(), any(), any())
         }
     }
+
+    //endregion
 }
