@@ -12,8 +12,10 @@ import tmg.flashback.core.controllers.AnalyticsController
 import tmg.flashback.core.controllers.CrashController
 import tmg.flashback.core.controllers.DeviceController
 import tmg.flashback.core.enums.UserProperty.*
+import tmg.flashback.core.repositories.CoreRepository
 import tmg.flashback.managers.notifications.PushNotificationManager
 import tmg.flashback.statistics.extensions.updateAllWidgets
+import tmg.utilities.extensions.isInDayMode
 
 /**
  * Startup handler
@@ -61,6 +63,7 @@ class FlashbackStartup(
         analyticsController.setUserProperty(DEVICE_MODEL, Build.MODEL)
         analyticsController.setUserProperty(OS_VERSION, Build.VERSION.SDK_INT.toString())
         analyticsController.setUserProperty(APP_VERSION, BuildConfig.VERSION_NAME)
+        analyticsController.setUserProperty(DEVICE_THEME, if (application.isInDayMode()) "day" else "night")
 
         // Update Widgets
         application.updateAllWidgets()
