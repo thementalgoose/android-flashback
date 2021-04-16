@@ -91,7 +91,6 @@ class DashboardFragment: BaseFragment<FragmentDashboardBinding>(),
     //region OverlappingPanelsLayout.PanelStateListener
 
     override fun onPanelStateChange(panelState: PanelState) {
-        Log.i("Flashback", "Panel state change $panelState")
         when (panelState) {
             PanelState.Opened, PanelState.Opening -> binding.navigation.animate()
                 .translationY(binding.navigation.height.toFloat())
@@ -115,6 +114,7 @@ class DashboardFragment: BaseFragment<FragmentDashboardBinding>(),
 
     override fun seasonSelected(season: Int) {
         seasonFragment?.selectSeason(season)
+        closeSeasonList()
     }
 
     override fun closeSeasonList() {

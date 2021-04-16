@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import org.threeten.bp.LocalDate
 import org.threeten.bp.temporal.ChronoUnit
@@ -24,6 +25,7 @@ import tmg.flashback.statistics.controllers.NotificationController
 import tmg.flashback.statistics.controllers.NotificationController.Companion.daysUntilDataProvidedBannerMovedToBottom
 import tmg.flashback.statistics.controllers.SeasonController
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
+import tmg.utilities.extensions.combinePair
 import tmg.utilities.extensions.combineTriple
 import tmg.utilities.extensions.then
 import tmg.utilities.lifecycle.DataEvent
@@ -103,12 +105,14 @@ class SeasonViewModel(
      */
     private val seasonList: Flow<List<SeasonItem>> = season
         .asFlow()
-        .flatMapLatest { seasonOverviewRepository.getSeasonOverview(it) }
-        .combineTriple(
+        .flatMapLatest {
+            seasonOverviewRepository.getSeasonOverview(it).combinePair(currentHistory)
+        }
+        .combinePair(
             currentTabFlow,
-            currentHistory
         )
-        .map { (season, menuItemType, history) ->
+        .map { (seasonAndHistory, menuItemType) ->
+            val (season, history) = seasonAndHistory
             val appBannerMessage = notificationController.banner
             val list: MutableList<SeasonItem> = mutableListOf()
             if (showBannerAtTop) {
