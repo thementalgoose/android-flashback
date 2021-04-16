@@ -53,8 +53,8 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
         }
 
         observe(viewModel.outputs.label) {
-            binding.seasonCollapsed.text = getString(R.string.home_season_arrow, it.msg ?: currentSeasonYear.toString())
-            binding.seasonExpanded.text = getString(R.string.home_season_arrow, it.msg ?: currentSeasonYear.toString())
+            binding.titleCollapsed.text = getString(R.string.home_season_arrow, it.msg ?: currentSeasonYear.toString())
+            binding.titleExpanded.text = getString(R.string.home_season_arrow, it.msg ?: currentSeasonYear.toString())
         }
 
         observe(viewModel.outputs.list) {

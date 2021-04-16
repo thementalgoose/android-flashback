@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/graph_rss"
+    app:startDestination="@id/RSSFragment">
+
+    <fragment
+        android:id="@+id/RSSFragment"
+        android:name="tmg.flashback.rss.ui.RSSFragment"
+        android:label="RSSFragment" >
+        <action
+            android:id="@+id/action_RSSFragment_to_webFragment"
+            app:destination="@id/webFragment"
+            app:enterAnim="@anim/in_from_bottom"
+            app:launchSingleTop="false"
+            app:popExitAnim="@anim/out_to_bottom">
+            <argument
+                android:name="title"
+                android:defaultValue=""
+                app:argType="string" />
+            <argument
+                android:name="url"
+                android:defaultValue=""
+                app:argType="string" />
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/webFragment"
+        android:name="tmg.flashback.rss.web.WebFragment"
+        android:label="WebFragment" />
+</navigation>
