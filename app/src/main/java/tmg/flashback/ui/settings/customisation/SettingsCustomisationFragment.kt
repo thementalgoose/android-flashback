@@ -3,6 +3,8 @@ package tmg.flashback.ui.settings.customisation
 import android.os.Bundle
 import android.view.View
 import org.koin.android.viewmodel.ext.android.viewModel
+import tmg.flashback.constants.ViewType
+import tmg.flashback.constants.logEvent
 import tmg.flashback.core.ui.settings.SettingsFragment
 import tmg.flashback.core.utils.ScreenAnalytics
 import tmg.flashback.ui.settings.customisation.animation.AnimationSpeedBottomSheetFragment
@@ -28,18 +30,22 @@ class SettingsCustomisationFragment: SettingsFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        analyticsController.logEvent(ViewType.SETTINGS_CUSTOMISATION)
+
         observe(viewModel.outputs.settings) {
             adapter.list = it
         }
 
         observeEvent(viewModel.outputs.openTheme) {
             activity?.let {
+                analyticsController.logEvent(ViewType.SETTINGS_CUSTOMISATION_THEME)
                 ThemeBottomSheetFragment().show(it.supportFragmentManager, "THEME")
             }
         }
 
         observeEvent(viewModel.outputs.openAnimationSpeed) {
             activity?.let {
+                analyticsController.logEvent(ViewType.SETTINGS_CUSTOMISATION_ANIMATION)
                 AnimationSpeedBottomSheetFragment().show(it.supportFragmentManager, "ANIMATION_SPEED")
             }
         }

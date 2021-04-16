@@ -10,6 +10,8 @@ import tmg.flashback.core.ui.BaseFragment
 import tmg.flashback.core.ui.settings.SettingsAdapter
 import tmg.flashback.core.utils.ScreenAnalytics
 import tmg.flashback.rss.R
+import tmg.flashback.rss.constants.ViewType
+import tmg.flashback.rss.constants.logEvent
 import tmg.flashback.rss.databinding.FragmentRssSettingsBinding
 import tmg.flashback.rss.ui.settings.RSSSettingsViewModel
 import tmg.utilities.extensions.observe
@@ -29,6 +31,8 @@ class RSSSettingsFragment: BaseFragment<FragmentRssSettingsBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        analyticsController.logEvent(ViewType.SETTINGS_RSS)
 
         adapter = SettingsAdapter(
             prefClicked = viewModel.inputs::clickPref,

@@ -8,6 +8,8 @@ import android.view.View
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.constants.App.playStoreUrl
+import tmg.flashback.constants.ViewType
+import tmg.flashback.constants.logEvent
 import tmg.flashback.core.managers.NavigationManager
 import tmg.flashback.core.ui.settings.SettingsFragment
 import tmg.flashback.core.utils.ScreenAnalytics
@@ -33,6 +35,8 @@ class SettingsAboutFragment: SettingsFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        analyticsController.logEvent(ViewType.SETTINGS_ABOUT)
 
         observe(viewModel.outputs.settings) {
             adapter.list = it
