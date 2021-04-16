@@ -8,7 +8,10 @@ import android.view.MenuItem
 import android.view.View
 import androidx.core.app.ActivityCompat.finishAffinity
 import org.koin.android.viewmodel.ext.android.viewModel
+import tmg.flashback.constants.ViewType
+import tmg.flashback.constants.logEvent
 import tmg.flashback.core.ui.BaseFragment
+import tmg.flashback.core.utils.ScreenAnalytics
 import tmg.flashback.databinding.FragmentLockoutBinding
 import tmg.flashback.ui.SplashActivity
 import tmg.utilities.extensions.fromHtml
@@ -22,11 +25,17 @@ class MaintenanceFragment: BaseFragment<FragmentLockoutBinding>() {
 
     private val viewModel: MaintenanceViewModel by viewModel()
 
+    override val screenAnalytics = ScreenAnalytics(
+        screenName = "Maintenance"
+    )
+
     override fun inflateView(inflater: LayoutInflater) = FragmentLockoutBinding
         .inflate(inflater)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        analyticsController.logEvent(ViewType.MAINTENANCE)
 
         binding.btnLink.setOnClickListener {
             viewModel.inputs.clickLink()

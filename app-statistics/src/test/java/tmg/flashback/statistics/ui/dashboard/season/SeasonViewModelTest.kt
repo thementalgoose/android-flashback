@@ -2,12 +2,14 @@ package tmg.flashback.statistics.ui.dashboard.season
 
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.verify
 import kotlinx.coroutines.flow.flow
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 import org.threeten.bp.LocalDate
+import tmg.flashback.core.controllers.AnalyticsController
 import tmg.flashback.statistics.controllers.NotificationController.Companion.daysUntilDataProvidedBannerMovedToBottom
 import tmg.flashback.core.controllers.AppearanceController
 import tmg.flashback.core.controllers.DeviceController
@@ -21,6 +23,8 @@ import tmg.flashback.core.utils.StringHolder
 import tmg.flashback.core.controllers.FeatureController
 import tmg.flashback.statistics.*
 import tmg.flashback.statistics.constants.Formula1.currentSeasonYear
+import tmg.flashback.statistics.constants.ViewType
+import tmg.flashback.statistics.constants.logEvent
 import tmg.flashback.statistics.controllers.NotificationController
 import tmg.flashback.statistics.controllers.SeasonController
 import tmg.flashback.statistics.testutils.*
@@ -41,6 +45,7 @@ internal class SeasonViewModelTest: BaseTest() {
     private val mockSeasonController: SeasonController = mockk(relaxed = true)
     private val mockNotificationController: NotificationController = mockk(relaxed = true)
     private val mockNetworkConnectivityManager: NetworkConnectivityManager = mockk(relaxed = true)
+    private val mockAnalyticsController: AnalyticsController = mockk(relaxed = true)
 
     @BeforeEach
     internal fun setUp() {
@@ -61,7 +66,8 @@ internal class SeasonViewModelTest: BaseTest() {
             mockSeasonOverviewRepository,
             mockNotificationController,
             mockSeasonController,
-            mockNetworkConnectivityManager
+            mockNetworkConnectivityManager,
+            mockAnalyticsController
         )
     }
 
@@ -280,6 +286,10 @@ internal class SeasonViewModelTest: BaseTest() {
         sut.outputs.list.test {
             assertListHasSublist(expected)
         }
+
+        verify {
+            mockAnalyticsController.logEvent(ViewType.DASHBOARD_SEASON_SCHEDULE, any())
+        }
     }
 
     //endregion
@@ -343,6 +353,10 @@ internal class SeasonViewModelTest: BaseTest() {
 
         sut.outputs.list.test {
             assertValue(expected)
+        }
+
+        verify {
+            mockAnalyticsController.logEvent(ViewType.DASHBOARD_SEASON_DRIVER, any())
         }
     }
 
@@ -420,6 +434,10 @@ internal class SeasonViewModelTest: BaseTest() {
 
         sut.outputs.list.test {
             assertValue(expected)
+        }
+
+        verify {
+            mockAnalyticsController.logEvent(ViewType.DASHBOARD_SEASON_CONSTRUCTOR, any())
         }
     }
 

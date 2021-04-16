@@ -14,7 +14,7 @@ import tmg.flashback.core.utils.ScreenAnalytics
 
 abstract class BaseFragment<T: ViewBinding>: Fragment() {
 
-    private val analyticsController: AnalyticsController by inject()
+    protected val analyticsController: AnalyticsController by inject()
 
     private var _binding: T? = null
     protected val binding: T

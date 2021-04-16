@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.core.ui.BaseActivity
 import tmg.flashback.core.utils.ScreenAnalytics
+import tmg.flashback.statistics.constants.ViewType
+import tmg.flashback.statistics.constants.logEvent
 import tmg.flashback.statistics.databinding.ActivityDriverBinding
 import tmg.flashback.statistics.ui.overview.driver.summary.DriverSummaryAdapter
 import tmg.flashback.statistics.ui.overview.driver.season.DriverSeasonActivity
@@ -38,6 +40,11 @@ class DriverActivity: BaseActivity() {
         intent?.extras?.let {
             driverId = it.getString(keyDriverId)!!
             driverName = it.getString(keyDriverName)!!
+
+            analyticsController.logEvent(ViewType.DRIVER, mapOf(
+                "driver_id" to driverId,
+                "driver_name" to driverName
+            ))
 
             viewModel.inputs.setup(driverId)
         }
