@@ -78,6 +78,14 @@
                 android:alpha="0.0"
                 app:framePosition="60"
                 app:motionTarget="@+id/titleCollapsed" />
+            <KeyAttribute
+                app:motionTarget="@+id/settings"
+                app:framePosition="100"
+                android:rotation="180" />
+            <KeyAttribute
+                app:motionTarget="@+id/refresh"
+                app:framePosition="100"
+                android:rotation="-180" />
         </KeyFrameSet>
 
     </Transition>
