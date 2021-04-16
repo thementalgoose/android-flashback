@@ -53,7 +53,7 @@ class UpNextWidgetProvider : AppWidgetProvider(), KoinComponent {
     }
 
     override fun onUpdate(context: Context?, appWidgetManager: AppWidgetManager?, appWidgetIds: IntArray?) {
-        Log.i("Flashback", "Updating up next widgets [${appWidgetIds.toString()}]")
+        Log.i("Flashback", "Updating up next widgets ${appWidgetIds.contentToString()}")
 
         // Fire and forget remote config sync
         GlobalScope.launch {
