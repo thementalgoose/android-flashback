@@ -1,8 +1,9 @@
 package tmg.flashback.rss.network
 
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import tmg.flashback.rss.BuildConfig
@@ -27,64 +28,71 @@ class RSS(
     private val rssFeedController: RSSFeedController
 ) : RssAPI {
 
+    private val xmlRetrofit: RssXMLRetrofit = buildRetrofit(true)
     private val headers: Map<String, String> = mapOf(
-            "Accept" to "application/rss+xml, application/xml"
+        "Accept" to "application/rss+xml, application/xml"
     )
 
-    override fun getNews(): Flow<Response<List<Article>>> = flow {
-
-        withContext(GlobalScope.coroutineContext) {
-
-            val xmlRetrofit: RssXMLRetrofit = buildRetrofit(true)
-
-            val responses: MutableList<Response<List<Article>>> = mutableListOf()
-            for (x in repository.rssUrls) {
-                try {
-                    val response = xmlRetrofit.getRssXML(headers, x).convert(rssFeedController, x, repository.rssShowDescription)
-                    responses.add(Response(response))
-                } catch (e: XMLStreamException) {
-                    if (BuildConfig.DEBUG) {
-                        e.printStackTrace()
-                    }
-                    responses.add(Response(null, -1))
-                } catch (e: SocketTimeoutException) {
-                    if (BuildConfig.DEBUG) {
-                        e.printStackTrace()
-                    }
-                    responses.add(Response(null, -1))
-                } catch (e: SSLHandshakeException) {
-                    if (BuildConfig.DEBUG) {
-                        e.printStackTrace()
-                    }
-                    responses.add(Response(null, -1))
-                } catch (e: ConnectException) {
-                    if (BuildConfig.DEBUG) {
-                        e.printStackTrace()
-                    }
-                    responses.add(Response(null, -1))
-                } catch (e: RuntimeException) {
-                    if (BuildConfig.DEBUG) {
-                        e.printStackTrace()
-                    }
-                    responses.add(Response(null, -1))
-                } catch (e: UnknownHostException) {
-                    if (BuildConfig.DEBUG) {
-                        e.printStackTrace()
-                    }
-                    responses.add(Response(null, -1))
-                } catch (e: HttpException) {
-                    if (BuildConfig.DEBUG) {
-                        e.printStackTrace()
-                    }
-                    responses.add(Response(null, e.code()))
-                } catch (e: NullPointerException) {
-                    if (BuildConfig.DEBUG) {
-                        e.printStackTrace()
-                    }
-                    responses.add(Response(null, -1))
-                }
+    private fun get(url: String): Flow<Response<List<Article>>> = flow {
+        val result: Response<List<Article>> = try {
+            val response = xmlRetrofit.getRssXML(headers, url)
+                .convert(rssFeedController, url, repository.rssShowDescription)
+            Response(response)
+        } catch (e: XMLStreamException) {
+            if (BuildConfig.DEBUG) {
+                e.printStackTrace()
             }
+            Response(null, -1)
+        } catch (e: SocketTimeoutException) {
+            if (BuildConfig.DEBUG) {
+                e.printStackTrace()
+            }
+            Response(null, -1)
+        } catch (e: SSLHandshakeException) {
+            if (BuildConfig.DEBUG) {
+                e.printStackTrace()
+            }
+            Response(null, -1)
+        } catch (e: ConnectException) {
+            if (BuildConfig.DEBUG) {
+                e.printStackTrace()
+            }
+            Response(null, -1)
+        } catch (e: RuntimeException) {
+            if (BuildConfig.DEBUG) {
+                e.printStackTrace()
+            }
+            Response(null, -1)
+        } catch (e: UnknownHostException) {
+            if (BuildConfig.DEBUG) {
+                e.printStackTrace()
+            }
+            Response(null, -1)
+        } catch (e: HttpException) {
+            if (BuildConfig.DEBUG) {
+                e.printStackTrace()
+            }
+            Response(null, e.code())
+        } catch (e: NullPointerException) {
+            if (BuildConfig.DEBUG) {
+                e.printStackTrace()
+            }
+            Response(null, -1)
+        }
 
+        emit(result)
+    }
+
+    private fun getAll(): Flow<List<Response<List<Article>>>> = flow {
+        combine(repository.rssUrls.map { get(it) }) {
+            it.toList()
+        }.collect {
+            emit(it)
+        }
+    }
+
+    override fun getNews(): Flow<Response<List<Article>>> = getAll()
+        .map { responses ->
             val errors = responses.filter { it.code != 200 }
             if (responses.size != errors.size) {
                 // Only some requests failed, continue with list
@@ -93,23 +101,20 @@ class RSS(
                     .mapNotNull { it.result }
                     .flatten()
                     .sortedByDescending { it.date }
-                emit(Response(validResponses))
-            }
-            else {
+                return@map Response(validResponses)
+            } else {
                 // All failed
                 if (errors.isNotEmpty()) {
                     if (errors.any { it.isNoNetwork }) {
                         @Suppress("RemoveExplicitTypeArguments")
-                        emit(Response<List<Article>>(null, -1))
+                        return@map Response<List<Article>>(null, -1)
                     } else {
-                        emit(errors.first())
+                        return@map errors.first()
                     }
-                }
-                else {
+                } else {
                     @Suppress("RemoveExplicitTypeArguments")
-                    emit(Response<List<Article>>(emptyList()))
+                    return@map Response<List<Article>>(emptyList())
                 }
             }
         }
     }
-}
