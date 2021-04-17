@@ -162,6 +162,10 @@ class UpNextWidgetProvider : AppWidgetProvider(), KoinComponent {
                     remoteView.setViewVisibility(R.id.daystogo, View.VISIBLE)
                 }
 
+                remoteView.setOnClickPendingIntent(R.id.flag, getRefreshWidgetPendingIntent(context, widgetId, appWidgetIds))
+                remoteView.setOnClickPendingIntent(R.id.circuit, getRefreshWidgetPendingIntent(context, widgetId, appWidgetIds))
+                remoteView.setOnClickPendingIntent(R.id.refresh, getRefreshWidgetPendingIntent(context, widgetId, appWidgetIds))
+
                 if (appRepository.widgetOpenApp) {
                     remoteView.setOnClickPendingIntent(R.id.container, getOpenAppPendingIntent(context))
                 }
