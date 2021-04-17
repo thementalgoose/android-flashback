@@ -49,7 +49,7 @@
     <!-- Widgets -->
     <string name="settings_widgets">Widgets</string>
     <string name="settings_widgets_update_all_title">Refresh all widgets</string>
-    <string name="settings_widgets_update_all_description">Manually refresh all active widgets. Widgets usually update every 6 hours</string>
+    <string name="settings_widgets_update_all_description">Manually refresh all active widgets. Widgets usually update every 4 hours</string>
     <string name="settings_widgets_update_all_updated">All widgets refreshed</string>
     <string name="settings_widgets_open_app_on_click_title">Open app when click widget</string>
     <string name="settings_widgets_open_app_on_click_description">Open the app when the widget on the home screen is clicked. If not, the widget will be refreshed only</string>
