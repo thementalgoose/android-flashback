@@ -66,6 +66,10 @@ class RSSFragment: BaseFragment<FragmentRssBinding>() {
             viewModel.inputs.refresh()
         }
 
+        binding.back.setOnClickListener {
+            activity?.finish()
+        }
+
         binding.settings.setOnClickListener {
             openConfigure(InitialScreen.SETTINGS)
         }
