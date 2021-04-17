@@ -1,67 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/f1BackgroundPrimary">
+    android:orientation="vertical">
+    <!-- Linear Layout parent required because of DiscordOverlappingPanels Weirdness -->
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/titlebar"
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp" />
+
+    <androidx.constraintlayout.motion.widget.MotionLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:background="?attr/f1BackgroundPrimary"
-        android:fitsSystemWindows="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layoutDescription="@xml/activity_settings_scene"
+        tools:showPaths="true">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/toolbarGuideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="@dimen/toolbarHeight" />
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/paddingSmall"
+            android:clickable="true"
+            android:contentDescription="@string/ab_dashboard_menu"
+            android:focusable="true"
+            android:foreground="@drawable/rounded_ripple"
+            android:padding="@dimen/paddingSmall"
+            app:layout_constraintBottom_toBottomOf="@id/toolbarGuideline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_back"
+            app:tint="?attr/f1TextPrimary" />
 
         <TextView
-            android:id="@+id/header"
-            style="@style/Text.Toolbar"
+            android:id="@+id/titleCollapsed"
+            style="@style/Text.Toolbar.Collapsed"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/paddingSmall"
+            android:layout_marginEnd="@dimen/paddingMedium"
+            android:alpha="0.0"
+            app:layout_constraintBottom_toBottomOf="@id/toolbarGuideline"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/back"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="2021" />
+
+        <TextView
+            android:id="@+id/titleExpanded"
+            style="@style/Text.Toolbar.Expanded"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fitsSystemWindows="true"
-            android:gravity="center"
-            android:text="@string/settings_title"
-            android:paddingTop="@dimen/paddingMedium"
+            android:layout_marginTop="@dimen/toolbarExpandedSpacer"
+            android:paddingStart="@dimen/paddingMedium"
+            android:paddingTop="@dimen/paddingSmall"
+            android:paddingEnd="@dimen/paddingMedium"
             android:paddingBottom="@dimen/paddingMedium"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
-
-        <ImageButton
-            android:id="@+id/back"
-            android:layout_width="@dimen/toolbarSettingsIcon"
-            android:layout_height="@dimen/toolbarSettingsIcon"
-            android:layout_marginStart="@dimen/paddingSmall"
-            android:layout_marginTop="@dimen/paddingSmall"
-            android:layout_marginEnd="@dimen/paddingMedium"
-            android:layout_marginBottom="@dimen/paddingSmall"
-            android:background="@null"
-            android:contentDescription="@string/settings_title"
-            android:foreground="@drawable/ripple_rounded"
-            android:scaleType="center"
-            android:src="@drawable/ic_back"
-            android:tint="?attr/f1TextPrimary"
-            app:layout_constraintBottom_toBottomOf="@id/header"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/header" />
+            app:layout_constraintTop_toTopOf="@id/toolbarGuideline"
+            tools:text="2021" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fragments"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:defaultNavHost="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/titleExpanded"
+            app:layout_constraintVertical_bias="1.0"
+            app:navGraph="@navigation/graph_settings" />
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragments"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:name="androidx.navigation.fragment.NavHostFragment"
-        app:defaultNavHost="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/titlebar"
-        app:layout_constraintVertical_bias="1.0"
-        app:navGraph="@navigation/graph_settings" />
+    </androidx.constraintlayout.motion.widget.MotionLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
