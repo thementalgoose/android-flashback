@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/paddingSmall"
             android:clickable="true"
-            android:contentDescription="@string/ab_dashboard_menu"
+            android:contentDescription="@string/ab_rss_back"
             android:focusable="true"
             android:foreground="@drawable/rounded_ripple"
             android:padding="@dimen/paddingSmall"
