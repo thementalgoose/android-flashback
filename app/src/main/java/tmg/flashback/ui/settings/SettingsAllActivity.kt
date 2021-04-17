@@ -1,6 +1,7 @@
 package tmg.flashback.ui.settings
 
 import android.os.Bundle
+import androidx.annotation.StringRes
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
@@ -45,6 +46,17 @@ class SettingsAllActivity: BaseActivity(), NavController.OnDestinationChangedLis
     //region OnDestinationChanged
 
     override fun onDestinationChanged(controller: NavController, destination: NavDestination, arguments: Bundle?) {
+        when (destination.id) {
+            R.id.settingsFragment -> updateTitle(R.string.settings_title)
+            R.id.settingsAboutFragment -> updateTitle(R.string.settings_all_about)
+            R.id.settingsCustomisationFragment -> updateTitle(R.string.settings_customisation)
+            R.id.settingsDeviceFragment -> updateTitle(R.string.settings_device)
+            R.id.settingsNotificationFragment -> updateTitle(R.string.settings_notifications_title)
+            R.id.settingsStatisticsFragment -> updateTitle(R.string.settings_statistics)
+            R.id.settingsWidgetFragment -> updateTitle(R.string.settings_widgets)
+            R.id.rssSettingsFragment -> updateTitle(R.string.settings_rss_title)
+            R.id.rssSettingsConfigureFragment -> updateTitle(R.string.settings_rss_configure)
+        }
         swipeDismissLock = when (destination.id) {
             R.id.settingsFragment -> {
                 false
@@ -56,4 +68,9 @@ class SettingsAllActivity: BaseActivity(), NavController.OnDestinationChangedLis
     }
 
     //endregion
+
+    private fun updateTitle(@StringRes title: Int) {
+        binding.titleCollapsed.setText(title)
+        binding.titleExpanded.setText(title)
+    }
 }
