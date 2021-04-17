@@ -3,6 +3,7 @@ package tmg.flashback.rss.ui.settings
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.annotation.IdRes
 import androidx.annotation.StringRes
 import androidx.navigation.NavController
@@ -37,11 +38,12 @@ class RSSSettingsActivity : BaseActivity(), NavController.OnDestinationChangedLi
 
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.fragments) as NavHostFragment
-        navHostFragment.findNavController().apply {
+        val controller = navHostFragment.findNavController().apply {
             val graph = navInflater.inflate(R.navigation.graph_rss_settings)
             graph.startDestination = initialScreen.startFragmentId
             this.graph = graph
         }
+        navController = controller
 
         binding.back.setOnClickListener { onBackPressed() }
     }
