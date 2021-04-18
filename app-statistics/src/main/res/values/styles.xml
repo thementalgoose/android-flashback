@@ -2,7 +2,6 @@
 <resources>
 
 
-
     <!-- =========================================== -->
 
     <!-- =========================================== -->
@@ -74,6 +73,7 @@
         <item name="android:textSize">28sp</item>
         <item name="android:textStyle">bold</item>
     </style>
+
     <style name="Text.UpNext.CountdownLabel" parent="Text">
         <item name="android:fontFamily">@font/montserrat</item>
         <item name="android:textColor">?attr/f1TextSecondary</item>
@@ -105,6 +105,24 @@
 
     <style name="Text.Dashboard.Track.Date" parent="Text">
         <item name="android:textSize">12sp</item>
+    </style>
+
+    <!--#endregion -->
+
+    <!--#region Dashboard - Calendar -->
+
+    <style name="Text.Dashboard.Calendar.Month" parent="Text">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Text.Dashboard.Calendar.Day" parent="Text">
+        <item name="android:textSize">@dimen/textSizeMedium</item>
+    </style>
+
+    <style name="Text.Dashboard.Calendar.DayHeader" parent="Text">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <!--#endregion -->
