@@ -142,6 +142,16 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
      * Publicaly accessible method for changing the display type for the list to be calendar
      *  Called from DashboardActivity as a result of moving nav bar to activity for
      */
+    fun selectCalendar() {
+        analyticsData["extra_view_type"] = SeasonNavItem.CALENDAR.name
+        recordScreenViewed()
+        viewModel.inputs.clickItem(SeasonNavItem.CALENDAR)
+    }
+
+    /**
+     * Publicaly accessible method for changing the display type for the list to be calendar
+     *  Called from DashboardActivity as a result of moving nav bar to activity for
+     */
     fun selectSchedule() {
         analyticsData["extra_view_type"] = SeasonNavItem.SCHEDULE.name
         recordScreenViewed()
