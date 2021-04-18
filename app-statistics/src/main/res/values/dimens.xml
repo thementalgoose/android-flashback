@@ -33,6 +33,8 @@
 
     <dimen name="widgetCircuitWidth">60dp</dimen>
     <dimen name="widgetCircuitHeight">60dp</dimen>
+    <dimen name="widgetRefreshWidth">24dp</dimen>
+    <dimen name="widgetRefreshHeight">24dp</dimen>
     <dimen name="widgetFlagSize">16dp</dimen>
     <dimen name="widgetMinWidth">250dp</dimen>
 

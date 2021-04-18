@@ -62,6 +62,17 @@
             tools:text="days to go" />
 
         <ImageView
+            android:id="@+id/refresh"
+            android:layout_width="@dimen/widgetRefreshWidth"
+            android:layout_height="match_parent"
+            android:layout_alignTop="@id/flag"
+            android:layout_alignBottom="@id/flag"
+            android:layout_alignParentEnd="true"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_widget_refresh"
+            app:tint="#fcfcfc" />
+
+        <ImageView
             android:id="@+id/circuit"
             android:layout_width="@dimen/widgetCircuitWidth"
             android:layout_height="@dimen/widgetCircuitHeight"
@@ -78,6 +89,7 @@
             android:layout_below="@id/circuit"
             android:layout_alignStart="@id/circuit"
             android:layout_alignEnd="@id/circuit"
+            android:layout_marginEnd="@dimen/paddingMedium"
             android:importantForAccessibility="no" />
 
     </RelativeLayout>
