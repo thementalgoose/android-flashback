@@ -44,7 +44,7 @@ class RSSFragment: BaseFragment<FragmentRssBinding>() {
 
         adapter = RSSAdapter(
             openConfigure = {
-                openConfigure()
+                openConfigure(InitialScreen.CONFIGURE)
             },
             articleClicked = { article, _ ->
                 if (repository.newsOpenInExternalBrowser) {
@@ -66,8 +66,12 @@ class RSSFragment: BaseFragment<FragmentRssBinding>() {
             viewModel.inputs.refresh()
         }
 
+        binding.back.setOnClickListener {
+            activity?.finish()
+        }
+
         binding.settings.setOnClickListener {
-            openConfigure()
+            openConfigure(InitialScreen.SETTINGS)
         }
 
         observe(viewModel.outputs.list) {
@@ -95,10 +99,10 @@ class RSSFragment: BaseFragment<FragmentRssBinding>() {
         }
     }
 
-    private fun openConfigure() {
+    private fun openConfigure(screen: InitialScreen) {
         activity?.let {
             startActivityForResult(
-                RSSSettingsActivity.intent(it, InitialScreen.CONFIGURE),
+                RSSSettingsActivity.intent(it, screen),
                 1001
             )
         }
