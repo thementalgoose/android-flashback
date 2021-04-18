@@ -3,7 +3,9 @@ package tmg.flashback.rss.ui.settings
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.annotation.IdRes
+import androidx.annotation.StringRes
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
@@ -34,14 +36,14 @@ class RSSSettingsActivity : BaseActivity(), NavController.OnDestinationChangedLi
             it.getInt(keyInitial).toEnum<InitialScreen>() ?: SETTINGS
         } ?: SETTINGS
 
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragments) as NavHostFragment
-        navHostFragment.findNavController().apply {
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.fragments) as NavHostFragment
+        val controller = navHostFragment.findNavController().apply {
             val graph = navInflater.inflate(R.navigation.graph_rss_settings)
             graph.startDestination = initialScreen.startFragmentId
             this.graph = graph
         }
-
-        binding.header.text = getString(R.string.settings_rss_title)
+        navController = controller
 
         binding.back.setOnClickListener { onBackPressed() }
     }
@@ -58,15 +60,27 @@ class RSSSettingsActivity : BaseActivity(), NavController.OnDestinationChangedLi
 
     //region OnDestinationChanged
 
-    override fun onDestinationChanged(controller: NavController, destination: NavDestination, arguments: Bundle?) {
-        val lock = when (initialScreen) {
+    override fun onDestinationChanged(
+        controller: NavController,
+        destination: NavDestination,
+        arguments: Bundle?
+    ) {
+        when (destination.id) {
+            R.id.rssSettingsFragment -> updateTitle(R.string.settings_rss_title)
+            R.id.rssSettingsConfigureFragment -> updateTitle(R.string.settings_rss_configure)
+        }
+        swipeDismissLock = when (initialScreen) {
             SETTINGS -> destination.id == R.id.rssSettingsConfigureFragment
             CONFIGURE -> false
         }
-        swipeDismissLock = lock
     }
 
     //endregion
+
+    private fun updateTitle(@StringRes title: Int) {
+        binding.titleCollapsed.setText(title)
+        binding.titleExpanded.setText(title)
+    }
 
     companion object {
 

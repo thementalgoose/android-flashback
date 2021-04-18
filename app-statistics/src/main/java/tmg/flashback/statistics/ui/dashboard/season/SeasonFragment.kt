@@ -78,7 +78,6 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
         }
 
         observe(viewModel.outputs.showLoading) {
-            Log.i("Flashback", "Dashboard show loading $it")
             if (it) {
                 showLoading()
             } else {
