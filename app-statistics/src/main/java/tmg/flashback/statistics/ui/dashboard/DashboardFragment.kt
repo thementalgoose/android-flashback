@@ -49,6 +49,10 @@ class DashboardFragment: BaseFragment<FragmentDashboardBinding>(),
 
         binding.navigation.setOnNavigationItemSelectedListener {
             return@setOnNavigationItemSelectedListener when (it.itemId) {
+                R.id.nav_calendar -> {
+                    seasonFragment?.selectCalendar()
+                    true
+                }
                 R.id.nav_schedule -> {
                     seasonFragment?.selectSchedule()
                     true
