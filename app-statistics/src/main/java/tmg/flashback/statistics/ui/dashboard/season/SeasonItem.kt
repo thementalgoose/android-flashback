@@ -2,25 +2,39 @@ package tmg.flashback.statistics.ui.dashboard.season
 
 import androidx.annotation.LayoutRes
 import org.threeten.bp.LocalDate
+import org.threeten.bp.Month
 import tmg.flashback.statistics.R
 import tmg.flashback.core.enums.AnimationSpeed
+import tmg.flashback.data.models.stats.HistoryRound
 import tmg.flashback.data.models.stats.Round
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 
 sealed class SeasonItem(
         @LayoutRes val layoutId: Int
 ) {
+    object CalendarHeader: SeasonItem(R.layout.view_dashboard_season_calendar_header)
+
+    data class CalendarMonth(
+        val month: Month
+    ): SeasonItem(R.layout.view_dashboard_season_calendar_month)
+
+    data class CalendarWeek(
+        val forMonth: Month,
+        val startingDay: LocalDate,
+        val race: HistoryRound?
+    ): SeasonItem(R.layout.view_dashboard_season_calendar_week)
+
     data class Track(
-            val season: Int,
-            val raceName: String,
-            val circuitName: String,
-            val circuitId: String,
-            val raceCountry: String,
-            val raceCountryISO: String,
-            val date: LocalDate,
-            val round: Int,
-            val hasQualifying: Boolean,
-            val hasResults: Boolean
+        val season: Int,
+        val raceName: String,
+        val circuitName: String,
+        val circuitId: String,
+        val raceCountry: String,
+        val raceCountryISO: String,
+        val date: LocalDate,
+        val round: Int,
+        val hasQualifying: Boolean,
+        val hasResults: Boolean
     ) : SeasonItem(R.layout.view_dashboard_season_track)
 
     data class Driver(

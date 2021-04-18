@@ -4,15 +4,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import org.koin.core.component.KoinApiExtension
 import tmg.flashback.statistics.R
-import tmg.flashback.statistics.databinding.ViewDashboardSeasonConstructorBinding
-import tmg.flashback.statistics.databinding.ViewDashboardSeasonDriverBinding
-import tmg.flashback.statistics.databinding.ViewDashboardSeasonTrackBinding
-import tmg.flashback.statistics.ui.dashboard.season.viewholders.ConstructorViewHolder
-import tmg.flashback.statistics.ui.dashboard.season.viewholders.DriverViewHolder
-import tmg.flashback.statistics.ui.dashboard.season.viewholders.TrackViewHolder
+import tmg.flashback.statistics.databinding.*
+import tmg.flashback.statistics.ui.dashboard.season.viewholders.*
 import tmg.flashback.statistics.ui.shared.sync.SyncAdapter
 
+@KoinApiExtension
 class SeasonAdapter(
     private val trackClicked: (track: SeasonItem.Track) -> Unit,
     private val driverClicked: (driver: SeasonItem.Driver) -> Unit,
@@ -41,6 +39,15 @@ class SeasonAdapter(
                 constructorClicked,
                 ViewDashboardSeasonConstructorBinding.inflate(layoutInflater, parent, false)
             )
+            R.layout.view_dashboard_season_calendar_header -> CalendarHeaderViewHolder(
+                ViewDashboardSeasonCalendarHeaderBinding.inflate(layoutInflater, parent, false)
+            )
+            R.layout.view_dashboard_season_calendar_month -> CalendarMonthViewHolder(
+                ViewDashboardSeasonCalendarMonthBinding.inflate(layoutInflater, parent, false)
+            )
+            R.layout.view_dashboard_season_calendar_week -> CalendarWeekViewHolder(
+                ViewDashboardSeasonCalendarWeekBinding.inflate(layoutInflater, parent, false)
+            )
             else -> super.onCreateViewHolder(parent, viewType)
         }
     }
@@ -52,6 +59,8 @@ class SeasonAdapter(
             is SeasonItem.Driver -> (holder as DriverViewHolder).bind(item)
             is SeasonItem.Constructor -> (holder as ConstructorViewHolder).bind(item)
             is SeasonItem.ErrorItem -> bindErrors(holder, item.item)
+            is SeasonItem.CalendarMonth -> (holder as CalendarMonthViewHolder).bind(item)
+            is SeasonItem.CalendarWeek -> (holder as CalendarWeekViewHolder).bind(item)
         }
     }
 
