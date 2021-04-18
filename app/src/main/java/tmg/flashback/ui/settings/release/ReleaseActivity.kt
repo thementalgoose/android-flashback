@@ -15,33 +15,11 @@ class ReleaseActivity : BaseActivity() {
 
     private lateinit var binding: ActivityReleaseNotesBinding
 
-    override val screenAnalytics = ScreenAnalytics(
-        screenName = "Release notes"
-    )
+    override val screenAnalytics: ScreenAnalytics? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityReleaseNotesBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        analyticsController.logEvent(ViewType.SETTINGS_RELEASE_NOTES)
-
-        binding.header.text = getString(R.string.settings_help_release_notes_title)
-
-        val list = Releases
-            .values()
-            .sortedByDescending { it.version }
-            .map { it.release }
-
-        binding.back.setOnClickListener { finish() }
-
-        binding.tvReleaseNotes.text = list.map { getString(it) }.joinToString("<br/><br/>").fromHtml()
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            finish()
-        }
-        return super.onOptionsItemSelected(item)
     }
 }
