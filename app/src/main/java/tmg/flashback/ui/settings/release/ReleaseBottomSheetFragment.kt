@@ -6,16 +6,15 @@ import android.view.View
 import org.koin.android.ext.android.inject
 import tmg.flashback.controllers.ReleaseNotesController
 import tmg.flashback.core.ui.BaseBottomSheetFragment
-import tmg.flashback.databinding.FragmentReleaseNotesBinding
+import tmg.flashback.databinding.FragmentBottomSheetReleaseNotesBinding
 import tmg.utilities.extensions.fromHtml
 
-class ReleaseBottomSheetFragment: BaseBottomSheetFragment<FragmentReleaseNotesBinding>() {
+class ReleaseBottomSheetFragment: BaseBottomSheetFragment<FragmentBottomSheetReleaseNotesBinding>() {
 
     private val releaseNotesController: ReleaseNotesController by inject()
 
     override fun inflateView(inflater: LayoutInflater) =
-        FragmentReleaseNotesBinding.inflate(inflater)
-
+        FragmentBottomSheetReleaseNotesBinding.inflate(inflater)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

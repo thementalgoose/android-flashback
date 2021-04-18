@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/f1BackgroundPrimary"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <View
+            android:id="@+id/pill"
+            android:layout_width="@dimen/bottomSheetPillWidth"
+            android:layout_height="@dimen/bottomSheetPillHeight"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/paddingSmall"
+            android:background="?attr/f1BackgroundSecondary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/bottomSheetTitle"
+            style="@style/Text.BottomSheet.Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/paddingSmall"
+            android:gravity="center"
+            android:text="@string/settings_help_release_notes_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/pill" />
+
+        <TextView
+            android:id="@+id/subtitle"
+            style="@style/Text.BottomSheet.Subtitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/paddingMedium"
+            android:paddingTop="@dimen/paddingSmall"
+            android:paddingEnd="@dimen/paddingMedium"
+            android:paddingBottom="@dimen/paddingNSmall"
+            android:text="@string/release_notes_description"
+            android:gravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bottomSheetTitle" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="?attr/f1BackgroundSecondary" />
+
+
+    <TextView
+        android:id="@+id/tvReleaseNotesDescription"
+        style="@style/Text.ReleaseNotes.Content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/paddingMedium"
+        android:paddingTop="@dimen/paddingSmall"
+        android:paddingEnd="@dimen/paddingMedium"
+        android:paddingBottom="@dimen/paddingXLarge"
+        tools:text="Initial release!" />
+
+</LinearLayout>
