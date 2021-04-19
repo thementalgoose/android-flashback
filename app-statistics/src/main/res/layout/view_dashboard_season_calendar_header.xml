@@ -9,67 +9,67 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingStart="@dimen/paddingMedium"
-        android:paddingEnd="@dimen/paddingMedium"
+        android:paddingEnd="@dimen/paddingLarge"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
+            android:id="@+id/cell1"
             style="@style/Text.Dashboard.Calendar.DayHeader"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:id="@+id/cell1"
             android:gravity="center" />
 
         <TextView
+            android:id="@+id/cell2"
             style="@style/Text.Dashboard.Calendar.DayHeader"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"
-            android:id="@+id/cell2" />
+            android:gravity="center" />
 
         <TextView
+            android:id="@+id/cell3"
             style="@style/Text.Dashboard.Calendar.DayHeader"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"
-            android:id="@+id/cell3" />
+            android:gravity="center" />
 
         <TextView
+            android:id="@+id/cell4"
             style="@style/Text.Dashboard.Calendar.DayHeader"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"
-            android:id="@+id/cell4" />
+            android:gravity="center" />
 
         <TextView
+            android:id="@+id/cell5"
             style="@style/Text.Dashboard.Calendar.DayHeader"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"
-            android:id="@+id/cell5" />
+            android:gravity="center" />
 
         <TextView
+            android:id="@+id/cell6"
             style="@style/Text.Dashboard.Calendar.DayHeader"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"
-            android:id="@+id/cell6" />
+            android:gravity="center" />
 
         <TextView
+            android:id="@+id/cell7"
             style="@style/Text.Dashboard.Calendar.DayHeader"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"
-            android:id="@+id/cell7" />
+            android:gravity="center" />
 
     </LinearLayout>
 
