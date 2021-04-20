@@ -12,4 +12,10 @@ class FeatureController(
     val rssEnabled: Boolean
         get() = configurationController.rss
 
+    /**
+     * Is the calendar dashboard feature enabled
+     */
+    val calendarDashboardEnabled: Boolean
+        get() = configurationController.dashboardCalendar
+
 }

@@ -11,6 +11,7 @@ import com.discord.panels.OverlappingPanelsLayout
 import com.discord.panels.PanelState
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
+import tmg.flashback.core.controllers.FeatureController
 import tmg.flashback.core.managers.NavigationManager
 import tmg.flashback.core.ui.BaseFragment
 import tmg.flashback.core.utils.ScreenAnalytics
@@ -20,12 +21,13 @@ import tmg.flashback.statistics.ui.dashboard.list.ListFragment
 import tmg.flashback.statistics.ui.dashboard.season.SeasonFragment
 import tmg.utilities.extensions.observeEvent
 
-class DashboardFragment: BaseFragment<FragmentDashboardBinding>(),
+class DashboardFragment : BaseFragment<FragmentDashboardBinding>(),
     OverlappingPanelsLayout.PanelStateListener, DashboardNavigationCallback {
 
     private val viewModel: DashboardViewModel by viewModel()
 
     private val navigationManager: NavigationManager by inject()
+    private val featureController: FeatureController by inject()
 
     private val seasonTag: String = "season"
     private val seasonFragment: SeasonFragment?
@@ -47,15 +49,23 @@ class DashboardFragment: BaseFragment<FragmentDashboardBinding>(),
         binding.panels.setEndPanelLockState(lockState = OverlappingPanelsLayout.LockState.CLOSE)
         binding.panels.registerStartPanelStateListeners(this)
 
+        if (!featureController.calendarDashboardEnabled) {
+            binding.navigation.menu.removeItem(R.id.nav_calendar)
+        }
+
         binding.navigation.setOnNavigationItemSelectedListener {
             return@setOnNavigationItemSelectedListener when (it.itemId) {
-                R.id.nav_calendar -> {
-                    seasonFragment?.selectCalendar()
-                    true
-                }
                 R.id.nav_schedule -> {
                     seasonFragment?.selectSchedule()
                     true
+                }
+                R.id.nav_calendar -> {
+                    if (featureController.calendarDashboardEnabled) {
+                        seasonFragment?.selectCalendar()
+                        true
+                    } else {
+                        false
+                    }
                 }
                 R.id.nav_drivers -> {
                     seasonFragment?.selectDrivers()
@@ -86,8 +96,7 @@ class DashboardFragment: BaseFragment<FragmentDashboardBinding>(),
         val transaction: FragmentTransaction = childFragmentManager.beginTransaction()
         if (tag != null) {
             transaction.replace(layoutRes, frag, tag)
-        }
-        else {
+        } else {
             transaction.replace(layoutRes, frag)
         }
         transaction.commit()

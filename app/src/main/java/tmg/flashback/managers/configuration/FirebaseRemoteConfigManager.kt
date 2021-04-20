@@ -39,8 +39,8 @@ class FirebaseRemoteConfigManager(
     private val keyDefaultBanner: String = "banner"
     private val keyForceUpgrade: String = "force_upgrade"
     private val keyDataProvidedBy: String = "data_provided"
-    private val keySearch: String = "search"
     private val keySupportedSeasons: String = "supported_seasons"
+    private val keyDashboardCalendar: String = "dashboard_calendar"
     private val keyRss: String = "rss"
     private val keyRssAddCustom: String = "rss_add_custom"
     private val keyRssSupportedSources: String = "rss_supported_sources"
@@ -80,6 +80,9 @@ class FirebaseRemoteConfigManager(
 
     override val supportedSeasons: Set<Int>
         get() = remoteConfig.getString(keySupportedSeasons).toJson<RemoteConfigAllSeasons>()?.convert() ?: emptySet()
+
+    override val dashboardCalendar: Boolean
+        get() = remoteConfig.getBoolean(keyDashboardCalendar)
 
     //endregion
 

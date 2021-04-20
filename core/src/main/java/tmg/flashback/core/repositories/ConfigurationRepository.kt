@@ -41,6 +41,11 @@ interface ConfigurationRepository {
      */
     val dataProvidedBy: String?
 
+    /**
+     * Dashboard calendar view enabled
+     */
+    val dashboardCalendar: Boolean
+
     //region RSS
 
     /**
