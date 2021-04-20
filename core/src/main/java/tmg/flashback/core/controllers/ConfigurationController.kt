@@ -99,6 +99,11 @@ class ConfigurationController(
      */
     val dataProvidedBy: String? get() = configurationRepository.dataProvidedBy
 
+    /**
+     * The new calendar tab in the dashboard should be enabled or not
+     */
+    val dashboardCalendar: Boolean by lazy { configurationRepository.dashboardCalendar }
+
     //endregion
 
     //region Variables - RSS
