@@ -171,9 +171,10 @@
         <br/>• Adds FP1, FP2, FP3, Qualifying and Race times for up next section
         <br/>• Adds Saudi Arabia track layout
         <br/>• Fixed bugs in up next highlighting]]></string>
-    <string name="release_56"><![CDATA[<b>5.8.4</b>
-        <br/>• Updates layout of schedule view on the home screen
+    <string name="release_57"><![CDATA[<b>5.9.1</b>
+        <br/>• Updates layout of schedule view on the home screen! Added more subtle animations throughout
         <br/>• Reduced time taken to load RSS feed
+        <br/>• Adds a new calendar view to the dashboard
         <br/>• Made it clearer when data is currently unavailable in the app
         <br/>• Bug fixes and backend improvements, mainly around loading feedback]]></string>
 
