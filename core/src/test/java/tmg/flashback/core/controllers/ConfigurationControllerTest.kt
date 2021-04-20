@@ -201,6 +201,19 @@ internal class ConfigurationControllerTest {
         assertEquals(sut.dataProvidedBy, input2)
     }
 
+    @Test
+    fun `dashboard calendar returns cached value`() {
+
+        val input1 = true
+        val input2 = false
+
+        initSUT()
+        every { mockConfigurationRepository.dashboardCalendar } returns input1
+        assertEquals(sut.dashboardCalendar, input1)
+        every { mockConfigurationRepository.dashboardCalendar } returns input2
+        assertEquals(sut.dashboardCalendar, input1)
+    }
+
     //endregion
 
     //region Variables - RSS

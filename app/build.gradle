@@ -189,6 +189,10 @@ task generateRemoteConfigDefaults {
                 value(supportedSeasons)
             }
             entry {
+                key('dashboard_calendar')
+                value(supportedSeasons)
+            }
+            entry {
                 key('rss')
                 value('false')
             }

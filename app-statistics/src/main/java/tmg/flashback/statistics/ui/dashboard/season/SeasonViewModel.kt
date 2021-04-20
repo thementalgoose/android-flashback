@@ -5,10 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
+import org.threeten.bp.DayOfWeek
 import org.threeten.bp.LocalDate
+import org.threeten.bp.Month
 import org.threeten.bp.temporal.ChronoUnit
+import org.threeten.bp.temporal.TemporalAdjusters
 import tmg.flashback.core.controllers.AnalyticsController
 import tmg.flashback.statistics.constants.Formula1.constructorChampionshipStarts
 import tmg.flashback.core.ui.BaseViewModel
@@ -29,7 +31,6 @@ import tmg.flashback.statistics.controllers.NotificationController.Companion.day
 import tmg.flashback.statistics.controllers.SeasonController
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
 import tmg.utilities.extensions.combinePair
-import tmg.utilities.extensions.combineTriple
 import tmg.utilities.extensions.then
 import tmg.utilities.lifecycle.DataEvent
 import tmg.utilities.lifecycle.Event
@@ -119,6 +120,9 @@ class SeasonViewModel(
             val (season, history) = seasonAndHistory
 
             when (menuItemType) {
+                SeasonNavItem.CALENDAR -> analyticsController.logEvent(ViewType.DASHBOARD_SEASON_CALENDAR, mapOf(
+                    "season" to season.season.toString()
+                ))
                 SeasonNavItem.SCHEDULE -> analyticsController.logEvent(ViewType.DASHBOARD_SEASON_SCHEDULE, mapOf(
                     "season" to season.season.toString()
                 ))
@@ -145,6 +149,21 @@ class SeasonViewModel(
             }
 
             when (menuItemType) {
+                SeasonNavItem.CALENDAR -> {
+                    when {
+                        historyRounds.isEmpty() && !networkConnectivityManager.isConnected ->
+                            list.addError(SyncDataItem.NoNetwork)
+                        historyRounds.isEmpty() && season.season == currentSeasonYear ->
+                            list.addError(SyncDataItem.Unavailable(DataUnavailable.EARLY_IN_SEASON))
+                        historyRounds.isEmpty() ->
+                            list.addError(SyncDataItem.Unavailable(DataUnavailable.MISSING_RACE))
+                        else ->
+                            list.addAll(historyRounds.toCalendar(season.season))
+                    }
+                    if (!showBannerAtTop) {
+                        list.add(SeasonItem.ErrorItem(SyncDataItem.ProvidedBy("calendar")))
+                    }
+                }
                 SeasonNavItem.SCHEDULE -> {
                     when {
                         historyRounds.isEmpty() && !networkConnectivityManager.isConnected ->
@@ -154,10 +173,10 @@ class SeasonViewModel(
                         historyRounds.isEmpty() ->
                             list.addError(SyncDataItem.Unavailable(DataUnavailable.MISSING_RACE))
                         else ->
-                            list.addAll(historyRounds.toCalendarList())
+                            list.addAll(historyRounds.toScheduleList())
                     }
                     if (!showBannerAtTop) {
-                        list.add(SeasonItem.ErrorItem(SyncDataItem.ProvidedBy("calendar")))
+                        list.add(SeasonItem.ErrorItem(SyncDataItem.ProvidedBy("schedule")))
                     }
                 }
                 SeasonNavItem.DRIVERS -> {
@@ -273,9 +292,43 @@ class SeasonViewModel(
     }
 
     /**
-     * Extract the calendar of tracks out into a list of home items to display on the home screen
+     * Extract the calendar of events out into a formatted display list
      */
-    private fun List<HistoryRound>.toCalendarList(): List<SeasonItem> {
+    private fun List<HistoryRound>.toCalendar(season: Int): List<SeasonItem> {
+        val list = mutableListOf<SeasonItem>()
+        list.add(SeasonItem.CalendarHeader)
+        Month.values().forEach { month ->
+            var start = LocalDate.of(season, month.value, 1)
+            var end = when {
+                start.dayOfWeek == DayOfWeek.SUNDAY -> {
+                    LocalDate.of(season, month.value, 1)
+                }
+                else -> {
+                    start.with(TemporalAdjusters.next(DayOfWeek.SUNDAY))
+                }
+            }
+
+            list.add(SeasonItem.CalendarMonth(month))
+            list.add(SeasonItem.CalendarWeek(month, start, this.firstOrNull { it.date >= start && it.date <= end }))
+            while (start.month == month) {
+                start = start.with(TemporalAdjusters.next(DayOfWeek.MONDAY))
+                end = end.plusDays(7L)
+
+                if (start.month == month) {
+                    list.add(
+                        SeasonItem.CalendarWeek(month, start, this.firstOrNull { it.date >= start && it.date <= end })
+                    )
+                }
+            }
+        }
+
+        return list
+    }
+
+    /**
+     * Extract the schedule of tracks out into a list of home items to display on the home screen
+     */
+    private fun List<HistoryRound>.toScheduleList(): List<SeasonItem> {
         return this
             .sortedBy { it.round }
             .map {
