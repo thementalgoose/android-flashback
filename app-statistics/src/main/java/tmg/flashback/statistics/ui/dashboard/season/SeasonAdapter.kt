@@ -13,6 +13,7 @@ import tmg.flashback.statistics.ui.shared.sync.SyncAdapter
 @KoinApiExtension
 class SeasonAdapter(
     private val trackClicked: (track: SeasonItem.Track) -> Unit,
+    private val calendarWeekRaceClicked: (track: SeasonItem.CalendarWeek) -> Unit,
     private val driverClicked: (driver: SeasonItem.Driver) -> Unit,
     private val constructorClicked: (constructor: SeasonItem.Constructor) -> Unit
 ): SyncAdapter<SeasonItem>() {
@@ -46,7 +47,8 @@ class SeasonAdapter(
                 ViewDashboardSeasonCalendarMonthBinding.inflate(layoutInflater, parent, false)
             )
             R.layout.view_dashboard_season_calendar_week -> CalendarWeekViewHolder(
-                ViewDashboardSeasonCalendarWeekBinding.inflate(layoutInflater, parent, false)
+                ViewDashboardSeasonCalendarWeekBinding.inflate(layoutInflater, parent, false),
+                calendarWeekRaceClicked
             )
             else -> super.onCreateViewHolder(parent, viewType)
         }

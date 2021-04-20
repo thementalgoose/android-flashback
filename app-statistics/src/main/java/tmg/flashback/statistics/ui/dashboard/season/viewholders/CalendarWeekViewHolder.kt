@@ -1,19 +1,25 @@
 package tmg.flashback.statistics.ui.dashboard.season.viewholders
 
+import android.view.View
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import org.threeten.bp.LocalDate
+import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.LayoutDashboardSeasonCalendarWeekBinding
 import tmg.flashback.statistics.databinding.ViewDashboardSeasonCalendarWeekBinding
+import tmg.flashback.statistics.enums.TrackLayout
 import tmg.flashback.statistics.ui.dashboard.season.SeasonItem
 import tmg.flashback.statistics.ui.util.getFlagResourceAlpha3
+import tmg.utilities.extensions.toEnum
 import tmg.utilities.extensions.views.context
 import tmg.utilities.extensions.views.show
 
 class CalendarWeekViewHolder(
-    private val binding: ViewDashboardSeasonCalendarWeekBinding
-) : RecyclerView.ViewHolder(binding.root) {
+    private val binding: ViewDashboardSeasonCalendarWeekBinding,
+    private val calendarWeekRaceClicked: (track: SeasonItem.CalendarWeek) -> Unit,
+) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
 
-    val cells: List<LayoutDashboardSeasonCalendarWeekBinding> by lazy {
+    private val cells: List<LayoutDashboardSeasonCalendarWeekBinding> by lazy {
         return@lazy listOf(
             binding.cell1,
             binding.cell2,
@@ -24,8 +30,16 @@ class CalendarWeekViewHolder(
             binding.cell7
         )
     }
+    private var hasExpandingContent: Boolean = false
+    private lateinit var item: SeasonItem.CalendarWeek
+
+    init {
+        binding.calendar.setOnClickListener(this)
+        binding.raceData.setOnClickListener(this)
+    }
 
     fun bind(item: SeasonItem.CalendarWeek) {
+        this.item = item
 
         binding.highlight.show(item.race != null)
 
@@ -54,14 +68,30 @@ class CalendarWeekViewHolder(
                 cells[x].day.alpha = 1.0f
             }
 
+            if (date == LocalDate.now()) {
+                cells[x].day.setBackgroundResource(R.drawable.dashboard_calendar_current_day)
+            }
+            else {
+                cells[x].day.setBackgroundResource(0)
+            }
+
             lastSimulatedDay = day
         }
 
         if (lastSimulatedDay > lastDayOfMonth.dayOfMonth || item.race == null) {
+            hasExpandingContent = false
             binding.highlight.alpha = alphaHighlightEnabled
             binding.highlight.show(false)
             binding.flag.show(false)
+
+            binding.raceData.show(false)
+            binding.circuit.setImageResource(0)
+            binding.circuitName.text = ""
+            binding.raceName.text = ""
+            binding.round.text = ""
+
         } else {
+            hasExpandingContent = true
             if (item.race.date < LocalDate.now()) {
                 binding.highlight.alpha = alphaHighlightDisabled
             }
@@ -71,6 +101,16 @@ class CalendarWeekViewHolder(
             binding.highlight.show(true)
             binding.flag.show(true)
             binding.flag.setImageResource(context.getFlagResourceAlpha3(item.race.countryISO))
+
+            binding.raceData.show(false)
+            val track = TrackLayout.getOverride(item.race.season, item.race.raceName) ?: item.race.circuitId.toEnum { it.circuitId }
+            binding.circuit.show(track != null)
+            if (track != null) {
+                binding.circuit.setImageResource(track.icon)
+            }
+            binding.circuitName.text = "${item.race.circuitName}, ${item.race.country}"
+            binding.raceName.text = item.race.raceName
+            binding.round.text = "#${item.race.round}"
         }
     }
 
@@ -79,5 +119,23 @@ class CalendarWeekViewHolder(
         private const val alphaHighlightDisabled = 0.2f
 
         private const val textAlpha = 0.35f
+    }
+
+    override fun onClick(p0: View?) {
+        when (p0) {
+            binding.calendar -> {
+                if (hasExpandingContent) {
+                    if (binding.raceData.isVisible) {
+                        binding.raceData.show(false)
+                    }
+                    else {
+                        binding.raceData.show(true)
+                    }
+                }
+            }
+            binding.raceData -> {
+                calendarWeekRaceClicked(item)
+            }
+        }
     }
 }
