@@ -8,7 +8,10 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
+import org.threeten.bp.DayOfWeek
 import org.threeten.bp.LocalDate
+import org.threeten.bp.Month
+import org.threeten.bp.temporal.TemporalAdjusters
 import tmg.flashback.core.controllers.AnalyticsController
 import tmg.flashback.statistics.controllers.NotificationController.Companion.daysUntilDataProvidedBannerMovedToBottom
 import tmg.flashback.core.controllers.AppearanceController
@@ -129,7 +132,7 @@ internal class SeasonViewModelTest: BaseTest() {
     //region Defaults
 
     @Test
-    fun `defaults to calendar type by default`() = coroutineTest {
+    fun `defaults to schedule type by default`() = coroutineTest {
 
         initSUT()
 
@@ -190,6 +193,110 @@ internal class SeasonViewModelTest: BaseTest() {
 
     //endregion
 
+    //region Schedule
+
+    @Test
+    fun `when home type is schedule and history rounds is empty and network not connected, show no network error`() = coroutineTest {
+
+        val historyListWithEmptyRound = History(2019, null, emptyList())
+
+        every { mockNetworkConnectivityManager.isConnected } returns false
+        every { mockHistoryRepository.historyFor(any()) } returns flow { emit(historyListWithEmptyRound) }
+
+        val expected = listOf<SeasonItem>(
+            SeasonItem.ErrorItem(SyncDataItem.ProvidedBy()),
+            SeasonItem.ErrorItem(SyncDataItem.NoNetwork)
+        )
+
+        initSUT()
+
+        sut.outputs.list.test {
+            assertValue(expected)
+        }
+    }
+
+    @Test
+    fun `when home type is schedule and history rounds is empty and network is connected and year is current year, show early in season error`() = coroutineTest {
+
+        val historyItemWithEmptyRound = History(currentSeasonYear, null, emptyList())
+
+        every { mockSeasonOverviewRepository.getSeasonOverview(any()) } returns flow { emit(mockSeason.copy(season = currentSeasonYear)) }
+        every { mockHistoryRepository.historyFor(any()) } returns flow { emit(historyItemWithEmptyRound) }
+
+        val expected = listOf<SeasonItem>(
+            SeasonItem.ErrorItem(SyncDataItem.ProvidedBy()),
+            SeasonItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.EARLY_IN_SEASON))
+        )
+
+        initSUT()
+
+        sut.outputs.list.test {
+            assertValue(expected)
+        }
+    }
+
+    @Test
+    fun `when home type is schedule and history rounds is empty and network is connected and year is in the past, show missing race data message`() = coroutineTest {
+
+        val historyListWithEmptyRound = History(2019, null, emptyList())
+
+        every { mockHistoryRepository.historyFor(any()) } returns flow { emit(historyListWithEmptyRound) }
+
+        val expected = listOf<SeasonItem>(
+            SeasonItem.ErrorItem(SyncDataItem.ProvidedBy()),
+            SeasonItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.MISSING_RACE))
+        )
+
+        initSUT()
+
+        sut.outputs.list.test {
+            assertValue(expected)
+        }
+    }
+
+    @Test
+    fun `when home type is schedule show calendar history list`() = coroutineTest {
+
+        val expected = listOf<SeasonItem>(
+            SeasonItem.Track(
+                season = mockHistoryRound1.season,
+                round = mockHistoryRound1.round,
+                raceName = mockHistoryRound1.raceName,
+                circuitId = mockHistoryRound1.circuitId,
+                circuitName = mockHistoryRound1.circuitName,
+                raceCountry = mockHistoryRound1.country,
+                raceCountryISO = mockHistoryRound1.countryISO,
+                date = mockHistoryRound1.date,
+                hasQualifying = mockHistoryRound1.hasQualifying,
+                hasResults = mockHistoryRound1.hasResults
+            ),
+            SeasonItem.Track(
+                season = mockHistoryRound2.season,
+                round = mockHistoryRound2.round,
+                raceName = mockHistoryRound2.raceName,
+                circuitId = mockHistoryRound2.circuitId,
+                circuitName = mockHistoryRound2.circuitName,
+                raceCountry = mockHistoryRound2.country,
+                raceCountryISO = mockHistoryRound2.countryISO,
+                date = mockHistoryRound2.date,
+                hasQualifying = mockHistoryRound2.hasQualifying,
+                hasResults = mockHistoryRound2.hasResults
+            )
+        )
+
+        initSUT()
+
+        sut.outputs.list.test {
+            assertListHasSublist(expected)
+        }
+
+        verify {
+            mockAnalyticsController.logEvent(ViewType.DASHBOARD_SEASON_SCHEDULE, any())
+        }
+    }
+
+    //endregion
+
     //region Calendar
 
     @Test
@@ -201,11 +308,13 @@ internal class SeasonViewModelTest: BaseTest() {
         every { mockHistoryRepository.historyFor(any()) } returns flow { emit(historyListWithEmptyRound) }
 
         val expected = listOf<SeasonItem>(
-                SeasonItem.ErrorItem(SyncDataItem.ProvidedBy()),
-                SeasonItem.ErrorItem(SyncDataItem.NoNetwork)
+            SeasonItem.ErrorItem(SyncDataItem.ProvidedBy()),
+            SeasonItem.ErrorItem(SyncDataItem.NoNetwork)
         )
 
         initSUT()
+        sut.inputs.clickItem(SeasonNavItem.CALENDAR)
+        advanceUntilIdle()
 
         sut.outputs.list.test {
             assertValue(expected)
@@ -221,11 +330,13 @@ internal class SeasonViewModelTest: BaseTest() {
         every { mockHistoryRepository.historyFor(any()) } returns flow { emit(historyItemWithEmptyRound) }
 
         val expected = listOf<SeasonItem>(
-                SeasonItem.ErrorItem(SyncDataItem.ProvidedBy()),
-                SeasonItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.EARLY_IN_SEASON))
+            SeasonItem.ErrorItem(SyncDataItem.ProvidedBy()),
+            SeasonItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.EARLY_IN_SEASON))
         )
 
         initSUT()
+        sut.inputs.clickItem(SeasonNavItem.CALENDAR)
+        advanceUntilIdle()
 
         sut.outputs.list.test {
             assertValue(expected)
@@ -240,11 +351,13 @@ internal class SeasonViewModelTest: BaseTest() {
         every { mockHistoryRepository.historyFor(any()) } returns flow { emit(historyListWithEmptyRound) }
 
         val expected = listOf<SeasonItem>(
-                SeasonItem.ErrorItem(SyncDataItem.ProvidedBy()),
-                SeasonItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.MISSING_RACE))
+            SeasonItem.ErrorItem(SyncDataItem.ProvidedBy()),
+            SeasonItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.MISSING_RACE))
         )
 
         initSUT()
+        sut.inputs.clickItem(SeasonNavItem.CALENDAR)
+        advanceUntilIdle()
 
         sut.outputs.list.test {
             assertValue(expected)
@@ -254,41 +367,39 @@ internal class SeasonViewModelTest: BaseTest() {
     @Test
     fun `when home type is calendar show calendar history list`() = coroutineTest {
 
-        val expected = listOf<SeasonItem>(
-                SeasonItem.Track(
-                        season = mockHistoryRound1.season,
-                        round = mockHistoryRound1.round,
-                        raceName = mockHistoryRound1.raceName,
-                        circuitId = mockHistoryRound1.circuitId,
-                        circuitName = mockHistoryRound1.circuitName,
-                        raceCountry = mockHistoryRound1.country,
-                        raceCountryISO = mockHistoryRound1.countryISO,
-                        date = mockHistoryRound1.date,
-                        hasQualifying = mockHistoryRound1.hasQualifying,
-                        hasResults = mockHistoryRound1.hasResults
-                ),
-                SeasonItem.Track(
-                        season = mockHistoryRound2.season,
-                        round = mockHistoryRound2.round,
-                        raceName = mockHistoryRound2.raceName,
-                        circuitId = mockHistoryRound2.circuitId,
-                        circuitName = mockHistoryRound2.circuitName,
-                        raceCountry = mockHistoryRound2.country,
-                        raceCountryISO = mockHistoryRound2.countryISO,
-                        date = mockHistoryRound2.date,
-                        hasQualifying = mockHistoryRound2.hasQualifying,
-                        hasResults = mockHistoryRound2.hasResults
-                )
-        )
+        val expected = expectedFullCalendar(2019)
 
         initSUT()
+        sut.inputs.clickItem(SeasonNavItem.CALENDAR)
+        advanceUntilIdle()
 
         sut.outputs.list.test {
-            assertListHasSublist(expected)
+            assertValue(listOf(SeasonItem.ErrorItem(SyncDataItem.ProvidedBy())) + expected)
         }
 
         verify {
-            mockAnalyticsController.logEvent(ViewType.DASHBOARD_SEASON_SCHEDULE, any())
+            mockAnalyticsController.logEvent(ViewType.DASHBOARD_SEASON_CALENDAR, any())
+        }
+    }
+
+    @Test
+    fun `when home type is calendar show race in expected calendar entry`() = coroutineTest {
+
+        val historyRound1 = mockHistoryRound1.copy(date = LocalDate.of(2019, 7, 7))
+        val historyRound2 = mockHistoryRound2.copy(date = LocalDate.of(2019, 10, 13))
+        every { mockHistoryRepository.historyFor(any()) } returns flow { emit(mockHistory.copy(rounds = listOf(historyRound1, historyRound2))) }
+
+        initSUT()
+        sut.inputs.clickItem(SeasonNavItem.CALENDAR)
+        advanceUntilIdle()
+
+        sut.outputs.list.test {
+            assertListMatchesItem { it is SeasonItem.CalendarWeek && it.race == historyRound1 && it.forMonth == Month.JULY }
+            assertListMatchesItem { it is SeasonItem.CalendarWeek && it.race == historyRound2 && it.forMonth == Month.OCTOBER }
+        }
+
+        verify {
+            mockAnalyticsController.logEvent(ViewType.DASHBOARD_SEASON_CALENDAR, any())
         }
     }
 
@@ -501,7 +612,7 @@ internal class SeasonViewModelTest: BaseTest() {
         initSUT()
 
         sut.outputs.list.test {
-            assertListHasLastItem(SeasonItem.ErrorItem(SyncDataItem.ProvidedBy("calendar")))
+            assertListHasLastItem(SeasonItem.ErrorItem(SyncDataItem.ProvidedBy("schedule")))
         }
     }
 
@@ -520,6 +631,29 @@ internal class SeasonViewModelTest: BaseTest() {
     //endregion
 
 
+    //region Mock Data - Calendar
+
+    private fun expectedFullCalendar(season: Int = 2019): List<SeasonItem> {
+        // Build up date
+        return listOf(SeasonItem.CalendarHeader) + Month
+            .values()
+            .map { month ->
+                val list = mutableListOf<SeasonItem>()
+                list.add(SeasonItem.CalendarMonth(month))
+                list.add(SeasonItem.CalendarWeek(month, LocalDate.of(season, month.value, 1), null))
+                val nextMonday = LocalDate.of(season, month.value, 1).with(TemporalAdjusters.next(DayOfWeek.MONDAY))
+                for (x in 0 until LocalDate.of(season, month.value, 1).with(TemporalAdjusters.lastDayOfMonth()).dayOfMonth step 7) {
+                    val date = nextMonday.plusDays(x.toLong())
+                    if (date.month == month) {
+                        list.add(SeasonItem.CalendarWeek(month, date, null))
+                    }
+                }
+                return@map list
+            }
+            .flatten()
+    }
+
+    //endregion
 
     //region Mock Data - Drivers
 

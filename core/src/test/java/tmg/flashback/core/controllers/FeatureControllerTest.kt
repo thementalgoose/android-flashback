@@ -35,4 +35,24 @@ internal class FeatureControllerTest {
     }
 
     //endregion
+
+    //region Dashboard Calendar
+
+    @Test
+    fun `dashboard calendar enabled`() {
+        every { mockConfigurationController.dashboardCalendar } returns true
+        initSUT()
+        assertTrue(sut.calendarDashboardEnabled)
+        verify { mockConfigurationController.dashboardCalendar }
+    }
+
+    @Test
+    fun `dashboard calendar disabled`() {
+        every { mockConfigurationController.dashboardCalendar } returns false
+        initSUT()
+        assertFalse(sut.calendarDashboardEnabled)
+        verify { mockConfigurationController.dashboardCalendar }
+    }
+
+    //endregion
 }
