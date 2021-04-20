@@ -10,6 +10,7 @@ import android.widget.ProgressBar
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
+import org.threeten.bp.LocalDate
 import tmg.flashback.core.ui.BaseFragment
 import tmg.flashback.core.utils.ScreenAnalytics
 import tmg.flashback.statistics.R
@@ -54,7 +55,23 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
         adapter = SeasonAdapter(
             trackClicked = viewModel.inputs::clickTrack,
             driverClicked = viewModel.inputs::clickDriver,
-            constructorClicked = viewModel.inputs::clickConstructor
+            constructorClicked = viewModel.inputs::clickConstructor,
+            calendarWeekRaceClicked = { week ->
+                week.race?.let {
+                    viewModel.inputs.clickTrack(SeasonItem.Track(
+                        season = it.season,
+                        raceName = it.raceName,
+                        circuitName = it.circuitName,
+                        circuitId = it.circuitId,
+                        raceCountry = it.country,
+                        raceCountryISO = it.countryISO,
+                        date = it.date,
+                        round = it.round,
+                        hasQualifying = it.hasQualifying,
+                        hasResults = it.hasResults,
+                    ))
+                }
+            }
         )
         binding.dataList.layoutManager = LinearLayoutManager(context)
         binding.dataList.adapter = adapter

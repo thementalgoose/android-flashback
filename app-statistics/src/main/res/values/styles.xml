@@ -125,6 +125,20 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="Text.Dashboard.Calendar.Race.Name" parent="Text">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Text.Dashboard.Calendar.Race.CircuitName" parent="Text">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="Text.Dashboard.Calendar.Race.Round" parent="Text">
+        <item name="android:textSize">22sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <!--#endregion -->
 
     <!-- =========================================== -->
