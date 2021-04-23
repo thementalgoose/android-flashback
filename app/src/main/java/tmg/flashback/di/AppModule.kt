@@ -55,7 +55,7 @@ val appModule = module {
     single<AppShortcutManager> { AndroidAppShortcutManager(get()) }
     single<ConfigurationManager> { FirebaseRemoteConfigManager(get()) }
     single<PushNotificationManager> { FirebasePushNotificationManager(get(), get()) }
-    single<StatisticsExternalNavigationManager> { FlashbackNavigationManager(get(), get()) }
+    single<StatisticsExternalNavigationManager> { FlashbackNavigationManager(get(), get(), get()) }
     single<WidgetManager> { AppWidgetManager(get()) }
 
     // Controllers
