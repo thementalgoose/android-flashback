@@ -19,7 +19,7 @@ val coreModule = module {
     single<AnalyticsManager> { FirebaseAnalyticsManager(get()) }
     single<BuildConfigManager> { AppBuildConfigManager() }
     single<CrashManager> { FirebaseCrashManager() }
-    single<NavigationManager> { FlashbackNavigationManager(get(), get()) }
+    single<NavigationManager> { FlashbackNavigationManager(get(), get(), get()) }
     single<NetworkConnectivityManager> { AndroidNetworkConnectivityManager(get()) }
 
     // Controllers

@@ -13,13 +13,14 @@ import tmg.flashback.R
 object AboutThisAppConfig {
 
     // Configuration item
-    fun configuration(context: Context, isDarkMode: Boolean = false) = AboutThisAppConfiguration(
+    fun configuration(context: Context, isDarkMode: Boolean = false, deviceUdid: String) = AboutThisAppConfiguration(
             themeRes = if (isDarkMode) R.style.DarkTheme_AboutThisApp else R.style.LightTheme_AboutThisApp,
             name = context.getString(R.string.about_name),
             nameDesc = context.getString(R.string.about_desc),
             imageUrl = "https://lh3.googleusercontent.com/l7T59nmp3joS3CUWEw-_mfmZAwXMHmiikR6uvQLFTXGy1-BlUICXxJZ9UCcvQlWhvQ",
             subtitle = context.getString(R.string.dependency_thank_you),
             footnote = context.getString(R.string.about_additional),
+            guid = deviceUdid,
             appVersion = BuildConfig.VERSION_NAME,
             appName = context.getString(R.string.app_name),
             appPackageName = "tmg.flashback",
