@@ -11,6 +11,7 @@ import tmg.flashback.controllers.ReleaseNotesController
 import tmg.flashback.core.controllers.AppearanceController
 import tmg.flashback.core.extensions.isLightMode
 import tmg.flashback.core.managers.NavigationManager
+import tmg.flashback.core.repositories.CoreRepository
 import tmg.flashback.rss.ui.RSSActivity
 import tmg.flashback.statistics.manager.StatisticsExternalNavigationManager
 import tmg.flashback.ui.admin.maintenance.MaintenanceActivity
@@ -20,7 +21,8 @@ import tmg.flashback.ui.settings.release.ReleaseBottomSheetFragment
 
 class FlashbackNavigationManager(
     private val appearanceController: AppearanceController,
-    private val releaseNotesController: ReleaseNotesController
+    private val releaseNotesController: ReleaseNotesController,
+    private val coreRepository: CoreRepository
 ): NavigationManager, StatisticsExternalNavigationManager {
 
     //region NavigationManager
@@ -28,7 +30,11 @@ class FlashbackNavigationManager(
     override fun getAboutThisAppIntent(context: Context): Intent {
         return AboutThisAppActivity.intent(
                 context = context,
-                configuration = AboutThisAppConfig.configuration(context, !appearanceController.currentTheme.isLightMode(context))
+                configuration = AboutThisAppConfig.configuration(
+                    context = context,
+                    isDarkMode = !appearanceController.currentTheme.isLightMode(context),
+                    deviceUdid = coreRepository.deviceUdid
+                )
         )
     }
 
