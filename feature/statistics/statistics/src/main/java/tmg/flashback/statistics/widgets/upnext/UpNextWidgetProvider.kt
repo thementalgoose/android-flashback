@@ -25,7 +25,7 @@ import tmg.flashback.core.controllers.ConfigurationController
 import tmg.flashback.statistics.enums.TrackLayout
 import tmg.flashback.statistics.controllers.UpNextController
 import tmg.flashback.core.controllers.CrashController
-import tmg.flashback.device.buildconfig.BuildConfigManager
+import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.core.managers.NavigationManager
 import tmg.flashback.core.model.UpNextSchedule
 import tmg.flashback.data.repositories.AppRepository
@@ -40,7 +40,7 @@ class UpNextWidgetProvider : AppWidgetProvider(), KoinComponent {
 
     private val crashController: CrashController by inject()
     private val upNextController: UpNextController by inject()
-    private val buildConfigManager: tmg.flashback.device.buildconfig.BuildConfigManager by inject()
+    private val buildConfigManager: BuildConfigManager by inject()
     private val navigationManager: NavigationManager by inject()
 
     private val configController: ConfigurationController by inject()

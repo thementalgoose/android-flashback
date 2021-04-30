@@ -1,4 +1,4 @@
-package tmg.flashback.device.buildconfig
+package tmg.flashback.device.managers
 
 /**
  * Wrapper around the BuildConfig that's generated at compile time

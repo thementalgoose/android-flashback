@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import tmg.flashback.core.ui.BaseViewModel
 import tmg.flashback.core.controllers.ConfigurationController
-import tmg.flashback.device.buildconfig.BuildConfigManager
+import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.data.db.DataRepository
 import tmg.flashback.statistics.BuildConfig
 import tmg.flashback.statistics.extensions.updateAllWidgets
@@ -39,7 +39,7 @@ interface DashboardViewModelOutputs {
 class DashboardViewModel(
     private val applicationContext: Context,
     private val dataRepository: DataRepository,
-    private val buildConfigManager: tmg.flashback.device.buildconfig.BuildConfigManager,
+    private val buildConfigManager: BuildConfigManager,
     private val configurationController: ConfigurationController
 ): BaseViewModel(), DashboardViewModelInputs, DashboardViewModelOutputs {
 

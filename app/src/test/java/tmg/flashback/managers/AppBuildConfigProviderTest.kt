@@ -3,14 +3,14 @@ package tmg.flashback.di.device
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
-import tmg.flashback.device.buildconfig.BuildConfigManager
+import tmg.flashback.device.managers.BuildConfigManager
 
 internal class BuildConfigProviderTest {
 
-    lateinit var sut: tmg.flashback.device.buildconfig.BuildConfigManager
+    lateinit var sut: BuildConfigManager
 
     private fun initSUT(versionCode: Int) {
-        sut = object : tmg.flashback.device.buildconfig.BuildConfigManager {
+        sut = object : BuildConfigManager {
             override val applicationId: String
                 get() = "tmg.flashback"
             override val versionCode: Int

@@ -1,7 +1,7 @@
 package tmg.flashback.controllers
 
 import tmg.flashback.constants.Releases
-import tmg.flashback.device.buildconfig.BuildConfigManager
+import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.core.repositories.CoreRepository
 
 /**
@@ -9,7 +9,7 @@ import tmg.flashback.core.repositories.CoreRepository
  */
 class ReleaseNotesController(
     private val coreRepository: CoreRepository,
-    private val buildConfigManager: tmg.flashback.device.buildconfig.BuildConfigManager
+    private val buildConfigManager: BuildConfigManager
 ) {
 
     /**

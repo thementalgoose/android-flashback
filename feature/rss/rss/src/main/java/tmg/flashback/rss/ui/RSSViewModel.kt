@@ -8,7 +8,7 @@ import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.*
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
-import tmg.flashback.core.managers.NetworkConnectivityManager
+import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.core.ui.BaseViewModel
 import tmg.flashback.rss.prefs.RSSRepository
 import tmg.flashback.rss.repo.RssAPI

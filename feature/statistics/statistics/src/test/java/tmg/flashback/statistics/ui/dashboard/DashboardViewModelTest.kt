@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.flow
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.core.controllers.ConfigurationController
-import tmg.flashback.device.buildconfig.BuildConfigManager
+import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.data.db.DataRepository
 import tmg.flashback.data.models.AppLockout
 import tmg.flashback.statistics.testutils.BaseTest
@@ -22,7 +22,7 @@ internal class DashboardViewModelTest: BaseTest() {
 
     private val mockContext: Context = mockk(relaxed = true)
     private val mockDataRepository: DataRepository = mockk(relaxed = true)
-    private val mockBuildConfigManager: tmg.flashback.device.buildconfig.BuildConfigManager = mockk(relaxed = true)
+    private val mockBuildConfigManager: BuildConfigManager = mockk(relaxed = true)
     private val mockConfigurationController: ConfigurationController = mockk(relaxed = true)
 
     @BeforeEach

@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 import org.threeten.bp.Year
-import tmg.flashback.core.managers.NetworkConnectivityManager
+import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.statistics.ui.overview.driver.summary.DriverSummaryItem
 import tmg.flashback.statistics.ui.overview.driver.summary.PipeType
 import tmg.flashback.statistics.ui.overview.driver.summary.PipeType.*
