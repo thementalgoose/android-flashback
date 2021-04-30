@@ -7,7 +7,9 @@
       <module name="android-flashback.app-statistics" target="11" />
       <module name="android-flashback.base" target="11" />
       <module name="android-flashback.core.analytics" target="11" />
+      <module name="android-flashback.core.notifications" target="11" />
       <module name="android-flashback.data-firebase" target="11" />
+      <module name="android-flashback.notifications" target="11" />
       <module name="app" target="1.8" />
       <module name="firebase" target="1.8" />
       <module name="repo" target="1.7" />
