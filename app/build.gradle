@@ -11,7 +11,7 @@ apply plugin: 'de.mannodermaus.android-junit5'
 apply plugin: 'com.github.triplet.play'
 apply plugin: "androidx.navigation.safeargs.kotlin"
 
-apply from: rootDir.absolutePath + "/dependencies.gradle"
+apply from: rootDir.absolutePath + "/base-dependencies.gradle"
 
 android {
     compileSdkVersion 30

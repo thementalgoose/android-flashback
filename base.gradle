@@ -1,9 +1,3 @@
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-apply plugin: 'de.mannodermaus.android-junit5'
-apply plugin: 'kotlin-kapt'
-apply plugin: "androidx.navigation.safeargs.kotlin"
-
 apply from: rootDir.absolutePath + "/base-dependencies.gradle"
 
 android {
@@ -77,13 +71,4 @@ android {
             }
         }
     }
-}
-
-dependencies {
-
-    // Swipe dismiss
-    api "com.r0adkll:slidableactivity:$slidr"
-
-    // Components
-    implementation "com.github.thementalgoose:android-components:$tmg_components"
 }
