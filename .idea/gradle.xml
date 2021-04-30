@@ -18,6 +18,7 @@
             <option value="$PROJECT_DIR$/base" />
             <option value="$PROJECT_DIR$/core" />
             <option value="$PROJECT_DIR$/core/analytics" />
+            <option value="$PROJECT_DIR$/core/configuration" />
             <option value="$PROJECT_DIR$/core/crash-reporting" />
             <option value="$PROJECT_DIR$/core/notifications" />
             <option value="$PROJECT_DIR$/data" />
