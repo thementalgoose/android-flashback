@@ -1,8 +1,10 @@
+rootProject.name = "android-flashback"
+
 include ':app'
 include ':app-statistics'
 include ':app-rss'
 include ':data-firebase'
 include ':data'
-include ':core'
+include ':base'
 
-rootProject.name = "android-flashback"
+include ':core:analytics'
