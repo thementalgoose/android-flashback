@@ -13,16 +13,23 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/app-rss" />
-            <option value="$PROJECT_DIR$/app-statistics" />
             <option value="$PROJECT_DIR$/base" />
             <option value="$PROJECT_DIR$/core" />
             <option value="$PROJECT_DIR$/core/analytics" />
             <option value="$PROJECT_DIR$/core/configuration" />
             <option value="$PROJECT_DIR$/core/crash-reporting" />
             <option value="$PROJECT_DIR$/core/notifications" />
-            <option value="$PROJECT_DIR$/data" />
-            <option value="$PROJECT_DIR$/data-firebase" />
+            <option value="$PROJECT_DIR$/feature" />
+            <option value="$PROJECT_DIR$/feature/rss" />
+            <option value="$PROJECT_DIR$/feature/rss/rss" />
+            <option value="$PROJECT_DIR$/feature/statistics" />
+            <option value="$PROJECT_DIR$/feature/statistics/data" />
+            <option value="$PROJECT_DIR$/feature/statistics/data-firebase" />
+            <option value="$PROJECT_DIR$/feature/statistics/statistics" />
+            <option value="$PROJECT_DIR$/shared" />
+            <option value="$PROJECT_DIR$/shared/device" />
+            <option value="$PROJECT_DIR$/shared/test" />
+            <option value="$PROJECT_DIR$/shared/ui" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

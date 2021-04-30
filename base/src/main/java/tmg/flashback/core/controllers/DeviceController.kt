@@ -1,7 +1,7 @@
 package tmg.flashback.core.controllers
 
 import org.threeten.bp.LocalDate
-import tmg.flashback.core.managers.BuildConfigManager
+import tmg.flashback.device.buildconfig.BuildConfigManager
 import tmg.flashback.core.repositories.CoreRepository
 
 /**

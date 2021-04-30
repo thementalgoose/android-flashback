@@ -1,6 +1,6 @@
 package tmg.flashback.constants
 
-import tmg.flashback.core.controllers.AnalyticsController
+import tmg.analytics.controllers.AnalyticsController
 
 enum class ViewType(
     val key: String

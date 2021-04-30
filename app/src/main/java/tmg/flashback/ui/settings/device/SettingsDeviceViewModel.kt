@@ -2,9 +2,9 @@ package tmg.flashback.ui.settings.device
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import tmg.analytics.controllers.AnalyticsController
 import tmg.components.prefs.AppPreferencesItem
 import tmg.flashback.R
-import tmg.flashback.core.controllers.AnalyticsController
 import tmg.flashback.core.controllers.CrashController
 import tmg.flashback.core.controllers.DeviceController
 import tmg.flashback.core.ui.BaseViewModel

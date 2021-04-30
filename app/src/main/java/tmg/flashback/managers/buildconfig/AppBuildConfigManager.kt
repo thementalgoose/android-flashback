@@ -1,9 +1,9 @@
 package tmg.flashback.managers.buildconfig
 
 import tmg.flashback.BuildConfig
-import tmg.flashback.core.managers.BuildConfigManager
+import tmg.flashback.device.buildconfig.BuildConfigManager
 
-class AppBuildConfigManager : BuildConfigManager {
+class AppBuildConfigManager : tmg.flashback.device.buildconfig.BuildConfigManager {
 
     override val versionCode: Int
         get() = BuildConfig.VERSION_CODE

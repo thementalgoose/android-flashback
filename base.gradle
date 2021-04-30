@@ -1,3 +1,9 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'de.mannodermaus.android-junit5'
+apply plugin: 'kotlin-kapt'
+apply plugin: "androidx.navigation.safeargs.kotlin"
+
 apply from: rootDir.absolutePath + "/base-dependencies.gradle"
 
 android {

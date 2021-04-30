@@ -6,8 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.r0adkll.slidr.Slidr
 import com.r0adkll.slidr.model.SlidrInterface
 import org.koin.android.ext.android.inject
+import tmg.analytics.controllers.AnalyticsController
 import tmg.flashback.core.R
-import tmg.flashback.core.controllers.AnalyticsController
 import tmg.flashback.core.enums.DisplayType
 import tmg.flashback.core.extensions.isLightMode
 import tmg.flashback.core.repositories.CoreRepository

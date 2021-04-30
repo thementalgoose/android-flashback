@@ -7,7 +7,6 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.components.prefs.AppPreferencesItem
 import tmg.flashback.R
-import tmg.flashback.core.controllers.AnalyticsController
 import tmg.flashback.core.controllers.CrashController
 import tmg.flashback.core.controllers.DeviceController
 import tmg.flashback.testutils.BaseTest

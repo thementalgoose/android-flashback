@@ -1,7 +1,9 @@
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-apply plugin: 'de.mannodermaus.android-junit5'
-apply plugin: 'kotlin-kapt'
-apply plugin: "androidx.navigation.safeargs.kotlin"
-
 apply from: rootDir.absolutePath + "/base.gradle"
+
+dependencies {
+
+    implementation platform("com.google.firebase:firebase-bom:$firebase_bom")
+    implementation 'com.google.firebase:firebase-config'
+
+    apply from: rootDir.absolutePath + "/shared/shared.gradle"
+}
