@@ -19,9 +19,9 @@ class FlashbackApplication: Application() {
             modules(
                 appModule,
                 appRssModule,
-                dataModule,
-                coreModule
+                dataModule
             )
+            modules(coreModules)
         }
 
         // Run startup

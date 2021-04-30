@@ -49,6 +49,7 @@ import tmg.flashback.statistics.ui.settings.statistics.SettingsStatisticsViewMod
 import tmg.flashback.ui.SplashViewModel
 import tmg.flashback.ui.settings.widgets.SettingsWidgetViewModel
 
+
 val appModule = module {
 
     // Managers

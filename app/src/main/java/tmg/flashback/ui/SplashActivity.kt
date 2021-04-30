@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
-import tmg.flashback.core.controllers.AnalyticsController
+import tmg.analytics.controllers.AnalyticsController
 import tmg.flashback.databinding.ActivitySplashBinding
 import tmg.flashback.ui.admin.forceupgrade.ForceUpgradeActivity
 import tmg.flashback.statistics.ui.dashboard.DashboardActivity

@@ -9,7 +9,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import org.koin.android.ext.android.inject
-import tmg.flashback.core.controllers.AnalyticsController
+import tmg.analytics.controllers.AnalyticsController
 import tmg.flashback.core.utils.ScreenAnalytics
 
 abstract class BaseFragment<T: ViewBinding>: Fragment() {

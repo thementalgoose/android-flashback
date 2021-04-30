@@ -1,0 +1,6 @@
+dependencies {
+    api project(":core:analytics")
+    api project(":core:configuration")
+    api project(":core:crash-reporting")
+    api project(":core:notifications")
+}

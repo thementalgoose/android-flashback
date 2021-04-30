@@ -8,11 +8,11 @@ import com.jakewharton.threetenabp.AndroidThreeTen
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import tmg.flashback.statistics.controllers.NotificationController
-import tmg.flashback.core.controllers.AnalyticsController
 import tmg.flashback.core.controllers.CrashController
 import tmg.flashback.core.controllers.DeviceController
 import tmg.flashback.core.enums.Theme
-import tmg.flashback.core.enums.UserProperty.*
+import tmg.analytics.UserProperty.*
+import tmg.analytics.controllers.AnalyticsController
 import tmg.flashback.core.repositories.CoreRepository
 import tmg.flashback.managers.notifications.PushNotificationManager
 import tmg.flashback.managers.widgets.WidgetManager

@@ -6,14 +6,14 @@ import io.mockk.verify
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import tmg.flashback.constants.Releases
-import tmg.flashback.core.managers.BuildConfigManager
+import tmg.flashback.device.buildconfig.BuildConfigManager
 import tmg.flashback.core.repositories.CoreRepository
 import tmg.flashback.testutils.BaseTest
 
 internal class ReleaseNotesControllerTest: BaseTest() {
 
     private var mockDeviceRepository: CoreRepository = mockk(relaxed = true)
-    private var mockBuildConfigManager: BuildConfigManager = mockk(relaxed = true)
+    private var mockBuildConfigManager: tmg.flashback.device.buildconfig.BuildConfigManager = mockk(relaxed = true)
 
     private lateinit var sut: ReleaseNotesController
 

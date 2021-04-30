@@ -1,7 +1,11 @@
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-apply plugin: 'de.mannodermaus.android-junit5'
-apply plugin: 'kotlin-kapt'
-apply plugin: "androidx.navigation.safeargs.kotlin"
-
 apply from: rootDir.absolutePath + "/base.gradle"
+
+dependencies {
+
+    // Cloud messaging support
+    implementation platform("com.google.firebase:firebase-bom:$firebase_bom")
+    implementation 'com.google.firebase:firebase-messaging'
+
+    // Import everything from shared layer
+    apply from: rootDir.absolutePath + "/shared/shared.gradle"
+}
