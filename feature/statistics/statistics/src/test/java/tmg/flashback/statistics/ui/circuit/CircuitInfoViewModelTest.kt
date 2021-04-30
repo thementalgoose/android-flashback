@@ -8,7 +8,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
-import tmg.flashback.core.managers.NetworkConnectivityManager
+import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.data.db.stats.CircuitRepository
 import tmg.flashback.data.models.stats.Circuit
 import tmg.flashback.data.models.stats.CircuitRace

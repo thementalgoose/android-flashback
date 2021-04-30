@@ -35,6 +35,9 @@ dependencies {
     // ConstraintLayout
     implementation "androidx.constraintlayout:constraintlayout:$android_constraint"
 
+    // Preferences
+    implementation "androidx.preference:preference-ktx:1.1.1"
+
     // Koin
     implementation "org.koin:koin-android:$koin_version"
     implementation "org.koin:koin-android-scope:$koin_version"

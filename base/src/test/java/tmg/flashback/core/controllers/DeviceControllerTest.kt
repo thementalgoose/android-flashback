@@ -6,7 +6,7 @@ import io.mockk.verify
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
-import tmg.flashback.device.buildconfig.BuildConfigManager
+import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.core.repositories.CoreRepository
 
 internal class DeviceControllerTest {

@@ -16,7 +16,7 @@ import tmg.flashback.statistics.controllers.NotificationController.Companion.day
 import tmg.flashback.core.controllers.AppearanceController
 import tmg.flashback.core.controllers.DeviceController
 import tmg.flashback.core.enums.AnimationSpeed
-import tmg.flashback.core.managers.NetworkConnectivityManager
+import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.data.db.stats.HistoryRepository
 import tmg.flashback.data.db.stats.SeasonOverviewRepository
 import tmg.flashback.data.models.stats.History

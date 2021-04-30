@@ -1,4 +1,4 @@
-package tmg.flashback.core.managers
+package tmg.flashback.device.managers
 
 /**
  * Interface to determine network connectivity synchronously

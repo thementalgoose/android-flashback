@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.flow
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDateTime
-import tmg.flashback.core.managers.NetworkConnectivityManager
+import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.rss.prefs.RSSRepository
 import tmg.flashback.rss.repo.RssAPI
 import tmg.flashback.rss.repo.model.Article
