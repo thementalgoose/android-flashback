@@ -81,7 +81,7 @@ android {
 
 dependencies {
 
-    api project(path: ':core')
+    api project(path: ':base')
     implementation project(path: ':data-firebase')
 
     // TMG dependencies

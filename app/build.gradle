@@ -222,7 +222,7 @@ dependencies {
     // Modules
     implementation project(path: ':data-firebase')
     implementation project(path: ':app-rss')
-    implementation project(path: ':core')
+    implementation project(path: ':base')
     implementation project(path: ':app-statistics')
 
     // Android Test
