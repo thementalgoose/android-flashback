@@ -86,4 +86,8 @@ dependencies {
 
     // Components
     implementation "com.github.thementalgoose:android-components:$tmg_components"
+    implementation project(path: ':core:analytics')
+    implementation project(path: ':core:notifications')
+    implementation project(path: ':core:configuration')
+    implementation project(path: ':core:crash-reporting')
 }
