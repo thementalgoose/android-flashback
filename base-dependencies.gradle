@@ -1,4 +1,4 @@
-apply from: rootDir.absolutePath + "/versions.gradle"
+apply from: rootDir.absolutePath + "/base-versions.gradle"
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])

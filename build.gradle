@@ -1,7 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
 
-    apply from: rootDir.absolutePath + "/versions.gradle"
+    apply from: rootDir.absolutePath + "/base-versions.gradle"
     ext {
         kotlin_version = '1.4.31'
     }

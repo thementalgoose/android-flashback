@@ -3,7 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'de.mannodermaus.android-junit5'
 apply plugin: 'kotlin-kapt'
 
-apply from: rootDir.absolutePath + "/dependencies.gradle"
+apply from: rootDir.absolutePath + "/base-dependencies.gradle"
 
 android {
     compileSdkVersion 30
