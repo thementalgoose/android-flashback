@@ -13,6 +13,7 @@ include ':core:analytics'
 include ':core:notifications'
 include ':core:crash-reporting'
 include ':core:configuration'
+include ':core:ads'
 
 include ':shared:ui'
 include ':shared:device'

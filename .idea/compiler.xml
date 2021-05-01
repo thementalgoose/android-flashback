@@ -5,6 +5,7 @@
       <module name="android-flashback.app" target="11" />
       <module name="android-flashback.base" target="11" />
       <module name="android-flashback.configuration" target="11" />
+      <module name="android-flashback.core.ads" target="11" />
       <module name="android-flashback.core.analytics" target="11" />
       <module name="android-flashback.core.configuration" target="11" />
       <module name="android-flashback.core.crash-reporting" target="11" />
