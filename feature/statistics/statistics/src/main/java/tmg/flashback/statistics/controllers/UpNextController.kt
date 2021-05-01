@@ -3,18 +3,17 @@ package tmg.flashback.statistics.controllers
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
 import org.threeten.bp.format.DateTimeFormatter
-import tmg.flashback.core.controllers.ConfigurationController
-import tmg.flashback.core.model.TimeListDisplayType
-import tmg.flashback.core.model.UpNextSchedule
+import tmg.configuration.controllers.ConfigController
+import tmg.configuration.repository.models.TimeListDisplayType
+import tmg.configuration.repository.models.UpNextSchedule
 import tmg.flashback.core.repositories.CoreRepository
-import tmg.flashback.data.repositories.AppRepository
 
 /**
  * Up Next functionality on the home screen
  */
 class UpNextController(
     private val coreRepository: CoreRepository,
-    private val configurationController: ConfigurationController
+    private val configurationController: ConfigController
 ) {
 
     /**

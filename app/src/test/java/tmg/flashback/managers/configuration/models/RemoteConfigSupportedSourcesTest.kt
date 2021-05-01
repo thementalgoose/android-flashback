@@ -2,10 +2,8 @@ package tmg.flashback.managers.configuration.models
 
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
-import tmg.configuration.firebase.models.RemoteConfigSupportedSource
-import tmg.configuration.firebase.models.RemoteConfigSupportedSources
-import tmg.configuration.firebase.models.convert
-import tmg.flashback.core.model.SupportedSource
+import tmg.configuration.repository.json.SupportedSourceJson
+import tmg.configuration.repository.json.SupportedSourcesJson
 import tmg.flashback.testutils.BaseTest
 
 internal class RemoteConfigSupportedSourcesTest: BaseTest() {
@@ -13,7 +11,7 @@ internal class RemoteConfigSupportedSourcesTest: BaseTest() {
 
     @Test
     fun `convert is empty if sources is null`() {
-        val model = RemoteConfigSupportedSources(
+        val model = SupportedSourcesJson(
             sources = null
         )
         assertEquals(emptyList<SupportedSource>(), model.convert())
@@ -21,9 +19,9 @@ internal class RemoteConfigSupportedSourcesTest: BaseTest() {
 
     @Test
     fun `convert is empty if no valid sources`() {
-        val model = RemoteConfigSupportedSources(
+        val model = SupportedSourcesJson(
             sources = listOf(
-                RemoteConfigSupportedSource(
+                SupportedSourceJson(
                 null, null, null, null, null, null, null
             )
             )
@@ -33,12 +31,12 @@ internal class RemoteConfigSupportedSourcesTest: BaseTest() {
 
     @Test
     fun `invalid source is ignored from empty list`() {
-        val model = RemoteConfigSupportedSources(
+        val model = SupportedSourcesJson(
             sources = listOf(
-                RemoteConfigSupportedSource(
+                SupportedSourceJson(
                 null, null, null, null, null, null, null
                 ),
-                RemoteConfigSupportedSource(
+                SupportedSourceJson(
                     "rsslink", null, "source", "colour", "colour", "title", "contact"
                 )
             )
@@ -57,7 +55,7 @@ internal class RemoteConfigSupportedSourcesTest: BaseTest() {
 
     @Test
     fun `consider supported source as null if source is null`() {
-        val model = RemoteConfigSupportedSource(
+        val model = SupportedSourceJson(
             rssLink = "rsslink",
             sourceShort = null,
             source = null,
@@ -71,7 +69,7 @@ internal class RemoteConfigSupportedSourcesTest: BaseTest() {
 
     @Test
     fun `consider supported source as null if title is null`() {
-        val model = RemoteConfigSupportedSource(
+        val model = SupportedSourceJson(
             rssLink = "rsslink",
             sourceShort = null,
             source = "source",
@@ -85,7 +83,7 @@ internal class RemoteConfigSupportedSourcesTest: BaseTest() {
 
     @Test
     fun `consider supported source as null if rssLink is null`() {
-        val model = RemoteConfigSupportedSource(
+        val model = SupportedSourceJson(
             rssLink = null,
             sourceShort = null,
             source = "source",
@@ -99,7 +97,7 @@ internal class RemoteConfigSupportedSourcesTest: BaseTest() {
 
     @Test
     fun `consider supported source as null if colour is null`() {
-        val model = RemoteConfigSupportedSource(
+        val model = SupportedSourceJson(
             rssLink = "rsslink",
             sourceShort = null,
             source = "source",
@@ -113,7 +111,7 @@ internal class RemoteConfigSupportedSourcesTest: BaseTest() {
 
     @Test
     fun `consider supported source as null if textColour is null`() {
-        val model = RemoteConfigSupportedSource(
+        val model = SupportedSourceJson(
             rssLink = "rsslink",
             sourceShort = null,
             source = "source",

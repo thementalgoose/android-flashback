@@ -5,13 +5,10 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Test
-import tmg.flashback.core.controllers.ConfigurationController
-import tmg.flashback.core.model.ForceUpgrade
 import tmg.flashback.testutils.*
 import tmg.flashback.testutils.BaseTest
 import tmg.flashback.testutils.assertEventNotFired
 import tmg.flashback.testutils.test
-import tmg.flashback.ui.admin.forceupgrade.ForceUpgradeViewModel
 
 internal class ForceUpgradeViewModelTest: BaseTest() {
 

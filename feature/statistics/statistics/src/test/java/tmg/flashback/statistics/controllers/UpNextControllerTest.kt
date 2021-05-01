@@ -9,13 +9,11 @@ import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
 import org.threeten.bp.format.DateTimeFormatter
-import tmg.flashback.core.controllers.ConfigurationController
 import tmg.flashback.core.model.TimeListDisplayType
 import tmg.flashback.core.model.Timestamp
 import tmg.flashback.core.model.UpNextSchedule
 import tmg.flashback.core.model.UpNextScheduleTimestamp
 import tmg.flashback.core.repositories.CoreRepository
-import tmg.flashback.statistics.controllers.UpNextController
 import tmg.flashback.statistics.testutils.BaseTest
 
 internal class UpNextControllerTest : BaseTest() {

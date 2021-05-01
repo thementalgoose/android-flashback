@@ -2,12 +2,11 @@ package tmg.flashback.di
 
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
+import tmg.configuration.firebase.FirebaseRemoteConfigManager
 import tmg.flashback.FlashbackStartup
 import tmg.flashback.controllers.*
-import tmg.flashback.core.managers.ConfigurationManager
 import tmg.flashback.managers.appshortcuts.AndroidAppShortcutManager
 import tmg.flashback.managers.appshortcuts.AppShortcutManager
-import tmg.flashback.managers.configuration.FirebaseRemoteConfigManager
 import tmg.flashback.managers.widgets.AppWidgetManager
 import tmg.flashback.managers.widgets.WidgetManager
 import tmg.flashback.repositories.SharedPreferenceRepository
@@ -51,7 +50,6 @@ val appModule = module {
 
     // Managers
     single<AppShortcutManager> { AndroidAppShortcutManager(get()) }
-    single<ConfigurationManager> { FirebaseRemoteConfigManager(get()) }
     single<StatisticsExternalNavigationManager> { FlashbackNavigationManager(get(), get(), get()) }
     single<WidgetManager> { AppWidgetManager(get()) }
 

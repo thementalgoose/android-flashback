@@ -1,14 +1,13 @@
 package tmg.flashback.statistics.controllers
 
 import android.os.Build
-import tmg.flashback.core.controllers.ConfigurationController
-import tmg.flashback.data.repositories.AppRepository
+import tmg.configuration.controllers.ConfigController
 
 /**
  * Control the notifications in the app / letting the user know something
  */
 class UserNotificationController(
-    private val configurationController: ConfigurationController
+    private val configurationController: ConfigController
 ) {
 
     /**

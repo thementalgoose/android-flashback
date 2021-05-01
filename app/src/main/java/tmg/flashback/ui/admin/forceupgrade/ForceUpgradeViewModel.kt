@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import tmg.flashback.core.controllers.ConfigurationController
+import tmg.configuration.controllers.ConfigController
 import tmg.flashback.core.ui.BaseViewModel
 import tmg.utilities.lifecycle.DataEvent
 
@@ -28,7 +28,7 @@ interface ForceUpgradeViewModelOutputs {
 //endregion
 
 class ForceUpgradeViewModel(
-    private val configurationController: ConfigurationController
+    private val configurationController: ConfigController
 ): BaseViewModel(), ForceUpgradeViewModelInputs, ForceUpgradeViewModelOutputs {
 
     var inputs: ForceUpgradeViewModelInputs = this

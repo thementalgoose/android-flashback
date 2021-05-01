@@ -1,24 +1,27 @@
-package tmg.configuration.firebase.models
+package tmg.configuration.repository.json
 
 import org.threeten.bp.format.DateTimeParseException
+import tmg.configuration.repository.models.Timestamp
 import tmg.configuration.repository.models.UpNextSchedule
 import tmg.configuration.repository.models.UpNextScheduleTimestamp
+import tmg.configuration.utils.DateConverters
+import tmg.configuration.utils.TimeConverters
 
-data class RemoteConfigUpNext(
-    val schedule: List<RemoteConfigUpNextSchedule>? = null
+data class UpNextJson(
+    val schedule: List<UpNextScheduleJson>? = null
 )
 
-data class RemoteConfigUpNextSchedule(
+data class UpNextScheduleJson(
     val s: Int? = null,
     val r: Int? = null,
     val title: String? = null,
     val subtitle: String? = null,
-    val dates: List<RemoteConfigUpNextItem>? = null,
+    val dates: List<UpNextItemJson>? = null,
     val flag: String? = null,
     val circuit: String? = null,
 )
 
-data class RemoteConfigUpNextItem(
+data class UpNextItemJson(
     val type: String?,
     val d: String?,
     val t: String?
@@ -26,7 +29,7 @@ data class RemoteConfigUpNextItem(
 
 //region Converters
 
-fun RemoteConfigUpNext.convert(): List<UpNextSchedule> {
+fun UpNextJson.convert(): List<UpNextSchedule> {
     if (schedule == null) {
         return emptyList()
     }
@@ -34,7 +37,7 @@ fun RemoteConfigUpNext.convert(): List<UpNextSchedule> {
         .mapNotNull { it.convert() }
 }
 
-fun RemoteConfigUpNextSchedule.convert(): UpNextSchedule? {
+fun UpNextScheduleJson.convert(): UpNextSchedule? {
     if (this.s == null || this.title == null) {
         return null
     }
@@ -49,14 +52,14 @@ fun RemoteConfigUpNextSchedule.convert(): UpNextSchedule? {
             return@mapNotNull null
         }
         val date = try {
-            ConverterUtils.fromDateRequired(it.d)
+            DateConverters.fromDateRequired(it.d)
         } catch (e: DateTimeParseException) {
             /* Do nothing */
             return@mapNotNull null
         }
         return@mapNotNull UpNextScheduleTimestamp(
             label = it.type,
-            timestamp = Timestamp(date, ConverterUtils.fromTime(it.t))
+            timestamp = Timestamp(date, TimeConverters.fromTime(it.t))
         )
     }
     if (values.isEmpty()) {

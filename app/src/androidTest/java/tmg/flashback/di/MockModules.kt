@@ -1,8 +1,6 @@
 package tmg.flashback.di
 
 import org.koin.dsl.module
-import tmg.flashback.core.managers.ConfigurationManager
-import tmg.flashback.core.repositories.ConfigurationRepository
 import tmg.flashback.di.data.MockConstructorRepository
 import tmg.flashback.di.data.MockDriverRepository
 import tmg.flashback.di.data.MockHistoryRepository

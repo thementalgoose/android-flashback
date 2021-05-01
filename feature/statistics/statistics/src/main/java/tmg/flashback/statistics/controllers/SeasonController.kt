@@ -1,6 +1,6 @@
 package tmg.flashback.statistics.controllers
 
-import tmg.flashback.core.controllers.ConfigurationController
+import tmg.configuration.controllers.ConfigController
 import tmg.flashback.data.repositories.AppRepository
 import tmg.flashback.statistics.constants.Formula1.currentSeasonYear
 
@@ -9,7 +9,7 @@ import tmg.flashback.statistics.constants.Formula1.currentSeasonYear
  */
 class SeasonController(
     private val appRepository: AppRepository,
-    private val configurationController: ConfigurationController
+    private val configurationController: ConfigController
 ) {
     //region Default season shown
 

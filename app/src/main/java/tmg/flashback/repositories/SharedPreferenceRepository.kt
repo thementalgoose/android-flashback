@@ -3,11 +3,11 @@ package tmg.flashback.repositories
 import android.content.Context
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
+import tmg.configuration.repository.models.TimeListDisplayType
 import tmg.flashback.constants.Defaults
 import tmg.flashback.core.enums.AnimationSpeed
 import tmg.flashback.core.enums.AppHints
 import tmg.flashback.core.enums.Theme
-import tmg.flashback.core.model.TimeListDisplayType
 import tmg.flashback.core.repositories.CoreRepository
 import tmg.flashback.data.repositories.AppRepository
 import tmg.flashback.rss.prefs.RSSRepository
@@ -50,8 +50,6 @@ class SharedPreferenceRepository(context: Context) : SharedPrefManager(context),
 
     private val keyAppFirstBoot: String = "APP_STARTUP_FIRST_BOOT"
     private val keyAppOpenCount: String = "APP_STARTUP_OPEN_COUNT"
-
-    private val keyRemoteConfigSyncCount: String = "REMOTE_CONFIG_SYNC_COUNT"
 
     private val dateFormat = DateTimeFormatter.ofPattern("yyyy/MM/dd")
 
@@ -130,10 +128,6 @@ class SharedPreferenceRepository(context: Context) : SharedPrefManager(context),
 
 
     //region Device
-
-    override var remoteConfigSync: Int
-        get() = getInt(keyRemoteConfigSyncCount, 0)
-        set(value) = save(keyRemoteConfigSyncCount, value)
 
     override var releaseNotesSeenAppVersion: Int
         get() = getInt(keyReleaseNotesSeenVersion, 0)

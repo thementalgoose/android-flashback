@@ -4,7 +4,7 @@ import androidx.recyclerview.widget.RecyclerView
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
 import org.threeten.bp.format.DateTimeFormatter
-import tmg.flashback.core.model.TimeListDisplayType
+import tmg.configuration.repository.models.TimeListDisplayType
 import tmg.flashback.data.utils.daysBetween
 import tmg.flashback.data.utils.hoursAndMins
 import tmg.flashback.data.utils.secondsBetween

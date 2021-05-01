@@ -164,7 +164,7 @@ task generateRemoteConfigDefaults {
     jsonBuilder(supportedSeasonsModel)
     def supportedSeasons = jsonBuilder.toString()
 
-    def filePath = project.projectDir.absolutePath + "/../app/src/main/res/xml/remote_config_defaults.xml"
+    def filePath = project.projectDir.absolutePath + "/../core/configuration/src/main/res/xml/remote_config_defaults.xml"
     new File(filePath).getParentFile().mkdirs()
     new File(filePath).withWriter { writer ->
         def xmlBuilder = new MarkupBuilder(writer)

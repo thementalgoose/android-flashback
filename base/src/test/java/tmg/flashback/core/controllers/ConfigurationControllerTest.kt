@@ -6,9 +6,7 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
 import tmg.flashback.core.constants.Migrations
-import tmg.flashback.core.managers.ConfigurationManager
 import tmg.flashback.core.model.*
-import tmg.flashback.core.repositories.ConfigurationRepository
 import tmg.flashback.core.repositories.CoreRepository
 
 internal class ConfigurationControllerTest {

@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import org.threeten.bp.ZoneId
 import org.threeten.bp.format.TextStyle
-import tmg.flashback.core.model.TimeListDisplayType
+import tmg.configuration.repository.models.TimeListDisplayType
 import tmg.flashback.statistics.enums.TrackLayout
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.ViewSeasonListUpNextBinding

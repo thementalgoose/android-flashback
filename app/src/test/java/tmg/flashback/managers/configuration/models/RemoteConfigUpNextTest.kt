@@ -3,10 +3,9 @@ package tmg.flashback.managers.configuration.models
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
-import tmg.configuration.firebase.models.RemoteConfigUpNext
-import tmg.configuration.firebase.models.RemoteConfigUpNextItem
-import tmg.configuration.firebase.models.RemoteConfigUpNextSchedule
-import tmg.configuration.firebase.models.convert
+import tmg.configuration.repository.json.UpNextJson
+import tmg.configuration.repository.json.UpNextItemJson
+import tmg.configuration.repository.json.UpNextScheduleJson
 import tmg.flashback.core.model.Timestamp
 import tmg.flashback.core.model.UpNextSchedule
 import tmg.flashback.core.model.UpNextScheduleTimestamp
@@ -18,20 +17,20 @@ internal class RemoteConfigUpNextTest: BaseTest() {
 
     @Test
     fun `convert returns empty list if schedule is null`() {
-        val model = RemoteConfigUpNext(null)
+        val model = UpNextJson(null)
         assertEquals(emptyList<UpNextSchedule>(), model.convert())
     }
 
     @Test
     fun `convert returns only valid items`() {
-        val model = RemoteConfigUpNext(
+        val model = UpNextJson(
             schedule = listOf(
-                RemoteConfigUpNextSchedule(
+                UpNextScheduleJson(
                     s = 2020,
                     r = 1,
                     title = "name",
                     dates = listOf(
-                        RemoteConfigUpNextItem(
+                        UpNextItemJson(
                             type = "Race",
                             d = "2020-01-21",
                             t = null
@@ -67,12 +66,12 @@ internal class RemoteConfigUpNextTest: BaseTest() {
 
     @Test
     fun `convert item is null is s (season) is null`() {
-        val model = RemoteConfigUpNextSchedule(
+        val model = UpNextScheduleJson(
             s = null,
             r = null,
             title = "name",
             dates = listOf(
-                RemoteConfigUpNextItem(
+                UpNextItemJson(
                     type = "Race",
                     d = "2020-01-21",
                     t = null
@@ -87,12 +86,12 @@ internal class RemoteConfigUpNextTest: BaseTest() {
 
     @Test
     fun `convert item is null is name is null`() {
-        val model = RemoteConfigUpNextSchedule(
+        val model = UpNextScheduleJson(
             s = 2020,
             r = null,
             title = null,
             dates = listOf(
-                RemoteConfigUpNextItem(
+                UpNextItemJson(
                     type = "Race",
                     d = "2020-01-21",
                     t = null
@@ -107,12 +106,12 @@ internal class RemoteConfigUpNextTest: BaseTest() {
 
     @Test
     fun `convert item is null is date is null`() {
-        val model = RemoteConfigUpNextSchedule(
+        val model = UpNextScheduleJson(
             s = 2020,
             r = null,
             title = "name",
             dates = listOf(
-                RemoteConfigUpNextItem(
+                UpNextItemJson(
                     type = "Race",
                     d = null,
                     t = null
@@ -127,12 +126,12 @@ internal class RemoteConfigUpNextTest: BaseTest() {
 
     @Test
     fun `convert item is null is date is invalid`() {
-        val model = RemoteConfigUpNextSchedule(
+        val model = UpNextScheduleJson(
             s = 2020,
             r = null,
             title = "name",
             dates = listOf(
-                RemoteConfigUpNextItem(
+                UpNextItemJson(
                     type = "Race",
                     d = "something-random",
                     t = null

@@ -1,14 +1,14 @@
 package tmg.configuration.firebase
 
+import com.google.firebase.FirebaseException
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
+import com.google.firebase.remoteconfig.FirebaseRemoteConfigException
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
+import kotlinx.coroutines.tasks.await
 import tmg.configuration.BuildConfig
-import tmg.configuration.extensions.toJson
-import tmg.configuration.firebase.models.*
+import tmg.configuration.R
 import tmg.configuration.managers.RemoteConfigManager
-import tmg.configuration.repository.models.ForceUpgrade
-import tmg.configuration.repository.models.SupportedSource
-import tmg.configuration.repository.models.UpNextSchedule
+import java.lang.Exception
 
 class FirebaseRemoteConfigManager: RemoteConfigManager {
 
@@ -24,6 +24,68 @@ class FirebaseRemoteConfigManager: RemoteConfigManager {
         }
         .build()
 
+    override suspend fun fetch(andActivate: Boolean): Boolean {
+        return try {
+            when (andActivate) {
+                true -> {
+                    remoteConfig.fetch(0L).await()
+                    val activate = remoteConfig.activate().await()
+                    activate
+                }
+                false -> {
+                    remoteConfig
+                        .fetch()
+                        .await()
+                    false
+                }
+            }
+        } catch (e: FirebaseRemoteConfigException) {
+            if (BuildConfig.DEBUG) {
+                e.printStackTrace()
+            }
+            false
+        } catch (e: FirebaseException) {
+            if (BuildConfig.DEBUG) {
+                e.printStackTrace()
+            }
+            false
+        } catch (e: Exception) {
+            if (BuildConfig.DEBUG) {
+                e.printStackTrace()
+            }
+            false
+        }
+    }
+
+    override suspend fun activate(): Boolean {
+        return try {
+            val result = remoteConfig
+                .activate()
+                .await()
+            result
+        } catch (e: FirebaseRemoteConfigException) {
+            if (BuildConfig.DEBUG) {
+                e.printStackTrace()
+            }
+            false
+        } catch (e: FirebaseException) {
+            if (BuildConfig.DEBUG) {
+                e.printStackTrace()
+            }
+            false
+        } catch (e: Exception) {
+            if (BuildConfig.DEBUG) {
+                e.printStackTrace()
+            }
+            false
+        }
+    }
+
+    override fun initialiseRemoteConfig() {
+        remoteConfig.setDefaultsAsync(R.xml.remote_config_defaults)
+        remoteConfig.setConfigSettingsAsync(remoteConfigSettings)
+    }
+
     override fun getBoolean(key: String): Boolean {
         return remoteConfig.getBoolean(key)
     }
@@ -31,24 +93,4 @@ class FirebaseRemoteConfigManager: RemoteConfigManager {
     override fun getString(key: String): String {
         return remoteConfig.getString(key)
     }
-
-    //region Complex objects supported by remote config
-
-    override fun String.toSupportedSeasons(): Set<Int> {
-        return toJson<RemoteConfigAllSeasons>()?.convert() ?: emptySet()
-    }
-
-    override fun String.toForceUpgrade(): ForceUpgrade? {
-        return toJson<RemoteConfigForceUpgrade>()?.convert()
-    }
-
-    override fun String.toUpNext(): List<UpNextSchedule> {
-        return toJson<RemoteConfigUpNext>()?.convert() ?: emptyList()
-    }
-
-    override fun String.toRssSupportedSources(): List<SupportedSource> {
-        return toJson<RemoteConfigSupportedSources>()?.convert() ?: emptyList()
-    }
-
-    //endregion
 }

@@ -1,10 +1,12 @@
 package tmg.flashback.core.controllers
 
+import tmg.configuration.controllers.ConfigController
+
 /**
  * All major features in the app
  */
 class FeatureController(
-        private val configurationController: ConfigurationController
+        private val configurationController: ConfigController
 ) {
     /**
      * Is the RSS feature enabled

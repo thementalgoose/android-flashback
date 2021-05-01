@@ -1,10 +1,6 @@
 package tmg.flashback.di.remoteconfig
 
-import tmg.flashback.core.managers.ConfigurationManager
-import tmg.flashback.core.model.ForceUpgrade
-import tmg.flashback.core.model.SupportedSource
 import tmg.flashback.core.model.UpNextSchedule
-import tmg.flashback.core.repositories.ConfigurationRepository
 
 internal object MockRemoteConfigRepository: ConfigurationRepository {
 

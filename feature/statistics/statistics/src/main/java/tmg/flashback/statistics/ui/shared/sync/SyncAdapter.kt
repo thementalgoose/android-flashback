@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import org.koin.core.component.KoinApiExtension
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import tmg.flashback.core.controllers.ConfigurationController
+import tmg.configuration.controllers.ConfigController
 import tmg.flashback.core.managers.NavigationManager
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.*
@@ -16,7 +16,7 @@ import tmg.flashback.statistics.ui.shared.sync.viewholders.*
 abstract class SyncAdapter<T> : RecyclerView.Adapter<RecyclerView.ViewHolder>(), KoinComponent {
 
     private val navigationManager: NavigationManager by inject()
-    private val configurationController: ConfigurationController by inject()
+    private val configurationController: ConfigController by inject()
 
     abstract var list: List<T>
 
