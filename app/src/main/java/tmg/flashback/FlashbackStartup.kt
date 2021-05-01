@@ -7,16 +7,16 @@ import com.github.stkent.bugshaker.flow.dialog.AlertDialogType
 import com.jakewharton.threetenabp.AndroidThreeTen
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import tmg.flashback.statistics.controllers.NotificationController
 import tmg.crash_reporting.controllers.CrashController
 import tmg.flashback.device.controllers.DeviceController
 import tmg.flashback.core.enums.Theme
 import tmg.analytics.UserProperty.*
 import tmg.analytics.controllers.AnalyticsController
 import tmg.flashback.core.repositories.CoreRepository
-import tmg.flashback.managers.notifications.PushNotificationManager
+import tmg.notifications.managers.PushNotificationManager
 import tmg.flashback.managers.widgets.WidgetManager
 import tmg.flashback.statistics.extensions.updateAllWidgets
+import tmg.notifications.controllers.NotificationController
 import tmg.utilities.extensions.isInDayMode
 
 /**
@@ -26,12 +26,11 @@ import tmg.utilities.extensions.isInDayMode
  */
 class FlashbackStartup(
     private val deviceController: DeviceController,
-    private val prefsNotification: NotificationController,
     private val crashController: CrashController,
     private val widgetManager: WidgetManager,
     private val coreRepository: CoreRepository,
     private val analyticsController: AnalyticsController,
-    private val notificationManager: PushNotificationManager,
+    private val notificationController: NotificationController
 ) {
     fun startup(application: FlashbackApplication) {
 
@@ -58,10 +57,10 @@ class FlashbackStartup(
         crashController.initialise()
 
         // Channels
-        notificationManager.createChannels()
-
-        // Opt in to all notifications
-        notificationsOptIn()
+        GlobalScope.launch {
+            notificationController.createNotificationChannels()
+            notificationController.subscribe()
+        }
 
         // Initialise user properties
         analyticsController.setUserProperty(DEVICE_MODEL, Build.MODEL)
@@ -76,32 +75,5 @@ class FlashbackStartup(
 
         // Update Widgets
         application.updateAllWidgets()
-    }
-
-    private fun notificationsOptIn() {
-
-        // Enrol for race push notifications
-        if (prefsNotification.raceOptInUndecided) {
-            GlobalScope.launch {
-                val result = notificationManager.raceSubscribe()
-                Log.i("Flashback", "Auto enrol push notifications race - $result")
-            }
-        }
-
-        // Enrol for qualifying push notifications
-        if (prefsNotification.qualifyingOptInUndecided) {
-            GlobalScope.launch {
-                val result = notificationManager.qualifyingSubscribe()
-                Log.i("Flashback", "Auto enrol push notifications qualifying - $result")
-            }
-        }
-
-        // Enrol for qualifying push notifications
-        if (prefsNotification.seasonInfoOptInUndecided) {
-            GlobalScope.launch {
-                val result = notificationManager.seasonInfoSubscribe()
-                Log.i("Flashback", "Auto enrol push notifications misc - $result")
-            }
-        }
     }
 }

@@ -52,4 +52,7 @@ dependencies {
 
     // Utilities
     api "com.github.thementalgoose:android-utilities:$tmg_utils"
+
+    // Test implementation
+    testImplementation platform(":shared:test")
 }

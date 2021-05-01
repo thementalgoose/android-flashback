@@ -26,9 +26,8 @@ import tmg.flashback.statistics.R
 import tmg.flashback.statistics.constants.Formula1.currentSeasonYear
 import tmg.flashback.statistics.constants.ViewType
 import tmg.flashback.statistics.constants.logEvent
-import tmg.flashback.statistics.controllers.NotificationController
-import tmg.flashback.statistics.controllers.NotificationController.Companion.daysUntilDataProvidedBannerMovedToBottom
 import tmg.flashback.statistics.controllers.SeasonController
+import tmg.flashback.statistics.controllers.UserNotificationController
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
 import tmg.utilities.extensions.combinePair
 import tmg.utilities.extensions.then
@@ -72,7 +71,7 @@ class SeasonViewModel(
     private val appearanceController: AppearanceController,
     private val historyRepository: HistoryRepository,
     private val seasonOverviewRepository: SeasonOverviewRepository,
-    private val notificationController: NotificationController,
+    private val notificationController: UserNotificationController,
     private val seasonController: SeasonController,
     private val networkConnectivityManager: NetworkConnectivityManager,
     private val analyticsController: AnalyticsController
@@ -288,7 +287,7 @@ class SeasonViewModel(
      */
     private fun showBannerAtTop(): Boolean {
         val daysBetween = ChronoUnit.DAYS.between(deviceController.appFirstBoot, LocalDate.now())
-        return daysBetween <= daysUntilDataProvidedBannerMovedToBottom
+        return daysBetween <= 5 // TODO: Make this a constant!
     }
 
     /**

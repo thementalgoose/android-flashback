@@ -1,8 +1,10 @@
-package tmg.flashback.data.enums
+package tmg.notifications
 
 enum class NotificationRegistration(
     val key: String
 ) {
+    DEFAULT(""),
+
     /**
      * User has opted in to push notifications
      *  or has been auto enrolled into notifications

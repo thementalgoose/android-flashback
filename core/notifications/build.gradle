@@ -6,6 +6,8 @@ dependencies {
     implementation platform("com.google.firebase:firebase-bom:$firebase_bom")
     implementation 'com.google.firebase:firebase-messaging'
 
+    implementation project(":shared:test")
+
     // Import everything from shared layer
     apply from: rootDir.absolutePath + "/shared/shared.gradle"
 }

@@ -12,6 +12,7 @@ import tmg.flashback.core.controllers.AppearanceController
 import tmg.flashback.core.extensions.isLightMode
 import tmg.flashback.core.managers.NavigationManager
 import tmg.flashback.core.repositories.CoreRepository
+import tmg.flashback.device.repository.DeviceRepository
 import tmg.flashback.rss.ui.RSSActivity
 import tmg.flashback.statistics.manager.StatisticsExternalNavigationManager
 import tmg.flashback.ui.admin.maintenance.MaintenanceActivity
@@ -22,7 +23,7 @@ import tmg.flashback.ui.settings.release.ReleaseBottomSheetFragment
 class FlashbackNavigationManager(
     private val appearanceController: AppearanceController,
     private val releaseNotesController: ReleaseNotesController,
-    private val coreRepository: CoreRepository
+    private val coreRepository: DeviceRepository
 ): NavigationManager, StatisticsExternalNavigationManager {
 
     //region NavigationManager

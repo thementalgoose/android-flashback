@@ -13,42 +13,8 @@ interface CoreRepository {
      */
     var theme: Theme
 
-    /**
-     * Last booted version
-     */
-    var lastAppVersion: Int
 
-    /**
-     * Enable or disable crash reporting
-     */
-    var crashReporting: Boolean
 
-    /**
-     * Shake to report functionality
-     */
-    var shakeToReport: Boolean
-
-    /**
-     * Opt in to anonymous analytics tracking
-     */
-    var analytics: Boolean
-
-    /**
-     * Device UDID
-     */
-    var deviceUdid: String
-
-    /**
-     * App open events
-     *   Should be set to first time accessed
-     */
-    var appFirstBootTime: LocalDate
-
-    /**
-     * The number of times the app has been opened
-     *   Incremented when app is opened
-     */
-    var appOpenedCount: Int
 
     /**
      * App hints that have been shown in the app

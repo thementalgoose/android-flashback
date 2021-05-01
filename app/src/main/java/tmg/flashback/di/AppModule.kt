@@ -7,8 +7,6 @@ import tmg.flashback.controllers.*
 import tmg.flashback.core.managers.ConfigurationManager
 import tmg.flashback.managers.appshortcuts.AndroidAppShortcutManager
 import tmg.flashback.managers.appshortcuts.AppShortcutManager
-import tmg.flashback.managers.notifications.FirebasePushNotificationManager
-import tmg.flashback.managers.notifications.PushNotificationManager
 import tmg.flashback.managers.configuration.FirebaseRemoteConfigManager
 import tmg.flashback.managers.widgets.AppWidgetManager
 import tmg.flashback.managers.widgets.WidgetManager
@@ -22,7 +20,6 @@ import tmg.flashback.rss.ui.configure.RSSConfigureViewModel
 import tmg.flashback.rss.ui.settings.RSSSettingsViewModel
 import tmg.flashback.core.controllers.FeatureController
 import tmg.flashback.managers.navigation.FlashbackNavigationManager
-import tmg.flashback.statistics.controllers.NotificationController
 import tmg.flashback.statistics.controllers.RaceController
 import tmg.flashback.statistics.controllers.SeasonController
 import tmg.flashback.statistics.controllers.UpNextController
@@ -55,13 +52,11 @@ val appModule = module {
     // Managers
     single<AppShortcutManager> { AndroidAppShortcutManager(get()) }
     single<ConfigurationManager> { FirebaseRemoteConfigManager(get()) }
-    single<PushNotificationManager> { FirebasePushNotificationManager(get(), get()) }
     single<StatisticsExternalNavigationManager> { FlashbackNavigationManager(get(), get(), get()) }
     single<WidgetManager> { AppWidgetManager(get()) }
 
     // Controllers
     single { FeatureController(get()) }
-    single { NotificationController(get(), get()) }
     single { RaceController(get()) }
     single { ReleaseNotesController(get(), get()) }
     single { SeasonController(get(), get()) }
@@ -71,7 +66,7 @@ val appModule = module {
 
     // UI
     // Startup
-    single { FlashbackStartup(get(), get(), get(), get(), get(), get(), get()) }
+    single { FlashbackStartup(get(), get(), get(), get(), get(), get()) }
     // Splash
     viewModel { SplashViewModel(get(), get(), get()) }
     // Dashboard
