@@ -3,4 +3,5 @@ dependencies {
     api project(":core:configuration")
     api project(":core:crash-reporting")
     api project(":core:notifications")
+    api project(":core:ads")
 }
