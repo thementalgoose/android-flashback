@@ -1,10 +1,8 @@
-package tmg.flashback.managers.configuration.models
+package tmg.configuration.firebase.models
 
 import org.threeten.bp.format.DateTimeParseException
-import tmg.flashback.core.model.Timestamp
-import tmg.flashback.core.model.UpNextSchedule
-import tmg.flashback.core.model.UpNextScheduleTimestamp
-import tmg.flashback.firebase.base.ConverterUtils
+import tmg.configuration.repository.models.UpNextSchedule
+import tmg.configuration.repository.models.UpNextScheduleTimestamp
 
 data class RemoteConfigUpNext(
     val schedule: List<RemoteConfigUpNextSchedule>? = null

@@ -5,6 +5,8 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigException
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import kotlinx.coroutines.tasks.await
+import tmg.configuration.firebase.models.RemoteConfigAllSeasons
+import tmg.configuration.firebase.models.RemoteConfigSupportedSources
 import tmg.flashback.constants.App.currentYear
 import tmg.crash_reporting.controllers.CrashController
 import tmg.flashback.core.managers.ConfigurationManager
@@ -15,7 +17,6 @@ import tmg.flashback.core.model.ForceUpgrade
 import tmg.flashback.firebase.extensions.toJson
 import tmg.flashback.core.model.SupportedSource
 import tmg.flashback.core.model.UpNextSchedule
-import tmg.flashback.managers.configuration.models.*
 import java.lang.Exception
 
 class FirebaseRemoteConfigManager(

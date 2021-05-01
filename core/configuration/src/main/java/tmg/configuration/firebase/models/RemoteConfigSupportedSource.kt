@@ -1,6 +1,6 @@
-package tmg.flashback.managers.configuration.models
+package tmg.configuration.firebase.models
 
-import tmg.flashback.core.model.SupportedSource
+import tmg.configuration.repository.models.SupportedSource
 
 data class RemoteConfigSupportedSources(
     val sources: List<RemoteConfigSupportedSource>? = null

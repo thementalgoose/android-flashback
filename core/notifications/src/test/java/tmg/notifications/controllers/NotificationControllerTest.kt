@@ -77,7 +77,23 @@ internal class NotificationControllerTest: BaseTest() {
 
     @Test
     fun `subscribe method does nothing if topics if already subscribed`() {
+        every { mockNotificationRepository.enabledRace } returns NotificationRegistration.OPT_IN
+        every { mockNotificationRepository.enabledQualifying } returns NotificationRegistration.OPT_IN
+        every { mockNotificationRepository.enabledSeasonInfo } returns NotificationRegistration.OPT_IN
 
+        initSUT()
+        runBlockingTest {
+            sut.subscribe()
+        }
+
+        coVerify(exactly = 0) {
+            mockNotificationManager.subscribeToTopic(any())
+        }
+        verify(exactly = 0) {
+            mockNotificationRepository.enabledRace = NotificationRegistration.OPT_IN
+            mockNotificationRepository.enabledQualifying = NotificationRegistration.OPT_IN
+            mockNotificationRepository.enabledSeasonInfo = NotificationRegistration.OPT_IN
+        }
     }
 
     companion object {

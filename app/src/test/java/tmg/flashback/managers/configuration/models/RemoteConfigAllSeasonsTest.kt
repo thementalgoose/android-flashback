@@ -2,6 +2,9 @@ package tmg.flashback.managers.configuration.models
 
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
+import tmg.configuration.firebase.models.RemoteConfigAllSeason
+import tmg.configuration.firebase.models.RemoteConfigAllSeasons
+import tmg.configuration.firebase.models.convert
 import tmg.flashback.testutils.BaseTest
 
 internal class RemoteConfigAllSeasonsTest: BaseTest() {

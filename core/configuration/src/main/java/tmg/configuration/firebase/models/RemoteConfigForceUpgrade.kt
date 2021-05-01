@@ -1,6 +1,6 @@
-package tmg.flashback.managers.configuration.models
+package tmg.configuration.firebase.models
 
-import tmg.flashback.core.model.ForceUpgrade
+import tmg.configuration.repository.models.ForceUpgrade
 
 data class RemoteConfigForceUpgrade(
         val title: String? = null,
