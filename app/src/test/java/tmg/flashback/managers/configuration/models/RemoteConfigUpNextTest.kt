@@ -3,10 +3,13 @@ package tmg.flashback.managers.configuration.models
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
+import tmg.configuration.firebase.models.RemoteConfigUpNext
+import tmg.configuration.firebase.models.RemoteConfigUpNextItem
+import tmg.configuration.firebase.models.RemoteConfigUpNextSchedule
+import tmg.configuration.firebase.models.convert
 import tmg.flashback.core.model.Timestamp
 import tmg.flashback.core.model.UpNextSchedule
 import tmg.flashback.core.model.UpNextScheduleTimestamp
-import tmg.flashback.firebase.base.ConverterUtils
 import tmg.flashback.testutils.BaseTest
 
 internal class RemoteConfigUpNextTest: BaseTest() {

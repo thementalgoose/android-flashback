@@ -1,4 +1,4 @@
-package tmg.flashback.managers.configuration.models
+package tmg.configuration.firebase.models
 
 data class RemoteConfigAllSeasons(
     val seasons: List<RemoteConfigAllSeason>? = null

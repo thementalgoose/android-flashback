@@ -2,6 +2,9 @@ package tmg.flashback.managers.configuration.models
 
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
+import tmg.configuration.firebase.models.RemoteConfigSupportedSource
+import tmg.configuration.firebase.models.RemoteConfigSupportedSources
+import tmg.configuration.firebase.models.convert
 import tmg.flashback.core.model.SupportedSource
 import tmg.flashback.testutils.BaseTest
 
@@ -19,9 +22,11 @@ internal class RemoteConfigSupportedSourcesTest: BaseTest() {
     @Test
     fun `convert is empty if no valid sources`() {
         val model = RemoteConfigSupportedSources(
-            sources = listOf(RemoteConfigSupportedSource(
+            sources = listOf(
+                RemoteConfigSupportedSource(
                 null, null, null, null, null, null, null
-            ))
+            )
+            )
         )
         assertEquals(emptyList<SupportedSource>(), model.convert())
     }

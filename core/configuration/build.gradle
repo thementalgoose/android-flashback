@@ -2,8 +2,12 @@ apply from: rootDir.absolutePath + "/base.gradle"
 
 dependencies {
 
+    // Firebase Remote Config
     implementation platform("com.google.firebase:firebase-bom:$firebase_bom")
     implementation 'com.google.firebase:firebase-config'
+
+    // Gson
+    implementation "com.google.code.gson:gson:2.8.6"
 
     apply from: rootDir.absolutePath + "/shared/shared.gradle"
 }
