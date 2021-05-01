@@ -4,10 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import tmg.components.prefs.AppPreferencesItem
 import tmg.flashback.R
-import tmg.flashback.statistics.controllers.NotificationController
 import tmg.flashback.core.ui.BaseViewModel
-import tmg.flashback.managers.notifications.FirebasePushNotificationManager.Companion.topicQualifying
-import tmg.flashback.managers.notifications.FirebasePushNotificationManager.Companion.topicRace
+import tmg.notifications.controllers.NotificationController
 import tmg.utilities.lifecycle.DataEvent
 import tmg.utilities.lifecycle.Event
 
@@ -64,8 +62,8 @@ class SettingsNotificationViewModel(
 
     override fun preferenceClicked(pref: String?, value: Boolean?) {
         when (pref) {
-            keyNotificationChannelQualifying -> openNotificationsChannel.value = DataEvent(topicQualifying)
-            keyNotificationChannelRace -> openNotificationsChannel.value = DataEvent(topicRace)
+            keyNotificationChannelQualifying -> openNotificationsChannel.value = DataEvent(NotificationController.keyTopicQualifying)
+            keyNotificationChannelRace -> openNotificationsChannel.value = DataEvent(NotificationController.keyTopicRace)
             keyNotificationSettings -> openNotifications.value = Event()
         }
     }

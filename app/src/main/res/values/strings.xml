@@ -149,9 +149,4 @@
     <string name="app_shortcut_rss_longtitle">Formula 1 RSS feed</string>
     <string name="app_shortcut_rss_disabled">RSS (Unavailable)</string>
 
-    <!-- Notifications -->
-    <string name="notification_channel_race">Race starts</string>
-    <string name="notification_channel_qualifying">Qualifying starts</string>
-    <string name="notification_channel_info">Season information</string>
-
 </resources>

@@ -7,8 +7,8 @@ import org.junit.jupiter.api.Test
 import tmg.components.prefs.AppPreferencesItem
 import tmg.flashback.R
 import tmg.flashback.statistics.controllers.NotificationController
-import tmg.flashback.managers.notifications.FirebasePushNotificationManager.Companion.topicQualifying
-import tmg.flashback.managers.notifications.FirebasePushNotificationManager.Companion.topicRace
+import tmg.notifications.managers.FirebasePushNotificationManager.Companion.topicQualifying
+import tmg.notifications.managers.FirebasePushNotificationManager.Companion.topicRace
 import tmg.flashback.testutils.*
 
 internal class SettingsNotificationViewModelTest: BaseTest() {

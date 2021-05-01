@@ -1,7 +1,5 @@
 package tmg.flashback.data.repositories
 
-import tmg.flashback.data.enums.NotificationRegistration
-
 /**
  * Storage variables that the user interacts with or manipulates through
  *   the usage of the app
@@ -50,26 +48,4 @@ interface AppRepository {
      * false = Refresh the widget
      */
     var widgetOpenApp: Boolean
-
-    //region Notifications
-
-    /**
-     * Race Notification preference
-     *   null = hasn't been set
-     */
-    var notificationsRace: NotificationRegistration?
-
-    /**
-     * Qualifying Notification preference
-     *   null = hasn't been set
-     */
-    var notificationsQualifying: NotificationRegistration?
-
-    /**
-     * Miscellaneous Notification preference
-     *   null = hasn't been set
-     */
-    var notificationsSeasonInfo: NotificationRegistration?
-
-    //endregion
 }

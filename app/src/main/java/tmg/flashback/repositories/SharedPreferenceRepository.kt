@@ -10,7 +10,6 @@ import tmg.flashback.core.enums.Theme
 import tmg.flashback.core.model.TimeListDisplayType
 import tmg.flashback.core.repositories.CoreRepository
 import tmg.flashback.data.repositories.AppRepository
-import tmg.flashback.data.enums.NotificationRegistration
 import tmg.flashback.rss.prefs.RSSRepository
 import tmg.utilities.extensions.toEnum
 import tmg.utilities.prefs.SharedPrefManager
@@ -132,80 +131,13 @@ class SharedPreferenceRepository(context: Context) : SharedPrefManager(context),
 
     //region Device
 
-    override var deviceUdid: String
-        set(value) = save(keyDeviceUDID, value)
-        get() {
-            var key = getString(keyDeviceUDID, "")
-            if (key.isNullOrEmpty()) {
-                val newKey = UUID.randomUUID().toString()
-                deviceUdid = newKey
-                key = newKey
-            }
-            return key
-        }
     override var remoteConfigSync: Int
         get() = getInt(keyRemoteConfigSyncCount, 0)
         set(value) = save(keyRemoteConfigSyncCount, value)
 
-    override var crashReporting: Boolean
-        get() = getBoolean(keyCrashReporting, Defaults.crashReporting)
-        set(value) = save(keyCrashReporting, value)
-
-    override var shakeToReport: Boolean
-        get() = getBoolean(keyShakeToReport, Defaults.shakeToReport)
-        set(value) = save(keyShakeToReport, value)
-
-    override var analytics: Boolean
-        get() = getBoolean(keyAnalyticsOptIn, Defaults.analyticsOptIn)
-        set(value) = save(keyAnalyticsOptIn, value)
-
-    override var lastAppVersion: Int
-        get() = getInt(keyAppVersion, 0)
-        set(value) = save(keyAppVersion, value)
-
-    override var appFirstBootTime: LocalDate
-        get() {
-            val value = getString(keyAppFirstBoot, null)
-            if (value == null) {
-                val result = LocalDate.now()
-                save(keyAppFirstBoot, result.format(dateFormat))
-                return result
-            }
-            return LocalDate.parse(value, dateFormat)
-        }
-        set(value) = save(keyAppFirstBoot, value.format(dateFormat))
-
-    override var appOpenedCount: Int
-        get() = getInt(keyAppOpenCount, 0)
-        set(value) = save(keyAppOpenCount, value)
-
     override var releaseNotesSeenAppVersion: Int
         get() = getInt(keyReleaseNotesSeenVersion, 0)
         set(value) = save(keyReleaseNotesSeenVersion, value)
-
-    override var notificationsQualifying: NotificationRegistration?
-        get() = getString(keyNotificationQualifying, null)?.toEnum<NotificationRegistration>()
-        set(value) = if (value != null) {
-            save(keyNotificationQualifying, value.key)
-        } else {
-            save(keyNotificationQualifying, "")
-        }
-
-    override var notificationsRace: NotificationRegistration?
-        get() = getString(keyNotificationRace, null)?.toEnum<NotificationRegistration>()
-        set(value) = if (value != null) {
-            save(keyNotificationRace, value.key)
-        } else {
-            save(keyNotificationRace, "")
-        }
-
-    override var notificationsSeasonInfo: NotificationRegistration?
-        get() = getString(keyNotificationSeasonInfo, null)?.toEnum<NotificationRegistration>()
-        set(value) = if (value != null) {
-            save(keyNotificationSeasonInfo, value.key)
-        } else {
-            save(keyNotificationSeasonInfo, "")
-        }
 
     //endregion
 

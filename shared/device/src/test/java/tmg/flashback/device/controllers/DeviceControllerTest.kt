@@ -1,4 +1,4 @@
-package tmg.flashback.core.controllers
+package tmg.flashback.device.controllers
 
 import io.mockk.every
 import io.mockk.mockk
@@ -7,12 +7,12 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
 import tmg.flashback.device.managers.BuildConfigManager
-import tmg.flashback.core.repositories.CoreRepository
-import tmg.flashback.device.controllers.DeviceController
+import tmg.flashback.device.repository.DeviceRepository
 
+// TODO: Check coverage
 internal class DeviceControllerTest {
 
-    private var mockDeviceRepository: CoreRepository = mockk(relaxed = true)
+    private var mockDeviceRepository: DeviceRepository = mockk(relaxed = true)
     private var mockBuildConfigManager: BuildConfigManager = mockk(relaxed = true)
 
     private lateinit var sut: DeviceController
@@ -20,32 +20,6 @@ internal class DeviceControllerTest {
     private fun initSUT() {
         sut = DeviceController(mockDeviceRepository, mockBuildConfigManager)
     }
-
-    //region Shake to report
-
-    @Test
-    fun `shake to report reads from prefs`() {
-        initSUT()
-        every { mockDeviceRepository.shakeToReport } returns true
-        assertTrue(mockDeviceRepository.shakeToReport)
-        every { mockDeviceRepository.shakeToReport } returns false
-        assertFalse(mockDeviceRepository.shakeToReport)
-
-        verify(exactly = 2) {
-            mockDeviceRepository.shakeToReport
-        }
-    }
-
-    @Test
-    fun `shake to report update saves to prefs`() {
-        initSUT()
-        sut.shakeToReport = true
-        verify {
-            mockDeviceRepository.shakeToReport = true
-        }
-    }
-
-    //endregion
 
     //region First boot
 
@@ -63,12 +37,12 @@ internal class DeviceControllerTest {
     @Test
     fun `app first boot reads from prefs`() {
         val expected = LocalDate.now().minusDays(2)
-        every { mockDeviceRepository.appFirstBootTime } returns expected
+        every { mockDeviceRepository.appFirstOpened } returns expected
         initSUT()
 
         assertEquals(expected, sut.appFirstBoot)
         verify {
-            mockDeviceRepository.appFirstBootTime
+            mockDeviceRepository.appFirstOpened
         }
     }
 

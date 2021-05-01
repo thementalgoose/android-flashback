@@ -16,7 +16,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 import org.junit.jupiter.api.extension.ExtensionContext
 
 @ExtendWith(TestingTaskExecutor::class)
-internal open class BaseTest {
+open class BaseTest {
 
     @get:Rule
     val coroutineScope = CoroutineRule()

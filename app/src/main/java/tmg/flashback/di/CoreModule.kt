@@ -13,6 +13,8 @@ import tmg.flashback.device.controllers.DeviceController
 import tmg.flashback.managers.navigation.FlashbackNavigationManager
 import tmg.flashback.managers.configuration.FirebaseRemoteConfigManager
 import tmg.flashback.repositories.SharedPreferenceRepository
+import tmg.flashback.statistics.controllers.UserNotificationController
+import tmg.notifications.di.notificationModule
 import tmg.utilities.prefs.SharedPrefManager
 
 private val coreModule = module {
@@ -26,6 +28,7 @@ private val coreModule = module {
     // Controllers
     single { AppearanceController(get(), get()) }
     single { AppHintsController(get()) }
+    single { UserNotificationController(get()) }
     single { DeviceController(get(), get()) }
     single { ConfigurationController(get(), get(), get()) }
 
@@ -38,5 +41,6 @@ private val coreModule = module {
 val coreModules = listOf(
     analyticsModule,
     crashReportingModule,
+    notificationModule,
     coreModule
 )

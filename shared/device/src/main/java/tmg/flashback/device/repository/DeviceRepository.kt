@@ -31,7 +31,7 @@ class DeviceRepository(
             val value = sharedPreferenceRepository.getString(keyAppFirstBoot, null)
             if (value == null) {
                 val result = LocalDate.now()
-                sharedPreferenceRepository.save(keyAppFirstBoot, result.format(dateFormat))
+                appFirstOpened = result
                 return result
             }
             return LocalDate.parse(value, dateFormat)
