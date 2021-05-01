@@ -1,7 +1,7 @@
 package tmg.flashback.statistics.ui.shared.timelist
 
-import tmg.flashback.core.model.TimeListDisplayType
-import tmg.flashback.core.model.UpNextScheduleTimestamp
+import tmg.configuration.repository.models.TimeListDisplayType
+import tmg.configuration.repository.models.UpNextScheduleTimestamp
 
 data class TimeListItem(
     val type: TimeListDisplayType,

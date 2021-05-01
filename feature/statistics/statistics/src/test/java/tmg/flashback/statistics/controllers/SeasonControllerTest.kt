@@ -5,7 +5,6 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
-import tmg.flashback.core.controllers.ConfigurationController
 import tmg.flashback.data.repositories.AppRepository
 import tmg.flashback.statistics.constants.Formula1.currentSeasonYear
 import tmg.flashback.statistics.testutils.BaseTest

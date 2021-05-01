@@ -7,8 +7,6 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
-import tmg.flashback.core.controllers.ConfigurationController
-import tmg.flashback.core.model.SupportedSource
 import tmg.flashback.rss.repo.model.SupportedArticleSource
 import tmg.flashback.rss.testutils.BaseTest
 

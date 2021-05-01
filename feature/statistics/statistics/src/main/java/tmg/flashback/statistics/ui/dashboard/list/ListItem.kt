@@ -3,8 +3,8 @@ package tmg.flashback.statistics.ui.dashboard.list
 import androidx.annotation.DrawableRes
 import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
-import tmg.flashback.core.model.TimeListDisplayType
-import tmg.flashback.core.model.UpNextSchedule
+import tmg.configuration.repository.models.TimeListDisplayType
+import tmg.configuration.repository.models.UpNextSchedule
 import tmg.flashback.statistics.R
 
 sealed class ListItem(

@@ -1,7 +1,5 @@
 package tmg.flashback.di.remoteconfig
 
-import tmg.flashback.core.managers.ConfigurationManager
-
 internal object MockRemoteConfigManager: ConfigurationManager {
     override fun setDefaults() {
 

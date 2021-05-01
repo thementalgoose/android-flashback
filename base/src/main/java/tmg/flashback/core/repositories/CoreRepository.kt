@@ -1,10 +1,10 @@
 package tmg.flashback.core.repositories
 
 import org.threeten.bp.LocalDate
+import tmg.configuration.repository.models.TimeListDisplayType
 import tmg.flashback.core.enums.AnimationSpeed
 import tmg.flashback.core.enums.AppHints
 import tmg.flashback.core.enums.Theme
-import tmg.flashback.core.model.TimeListDisplayType
 
 interface CoreRepository {
 
@@ -25,11 +25,6 @@ interface CoreRepository {
      * Animation Speed preference for widgets / areas of the app that it's applicable
      */
     var animationSpeed: AnimationSpeed
-
-    /**
-     * Remote config has been synchronised
-     */
-    var remoteConfigSync: Int
 
     /**
      * App version for which the release notes had last been seen

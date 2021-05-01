@@ -1,12 +1,12 @@
-package tmg.configuration.firebase.models
+package tmg.configuration.repository.json
 
 import tmg.configuration.repository.models.SupportedSource
 
-data class RemoteConfigSupportedSources(
-    val sources: List<RemoteConfigSupportedSource>? = null
+data class SupportedSourcesJson(
+    val sources: List<SupportedSourceJson>? = null
 )
 
-data class RemoteConfigSupportedSource(
+data class SupportedSourceJson(
     val rssLink: String? = null,
     val sourceShort: String? = null,
     val source: String? = null,
@@ -18,11 +18,11 @@ data class RemoteConfigSupportedSource(
 
 //region Converters
 
-fun RemoteConfigSupportedSources.convert(): List<SupportedSource> {
+fun SupportedSourcesJson.convert(): List<SupportedSource> {
     return this.sources?.mapNotNull { it.convert() } ?: emptyList()
 }
 
-fun RemoteConfigSupportedSource.convert(): SupportedSource? {
+fun SupportedSourceJson.convert(): SupportedSource? {
     if (this.source == null || this.title == null || this.rssLink == null || this.colour == null || this.textColour == null) {
         return null
     }

@@ -3,9 +3,7 @@ package tmg.flashback.statistics.ui.shared.timelist
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import tmg.flashback.core.model.UpNextScheduleTimestamp
 import tmg.flashback.statistics.databinding.ViewSeasonListUpNextTimelistBinding
-import tmg.flashback.statistics.ui.shared.pill.PillItem
 import tmg.flashback.statistics.ui.shared.timelist.viewholders.TimeViewHolder
 
 class TimeListAdapter: RecyclerView.Adapter<TimeViewHolder>() {

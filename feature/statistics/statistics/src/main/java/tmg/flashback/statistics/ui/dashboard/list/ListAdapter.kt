@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import tmg.flashback.core.model.TimeListDisplayType
+import tmg.configuration.repository.models.TimeListDisplayType
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.*
 import tmg.flashback.statistics.ui.dashboard.list.viewholders.*

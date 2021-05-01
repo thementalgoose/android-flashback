@@ -2,7 +2,6 @@ package tmg.flashback.managers.configuration.models
 
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
-import tmg.flashback.core.model.ForceUpgrade
 import tmg.flashback.testutils.BaseTest
 
 internal class RemoteConfigForceUpgradeTest: BaseTest() {

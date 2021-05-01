@@ -1,12 +1,12 @@
 package tmg.flashback.rss.controllers
 
-import tmg.flashback.core.controllers.ConfigurationController
+import tmg.configuration.controllers.ConfigController
 import tmg.flashback.rss.repo.model.SupportedArticleSource
 import java.net.MalformedURLException
 import java.net.URL
 
 class RSSFeedController(
-    val configurationController: ConfigurationController
+    val configurationController: ConfigController
 ) {
 
     /**

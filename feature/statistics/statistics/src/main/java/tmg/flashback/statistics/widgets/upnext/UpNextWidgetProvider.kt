@@ -21,13 +21,13 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
-import tmg.flashback.core.controllers.ConfigurationController
+import tmg.configuration.controllers.ConfigController
+import tmg.configuration.repository.models.UpNextSchedule
 import tmg.flashback.statistics.enums.TrackLayout
 import tmg.flashback.statistics.controllers.UpNextController
 import tmg.crash_reporting.controllers.CrashController
 import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.core.managers.NavigationManager
-import tmg.flashback.core.model.UpNextSchedule
 import tmg.flashback.data.repositories.AppRepository
 import tmg.flashback.data.utils.daysBetween
 import tmg.flashback.statistics.R
@@ -43,7 +43,7 @@ class UpNextWidgetProvider : AppWidgetProvider(), KoinComponent {
     private val buildConfigManager: BuildConfigManager by inject()
     private val navigationManager: NavigationManager by inject()
 
-    private val configController: ConfigurationController by inject()
+    private val configController: ConfigController by inject()
     private val appRepository: AppRepository by inject()
 
     override fun onReceive(context: Context?, intent: Intent?) {

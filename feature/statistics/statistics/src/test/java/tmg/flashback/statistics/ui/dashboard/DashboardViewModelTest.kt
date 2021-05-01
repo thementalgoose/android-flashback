@@ -7,7 +7,6 @@ import io.mockk.mockk
 import kotlinx.coroutines.flow.flow
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.flashback.core.controllers.ConfigurationController
 import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.data.db.DataRepository
 import tmg.flashback.data.models.AppLockout
