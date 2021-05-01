@@ -7,9 +7,10 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.map
+import tmg.crash_reporting.controllers.CrashController
 
 open class FirebaseRepo(
-    val crashManager: FirestoreCrashManager
+    val crashController: CrashController
 ) {
 
     private val firebaseApp: FirebaseApp = FirebaseApp.getInstance()
@@ -111,7 +112,7 @@ open class FirebaseRepo(
             handleFirebaseError(exception, path)
         } else {
             val wrappedException = FlashbackParseException("Model at $path failed to parse", exception)
-            crashManager.logException(wrappedException, "Exception thrown whilst parsing model on $path - ${exception.message}")
+            crashController.logError(wrappedException, "Exception thrown whilst parsing model on $path - ${exception.message}")
         }
     }
 
@@ -128,19 +129,19 @@ open class FirebaseRepo(
             FirebaseFirestoreException.Code.OK -> { }
             FirebaseFirestoreException.Code.CANCELLED -> { }
             FirebaseFirestoreException.Code.NOT_FOUND -> {
-                crashManager.logException(exception, "Accessing $path resulted in not found")
+                crashController.logError(exception, "Accessing $path resulted in not found")
             }
             FirebaseFirestoreException.Code.ALREADY_EXISTS -> {
-                crashManager.logException(exception, "Already exists accessing $path")
+                crashController.logError(exception, "Already exists accessing $path")
             }
             FirebaseFirestoreException.Code.PERMISSION_DENIED -> {
-                crashManager.logException(exception, "Permission denied while accessing $path")
+                crashController.logError(exception, "Permission denied while accessing $path")
             }
             FirebaseFirestoreException.Code.UNAUTHENTICATED -> {
-                crashManager.logException(exception, "Unauthenticated while accessing $path")
+                crashController.logError(exception, "Unauthenticated while accessing $path")
             }
             else -> {
-                crashManager.logException(exception, "Unsupported error thrown by Firebase $path")
+                crashController.logError(exception, "Unsupported error thrown by Firebase $path")
             }
         }
     }

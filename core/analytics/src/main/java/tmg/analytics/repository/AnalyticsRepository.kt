@@ -3,15 +3,15 @@ package tmg.analytics.repository
 import tmg.flashback.device.repository.SharedPreferenceRepository
 
 class AnalyticsRepository(
-    private val sharedPrefManager: SharedPreferenceRepository
+    private val sharedPreferenceRepository: SharedPreferenceRepository
 ) {
 
     companion object {
-        private const val keyIsAnalyticsEnabled: String = "ANALYTICS_OPT_IN"
-        private const val keyIsAnalyticsEnabledDefaultValue: Boolean = true
+        private const val keyAnalytics: String = "ANALYTICS_OPT_IN"
+        private const val keyAnalyticsDefault: Boolean = true
     }
 
-    var isAnalyticsEnabled: Boolean
-        get() = sharedPrefManager.getBoolean(keyIsAnalyticsEnabled, keyIsAnalyticsEnabledDefaultValue)
-        set(value) = sharedPrefManager.save(keyIsAnalyticsEnabled, value)
+    var isEnabled: Boolean
+        get() = sharedPreferenceRepository.getBoolean(keyAnalytics, keyAnalyticsDefault)
+        set(value) = sharedPreferenceRepository.save(keyAnalytics, value)
 }

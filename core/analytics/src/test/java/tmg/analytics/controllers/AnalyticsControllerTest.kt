@@ -26,13 +26,13 @@ internal class AnalyticsControllerTest {
     @Test
     fun `enabled reads value from core repository`() {
 
-        every { mockAnalyticsRepository.isAnalyticsEnabled } returns true
+        every { mockAnalyticsRepository.isEnabled } returns true
         initSUT()
 
         assertTrue(sut.enabled)
 
         verify {
-            mockAnalyticsRepository.isAnalyticsEnabled
+            mockAnalyticsRepository.isEnabled
         }
     }
 
@@ -44,7 +44,7 @@ internal class AnalyticsControllerTest {
         sut.enabled = false
 
         verify {
-            mockAnalyticsRepository.isAnalyticsEnabled = false
+            mockAnalyticsRepository.isEnabled = false
         }
     }
 
@@ -55,7 +55,7 @@ internal class AnalyticsControllerTest {
     @Test
     fun `set event called if enabled is true`() {
 
-        every { mockAnalyticsRepository.isAnalyticsEnabled } returns true
+        every { mockAnalyticsRepository.isEnabled } returns true
         initSUT()
 
         sut.logEvent("testKey")
@@ -67,7 +67,7 @@ internal class AnalyticsControllerTest {
 
     @Test
     fun `set event called with params if enabled is true`() {
-        every { mockAnalyticsRepository.isAnalyticsEnabled } returns true
+        every { mockAnalyticsRepository.isEnabled } returns true
         initSUT()
 
         sut.logEvent("testKey", mapOf("test" to "hello"))
@@ -80,7 +80,7 @@ internal class AnalyticsControllerTest {
     @Test
     fun `set event not called if enabled is false`() {
 
-        every { mockAnalyticsRepository.isAnalyticsEnabled } returns false
+        every { mockAnalyticsRepository.isEnabled } returns false
         initSUT()
 
         sut.logEvent("testKey")
@@ -97,7 +97,7 @@ internal class AnalyticsControllerTest {
     @Test
     fun `set user property called if enabled is true`() {
 
-        every { mockAnalyticsRepository.isAnalyticsEnabled } returns true
+        every { mockAnalyticsRepository.isEnabled } returns true
         initSUT()
 
         sut.setUserProperty(UserProperty.APP_VERSION, "test-value")
@@ -110,7 +110,7 @@ internal class AnalyticsControllerTest {
     @Test
     fun `set user property not called if enabled is false`() {
 
-        every { mockAnalyticsRepository.isAnalyticsEnabled } returns false
+        every { mockAnalyticsRepository.isEnabled } returns false
         initSUT()
 
         sut.setUserProperty(UserProperty.APP_VERSION, "test-value")
@@ -127,7 +127,7 @@ internal class AnalyticsControllerTest {
     @Test
     fun `view screen called if enabled is true`() {
 
-        every { mockAnalyticsRepository.isAnalyticsEnabled } returns true
+        every { mockAnalyticsRepository.isEnabled } returns true
         initSUT()
 
         sut.viewScreen("screen", this.javaClass, emptyMap())
@@ -140,7 +140,7 @@ internal class AnalyticsControllerTest {
     @Test
     fun `view screen not called if enabled is false`() {
 
-        every { mockAnalyticsRepository.isAnalyticsEnabled } returns false
+        every { mockAnalyticsRepository.isEnabled } returns false
         initSUT()
 
         sut.viewScreen("screen", this.javaClass, emptyMap())

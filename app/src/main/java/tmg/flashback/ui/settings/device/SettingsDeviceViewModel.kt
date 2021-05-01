@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import tmg.analytics.controllers.AnalyticsController
 import tmg.components.prefs.AppPreferencesItem
 import tmg.flashback.R
-import tmg.flashback.core.controllers.CrashController
-import tmg.flashback.core.controllers.DeviceController
+import tmg.crash_reporting.controllers.CrashController
+import tmg.flashback.device.controllers.DeviceController
 import tmg.flashback.core.ui.BaseViewModel
 import tmg.utilities.lifecycle.Event
 
@@ -56,7 +56,7 @@ class SettingsDeviceViewModel(
             ))
             add(AppPreferencesItem.SwitchPreference(keyCrash, R.string.settings_help_crash_reporting_title, R.string.settings_help_crash_reporting_description, crashController.enabled))
             add(AppPreferencesItem.SwitchPreference(keyAnalytics, R.string.settings_help_analytics_title, R.string.settings_help_analytics_description, analyticsController.enabled))
-            add(AppPreferencesItem.SwitchPreference(keyShake, R.string.settings_help_shake_to_report_title, R.string.settings_help_shake_to_report_description, deviceController.shakeToReport))
+            add(AppPreferencesItem.SwitchPreference(keyShake, R.string.settings_help_shake_to_report_title, R.string.settings_help_shake_to_report_description, crashController.shakeToReport))
         }
     }
 
@@ -66,7 +66,7 @@ class SettingsDeviceViewModel(
         when (pref) {
             keyCrash -> crashController.enabled = value ?: true
             keyAnalytics -> analyticsController.enabled = value ?: true
-            keyShake -> deviceController.shakeToReport = value ?: true
+            keyShake -> crashController.shakeToReport = value ?: true
             keyReleaseNotes -> openReleaseNotes.value = Event()
         }
     }

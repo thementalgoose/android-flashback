@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
 import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.core.repositories.CoreRepository
+import tmg.flashback.device.controllers.DeviceController
 
 internal class DeviceControllerTest {
 

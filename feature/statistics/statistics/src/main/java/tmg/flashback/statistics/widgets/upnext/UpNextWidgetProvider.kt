@@ -24,7 +24,7 @@ import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.core.controllers.ConfigurationController
 import tmg.flashback.statistics.enums.TrackLayout
 import tmg.flashback.statistics.controllers.UpNextController
-import tmg.flashback.core.controllers.CrashController
+import tmg.crash_reporting.controllers.CrashController
 import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.core.managers.NavigationManager
 import tmg.flashback.core.model.UpNextSchedule

@@ -1,81 +1,12 @@
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-apply plugin: 'de.mannodermaus.android-junit5'
-apply plugin: 'kotlin-kapt'
-
-apply from: rootDir.absolutePath + "/base-dependencies.gradle"
-
-android {
-    compileSdkVersion 30
-
-    defaultConfig {
-        minSdkVersion 23
-        targetSdkVersion 30
-        versionCode 1
-        versionName "1.0"
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles "consumer-rules.pro"
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = '1.8'
-        freeCompilerArgs += kotlinCompilerArgs
-    }
-
-    sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
-        androidTest.java.srcDirs += 'src/androidTest/kotlin'
-        androidTest.resources.srcDirs += 'src/androidTest/res'
-        test.java.srcDirs += 'src/test/java'
-    }
-
-    testOptions {
-        junitPlatform {
-            testLogging {
-                events "passed", "skipped", "failed", "standardOut", "standardError"
-            }
-        }
-        unitTests {
-            includeAndroidResources = true
-            returnDefaultValues = true
-            all {
-                afterSuite { desc, result ->
-                    if (!desc.parent) {
-                        println "\n======================================================================="
-                        println "${desc.displayName}"
-                        println "Test result: ${result.resultType}"
-                        println "Test summary: ${result.testCount} tests, " +
-                                "${result.successfulTestCount} succeeded, " +
-                                "${result.failedTestCount} failed, " +
-                                "${result.skippedTestCount} skipped"
-                        println "======================================================================="
-                    }
-                }
-                useJUnitPlatform()
-                testLogging {
-                    showStandardStreams = true
-                    events "passed", "skipped", "failed", "standardOut", "standardError"
-                }
-            }
-        }
-    }
-}
+apply from: rootDir.absolutePath + "/base.gradle"
 
 dependencies {
 
     // Modules
     api project(path: ':feature:statistics:data')
+
+    // Explicit crash reporting link
+    implementation project(path: ':core:crash-reporting')
 
     // Firebase
     implementation platform("com.google.firebase:firebase-bom:$firebase_bom")

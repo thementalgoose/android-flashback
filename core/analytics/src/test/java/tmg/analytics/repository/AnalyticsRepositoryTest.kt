@@ -25,9 +25,9 @@ internal class AnalyticsRepositoryTest {
 
         initSUT()
 
-        assertTrue(sut.isAnalyticsEnabled)
+        assertTrue(sut.isEnabled)
         verify {
-            mockSharedPreferenceRepository.getBoolean("ANALYTICS_OPT_IN", true)
+            mockSharedPreferenceRepository.getBoolean(ANALYTICS_KEY, true)
         }
     }
 
@@ -35,9 +35,9 @@ internal class AnalyticsRepositoryTest {
     fun `setting analytics enabled saves value from preferences repository`() {
         initSUT()
 
-        sut.isAnalyticsEnabled = true
+        sut.isEnabled = true
         verify {
-            mockSharedPreferenceRepository.save("ANALYTICS_OPT_IN", true)
+            mockSharedPreferenceRepository.save(ANALYTICS_KEY, true)
         }
     }
 
@@ -45,11 +45,15 @@ internal class AnalyticsRepositoryTest {
     fun `setting analytics disabled saves value from preferences repository`() {
         initSUT()
 
-        sut.isAnalyticsEnabled = false
+        sut.isEnabled = false
         verify {
-            mockSharedPreferenceRepository.save("ANALYTICS_OPT_IN", false)
+            mockSharedPreferenceRepository.save(ANALYTICS_KEY, false)
         }
     }
 
     //endregion
+
+    companion object {
+        private const val ANALYTICS_KEY = "ANALYTICS_OPT_IN"
+    }
 }

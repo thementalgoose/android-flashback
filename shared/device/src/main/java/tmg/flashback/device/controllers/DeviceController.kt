@@ -1,27 +1,17 @@
-package tmg.flashback.core.controllers
+package tmg.flashback.device.controllers
 
 import org.threeten.bp.LocalDate
 import tmg.flashback.device.managers.BuildConfigManager
-import tmg.flashback.core.repositories.CoreRepository
+import tmg.flashback.device.repository.DeviceRepository
 
 /**
  * Controller to handle device prefs and actions that
  *  may require perminent storage
  */
 class DeviceController(
-    private val coreRepository: CoreRepository,
+    private val deviceRepository: DeviceRepository,
     private val buildConfigManager: BuildConfigManager
 ) {
-    //region Shake to report
-
-    var shakeToReport: Boolean
-        get() = coreRepository.shakeToReport
-        set(value) {
-            coreRepository.shakeToReport = value
-        }
-
-    //endregion
-
     /**
      * To be ran when the app is first opened
      */
@@ -31,27 +21,27 @@ class DeviceController(
     }
 
     var appOpenedCount: Int
-        get() = coreRepository.appOpenedCount
+        get() = deviceRepository.appOpenedCount
         private set(value) {
-            coreRepository.appOpenedCount = value
+            deviceRepository.appOpenedCount = value
         }
 
     val appFirstBoot: LocalDate
-        get() = coreRepository.appFirstBootTime
+        get() = deviceRepository.appFirstOpened
 
     //region Device UDID
 
     val deviceUdid: String
-        get() = coreRepository.deviceUdid
+        get() = deviceRepository.deviceUdid
 
     //endregion
 
     //region Last app version
 
     var lastAppVersion: Int
-        get() = coreRepository.lastAppVersion
+        get() = deviceRepository.lastAppVersion
         private set(value) {
-            coreRepository.lastAppVersion = value
+            deviceRepository.lastAppVersion = value
         }
 
     private fun updateAppVersion() {
