@@ -6,7 +6,7 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfigException
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import kotlinx.coroutines.tasks.await
 import tmg.flashback.constants.App.currentYear
-import tmg.flashback.core.controllers.CrashController
+import tmg.crash_reporting.controllers.CrashController
 import tmg.flashback.core.managers.ConfigurationManager
 import tmg.flashback.core.repositories.ConfigurationRepository
 import tmg.flashback.firebase.BuildConfig

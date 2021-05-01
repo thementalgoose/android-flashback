@@ -15,7 +15,7 @@ import tmg.analytics.controllers.AnalyticsController
 import tmg.flashback.statistics.constants.Formula1.constructorChampionshipStarts
 import tmg.flashback.core.ui.BaseViewModel
 import tmg.flashback.core.controllers.AppearanceController
-import tmg.flashback.core.controllers.DeviceController
+import tmg.flashback.device.controllers.DeviceController
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.data.db.stats.HistoryRepository
 import tmg.flashback.data.db.stats.SeasonOverviewRepository

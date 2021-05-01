@@ -1,45 +1,47 @@
-package tmg.flashback.core.controllers
+package tmg.crash_reporting.controllers
 
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
-import tmg.flashback.core.managers.CrashManager
-import tmg.flashback.core.repositories.CoreRepository
+import tmg.crash_reporting.managers.CrashManager
+import tmg.crash_reporting.repository.CrashRepository
+import tmg.flashback.device.repository.DeviceRepository
 import java.lang.RuntimeException
 
-internal class CrashControllerTest() {
+internal class CrashControllerTest {
 
-    private var mockCoreRepository: CoreRepository = mockk(relaxed = true)
+    private var mockCrashRepository: CrashRepository = mockk(relaxed = true)
+    private var mockDeviceRepository: DeviceRepository = mockk(relaxed = true)
     private var mockCrashManager: CrashManager = mockk(relaxed = true)
 
     private lateinit var sut: CrashController
 
     private fun initSUT() {
-        sut = CrashController(mockCoreRepository, mockCrashManager)
+        sut = CrashController(mockCrashRepository, mockDeviceRepository, mockCrashManager)
     }
 
     //region Crash reporting enabled
 
     @Test
     fun `crash reporting enabled`() {
-        every { mockCoreRepository.crashReporting } returns true
+        every { mockCrashRepository.isEnabled } returns true
         initSUT()
 
-        assertTrue(sut.enabled)
-        verify { mockCoreRepository.crashReporting }
+        Assertions.assertTrue(sut.enabled)
+        verify { mockCrashRepository.isEnabled }
     }
 
     @Test
     fun `crash reporting disabled`() {
-        every { mockCoreRepository.crashReporting } returns false
+        every { mockCrashRepository.isEnabled } returns false
         initSUT()
 
-        assertFalse(sut.enabled)
-        verify { mockCoreRepository.crashReporting }
+        Assertions.assertFalse(sut.enabled)
+        verify { mockCrashRepository.isEnabled }
     }
 
     @Test
@@ -48,7 +50,7 @@ internal class CrashControllerTest() {
         initSUT()
 
         sut.enabled = true
-        verify { mockCoreRepository.crashReporting = true }
+        verify { mockCrashRepository.isEnabled = true }
     }
 
     //endregion
@@ -58,17 +60,16 @@ internal class CrashControllerTest() {
     @Test
     fun `initialise sends all data to firebase`() {
         val expectedDate = LocalDate.now().format(DateTimeFormatter.ofPattern("dd MMM yyyy"))
-        every { mockCoreRepository.appFirstBootTime } returns LocalDate.now()
-        every { mockCoreRepository.analytics } returns true
-        every { mockCoreRepository.appOpenedCount } returns 1
-        every { mockCoreRepository.deviceUdid } returns "test-udid"
-        every { mockCoreRepository.crashReporting } returns true
+        every { mockDeviceRepository.appFirstOpened } returns LocalDate.now()
+        every { mockDeviceRepository.appOpenedCount } returns 1
+        every { mockDeviceRepository.deviceUdid } returns "test-udid"
+        every { mockCrashRepository.isEnabled } returns true
 
         initSUT()
         sut.initialise()
 
         verify {
-            mockCrashManager.initialise(true, true, "test-udid", expectedDate, 1)
+            mockCrashManager.initialise(true,  "test-udid", expectedDate, 1)
         }
     }
 
@@ -78,7 +79,7 @@ internal class CrashControllerTest() {
 
     @Test
     fun `log msg forwards to firebase if toggle is enabled`() {
-        every { mockCoreRepository.crashReporting } returns true
+        every { mockCrashRepository.isEnabled } returns true
 
         initSUT()
         sut.log("msg")
@@ -88,7 +89,7 @@ internal class CrashControllerTest() {
 
     @Test
     fun `log msg forwards to firebase if toggle is disabled`() {
-        every { mockCoreRepository.crashReporting } returns false
+        every { mockCrashRepository.isEnabled } returns false
 
         initSUT()
         sut.log("msg")
@@ -98,7 +99,7 @@ internal class CrashControllerTest() {
 
     @Test
     fun `log error forwards to firebase if toggle is enabled`() {
-        every { mockCoreRepository.crashReporting } returns true
+        every { mockCrashRepository.isEnabled } returns true
 
         initSUT()
         sut.logError("msg")
@@ -108,7 +109,7 @@ internal class CrashControllerTest() {
 
     @Test
     fun `log error forwards to firebase if toggle is disabled`() {
-        every { mockCoreRepository.crashReporting } returns false
+        every { mockCrashRepository.isEnabled } returns false
 
         initSUT()
         sut.logError("msg")
@@ -118,7 +119,7 @@ internal class CrashControllerTest() {
 
     @Test
     fun `log msg with exception forwards to firebase if toggle is enabled`() {
-        every { mockCoreRepository.crashReporting } returns true
+        every { mockCrashRepository.isEnabled } returns true
 
         val exception = RuntimeException()
         initSUT()
@@ -129,7 +130,7 @@ internal class CrashControllerTest() {
 
     @Test
     fun `log msg with exception forwards to firebase if toggle is disabled`() {
-        every { mockCoreRepository.crashReporting } returns false
+        every { mockCrashRepository.isEnabled } returns false
 
         val exception = RuntimeException()
         initSUT()

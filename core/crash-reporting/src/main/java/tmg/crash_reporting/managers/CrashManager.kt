@@ -1,9 +1,12 @@
-package tmg.flashback.firebase
+package tmg.crash_reporting.managers
 
-interface FirestoreCrashManager {
+/**
+ * Wrapper around the Firebase Crashlytics that the app uses to report crashes
+ * Abstracted for testing
+ */
+interface CrashManager {
     fun initialise(
         enableCrashReporting: Boolean,
-        enableAnalytics: Boolean,
         deviceUdid: String,
         appFirstOpened: String,
         appOpenedCount: Int

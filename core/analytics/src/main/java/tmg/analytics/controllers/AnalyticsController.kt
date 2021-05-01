@@ -10,9 +10,9 @@ class AnalyticsController(
     private val analyticsManager: AnalyticsManager
 ) {
     var enabled: Boolean
-        get() = analyticsRepository.isAnalyticsEnabled
+        get() = analyticsRepository.isEnabled
         set(value) {
-            analyticsRepository.isAnalyticsEnabled = value
+            analyticsRepository.isEnabled = value
         }
 
     fun logEvent(key: String, params: Map<String, String> = emptyMap()) {

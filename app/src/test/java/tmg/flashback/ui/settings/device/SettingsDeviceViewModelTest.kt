@@ -7,8 +7,8 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.components.prefs.AppPreferencesItem
 import tmg.flashback.R
-import tmg.flashback.core.controllers.CrashController
-import tmg.flashback.core.controllers.DeviceController
+import tmg.crash_reporting.controllers.CrashController
+import tmg.flashback.device.controllers.DeviceController
 import tmg.flashback.testutils.BaseTest
 import tmg.flashback.testutils.assertEventFired
 import tmg.flashback.testutils.test

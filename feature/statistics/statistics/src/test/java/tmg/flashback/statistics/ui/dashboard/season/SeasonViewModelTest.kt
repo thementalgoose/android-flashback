@@ -14,7 +14,7 @@ import org.threeten.bp.Month
 import org.threeten.bp.temporal.TemporalAdjusters
 import tmg.flashback.statistics.controllers.NotificationController.Companion.daysUntilDataProvidedBannerMovedToBottom
 import tmg.flashback.core.controllers.AppearanceController
-import tmg.flashback.core.controllers.DeviceController
+import tmg.flashback.device.controllers.DeviceController
 import tmg.flashback.core.enums.AnimationSpeed
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.data.db.stats.HistoryRepository

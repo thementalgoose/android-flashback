@@ -8,8 +8,8 @@ import com.jakewharton.threetenabp.AndroidThreeTen
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import tmg.flashback.statistics.controllers.NotificationController
-import tmg.flashback.core.controllers.CrashController
-import tmg.flashback.core.controllers.DeviceController
+import tmg.crash_reporting.controllers.CrashController
+import tmg.flashback.device.controllers.DeviceController
 import tmg.flashback.core.enums.Theme
 import tmg.analytics.UserProperty.*
 import tmg.analytics.controllers.AnalyticsController
@@ -39,7 +39,7 @@ class FlashbackStartup(
         AndroidThreeTen.init(application)
 
         // Shake to report a bug
-        if (deviceController.shakeToReport) {
+        if (crashController.shakeToReport) {
             Log.i("Flashback", "Enabling shake to report")
             BugShaker.get(application)
                     .setEmailAddresses("thementalgoose@gmail.com")
