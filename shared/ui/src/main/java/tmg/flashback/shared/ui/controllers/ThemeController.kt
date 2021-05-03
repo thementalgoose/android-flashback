@@ -9,7 +9,7 @@ abstract class ThemeController(
     private val applicationContext: Context
 ) {
 
-    protected abstract var themePref: Theme
+    abstract var themePref: Theme
 
     @get:StyleRes
     val themeStyle: Int

@@ -7,7 +7,6 @@ import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
-import tmg.flashback.shared.ui.manager.ThemeManager
 import tmg.flashback.shared.ui.model.Theme
 
 internal class ThemeControllerTest {
