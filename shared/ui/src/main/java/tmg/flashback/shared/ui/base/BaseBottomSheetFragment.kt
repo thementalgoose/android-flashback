@@ -1,4 +1,4 @@
-package tmg.flashback.core.ui
+package tmg.flashback.shared.ui.base
 
 import android.os.Bundle
 import android.view.LayoutInflater

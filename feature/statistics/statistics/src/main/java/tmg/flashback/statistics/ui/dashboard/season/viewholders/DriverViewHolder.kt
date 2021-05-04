@@ -4,7 +4,7 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import tmg.flashback.statistics.R
-import tmg.flashback.core.enums.AnimationSpeed
+import tmg.flashback.shared.ui.model.AnimationSpeed
 import tmg.flashback.statistics.ui.dashboard.season.SeasonItem
 import tmg.flashback.core.extensions.getColor
 import tmg.flashback.statistics.databinding.ViewDashboardSeasonDriverBinding

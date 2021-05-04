@@ -7,8 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.constants.ViewType
-import tmg.flashback.constants.logEvent
-import tmg.flashback.core.ui.BaseFragment
+import tmg.flashback.shared.ui.base.BaseFragment
 import tmg.flashback.core.utils.ScreenAnalytics
 import tmg.flashback.databinding.FragmentLockoutBinding
 import tmg.utilities.extensions.fromHtml

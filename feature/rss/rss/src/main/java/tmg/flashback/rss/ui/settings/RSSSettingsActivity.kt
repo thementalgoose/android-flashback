@@ -3,7 +3,6 @@ package tmg.flashback.rss.ui.settings
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.annotation.IdRes
 import androidx.annotation.StringRes
 import androidx.navigation.NavController
@@ -11,7 +10,6 @@ import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import tmg.flashback.rss.R
-import tmg.flashback.core.ui.BaseActivity
 import tmg.flashback.core.utils.ScreenAnalytics
 import tmg.flashback.rss.databinding.ActivityRssSettingsBinding
 import tmg.flashback.rss.ui.settings.InitialScreen.CONFIGURE

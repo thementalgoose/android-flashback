@@ -9,15 +9,13 @@ import android.view.View
 import androidx.core.app.ActivityCompat.finishAffinity
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.constants.ViewType
-import tmg.flashback.constants.logEvent
-import tmg.flashback.core.ui.BaseFragment
+import tmg.flashback.shared.ui.base.BaseFragment
 import tmg.flashback.core.utils.ScreenAnalytics
 import tmg.flashback.databinding.FragmentLockoutBinding
 import tmg.flashback.ui.SplashActivity
 import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
-import tmg.utilities.extensions.viewUrl
 import tmg.utilities.extensions.views.gone
 import tmg.utilities.extensions.views.visible
 

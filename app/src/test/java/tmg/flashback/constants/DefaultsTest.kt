@@ -2,8 +2,7 @@ package tmg.flashback.constants
 
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
-import tmg.flashback.core.enums.AnimationSpeed
-import tmg.flashback.core.enums.Theme
+import tmg.flashback.shared.ui.model.AnimationSpeed
 import tmg.flashback.testutils.BaseTest
 
 internal class DefaultsTest: BaseTest() {

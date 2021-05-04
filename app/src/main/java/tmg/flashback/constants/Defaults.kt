@@ -1,7 +1,6 @@
 package tmg.flashback.constants
 
-import tmg.flashback.core.enums.AnimationSpeed
-import tmg.flashback.core.enums.Theme
+import tmg.flashback.shared.ui.model.AnimationSpeed
 
 internal object Defaults {
 

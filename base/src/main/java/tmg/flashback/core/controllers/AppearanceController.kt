@@ -1,8 +1,7 @@
 package tmg.flashback.core.controllers
 
 import android.content.Context
-import tmg.flashback.core.enums.AnimationSpeed
-import tmg.flashback.core.enums.Theme
+import tmg.flashback.shared.ui.model.AnimationSpeed
 import tmg.flashback.core.repositories.CoreRepository
 import tmg.utilities.extensions.isInDayMode
 

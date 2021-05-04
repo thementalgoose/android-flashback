@@ -2,7 +2,7 @@ package tmg.flashback.statistics.ui.overview.driver.season.viewholders
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import tmg.flashback.core.enums.AnimationSpeed
+import tmg.flashback.shared.ui.model.AnimationSpeed
 import tmg.flashback.statistics.ui.overview.driver.season.DriverSeasonItem
 import tmg.flashback.data.enums.isStatusFinished
 import tmg.flashback.core.extensions.getColor

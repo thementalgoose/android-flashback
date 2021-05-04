@@ -81,9 +81,6 @@ android {
 
 dependencies {
 
-    // Swipe dismiss
-    api "com.r0adkll:slidableactivity:$slidr"
-
     // Components
     implementation "com.github.thementalgoose:android-components:$tmg_components"
     implementation project(path: ':core:analytics')

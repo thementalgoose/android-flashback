@@ -4,7 +4,7 @@ import androidx.annotation.LayoutRes
 import org.threeten.bp.LocalDate
 import org.threeten.bp.Month
 import tmg.flashback.statistics.R
-import tmg.flashback.core.enums.AnimationSpeed
+import tmg.flashback.shared.ui.model.AnimationSpeed
 import tmg.flashback.data.models.stats.HistoryRound
 import tmg.flashback.data.models.stats.Round
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem

@@ -3,7 +3,7 @@ package tmg.flashback.statistics.ui.race.viewholders
 import android.view.View
 import androidx.annotation.ColorInt
 import androidx.recyclerview.widget.RecyclerView
-import tmg.flashback.core.enums.AnimationSpeed
+import tmg.flashback.shared.ui.model.AnimationSpeed
 import tmg.flashback.data.models.stats.Driver
 import tmg.flashback.statistics.ui.race.RaceModel
 import tmg.flashback.core.extensions.getColor

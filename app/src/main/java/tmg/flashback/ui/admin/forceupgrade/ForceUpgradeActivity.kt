@@ -1,8 +1,6 @@
 package tmg.flashback.ui.admin.forceupgrade
 
 import android.os.Bundle
-import tmg.flashback.core.enums.DisplayType
-import tmg.flashback.core.ui.BaseActivity
 import tmg.flashback.core.utils.ScreenAnalytics
 import tmg.flashback.databinding.ActivityForceUpgradeBinding
 

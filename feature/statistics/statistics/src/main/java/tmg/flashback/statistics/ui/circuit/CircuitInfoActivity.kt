@@ -7,17 +7,11 @@ import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import org.koin.android.viewmodel.ext.android.viewModel
-import tmg.flashback.core.ui.BaseActivity
 import tmg.flashback.core.utils.ScreenAnalytics
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.constants.ViewType
-import tmg.flashback.statistics.constants.logEvent
 import tmg.flashback.statistics.databinding.ActivityCircuitInfoBinding
 import tmg.flashback.statistics.ui.race.RaceActivity
-import tmg.utilities.extensions.copyToClipboard
-import tmg.utilities.extensions.observe
-import tmg.utilities.extensions.observeEvent
 
 class CircuitInfoActivity: BaseActivity() {
 

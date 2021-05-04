@@ -23,4 +23,8 @@
     <attr name="contentSecondaryInverse" format="color" />
     <attr name="contentTertiaryInverse" format="color" />
 
+    <!-- Ripple -->
+
+    <attr name="rippleColor" format="color" />
+
 </resources>

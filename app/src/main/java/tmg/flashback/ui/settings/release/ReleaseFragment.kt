@@ -3,11 +3,9 @@ package tmg.flashback.ui.settings.release
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import tmg.flashback.R
 import tmg.flashback.constants.Releases
 import tmg.flashback.constants.ViewType
-import tmg.flashback.constants.logEvent
-import tmg.flashback.core.ui.BaseFragment
+import tmg.flashback.shared.ui.base.BaseFragment
 import tmg.flashback.core.utils.ScreenAnalytics
 import tmg.flashback.databinding.FragmentReleaseNotesBinding
 import tmg.utilities.extensions.fromHtml

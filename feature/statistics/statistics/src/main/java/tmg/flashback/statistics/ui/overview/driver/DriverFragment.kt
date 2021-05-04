@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.android.viewmodel.ext.android.viewModel
-import tmg.flashback.core.ui.BaseFragment
+import tmg.flashback.shared.ui.base.BaseFragment
 import tmg.flashback.statistics.databinding.FragmentDriverSeasonBinding
 import tmg.flashback.statistics.ui.overview.driver.summary.DriverSummaryAdapter
 import tmg.utilities.extensions.observe

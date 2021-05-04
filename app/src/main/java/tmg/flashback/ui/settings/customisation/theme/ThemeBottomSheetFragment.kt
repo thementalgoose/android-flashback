@@ -6,9 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.android.viewmodel.ext.android.viewModel
-import tmg.flashback.core.enums.Theme
-import tmg.flashback.core.ui.BaseBottomSheetFragment
-import tmg.flashback.core.ui.bottomsheet.BottomSheetAdapter
+import tmg.flashback.shared.ui.base.BaseBottomSheetFragment
+import tmg.flashback.shared.ui.bottomsheet.BottomSheetAdapter
 import tmg.flashback.databinding.FragmentBottomSheetThemeBinding
 import tmg.flashback.ui.SplashActivity
 import tmg.utilities.extensions.observe

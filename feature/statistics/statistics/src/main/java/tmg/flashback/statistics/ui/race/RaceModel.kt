@@ -1,7 +1,7 @@
 package tmg.flashback.statistics.ui.race
 
 import androidx.annotation.LayoutRes
-import tmg.flashback.core.enums.AnimationSpeed
+import tmg.flashback.shared.ui.model.AnimationSpeed
 import tmg.flashback.data.enums.RaceStatus
 import tmg.flashback.data.models.stats.*
 import tmg.flashback.statistics.R

@@ -1,7 +1,6 @@
 package tmg.flashback.ui.admin.maintenance
 
 import android.os.Bundle
-import tmg.flashback.core.ui.BaseActivity
 import tmg.flashback.core.utils.ScreenAnalytics
 import tmg.flashback.databinding.ActivityMaintenanceBinding
 

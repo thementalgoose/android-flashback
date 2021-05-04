@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import org.koin.android.ext.android.inject
 import tmg.flashback.controllers.ReleaseNotesController
-import tmg.flashback.core.ui.BaseBottomSheetFragment
+import tmg.flashback.shared.ui.base.BaseBottomSheetFragment
 import tmg.flashback.databinding.FragmentBottomSheetReleaseNotesBinding
 import tmg.utilities.extensions.fromHtml
 
