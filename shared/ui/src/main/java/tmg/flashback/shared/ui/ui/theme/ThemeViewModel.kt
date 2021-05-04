@@ -1,11 +1,16 @@
-package tmg.flashback.ui.settings.customisation.theme
+package tmg.flashback.shared.ui.ui.theme
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import tmg.flashback.core.controllers.AppearanceController
-import tmg.flashback.core.ui.BaseViewModel
+import androidx.lifecycle.ViewModel
 import tmg.flashback.shared.ui.bottomsheet.BottomSheetItem
+import tmg.flashback.shared.ui.controllers.ThemeController
+import tmg.flashback.shared.ui.extensions.icon
+import tmg.flashback.shared.ui.extensions.label
+import tmg.flashback.shared.ui.model.Theme
 import tmg.utilities.lifecycle.DataEvent
+import tmg.utilities.models.Selected
+import tmg.utilities.models.StringHolder
 
 //region Inputs
 
@@ -26,8 +31,8 @@ interface ThemeViewModelOutputs {
 //endregion
 
 class ThemeViewModel(
-        private val appearanceController: AppearanceController
-): BaseViewModel(), ThemeViewModelInputs, ThemeViewModelOutputs {
+        private val themeController: ThemeController
+): ViewModel(), ThemeViewModelInputs, ThemeViewModelOutputs {
 
     var inputs: ThemeViewModelInputs = this
     var outputs: ThemeViewModelOutputs = this
@@ -43,8 +48,8 @@ class ThemeViewModel(
     //region Inputs
 
     override fun selectTheme(theme: Theme) {
-        val same = appearanceController.currentTheme == theme
-        appearanceController.currentTheme = theme
+        val same = themeController.theme == theme
+        themeController.theme = theme
         updateThemeList()
         themeUpdated.value = DataEvent(Pair(theme, same))
     }
@@ -54,7 +59,7 @@ class ThemeViewModel(
     private fun updateThemeList() {
         themePreferences.value = Theme.values()
                 .map {
-                    Selected(BottomSheetItem(it.ordinal, it.icon, StringHolder(it.label)), it == appearanceController.currentTheme)
+                    Selected(BottomSheetItem(it.ordinal, it.icon, StringHolder(it.label)), it == themeController.theme)
                 }
     }
 }

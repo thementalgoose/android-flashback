@@ -1,22 +1,24 @@
-package tmg.flashback.ui.settings.customisation.animation
+package tmg.flashback.shared.ui.ui.animation
 
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.flashback.core.controllers.AppearanceController
-import tmg.flashback.shared.ui.model.AnimationSpeed
-import tmg.flashback.extensions.icon
-import tmg.flashback.extensions.label
-import tmg.flashback.testutils.BaseTest
-import tmg.flashback.testutils.assertEventFired
-import tmg.flashback.testutils.test
 import tmg.flashback.shared.ui.bottomsheet.BottomSheetItem
+import tmg.flashback.shared.ui.controllers.ThemeController
+import tmg.flashback.shared.ui.extensions.icon
+import tmg.flashback.shared.ui.extensions.label
+import tmg.flashback.shared.ui.model.AnimationSpeed
+import tmg.test.assertEventFired
+import tmg.test.test
+import tmg.utilities.models.Selected
+import tmg.utilities.models.StringHolder
 
-internal class AnimationSpeedViewModelTest: BaseTest() {
+internal class AnimationSpeedViewModelTest {
 
-    private val mockAppearanceController: AppearanceController = mockk(relaxed = true)
+    private val mockAppearanceController: ThemeController = mockk(relaxed = true)
 
     private lateinit var sut: AnimationSpeedViewModel
 
@@ -36,7 +38,8 @@ internal class AnimationSpeedViewModelTest: BaseTest() {
         initSUT()
         sut.outputs.animationSpeedPreference.test {
             assertValue(AnimationSpeed.values().map {
-                Selected(BottomSheetItem(it.ordinal, it.icon, StringHolder(it.label)), it == AnimationSpeed.MEDIUM)
+                Selected(
+                    BottomSheetItem(it.ordinal, it.icon, StringHolder(it.label)), it == AnimationSpeed.MEDIUM)
             })
         }
     }

@@ -1,18 +1,17 @@
-package tmg.flashback.ui.settings.customisation
+package tmg.flashback.shared.ui.ui
 
 import org.junit.jupiter.api.Test
 import tmg.components.prefs.AppPreferencesItem
-import tmg.flashback.R
-import tmg.flashback.testutils.BaseTest
-import tmg.flashback.testutils.assertEventFired
-import tmg.flashback.testutils.test
+import tmg.flashback.shared.ui.R
+import tmg.test.assertEventFired
+import tmg.test.test
 
-internal class SettingsCustomisationViewModelTest: BaseTest() {
+internal class SettingsThemeViewModelTest {
 
-    private lateinit var sut: SettingsCustomisationViewModel
+    private lateinit var sut: SettingsThemeViewModel
 
     private fun initSUT() {
-        sut = SettingsCustomisationViewModel()
+        sut = SettingsThemeViewModel()
     }
 
     @Test
@@ -20,9 +19,9 @@ internal class SettingsCustomisationViewModelTest: BaseTest() {
         initSUT()
         sut.outputs.settings.test {
             assertValue(listOf(
-                AppPreferencesItem.Category(R.string.settings_customisation),
+                AppPreferencesItem.Category(R.string.settings_theme_title),
                 AppPreferencesItem.Preference("Theme", R.string.settings_theme_theme_title, R.string.settings_theme_theme_description),
-                AppPreferencesItem.Preference("AnimationSpeed", R.string.settings_animation_speed_animation_title, R.string.settings_animation_speed_animation_description)
+                AppPreferencesItem.Preference("AnimationSpeed", R.string.settings_theme_animation_speed_title, R.string.settings_theme_animation_speed_description)
             ))
         }
     }

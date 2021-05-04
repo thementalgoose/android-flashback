@@ -1,29 +1,33 @@
-package tmg.flashback.ui.settings.customisation.theme
+package tmg.flashback.shared.ui.ui.theme
 
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.flashback.core.controllers.AppearanceController
-import tmg.flashback.testutils.BaseTest
-import tmg.flashback.testutils.test
 import tmg.flashback.shared.ui.bottomsheet.BottomSheetItem
-import tmg.flashback.testutils.assertDataEventValue
+import tmg.flashback.shared.ui.controllers.ThemeController
+import tmg.flashback.shared.ui.extensions.icon
+import tmg.flashback.shared.ui.extensions.label
+import tmg.flashback.shared.ui.model.Theme
+import tmg.test.assertDataEventValue
+import tmg.test.test
+import tmg.utilities.models.Selected
+import tmg.utilities.models.StringHolder
 
-internal class ThemeViewModelTest: BaseTest() {
+internal class ThemeViewModelTest {
 
-    private val mockAppearanceController: AppearanceController = mockk(relaxed = true)
+    private val mockThemeController: ThemeController = mockk(relaxed = true)
 
     private lateinit var sut: ThemeViewModel
 
     private fun initSUT() {
-        sut = ThemeViewModel(mockAppearanceController)
+        sut = ThemeViewModel(mockThemeController)
     }
 
     @BeforeEach
     internal fun setUp() {
-        every { mockAppearanceController.currentTheme } returns Theme.AUTO
+        every { mockThemeController.theme } returns Theme.DEFAULT
     }
 
     @Test
@@ -31,7 +35,7 @@ internal class ThemeViewModelTest: BaseTest() {
         initSUT()
         sut.outputs.themePreferences.test {
             assertValue(Theme.values().map {
-                Selected(BottomSheetItem(it.ordinal, it.icon, StringHolder(it.label)), it == Theme.AUTO)
+                Selected(BottomSheetItem(it.ordinal, it.icon, StringHolder(it.label)), it == Theme.DEFAULT)
             })
         }
     }
@@ -41,7 +45,7 @@ internal class ThemeViewModelTest: BaseTest() {
         initSUT()
         sut.inputs.selectTheme(Theme.DAY)
         verify {
-            mockAppearanceController.currentTheme = Theme.DAY
+            mockThemeController.theme = Theme.DAY
         }
     }
 
@@ -56,7 +60,7 @@ internal class ThemeViewModelTest: BaseTest() {
 
     @Test
     fun `selecting theme sends theme updated event with same selection`() {
-        every { mockAppearanceController.currentTheme } returns Theme.DAY
+        every { mockThemeController.theme } returns Theme.DAY
         initSUT()
         sut.inputs.selectTheme(Theme.DAY)
         sut.outputs.themeUpdated.test {
