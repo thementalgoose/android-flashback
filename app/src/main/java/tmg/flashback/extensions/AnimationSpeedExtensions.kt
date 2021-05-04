@@ -1,7 +1,7 @@
 package tmg.flashback.extensions
 
 import tmg.flashback.R
-import tmg.flashback.core.enums.AnimationSpeed
+import tmg.flashback.shared.ui.model.AnimationSpeed
 
 val AnimationSpeed.label: Int
     get() = when (this) {

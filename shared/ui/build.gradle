@@ -1,1 +1,10 @@
 apply from: rootDir.absolutePath + "/base.gradle"
+
+dependencies {
+
+    // Components
+    implementation "com.github.thementalgoose:android-components:$tmg_components"
+
+    // Swipe dismiss
+    implementation "com.r0adkll:slidableactivity:$slidr"
+}

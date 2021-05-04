@@ -1,13 +1,11 @@
 package tmg.flashback.repositories
 
 import android.content.Context
-import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.configuration.repository.models.TimeListDisplayType
 import tmg.flashback.constants.Defaults
-import tmg.flashback.core.enums.AnimationSpeed
+import tmg.flashback.shared.ui.model.AnimationSpeed
 import tmg.flashback.core.enums.AppHints
-import tmg.flashback.core.enums.Theme
 import tmg.flashback.core.repositories.CoreRepository
 import tmg.flashback.data.repositories.AppRepository
 import tmg.flashback.rss.prefs.RSSRepository

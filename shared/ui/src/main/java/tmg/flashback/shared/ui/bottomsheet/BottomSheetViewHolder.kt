@@ -1,10 +1,10 @@
-package tmg.flashback.core.ui.bottomsheet
+package tmg.flashback.shared.ui.bottomsheet
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import tmg.flashback.core.R
-import tmg.flashback.core.databinding.ViewBottomSheetItemBinding
-import tmg.flashback.core.utils.Selected
+import tmg.flashback.shared.ui.R
+import tmg.utilities.models.Selected
+import tmg.flashback.shared.ui.databinding.ViewBottomSheetItemBinding
 import tmg.utilities.extensions.views.context
 import tmg.utilities.extensions.views.gone
 import tmg.utilities.extensions.views.show
@@ -25,7 +25,7 @@ class BottomSheetViewHolder(
         binding.apply {
             if (selected.value.image != null) {
                 menuItemIcon.show()
-                menuItemIcon.setImageResource(selected.value.image)
+                menuItemIcon.setImageResource(selected.value.image!!)
             }
             else {
                 menuItemIcon.gone()
@@ -34,7 +34,7 @@ class BottomSheetViewHolder(
             menuItemLabel.text = selected.value.text.resolve(context)
 
             if (selected.isSelected) {
-                container.setBackgroundResource(R.drawable.background_selected)
+                container.setBackgroundResource(R.drawable.background_bottom_sheet_selected)
             }
             else {
                 container.setBackgroundResource(0)

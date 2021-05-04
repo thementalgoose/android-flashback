@@ -1,8 +1,5 @@
 package tmg.flashback.extensions
 
-import tmg.flashback.R
-import tmg.flashback.core.enums.Theme
-
 val Theme.label: Int
     get() = when (this) {
         Theme.DAY -> R.string.settings_theme_theme_light

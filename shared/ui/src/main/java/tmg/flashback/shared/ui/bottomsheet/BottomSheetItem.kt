@@ -1,7 +1,7 @@
-package tmg.flashback.core.ui.bottomsheet
+package tmg.flashback.shared.ui.bottomsheet
 
 import androidx.annotation.DrawableRes
-import tmg.flashback.core.utils.StringHolder
+import tmg.utilities.models.StringHolder
 
 data class BottomSheetItem(
     val id: Int,

@@ -13,12 +13,11 @@ import com.google.android.material.snackbar.Snackbar
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.core.managers.NavigationManager
-import tmg.flashback.core.ui.BaseFragment
+import tmg.flashback.shared.ui.base.BaseFragment
 import tmg.flashback.statistics.BuildConfig
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.FragmentDashboardListBinding
 import tmg.flashback.statistics.manager.StatisticsExternalNavigationManager
-import tmg.flashback.statistics.ui.dashboard.DashboardFragment
 import tmg.flashback.statistics.ui.dashboard.DashboardNavigationCallback
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent

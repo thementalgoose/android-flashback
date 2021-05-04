@@ -21,7 +21,6 @@ import tmg.flashback.data.db.stats.HistoryRepository
 import tmg.flashback.data.db.stats.SeasonOverviewRepository
 import tmg.flashback.data.models.stats.*
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
-import tmg.flashback.core.utils.StringHolder
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.constants.Formula1.currentSeasonYear
 import tmg.flashback.statistics.constants.ViewType

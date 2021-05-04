@@ -4,8 +4,7 @@ import android.os.Bundle
 import android.view.View
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.constants.ViewType
-import tmg.flashback.constants.logEvent
-import tmg.flashback.core.ui.settings.SettingsFragment
+import tmg.flashback.shared.ui.settings.SettingsFragment
 import tmg.flashback.core.utils.ScreenAnalytics
 import tmg.flashback.ui.settings.customisation.animation.AnimationSpeedBottomSheetFragment
 import tmg.flashback.ui.settings.customisation.theme.ThemeBottomSheetFragment

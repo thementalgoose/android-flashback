@@ -1,22 +1,17 @@
 package tmg.flashback.statistics.ui.dashboard.season
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.IMPORTANT_FOR_ACCESSIBILITY_NO
 import android.view.View.IMPORTANT_FOR_ACCESSIBILITY_YES
-import android.widget.ProgressBar
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
-import org.threeten.bp.LocalDate
-import tmg.flashback.core.controllers.FeatureController
-import tmg.flashback.core.ui.BaseFragment
+import tmg.flashback.shared.ui.base.BaseFragment
 import tmg.flashback.core.utils.ScreenAnalytics
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.constants.Formula1.currentSeasonYear
-import tmg.flashback.statistics.controllers.RaceController
 import tmg.flashback.statistics.controllers.SeasonController
 import tmg.flashback.statistics.databinding.FragmentDashboardSeasonBinding
 import tmg.flashback.statistics.ui.dashboard.DashboardFragment
@@ -26,7 +21,6 @@ import tmg.flashback.statistics.ui.overview.driver.DriverActivity
 import tmg.flashback.statistics.ui.race.RaceActivity
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
-import tmg.utilities.extensions.views.show
 
 class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
 

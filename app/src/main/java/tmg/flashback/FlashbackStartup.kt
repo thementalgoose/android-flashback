@@ -9,11 +9,9 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import tmg.crash_reporting.controllers.CrashController
 import tmg.flashback.device.controllers.DeviceController
-import tmg.flashback.core.enums.Theme
 import tmg.analytics.UserProperty.*
 import tmg.analytics.controllers.AnalyticsController
 import tmg.flashback.core.repositories.CoreRepository
-import tmg.notifications.managers.PushNotificationManager
 import tmg.flashback.managers.widgets.WidgetManager
 import tmg.flashback.statistics.extensions.updateAllWidgets
 import tmg.notifications.controllers.NotificationController

@@ -6,15 +6,13 @@ import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.core.controllers.AppearanceController
-import tmg.flashback.core.enums.AnimationSpeed
+import tmg.flashback.shared.ui.model.AnimationSpeed
 import tmg.flashback.extensions.icon
 import tmg.flashback.extensions.label
 import tmg.flashback.testutils.BaseTest
 import tmg.flashback.testutils.assertEventFired
 import tmg.flashback.testutils.test
-import tmg.flashback.core.utils.Selected
-import tmg.flashback.core.utils.StringHolder
-import tmg.flashback.core.ui.bottomsheet.BottomSheetItem
+import tmg.flashback.shared.ui.bottomsheet.BottomSheetItem
 
 internal class AnimationSpeedViewModelTest: BaseTest() {
 

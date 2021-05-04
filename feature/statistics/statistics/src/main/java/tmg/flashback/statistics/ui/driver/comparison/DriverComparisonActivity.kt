@@ -3,9 +3,7 @@ package tmg.flashback.statistics.ui.driver.comparison
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import tmg.flashback.core.ui.BaseActivity
 import tmg.flashback.core.utils.ScreenAnalytics
-import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.ActivityDriverComparisonBinding
 
 class DriverComparisonActivity: BaseActivity() {

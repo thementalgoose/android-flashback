@@ -1,13 +1,13 @@
-package tmg.flashback.core.ui.settings
+package tmg.flashback.shared.ui.settings
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.viewbinding.ViewBinding
 import tmg.components.prefs.AppPreferencesAdapter
 import tmg.components.prefs.AppPreferencesItem
-import tmg.flashback.core.databinding.ViewSettingsCategoryBinding
-import tmg.flashback.core.databinding.ViewSettingsPreferenceBinding
-import tmg.flashback.core.databinding.ViewSettingsPreferenceSwitchBinding
+import tmg.flashback.shared.ui.databinding.ViewSettingsCategoryBinding
+import tmg.flashback.shared.ui.databinding.ViewSettingsPreferenceBinding
+import tmg.flashback.shared.ui.databinding.ViewSettingsPreferenceSwitchBinding
 
 class SettingsAdapter(
         prefClicked: (prefKey: String) -> Unit = { _ -> },

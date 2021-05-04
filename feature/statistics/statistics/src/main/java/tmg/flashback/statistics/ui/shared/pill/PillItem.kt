@@ -1,8 +1,6 @@
 package tmg.flashback.statistics.ui.shared.pill
 
 import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
-import tmg.flashback.core.utils.StringHolder
 import tmg.flashback.statistics.R
 
 sealed class PillItem(

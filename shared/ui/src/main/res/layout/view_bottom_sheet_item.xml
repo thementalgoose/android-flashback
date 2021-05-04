@@ -16,7 +16,8 @@
         android:layout_marginBottom="@dimen/paddingXSmall"
         android:clickable="true"
         android:focusable="true"
-        android:foreground="@drawable/ripple_rounded">
+        android:foreground="@drawable/ripple_rounded_small"
+        tools:ignore="UnusedAttribute">
 
         <ImageView
             android:id="@+id/menuItemIcon"
@@ -26,7 +27,7 @@
             app:layout_constraintBottom_toBottomOf="@id/menuItemLabel"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/menuItemLabel"
-            app:tint="?attr/f1TextPrimary" />
+            app:tint="?attr/contentPrimary" />
 
         <TextView
             android:id="@+id/menuItemLabel"

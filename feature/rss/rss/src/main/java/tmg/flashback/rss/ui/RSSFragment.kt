@@ -9,17 +9,13 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
-import tmg.flashback.core.ui.BaseFragment
+import tmg.flashback.shared.ui.base.BaseFragment
 import tmg.flashback.core.utils.ScreenAnalytics
-import tmg.flashback.rss.R
 import tmg.flashback.rss.constants.ViewType
-import tmg.flashback.rss.constants.logEvent
 import tmg.flashback.rss.databinding.FragmentRssBinding
 import tmg.flashback.rss.prefs.RSSRepository
-import tmg.flashback.rss.repo.model.Article
 import tmg.flashback.rss.ui.settings.InitialScreen
 import tmg.flashback.rss.ui.settings.RSSSettingsActivity
-import tmg.flashback.rss.web.WebFragment
 import tmg.utilities.extensions.observe
 
 class RSSFragment: BaseFragment<FragmentRssBinding>() {

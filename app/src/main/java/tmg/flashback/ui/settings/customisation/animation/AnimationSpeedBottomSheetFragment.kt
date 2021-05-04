@@ -5,10 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.android.viewmodel.ext.android.viewModel
-import tmg.flashback.R
-import tmg.flashback.core.enums.AnimationSpeed
-import tmg.flashback.core.ui.BaseBottomSheetFragment
-import tmg.flashback.core.ui.bottomsheet.BottomSheetAdapter
+import tmg.flashback.shared.ui.model.AnimationSpeed
+import tmg.flashback.shared.ui.base.BaseBottomSheetFragment
+import tmg.flashback.shared.ui.bottomsheet.BottomSheetAdapter
 import tmg.flashback.databinding.FragmentBottomSheetAnimationSpeedBinding
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent

@@ -2,6 +2,7 @@ package tmg.flashback.shared.ui.controllers
 
 import android.content.Context
 import androidx.annotation.StyleRes
+import tmg.flashback.shared.ui.model.AnimationSpeed
 import tmg.flashback.shared.ui.model.Theme
 import tmg.utilities.extensions.isInDayMode
 
@@ -9,7 +10,15 @@ abstract class ThemeController(
     private val applicationContext: Context
 ) {
 
-    abstract var themePref: Theme
+    /**
+     * Animation speed preference
+     */
+    internal abstract val animationSpeed: AnimationSpeed
+
+    /**
+     * Theme preference
+     */
+    internal abstract var themePref: Theme
 
     @get:StyleRes
     val themeStyle: Int
@@ -25,5 +34,5 @@ abstract class ThemeController(
         }
 
     @StyleRes
-    abstract fun getStyleResource(theme: Theme): Int
+    protected abstract fun getStyleResource(theme: Theme): Int
 }

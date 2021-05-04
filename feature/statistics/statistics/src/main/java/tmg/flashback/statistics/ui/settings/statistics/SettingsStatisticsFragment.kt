@@ -4,11 +4,10 @@ import android.os.Bundle
 import android.view.View
 import com.google.android.material.snackbar.Snackbar
 import org.koin.android.viewmodel.ext.android.viewModel
-import tmg.flashback.core.ui.settings.SettingsFragment
+import tmg.flashback.shared.ui.settings.SettingsFragment
 import tmg.flashback.core.utils.ScreenAnalytics
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.constants.ViewType
-import tmg.flashback.statistics.constants.logEvent
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 

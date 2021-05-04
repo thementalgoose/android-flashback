@@ -3,13 +3,8 @@ package tmg.flashback.ui.settings.customisation.theme
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import tmg.flashback.core.controllers.AppearanceController
-import tmg.flashback.core.enums.Theme
 import tmg.flashback.core.ui.BaseViewModel
-import tmg.flashback.extensions.icon
-import tmg.flashback.extensions.label
-import tmg.flashback.core.utils.Selected
-import tmg.flashback.core.utils.StringHolder
-import tmg.flashback.core.ui.bottomsheet.BottomSheetItem
+import tmg.flashback.shared.ui.bottomsheet.BottomSheetItem
 import tmg.utilities.lifecycle.DataEvent
 
 //region Inputs

@@ -1,10 +1,8 @@
 package tmg.flashback.core.repositories
 
-import org.threeten.bp.LocalDate
 import tmg.configuration.repository.models.TimeListDisplayType
-import tmg.flashback.core.enums.AnimationSpeed
+import tmg.flashback.shared.ui.model.AnimationSpeed
 import tmg.flashback.core.enums.AppHints
-import tmg.flashback.core.enums.Theme
 
 interface CoreRepository {
 
