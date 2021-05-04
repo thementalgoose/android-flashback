@@ -13,23 +13,23 @@ abstract class ThemeController(
     /**
      * Animation speed preference
      */
-    internal abstract val animationSpeed: AnimationSpeed
+    internal abstract var animationSpeed: AnimationSpeed
 
     /**
      * Theme preference
      */
-    internal abstract var themePref: Theme
+    internal abstract var theme: Theme
 
     @get:StyleRes
     val themeStyle: Int
         get() {
-            return when (themePref) {
+            return when (theme) {
                 Theme.DEFAULT -> if (applicationContext.isInDayMode()) {
                     getStyleResource(Theme.DAY)
                 } else {
                     getStyleResource(Theme.NIGHT)
                 }
-                else -> getStyleResource(themePref)
+                else -> getStyleResource(theme)
             }
         }
 

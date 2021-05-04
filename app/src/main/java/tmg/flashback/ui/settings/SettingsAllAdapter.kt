@@ -7,8 +7,8 @@ import androidx.annotation.StringRes
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.R
-import tmg.flashback.core.ui.shared.GenericDiffCallback
 import tmg.flashback.databinding.ViewSettingsAllCategoryBinding
+import tmg.utilities.difflist.GenericDiffCallback
 
 class SettingsAllAdapter(
     private val categoryClicked: (category: Category) -> Unit

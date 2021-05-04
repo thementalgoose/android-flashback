@@ -1,14 +1,16 @@
-package tmg.flashback.ui.settings.customisation.animation
+package tmg.flashback.shared.ui.ui.animation
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import tmg.flashback.core.controllers.AppearanceController
+import androidx.lifecycle.ViewModel
 import tmg.flashback.shared.ui.model.AnimationSpeed
-import tmg.flashback.core.ui.BaseViewModel
-import tmg.flashback.extensions.icon
-import tmg.flashback.extensions.label
 import tmg.flashback.shared.ui.bottomsheet.BottomSheetItem
+import tmg.flashback.shared.ui.controllers.ThemeController
+import tmg.flashback.shared.ui.extensions.icon
+import tmg.flashback.shared.ui.extensions.label
 import tmg.utilities.lifecycle.Event
+import tmg.utilities.models.Selected
+import tmg.utilities.models.StringHolder
 
 //region Inputs
 
@@ -30,8 +32,8 @@ interface AnimationSpeedViewModelOutputs {
 
 
 class AnimationSpeedViewModel(
-        private val appearanceController: AppearanceController
-): BaseViewModel(), AnimationSpeedViewModelInputs, AnimationSpeedViewModelOutputs {
+        private val themeController: ThemeController
+): ViewModel(), AnimationSpeedViewModelInputs, AnimationSpeedViewModelOutputs {
 
     var inputs: AnimationSpeedViewModelInputs = this
     var outputs: AnimationSpeedViewModelOutputs = this
@@ -46,7 +48,7 @@ class AnimationSpeedViewModel(
     //region Inputs
 
     override fun selectAnimationSpeed(animationSpeed: AnimationSpeed) {
-        appearanceController.animationSpeed = animationSpeed
+        themeController.animationSpeed = animationSpeed
         updateAnimationList()
         animationSpeedUpdated.value = Event()
     }
@@ -56,7 +58,7 @@ class AnimationSpeedViewModel(
     private fun updateAnimationList() {
         animationSpeedPreference.value = AnimationSpeed.values()
                 .map {
-                    Selected(BottomSheetItem(it.ordinal, it.icon, StringHolder(it.label)), it == appearanceController.animationSpeed)
+                    Selected(BottomSheetItem(it.ordinal, it.icon, StringHolder(it.label)), it == themeController.animationSpeed)
                 }
     }
 }

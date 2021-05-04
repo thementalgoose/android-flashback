@@ -1,6 +1,6 @@
-package tmg.flashback.extensions
+package tmg.flashback.shared.ui.extensions
 
-import tmg.flashback.R
+import tmg.flashback.shared.ui.R
 import tmg.flashback.shared.ui.model.AnimationSpeed
 
 val AnimationSpeed.label: Int
