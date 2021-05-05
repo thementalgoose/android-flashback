@@ -13,7 +13,6 @@ import org.threeten.bp.LocalDate
 import org.threeten.bp.Month
 import org.threeten.bp.temporal.TemporalAdjusters
 import tmg.flashback.statistics.controllers.NotificationController.Companion.daysUntilDataProvidedBannerMovedToBottom
-import tmg.flashback.core.controllers.AppearanceController
 import tmg.flashback.device.controllers.DeviceController
 import tmg.flashback.shared.ui.model.AnimationSpeed
 import tmg.flashback.device.managers.NetworkConnectivityManager
