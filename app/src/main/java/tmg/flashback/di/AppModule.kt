@@ -14,8 +14,8 @@ import tmg.flashback.rss.network.RSS
 import tmg.flashback.rss.prefs.RSSRepositoryI
 import tmg.flashback.rss.repo.RssAPI
 import tmg.flashback.rss.ui.RSSViewModel
-import tmg.flashback.rss.ui.configure.RSSConfigureViewModel
-import tmg.flashback.rss.ui.settings.RSSSettingsViewModel
+import tmg.flashback.rss.ui.settings.configure.RSSConfigureViewModel
+import tmg.flashback.rss.ui.settings.settings.RSSSettingsViewModel
 import tmg.flashback.core.controllers.FeatureController
 import tmg.flashback.managers.navigation.FlashbackNavigationManager
 import tmg.flashback.statistics.controllers.RaceController
