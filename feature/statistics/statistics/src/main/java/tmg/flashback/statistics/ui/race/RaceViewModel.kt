@@ -10,7 +10,6 @@ import org.threeten.bp.LocalDate
 import tmg.flashback.core.ui.BaseViewModel
 import tmg.flashback.statistics.controllers.RaceController
 import tmg.flashback.core.controllers.AppHintsController
-import tmg.flashback.core.controllers.AppearanceController
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.data.db.stats.SeasonOverviewRepository
 import tmg.flashback.data.models.stats.*

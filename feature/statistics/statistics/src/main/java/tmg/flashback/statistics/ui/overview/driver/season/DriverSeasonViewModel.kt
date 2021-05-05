@@ -13,7 +13,6 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import tmg.flashback.statistics.constants.Formula1.maxPointsBySeason
 import tmg.flashback.core.ui.BaseViewModel
-import tmg.flashback.core.controllers.AppearanceController
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.statistics.ui.overview.driver.summary.PipeType
 import tmg.flashback.data.db.stats.DriverRepository
