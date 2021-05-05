@@ -1,6 +1,7 @@
 package tmg.flashback.constants
 
 import tmg.flashback.shared.ui.model.AnimationSpeed
+import tmg.flashback.shared.ui.model.Theme
 
 internal object Defaults {
 
@@ -9,7 +10,7 @@ internal object Defaults {
     const val showGridPenaltiesInQualifying: Boolean = true
 
     val animationSpeed: AnimationSpeed = AnimationSpeed.MEDIUM
-    val theme: Theme = Theme.AUTO
+    val theme: Theme = Theme.DEFAULT
 
     const val showListFavourited: Boolean = true
     const val showListAll: Boolean = true

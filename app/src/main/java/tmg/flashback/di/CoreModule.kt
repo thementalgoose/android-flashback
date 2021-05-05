@@ -23,7 +23,6 @@ private val coreModule = module {
     single<NavigationManager> { FlashbackNavigationManager(get(), get(), get()) }
 
     // Controllers
-    single { AppearanceController(get(), get()) }
     single { AppHintsController(get()) }
     single { UserNotificationController(get()) }
     single { DeviceController(get(), get()) }

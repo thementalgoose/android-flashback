@@ -2,7 +2,6 @@ package tmg.flashback.di
 
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
-import tmg.configuration.firebase.FirebaseRemoteConfigManager
 import tmg.flashback.FlashbackStartup
 import tmg.flashback.controllers.*
 import tmg.flashback.managers.appshortcuts.AndroidAppShortcutManager
@@ -12,7 +11,7 @@ import tmg.flashback.managers.widgets.WidgetManager
 import tmg.flashback.repositories.SharedPreferenceRepository
 import tmg.flashback.rss.controllers.RSSFeedController
 import tmg.flashback.rss.network.RSS
-import tmg.flashback.rss.prefs.RSSRepository
+import tmg.flashback.rss.prefs.RSSRepositoryI
 import tmg.flashback.rss.repo.RssAPI
 import tmg.flashback.rss.ui.RSSViewModel
 import tmg.flashback.rss.ui.configure.RSSConfigureViewModel
@@ -107,7 +106,7 @@ val appRssModule = module {
     single { RSSFeedController(get()) }
 
     // Repositories
-    single<RSSRepository> { SharedPreferenceRepository(get()) }
+    single<RSSRepositoryI> { SharedPreferenceRepository(get()) }
 
     // UI
     viewModel { RSSViewModel(get(), get(), get()) }

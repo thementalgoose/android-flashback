@@ -7,7 +7,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDateTime
 import tmg.flashback.device.managers.NetworkConnectivityManager
-import tmg.flashback.rss.prefs.RSSRepository
+import tmg.flashback.rss.prefs.RSSRepositoryI
 import tmg.flashback.rss.repo.RssAPI
 import tmg.flashback.rss.repo.model.Article
 import tmg.flashback.rss.repo.model.ArticleSource
@@ -20,7 +20,7 @@ class RSSViewModelTest: BaseTest() {
     private lateinit var sut: RSSViewModel
 
     private val mockRSSDB: RssAPI = mockk(relaxed = true)
-    private val mockRepository: RSSRepository = mockk(relaxed = true)
+    private val mockRepository: RSSRepositoryI = mockk(relaxed = true)
     private val mockConnectivityManager: NetworkConnectivityManager = mockk(relaxed = true)
 
     private val mockLocalDate: LocalDateTime = LocalDateTime.of(2020, 1, 1, 1, 2, 3, 0)

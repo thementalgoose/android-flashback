@@ -9,7 +9,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment"
-        android:name="tmg.flashback.ui.admin.maintenance.MaintenanceFragment"
+        android:name="tmg.flashback.statistics.ui.admin.maintenance.MaintenanceFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"

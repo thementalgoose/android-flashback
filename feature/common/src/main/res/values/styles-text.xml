@@ -14,4 +14,16 @@
 
     <!-- #endregion -->
 
+    <!-- #region Settings All -->
+
+    <style name="Settings.All.Title" parent="Text">
+        <item name="android:textColor">?attr/colorPrimary</item>
+    </style>
+
+    <style name="Settings.All.Subtitle" parent="Text">
+
+    </style>
+
+    <!-- #endregion -->
+
 </resources>

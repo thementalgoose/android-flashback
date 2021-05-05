@@ -7,7 +7,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.components.prefs.AppPreferencesItem
 import tmg.flashback.rss.R
-import tmg.flashback.rss.prefs.RSSRepository
+import tmg.flashback.rss.prefs.RSSRepositoryI
 import tmg.flashback.rss.testutils.BaseTest
 import tmg.flashback.rss.testutils.assertEventFired
 import tmg.flashback.rss.testutils.test
@@ -17,7 +17,7 @@ class RSSSettingsViewModelTest: BaseTest() {
 
     lateinit var sut: RSSSettingsViewModel
 
-    private val mock: RSSRepository = mockk(relaxed = true)
+    private val mock: RSSRepositoryI = mockk(relaxed = true)
 
     private val keyConfigureSources: String = "keyConfigureSources"
     private val keyShowDescription: String = "keyShowDescription"

@@ -1,4 +1,4 @@
-package tmg.flashback.ui.admin.maintenance
+package tmg.flashback.statistics.ui.admin.maintenance
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel

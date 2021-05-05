@@ -1,17 +1,13 @@
 package tmg.flashback.rss.network
 
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import tmg.flashback.rss.BuildConfig
 import tmg.flashback.rss.controllers.RSSFeedController
 import tmg.flashback.rss.network.apis.convert
 import tmg.flashback.rss.network.shared.RssXMLRetrofit
 import tmg.flashback.rss.network.shared.buildRetrofit
-import tmg.flashback.rss.prefs.RSSRepository
+import tmg.flashback.rss.repo.RSSRepository
 import tmg.flashback.rss.repo.RssAPI
 import tmg.flashback.rss.repo.model.Article
 import tmg.flashback.rss.repo.model.Response

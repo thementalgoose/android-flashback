@@ -16,9 +16,9 @@ class SettingsWidgetFragment: SettingsFragment() {
 
     private val viewModel: SettingsWidgetViewModel by viewModel()
 
-    override val screenAnalytics = ScreenAnalytics(
-        screenName = "Settings - Widget"
-    )
+//    override val screenAnalytics = ScreenAnalytics(
+//        screenName = "Settings - Widget"
+//    )
 
     override val prefClicked: (prefKey: String) -> Unit = { prefKey ->
         viewModel.inputs.preferenceClicked(prefKey, null)
@@ -30,7 +30,7 @@ class SettingsWidgetFragment: SettingsFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        analyticsController.logEvent(ViewType.SETTINGS_WIDGET)
+//        analyticsController.logEvent(ViewType.SETTINGS_WIDGET)
 
         observe(viewModel.outputs.settings) {
             adapter.list = it
