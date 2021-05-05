@@ -13,12 +13,12 @@ abstract class ThemeController(
     /**
      * Animation speed preference
      */
-    internal abstract var animationSpeed: AnimationSpeed
+    abstract var animationSpeed: AnimationSpeed
 
     /**
      * Theme preference
      */
-    internal abstract var theme: Theme
+    abstract var theme: Theme
 
     @get:StyleRes
     val themeStyle: Int

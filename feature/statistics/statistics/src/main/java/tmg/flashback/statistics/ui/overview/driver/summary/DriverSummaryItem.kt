@@ -26,7 +26,7 @@ sealed class DriverSummaryItem(
 
     data class Stat(
             @AttrRes
-            val tint: Int = R.attr.f1TextSecondary,
+            val tint: Int = R.attr.contentSecondary,
             @DrawableRes
             val icon: Int,
             @StringRes

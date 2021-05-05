@@ -7,6 +7,8 @@
     <attr name="backgroundPrimaryInverse" format="color" />
     <attr name="backgroundSecondary" format="color" />
     <attr name="backgroundSecondaryInverse" format="color" />
+    <attr name="backgroundTertiary" format="color" />
+    <attr name="backgroundTertiaryInverse" format="color" />
     <attr name="backgroundNav" format="color" />
 
     <!-- Items -->

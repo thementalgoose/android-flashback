@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import tmg.flashback.core.ui.shared.GenericDiffCallback
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.ViewDriverSeasonBinding
 import tmg.flashback.statistics.databinding.ViewDriverSeasonHeaderBinding
@@ -15,6 +14,7 @@ import tmg.flashback.statistics.ui.overview.driver.season.viewholders.RaceHeader
 import tmg.flashback.statistics.ui.overview.driver.season.viewholders.RaceViewHolder
 import tmg.flashback.statistics.ui.overview.viewholders.DriverHistoryViewHolder
 import tmg.flashback.statistics.ui.shared.sync.SyncAdapter
+import tmg.utilities.difflist.GenericDiffCallback
 
 @Suppress("EXPERIMENTAL_API_USAGE", "EXPERIMENTAL_OVERRIDE")
 class DriverSeasonAdapter(

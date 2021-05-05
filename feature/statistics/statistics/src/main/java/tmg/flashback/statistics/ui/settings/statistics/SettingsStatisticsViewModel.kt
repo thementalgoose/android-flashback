@@ -2,10 +2,10 @@ package tmg.flashback.statistics.ui.settings.statistics
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import tmg.components.prefs.AppPreferencesItem
 import tmg.flashback.statistics.controllers.RaceController
 import tmg.flashback.statistics.controllers.SeasonController
-import tmg.flashback.core.ui.BaseViewModel
 import tmg.flashback.statistics.R
 import tmg.utilities.lifecycle.Event
 
@@ -30,7 +30,7 @@ interface SettingsStatisticsViewModelOutputs {
 class SettingsStatisticsViewModel(
         private val raceController: RaceController,
         private val seasonController: SeasonController
-): BaseViewModel(), SettingsStatisticsViewModelInputs, SettingsStatisticsViewModelOutputs {
+): ViewModel(), SettingsStatisticsViewModelInputs, SettingsStatisticsViewModelOutputs {
 
     private val keyQualifyingDeltas: String = "QualifyingDelta"
     private val keyFadeOutDNF: String = "FadeOutDNF"

@@ -11,6 +11,9 @@ dependencies {
 
     apply from: rootDir.absolutePath + "/core/core.gradle"
 
+    // Swipe refresh
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:$swipe_refresh"
+
     // Retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofit"
     implementation "com.squareup.retrofit2:converter-simplexml:$retrofit"

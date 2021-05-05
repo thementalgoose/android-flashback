@@ -7,7 +7,6 @@ import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.analytics.controllers.AnalyticsController
 import tmg.flashback.databinding.ActivitySplashBinding
-import tmg.flashback.ui.admin.forceupgrade.ForceUpgradeActivity
 import tmg.flashback.statistics.ui.dashboard.DashboardActivity
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent

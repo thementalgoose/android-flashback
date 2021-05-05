@@ -12,7 +12,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/logo_round"
         android:supportsRtl="true"
-        android:theme="@style/LightTheme">
+        android:theme="@style/DayTheme">
 
         <meta-data
             android:name="google_analytics_automatic_screen_reporting_enabled"

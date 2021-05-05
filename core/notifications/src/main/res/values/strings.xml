@@ -4,4 +4,14 @@
     <string name="notification_channel_race">Race starts</string>
     <string name="notification_channel_qualifying">Qualifying starts</string>
     <string name="notification_channel_info">Season information</string>
+
+    <!-- Settings -->
+    <string name="settings_notifications_title">Notifications</string>
+    <string name="settings_notifications_channel_qualifying_title">Qualifying</string>
+    <string name="settings_notifications_channel_qualifying_description">Receive notifications 30 minutes before qualifying starts. Configure them here</string>
+    <string name="settings_notifications_channel_race_title">Race</string>
+    <string name="settings_notifications_channel_race_description">Receive notifications 30 minutes before a race starts. Configure them here</string>
+    <string name="settings_notifications_nonchannel_title">Notifications</string>
+    <string name="settings_notifications_nonchannel_description">Turn off the app notifications by turning them off in your settings</string>
+
 </resources>

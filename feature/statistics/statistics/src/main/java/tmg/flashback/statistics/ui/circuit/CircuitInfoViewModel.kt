@@ -1,13 +1,9 @@
 package tmg.flashback.statistics.ui.circuit
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.*
 import tmg.flashback.device.managers.NetworkConnectivityManager
-import tmg.flashback.core.ui.BaseViewModel
 import tmg.flashback.statistics.extensions.circuitIcon
 import tmg.flashback.data.db.stats.CircuitRepository
 import tmg.flashback.data.models.stats.Circuit
@@ -42,7 +38,7 @@ interface CircuitInfoViewModelOutputs {
 class CircuitInfoViewModel(
         private val circuitRepository: CircuitRepository,
         private val connectivityManager: NetworkConnectivityManager
-) : BaseViewModel(), CircuitInfoViewModelInputs, CircuitInfoViewModelOutputs {
+) : ViewModel(), CircuitInfoViewModelInputs, CircuitInfoViewModelOutputs {
 
     private var circuitLat: Double? = null
     private var circuitLng: Double? = null

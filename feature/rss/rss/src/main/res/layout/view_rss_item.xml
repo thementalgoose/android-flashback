@@ -12,7 +12,7 @@
     android:paddingTop="10dp"
     android:paddingEnd="@dimen/paddingMedium"
     android:paddingBottom="10dp"
-    tools:background="?attr/rssBackground">
+    tools:background="?attr/backgroundPrimary">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/imageContainer"
@@ -84,7 +84,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:drawablePadding="4dp"
-        android:drawableTint="?attr/rssTextTertiary"
+        android:drawableTint="?attr/contentTertiary"
         android:paddingStart="2dp"
         android:paddingEnd="2dp"
         app:layout_constraintEnd_toEndOf="parent"

@@ -8,6 +8,7 @@ import androidx.navigation.fragment.NavHostFragment
 import tmg.flashback.R
 import tmg.flashback.core.utils.ScreenAnalytics
 import tmg.flashback.databinding.ActivitySettingsBinding
+import tmg.flashback.shared.ui.base.BaseActivity
 
 class SettingsAllActivity: BaseActivity(), NavController.OnDestinationChangedListener {
 
@@ -15,7 +16,7 @@ class SettingsAllActivity: BaseActivity(), NavController.OnDestinationChangedLis
 
     private var navController: NavController? = null
 
-    override val screenAnalytics: ScreenAnalytics? = null
+//    override val screenAnalytics: ScreenAnalytics? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +49,7 @@ class SettingsAllActivity: BaseActivity(), NavController.OnDestinationChangedLis
         when (destination.id) {
             R.id.settingsFragment -> updateTitle(R.string.settings_title)
             R.id.settingsAboutFragment -> updateTitle(R.string.settings_all_about)
-            R.id.settingsCustomisationFragment -> updateTitle(R.string.settings_customisation)
+//            R.id.settingsCustomisationFragment -> updateTitle(R.string.settings_customisation)
             R.id.settingsDeviceFragment -> updateTitle(R.string.settings_device)
             R.id.settingsNotificationFragment -> updateTitle(R.string.settings_notifications_title)
             R.id.settingsStatisticsFragment -> updateTitle(R.string.settings_statistics)

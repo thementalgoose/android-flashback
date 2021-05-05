@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/f1BackgroundPrimary"
+    android:background="?attr/backgroundPrimary"
     android:paddingStart="@dimen/paddingSmall"
     android:paddingTop="@dimen/paddingSmall"
     android:paddingEnd="@dimen/paddingMedium"
@@ -24,7 +24,7 @@
         android:layout_marginStart="@dimen/paddingMedium"
         android:layout_marginEnd="@dimen/paddingSmall"
         android:src="@drawable/ic_race_points"
-        android:tint="?attr/f1TextSecondary"
+        android:tint="?attr/contentSecondary"
         app:layout_constraintEnd_toStartOf="@id/llPosition"
         app:layout_constraintStart_toStartOf="@id/guideline"
         app:layout_constraintTop_toTopOf="parent" />
@@ -46,7 +46,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_race_grid"
-            android:tint="?attr/f1TextSecondary"
+            android:tint="?attr/contentSecondary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -72,7 +72,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_race_status"
-            android:tint="?attr/f1TextSecondary" />
+            android:tint="?attr/contentSecondary" />
 
     </LinearLayout>
 

@@ -30,19 +30,19 @@ class TrackViewHolder(
             country.setImageResource(context.getFlagResourceAlpha3(item.raceCountryISO))
             when {
                 data.hasResults -> {
-                    status.setColorFilter(context.theme.getColor(R.attr.f1DeltaNegative))
+                    status.setColorFilter(context.theme.getColor(R.attr.f1ResultsFull))
                     status.setImageResource(R.drawable.race_status_hasdata)
                 }
                 data.hasQualifying -> {
-                    status.setColorFilter(context.theme.getColor(R.attr.f1DeltaWaiting))
+                    status.setColorFilter(context.theme.getColor(R.attr.f1ResultsPartial))
                     status.setImageResource(R.drawable.race_status_hasqualifying)
                 }
                 data.date > LocalDate.now() -> {
-                    status.setColorFilter(context.theme.getColor(R.attr.f1DeltaNeutral))
+                    status.setColorFilter(context.theme.getColor(R.attr.f1ResultsNeutral))
                     status.setImageResource(R.drawable.race_status_nothappened)
                 }
                 else -> {
-                    status.setColorFilter(context.theme.getColor(R.attr.f1DeltaNeutral))
+                    status.setColorFilter(context.theme.getColor(R.attr.f1ResultsNeutral))
                     status.setImageResource(R.drawable.race_status_waitingfor)
                 }
             }

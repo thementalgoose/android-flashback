@@ -14,13 +14,14 @@ import tmg.flashback.core.utils.ScreenAnalytics
 import tmg.flashback.rss.databinding.ActivityRssSettingsBinding
 import tmg.flashback.rss.ui.settings.InitialScreen.CONFIGURE
 import tmg.flashback.rss.ui.settings.InitialScreen.SETTINGS
+import tmg.flashback.shared.ui.base.BaseActivity
 import tmg.utilities.extensions.toEnum
 
 class RSSSettingsActivity : BaseActivity(), NavController.OnDestinationChangedListener {
 
     private lateinit var binding: ActivityRssSettingsBinding
 
-    override val screenAnalytics: ScreenAnalytics? = null
+//    override val screenAnalytics: ScreenAnalytics? = null
 
     private var initialScreen: InitialScreen = SETTINGS
     private var navController: NavController? = null

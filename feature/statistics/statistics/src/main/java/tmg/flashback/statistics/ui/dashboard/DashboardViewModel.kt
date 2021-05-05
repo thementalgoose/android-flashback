@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import tmg.configuration.controllers.ConfigController
-import tmg.flashback.core.ui.BaseViewModel
+import androidx.lifecycle.ViewModel
 import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.data.db.DataRepository
 import tmg.flashback.statistics.BuildConfig
@@ -41,7 +41,7 @@ class DashboardViewModel(
     private val dataRepository: DataRepository,
     private val buildConfigManager: BuildConfigManager,
     private val configurationController: ConfigController
-): BaseViewModel(), DashboardViewModelInputs, DashboardViewModelOutputs {
+): ViewModel(), DashboardViewModelInputs, DashboardViewModelOutputs {
 
     override val openAppLockout: LiveData<Event> = dataRepository
         .appLockout()

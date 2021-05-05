@@ -6,6 +6,9 @@ dependencies {
     apply from: rootDir.absolutePath + "/core/core.gradle"
     implementation project(path: ':feature:statistics:data-firebase')
 
+    // Swipe refresh
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:$swipe_refresh"
+
     // TMG dependencies
     implementation "com.github.thementalgoose:android-components:$tmg_components"
     implementation "com.github.thementalgoose:android-labelled-progress-bar:$tmg_labelled_progressbar"

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="DayTheme" parent="Theme.AppCompat.DayNight">
+
+        <!-- Material theme colours -->
+        <item name="colorPrimary">#0274D1</item>
+        <item name="colorPrimaryDark">#0274D1</item>
+        <item name="colorAccent">#00E2E4</item>
+
+        <!-- =============================================================================== -->
+
+        <!-- Statistics -->
+        <item name="f1Podium1">#d3bc4d</item>
+        <item name="f1Podium2">#c2c2c2</item>
+        <item name="f1Podium3">#d29342</item>
+        <item name="f1DeltaPositive">#f44336</item>
+        <item name="f1DeltaNeutral">?attr/contentSecondary</item>
+        <item name="f1DeltaNegative">#4caf50</item>
+        <item name="f1ResultsFull">#4caf50</item>
+        <item name="f1ResultsPartial">#ffa000</item>
+        <item name="f1ResultsNeutral">?attr/contentSecondary</item>
+        <item name="f1FastestSector">#673ab7</item>
+        <item name="f1FavouriteSeason">#e6ca4f</item>
+        <item name="f1Championship">#e6ca4f</item>
+        <item name="f1PipeColor">?attr/backgroundSecondary</item>
+
+        <!-- =============================================================================== -->
+
+        <!-- RSS -->
+        <item name="rssAdd">#4caf50</item>
+        <item name="rssRemove">#f44336</item>
+        <item name="rssNewsBar">?attr/backgroundSecondary</item>
+
+        <!-- =============================================================================== -->
+
+        <!-- Content -->
+        <item name="contentPrimary">#181818</item>
+        <item name="contentSecondary">#383838</item>
+        <item name="contentTertiary">#484848</item>
+        <item name="contentPrimaryInverse">#f8f8f8</item>
+        <item name="contentSecondaryInverse">#f2f2f2</item>
+        <item name="contentTertiaryInverse">#eeeeee</item>
+
+        <!-- Backgrounds -->
+        <item name="backgroundPrimary">#f8f8f8</item>
+        <item name="backgroundSecondary">#f2f2f2</item>
+        <item name="backgroundTertiary">#eeeeee</item>
+        <item name="backgroundPrimaryInverse">#181818</item>
+        <item name="backgroundSecondaryInverse">#383838</item>
+        <item name="backgroundTertiaryInverse">#484848</item>
+        <item name="backgroundNav">#f2f2f2</item>
+        <item name="backgroundItem">?attr/backgroundPrimary</item>
+        <item name="backgroundItemSelected">?attr/backgroundSecondary</item>
+
+        <!-- Ripple -->
+        <item name="rippleColor">#44000000</item>
+
+    </style>
+
+</resources>

@@ -20,7 +20,7 @@
             android:layout_height="@dimen/bottomSheetPillHeight"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/paddingSmall"
-            android:background="?attr/f1BackgroundSecondary"
+            android:background="?attr/backgroundPrimary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -33,7 +33,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/paddingSmall"
             android:gravity="center"
-            android:text="@string/settings_animation_speed_animation_title"
+            android:text="@string/settings_theme_animation_speed_title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/pill" />
@@ -48,7 +48,7 @@
             android:paddingTop="@dimen/paddingSmall"
             android:paddingEnd="@dimen/paddingMedium"
             android:paddingBottom="@dimen/paddingNSmall"
-            android:text="@string/settings_animation_speed_animation_description"
+            android:text="@string/settings_theme_animation_speed_description"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/bottomSheetTitle" />
@@ -58,7 +58,7 @@
     <View
         android:layout_width="wrap_content"
         android:layout_height="1dp"
-        android:background="?attr/f1BackgroundSecondary" />
+        android:background="?attr/backgroundSecondary" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/animationList"

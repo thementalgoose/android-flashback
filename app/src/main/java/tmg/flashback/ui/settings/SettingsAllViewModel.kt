@@ -3,7 +3,7 @@ package tmg.flashback.ui.settings
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import tmg.flashback.core.controllers.FeatureController
-import tmg.flashback.core.ui.BaseViewModel
+import androidx.lifecycle.ViewModel
 import tmg.utilities.lifecycle.DataEvent
 
 //region Inputs
@@ -26,7 +26,7 @@ interface SettingsAllViewModelOutputs {
 
 class SettingsAllViewModel(
         private val featureController: FeatureController
-): BaseViewModel(), SettingsAllViewModelInputs, SettingsAllViewModelOutputs {
+): ViewModel(), SettingsAllViewModelInputs, SettingsAllViewModelOutputs {
 
     var inputs: SettingsAllViewModelInputs = this
     var outputs: SettingsAllViewModelOutputs = this

@@ -12,11 +12,12 @@ import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import tmg.flashback.statistics.constants.Formula1.maxPointsBySeason
-import tmg.flashback.core.ui.BaseViewModel
+import androidx.lifecycle.ViewModel
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.statistics.ui.overview.driver.summary.PipeType
 import tmg.flashback.data.db.stats.DriverRepository
 import tmg.flashback.data.models.stats.DriverOverviewStanding
+import tmg.flashback.shared.ui.controllers.ThemeController
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
@@ -46,8 +47,8 @@ interface DriverSeasonViewModelOutputs {
 class DriverSeasonViewModel(
     private val driverRepository: DriverRepository,
     private val connectivityManager: NetworkConnectivityManager,
-    private val appearanceController: AppearanceController
-) : BaseViewModel(),
+    private val themeController: ThemeController
+) : ViewModel(),
     DriverSeasonViewModelInputs,
     DriverSeasonViewModelOutputs {
 
@@ -154,7 +155,7 @@ class DriverSeasonViewModel(
                                 raceStatus = it.status,
                                 points = it.points,
                                 maxPoints = maxPointsBySeason(it.season),
-                                animationSpeed = appearanceController.animationSpeed
+                                animationSpeed = themeController.animationSpeed
                             )
                         }
                         .sortedBy { it.round }
@@ -194,7 +195,7 @@ class DriverSeasonViewModel(
         val list: MutableList<DriverSeasonItem> = mutableListOf()
 
         list.addStat(
-            tint = if (!overview.isInProgress && overview.championshipStanding == 1) R.attr.f1Favourite else R.attr.f1TextSecondary,
+            tint = if (!overview.isInProgress && overview.championshipStanding == 1) R.attr.f1Championship else R.attr.contentSecondary,
             icon = if (!overview.isInProgress && overview.championshipStanding == 1) R.drawable.ic_star_filled_coloured else R.drawable.ic_championship_order,
             label = if (overview.isInProgress) R.string.driver_overview_stat_career_championship_standing_so_far else R.string.driver_overview_stat_career_championship_standing,
             value = overview.championshipStanding.ordinalAbbreviation
@@ -257,7 +258,7 @@ class DriverSeasonViewModel(
         return list
     }
 
-    private fun MutableList<DriverSeasonItem>.addStat(@AttrRes tint: Int = R.attr.f1TextSecondary, @DrawableRes icon: Int, @StringRes label: Int, value: String) {
+    private fun MutableList<DriverSeasonItem>.addStat(@AttrRes tint: Int = R.attr.contentSecondary, @DrawableRes icon: Int, @StringRes label: Int, value: String) {
         this.add(
             DriverSeasonItem.Stat(
                 tint = tint,

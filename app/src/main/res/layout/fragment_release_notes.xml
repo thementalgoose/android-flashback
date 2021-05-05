@@ -15,7 +15,7 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="?attr/rssBackground"
+        android:background="?attr/backgroundPrimary"
         app:layoutDescription="@xml/scene_fragment_release_notes"
         tools:showPaths="true">
 
@@ -40,7 +40,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_back"
-            app:tint="?attr/f1TextPrimary" />
+            app:tint="?attr/contentPrimary" />
 
         <TextView
             android:id="@+id/titleCollapsed"
@@ -91,7 +91,7 @@
                 android:paddingTop="@dimen/paddingSmall"
                 android:paddingEnd="@dimen/paddingMedium"
                 android:paddingBottom="@dimen/paddingXLarge"
-                android:textColor="?attr/f1TextPrimary" />
+                android:textColor="?attr/contentPrimary" />
 
         </androidx.core.widget.NestedScrollView>
 

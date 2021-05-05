@@ -33,13 +33,13 @@
 
     <style name="Text.BottomSheet.Item" parent="Text">
         <item name="android:textStyle">bold</item>
-        <item name="android:textColor">?attr/f1TextSecondary</item>
+        <item name="android:textColor">?attr/contentSecondary</item>
     </style>
 
     <style name="Text.BottomSheet.Header" parent="Text">
         <item name="android:textSize">@dimen/textSizeSmall</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textColor">?attr/f1TextTertiary</item>
+        <item name="android:textColor">?attr/contentTertiary</item>
     </style>
 
     <!--#endregion -->
@@ -53,19 +53,19 @@
     <style name="Text.UpNext.Title" parent="Text.BottomSheet.Header" />
 
     <style name="Text.UpNext.RaceName" parent="Text">
-        <item name="android:textColor">?attr/f1TextSecondary</item>
+        <item name="android:textColor">?attr/contentSecondary</item>
         <item name="android:textSize">@dimen/textSizeMedium</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="Text.UpNext.Circuit" parent="Text">
-        <item name="android:textColor">?attr/f1TextTertiary</item>
+        <item name="android:textColor">?attr/contentTertiary</item>
         <item name="android:textSize">@dimen/textSizeSmall</item>
     </style>
 
     <style name="Text.UpNext.Round" parent="Text">
         <item name="android:textSize">@dimen/textSizeSmall</item>
-        <item name="android:textColor">?attr/f1TextTertiary</item>
+        <item name="android:textColor">?attr/contentTertiary</item>
     </style>
 
     <style name="Text.UpNext.Countdown" parent="Text">
@@ -76,13 +76,13 @@
 
     <style name="Text.UpNext.CountdownLabel" parent="Text">
         <item name="android:fontFamily">@font/montserrat</item>
-        <item name="android:textColor">?attr/f1TextSecondary</item>
+        <item name="android:textColor">?attr/contentSecondary</item>
         <item name="android:textSize">@dimen/textSizeMedium</item>
     </style>
 
     <style name="Text.UpNext.Date" parent="Text">
         <item name="android:textSize">@dimen/textSizeSmall</item>
-        <item name="android:textColor">?attr/f1TextTertiary</item>
+        <item name="android:textColor">?attr/contentTertiary</item>
     </style>
 
     <!--#endregion -->
@@ -245,7 +245,7 @@
 
     <style name="Text.Podium.Position" parent="Text">
         <item name="android:textSize">16sp</item>
-        <item name="android:textColor">?attr/f1TextInversePrimary</item>
+        <item name="android:textColor">?attr/contentPrimaryInverse</item>
         <item name="android:textStyle">bold</item>
     </style>
 
@@ -277,7 +277,7 @@
 
     <style name="Text.Podium.Points" parent="Text">
         <item name="android:textSize">12sp</item>
-        <item name="android:textColor">?attr/f1TextInversePrimary</item>
+        <item name="android:textColor">?attr/contentPrimaryInverse</item>
     </style>
 
     <!--#endregion -->
@@ -405,7 +405,7 @@
     <style name="Text.DriverOverview.History.Year" parent="Text">
         <item name="android:textSize">16sp</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textColor">?attr/f1TextSecondary</item>
+        <item name="android:textColor">?attr/contentSecondary</item>
     </style>
 
     <style name="Text.DriverOverview.History.Constructor" parent="Text">
@@ -414,7 +414,7 @@
 
     <style name="Text.DriverOverview.Stats.Title" parent="Text">
         <item name="android:textSize">14sp</item>
-        <item name="android:textColor">?attr/f1TextSecondary</item>
+        <item name="android:textColor">?attr/contentSecondary</item>
     </style>
 
     <style name="Text.DriverOverview.Stats.Value" parent="Text">
@@ -432,7 +432,7 @@
     <style name="Text.ConstructorOverview.History.Year" parent="Text">
         <item name="android:textSize">16sp</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textColor">?attr/f1TextSecondary</item>
+        <item name="android:textColor">?attr/contentSecondary</item>
     </style>
 
     <style name="Text.ConstructorOverview.Stats.Value" parent="Text">
@@ -474,7 +474,7 @@
 
     <style name="Text.DriverSeason.Track.Qualified" parent="Text">
         <item name="android:textSize">18sp</item>
-        <item name="android:textColor">?attr/f1TextSecondary</item>
+        <item name="android:textColor">?attr/contentSecondary</item>
     </style>
 
     <!--#endregion -->
@@ -487,22 +487,22 @@
 
     <style name="Text.Pill.Text" parent="Text">
         <item name="android:textSize">@dimen/textSizeMedium</item>
-        <item name="android:textColor">?attr/f1TextTertiary</item>
+        <item name="android:textColor">?attr/contentTertiary</item>
     </style>
 
     <style name="Text.Home.Placeholder" parent="Text">
         <item name="android:textSize">@dimen/textSizeMedium</item>
-        <item name="android:textColor">?attr/f1TextTertiary</item>
+        <item name="android:textColor">?attr/contentTertiary</item>
     </style>
 
     <style name="Text.Home.Message" parent="Text">
         <item name="android:textSize">@dimen/textSizeXSmall</item>
-        <item name="android:textColor">?attr/f1TextTertiary</item>
+        <item name="android:textColor">?attr/contentTertiary</item>
     </style>
 
     <style name="Text.Network.Error" parent="Text">
         <item name="android:textSize">@dimen/textSizeMedium</item>
-        <item name="android:textColor">?attr/f1TextTertiary</item>
+        <item name="android:textColor">?attr/contentTertiary</item>
     </style>
 
     <!--#endregion -->

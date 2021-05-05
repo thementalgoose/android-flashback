@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.combine
 import tmg.configuration.repository.models.TimeListDisplayType
 import tmg.flashback.core.controllers.FeatureController
 import tmg.flashback.statistics.R
-import tmg.flashback.core.ui.BaseViewModel
+import androidx.lifecycle.ViewModel
 import tmg.flashback.statistics.controllers.SeasonController
 import tmg.flashback.statistics.controllers.UpNextController
 import tmg.utilities.lifecycle.DataEvent
@@ -49,7 +49,7 @@ class ListViewModel(
     private val seasonController: SeasonController,
     private val upNextController: UpNextController,
     private val featureController: FeatureController
-) : BaseViewModel(), ListViewModelInputs, ListViewModelOutputs {
+) : ViewModel(), ListViewModelInputs, ListViewModelOutputs {
 
     private var selectionHeaderFavouited: MutableLiveData<Boolean> =
         MutableLiveData(seasonController.favouritesExpanded)

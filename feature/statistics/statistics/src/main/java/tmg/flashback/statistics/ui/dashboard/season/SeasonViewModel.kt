@@ -13,12 +13,13 @@ import org.threeten.bp.temporal.ChronoUnit
 import org.threeten.bp.temporal.TemporalAdjusters
 import tmg.analytics.controllers.AnalyticsController
 import tmg.flashback.statistics.constants.Formula1.constructorChampionshipStarts
-import tmg.flashback.core.ui.BaseViewModel
+import androidx.lifecycle.ViewModel
 import tmg.flashback.device.controllers.DeviceController
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.data.db.stats.HistoryRepository
 import tmg.flashback.data.db.stats.SeasonOverviewRepository
 import tmg.flashback.data.models.stats.*
+import tmg.flashback.shared.ui.controllers.ThemeController
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.constants.Formula1.currentSeasonYear
@@ -31,6 +32,7 @@ import tmg.utilities.extensions.combinePair
 import tmg.utilities.extensions.then
 import tmg.utilities.lifecycle.DataEvent
 import tmg.utilities.lifecycle.Event
+import tmg.utilities.models.StringHolder
 
 //region Inputs
 
@@ -66,14 +68,14 @@ interface SeasonViewModelOutputs {
 
 class SeasonViewModel(
     private val deviceController: DeviceController,
-    private val appearanceController: AppearanceController,
+    private val themeController: ThemeController,
     private val historyRepository: HistoryRepository,
     private val seasonOverviewRepository: SeasonOverviewRepository,
     private val notificationController: UserNotificationController,
     private val seasonController: SeasonController,
     private val networkConnectivityManager: NetworkConnectivityManager,
     private val analyticsController: AnalyticsController
-): BaseViewModel(), SeasonViewModelInputs, SeasonViewModelOutputs {
+): ViewModel(), SeasonViewModelInputs, SeasonViewModelOutputs {
 
     private val showBannerAtTop: Boolean = showBannerAtTop()
     private val currentTab: ConflatedBroadcastChannel<SeasonNavItem> =
@@ -362,7 +364,7 @@ class SeasonViewModel(
                     bestQualifying = rounds.bestQualifyingResultFor(roundDriver.id),
                     bestFinish = rounds.bestRaceResultFor(roundDriver.id),
                     maxPointsInSeason = this.maxDriverPointsInSeason(),
-                    animationSpeed = appearanceController.animationSpeed
+                    animationSpeed = themeController.animationSpeed
                 )
             }
     }
@@ -383,7 +385,7 @@ class SeasonViewModel(
                     driver = driverPoints.values.sortedByDescending { it.second },
                     points = constructorPoints,
                     maxPointsInSeason = this.maxConstructorPointsInSeason(),
-                    barAnimation = appearanceController.animationSpeed
+                    barAnimation = themeController.animationSpeed
                 )
             }
             .sortedByDescending { it.points }

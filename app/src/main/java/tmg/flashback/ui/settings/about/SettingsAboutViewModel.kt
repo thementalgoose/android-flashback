@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import tmg.components.prefs.AppPreferencesItem
 import tmg.flashback.R
-import tmg.flashback.core.ui.BaseViewModel
+import androidx.lifecycle.ViewModel
 import tmg.utilities.lifecycle.Event
 
 //region Inputs
@@ -27,7 +27,7 @@ interface SettingsAboutViewModelOutputs {
 
 //endregion
 
-class SettingsAboutViewModel: BaseViewModel(), SettingsAboutViewModelInputs,
+class SettingsAboutViewModel: ViewModel(), SettingsAboutViewModelInputs,
     SettingsAboutViewModelOutputs {
 
     private val keyAboutThisApp: String = "AboutThisApp"

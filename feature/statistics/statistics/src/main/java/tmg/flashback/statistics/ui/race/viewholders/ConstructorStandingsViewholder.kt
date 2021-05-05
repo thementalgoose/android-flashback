@@ -49,7 +49,7 @@ class ConstructorStandingsViewholder(
             }
 
             lpvProgress.progressColour = model.constructor.color
-            lpvProgress.textBackgroundColour = context.theme.getColor(R.attr.f1TextSecondary)
+            lpvProgress.textBackgroundColour = context.theme.getColor(R.attr.contentSecondary)
             var maxPercentage = model.points.toFloat() / maxPointsByAnyTeam.toFloat()
             if (maxPercentage.isNaN()) {
                 maxPercentage = 0.05f

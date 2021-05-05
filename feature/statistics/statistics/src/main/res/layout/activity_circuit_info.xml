@@ -5,7 +5,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/f1BackgroundPrimary">
+    android:background="?attr/backgroundPrimary">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -23,7 +23,7 @@
                 android:id="@+id/titlebar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?attr/f1BackgroundPrimary"
+                android:background="?attr/backgroundPrimary"
                 android:fitsSystemWindows="false">
 
                 <TextView
@@ -54,7 +54,7 @@
                     android:foreground="@drawable/ripple_rounded"
                     android:scaleType="center"
                     android:src="@drawable/ic_back"
-                    android:tint="?attr/f1TextPrimary"
+                    android:tint="?attr/contentPrimary"
                     app:layout_constraintBottom_toBottomOf="@id/header"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@id/header" />
@@ -67,7 +67,7 @@
                     android:layout_marginEnd="@dimen/paddingMedium"
                     android:background="@drawable/ripple_rounded"
                     android:contentDescription="@string/settings_title"
-                    android:tint="?attr/f1TextPrimary"
+                    android:tint="?attr/contentPrimary"
                     app:layout_constraintBottom_toBottomOf="@id/back"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/back" />

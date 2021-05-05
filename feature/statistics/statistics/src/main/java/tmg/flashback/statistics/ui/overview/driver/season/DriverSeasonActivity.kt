@@ -4,23 +4,26 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.core.utils.ScreenAnalytics
+import tmg.flashback.shared.ui.base.BaseActivity
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.constants.ViewType
 import tmg.flashback.statistics.databinding.ActivityDriverSeasonBinding
+import tmg.utilities.extensions.loadFragment
 
 class DriverSeasonActivity: BaseActivity() {
 
     private lateinit var binding: ActivityDriverSeasonBinding
     private val viewModel: DriverSeasonViewModel by viewModel()
 
-    override val screenAnalytics get() = ScreenAnalytics(
-        screenName = "Driver Season Overview",
-        attributes = mapOf(
-            "extra_driver_id" to driverId,
-            "extra_season" to "$season"
-        )
-    )
+//    override val screenAnalytics get() = ScreenAnalytics(
+//        screenName = "Driver Season Overview",
+//        attributes = mapOf(
+//            "extra_driver_id" to driverId,
+//            "extra_season" to "$season"
+//        )
+//    )
 
     private lateinit var driverId: String
     private lateinit var driverName: String
@@ -36,11 +39,11 @@ class DriverSeasonActivity: BaseActivity() {
             driverName = it.getString(keyDriverName)!!
             season = it.getInt(keyDriverSeason)
 
-            analyticsController.logEvent(ViewType.DRIVER_SEASON, mapOf(
-                "driver_id" to driverId,
-                "driver_name" to driverName,
-                "season" to season.toString()
-            ))
+//            analyticsController.logEvent(ViewType.DRIVER_SEASON, mapOf(
+//                "driver_id" to driverId,
+//                "driver_name" to driverName,
+//                "season" to season.toString()
+//            ))
 
             viewModel.inputs.setup(driverId, season)
         }

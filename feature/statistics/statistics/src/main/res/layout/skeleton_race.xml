@@ -4,7 +4,7 @@
     android:id="@+id/skeletonLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:alpha="?attr/f1BackgroundSkeletonAlpha"
+    android:alpha="0.5"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent">

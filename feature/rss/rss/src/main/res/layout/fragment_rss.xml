@@ -15,7 +15,7 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="?attr/rssBackground"
+        android:background="?attr/backgroundPrimary"
         app:layoutDescription="@xml/fragment_rss_scene"
         tools:showPaths="true">
 
@@ -40,7 +40,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_rss_back"
-            app:tint="?attr/rssTextPrimary" />
+            app:tint="?attr/contentPrimary" />
 
         <ImageView
             android:id="@+id/settings"
@@ -56,7 +56,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_rss_settings"
-            app:tint="?attr/rssTextPrimary" />
+            app:tint="?attr/contentPrimary" />
 
         <ImageView
             android:id="@+id/refresh"
@@ -71,7 +71,7 @@
             app:layout_constraintEnd_toStartOf="@id/settings"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_rss_refresh"
-            app:tint="?attr/rssTextPrimary" />
+            app:tint="?attr/contentPrimary" />
 
         <TextView
             android:id="@+id/titleCollapsed"

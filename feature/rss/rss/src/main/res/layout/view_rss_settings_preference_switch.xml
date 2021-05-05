@@ -38,7 +38,7 @@
         tools:text="Preference" />
 
     <CheckBox
-        android:buttonTint="?attr/rssTextSecondary"
+        android:buttonTint="?attr/contentSecondary"
         android:id="@+id/checkbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

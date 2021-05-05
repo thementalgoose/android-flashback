@@ -71,7 +71,7 @@
         android:minHeight="@dimen/dashboardUpNextTrackHeight"
         app:layout_constraintEnd_toEndOf="@id/end"
         app:layout_constraintTop_toTopOf="@id/title"
-        app:tint="?attr/f1TextSecondary"
+        app:tint="?attr/contentSecondary"
         tools:src="@drawable/ic_map_unknown" />
 
     <androidx.constraintlayout.widget.Barrier

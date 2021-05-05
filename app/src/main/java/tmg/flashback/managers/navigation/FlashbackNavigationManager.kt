@@ -1,17 +1,13 @@
 package tmg.flashback.managers.navigation
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentActivity
 import tmg.components.about.AboutThisAppActivity
 import tmg.flashback.constants.AboutThisAppConfig
 import tmg.flashback.controllers.ReleaseNotesController
-import tmg.flashback.core.controllers.AppearanceController
 import tmg.flashback.core.extensions.isLightMode
 import tmg.flashback.core.managers.NavigationManager
-import tmg.flashback.core.repositories.CoreRepository
 import tmg.flashback.device.repository.DeviceRepository
 import tmg.flashback.rss.ui.RSSActivity
 import tmg.flashback.statistics.manager.StatisticsExternalNavigationManager

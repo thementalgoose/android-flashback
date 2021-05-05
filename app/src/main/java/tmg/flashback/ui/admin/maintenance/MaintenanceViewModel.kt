@@ -1,12 +1,12 @@
 package tmg.flashback.ui.admin.maintenance
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.*
 import tmg.flashback.device.managers.BuildConfigManager
-import tmg.flashback.core.ui.BaseViewModel
 import tmg.flashback.data.db.DataRepository
 import tmg.flashback.data.models.AppLockout
 import tmg.utilities.lifecycle.DataEvent
@@ -44,7 +44,7 @@ interface MaintenanceViewModelOutputs {
 class MaintenanceViewModel(
     private val dataRepository: DataRepository,
     private val buildConfigProvider: BuildConfigManager
-): BaseViewModel(), MaintenanceViewModelInputs, MaintenanceViewModelOutputs {
+): ViewModel(), MaintenanceViewModelInputs, MaintenanceViewModelOutputs {
 
     private val clickLinkEvent: ConflatedBroadcastChannel<DataEvent<String>> = ConflatedBroadcastChannel()
 

@@ -7,12 +7,13 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.*
 import org.threeten.bp.LocalDate
-import tmg.flashback.core.ui.BaseViewModel
+import androidx.lifecycle.ViewModel
 import tmg.flashback.statistics.controllers.RaceController
 import tmg.flashback.core.controllers.AppHintsController
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.data.db.stats.SeasonOverviewRepository
 import tmg.flashback.data.models.stats.*
+import tmg.flashback.shared.ui.controllers.ThemeController
 import tmg.flashback.statistics.constants.Formula1.showComingSoonMessageForNextDays
 import tmg.flashback.statistics.ui.race.*
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
@@ -55,12 +56,12 @@ interface RaceViewModelOutputs {
 //endregion
 
 class RaceViewModel(
-        private val seasonOverviewRepository: SeasonOverviewRepository,
-        private val appHintsController: AppHintsController,
-        private val raceController: RaceController,
-        private val appearanceController: AppearanceController,
-        private val connectivityManager: NetworkConnectivityManager
-) : BaseViewModel(), RaceViewModelInputs, RaceViewModelOutputs {
+    private val seasonOverviewRepository: SeasonOverviewRepository,
+    private val appHintsController: AppHintsController,
+    private val raceController: RaceController,
+    private val themeController: ThemeController,
+    private val connectivityManager: NetworkConnectivityManager
+) : ViewModel(), RaceViewModelInputs, RaceViewModelOutputs {
 
     var inputs: RaceViewModelInputs = this
     var outputs: RaceViewModelOutputs = this
@@ -123,7 +124,7 @@ class RaceViewModel(
                         .constructorStandings
                         .map {
                             val drivers: List<Pair<Driver, Int>> = getDriverFromConstructor(roundData, it.constructor.id)
-                            RaceModel.ConstructorStandings(it.constructor, it.points, drivers, appearanceController.animationSpeed)
+                            RaceModel.ConstructorStandings(it.constructor, it.points, drivers, themeController.animationSpeed)
                         }
                         .sortedByDescending { it.points }
 

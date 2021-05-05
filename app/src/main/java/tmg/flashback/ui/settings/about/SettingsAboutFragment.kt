@@ -21,9 +21,9 @@ class SettingsAboutFragment: SettingsFragment() {
     private val viewModel: SettingsAboutViewModel by viewModel()
 
     private val navigationManager: NavigationManager by inject()
-    override val screenAnalytics = ScreenAnalytics(
-        screenName = "Settings - About"
-    )
+//    override val screenAnalytics = ScreenAnalytics(
+//        screenName = "Settings - About"
+//    )
 
     override val prefClicked: (prefKey: String) -> Unit = { prefKey ->
         viewModel.inputs.preferenceClicked(prefKey, null)
@@ -35,7 +35,7 @@ class SettingsAboutFragment: SettingsFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        analyticsController.logEvent(ViewType.SETTINGS_ABOUT)
+//        analyticsController.logEvent(ViewType.SETTINGS_ABOUT)
 
         observe(viewModel.outputs.settings) {
             adapter.list = it

@@ -24,9 +24,9 @@ class RSSFragment: BaseFragment<FragmentRssBinding>() {
 
     private val repository: RSSRepository by inject()
 
-    override val screenAnalytics = ScreenAnalytics(
-        screenName = "RSS Feed"
-    )
+//    override val screenAnalytics = ScreenAnalytics(
+//        screenName = "RSS Feed"
+//    )
 
     private lateinit var adapter: RSSAdapter
 
@@ -36,7 +36,7 @@ class RSSFragment: BaseFragment<FragmentRssBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        analyticsController.logEvent(ViewType.RSS)
+//        analyticsController.logEvent(ViewType.RSS)
 
         adapter = RSSAdapter(
             openConfigure = {

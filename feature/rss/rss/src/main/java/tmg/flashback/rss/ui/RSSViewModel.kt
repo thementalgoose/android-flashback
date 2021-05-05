@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.*
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.device.managers.NetworkConnectivityManager
-import tmg.flashback.core.ui.BaseViewModel
+import androidx.lifecycle.ViewModel
 import tmg.flashback.rss.prefs.RSSRepository
 import tmg.flashback.rss.repo.RssAPI
 import tmg.utilities.extensions.then
@@ -36,7 +36,7 @@ class RSSViewModel(
     private val RSSDB: RssAPI,
     private val prefRepository: RSSRepository,
     private val connectivityManager: NetworkConnectivityManager
-): BaseViewModel(), RSSViewModelInputs,
+): ViewModel(), RSSViewModelInputs,
     RSSViewModelOutputs {
 
     override val isRefreshing: MutableLiveData<Boolean> = MutableLiveData()

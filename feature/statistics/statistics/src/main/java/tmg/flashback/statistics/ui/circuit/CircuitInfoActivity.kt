@@ -7,23 +7,28 @@ import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.core.utils.ScreenAnalytics
+import tmg.flashback.shared.ui.base.BaseActivity
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.constants.ViewType
 import tmg.flashback.statistics.databinding.ActivityCircuitInfoBinding
 import tmg.flashback.statistics.ui.race.RaceActivity
+import tmg.utilities.extensions.copyToClipboard
+import tmg.utilities.extensions.observe
+import tmg.utilities.extensions.observeEvent
 
 class CircuitInfoActivity: BaseActivity() {
 
     private lateinit var binding: ActivityCircuitInfoBinding
     private val viewModel: CircuitInfoViewModel by viewModel()
 
-    override val screenAnalytics get() = ScreenAnalytics(
-        screenName = "Circuit Overview",
-        attributes = mapOf(
-            "extra_circuit" to circuitId
-        )
-    )
+//    override val screenAnalytics get() = ScreenAnalytics(
+//        screenName = "Circuit Overview",
+//        attributes = mapOf(
+//            "extra_circuit" to circuitId
+//        )
+//    )
 
     private lateinit var circuitId: String
     private lateinit var circuitName: String
@@ -38,10 +43,10 @@ class CircuitInfoActivity: BaseActivity() {
             circuitId = it.getString(keyCircuit)!!
             circuitName = it.getString(keyCircuitName)!!
 
-            analyticsController.logEvent(ViewType.CIRCUIT, mapOf(
-                "circuit_id" to circuitId,
-                "circuit_name" to circuitName
-            ))
+//            analyticsController.logEvent(ViewType.CIRCUIT, mapOf(
+//                "circuit_id" to circuitId,
+//                "circuit_name" to circuitName
+//            ))
         }
 
         binding.header.text = circuitName

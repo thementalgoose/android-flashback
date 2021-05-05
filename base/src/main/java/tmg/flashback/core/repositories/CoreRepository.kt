@@ -6,11 +6,6 @@ import tmg.flashback.core.enums.AppHints
 
 interface CoreRepository {
 
-    /**
-     * Dark mode preference
-     */
-    var theme: Theme
-
 
 
 

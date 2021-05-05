@@ -14,7 +14,8 @@ object AboutThisAppConfig {
 
     // Configuration item
     fun configuration(context: Context, isDarkMode: Boolean = false, deviceUdid: String) = AboutThisAppConfiguration(
-            themeRes = if (isDarkMode) R.style.DarkTheme_AboutThisApp else R.style.LightTheme_AboutThisApp,
+            // TODO: Fix this theming setup for about this app!
+            themeRes = if (isDarkMode) R.style.DayTheme else R.style.DayTheme,
             name = context.getString(R.string.about_name),
             nameDesc = context.getString(R.string.about_desc),
             imageUrl = "https://lh3.googleusercontent.com/l7T59nmp3joS3CUWEw-_mfmZAwXMHmiikR6uvQLFTXGy1-BlUICXxJZ9UCcvQlWhvQ",

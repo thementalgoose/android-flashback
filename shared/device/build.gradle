@@ -3,5 +3,5 @@ apply from: rootDir.absolutePath + "/base.gradle"
 dependencies {
 
     // Test dependencies
-    testImplementation project(":shared:test")
+    testImplementation project(":test")
 }
