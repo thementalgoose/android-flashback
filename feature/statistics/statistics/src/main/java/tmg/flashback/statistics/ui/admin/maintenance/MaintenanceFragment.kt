@@ -1,4 +1,4 @@
-package tmg.flashback.ui.admin.maintenance
+package tmg.flashback.statistics.ui.admin.maintenance
 
 import android.content.Intent
 import android.net.Uri
@@ -8,32 +8,29 @@ import android.view.MenuItem
 import android.view.View
 import androidx.core.app.ActivityCompat.finishAffinity
 import org.koin.android.viewmodel.ext.android.viewModel
-import tmg.flashback.constants.ViewType
 import tmg.flashback.shared.ui.base.BaseFragment
-import tmg.flashback.core.utils.ScreenAnalytics
-import tmg.flashback.databinding.FragmentLockoutBinding
-import tmg.flashback.ui.SplashActivity
+import tmg.flashback.statistics.databinding.FragmentMaintenanceBinding
 import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 import tmg.utilities.extensions.views.gone
 import tmg.utilities.extensions.views.visible
 
-class MaintenanceFragment: BaseFragment<FragmentLockoutBinding>() {
+class MaintenanceFragment: BaseFragment<FragmentMaintenanceBinding>() {
 
     private val viewModel: MaintenanceViewModel by viewModel()
 
-    override val screenAnalytics = ScreenAnalytics(
-        screenName = "Maintenance"
-    )
+//    override val screenAnalytics = ScreenAnalytics(
+//        screenName = "Maintenance"
+//    )
 
-    override fun inflateView(inflater: LayoutInflater) = FragmentLockoutBinding
+    override fun inflateView(inflater: LayoutInflater) = FragmentMaintenanceBinding
         .inflate(inflater)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        analyticsController.logEvent(ViewType.MAINTENANCE)
+//        analyticsController.logEvent(ViewType.MAINTENANCE)
 
         binding.btnLink.setOnClickListener {
             viewModel.inputs.clickLink()
@@ -64,7 +61,8 @@ class MaintenanceFragment: BaseFragment<FragmentLockoutBinding>() {
         observeEvent(viewModel.outputs.returnToHome) {
             activity?.let {
                 it.finish()
-                startActivity(Intent(it, SplashActivity::class.java))
+                // TODO: Fix this!
+//                startActivity(Intent(it, SplashActivity::class.java))
             }
         }
     }

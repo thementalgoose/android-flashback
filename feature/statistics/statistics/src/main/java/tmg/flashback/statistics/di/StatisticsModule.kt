@@ -1,16 +1,15 @@
-package tmg.flashback.di
+package tmg.flashback.statistics.di
 
 import org.koin.dsl.module
 import tmg.flashback.data.db.DataRepository
 import tmg.flashback.data.db.stats.*
-import tmg.flashback.data.repositories.AppRepository
 import tmg.flashback.firebase.repos.*
-import tmg.flashback.repositories.SharedPreferenceRepository
+import tmg.flashback.statistics.repository.StatisticsRepository
 
-val dataModule = module {
+val statisticsModule = module {
 
     // App
-    single<AppRepository> { SharedPreferenceRepository(get()) }
+    single { StatisticsRepository(get()) }
 
     // Firestore
     single<DataRepository> { DataFirestore(get()) }
@@ -19,4 +18,5 @@ val dataModule = module {
     single<CircuitRepository> { CircuitFirestore(get()) }
     single<DriverRepository> { DriverFirestore(get()) }
     single<ConstructorRepository> { ConstructorFirestore(get()) }
+
 }

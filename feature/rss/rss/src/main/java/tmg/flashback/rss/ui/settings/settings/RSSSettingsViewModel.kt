@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import tmg.components.prefs.AppPreferencesItem
 import androidx.lifecycle.ViewModel
 import tmg.flashback.rss.R
-import tmg.flashback.rss.prefs.RSSRepository
+import tmg.flashback.rss.prefs.RSSRepositoryI
 import tmg.utilities.lifecycle.Event
 
 //region Inputs
@@ -27,7 +27,7 @@ interface RSSSettingsViewModelOutputs {
 //endregion
 
 class RSSSettingsViewModel(
-        private val prefRepository: RSSRepository
+        private val prefRepository: RSSRepositoryI
 ): ViewModel(),
     RSSSettingsViewModelInputs,
     RSSSettingsViewModelOutputs {

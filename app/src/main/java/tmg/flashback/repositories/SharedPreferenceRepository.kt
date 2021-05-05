@@ -8,7 +8,7 @@ import tmg.flashback.shared.ui.model.AnimationSpeed
 import tmg.flashback.core.enums.AppHints
 import tmg.flashback.core.repositories.CoreRepository
 import tmg.flashback.data.repositories.AppRepository
-import tmg.flashback.rss.prefs.RSSRepository
+import tmg.flashback.rss.prefs.RSSRepositoryI
 import tmg.utilities.extensions.toEnum
 import tmg.utilities.prefs.SharedPrefManager
 import java.util.*
@@ -16,7 +16,7 @@ import java.util.*
 class SharedPreferenceRepository(context: Context) : SharedPrefManager(context),
     AppRepository,
     CoreRepository,
-    RSSRepository {
+    RSSRepositoryI {
 
     override val prefsKey: String = "Flashback"
     private val keyShowQualifyingDelta: String = "SHOW_QUALIFYING_DELTA"

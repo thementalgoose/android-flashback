@@ -14,7 +14,7 @@ import org.koin.android.ext.android.inject
 import tmg.analytics.controllers.AnalyticsController
 import tmg.flashback.rss.R
 import tmg.flashback.rss.databinding.FragmentWebBinding
-import tmg.flashback.rss.prefs.RSSRepository
+import tmg.flashback.rss.prefs.RSSRepositoryI
 import tmg.utilities.extensions.getColor
 import tmg.utilities.extensions.views.show
 import java.lang.RuntimeException
@@ -27,7 +27,7 @@ class WebFragment : Fragment() {
     // binding to throw NPE
     private var binding: FragmentWebBinding? = null
 
-    private val repository: RSSRepository by inject()
+    private val repository: RSSRepositoryI by inject()
     private val analyticsManager: AnalyticsController by inject()
 
     private lateinit var pageTitle: String

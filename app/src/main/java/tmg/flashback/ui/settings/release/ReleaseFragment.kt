@@ -12,9 +12,9 @@ import tmg.utilities.extensions.fromHtml
 
 class ReleaseFragment: BaseFragment<FragmentReleaseNotesBinding>() {
 
-    override val screenAnalytics = ScreenAnalytics(
-        screenName = "Release Notes"
-    )
+//    override val screenAnalytics = ScreenAnalytics(
+//        screenName = "Release Notes"
+//    )
 
     override fun inflateView(inflater: LayoutInflater) = FragmentReleaseNotesBinding
         .inflate(inflater)
@@ -22,7 +22,7 @@ class ReleaseFragment: BaseFragment<FragmentReleaseNotesBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        analyticsController.logEvent(ViewType.SETTINGS_RELEASE_NOTES)
+//        analyticsController.logEvent(ViewType.SETTINGS_RELEASE_NOTES)
 
         val list = Releases
             .values()

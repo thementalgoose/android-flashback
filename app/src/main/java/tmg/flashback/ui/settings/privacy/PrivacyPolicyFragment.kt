@@ -17,9 +17,9 @@ class PrivacyPolicyFragment: BaseFragment<FragmentPrivacyPolicyBinding>() {
 
     private val viewModel: PrivacyPolicyViewModel by viewModel()
 
-    override val screenAnalytics = ScreenAnalytics(
-        screenName = "Privacy Policy"
-    )
+//    override val screenAnalytics = ScreenAnalytics(
+//        screenName = "Privacy Policy"
+//    )
 
     override fun inflateView(inflater: LayoutInflater) = FragmentPrivacyPolicyBinding
         .inflate(inflater)
@@ -27,7 +27,7 @@ class PrivacyPolicyFragment: BaseFragment<FragmentPrivacyPolicyBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        analyticsController.logEvent(ViewType.SETTINGS_PRIVACY_POLICY)
+//        analyticsController.logEvent(ViewType.SETTINGS_PRIVACY_POLICY)
 
         binding.tvPolicy.text = getString(R.string.privacy_policy_data).fromHtml()
         binding.tvPolicy.movementMethod = LinkMovementMethod.getInstance()

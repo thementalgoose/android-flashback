@@ -1,20 +1,20 @@
 package tmg.flashback.statistics.controllers
 
 import tmg.configuration.controllers.ConfigController
-import tmg.flashback.data.repositories.AppRepository
 import tmg.flashback.statistics.constants.Formula1.currentSeasonYear
+import tmg.flashback.statistics.repository.StatisticsRepository
 
 /**
  * All the preferences surrounding the season, list of all seasons
  */
 class SeasonController(
-    private val appRepository: AppRepository,
+    private val statisticsRepository: StatisticsRepository,
     private val configurationController: ConfigController
 ) {
     //region Default season shown
 
     fun clearDefault() {
-        appRepository.defaultSeason = null
+        statisticsRepository.defaultSeason = null
     }
 
     fun setUserDefaultSeason(season: Int) {
@@ -24,7 +24,7 @@ class SeasonController(
     var defaultSeason: Int
         get() {
             val supportedSeasons = configurationController.supportedSeasons
-            val userPrefSeason = appRepository.defaultSeason
+            val userPrefSeason = statisticsRepository.defaultSeason
             val serverSeason = configurationController.defaultSeason
 
             if (supportedSeasons.isEmpty()) {
@@ -45,14 +45,14 @@ class SeasonController(
             }
         }
         private set(value) {
-            appRepository.defaultSeason = value
+            statisticsRepository.defaultSeason = value
         }
 
     val serverDefaultSeason: Int
         get() = configurationController.defaultSeason
 
     val isUserDefinedValueSet: Boolean
-        get() = appRepository.defaultSeason != null
+        get() = statisticsRepository.defaultSeason != null
 
     //endregion
 
@@ -66,15 +66,15 @@ class SeasonController(
     //region Showing favourites / all
 
     var favouritesExpanded: Boolean
-        get() = appRepository.showListFavourited
+        get() = statisticsRepository.showListFavourited
         set(value) {
-            appRepository.showListFavourited = value
+            statisticsRepository.showListFavourited = value
         }
 
     var allExpanded: Boolean
-        get() = appRepository.showListAll
+        get() = statisticsRepository.showListAll
         set(value) {
-            appRepository.showListAll = value
+            statisticsRepository.showListAll = value
         }
 
     //endregion
@@ -82,9 +82,9 @@ class SeasonController(
     //region Favourites
 
     var favouriteSeasons: Set<Int>
-        get() = appRepository.favouriteSeasons
+        get() = statisticsRepository.favouriteSeasons
         private set(value) {
-            appRepository.favouriteSeasons = value
+            statisticsRepository.favouriteSeasons = value
         }
 
     fun isFavourite(season: Int): Boolean {
