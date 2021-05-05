@@ -11,11 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.shared.ui.base.BaseFragment
-import tmg.flashback.core.utils.ScreenAnalytics
 import tmg.flashback.rss.R
-import tmg.flashback.rss.constants.ViewType
 import tmg.flashback.rss.databinding.FragmentRssSettingsConfigureBinding
-import tmg.flashback.rss.ui.configure.RSSConfigureViewModel
 import tmg.utilities.extensions.managerClipboard
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent

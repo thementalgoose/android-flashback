@@ -10,7 +10,7 @@ import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import androidx.lifecycle.ViewModel
-import tmg.flashback.rss.prefs.RSSRepositoryI
+import tmg.flashback.rss.repo.RSSRepository
 import tmg.flashback.rss.repo.RssAPI
 import tmg.utilities.extensions.then
 
@@ -34,7 +34,7 @@ interface RSSViewModelOutputs {
 @Suppress("EXPERIMENTAL_API_USAGE")
 class RSSViewModel(
     private val RSSDB: RssAPI,
-    private val prefRepository: RSSRepositoryI,
+    private val prefRepository: RSSRepository,
     private val connectivityManager: NetworkConnectivityManager
 ): ViewModel(), RSSViewModelInputs,
     RSSViewModelOutputs {
