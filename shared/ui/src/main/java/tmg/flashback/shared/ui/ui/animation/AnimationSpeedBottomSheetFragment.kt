@@ -8,7 +8,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.shared.ui.model.AnimationSpeed
 import tmg.flashback.shared.ui.base.BaseBottomSheetFragment
 import tmg.flashback.shared.ui.bottomsheet.BottomSheetAdapter
-import tmg.flashback.databinding.FragmentBottomSheetAnimationSpeedBinding
+import tmg.flashback.shared.ui.databinding.FragmentBottomSheetAnimationSpeedBinding
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 

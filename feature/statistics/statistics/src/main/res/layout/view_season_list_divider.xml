@@ -11,7 +11,7 @@
         android:layout_marginTop="@dimen/paddingXSmall"
         android:layout_marginBottom="@dimen/paddingSmall"
         android:alpha="0.5"
-        android:background="?attr/f1BackgroundSecondary"
+        android:background="?attr/backgroundSecondary"
         android:importantForAccessibility="no"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

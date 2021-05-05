@@ -12,7 +12,7 @@
         android:layout_marginTop="@dimen/paddingSmall"
         android:layout_marginEnd="@dimen/paddingMedium"
         android:layout_marginBottom="@dimen/paddingSmall"
-        app:tint="?attr/f1TextPrimary"
+        app:tint="?attr/contentPrimary"
         android:id="@+id/circuit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -2,11 +2,12 @@ package tmg.flashback.statistics.ui.shared.pill
 
 import androidx.annotation.DrawableRes
 import tmg.flashback.statistics.R
+import tmg.utilities.models.StringHolder
 
 sealed class PillItem(
-        @DrawableRes val icon: Int? = null,
-        val label: StringHolder,
-        val highlighted: Boolean = false
+    @DrawableRes val icon: Int? = null,
+    val label: StringHolder,
+    val highlighted: Boolean = false
 ) {
     data class Wikipedia(
             val link: String

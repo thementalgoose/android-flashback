@@ -6,11 +6,15 @@
     <color name="logo_gradient_1">#745BE9</color>
     <color name="logo_gradient_2">#4A34B6</color>
 
-    <color name="transparent">#00ffffff</color>
-
-    <color name="whiteTranslucent">#88000000</color>
-
     <color name="overlay">#88000000</color>
     <color name="favourite">#E6CA4F</color>
+
+
+
+
+
+
+    <color name="brandPrimary">#0274D1</color>
+    <color name="brandSecondary">#00E2E4</color>
 
 </resources>

@@ -5,23 +5,27 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
+import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.core.utils.ScreenAnalytics
+import tmg.flashback.shared.ui.base.BaseActivity
 import tmg.flashback.statistics.constants.ViewType
 import tmg.flashback.statistics.databinding.ActivityDriverBinding
 import tmg.flashback.statistics.ui.overview.driver.summary.DriverSummaryAdapter
 import tmg.flashback.statistics.ui.overview.driver.season.DriverSeasonActivity
+import tmg.utilities.extensions.observe
+import tmg.utilities.extensions.observeEvent
 
 class DriverActivity: BaseActivity() {
 
     private lateinit var binding: ActivityDriverBinding
     private val viewModel: DriverViewModel by viewModel()
 
-    override val screenAnalytics get() = ScreenAnalytics(
-        screenName = "Driver Overview",
-        attributes = mapOf(
-            "extra_driver_id" to driverId
-        )
-    )
+//    override val screenAnalytics get() = ScreenAnalytics(
+//        screenName = "Driver Overview",
+//        attributes = mapOf(
+//            "extra_driver_id" to driverId
+//        )
+//    )
 
     private lateinit var driverId: String
     private lateinit var driverName: String
@@ -36,10 +40,10 @@ class DriverActivity: BaseActivity() {
             driverId = it.getString(keyDriverId)!!
             driverName = it.getString(keyDriverName)!!
 
-            analyticsController.logEvent(ViewType.DRIVER, mapOf(
-                "driver_id" to driverId,
-                "driver_name" to driverName
-            ))
+//            analyticsController.logEvent(ViewType.DRIVER, mapOf(
+//                "driver_id" to driverId,
+//                "driver_name" to driverName
+//            ))
 
             viewModel.inputs.setup(driverId)
         }

@@ -31,7 +31,7 @@ internal class AppThemeControllerTest {
     )
     fun `saving theme pref saves value in shared preference repo`(theme: Theme, key: String) {
         initSUT()
-        sut.themePref = theme
+        sut.theme = theme
         verify {
             mockSharedPreferenceRepository.save(keyTheme, key)
         }
@@ -48,7 +48,7 @@ internal class AppThemeControllerTest {
         every { mockSharedPreferenceRepository.getString(keyTheme) } returns key
 
         initSUT()
-        assertEquals(theme, sut.themePref)
+        assertEquals(theme, sut.theme)
         verify {
             mockSharedPreferenceRepository.getString(keyTheme)
         }
@@ -65,14 +65,14 @@ internal class AppThemeControllerTest {
     fun `get style resource for theme day returns day theme`() {
         initSUT()
 
-        assertEquals(R.style.LightTheme, sut.getStyleResource(Theme.DAY))
+        assertEquals(R.style.DayTheme, sut.getStyleResource(Theme.DAY))
     }
 
     @Test
     fun `get style resource for theme night returns night theme`() {
         initSUT()
 
-        assertEquals(R.style.DarkTheme, sut.getStyleResource(Theme.NIGHT))
+        assertEquals(R.style.DayTheme, sut.getStyleResource(Theme.NIGHT))
     }
 
     companion object {

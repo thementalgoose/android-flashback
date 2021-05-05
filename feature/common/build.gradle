@@ -1,0 +1,8 @@
+apply from: rootDir.absolutePath + "/base.gradle"
+
+dependencies {
+    // Modules
+    api project(path: ':base')
+
+    apply from: rootDir.absolutePath + "/core/core.gradle"
+}

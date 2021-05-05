@@ -15,6 +15,7 @@ import tmg.flashback.data.db.stats.SeasonOverviewRepository
 import tmg.flashback.data.models.stats.LapTime
 import tmg.flashback.data.models.stats.Round
 import tmg.flashback.data.models.stats.RoundDriver
+import tmg.flashback.shared.ui.controllers.ThemeController
 import tmg.flashback.statistics.mockRound1
 import tmg.flashback.statistics.mockRound3
 import tmg.flashback.statistics.testutils.*
@@ -33,7 +34,7 @@ internal class RaceViewModelTest: BaseTest() {
     lateinit var sut: RaceViewModel
 
     private val mockSeasonOverviewRepository: SeasonOverviewRepository = mockk(relaxed = true)
-    private val mockAppearanceController: AppearanceController = mockk(relaxed = true)
+    private val mockThemeController: ThemeController = mockk(relaxed = true)
     private val mockRaceController: RaceController = mockk(relaxed = true)
     private val mockAppHintsController: AppHintsController = mockk(relaxed = true)
     private val mockConnectivityManager: NetworkConnectivityManager = mockk(relaxed = true)
@@ -44,12 +45,12 @@ internal class RaceViewModelTest: BaseTest() {
     internal fun setUp() {
 
         every { mockConnectivityManager.isConnected } returns true
-        every { mockAppearanceController.animationSpeed } returns AnimationSpeed.NONE
+        every { mockThemeController.animationSpeed } returns AnimationSpeed.NONE
         every { mockRaceController.fadeDNF } returns true
     }
 
     private fun initSUT(roundDate: LocalDate? = null, orderBy: RaceAdapterType = RACE) {
-        sut = RaceViewModel(mockSeasonOverviewRepository, mockAppHintsController, mockRaceController, mockAppearanceController, mockConnectivityManager)
+        sut = RaceViewModel(mockSeasonOverviewRepository, mockAppHintsController, mockRaceController, mockThemeController, mockConnectivityManager)
         val (season, round) = expectedSeasonRound
         sut.inputs.initialise(season, round, roundDate)
         sut.inputs.orderBy(orderBy)

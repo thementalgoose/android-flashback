@@ -13,6 +13,8 @@ import tmg.analytics.UserProperty.*
 import tmg.analytics.controllers.AnalyticsController
 import tmg.flashback.core.repositories.CoreRepository
 import tmg.flashback.managers.widgets.WidgetManager
+import tmg.flashback.shared.ui.controllers.ThemeController
+import tmg.flashback.shared.ui.model.Theme
 import tmg.flashback.statistics.extensions.updateAllWidgets
 import tmg.notifications.controllers.NotificationController
 import tmg.utilities.extensions.isInDayMode
@@ -26,7 +28,7 @@ class FlashbackStartup(
     private val deviceController: DeviceController,
     private val crashController: CrashController,
     private val widgetManager: WidgetManager,
-    private val coreRepository: CoreRepository,
+    private val themeController: ThemeController,
     private val analyticsController: AnalyticsController,
     private val notificationController: NotificationController
 ) {
@@ -65,10 +67,10 @@ class FlashbackStartup(
         analyticsController.setUserProperty(OS_VERSION, Build.VERSION.SDK_INT.toString())
         analyticsController.setUserProperty(APP_VERSION, BuildConfig.VERSION_NAME)
         analyticsController.setUserProperty(WIDGET_USAGE, if (widgetManager.hasWidgets) "true" else "false")
-        analyticsController.setUserProperty(DEVICE_THEME, when (coreRepository.theme) {
+        analyticsController.setUserProperty(DEVICE_THEME, when (themeController.theme) {
             Theme.DAY -> "day"
             Theme.NIGHT -> "night"
-            Theme.AUTO -> if (application.isInDayMode()) "day" else "night"
+            Theme.DEFAULT -> if (application.isInDayMode()) "day (default)" else "night (default)"
         })
 
         // Update Widgets

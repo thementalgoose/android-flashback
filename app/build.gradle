@@ -228,10 +228,10 @@ tasks.whenTaskAdded { task ->
 dependencies {
 
     // Modules
-    implementation project(path: ':feature:statistics:data-firebase')
-    implementation project(path: ':feature:rss:rss')
     implementation project(path: ':base')
     implementation project(path: ':feature:statistics:statistics')
+    implementation project(path: ':feature:rss:rss')
+    implementation project(path: ':feature:common')
 
     // Android Test
     androidTestImplementation 'androidx.test:rules:1.3.0'

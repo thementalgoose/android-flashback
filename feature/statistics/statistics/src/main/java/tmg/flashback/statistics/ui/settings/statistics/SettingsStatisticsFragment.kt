@@ -15,10 +15,6 @@ class SettingsStatisticsFragment: SettingsFragment() {
 
     private val viewModel: SettingsStatisticsViewModel by viewModel()
 
-    override val screenAnalytics = ScreenAnalytics(
-        screenName = "Settings - Statistics"
-    )
-
     override val prefClicked: (prefKey: String) -> Unit = { prefKey ->
         viewModel.inputs.preferenceClicked(prefKey, null)
     }
@@ -28,8 +24,6 @@ class SettingsStatisticsFragment: SettingsFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        analyticsController.logEvent(ViewType.SETTINGS_STATISTICS)
 
         observe(viewModel.outputs.settings) {
             adapter.list = it

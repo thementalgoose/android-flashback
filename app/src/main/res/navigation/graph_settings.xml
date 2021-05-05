@@ -73,7 +73,7 @@
         android:label="SettingsDeviceFragment" />
     <fragment
         android:id="@+id/settingsNotificationFragment"
-        android:name="tmg.flashback.ui.settings.notifications.SettingsNotificationFragment"
+        android:name="tmg.notifications.ui.settings.SettingsNotificationFragment"
         android:label="SettingsNotificationFragment" />
     <fragment
         android:id="@+id/settingsStatisticsFragment"

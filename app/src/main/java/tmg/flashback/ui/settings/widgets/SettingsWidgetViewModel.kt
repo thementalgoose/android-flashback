@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import tmg.components.prefs.AppPreferencesItem
 import tmg.flashback.R
 import tmg.flashback.constants.Defaults
-import tmg.flashback.core.ui.BaseViewModel
+import androidx.lifecycle.ViewModel
 import tmg.flashback.data.repositories.AppRepository
 import tmg.utilities.lifecycle.Event
 
@@ -29,7 +29,7 @@ interface SettingsWidgetViewModelOutputs {
 
 class SettingsWidgetViewModel(
     private val appRepository: AppRepository
-): BaseViewModel(), SettingsWidgetViewModelInputs,
+): ViewModel(), SettingsWidgetViewModelInputs,
     SettingsWidgetViewModelOutputs {
 
     private val keyRefreshWidget: String = "Widgets"

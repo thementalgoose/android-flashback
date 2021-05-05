@@ -39,9 +39,9 @@ class ConstructorViewHolder(
 
         binding.tvTitle.text = item.constructor.name
 
-        binding.lpvProgress.backgroundColour = context.theme.getColor(R.attr.f1BackgroundPrimary)
+        binding.lpvProgress.backgroundColour = context.theme.getColor(R.attr.backgroundPrimary)
         binding.lpvProgress.progressColour = item.constructor.color
-        binding.lpvProgress.textBackgroundColour = context.theme.getColor(R.attr.f1TextSecondary)
+        binding.lpvProgress.textBackgroundColour = context.theme.getColor(R.attr.contentSecondary)
 
         var maxProgress = item.points.toFloat() / item.maxPointsInSeason.toFloat()
         if (maxProgress.isNaN()) {

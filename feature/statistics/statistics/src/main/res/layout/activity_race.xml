@@ -5,7 +5,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/f1BackgroundPrimary">
+    android:background="?attr/backgroundPrimary">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
@@ -24,7 +24,7 @@
                 android:id="@+id/titlebar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?attr/f1BackgroundPrimary">
+                android:background="?attr/backgroundPrimary">
 
                 <TextView
                     android:id="@+id/grandprix"
@@ -58,7 +58,7 @@
                     android:contentDescription="@string/settings_title"
                     android:scaleType="center"
                     android:src="@drawable/ic_back"
-                    android:tint="?attr/f1TextPrimary"
+                    android:tint="?attr/contentPrimary"
                     app:layout_constraintBottom_toBottomOf="@id/grandprix"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@id/grandprix" />
@@ -118,7 +118,7 @@
                     app:layout_constraintBottom_toBottomOf="@id/tvDate"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:tint="?attr/f1TextPrimary"
+                    app:tint="?attr/contentPrimary"
                     tools:layout_width="100dp"
                     tools:src="@drawable/circuit_albert_park" />
 
@@ -177,7 +177,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:background="?attr/f1BackgroundNavPrimary"
+        android:background="?attr/backgroundNav"
         app:itemIconTint="@drawable/selector_bottom_nav_color"
         app:itemTextColor="@drawable/selector_bottom_nav_color"
         app:menu="@menu/menu_race" />

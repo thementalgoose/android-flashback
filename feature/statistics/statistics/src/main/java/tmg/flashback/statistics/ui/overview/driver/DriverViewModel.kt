@@ -3,16 +3,12 @@ package tmg.flashback.statistics.ui.overview.driver
 import androidx.annotation.AttrRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import tmg.flashback.device.managers.NetworkConnectivityManager
-import tmg.flashback.core.ui.BaseViewModel
 import tmg.flashback.statistics.ui.overview.driver.summary.DriverSummaryItem
 import tmg.flashback.statistics.ui.overview.driver.summary.PipeType
 import tmg.flashback.statistics.ui.overview.driver.summary.addError
@@ -50,7 +46,7 @@ interface DriverViewModelOutputs {
 class DriverViewModel(
         private val driverRepository: DriverRepository,
         private val connectivityManager: NetworkConnectivityManager
-): BaseViewModel(), DriverViewModelInputs, DriverViewModelOutputs {
+): ViewModel(), DriverViewModelInputs, DriverViewModelOutputs {
 
     var inputs: DriverViewModelInputs = this
     var outputs: DriverViewModelOutputs = this
@@ -143,7 +139,7 @@ class DriverViewModel(
     private fun getAllStats(overview: DriverOverview): List<DriverSummaryItem> {
         val list: MutableList<DriverSummaryItem> = mutableListOf()
         list.addStat(
-            tint = if (overview.championshipWins > 0) R.attr.f1Favourite else R.attr.f1TextSecondary,
+            tint = if (overview.championshipWins > 0) R.attr.f1Championship else R.attr.contentSecondary,
             icon = R.drawable.ic_menu_drivers,
             label = R.string.driver_overview_stat_career_drivers_title,
             value = overview.championshipWins.toString()
@@ -216,7 +212,7 @@ class DriverViewModel(
         return list
     }
 
-    private fun MutableList<DriverSummaryItem>.addStat(@AttrRes tint: Int = R.attr.f1TextSecondary, @DrawableRes icon: Int, @StringRes label: Int, value: String) {
+    private fun MutableList<DriverSummaryItem>.addStat(@AttrRes tint: Int = R.attr.contentSecondary, @DrawableRes icon: Int, @StringRes label: Int, value: String) {
         this.add(
             DriverSummaryItem.Stat(
             tint = tint,

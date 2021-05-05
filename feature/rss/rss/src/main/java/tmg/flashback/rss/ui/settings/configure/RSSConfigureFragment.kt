@@ -24,9 +24,9 @@ class RSSConfigureFragment: BaseFragment<FragmentRssSettingsConfigureBinding>() 
 
     private val viewModel: RSSConfigureViewModel by viewModel()
 
-    override val screenAnalytics = ScreenAnalytics(
-        screenName = "Settings - RSS Configure"
-    )
+//    override val screenAnalytics = ScreenAnalytics(
+//        screenName = "Settings - RSS Configure"
+//    )
 
     private lateinit var adapter: RSSConfigureAdapter
 
@@ -36,7 +36,7 @@ class RSSConfigureFragment: BaseFragment<FragmentRssSettingsConfigureBinding>() 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        analyticsController.logEvent(ViewType.SETTINGS_RSS_CONFIGURE)
+//        analyticsController.logEvent(ViewType.SETTINGS_RSS_CONFIGURE)
 
         adapter = RSSConfigureAdapter(
             quickAddItem = viewModel.inputs::addQuickItem,

@@ -30,7 +30,7 @@
         android:layout_height="0dp"
         android:gravity="center"
         android:src="@drawable/ic_race_points"
-        android:tint="?attr/f1TextPrimary"
+        android:tint="?attr/contentPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/guideline"
         app:layout_constraintTop_toTopOf="parent" />
@@ -53,7 +53,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:src="@drawable/ic_race_status"
-        android:tint="?attr/f1TextPrimary"
+        android:tint="?attr/contentPrimary"
         app:layout_constraintEnd_toStartOf="@id/guideline"
         app:layout_constraintStart_toEndOf="@id/qualified"
         app:layout_constraintTop_toTopOf="parent" />

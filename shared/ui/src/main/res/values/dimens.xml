@@ -5,6 +5,7 @@
 
     <!-- Text sizes -->
 
+    <dimen name="textSizeFeature">32sp</dimen>
     <dimen name="textSizeXLarge">20sp</dimen>
     <dimen name="textSizeLarge">16sp</dimen>
     <dimen name="textSizeMedium">14sp</dimen>
@@ -30,6 +31,16 @@
     <dimen name="radiusLarge">24dp</dimen>
     <dimen name="radiusMedium">12dp</dimen>
     <dimen name="radiusSmall">6dp</dimen>
+
+    <!--===============================================================-->
+
+    <!-- Toolbar -->
+    <!-- TODO: Look at moving these higher up the stack -->
+
+    <dimen name="toolbarSettingsIcon">36dp</dimen>
+    <dimen name="toolbarIconSize">36dp</dimen>
+    <dimen name="toolbarHeight">54dp</dimen>
+    <dimen name="toolbarExpandedSpacer">16dp</dimen>
 
     <!--===============================================================-->
 

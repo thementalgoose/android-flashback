@@ -40,7 +40,7 @@ class ItemViewHolder(
             binding.visitWebsite.show()
         }
         else {
-            binding.imageBackground.setBackgroundColor(context.theme.getColor(R.attr.rssBrandPrimary))
+            binding.imageBackground.setBackgroundColor(context.theme.getColor(R.attr.backgroundPrimary))
             binding.label.text = "..."
             binding.visitWebsite.gone()
 

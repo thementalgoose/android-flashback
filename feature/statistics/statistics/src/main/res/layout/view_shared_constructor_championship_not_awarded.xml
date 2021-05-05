@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:background="?attr/f1BackgroundPrimary">
+    tools:background="?attr/backgroundPrimary">
 
     <ImageView
         android:id="@+id/icon"
@@ -15,7 +15,7 @@
         android:layout_marginBottom="@dimen/paddingMedium"
         android:padding="@dimen/paddingMedium"
         android:src="@drawable/ic_icon_constructors_championship_not_awarded"
-        app:tint="?attr/f1TextTertiary"
+        app:tint="?attr/contentTertiary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

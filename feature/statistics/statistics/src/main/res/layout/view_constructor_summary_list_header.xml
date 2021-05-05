@@ -14,7 +14,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_championship_order"
-        app:tint="?attr/f1TextSecondary" />
+        app:tint="?attr/contentSecondary" />
 
     <ImageView
         android:id="@+id/standing"
@@ -24,6 +24,6 @@
         app:layout_constraintEnd_toStartOf="@id/points"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_race_points"
-        app:tint="?attr/f1TextSecondary" />
+        app:tint="?attr/contentSecondary" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

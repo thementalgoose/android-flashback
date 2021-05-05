@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import tmg.flashback.core.ui.shared.GenericDiffCallback
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.SkeletonRaceBinding
 import tmg.flashback.statistics.databinding.ViewDriverSummaryHeaderBinding
@@ -17,6 +16,7 @@ import tmg.flashback.statistics.ui.overview.viewholders.StatsViewHolder
 import tmg.flashback.statistics.ui.race.viewholders.SkeletonLoadingViewHolder
 import tmg.flashback.statistics.ui.shared.pill.PillItem
 import tmg.flashback.statistics.ui.shared.sync.SyncAdapter
+import tmg.utilities.difflist.GenericDiffCallback
 
 @Suppress("EXPERIMENTAL_API_USAGE", "EXPERIMENTAL_OVERRIDE")
 class DriverSummaryAdapter(

@@ -8,11 +8,13 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
+import org.koin.android.ext.android.inject
+import org.koin.experimental.property.inject
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.statistics.enums.TrackLayout
 import tmg.flashback.core.controllers.AppHintsController.Companion.appHintDelay
-import tmg.flashback.core.utils.ScreenAnalytics
+import tmg.flashback.shared.ui.base.BaseActivity
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.ActivityRaceBinding
 import tmg.flashback.statistics.ui.circuit.CircuitInfoActivity
@@ -20,6 +22,10 @@ import tmg.flashback.statistics.ui.overview.constructor.ConstructorActivity
 import tmg.flashback.statistics.ui.overview.driver.DriverActivity
 import tmg.flashback.statistics.ui.shared.pill.PillAdapter
 import tmg.flashback.statistics.ui.shared.pill.PillItem
+import tmg.flashback.statistics.ui.util.getFlagResourceAlpha3
+import tmg.utilities.extensions.fromHtml
+import tmg.utilities.extensions.observe
+import tmg.utilities.extensions.observeEvent
 import tmg.utilities.extensions.toEnum
 import tmg.utilities.extensions.views.show
 
@@ -30,13 +36,13 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
     private lateinit var binding: ActivityRaceBinding
     private val viewModel: RaceViewModel by inject()
 
-    override val screenAnalytics get() = ScreenAnalytics(
-        screenName = "Race Results",
-        attributes = mapOf(
-            "race_season" to "$season",
-            "race_round" to "$round"
-        )
-    )
+//    override val screenAnalytics get() = ScreenAnalytics(
+//        screenName = "Race Results",
+//        attributes = mapOf(
+//            "race_season" to "$season",
+//            "race_round" to "$round"
+//        )
+//    )
 
     private lateinit var raceAdapter: RaceAdapter
     private lateinit var linkAdapter: PillAdapter

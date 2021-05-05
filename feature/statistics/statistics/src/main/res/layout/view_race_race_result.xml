@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:id="@+id/cell"
     android:layout_height="wrap_content"
-    android:background="?attr/f1BackgroundPrimary"
+    android:background="?attr/backgroundPrimary"
     android:paddingStart="0dp"
     android:paddingEnd="@dimen/paddingSmall">
 
@@ -190,7 +190,7 @@
                 android:layout_width="@dimen/raceStatusSize"
                 android:layout_height="@dimen/raceStatusSize"
                 android:layout_marginStart="3dp"
-                app:tint="?attr/f1TextSecondary" />
+                app:tint="?attr/contentSecondary" />
 
         </LinearLayout>
 

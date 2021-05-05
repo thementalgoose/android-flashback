@@ -20,9 +20,9 @@ class RSSSettingsFragment: BaseFragment<FragmentRssSettingsBinding>() {
 
     private val viewModel: RSSSettingsViewModel by viewModel()
 
-    override val screenAnalytics = ScreenAnalytics(
-        screenName = "Settings - RSS"
-    )
+//    override val screenAnalytics = ScreenAnalytics(
+//        screenName = "Settings - RSS"
+//    )
 
     private lateinit var adapter: SettingsAdapter
 
@@ -31,7 +31,7 @@ class RSSSettingsFragment: BaseFragment<FragmentRssSettingsBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        analyticsController.logEvent(ViewType.SETTINGS_RSS)
+//        analyticsController.logEvent(ViewType.SETTINGS_RSS)
 
         adapter = SettingsAdapter(
             prefClicked = viewModel.inputs::clickPref,

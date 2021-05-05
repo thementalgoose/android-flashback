@@ -46,15 +46,15 @@ class SeasonViewHolder(
         val colour = coloursDecade["${season.season.toString().substring(0, 3)}0"]?.toColorInt() ?: ContextCompat.getColor(itemView.context, R.color.colorTheme)
 
         binding.label.text = season.season.toString()
-        binding.highlight.setCircleColour(context.theme.getColor(R.attr.f1BackgroundPrimary))
+        binding.highlight.setCircleColour(context.theme.getColor(R.attr.backgroundPrimary))
 
         when (season.selected) {
             true -> {
-                binding.label.setTextColor(context.theme.getColor(R.attr.f1TextPrimary))
+                binding.label.setTextColor(context.theme.getColor(R.attr.contentPrimary))
                 binding.highlight.invisible()
             }
             false -> {
-                binding.label.setTextColor(context.theme.getColor(R.attr.f1TextTertiary))
+                binding.label.setTextColor(context.theme.getColor(R.attr.contentTertiary))
                 binding.highlight.visible()
             }
         }

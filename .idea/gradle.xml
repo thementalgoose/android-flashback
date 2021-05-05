@@ -21,6 +21,7 @@
             <option value="$PROJECT_DIR$/core/crash-reporting" />
             <option value="$PROJECT_DIR$/core/notifications" />
             <option value="$PROJECT_DIR$/feature" />
+            <option value="$PROJECT_DIR$/feature/common" />
             <option value="$PROJECT_DIR$/feature/rss" />
             <option value="$PROJECT_DIR$/feature/rss/rss" />
             <option value="$PROJECT_DIR$/feature/statistics" />
@@ -29,8 +30,8 @@
             <option value="$PROJECT_DIR$/feature/statistics/statistics" />
             <option value="$PROJECT_DIR$/shared" />
             <option value="$PROJECT_DIR$/shared/device" />
-            <option value="$PROJECT_DIR$/shared/test" />
             <option value="$PROJECT_DIR$/shared/ui" />
+            <option value="$PROJECT_DIR$/test" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

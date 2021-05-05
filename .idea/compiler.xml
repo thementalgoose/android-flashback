@@ -4,6 +4,7 @@
     <bytecodeTargetLevel target="1.7">
       <module name="android-flashback.app" target="11" />
       <module name="android-flashback.base" target="11" />
+      <module name="android-flashback.common" target="11" />
       <module name="android-flashback.configuration" target="11" />
       <module name="android-flashback.core.ads" target="11" />
       <module name="android-flashback.core.analytics" target="11" />
@@ -11,6 +12,7 @@
       <module name="android-flashback.core.crash-reporting" target="11" />
       <module name="android-flashback.core.notifications" target="11" />
       <module name="android-flashback.data-firebase" target="11" />
+      <module name="android-flashback.feature.common" target="11" />
       <module name="android-flashback.feature.rss.rss" target="11" />
       <module name="android-flashback.feature.statistics.data-firebase" target="11" />
       <module name="android-flashback.feature.statistics.statistics" target="11" />
@@ -20,6 +22,7 @@
       <module name="android-flashback.shared.test" target="11" />
       <module name="android-flashback.shared.ui" target="11" />
       <module name="android-flashback.statistics" target="11" />
+      <module name="android-flashback.test" target="11" />
       <module name="android-flashback.ui" target="11" />
       <module name="app" target="1.8" />
       <module name="firebase" target="1.8" />

@@ -15,7 +15,7 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="?attr/f1BackgroundPrimary"
+        android:background="?attr/backgroundPrimary"
         app:layoutDescription="@xml/fragment_dashboard_season_scene"
         tools:showPaths="true">
 
@@ -40,7 +40,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_menu"
-            app:tint="?attr/f1TextPrimary" />
+            app:tint="?attr/contentPrimary" />
 
         <TextView
             android:id="@+id/titleCollapsed"

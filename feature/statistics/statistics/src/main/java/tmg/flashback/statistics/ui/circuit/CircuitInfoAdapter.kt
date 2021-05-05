@@ -3,7 +3,6 @@ package tmg.flashback.statistics.ui.circuit
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import tmg.flashback.core.ui.shared.calculateDiff
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.ViewCircuitInfoHeaderBinding
 import tmg.flashback.statistics.databinding.ViewCircuitInfoRaceBinding
@@ -12,6 +11,7 @@ import tmg.flashback.statistics.ui.circuit.viewholders.HeaderViewHolder
 import tmg.flashback.statistics.ui.circuit.viewholders.RaceViewHolder
 import tmg.flashback.statistics.ui.circuit.viewholders.TrackViewHolder
 import tmg.flashback.statistics.ui.shared.sync.SyncAdapter
+import tmg.utilities.difflist.calculateDiff
 
 @Suppress("EXPERIMENTAL_API_USAGE", "EXPERIMENTAL_OVERRIDE")
 class CircuitInfoAdapter(

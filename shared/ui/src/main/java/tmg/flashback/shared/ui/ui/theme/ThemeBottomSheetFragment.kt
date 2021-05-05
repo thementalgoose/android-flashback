@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.shared.ui.base.BaseBottomSheetFragment
 import tmg.flashback.shared.ui.bottomsheet.BottomSheetAdapter
-import tmg.flashback.databinding.FragmentBottomSheetThemeBinding
-import tmg.flashback.ui.SplashActivity
+import tmg.flashback.shared.ui.databinding.FragmentBottomSheetThemeBinding
+import tmg.flashback.shared.ui.model.Theme
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 
@@ -41,7 +41,8 @@ class ThemeBottomSheetFragment: BaseBottomSheetFragment<FragmentBottomSheetTheme
             if (!isSameSelection) {
                 activity?.let {
                     it.finishAffinity()
-                    startActivity(Intent(it, SplashActivity::class.java))
+                    // TODO: FIX THIS!
+//                    startActivity(Intent(it, SplashActivity::class.java))
                 }
             }
             dismiss()

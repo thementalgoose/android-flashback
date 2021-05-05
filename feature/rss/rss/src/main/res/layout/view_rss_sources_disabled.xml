@@ -8,7 +8,7 @@
     android:clickable="true"
     android:focusable="true"
     android:foreground="?attr/selectableItemBackground"
-    tools:background="?attr/rssBackground">
+    tools:background="?attr/backgroundPrimary">
 
     <ImageView
         android:id="@+id/icon"
@@ -22,7 +22,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="?attr/rssTextTertiary" />
+        app:tint="?attr/contentTertiary" />
 
     <TextView
         style="@style/RSS.Network.Error"

@@ -1,5 +1,5 @@
 dependencies {
     api project(":shared:ui")
     api project(":shared:device")
-    testImplementation project(":shared:test")
+    testImplementation project(":test")
 }

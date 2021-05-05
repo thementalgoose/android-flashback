@@ -41,15 +41,15 @@ class DriverViewHolder(
             .load(item.driver.photoUrl)
             .into(binding.image)
 
-        binding.image.setBackgroundColor(context.theme.getColor(R.attr.f1TextTertiary))
+        binding.image.setBackgroundColor(context.theme.getColor(R.attr.contentTertiary))
         binding.imgDriverFlag.setImageResource(itemView.context.getFlagResourceAlpha3(item.driver.nationalityISO))
 
         binding.tvDriverNumber.text = item.driver.number.toString()
         binding.tvConstructor.text = item.driver.constructorAtEndOfSeason.name
 
-        binding.lpvProgress.backgroundColour = itemView.context.theme.getColor(R.attr.f1BackgroundPrimary)
+        binding.lpvProgress.backgroundColour = itemView.context.theme.getColor(R.attr.backgroundPrimary)
         binding.lpvProgress.progressColour = item.driver.constructorAtEndOfSeason.color
-        binding.lpvProgress.textBackgroundColour = context.theme.getColor(R.attr.f1TextSecondary)
+        binding.lpvProgress.textBackgroundColour = context.theme.getColor(R.attr.contentSecondary)
 
         var maxProgress = item.points.toFloat() / item.maxPointsInSeason.toFloat()
         if (maxProgress.isNaN()) {
