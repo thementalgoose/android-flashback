@@ -1,7 +1,7 @@
 package tmg.flashback.core.repositories
 
 import tmg.configuration.repository.models.TimeListDisplayType
-import tmg.flashback.shared.ui.model.AnimationSpeed
+import tmg.core.ui.model.AnimationSpeed
 import tmg.flashback.core.enums.AppHints
 
 interface CoreRepository {

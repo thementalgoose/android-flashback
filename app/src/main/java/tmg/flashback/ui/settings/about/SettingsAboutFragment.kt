@@ -5,16 +5,10 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import org.koin.android.ext.android.inject
-import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.constants.App.playStoreUrl
-import tmg.flashback.constants.ViewType
 import tmg.flashback.core.managers.NavigationManager
-import tmg.flashback.shared.ui.settings.SettingsFragment
-import tmg.flashback.core.utils.ScreenAnalytics
-import tmg.flashback.ui.settings.privacy.PrivacyPolicyActivity
-import tmg.utilities.extensions.observe
-import tmg.utilities.extensions.observeEvent
+import tmg.core.ui.settings.SettingsFragment
+import tmg.common.ui.privacypolicy.PrivacyPolicyActivity
 
 class SettingsAboutFragment: SettingsFragment() {
 

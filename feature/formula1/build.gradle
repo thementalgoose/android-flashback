@@ -1,0 +1,19 @@
+apply from: rootDir.absolutePath + "/base.gradle"
+
+dependencies {
+
+    api project(path: ':base')
+
+    // Core modules
+    implementation project(path: ':core:ads')
+    implementation project(path: ':core:analytics')
+    implementation project(path: ':core:configuration')
+    implementation project(path: ':core:crash-reporting')
+    implementation project(path: ':core:device')
+    implementation project(path: ':core:notifications')
+    implementation project(path: ':core:preferences')
+    implementation project(path: ':core:ui')
+
+    // Flagkit
+    implementation 'com.jwang123.flagkit:flagkit:1.0'
+}

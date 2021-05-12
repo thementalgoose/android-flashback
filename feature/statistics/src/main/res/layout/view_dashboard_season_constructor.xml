@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground"
+    android:paddingStart="@dimen/paddingMedium"
+    android:paddingTop="@dimen/paddingSmall"
+    android:paddingEnd="@dimen/paddingMedium"
+    android:paddingBottom="@dimen/paddingSmall">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.6" />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        style="@style/Text.ConstructorStandings.Title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@id/guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Ferrari" />
+
+    <tmg.core.ui.views.PassThroughRecyclerView
+        android:id="@+id/driverList"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        android:overScrollMode="never"
+        app:layout_constraintEnd_toStartOf="@id/guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        tools:itemCount="4"
+        tools:listitem="@layout/layout_constructor_driver" />
+
+    <TextView
+        android:id="@+id/penalty"
+        style="@style/Text.ConstructorStandings.Penalty"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="@dimen/paddingXSmall"
+        android:text="@string/home_constructor_penalty"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/tvTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/driverList" />
+
+    <tmg.labelledprogressbar.LabelledProgressBar
+        android:id="@+id/lpvProgress"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:minHeight="30dp"
+        app:layout_constraintBottom_toBottomOf="@id/penalty"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/guideline"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lpb_backgroundColour="?attr/backgroundPrimary"
+        app:lpb_radius="@dimen/radiusSmall"
+        app:lpb_sliverWidth="1dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

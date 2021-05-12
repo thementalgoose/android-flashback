@@ -1,6 +1,6 @@
 package tmg.analytics.repository
 
-import tmg.flashback.device.repository.SharedPreferenceRepository
+import tmg.core.device.repository.SharedPreferenceRepository
 
 class AnalyticsRepository(
     private val sharedPreferenceRepository: SharedPreferenceRepository

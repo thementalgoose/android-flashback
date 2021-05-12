@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import tmg.configuration.controllers.ConfigController
 import tmg.configuration.repository.models.ForceUpgrade
-import tmg.test.*
 
 internal class ForceUpgradeViewModelTest: BaseTest() {
 

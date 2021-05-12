@@ -3,16 +3,12 @@ package tmg.flashback.ui.settings
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.R
 import tmg.flashback.constants.ViewType
-import tmg.flashback.shared.ui.base.BaseFragment
+import tmg.core.ui.base.BaseFragment
 import tmg.flashback.core.utils.ScreenAnalytics
 import tmg.flashback.databinding.FragmentAllSettingsBinding
-import tmg.utilities.extensions.observe
-import tmg.utilities.extensions.observeEvent
 
 class SettingsAllFragment: BaseFragment<FragmentAllSettingsBinding>() {
 

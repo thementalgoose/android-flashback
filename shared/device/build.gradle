@@ -1,7 +1,0 @@
-apply from: rootDir.absolutePath + "/base.gradle"
-
-dependencies {
-
-    // Test dependencies
-    testImplementation project(":test")
-}

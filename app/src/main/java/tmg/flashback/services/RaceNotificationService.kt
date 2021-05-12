@@ -11,7 +11,6 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import tmg.flashback.R
 import tmg.flashback.ui.SplashActivity
-import tmg.notifications.controllers.NotificationController
 
 class RaceNotificationService: FirebaseMessagingService() {
 

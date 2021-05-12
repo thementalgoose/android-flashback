@@ -1,6 +1,6 @@
 package tmg.flashback.constants
 
-import tmg.analytics.controllers.AnalyticsController
+import tmg.analytics.manager.AnalyticsManager
 
 enum class ViewType(
     val key: String
@@ -19,6 +19,6 @@ enum class ViewType(
     SETTINGS_WIDGET("view_settings_widget"),
 }
 
-fun AnalyticsController.logEvent(type: ViewType, attributes: Map<String, String> = emptyMap()) {
+fun AnalyticsManager.logEvent(type: ViewType, attributes: Map<String, String> = emptyMap()) {
     this.logEvent(type.key, attributes)
 }

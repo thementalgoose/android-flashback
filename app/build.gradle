@@ -198,7 +198,7 @@ task generateRemoteConfigDefaults {
             }
             entry {
                 key('dashboard_calendar')
-                value(supportedSeasons)
+                value('false')
             }
             entry {
                 key('rss')
@@ -229,8 +229,8 @@ dependencies {
 
     // Modules
     implementation project(path: ':base')
-    implementation project(path: ':feature:statistics:statistics')
-    implementation project(path: ':feature:rss:rss')
+    implementation project(path: ':feature:statistics')
+    implementation project(path: ':feature:rss')
     implementation project(path: ':feature:common')
 
     // Android Test
@@ -240,8 +240,8 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation "org.junit.jupiter:junit-jupiter-api:$junit"
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-    androidTestImplementation "de.mannodermaus.junit5:android-test-core:1.2.0"
-    androidTestRuntimeOnly "de.mannodermaus.junit5:android-test-runner:1.2.0"
+    androidTestImplementation "de.mannodermaus.junit5:android-test-core:1.2.2"
+    androidTestRuntimeOnly "de.mannodermaus.junit5:android-test-runner:1.2.2"
     androidTestImplementation "org.junit.jupiter:junit-jupiter-api:$junit"
     androidTestImplementation "org.junit.jupiter:junit-jupiter-engine:$junit"
     androidTestImplementation "org.junit.jupiter:junit-jupiter-params:$junit"
@@ -259,7 +259,7 @@ dependencies {
     implementation 'com.reddit:indicator-fast-scroll:1.3.0'
 
     // TMG dependencies
-    implementation "com.github.thementalgoose:android-components:$tmg_components"
+    implementation "com.github.thementalgoose:android-about-this-app:$tmg_about_this_app"
     implementation "com.github.thementalgoose:android-utilities:$tmg_utils"
     implementation "com.github.thementalgoose:android-labelled-progress-bar:$tmg_labelled_progressbar"
 
@@ -268,7 +268,7 @@ dependencies {
 
     // Glide
     implementation "com.github.bumptech.glide:glide:$glide"
-    annotationProcessor "com.github.bumptech.glide:compiler:$glide"
+    kapt "com.github.bumptech.glide:compiler:$glide"
 
     // BugShaker
     implementation 'com.github.stkent:bugshaker:1.4.1'

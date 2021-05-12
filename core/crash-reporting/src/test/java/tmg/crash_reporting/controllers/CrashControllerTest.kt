@@ -7,21 +7,21 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
-import tmg.crash_reporting.managers.CrashManager
+import tmg.crash_reporting.services.CrashService
 import tmg.crash_reporting.repository.CrashRepository
-import tmg.flashback.device.repository.DeviceRepository
+import tmg.core.device.repositories.DeviceRepository
 import java.lang.RuntimeException
 
 internal class CrashControllerTest {
 
     private var mockCrashRepository: CrashRepository = mockk(relaxed = true)
-    private var mockDeviceRepository: DeviceRepository = mockk(relaxed = true)
-    private var mockCrashManager: CrashManager = mockk(relaxed = true)
+    private var mockDeviceRepository: tmg.core.device.repositories.DeviceRepository = mockk(relaxed = true)
+    private var mockCrashService: CrashService = mockk(relaxed = true)
 
     private lateinit var sut: CrashController
 
     private fun initSUT() {
-        sut = CrashController(mockCrashRepository, mockDeviceRepository, mockCrashManager)
+        sut = CrashController(mockCrashRepository, mockDeviceRepository, mockCrashService)
     }
 
     //region Crash reporting enabled
@@ -69,7 +69,7 @@ internal class CrashControllerTest {
         sut.initialise()
 
         verify {
-            mockCrashManager.initialise(true,  "test-udid", expectedDate, 1)
+            mockCrashService.initialise(true,  "test-udid", expectedDate, 1)
         }
     }
 
@@ -84,7 +84,7 @@ internal class CrashControllerTest {
         initSUT()
         sut.log("msg")
 
-        verify { mockCrashManager.logInfo("msg") }
+        verify { mockCrashService.logInfo("msg") }
     }
 
     @Test
@@ -94,7 +94,7 @@ internal class CrashControllerTest {
         initSUT()
         sut.log("msg")
 
-        verify(exactly = 0) { mockCrashManager.logInfo("msg") }
+        verify(exactly = 0) { mockCrashService.logInfo("msg") }
     }
 
     @Test
@@ -104,7 +104,7 @@ internal class CrashControllerTest {
         initSUT()
         sut.logError("msg")
 
-        verify { mockCrashManager.logError("msg") }
+        verify { mockCrashService.logError("msg") }
     }
 
     @Test
@@ -114,7 +114,7 @@ internal class CrashControllerTest {
         initSUT()
         sut.logError("msg")
 
-        verify(exactly = 0) { mockCrashManager.logError("msg") }
+        verify(exactly = 0) { mockCrashService.logError("msg") }
     }
 
     @Test
@@ -125,7 +125,7 @@ internal class CrashControllerTest {
         initSUT()
         sut.logError(exception, "msg")
 
-        verify { mockCrashManager.logException(exception, "msg") }
+        verify { mockCrashService.logException(exception, "msg") }
     }
 
     @Test
@@ -136,7 +136,7 @@ internal class CrashControllerTest {
         initSUT()
         sut.logError(exception, "msg")
 
-        verify(exactly = 0) { mockCrashManager.logException(exception, "msg") }
+        verify(exactly = 0) { mockCrashService.logException(exception, "msg") }
     }
 
     //endregion

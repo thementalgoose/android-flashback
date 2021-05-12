@@ -17,24 +17,25 @@
             <option value="$PROJECT_DIR$/core" />
             <option value="$PROJECT_DIR$/core/ads" />
             <option value="$PROJECT_DIR$/core/analytics" />
+            <option value="$PROJECT_DIR$/core/appshortcuts" />
             <option value="$PROJECT_DIR$/core/configuration" />
             <option value="$PROJECT_DIR$/core/crash-reporting" />
+            <option value="$PROJECT_DIR$/core/device" />
             <option value="$PROJECT_DIR$/core/notifications" />
+            <option value="$PROJECT_DIR$/core/preferences" />
+            <option value="$PROJECT_DIR$/core/ui" />
             <option value="$PROJECT_DIR$/feature" />
             <option value="$PROJECT_DIR$/feature/common" />
+            <option value="$PROJECT_DIR$/feature/formula1" />
             <option value="$PROJECT_DIR$/feature/rss" />
-            <option value="$PROJECT_DIR$/feature/rss/rss" />
             <option value="$PROJECT_DIR$/feature/statistics" />
-            <option value="$PROJECT_DIR$/feature/statistics/data" />
-            <option value="$PROJECT_DIR$/feature/statistics/data-firebase" />
-            <option value="$PROJECT_DIR$/feature/statistics/statistics" />
-            <option value="$PROJECT_DIR$/shared" />
-            <option value="$PROJECT_DIR$/shared/device" />
-            <option value="$PROJECT_DIR$/shared/ui" />
-            <option value="$PROJECT_DIR$/test" />
+            <option value="$PROJECT_DIR$/feature/statistics_data" />
+            <option value="$PROJECT_DIR$/feature/statistics_data_firebase" />
+            <option value="$PROJECT_DIR$/feature/upnext" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
+        <option name="useQualifiedModuleNames" value="true" />
       </GradleProjectSettings>
     </option>
   </component>

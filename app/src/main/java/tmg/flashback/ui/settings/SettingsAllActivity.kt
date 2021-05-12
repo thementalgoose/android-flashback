@@ -6,9 +6,8 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import tmg.flashback.R
-import tmg.flashback.core.utils.ScreenAnalytics
 import tmg.flashback.databinding.ActivitySettingsBinding
-import tmg.flashback.shared.ui.base.BaseActivity
+import tmg.core.ui.base.BaseActivity
 
 class SettingsAllActivity: BaseActivity(), NavController.OnDestinationChangedListener {
 

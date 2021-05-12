@@ -5,7 +5,7 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
-import tmg.flashback.device.repository.SharedPreferenceRepository
+import tmg.core.device.repository.SharedPreferenceRepository
 
 internal class AnalyticsRepositoryTest {
 

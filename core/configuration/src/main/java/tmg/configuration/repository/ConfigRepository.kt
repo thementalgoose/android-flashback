@@ -7,7 +7,7 @@ import tmg.configuration.repository.json.*
 import tmg.configuration.repository.models.ForceUpgrade
 import tmg.configuration.repository.models.SupportedSource
 import tmg.configuration.repository.models.UpNextSchedule
-import tmg.flashback.device.repository.SharedPreferenceRepository
+import tmg.core.device.repository.SharedPreferenceRepository
 
 class ConfigRepository(
     private val remoteConfigManager: RemoteConfigManager,

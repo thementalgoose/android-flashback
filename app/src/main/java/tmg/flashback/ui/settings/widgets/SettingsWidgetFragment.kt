@@ -3,14 +3,8 @@ package tmg.flashback.ui.settings.widgets
 import android.os.Bundle
 import android.view.View
 import com.google.android.material.snackbar.Snackbar
-import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.R
-import tmg.flashback.constants.ViewType
-import tmg.flashback.shared.ui.settings.SettingsFragment
-import tmg.flashback.core.utils.ScreenAnalytics
-import tmg.flashback.statistics.extensions.updateAllWidgets
-import tmg.utilities.extensions.observe
-import tmg.utilities.extensions.observeEvent
+import tmg.core.ui.settings.SettingsFragment
 
 class SettingsWidgetFragment: SettingsFragment() {
 

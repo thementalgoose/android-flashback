@@ -8,13 +8,12 @@ import com.jakewharton.threetenabp.AndroidThreeTen
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import tmg.crash_reporting.controllers.CrashController
-import tmg.flashback.device.controllers.DeviceController
+import tmg.core.device.controllers.DeviceController
 import tmg.analytics.UserProperty.*
-import tmg.analytics.controllers.AnalyticsController
-import tmg.flashback.core.repositories.CoreRepository
+import tmg.analytics.manager.AnalyticsManager
 import tmg.flashback.managers.widgets.WidgetManager
-import tmg.flashback.shared.ui.controllers.ThemeController
-import tmg.flashback.shared.ui.model.Theme
+import tmg.core.ui.controllers.ThemeController
+import tmg.core.ui.model.Theme
 import tmg.flashback.statistics.extensions.updateAllWidgets
 import tmg.notifications.controllers.NotificationController
 import tmg.utilities.extensions.isInDayMode
@@ -25,11 +24,11 @@ import tmg.utilities.extensions.isInDayMode
  * Ran when the application is first started
  */
 class FlashbackStartup(
-    private val deviceController: DeviceController,
+    private val deviceController: tmg.core.device.controllers.DeviceController,
     private val crashController: CrashController,
     private val widgetManager: WidgetManager,
     private val themeController: ThemeController,
-    private val analyticsController: AnalyticsController,
+    private val analyticsManager: AnalyticsManager,
     private val notificationController: NotificationController
 ) {
     fun startup(application: FlashbackApplication) {
@@ -63,11 +62,11 @@ class FlashbackStartup(
         }
 
         // Initialise user properties
-        analyticsController.setUserProperty(DEVICE_MODEL, Build.MODEL)
-        analyticsController.setUserProperty(OS_VERSION, Build.VERSION.SDK_INT.toString())
-        analyticsController.setUserProperty(APP_VERSION, BuildConfig.VERSION_NAME)
-        analyticsController.setUserProperty(WIDGET_USAGE, if (widgetManager.hasWidgets) "true" else "false")
-        analyticsController.setUserProperty(DEVICE_THEME, when (themeController.theme) {
+        analyticsManager.setUserProperty(DEVICE_MODEL, Build.MODEL)
+        analyticsManager.setUserProperty(OS_VERSION, Build.VERSION.SDK_INT.toString())
+        analyticsManager.setUserProperty(APP_VERSION, BuildConfig.VERSION_NAME)
+        analyticsManager.setUserProperty(WIDGET_USAGE, if (widgetManager.hasWidgets) "true" else "false")
+        analyticsManager.setUserProperty(DEVICE_THEME, when (themeController.theme) {
             Theme.DAY -> "day"
             Theme.NIGHT -> "night"
             Theme.DEFAULT -> if (application.isInDayMode()) "day (default)" else "night (default)"

@@ -5,10 +5,9 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
-import tmg.configuration.repository.json.AllSeasonsJson
 import tmg.configuration.managers.RemoteConfigManager
 import tmg.configuration.repository.models.ForceUpgrade
-import tmg.flashback.device.repository.SharedPreferenceRepository
+import tmg.core.device.repository.SharedPreferenceRepository
 import java.time.Year
 
 internal class ConfigRepositoryTest {

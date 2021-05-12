@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
-import tmg.analytics.controllers.AnalyticsController
+import tmg.analytics.manager.AnalyticsManager
 import tmg.common.ui.forceupgrade.ForceUpgradeActivity
 import tmg.flashback.databinding.ActivitySplashBinding
 import tmg.flashback.statistics.ui.dashboard.DashboardActivity
@@ -18,7 +18,7 @@ class SplashActivity: AppCompatActivity() {
     private lateinit var binding: ActivitySplashBinding
     private val viewModel: SplashViewModel by viewModel()
 
-    private val analyticsManager: AnalyticsController by inject()
+    private val analyticsManager: AnalyticsManager by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -50,7 +50,7 @@
             android:theme="@style/Translucent" />
 
         <activity
-            android:name=".ui.settings.release.ReleaseActivity"
+            android:name="tmg.common.ui.releasenotes.ReleaseActivity"
             android:label=""
             android:theme="@style/Translucent" />
 
@@ -60,7 +60,7 @@
             android:theme="@style/Translucent" />
 
         <activity
-            android:name=".ui.settings.privacy.PrivacyPolicyActivity"
+            android:name="tmg.common.ui.privacypolicy.PrivacyPolicyActivity"
             android:label=""
             android:theme="@style/Translucent" />
 

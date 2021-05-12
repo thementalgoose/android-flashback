@@ -1,10 +1,11 @@
 ext {
     kotlin_version = "1.4.31"
-    mockk = "1.10.3-jdk8"
-    junit = "5.5.2"
     koin_version = "2.2.2"
     coroutines = "1.4.1"
     navigation = "2.3.5"
+
+    mockk = "1.10.3-jdk8"
+    junit = "5.5.2"
 
     threeten = "1.2.2"
     threetenbp = "1.4.1"
@@ -16,11 +17,12 @@ ext {
     swipe_refresh = "1.1.0"
     slidr = "2.1.0"
 
-    glide = "4.11.0"
+    glide = "4.12.0"
 
-    tmg_utils = "2.1.2"
-    tmg_components = "4.0.1"
+    tmg_utils = "2.1.3"
+    tmg_about_this_app = "5.0.0"
     tmg_labelled_progressbar = "1.0.6"
+    tmg_test_utils = "1.0.0"
 
     lottie = "3.4.0"
 
