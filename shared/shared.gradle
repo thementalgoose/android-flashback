@@ -1,5 +1,0 @@
-dependencies {
-    api project(":shared:ui")
-    api project(":shared:device")
-    testImplementation project(":test")
-}

@@ -1,13 +1,13 @@
 package tmg.analytics.di
 
 import org.koin.dsl.module
-import tmg.analytics.controllers.AnalyticsController
-import tmg.analytics.managers.AnalyticsManager
-import tmg.analytics.managers.FirebaseAnalyticsManager
+import tmg.analytics.manager.AnalyticsManager
+import tmg.analytics.services.AnalyticsService
+import tmg.analytics.services.FirebaseAnalyticsService
 import tmg.analytics.repository.AnalyticsRepository
 
 val analyticsModule = module {
-    single<AnalyticsManager> { FirebaseAnalyticsManager(get()) }
+    single<AnalyticsService> { FirebaseAnalyticsService(get()) }
     single { AnalyticsRepository(get()) }
-    single { AnalyticsController(get(), get()) }
+    single { AnalyticsManager(get(), get()) }
 }

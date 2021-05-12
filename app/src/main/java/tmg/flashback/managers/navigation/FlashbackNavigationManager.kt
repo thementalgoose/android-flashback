@@ -4,22 +4,22 @@ import android.content.Context
 import android.content.Intent
 import androidx.fragment.app.FragmentActivity
 import tmg.components.about.AboutThisAppActivity
-import tmg.flashback.constants.AboutThisAppConfig
-import tmg.flashback.controllers.ReleaseNotesController
+import tmg.common.constants.AboutThisAppConfig
+import tmg.common.controllers.ReleaseNotesController
 import tmg.flashback.core.extensions.isLightMode
 import tmg.flashback.core.managers.NavigationManager
-import tmg.flashback.device.repository.DeviceRepository
+import tmg.core.device.repositories.DeviceRepository
 import tmg.flashback.rss.ui.RSSActivity
 import tmg.flashback.statistics.manager.StatisticsExternalNavigationManager
 import tmg.flashback.ui.admin.maintenance.MaintenanceActivity
 import tmg.flashback.ui.settings.SettingsAllActivity
 import tmg.flashback.ui.SplashActivity
-import tmg.flashback.ui.settings.release.ReleaseBottomSheetFragment
+import tmg.common.ui.releasenotes.ReleaseBottomSheetFragment
 
 class FlashbackNavigationManager(
     private val appearanceController: AppearanceController,
     private val releaseNotesController: ReleaseNotesController,
-    private val coreRepository: DeviceRepository
+    private val coreRepository: tmg.core.device.repositories.DeviceRepository
 ): NavigationManager, StatisticsExternalNavigationManager {
 
     //region NavigationManager

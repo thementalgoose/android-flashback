@@ -8,16 +8,14 @@ import org.junit.jupiter.api.Test
 import tmg.components.prefs.AppPreferencesItem
 import tmg.flashback.R
 import tmg.crash_reporting.controllers.CrashController
-import tmg.flashback.device.controllers.DeviceController
+import tmg.core.device.controllers.DeviceController
 import tmg.flashback.testutils.BaseTest
-import tmg.flashback.testutils.assertEventFired
-import tmg.flashback.testutils.test
 
 internal class SettingsDeviceViewModelTest : BaseTest() {
 
     private var mockCrashController: CrashController = mockk(relaxed = true)
     private var mockAnalyticsController: AnalyticsController = mockk(relaxed = true)
-    private var mockDeviceController: DeviceController = mockk(relaxed = true)
+    private var mockDeviceController: tmg.core.device.controllers.DeviceController = mockk(relaxed = true)
 
     private lateinit var sut: SettingsDeviceViewModel
 

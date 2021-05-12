@@ -1,6 +1,6 @@
 package tmg.crash_reporting.repository
 
-import tmg.flashback.device.repository.SharedPreferenceRepository
+import tmg.core.device.repository.SharedPreferenceRepository
 
 class CrashRepository(
     private val sharedPreferenceRepository: SharedPreferenceRepository

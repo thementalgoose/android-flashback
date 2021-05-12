@@ -82,7 +82,7 @@ android {
 dependencies {
 
     // Components
-    implementation "com.github.thementalgoose:android-components:$tmg_components"
+    implementation "com.github.thementalgoose:android-about-this-app:$tmg_about_this_app"
     implementation project(path: ':core:analytics')
     implementation project(path: ':core:notifications')
     implementation project(path: ':core:configuration')

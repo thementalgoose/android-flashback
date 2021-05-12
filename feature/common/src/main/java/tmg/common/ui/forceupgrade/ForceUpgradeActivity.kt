@@ -2,8 +2,8 @@ package tmg.common.ui.forceupgrade
 
 import android.os.Bundle
 import tmg.common.databinding.ActivityLockoutBinding
-import tmg.flashback.shared.ui.base.BaseActivity
-import tmg.flashback.shared.ui.model.DisplayType
+import tmg.core.ui.base.BaseActivity
+import tmg.core.ui.model.DisplayType
 
 class ForceUpgradeActivity: BaseActivity() {
 

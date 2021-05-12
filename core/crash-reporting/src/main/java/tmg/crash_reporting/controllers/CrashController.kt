@@ -1,16 +1,15 @@
 package tmg.crash_reporting.controllers
 
 import org.threeten.bp.format.DateTimeFormatter
-import tmg.crash_reporting.managers.CrashManager
+import tmg.crash_reporting.services.CrashService
 import tmg.crash_reporting.repository.CrashRepository
-import tmg.flashback.device.controllers.DeviceController
-import tmg.flashback.device.repository.DeviceRepository
+import tmg.core.device.repositories.DeviceRepository
 import java.lang.Exception
 
 class CrashController(
     private val crashRepository: CrashRepository,
-    private val deviceRepository: DeviceRepository,
-    private val crashManager: CrashManager
+    private val deviceRepository: tmg.core.device.repositories.DeviceRepository,
+    private val crashService: CrashService
 ) {
     var enabled: Boolean
         get() = crashRepository.isEnabled
@@ -25,7 +24,7 @@ class CrashController(
         }
 
     fun initialise() {
-        crashManager.initialise(
+        crashService.initialise(
             enableCrashReporting = crashRepository.isEnabled,
             deviceUdid = deviceRepository.deviceUdid,
             appOpenedCount = deviceRepository.appOpenedCount,
@@ -35,19 +34,19 @@ class CrashController(
 
     fun logError(msg: String) {
         if (enabled) {
-            crashManager.logError(msg)
+            crashService.logError(msg)
         }
     }
 
     fun log(msg: String) {
         if (enabled) {
-            crashManager.logInfo(msg)
+            crashService.logInfo(msg)
         }
     }
 
     fun logError(error: Exception, msg: String) {
         if (enabled) {
-            crashManager.logException(error, msg)
+            crashService.logException(error, msg)
         }
     }
 }

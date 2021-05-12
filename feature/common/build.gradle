@@ -4,5 +4,16 @@ dependencies {
     // Modules
     api project(path: ':base')
 
-    apply from: rootDir.absolutePath + "/core/core.gradle"
+    // Core modules
+    implementation project(path: ':core:ads')
+    implementation project(path: ':core:analytics')
+    implementation project(path: ':core:configuration')
+    implementation project(path: ':core:crash-reporting')
+    implementation project(path: ':core:device')
+    implementation project(path: ':core:notifications')
+    implementation project(path: ':core:preferences')
+    implementation project(path: ':core:ui')
+
+    // About This App
+    implementation "com.github.thementalgoose:android-about-this-app:$tmg_about_this_app"
 }

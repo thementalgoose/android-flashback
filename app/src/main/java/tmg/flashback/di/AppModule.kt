@@ -2,6 +2,7 @@ package tmg.flashback.di
 
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
+import tmg.common.controllers.ReleaseNotesController
 import tmg.flashback.FlashbackStartup
 import tmg.flashback.controllers.*
 import tmg.flashback.managers.appshortcuts.AndroidAppShortcutManager
@@ -39,7 +40,7 @@ import tmg.flashback.ui.settings.customisation.animation.AnimationSpeedViewModel
 import tmg.flashback.ui.settings.customisation.theme.ThemeViewModel
 import tmg.flashback.ui.settings.device.SettingsDeviceViewModel
 import tmg.flashback.ui.settings.notifications.SettingsNotificationViewModel
-import tmg.flashback.ui.settings.privacy.PrivacyPolicyViewModel
+import tmg.common.ui.privacypolicy.PrivacyPolicyViewModel
 import tmg.flashback.statistics.ui.settings.statistics.SettingsStatisticsViewModel
 import tmg.flashback.ui.SplashViewModel
 import tmg.flashback.ui.settings.widgets.SettingsWidgetViewModel
