@@ -11,7 +11,7 @@ import com.google.android.material.snackbar.Snackbar
 import org.koin.android.ext.android.inject
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
-import tmg.flashback.statistics.enums.TrackLayout
+import tmg.flashback.formula1.enums.TrackLayout
 import tmg.flashback.core.controllers.AppHintsController.Companion.appHintDelay
 import tmg.core.ui.base.BaseActivity
 import tmg.flashback.statistics.R
@@ -21,7 +21,7 @@ import tmg.flashback.statistics.ui.overview.constructor.ConstructorActivity
 import tmg.flashback.statistics.ui.overview.driver.DriverActivity
 import tmg.flashback.statistics.ui.shared.pill.PillAdapter
 import tmg.flashback.statistics.ui.shared.pill.PillItem
-import tmg.flashback.statistics.ui.util.getFlagResourceAlpha3
+import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent

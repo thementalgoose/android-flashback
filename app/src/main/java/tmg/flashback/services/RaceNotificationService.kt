@@ -11,6 +11,7 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import tmg.flashback.R
 import tmg.flashback.ui.SplashActivity
+import tmg.notifications.controllers.NotificationController
 
 class RaceNotificationService: FirebaseMessagingService() {
 
@@ -55,7 +56,7 @@ class RaceNotificationService: FirebaseMessagingService() {
         // Since android Oreo notification channel is needed.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel: NotificationChannel? = when (channelId) {
-                NotificationController.keyTopicRace -> NotificationChannel(channelId, getString(R.string.notification_channel_race), NotificationManager.IMPORTANCE_DEFAULT)
+                NotificationController.keyTopicRace -> NotificationChannel(channelId, getString(R.string.notification_channel_race), NotificationManager.IMPORTANCE_HIGH)
                 NotificationController.keyTopicQualifying -> NotificationChannel(channelId, getString(R.string.notification_channel_qualifying), NotificationManager.IMPORTANCE_DEFAULT)
                 NotificationController.keyTopicSeasonInfo -> NotificationChannel(channelId, getString(R.string.notification_channel_info), NotificationManager.IMPORTANCE_DEFAULT)
                 else -> null

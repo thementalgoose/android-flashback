@@ -10,11 +10,9 @@ import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.core.ui.base.BaseFragment
 import tmg.flashback.statistics.R
-import tmg.flashback.statistics.constants.Formula1.currentSeasonYear
+import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
 import tmg.flashback.statistics.controllers.SeasonController
 import tmg.flashback.statistics.databinding.FragmentDashboardSeasonBinding
-import tmg.flashback.statistics.ui.dashboard.DashboardFragment
-import tmg.flashback.statistics.ui.dashboard.DashboardNavigationCallback
 import tmg.flashback.statistics.ui.overview.constructor.ConstructorActivity
 import tmg.flashback.statistics.ui.overview.driver.DriverActivity
 import tmg.flashback.statistics.ui.race.RaceActivity
@@ -32,8 +30,8 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
     )
 
     private lateinit var adapter: SeasonAdapter
-    private val dashboardNavigation: DashboardNavigationCallback?
-        get() = parentFragment as? DashboardFragment
+    private val dashboardNavigation: tmg.flashback.ui.dashboard.DashboardNavigationCallback?
+        get() = parentFragment as? tmg.flashback.ui.dashboard.DashboardFragment
 
 //    override val screenAnalytics get() = ScreenAnalytics(
 //        screenName = "Dashboard",

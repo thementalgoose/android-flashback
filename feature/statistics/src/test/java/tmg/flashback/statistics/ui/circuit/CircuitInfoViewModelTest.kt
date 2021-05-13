@@ -8,12 +8,11 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
-import tmg.core.device.managers.NetworkConnectivityManager
 import tmg.flashback.data.db.stats.CircuitRepository
 import tmg.flashback.data.models.stats.Circuit
 import tmg.flashback.data.models.stats.CircuitRace
-import tmg.flashback.statistics.enums.TrackLayout
-import tmg.flashback.statistics.extensions.circuitIcon
+import tmg.flashback.formula1.enums.TrackLayout
+import tmg.flashback.formula1.extensions.circuitIcon
 import tmg.flashback.statistics.testutils.BaseTest
 import tmg.flashback.statistics.testutils.assertDataEventMatches
 import tmg.flashback.statistics.testutils.assertEventFired

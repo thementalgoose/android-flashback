@@ -2,6 +2,7 @@
 <resources>
 
     <!-- All -->
+    <string name="settings_all_title">Settings</string>
     <string name="settings_all_customisation">Appearance</string>
     <string name="settings_all_customisation_subtitle">Theme and animation preferences</string>
     <string name="settings_all_statistics">Statistics</string>
@@ -16,15 +17,6 @@
     <string name="settings_all_device_subtitle">General app settings for crash reporting, analytics, etc.</string>
     <string name="settings_all_about">About</string>
     <string name="settings_all_about_subtitle">About Flashback</string>
-
-    <!-- Widgets -->
-    <string name="settings_widgets">Widgets</string>
-    <string name="settings_widgets_update_all_title">Refresh all widgets</string>
-    <string name="settings_widgets_update_all_description">Manually refresh all active widgets. Widgets usually update every 4 hours</string>
-    <string name="settings_widgets_update_all_updated">All widgets refreshed</string>
-    <string name="settings_widgets_open_app_on_click_title">Open app when click widget</string>
-    <string name="settings_widgets_open_app_on_click_description">Open the app when the widget on the home screen is clicked. If not, the widget will be refreshed only</string>
-
 
     <!-- Support -->
     <string name="settings_help">Support</string>

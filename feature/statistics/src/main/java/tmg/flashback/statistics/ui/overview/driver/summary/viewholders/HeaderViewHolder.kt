@@ -10,7 +10,7 @@ import tmg.flashback.statistics.ui.shared.pill.PillItem
 import tmg.flashback.core.extensions.getColor
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.ViewDriverSummaryHeaderBinding
-import tmg.flashback.statistics.ui.util.getFlagResourceAlpha3
+import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.utilities.extensions.views.context
 
 class HeaderViewHolder(

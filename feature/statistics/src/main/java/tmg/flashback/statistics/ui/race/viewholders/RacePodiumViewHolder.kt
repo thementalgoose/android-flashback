@@ -8,7 +8,7 @@ import tmg.flashback.core.extensions.getColor
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.LayoutPodiumBinding
 import tmg.flashback.statistics.databinding.ViewRaceRacePodiumBinding
-import tmg.flashback.statistics.ui.util.getFlagResourceAlpha3
+import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.statistics.ui.util.positionStarted
 import tmg.utilities.extensions.views.context
 import tmg.utilities.extensions.views.gone

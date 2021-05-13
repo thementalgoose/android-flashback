@@ -24,7 +24,7 @@ import tmg.utilities.extensions.isInDayMode
  * Ran when the application is first started
  */
 class FlashbackStartup(
-    private val deviceController: tmg.core.device.controllers.DeviceController,
+    private val deviceController: DeviceController,
     private val crashController: CrashController,
     private val widgetManager: WidgetManager,
     private val themeController: ThemeController,
@@ -53,7 +53,11 @@ class FlashbackStartup(
         deviceController.appOpened()
 
         // Crash Reporting
-        crashController.initialise()
+        crashController.initialise(
+            deviceUdid = deviceController.deviceUdid,
+            appOpenedCount = deviceController.appOpenedCount,
+            appFirstOpened = deviceController.appFirstBoot
+        )
 
         // Channels
         GlobalScope.launch {

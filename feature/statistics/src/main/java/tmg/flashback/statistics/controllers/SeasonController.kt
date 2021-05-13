@@ -1,7 +1,7 @@
 package tmg.flashback.statistics.controllers
 
 import tmg.configuration.controllers.ConfigController
-import tmg.flashback.statistics.constants.Formula1.currentSeasonYear
+import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
 import tmg.flashback.statistics.repository.StatisticsRepository
 
 /**

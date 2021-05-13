@@ -3,7 +3,9 @@ package tmg.flashback.ui
 import io.mockk.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.flashback.core.controllers.FeatureController
+import tmg.configuration.controllers.ConfigController
+import tmg.configuration.repository.models.ForceUpgrade
+import tmg.flashback.controllers.FeatureController
 import tmg.flashback.managers.appshortcuts.AppShortcutManager
 import tmg.flashback.testutils.BaseTest
 import tmg.flashback.testutils.assertEventFired
@@ -14,7 +16,7 @@ internal class  SplashViewModelTest: BaseTest() {
 
     private var mockAppShortcutManager: AppShortcutManager = mockk(relaxed = true)
     private var mockFeatureController: FeatureController = mockk(relaxed = true)
-    private var mockConfigurationManager: ConfigurationController = mockk(relaxed = true)
+    private var mockConfigurationManager: ConfigController = mockk(relaxed = true)
 
     private lateinit var sut: SplashViewModel
 

@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.data.models.stats.ConstructorOverviewDriverStanding
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.LayoutConstructorDriverLabelBinding
-import tmg.flashback.statistics.ui.util.getFlagResourceAlpha3
+import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.utilities.extensions.ordinalAbbreviation
 
 class DriverListStatAdapter: RecyclerView.Adapter<DriverListStatAdapter.ViewHolder>() {

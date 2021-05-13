@@ -18,9 +18,9 @@ import tmg.flashback.data.db.stats.HistoryRepository
 import tmg.flashback.data.db.stats.SeasonOverviewRepository
 import tmg.flashback.data.models.stats.History
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
-import tmg.flashback.core.controllers.FeatureController
+import tmg.flashback.controllers.FeatureController
 import tmg.flashback.statistics.*
-import tmg.flashback.statistics.constants.Formula1.currentSeasonYear
+import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
 import tmg.flashback.statistics.constants.ViewType
 import tmg.flashback.statistics.controllers.NotificationController
 import tmg.flashback.statistics.controllers.SeasonController
@@ -36,7 +36,7 @@ internal class SeasonViewModelTest: BaseTest() {
 
     private val mockDeviceController: tmg.core.device.controllers.DeviceController = mockk(relaxed = true)
     private val mockAppearanceController: AppearanceController = mockk(relaxed = true)
-    private val mockFeatureController: FeatureController = mockk(relaxed = true)
+    private val mockFeatureController: tmg.flashback.controllers.FeatureController = mockk(relaxed = true)
     private val mockHistoryRepository: HistoryRepository = mockk(relaxed = true)
     private val mockSeasonOverviewRepository: SeasonOverviewRepository = mockk(relaxed = true)
     private val mockSeasonController: SeasonController = mockk(relaxed = true)

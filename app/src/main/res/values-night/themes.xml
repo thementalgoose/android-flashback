@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+<!--    <style name="FlashbackAppTheme" parent="AppTheme">-->
+
+<!--        &lt;!&ndash; Material theme colours &ndash;&gt;-->
+<!--        <item name="colorPrimary">#0274D1</item>-->
+<!--        <item name="colorPrimaryDark">#0274D1</item>-->
+<!--        <item name="colorAccent">#00E2E4</item>-->
+
+<!--        &lt;!&ndash; =============================================================================== &ndash;&gt;-->
+
+<!--        &lt;!&ndash; Statistics &ndash;&gt;-->
+<!--        <item name="f1Podium1">#d3bc4d</item>-->
+<!--        <item name="f1Podium2">#c2c2c2</item>-->
+<!--        <item name="f1Podium3">#d29342</item>-->
+<!--        <item name="f1DeltaPositive">#f44336</item>-->
+<!--        <item name="f1DeltaNeutral">?attr/contentSecondary</item>-->
+<!--        <item name="f1DeltaNegative">#4caf50</item>-->
+<!--        <item name="f1ResultsFull">#4caf50</item>-->
+<!--        <item name="f1ResultsPartial">#ffa000</item>-->
+<!--        <item name="f1ResultsNeutral">?attr/contentSecondary</item>-->
+<!--        <item name="f1FastestSector">#673ab7</item>-->
+<!--        <item name="f1FavouriteSeason">#e6ca4f</item>-->
+<!--        <item name="f1Championship">#e6ca4f</item>-->
+<!--        <item name="f1PipeColor">?attr/backgroundSecondary</item>-->
+
+<!--        &lt;!&ndash; =============================================================================== &ndash;&gt;-->
+
+<!--        &lt;!&ndash; RSS &ndash;&gt;-->
+<!--        <item name="rssAdd">#4caf50</item>-->
+<!--        <item name="rssRemove">#f44336</item>-->
+<!--        <item name="rssNewsBar">?attr/backgroundSecondary</item>-->
+
+<!--        &lt;!&ndash; =============================================================================== &ndash;&gt;-->
+
+<!--    </style>-->
+
+<!--    <style name="FlashbackAppTheme.AboutThisApp" parent="FlashbackAppTheme">-->
+
+        <!--        <item name="android:statusBarColor">@color/logo_gradient_2</item>-->
+
+        <!--        &lt;!&ndash; About This App Activity &ndash;&gt;-->
+        <!--        <item name="aboutThisApp_header">@color/logo_gradient_2</item>-->
+        <!--        <item name="aboutThisApp_textPrimary">#f8f8f8</item>-->
+        <!--        <item name="aboutThisApp_textSecondary">#e8e8e8</item>-->
+        <!--        <item name="aboutThisApp_textToolbar">#f8f8f8</item>-->
+        <!--        <item name="aboutThisApp_iconPrimary">?attr/aboutThisApp_textPrimary</item>-->
+        <!--        <item name="aboutThisApp_backgroundPrimary">?attr/backgroundPrimary</item>-->
+        <!--        <item name="aboutThisApp_backgroundSecondary">?attr/backgroundSecondary</item>-->
+<!--    </style>-->
+
+</resources>

@@ -3,34 +3,34 @@ package tmg.flashback.managers.navigation
 import android.content.Context
 import android.content.Intent
 import androidx.fragment.app.FragmentActivity
-import tmg.components.about.AboutThisAppActivity
+import tmg.aboutthisapp.AboutThisAppActivity
 import tmg.common.constants.AboutThisAppConfig
 import tmg.common.controllers.ReleaseNotesController
-import tmg.flashback.core.extensions.isLightMode
 import tmg.flashback.core.managers.NavigationManager
-import tmg.core.device.repositories.DeviceRepository
 import tmg.flashback.rss.ui.RSSActivity
 import tmg.flashback.statistics.manager.StatisticsExternalNavigationManager
-import tmg.flashback.ui.admin.maintenance.MaintenanceActivity
 import tmg.flashback.ui.settings.SettingsAllActivity
 import tmg.flashback.ui.SplashActivity
 import tmg.common.ui.releasenotes.ReleaseBottomSheetFragment
+import tmg.flashback.statistics.ui.admin.maintenance.MaintenanceActivity
 
 class FlashbackNavigationManager(
-    private val appearanceController: AppearanceController,
     private val releaseNotesController: ReleaseNotesController,
-    private val coreRepository: tmg.core.device.repositories.DeviceRepository
 ): NavigationManager, StatisticsExternalNavigationManager {
 
     //region NavigationManager
 
     override fun getAboutThisAppIntent(context: Context): Intent {
+        // TODO
         return AboutThisAppActivity.intent(
                 context = context,
                 configuration = AboutThisAppConfig.configuration(
                     context = context,
-                    isDarkMode = !appearanceController.currentTheme.isLightMode(context),
-                    deviceUdid = coreRepository.deviceUdid
+                    appVersion = "1.0",
+                    appName = "Flashback",
+                    isDarkMode = false,
+                    deviceUdid = "test-guid"
+//                    deviceUdid = coreRepository.deviceUdid
                 )
         )
     }

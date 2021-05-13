@@ -2,7 +2,6 @@ package tmg.flashback.statistics.controllers
 
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.verify
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
@@ -12,8 +11,7 @@ import org.threeten.bp.format.DateTimeFormatter
 import tmg.configuration.controllers.ConfigController
 import tmg.configuration.repository.models.UpNextSchedule
 import tmg.configuration.repository.models.UpNextScheduleTimestamp
-import tmg.flashback.core.model.Timestamp
-import tmg.flashback.core.repositories.CoreRepository
+import tmg.flashback.formula1.model.Timestamp
 import tmg.flashback.statistics.testutils.BaseTest
 
 internal class UpNextControllerTest : BaseTest() {

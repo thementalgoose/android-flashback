@@ -1,9 +1,9 @@
 package tmg.flashback.statistics.repository
 
-import tmg.core.device.repository.SharedPreferenceRepository
+import tmg.core.prefs.manager.PreferenceManager
 
 class StatisticsRepository(
-    private val sharedPreferenceRepository: SharedPreferenceRepository
+    private val preferenceManager: PreferenceManager
 ) {
 
     companion object {
@@ -21,44 +21,44 @@ class StatisticsRepository(
      * Show the qualifying delta in the layout
      */
     var showQualifyingDelta: Boolean
-        get() = sharedPreferenceRepository.getBoolean(keyShowQualifyingDelta, false)
-        set(value) = sharedPreferenceRepository.save(keyShowQualifyingDelta, value)
+        get() = preferenceManager.getBoolean(keyShowQualifyingDelta, false)
+        set(value) = preferenceManager.save(keyShowQualifyingDelta, value)
 
     /**
      * Fade the race results where the driver results in DNF
      */
     var fadeDNF: Boolean
-        get() = sharedPreferenceRepository.getBoolean(keyFadeDNF, false)
-        set(value) = sharedPreferenceRepository.save(keyFadeDNF, value)
+        get() = preferenceManager.getBoolean(keyFadeDNF, false)
+        set(value) = preferenceManager.save(keyFadeDNF, value)
 
     /**
      * Show the favourited bottom sheet section expanded by default
      */
     var showListFavourited: Boolean
-        get() = sharedPreferenceRepository.getBoolean(keyShowListFavourited, false)
-        set(value) = sharedPreferenceRepository.save(keyShowListFavourited, value)
+        get() = preferenceManager.getBoolean(keyShowListFavourited, false)
+        set(value) = preferenceManager.save(keyShowListFavourited, value)
 
     /**
      * Show the all bottom sheet section expanded by default
      */
     var showListAll: Boolean
-        get() = sharedPreferenceRepository.getBoolean(keyShowListAll, false)
-        set(value) = sharedPreferenceRepository.save(keyShowListAll, value)
+        get() = preferenceManager.getBoolean(keyShowListAll, false)
+        set(value) = preferenceManager.save(keyShowListAll, value)
 
     /**
      * Show grid penalties in qualifying
      */
     var showGridPenaltiesInQualifying: Boolean
-        get() = sharedPreferenceRepository.getBoolean(keyShowGridPenaltiesInQualifying, false)
-        set(value) = sharedPreferenceRepository.save(keyShowGridPenaltiesInQualifying, value)
+        get() = preferenceManager.getBoolean(keyShowGridPenaltiesInQualifying, false)
+        set(value) = preferenceManager.save(keyShowGridPenaltiesInQualifying, value)
 
     /**
      * Favourited seasons in the list
      */
     var favouriteSeasons: Set<Int>
-        set(value) = sharedPreferenceRepository.save(keyFavouriteSeasons, value.map { it.toString() }.toSet())
+        set(value) = preferenceManager.save(keyFavouriteSeasons, value.map { it.toString() }.toSet())
         get() {
-            val value = sharedPreferenceRepository.getSet(keyFavouriteSeasons, setOf())
+            val value = preferenceManager.getSet(keyFavouriteSeasons, setOf())
             return value
                 .mapNotNull { it.toIntOrNull() }
                 .toSet()
@@ -70,7 +70,7 @@ class StatisticsRepository(
      */
     var defaultSeason: Int?
         get() {
-            val value = sharedPreferenceRepository.getInt(keyDefaultSeason, -1)
+            val value = preferenceManager.getInt(keyDefaultSeason, -1)
             if (value == -1) return null
             return value
         }
@@ -79,7 +79,7 @@ class StatisticsRepository(
                 null -> -1
                 else -> value
             }
-            sharedPreferenceRepository.save(keyDefaultSeason, valueToSave)
+            preferenceManager.save(keyDefaultSeason, valueToSave)
         }
 
     /**
@@ -88,7 +88,7 @@ class StatisticsRepository(
      *  false = Refresh the widget
      */
     var widgetOpenApp: Boolean
-        get() = sharedPreferenceRepository.getBoolean(keyWidgetOpenApp, false)
-        set(value) = sharedPreferenceRepository.save(keyWidgetOpenApp, value)
+        get() = preferenceManager.getBoolean(keyWidgetOpenApp, false)
+        set(value) = preferenceManager.save(keyWidgetOpenApp, value)
 
 }

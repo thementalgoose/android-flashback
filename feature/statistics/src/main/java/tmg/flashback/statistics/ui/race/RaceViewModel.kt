@@ -13,7 +13,7 @@ import tmg.flashback.core.controllers.AppHintsController
 import tmg.flashback.data.db.stats.SeasonOverviewRepository
 import tmg.flashback.data.models.stats.*
 import tmg.core.ui.controllers.ThemeController
-import tmg.flashback.statistics.constants.Formula1.showComingSoonMessageForNextDays
+import tmg.flashback.formula1.constants.Formula1.showComingSoonMessageForNextDays
 import tmg.flashback.statistics.ui.race.*
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable

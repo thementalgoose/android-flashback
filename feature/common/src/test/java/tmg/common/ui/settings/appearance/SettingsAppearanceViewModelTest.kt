@@ -2,7 +2,10 @@ package tmg.common.ui.settings.appearance
 
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
+import tmg.core.ui.settings.SettingsModel
 import tmg.core.ui.R
+import tmg.testutils.livedata.assertEventFired
+import tmg.testutils.livedata.test
 
 internal class SettingsAppearanceViewModelTest {
 
@@ -13,38 +16,36 @@ internal class SettingsAppearanceViewModelTest {
     }
 
     @Test
-    fun `init loads correct settings options`() {
+    fun `initial model list is expected`() {
         initSUT()
-        sut.outputs.settings.test {
-            assertValue(listOf(
-                AppPreferencesItem.Category(R.string.settings_theme_title),
-                AppPreferencesItem.Preference("Theme", R.string.settings_theme_theme_title, R.string.settings_theme_theme_description),
-                AppPreferencesItem.Preference("AnimationSpeed", R.string.settings_theme_animation_speed_title, R.string.settings_theme_animation_speed_description)
-            ))
+        (sut.models[0] as SettingsModel.Header).apply {
+            assertEquals(R.string.settings_theme_title, this.title)
+        }
+        (sut.models[1] as SettingsModel.Pref).apply {
+            assertEquals(R.string.settings_theme_theme_title, this.title)
+            assertEquals(R.string.settings_theme_theme_description, this.description)
+        }
+        (sut.models[2] as SettingsModel.Pref).apply {
+            assertEquals(R.string.settings_theme_animation_speed_title, this.title)
+            assertEquals(R.string.settings_theme_animation_speed_description, this.description)
         }
     }
 
-    //region Theme
-
     @Test
-    fun `clicking theme in settings calls open theme event`() {
+    fun `clicking pref model for theme shows event`() {
         initSUT()
-        sut.inputs.preferenceClicked("Theme", null)
+        sut.clickPreference(sut.models[1] as SettingsModel.Pref)
         sut.outputs.openTheme.test {
             assertEventFired()
         }
     }
 
-    //endregion
-
     @Test
-    fun `clicking animation speed in settings calls open animation speed event`() {
+    fun `clicking pref model for animation speed shows event`() {
         initSUT()
-        sut.inputs.preferenceClicked("AnimationSpeed", null)
+        sut.clickPreference(sut.models[2] as SettingsModel.Pref)
         sut.outputs.openAnimationSpeed.test {
             assertEventFired()
         }
     }
-
-
 }

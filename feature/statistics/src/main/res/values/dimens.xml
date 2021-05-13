@@ -6,8 +6,6 @@
 
     <!-- Bottom sheet -->
 
-    <dimen name="bottomSheetPillWidth">36dp</dimen>
-
     <dimen name="seasonListCircleSize">20dp</dimen>
     <dimen name="seasonListCircleSelectedSize">10dp</dimen>
     <dimen name="seasonListCircleDefaultSize">6dp</dimen>

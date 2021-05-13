@@ -2,14 +2,15 @@ package tmg.flashback.ui.settings
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import tmg.flashback.core.controllers.FeatureController
-import androidx.lifecycle.ViewModel
-import tmg.utilities.lifecycle.DataEvent
+import tmg.core.ui.settings.SettingsModel
+import tmg.core.ui.settings.SettingsViewModel
+import tmg.flashback.R
+import tmg.utilities.lifecycle.Event
 
 //region Inputs
 
 interface SettingsAllViewModelInputs {
-    fun clickCategory(category: Category)
+
 }
 
 //endregion
@@ -17,37 +18,35 @@ interface SettingsAllViewModelInputs {
 //region Outputs
 
 interface SettingsAllViewModelOutputs {
-    val categories: LiveData<List<Category>>
-
-    val navigateToo: LiveData<DataEvent<Category>>
+    val openAbout: LiveData<Event>
 }
 
 //endregion
 
-class SettingsAllViewModel(
-        private val featureController: FeatureController
-): ViewModel(), SettingsAllViewModelInputs, SettingsAllViewModelOutputs {
+
+class SettingsAllViewModel: SettingsViewModel(), SettingsAllViewModelInputs, SettingsAllViewModelOutputs {
+
+    override val models: List<SettingsModel> = listOf(
+        SettingsModel.Header(R.string.settings_about),
+        SettingsModel.Pref(
+            title = R.string.settings_about,
+            description = R.string.settings_about,
+            onClick = {
+                openAbout.value = Event()
+            }
+        )
+    )
+
+    override val openAbout: MutableLiveData<Event> = MutableLiveData()
 
     var inputs: SettingsAllViewModelInputs = this
     var outputs: SettingsAllViewModelOutputs = this
 
-    override val categories: MutableLiveData<List<Category>> = MutableLiveData()
-    override val navigateToo: MutableLiveData<DataEvent<Category>> = MutableLiveData()
-
     init {
-        categories.value = when {
-            !featureController.rssEnabled -> Category.values()
-                    .filter { it != Category.RSS }
-                    .toList()
-            else -> Category.values().toList()
-        }
+
     }
 
     //region Inputs
-
-    override fun clickCategory(category: Category) {
-        navigateToo.value = DataEvent(category)
-    }
 
     //endregion
 

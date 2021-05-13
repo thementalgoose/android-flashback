@@ -1,6 +1,6 @@
 package tmg.flashback.statistics.extensions
 
-import tmg.flashback.statistics.enums.TrackLayout
+import tmg.flashback.formula1.enums.TrackLayout
 import tmg.flashback.data.models.stats.Circuit
 import tmg.utilities.extensions.toEnum
 

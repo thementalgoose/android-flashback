@@ -10,7 +10,7 @@ import tmg.flashback.statistics.ui.race.RaceAdapterCallback
 import tmg.flashback.statistics.ui.race.RaceAdapterType
 import tmg.flashback.statistics.ui.race.RaceModel
 import tmg.flashback.statistics.ui.race.DisplayPrefs
-import tmg.flashback.statistics.ui.util.getFlagResourceAlpha3
+import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.utilities.extensions.ordinalAbbreviation
 import tmg.utilities.extensions.views.context
 import tmg.utilities.extensions.views.getString

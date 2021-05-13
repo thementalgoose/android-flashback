@@ -11,7 +11,7 @@ import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import tmg.flashback.statistics.constants.Formula1.maxPointsBySeason
+import tmg.flashback.formula1.constants.Formula1.maxPointsBySeason
 import androidx.lifecycle.ViewModel
 import tmg.flashback.statistics.ui.overview.driver.summary.PipeType
 import tmg.flashback.data.db.stats.DriverRepository

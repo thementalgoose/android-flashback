@@ -15,5 +15,5 @@ dependencies {
     implementation project(path: ':core:ui')
 
     // Flagkit
-    implementation 'com.jwang123.flagkit:flagkit:1.0'
+    api 'com.jwang123.flagkit:flagkit:1.0'
 }
