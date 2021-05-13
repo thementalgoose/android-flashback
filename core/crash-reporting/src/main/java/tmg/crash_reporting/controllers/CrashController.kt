@@ -1,14 +1,13 @@
 package tmg.crash_reporting.controllers
 
+import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.crash_reporting.services.CrashService
 import tmg.crash_reporting.repository.CrashRepository
-import tmg.core.device.repositories.DeviceRepository
 import java.lang.Exception
 
 class CrashController(
     private val crashRepository: CrashRepository,
-    private val deviceRepository: tmg.core.device.repositories.DeviceRepository,
     private val crashService: CrashService
 ) {
     var enabled: Boolean
@@ -23,12 +22,16 @@ class CrashController(
             crashRepository.shakeToReport = value
         }
 
-    fun initialise() {
+    fun initialise(
+        deviceUdid: String,
+        appOpenedCount: Int,
+        appFirstOpened: LocalDate
+    ) {
         crashService.initialise(
             enableCrashReporting = crashRepository.isEnabled,
-            deviceUdid = deviceRepository.deviceUdid,
-            appOpenedCount = deviceRepository.appOpenedCount,
-            appFirstOpened = deviceRepository.appFirstOpened.format(DateTimeFormatter.ofPattern("dd MMM yyyy"))
+            deviceUdid = deviceUdid, // deviceRepository.deviceUdid,
+            appOpenedCount = appOpenedCount, // deviceRepository.appOpenedCount,
+            appFirstOpened = appFirstOpened.format(DateTimeFormatter.ofPattern("dd MMM yyyy")) // // deviceRepository.appFirstOpened
         )
     }
 

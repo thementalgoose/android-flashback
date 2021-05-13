@@ -7,17 +7,17 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
-import tmg.core.device.repository.SharedPreferenceRepository
+import tmg.core.prefs.manager.PreferenceManager
 import tmg.notifications.NotificationRegistration
 
 internal class NotificationRepositoryTest {
 
-    private val mockSharedPreferenceRepository: SharedPreferenceRepository = mockk(relaxed = true)
+    private val mockPreferenceManager: PreferenceManager = mockk(relaxed = true)
 
     private lateinit var sut: NotificationRepository
 
     private fun initSUT() {
-        sut = NotificationRepository(mockSharedPreferenceRepository)
+        sut = NotificationRepository(mockPreferenceManager)
     }
 
     //region Race enabled
@@ -29,7 +29,7 @@ internal class NotificationRepositoryTest {
 
         sut.enabledRace = NotificationRegistration.OPT_IN
         verify {
-            mockSharedPreferenceRepository.save(RACE_KEY, NotificationRegistration.OPT_IN.key)
+            mockPreferenceManager.save(RACE_KEY, NotificationRegistration.OPT_IN.key)
         }
     }
 
@@ -40,13 +40,13 @@ internal class NotificationRepositoryTest {
         "OPT_OUT,OPT_OUT"
     )
     fun `race notifications read unrecognised resolves to default`(key: String, expected: NotificationRegistration) {
-        every { mockSharedPreferenceRepository.getString(any(), any()) } returns key
+        every { mockPreferenceManager.getString(any(), any()) } returns key
 
         initSUT()
 
         assertEquals(expected, sut.enabledRace)
         verify {
-            mockSharedPreferenceRepository.getString(RACE_KEY, "")
+            mockPreferenceManager.getString(RACE_KEY, "")
         }
     }
 
@@ -61,7 +61,7 @@ internal class NotificationRepositoryTest {
 
         sut.enabledQualifying = NotificationRegistration.OPT_IN
         verify {
-            mockSharedPreferenceRepository.save(QUALIFYING_KEY, NotificationRegistration.OPT_IN.key)
+            mockPreferenceManager.save(QUALIFYING_KEY, NotificationRegistration.OPT_IN.key)
         }
     }
 
@@ -72,13 +72,13 @@ internal class NotificationRepositoryTest {
         "OPT_OUT,OPT_OUT"
     )
     fun `qualifying notifications read unrecognised resolves to default`(key: String, expected: NotificationRegistration) {
-        every { mockSharedPreferenceRepository.getString(any(), any()) } returns key
+        every { mockPreferenceManager.getString(any(), any()) } returns key
 
         initSUT()
 
         assertEquals(expected, sut.enabledQualifying)
         verify {
-            mockSharedPreferenceRepository.getString(QUALIFYING_KEY, "")
+            mockPreferenceManager.getString(QUALIFYING_KEY, "")
         }
     }
 
@@ -93,7 +93,7 @@ internal class NotificationRepositoryTest {
 
         sut.enabledSeasonInfo = NotificationRegistration.OPT_IN
         verify {
-            mockSharedPreferenceRepository.save(SEASON_INFO_KEY, NotificationRegistration.OPT_IN.key)
+            mockPreferenceManager.save(SEASON_INFO_KEY, NotificationRegistration.OPT_IN.key)
         }
     }
 
@@ -104,13 +104,13 @@ internal class NotificationRepositoryTest {
         "OPT_OUT,OPT_OUT"
     )
     fun `season info notifications read unrecognised resolves to default`(key: String, expected: NotificationRegistration) {
-        every { mockSharedPreferenceRepository.getString(any(), any()) } returns key
+        every { mockPreferenceManager.getString(any(), any()) } returns key
 
         initSUT()
 
         assertEquals(expected, sut.enabledSeasonInfo)
         verify {
-            mockSharedPreferenceRepository.getString(SEASON_INFO_KEY, "")
+            mockPreferenceManager.getString(SEASON_INFO_KEY, "")
         }
     }
 

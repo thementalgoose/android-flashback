@@ -11,7 +11,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import org.koin.android.ext.android.inject
-import tmg.analytics.manager.AnalyticsManager
+import tmg.core.analytics.manager.AnalyticsManager
 import tmg.flashback.rss.R
 import tmg.flashback.rss.databinding.FragmentWebBinding
 import tmg.flashback.rss.repo.RSSRepository

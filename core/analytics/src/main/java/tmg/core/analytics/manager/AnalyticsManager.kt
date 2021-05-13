@@ -1,9 +1,9 @@
-package tmg.analytics.manager
+package tmg.core.analytics.manager
 
 import android.os.Bundle
-import tmg.analytics.UserProperty
-import tmg.analytics.services.AnalyticsService
-import tmg.analytics.repository.AnalyticsRepository
+import tmg.core.analytics.UserProperty
+import tmg.core.analytics.services.AnalyticsService
+import tmg.core.analytics.repository.AnalyticsRepository
 
 class AnalyticsManager(
     private val analyticsRepository: AnalyticsRepository,

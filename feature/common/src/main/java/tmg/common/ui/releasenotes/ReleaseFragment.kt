@@ -25,6 +25,7 @@ class ReleaseFragment: BaseFragment<FragmentReleaseNotesBinding>() {
             activity?.finish()
         }
 
+        // TODO: Move this to a view model!
         binding.releaseNotes.text = list
             .joinToString("<br/><br/>") { getString(it) }
             .fromHtml()

@@ -20,8 +20,9 @@ sealed class SettingsModel(
         val title: Int,
         @StringRes
         val description: Int,
-        val getState: ViewModel.() -> Boolean,
-        val saveState: ViewModel.(value: Boolean) -> Unit
+        val getState: () -> Boolean,
+        val saveState: (value: Boolean) -> Unit,
+        val saveStateNotification: (Fragment.(value: Boolean) -> Unit)? = null
     ): SettingsModel(R.layout.view_settings_preference_switch)
 
     data class Pref(
@@ -29,6 +30,6 @@ sealed class SettingsModel(
         val title: Int,
         @StringRes
         val description: Int,
-        val onClick: (ViewModel.() -> Unit)?
+        val onClick: (Fragment.() -> Unit)?
     ): SettingsModel(R.layout.view_settings_preference)
 }

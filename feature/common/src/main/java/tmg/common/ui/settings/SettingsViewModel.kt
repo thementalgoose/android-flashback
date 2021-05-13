@@ -1,39 +1,42 @@
 package tmg.common.ui.settings
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import tmg.utilities.lifecycle.DataEvent
 
-//region Inputs
+abstract class SettingsViewModel: ViewModel() {
 
-interface SettingsViewModelInputs {
-    fun
-}
+    abstract val models: List<SettingsModel>
 
-//endregion
+    private val _settings: MutableLiveData<List<SettingsModel>> = MutableLiveData()
+    val settings: LiveData<List<SettingsModel>> = _settings
 
-//region Outputs
+    private val _clickPref: MutableLiveData<DataEvent<SettingsModel.Pref>> = MutableLiveData()
+    val clickPref: LiveData<DataEvent<SettingsModel.Pref>> = _clickPref
 
-interface SettingsViewModelOutputs {
-    val settings: LiveData<SettingsModel>
-}
-
-//endregion
-
-
-abstract class SettingsViewModel: ViewModel(), SettingsViewModelInputs, SettingsViewModelOutputs {
-
-    var inputs: SettingsViewModelInputs = this
-    var outputs: SettingsViewModelOutputs = this
+    private val _switchPref: MutableLiveData<DataEvent<Pair<SettingsModel.SwitchPref, Boolean>>> = MutableLiveData()
+    val switchPref: LiveData<DataEvent<Pair<SettingsModel.SwitchPref, Boolean>>> = _switchPref
 
     init {
-
+        refreshList()
     }
 
-    //region Inputs
-
-    //endregion
+    fun clickPreference(model: SettingsModel.Pref) {
+        _clickPref.value = DataEvent(model)
+    }
 
     //region Outputs
 
+    fun clickSwitchPreference(model: SettingsModel.SwitchPref, toState: Boolean) {
+        model.saveState(toState)
+        refreshList()
+        _switchPref.value = DataEvent(Pair(model, toState))
+    }
+
     //endregion
+
+    private fun refreshList() {
+        _settings.value = models
+    }
 }

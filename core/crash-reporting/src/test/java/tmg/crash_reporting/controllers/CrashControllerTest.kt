@@ -9,19 +9,17 @@ import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.crash_reporting.services.CrashService
 import tmg.crash_reporting.repository.CrashRepository
-import tmg.core.device.repositories.DeviceRepository
 import java.lang.RuntimeException
 
 internal class CrashControllerTest {
 
     private var mockCrashRepository: CrashRepository = mockk(relaxed = true)
-    private var mockDeviceRepository: tmg.core.device.repositories.DeviceRepository = mockk(relaxed = true)
     private var mockCrashService: CrashService = mockk(relaxed = true)
 
     private lateinit var sut: CrashController
 
     private fun initSUT() {
-        sut = CrashController(mockCrashRepository, mockDeviceRepository, mockCrashService)
+        sut = CrashController(mockCrashRepository, mockCrashService)
     }
 
     //region Crash reporting enabled
@@ -59,14 +57,16 @@ internal class CrashControllerTest {
 
     @Test
     fun `initialise sends all data to firebase`() {
+        val now = LocalDate.now()
         val expectedDate = LocalDate.now().format(DateTimeFormatter.ofPattern("dd MMM yyyy"))
-        every { mockDeviceRepository.appFirstOpened } returns LocalDate.now()
-        every { mockDeviceRepository.appOpenedCount } returns 1
-        every { mockDeviceRepository.deviceUdid } returns "test-udid"
         every { mockCrashRepository.isEnabled } returns true
 
         initSUT()
-        sut.initialise()
+        sut.initialise(
+            deviceUdid = "test-udid",
+            appOpenedCount = 1,
+            appFirstOpened = now
+        )
 
         verify {
             mockCrashService.initialise(true,  "test-udid", expectedDate, 1)

@@ -1,10 +1,10 @@
-package tmg.analytics.services
+package tmg.core.analytics.services
 
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import com.google.firebase.analytics.FirebaseAnalytics
-import tmg.analytics.BuildConfig
+import tmg.core.analytics.BuildConfig
 
 internal class FirebaseAnalyticsService(
     val context: Context

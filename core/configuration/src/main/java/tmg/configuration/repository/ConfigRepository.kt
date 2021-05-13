@@ -7,11 +7,11 @@ import tmg.configuration.repository.json.*
 import tmg.configuration.repository.models.ForceUpgrade
 import tmg.configuration.repository.models.SupportedSource
 import tmg.configuration.repository.models.UpNextSchedule
-import tmg.core.device.repository.SharedPreferenceRepository
+import tmg.core.prefs.manager.PreferenceManager
 
 class ConfigRepository(
     private val remoteConfigManager: RemoteConfigManager,
-    private val sharedPreferenceRepository: SharedPreferenceRepository
+    private val preferenceManager: PreferenceManager
 ) {
 
     companion object {
@@ -32,8 +32,8 @@ class ConfigRepository(
     //region Shared Prefs
 
     var remoteConfigSync: Int
-        get() = sharedPreferenceRepository.getInt(keyRemoteConfigSync, 0)
-        set(value) = sharedPreferenceRepository.save(keyRemoteConfigSync, value)
+        get() = preferenceManager.getInt(keyRemoteConfigSync, 0)
+        set(value) = preferenceManager.save(keyRemoteConfigSync, value)
 
     //endregion
 

@@ -1,4 +1,4 @@
-package tmg.analytics.services
+package tmg.core.analytics.services
 
 import android.os.Bundle
 

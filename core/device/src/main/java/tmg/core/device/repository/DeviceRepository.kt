@@ -6,7 +6,7 @@ import tmg.core.prefs.manager.PreferenceManager
 import java.util.*
 
 class DeviceRepository(
-    private val sharedPreferenceRepository: PreferenceManager
+    private val preferenceManager: PreferenceManager
 ) {
     companion object {
         private const val keyAppOpenedCount: String = "APP_STARTUP_OPEN_COUNT"
@@ -21,15 +21,15 @@ class DeviceRepository(
      * How many times the application onCreate has been called
      */
     var appOpenedCount: Int
-        get() = sharedPreferenceRepository.getInt(keyAppOpenedCount, 0)
-        set(value) = sharedPreferenceRepository.save(keyAppOpenedCount, value)
+        get() = preferenceManager.getInt(keyAppOpenedCount, 0)
+        set(value) = preferenceManager.save(keyAppOpenedCount, value)
 
     /**
      * LocalDate of when the app was first opened
      */
     var appFirstOpened: LocalDate
         get() {
-            val value = sharedPreferenceRepository.getString(keyAppFirstBoot, null)
+            val value = preferenceManager.getString(keyAppFirstBoot, null)
             if (value == null) {
                 val result = LocalDate.now()
                 appFirstOpened = result
@@ -37,22 +37,22 @@ class DeviceRepository(
             }
             return LocalDate.parse(value, dateFormat)
         }
-        set(value) = sharedPreferenceRepository.save(keyAppFirstBoot, value.format(dateFormat))
+        set(value) = preferenceManager.save(keyAppFirstBoot, value.format(dateFormat))
 
     /**
      * Last app version that was opened
      */
     var lastAppVersion: Int
-        get() = sharedPreferenceRepository.getInt(keyAppVersion, 0)
-        set(value) = sharedPreferenceRepository.save(keyAppVersion, value)
+        get() = preferenceManager.getInt(keyAppVersion, 0)
+        set(value) = preferenceManager.save(keyAppVersion, value)
 
     /**
      * Randomly generated device UDID to uniquely identify app install session
      */
     var deviceUdid: String
-        set(value) = sharedPreferenceRepository.save(keyDeviceUDID, value)
+        set(value) = preferenceManager.save(keyDeviceUDID, value)
         get() {
-            var key = sharedPreferenceRepository.getString(keyDeviceUDID, "")
+            var key = preferenceManager.getString(keyDeviceUDID, "")
             if (key.isNullOrEmpty()) {
                 val newKey = UUID.randomUUID().toString()
                 deviceUdid = newKey
