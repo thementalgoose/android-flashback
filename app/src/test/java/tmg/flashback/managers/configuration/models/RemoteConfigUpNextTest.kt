@@ -6,7 +6,7 @@ import org.threeten.bp.LocalDate
 import tmg.configuration.repository.json.UpNextJson
 import tmg.configuration.repository.json.UpNextItemJson
 import tmg.configuration.repository.json.UpNextScheduleJson
-import tmg.flashback.core.model.Timestamp
+import tmg.flashback.formula1.model.Timestamp
 import tmg.flashback.core.model.UpNextSchedule
 import tmg.flashback.core.model.UpNextScheduleTimestamp
 import tmg.flashback.testutils.BaseTest
@@ -49,7 +49,7 @@ internal class RemoteConfigUpNextTest: BaseTest() {
             values = listOf(
                 UpNextScheduleTimestamp(
                     label = "Race",
-                    timestamp = Timestamp(LocalDate.of(2020, 1, 21))
+                    timestamp = tmg.flashback.formula1.model.Timestamp(LocalDate.of(2020, 1, 21))
                 )
             ),
             flag = "GBR",

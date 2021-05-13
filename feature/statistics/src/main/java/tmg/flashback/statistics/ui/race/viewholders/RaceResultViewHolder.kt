@@ -9,7 +9,7 @@ import tmg.flashback.core.extensions.getColor
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.ViewRaceRaceResultBinding
 import tmg.flashback.statistics.extensions.iconRes
-import tmg.flashback.statistics.ui.util.getFlagResourceAlpha3
+import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.statistics.ui.util.position
 import tmg.utilities.extensions.toEmptyIfZero
 import tmg.utilities.extensions.views.*

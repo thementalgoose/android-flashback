@@ -24,28 +24,28 @@
 
         <TextView
             android:id="@+id/bottomSheetTitle"
-            style="@style/Text.BottomSheet.Title"
+            style="@style/Settings.BottomSheet.Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/paddingSmall"
             android:gravity="center"
-            android:text="@string/settings_help_release_notes_title"
+            android:text="@string/settings_about_release_notes_title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/pill" />
 
         <TextView
             android:id="@+id/subtitle"
-            style="@style/Text.BottomSheet.Subtitle"
+            style="@style/Settings.BottomSheet.Subtitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:paddingStart="@dimen/paddingMedium"
             android:paddingTop="@dimen/paddingSmall"
             android:paddingEnd="@dimen/paddingMedium"
             android:paddingBottom="@dimen/paddingNSmall"
             android:text="@string/release_notes_description"
-            android:gravity="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/bottomSheetTitle" />
@@ -60,7 +60,7 @@
 
     <TextView
         android:id="@+id/tvReleaseNotesDescription"
-        style="@style/Text.ReleaseNotes.Content"
+        style="@style/Settings.BottomSheet.Content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingStart="@dimen/paddingMedium"

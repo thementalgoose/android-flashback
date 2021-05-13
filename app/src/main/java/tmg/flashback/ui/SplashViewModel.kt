@@ -6,8 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import tmg.configuration.controllers.ConfigController
 import tmg.flashback.BuildConfig
-import tmg.flashback.core.controllers.FeatureController
+import tmg.flashback.controllers.FeatureController
 import tmg.flashback.managers.appshortcuts.AppShortcutManager
 import tmg.utilities.lifecycle.Event
 

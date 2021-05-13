@@ -20,7 +20,7 @@ object AboutThisAppConfig {
             deviceUdid: String
     ) = AboutThisAppConfiguration(
             // TODO: Fix this theming setup for about this app!
-            themeRes = if (isDarkMode) R.style.DayTheme else R.style.DayTheme,
+            themeRes = R.style.AppTheme,
             name = context.getString(R.string.about_name),
             nameDesc = context.getString(R.string.about_desc),
             imageUrl = "https://lh3.googleusercontent.com/l7T59nmp3joS3CUWEw-_mfmZAwXMHmiikR6uvQLFTXGy1-BlUICXxJZ9UCcvQlWhvQ",

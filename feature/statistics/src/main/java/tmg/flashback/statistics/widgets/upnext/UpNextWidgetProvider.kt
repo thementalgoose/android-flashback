@@ -23,14 +23,13 @@ import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.configuration.controllers.ConfigController
 import tmg.configuration.repository.models.UpNextSchedule
-import tmg.flashback.statistics.enums.TrackLayout
+import tmg.flashback.formula1.enums.TrackLayout
 import tmg.flashback.statistics.controllers.UpNextController
 import tmg.crash_reporting.controllers.CrashController
-import tmg.core.device.managers.BuildConfigManager
 import tmg.flashback.core.managers.NavigationManager
 import tmg.flashback.data.utils.daysBetween
 import tmg.flashback.statistics.R
-import tmg.flashback.statistics.ui.util.getFlagResourceAlpha3
+import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.utilities.extensions.toEnum
 import java.lang.Exception
 

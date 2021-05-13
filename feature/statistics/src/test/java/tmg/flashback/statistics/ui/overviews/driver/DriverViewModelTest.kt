@@ -9,13 +9,12 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 import org.threeten.bp.Year
-import tmg.core.device.managers.NetworkConnectivityManager
 import tmg.flashback.statistics.ui.overview.driver.summary.DriverSummaryItem
 import tmg.flashback.statistics.ui.overview.driver.summary.PipeType
 import tmg.flashback.statistics.ui.overview.driver.summary.PipeType.*
 import tmg.flashback.data.db.stats.DriverRepository
 import tmg.flashback.statistics.R
-import tmg.flashback.statistics.constants.Formula1.currentSeasonYear
+import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
 import tmg.flashback.statistics.testutils.*
 import tmg.flashback.statistics.testutils.BaseTest
 import tmg.flashback.statistics.testutils.assertListContainsItem

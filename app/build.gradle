@@ -227,11 +227,21 @@ tasks.whenTaskAdded { task ->
 
 dependencies {
 
-    // Modules
+    // Feature modules
     implementation project(path: ':base')
     implementation project(path: ':feature:statistics')
+    implementation project(path: ':feature:upnext')
+    implementation project(path: ':feature:statistics_data_firebase')
     implementation project(path: ':feature:rss')
     implementation project(path: ':feature:common')
+
+    // Core modules
+    implementation project(path: ':core:analytics')
+    implementation project(path: ':core:configuration')
+    implementation project(path: ':core:crash-reporting')
+    implementation project(path: ':core:device')
+    implementation project(path: ':core:notifications')
+    implementation project(path: ':core:ui')
 
     // Android Test
     androidTestImplementation 'androidx.test:rules:1.3.0'
@@ -251,6 +261,9 @@ dependencies {
     androidTestImplementation('com.schibsted.spain:barista:3.7.0') {
         exclude group: 'org.jetbrains.kotlin' // Only if you already use Kotlin in your project
     }
+
+    // Discord Overlapping panels
+    implementation 'com.github.discord:OverlappingPanels:0.1.1'
 
     // Progress bar
     implementation 'com.aswin:CustomArc:1.0.2'

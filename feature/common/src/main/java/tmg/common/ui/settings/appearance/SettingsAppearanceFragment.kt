@@ -3,7 +3,7 @@ package tmg.common.ui.settings.appearance
 import android.os.Bundle
 import android.view.View
 import org.koin.android.viewmodel.ext.android.viewModel
-import tmg.common.ui.settings.SettingsFragment
+import tmg.core.ui.settings.SettingsFragment
 import tmg.utilities.extensions.observeEvent
 
 class SettingsAppearanceFragment: SettingsFragment<SettingsAppearanceViewModel>() {
@@ -14,11 +14,11 @@ class SettingsAppearanceFragment: SettingsFragment<SettingsAppearanceViewModel>(
         super.onViewCreated(view, savedInstanceState)
 
         observeEvent(viewModel.outputs.openTheme) {
-            TODO("Open the theme bottom sheet")
+            TODO("Event")
         }
 
         observeEvent(viewModel.outputs.openAnimationSpeed) {
-            TODO("Open the animation bottom sheet")
+            TODO("Event")
         }
     }
 

@@ -1,9 +1,11 @@
 package tmg.common.ui.settings.about
 
-import android.widget.Toast
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import tmg.common.R
-import tmg.common.ui.settings.SettingsModel
-import tmg.common.ui.settings.SettingsViewModel
+import tmg.core.ui.settings.SettingsModel
+import tmg.core.ui.settings.SettingsViewModel
+import tmg.utilities.lifecycle.Event
 
 //region Inputs
 
@@ -16,7 +18,10 @@ interface SettingsAboutViewModelInputs {
 //region Outputs
 
 interface SettingsAboutViewModelOutputs {
-
+    val openAboutThisApp: LiveData<Event>
+    val openReview: LiveData<Event>
+    val openReleaseNotes: LiveData<Event>
+    val openPrivacyPolicy: LiveData<Event>
 }
 
 //endregion
@@ -30,32 +35,37 @@ class SettingsAboutViewModel: SettingsViewModel(), SettingsAboutViewModelInputs,
             title = R.string.settings_about_about_title,
             description = R.string.settings_about_about_description,
             onClick = {
-                TODO("About clicked")
+                openAboutThisApp.value = Event()
             }
         ),
         SettingsModel.Pref(
             title = R.string.settings_about_review_title,
             description = R.string.settings_about_review_description,
             onClick = {
-                TODO("Review clicked")
+                openReview.value = Event()
             }
         ),
         SettingsModel.Pref(
             title = R.string.settings_about_release_notes_title,
             description = R.string.settings_about_release_notes_description,
             onClick = {
-                TODO("Release notes clicked")
+                openReleaseNotes.value = Event()
             }
         ),
         SettingsModel.Pref(
             title = R.string.settings_about_privacy_policy_title,
             description = R.string.settings_about_privacy_policy_description,
             onClick = {
-                TODO("Privacy Policy clicked")
+                openPrivacyPolicy.value = Event()
             }
         )
     )
 
     var inputs: SettingsAboutViewModelInputs = this
     var outputs: SettingsAboutViewModelOutputs = this
+
+    override val openAboutThisApp: MutableLiveData<Event> = MutableLiveData()
+    override val openReview: MutableLiveData<Event> = MutableLiveData()
+    override val openReleaseNotes: MutableLiveData<Event> = MutableLiveData()
+    override val openPrivacyPolicy: MutableLiveData<Event> = MutableLiveData()
 }

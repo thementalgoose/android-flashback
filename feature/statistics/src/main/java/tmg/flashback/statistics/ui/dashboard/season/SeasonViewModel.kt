@@ -12,7 +12,7 @@ import org.threeten.bp.Month
 import org.threeten.bp.temporal.ChronoUnit
 import org.threeten.bp.temporal.TemporalAdjusters
 import tmg.core.analytics.manager.AnalyticsManager
-import tmg.flashback.statistics.constants.Formula1.constructorChampionshipStarts
+import tmg.flashback.formula1.constants.Formula1.constructorChampionshipStarts
 import androidx.lifecycle.ViewModel
 import tmg.flashback.data.db.stats.HistoryRepository
 import tmg.flashback.data.db.stats.SeasonOverviewRepository
@@ -20,7 +20,7 @@ import tmg.flashback.data.models.stats.*
 import tmg.core.ui.controllers.ThemeController
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.statistics.R
-import tmg.flashback.statistics.constants.Formula1.currentSeasonYear
+import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
 import tmg.flashback.statistics.constants.ViewType
 import tmg.flashback.statistics.constants.logEvent
 import tmg.flashback.statistics.controllers.SeasonController

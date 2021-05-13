@@ -1,106 +1,89 @@
 package tmg.flashback.rss.ui.settings.settings
 
-import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import tmg.components.prefs.AppPreferencesItem
+import tmg.core.ui.settings.SettingsModel
 import tmg.flashback.rss.R
-import tmg.flashback.rss.prefs.RSSRepositoryI
+import tmg.flashback.rss.repo.RSSRepository
 import tmg.flashback.rss.testutils.BaseTest
 import tmg.flashback.rss.testutils.assertEventFired
 import tmg.flashback.rss.testutils.test
 
 class RSSSettingsViewModelTest: BaseTest() {
 
+    private val mockRssRepository: RSSRepository = mockk(relaxed = true)
+
     lateinit var sut: RSSSettingsViewModel
 
-    private val mock: RSSRepositoryI = mockk(relaxed = true)
-
-    private val keyConfigureSources: String = "keyConfigureSources"
-    private val keyShowDescription: String = "keyShowDescription"
-    private val keyJavascript: String = "keyJavascript"
-    private val keyOpenInExternalBrowser: String = "keyOpenInExternalBrowser"
-
-    @BeforeEach
-    internal fun setUp() {
-
-        every { mock.rssShowDescription } returns false
-        every { mock.inAppEnableJavascript } returns false
-        every { mock.rssUrls } returns emptySet()
-
-        sut = RSSSettingsViewModel(mock)
+    private fun initSUT() {
+        sut = RSSSettingsViewModel(mockRssRepository)
     }
 
     @Test
-    fun `settings list is returned properly`() {
-
-        val expected = listOf(
-            AppPreferencesItem.Category(R.string.settings_rss_configure),
-            AppPreferencesItem.Preference(
-                keyConfigureSources,
-                R.string.settings_rss_configure_sources_title,
-                R.string.settings_rss_configure_sources_description
-            ),
-            AppPreferencesItem.Category(R.string.settings_rss_appearance_title),
-            AppPreferencesItem.SwitchPreference(
-                keyShowDescription,
-                R.string.settings_rss_show_description_title,
-                R.string.settings_rss_show_description_description,
-                false
-            ),
-            AppPreferencesItem.Category(R.string.settings_rss_browser),
-            AppPreferencesItem.SwitchPreference(
-                keyOpenInExternalBrowser,
-                R.string.settings_rss_browser_external_title,
-                R.string.settings_rss_browser_external_description,
-                false
-            ),
-            AppPreferencesItem.SwitchPreference(
-                keyJavascript,
-                R.string.settings_rss_browser_javascript_title,
-                R.string.settings_rss_browser_javascript_description,
-                false
-            )
-        )
-
-        sut.outputs.settings.test {
-            assertValue(expected)
+    fun `initial model list is expected`() {
+        initSUT()
+        (sut.models[0] as SettingsModel.Header).apply {
+            assertEquals(R.string.settings_rss_configure, this.title)
+        }
+        (sut.models[1] as SettingsModel.Pref).apply {
+            assertEquals(R.string.settings_rss_configure_sources_title, this.title)
+            assertEquals(R.string.settings_rss_configure_sources_description, this.description)
+        }
+        (sut.models[2] as SettingsModel.Header).apply {
+            assertEquals(R.string.settings_rss_appearance_title, this.title)
+        }
+        (sut.models[3] as SettingsModel.Pref).apply {
+            assertEquals(R.string.settings_rss_show_description_title, this.title)
+            assertEquals(R.string.settings_rss_show_description_description, this.description)
+        }
+        (sut.models[4] as SettingsModel.Header).apply {
+            assertEquals(R.string.settings_rss_browser, this.title)
+        }
+        (sut.models[5] as SettingsModel.Pref).apply {
+            assertEquals(R.string.settings_rss_browser_external_title, this.title)
+            assertEquals(R.string.settings_rss_browser_external_description, this.description)
+        }
+        (sut.models[6] as SettingsModel.Pref).apply {
+            assertEquals(R.string.settings_rss_browser_javascript_title, this.title)
+            assertEquals(R.string.settings_rss_browser_javascript_description, this.description)
         }
     }
 
     @Test
-    fun `clicking configure sources item notifies navigation`() {
-
-        sut.clickPref(keyConfigureSources)
-
+    fun `clicking pref model for configure launches configure event`() {
+        initSUT()
+        sut.clickPreference(sut.models[1] as SettingsModel.Pref)
         sut.outputs.goToConfigure.test {
             assertEventFired()
         }
     }
 
     @Test
-    fun `update show description marks it enabled in prefs`() {
-
-        sut.updatePref(keyShowDescription, true)
-
-        verify { mock.rssShowDescription = true }
+    fun `clicking pref model for show description updates toggle`() {
+        initSUT()
+        sut.clickSwitchPreference(sut.models[3] as SettingsModel.SwitchPref, true)
+        verify {
+            mockRssRepository.rssShowDescription = true
+        }
     }
 
     @Test
-    fun `update enable javascript marks it enabled in prefs`() {
-
-        sut.updatePref(keyJavascript, true)
-
-        verify { mock.inAppEnableJavascript = true }
+    fun `clicking pref model for rss external browser updates toggle`() {
+        initSUT()
+        sut.clickSwitchPreference(sut.models[5] as SettingsModel.SwitchPref, true)
+        verify {
+            mockRssRepository.newsOpenInExternalBrowser = true
+        }
     }
 
     @Test
-    fun `update enable open in external browser marks it enabled in prefs`() {
-
-        sut.updatePref(keyOpenInExternalBrowser, true)
-
-        verify { mock.newsOpenInExternalBrowser = true}
+    fun `clicking pref model for broswer javascript updates toggle`() {
+        initSUT()
+        sut.clickSwitchPreference(sut.models[6] as SettingsModel.SwitchPref, true)
+        verify {
+            mockRssRepository.inAppEnableJavascript = true
+        }
     }
 }

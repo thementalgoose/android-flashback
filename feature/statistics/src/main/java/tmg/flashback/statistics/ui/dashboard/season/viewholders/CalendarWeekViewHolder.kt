@@ -7,9 +7,9 @@ import org.threeten.bp.LocalDate
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.LayoutDashboardSeasonCalendarWeekBinding
 import tmg.flashback.statistics.databinding.ViewDashboardSeasonCalendarWeekBinding
-import tmg.flashback.statistics.enums.TrackLayout
+import tmg.flashback.formula1.enums.TrackLayout
 import tmg.flashback.statistics.ui.dashboard.season.SeasonItem
-import tmg.flashback.statistics.ui.util.getFlagResourceAlpha3
+import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.utilities.extensions.toEnum
 import tmg.utilities.extensions.views.context
 import tmg.utilities.extensions.views.show

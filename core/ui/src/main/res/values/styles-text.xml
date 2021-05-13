@@ -34,6 +34,10 @@
         <item name="android:textColor">?attr/contentSecondary</item>
     </style>
 
+    <style name="Settings.BottomSheet.Content" parent="Text">
+        <item name="android:textColor">?attr/contentSecondary</item>
+    </style>
+
     <!-- #endregion -->
 
     <!-- #region Settings -->

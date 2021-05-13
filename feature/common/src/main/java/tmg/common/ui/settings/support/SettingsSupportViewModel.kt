@@ -2,8 +2,8 @@ package tmg.common.ui.settings.support
 
 import tmg.core.analytics.manager.AnalyticsManager
 import tmg.common.R
-import tmg.common.ui.settings.SettingsModel
-import tmg.common.ui.settings.SettingsViewModel
+import tmg.core.ui.settings.SettingsModel
+import tmg.core.ui.settings.SettingsViewModel
 import tmg.crash_reporting.controllers.CrashController
 
 //region Inputs

@@ -14,6 +14,7 @@
       <module name="android-flashback.core.device" target="1.8" />
       <module name="android-flashback.core.notifications" target="1.8" />
       <module name="android-flashback.core.preferences" target="1.8" />
+      <module name="android-flashback.core.tutorial" target="1.8" />
       <module name="android-flashback.core.ui" target="1.8" />
       <module name="android-flashback.data-firebase" target="11" />
       <module name="android-flashback.feature.common" target="1.8" />

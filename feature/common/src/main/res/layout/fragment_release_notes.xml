@@ -50,7 +50,7 @@
             android:layout_marginStart="@dimen/paddingSmall"
             android:layout_marginEnd="@dimen/paddingMedium"
             android:alpha="0.0"
-            android:text="@string/settings_help_release_notes_title"
+            android:text="@string/settings_about_release_notes_title"
             app:layout_constraintBottom_toBottomOf="@id/toolbarGuideline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/back"
@@ -66,7 +66,7 @@
             android:paddingTop="@dimen/paddingSmall"
             android:paddingEnd="@dimen/paddingMedium"
             android:paddingBottom="@dimen/paddingMedium"
-            android:text="@string/settings_help_release_notes_title"
+            android:text="@string/settings_about_release_notes_title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/toolbarGuideline" />

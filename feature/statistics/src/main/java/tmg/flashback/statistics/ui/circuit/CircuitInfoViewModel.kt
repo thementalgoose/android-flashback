@@ -3,10 +3,9 @@ package tmg.flashback.statistics.ui.circuit
 import androidx.lifecycle.*
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.*
-import tmg.core.device.managers.NetworkConnectivityManager
-import tmg.flashback.statistics.extensions.circuitIcon
 import tmg.flashback.data.db.stats.CircuitRepository
 import tmg.flashback.data.models.stats.Circuit
+import tmg.flashback.statistics.extensions.circuitIcon
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.utilities.extensions.then
 import tmg.utilities.lifecycle.DataEvent

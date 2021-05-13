@@ -1,11 +1,9 @@
 package tmg.common.ui.settings.notifications
 
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import tmg.common.ui.settings.SettingsModel
-import tmg.common.ui.settings.SettingsViewModel
+import tmg.core.ui.settings.SettingsModel
+import tmg.core.ui.settings.SettingsViewModel
 import tmg.notifications.R
 import tmg.notifications.controllers.NotificationController
 import tmg.utilities.lifecycle.DataEvent
@@ -36,14 +34,16 @@ class SettingsNotificationViewModel(
     override val models: List<SettingsModel> = mutableListOf<SettingsModel>().apply {
         add(SettingsModel.Header(R.string.settings_notifications_title))
         if (notificationController.isNotificationChannelsSupported) {
-            add(SettingsModel.Pref(
+            add(
+                SettingsModel.Pref(
                 title = R.string.settings_notifications_channel_qualifying_title,
                 description = R.string.settings_notifications_channel_qualifying_description,
                 onClick = {
                     openNotificationsChannel.value = DataEvent(keyNotificationChannelQualifying)
                 }
             ))
-            add(SettingsModel.Pref(
+            add(
+                SettingsModel.Pref(
                 title = R.string.settings_notifications_channel_race_title,
                 description = R.string.settings_notifications_channel_race_description,
                 onClick = {
@@ -51,7 +51,8 @@ class SettingsNotificationViewModel(
                 }
             ))
         } else {
-            add(SettingsModel.Pref(
+            add(
+                SettingsModel.Pref(
                 title = R.string.settings_notifications_nonchannel_title,
                 description = R.string.settings_notifications_nonchannel_description,
                 onClick = {

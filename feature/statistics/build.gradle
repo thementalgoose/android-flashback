@@ -4,6 +4,11 @@ dependencies {
 
     api project(path: ':base')
 
+    // Formula 1 base data
+    implementation project(path: ':feature:formula1')
+
+    // Firebase module
+    implementation project(path: ':feature:statistics_data_firebase')
 
     // Core modules
     implementation project(path: ':core:ads')
@@ -15,8 +20,6 @@ dependencies {
     implementation project(path: ':core:preferences')
     implementation project(path: ':core:ui')
 
-    // Firebase module
-    implementation project(path: ':feature:statistics_data_firebase')
 
     // Swipe refresh
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:$swipe_refresh"
@@ -37,7 +40,4 @@ dependencies {
 
     // Skeleton Layout
     implementation 'com.faltenreich:skeletonlayout:2.0.1'
-
-    // Discord Overlapping panels
-    implementation 'com.github.discord:OverlappingPanels:0.1.1'
 }

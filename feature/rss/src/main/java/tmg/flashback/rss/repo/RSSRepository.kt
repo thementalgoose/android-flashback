@@ -1,9 +1,9 @@
 package tmg.flashback.rss.repo
 
-import tmg.core.device.repository.SharedPreferenceRepository
+import tmg.core.prefs.manager.PreferenceManager
 
 class RSSRepository(
-    private val sharedPreferenceRepository: SharedPreferenceRepository
+    private val preferenceManager: PreferenceManager
 ) {
 
     companion object {
@@ -17,27 +17,27 @@ class RSSRepository(
      * RSS URLs
      */
     var rssUrls: Set<String>
-        get() = sharedPreferenceRepository.getSet(keyRssList, emptySet())
-        set(value) = sharedPreferenceRepository.save(keyRssList, value)
+        get() = preferenceManager.getSet(keyRssList, emptySet())
+        set(value) = preferenceManager.save(keyRssList, value)
 
     /**
      * Enable javascript in the in app browser.
      */
     var inAppEnableJavascript: Boolean
-        get() = sharedPreferenceRepository.getBoolean(keyInAppEnableJavascript, true)
-        set(value) = sharedPreferenceRepository.save(keyInAppEnableJavascript, value)
+        get() = preferenceManager.getBoolean(keyInAppEnableJavascript, true)
+        set(value) = preferenceManager.save(keyInAppEnableJavascript, value)
 
     /**
      * Shows the description for the news items
      */
     var rssShowDescription: Boolean
-        get() = sharedPreferenceRepository.getBoolean(keyRssShowDescription, true)
-        set(value) = sharedPreferenceRepository.save(keyRssShowDescription, value)
+        get() = preferenceManager.getBoolean(keyRssShowDescription, true)
+        set(value) = preferenceManager.save(keyRssShowDescription, value)
 
     /**
      * Open the news article in an external browser or not
      */
     var newsOpenInExternalBrowser: Boolean
-        get() = sharedPreferenceRepository.getBoolean(keyNewsOpenInExternalBrowser, false)
-        set(value) = sharedPreferenceRepository.save(keyNewsOpenInExternalBrowser, value)
+        get() = preferenceManager.getBoolean(keyNewsOpenInExternalBrowser, false)
+        set(value) = preferenceManager.save(keyNewsOpenInExternalBrowser, value)
 }
