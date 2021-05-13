@@ -1,4 +1,4 @@
-package tmg.flashback.di.data
+package tmg.flashback.di_old.data
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

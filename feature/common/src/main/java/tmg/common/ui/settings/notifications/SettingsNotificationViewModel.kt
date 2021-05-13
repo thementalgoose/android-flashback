@@ -1,9 +1,11 @@
 package tmg.common.ui.settings.notifications
 
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import tmg.components.prefs.AppPreferencesItem
+import tmg.common.ui.settings.SettingsModel
+import tmg.common.ui.settings.SettingsViewModel
 import tmg.notifications.R
 import tmg.notifications.controllers.NotificationController
 import tmg.utilities.lifecycle.DataEvent
@@ -12,7 +14,7 @@ import tmg.utilities.lifecycle.Event
 //region Inputs
 
 interface SettingsNotificationViewModelInputs {
-    fun preferenceClicked(pref: String?, value: Boolean?)
+
 }
 
 //endregion
@@ -20,8 +22,6 @@ interface SettingsNotificationViewModelInputs {
 //region Outputs
 
 interface SettingsNotificationViewModelOutputs {
-    val settings: LiveData<List<AppPreferencesItem>>
-
     val openNotificationsChannel: LiveData<DataEvent<String>>
     val openNotifications: LiveData<Event>
 }
@@ -31,42 +31,42 @@ interface SettingsNotificationViewModelOutputs {
 
 class SettingsNotificationViewModel(
     private val notificationController: NotificationController
-): ViewModel(), SettingsNotificationViewModelInputs, SettingsNotificationViewModelOutputs {
+): SettingsViewModel(), SettingsNotificationViewModelInputs, SettingsNotificationViewModelOutputs {
+
+    override val models: List<SettingsModel> = mutableListOf<SettingsModel>().apply {
+        add(SettingsModel.Header(R.string.settings_notifications_title))
+        if (notificationController.isNotificationChannelsSupported) {
+            add(SettingsModel.Pref(
+                title = R.string.settings_notifications_channel_qualifying_title,
+                description = R.string.settings_notifications_channel_qualifying_description,
+                onClick = {
+                    openNotificationsChannel.value = DataEvent(keyNotificationChannelQualifying)
+                }
+            ))
+            add(SettingsModel.Pref(
+                title = R.string.settings_notifications_channel_race_title,
+                description = R.string.settings_notifications_channel_race_description,
+                onClick = {
+                    openNotificationsChannel.value = DataEvent(keyNotificationChannelRace)
+                }
+            ))
+        } else {
+            add(SettingsModel.Pref(
+                title = R.string.settings_notifications_nonchannel_title,
+                description = R.string.settings_notifications_nonchannel_description,
+                onClick = {
+                    openNotifications.value = Event()
+                }
+            ))
+        }
+    }
 
     private val keyNotificationChannelQualifying: String = "NotificationQualifying"
     private val keyNotificationChannelRace: String = "NotificationRace"
-    private val keyNotificationSettings: String = "NotificationSettings"
 
     var inputs: SettingsNotificationViewModelInputs = this
     var outputs: SettingsNotificationViewModelOutputs = this
 
-    override val settings: MutableLiveData<List<AppPreferencesItem>> = MutableLiveData()
-
     override val openNotifications: MutableLiveData<Event> = MutableLiveData()
     override val openNotificationsChannel: MutableLiveData<DataEvent<String>> = MutableLiveData()
-
-    init {
-        settings.value = mutableListOf<AppPreferencesItem>().apply {
-            add(AppPreferencesItem.Category(R.string.settings_notifications_title))
-            if (notificationController.isNotificationChannelsSupported) {
-                add(AppPreferencesItem.Preference(keyNotificationChannelQualifying, R.string.settings_notifications_channel_qualifying_title, R.string.settings_notifications_channel_qualifying_description))
-                add(AppPreferencesItem.Preference(keyNotificationChannelRace, R.string.settings_notifications_channel_race_title, R.string.settings_notifications_channel_race_description))
-            }
-            else {
-                add(AppPreferencesItem.Preference(keyNotificationSettings, R.string.settings_notifications_nonchannel_title, R.string.settings_notifications_nonchannel_description))
-            }
-        }
-    }
-
-    //region Inputs
-
-    override fun preferenceClicked(pref: String?, value: Boolean?) {
-        when (pref) {
-            keyNotificationChannelQualifying -> openNotificationsChannel.value = DataEvent(NotificationController.keyTopicQualifying)
-            keyNotificationChannelRace -> openNotificationsChannel.value = DataEvent(NotificationController.keyTopicRace)
-            keyNotificationSettings -> openNotifications.value = Event()
-        }
-    }
-
-    //endregion
 }

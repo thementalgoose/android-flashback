@@ -1,4 +1,4 @@
-package tmg.flashback.di.rss
+package tmg.flashback.di_old.rss
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

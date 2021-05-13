@@ -1,4 +1,4 @@
-package tmg.flashback.di.remoteconfig
+package tmg.flashback.di_old.remoteconfig
 
 import tmg.flashback.core.model.UpNextSchedule
 

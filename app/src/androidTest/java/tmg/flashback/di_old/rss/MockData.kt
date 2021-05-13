@@ -1,4 +1,4 @@
-package tmg.flashback.di.rss
+package tmg.flashback.di_old.rss
 
 import org.threeten.bp.LocalDateTime
 import tmg.flashback.rss.repo.model.Article
