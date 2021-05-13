@@ -4,7 +4,7 @@ import android.app.Application
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
-import tmg.flashback.di.*
+import tmg.flashback.di_old.*
 
 class FlashbackApplication: Application() {
 

@@ -20,7 +20,7 @@ internal class SettingsAboutViewModelTest: BaseTest() {
         initSUT()
         sut.outputs.settings.test {
             assertValue(listOf(
-                AppPreferencesItem.Category(R.string.settings_help),
+                AppPreferencesItem.Category(R.string.settings_about),
                 AppPreferencesItem.Preference("AboutThisApp", R.string.settings_help_about_title, R.string.settings_help_about_description),
                 AppPreferencesItem.Preference("Review", R.string.settings_help_review_title, R.string.settings_help_review_description),
                 AppPreferencesItem.Preference("PrivacyPolicy", R.string.settings_help_privacy_policy_title, R.string.settings_help_privacy_policy_description)

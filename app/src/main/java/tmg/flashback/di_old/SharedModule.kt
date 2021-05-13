@@ -1,4 +1,4 @@
-package tmg.flashback.di
+package tmg.flashback.di_old
 
 import org.koin.dsl.module
 import tmg.flashback.device.di.deviceModule

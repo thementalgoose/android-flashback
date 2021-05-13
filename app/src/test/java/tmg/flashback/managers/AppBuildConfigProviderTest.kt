@@ -1,4 +1,4 @@
-package tmg.flashback.di.device
+package tmg.flashback.di_old.device
 
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.params.ParameterizedTest

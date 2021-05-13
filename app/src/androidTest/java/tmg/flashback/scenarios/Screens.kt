@@ -1,7 +1,7 @@
 package tmg.flashback.scenarios
 
 import tmg.flashback.R
-import tmg.flashback.di.remoteconfig.MockRemoteConfigRepository
+import tmg.flashback.di_old.remoteconfig.MockRemoteConfigRepository
 import tmg.flashback.ui.EspressoUtils.clickOn
 import tmg.flashback.ui.EspressoUtils.collapseAppBar
 import tmg.flashback.ui.EspressoUtils.pressBack

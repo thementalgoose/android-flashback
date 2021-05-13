@@ -45,7 +45,7 @@ class SettingsAboutViewModel: ViewModel(), SettingsAboutViewModelInputs,
 
     init {
         settings.value = mutableListOf<AppPreferencesItem>().apply {
-            add(AppPreferencesItem.Category(R.string.settings_help))
+            add(AppPreferencesItem.Category(R.string.settings_about))
             add(AppPreferencesItem.Preference(
                 prefKey = keyAboutThisApp,
                 title = R.string.settings_help_about_title,

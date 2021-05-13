@@ -30,6 +30,6 @@ sealed class SettingsModel(
         val title: Int,
         @StringRes
         val description: Int,
-        val onClick: (Fragment.() -> Unit)?
+        val onClick: (() -> Unit)?
     ): SettingsModel(R.layout.view_settings_preference)
 }

@@ -29,7 +29,7 @@ class SettingsSupportViewModel(
 ): SettingsViewModel(), SettingsSupportViewModelInputs, SettingsSupportViewModelOutputs {
 
     override val models: List<SettingsModel> = listOf(
-        SettingsModel.Header(R.string.settings_device),
+        SettingsModel.Header(R.string.settings_help),
         SettingsModel.SwitchPref(
             title = R.string.settings_help_crash_reporting_title,
             description = R.string.settings_help_crash_reporting_description,
@@ -52,16 +52,4 @@ class SettingsSupportViewModel(
 
     var inputs: SettingsSupportViewModelInputs = this
     var outputs: SettingsSupportViewModelOutputs = this
-
-    init {
-
-    }
-
-    //region Inputs
-
-    //endregion
-
-    //region Outputs
-
-    //endregion
 }
