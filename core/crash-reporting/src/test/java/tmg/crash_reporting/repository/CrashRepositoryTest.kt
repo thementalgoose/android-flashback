@@ -5,29 +5,29 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
-import tmg.core.device.repository.SharedPreferenceRepository
+import tmg.core.prefs.manager.PreferenceManager
 
 internal class CrashRepositoryTest {
 
-    private val mockSharedPreferenceRepository: SharedPreferenceRepository = mockk(relaxed = true)
+    private val mockPreferenceManager: PreferenceManager = mockk(relaxed = true)
 
     private lateinit var sut: CrashRepository
 
     private fun initSUT() {
-        sut = CrashRepository(mockSharedPreferenceRepository)
+        sut = CrashRepository(mockPreferenceManager)
     }
 
     //region Is crash reporting enabled
 
     @Test
     fun `is crash reporting enabled reads value from preferences repository with default to true`() {
-        every { mockSharedPreferenceRepository.getBoolean(any(), any()) } returns true
+        every { mockPreferenceManager.getBoolean(any(), any()) } returns true
 
         initSUT()
 
         assertTrue(sut.isEnabled)
         verify {
-            mockSharedPreferenceRepository.getBoolean(CRASH_REPORTING_KEY, true)
+            mockPreferenceManager.getBoolean(CRASH_REPORTING_KEY, true)
         }
     }
 
@@ -37,7 +37,7 @@ internal class CrashRepositoryTest {
 
         sut.isEnabled = true
         verify {
-            mockSharedPreferenceRepository.save(CRASH_REPORTING_KEY, true)
+            mockPreferenceManager.save(CRASH_REPORTING_KEY, true)
         }
     }
 
@@ -47,7 +47,7 @@ internal class CrashRepositoryTest {
 
         sut.isEnabled = false
         verify {
-            mockSharedPreferenceRepository.save(CRASH_REPORTING_KEY, false)
+            mockPreferenceManager.save(CRASH_REPORTING_KEY, false)
         }
     }
 
@@ -57,13 +57,13 @@ internal class CrashRepositoryTest {
 
     @Test
     fun `is shake to report enabled reads value from preferences repository with default to true`() {
-        every { mockSharedPreferenceRepository.getBoolean(any(), any()) } returns true
+        every { mockPreferenceManager.getBoolean(any(), any()) } returns true
 
         initSUT()
 
         assertTrue(sut.shakeToReport)
         verify {
-            mockSharedPreferenceRepository.getBoolean(SHAKE_TO_REPORT_KEY, true)
+            mockPreferenceManager.getBoolean(SHAKE_TO_REPORT_KEY, true)
         }
     }
 
@@ -73,7 +73,7 @@ internal class CrashRepositoryTest {
 
         sut.shakeToReport = true
         verify {
-            mockSharedPreferenceRepository.save(SHAKE_TO_REPORT_KEY, true)
+            mockPreferenceManager.save(SHAKE_TO_REPORT_KEY, true)
         }
     }
 
@@ -83,7 +83,7 @@ internal class CrashRepositoryTest {
 
         sut.shakeToReport = false
         verify {
-            mockSharedPreferenceRepository.save(SHAKE_TO_REPORT_KEY, false)
+            mockPreferenceManager.save(SHAKE_TO_REPORT_KEY, false)
         }
     }
 

@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 import tmg.notifications.NotificationRegistration
 import tmg.notifications.managers.PushNotificationManager
 import tmg.notifications.repository.NotificationRepository
-import tmg.test.BaseTest
+import tmg.testutils.BaseTest
 
 internal class NotificationControllerTest: BaseTest() {
 

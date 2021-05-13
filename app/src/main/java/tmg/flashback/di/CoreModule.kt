@@ -1,7 +1,7 @@
 package tmg.flashback.di
 
 import org.koin.dsl.module
-import tmg.analytics.di.analyticsModule
+import tmg.core.analytics.di.analyticsModule
 import tmg.configuration.di.configModule
 import tmg.crash_reporting.di.crashReportingModule
 import tmg.flashback.core.controllers.*

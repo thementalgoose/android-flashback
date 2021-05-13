@@ -6,12 +6,12 @@ import tmg.common.ui.settings.appearance.SettingsAppearanceViewModel
 import tmg.common.ui.settings.appearance.animation.AnimationSpeedViewModel
 import tmg.common.ui.settings.appearance.theme.ThemeViewModel
 import tmg.common.ui.settings.notifications.SettingsNotificationViewModel
-import tmg.crash_reporting.ui.settings.SettingsCrashReportingViewModel
+import tmg.common.ui.settings.support.SettingsSupportViewModel
 
 val commonModule = module {
 
     viewModel { SettingsAppearanceViewModel() }
-    viewModel { SettingsCrashReportingViewModel(get()) }
+    viewModel { SettingsSupportViewModel(get(), get()) }
     viewModel { SettingsNotificationViewModel(get()) }
     viewModel { ThemeViewModel(get()) }
     viewModel { AnimationSpeedViewModel(get()) }

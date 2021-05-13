@@ -6,9 +6,9 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.android.viewmodel.compat.ScopeCompat.viewModel
 import org.koin.android.viewmodel.ext.android.viewModel
+import tmg.common.databinding.FragmentBottomSheetThemeBinding
 import tmg.core.ui.base.BaseBottomSheetFragment
 import tmg.core.ui.bottomsheet.BottomSheetAdapter
-import tmg.core.ui.databinding.FragmentBottomSheetThemeBinding
 import tmg.core.ui.model.Theme
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent

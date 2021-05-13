@@ -7,29 +7,29 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import tmg.configuration.managers.RemoteConfigManager
 import tmg.configuration.repository.models.ForceUpgrade
-import tmg.core.device.repository.SharedPreferenceRepository
+import tmg.core.prefs.manager.PreferenceManager
 import java.time.Year
 
 internal class ConfigRepositoryTest {
 
     private val mockRemoteConfigManager: RemoteConfigManager = mockk(relaxed = true)
-    private val mockSharedPreferenceRepository: SharedPreferenceRepository = mockk(relaxed = true)
+    private val mockPreferenceManager: PreferenceManager = mockk(relaxed = true)
 
     private lateinit var sut: ConfigRepository
 
     private fun initSUT() {
-        sut = ConfigRepository(mockRemoteConfigManager, mockSharedPreferenceRepository)
+        sut = ConfigRepository(mockRemoteConfigManager, mockPreferenceManager)
     }
 
     //region Remote Config Sync count
 
     @Test
     fun `remote config sync count calls shared prefs repository`() {
-        every { mockSharedPreferenceRepository.getInt(keyRemoteConfigSync, any()) } returns 3
+        every { mockPreferenceManager.getInt(keyRemoteConfigSync, any()) } returns 3
         initSUT()
         assertEquals(sut.remoteConfigSync, 3)
         verify {
-            mockSharedPreferenceRepository.getInt(keyRemoteConfigSync, 0)
+            mockPreferenceManager.getInt(keyRemoteConfigSync, 0)
         }
     }
 
@@ -38,7 +38,7 @@ internal class ConfigRepositoryTest {
         initSUT()
         sut.remoteConfigSync = 2
         verify {
-            mockSharedPreferenceRepository.save(keyRemoteConfigSync, 2)
+            mockPreferenceManager.save(keyRemoteConfigSync, 2)
         }
     }
 

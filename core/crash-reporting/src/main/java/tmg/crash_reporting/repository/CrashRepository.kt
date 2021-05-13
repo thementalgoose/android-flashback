@@ -1,9 +1,9 @@
 package tmg.crash_reporting.repository
 
-import tmg.core.device.repository.SharedPreferenceRepository
+import tmg.core.prefs.manager.PreferenceManager
 
 class CrashRepository(
-    private val sharedPreferenceRepository: SharedPreferenceRepository
+    private val preferenceManager: PreferenceManager
 ) {
     companion object {
         private const val keyCrashReporting: String = "CRASH_REPORTING"
@@ -11,10 +11,10 @@ class CrashRepository(
     }
 
     var isEnabled: Boolean
-        get() = sharedPreferenceRepository.getBoolean(keyCrashReporting, true)
-        set(value) = sharedPreferenceRepository.save(keyCrashReporting, value)
+        get() = preferenceManager.getBoolean(keyCrashReporting, true)
+        set(value) = preferenceManager.save(keyCrashReporting, value)
 
     var shakeToReport: Boolean
-        get() = sharedPreferenceRepository.getBoolean(keyShakeToReport, true)
-        set(value) = sharedPreferenceRepository.save(keyShakeToReport, value)
+        get() = preferenceManager.getBoolean(keyShakeToReport, true)
+        set(value) = preferenceManager.save(keyShakeToReport, value)
 }

@@ -10,11 +10,13 @@ import tmg.core.ui.databinding.ViewSettingsPreferenceBinding
 import tmg.core.ui.databinding.ViewSettingsPreferenceSwitchBinding
 import java.lang.RuntimeException
 
-class SettingsAdapter<T: Fragment>(
-    private val getFragmentContext: () -> T
+class SettingsAdapter(
+    private val clickSwitch: (model: SettingsModel.SwitchPref, toNewState: Boolean) -> Unit,
+    private val clickPref: (model: SettingsModel.Pref) -> Unit,
+    private val getState: (model: SettingsModel.SwitchPref) -> Boolean
 ): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    var list: List<SettingsModel<T>> = emptyList()
+    var list: List<SettingsModel> = emptyList()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -23,17 +25,17 @@ class SettingsAdapter<T: Fragment>(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val layoutInflater: LayoutInflater = LayoutInflater.from(parent.context)
         return when (viewType) {
-            R.layout.view_settings_category -> HeaderViewHolder<T>(
-                ViewSettingsCategoryBinding.inflate(layoutInflater, parent, false),
-                getFragmentContext
+            R.layout.view_settings_category -> HeaderViewHolder(
+                ViewSettingsCategoryBinding.inflate(layoutInflater, parent, false)
             )
-            R.layout.view_settings_preference -> PreferenceViewHolder<T>(
+            R.layout.view_settings_preference -> PreferenceViewHolder(
                 ViewSettingsPreferenceBinding.inflate(layoutInflater, parent, false),
-                getFragmentContext
+                clickPref
             )
-            R.layout.view_settings_preference_switch -> SwitchViewHolder<T>(
+            R.layout.view_settings_preference_switch -> SwitchViewHolder(
                 ViewSettingsPreferenceSwitchBinding.inflate(layoutInflater, parent, false),
-                getFragmentContext
+                clickSwitch,
+                getState
             )
             else -> throw RuntimeException("View type is not supported!")
         }
@@ -42,9 +44,9 @@ class SettingsAdapter<T: Fragment>(
     @Suppress("UNCHECKED_CAST")
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (val item = list[position]) {
-            is SettingsModel.Header -> (holder as HeaderViewHolder<T>).bind(item)
-            is SettingsModel.Pref -> (holder as PreferenceViewHolder<T>).bind(item)
-            is SettingsModel.SwitchPref -> (holder as SwitchViewHolder<T>).bind(item)
+            is SettingsModel.Header -> (holder as HeaderViewHolder).bind(item)
+            is SettingsModel.Pref -> (holder as PreferenceViewHolder).bind(item)
+            is SettingsModel.SwitchPref -> (holder as SwitchViewHolder).bind(item)
         }
     }
 

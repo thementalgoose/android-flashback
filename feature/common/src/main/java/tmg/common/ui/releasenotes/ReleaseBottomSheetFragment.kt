@@ -11,6 +11,7 @@ import tmg.utilities.extensions.fromHtml
 
 class ReleaseBottomSheetFragment: BaseBottomSheetFragment<FragmentBottomSheetReleaseNotesBinding>() {
 
+    // TODO: Move over to view model
     private val releaseNotesController: ReleaseNotesController by inject()
 
     override fun inflateView(inflater: LayoutInflater) =

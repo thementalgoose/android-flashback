@@ -11,7 +11,7 @@ import org.threeten.bp.LocalDate
 import org.threeten.bp.Month
 import org.threeten.bp.temporal.ChronoUnit
 import org.threeten.bp.temporal.TemporalAdjusters
-import tmg.analytics.manager.AnalyticsManager
+import tmg.core.analytics.manager.AnalyticsManager
 import tmg.flashback.statistics.constants.Formula1.constructorChampionshipStarts
 import androidx.lifecycle.ViewModel
 import tmg.flashback.data.db.stats.HistoryRepository

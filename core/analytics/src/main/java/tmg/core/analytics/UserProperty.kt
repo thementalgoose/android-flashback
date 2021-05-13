@@ -1,4 +1,4 @@
-package tmg.analytics
+package tmg.core.analytics
 
 enum class UserProperty(
     val key: String

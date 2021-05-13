@@ -1,33 +1,33 @@
-package tmg.analytics.repository
+package tmg.core.analytics.repository
 
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
-import tmg.core.device.repository.SharedPreferenceRepository
+import tmg.core.prefs.manager.PreferenceManager
 
 internal class AnalyticsRepositoryTest {
 
-    private val mockSharedPreferenceRepository: SharedPreferenceRepository = mockk(relaxed = true)
+    private val mockPreferenceManager: PreferenceManager = mockk(relaxed = true)
 
     private lateinit var sut: AnalyticsRepository
 
     private fun initSUT() {
-        sut = AnalyticsRepository(mockSharedPreferenceRepository)
+        sut = AnalyticsRepository(mockPreferenceManager)
     }
 
     //region Is analytics enabled
 
     @Test
     fun `is analytics enabled reads value from preferences repository with default to true`() {
-        every { mockSharedPreferenceRepository.getBoolean(any(), any()) } returns true
+        every { mockPreferenceManager.getBoolean(any(), any()) } returns true
 
         initSUT()
 
         assertTrue(sut.isEnabled)
         verify {
-            mockSharedPreferenceRepository.getBoolean(ANALYTICS_KEY, true)
+            mockPreferenceManager.getBoolean(ANALYTICS_KEY, true)
         }
     }
 
@@ -37,7 +37,7 @@ internal class AnalyticsRepositoryTest {
 
         sut.isEnabled = true
         verify {
-            mockSharedPreferenceRepository.save(ANALYTICS_KEY, true)
+            mockPreferenceManager.save(ANALYTICS_KEY, true)
         }
     }
 
@@ -47,7 +47,7 @@ internal class AnalyticsRepositoryTest {
 
         sut.isEnabled = false
         verify {
-            mockSharedPreferenceRepository.save(ANALYTICS_KEY, false)
+            mockPreferenceManager.save(ANALYTICS_KEY, false)
         }
     }
 

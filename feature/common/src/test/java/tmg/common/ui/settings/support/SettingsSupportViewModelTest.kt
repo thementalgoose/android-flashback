@@ -1,4 +1,4 @@
-package tmg.common.ui.settings.crash_reporting
+package tmg.common.ui.settings.support
 
 import io.mockk.every
 import io.mockk.mockk
@@ -6,18 +6,19 @@ import io.mockk.verify
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import tmg.core.analytics.manager.AnalyticsManager
 import tmg.crash_reporting.R
 import tmg.crash_reporting.controllers.CrashController
-import tmg.crash_reporting.ui.settings.SettingsCrashReportingViewModel
 
-internal class SettingsCrashReportingViewModelTest {
+internal class SettingsSupportViewModelTest {
 
     private val mockCrashController: CrashController = mockk(relaxed = true)
+    private val mockAnalyticsManager: AnalyticsManager = mockk(relaxed = true)
 
-    private lateinit var sut: SettingsCrashReportingViewModel
+    private lateinit var sut: SettingsSupportViewModel
 
     private fun initSUT() {
-        sut = SettingsCrashReportingViewModel(mockCrashController)
+        sut = SettingsSupportViewModel(mockCrashController, mockAnalyticsManager)
     }
 
     @BeforeEach

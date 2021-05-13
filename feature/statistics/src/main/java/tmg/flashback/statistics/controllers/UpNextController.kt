@@ -12,18 +12,14 @@ import tmg.flashback.core.repositories.CoreRepository
  * Up Next functionality on the home screen
  */
 class UpNextController(
-    private val coreRepository: CoreRepository,
     private val configurationController: ConfigController
 ) {
 
     /**
      * The value that the menu should default too when showing time list types
      */
-    var upNextDisplayType: TimeListDisplayType
-        get() = coreRepository.displayListTypePref
-        set(value) {
-            coreRepository.displayListTypePref = value
-        }
+    var upNextDisplayType: TimeListDisplayType = TimeListDisplayType.RELATIVE
+//            coreRepository.displayListTypePref = value
 
     /**
      * Get the next race to display in the up next schedule

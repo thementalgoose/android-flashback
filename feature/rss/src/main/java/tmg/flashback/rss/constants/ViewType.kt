@@ -1,6 +1,6 @@
 package tmg.flashback.rss.constants
 
-import tmg.analytics.manager.AnalyticsManager
+import tmg.core.analytics.manager.AnalyticsManager
 
 enum class ViewType(
     val key: String
