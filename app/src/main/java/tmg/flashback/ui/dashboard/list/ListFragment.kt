@@ -15,9 +15,9 @@ import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.core.managers.NavigationManager
 import tmg.core.ui.base.BaseFragment
 import tmg.flashback.databinding.FragmentDashboardListBinding
+import tmg.flashback.rss.ui.RSSActivity
 import tmg.flashback.statistics.BuildConfig
 import tmg.flashback.statistics.R
-import tmg.flashback.statistics.manager.StatisticsExternalNavigationManager
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 
@@ -26,7 +26,6 @@ class ListFragment: BaseFragment<FragmentDashboardListBinding>() {
     private val viewModel: ListViewModel by viewModel()
 
     private val navigationManager: NavigationManager by inject()
-    private val statisticsNavigationManager: StatisticsExternalNavigationManager by inject()
 
     private var adapter: ListAdapter? = null
     private val dashboardNavigationCallback: tmg.flashback.ui.dashboard.DashboardNavigationCallback? get() = parentFragment as? tmg.flashback.ui.dashboard.DashboardNavigationCallback
@@ -83,7 +82,7 @@ class ListFragment: BaseFragment<FragmentDashboardListBinding>() {
 
         observeEvent(viewModel.outputs.openRss) {
             context?.let {
-                startActivity(statisticsNavigationManager.getRSSIntent(it))
+                startActivity(Intent(it, RSSActivity::class.java))
             }
         }
 

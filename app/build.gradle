@@ -67,6 +67,7 @@ android {
         exclude "META-INF/LGPL2.1"
         exclude "META-INF/AL2.0"
         exclude "META-INF/licenses/ASM"
+        pickFirst "META-INF/*"
     }
 
     flavorDimensions 'version'
@@ -230,8 +231,9 @@ dependencies {
     // Feature modules
     implementation project(path: ':base')
     implementation project(path: ':feature:statistics')
-    implementation project(path: ':feature:upnext')
     implementation project(path: ':feature:statistics_data_firebase')
+    implementation project(path: ':feature:formula1')
+    implementation project(path: ':feature:upnext')
     implementation project(path: ':feature:rss')
     implementation project(path: ':feature:common')
 

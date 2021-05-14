@@ -14,7 +14,7 @@ import tmg.core.analytics.manager.AnalyticsManager
 import tmg.flashback.managers.widgets.WidgetManager
 import tmg.core.ui.controllers.ThemeController
 import tmg.core.ui.model.Theme
-import tmg.flashback.statistics.extensions.updateAllWidgets
+import tmg.flashback.upnext.extensions.updateAllWidgets
 import tmg.notifications.controllers.NotificationController
 import tmg.utilities.extensions.isInDayMode
 

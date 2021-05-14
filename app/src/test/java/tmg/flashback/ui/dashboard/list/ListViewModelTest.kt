@@ -11,7 +11,7 @@ import tmg.configuration.repository.models.UpNextSchedule
 import tmg.flashback.controllers.FeatureController
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.controllers.SeasonController
-import tmg.flashback.statistics.controllers.UpNextController
+import tmg.flashback.upnext.controllers.UpNextController
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.*
 

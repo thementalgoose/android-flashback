@@ -1,10 +1,10 @@
-package tmg.flashback.statistics.ui.shared.timelist
+package tmg.flashback.upnext.ui.timelist
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import tmg.flashback.statistics.databinding.ViewSeasonListUpNextTimelistBinding
-import tmg.flashback.statistics.ui.shared.timelist.viewholders.TimeViewHolder
+import tmg.flashback.upnext.databinding.ViewUpNextTimeListBinding
+import tmg.flashback.upnext.ui.timelist.viewholders.TimeViewHolder
 
 class TimeListAdapter: RecyclerView.Adapter<TimeViewHolder>() {
 
@@ -16,7 +16,7 @@ class TimeListAdapter: RecyclerView.Adapter<TimeViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TimeViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val layout = ViewSeasonListUpNextTimelistBinding.inflate(layoutInflater, parent, false)
+        val layout = ViewUpNextTimeListBinding.inflate(layoutInflater, parent, false)
         return TimeViewHolder(layout)
     }
 

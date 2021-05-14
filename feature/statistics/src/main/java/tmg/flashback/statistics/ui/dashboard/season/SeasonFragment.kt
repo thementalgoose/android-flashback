@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.IMPORTANT_FOR_ACCESSIBILITY_NO
 import android.view.View.IMPORTANT_FOR_ACCESSIBILITY_YES
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -30,8 +31,8 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
     )
 
     private lateinit var adapter: SeasonAdapter
-    private val dashboardNavigation: tmg.flashback.ui.dashboard.DashboardNavigationCallback?
-        get() = parentFragment as? tmg.flashback.ui.dashboard.DashboardFragment
+//    private val dashboardNavigation: DashboardNavigationCallback?
+//        get() = parentFragment as? DashboardFragment
 
 //    override val screenAnalytics get() = ScreenAnalytics(
 //        screenName = "Dashboard",
@@ -73,7 +74,9 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
         }
 
         observeEvent(viewModel.outputs.openMenu) {
-            dashboardNavigation?.openSeasonList()
+            Toast.makeText(context, "OPEN MENU", Toast.LENGTH_LONG).show()
+            TODO("Open menu")
+//            dashboardNavigation?.openSeasonList()
         }
 
         observe(viewModel.outputs.label) {
