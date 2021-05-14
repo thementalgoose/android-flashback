@@ -5,7 +5,7 @@ import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
 import tmg.configuration.repository.models.TimeListDisplayType
 import tmg.configuration.repository.models.UpNextSchedule
-import tmg.flashback.statistics.R
+import tmg.flashback.R
 
 sealed class ListItem(
     @LayoutRes val layoutId: Int

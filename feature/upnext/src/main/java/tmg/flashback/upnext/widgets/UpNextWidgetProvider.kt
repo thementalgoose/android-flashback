@@ -1,4 +1,4 @@
-package tmg.flashback.statistics.widgets.upnext
+package tmg.flashback.upnext.widgets
 
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
@@ -24,12 +24,12 @@ import org.threeten.bp.format.DateTimeFormatter
 import tmg.configuration.controllers.ConfigController
 import tmg.configuration.repository.models.UpNextSchedule
 import tmg.flashback.formula1.enums.TrackLayout
-import tmg.flashback.statistics.controllers.UpNextController
 import tmg.crash_reporting.controllers.CrashController
 import tmg.flashback.core.managers.NavigationManager
 import tmg.flashback.data.utils.daysBetween
-import tmg.flashback.statistics.R
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
+import tmg.flashback.upnext.R
+import tmg.flashback.upnext.controllers.UpNextController
 import tmg.utilities.extensions.toEnum
 import java.lang.Exception
 
@@ -161,12 +161,12 @@ class UpNextWidgetProvider : AppWidgetProvider(), KoinComponent {
                 remoteView.setOnClickPendingIntent(R.id.circuit, getRefreshWidgetPendingIntent(context, widgetId, appWidgetIds))
                 remoteView.setOnClickPendingIntent(R.id.refresh, getRefreshWidgetPendingIntent(context, widgetId, appWidgetIds))
 
-                if (appRepository.widgetOpenApp) {
+//                if (appRepository.widgetOpenApp) {
                     remoteView.setOnClickPendingIntent(R.id.container, getOpenAppPendingIntent(context))
-                }
-                else {
-                    remoteView.setOnClickPendingIntent(R.id.container, getRefreshWidgetPendingIntent(context, widgetId, appWidgetIds))
-                }
+//                }
+//                else {
+//                    remoteView.setOnClickPendingIntent(R.id.container, getRefreshWidgetPendingIntent(context, widgetId, appWidgetIds))
+//                }
                 appWidgetManager?.updateAppWidget(widgetId, remoteView)
             } catch (e: RuntimeException) {
                 crashController.logError(e, "Widget Up Next provider couldn't be set up")

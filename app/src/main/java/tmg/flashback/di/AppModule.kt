@@ -3,6 +3,7 @@ package tmg.flashback.di
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import tmg.core.device.managers.BuildConfigManager
+import tmg.flashback.FlashbackStartup
 import tmg.flashback.managers.appshortcuts.AndroidAppShortcutManager
 import tmg.flashback.managers.appshortcuts.AppShortcutManager
 import tmg.flashback.managers.buildconfig.AppBuildConfigManager
@@ -20,6 +21,8 @@ val appModule = module {
     viewModel { SettingsAllViewModel() }
     viewModel { DashboardViewModel(get(), get(), get(), get()) }
     viewModel { ListViewModel(get(), get(), get()) }
+
+    single { FlashbackStartup(get(), get(), get(), get(), get(), get()) }
 
     single<AppShortcutManager> { AndroidAppShortcutManager(get()) }
     single<BuildConfigManager> { AppBuildConfigManager() }

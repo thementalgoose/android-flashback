@@ -6,6 +6,9 @@ import org.koin.dsl.module
 import tmg.flashback.data.db.DataRepository
 import tmg.flashback.data.db.stats.*
 import tmg.flashback.firebase.repos.*
+import tmg.flashback.statistics.controllers.RaceController
+import tmg.flashback.statistics.controllers.SeasonController
+import tmg.flashback.statistics.controllers.UserNotificationController
 import tmg.flashback.statistics.repository.StatisticsRepository
 import tmg.flashback.statistics.ui.admin.maintenance.MaintenanceViewModel
 import tmg.flashback.statistics.ui.circuit.CircuitInfoViewModel
@@ -24,7 +27,10 @@ val statisticsModule = module {
     viewModel { DriverViewModel(get(), get()) }
     viewModel { DriverSeasonViewModel(get(), get(), get()) }
     viewModel { RaceViewModel(get(), get(), get(), get(), get()) }
-    viewModel { CircuitInfoViewModel(get(), get()) }
+
+    single { RaceController(get()) }
+    single { SeasonController(get(), get()) }
+    single { UserNotificationController(get()) }
 
     // App
     single { StatisticsRepository(get()) }

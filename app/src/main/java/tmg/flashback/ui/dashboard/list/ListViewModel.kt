@@ -7,7 +7,7 @@ import tmg.flashback.controllers.FeatureController
 import tmg.flashback.statistics.R
 import androidx.lifecycle.ViewModel
 import tmg.flashback.statistics.controllers.SeasonController
-import tmg.flashback.statistics.controllers.UpNextController
+import tmg.flashback.upnext.controllers.UpNextController
 import tmg.utilities.lifecycle.DataEvent
 import tmg.utilities.lifecycle.Event
 
@@ -46,9 +46,9 @@ interface ListViewModelOutputs {
 //endregion
 
 class ListViewModel(
-    private val seasonController: SeasonController,
-    private val upNextController: UpNextController,
-    private val featureController: FeatureController
+        private val seasonController: SeasonController,
+        private val upNextController: UpNextController,
+        private val featureController: FeatureController
 ) : ViewModel(), ListViewModelInputs, ListViewModelOutputs {
 
     private var selectionHeaderFavouited: MutableLiveData<Boolean> =

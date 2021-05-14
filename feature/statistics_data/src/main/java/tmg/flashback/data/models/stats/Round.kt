@@ -63,7 +63,7 @@ data class Round(
     private fun Map<String, RoundQualifyingResult>.fastest(): LapTime? = this
             .map { it.value.time }
             .filter { it != null && !it.noTime && it.totalMillis != 0 }
-            .minBy {
+            .minByOrNull {
                 it?.totalMillis ?: Int.MAX_VALUE
             }
 }
@@ -110,7 +110,7 @@ val List<Round>.upcoming: Int
  * (ie. Points that the constructors champion has scored)
  */
 fun Map<String, Triple<Constructor, Map<String, Pair<Driver, Int>>, Int>>.maxConstructorPointsInSeason(): Int {
-    return this.values.maxBy { it.third }?.third ?: 0
+    return this.values.maxByOrNull { it.third }?.third ?: 0
 }
 
 /**
@@ -118,7 +118,7 @@ fun Map<String, Triple<Constructor, Map<String, Pair<Driver, Int>>, Int>>.maxCon
  * (ie. Points that the drivers champion has scored)
  */
 fun Map<String, Pair<RoundDriver, Int>>.maxDriverPointsInSeason(): Int {
-    return this.values.maxBy { it.second }?.second ?: 0
+    return this.values.maxByOrNull { it.second }?.second ?: 0
 }
 
 /**

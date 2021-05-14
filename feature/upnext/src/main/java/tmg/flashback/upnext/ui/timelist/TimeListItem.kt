@@ -1,4 +1,4 @@
-package tmg.flashback.statistics.ui.shared.timelist
+package tmg.flashback.upnext.ui.timelist
 
 import tmg.configuration.repository.models.TimeListDisplayType
 import tmg.configuration.repository.models.UpNextScheduleTimestamp

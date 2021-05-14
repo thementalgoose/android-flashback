@@ -19,10 +19,10 @@ internal class UpNextControllerTest : BaseTest() {
     private var mockRemoteConfigRepository: ConfigController = mockk(relaxed = true)
 //    private var mockCoreRepository: CoreRepository = mockk(relaxed = true)
 
-    private lateinit var sut: UpNextController
+    private lateinit var sut: tmg.flashback.upnext.UpNextController
 
     private fun initSUT() {
-        sut = UpNextController(mockRemoteConfigRepository)
+        sut = tmg.flashback.upnext.UpNextController(mockRemoteConfigRepository)
     }
 
     @Test

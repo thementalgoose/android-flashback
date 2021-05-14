@@ -1,4 +1,4 @@
-package tmg.flashback.statistics.controllers
+package tmg.flashback.upnext.controllers
 
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
@@ -6,7 +6,6 @@ import org.threeten.bp.format.DateTimeFormatter
 import tmg.configuration.controllers.ConfigController
 import tmg.configuration.repository.models.TimeListDisplayType
 import tmg.configuration.repository.models.UpNextSchedule
-import tmg.flashback.core.repositories.CoreRepository
 
 /**
  * Up Next functionality on the home screen

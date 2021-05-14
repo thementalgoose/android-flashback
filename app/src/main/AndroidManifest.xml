@@ -125,7 +125,7 @@
         <!-- Widgets -->
 
         <receiver
-            android:name=".statistics.widgets.upnext.UpNextWidgetProvider"
+            android:name=".upnext.widgets.UpNextWidgetProvider"
             android:label="@string/widget_up_next_title">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />

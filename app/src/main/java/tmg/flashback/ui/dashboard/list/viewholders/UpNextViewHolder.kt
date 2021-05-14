@@ -5,15 +5,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import org.threeten.bp.ZoneId
 import tmg.configuration.repository.models.TimeListDisplayType
-import tmg.flashback.formula1.enums.TrackLayout
-import tmg.flashback.statistics.R
+import tmg.flashback.R
+import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.statistics.databinding.ViewSeasonListUpNextBinding
 import tmg.flashback.ui.dashboard.list.ListItem
 import tmg.flashback.statistics.ui.shared.pill.PillAdapter
 import tmg.flashback.statistics.ui.shared.pill.PillItem
-import tmg.flashback.statistics.ui.shared.timelist.TimeListAdapter
-import tmg.flashback.statistics.ui.shared.timelist.TimeListItem
-import tmg.flashback.statistics.ui.util.getFlagResourceAlpha3
+import tmg.flashback.upnext.ui.timelist.TimeListAdapter
+import tmg.flashback.upnext.ui.timelist.TimeListItem
 import tmg.utilities.extensions.views.*
 import java.util.*
 

@@ -1,11 +1,11 @@
-package tmg.flashback.statistics.extensions
+package tmg.flashback.upnext.extensions
 
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import tmg.flashback.statistics.widgets.upnext.UpNextWidgetProvider
+import tmg.flashback.upnext.widgets.UpNextWidgetProvider
 
 fun Context.updateAllWidgets() {
     updateWidgets(UpNextWidgetProvider::class.java)

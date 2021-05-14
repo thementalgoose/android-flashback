@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.map
 import tmg.core.device.managers.BuildConfigManager
 import tmg.flashback.data.db.DataRepository
 import tmg.flashback.statistics.BuildConfig
-import tmg.flashback.statistics.extensions.updateAllWidgets
+import tmg.flashback.upnext.extensions.updateAllWidgets
 import tmg.utilities.lifecycle.Event
 
 //region Inputs

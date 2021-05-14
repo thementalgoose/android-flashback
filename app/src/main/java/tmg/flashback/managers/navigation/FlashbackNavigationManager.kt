@@ -8,7 +8,6 @@ import tmg.common.constants.AboutThisAppConfig
 import tmg.common.controllers.ReleaseNotesController
 import tmg.flashback.core.managers.NavigationManager
 import tmg.flashback.rss.ui.RSSActivity
-import tmg.flashback.statistics.manager.StatisticsExternalNavigationManager
 import tmg.flashback.ui.settings.SettingsAllActivity
 import tmg.flashback.ui.SplashActivity
 import tmg.common.ui.releasenotes.ReleaseBottomSheetFragment
@@ -16,7 +15,7 @@ import tmg.flashback.statistics.ui.admin.maintenance.MaintenanceActivity
 
 class FlashbackNavigationManager(
     private val releaseNotesController: ReleaseNotesController,
-): NavigationManager, StatisticsExternalNavigationManager {
+): NavigationManager {
 
     //region NavigationManager
 
@@ -53,12 +52,4 @@ class FlashbackNavigationManager(
                 .show(activity.supportFragmentManager, "RELEASE_NOTES")
         }
     }
-
-    //endregion
-
-    override fun getRSSIntent(context: Context): Intent {
-        return Intent(context, RSSActivity::class.java)
-    }
-
-    //endregion
 }

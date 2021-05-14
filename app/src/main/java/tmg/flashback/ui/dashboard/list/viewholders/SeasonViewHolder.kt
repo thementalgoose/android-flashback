@@ -4,11 +4,12 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.toColorInt
 import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.*
-import tmg.flashback.statistics.R
-import tmg.flashback.formula1.constants.Formula1.coloursDecade
+import tmg.flashback.formula1.constants.Formula1
 import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
+import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.ViewSeasonListSeasonBinding
 import tmg.flashback.ui.dashboard.list.HeaderType
 import tmg.flashback.ui.dashboard.list.ListItem
@@ -42,7 +43,7 @@ class SeasonViewHolder(
 
         popupMenu.menu.findItem(R.id.season_list_clear_default).isEnabled = season.showClearDefault
 
-        val colour = coloursDecade["${season.season.toString().substring(0, 3)}0"]?.toColorInt() ?: ContextCompat.getColor(itemView.context, R.color.colorTheme)
+        val colour = Formula1.coloursDecade["${season.season.toString().substring(0, 3)}0"]?.toColorInt() ?: ContextCompat.getColor(itemView.context, R.color.colorTheme)
 
         binding.label.text = season.season.toString()
         binding.highlight.setCircleColour(context.theme.getColor(R.attr.backgroundPrimary))

@@ -1,4 +1,4 @@
-package tmg.flashback.statistics.ui.shared.timelist.viewholders
+package tmg.flashback.upnext.ui.timelist.viewholders
 
 import androidx.recyclerview.widget.RecyclerView
 import org.threeten.bp.LocalDate
@@ -6,20 +6,19 @@ import org.threeten.bp.LocalTime
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.configuration.repository.models.TimeListDisplayType
 import tmg.flashback.data.utils.daysBetween
-import tmg.flashback.data.utils.hoursAndMins
 import tmg.flashback.data.utils.secondsBetween
-import tmg.flashback.statistics.R
-import tmg.flashback.statistics.databinding.ViewSeasonListUpNextTimelistBinding
-import tmg.flashback.statistics.ui.shared.timelist.TimeListItem
+import tmg.flashback.upnext.R
+import tmg.flashback.upnext.databinding.ViewUpNextTimeListBinding
+import tmg.flashback.upnext.extensions.secondsToHHmm
 import tmg.utilities.extensions.ordinalAbbreviation
 import tmg.utilities.extensions.views.context
 import tmg.utilities.extensions.views.getString
 
 class TimeViewHolder(
-    private val binding: ViewSeasonListUpNextTimelistBinding
+    private val binding: ViewUpNextTimeListBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(item: TimeListItem) {
+    fun bind(item: tmg.flashback.upnext.ui.timelist.TimeListItem) {
 
         if (!item.item.timestamp.isInPast || item.itemInList == item.totalList - 1) {
             binding.container.alpha = 1.0f
@@ -92,7 +91,7 @@ class TimeViewHolder(
                         )
                     }
                     else if (localTime >= nowTime) {
-                        val (hours, minutes) = secondsBetween(nowTime, localTime).hoursAndMins
+                        val (hours, minutes) = secondsBetween(nowTime, localTime).secondsToHHmm
                         when {
                             hours > 12 -> {
                                 binding.dates.text = getString(R.string.dashboard_up_next_datetime_hour, hours)
@@ -120,7 +119,7 @@ class TimeViewHolder(
                         val (hoursSinceStart, minutesSinceStart) = secondsBetween(
                             localTime,
                             nowTime
-                        ).hoursAndMins
+                        ).secondsToHHmm
 
                         when {
                             hoursSinceStart > 0 -> {
