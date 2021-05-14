@@ -10,9 +10,4 @@ interface BuildConfigManager {
 
     val versionCode: Int
     val versionName: String
-
-    // TODO: Move this out of here!
-    fun shouldLockoutBasedOnVersion(version: Int?): Boolean {
-        return version == null || version >= versionCode || version <= 0
-    }
 }
