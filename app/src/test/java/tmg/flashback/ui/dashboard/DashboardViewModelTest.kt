@@ -50,7 +50,7 @@ internal class DashboardViewModelTest: BaseTest() {
     fun `app lockout event is fired if show is true and build config provider says version is should lockout`() = coroutineTest {
 
         every { mockDataRepository.appLockout() } returns flow { emit(expectedAppLockout) }
-        every { mockBuildConfigManager.shouldLockoutBasedOnVersion(any()) } returns true
+        every { mockBuildConfigManager.versionCode } returns expectedAppLockout.version!! - 1
 
         initSUT()
         advanceUntilIdle()
@@ -64,7 +64,7 @@ internal class DashboardViewModelTest: BaseTest() {
     fun `app lockout event is not fired if show is false and build config provider says version is should lockout`() = coroutineTest {
 
         every { mockDataRepository.appLockout() } returns flow { emit(expectedAppLockout.copy(show = false)) }
-        every { mockBuildConfigManager.shouldLockoutBasedOnVersion(any()) } returns true
+        every { mockBuildConfigManager.versionCode } returns expectedAppLockout.version!! - 1
 
         initSUT()
         advanceUntilIdle()
@@ -78,7 +78,7 @@ internal class DashboardViewModelTest: BaseTest() {
     fun `app lockout event is not fired if show is true and build config provider says version is should not lockout`() = coroutineTest {
 
         every { mockDataRepository.appLockout() } returns flow { emit(expectedAppLockout.copy()) }
-        every { mockBuildConfigManager.shouldLockoutBasedOnVersion(any()) } returns false
+        every { mockBuildConfigManager.versionCode } returns expectedAppLockout.version!! + 1
 
         initSUT()
         advanceUntilIdle()
@@ -92,7 +92,7 @@ internal class DashboardViewModelTest: BaseTest() {
     fun `app lockout event is not fired if app lockout value is null`() = coroutineTest {
 
         every { mockDataRepository.appLockout() } returns flow { emit(null) }
-        every { mockBuildConfigManager.shouldLockoutBasedOnVersion(any()) } returns true
+        every { mockBuildConfigManager.versionCode } returns expectedAppLockout.version!! - 1
 
         initSUT()
         advanceUntilIdle()

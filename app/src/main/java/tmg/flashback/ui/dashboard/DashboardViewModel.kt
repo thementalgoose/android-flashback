@@ -3,6 +3,7 @@ package tmg.flashback.ui.dashboard
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.*
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
 import tmg.configuration.controllers.ConfigController
 import kotlinx.coroutines.flow.filterNotNull
@@ -43,13 +44,9 @@ class DashboardViewModel(
 
     override val openAppLockout: LiveData<Event> = dataRepository
         .appLockout()
-        .map {
-            if (it?.show == true && buildConfigManager.shouldLockoutBasedOnVersion(it.version)) {
-                Event()
-            } else {
-                null
-            }
-        }
+        .filterNotNull()
+        .filter { it.showLockout(buildConfigManager.versionCode) }
+        .map { Event() }
         .filterNotNull()
         .asLiveData(viewModelScope.coroutineContext)
 
