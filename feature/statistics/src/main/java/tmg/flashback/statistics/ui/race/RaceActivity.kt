@@ -12,7 +12,6 @@ import org.koin.android.ext.android.inject
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.formula1.enums.TrackLayout
-import tmg.flashback.core.controllers.AppHintsController.Companion.appHintDelay
 import tmg.core.ui.base.BaseActivity
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.ActivityRaceBinding
@@ -231,9 +230,9 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
         }
 
         observeEvent(viewModel.outputs.showAppHintLongPress) {
-            Snackbar.make(binding.appbar, getString(R.string.app_hint_race_qualifying_long_click), appHintDelay)
-                .setAnchorView(binding.menu)
-                .show()
+//            Snackbar.make(binding.appbar, getString(R.string.app_hint_race_qualifying_long_click), appHintDelay)
+//                .setAnchorView(binding.menu)
+//                .show()
         }
 
 

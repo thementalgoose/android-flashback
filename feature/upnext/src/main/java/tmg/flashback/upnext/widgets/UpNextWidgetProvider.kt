@@ -25,7 +25,6 @@ import tmg.configuration.controllers.ConfigController
 import tmg.configuration.repository.models.UpNextSchedule
 import tmg.flashback.formula1.enums.TrackLayout
 import tmg.crash_reporting.controllers.CrashController
-import tmg.flashback.core.managers.NavigationManager
 import tmg.flashback.data.utils.daysBetween
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.upnext.R
@@ -39,7 +38,6 @@ class UpNextWidgetProvider : AppWidgetProvider(), KoinComponent {
     private val crashController: CrashController by inject()
     private val upNextController: UpNextController by inject()
     private val buildConfigManager: tmg.core.device.managers.BuildConfigManager by inject()
-    private val navigationManager: NavigationManager by inject()
 
     private val configController: ConfigController by inject()
 
@@ -209,7 +207,9 @@ class UpNextWidgetProvider : AppWidgetProvider(), KoinComponent {
     }
 
     private fun getOpenAppPendingIntent(context: Context): PendingIntent {
-        val intent = navigationManager.getAppStartupIntent(context)
+//        val intent = navigationManager.getAppStartupIntent(context)
+        // TODO: CHECK THIS!
+        val intent = context.packageManager.getLaunchIntentForPackage(buildConfigManager.applicationId)
         return PendingIntent.getActivity(context, 0, intent, 0)
     }
 

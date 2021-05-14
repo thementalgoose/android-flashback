@@ -9,7 +9,6 @@ import kotlinx.coroutines.flow.*
 import org.threeten.bp.LocalDate
 import androidx.lifecycle.ViewModel
 import tmg.flashback.statistics.controllers.RaceController
-import tmg.flashback.core.controllers.AppHintsController
 import tmg.flashback.data.db.stats.SeasonOverviewRepository
 import tmg.flashback.data.models.stats.*
 import tmg.core.ui.controllers.ThemeController
@@ -56,7 +55,7 @@ interface RaceViewModelOutputs {
 
 class RaceViewModel(
     private val seasonOverviewRepository: SeasonOverviewRepository,
-    private val appHintsController: AppHintsController,
+//    private val appHintsController: AppHintsController,
     private val raceController: RaceController,
     private val themeController: ThemeController,
     private val connectivityManager: tmg.core.device.managers.NetworkConnectivityManager
@@ -267,10 +266,10 @@ class RaceViewModel(
      */
     private fun appHintNotifyQualifying() {
 
-        if (appHintsController.showQualifyingLongPress) {
-            appHintsController.showQualifyingLongPress = true
-            showAppHintLongPress.value = Event()
-        }
+//        if (appHintsController.showQualifyingLongPress) {
+//            appHintsController.showQualifyingLongPress = true
+//            showAppHintLongPress.value = Event()
+//        }
     }
 
     private fun getDriverFromConstructor(round: Round, constructorId: String): List<Pair<Driver, Int>> {

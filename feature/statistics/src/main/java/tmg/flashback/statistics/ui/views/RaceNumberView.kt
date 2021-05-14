@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import tmg.flashback.statistics.R
 import tmg.utilities.extensions.dpToPx
+import tmg.utilities.extensions.getColor
 import kotlin.math.roundToInt
 
 class RaceNumberView: androidx.appcompat.widget.AppCompatTextView {
@@ -27,7 +28,7 @@ class RaceNumberView: androidx.appcompat.widget.AppCompatTextView {
     private val verticalPadding: Int = 2f.dpToPx(context.resources).roundToInt()
 
     @ColorInt
-    var colorHighlight: Int = ContextCompat.getColor(context, R.color.colorTheme)
+    var colorHighlight: Int = context.theme.getColor(R.attr.colorPrimary)
         set(value) {
             field = value
             setShadowLayer(10f, 0f, 0f, value)

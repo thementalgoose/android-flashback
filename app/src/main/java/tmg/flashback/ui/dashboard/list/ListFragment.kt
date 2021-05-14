@@ -12,20 +12,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
-import tmg.flashback.core.managers.NavigationManager
 import tmg.core.ui.base.BaseFragment
 import tmg.flashback.databinding.FragmentDashboardListBinding
 import tmg.flashback.rss.ui.RSSActivity
 import tmg.flashback.statistics.BuildConfig
 import tmg.flashback.statistics.R
+import tmg.flashback.ui.settings.SettingsAllActivity
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 
 class ListFragment: BaseFragment<FragmentDashboardListBinding>() {
 
     private val viewModel: ListViewModel by viewModel()
-
-    private val navigationManager: NavigationManager by inject()
 
     private var adapter: ListAdapter? = null
     private val dashboardNavigationCallback: tmg.flashback.ui.dashboard.DashboardNavigationCallback? get() = parentFragment as? tmg.flashback.ui.dashboard.DashboardNavigationCallback
@@ -76,7 +74,7 @@ class ListFragment: BaseFragment<FragmentDashboardListBinding>() {
 
         observeEvent(viewModel.outputs.openSettings) {
             context?.let {
-                startActivity(navigationManager.getSettingsIntent(it))
+                startActivity(Intent(it, SettingsAllActivity::class.java))
             }
         }
 

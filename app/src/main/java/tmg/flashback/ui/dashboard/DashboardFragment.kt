@@ -1,5 +1,6 @@
 package tmg.flashback.ui.dashboard
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,12 +9,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.discord.panels.OverlappingPanelsLayout
 import com.discord.panels.PanelState
-import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
+import tmg.common.ui.releasenotes.ReleaseBottomSheetFragment
 import tmg.core.ui.base.BaseFragment
 import tmg.flashback.R
-import tmg.flashback.core.managers.NavigationManager
 import tmg.flashback.databinding.FragmentDashboardBinding
+import tmg.flashback.statistics.ui.admin.maintenance.MaintenanceActivity
 import tmg.flashback.ui.dashboard.list.ListFragment
 import tmg.flashback.statistics.ui.dashboard.season.SeasonFragment
 import tmg.utilities.extensions.observeEvent
@@ -22,8 +23,6 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(),
     OverlappingPanelsLayout.PanelStateListener, DashboardNavigationCallback {
 
     private val viewModel: DashboardViewModel by viewModel()
-
-    private val navigationManager: NavigationManager by inject()
 
     private val seasonTag: String = "season"
     private val seasonFragment: SeasonFragment?
@@ -77,7 +76,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(),
 
         observeEvent(viewModel.outputs.openAppLockout) {
             activity?.let {
-                startActivity(navigationManager.getMaintenanceIntent(it))
+                startActivity(Intent(it, MaintenanceActivity::class.java))
                 it.finishAffinity()
             }
         }
@@ -85,6 +84,11 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(),
         observeEvent(viewModel.outputs.appConfigSynced) {
             listFragment?.refresh()
             seasonFragment?.refresh()
+        }
+
+        observeEvent(viewModel.outputs.openReleaseNotes) {
+            ReleaseBottomSheetFragment()
+                .show(parentFragmentManager, "RELEASE_NOTES")
         }
     }
 

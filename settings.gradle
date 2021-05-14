@@ -1,7 +1,6 @@
 rootProject.name = "android-flashback"
 
 include ':app'
-include ':base'
 
 include ':feature:common'
 include ':feature:statistics'

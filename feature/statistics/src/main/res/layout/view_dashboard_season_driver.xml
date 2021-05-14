@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         android:focusable="true"
-        android:foreground="@drawable/ripple"
+        android:foreground="@drawable/ripple_rectangle"
         android:paddingStart="@dimen/paddingNSmall"
         android:paddingTop="@dimen/paddingSmall"
         android:paddingEnd="@dimen/paddingMedium"

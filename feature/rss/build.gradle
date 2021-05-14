@@ -6,9 +6,6 @@ ext {
 }
 
 dependencies {
-    // Modules
-    api project(path: ':base')
-
     // Core modules
     implementation project(path: ':core:ads')
     implementation project(path: ':core:analytics')
