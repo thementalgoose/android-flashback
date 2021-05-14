@@ -71,7 +71,6 @@ internal class MaintenanceViewModelTest : BaseTest() {
             )
         }
         every { mockBuildConfigProvider.versionCode } returns mockAppVersion
-        every { mockBuildConfigProvider.shouldLockoutBasedOnVersion(version = any()) } returns true
     }
 
     private fun initSUT() {
@@ -88,7 +87,6 @@ internal class MaintenanceViewModelTest : BaseTest() {
                 mockAppLockoutVersionHigherThanCurrent
             )
         }
-        every { mockBuildConfigProvider.shouldLockoutBasedOnVersion(version = any()) } returns true
 
         initSUT()
         advanceUntilIdle()
@@ -106,7 +104,6 @@ internal class MaintenanceViewModelTest : BaseTest() {
                 mockAppLockoutVersionEqualToCurrent
             )
         }
-        every { mockBuildConfigProvider.shouldLockoutBasedOnVersion(version = any()) } returns true
 
         initSUT()
         advanceUntilIdle()
@@ -124,7 +121,6 @@ internal class MaintenanceViewModelTest : BaseTest() {
                 mockAppLockoutVersionLessThanCurrent
             )
         }
-        every { mockBuildConfigProvider.shouldLockoutBasedOnVersion(version = any()) } returns false
 
         initSUT()
         advanceUntilIdle()
@@ -138,7 +134,6 @@ internal class MaintenanceViewModelTest : BaseTest() {
     fun `app lockout not shown when show is true and version is null`() = coroutineTest {
 
         every { mockDataRepository.appLockout() } returns flow { emit(mockAppLockoutVersionNull) }
-        every { mockBuildConfigProvider.shouldLockoutBasedOnVersion(version = any()) } returns false
 
         initSUT()
         advanceUntilIdle()
@@ -152,7 +147,6 @@ internal class MaintenanceViewModelTest : BaseTest() {
     fun `app lockout not shown when show is false`() = coroutineTest {
 
         every { mockDataRepository.appLockout() } returns flow { emit(mockAppLockoutShowFalse) }
-        every { mockBuildConfigProvider.shouldLockoutBasedOnVersion(version = any()) } returns true
 
         initSUT()
         advanceUntilIdle()

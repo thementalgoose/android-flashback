@@ -5,28 +5,28 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
-import tmg.core.device.repository.SharedPreferenceRepository
+import tmg.core.prefs.manager.PreferenceManager
 
 internal class StatisticsRepositoryTest {
 
-    private val mockSharedPreferenceRepository: SharedPreferenceRepository = mockk(relaxed = true)
+    private val mockPreferenceManager: PreferenceManager = mockk(relaxed = true)
 
     private lateinit var sut: StatisticsRepository
 
     private fun initSUT() {
-        sut = StatisticsRepository(mockSharedPreferenceRepository)
+        sut = StatisticsRepository(mockPreferenceManager)
     }
 
     //region Show Qualifying Delta
 
     @Test
     fun `show qualifying delta reads value from preferences repository`() {
-        every { mockSharedPreferenceRepository.getBoolean(keyShowQualifyingDelta, false) } returns true
+        every { mockPreferenceManager.getBoolean(keyShowQualifyingDelta, false) } returns true
         initSUT()
 
         assertTrue(sut.showQualifyingDelta)
         verify {
-            mockSharedPreferenceRepository.getBoolean(keyShowQualifyingDelta, false)
+            mockPreferenceManager.getBoolean(keyShowQualifyingDelta, false)
         }
     }
 
@@ -36,7 +36,7 @@ internal class StatisticsRepositoryTest {
 
         sut.showQualifyingDelta = true
         verify {
-            mockSharedPreferenceRepository.save(keyShowQualifyingDelta, true)
+            mockPreferenceManager.save(keyShowQualifyingDelta, true)
         }
     }
 
@@ -46,12 +46,12 @@ internal class StatisticsRepositoryTest {
 
     @Test
     fun `fade dnf reads value from preferences repository`() {
-        every { mockSharedPreferenceRepository.getBoolean(keyFadeDNF, true) } returns true
+        every { mockPreferenceManager.getBoolean(keyFadeDNF, true) } returns true
         initSUT()
 
         assertTrue(sut.fadeDNF)
         verify {
-            mockSharedPreferenceRepository.getBoolean(keyFadeDNF, true)
+            mockPreferenceManager.getBoolean(keyFadeDNF, true)
         }
     }
 
@@ -61,7 +61,7 @@ internal class StatisticsRepositoryTest {
 
         sut.fadeDNF = true
         verify {
-            mockSharedPreferenceRepository.save(keyFadeDNF, true)
+            mockPreferenceManager.save(keyFadeDNF, true)
         }
     }
 
@@ -71,12 +71,12 @@ internal class StatisticsRepositoryTest {
 
     @Test
     fun `show list favourited reads value from preferences repository`() {
-        every { mockSharedPreferenceRepository.getBoolean(keyShowListFavourited, true) } returns true
+        every { mockPreferenceManager.getBoolean(keyShowListFavourited, true) } returns true
         initSUT()
 
         assertTrue(sut.showListFavourited)
         verify {
-            mockSharedPreferenceRepository.getBoolean(keyShowListFavourited, true)
+            mockPreferenceManager.getBoolean(keyShowListFavourited, true)
         }
     }
 
@@ -86,7 +86,7 @@ internal class StatisticsRepositoryTest {
 
         sut.showListFavourited = true
         verify {
-            mockSharedPreferenceRepository.save(keyShowListFavourited, true)
+            mockPreferenceManager.save(keyShowListFavourited, true)
         }
     }
 
@@ -96,12 +96,12 @@ internal class StatisticsRepositoryTest {
 
     @Test
     fun `show list all reads value from preferences repository`() {
-        every { mockSharedPreferenceRepository.getBoolean(keyShowListAll, true) } returns true
+        every { mockPreferenceManager.getBoolean(keyShowListAll, true) } returns true
         initSUT()
 
         assertTrue(sut.showListAll)
         verify {
-            mockSharedPreferenceRepository.getBoolean(keyShowListAll, true)
+            mockPreferenceManager.getBoolean(keyShowListAll, true)
         }
     }
 
@@ -111,7 +111,7 @@ internal class StatisticsRepositoryTest {
 
         sut.showListAll = true
         verify {
-            mockSharedPreferenceRepository.save(keyShowListAll, true)
+            mockPreferenceManager.save(keyShowListAll, true)
         }
     }
 
@@ -121,12 +121,12 @@ internal class StatisticsRepositoryTest {
 
     @Test
     fun `show grid penalties in qualifying reads value from preferences repository`() {
-        every { mockSharedPreferenceRepository.getBoolean(keyShowGridPenaltiesInQualifying, true) } returns true
+        every { mockPreferenceManager.getBoolean(keyShowGridPenaltiesInQualifying, true) } returns true
         initSUT()
 
         assertTrue(sut.showGridPenaltiesInQualifying)
         verify {
-            mockSharedPreferenceRepository.getBoolean(keyShowGridPenaltiesInQualifying, true)
+            mockPreferenceManager.getBoolean(keyShowGridPenaltiesInQualifying, true)
         }
     }
 
@@ -136,7 +136,7 @@ internal class StatisticsRepositoryTest {
 
         sut.showGridPenaltiesInQualifying = true
         verify {
-            mockSharedPreferenceRepository.save(keyShowGridPenaltiesInQualifying, true)
+            mockPreferenceManager.save(keyShowGridPenaltiesInQualifying, true)
         }
     }
 
@@ -146,11 +146,11 @@ internal class StatisticsRepositoryTest {
 
     @Test
     fun `favourite seasons reads value from preferences repository`() {
-        every { mockSharedPreferenceRepository.getSet(keyFavouriteSeasons, emptySet()) } returns mutableSetOf("2013")
+        every { mockPreferenceManager.getSet(keyFavouriteSeasons, emptySet()) } returns mutableSetOf("2013")
         initSUT()
         assertEquals(mutableSetOf(2013), sut.favouriteSeasons)
         verify {
-            mockSharedPreferenceRepository.save(keyFavouriteSeasons, emptySet())
+            mockPreferenceManager.save(keyFavouriteSeasons, emptySet())
         }
     }
 
@@ -159,7 +159,7 @@ internal class StatisticsRepositoryTest {
         initSUT()
         sut.favouriteSeasons = setOf(2012)
         verify {
-            mockSharedPreferenceRepository.save(keyFavouriteSeasons, setOf("2012"))
+            mockPreferenceManager.save(keyFavouriteSeasons, setOf("2012"))
         }
     }
 
@@ -169,21 +169,21 @@ internal class StatisticsRepositoryTest {
 
     @Test
     fun `default stream will return null if value is not specified`() {
-        every { mockSharedPreferenceRepository.getInt(keyDefaultSeason, -1) } returns -1
+        every { mockPreferenceManager.getInt(keyDefaultSeason, -1) } returns -1
         initSUT()
         assertNull(sut.defaultSeason)
         verify {
-            mockSharedPreferenceRepository.getInt(keyDefaultSeason, -1)
+            mockPreferenceManager.getInt(keyDefaultSeason, -1)
         }
     }
 
     @Test
     fun `default stream will return value if value is specified`() {
-        every { mockSharedPreferenceRepository.getInt(keyDefaultSeason, -1) } returns 123
+        every { mockPreferenceManager.getInt(keyDefaultSeason, -1) } returns 123
         initSUT()
         assertEquals(123, sut.defaultSeason)
         verify {
-            mockSharedPreferenceRepository.getInt(keyDefaultSeason, -1)
+            mockPreferenceManager.getInt(keyDefaultSeason, -1)
         }
     }
 
@@ -192,7 +192,7 @@ internal class StatisticsRepositoryTest {
         initSUT()
         sut.defaultSeason = null
         verify {
-            mockSharedPreferenceRepository.save(keyDefaultSeason, -1)
+            mockPreferenceManager.save(keyDefaultSeason, -1)
         }
     }
 
@@ -201,7 +201,7 @@ internal class StatisticsRepositoryTest {
         initSUT()
         sut.defaultSeason = 123
         verify {
-            mockSharedPreferenceRepository.save(keyDefaultSeason, 123)
+            mockPreferenceManager.save(keyDefaultSeason, 123)
         }
     }
 
@@ -211,12 +211,12 @@ internal class StatisticsRepositoryTest {
 
     @Test
     fun `widget open app reads value from preferences repository`() {
-        every { mockSharedPreferenceRepository.getBoolean(keyWidgetOpenApp, true) } returns true
+        every { mockPreferenceManager.getBoolean(keyWidgetOpenApp, true) } returns true
         initSUT()
 
         assertTrue(sut.widgetOpenApp)
         verify {
-            mockSharedPreferenceRepository.getBoolean(keyWidgetOpenApp, true)
+            mockPreferenceManager.getBoolean(keyWidgetOpenApp, true)
         }
     }
 
@@ -226,7 +226,7 @@ internal class StatisticsRepositoryTest {
 
         sut.widgetOpenApp = true
         verify {
-            mockSharedPreferenceRepository.save(keyWidgetOpenApp, true)
+            mockPreferenceManager.save(keyWidgetOpenApp, true)
         }
     }
     //endregion

@@ -35,14 +35,14 @@ class StatisticsRepository(
      * Show the favourited bottom sheet section expanded by default
      */
     var showListFavourited: Boolean
-        get() = preferenceManager.getBoolean(keyShowListFavourited, false)
+        get() = preferenceManager.getBoolean(keyShowListFavourited, true)
         set(value) = preferenceManager.save(keyShowListFavourited, value)
 
     /**
      * Show the all bottom sheet section expanded by default
      */
     var showListAll: Boolean
-        get() = preferenceManager.getBoolean(keyShowListAll, false)
+        get() = preferenceManager.getBoolean(keyShowListAll, true)
         set(value) = preferenceManager.save(keyShowListAll, value)
 
     /**

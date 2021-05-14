@@ -71,7 +71,7 @@ class MaintenanceViewModel(
 
     override val returnToHome: LiveData<Event> = appLockedData
         .filter {
-            it?.show != true || !buildConfigProvider.shouldLockoutBasedOnVersion(it.version)
+            it == null || !it.showLockout(buildConfigProvider.versionCode)
         }
         .map { Event() }
         .asLiveData(viewModelScope.coroutineContext)
