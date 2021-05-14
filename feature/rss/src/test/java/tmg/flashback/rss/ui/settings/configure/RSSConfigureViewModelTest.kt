@@ -13,6 +13,7 @@ import tmg.flashback.rss.testutils.BaseTest
 import tmg.flashback.rss.testutils.assertDataEventValue
 import tmg.flashback.rss.testutils.assertListDoesNotMatchItem
 import tmg.flashback.rss.testutils.test
+import tmg.testutils.BaseTest
 
 class RSSConfigureViewModelTest: BaseTest() {
 

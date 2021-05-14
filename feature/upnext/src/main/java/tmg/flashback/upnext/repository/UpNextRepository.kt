@@ -1,5 +1,9 @@
 package tmg.flashback.upnext.repository
 
-class UpNextRepository {
+import tmg.configuration.controllers.ConfigController
+
+class UpNextRepository(
+    private val configController: ConfigController
+) {
 
 }
