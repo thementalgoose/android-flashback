@@ -1,15 +1,11 @@
-package tmg.flashback.statistics.ui.settings
+package tmg.flashback.ui.settings
 
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.controllers.FeatureController
-import tmg.flashback.testutils.BaseTest
-import tmg.flashback.testutils.assertDataEventValue
-import tmg.flashback.testutils.test
-import tmg.flashback.ui.settings.Category
-import tmg.flashback.ui.settings.SettingsAllViewModel
+import tmg.testutils.BaseTest
 
 internal class SettingsAllViewModelTest: BaseTest() {
 
