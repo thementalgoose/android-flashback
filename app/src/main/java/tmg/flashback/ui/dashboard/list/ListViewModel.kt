@@ -3,9 +3,9 @@ package tmg.flashback.ui.dashboard.list
 import androidx.lifecycle.*
 import kotlinx.coroutines.flow.combine
 import tmg.configuration.repository.models.TimeListDisplayType
-import tmg.flashback.controllers.FeatureController
 import tmg.flashback.statistics.R
 import androidx.lifecycle.ViewModel
+import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.statistics.controllers.SeasonController
 import tmg.flashback.upnext.controllers.UpNextController
 import tmg.utilities.lifecycle.DataEvent
@@ -48,7 +48,7 @@ interface ListViewModelOutputs {
 class ListViewModel(
         private val seasonController: SeasonController,
         private val upNextController: UpNextController,
-        private val featureController: FeatureController
+        private val rssController: RSSController
 ) : ViewModel(), ListViewModelInputs, ListViewModelOutputs {
 
     private var selectionHeaderFavouited: MutableLiveData<Boolean> =
@@ -77,7 +77,7 @@ class ListViewModel(
 
         // Extra buttons
         val buttonsList = mutableListOf<ListItem.Button>().apply {
-            if (featureController.rssEnabled) {
+            if (rssController.enabled) {
                 add(
                     ListItem.Button(
                         itemId = "rss",

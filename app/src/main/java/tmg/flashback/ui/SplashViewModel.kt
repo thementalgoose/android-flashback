@@ -10,6 +10,7 @@ import tmg.configuration.controllers.ConfigController
 import tmg.flashback.BuildConfig
 import tmg.flashback.controllers.FeatureController
 import tmg.flashback.managers.appshortcuts.AppShortcutManager
+import tmg.flashback.rss.controllers.RSSController
 import tmg.utilities.lifecycle.Event
 
 //region Inputs
@@ -33,7 +34,7 @@ interface SplashViewModelOutputs {
 
 class SplashViewModel(
     private val shortcutManager: AppShortcutManager,
-    private val featureController: FeatureController,
+    private val rssController: RSSController,
     private val configurationController: ConfigController
 ): ViewModel(), SplashViewModelInputs, SplashViewModelOutputs {
 
@@ -89,7 +90,7 @@ class SplashViewModel(
     private fun performConfigUpdates() {
 
         // Shortcuts for RSS
-        when (featureController.rssEnabled) {
+        when (rssController.enabled) {
             true -> shortcutManager.enable()
             false -> shortcutManager.disable()
         }

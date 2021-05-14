@@ -3,7 +3,7 @@ package tmg.flashback.rss.network
 import kotlinx.coroutines.flow.*
 import retrofit2.HttpException
 import tmg.flashback.rss.BuildConfig
-import tmg.flashback.rss.controllers.RSSFeedController
+import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.rss.network.apis.convert
 import tmg.flashback.rss.network.shared.RssXMLRetrofit
 import tmg.flashback.rss.network.shared.buildRetrofit
@@ -21,7 +21,7 @@ import javax.xml.stream.XMLStreamException
 
 class RSS(
     private val repository: RSSRepository,
-    private val rssFeedController: RSSFeedController
+    private val rssFeedController: RSSController
 ) : RssAPI {
 
     private val xmlRetrofit: RssXMLRetrofit = buildRetrofit(true)

@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import tmg.flashback.rss.R
-import tmg.flashback.rss.controllers.RSSFeedController
+import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.rss.repo.RSSRepository
 import tmg.flashback.rss.repo.model.SupportedArticleSource
 import tmg.utilities.lifecycle.DataEvent
@@ -31,7 +31,7 @@ interface RSSConfigureViewModelOutputs {
 
 class RSSConfigureViewModel(
     private val repository: RSSRepository,
-    private val rssFeedController: RSSFeedController
+    private val rssFeedController: RSSController
 ) : ViewModel(), RSSConfigureViewModelInputs, RSSConfigureViewModelOutputs {
 
     var inputs: RSSConfigureViewModelInputs = this

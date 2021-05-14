@@ -12,7 +12,6 @@ import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.core.ui.base.BaseFragment
 import tmg.flashback.R
-import tmg.flashback.controllers.FeatureController
 import tmg.flashback.core.managers.NavigationManager
 import tmg.flashback.databinding.FragmentDashboardBinding
 import tmg.flashback.ui.dashboard.list.ListFragment
@@ -25,7 +24,6 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(),
     private val viewModel: DashboardViewModel by viewModel()
 
     private val navigationManager: NavigationManager by inject()
-    private val featureController: FeatureController by inject()
 
     private val seasonTag: String = "season"
     private val seasonFragment: SeasonFragment?
@@ -47,9 +45,9 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(),
         binding.panels.setEndPanelLockState(lockState = OverlappingPanelsLayout.LockState.CLOSE)
         binding.panels.registerStartPanelStateListeners(this)
 
-        if (!featureController.calendarDashboardEnabled) {
-            binding.navigation.menu.removeItem(R.id.nav_calendar)
-        }
+//        if (!featureController.calendarDashboardEnabled) {
+//            binding.navigation.menu.removeItem(R.id.nav_calendar)
+//        }
 
         binding.navigation.setOnNavigationItemSelectedListener {
             return@setOnNavigationItemSelectedListener when (it.itemId) {
@@ -58,12 +56,12 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(),
                     true
                 }
                 R.id.nav_calendar -> {
-                    if (featureController.calendarDashboardEnabled) {
+//                    if (featureController.calendarDashboardEnabled) {
                         seasonFragment?.selectCalendar()
                         true
-                    } else {
-                        false
-                    }
+//                    } else {
+//                        false
+//                    }
                 }
                 R.id.nav_drivers -> {
                     seasonFragment?.selectDrivers()

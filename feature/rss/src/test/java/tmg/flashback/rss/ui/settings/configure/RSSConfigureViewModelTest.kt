@@ -6,7 +6,7 @@ import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.rss.R
-import tmg.flashback.rss.controllers.RSSFeedController
+import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.rss.prefs.RSSRepositoryI
 import tmg.flashback.rss.repo.model.SupportedArticleSource
 import tmg.flashback.rss.testutils.BaseTest
@@ -19,7 +19,7 @@ class RSSConfigureViewModelTest: BaseTest() {
     lateinit var sut: RSSConfigureViewModel
 
     private val mock: RSSRepositoryI = mockk(relaxed = true)
-    private val mockRssFeedController: RSSFeedController = mockk(relaxed = true)
+    private val mockRssFeedController: RSSController = mockk(relaxed = true)
 
     private val mockSupportedArticle = SupportedArticleSource("https://www.test.com/rss", "", "https://www.test.com", "", "", "", "https://www.test.com/contact")
     private val mockListOfSupportedArticles: List<SupportedArticleSource> = listOf(mockSupportedArticle)

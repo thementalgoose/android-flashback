@@ -2,13 +2,14 @@ package tmg.core.device.controllers
 
 import org.threeten.bp.LocalDate
 import tmg.core.device.managers.BuildConfigManager
+import tmg.core.device.repository.DeviceRepository
 
 /**
  * Controller to handle device prefs and actions that
  *  may require perminent storage
  */
 class DeviceController(
-    private val deviceRepository: tmg.core.device.repository.DeviceRepository,
+    private val deviceRepository: DeviceRepository,
     private val buildConfigManager: BuildConfigManager
 ) {
     /**

@@ -7,17 +7,19 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
+import tmg.configuration.controllers.ConfigController
+import tmg.configuration.repository.models.SupportedSource
 import tmg.flashback.rss.repo.model.SupportedArticleSource
 import tmg.flashback.rss.testutils.BaseTest
 
-internal class RSSFeedControllerTest: BaseTest() {
+internal class RSSControllerTest: BaseTest() {
 
-    private val mockConfigurationController: ConfigurationController = mockk(relaxed = true)
+    private val mockConfigurationController: ConfigController = mockk(relaxed = true)
 
-    private lateinit var sut: RSSFeedController
+    private lateinit var sut: RSSController
 
     private fun initSUT() {
-        sut = RSSFeedController(mockConfigurationController)
+        sut = RSSController(mockConfigurationController)
     }
 
     @Test

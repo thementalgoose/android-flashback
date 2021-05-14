@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeParseException
-import tmg.flashback.rss.controllers.RSSFeedController
+import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.rss.network.apis.model.RssXMLModel
 import tmg.flashback.rss.network.apis.model.RssXMLModelChannel
 import tmg.flashback.rss.network.apis.model.RssXMLModelItem
@@ -16,7 +16,7 @@ import tmg.flashback.rss.testutils.BaseTest
 
 internal class RssXMLConverterTest: BaseTest() {
 
-    private val mockRssFeedController: RSSFeedController = mockk(relaxed = true)
+    private val mockRssFeedController: RSSController = mockk(relaxed = true)
     private val source = "https://www.test.com"
 
     @Test

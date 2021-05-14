@@ -3,7 +3,7 @@ package tmg.flashback.rss.network.apis
 import android.util.Log
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
-import tmg.flashback.rss.controllers.RSSFeedController
+import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.rss.network.apis.model.RssXMLModel
 import tmg.flashback.rss.network.apis.model.RssXMLModelItem
 import tmg.flashback.rss.repo.model.Article
@@ -13,7 +13,7 @@ import java.net.URL
 
 private const val dateFormat = "EEE, d MMM yyyy HH:mm:ss Z"
 
-fun RssXMLModel.convert(rssFeedController: RSSFeedController, fromSource: String, showDescription: Boolean): List<Article> {
+fun RssXMLModel.convert(rssFeedController: RSSController, fromSource: String, showDescription: Boolean): List<Article> {
 
     if (this.channel == null) {
         Log.e("Flashback", "Failed to parse RSS model from channel $fromSource")
