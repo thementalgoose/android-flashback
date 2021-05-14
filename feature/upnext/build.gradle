@@ -2,8 +2,6 @@ apply from: rootDir.absolutePath + "/base.gradle"
 
 dependencies {
 
-    api project(path: ':base')
-
     // Formula 1 base data
     implementation project(path: ':feature:formula1')
 

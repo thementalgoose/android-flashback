@@ -7,15 +7,15 @@ import org.koin.core.component.KoinApiExtension
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import tmg.configuration.controllers.ConfigController
-import tmg.flashback.core.managers.NavigationManager
 import tmg.flashback.statistics.R
+import tmg.flashback.statistics.StatisticsNavigationManager
 import tmg.flashback.statistics.databinding.*
 import tmg.flashback.statistics.ui.shared.sync.viewholders.*
 
 @KoinApiExtension
 abstract class SyncAdapter<T> : RecyclerView.Adapter<RecyclerView.ViewHolder>(), KoinComponent {
 
-    private val navigationManager: NavigationManager by inject()
+    private val navigationManager: StatisticsNavigationManager by inject()
     private val configurationController: ConfigController by inject()
 
     abstract var list: List<T>

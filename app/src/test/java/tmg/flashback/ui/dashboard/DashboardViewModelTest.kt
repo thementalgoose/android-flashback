@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.flow
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import tmg.common.controllers.ReleaseNotesController
 import tmg.configuration.controllers.ConfigController
 import tmg.core.device.managers.BuildConfigManager
 import tmg.flashback.data.db.DataRepository
@@ -25,10 +26,12 @@ internal class DashboardViewModelTest: BaseTest() {
     private val mockDataRepository: DataRepository = mockk(relaxed = true)
     private val mockBuildConfigManager: BuildConfigManager = mockk(relaxed = true)
     private val mockConfigurationController: ConfigController = mockk(relaxed = true)
+    private val mockReleaseNotesCOntroller: ReleaseNotesController = mockk(relaxed = true)
 
     @BeforeEach
     internal fun setUp() {
         coEvery { mockConfigurationController.applyPending() } returns false
+        every { mockReleaseNotesCOntroller.pendingReleaseNotes } returns false
     }
 
     private fun initSUT() {
@@ -36,7 +39,8 @@ internal class DashboardViewModelTest: BaseTest() {
             mockContext,
             mockDataRepository,
             mockBuildConfigManager,
-            mockConfigurationController
+            mockConfigurationController,
+            mockReleaseNotesCOntroller
         )
     }
 
@@ -125,6 +129,28 @@ internal class DashboardViewModelTest: BaseTest() {
 
         sut.outputs.appConfigSynced.test {
             assertEventFired()
+        }
+    }
+
+    //endregion
+
+    //region Release notes
+
+    @Test
+    fun `init if release notes are pending then open release notes is fired`() {
+        every { mockReleaseNotesCOntroller.pendingReleaseNotes } returns true
+        initSUT()
+        sut.outputs.openReleaseNotes.test {
+            assertEventFired()
+        }
+    }
+
+    @Test
+    fun `init if release notes are not pending then open release notes not fired`() {
+        every { mockReleaseNotesCOntroller.pendingReleaseNotes } returns false
+        initSUT()
+        sut.outputs.openReleaseNotes.test {
+            assertEventNotFired()
         }
     }
 

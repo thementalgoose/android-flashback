@@ -43,7 +43,7 @@ class SeasonViewHolder(
 
         popupMenu.menu.findItem(R.id.season_list_clear_default).isEnabled = season.showClearDefault
 
-        val colour = Formula1.coloursDecade["${season.season.toString().substring(0, 3)}0"]?.toColorInt() ?: ContextCompat.getColor(itemView.context, R.color.colorTheme)
+        val colour = Formula1.coloursDecade["${season.season.toString().substring(0, 3)}0"]?.toColorInt() ?: context.theme.getColor(R.attr.colorPrimary)
 
         binding.label.text = season.season.toString()
         binding.highlight.setCircleColour(context.theme.getColor(R.attr.backgroundPrimary))

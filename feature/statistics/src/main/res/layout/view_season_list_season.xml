@@ -8,7 +8,7 @@
     android:layout_marginEnd="@dimen/paddingNSmall"
     android:clickable="true"
     android:focusable="true"
-    android:foreground="@drawable/ripple">
+    android:foreground="@drawable/ripple_rectangle">
 
     <View
         android:id="@+id/pipeTop"
@@ -49,7 +49,7 @@
         android:id="@+id/more"
         android:layout_width="@dimen/bottomSheetIconSize"
         android:layout_height="0dp"
-        android:background="@drawable/ripple_rounded"
+        android:background="@drawable/ripple_rounded_small"
         android:contentDescription="@string/ab_season_list_more"
         android:paddingStart="@dimen/paddingSmall"
         android:paddingTop="@dimen/paddingSmall"
@@ -65,7 +65,7 @@
         android:id="@+id/favourite"
         android:layout_width="@dimen/bottomSheetIconSize"
         android:layout_height="0dp"
-        android:background="@drawable/ripple_rounded"
+        android:background="@drawable/ripple_rounded_small"
         android:contentDescription="@string/ab_season_list_favourite"
         android:paddingStart="@dimen/paddingSmall"
         android:paddingTop="@dimen/paddingSmall"

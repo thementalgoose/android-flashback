@@ -3,7 +3,6 @@ package tmg.common.controllers
 import tmg.common.constants.Releases
 import tmg.common.repository.ReleaseNotesRepository
 import tmg.core.device.managers.BuildConfigManager
-import tmg.flashback.core.repositories.CoreRepository
 
 /**
  * Controller around release notes being displayed in the app

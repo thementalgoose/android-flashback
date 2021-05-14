@@ -26,7 +26,7 @@ val statisticsModule = module {
     viewModel { ConstructorViewModel(get(), get()) }
     viewModel { DriverViewModel(get(), get()) }
     viewModel { DriverSeasonViewModel(get(), get(), get()) }
-    viewModel { RaceViewModel(get(), get(), get(), get(), get()) }
+    viewModel { RaceViewModel(get(), get(), get(), get()) }
 
     single { RaceController(get()) }
     single { SeasonController(get(), get()) }
