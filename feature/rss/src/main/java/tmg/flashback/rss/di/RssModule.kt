@@ -2,7 +2,7 @@ package tmg.flashback.rss.di
 
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
-import tmg.flashback.rss.controllers.RSSFeedController
+import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.rss.network.RSS
 import tmg.flashback.rss.repo.RSSRepository
 import tmg.flashback.rss.repo.RssAPI
@@ -23,7 +23,7 @@ val rssModule = module {
     // Managers
 
     // Controllers
-    single { RSSFeedController(get()) }
+    single { RSSController(get()) }
 
     // Repositories
     single { RSSRepository(get()) }

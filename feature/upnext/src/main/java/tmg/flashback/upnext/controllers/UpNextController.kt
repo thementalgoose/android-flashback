@@ -27,6 +27,7 @@ class UpNextController(
     // item 0 :yesterday
     // item 1 :today, today2
     // item 2: tomorrow
+    // TODO: Move this to a repository layer
     fun getNextEvent(): UpNextSchedule? {
 
         return configurationController

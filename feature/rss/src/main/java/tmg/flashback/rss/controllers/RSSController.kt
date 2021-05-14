@@ -5,9 +5,14 @@ import tmg.flashback.rss.repo.model.SupportedArticleSource
 import java.net.MalformedURLException
 import java.net.URL
 
-class RSSFeedController(
-    val configurationController: ConfigController
+class RSSController(
+    private val configurationController: ConfigController
 ) {
+
+    /**
+     * If the feature is enabled or not
+     */
+    val enabled: Boolean = configurationController.rss
 
     /**
      * Get a list of all the supported sources in the app
@@ -29,7 +34,8 @@ class RSSFeedController(
     /**
      * Determine if we should show adding custom rss feeds functionality
      */
-    val showAddCustomFeeds: Boolean = configurationController.rssAddCustom
+    val showAddCustomFeeds: Boolean
+        get() = configurationController.rssAddCustom
 
     private val fallbackUrls: Map<String, String> = mapOf(
         "bbc.co.uk" to "https://www.bbc.co.uk",
