@@ -10,7 +10,6 @@ import tmg.utilities.extensions.observe
 
 class SettingsAllFragment: SettingsFragment<SettingsAllViewModel>() {
 
-
     override val viewModel: SettingsAllViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
