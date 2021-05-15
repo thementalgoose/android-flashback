@@ -12,37 +12,48 @@ import org.threeten.bp.DayOfWeek
 import org.threeten.bp.LocalDate
 import org.threeten.bp.Month
 import org.threeten.bp.temporal.TemporalAdjusters
-import tmg.flashback.statistics.controllers.NotificationController.Companion.daysUntilDataProvidedBannerMovedToBottom
+import tmg.core.analytics.manager.AnalyticsManager
+import tmg.core.device.controllers.DeviceController
+import tmg.core.device.managers.NetworkConnectivityManager
+import tmg.core.ui.controllers.ThemeController
 import tmg.core.ui.model.AnimationSpeed
 import tmg.flashback.data.db.stats.HistoryRepository
 import tmg.flashback.data.db.stats.SeasonOverviewRepository
 import tmg.flashback.data.models.stats.History
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
-import tmg.flashback.controllers.FeatureController
 import tmg.flashback.statistics.*
 import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
 import tmg.flashback.statistics.constants.ViewType
-import tmg.flashback.statistics.controllers.NotificationController
 import tmg.flashback.statistics.controllers.SeasonController
-import tmg.flashback.statistics.testutils.*
-import tmg.flashback.statistics.testutils.BaseTest
-import tmg.flashback.statistics.testutils.assertEventFired
-import tmg.flashback.statistics.testutils.test
+import tmg.flashback.statistics.controllers.UserNotificationController
+import tmg.flashback.statistics.ui.dashboard.season.SeasonViewModel.Companion.daysUntilDataProvidedBannerMovedToBottom
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
+import tmg.notifications.controllers.NotificationController
+import tmg.testutils.BaseTest
+import tmg.testutils.livedata.assertDataEventValue
+import tmg.testutils.livedata.assertEventFired
+import tmg.testutils.livedata.assertListContainsItem
+import tmg.testutils.livedata.assertListDoesNotMatchItem
+import tmg.testutils.livedata.assertListExcludesItem
+import tmg.testutils.livedata.assertListHasFirstItem
+import tmg.testutils.livedata.assertListHasLastItem
+import tmg.testutils.livedata.assertListHasSublist
+import tmg.testutils.livedata.assertListMatchesItem
+import tmg.testutils.livedata.test
+import tmg.utilities.models.StringHolder
 
 internal class SeasonViewModelTest: BaseTest() {
 
     lateinit var sut: SeasonViewModel
 
-    private val mockDeviceController: tmg.core.device.controllers.DeviceController = mockk(relaxed = true)
-    private val mockAppearanceController: AppearanceController = mockk(relaxed = true)
-    private val mockFeatureController: tmg.flashback.controllers.FeatureController = mockk(relaxed = true)
+    private val mockDeviceController: DeviceController = mockk(relaxed = true)
+    private val mockThemeController: ThemeController = mockk(relaxed = true)
     private val mockHistoryRepository: HistoryRepository = mockk(relaxed = true)
     private val mockSeasonOverviewRepository: SeasonOverviewRepository = mockk(relaxed = true)
     private val mockSeasonController: SeasonController = mockk(relaxed = true)
-    private val mockNotificationController: NotificationController = mockk(relaxed = true)
-    private val mockNetworkConnectivityManager: tmg.core.device.managers.NetworkConnectivityManager = mockk(relaxed = true)
-    private val mockAnalyticsController: AnalyticsController = mockk(relaxed = true)
+    private val mockNotificationController: UserNotificationController = mockk(relaxed = true)
+    private val mockNetworkConnectivityManager: NetworkConnectivityManager = mockk(relaxed = true)
+    private val mockAnalyticsController: AnalyticsManager = mockk(relaxed = true)
 
     @BeforeEach
     internal fun setUp() {
@@ -50,7 +61,7 @@ internal class SeasonViewModelTest: BaseTest() {
 
         every { mockNetworkConnectivityManager.isConnected } returns true
 
-        every { mockAppearanceController.animationSpeed } returns AnimationSpeed.NONE
+        every { mockThemeController.animationSpeed } returns AnimationSpeed.NONE
         every { mockSeasonOverviewRepository.getSeasonOverview(any()) } returns flow { emit(mockSeason) }
         every { mockHistoryRepository.historyFor(any()) } returns flow { emit(mockHistory) }
     }
@@ -58,7 +69,7 @@ internal class SeasonViewModelTest: BaseTest() {
     private fun initSUT() {
         sut = SeasonViewModel(
             mockDeviceController,
-            mockAppearanceController,
+            mockThemeController,
             mockHistoryRepository,
             mockSeasonOverviewRepository,
             mockNotificationController,

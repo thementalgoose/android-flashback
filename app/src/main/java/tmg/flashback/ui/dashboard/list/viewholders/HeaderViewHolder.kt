@@ -3,7 +3,7 @@ package tmg.flashback.ui.dashboard.list.viewholders
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.R
-import tmg.flashback.statistics.databinding.ViewSeasonListHeaderBinding
+import tmg.flashback.databinding.ViewSeasonListHeaderBinding
 import tmg.flashback.ui.dashboard.list.HeaderType
 import tmg.flashback.ui.dashboard.list.ListItem
 import tmg.utilities.extensions.views.getString

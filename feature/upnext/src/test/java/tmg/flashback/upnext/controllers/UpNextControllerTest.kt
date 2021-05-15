@@ -7,26 +7,25 @@ import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
 import org.threeten.bp.format.DateTimeFormatter
-import tmg.configuration.controllers.ConfigController
-import tmg.configuration.repository.models.UpNextSchedule
-import tmg.configuration.repository.models.UpNextScheduleTimestamp
 import tmg.flashback.formula1.model.Timestamp
+import tmg.flashback.upnext.repository.UpNextRepository
+import tmg.flashback.upnext.repository.model.UpNextSchedule
+import tmg.flashback.upnext.repository.model.UpNextScheduleTimestamp
 import tmg.testutils.BaseTest
 
 internal class UpNextControllerTest : BaseTest() {
 
-    private var mockRemoteConfigRepository: ConfigController = mockk(relaxed = true)
-//    private var mockCoreRepository: CoreRepository = mockk(relaxed = true)
+    private var mockUpNextRepository: UpNextRepository = mockk(relaxed = true)
 
     private lateinit var sut: UpNextController
 
     private fun initSUT() {
-        sut = UpNextController(mockRemoteConfigRepository)
+        sut = UpNextController(mockUpNextRepository)
     }
 
     @Test
     fun `no next race if remote config is empty`() {
-        every { mockRemoteConfigRepository.upNext } returns emptyList()
+        every { mockUpNextRepository.upNext } returns emptyList()
         initSUT()
 
         assertNull(sut.getNextEvent())
@@ -39,7 +38,7 @@ internal class UpNextControllerTest : BaseTest() {
             generateUpNextItem(-2 to "12:00", -1 to "10:00")
         )
 
-        every { mockRemoteConfigRepository.upNext } returns list
+        every { mockUpNextRepository.upNext } returns list
         initSUT()
 
         assertNull(sut.getNextEvent())
@@ -52,7 +51,7 @@ internal class UpNextControllerTest : BaseTest() {
             expected,
             generateUpNextItem(3 to "10:00")
         )
-        every { mockRemoteConfigRepository.upNext } returns list
+        every { mockUpNextRepository.upNext } returns list
         initSUT()
 
         assertEquals(expected, sut.getNextEvent())
@@ -65,7 +64,7 @@ internal class UpNextControllerTest : BaseTest() {
             expected,
             generateUpNextItem(-1 to "10:00")
         )
-        every { mockRemoteConfigRepository.upNext } returns list
+        every { mockUpNextRepository.upNext } returns list
         initSUT()
 
         assertEquals(expected, sut.getNextEvent())
@@ -78,7 +77,7 @@ internal class UpNextControllerTest : BaseTest() {
             expected,
             generateUpNextItem(-1 to "10:00")
         )
-        every { mockRemoteConfigRepository.upNext } returns list
+        every { mockUpNextRepository.upNext } returns list
         initSUT()
 
         assertEquals(expected, sut.getNextEvent())
@@ -90,7 +89,7 @@ internal class UpNextControllerTest : BaseTest() {
             generateUpNextItem(-3 to "10:00"),
             expected
         )
-        every { mockRemoteConfigRepository.upNext } returns list
+        every { mockUpNextRepository.upNext } returns list
         initSUT()
 
         assertEquals(expected, sut.getNextEvent())
@@ -107,7 +106,7 @@ internal class UpNextControllerTest : BaseTest() {
             generateUpNextItem(2 to "11:00")
         )
 
-        every { mockRemoteConfigRepository.upNext } returns list
+        every { mockUpNextRepository.upNext } returns list
         initSUT()
 
         assertEquals(expected, sut.getNextEvent())
@@ -141,7 +140,7 @@ internal class UpNextControllerTest : BaseTest() {
             )
         )
         initSUT()
-        every { mockRemoteConfigRepository.upNext } returns list
+        every { mockUpNextRepository.upNext } returns list
 
         assertEquals(list[1], sut.getNextEvent())
     }
@@ -172,7 +171,7 @@ internal class UpNextControllerTest : BaseTest() {
             )
         )
         initSUT()
-        every { mockRemoteConfigRepository.upNext } returns list
+        every { mockUpNextRepository.upNext } returns list
 
         assertEquals(list[1], sut.getNextEvent())
     }
@@ -203,7 +202,7 @@ internal class UpNextControllerTest : BaseTest() {
             )
         )
         initSUT()
-        every { mockRemoteConfigRepository.upNext } returns list
+        every { mockUpNextRepository.upNext } returns list
 
         assertEquals(list[1], sut.getNextEvent())
     }
@@ -234,7 +233,7 @@ internal class UpNextControllerTest : BaseTest() {
             )
         )
         initSUT()
-        every { mockRemoteConfigRepository.upNext } returns list
+        every { mockUpNextRepository.upNext } returns list
 
         assertEquals(list[1], sut.getNextEvent())
     }
@@ -265,7 +264,7 @@ internal class UpNextControllerTest : BaseTest() {
             )
         )
         initSUT()
-        every { mockRemoteConfigRepository.upNext } returns list
+        every { mockUpNextRepository.upNext } returns list
 
         assertEquals(list[2], sut.getNextEvent())
     }
@@ -274,6 +273,7 @@ internal class UpNextControllerTest : BaseTest() {
 
     //region Up Next Display Type
 
+    // TODO: Re-enable support for this preference!
 //    @Test
 //    fun `up next display type reads value from core`() {
 //        every { mockCoreRepository.displayListTypePref } returns TimeListDisplayType.LOCAL

@@ -4,9 +4,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import tmg.configuration.repository.models.TimeListDisplayType
-import tmg.flashback.statistics.R
-import tmg.flashback.statistics.databinding.*
+import tmg.flashback.R
+import tmg.flashback.databinding.ViewSeasonListButtonBinding
+import tmg.flashback.databinding.ViewSeasonListDividerBinding
+import tmg.flashback.databinding.ViewSeasonListHeaderBinding
+import tmg.flashback.databinding.ViewSeasonListHeroBinding
+import tmg.flashback.databinding.ViewSeasonListSeasonBinding
+import tmg.flashback.databinding.ViewSeasonListUpNextBinding
+import tmg.flashback.upnext.repository.model.TimeListDisplayType
 
 class ListAdapter(
     var featureToggled: (type: HeaderType) -> Unit,

@@ -12,15 +12,15 @@ import tmg.flashback.data.db.stats.CircuitRepository
 import tmg.flashback.data.models.stats.Circuit
 import tmg.flashback.data.models.stats.CircuitRace
 import tmg.flashback.formula1.enums.TrackLayout
-import tmg.flashback.formula1.extensions.circuitIcon
-import tmg.flashback.statistics.testutils.BaseTest
-import tmg.flashback.statistics.testutils.assertDataEventMatches
-import tmg.flashback.statistics.testutils.assertEventFired
-import tmg.flashback.statistics.testutils.assertListContainsItem
-import tmg.flashback.statistics.testutils.assertListHasSublist
-import tmg.flashback.statistics.testutils.assertListNotEmpty
-import tmg.flashback.statistics.testutils.test
+import tmg.flashback.statistics.extensions.circuitIcon
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
+import tmg.testutils.BaseTest
+import tmg.testutils.livedata.assertDataEventMatches
+import tmg.testutils.livedata.assertEventFired
+import tmg.testutils.livedata.assertListContainsItem
+import tmg.testutils.livedata.assertListHasSublist
+import tmg.testutils.livedata.assertListNotEmpty
+import tmg.testutils.livedata.test
 
 internal class CircuitInfoViewModelTest: BaseTest() {
 

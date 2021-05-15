@@ -1,10 +1,8 @@
 package tmg.core.ui.settings
 
-import io.mockk.verify
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import tmg.testutils.BaseTest
-import tmg.testutils.livedata.assertDataEventValue
 import tmg.testutils.livedata.test
 import tmg.testutils.livedata.testObserve
 

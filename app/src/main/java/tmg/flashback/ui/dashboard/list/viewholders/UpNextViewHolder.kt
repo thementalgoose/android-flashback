@@ -4,21 +4,21 @@ import android.annotation.SuppressLint
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import org.threeten.bp.ZoneId
-import tmg.configuration.repository.models.TimeListDisplayType
 import tmg.flashback.R
+import tmg.flashback.databinding.ViewSeasonListUpNextBinding
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
-import tmg.flashback.statistics.databinding.ViewSeasonListUpNextBinding
 import tmg.flashback.ui.dashboard.list.ListItem
 import tmg.flashback.statistics.ui.shared.pill.PillAdapter
 import tmg.flashback.statistics.ui.shared.pill.PillItem
+import tmg.flashback.upnext.repository.model.TimeListDisplayType
 import tmg.flashback.upnext.ui.timelist.TimeListAdapter
 import tmg.flashback.upnext.ui.timelist.TimeListItem
 import tmg.utilities.extensions.views.*
 import java.util.*
 
 class UpNextViewHolder(
-    private val binding: ViewSeasonListUpNextBinding,
-    private val timeFilterCallback: (TimeListDisplayType) -> Unit
+        private val binding: ViewSeasonListUpNextBinding,
+        private val timeFilterCallback: (TimeListDisplayType) -> Unit
 ) : RecyclerView.ViewHolder(binding.root), (PillItem) -> Unit {
 
     private lateinit var upNext: ListItem.UpNext

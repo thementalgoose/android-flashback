@@ -14,6 +14,8 @@ import org.threeten.bp.temporal.TemporalAdjusters
 import tmg.core.analytics.manager.AnalyticsManager
 import tmg.flashback.formula1.constants.Formula1.constructorChampionshipStarts
 import androidx.lifecycle.ViewModel
+import tmg.core.device.controllers.DeviceController
+import tmg.core.device.managers.NetworkConnectivityManager
 import tmg.flashback.data.db.stats.HistoryRepository
 import tmg.flashback.data.db.stats.SeasonOverviewRepository
 import tmg.flashback.data.models.stats.*
@@ -65,14 +67,14 @@ interface SeasonViewModelOutputs {
 //endregion
 
 class SeasonViewModel(
-    private val deviceController: tmg.core.device.controllers.DeviceController,
-    private val themeController: ThemeController,
-    private val historyRepository: HistoryRepository,
-    private val seasonOverviewRepository: SeasonOverviewRepository,
-    private val notificationController: UserNotificationController,
-    private val seasonController: SeasonController,
-    private val networkConnectivityManager: tmg.core.device.managers.NetworkConnectivityManager,
-    private val analyticsManager: AnalyticsManager
+        private val deviceController: DeviceController,
+        private val themeController: ThemeController,
+        private val historyRepository: HistoryRepository,
+        private val seasonOverviewRepository: SeasonOverviewRepository,
+        private val notificationController: UserNotificationController,
+        private val seasonController: SeasonController,
+        private val networkConnectivityManager: NetworkConnectivityManager,
+        private val analyticsManager: AnalyticsManager
 ): ViewModel(), SeasonViewModelInputs, SeasonViewModelOutputs {
 
     private val showBannerAtTop: Boolean = showBannerAtTop()
@@ -387,5 +389,9 @@ class SeasonViewModel(
                 )
             }
             .sortedByDescending { it.points }
+    }
+
+    companion object {
+        const val daysUntilDataProvidedBannerMovedToBottom: Int = 5
     }
 }

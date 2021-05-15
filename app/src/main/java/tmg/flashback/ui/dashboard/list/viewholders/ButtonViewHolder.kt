@@ -2,7 +2,7 @@ package tmg.flashback.ui.dashboard.list.viewholders
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import tmg.flashback.statistics.databinding.ViewSeasonListButtonBinding
+import tmg.flashback.databinding.ViewSeasonListButtonBinding
 import tmg.flashback.ui.dashboard.list.ListItem
 
 class ButtonViewHolder(

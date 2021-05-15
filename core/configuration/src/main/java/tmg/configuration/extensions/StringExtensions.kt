@@ -14,3 +14,14 @@ inline fun <reified T> String.toJson(): T? {
         null
     }
 }
+fun <T> String.toJson(clazz: Class<T>): T? {
+    if (this.isEmpty()) {
+        return null
+    }
+    val gson = Gson()
+    return try {
+        gson.fromJson(this, clazz)
+    } catch (e: JsonSyntaxException) {
+        null
+    }
+}

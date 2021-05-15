@@ -1,19 +1,16 @@
 package tmg.flashback.statistics.ui.settings.statistics
 
-import androidx.annotation.StringRes
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.core.ui.settings.SettingsModel
+import tmg.core.ui.testutils.assertExpectedOrder
+import tmg.core.ui.testutils.findPref
+import tmg.core.ui.testutils.findSwitch
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.controllers.RaceController
 import tmg.flashback.statistics.controllers.SeasonController
-import tmg.flashback.statistics.testutils.assertExpectedOrder
-import tmg.flashback.statistics.testutils.findPref
-import tmg.flashback.statistics.testutils.findSwitch
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertEventFired
 import tmg.testutils.livedata.test

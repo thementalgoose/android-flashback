@@ -2,12 +2,12 @@ package tmg.flashback.ui.dashboard.list
 
 import androidx.lifecycle.*
 import kotlinx.coroutines.flow.combine
-import tmg.configuration.repository.models.TimeListDisplayType
 import tmg.flashback.statistics.R
 import androidx.lifecycle.ViewModel
 import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.statistics.controllers.SeasonController
 import tmg.flashback.upnext.controllers.UpNextController
+import tmg.flashback.upnext.repository.model.TimeListDisplayType
 import tmg.utilities.lifecycle.DataEvent
 import tmg.utilities.lifecycle.Event
 

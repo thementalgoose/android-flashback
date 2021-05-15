@@ -5,19 +5,20 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
-import tmg.flashback.data.repositories.AppRepository
+import tmg.configuration.controllers.ConfigController
 import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
-import tmg.flashback.statistics.testutils.BaseTest
+import tmg.flashback.statistics.repository.StatisticsRepository
+import tmg.testutils.BaseTest
 
 internal class SeasonControllerTest: BaseTest() {
 
-    private var mockAppRepository: AppRepository = mockk(relaxed = true)
-    private var mockRemoteConfigRepository: ConfigurationController = mockk(relaxed = true)
+    private var mockStatisticsRepository: StatisticsRepository = mockk(relaxed = true)
+    private var mockRemoteConfigRepository: ConfigController = mockk(relaxed = true)
 
     private lateinit var sut: SeasonController
 
     private fun initSUT() {
-        sut = SeasonController(mockAppRepository, mockRemoteConfigRepository)
+        sut = SeasonController(mockStatisticsRepository, mockRemoteConfigRepository)
     }
 
     //region Default year
@@ -26,7 +27,7 @@ internal class SeasonControllerTest: BaseTest() {
     fun `returns current year if supported season list is empty`() {
         every { mockRemoteConfigRepository.supportedSeasons } returns emptySet()
         every { mockRemoteConfigRepository.defaultSeason } returns 2018
-        every { mockAppRepository.defaultSeason } returns 2017
+        every { mockStatisticsRepository.defaultSeason } returns 2017
         initSUT()
 
         assertEquals(currentSeasonYear, sut.defaultSeason)
@@ -36,7 +37,7 @@ internal class SeasonControllerTest: BaseTest() {
     fun `returns user defined value if its supported`() {
         every { mockRemoteConfigRepository.supportedSeasons } returns setOf(2017, 2018)
         every { mockRemoteConfigRepository.defaultSeason } returns 2018
-        every { mockAppRepository.defaultSeason } returns 2017
+        every { mockStatisticsRepository.defaultSeason } returns 2017
         initSUT()
 
         assertEquals(2017, sut.defaultSeason)
@@ -46,12 +47,12 @@ internal class SeasonControllerTest: BaseTest() {
     fun `runs clear default method if user defined value found to be invalid`() {
         every { mockRemoteConfigRepository.supportedSeasons } returns setOf(2019)
         every { mockRemoteConfigRepository.defaultSeason } returns 2018
-        every { mockAppRepository.defaultSeason } returns 2017
+        every { mockStatisticsRepository.defaultSeason } returns 2017
         initSUT()
 
         assertEquals(2019, sut.defaultSeason)
         verify {
-            mockAppRepository.defaultSeason = null
+            mockStatisticsRepository.defaultSeason = null
         }
     }
 
@@ -59,7 +60,7 @@ internal class SeasonControllerTest: BaseTest() {
     fun `if user defined value invalid, return server value if in supported seasons`() {
         every { mockRemoteConfigRepository.supportedSeasons } returns setOf(2018,2019)
         every { mockRemoteConfigRepository.defaultSeason } returns 2018
-        every { mockAppRepository.defaultSeason } returns 1921
+        every { mockStatisticsRepository.defaultSeason } returns 1921
         initSUT()
 
         assertEquals(2018, sut.defaultSeason)
@@ -69,7 +70,7 @@ internal class SeasonControllerTest: BaseTest() {
     fun `if user defined value is null, return server value if in supported seasons`() {
         every { mockRemoteConfigRepository.supportedSeasons } returns setOf(2018,2019)
         every { mockRemoteConfigRepository.defaultSeason } returns 2018
-        every { mockAppRepository.defaultSeason } returns null
+        every { mockStatisticsRepository.defaultSeason } returns null
         initSUT()
 
         assertEquals(2018, sut.defaultSeason)
@@ -79,7 +80,7 @@ internal class SeasonControllerTest: BaseTest() {
     fun `if user defined value invalid or null, return max in supported seasons value if server value is not valid`() {
         every { mockRemoteConfigRepository.supportedSeasons } returns setOf(2018,2019)
         every { mockRemoteConfigRepository.defaultSeason } returns 2017
-        every { mockAppRepository.defaultSeason } returns null
+        every { mockStatisticsRepository.defaultSeason } returns null
         initSUT()
 
         assertEquals(2019, sut.defaultSeason)
@@ -90,7 +91,7 @@ internal class SeasonControllerTest: BaseTest() {
         initSUT()
         sut.clearDefault()
         verify {
-            mockAppRepository.defaultSeason = null
+            mockStatisticsRepository.defaultSeason = null
         }
     }
 
@@ -99,7 +100,7 @@ internal class SeasonControllerTest: BaseTest() {
         initSUT()
         sut.setUserDefaultSeason(2018)
         verify {
-            mockAppRepository.defaultSeason = 2018
+            mockStatisticsRepository.defaultSeason = 2018
         }
     }
 
@@ -115,21 +116,21 @@ internal class SeasonControllerTest: BaseTest() {
 
     @Test
     fun `is user defined season value set value`() {
-        every { mockAppRepository.defaultSeason } returns 2018
+        every { mockStatisticsRepository.defaultSeason } returns 2018
         initSUT()
         assertTrue(sut.isUserDefinedValueSet)
         verify {
-            mockAppRepository.defaultSeason
+            mockStatisticsRepository.defaultSeason
         }
     }
 
     @Test
     fun `is user defined season value set null`() {
-        every { mockAppRepository.defaultSeason } returns null
+        every { mockStatisticsRepository.defaultSeason } returns null
         initSUT()
         assertFalse(sut.isUserDefinedValueSet)
         verify {
-            mockAppRepository.defaultSeason
+            mockStatisticsRepository.defaultSeason
         }
     }
 
@@ -154,52 +155,52 @@ internal class SeasonControllerTest: BaseTest() {
 
     @Test
     fun `default show favourites section true`() {
-        every { mockAppRepository.showListFavourited } returns true
+        every { mockStatisticsRepository.showListFavourited } returns true
         initSUT()
 
         assertTrue(sut.favouritesExpanded)
-        verify { mockAppRepository.showListFavourited }
+        verify { mockStatisticsRepository.showListFavourited }
     }
 
     @Test
     fun `default show favourites section false`() {
-        every { mockAppRepository.showListFavourited } returns false
+        every { mockStatisticsRepository.showListFavourited } returns false
         initSUT()
 
         assertFalse(sut.favouritesExpanded)
-        verify { mockAppRepository.showListFavourited }
+        verify { mockStatisticsRepository.showListFavourited }
     }
 
     @Test
     fun `default show favourites update interacts with prefs`() {
         initSUT()
         sut.favouritesExpanded = true
-        verify { mockAppRepository.showListFavourited = true }
+        verify { mockStatisticsRepository.showListFavourited = true }
     }
 
     @Test
     fun `default show all section true`() {
-        every { mockAppRepository.showListAll } returns true
+        every { mockStatisticsRepository.showListAll } returns true
         initSUT()
 
         assertTrue(sut.allExpanded)
-        verify { mockAppRepository.showListAll }
+        verify { mockStatisticsRepository.showListAll }
     }
 
     @Test
     fun `default show all section false`() {
-        every { mockAppRepository.showListAll } returns false
+        every { mockStatisticsRepository.showListAll } returns false
         initSUT()
 
         assertFalse(sut.allExpanded)
-        verify { mockAppRepository.showListAll }
+        verify { mockStatisticsRepository.showListAll }
     }
 
     @Test
     fun `default show all update interacts with prefs`() {
         initSUT()
         sut.allExpanded = true
-        verify { mockAppRepository.showListAll = true }
+        verify { mockStatisticsRepository.showListAll = true }
     }
 
     //endregion
@@ -208,16 +209,16 @@ internal class SeasonControllerTest: BaseTest() {
 
     @Test
     fun `favourites returns from prefs`() {
-        every { mockAppRepository.favouriteSeasons } returns setOf(2018)
+        every { mockStatisticsRepository.favouriteSeasons } returns setOf(2018)
         initSUT()
 
         assertEquals(setOf(2018), sut.favouriteSeasons)
-        verify { mockAppRepository.favouriteSeasons }
+        verify { mockStatisticsRepository.favouriteSeasons }
     }
 
     @Test
     fun `is favourited checks prefs`() {
-        every { mockAppRepository.favouriteSeasons } returns setOf(2018)
+        every { mockStatisticsRepository.favouriteSeasons } returns setOf(2018)
         initSUT()
 
         assertFalse(sut.isFavourite(2017))
@@ -226,31 +227,31 @@ internal class SeasonControllerTest: BaseTest() {
 
     @Test
     fun `toggle season removes or adds properly`() {
-        every { mockAppRepository.favouriteSeasons } returns setOf(2019)
+        every { mockStatisticsRepository.favouriteSeasons } returns setOf(2019)
         initSUT()
 
         sut.toggleFavourite(2018)
-        verify { mockAppRepository.favouriteSeasons = setOf(2019, 2018) }
+        verify { mockStatisticsRepository.favouriteSeasons = setOf(2019, 2018) }
         sut.toggleFavourite(2019)
-        verify { mockAppRepository.favouriteSeasons = emptySet() }
+        verify { mockStatisticsRepository.favouriteSeasons = emptySet() }
     }
 
     @Test
     fun `add favourite adds to prefs`() {
-        every { mockAppRepository.favouriteSeasons } returns setOf(2017)
+        every { mockStatisticsRepository.favouriteSeasons } returns setOf(2017)
         initSUT()
 
         sut.addFavourite(2019)
-        verify { mockAppRepository.favouriteSeasons = setOf(2017, 2019) }
+        verify { mockStatisticsRepository.favouriteSeasons = setOf(2017, 2019) }
     }
 
     @Test
     fun `remove favourite removes from prefs`() {
-        every { mockAppRepository.favouriteSeasons } returns setOf(2017, 2019)
+        every { mockStatisticsRepository.favouriteSeasons } returns setOf(2017, 2019)
         initSUT()
 
         sut.removeFavourite(2019)
-        verify { mockAppRepository.favouriteSeasons = setOf(2017) }
+        verify { mockStatisticsRepository.favouriteSeasons = setOf(2017) }
     }
 
     //endregion

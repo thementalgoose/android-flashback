@@ -4,14 +4,15 @@ import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.configuration.controllers.ConfigController
-import tmg.configuration.repository.models.TimeListDisplayType
-import tmg.configuration.repository.models.UpNextSchedule
+import tmg.flashback.upnext.repository.UpNextRepository
+import tmg.flashback.upnext.repository.model.TimeListDisplayType
+import tmg.flashback.upnext.repository.model.UpNextSchedule
 
 /**
  * Up Next functionality on the home screen
  */
 class UpNextController(
-    private val configurationController: ConfigController
+    private val upNextRepository: UpNextRepository
 ) {
 
     /**
@@ -30,7 +31,7 @@ class UpNextController(
     // TODO: Move this to a repository layer
     fun getNextEvent(): UpNextSchedule? {
 
-        return configurationController
+        return upNextRepository
             .upNext
             .filter { schedule ->
                 schedule.values.any { it.timestamp.originalDate >= LocalDate.now() }
