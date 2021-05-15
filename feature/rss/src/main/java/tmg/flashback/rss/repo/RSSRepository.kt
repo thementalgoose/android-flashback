@@ -1,16 +1,52 @@
 package tmg.flashback.rss.repo
 
+import tmg.configuration.controllers.ConfigController
+import tmg.flashback.rss.repo.json.SupportedSourcesJson
+import tmg.flashback.rss.repo.model.SupportedSource
 import tmg.core.prefs.manager.PreferenceManager
+import tmg.flashback.rss.repo.converters.convert
 
 class RSSRepository(
-    private val preferenceManager: PreferenceManager
+    private val preferenceManager: PreferenceManager,
+    private val configController: ConfigController
 ) {
 
     companion object {
+
+        // Config
+        private const val keyRss: String = "rss"
+        private const val keyRssAddCustom: String = "rss_add_custom"
+        private const val keyRssSupportedSources: String = "rss_supported_sources"
+
+        // Prefs
         private const val keyRssList: String = "RSS_LIST"
         private const val keyRssShowDescription: String = "NEWS_SHOW_DESCRIPTIONS"
         private const val keyInAppEnableJavascript: String = "IN_APP_ENABLE_JAVASCRIPT"
         private const val keyNewsOpenInExternalBrowser: String = "NEWS_OPEN_IN_EXTERNAL_BROWSER"
+    }
+
+    /**
+     * Is the RSS feature enabled
+     */
+    val enabled: Boolean by lazy {
+        configController.getBoolean(keyRss)
+    }
+
+    /**
+     * Is the RSS add custom rss feeds feature enabled
+     */
+    val addCustom: Boolean by lazy {
+        configController.getBoolean(keyRssAddCustom)
+    }
+
+    /**
+     * RSS supported sources for the quick add section
+     */
+    val supportedSources: List<SupportedSource> by lazy {
+        configController
+                .getJson<SupportedSourcesJson>(keyRssSupportedSources)
+                ?.convert()
+                ?: emptyList()
     }
 
     /**

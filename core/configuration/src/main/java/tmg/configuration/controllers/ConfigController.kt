@@ -5,7 +5,6 @@ import tmg.configuration.extensions.toJson
 import tmg.configuration.services.RemoteConfigService
 import tmg.configuration.repository.ConfigRepository
 import tmg.configuration.repository.models.ForceUpgrade
-import tmg.configuration.repository.models.SupportedSource
 
 /**
  * Remote config variables and storage data
@@ -95,12 +94,6 @@ class ConfigController(
     val dashboardCalendar: Boolean get() = configRepository.dashboardCalendar
 
     val dataProvidedBy: String get() = configRepository.dataProvidedBy
-
-    val rss: Boolean get() = configRepository.rss
-
-    val rssAddCustom: Boolean get() = configRepository.rssAddCustom
-
-    val rssSupportedSources: List<SupportedSource> get() = configRepository.rssSupportedSources
 
     //endregion
 }

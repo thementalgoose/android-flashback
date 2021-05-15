@@ -257,98 +257,14 @@ internal class ConfigRepositoryTest {
 
     //endregion
 
-    //region Up Next
-
-    @Test
-    fun `up next`() {
-        TODO("Implement me!")
-    }
-
-    //endregion
-
-    //region RSS
-
-    @Test
-    fun `rss calls remote config`() {
-        every { mockRemoteConfigService.getBoolean(keyRss) } returns true
-        initSUT()
-        assertTrue(sut.rss)
-        verify {
-            mockRemoteConfigService.getBoolean(keyRss)
-        }
-    }
-
-    @Test
-    fun `rss value doesnt change when called again`() {
-        every { mockRemoteConfigService.getBoolean(keyRss) } returns true
-        initSUT()
-
-        assertTrue(sut.rss)
-        verify {
-            mockRemoteConfigService.getBoolean(keyRss)
-        }
-
-        every { mockRemoteConfigService.getBoolean(keyRss) } returns false
-        assertTrue(sut.rss)
-        verify(exactly = 0) {
-            mockRemoteConfigService.getBoolean(keyRss)
-        }
-    }
-
-    //endregion
-
-    //region RSS Add Custom
-
-    @Test
-    fun `rss add custom calls remote config`() {
-        every { mockRemoteConfigService.getBoolean(keyRssAddCustom) } returns true
-        initSUT()
-        assertTrue(sut.rssAddCustom)
-        verify {
-            mockRemoteConfigService.getBoolean(keyRssAddCustom)
-        }
-    }
-
-    @Test
-    fun `rss add custom value doesnt change when called again`() {
-        every { mockRemoteConfigService.getBoolean(keyRssAddCustom) } returns true
-        initSUT()
-
-        assertTrue(sut.rssAddCustom)
-        verify {
-            mockRemoteConfigService.getBoolean(keyRssAddCustom)
-        }
-
-        every { mockRemoteConfigService.getBoolean(keyRssAddCustom) } returns false
-        assertTrue(sut.rssAddCustom)
-        verify(exactly = 0) {
-            mockRemoteConfigService.getBoolean(keyRssAddCustom)
-        }
-    }
-
-    //endregion
-
-    //region RSS Supported Sources
-
-    @Test
-    fun `rss supported seasons`() {
-        TODO("Implement me!")
-    }
-
-    //endregion
-
     companion object {
         private const val keyRemoteConfigSync: String = "REMOTE_CONFIG_SYNC_COUNT"
 
         private const val keyDefaultYear: String = "default_year"
-        private const val keyUpNext: String = "up_next"
         private const val keyDefaultBanner: String = "banner"
         private const val keyForceUpgrade: String = "force_upgrade"
         private const val keyDataProvidedBy: String = "data_provided"
         private const val keySupportedSeasons: String = "supported_seasons"
         private const val keyDashboardCalendar: String = "dashboard_calendar"
-        private const val keyRss: String = "rss"
-        private const val keyRssAddCustom: String = "rss_add_custom"
-        private const val keyRssSupportedSources: String = "rss_supported_sources"
     }
 }

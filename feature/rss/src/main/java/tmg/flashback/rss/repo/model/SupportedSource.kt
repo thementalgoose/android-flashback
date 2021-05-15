@@ -1,4 +1,4 @@
-package tmg.configuration.repository.models
+package tmg.flashback.rss.repo.model
 
 data class SupportedSource(
     val rssLink: String,
