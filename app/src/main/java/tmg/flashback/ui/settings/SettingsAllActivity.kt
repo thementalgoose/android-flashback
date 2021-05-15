@@ -47,13 +47,13 @@ class SettingsAllActivity: BaseActivity(), NavController.OnDestinationChangedLis
     override fun onDestinationChanged(controller: NavController, destination: NavDestination, arguments: Bundle?) {
         when (destination.id) {
             R.id.settingsFragment -> updateTitle(R.string.settings_title)
-            R.id.settingsAboutFragment -> updateTitle(R.string.settings_all_about)
-//            R.id.settingsCustomisationFragment -> updateTitle(R.string.settings_customisation)
-//            R.id.settingsDeviceFragment -> updateTitle(R.string.settings_device)
-            R.id.settingsNotificationFragment -> updateTitle(R.string.settings_notifications_title)
-            R.id.settingsStatisticsFragment -> updateTitle(R.string.settings_statistics)
+            R.id.settingsAppearanceFragment -> updateTitle(R.string.settings_all_appearance)
+            R.id.settingsStatisticsFragment -> updateTitle(R.string.settings_all_statistics)
             R.id.rssSettingsFragment -> updateTitle(R.string.settings_rss_title)
             R.id.rssSettingsConfigureFragment -> updateTitle(R.string.settings_rss_configure)
+            R.id.settingsNotificationFragment -> updateTitle(R.string.settings_all_notifications)
+            R.id.settingsSupportFragment -> updateTitle(R.string.settings_all_support)
+            R.id.settingsAboutFragment -> updateTitle(R.string.settings_all_about)
         }
         swipeDismissLock = when (destination.id) {
             R.id.settingsFragment -> {

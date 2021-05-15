@@ -28,7 +28,7 @@ class StatisticsRepository(
      * Fade the race results where the driver results in DNF
      */
     var fadeDNF: Boolean
-        get() = preferenceManager.getBoolean(keyFadeDNF, false)
+        get() = preferenceManager.getBoolean(keyFadeDNF, true)
         set(value) = preferenceManager.save(keyFadeDNF, value)
 
     /**
@@ -49,7 +49,7 @@ class StatisticsRepository(
      * Show grid penalties in qualifying
      */
     var showGridPenaltiesInQualifying: Boolean
-        get() = preferenceManager.getBoolean(keyShowGridPenaltiesInQualifying, false)
+        get() = preferenceManager.getBoolean(keyShowGridPenaltiesInQualifying, true)
         set(value) = preferenceManager.save(keyShowGridPenaltiesInQualifying, value)
 
     /**

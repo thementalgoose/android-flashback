@@ -7,7 +7,7 @@ import tmg.core.ui.settings.SettingsFragment
 
 class SettingsSupportFragment: SettingsFragment<SettingsSupportViewModel>() {
 
-    override val vm: SettingsSupportViewModel by viewModel()
+    override val viewModel: SettingsSupportViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

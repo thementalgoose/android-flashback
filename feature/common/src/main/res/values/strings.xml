@@ -3,18 +3,16 @@
 
     <!-- All -->
     <string name="settings_all_title">Settings</string>
-    <string name="settings_all_customisation">Appearance</string>
-    <string name="settings_all_customisation_subtitle">Theme and animation preferences</string>
+    <string name="settings_all_appearance">Appearance</string>
+    <string name="settings_all_appearance_subtitle">Theme and animation preferences</string>
     <string name="settings_all_statistics">Statistics</string>
     <string name="settings_all_statistics_subtitle">Customise how our race data is displayed to you</string>
-    <string name="settings_all_notifications">Notifications</string>
-    <string name="settings_all_notifications_subtitle">Customise what notifications you receive</string>
-    <string name="settings_all_widgets">Widgets</string>
-    <string name="settings_all_widgets_subtitle">Widget preferences</string>
     <string name="settings_all_rss">RSS</string>
     <string name="settings_all_rss_subtitle">Browser and RSS preferences</string>
-    <string name="settings_all_device">Support</string>
-    <string name="settings_all_device_subtitle">General app settings for crash reporting, analytics, etc.</string>
+    <string name="settings_all_notifications">Notifications</string>
+    <string name="settings_all_notifications_subtitle">Customise what notifications you receive</string>
+    <string name="settings_all_support">Support</string>
+    <string name="settings_all_support_subtitle">General app settings for crash reporting, analytics, etc.</string>
     <string name="settings_all_about">About</string>
     <string name="settings_all_about_subtitle">About Flashback</string>
 

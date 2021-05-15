@@ -8,16 +8,16 @@ import tmg.utilities.extensions.observeEvent
 
 class SettingsAppearanceFragment: SettingsFragment<SettingsAppearanceViewModel>() {
 
-    override val vm: SettingsAppearanceViewModel by viewModel()
+    override val viewModel: SettingsAppearanceViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        observeEvent(vm.outputs.openTheme) {
+        observeEvent(viewModel.outputs.openTheme) {
             TODO("Event")
         }
 
-        observeEvent(vm.outputs.openAnimationSpeed) {
+        observeEvent(viewModel.outputs.openAnimationSpeed) {
             TODO("Event")
         }
     }

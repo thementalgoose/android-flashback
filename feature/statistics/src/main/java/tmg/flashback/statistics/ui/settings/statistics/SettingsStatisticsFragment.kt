@@ -10,12 +10,12 @@ import tmg.utilities.extensions.observeEvent
 
 class SettingsStatisticsFragment: SettingsFragment<SettingsStatisticsViewModel>() {
 
-    override val vm: SettingsStatisticsViewModel by viewModel()
+    override val viewModel: SettingsStatisticsViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        observeEvent(vm.outputs.defaultSeasonChanged) {
+        observeEvent(viewModel.outputs.defaultSeasonChanged) {
             Snackbar.make(view, R.string.settings_default_season_updated, Snackbar.LENGTH_SHORT).show()
         }
     }

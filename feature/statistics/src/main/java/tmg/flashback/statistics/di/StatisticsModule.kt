@@ -17,6 +17,7 @@ import tmg.flashback.statistics.ui.overview.constructor.ConstructorViewModel
 import tmg.flashback.statistics.ui.overview.driver.DriverViewModel
 import tmg.flashback.statistics.ui.overview.driver.season.DriverSeasonViewModel
 import tmg.flashback.statistics.ui.race.RaceViewModel
+import tmg.flashback.statistics.ui.settings.statistics.SettingsStatisticsViewModel
 
 val statisticsModule = module {
 
@@ -27,6 +28,8 @@ val statisticsModule = module {
     viewModel { DriverViewModel(get(), get()) }
     viewModel { DriverSeasonViewModel(get(), get(), get()) }
     viewModel { RaceViewModel(get(), get(), get(), get()) }
+
+    viewModel { SettingsStatisticsViewModel(get(), get()) }
 
     single { RaceController(get()) }
     single { SeasonController(get(), get()) }
