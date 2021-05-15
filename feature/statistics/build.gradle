@@ -6,7 +6,7 @@ dependencies {
     implementation project(path: ':feature:formula1')
 
     // Firebase module
-    implementation project(path: ':feature:statistics_data_firebase')
+    implementation project(path: ':feature:statistics-data-firebase')
 
     // Core modules
     implementation project(path: ':core:ads')

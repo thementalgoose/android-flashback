@@ -3,7 +3,7 @@ apply from: rootDir.absolutePath + "/base.gradle"
 dependencies {
 
     // Modules
-    api project(path: ':feature:statistics_data')
+    api project(path: ':feature:statistics-data')
 
     // Explicit crash reporting link
     implementation project(path: ':core:crash-reporting')
