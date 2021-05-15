@@ -48,30 +48,30 @@ jobs:
             echo "lines_core_ui=$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                            | grep -E '^core/ui/' -c)" >> $GITHUB_ENV
 
       # Unit Tests
-      - name: Unit tests - app
-        run: ./gradlew :app:testMockDebugUnitTest
-        if: ${{ env.lines_app != 0 }}
-      - name: Unit tests - feature:common
-        run: ./gradlew :feature:common:testDebugUnitTest
-        if: ${{ env.lines_feature_common != 0 }}
-      - name: Unit tests - feature:formula1
-        run: ./gradlew :feature:formula1:testDebugUnitTest
-        if: ${{ env.lines_feature_formula1 != 0 }}
-      - name: Unit tests - feature:rss
-        run: ./gradlew :feature:rss:testDebugUnitTest
-        if: ${{ env.lines_feature_rss != 0 }}
-      - name: Unit tests - feature:statistics
-        run: ./gradlew :feature:statistics:testDebugUnitTest
-        if: ${{ env.lines_feature_statistics != 0 }}
-      - name: Unit tests - feature:statistics_data
-        run: ./gradlew :feature:statistics_data:testDebugUnitTest
-        if: ${{ env.lines_feature_statistics_data != 0 }}
-      - name: Unit tests - feature:statistics_data_firebase
-        run: ./gradlew :feature:statistics_data_firebase:testDebugUnitTest
-        if: ${{ env.lines_feature_statistics_data_firebase != 0 }}
-      - name: Unit tests - feature:upnext
-        run: ./gradlew :feature:upnext:testDebugUnitTest
-        if: ${{ env.lines_feature_upnext != 0 }}
+#      - name: Unit tests - app
+#        run: ./gradlew :app:testMockDebugUnitTest
+#        if: ${{ env.lines_app != 0 }}
+#      - name: Unit tests - feature:common
+#        run: ./gradlew :feature:common:testDebugUnitTest
+#        if: ${{ env.lines_feature_common != 0 }}
+#      - name: Unit tests - feature:formula1
+#        run: ./gradlew :feature:formula1:testDebugUnitTest
+#        if: ${{ env.lines_feature_formula1 != 0 }}
+#      - name: Unit tests - feature:rss
+#        run: ./gradlew :feature:rss:testDebugUnitTest
+#        if: ${{ env.lines_feature_rss != 0 }}
+#      - name: Unit tests - feature:statistics
+#        run: ./gradlew :feature:statistics:testDebugUnitTest
+#        if: ${{ env.lines_feature_statistics != 0 }}
+#      - name: Unit tests - feature:statistics_data
+#        run: ./gradlew :feature:statistics_data:testDebugUnitTest
+#        if: ${{ env.lines_feature_statistics_data != 0 }}
+#      - name: Unit tests - feature:statistics_data_firebase
+#        run: ./gradlew :feature:statistics_data_firebase:testDebugUnitTest
+#        if: ${{ env.lines_feature_statistics_data_firebase != 0 }}
+#      - name: Unit tests - feature:upnext
+#        run: ./gradlew :feature:upnext:testDebugUnitTest
+#        if: ${{ env.lines_feature_upnext != 0 }}
       - name: Unit tests - core:ads
         run: ./gradlew :core:ads:testDebugUnitTest
         if: ${{ env.lines_core_ads != 0 }}
@@ -103,7 +103,14 @@ jobs:
         run: ./gradlew :core:ui:testDebugUnitTest
         if: ${{ env.lines_core_ui != 0 }}
 
-#      # Leaving comment if failed
+      # Leaving comment if failed
+      - name: Publish Unit Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v1.17
+        if: always()
+        with:
+          files: |
+            **/test-results/**/*.xml
+
 #      - name: Notify PR
 #        if: ${{ failure() }}
 #        uses: peter-evans/commit-comment@v1

@@ -10,7 +10,7 @@ import org.junit.jupiter.params.provider.CsvSource
 import tmg.configuration.controllers.ConfigController
 import tmg.configuration.repository.models.SupportedSource
 import tmg.flashback.rss.repo.model.SupportedArticleSource
-import tmg.flashback.rss.testutils.BaseTest
+import tmg.testutils.BaseTest
 
 internal class RSSControllerTest: BaseTest() {
 

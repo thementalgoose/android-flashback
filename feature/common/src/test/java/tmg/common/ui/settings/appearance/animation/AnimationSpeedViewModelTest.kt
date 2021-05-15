@@ -11,10 +11,13 @@ import tmg.core.ui.controllers.ThemeController
 import tmg.core.ui.extensions.icon
 import tmg.core.ui.extensions.label
 import tmg.core.ui.model.AnimationSpeed
+import tmg.testutils.BaseTest
+import tmg.testutils.livedata.assertEventFired
+import tmg.testutils.livedata.test
 import tmg.utilities.models.Selected
 import tmg.utilities.models.StringHolder
 
-internal class AnimationSpeedViewModelTest {
+internal class AnimationSpeedViewModelTest: BaseTest() {
 
     private val mockAppearanceController: ThemeController = mockk(relaxed = true)
 

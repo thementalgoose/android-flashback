@@ -29,6 +29,7 @@ internal class ReleaseNotesRepositoryTest {
 
     @Test
     fun `remote config sync count saves in shared prefs repository`() {
+        every { mockPreferenceManager.save(keyReleaseNotesSeenVersion, any<Int>()) } returns Unit
         initSUT()
         sut.releaseNotesSeenAppVersion = 2
         verify {

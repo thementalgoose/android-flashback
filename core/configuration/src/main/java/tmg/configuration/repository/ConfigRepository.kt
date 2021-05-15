@@ -2,7 +2,7 @@ package tmg.configuration.repository
 
 import org.threeten.bp.Year
 import tmg.configuration.extensions.toJson
-import tmg.configuration.managers.RemoteConfigManager
+import tmg.configuration.services.RemoteConfigService
 import tmg.configuration.repository.json.*
 import tmg.configuration.repository.models.ForceUpgrade
 import tmg.configuration.repository.models.SupportedSource
@@ -10,8 +10,8 @@ import tmg.configuration.repository.models.UpNextSchedule
 import tmg.core.prefs.manager.PreferenceManager
 
 class ConfigRepository(
-    private val remoteConfigManager: RemoteConfigManager,
-    private val preferenceManager: PreferenceManager
+        private val remoteConfigService: RemoteConfigService,
+        private val preferenceManager: PreferenceManager
 ) {
 
     companion object {
@@ -43,7 +43,7 @@ class ConfigRepository(
      * Get a list of all the seasons to show in the list
      */
     val supportedSeasons: Set<Int>
-        get() = remoteConfigManager
+        get() = remoteConfigService
             .getString(keySupportedSeasons)
             .toJson<AllSeasonsJson>()
             ?.convert()
@@ -54,7 +54,7 @@ class ConfigRepository(
      *  This is the one flashback determines is the best to show
      */
     val defaultSeason: Int by lazy {
-        remoteConfigManager
+        remoteConfigService
             .getString(keyDefaultYear).toIntOrNull() ?: Year.now().value
     }
 
@@ -65,7 +65,7 @@ class ConfigRepository(
      * Banner to be shown at the top of the home screen
      */
     val banner: String
-        get() = remoteConfigManager.getString(keyDefaultBanner)
+        get() = remoteConfigService.getString(keyDefaultBanner)
 
     /**
      * Force upgrade message to be shown
@@ -77,7 +77,7 @@ class ConfigRepository(
      * }
      */
     val forceUpgrade: ForceUpgrade?
-        get() = remoteConfigManager
+        get() = remoteConfigService
             .getString(keyForceUpgrade)
             .toJson<ForceUpgradeJson>()
             ?.convert()
@@ -87,13 +87,13 @@ class ConfigRepository(
      *  Text to be displayed on every statistics screen of who the statistics are provided by
      */
     val dataProvidedBy: String
-        get() = remoteConfigManager.getString(keyDataProvidedBy)
+        get() = remoteConfigService.getString(keyDataProvidedBy)
 
     /**
      * The new calendar tab in the dashboard should be enabled or not
      */
     val dashboardCalendar: Boolean by lazy {
-        remoteConfigManager.getBoolean(keyDashboardCalendar)
+        remoteConfigService.getBoolean(keyDashboardCalendar)
     }
 
     /**
@@ -101,7 +101,7 @@ class ConfigRepository(
      * - Contains name, a date, an optional time and potentially a flag
      */
     val upNext: List<UpNextSchedule>
-        get() = remoteConfigManager
+        get() = remoteConfigService
             .getString(keyUpNext)
             .toJson<UpNextJson>()
             ?.convert()
@@ -111,7 +111,7 @@ class ConfigRepository(
      * Enable the RSS feed functionality
      */
     val rss: Boolean by lazy {
-        remoteConfigManager.getBoolean(keyRss)
+        remoteConfigService.getBoolean(keyRss)
     }
 
     /**
@@ -119,14 +119,14 @@ class ConfigRepository(
      *  Section gets removed from the RSS screen but custom URLs are still listed in the users preferences
      */
     val rssAddCustom: Boolean by lazy {
-        remoteConfigManager.getBoolean(keyRssAddCustom)
+        remoteConfigService.getBoolean(keyRssAddCustom)
     }
 
     /**
      * List of supported articles for the RSS configure functionality
      */
     val rssSupportedSources: List<SupportedSource> by lazy {
-        remoteConfigManager
+        remoteConfigService
             .getString(keyRssSupportedSources)
             .toJson<SupportedSourcesJson>()
             ?.convert()

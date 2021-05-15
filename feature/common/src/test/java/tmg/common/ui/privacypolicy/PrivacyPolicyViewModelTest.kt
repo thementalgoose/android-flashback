@@ -1,7 +1,9 @@
 package tmg.common.ui.privacypolicy
 
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
+import tmg.testutils.BaseTest
+import tmg.testutils.livedata.assertEventFired
+import tmg.testutils.livedata.test
 
 internal class PrivacyPolicyViewModelTest: BaseTest() {
 

@@ -6,28 +6,28 @@ import io.mockk.verify
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
-import tmg.core.device.repository.SharedPreferenceRepository
+import tmg.core.prefs.manager.PreferenceManager
 
 internal class RSSRepositoryTest {
 
-    private val mockSharedPreferenceRepository: SharedPreferenceRepository = mockk(relaxed = true)
+    private val mockPreferenceManager: PreferenceManager = mockk(relaxed = true)
 
     private lateinit var sut: RSSRepository
 
     private fun initSUT() {
-        sut = RSSRepository(mockSharedPreferenceRepository)
+        sut = RSSRepository(mockPreferenceManager)
     }
 
     //region rssUrls
 
     @Test
     fun `get rss urls reads value from preferences repository`() {
-        every { mockSharedPreferenceRepository.getSet(keyRssList, emptySet()) } returns mutableSetOf("test")
+        every { mockPreferenceManager.getSet(keyRssList, emptySet()) } returns mutableSetOf("test")
         initSUT()
 
         assertEquals(mutableSetOf("test"), sut.rssUrls)
         verify {
-            mockSharedPreferenceRepository.getSet(keyRssList, emptySet())
+            mockPreferenceManager.getSet(keyRssList, emptySet())
         }
     }
 
@@ -37,7 +37,7 @@ internal class RSSRepositoryTest {
 
         sut.rssUrls = setOf("hey")
         verify {
-            mockSharedPreferenceRepository.save(keyRssList, setOf("hey"))
+            mockPreferenceManager.save(keyRssList, setOf("hey"))
         }
     }
 
@@ -47,12 +47,12 @@ internal class RSSRepositoryTest {
 
     @Test
     fun `in app enable javascript reads value from preferences repository`() {
-        every { mockSharedPreferenceRepository.getBoolean(keyInAppEnableJavascript, true) } returns true
+        every { mockPreferenceManager.getBoolean(keyInAppEnableJavascript, true) } returns true
         initSUT()
 
         assertTrue(sut.inAppEnableJavascript)
         verify {
-            mockSharedPreferenceRepository.getBoolean(keyInAppEnableJavascript, true)
+            mockPreferenceManager.getBoolean(keyInAppEnableJavascript, true)
         }
     }
 
@@ -62,7 +62,7 @@ internal class RSSRepositoryTest {
 
         sut.inAppEnableJavascript = true
         verify {
-            mockSharedPreferenceRepository.save(keyInAppEnableJavascript, true)
+            mockPreferenceManager.save(keyInAppEnableJavascript, true)
         }
     }
 
@@ -72,12 +72,12 @@ internal class RSSRepositoryTest {
 
     @Test
     fun `rss show description reads value from preferences repository`() {
-        every { mockSharedPreferenceRepository.getBoolean(keyRssShowDescription, true) } returns true
+        every { mockPreferenceManager.getBoolean(keyRssShowDescription, true) } returns true
         initSUT()
 
         assertTrue(sut.rssShowDescription)
         verify {
-            mockSharedPreferenceRepository.getBoolean(keyRssShowDescription, true)
+            mockPreferenceManager.getBoolean(keyRssShowDescription, true)
         }
     }
 
@@ -87,7 +87,7 @@ internal class RSSRepositoryTest {
 
         sut.rssShowDescription = true
         verify {
-            mockSharedPreferenceRepository.save(keyRssShowDescription, true)
+            mockPreferenceManager.save(keyRssShowDescription, true)
         }
     }
 
@@ -97,12 +97,12 @@ internal class RSSRepositoryTest {
 
     @Test
     fun `news open in external browser reads value from preferences repository`() {
-        every { mockSharedPreferenceRepository.getBoolean(keyNewsOpenInExternalBrowser, true) } returns true
+        every { mockPreferenceManager.getBoolean(keyNewsOpenInExternalBrowser, false) } returns true
         initSUT()
 
         assertTrue(sut.newsOpenInExternalBrowser)
         verify {
-            mockSharedPreferenceRepository.getBoolean(keyNewsOpenInExternalBrowser, false)
+            mockPreferenceManager.getBoolean(keyNewsOpenInExternalBrowser, false)
         }
     }
 
@@ -112,7 +112,7 @@ internal class RSSRepositoryTest {
 
         sut.newsOpenInExternalBrowser = true
         verify {
-            mockSharedPreferenceRepository.save(keyNewsOpenInExternalBrowser, true)
+            mockPreferenceManager.save(keyNewsOpenInExternalBrowser, true)
         }
     }
 

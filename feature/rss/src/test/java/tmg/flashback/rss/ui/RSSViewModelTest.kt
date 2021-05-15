@@ -7,21 +7,25 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDateTime
 import tmg.core.device.managers.NetworkConnectivityManager
-import tmg.flashback.rss.prefs.RSSRepositoryI
+import tmg.flashback.rss.controllers.RSSController
+import tmg.flashback.rss.repo.RSSRepository
 import tmg.flashback.rss.repo.RssAPI
 import tmg.flashback.rss.repo.model.Article
 import tmg.flashback.rss.repo.model.ArticleSource
 import tmg.flashback.rss.repo.model.Response
-import tmg.flashback.rss.testutils.BaseTest
-import tmg.flashback.rss.testutils.*
+import tmg.testutils.BaseTest
+import tmg.testutils.livedata.assertListContainsItem
+import tmg.testutils.livedata.assertListMatchesItem
+import tmg.testutils.livedata.test
+import tmg.testutils.livedata.testObserve
 
 class RSSViewModelTest: BaseTest() {
 
     private lateinit var sut: RSSViewModel
 
     private val mockRSSDB: RssAPI = mockk(relaxed = true)
-    private val mockRepository: RSSRepositoryI = mockk(relaxed = true)
-    private val mockConnectivityManager: tmg.core.device.managers.NetworkConnectivityManager = mockk(relaxed = true)
+    private val mockRssRepository: RSSRepository = mockk(relaxed = true)
+    private val mockConnectivityManager: NetworkConnectivityManager = mockk(relaxed = true)
 
     private val mockLocalDate: LocalDateTime = LocalDateTime.of(2020, 1, 1, 1, 2, 3, 0)
     private val mockArticleSource = ArticleSource(
@@ -49,8 +53,8 @@ class RSSViewModelTest: BaseTest() {
     internal fun setUp() {
 
         every { mockConnectivityManager.isConnected } returns true
-        every { mockRepository.rssUrls } returns setOf("https://www.mock.rss.url.com")
-        every { mockRepository.rssShowDescription } returns true
+        every { mockRssRepository.rssUrls } returns setOf("https://www.mock.rss.url.com")
+        every { mockRssRepository.rssShowDescription } returns true
         every { mockRSSDB.getNews() } returns mockResponse200
     }
 
@@ -58,7 +62,7 @@ class RSSViewModelTest: BaseTest() {
 
         sut = RSSViewModel(
             mockRSSDB,
-            mockRepository,
+                mockRssRepository,
             mockConnectivityManager
         )
     }
@@ -73,7 +77,7 @@ class RSSViewModelTest: BaseTest() {
 
         sut.outputs.list.test {
             assertListContainsItem(RSSItem.RSS(mockArticle))
-            assertListHasItem { it is RSSItem.Message }
+            assertListMatchesItem { it is RSSItem.Message }
         }
 
         observer.assertEmittedItems(true, false)
@@ -93,7 +97,7 @@ class RSSViewModelTest: BaseTest() {
 
         sut.outputs.list.test {
             assertListContainsItem(RSSItem.RSS(mockArticle))
-            assertListHasItem { it is RSSItem.Message && it.msg.split(":").size == 3 }
+            assertListMatchesItem { it is RSSItem.Message && it.msg.split(":").size == 3 }
         }
     }
 
@@ -101,7 +105,7 @@ class RSSViewModelTest: BaseTest() {
     fun `init all sources disabled if excludes list contains all news sources`() = coroutineTest {
 
         every { mockRSSDB.getNews() } returns mockResponse500
-        every { mockRepository.rssUrls } returns emptySet()
+        every { mockRssRepository.rssUrls } returns emptySet()
 
         val expected = listOf<RSSItem>(
             RSSItem.SourcesDisabled

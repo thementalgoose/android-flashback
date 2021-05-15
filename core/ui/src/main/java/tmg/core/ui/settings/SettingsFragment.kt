@@ -33,14 +33,6 @@ abstract class SettingsFragment<T: SettingsViewModel>: BaseFragment<FragmentSett
             adapter.list = it
         }
 
-        observeEvent(viewModel.clickPref) {
-            it.onClick?.invoke()
-        }
-
-        observeEvent(viewModel.switchPref) { (pref, newState) ->
-            pref.saveStateNotification?.invoke(newState)
-        }
-
         viewModel.loadSettings()
     }
 }

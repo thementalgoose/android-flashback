@@ -12,7 +12,7 @@ import tmg.flashback.rss.network.apis.model.RssXMLModelChannel
 import tmg.flashback.rss.network.apis.model.RssXMLModelItem
 import tmg.flashback.rss.repo.model.Article
 import tmg.flashback.rss.repo.model.ArticleSource
-import tmg.flashback.rss.testutils.BaseTest
+import tmg.testutils.BaseTest
 
 internal class RssXMLConverterTest: BaseTest() {
 

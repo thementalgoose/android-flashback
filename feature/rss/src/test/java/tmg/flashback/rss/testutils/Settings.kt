@@ -1,4 +1,4 @@
-package tmg.flashback.statistics.testutils
+package tmg.flashback.rss.testutils
 
 import androidx.annotation.StringRes
 import org.junit.jupiter.api.Assertions

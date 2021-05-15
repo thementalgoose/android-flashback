@@ -7,10 +7,10 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import kotlinx.coroutines.tasks.await
 import tmg.configuration.BuildConfig
 import tmg.configuration.R
-import tmg.configuration.managers.RemoteConfigManager
+import tmg.configuration.services.RemoteConfigService
 import java.lang.Exception
 
-class FirebaseRemoteConfigManager: RemoteConfigManager {
+class FirebaseRemoteConfigService: RemoteConfigService {
 
     private val remoteConfig: FirebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
     private val remoteConfigSettings = FirebaseRemoteConfigSettings
