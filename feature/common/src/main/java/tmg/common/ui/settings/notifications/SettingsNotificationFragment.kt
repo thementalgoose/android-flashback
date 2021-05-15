@@ -11,12 +11,12 @@ import tmg.utilities.extensions.observeEvent
 
 class SettingsNotificationFragment: SettingsFragment<SettingsNotificationViewModel>() {
 
-    override val viewModel: SettingsNotificationViewModel by viewModel()
+    override val vm: SettingsNotificationViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        observeEvent(viewModel.outputs.openNotificationsChannel) { channelId ->
+        observeEvent(vm.outputs.openNotificationsChannel) { channelId ->
             context?.let { context ->
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     val intent = Intent().apply {
@@ -29,7 +29,7 @@ class SettingsNotificationFragment: SettingsFragment<SettingsNotificationViewMod
             }
         }
 
-        observeEvent(viewModel.outputs.openNotifications) {
+        observeEvent(vm.outputs.openNotifications) {
             context?.let { context ->
                 val intent = Intent().apply {
                     action = "android.settings.APP_NOTIFICATION_SETTINGS"

@@ -11,9 +11,9 @@ import tmg.utilities.extensions.observeEvent
 
 abstract class SettingsFragment<T: SettingsViewModel>: BaseFragment<FragmentSettingsBinding>() {
 
-    abstract val viewModel: T
+    abstract val vm: T
 
-    private lateinit var adapter: SettingsAdapter
+    lateinit var adapter: SettingsAdapter
 
     override fun inflateView(inflater: LayoutInflater) =
         FragmentSettingsBinding.inflate(inflater)
@@ -22,23 +22,25 @@ abstract class SettingsFragment<T: SettingsViewModel>: BaseFragment<FragmentSett
         super.onViewCreated(view, savedInstanceState)
 
         adapter = SettingsAdapter(
-            clickSwitch = viewModel::clickSwitchPreference,
-            clickPref = viewModel::clickPreference,
+            clickSwitch = vm::clickSwitchPreference,
+            clickPref = vm::clickPreference,
             getState = { it.getState() }
         )
         binding.settingsList.adapter = adapter
         binding.settingsList.layoutManager = LinearLayoutManager(context)
 
-        observe(viewModel.settings) {
+        observe(vm.settings) {
             adapter.list = it
         }
 
-        observeEvent(viewModel.clickPref) {
+        observeEvent(vm.clickPref) {
             it.onClick?.invoke()
         }
 
-        observeEvent(viewModel.switchPref) { (pref, newState) ->
+        observeEvent(vm.switchPref) { (pref, newState) ->
             pref.saveStateNotification?.invoke(newState)
         }
+
+        vm.loadSettings()
     }
 }

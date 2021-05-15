@@ -18,7 +18,7 @@ abstract class SettingsViewModel: ViewModel() {
     private val _switchPref: MutableLiveData<DataEvent<Pair<SettingsModel.SwitchPref, Boolean>>> = MutableLiveData()
     val switchPref: LiveData<DataEvent<Pair<SettingsModel.SwitchPref, Boolean>>> = _switchPref
 
-    init {
+    fun loadSettings() {
         refreshList()
     }
 
