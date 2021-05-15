@@ -37,13 +37,13 @@ class NotificationController(
         if (notificationRepository.enabledQualifying == NotificationRegistration.DEFAULT) {
             val result = notificationManager.subscribeToTopic(keyTopicQualifying)
             if (result) {
-                notificationRepository.enabledRace = NotificationRegistration.OPT_IN
+                notificationRepository.enabledQualifying = NotificationRegistration.OPT_IN
             }
         }
         if (notificationRepository.enabledSeasonInfo == NotificationRegistration.DEFAULT) {
             val result = notificationManager.subscribeToTopic(keyTopicSeasonInfo)
             if (result) {
-                notificationRepository.enabledRace = NotificationRegistration.OPT_IN
+                notificationRepository.enabledSeasonInfo = NotificationRegistration.OPT_IN
             }
         }
         return true

@@ -6,8 +6,10 @@ import io.mockk.verify
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import tmg.common.R
+import tmg.common.testutils.findSwitch
 import tmg.core.analytics.manager.AnalyticsManager
-import tmg.crash_reporting.R
+import tmg.core.ui.settings.SettingsModel
 import tmg.crash_reporting.controllers.CrashController
 
 internal class SettingsSupportViewModelTest {
@@ -30,52 +32,56 @@ internal class SettingsSupportViewModelTest {
     @Test
     fun `init loads correct settings options`() {
         initSUT()
-        sut.outputs.settings.test {
-            assertValue(listOf(
-                AppPreferencesItem.Category(R.string.settings_crash_reporting_title),
-                AppPreferencesItem.SwitchPreference("CrashReporting",
-                    R.string.settings_crash_reporting_enabled_title,
-                    R.string.settings_crash_reporting_enabled_description, false),
-                AppPreferencesItem.SwitchPreference("ShakeToReport",
-                    R.string.settings_crash_reporting_shake_to_report_title,
-                    R.string.settings_crash_reporting_shake_to_report_description, false),
-            ))
+
+        val expected = listOf(
+                Pair(R.string.settings_help, null),
+                Pair(R.string.settings_help_crash_reporting_title, R.string.settings_help_crash_reporting_description),
+                Pair(R.string.settings_help_analytics_title, R.string.settings_help_analytics_description),
+                Pair(R.string.settings_help_shake_to_report_title, R.string.settings_help_shake_to_report_description),
+        )
+
+        sut.models.forEachIndexed { index, settingsModel ->
+            if (settingsModel is SettingsModel.Header) {
+                assertEquals(expected[index].first, settingsModel.title)
+            }
+            if (settingsModel is SettingsModel.SwitchPref) {
+                assertEquals(expected[index].first, settingsModel.title)
+                assertEquals(expected[index].second, settingsModel.description)
+            }
+            if (settingsModel is SettingsModel.Pref) {
+                assertEquals(expected[index].first, settingsModel.title)
+                assertEquals(expected[index].second, settingsModel.description)
+            }
         }
     }
 
     @Test
-    fun `clicking enabled toggle marks crash reporting enabled`() {
+    fun `clicking toggle for crash reporting updates toggle`() {
         initSUT()
-        sut.inputs.preferenceClicked("CrashReporting", true)
+        sut.clickSwitchPreference(sut.models.findSwitch(R.string.settings_help_crash_reporting_title), true)
         verify {
+            mockCrashController.enabled
             mockCrashController.enabled = true
         }
     }
 
     @Test
-    fun `clicking enabled toggle sends notification event`() {
+    fun `clicking toggle for anonymous analytics updates toggle`() {
         initSUT()
-        sut.inputs.preferenceClicked("CrashReporting", true)
-        sut.outputs.notifyPreferencesAppliedAfterRestart.test {
-            assertEventFired()
-        }
-    }
-
-    @Test
-    fun `clicking shake to report toggle marks shake to report enabled`() {
-        initSUT()
-        sut.inputs.preferenceClicked("ShakeToReport", true)
+        sut.clickSwitchPreference(sut.models.findSwitch(R.string.settings_help_analytics_title), true)
         verify {
-            mockCrashController.shakeToReport = true
+            mockAnalyticsManager.enabled
+            mockAnalyticsManager.enabled = true
         }
     }
 
     @Test
-    fun `clicking shake to report toggle sends notification event`() {
+    fun `clicking toggle for shake to report updates toggle`() {
         initSUT()
-        sut.inputs.preferenceClicked("ShakeToReport", true)
-        sut.outputs.notifyPreferencesAppliedAfterRestart.test {
-            assertEventFired()
+        sut.clickSwitchPreference(sut.models.findSwitch(R.string.settings_help_shake_to_report_title), true)
+        verify {
+            mockCrashController.shakeToReport
+            mockCrashController.shakeToReport = true
         }
     }
 

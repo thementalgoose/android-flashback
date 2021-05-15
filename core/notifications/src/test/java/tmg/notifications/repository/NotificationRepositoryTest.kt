@@ -39,7 +39,7 @@ internal class NotificationRepositoryTest {
         "OPT_IN,OPT_IN",
         "OPT_OUT,OPT_OUT"
     )
-    fun `race notifications read unrecognised resolves to default`(key: String, expected: NotificationRegistration) {
+    fun `race notifications read unrecognised resolves to default`(key: String?, expected: NotificationRegistration) {
         every { mockPreferenceManager.getString(any(), any()) } returns key
 
         initSUT()
@@ -71,7 +71,7 @@ internal class NotificationRepositoryTest {
         "OPT_IN,OPT_IN",
         "OPT_OUT,OPT_OUT"
     )
-    fun `qualifying notifications read unrecognised resolves to default`(key: String, expected: NotificationRegistration) {
+    fun `qualifying notifications read unrecognised resolves to default`(key: String?, expected: NotificationRegistration) {
         every { mockPreferenceManager.getString(any(), any()) } returns key
 
         initSUT()
@@ -103,7 +103,7 @@ internal class NotificationRepositoryTest {
         "OPT_IN,OPT_IN",
         "OPT_OUT,OPT_OUT"
     )
-    fun `season info notifications read unrecognised resolves to default`(key: String, expected: NotificationRegistration) {
+    fun `season info notifications read unrecognised resolves to default`(key: String?, expected: NotificationRegistration) {
         every { mockPreferenceManager.getString(any(), any()) } returns key
 
         initSUT()
