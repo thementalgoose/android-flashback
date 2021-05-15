@@ -49,7 +49,7 @@ jobs:
 
       # Unit Tests
       - name: Unit tests - app
-        run: ./gradlew :app:testMockDebugUnitTest
+        run: ./gradlew :app:testSandDebugUnitTest
         if: ${{ env.lines_app != 0 }}
       - name: Unit tests - feature:common
         run: ./gradlew :feature:common:testDebugUnitTest
