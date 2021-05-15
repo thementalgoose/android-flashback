@@ -6,17 +6,16 @@ import com.google.android.material.snackbar.Snackbar
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.core.ui.settings.SettingsFragment
 import tmg.flashback.statistics.R
-import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 
 class SettingsStatisticsFragment: SettingsFragment<SettingsStatisticsViewModel>() {
 
-    override val viewModel: SettingsStatisticsViewModel by viewModel()
+    override val vm: SettingsStatisticsViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        observeEvent(viewModel.outputs.defaultSeasonChanged) {
+        observeEvent(vm.outputs.defaultSeasonChanged) {
             Snackbar.make(view, R.string.settings_default_season_updated, Snackbar.LENGTH_SHORT).show()
         }
     }

@@ -8,24 +8,24 @@ import tmg.utilities.extensions.observeEvent
 
 class SettingsAboutFragment: SettingsFragment<SettingsAboutViewModel>() {
 
-    override val viewModel: SettingsAboutViewModel by viewModel()
+    override val vm: SettingsAboutViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        observeEvent(viewModel.outputs.openAboutThisApp) {
+        observeEvent(vm.outputs.openAboutThisApp) {
             TODO("Event")
         }
 
-        observeEvent(viewModel.outputs.openReleaseNotes) {
+        observeEvent(vm.outputs.openReleaseNotes) {
             TODO("Event")
         }
 
-        observeEvent(viewModel.outputs.openPrivacyPolicy) {
+        observeEvent(vm.outputs.openPrivacyPolicy) {
             TODO("Event")
         }
 
-        observeEvent(viewModel.outputs.openReview) {
+        observeEvent(vm.outputs.openReview) {
             TODO("Event")
         }
     }

@@ -10,7 +10,7 @@ import tmg.utilities.extensions.observeEvent
 
 class RSSSettingsFragment: SettingsFragment<RSSSettingsViewModel>() {
 
-    override val viewModel: RSSSettingsViewModel by viewModel()
+    override val vm: RSSSettingsViewModel by viewModel()
 
 //    override val screenAnalytics = ScreenAnalytics(
 //        screenName = "Settings - RSS"
@@ -21,7 +21,7 @@ class RSSSettingsFragment: SettingsFragment<RSSSettingsViewModel>() {
 
 //        analyticsController.logEvent(ViewType.SETTINGS_RSS)
 
-        observeEvent(viewModel.outputs.goToConfigure) {
+        observeEvent(vm.outputs.goToConfigure) {
             findNavController().navigate(R.id.graph_action_configure)
         }
     }
