@@ -6,7 +6,6 @@ import tmg.configuration.services.RemoteConfigService
 import tmg.configuration.repository.json.*
 import tmg.configuration.repository.models.ForceUpgrade
 import tmg.configuration.repository.models.SupportedSource
-import tmg.configuration.repository.models.UpNextSchedule
 import tmg.core.prefs.manager.PreferenceManager
 
 class ConfigRepository(
@@ -18,7 +17,6 @@ class ConfigRepository(
         private const val keyRemoteConfigSync: String = "REMOTE_CONFIG_SYNC_COUNT"
 
         private const val keyDefaultYear: String = "default_year"
-        private const val keyUpNext: String = "up_next"
         private const val keyDefaultBanner: String = "banner"
         private const val keyForceUpgrade: String = "force_upgrade"
         private const val keyDataProvidedBy: String = "data_provided"
@@ -28,6 +26,10 @@ class ConfigRepository(
         private const val keyRssAddCustom: String = "rss_add_custom"
         private const val keyRssSupportedSources: String = "rss_supported_sources"
     }
+
+    //region Values
+
+    //endregion
 
     //region Shared Prefs
 
@@ -95,17 +97,6 @@ class ConfigRepository(
     val dashboardCalendar: Boolean by lazy {
         remoteConfigService.getBoolean(keyDashboardCalendar)
     }
-
-    /**
-     * Up next schedule to be shown in the app
-     * - Contains name, a date, an optional time and potentially a flag
-     */
-    val upNext: List<UpNextSchedule>
-        get() = remoteConfigService
-            .getString(keyUpNext)
-            .toJson<UpNextJson>()
-            ?.convert()
-            ?: emptyList()
 
     /**
      * Enable the RSS feed functionality

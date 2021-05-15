@@ -1,40 +1,20 @@
-package tmg.configuration.repository.json
+package tmg.flashback.upnext.repository.converters
 
 import org.threeten.bp.format.DateTimeParseException
-import tmg.configuration.repository.models.Timestamp
-import tmg.configuration.repository.models.UpNextSchedule
-import tmg.configuration.repository.models.UpNextScheduleTimestamp
 import tmg.configuration.utils.DateConverters
 import tmg.configuration.utils.TimeConverters
-
-data class UpNextJson(
-    val schedule: List<UpNextScheduleJson>? = null
-)
-
-data class UpNextScheduleJson(
-    val s: Int? = null,
-    val r: Int? = null,
-    val title: String? = null,
-    val subtitle: String? = null,
-    val dates: List<UpNextItemJson>? = null,
-    val flag: String? = null,
-    val circuit: String? = null,
-)
-
-data class UpNextItemJson(
-    val type: String?,
-    val d: String?,
-    val t: String?
-)
-
-//region Converters
+import tmg.flashback.formula1.model.Timestamp
+import tmg.flashback.upnext.repository.json.UpNextJson
+import tmg.flashback.upnext.repository.json.UpNextScheduleJson
+import tmg.flashback.upnext.repository.model.UpNextSchedule
+import tmg.flashback.upnext.repository.model.UpNextScheduleTimestamp
 
 fun UpNextJson.convert(): List<UpNextSchedule> {
     if (schedule == null) {
         return emptyList()
     }
     return schedule
-        .mapNotNull { it.convert() }
+            .mapNotNull { it.convert() }
 }
 
 fun UpNextScheduleJson.convert(): UpNextSchedule? {
@@ -58,8 +38,8 @@ fun UpNextScheduleJson.convert(): UpNextSchedule? {
             return@mapNotNull null
         }
         return@mapNotNull UpNextScheduleTimestamp(
-            label = it.type,
-            timestamp = Timestamp(date, TimeConverters.fromTime(it.t))
+                label = it.type,
+                timestamp = Timestamp(date, TimeConverters.fromTime(it.t))
         )
     }
     if (values.isEmpty()) {
@@ -67,14 +47,12 @@ fun UpNextScheduleJson.convert(): UpNextSchedule? {
     }
 
     return UpNextSchedule(
-        season = this.s,
-        round = this.r ?: 0,
-        title = this.title,
-        subtitle = this.subtitle,
-        values = values,
-        flag = flag,
-        circuitId = circuit,
+            season = this.s,
+            round = this.r ?: 0,
+            title = this.title,
+            subtitle = this.subtitle,
+            values = values,
+            flag = flag,
+            circuitId = circuit,
     )
 }
-
-//endregion

@@ -5,17 +5,17 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.configuration.controllers.ConfigController
 import tmg.configuration.repository.models.ForceUpgrade
-import tmg.flashback.controllers.FeatureController
 import tmg.flashback.managers.appshortcuts.AppShortcutManager
-import tmg.flashback.testutils.BaseTest
-import tmg.flashback.testutils.assertEventFired
-import tmg.flashback.testutils.assertEventNotFired
-import tmg.flashback.testutils.test
+import tmg.flashback.rss.controllers.RSSController
+import tmg.testutils.BaseTest
+import tmg.testutils.livedata.assertEventFired
+import tmg.testutils.livedata.assertEventNotFired
+import tmg.testutils.livedata.test
 
 internal class  SplashViewModelTest: BaseTest() {
 
     private var mockAppShortcutManager: AppShortcutManager = mockk(relaxed = true)
-    private var mockFeatureController: FeatureController = mockk(relaxed = true)
+    private var mockRssController: RSSController = mockk(relaxed = true)
     private var mockConfigurationManager: ConfigController = mockk(relaxed = true)
 
     private lateinit var sut: SplashViewModel
@@ -28,7 +28,7 @@ internal class  SplashViewModelTest: BaseTest() {
     }
 
     private fun initSUT() {
-        sut = SplashViewModel(mockAppShortcutManager, mockFeatureController, mockConfigurationManager)
+        sut = SplashViewModel(mockAppShortcutManager, mockRssController, mockConfigurationManager)
     }
 
     @Test
@@ -88,7 +88,7 @@ internal class  SplashViewModelTest: BaseTest() {
     fun `start fetch and activate when success sets updates shortcut manager`() = coroutineTest {
 
         every { mockConfigurationManager.requireSynchronisation } returns true
-        every { mockFeatureController.rssEnabled } returns true
+        every { mockRssController.enabled } returns true
         coEvery { mockConfigurationManager.fetchAndApply() } returns true
 
         initSUT()

@@ -12,7 +12,7 @@ internal class AppLockoutConverterTest: BaseTest() {
 
     @Test
     fun `AppLockoutConverter show is false if found to be null`() {
-        assertFalse(FAppLockout(show = null).convert().show)
+        assertFalse(FAppLockout(show = null).convert().showLockout(0))
     }
 
     @ParameterizedTest(name = "version value {0} maps to {1}")

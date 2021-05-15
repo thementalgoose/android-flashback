@@ -1,11 +1,11 @@
 package tmg.configuration.controllers
 
 import tmg.configuration.constants.Migrations
+import tmg.configuration.extensions.toJson
 import tmg.configuration.services.RemoteConfigService
 import tmg.configuration.repository.ConfigRepository
 import tmg.configuration.repository.models.ForceUpgrade
 import tmg.configuration.repository.models.SupportedSource
-import tmg.configuration.repository.models.UpNextSchedule
 
 /**
  * Remote config variables and storage data
@@ -52,6 +52,36 @@ class ConfigController(
         return configService.activate()
     }
 
+    /**
+     * Get a boolean from the config service
+     */
+    fun getBoolean(key: String): Boolean {
+        return configService.getBoolean(key)
+    }
+
+    /**
+     * Get a string from the config service
+     * If the key is empty it gets transformed to null
+     */
+    fun getString(key: String): String? {
+        val result = configService.getString(key)
+        if (result.isEmpty()) {
+            return null
+        }
+        return result
+    }
+
+    /**
+     * Get a JSON object from the config service
+     */
+    fun <T> getJson(key: String, clazz: Class<T>): T? {
+        return configService.getString(key)
+                .toJson(clazz)
+    }
+    inline fun <reified T> getJson(key: String): T? {
+        return getJson(key, T::class.java)
+    }
+
     //region Variables
 
     val supportedSeasons: Set<Int> get() = configRepository.supportedSeasons
@@ -65,8 +95,6 @@ class ConfigController(
     val dashboardCalendar: Boolean get() = configRepository.dashboardCalendar
 
     val dataProvidedBy: String get() = configRepository.dataProvidedBy
-
-    val upNext: List<UpNextSchedule> get() = configRepository.upNext
 
     val rss: Boolean get() = configRepository.rss
 

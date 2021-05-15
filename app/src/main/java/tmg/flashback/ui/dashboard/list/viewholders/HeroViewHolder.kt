@@ -1,10 +1,10 @@
 package tmg.flashback.ui.dashboard.list.viewholders
 
 import androidx.recyclerview.widget.RecyclerView
-import tmg.flashback.statistics.databinding.ViewSeasonListHeroBinding
+import tmg.flashback.databinding.ViewSeasonListHeroBinding
 
 class HeroViewHolder(
-    binding: ViewSeasonListHeroBinding,
+        binding: ViewSeasonListHeroBinding,
 ): RecyclerView.ViewHolder(binding.root) {
 
 }

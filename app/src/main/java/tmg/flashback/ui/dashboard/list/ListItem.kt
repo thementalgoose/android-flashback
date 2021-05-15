@@ -3,9 +3,9 @@ package tmg.flashback.ui.dashboard.list
 import androidx.annotation.DrawableRes
 import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
-import tmg.configuration.repository.models.TimeListDisplayType
-import tmg.configuration.repository.models.UpNextSchedule
 import tmg.flashback.R
+import tmg.flashback.upnext.repository.model.TimeListDisplayType
+import tmg.flashback.upnext.repository.model.UpNextSchedule
 
 sealed class ListItem(
     @LayoutRes val layoutId: Int
@@ -13,8 +13,8 @@ sealed class ListItem(
     object Hero: ListItem(R.layout.view_season_list_hero)
 
     data class UpNext(
-        val upNextSchedule: UpNextSchedule,
-        val timeFormatType: TimeListDisplayType
+            val upNextSchedule: UpNextSchedule,
+            val timeFormatType: TimeListDisplayType
     ): ListItem(R.layout.view_season_list_up_next)
 
     object Divider: ListItem(R.layout.view_season_list_divider)

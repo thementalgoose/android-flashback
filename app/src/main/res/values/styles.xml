@@ -28,14 +28,16 @@
 
     <!-- =========================================== -->
 
-    <!--#region Release Notes -->
+    <!--#region Season List -->
 
-    <style name="Text.ReleaseNotes.Content" parent="Text" />
+    <style name="Text.Dashboard.List.Item" parent="Text">
+    </style>
+
+    <style name="Text.Dashboard.List.Header" parent="Text">
+        <item name="android:textSize">@dimen/textSizeLarge</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 
     <!--#endregion -->
-
-    <!-- =========================================== -->
-
-    <!-- =========================================== -->
 
 </resources>

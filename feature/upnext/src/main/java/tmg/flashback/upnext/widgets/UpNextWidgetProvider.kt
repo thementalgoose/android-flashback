@@ -22,13 +22,13 @@ import org.koin.core.component.inject
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.configuration.controllers.ConfigController
-import tmg.configuration.repository.models.UpNextSchedule
 import tmg.flashback.formula1.enums.TrackLayout
 import tmg.crash_reporting.controllers.CrashController
 import tmg.flashback.data.utils.daysBetween
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.upnext.R
 import tmg.flashback.upnext.controllers.UpNextController
+import tmg.flashback.upnext.repository.model.UpNextSchedule
 import tmg.utilities.extensions.toEnum
 import java.lang.Exception
 

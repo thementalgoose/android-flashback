@@ -11,7 +11,7 @@
 
     <TextView
         android:id="@+id/header"
-        style="@style/Text.BottomSheet.Header"
+        style="@style/Text.Dashboard.List.Header"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:alpha="0.6"
