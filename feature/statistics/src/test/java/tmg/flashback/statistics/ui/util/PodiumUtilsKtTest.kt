@@ -3,10 +3,8 @@ package tmg.flashback.statistics.ui.util
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
-import tmg.flashback.statistics.testutils.BaseTest
-import tmg.flashback.statistics.ui.util.position
 
-internal class PodiumUtilsKtTest: BaseTest() {
+internal class PodiumUtilsKtTest {
 
     @ParameterizedTest(name = "{0} as ordinal abbreviation is {1}")
     @CsvSource(

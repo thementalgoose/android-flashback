@@ -1,12 +1,26 @@
 package tmg.flashback.statistics.repository
 
+import org.threeten.bp.Year
+import tmg.configuration.controllers.ConfigController
+import tmg.flashback.statistics.repository.json.AllSeasonsJson
 import tmg.core.prefs.manager.PreferenceManager
+import tmg.flashback.statistics.repository.converters.convert
 
 class StatisticsRepository(
-    private val preferenceManager: PreferenceManager
+        private val preferenceManager: PreferenceManager,
+        private val configController: ConfigController
 ) {
 
     companion object {
+
+        // Config
+        private const val keyDefaultYear: String = "default_year"
+        private const val keyDefaultBanner: String = "banner"
+        private const val keyDataProvidedBy: String = "data_provided"
+        private const val keySupportedSeasons: String = "supported_seasons"
+        private const val keyDashboardCalendar: String = "dashboard_calendar"
+
+        // Prefs
         private const val keyShowQualifyingDelta: String = "SHOW_QUALIFYING_DELTA"
         private const val keyFadeDNF: String = "FADE_DNF"
         private const val keyShowListFavourited: String = "BOTTOM_SHEET_FAVOURITED"
@@ -14,8 +28,42 @@ class StatisticsRepository(
         private const val keyShowGridPenaltiesInQualifying: String = "SHOW_GRID_PENALTIES_IN_QUALIFYING"
         private const val keyFavouriteSeasons: String = "FAVOURITE_SEASONS"
         private const val keyDefaultSeason: String = "DEFAULT_SEASON"
-        private const val keyWidgetOpenApp: String = "WIDGET_OPEN_BEHAVIOR"
     }
+
+    /**
+     * Default year as specified by the server.
+     */
+    val serverDefaultYear: Int by lazy {
+        configController.getString(keyDefaultYear)?.toIntOrNull() ?: Year.now().value
+    }
+
+    /**
+     * Banner to be displayed at the top of the screen
+     */
+    val banner: String?
+        get() = configController.getString(keyDefaultBanner)
+
+    /**
+     * Banner to be displayed at the top of the screen
+     */
+    val dataProvidedBy: String?
+        get() = configController.getString(keyDataProvidedBy)
+
+    /**
+     * The new calendar tab in the dashboard should be enabled or not
+     */
+    val dashboardCalendar: Boolean by lazy {
+        configController.getBoolean(keyDashboardCalendar)
+    }
+
+    /**
+     * Supported seasons
+     */
+    val supportedSeasons: Set<Int>
+        get() = configController
+                .getJson<AllSeasonsJson>(keySupportedSeasons)
+                ?.convert()
+                ?: emptySet()
 
     /**
      * Show the qualifying delta in the layout
@@ -81,14 +129,5 @@ class StatisticsRepository(
             }
             preferenceManager.save(keyDefaultSeason, valueToSave)
         }
-
-    /**
-     * What should happen when the widget is clicked
-     *  true = Open the app
-     *  false = Refresh the widget
-     */
-    var widgetOpenApp: Boolean
-        get() = preferenceManager.getBoolean(keyWidgetOpenApp, false)
-        set(value) = preferenceManager.save(keyWidgetOpenApp, value)
 
 }

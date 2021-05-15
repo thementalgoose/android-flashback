@@ -26,7 +26,6 @@ import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
 import tmg.flashback.statistics.constants.ViewType
 import tmg.flashback.statistics.constants.logEvent
 import tmg.flashback.statistics.controllers.SeasonController
-import tmg.flashback.statistics.controllers.UserNotificationController
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
 import tmg.utilities.extensions.combinePair
 import tmg.utilities.extensions.then
@@ -71,7 +70,6 @@ class SeasonViewModel(
         private val themeController: ThemeController,
         private val historyRepository: HistoryRepository,
         private val seasonOverviewRepository: SeasonOverviewRepository,
-        private val notificationController: UserNotificationController,
         private val seasonController: SeasonController,
         private val networkConnectivityManager: NetworkConnectivityManager,
         private val analyticsManager: AnalyticsManager
@@ -133,7 +131,7 @@ class SeasonViewModel(
                 ))
             }
 
-            val appBannerMessage = notificationController.banner
+            val appBannerMessage = seasonController.banner
             val list: MutableList<SeasonItem> = mutableListOf()
             if (showBannerAtTop) {
                 list.add(SeasonItem.ErrorItem(SyncDataItem.ProvidedBy()))

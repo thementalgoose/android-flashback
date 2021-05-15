@@ -2,7 +2,9 @@ package tmg.common.di
 
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
+import tmg.common.controllers.ForceUpgradeController
 import tmg.common.controllers.ReleaseNotesController
+import tmg.common.repository.ForceUpgradeRepository
 import tmg.common.repository.ReleaseNotesRepository
 import tmg.common.ui.forceupgrade.ForceUpgradeViewModel
 import tmg.common.ui.privacypolicy.PrivacyPolicyViewModel
@@ -17,8 +19,10 @@ val commonModule = module {
 
     single { ReleaseNotesController(get(), get()) }
     single { ReleaseNotesRepository(get()) }
+    single { ForceUpgradeController(get()) }
+    single { ForceUpgradeRepository(get()) }
 
-    viewModel { ForceUpgradeViewModel(get()) }
+    viewModel { ForceUpgradeViewModel(get(), get()) }
 
     viewModel { PrivacyPolicyViewModel() }
 

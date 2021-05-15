@@ -22,7 +22,7 @@ import tmg.flashback.ui.settings.SettingsAllViewModel
 
 val appModule = module {
 
-    viewModel { SplashViewModel(get(), get(), get()) }
+    viewModel { SplashViewModel(get(), get(), get(), get()) }
     viewModel { SettingsAllViewModel(get()) }
     viewModel { DashboardViewModel(get(), get(), get(), get(), get()) }
     viewModel { ListViewModel(get(), get(), get()) }

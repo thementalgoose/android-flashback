@@ -4,7 +4,6 @@ import tmg.configuration.constants.Migrations
 import tmg.configuration.extensions.toJson
 import tmg.configuration.services.RemoteConfigService
 import tmg.configuration.repository.ConfigRepository
-import tmg.configuration.repository.models.ForceUpgrade
 
 /**
  * Remote config variables and storage data
@@ -80,20 +79,4 @@ class ConfigController(
     inline fun <reified T> getJson(key: String): T? {
         return getJson(key, T::class.java)
     }
-
-    //region Variables
-
-    val supportedSeasons: Set<Int> get() = configRepository.supportedSeasons
-
-    val defaultSeason: Int get() = configRepository.defaultSeason
-
-    val banner: String get() = configRepository.banner
-
-    val forceUpgrade: ForceUpgrade? get() = configRepository.forceUpgrade
-
-    val dashboardCalendar: Boolean get() = configRepository.dashboardCalendar
-
-    val dataProvidedBy: String get() = configRepository.dataProvidedBy
-
-    //endregion
 }

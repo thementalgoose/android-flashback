@@ -13,20 +13,61 @@ import tmg.testutils.BaseTest
 internal class SeasonControllerTest: BaseTest() {
 
     private var mockStatisticsRepository: StatisticsRepository = mockk(relaxed = true)
-    private var mockRemoteConfigRepository: ConfigController = mockk(relaxed = true)
 
     private lateinit var sut: SeasonController
 
     private fun initSUT() {
-        sut = SeasonController(mockStatisticsRepository, mockRemoteConfigRepository)
+        sut = SeasonController(mockStatisticsRepository)
     }
+
+    //region Dashboard calendar
+
+    @Test
+    fun `dashboard calendar reads value from repository`() {
+        every { mockStatisticsRepository.dashboardCalendar } returns true
+        initSUT()
+        assertTrue(sut.dashboardCalendar)
+        verify {
+            mockStatisticsRepository.dashboardCalendar
+        }
+    }
+
+    //endregion
+
+    //region Banner
+
+    @Test
+    fun `banner reads value from repository`() {
+        every { mockStatisticsRepository.banner } returns "banner"
+        initSUT()
+        assertEquals("banner", sut.banner)
+        verify {
+            mockStatisticsRepository.banner
+        }
+    }
+
+    //endregion
+
+    //region Data provided by
+
+    @Test
+    fun `data provided by reads value from repository`() {
+        every { mockStatisticsRepository.dataProvidedBy } returns "data provided by"
+        initSUT()
+        assertEquals("data provided by", sut.dataProvidedBy)
+        verify {
+            mockStatisticsRepository.dataProvidedBy
+        }
+    }
+
+    //endregion
 
     //region Default year
 
     @Test
     fun `returns current year if supported season list is empty`() {
-        every { mockRemoteConfigRepository.supportedSeasons } returns emptySet()
-        every { mockRemoteConfigRepository.defaultSeason } returns 2018
+        every { mockStatisticsRepository.supportedSeasons } returns emptySet()
+        every { mockStatisticsRepository.serverDefaultYear } returns 2018
         every { mockStatisticsRepository.defaultSeason } returns 2017
         initSUT()
 
@@ -35,8 +76,8 @@ internal class SeasonControllerTest: BaseTest() {
 
     @Test
     fun `returns user defined value if its supported`() {
-        every { mockRemoteConfigRepository.supportedSeasons } returns setOf(2017, 2018)
-        every { mockRemoteConfigRepository.defaultSeason } returns 2018
+        every { mockStatisticsRepository.supportedSeasons } returns setOf(2017, 2018)
+        every { mockStatisticsRepository.serverDefaultYear } returns 2018
         every { mockStatisticsRepository.defaultSeason } returns 2017
         initSUT()
 
@@ -45,8 +86,8 @@ internal class SeasonControllerTest: BaseTest() {
 
     @Test
     fun `runs clear default method if user defined value found to be invalid`() {
-        every { mockRemoteConfigRepository.supportedSeasons } returns setOf(2019)
-        every { mockRemoteConfigRepository.defaultSeason } returns 2018
+        every { mockStatisticsRepository.supportedSeasons } returns setOf(2019)
+        every { mockStatisticsRepository.serverDefaultYear } returns 2018
         every { mockStatisticsRepository.defaultSeason } returns 2017
         initSUT()
 
@@ -58,8 +99,8 @@ internal class SeasonControllerTest: BaseTest() {
 
     @Test
     fun `if user defined value invalid, return server value if in supported seasons`() {
-        every { mockRemoteConfigRepository.supportedSeasons } returns setOf(2018,2019)
-        every { mockRemoteConfigRepository.defaultSeason } returns 2018
+        every { mockStatisticsRepository.supportedSeasons } returns setOf(2018,2019)
+        every { mockStatisticsRepository.serverDefaultYear } returns 2018
         every { mockStatisticsRepository.defaultSeason } returns 1921
         initSUT()
 
@@ -68,8 +109,8 @@ internal class SeasonControllerTest: BaseTest() {
 
     @Test
     fun `if user defined value is null, return server value if in supported seasons`() {
-        every { mockRemoteConfigRepository.supportedSeasons } returns setOf(2018,2019)
-        every { mockRemoteConfigRepository.defaultSeason } returns 2018
+        every { mockStatisticsRepository.supportedSeasons } returns setOf(2018,2019)
+        every { mockStatisticsRepository.serverDefaultYear } returns 2018
         every { mockStatisticsRepository.defaultSeason } returns null
         initSUT()
 
@@ -78,8 +119,8 @@ internal class SeasonControllerTest: BaseTest() {
 
     @Test
     fun `if user defined value invalid or null, return max in supported seasons value if server value is not valid`() {
-        every { mockRemoteConfigRepository.supportedSeasons } returns setOf(2018,2019)
-        every { mockRemoteConfigRepository.defaultSeason } returns 2017
+        every { mockStatisticsRepository.supportedSeasons } returns setOf(2018,2019)
+        every { mockStatisticsRepository.serverDefaultYear } returns 2017
         every { mockStatisticsRepository.defaultSeason } returns null
         initSUT()
 
@@ -106,11 +147,11 @@ internal class SeasonControllerTest: BaseTest() {
 
     @Test
     fun `default season server returns the server configured default season`() {
-        every { mockRemoteConfigRepository.defaultSeason } returns 2018
+        every { mockStatisticsRepository.serverDefaultYear } returns 2018
         initSUT()
         assertEquals(2018, sut.serverDefaultSeason)
         verify {
-            mockRemoteConfigRepository.defaultSeason
+            mockStatisticsRepository.serverDefaultYear
         }
     }
 
@@ -140,12 +181,12 @@ internal class SeasonControllerTest: BaseTest() {
 
     @Test
     fun `all seasons are pulled from remote config`() {
-        every { mockRemoteConfigRepository.supportedSeasons } returns setOf(2020)
+        every { mockStatisticsRepository.supportedSeasons } returns setOf(2020)
         initSUT()
 
         assertEquals(setOf(2020), sut.supportedSeasons)
         verify {
-            mockRemoteConfigRepository.supportedSeasons
+            mockStatisticsRepository.supportedSeasons
         }
     }
 

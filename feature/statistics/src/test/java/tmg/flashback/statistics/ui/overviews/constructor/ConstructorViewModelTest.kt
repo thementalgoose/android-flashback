@@ -13,16 +13,18 @@ import tmg.flashback.statistics.ui.overview.constructor.summary.ConstructorSumma
 import tmg.flashback.statistics.ui.overview.driver.summary.PipeType
 import tmg.flashback.data.db.stats.ConstructorRepository
 import tmg.flashback.statistics.R
-import tmg.flashback.statistics.testutils.*
-import tmg.flashback.statistics.testutils.BaseTest
-import tmg.flashback.statistics.testutils.assertListContainsItem
-import tmg.flashback.statistics.testutils.assertListMatchesItem
-import tmg.flashback.statistics.testutils.test
 import tmg.flashback.statistics.ui.overview.constructor.ConstructorViewModel
 import tmg.flashback.statistics.ui.overviews.*
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
 import tmg.flashback.statistics.ui.util.position
+import tmg.testutils.BaseTest
+import tmg.testutils.livedata.assertDataEventValue
+import tmg.testutils.livedata.assertListContainsItem
+import tmg.testutils.livedata.assertListContainsItems
+import tmg.testutils.livedata.assertListExcludesItem
+import tmg.testutils.livedata.assertListMatchesItem
+import tmg.testutils.livedata.test
 
 internal class ConstructorViewModelTest: BaseTest() {
 
@@ -126,7 +128,7 @@ internal class ConstructorViewModelTest: BaseTest() {
         sut.outputs.list.test {
             assertListContainsItem(
                 ConstructorSummaryItem.Stat(
-                tint = R.attr.f1Favourite,
+                tint = R.attr.f1Championship,
                 icon = R.drawable.ic_menu_constructors,
                 label = R.string.constructor_overview_stat_titles,
                 value = "1"

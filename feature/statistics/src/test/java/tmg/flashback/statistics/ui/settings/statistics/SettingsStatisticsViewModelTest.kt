@@ -5,12 +5,12 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.core.ui.testutils.assertExpectedOrder
-import tmg.core.ui.testutils.findPref
-import tmg.core.ui.testutils.findSwitch
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.controllers.RaceController
 import tmg.flashback.statistics.controllers.SeasonController
+import tmg.flashback.statistics.testutils.assertExpectedOrder
+import tmg.flashback.statistics.testutils.findPref
+import tmg.flashback.statistics.testutils.findSwitch
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertEventFired
 import tmg.testutils.livedata.test
@@ -77,7 +77,6 @@ internal class SettingsStatisticsViewModelTest: BaseTest() {
         initSUT()
         sut.clickSwitchPreference(sut.models.findSwitch(R.string.settings_customisation_qualifying_delta_title), true)
         verify {
-            mockRaceController.showQualifyingDelta
             mockRaceController.showQualifyingDelta = true
         }
     }
@@ -87,7 +86,6 @@ internal class SettingsStatisticsViewModelTest: BaseTest() {
         initSUT()
         sut.clickSwitchPreference(sut.models.findSwitch(R.string.settings_customisation_qualifying_grid_penalties_title), true)
         verify {
-            mockRaceController.showGridPenaltiesInQualifying
             mockRaceController.showGridPenaltiesInQualifying = true
         }
     }
@@ -97,7 +95,6 @@ internal class SettingsStatisticsViewModelTest: BaseTest() {
         initSUT()
         sut.clickSwitchPreference(sut.models.findSwitch(R.string.settings_customisation_fade_dnf_title), true)
         verify {
-            mockRaceController.fadeDNF
             mockRaceController.fadeDNF = true
         }
     }
@@ -127,7 +124,6 @@ internal class SettingsStatisticsViewModelTest: BaseTest() {
         initSUT()
         sut.clickSwitchPreference(sut.models.findSwitch(R.string.settings_customisation_season_all_expanded_title), true)
         verify {
-            mockSeasonController.allExpanded
             mockSeasonController.allExpanded = true
         }
     }
@@ -135,9 +131,8 @@ internal class SettingsStatisticsViewModelTest: BaseTest() {
     @Test
     fun `clicking toggle for favourites expanded updates toggle`() {
         initSUT()
-        sut.clickSwitchPreference(sut.models.findSwitch(R.string.settings_customisation_season_favourited_expanded_description), true)
+        sut.clickSwitchPreference(sut.models.findSwitch(R.string.settings_customisation_season_favourited_expanded_title), true)
         verify {
-            mockSeasonController.favouritesExpanded
             mockSeasonController.favouritesExpanded = true
         }
     }

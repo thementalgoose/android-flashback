@@ -6,9 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import tmg.common.controllers.ForceUpgradeController
 import tmg.configuration.controllers.ConfigController
 import tmg.flashback.BuildConfig
-import tmg.flashback.controllers.FeatureController
 import tmg.flashback.managers.appshortcuts.AppShortcutManager
 import tmg.flashback.rss.controllers.RSSController
 import tmg.utilities.lifecycle.Event
@@ -35,7 +35,8 @@ interface SplashViewModelOutputs {
 class SplashViewModel(
     private val shortcutManager: AppShortcutManager,
     private val rssController: RSSController,
-    private val configurationController: ConfigController
+    private val configurationController: ConfigController,
+    private val forceUpgradeController: ForceUpgradeController
 ): ViewModel(), SplashViewModelInputs, SplashViewModelOutputs {
 
     var inputs: SplashViewModelInputs = this
@@ -77,7 +78,7 @@ class SplashViewModel(
     }
 
     private fun goToNextScreen() {
-        if (configurationController.forceUpgrade != null) {
+        if (forceUpgradeController.shouldForceUpgrade) {
             goToForceUpgrade.value = Event()
         }
         else {
