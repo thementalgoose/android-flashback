@@ -6,6 +6,7 @@ import tmg.common.controllers.ReleaseNotesController
 import tmg.common.repository.ReleaseNotesRepository
 import tmg.common.ui.forceupgrade.ForceUpgradeViewModel
 import tmg.common.ui.privacypolicy.PrivacyPolicyViewModel
+import tmg.common.ui.settings.about.SettingsAboutViewModel
 import tmg.common.ui.settings.appearance.SettingsAppearanceViewModel
 import tmg.common.ui.settings.appearance.animation.AnimationSpeedViewModel
 import tmg.common.ui.settings.appearance.theme.ThemeViewModel
@@ -22,6 +23,7 @@ val commonModule = module {
     viewModel { PrivacyPolicyViewModel() }
 
     viewModel { SettingsAppearanceViewModel() }
+    viewModel { SettingsAboutViewModel() }
     viewModel { SettingsSupportViewModel(get(), get()) }
     viewModel { SettingsNotificationViewModel(get()) }
     viewModel { ThemeViewModel(get()) }
