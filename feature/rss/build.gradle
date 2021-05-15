@@ -29,7 +29,6 @@ dependencies {
     implementation 'org.conscrypt:conscrypt-android:2.2.1'
 
     // TMG dependencies
-    implementation "com.github.thementalgoose:android-about-this-app:$tmg_about_this_app"
     implementation "com.github.thementalgoose:android-labelled-progress-bar:$tmg_labelled_progressbar"
 
     // Lottie

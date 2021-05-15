@@ -1,12 +1,12 @@
 package tmg.flashback.upnext.repository
 
-import tmg.configuration.controllers.ConfigController
+import tmg.configuration.manager.ConfigManager
 import tmg.flashback.upnext.repository.converters.convert
 import tmg.flashback.upnext.repository.json.UpNextJson
 import tmg.flashback.upnext.repository.model.UpNextSchedule
 
 class UpNextRepository(
-    private val configController: ConfigController
+    private val configManager: ConfigManager
 ) {
 
     companion object {
@@ -14,7 +14,7 @@ class UpNextRepository(
     }
 
     val upNext: List<UpNextSchedule>
-        get() = configController
+        get() = configManager
                 .getJson<UpNextJson>(keyUpNext)
                 ?.convert()
                 ?: emptyList()

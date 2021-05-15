@@ -11,6 +11,7 @@ import tmg.flashback.databinding.ViewSeasonListHeaderBinding
 import tmg.flashback.databinding.ViewSeasonListHeroBinding
 import tmg.flashback.databinding.ViewSeasonListSeasonBinding
 import tmg.flashback.databinding.ViewSeasonListUpNextBinding
+import tmg.flashback.ui.dashboard.list.viewholders.*
 import tmg.flashback.upnext.repository.model.TimeListDisplayType
 
 class ListAdapter(
@@ -40,28 +41,28 @@ class ListAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         return when (viewType) {
-            R.layout.view_season_list_divider -> tmg.flashback.ui.dashboard.list.viewholders.DividerViewHolder(
+            R.layout.view_season_list_divider -> DividerViewHolder(
                 ViewSeasonListDividerBinding.inflate(layoutInflater, parent, false)
             )
-            R.layout.view_season_list_season -> tmg.flashback.ui.dashboard.list.viewholders.SeasonViewHolder(
+            R.layout.view_season_list_season -> SeasonViewHolder(
                 favouriteToggled,
                 seasonClicked,
                 setDefaultClicked,
                 clearDefaultClicked,
                 ViewSeasonListSeasonBinding.inflate(layoutInflater, parent, false)
             )
-            R.layout.view_season_list_header -> tmg.flashback.ui.dashboard.list.viewholders.HeaderViewHolder(
+            R.layout.view_season_list_header -> HeaderViewHolder(
                 featureToggled,
                 ViewSeasonListHeaderBinding.inflate(layoutInflater, parent, false)
             )
-            R.layout.view_season_list_hero -> tmg.flashback.ui.dashboard.list.viewholders.HeroViewHolder(
+            R.layout.view_season_list_hero -> HeroViewHolder(
                 ViewSeasonListHeroBinding.inflate(layoutInflater, parent, false)
             )
-            R.layout.view_season_list_up_next -> tmg.flashback.ui.dashboard.list.viewholders.UpNextViewHolder(
+            R.layout.view_season_list_up_next -> UpNextViewHolder(
                 ViewSeasonListUpNextBinding.inflate(layoutInflater, parent, false),
                 timeDisplayFormatClicked
             )
-            R.layout.view_season_list_button -> tmg.flashback.ui.dashboard.list.viewholders.ButtonViewHolder(
+            R.layout.view_season_list_button -> ButtonViewHolder(
                 buttonClicked,
                 ViewSeasonListButtonBinding.inflate(layoutInflater, parent, false)
             )
@@ -75,10 +76,14 @@ class ListAdapter(
         payloads: MutableList<Any>
     ) {
         when (val item = list[position]) {
-            is ListItem.Season -> (holder as tmg.flashback.ui.dashboard.list.viewholders.SeasonViewHolder).bind(item)
-            is ListItem.Header -> (holder as tmg.flashback.ui.dashboard.list.viewholders.HeaderViewHolder).bind(item)
-            is ListItem.UpNext -> (holder as tmg.flashback.ui.dashboard.list.viewholders.UpNextViewHolder).bind(item)
-            is ListItem.Button -> (holder as tmg.flashback.ui.dashboard.list.viewholders.ButtonViewHolder).bind(item)
+            is ListItem.Season -> {
+                val next = (list.getOrNull(position - 1) as? ListItem.Season)?.season
+                val previous = (list.getOrNull(position + 1) as? ListItem.Season)?.season
+                (holder as SeasonViewHolder).bind(previous, item, next)
+            }
+            is ListItem.Header -> (holder as HeaderViewHolder).bind(item)
+            is ListItem.UpNext -> (holder as UpNextViewHolder).bind(item)
+            is ListItem.Button -> (holder as ButtonViewHolder).bind(item)
         }
     }
 

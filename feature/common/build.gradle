@@ -14,4 +14,8 @@ dependencies {
 
     // About This App
     implementation "com.github.thementalgoose:android-about-this-app:$tmg_about_this_app"
+
+    // CircleImageView
+    implementation "de.hdodenhof:circleimageview:$circleimageview"
+
 }

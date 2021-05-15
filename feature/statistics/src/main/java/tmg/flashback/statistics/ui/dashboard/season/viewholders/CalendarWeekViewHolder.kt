@@ -1,5 +1,6 @@
 package tmg.flashback.statistics.ui.dashboard.season.viewholders
 
+import android.graphics.Color
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
@@ -10,6 +11,7 @@ import tmg.flashback.statistics.databinding.ViewDashboardSeasonCalendarWeekBindi
 import tmg.flashback.formula1.enums.TrackLayout
 import tmg.flashback.statistics.ui.dashboard.season.SeasonItem
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
+import tmg.utilities.extensions.getColor
 import tmg.utilities.extensions.toEnum
 import tmg.utilities.extensions.views.context
 import tmg.utilities.extensions.views.show
@@ -70,9 +72,11 @@ class CalendarWeekViewHolder(
 
             if (date == LocalDate.now()) {
                 cells[x].day.setBackgroundResource(R.drawable.dashboard_calendar_current_day)
+                cells[x].day.setTextColor(Color.WHITE)
             }
             else {
                 cells[x].day.setBackgroundResource(0)
+                cells[x].day.setTextColor(context.theme.getColor(R.attr.contentPrimary))
             }
 
             lastSimulatedDay = day

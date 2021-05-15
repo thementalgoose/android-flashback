@@ -1,6 +1,6 @@
 package tmg.flashback.rss.repo
 
-import tmg.configuration.controllers.ConfigController
+import tmg.configuration.manager.ConfigManager
 import tmg.flashback.rss.repo.json.SupportedSourcesJson
 import tmg.flashback.rss.repo.model.SupportedSource
 import tmg.core.prefs.manager.PreferenceManager
@@ -8,7 +8,7 @@ import tmg.flashback.rss.repo.converters.convert
 
 class RSSRepository(
     private val preferenceManager: PreferenceManager,
-    private val configController: ConfigController
+    private val configManager: ConfigManager
 ) {
 
     companion object {
@@ -29,21 +29,21 @@ class RSSRepository(
      * Is the RSS feature enabled
      */
     val enabled: Boolean by lazy {
-        configController.getBoolean(keyRss)
+        configManager.getBoolean(keyRss)
     }
 
     /**
      * Is the RSS add custom rss feeds feature enabled
      */
     val addCustom: Boolean by lazy {
-        configController.getBoolean(keyRssAddCustom)
+        configManager.getBoolean(keyRssAddCustom)
     }
 
     /**
      * RSS supported sources for the quick add section
      */
     val supportedSources: List<SupportedSource> by lazy {
-        configController
+        configManager
                 .getJson<SupportedSourcesJson>(keyRssSupportedSources)
                 ?.convert()
                 ?: emptyList()

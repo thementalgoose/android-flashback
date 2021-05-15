@@ -22,6 +22,8 @@ import org.koin.core.component.inject
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.configuration.controllers.ConfigController
+import tmg.core.device.managers.BuildConfigManager
+import tmg.core.ui.navigation.NavigationProvider
 import tmg.flashback.formula1.enums.TrackLayout
 import tmg.crash_reporting.controllers.CrashController
 import tmg.flashback.data.utils.daysBetween
@@ -37,7 +39,8 @@ class UpNextWidgetProvider : AppWidgetProvider(), KoinComponent {
 
     private val crashController: CrashController by inject()
     private val upNextController: UpNextController by inject()
-    private val buildConfigManager: tmg.core.device.managers.BuildConfigManager by inject()
+    private val buildConfigManager: BuildConfigManager by inject()
+    private val navigationProvider: NavigationProvider by inject()
 
     private val configController: ConfigController by inject()
 
@@ -207,9 +210,7 @@ class UpNextWidgetProvider : AppWidgetProvider(), KoinComponent {
     }
 
     private fun getOpenAppPendingIntent(context: Context): PendingIntent {
-//        val intent = navigationManager.getAppStartupIntent(context)
-        // TODO: CHECK THIS!
-        val intent = context.packageManager.getLaunchIntentForPackage(buildConfigManager.applicationId)
+        val intent = navigationProvider.relaunchAppIntent(context)
         return PendingIntent.getActivity(context, 0, intent, 0)
     }
 

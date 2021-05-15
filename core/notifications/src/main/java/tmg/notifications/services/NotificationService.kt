@@ -1,4 +1,4 @@
-package tmg.flashback.services
+package tmg.notifications.services
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -9,11 +9,14 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import tmg.flashback.R
-import tmg.flashback.ui.SplashActivity
+import org.koin.android.ext.android.inject
+import tmg.notifications.R
 import tmg.notifications.controllers.NotificationController
+import tmg.notifications.navigation.NotificationNavigationProvider
 
-class RaceNotificationService: FirebaseMessagingService() {
+class NotificationService : FirebaseMessagingService() {
+
+    private val navigationProvider: NotificationNavigationProvider by inject()
 
     override fun onMessageReceived(message: RemoteMessage) {
         super.onMessageReceived(message)
@@ -39,7 +42,7 @@ class RaceNotificationService: FirebaseMessagingService() {
      * Register a local notification for when the app is open
      */
     private fun sendNotification(channelId: String, title: String, text: String?) {
-        val intent = Intent(this, SplashActivity::class.java)
+        val intent = navigationProvider.relaunchAppIntent(this)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         val pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
             PendingIntent.FLAG_ONE_SHOT)
@@ -52,19 +55,6 @@ class RaceNotificationService: FirebaseMessagingService() {
             .setContentIntent(pendingIntent)
 
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
-        // Since android Oreo notification channel is needed.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel: NotificationChannel? = when (channelId) {
-                NotificationController.keyTopicRace -> NotificationChannel(channelId, getString(R.string.notification_channel_race), NotificationManager.IMPORTANCE_HIGH)
-                NotificationController.keyTopicQualifying -> NotificationChannel(channelId, getString(R.string.notification_channel_qualifying), NotificationManager.IMPORTANCE_DEFAULT)
-                NotificationController.keyTopicSeasonInfo -> NotificationChannel(channelId, getString(R.string.notification_channel_info), NotificationManager.IMPORTANCE_DEFAULT)
-                else -> null
-            }
-            channel?.let {
-                notificationManager.createNotificationChannel(it)
-            }
-        }
 
         notificationManager.notify(0 /* ID of notification */, notificationBuilder.build())
     }

@@ -9,20 +9,25 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.discord.panels.OverlappingPanelsLayout
 import com.discord.panels.PanelState
+import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.common.ui.releasenotes.ReleaseBottomSheetFragment
 import tmg.core.ui.base.BaseFragment
 import tmg.flashback.R
 import tmg.flashback.databinding.FragmentDashboardBinding
+import tmg.flashback.statistics.controllers.SeasonController
 import tmg.flashback.statistics.ui.admin.maintenance.MaintenanceActivity
 import tmg.flashback.ui.dashboard.list.ListFragment
 import tmg.flashback.statistics.ui.dashboard.season.SeasonFragment
+import tmg.flashback.statistics.ui.dashboard.season.SeasonFragmentCallback
 import tmg.utilities.extensions.observeEvent
 
 class DashboardFragment : BaseFragment<FragmentDashboardBinding>(),
-    OverlappingPanelsLayout.PanelStateListener, DashboardNavigationCallback {
+    OverlappingPanelsLayout.PanelStateListener, DashboardNavigationCallback, SeasonFragmentCallback {
 
     private val viewModel: DashboardViewModel by viewModel()
+
+    private val seasonController: SeasonController by inject()
 
     private val seasonTag: String = "season"
     private val seasonFragment: SeasonFragment?
@@ -44,9 +49,9 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(),
         binding.panels.setEndPanelLockState(lockState = OverlappingPanelsLayout.LockState.CLOSE)
         binding.panels.registerStartPanelStateListeners(this)
 
-//        if (!featureController.calendarDashboardEnabled) {
-//            binding.navigation.menu.removeItem(R.id.nav_calendar)
-//        }
+        if (!seasonController.dashboardCalendar) {
+            binding.navigation.menu.removeItem(R.id.nav_calendar)
+        }
 
         binding.navigation.setOnNavigationItemSelectedListener {
             return@setOnNavigationItemSelectedListener when (it.itemId) {
@@ -55,12 +60,12 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(),
                     true
                 }
                 R.id.nav_calendar -> {
-//                    if (featureController.calendarDashboardEnabled) {
+                    if (seasonController.dashboardCalendar) {
                         seasonFragment?.selectCalendar()
                         true
-//                    } else {
-//                        false
-//                    }
+                    } else {
+                        false
+                    }
                 }
                 R.id.nav_drivers -> {
                     seasonFragment?.selectDrivers()
@@ -133,6 +138,13 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(),
 
     override fun closeSeasonList() {
         binding.panels.closePanels()
+    }
+
+    //endregion
+
+    //region SeasonFragmentCallback
+    override fun openMenu() {
+        binding.panels.openStartPanel()
     }
 
     //endregion

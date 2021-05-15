@@ -50,6 +50,21 @@ internal class AnalyticsManagerTest {
 
     //endregion
 
+    //region Initialising
+
+    @Test
+    fun `initialise passes user id and collection enabled to analytics service`() {
+        every { mockAnalyticsRepository.isEnabled } returns true
+        initSUT()
+        sut.initialise("my-user-id")
+        verify {
+            mockAnalyticsService.setUserId("my-user-id")
+            mockAnalyticsService.setAnalyticsCollectionEnabled(true)
+        }
+    }
+
+    //endregion
+
     //region logEvent
 
     @Test

@@ -4,9 +4,10 @@ import tmg.common.repository.converters.convert
 import tmg.common.repository.json.ForceUpgradeJson
 import tmg.configuration.controllers.ConfigController
 import tmg.common.repository.model.ForceUpgrade
+import tmg.configuration.manager.ConfigManager
 
 class ForceUpgradeRepository(
-        private val configController: ConfigController
+        private val configManager: ConfigManager
 ) {
     companion object {
         private const val keyForceUpgrade: String = "force_upgrade"
@@ -22,7 +23,7 @@ class ForceUpgradeRepository(
      * }
      */
     val forceUpgrade: ForceUpgrade?
-        get() = configController
+        get() = configManager
                 .getJson<ForceUpgradeJson>(keyForceUpgrade)
                 ?.convert()
 }

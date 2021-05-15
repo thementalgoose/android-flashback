@@ -23,7 +23,6 @@ dependencies {
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:$swipe_refresh"
 
     // TMG dependencies
-    implementation "com.github.thementalgoose:android-about-this-app:$tmg_about_this_app"
     implementation "com.github.thementalgoose:android-labelled-progress-bar:$tmg_labelled_progressbar"
 
     // Glide

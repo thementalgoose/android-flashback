@@ -2,6 +2,7 @@ package tmg.flashback
 
 import android.os.Build
 import android.util.Log
+import androidx.appcompat.app.AppCompatDelegate
 import com.github.stkent.bugshaker.BugShaker
 import com.github.stkent.bugshaker.flow.dialog.AlertDialogType
 import com.jakewharton.threetenabp.AndroidThreeTen
@@ -36,6 +37,13 @@ class FlashbackStartup(
         // ThreeTen
         AndroidThreeTen.init(application)
 
+        // Theming
+        when (themeController.theme) {
+            Theme.DEFAULT -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+            Theme.DAY -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            Theme.NIGHT -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        }
+
         // Shake to report a bug
         if (crashController.shakeToReport) {
             Log.i("Flashback", "Enabling shake to report")
@@ -66,6 +74,7 @@ class FlashbackStartup(
         }
 
         // Initialise user properties
+        analyticsManager.initialise(userId = deviceController.deviceUdid)
         analyticsManager.setUserProperty(DEVICE_MODEL, Build.MODEL)
         analyticsManager.setUserProperty(OS_VERSION, Build.VERSION.SDK_INT.toString())
         analyticsManager.setUserProperty(APP_VERSION, BuildConfig.VERSION_NAME)
