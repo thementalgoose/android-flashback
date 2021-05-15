@@ -1,5 +1,6 @@
 package tmg.flashback.statistics.ui.settings.statistics
 
+import androidx.annotation.StringRes
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -10,6 +11,8 @@ import tmg.core.ui.settings.SettingsModel
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.controllers.RaceController
 import tmg.flashback.statistics.controllers.SeasonController
+import tmg.flashback.statistics.testutils.findPref
+import tmg.flashback.statistics.testutils.findSwitch
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertEventFired
 import tmg.testutils.livedata.test
@@ -38,75 +41,69 @@ internal class SettingsStatisticsViewModelTest: BaseTest() {
     @Test
     fun `initial model list is expected when user defined value false`() {
         initSUT()
-        (sut.models[0] as SettingsModel.Header).apply {
-            assertEquals(R.string.settings_statistics, this.title)
-        }
-        (sut.models[1] as SettingsModel.SwitchPref).apply {
-            assertEquals(R.string.settings_customisation_qualifying_delta_title, this.title)
-            assertEquals(R.string.settings_customisation_qualifying_delta_description, this.description)
-        }
-        (sut.models[2] as SettingsModel.SwitchPref).apply {
-            assertEquals(R.string.settings_customisation_qualifying_grid_penalties_title, this.title)
-            assertEquals(R.string.settings_customisation_qualifying_grid_penalties_description, this.description)
-        }
-        (sut.models[3] as SettingsModel.SwitchPref).apply {
-            assertEquals(R.string.settings_customisation_fade_dnf_title, this.title)
-            assertEquals(R.string.settings_customisation_fade_dnf_description, this.description)
-        }
-        (sut.models[4] as SettingsModel.Header).apply {
-            assertEquals(R.string.settings_home, this.title)
-        }
-        (sut.models[5] as SettingsModel.SwitchPref).apply {
-            assertEquals(R.string.settings_customisation_season_all_expanded_title, this.title)
-            assertEquals(R.string.settings_customisation_season_all_expanded_description, this.description)
-        }
-        (sut.models[6] as SettingsModel.SwitchPref).apply {
-            assertEquals(R.string.settings_customisation_season_favourited_expanded_title, this.title)
-            assertEquals(R.string.settings_customisation_season_favourited_expanded_title, this.description)
+
+        val expected = listOf(
+                Pair(R.string.settings_statistics, null),
+                Pair(R.string.settings_customisation_qualifying_delta_title, R.string.settings_customisation_qualifying_delta_description),
+                Pair(R.string.settings_customisation_qualifying_grid_penalties_title, R.string.settings_customisation_qualifying_grid_penalties_description),
+                Pair(R.string.settings_customisation_fade_dnf_title, R.string.settings_customisation_fade_dnf_description),
+                Pair(R.string.settings_home, null),
+                Pair(R.string.settings_customisation_season_all_expanded_title, R.string.settings_customisation_season_all_expanded_description),
+                Pair(R.string.settings_customisation_season_favourited_expanded_title, R.string.settings_customisation_season_favourited_expanded_description),
+        )
+
+        sut.models.forEachIndexed { index, settingsModel ->
+            if (settingsModel is SettingsModel.Header) {
+                assertEquals(expected[index].first, settingsModel.title)
+            }
+            if (settingsModel is SettingsModel.SwitchPref) {
+                assertEquals(expected[index].first, settingsModel.title)
+                assertEquals(expected[index].second, settingsModel.description)
+            }
+            if (settingsModel is SettingsModel.Pref) {
+                assertEquals(expected[index].first, settingsModel.title)
+                assertEquals(expected[index].second, settingsModel.description)
+            }
         }
     }
 
     @Test
     fun `initial model list is expected when user defined value true`() {
         every { mockSeasonController.isUserDefinedValueSet } returns true
+
         initSUT()
-        (sut.models[0] as SettingsModel.Header).apply {
-            assertEquals(R.string.settings_statistics, this.title)
-        }
-        (sut.models[1] as SettingsModel.SwitchPref).apply {
-            assertEquals(R.string.settings_customisation_qualifying_delta_title, this.title)
-            assertEquals(R.string.settings_customisation_qualifying_delta_description, this.description)
-        }
-        (sut.models[2] as SettingsModel.SwitchPref).apply {
-            assertEquals(R.string.settings_customisation_qualifying_grid_penalties_title, this.title)
-            assertEquals(R.string.settings_customisation_qualifying_grid_penalties_description, this.description)
-        }
-        (sut.models[3] as SettingsModel.SwitchPref).apply {
-            assertEquals(R.string.settings_customisation_fade_dnf_title, this.title)
-            assertEquals(R.string.settings_customisation_fade_dnf_description, this.description)
-        }
-        (sut.models[4] as SettingsModel.Header).apply {
-            assertEquals(R.string.settings_home, this.title)
-        }
-        (sut.models[5] as SettingsModel.Pref).apply {
-            assertEquals(R.string.settings_default_season_title, this.title)
-            assertEquals(R.string.settings_default_season_description, this.description)
-        }
-        (sut.models[6] as SettingsModel.SwitchPref).apply {
-            assertEquals(R.string.settings_customisation_season_all_expanded_title, this.title)
-            assertEquals(R.string.settings_customisation_season_all_expanded_description, this.description)
-        }
-        (sut.models[7] as SettingsModel.SwitchPref).apply {
-            assertEquals(R.string.settings_customisation_season_favourited_expanded_title, this.title)
-            assertEquals(R.string.settings_customisation_season_favourited_expanded_title, this.description)
+        val expected = listOf(
+                Pair(R.string.settings_statistics, null),
+                Pair(R.string.settings_customisation_qualifying_delta_title, R.string.settings_customisation_qualifying_delta_description),
+                Pair(R.string.settings_customisation_qualifying_grid_penalties_title, R.string.settings_customisation_qualifying_grid_penalties_description),
+                Pair(R.string.settings_customisation_fade_dnf_title, R.string.settings_customisation_fade_dnf_description),
+                Pair(R.string.settings_home, null),
+                Pair(R.string.settings_default_season_title, R.string.settings_default_season_description),
+                Pair(R.string.settings_customisation_season_all_expanded_title, R.string.settings_customisation_season_all_expanded_description),
+                Pair(R.string.settings_customisation_season_favourited_expanded_title, R.string.settings_customisation_season_favourited_expanded_description),
+        )
+
+        sut.models.forEachIndexed { index, settingsModel ->
+            if (settingsModel is SettingsModel.Header) {
+                assertEquals(expected[index].first, settingsModel.title)
+            }
+            if (settingsModel is SettingsModel.SwitchPref) {
+                assertEquals(expected[index].first, settingsModel.title)
+                assertEquals(expected[index].second, settingsModel.description)
+            }
+            if (settingsModel is SettingsModel.Pref) {
+                assertEquals(expected[index].first, settingsModel.title)
+                assertEquals(expected[index].second, settingsModel.description)
+            }
         }
     }
 
     @Test
     fun `clicking toggle for qualifying delta updates toggle`() {
         initSUT()
-        sut.clickSwitchPreference(sut.models[1] as SettingsModel.SwitchPref, true)
+        sut.clickSwitchPreference(sut.models.findSwitch(R.string.settings_customisation_qualifying_delta_title), true)
         verify {
+            mockRaceController.showQualifyingDelta
             mockRaceController.showQualifyingDelta = true
         }
     }
@@ -114,17 +111,19 @@ internal class SettingsStatisticsViewModelTest: BaseTest() {
     @Test
     fun `clicking toggle for qualifying grid penalties updates toggle`() {
         initSUT()
-        sut.clickSwitchPreference(sut.models[2] as SettingsModel.SwitchPref, true)
+        sut.clickSwitchPreference(sut.models.findSwitch(R.string.settings_customisation_qualifying_grid_penalties_title), true)
         verify {
-            mockRaceController.showGridPenaltiesInQualifying= true
+            mockRaceController.showGridPenaltiesInQualifying
+            mockRaceController.showGridPenaltiesInQualifying = true
         }
     }
 
     @Test
     fun `clicking toggle for fade dnf updates toggle`() {
         initSUT()
-        sut.clickSwitchPreference(sut.models[3] as SettingsModel.SwitchPref, true)
+        sut.clickSwitchPreference(sut.models.findSwitch(R.string.settings_customisation_fade_dnf_title), true)
         verify {
+            mockRaceController.fadeDNF
             mockRaceController.fadeDNF = true
         }
     }
@@ -133,7 +132,7 @@ internal class SettingsStatisticsViewModelTest: BaseTest() {
     fun `clicking toggle for clearing default season launches event`() {
         every { mockSeasonController.isUserDefinedValueSet } returns true
         initSUT()
-        sut.clickPreference(sut.models[5] as SettingsModel.Pref)
+        sut.clickPreference(sut.models.findPref(R.string.settings_default_season_title))
         sut.outputs.defaultSeasonChanged.test {
             assertEventFired()
         }
@@ -143,7 +142,7 @@ internal class SettingsStatisticsViewModelTest: BaseTest() {
     fun `clicking toggle for clearing default season clears toggle`() {
         every { mockSeasonController.isUserDefinedValueSet } returns true
         initSUT()
-        sut.clickPreference(sut.models[5] as SettingsModel.Pref)
+        sut.clickPreference(sut.models.findPref(R.string.settings_default_season_title))
         verify {
             mockSeasonController.clearDefault()
         }
@@ -152,8 +151,9 @@ internal class SettingsStatisticsViewModelTest: BaseTest() {
     @Test
     fun `clicking toggle for all expanded updates toggle`() {
         initSUT()
-        sut.clickSwitchPreference(sut.models[5] as SettingsModel.SwitchPref, true)
+        sut.clickSwitchPreference(sut.models.findSwitch(R.string.settings_customisation_season_all_expanded_title), true)
         verify {
+            mockSeasonController.allExpanded
             mockSeasonController.allExpanded = true
         }
     }
@@ -161,8 +161,9 @@ internal class SettingsStatisticsViewModelTest: BaseTest() {
     @Test
     fun `clicking toggle for favourites expanded updates toggle`() {
         initSUT()
-        sut.clickSwitchPreference(sut.models[6] as SettingsModel.SwitchPref, true)
+        sut.clickSwitchPreference(sut.models.findSwitch(R.string.settings_customisation_season_favourited_expanded_description), true)
         verify {
+            mockSeasonController.favouritesExpanded
             mockSeasonController.favouritesExpanded = true
         }
     }

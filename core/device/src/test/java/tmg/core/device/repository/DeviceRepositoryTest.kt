@@ -111,7 +111,7 @@ internal class DeviceRepositoryTest {
         sut.lastAppVersion = 4
 
         verify {
-            mockPreferenceManager.save(keyAppVersion, 3 /* Should be 4 */)
+            mockPreferenceManager.save(keyAppVersion, 4)
         }
     }
 
@@ -125,7 +125,7 @@ internal class DeviceRepositoryTest {
         initSUT()
 
         assertNotNull(sut.deviceUdid)
-        verify(exactly = 0) {
+        verify {
             mockPreferenceManager.getString(keyDeviceUdid, "")
             mockPreferenceManager.save(keyDeviceUdid, any<String>())
         }
@@ -155,7 +155,7 @@ internal class DeviceRepositoryTest {
 
         sut.deviceUdid = testGuid
         verify {
-            mockPreferenceManager.save(keyAppFirstBoot, testGuid)
+            mockPreferenceManager.save(keyDeviceUdid, testGuid)
         }
     }
 

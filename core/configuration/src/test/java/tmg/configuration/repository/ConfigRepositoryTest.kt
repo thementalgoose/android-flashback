@@ -250,7 +250,7 @@ internal class ConfigRepositoryTest {
 
         every { mockRemoteConfigManager.getBoolean(keyDashboardCalendar) } returns false
         assertTrue(sut.dashboardCalendar)
-        verify(exactly = 0) {
+        verify(exactly = 1) {
             mockRemoteConfigManager.getBoolean(keyDashboardCalendar)
         }
     }
@@ -301,11 +301,11 @@ internal class ConfigRepositoryTest {
 
     @Test
     fun `rss add custom calls remote config`() {
-        every { mockRemoteConfigManager.getBoolean(keyRss) } returns true
+        every { mockRemoteConfigManager.getBoolean(keyRssAddCustom) } returns true
         initSUT()
         assertTrue(sut.rssAddCustom)
         verify {
-            mockRemoteConfigManager.getBoolean(keyRss)
+            mockRemoteConfigManager.getBoolean(keyRssAddCustom)
         }
     }
 
