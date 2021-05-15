@@ -160,7 +160,6 @@ internal class ListViewModelTest: BaseTest() {
         sut.inputs.clickTimeDisplayType(TimeListDisplayType.RELATIVE)
 
         sut.outputs.list.test {
-            println(latestValue)
             assertListMatchesItem { it is ListItem.UpNext && it.timeFormatType == TimeListDisplayType.RELATIVE }
         }
     }
