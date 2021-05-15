@@ -22,6 +22,7 @@
       <module name="android-flashback.feature.rss" target="1.8" />
       <module name="android-flashback.feature.rss.rss" target="1.8" />
       <module name="android-flashback.feature.statistics" target="1.8" />
+      <module name="android-flashback.feature.statistics-data-firebase" target="1.8" />
       <module name="android-flashback.feature.statistics.data-firebase" target="1.8" />
       <module name="android-flashback.feature.statistics.statistics" target="1.8" />
       <module name="android-flashback.feature.statistics.widgets" target="1.8" />

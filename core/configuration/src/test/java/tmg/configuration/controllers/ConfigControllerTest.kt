@@ -7,9 +7,6 @@ import org.junit.jupiter.api.Test
 import tmg.configuration.constants.Migrations
 import tmg.configuration.services.RemoteConfigService
 import tmg.configuration.repository.ConfigRepository
-import tmg.common.repository.model.ForceUpgrade
-import tmg.flashback.rss.repo.model.SupportedSource
-import tmg.configuration.repository.models.UpNextSchedule
 
 internal class ConfigControllerTest {
 
@@ -107,105 +104,45 @@ internal class ConfigControllerTest {
     //region Variables
 
     @Test
-    fun `supported seasons calls config repo`() {
-        every { mockConfigRepository.supportedSeasons } returns setOf(2012)
+    fun `get boolean calls service`() {
+        every { mockConfigService.getBoolean(any()) } returns true
         initSUT()
-        assertEquals(setOf(2012), sut.supportedSeasons)
+        assertTrue(sut.getBoolean("key"))
         verify {
-            mockConfigRepository.supportedSeasons
+            mockConfigService.getBoolean("key")
         }
     }
 
     @Test
-    fun `default season calls config repo`() {
-        every { mockConfigRepository.defaultSeason } returns 2019
+    fun `get string calls service`() {
+        every { mockConfigService.getString(any()) } returns "hey"
         initSUT()
-        assertEquals(2019, sut.defaultSeason)
+        assertEquals("hey", sut.getString("key"))
         verify {
-            mockConfigRepository.defaultSeason
+            mockConfigService.getString("key")
         }
     }
 
     @Test
-    fun `banner calls config repo`() {
-        every { mockConfigRepository.banner } returns "banner-time"
+    fun `get empty string calls service and returns null`() {
+        every { mockConfigService.getString(any()) } returns ""
         initSUT()
-        assertEquals("banner-time", sut.banner)
+        assertNull(sut.getString("key"))
         verify {
-            mockConfigRepository.banner
+            mockConfigService.getString("key")
         }
     }
 
+    data class TestModel(
+        val test: String
+    )
     @Test
-    fun `force upgrade calls config repo`() {
-        val expected = tmg.common.repository.model.ForceUpgrade(title = "test", message = "hello", link = null)
-        every { mockConfigRepository.forceUpgrade } returns expected
+    fun `get json calls service`() {
+        every { mockConfigService.getString(any()) } returns "{'test':'hey'}"
         initSUT()
-        assertEquals(expected, sut.forceUpgrade)
+        assertEquals(TestModel("hey"), sut.getJson("key", TestModel::class.java))
         verify {
-            mockConfigRepository.forceUpgrade
-        }
-    }
-
-    @Test
-    fun `dashboard calendar calls config repo`() {
-        every { mockConfigRepository.dashboardCalendar } returns true
-        initSUT()
-        assertTrue(sut.dashboardCalendar)
-        verify {
-            mockConfigRepository.dashboardCalendar
-        }
-    }
-
-    @Test
-    fun `data provided by calls config repo`() {
-        every { mockConfigRepository.dataProvidedBy } returns "banner-time"
-        initSUT()
-        assertEquals("banner-time", sut.dataProvidedBy)
-        verify {
-            mockConfigRepository.dataProvidedBy
-        }
-    }
-
-    @Test
-    fun `up next calls config repo`() {
-        val expected = UpNextSchedule(1, 1, "", null, emptyList(), "PRT", "algarve")
-        every { mockConfigRepository.upNext } returns listOf(expected)
-        initSUT()
-        assertEquals(listOf(expected), sut.upNext)
-        verify {
-            mockConfigRepository.upNext
-        }
-    }
-
-    @Test
-    fun `rss calls config repo`() {
-        every { mockConfigRepository.rss } returns true
-        initSUT()
-        assertTrue(sut.rss)
-        verify {
-            mockConfigRepository.rss
-        }
-    }
-
-    @Test
-    fun `rss add custom calls config repo`() {
-        every { mockConfigRepository.rssAddCustom } returns true
-        initSUT()
-        assertTrue(sut.rssAddCustom)
-        verify {
-            mockConfigRepository.rssAddCustom
-        }
-    }
-
-    @Test
-    fun `rss supported sources calls config repo`() {
-        val expected = tmg.flashback.rss.repo.model.SupportedSource("", "", "", "", "", "", "")
-        every { mockConfigRepository.rssSupportedSources } returns listOf(expected)
-        initSUT()
-        assertEquals(listOf(expected), sut.rssSupportedSources)
-        verify {
-            mockConfigRepository.rssSupportedSources
+            mockConfigService.getString("key")
         }
     }
 

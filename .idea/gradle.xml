@@ -29,8 +29,8 @@
             <option value="$PROJECT_DIR$/feature/formula1" />
             <option value="$PROJECT_DIR$/feature/rss" />
             <option value="$PROJECT_DIR$/feature/statistics" />
-            <option value="$PROJECT_DIR$/feature/statistics_data" />
-            <option value="$PROJECT_DIR$/feature/statistics_data_firebase" />
+            <option value="$PROJECT_DIR$/feature/statistics-data" />
+            <option value="$PROJECT_DIR$/feature/statistics-data-firebase" />
             <option value="$PROJECT_DIR$/feature/upnext" />
           </set>
         </option>

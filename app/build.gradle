@@ -230,7 +230,7 @@ dependencies {
 
     // Feature modules
     implementation project(path: ':feature:statistics')
-    implementation project(path: ':feature:statistics_data_firebase')
+    implementation project(path: ':feature:statistics-data-firebase')
     implementation project(path: ':feature:formula1')
     implementation project(path: ':feature:upnext')
     implementation project(path: ':feature:rss')

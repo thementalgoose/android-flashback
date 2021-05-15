@@ -63,11 +63,11 @@ jobs:
       - name: Unit tests - feature:statistics
         run: ./gradlew :feature:statistics:testDebugUnitTest
         if: ${{ env.lines_feature_statistics != 0 }}
-      - name: Unit tests - feature:statistics_data
-        run: ./gradlew :feature:statistics_data:testDebugUnitTest
+      - name: Unit tests - feature:statistics-data
+        run: ./gradlew :feature:statistics-data:testDebugUnitTest
         if: ${{ env.lines_feature_statistics_data != 0 }}
-      - name: Unit tests - feature:statistics_data_firebase
-        run: ./gradlew :feature:statistics_data_firebase:testDebugUnitTest
+      - name: Unit tests - feature:statistics-data-firebase
+        run: ./gradlew :feature:statistics-data-firebase:testDebugUnitTest
         if: ${{ env.lines_feature_statistics_data_firebase != 0 }}
       - name: Unit tests - feature:upnext
         run: ./gradlew :feature:upnext:testDebugUnitTest
