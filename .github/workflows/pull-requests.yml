@@ -103,17 +103,7 @@ jobs:
         run: ./gradlew :core:ui:testDebugUnitTest
         if: ${{ env.lines_core_ui != 0 }}
 
-      # Leaving comment if failed
-      - name: Publish Unit Test Results
-        uses: EnricoMi/publish-unit-test-result-action@v1.17
-        if: always()
+      - name: Publish Test Report
+        uses: mikepenz/action-junit-report@v2
         with:
-          files: |
-            **/test-results/**/*.xml
-
-#      - name: Notify PR
-#        if: ${{ failure() }}
-#        uses: peter-evans/commit-comment@v1
-#        with:
-#          body: |
-#            Unit tests failed for commit ${{ github.sha }}
+          report_paths: '**/build/test-results/**/TEST-*.xml'
