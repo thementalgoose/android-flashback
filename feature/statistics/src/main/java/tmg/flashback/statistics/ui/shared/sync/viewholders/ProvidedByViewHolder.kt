@@ -3,14 +3,14 @@ package tmg.flashback.statistics.ui.shared.sync.viewholders
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import tmg.core.ui.navigation.NavigationProvider
 import tmg.flashback.statistics.R
-import tmg.flashback.statistics.StatisticsNavigationManager
 import tmg.flashback.statistics.databinding.ViewSharedProvidedBinding
 import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.views.getString
 
 class ProvidedByViewHolder(
-    private val navigationManager: StatisticsNavigationManager,
+    private val navigationManager: NavigationProvider,
     private val binding: ViewSharedProvidedBinding
 ) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
 

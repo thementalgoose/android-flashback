@@ -37,7 +37,7 @@ class SeasonViewHolder(
         setOnMenuItemClickListener(this@SeasonViewHolder)
     }
 
-    fun bind(season: ListItem.Season) {
+    fun bind(previous: Int?, season: ListItem.Season, next: Int?) {
         currentSeason = season.season
         isFavourited = season.isFavourited
 
@@ -80,8 +80,11 @@ class SeasonViewHolder(
         binding.cardview.setCircleColour(colour)
         binding.pipeTop.setBackgroundColor(colour)
         binding.pipeBottom.setBackgroundColor(colour)
-        binding.pipeTop.show(!currentSeason.toString().endsWith('9') && currentSeason != currentSeasonYear && season.fixed == HeaderType.ALL)
-        binding.pipeBottom.show(!currentSeason.toString().endsWith('0') && (currentSeason != currentSeasonYear || !currentSeasonYear.toString().endsWith("0")) && season.fixed == HeaderType.ALL)
+
+        println("$previous - $currentSeason - $next")
+
+        binding.pipeTop.show(!currentSeason.toString().endsWith('9') && next == currentSeason + 1 && season.fixed == HeaderType.ALL)
+        binding.pipeBottom.show(!currentSeason.toString().endsWith('0') && previous == currentSeason - 1  && season.fixed == HeaderType.ALL)
     }
 
     //region View.OnClickListener

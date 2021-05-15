@@ -16,6 +16,5 @@ class DashboardActivity: BaseActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityDashboardBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
     }
 }

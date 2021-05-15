@@ -40,6 +40,20 @@ internal class FirebaseAnalyticsService(
         analytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, bundle)
     }
 
+    override fun setUserId(userId: String) {
+        if (BuildConfig.DEBUG) {
+            Log.i("Analytics", "UserId $userId")
+        }
+        analytics.setUserId(userId)
+    }
+
+    override fun setAnalyticsCollectionEnabled(enabled: Boolean) {
+        if (BuildConfig.DEBUG) {
+            Log.i("Analytics", "Analytics collection $enabled")
+        }
+        analytics.setAnalyticsCollectionEnabled(enabled)
+    }
+
     override fun setProperty(key: String, value: String) {
         if (BuildConfig.DEBUG) {
             Log.i("Analytics", "UserProperty $key -> $value")

@@ -1,14 +1,14 @@
 package tmg.flashback.statistics.repository
 
 import org.threeten.bp.Year
-import tmg.configuration.controllers.ConfigController
+import tmg.configuration.manager.ConfigManager
 import tmg.flashback.statistics.repository.json.AllSeasonsJson
 import tmg.core.prefs.manager.PreferenceManager
 import tmg.flashback.statistics.repository.converters.convert
 
 class StatisticsRepository(
         private val preferenceManager: PreferenceManager,
-        private val configController: ConfigController
+        private val configManager: ConfigManager
 ) {
 
     companion object {
@@ -34,33 +34,33 @@ class StatisticsRepository(
      * Default year as specified by the server.
      */
     val serverDefaultYear: Int by lazy {
-        configController.getString(keyDefaultYear)?.toIntOrNull() ?: Year.now().value
+        configManager.getString(keyDefaultYear)?.toIntOrNull() ?: Year.now().value
     }
 
     /**
      * Banner to be displayed at the top of the screen
      */
     val banner: String?
-        get() = configController.getString(keyDefaultBanner)
+        get() = configManager.getString(keyDefaultBanner)
 
     /**
      * Banner to be displayed at the top of the screen
      */
     val dataProvidedBy: String?
-        get() = configController.getString(keyDataProvidedBy)
+        get() = configManager.getString(keyDataProvidedBy)
 
     /**
      * The new calendar tab in the dashboard should be enabled or not
      */
     val dashboardCalendar: Boolean by lazy {
-        configController.getBoolean(keyDashboardCalendar)
+        configManager.getBoolean(keyDashboardCalendar)
     }
 
     /**
      * Supported seasons
      */
     val supportedSeasons: Set<Int>
-        get() = configController
+        get() = configManager
                 .getJson<AllSeasonsJson>(keySupportedSeasons)
                 ?.convert()
                 ?: emptySet()

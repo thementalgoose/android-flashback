@@ -15,6 +15,11 @@ class AnalyticsManager(
             analyticsRepository.isEnabled = value
         }
 
+    fun initialise(userId: String) {
+        analyticsService.setUserId(userId)
+        analyticsService.setAnalyticsCollectionEnabled(enabled)
+    }
+
     fun logEvent(key: String, params: Map<String, String> = emptyMap()) {
         if (enabled) {
             if (params.isNotEmpty()) {

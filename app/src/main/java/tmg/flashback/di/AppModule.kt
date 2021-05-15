@@ -5,6 +5,7 @@ import org.koin.dsl.module
 import tmg.core.device.managers.BuildConfigManager
 import tmg.core.prefs.manager.PreferenceManager
 import tmg.core.ui.managers.StyleManager
+import tmg.core.ui.navigation.NavigationProvider
 import tmg.flashback.FlashbackStartup
 import tmg.flashback.managers.appshortcuts.AndroidAppShortcutManager
 import tmg.flashback.managers.appshortcuts.AppShortcutManager
@@ -12,13 +13,13 @@ import tmg.flashback.managers.buildconfig.AppBuildConfigManager
 import tmg.flashback.managers.widgets.AppWidgetManager
 import tmg.flashback.managers.widgets.WidgetManager
 import tmg.flashback.managers.AppPreferencesManager
-import tmg.flashback.managers.AppStatisticsNavigationManager
+import tmg.flashback.managers.AppNavigationProvider
 import tmg.flashback.managers.AppStyleManager
-import tmg.flashback.statistics.StatisticsNavigationManager
 import tmg.flashback.ui.SplashViewModel
 import tmg.flashback.ui.dashboard.DashboardViewModel
 import tmg.flashback.ui.dashboard.list.ListViewModel
 import tmg.flashback.ui.settings.SettingsAllViewModel
+import tmg.notifications.navigation.NotificationNavigationProvider
 
 val appModule = module {
 
@@ -28,9 +29,12 @@ val appModule = module {
     viewModel { ListViewModel(get(), get(), get()) }
 
     single { FlashbackStartup(get(), get(), get(), get(), get(), get()) }
+
     single<PreferenceManager> { AppPreferencesManager(get()) }
     single<StyleManager> { AppStyleManager() }
-    single<StatisticsNavigationManager> { AppStatisticsNavigationManager() }
+
+    single<NavigationProvider> { AppNavigationProvider(get(), get()) }
+    single<NotificationNavigationProvider> { AppNavigationProvider(get(), get()) }
 
     single<AppShortcutManager> { AndroidAppShortcutManager(get()) }
     single<BuildConfigManager> { AppBuildConfigManager() }

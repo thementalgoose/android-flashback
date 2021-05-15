@@ -6,39 +6,39 @@ import io.mockk.verify
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import tmg.common.repository.json.ForceUpgradeJson
-import tmg.configuration.controllers.ConfigController
+import tmg.configuration.manager.ConfigManager
 
 internal class ForceUpgradeRepositoryTest {
 
-    private val mockConfigController: ConfigController = mockk()
+    private val mockConfigManager: ConfigManager = mockk()
 
     private lateinit var sut: ForceUpgradeRepository
 
     private fun initSUT() {
-        sut = ForceUpgradeRepository(mockConfigController)
+        sut = ForceUpgradeRepository(mockConfigManager)
     }
 
     //region Force upgrade model
 
     @Test
     fun `force upgrade is null if config returns null`() {
-        every { mockConfigController.getJson<ForceUpgradeJson>(keyForceUpgrade) } returns null
+        every { mockConfigManager.getJson<ForceUpgradeJson>(keyForceUpgrade) } returns null
         initSUT()
         assertNull(sut.forceUpgrade)
         verify {
-            mockConfigController.getJson<ForceUpgradeJson>(keyForceUpgrade)
+            mockConfigManager.getJson<ForceUpgradeJson>(keyForceUpgrade)
         }
     }
 
     @Test
     fun `force upgrade is successful if config returns model`() {
-        every { mockConfigController.getJson<ForceUpgradeJson>(keyForceUpgrade) } returns ForceUpgradeJson(title = "hey", message = "hey")
+        every { mockConfigManager.getJson<ForceUpgradeJson>(keyForceUpgrade) } returns ForceUpgradeJson(title = "hey", message = "hey")
         initSUT()
         val model = sut.forceUpgrade!!
         assertEquals("hey", model.title)
         assertEquals("hey", model.message)
         verify {
-            mockConfigController.getJson<ForceUpgradeJson>(keyForceUpgrade)
+            mockConfigManager.getJson<ForceUpgradeJson>(keyForceUpgrade)
         }
     }
 

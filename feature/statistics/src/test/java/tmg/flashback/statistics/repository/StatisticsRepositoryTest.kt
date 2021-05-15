@@ -5,7 +5,7 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
-import tmg.configuration.controllers.ConfigController
+import tmg.configuration.manager.ConfigManager
 import tmg.core.prefs.manager.PreferenceManager
 import tmg.flashback.statistics.repository.json.AllSeasonsJson
 import java.time.Year
@@ -13,58 +13,58 @@ import java.time.Year
 internal class StatisticsRepositoryTest {
 
     private val mockPreferenceManager: PreferenceManager = mockk(relaxed = true)
-    private val mockConfigController: ConfigController = mockk(relaxed = true)
+    private val mockConfigManager: ConfigManager = mockk(relaxed = true)
 
     private lateinit var sut: StatisticsRepository
 
     private fun initSUT() {
-        sut = StatisticsRepository(mockPreferenceManager, mockConfigController)
+        sut = StatisticsRepository(mockPreferenceManager, mockConfigManager)
     }
 
     //region Server default year
 
     @Test
     fun `server default year is current year if from config returns valid string`() {
-        every { mockConfigController.getString(keyDefaultYear) } returns "2020"
+        every { mockConfigManager.getString(keyDefaultYear) } returns "2020"
         initSUT()
         assertEquals(2020, sut.serverDefaultYear)
         verify {
-            mockConfigController.getString(keyDefaultYear)
+            mockConfigManager.getString(keyDefaultYear)
         }
     }
 
     @Test
     fun `server default year is current year if from config returns non int string`() {
-        every { mockConfigController.getString(keyDefaultYear) } returns "testing"
+        every { mockConfigManager.getString(keyDefaultYear) } returns "testing"
         initSUT()
         assertEquals(Year.now().value, sut.serverDefaultYear)
         verify {
-            mockConfigController.getString(keyDefaultYear)
+            mockConfigManager.getString(keyDefaultYear)
         }
     }
 
     @Test
     fun `server default year is current year if from config returns null`() {
-        every { mockConfigController.getString(keyDefaultYear) } returns "testing"
+        every { mockConfigManager.getString(keyDefaultYear) } returns "testing"
         initSUT()
         assertEquals(Year.now().value, sut.serverDefaultYear)
         verify {
-            mockConfigController.getString(keyDefaultYear)
+            mockConfigManager.getString(keyDefaultYear)
         }
     }
 
     @Test
     fun `server default year is lazy loaded`() {
-        every { mockConfigController.getString(keyDefaultYear) } returns "2020"
+        every { mockConfigManager.getString(keyDefaultYear) } returns "2020"
         initSUT()
         assertEquals(2020, sut.serverDefaultYear)
         verify(exactly = 1) {
-            mockConfigController.getString(keyDefaultYear)
+            mockConfigManager.getString(keyDefaultYear)
         }
-        every { mockConfigController.getString(keyDefaultYear) } returns "2021"
+        every { mockConfigManager.getString(keyDefaultYear) } returns "2021"
         assertEquals(2020, sut.serverDefaultYear)
         verify(exactly = 1) {
-            mockConfigController.getString(keyDefaultYear)
+            mockConfigManager.getString(keyDefaultYear)
         }
     }
 
@@ -74,11 +74,11 @@ internal class StatisticsRepositoryTest {
 
     @Test
     fun `banner value is returned from config repository`() {
-        every { mockConfigController.getString(keyDefaultBanner) } returns "value"
+        every { mockConfigManager.getString(keyDefaultBanner) } returns "value"
         initSUT()
         assertEquals("value", sut.banner)
         verify {
-            mockConfigController.getString(keyDefaultBanner)
+            mockConfigManager.getString(keyDefaultBanner)
         }
     }
 
@@ -88,11 +88,11 @@ internal class StatisticsRepositoryTest {
 
     @Test
     fun `data provided by value is returned from config repository`() {
-        every { mockConfigController.getString(keyDataProvidedBy) } returns "value"
+        every { mockConfigManager.getString(keyDataProvidedBy) } returns "value"
         initSUT()
         assertEquals("value", sut.dataProvidedBy)
         verify {
-            mockConfigController.getString(keyDataProvidedBy)
+            mockConfigManager.getString(keyDataProvidedBy)
         }
     }
 
@@ -102,26 +102,26 @@ internal class StatisticsRepositoryTest {
 
     @Test
     fun `dashboard calendar value is returned from config repository`() {
-        every { mockConfigController.getBoolean(keyDashboardCalendar) } returns true
+        every { mockConfigManager.getBoolean(keyDashboardCalendar) } returns true
         initSUT()
         assertTrue(sut.dashboardCalendar)
         verify {
-            mockConfigController.getBoolean(keyDashboardCalendar)
+            mockConfigManager.getBoolean(keyDashboardCalendar)
         }
     }
 
     @Test
     fun `dashboard calendar value is lazy loaded`() {
-        every { mockConfigController.getBoolean(keyDashboardCalendar) } returns true
+        every { mockConfigManager.getBoolean(keyDashboardCalendar) } returns true
         initSUT()
         assertTrue(sut.dashboardCalendar)
         verify(exactly = 1) {
-            mockConfigController.getBoolean(keyDashboardCalendar)
+            mockConfigManager.getBoolean(keyDashboardCalendar)
         }
-        every { mockConfigController.getBoolean(keyDashboardCalendar) } returns false
+        every { mockConfigManager.getBoolean(keyDashboardCalendar) } returns false
         assertTrue(sut.dashboardCalendar)
         verify(exactly = 1) {
-            mockConfigController.getBoolean(keyDashboardCalendar)
+            mockConfigManager.getBoolean(keyDashboardCalendar)
         }
     }
 
@@ -131,21 +131,21 @@ internal class StatisticsRepositoryTest {
 
     @Test
     fun `supported seasons is returned from config repository`() {
-        every { mockConfigController.getJson<AllSeasonsJson>(keySupportedSeasons) } returns AllSeasonsJson(seasons = emptyList())
+        every { mockConfigManager.getJson<AllSeasonsJson>(keySupportedSeasons) } returns AllSeasonsJson(seasons = emptyList())
         initSUT()
         assertEquals(emptySet<Int>(), sut.supportedSeasons)
         verify {
-            mockConfigController.getJson<AllSeasonsJson>(keySupportedSeasons)
+            mockConfigManager.getJson<AllSeasonsJson>(keySupportedSeasons)
         }
     }
 
     @Test
     fun `supported seasons returned as null results in empty set`() {
-        every { mockConfigController.getJson<AllSeasonsJson>(keySupportedSeasons) } returns null
+        every { mockConfigManager.getJson<AllSeasonsJson>(keySupportedSeasons) } returns null
         initSUT()
         assertEquals(emptySet<Int>(), sut.supportedSeasons)
         verify {
-            mockConfigController.getJson<AllSeasonsJson>(keySupportedSeasons)
+            mockConfigManager.getJson<AllSeasonsJson>(keySupportedSeasons)
         }
     }
 

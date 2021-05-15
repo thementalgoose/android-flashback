@@ -34,7 +34,6 @@
     </style>
 
     <style name="Text.Dashboard.List.Header" parent="Text">
-        <item name="android:textSize">@dimen/textSizeLarge</item>
         <item name="android:textStyle">bold</item>
     </style>
 

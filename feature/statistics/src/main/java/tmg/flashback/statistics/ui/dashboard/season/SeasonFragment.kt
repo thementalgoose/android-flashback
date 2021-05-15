@@ -31,8 +31,8 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
     )
 
     private lateinit var adapter: SeasonAdapter
-//    private val dashboardNavigation: DashboardNavigationCallback?
-//        get() = parentFragment as? DashboardFragment
+    private val seasonFragmentCallback: SeasonFragmentCallback?
+        get() = parentFragment as? SeasonFragmentCallback
 
 //    override val screenAnalytics get() = ScreenAnalytics(
 //        screenName = "Dashboard",
@@ -74,9 +74,7 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
         }
 
         observeEvent(viewModel.outputs.openMenu) {
-            Toast.makeText(context, "OPEN MENU", Toast.LENGTH_LONG).show()
-            TODO("Open menu")
-//            dashboardNavigation?.openSeasonList()
+            seasonFragmentCallback?.openMenu()
         }
 
         observe(viewModel.outputs.label) {

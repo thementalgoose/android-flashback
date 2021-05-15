@@ -62,8 +62,8 @@ class SettingsNotificationViewModel(
         }
     }
 
-    private val keyNotificationChannelQualifying: String = "NotificationQualifying"
-    private val keyNotificationChannelRace: String = "NotificationRace"
+    private val keyNotificationChannelQualifying: String = "qualifying"
+    private val keyNotificationChannelRace: String = "race"
 
     var inputs: SettingsNotificationViewModelInputs = this
     var outputs: SettingsNotificationViewModelOutputs = this

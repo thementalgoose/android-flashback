@@ -3,6 +3,8 @@ package tmg.common.ui.settings.appearance.theme
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatDelegate.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.android.viewmodel.compat.ScopeCompat.viewModel
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -37,12 +39,12 @@ class ThemeBottomSheetFragment: BaseBottomSheetFragment<FragmentBottomSheetTheme
             adapter.list = it
         }
 
-        observeEvent(viewModel.outputs.themeUpdated) { (_, isSameSelection) ->
+        observeEvent(viewModel.outputs.themeUpdated) { (value, isSameSelection) ->
             if (!isSameSelection) {
-                activity?.let {
-                    it.finishAffinity()
-                    // TODO: FIX THIS!
-//                    startActivity(Intent(it, SplashActivity::class.java))
+                when (value) {
+                    Theme.DEFAULT -> setDefaultNightMode(MODE_NIGHT_FOLLOW_SYSTEM)
+                    Theme.DAY -> setDefaultNightMode(MODE_NIGHT_NO)
+                    Theme.NIGHT -> setDefaultNightMode(MODE_NIGHT_YES)
                 }
             }
             dismiss()

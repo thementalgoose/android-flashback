@@ -6,7 +6,7 @@ import io.mockk.verify
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
-import tmg.configuration.controllers.ConfigController
+import tmg.configuration.manager.ConfigManager
 import tmg.core.prefs.manager.PreferenceManager
 import tmg.flashback.rss.repo.json.SupportedSourceJson
 import tmg.flashback.rss.repo.json.SupportedSourcesJson
@@ -15,38 +15,38 @@ import tmg.flashback.rss.repo.model.SupportedSource
 internal class RSSRepositoryTest {
 
     private val mockPreferenceManager: PreferenceManager = mockk(relaxed = true)
-    private val mockConfigController: ConfigController = mockk(relaxed = true)
+    private val mockConfigManager: ConfigManager = mockk(relaxed = true)
 
     private lateinit var sut: RSSRepository
 
     private fun initSUT() {
-        sut = RSSRepository(mockPreferenceManager, mockConfigController)
+        sut = RSSRepository(mockPreferenceManager, mockConfigManager)
     }
 
     //region enabled
 
     @Test
     fun `get rss enabled feature reads value from config`() {
-        every { mockConfigController.getBoolean(keyRss) } returns true
+        every { mockConfigManager.getBoolean(keyRss) } returns true
         initSUT()
         assertTrue(sut.enabled)
         verify {
-            mockConfigController.getBoolean(keyRss)
+            mockConfigManager.getBoolean(keyRss)
         }
     }
 
     @Test
     fun `get rss enabled feature is lazy loaded`() {
-        every { mockConfigController.getBoolean(keyRss) } returns true
+        every { mockConfigManager.getBoolean(keyRss) } returns true
         initSUT()
         assertTrue(sut.enabled)
         verify(exactly = 1) {
-            mockConfigController.getBoolean(keyRss)
+            mockConfigManager.getBoolean(keyRss)
         }
-        every { mockConfigController.getBoolean(keyRss) } returns false
+        every { mockConfigManager.getBoolean(keyRss) } returns false
         assertTrue(sut.enabled)
         verify(exactly = 1) {
-            mockConfigController.getBoolean(keyRss)
+            mockConfigManager.getBoolean(keyRss)
         }
     }
 
@@ -56,26 +56,26 @@ internal class RSSRepositoryTest {
 
     @Test
     fun `get rss add custom enabled feature reads value from config`() {
-        every { mockConfigController.getBoolean(keyRssAddCustom) } returns true
+        every { mockConfigManager.getBoolean(keyRssAddCustom) } returns true
         initSUT()
         assertTrue(sut.addCustom)
         verify {
-            mockConfigController.getBoolean(keyRssAddCustom)
+            mockConfigManager.getBoolean(keyRssAddCustom)
         }
     }
 
     @Test
     fun `get rss add custom enabled feature is lazy loaded`() {
-        every { mockConfigController.getBoolean(keyRssAddCustom) } returns true
+        every { mockConfigManager.getBoolean(keyRssAddCustom) } returns true
         initSUT()
         assertTrue(sut.addCustom)
         verify(exactly = 1) {
-            mockConfigController.getBoolean(keyRssAddCustom)
+            mockConfigManager.getBoolean(keyRssAddCustom)
         }
-        every { mockConfigController.getBoolean(keyRssAddCustom) } returns false
+        every { mockConfigManager.getBoolean(keyRssAddCustom) } returns false
         assertTrue(sut.addCustom)
         verify(exactly = 1) {
-            mockConfigController.getBoolean(keyRssAddCustom)
+            mockConfigManager.getBoolean(keyRssAddCustom)
         }
     }
 
@@ -85,37 +85,37 @@ internal class RSSRepositoryTest {
 
     @Test
     fun `getting supported sources returns empty list if manager sources null`() {
-        every { mockConfigController.getJson<SupportedSourcesJson>(keyRssSupportedSources) } returns null
+        every { mockConfigManager.getJson<SupportedSourcesJson>(keyRssSupportedSources) } returns null
         initSUT()
         assertEquals(emptyList<SupportedSource>(), sut.supportedSources)
         verify {
-            mockConfigController.getJson<SupportedSourcesJson>(keyRssSupportedSources)
+            mockConfigManager.getJson<SupportedSourcesJson>(keyRssSupportedSources)
         }
     }
 
     @Test
     fun `getting supported sources returns empty list if model sources is null`() {
-        every { mockConfigController.getJson<SupportedSourcesJson>(keyRssSupportedSources) } returns SupportedSourcesJson(sources = null)
+        every { mockConfigManager.getJson<SupportedSourcesJson>(keyRssSupportedSources) } returns SupportedSourcesJson(sources = null)
         initSUT()
         assertEquals(emptyList<SupportedSource>(), sut.supportedSources)
         verify {
-            mockConfigController.getJson<SupportedSourcesJson>(keyRssSupportedSources)
+            mockConfigManager.getJson<SupportedSourcesJson>(keyRssSupportedSources)
         }
     }
 
     @Test
     fun `getting supported sources returns empty list if model sources is empty`() {
-        every { mockConfigController.getJson<SupportedSourcesJson>(keyRssSupportedSources) } returns SupportedSourcesJson(sources = emptyList())
+        every { mockConfigManager.getJson<SupportedSourcesJson>(keyRssSupportedSources) } returns SupportedSourcesJson(sources = emptyList())
         initSUT()
         assertEquals(emptyList<SupportedSource>(), sut.supportedSources)
         verify {
-            mockConfigController.getJson<SupportedSourcesJson>(keyRssSupportedSources)
+            mockConfigManager.getJson<SupportedSourcesJson>(keyRssSupportedSources)
         }
     }
 
     @Test
     fun `getting supported sources returns valid list when json content`() {
-        every { mockConfigController.getJson<SupportedSourcesJson>(keyRssSupportedSources) } returns SupportedSourcesJson(sources = listOf(SupportedSourceJson(
+        every { mockConfigManager.getJson<SupportedSourcesJson>(keyRssSupportedSources) } returns SupportedSourcesJson(sources = listOf(SupportedSourceJson(
                 rssLink = "rssLink",
                 source = "source",
                 sourceShort = "sourceShort",
@@ -127,7 +127,7 @@ internal class RSSRepositoryTest {
         initSUT()
         assertEquals("rssLink", sut.supportedSources.first().rssLink)
         verify {
-            mockConfigController.getJson<SupportedSourcesJson>(keyRssSupportedSources)
+            mockConfigManager.getJson<SupportedSourcesJson>(keyRssSupportedSources)
         }
     }
 
