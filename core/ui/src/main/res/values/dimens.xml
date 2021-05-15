@@ -47,6 +47,7 @@
     <!-- Bottom sheet -->
 
     <dimen name="bottomSheetPillWidth">36dp</dimen>
+    <dimen name="bottomSheetPillHeight">6dp</dimen>
 
     <!--===============================================================-->
 

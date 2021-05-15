@@ -5,7 +5,7 @@ import kotlinx.coroutines.test.runBlockingTest
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import tmg.configuration.constants.Migrations
-import tmg.configuration.managers.RemoteConfigManager
+import tmg.configuration.services.RemoteConfigService
 import tmg.configuration.repository.ConfigRepository
 import tmg.configuration.repository.models.ForceUpgrade
 import tmg.configuration.repository.models.SupportedSource
@@ -13,13 +13,13 @@ import tmg.configuration.repository.models.UpNextSchedule
 
 internal class ConfigControllerTest {
 
-    private val mockConfigManager: RemoteConfigManager = mockk(relaxed = true)
+    private val mockConfigService: RemoteConfigService = mockk(relaxed = true)
     private val mockConfigRepository: ConfigRepository = mockk(relaxed = true)
 
     private lateinit var sut: ConfigController
 
     private fun initSUT() {
-        sut = ConfigController(mockConfigRepository, mockConfigManager)
+        sut = ConfigController(mockConfigRepository, mockConfigService)
     }
 
     @Test
@@ -28,7 +28,7 @@ internal class ConfigControllerTest {
         initSUT()
 
         verify {
-            mockConfigManager.initialiseRemoteConfig()
+            mockConfigService.initialiseRemoteConfig()
         }
     }
 
@@ -70,20 +70,20 @@ internal class ConfigControllerTest {
         }
 
         coVerify {
-            mockConfigManager.fetch(false)
+            mockConfigService.fetch(false)
         }
     }
 
     @Test
     fun `fetch and apply calls update in manager and saves remote config sync`() {
-        coEvery { mockConfigManager.fetch(true) } returns true
+        coEvery { mockConfigService.fetch(true) } returns true
         initSUT()
         runBlockingTest {
             sut.fetchAndApply()
         }
 
         coVerify {
-            mockConfigManager.fetch(true)
+            mockConfigService.fetch(true)
         }
         verify {
             mockConfigRepository.remoteConfigSync = Migrations.configurationSyncCount
@@ -98,7 +98,7 @@ internal class ConfigControllerTest {
         }
 
         coVerify {
-            mockConfigManager.activate()
+            mockConfigService.activate()
         }
     }
 

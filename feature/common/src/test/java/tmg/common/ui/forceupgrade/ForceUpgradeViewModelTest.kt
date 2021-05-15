@@ -8,6 +8,10 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import tmg.configuration.controllers.ConfigController
 import tmg.configuration.repository.models.ForceUpgrade
+import tmg.testutils.BaseTest
+import tmg.testutils.livedata.assertDataEventValue
+import tmg.testutils.livedata.assertEventNotFired
+import tmg.testutils.livedata.test
 
 internal class ForceUpgradeViewModelTest: BaseTest() {
 
@@ -38,7 +42,9 @@ internal class ForceUpgradeViewModelTest: BaseTest() {
             assertValue(Pair("Error :(", "Please restart the app"))
         }
         sut.outputs.showLink.test {
-            assertValueNull()
+            // TODO: Replace this once https://github.com/thementalgoose/android-test-utilities/pull/2 is merged
+            assertEmittedCount(1)
+            assertValueAt(null, 0)
         }
     }
 
@@ -78,7 +84,9 @@ internal class ForceUpgradeViewModelTest: BaseTest() {
             assertValue(Pair("title", "message"))
         }
         sut.outputs.showLink.test {
-            assertValueNull()
+            // TODO: Replace this once https://github.com/thementalgoose/android-test-utilities/pull/2 is merged
+            assertEmittedCount(1)
+            assertValueAt(null, 0)
         }
 
         verify {

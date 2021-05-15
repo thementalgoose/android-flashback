@@ -11,10 +11,13 @@ import tmg.core.ui.controllers.ThemeController
 import tmg.core.ui.extensions.icon
 import tmg.core.ui.extensions.label
 import tmg.core.ui.model.Theme
+import tmg.testutils.BaseTest
+import tmg.testutils.livedata.assertDataEventValue
+import tmg.testutils.livedata.test
 import tmg.utilities.models.Selected
 import tmg.utilities.models.StringHolder
 
-internal class ThemeViewModelTest {
+internal class ThemeViewModelTest: BaseTest() {
 
     private val mockThemeController: ThemeController = mockk(relaxed = true)
 

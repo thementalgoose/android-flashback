@@ -5,20 +5,20 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
-import tmg.configuration.managers.RemoteConfigManager
+import tmg.configuration.services.RemoteConfigService
 import tmg.configuration.repository.models.ForceUpgrade
 import tmg.core.prefs.manager.PreferenceManager
 import java.time.Year
 
 internal class ConfigRepositoryTest {
 
-    private val mockRemoteConfigManager: RemoteConfigManager = mockk(relaxed = true)
+    private val mockRemoteConfigService: RemoteConfigService = mockk(relaxed = true)
     private val mockPreferenceManager: PreferenceManager = mockk(relaxed = true)
 
     private lateinit var sut: ConfigRepository
 
     private fun initSUT() {
-        sut = ConfigRepository(mockRemoteConfigManager, mockPreferenceManager)
+        sut = ConfigRepository(mockRemoteConfigService, mockPreferenceManager)
     }
 
     //region Remote Config Sync count
@@ -49,7 +49,7 @@ internal class ConfigRepositoryTest {
     @Test
     fun `supported seasons calls remote config`() {
         val expected = setOf(2020, 2019)
-        every { mockRemoteConfigManager.getString(keySupportedSeasons) } returns
+        every { mockRemoteConfigService.getString(keySupportedSeasons) } returns
                 """
         {
             "seasons": [
@@ -69,7 +69,7 @@ internal class ConfigRepositoryTest {
 
     @Test
     fun `supported seasons with invalid json returns empty set`() {
-        every { mockRemoteConfigManager.getString(keySupportedSeasons) } returns """
+        every { mockRemoteConfigService.getString(keySupportedSeasons) } returns """
         {
             "somethingelse": true
         }
@@ -85,38 +85,38 @@ internal class ConfigRepositoryTest {
 
     @Test
     fun `default season calls remote config`() {
-        every { mockRemoteConfigManager.getString(keyDefaultYear) } returns "2020"
+        every { mockRemoteConfigService.getString(keyDefaultYear) } returns "2020"
         initSUT()
         assertEquals(2020, sut.defaultSeason)
         verify {
-            mockRemoteConfigManager.getString(keyDefaultYear)
+            mockRemoteConfigService.getString(keyDefaultYear)
         }
     }
 
     @Test
     fun `default season value doesnt update if called again`() {
-        every { mockRemoteConfigManager.getString(keyDefaultYear) } returns "2020"
+        every { mockRemoteConfigService.getString(keyDefaultYear) } returns "2020"
         initSUT()
 
         assertEquals(2020, sut.defaultSeason)
         verify {
-            mockRemoteConfigManager.getString(keyDefaultYear)
+            mockRemoteConfigService.getString(keyDefaultYear)
         }
 
-        every { mockRemoteConfigManager.getString(keyDefaultYear) } returns "2019"
+        every { mockRemoteConfigService.getString(keyDefaultYear) } returns "2019"
         assertEquals(2020, sut.defaultSeason)
         verify(exactly = 0) {
-            mockRemoteConfigManager.getString(keyDefaultYear)
+            mockRemoteConfigService.getString(keyDefaultYear)
         }
     }
 
     @Test
     fun `default season when value is empty return current year`() {
-        every { mockRemoteConfigManager.getString(keyDefaultYear) } returns "not-an-int"
+        every { mockRemoteConfigService.getString(keyDefaultYear) } returns "not-an-int"
         initSUT()
         assertEquals(Year.now().value, sut.defaultSeason)
         verify {
-            mockRemoteConfigManager.getString(keyDefaultYear)
+            mockRemoteConfigService.getString(keyDefaultYear)
         }
     }
 
@@ -126,11 +126,11 @@ internal class ConfigRepositoryTest {
 
     @Test
     fun `banner calls remote config`() {
-        every { mockRemoteConfigManager.getString(keyDefaultBanner) } returns "test"
+        every { mockRemoteConfigService.getString(keyDefaultBanner) } returns "test"
         initSUT()
         assertEquals("test", sut.banner)
         verify {
-            mockRemoteConfigManager.getString(keyDefaultBanner)
+            mockRemoteConfigService.getString(keyDefaultBanner)
         }
     }
 
@@ -147,7 +147,7 @@ internal class ConfigRepositoryTest {
             link = Pair("test", "http://www.google.com")
         )
 
-        every { mockRemoteConfigManager.getString(keyForceUpgrade) } returns """
+        every { mockRemoteConfigService.getString(keyForceUpgrade) } returns """
         {
            "title": "hello",
            "message": "howdy",
@@ -160,7 +160,7 @@ internal class ConfigRepositoryTest {
         assertEquals(expected, sut.forceUpgrade)
 
         verify {
-            mockRemoteConfigManager.getString(keyForceUpgrade)
+            mockRemoteConfigService.getString(keyForceUpgrade)
         }
     }
 
@@ -173,7 +173,7 @@ internal class ConfigRepositoryTest {
             link = null
         )
 
-        every { mockRemoteConfigManager.getString(keyForceUpgrade) } returns """
+        every { mockRemoteConfigService.getString(keyForceUpgrade) } returns """
         {
            "title": "hello",
            "message": "howdy"
@@ -186,7 +186,7 @@ internal class ConfigRepositoryTest {
 
     @Test
     fun `force upgrade title is empty`() {
-        every { mockRemoteConfigManager.getString(keyForceUpgrade) } returns """
+        every { mockRemoteConfigService.getString(keyForceUpgrade) } returns """
         {
            "title": null,
            "message": "howdy"
@@ -199,7 +199,7 @@ internal class ConfigRepositoryTest {
 
     @Test
     fun `force upgrade message is empty`() {
-        every { mockRemoteConfigManager.getString(keyForceUpgrade) } returns """
+        every { mockRemoteConfigService.getString(keyForceUpgrade) } returns """
         {
            "title": "test",
            "message": null
@@ -216,11 +216,11 @@ internal class ConfigRepositoryTest {
 
     @Test
     fun `data provided by calls remote config`() {
-        every { mockRemoteConfigManager.getString(keyDataProvidedBy) } returns "test"
+        every { mockRemoteConfigService.getString(keyDataProvidedBy) } returns "test"
         initSUT()
         assertEquals("test", sut.dataProvidedBy)
         verify {
-            mockRemoteConfigManager.getString(keyDataProvidedBy)
+            mockRemoteConfigService.getString(keyDataProvidedBy)
         }
     }
 
@@ -230,28 +230,28 @@ internal class ConfigRepositoryTest {
 
     @Test
     fun `dashboard calendar calls remote config`() {
-        every { mockRemoteConfigManager.getBoolean(keyDashboardCalendar) } returns true
+        every { mockRemoteConfigService.getBoolean(keyDashboardCalendar) } returns true
         initSUT()
         assertTrue(sut.dashboardCalendar)
         verify {
-            mockRemoteConfigManager.getBoolean(keyDashboardCalendar)
+            mockRemoteConfigService.getBoolean(keyDashboardCalendar)
         }
     }
 
     @Test
     fun `dashboard calendar value doesnt change when called again`() {
-        every { mockRemoteConfigManager.getBoolean(keyDashboardCalendar) } returns true
+        every { mockRemoteConfigService.getBoolean(keyDashboardCalendar) } returns true
         initSUT()
 
         assertTrue(sut.dashboardCalendar)
         verify {
-            mockRemoteConfigManager.getBoolean(keyDashboardCalendar)
+            mockRemoteConfigService.getBoolean(keyDashboardCalendar)
         }
 
-        every { mockRemoteConfigManager.getBoolean(keyDashboardCalendar) } returns false
+        every { mockRemoteConfigService.getBoolean(keyDashboardCalendar) } returns false
         assertTrue(sut.dashboardCalendar)
         verify(exactly = 1) {
-            mockRemoteConfigManager.getBoolean(keyDashboardCalendar)
+            mockRemoteConfigService.getBoolean(keyDashboardCalendar)
         }
     }
 
@@ -270,28 +270,28 @@ internal class ConfigRepositoryTest {
 
     @Test
     fun `rss calls remote config`() {
-        every { mockRemoteConfigManager.getBoolean(keyRss) } returns true
+        every { mockRemoteConfigService.getBoolean(keyRss) } returns true
         initSUT()
         assertTrue(sut.rss)
         verify {
-            mockRemoteConfigManager.getBoolean(keyRss)
+            mockRemoteConfigService.getBoolean(keyRss)
         }
     }
 
     @Test
     fun `rss value doesnt change when called again`() {
-        every { mockRemoteConfigManager.getBoolean(keyRss) } returns true
+        every { mockRemoteConfigService.getBoolean(keyRss) } returns true
         initSUT()
 
         assertTrue(sut.rss)
         verify {
-            mockRemoteConfigManager.getBoolean(keyRss)
+            mockRemoteConfigService.getBoolean(keyRss)
         }
 
-        every { mockRemoteConfigManager.getBoolean(keyRss) } returns false
+        every { mockRemoteConfigService.getBoolean(keyRss) } returns false
         assertTrue(sut.rss)
         verify(exactly = 0) {
-            mockRemoteConfigManager.getBoolean(keyRss)
+            mockRemoteConfigService.getBoolean(keyRss)
         }
     }
 
@@ -301,28 +301,28 @@ internal class ConfigRepositoryTest {
 
     @Test
     fun `rss add custom calls remote config`() {
-        every { mockRemoteConfigManager.getBoolean(keyRssAddCustom) } returns true
+        every { mockRemoteConfigService.getBoolean(keyRssAddCustom) } returns true
         initSUT()
         assertTrue(sut.rssAddCustom)
         verify {
-            mockRemoteConfigManager.getBoolean(keyRssAddCustom)
+            mockRemoteConfigService.getBoolean(keyRssAddCustom)
         }
     }
 
     @Test
     fun `rss add custom value doesnt change when called again`() {
-        every { mockRemoteConfigManager.getBoolean(keyRssAddCustom) } returns true
+        every { mockRemoteConfigService.getBoolean(keyRssAddCustom) } returns true
         initSUT()
 
         assertTrue(sut.rssAddCustom)
         verify {
-            mockRemoteConfigManager.getBoolean(keyRssAddCustom)
+            mockRemoteConfigService.getBoolean(keyRssAddCustom)
         }
 
-        every { mockRemoteConfigManager.getBoolean(keyRssAddCustom) } returns false
+        every { mockRemoteConfigService.getBoolean(keyRssAddCustom) } returns false
         assertTrue(sut.rssAddCustom)
         verify(exactly = 0) {
-            mockRemoteConfigManager.getBoolean(keyRssAddCustom)
+            mockRemoteConfigService.getBoolean(keyRssAddCustom)
         }
     }
 

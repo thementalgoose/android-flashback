@@ -12,26 +12,20 @@ abstract class SettingsViewModel: ViewModel() {
     private val _settings: MutableLiveData<List<SettingsModel>> = MutableLiveData()
     val settings: LiveData<List<SettingsModel>> = _settings
 
-    private val _clickPref: MutableLiveData<DataEvent<SettingsModel.Pref>> = MutableLiveData()
-    val clickPref: LiveData<DataEvent<SettingsModel.Pref>> = _clickPref
-
-    private val _switchPref: MutableLiveData<DataEvent<Pair<SettingsModel.SwitchPref, Boolean>>> = MutableLiveData()
-    val switchPref: LiveData<DataEvent<Pair<SettingsModel.SwitchPref, Boolean>>> = _switchPref
-
     fun loadSettings() {
         refreshList()
     }
 
     fun clickPreference(model: SettingsModel.Pref) {
-        _clickPref.value = DataEvent(model)
+        model.onClick?.invoke()
     }
 
     //region Outputs
 
     fun clickSwitchPreference(model: SettingsModel.SwitchPref, toState: Boolean) {
         model.saveState(toState)
+        model.saveStateNotification?.invoke(toState)
         refreshList()
-        _switchPref.value = DataEvent(Pair(model, toState))
     }
 
     //endregion

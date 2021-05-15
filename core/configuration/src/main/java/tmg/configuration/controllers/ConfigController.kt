@@ -1,7 +1,7 @@
 package tmg.configuration.controllers
 
 import tmg.configuration.constants.Migrations
-import tmg.configuration.managers.RemoteConfigManager
+import tmg.configuration.services.RemoteConfigService
 import tmg.configuration.repository.ConfigRepository
 import tmg.configuration.repository.models.ForceUpgrade
 import tmg.configuration.repository.models.SupportedSource
@@ -13,11 +13,11 @@ import tmg.configuration.repository.models.UpNextSchedule
  */
 class ConfigController(
     private val configRepository: ConfigRepository,
-    private val configManager: RemoteConfigManager
+    private val configService: RemoteConfigService
 ) {
 
     init {
-        configManager.initialiseRemoteConfig()
+        configService.initialiseRemoteConfig()
     }
 
     /**
@@ -31,14 +31,14 @@ class ConfigController(
      *  This will not be applied until [fetchAndApply] or [applyPending] is called
      */
     suspend fun fetch(): Boolean {
-        return configManager.fetch(false)
+        return configService.fetch(false)
     }
 
     /**
      * Fetch the latest configuration and apply it immediately. Returns true if update is found and applied, false otherwise
      */
     suspend fun fetchAndApply(): Boolean {
-        val result = configManager.fetch(true)
+        val result = configService.fetch(true)
         configRepository.remoteConfigSync = Migrations.configurationSyncCount
         return result
     }
@@ -49,7 +49,7 @@ class ConfigController(
      * - If no update is found, this step just returns false
      */
     suspend fun applyPending(): Boolean {
-        return configManager.activate()
+        return configService.activate()
     }
 
     //region Variables

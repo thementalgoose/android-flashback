@@ -26,4 +26,12 @@
 
     <!-- #endregion -->
 
+    <!-- #region Privacy Policy -->
+
+    <style name="Text.PrivacyPolicy.Description" parent="Text">
+
+    </style>
+
+    <!-- #endregion -->
+
 </resources>

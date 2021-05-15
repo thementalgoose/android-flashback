@@ -35,7 +35,7 @@ interface RSSViewModelOutputs {
 class RSSViewModel(
     private val RSSDB: RssAPI,
     private val prefRepository: RSSRepository,
-    private val connectivityManager: tmg.core.device.managers.NetworkConnectivityManager
+    private val connectivityManager: NetworkConnectivityManager
 ): ViewModel(), RSSViewModelInputs,
     RSSViewModelOutputs {
 

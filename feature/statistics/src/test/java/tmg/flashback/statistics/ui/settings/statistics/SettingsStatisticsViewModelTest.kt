@@ -11,6 +11,7 @@ import tmg.core.ui.settings.SettingsModel
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.controllers.RaceController
 import tmg.flashback.statistics.controllers.SeasonController
+import tmg.flashback.statistics.testutils.assertExpectedOrder
 import tmg.flashback.statistics.testutils.findPref
 import tmg.flashback.statistics.testutils.findSwitch
 import tmg.testutils.BaseTest
@@ -52,19 +53,7 @@ internal class SettingsStatisticsViewModelTest: BaseTest() {
                 Pair(R.string.settings_customisation_season_favourited_expanded_title, R.string.settings_customisation_season_favourited_expanded_description),
         )
 
-        sut.models.forEachIndexed { index, settingsModel ->
-            if (settingsModel is SettingsModel.Header) {
-                assertEquals(expected[index].first, settingsModel.title)
-            }
-            if (settingsModel is SettingsModel.SwitchPref) {
-                assertEquals(expected[index].first, settingsModel.title)
-                assertEquals(expected[index].second, settingsModel.description)
-            }
-            if (settingsModel is SettingsModel.Pref) {
-                assertEquals(expected[index].first, settingsModel.title)
-                assertEquals(expected[index].second, settingsModel.description)
-            }
-        }
+        sut.models.assertExpectedOrder(expected)
     }
 
     @Test
@@ -83,19 +72,7 @@ internal class SettingsStatisticsViewModelTest: BaseTest() {
                 Pair(R.string.settings_customisation_season_favourited_expanded_title, R.string.settings_customisation_season_favourited_expanded_description),
         )
 
-        sut.models.forEachIndexed { index, settingsModel ->
-            if (settingsModel is SettingsModel.Header) {
-                assertEquals(expected[index].first, settingsModel.title)
-            }
-            if (settingsModel is SettingsModel.SwitchPref) {
-                assertEquals(expected[index].first, settingsModel.title)
-                assertEquals(expected[index].second, settingsModel.description)
-            }
-            if (settingsModel is SettingsModel.Pref) {
-                assertEquals(expected[index].first, settingsModel.title)
-                assertEquals(expected[index].second, settingsModel.description)
-            }
-        }
+        sut.models.assertExpectedOrder(expected)
     }
 
     @Test

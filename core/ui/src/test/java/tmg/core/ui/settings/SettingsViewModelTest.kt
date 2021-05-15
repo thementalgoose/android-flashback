@@ -1,5 +1,6 @@
 package tmg.core.ui.settings
 
+import io.mockk.verify
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import tmg.testutils.BaseTest
@@ -60,18 +61,15 @@ internal class SettingsViewModelTest: BaseTest() {
     fun `click preference emits data event for model`() {
         initSUT()
         sut.clickPreference(exampleModelPref)
-        sut.clickPref.test {
-            assertDataEventValue(exampleModelPref)
-        }
+        assertEquals(1, onClick)
     }
 
     @Test
     fun `click switch preference emits data event for model`() {
         initSUT()
         sut.clickSwitchPreference(exampleModelSwitchPref, true)
-        sut.switchPref.test {
-            assertDataEventValue(Pair(exampleModelSwitchPref, true))
-        }
+        assertEquals(1, saveState)
+        assertEquals(1, saveStateNotifications)
     }
 
     @Test

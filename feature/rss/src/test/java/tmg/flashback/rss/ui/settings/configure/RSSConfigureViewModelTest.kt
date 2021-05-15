@@ -7,19 +7,18 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.rss.R
 import tmg.flashback.rss.controllers.RSSController
-import tmg.flashback.rss.prefs.RSSRepositoryI
+import tmg.flashback.rss.repo.RSSRepository
 import tmg.flashback.rss.repo.model.SupportedArticleSource
-import tmg.flashback.rss.testutils.BaseTest
-import tmg.flashback.rss.testutils.assertDataEventValue
-import tmg.flashback.rss.testutils.assertListDoesNotMatchItem
-import tmg.flashback.rss.testutils.test
 import tmg.testutils.BaseTest
+import tmg.testutils.livedata.assertDataEventValue
+import tmg.testutils.livedata.assertListDoesNotMatchItem
+import tmg.testutils.livedata.test
 
 class RSSConfigureViewModelTest: BaseTest() {
 
     lateinit var sut: RSSConfigureViewModel
 
-    private val mock: RSSRepositoryI = mockk(relaxed = true)
+    private val mockRepository: RSSRepository = mockk(relaxed = true)
     private val mockRssFeedController: RSSController = mockk(relaxed = true)
 
     private val mockSupportedArticle = SupportedArticleSource("https://www.test.com/rss", "", "https://www.test.com", "", "", "", "https://www.test.com/contact")
@@ -28,12 +27,12 @@ class RSSConfigureViewModelTest: BaseTest() {
     @BeforeEach
     fun setUp() {
         every { mockRssFeedController.showAddCustomFeeds } returns true
-        every { mock.rssUrls } returns emptySet()
+        every { mockRepository.rssUrls } returns emptySet()
         every { mockRssFeedController.sources } returns mockListOfSupportedArticles
     }
 
     private fun initSUT() {
-        sut = RSSConfigureViewModel(mock, mockRssFeedController)
+        sut = RSSConfigureViewModel(mockRepository, mockRssFeedController)
     }
 
     @Test
@@ -54,26 +53,26 @@ class RSSConfigureViewModelTest: BaseTest() {
     @Test
     fun `add quick item will update the prefs DB`() {
 
-        every { mock.rssUrls } returns emptySet()
+        every { mockRepository.rssUrls } returns emptySet()
 
         initSUT()
 
         sut.inputs.addQuickItem(mockListOfSupportedArticles.first())
 
-        verify { mock.rssUrls = setOf(mockSupportedArticle.rssLink) }
+        verify { mockRepository.rssUrls = setOf(mockSupportedArticle.rssLink) }
     }
 
     @Test
     fun `removing item will update the prefs DB`() {
 
         val link = mockSupportedArticle.rssLink
-        every { mock.rssUrls } returns setOf(link)
+        every { mockRepository.rssUrls } returns setOf(link)
 
         initSUT()
 
         sut.inputs.removeItem(link)
 
-        verify { mock.rssUrls = emptySet() }
+        verify { mockRepository.rssUrls = emptySet() }
     }
 
     @Test
@@ -112,7 +111,7 @@ class RSSConfigureViewModelTest: BaseTest() {
         initSUT()
 
         // Assume preferences updated
-        every { mock.rssUrls } returns setOf(item)
+        every { mockRepository.rssUrls } returns setOf(item)
         sut.inputs.addCustomItem(item)
 
         sut.outputs.list.test {
@@ -127,11 +126,11 @@ class RSSConfigureViewModelTest: BaseTest() {
         val expected = buildList(
             added = emptyList()
         )
-        every { mock.rssUrls } returns setOf(item)
+        every { mockRepository.rssUrls } returns setOf(item)
 
         initSUT()
         // Assume preferences updated
-        every { mock.rssUrls } returns emptySet()
+        every { mockRepository.rssUrls } returns emptySet()
         sut.inputs.removeItem(item)
 
         sut.outputs.list.test {
@@ -144,12 +143,12 @@ class RSSConfigureViewModelTest: BaseTest() {
 
         val item = "https://www.google.com/testlink"
         val expected = setOf(item)
-        every { mock.rssUrls } returns emptySet()
+        every { mockRepository.rssUrls } returns emptySet()
 
         initSUT()
         sut.inputs.addCustomItem(item)
 
-        verify { mock.rssUrls = expected }
+        verify { mockRepository.rssUrls = expected }
     }
 
     @Test
@@ -157,12 +156,12 @@ class RSSConfigureViewModelTest: BaseTest() {
 
         val item = "https://www.google.com/testlink"
         val expected = emptySet<String>()
-        every { mock.rssUrls } returns setOf(item)
+        every { mockRepository.rssUrls } returns setOf(item)
 
         initSUT()
         sut.inputs.removeItem(item)
 
-        verify { mock.rssUrls = expected }
+        verify { mockRepository.rssUrls = expected }
     }
 
 
