@@ -47,7 +47,7 @@
 
             <TextView
                 android:id="@+id/tvMessage"
-                style="@style/Text.Lockout.Text"
+                style="@style/Text.Maintenance.Text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="start|top"
@@ -63,7 +63,7 @@
 
     <TextView
         android:id="@+id/btnLink"
-        style="@style/Text.Lockout.Button"
+        style="@style/Text.Maintenance.Button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/paddingMedium"

@@ -28,25 +28,6 @@
 
     <!-- =========================================== -->
 
-    <!-- =========================================== -->
-
-    <!--#region App Lockout -->
-
-    <style name="Text.Lockout.Text" parent="Text">
-
-    </style>
-
-    <style name="Text.Lockout.Button" parent="Text">
-        <item name="android:textStyle">bold</item>
-        <item name="android:textSize">16sp</item>
-    </style>
-
-    <!--#endregion -->
-
-    <!-- =========================================== -->
-
-    <!-- =========================================== -->
-
     <!--#region Release Notes -->
 
     <style name="Text.ReleaseNotes.Content" parent="Text" />
