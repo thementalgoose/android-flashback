@@ -6,8 +6,9 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
+import tmg.common.controllers.ForceUpgradeController
 import tmg.configuration.controllers.ConfigController
-import tmg.configuration.repository.models.ForceUpgrade
+import tmg.common.repository.model.ForceUpgrade
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertDataEventValue
 import tmg.testutils.livedata.assertEventNotFired
@@ -16,11 +17,12 @@ import tmg.testutils.livedata.test
 internal class ForceUpgradeViewModelTest: BaseTest() {
 
     private val mockConfigurationController: ConfigController = mockk(relaxed = true)
+    private val mockForceUpgradeController: ForceUpgradeController = mockk(relaxed = true)
 
     private lateinit var sut: ForceUpgradeViewModel
 
     private fun initSUT() {
-        sut = ForceUpgradeViewModel(mockConfigurationController)
+        sut = ForceUpgradeViewModel(mockForceUpgradeController, mockConfigurationController)
     }
 
     @Test
@@ -35,7 +37,7 @@ internal class ForceUpgradeViewModelTest: BaseTest() {
     @Test
     fun `force upgrade null error message displayed prompting app restart`() {
 
-        every { mockConfigurationController.forceUpgrade } returns null
+        every { mockForceUpgradeController.forceUpgrade } returns null
         initSUT()
 
         sut.outputs.data.test {
@@ -51,7 +53,7 @@ internal class ForceUpgradeViewModelTest: BaseTest() {
     @Test
     fun `force upgrade shows message from configuration with link`() {
 
-        every { mockConfigurationController.forceUpgrade } returns ForceUpgrade(
+        every { mockForceUpgradeController.forceUpgrade } returns ForceUpgrade(
             title = "title",
             message = "message",
             link = Pair("text", "https://www.google.com")
@@ -66,14 +68,14 @@ internal class ForceUpgradeViewModelTest: BaseTest() {
         }
 
         verify {
-            mockConfigurationController.forceUpgrade
+            mockForceUpgradeController.forceUpgrade
         }
     }
 
     @Test
     fun `force upgrade shows message from configuration without link`() {
 
-        every { mockConfigurationController.forceUpgrade } returns ForceUpgrade(
+        every { mockForceUpgradeController.forceUpgrade } returns ForceUpgrade(
             title = "title",
             message = "message",
             link = null
@@ -90,13 +92,13 @@ internal class ForceUpgradeViewModelTest: BaseTest() {
         }
 
         verify {
-            mockConfigurationController.forceUpgrade
+            mockForceUpgradeController.forceUpgrade
         }
     }
 
     @Test
     fun `click link does nothing if force upgrade doesnt exist`() {
-        every { mockConfigurationController.forceUpgrade } returns ForceUpgrade(
+        every { mockForceUpgradeController.forceUpgrade } returns ForceUpgrade(
             title = "title",
             message = "message",
             link = null
@@ -111,7 +113,7 @@ internal class ForceUpgradeViewModelTest: BaseTest() {
 
     @Test
     fun `click link fires open link event if force upgrade message populated`() {
-        every { mockConfigurationController.forceUpgrade } returns ForceUpgrade(
+        every { mockForceUpgradeController.forceUpgrade } returns ForceUpgrade(
             title = "title",
             message = "message",
             link = Pair("Title", "https://www.google.com")

@@ -4,10 +4,10 @@ import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.common.testutils.assertExpectedOrder
-import tmg.common.testutils.findPref
 import tmg.flashback.R
 import tmg.flashback.rss.controllers.RSSController
+import tmg.flashback.testutils.assertExpectedOrder
+import tmg.flashback.testutils.findPref
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertEventFired
 import tmg.testutils.livedata.test
@@ -69,7 +69,7 @@ internal class SettingsAllViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `clicking statistics fires open appearance event`() {
+    fun `clicking statistics fires open statistics event`() {
         initSUT()
         sut.clickPreference(sut.models.findPref(R.string.settings_all_statistics))
         sut.outputs.openStatistics.test {
@@ -78,7 +78,7 @@ internal class SettingsAllViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `clicking rss fires open appearance event`() {
+    fun `clicking rss fires open rss event`() {
         initSUT()
         sut.clickPreference(sut.models.findPref(R.string.settings_all_rss))
         sut.outputs.openRss.test {
@@ -87,7 +87,7 @@ internal class SettingsAllViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `clicking notifications fires open appearance event`() {
+    fun `clicking notifications fires open notifications event`() {
         initSUT()
         sut.clickPreference(sut.models.findPref(R.string.settings_all_notifications))
         sut.outputs.openNotifications.test {
@@ -96,7 +96,7 @@ internal class SettingsAllViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `clicking support fires open appearance event`() {
+    fun `clicking support fires open support event`() {
         initSUT()
         sut.clickPreference(sut.models.findPref(R.string.settings_all_support))
         sut.outputs.openSupport.test {
@@ -107,7 +107,7 @@ internal class SettingsAllViewModelTest: BaseTest() {
     @Test
     fun `clicking about fires open appearance event`() {
         initSUT()
-        sut.clickPreference(sut.models.findPref(R.string.settings_all_appearance))
+        sut.clickPreference(sut.models.findPref(R.string.settings_all_about))
         sut.outputs.openAbout.test {
             assertEventFired()
         }

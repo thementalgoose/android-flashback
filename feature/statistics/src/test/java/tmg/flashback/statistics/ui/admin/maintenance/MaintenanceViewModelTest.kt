@@ -134,12 +134,13 @@ internal class MaintenanceViewModelTest : BaseTest() {
     fun `app lockout not shown when show is true and version is null`() = coroutineTest {
 
         every { mockDataRepository.appLockout() } returns flow { emit(mockAppLockoutVersionNull) }
+        every { mockBuildConfigProvider.versionCode } returns 3
 
         initSUT()
         advanceUntilIdle()
 
         sut.outputs.returnToHome.test {
-            assertEventFired()
+            assertEventNotFired()
         }
     }
 

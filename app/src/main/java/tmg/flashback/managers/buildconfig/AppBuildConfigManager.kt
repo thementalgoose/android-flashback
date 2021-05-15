@@ -1,5 +1,6 @@
 package tmg.flashback.managers.buildconfig
 
+import android.os.Build
 import tmg.core.device.managers.BuildConfigManager
 import tmg.flashback.BuildConfig
 
@@ -13,4 +14,7 @@ class AppBuildConfigManager : BuildConfigManager {
 
     override val applicationId: String
         get() = BuildConfig.APPLICATION_ID
+
+    override val isNotificationChannelsSupported: Boolean
+        get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
 }

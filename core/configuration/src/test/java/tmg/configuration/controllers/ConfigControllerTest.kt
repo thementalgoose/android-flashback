@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test
 import tmg.configuration.constants.Migrations
 import tmg.configuration.services.RemoteConfigService
 import tmg.configuration.repository.ConfigRepository
-import tmg.configuration.repository.models.ForceUpgrade
+import tmg.common.repository.model.ForceUpgrade
 import tmg.flashback.rss.repo.model.SupportedSource
 import tmg.configuration.repository.models.UpNextSchedule
 
@@ -138,7 +138,7 @@ internal class ConfigControllerTest {
 
     @Test
     fun `force upgrade calls config repo`() {
-        val expected = ForceUpgrade(title = "test", message = "hello", link = null)
+        val expected = tmg.common.repository.model.ForceUpgrade(title = "test", message = "hello", link = null)
         every { mockConfigRepository.forceUpgrade } returns expected
         initSUT()
         assertEquals(expected, sut.forceUpgrade)

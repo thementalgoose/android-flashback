@@ -8,7 +8,6 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
 import tmg.flashback.statistics.controllers.RaceController
-import tmg.flashback.core.controllers.AppHintsController
 import tmg.core.ui.model.AnimationSpeed
 import tmg.flashback.data.db.stats.SeasonOverviewRepository
 import tmg.flashback.data.models.stats.LapTime
@@ -18,15 +17,16 @@ import tmg.core.ui.controllers.ThemeController
 import tmg.flashback.statistics.mockRound1
 import tmg.flashback.statistics.mockRound3
 import tmg.flashback.statistics.testutils.*
-import tmg.flashback.statistics.testutils.BaseTest
-import tmg.flashback.statistics.testutils.assertDataEventValue
-import tmg.flashback.statistics.testutils.assertEventFired
-import tmg.flashback.statistics.testutils.test
 import tmg.flashback.statistics.ui.overviews.*
 import tmg.flashback.statistics.ui.race.RaceAdapterType.*
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
 import tmg.flashback.statistics.ui.util.SeasonRound
+import tmg.testutils.BaseTest
+import tmg.testutils.livedata.assertDataEventValue
+import tmg.testutils.livedata.assertEventFired
+import tmg.testutils.livedata.assertEventNotFired
+import tmg.testutils.livedata.test
 
 internal class RaceViewModelTest: BaseTest() {
 
@@ -35,7 +35,7 @@ internal class RaceViewModelTest: BaseTest() {
     private val mockSeasonOverviewRepository: SeasonOverviewRepository = mockk(relaxed = true)
     private val mockThemeController: ThemeController = mockk(relaxed = true)
     private val mockRaceController: RaceController = mockk(relaxed = true)
-    private val mockAppHintsController: AppHintsController = mockk(relaxed = true)
+//    private val mockAppHintsController: AppHintsController = mockk(relaxed = true)
     private val mockConnectivityManager: tmg.core.device.managers.NetworkConnectivityManager = mockk(relaxed = true)
 
     private val expectedSeasonRound: SeasonRound = SeasonRound(2019, 1)
@@ -49,7 +49,7 @@ internal class RaceViewModelTest: BaseTest() {
     }
 
     private fun initSUT(roundDate: LocalDate? = null, orderBy: RaceAdapterType = RACE) {
-        sut = RaceViewModel(mockSeasonOverviewRepository, mockAppHintsController, mockRaceController, mockThemeController, mockConnectivityManager)
+        sut = RaceViewModel(mockSeasonOverviewRepository, mockRaceController, mockThemeController, mockConnectivityManager)
         val (season, round) = expectedSeasonRound
         sut.inputs.initialise(season, round, roundDate)
         sut.inputs.orderBy(orderBy)
@@ -495,7 +495,7 @@ internal class RaceViewModelTest: BaseTest() {
         advanceUntilIdle()
 
         sut.outputs.raceItems.test {
-            assertItemCount(1)
+            assertEmittedCount(1)
         }
         sut.outputs.showLinks.test {
             assertValue(false)
@@ -512,7 +512,7 @@ internal class RaceViewModelTest: BaseTest() {
         advanceUntilIdle()
 
         sut.outputs.raceItems.test {
-            assertItemCount(1)
+            assertEmittedCount(1)
         }
         sut.outputs.showLinks.test {
             assertValue(true)
@@ -538,7 +538,7 @@ internal class RaceViewModelTest: BaseTest() {
     @Test
     fun `notify app show qualifying long click hint when never been done before`() = coroutineTest {
 
-        every { mockAppHintsController.showQualifyingLongPress } returns true
+//        every { mockAppHintsController.showQualifyingLongPress } returns true
         every { mockRaceController.showQualifyingDelta } returns false
         every { mockRaceController.showGridPenaltiesInQualifying } returns false
         every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow { emit(mockRound3) }
@@ -555,16 +555,16 @@ internal class RaceViewModelTest: BaseTest() {
         }
         advanceUntilIdle()
 
-        sut.outputs.showAppHintLongPress.test {
-            assertEventFired()
-        }
-        verify { mockAppHintsController.showQualifyingLongPress = true }
+//        sut.outputs.showAppHintLongPress.test {
+//            assertEventFired()
+//        }
+//        verify { mockAppHintsController.showQualifyingLongPress = true }
     }
 
     @Test
     fun `notify app show qualifying not shown if it's been shown before`() = coroutineTest {
 
-        every { mockAppHintsController.showQualifyingLongPress } returns false
+//        every { mockAppHintsController.showQualifyingLongPress } returns false
         every { mockRaceController.showQualifyingDelta } returns false
         every { mockRaceController.showGridPenaltiesInQualifying } returns false
         every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow { emit(mockRound3) }

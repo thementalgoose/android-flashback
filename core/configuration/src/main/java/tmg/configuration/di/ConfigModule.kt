@@ -8,6 +8,6 @@ import tmg.configuration.repository.ConfigRepository
 
 val configModule = module {
     single<RemoteConfigService> { FirebaseRemoteConfigService() }
-    single { ConfigRepository(get(), get()) }
+    single { ConfigRepository(get()) }
     single { ConfigController(get(), get()) }
 }

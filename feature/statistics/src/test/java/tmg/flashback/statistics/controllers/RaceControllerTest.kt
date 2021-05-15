@@ -5,17 +5,17 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
-import tmg.flashback.data.repositories.AppRepository
-import tmg.flashback.statistics.testutils.BaseTest
+import tmg.flashback.statistics.repository.StatisticsRepository
+import tmg.testutils.BaseTest
 
 internal class RaceControllerTest: BaseTest() {
 
-    private var mockAppRepository: AppRepository = mockk(relaxed = true)
+    private var mockStatisticsRepository: StatisticsRepository = mockk(relaxed = true)
 
     private lateinit var sut: RaceController
 
     private fun initSUT() {
-        sut = RaceController(mockAppRepository)
+        sut = RaceController(mockStatisticsRepository)
     }
 
     //region Show Qualifying Delta
@@ -23,13 +23,13 @@ internal class RaceControllerTest: BaseTest() {
     @Test
     fun `show qualifying delta reads from prefs`() {
         initSUT()
-        every { mockAppRepository.showQualifyingDelta } returns true
-        assertTrue(mockAppRepository.showQualifyingDelta)
-        every { mockAppRepository.showQualifyingDelta } returns false
-        assertFalse(mockAppRepository.showQualifyingDelta)
+        every { mockStatisticsRepository.showQualifyingDelta } returns true
+        assertTrue(mockStatisticsRepository.showQualifyingDelta)
+        every { mockStatisticsRepository.showQualifyingDelta } returns false
+        assertFalse(mockStatisticsRepository.showQualifyingDelta)
 
         verify(exactly = 2) {
-            mockAppRepository.showQualifyingDelta
+            mockStatisticsRepository.showQualifyingDelta
         }
     }
 
@@ -38,7 +38,7 @@ internal class RaceControllerTest: BaseTest() {
         initSUT()
         sut.showQualifyingDelta = true
         verify {
-            mockAppRepository.showQualifyingDelta = true
+            mockStatisticsRepository.showQualifyingDelta = true
         }
     }
 
@@ -49,13 +49,13 @@ internal class RaceControllerTest: BaseTest() {
     @Test
     fun `fade dnf reads from prefs`() {
         initSUT()
-        every { mockAppRepository.fadeDNF } returns true
-        assertTrue(mockAppRepository.fadeDNF)
-        every { mockAppRepository.fadeDNF } returns false
-        assertFalse(mockAppRepository.fadeDNF)
+        every { mockStatisticsRepository.fadeDNF } returns true
+        assertTrue(mockStatisticsRepository.fadeDNF)
+        every { mockStatisticsRepository.fadeDNF } returns false
+        assertFalse(mockStatisticsRepository.fadeDNF)
 
         verify(exactly = 2) {
-            mockAppRepository.fadeDNF
+            mockStatisticsRepository.fadeDNF
         }
     }
 
@@ -64,7 +64,7 @@ internal class RaceControllerTest: BaseTest() {
         initSUT()
         sut.fadeDNF = true
         verify {
-            mockAppRepository.fadeDNF = true
+            mockStatisticsRepository.fadeDNF = true
         }
     }
 
@@ -75,13 +75,13 @@ internal class RaceControllerTest: BaseTest() {
     @Test
     fun `show grid penalties in qualifying reads from prefs`() {
         initSUT()
-        every { mockAppRepository.showGridPenaltiesInQualifying } returns true
-        assertTrue(mockAppRepository.showGridPenaltiesInQualifying)
-        every { mockAppRepository.showGridPenaltiesInQualifying } returns false
-        assertFalse(mockAppRepository.showGridPenaltiesInQualifying)
+        every { mockStatisticsRepository.showGridPenaltiesInQualifying } returns true
+        assertTrue(mockStatisticsRepository.showGridPenaltiesInQualifying)
+        every { mockStatisticsRepository.showGridPenaltiesInQualifying } returns false
+        assertFalse(mockStatisticsRepository.showGridPenaltiesInQualifying)
 
         verify(exactly = 2) {
-            mockAppRepository.showGridPenaltiesInQualifying
+            mockStatisticsRepository.showGridPenaltiesInQualifying
         }
     }
 
@@ -90,7 +90,7 @@ internal class RaceControllerTest: BaseTest() {
         initSUT()
         sut.showGridPenaltiesInQualifying = true
         verify {
-            mockAppRepository.showGridPenaltiesInQualifying = true
+            mockStatisticsRepository.showGridPenaltiesInQualifying = true
         }
     }
 

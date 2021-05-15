@@ -5,17 +5,156 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
+import tmg.configuration.controllers.ConfigController
 import tmg.core.prefs.manager.PreferenceManager
+import tmg.flashback.statistics.repository.json.AllSeasonsJson
+import java.time.Year
 
 internal class StatisticsRepositoryTest {
 
     private val mockPreferenceManager: PreferenceManager = mockk(relaxed = true)
+    private val mockConfigController: ConfigController = mockk(relaxed = true)
 
     private lateinit var sut: StatisticsRepository
 
     private fun initSUT() {
-        sut = StatisticsRepository(mockPreferenceManager)
+        sut = StatisticsRepository(mockPreferenceManager, mockConfigController)
     }
+
+    //region Server default year
+
+    @Test
+    fun `server default year is current year if from config returns valid string`() {
+        every { mockConfigController.getString(keyDefaultYear) } returns "2020"
+        initSUT()
+        assertEquals(2020, sut.serverDefaultYear)
+        verify {
+            mockConfigController.getString(keyDefaultYear)
+        }
+    }
+
+    @Test
+    fun `server default year is current year if from config returns non int string`() {
+        every { mockConfigController.getString(keyDefaultYear) } returns "testing"
+        initSUT()
+        assertEquals(Year.now().value, sut.serverDefaultYear)
+        verify {
+            mockConfigController.getString(keyDefaultYear)
+        }
+    }
+
+    @Test
+    fun `server default year is current year if from config returns null`() {
+        every { mockConfigController.getString(keyDefaultYear) } returns "testing"
+        initSUT()
+        assertEquals(Year.now().value, sut.serverDefaultYear)
+        verify {
+            mockConfigController.getString(keyDefaultYear)
+        }
+    }
+
+    @Test
+    fun `server default year is lazy loaded`() {
+        every { mockConfigController.getString(keyDefaultYear) } returns "2020"
+        initSUT()
+        assertEquals(2020, sut.serverDefaultYear)
+        verify(exactly = 1) {
+            mockConfigController.getString(keyDefaultYear)
+        }
+        every { mockConfigController.getString(keyDefaultYear) } returns "2021"
+        assertEquals(2020, sut.serverDefaultYear)
+        verify(exactly = 1) {
+            mockConfigController.getString(keyDefaultYear)
+        }
+    }
+
+    //endregion
+
+    //region Banner
+
+    @Test
+    fun `banner value is returned from config repository`() {
+        every { mockConfigController.getString(keyDefaultBanner) } returns "value"
+        initSUT()
+        assertEquals("value", sut.banner)
+        verify {
+            mockConfigController.getString(keyDefaultBanner)
+        }
+    }
+
+    //endregion
+
+    //region Data Provided by
+
+    @Test
+    fun `data provided by value is returned from config repository`() {
+        every { mockConfigController.getString(keyDataProvidedBy) } returns "value"
+        initSUT()
+        assertEquals("value", sut.dataProvidedBy)
+        verify {
+            mockConfigController.getString(keyDataProvidedBy)
+        }
+    }
+
+    //endregion
+
+    //region Dashboard calendar
+
+    @Test
+    fun `dashboard calendar value is returned from config repository`() {
+        every { mockConfigController.getBoolean(keyDashboardCalendar) } returns true
+        initSUT()
+        assertTrue(sut.dashboardCalendar)
+        verify {
+            mockConfigController.getBoolean(keyDashboardCalendar)
+        }
+    }
+
+    @Test
+    fun `dashboard calendar value is lazy loaded`() {
+        every { mockConfigController.getBoolean(keyDashboardCalendar) } returns true
+        initSUT()
+        assertTrue(sut.dashboardCalendar)
+        verify(exactly = 1) {
+            mockConfigController.getBoolean(keyDashboardCalendar)
+        }
+        every { mockConfigController.getBoolean(keyDashboardCalendar) } returns false
+        assertTrue(sut.dashboardCalendar)
+        verify(exactly = 1) {
+            mockConfigController.getBoolean(keyDashboardCalendar)
+        }
+    }
+
+    //endregion
+
+    //region Supported Seasons
+
+    @Test
+    fun `supported seasons is returned from config repository`() {
+        every { mockConfigController.getJson<AllSeasonsJson>(keySupportedSeasons) } returns AllSeasonsJson(seasons = emptyList())
+        initSUT()
+        assertEquals(emptySet<Int>(), sut.supportedSeasons)
+        verify {
+            mockConfigController.getJson<AllSeasonsJson>(keySupportedSeasons)
+        }
+    }
+
+    @Test
+    fun `supported seasons returned as null results in empty set`() {
+        every { mockConfigController.getJson<AllSeasonsJson>(keySupportedSeasons) } returns null
+        initSUT()
+        assertEquals(emptySet<Int>(), sut.supportedSeasons)
+        verify {
+            mockConfigController.getJson<AllSeasonsJson>(keySupportedSeasons)
+        }
+    }
+
+    //endregion
+
+
+
+
+
 
     //region Show Qualifying Delta
 
@@ -150,7 +289,7 @@ internal class StatisticsRepositoryTest {
         initSUT()
         assertEquals(mutableSetOf(2013), sut.favouriteSeasons)
         verify {
-            mockPreferenceManager.save(keyFavouriteSeasons, emptySet())
+            mockPreferenceManager.getSet(keyFavouriteSeasons, emptySet())
         }
     }
 
@@ -207,31 +346,16 @@ internal class StatisticsRepositoryTest {
 
     //endregion
 
-    //region Widget Open App
-
-    @Test
-    fun `widget open app reads value from preferences repository`() {
-        every { mockPreferenceManager.getBoolean(keyWidgetOpenApp, true) } returns true
-        initSUT()
-
-        assertTrue(sut.widgetOpenApp)
-        verify {
-            mockPreferenceManager.getBoolean(keyWidgetOpenApp, true)
-        }
-    }
-
-    @Test
-    fun `widget open app saves value to shared prefs repository`() {
-        initSUT()
-
-        sut.widgetOpenApp = true
-        verify {
-            mockPreferenceManager.save(keyWidgetOpenApp, true)
-        }
-    }
-    //endregion
-
     companion object {
+
+        // Config
+        private const val keyDefaultYear: String = "default_year"
+        private const val keyDefaultBanner: String = "banner"
+        private const val keyDataProvidedBy: String = "data_provided"
+        private const val keySupportedSeasons: String = "supported_seasons"
+        private const val keyDashboardCalendar: String = "dashboard_calendar"
+
+        // Prefs
         private const val keyShowQualifyingDelta: String = "SHOW_QUALIFYING_DELTA"
         private const val keyFadeDNF: String = "FADE_DNF"
         private const val keyShowListFavourited: String = "BOTTOM_SHEET_FAVOURITED"
@@ -239,6 +363,5 @@ internal class StatisticsRepositoryTest {
         private const val keyShowGridPenaltiesInQualifying: String = "SHOW_GRID_PENALTIES_IN_QUALIFYING"
         private const val keyFavouriteSeasons: String = "FAVOURITE_SEASONS"
         private const val keyDefaultSeason: String = "DEFAULT_SEASON"
-        private const val keyWidgetOpenApp: String = "WIDGET_OPEN_BEHAVIOR"
     }
 }

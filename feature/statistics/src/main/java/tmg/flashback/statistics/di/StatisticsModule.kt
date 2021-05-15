@@ -1,6 +1,5 @@
 package tmg.flashback.statistics.di
 
-import org.koin.android.experimental.dsl.viewModel
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import tmg.flashback.data.db.DataRepository
@@ -8,7 +7,6 @@ import tmg.flashback.data.db.stats.*
 import tmg.flashback.firebase.repos.*
 import tmg.flashback.statistics.controllers.RaceController
 import tmg.flashback.statistics.controllers.SeasonController
-import tmg.flashback.statistics.controllers.UserNotificationController
 import tmg.flashback.statistics.repository.StatisticsRepository
 import tmg.flashback.statistics.ui.admin.maintenance.MaintenanceViewModel
 import tmg.flashback.statistics.ui.circuit.CircuitInfoViewModel
@@ -23,7 +21,7 @@ val statisticsModule = module {
 
     viewModel { MaintenanceViewModel(get(), get()) }
     viewModel { CircuitInfoViewModel(get(), get()) }
-    viewModel { SeasonViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
+    viewModel { SeasonViewModel(get(), get(), get(), get(), get(), get(), get()) }
     viewModel { ConstructorViewModel(get(), get()) }
     viewModel { DriverViewModel(get(), get()) }
     viewModel { DriverSeasonViewModel(get(), get(), get()) }
@@ -32,11 +30,10 @@ val statisticsModule = module {
     viewModel { SettingsStatisticsViewModel(get(), get()) }
 
     single { RaceController(get()) }
-    single { SeasonController(get(), get()) }
-    single { UserNotificationController(get()) }
+    single { SeasonController(get()) }
 
     // App
-    single { StatisticsRepository(get()) }
+    single { StatisticsRepository(get(), get()) }
 
     // Firestore
     single<DataRepository> { DataFirestore(get()) }

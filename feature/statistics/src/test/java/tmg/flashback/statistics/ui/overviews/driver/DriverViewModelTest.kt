@@ -15,16 +15,18 @@ import tmg.flashback.statistics.ui.overview.driver.summary.PipeType.*
 import tmg.flashback.data.db.stats.DriverRepository
 import tmg.flashback.statistics.R
 import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
-import tmg.flashback.statistics.testutils.*
-import tmg.flashback.statistics.testutils.BaseTest
-import tmg.flashback.statistics.testutils.assertListContainsItem
-import tmg.flashback.statistics.testutils.assertListMatchesItem
-import tmg.flashback.statistics.testutils.test
 import tmg.flashback.statistics.ui.overview.driver.DriverViewModel
 import tmg.flashback.statistics.ui.overviews.*
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
 import tmg.flashback.statistics.ui.util.position
+import tmg.testutils.BaseTest
+import tmg.testutils.livedata.assertDataEventValue
+import tmg.testutils.livedata.assertListContainsItem
+import tmg.testutils.livedata.assertListContainsItems
+import tmg.testutils.livedata.assertListExcludesItem
+import tmg.testutils.livedata.assertListMatchesItem
+import tmg.testutils.livedata.test
 
 internal class DriverViewModelTest: BaseTest() {
 
@@ -134,7 +136,7 @@ internal class DriverViewModelTest: BaseTest() {
         sut.outputs.list.test {
             assertListContainsItem(
                 DriverSummaryItem.Stat(
-                tint = R.attr.f1Favourite,
+                tint = R.attr.f1Championship,
                 icon = R.drawable.ic_menu_drivers,
                 label = R.string.driver_overview_stat_career_drivers_title,
                 value = "1"

@@ -1,4 +1,4 @@
-package tmg.configuration.repository.models
+package tmg.common.repository.model
 
 data class ForceUpgrade(
         val title: String,

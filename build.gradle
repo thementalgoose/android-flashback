@@ -47,6 +47,24 @@ task clean(type: Delete) {
 }
 
 task testModules {
-    dependsOn ':app:testSandDebugUnitTest', ':app-rss:testDebugUnitTest', ':app-statistics:testDebugUnitTest', ':data-firebase:testDebugUnitTest', ':data:test', ':core:testDebugUnitTest', 'clean'
+    dependsOn ':app:testSandDebugUnitTest',
+            ':feature:common:testDebugUnitTest',
+            ':feature:formula1:testDebugUnitTest',
+            ':feature:rss:testDebugUnitTest',
+            ':feature:statistics:testDebugUnitTest',
+            ':feature:statistics-data:testDebugUnitTest',
+            ':feature:statistics-data-firebase:testDebugUnitTest',
+            ':feature:upnext:testDebugUnitTest',
+            ':core:ads:testDebugUnitTest',
+            ':core:analytics:testDebugUnitTest',
+            ':core:appshortcuts:testDebugUnitTest',
+            ':core:configuration:testDebugUnitTest',
+            ':core:crash-reporting:testDebugUnitTest',
+            ':core:device:testDebugUnitTest',
+            ':core:notifications:testDebugUnitTest',
+            ':core:preferences:testDebugUnitTest',
+            ':core:tutorial:testDebugUnitTest',
+            ':core:ui:testDebugUnitTest',
+            'clean'
     print "Tests passed successfully!"
 }

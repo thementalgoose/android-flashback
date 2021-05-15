@@ -9,5 +9,8 @@ interface BuildConfigManager {
     val applicationId: String
 
     val versionCode: Int
+
     val versionName: String
+
+    val isNotificationChannelsSupported: Boolean
 }

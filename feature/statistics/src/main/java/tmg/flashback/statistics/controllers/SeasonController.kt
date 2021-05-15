@@ -8,9 +8,30 @@ import tmg.flashback.statistics.repository.StatisticsRepository
  * All the preferences surrounding the season, list of all seasons
  */
 class SeasonController(
-    private val statisticsRepository: StatisticsRepository,
-    private val configurationController: ConfigController
+    private val statisticsRepository: StatisticsRepository
 ) {
+
+    //region Dashboard calendar
+
+    val dashboardCalendar: Boolean
+        get() = statisticsRepository.dashboardCalendar
+
+    //endregion
+
+    //region Banner
+
+    val banner: String?
+        get() = statisticsRepository.banner
+
+    //endregion
+
+    //region Data provided by
+
+    val dataProvidedBy: String?
+        get() = statisticsRepository.dataProvidedBy
+
+    //endregion
+
     //region Default season shown
 
     fun clearDefault() {
@@ -23,9 +44,9 @@ class SeasonController(
 
     var defaultSeason: Int
         get() {
-            val supportedSeasons = configurationController.supportedSeasons
+            val supportedSeasons = statisticsRepository.supportedSeasons
             val userPrefSeason = statisticsRepository.defaultSeason
-            val serverSeason = configurationController.defaultSeason
+            val serverSeason = statisticsRepository.serverDefaultYear
 
             if (supportedSeasons.isEmpty()) {
                 return currentSeasonYear
@@ -49,7 +70,7 @@ class SeasonController(
         }
 
     val serverDefaultSeason: Int
-        get() = configurationController.defaultSeason
+        get() = statisticsRepository.serverDefaultYear
 
     val isUserDefinedValueSet: Boolean
         get() = statisticsRepository.defaultSeason != null
@@ -59,7 +80,7 @@ class SeasonController(
     //region All Seasons
 
     val supportedSeasons: Set<Int>
-        get() = configurationController.supportedSeasons
+        get() = statisticsRepository.supportedSeasons
 
     //endregion
 

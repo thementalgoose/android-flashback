@@ -9,6 +9,7 @@ import org.koin.core.component.inject
 import tmg.configuration.controllers.ConfigController
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.StatisticsNavigationManager
+import tmg.flashback.statistics.controllers.SeasonController
 import tmg.flashback.statistics.databinding.*
 import tmg.flashback.statistics.ui.shared.sync.viewholders.*
 
@@ -16,7 +17,7 @@ import tmg.flashback.statistics.ui.shared.sync.viewholders.*
 abstract class SyncAdapter<T> : RecyclerView.Adapter<RecyclerView.ViewHolder>(), KoinComponent {
 
     private val navigationManager: StatisticsNavigationManager by inject()
-    private val configurationController: ConfigController by inject()
+    private val seasonController: SeasonController by inject()
 
     abstract var list: List<T>
 
@@ -53,7 +54,7 @@ abstract class SyncAdapter<T> : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
             is SyncDataItem.Unavailable -> (holder as DataUnavailableViewHolder).bind(item.type)
             is SyncDataItem.Message -> (holder as MessageViewHolder).bind(item.msg)
             is SyncDataItem.MessageRes -> (holder as MessageViewHolder).bind(item.msg, item.values)
-            is SyncDataItem.ProvidedBy -> (holder as ProvidedByViewHolder).bind(configurationController.dataProvidedBy)
+            is SyncDataItem.ProvidedBy -> (holder as ProvidedByViewHolder).bind(seasonController.dataProvidedBy)
             else -> { }
         }
     }

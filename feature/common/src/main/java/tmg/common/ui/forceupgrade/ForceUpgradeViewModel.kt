@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import tmg.common.controllers.ForceUpgradeController
 import tmg.configuration.controllers.ConfigController
 import tmg.utilities.lifecycle.DataEvent
 
@@ -28,7 +29,8 @@ interface ForceUpgradeViewModelOutputs {
 //endregion
 
 class ForceUpgradeViewModel(
-    private val configurationController: ConfigController
+    private val forceUpgradeController: ForceUpgradeController,
+    private val configController: ConfigController
 ): ViewModel(), ForceUpgradeViewModelInputs, ForceUpgradeViewModelOutputs {
 
     var inputs: ForceUpgradeViewModelInputs = this
@@ -40,24 +42,24 @@ class ForceUpgradeViewModel(
     override val openLinkEvent: MutableLiveData<DataEvent<String>> = MutableLiveData()
 
     init {
-        configurationController.forceUpgrade?.let {
+        forceUpgradeController.forceUpgrade?.let {
             data.value = Pair(it.title, it.message)
             showLink.value = it.link
         }
-        if (configurationController.forceUpgrade == null) {
+        if (forceUpgradeController.forceUpgrade == null) {
             data.value = Pair("Error :(", "Please restart the app")
             showLink.value = null
         }
 
         viewModelScope.launch {
-            configurationController.fetch()
+            configController.fetch()
         }
     }
 
     //region Inputs
 
     override fun clickLink() {
-        configurationController.forceUpgrade?.link?.let { (_, link) ->
+        forceUpgradeController.forceUpgrade?.link?.let { (_, link) ->
             openLinkEvent.value = DataEvent(link)
         }
     }

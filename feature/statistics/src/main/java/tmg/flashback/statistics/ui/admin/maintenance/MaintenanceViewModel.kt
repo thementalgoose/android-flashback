@@ -43,18 +43,12 @@ interface MaintenanceViewModelOutputs {
 
 class MaintenanceViewModel(
     private val dataRepository: DataRepository,
-    private val buildConfigProvider: tmg.core.device.managers.BuildConfigManager
+    private val buildConfigProvider: BuildConfigManager
 ): ViewModel(), MaintenanceViewModelInputs, MaintenanceViewModelOutputs {
 
     private val clickLinkEvent: ConflatedBroadcastChannel<DataEvent<String>> = ConflatedBroadcastChannel()
 
-    private var appLocked: AppLockout? = null
-
     private val appLockedData: Flow<AppLockout?> = dataRepository.appLockout()
-        .map {
-            appLocked = it
-            it
-        }
 
     override val data: LiveData<Pair<String, String>> = appLockedData // Title, Message
         .filterNotNull()

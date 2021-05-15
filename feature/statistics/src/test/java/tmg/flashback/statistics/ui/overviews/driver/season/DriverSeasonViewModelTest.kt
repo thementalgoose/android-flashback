@@ -5,42 +5,44 @@ import io.mockk.mockk
 import kotlinx.coroutines.flow.flow
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import tmg.core.device.managers.NetworkConnectivityManager
+import tmg.core.ui.controllers.ThemeController
 import tmg.core.ui.model.AnimationSpeed
 import tmg.flashback.statistics.ui.overview.driver.summary.PipeType.*
 import tmg.flashback.data.db.stats.DriverRepository
 import tmg.flashback.data.models.stats.DriverOverviewRace
 import tmg.flashback.statistics.R
-import tmg.flashback.statistics.testutils.BaseTest
-import tmg.flashback.statistics.testutils.assertDataEventValue
-import tmg.flashback.statistics.testutils.assertListContainsItems
-import tmg.flashback.statistics.testutils.test
 import tmg.flashback.statistics.ui.overview.driver.season.DriverSeasonItem
 import tmg.flashback.statistics.ui.overview.driver.season.DriverSeasonViewModel
 import tmg.flashback.statistics.ui.overviews.*
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
 import tmg.flashback.statistics.ui.util.position
+import tmg.testutils.BaseTest
+import tmg.testutils.livedata.assertDataEventValue
+import tmg.testutils.livedata.assertListContainsItems
+import tmg.testutils.livedata.test
 
 internal class DriverSeasonViewModelTest: BaseTest() {
 
     lateinit var sut: DriverSeasonViewModel
 
     private var mockDriverRepository: DriverRepository = mockk(relaxed = true)
-    private var mockConnectivityManager: tmg.core.device.managers.NetworkConnectivityManager = mockk(relaxed = true)
-    private var mockAppearanceController: AppearanceController = mockk(relaxed = true)
+    private var mockConnectivityManager: NetworkConnectivityManager = mockk(relaxed = true)
+    private var mockThemeController: ThemeController = mockk(relaxed = true)
 
     @BeforeEach
     internal fun setUp() {
 
         every { mockConnectivityManager.isConnected } returns true
-        every { mockAppearanceController.animationSpeed } returns AnimationSpeed.NONE
+        every { mockThemeController.animationSpeed } returns AnimationSpeed.NONE
     }
 
     private fun initSUT() {
         sut = DriverSeasonViewModel(
                 mockDriverRepository,
                 mockConnectivityManager,
-                mockAppearanceController
+                mockThemeController
         )
         sut.inputs.setup(mockDriverId, 2019)
     }

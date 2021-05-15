@@ -6,25 +6,25 @@ import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.Year
-import tmg.configuration.repository.models.TimeListDisplayType
-import tmg.configuration.repository.models.UpNextSchedule
-import tmg.flashback.controllers.FeatureController
+import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.controllers.SeasonController
 import tmg.flashback.upnext.controllers.UpNextController
+import tmg.flashback.upnext.repository.model.TimeListDisplayType
+import tmg.flashback.upnext.repository.model.UpNextSchedule
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.*
 
 internal class ListViewModelTest: BaseTest() {
 
-    lateinit var sut: tmg.flashback.ui.dashboard.list.ListViewModel
+    lateinit var sut: ListViewModel
 
     private var currentYear: Int = Year.now().value
     private var minYear: Int = 1950
 
     private val mockSeasonController: SeasonController = mockk(relaxed = true)
     private val mockUpNextController: UpNextController = mockk(relaxed = true)
-    private val mockFeatureController: FeatureController = mockk(relaxed = true)
+    private val mockRssController: RSSController = mockk(relaxed = true)
 
     @BeforeEach
     internal fun setUp() {
@@ -40,14 +40,14 @@ internal class ListViewModelTest: BaseTest() {
 
         every { mockSeasonController.supportedSeasons } returns List(currentYear - 1949) { it + 1950 }.toSet()
 
-        every { mockFeatureController.rssEnabled } returns false
+        every { mockRssController.enabled } returns false
     }
 
     private fun initSUT() {
-        sut = tmg.flashback.ui.dashboard.list.ListViewModel(
+        sut = ListViewModel(
             mockSeasonController,
             mockUpNextController,
-            mockFeatureController
+            mockRssController
         )
     }
 
@@ -172,7 +172,7 @@ internal class ListViewModelTest: BaseTest() {
     @Test
     fun `links section is displayed when rss feature is enabled`() {
 
-        every { mockFeatureController.rssEnabled } returns true
+        every { mockRssController.enabled } returns true
         initSUT()
 
         sut.outputs.list.test {
@@ -183,7 +183,7 @@ internal class ListViewModelTest: BaseTest() {
     @Test
     fun `links section is hidden when rss feature is not enabled`() {
 
-        every { mockFeatureController.rssEnabled } returns false
+        every { mockRssController.enabled } returns false
         initSUT()
 
         sut.outputs.list.test {
@@ -366,7 +366,7 @@ internal class ListViewModelTest: BaseTest() {
             mockSeasonController.addFavourite(2018)
         }
 
-        observer.assertListMatchesItem { it is ListItem.Season && it.season == 2018 && it.isFavourited }
+        observer.assertListMatchesItem(atIndex = 1) { it is ListItem.Season && it.season == 2018 && it.isFavourited }
     }
 
     //endregion

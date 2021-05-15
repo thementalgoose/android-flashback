@@ -3,7 +3,6 @@ package tmg.flashback.upnext.controllers
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
 import org.threeten.bp.format.DateTimeFormatter
-import tmg.configuration.controllers.ConfigController
 import tmg.flashback.upnext.repository.UpNextRepository
 import tmg.flashback.upnext.repository.model.TimeListDisplayType
 import tmg.flashback.upnext.repository.model.UpNextSchedule
@@ -19,7 +18,6 @@ class UpNextController(
      * The value that the menu should default too when showing time list types
      */
     var upNextDisplayType: TimeListDisplayType = TimeListDisplayType.RELATIVE
-//            coreRepository.displayListTypePref = value
 
     /**
      * Get the next race to display in the up next schedule
@@ -28,9 +26,7 @@ class UpNextController(
     // item 0 :yesterday
     // item 1 :today, today2
     // item 2: tomorrow
-    // TODO: Move this to a repository layer
     fun getNextEvent(): UpNextSchedule? {
-
         return upNextRepository
             .upNext
             .filter { schedule ->
