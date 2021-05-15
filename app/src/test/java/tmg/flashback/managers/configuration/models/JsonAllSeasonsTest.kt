@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import tmg.configuration.repository.json.AllSeasonJson
 import tmg.configuration.repository.json.AllSeasonsJson
-import tmg.configuration.repository.json.convert
 import tmg.flashback.testutils.BaseTest
 
 internal class JsonAllSeasonsTest: BaseTest() {

@@ -8,7 +8,7 @@ import tmg.configuration.constants.Migrations
 import tmg.configuration.services.RemoteConfigService
 import tmg.configuration.repository.ConfigRepository
 import tmg.configuration.repository.models.ForceUpgrade
-import tmg.configuration.repository.models.SupportedSource
+import tmg.flashback.rss.repo.model.SupportedSource
 import tmg.configuration.repository.models.UpNextSchedule
 
 internal class ConfigControllerTest {
@@ -200,7 +200,7 @@ internal class ConfigControllerTest {
 
     @Test
     fun `rss supported sources calls config repo`() {
-        val expected = SupportedSource("", "", "", "", "", "", "")
+        val expected = tmg.flashback.rss.repo.model.SupportedSource("", "", "", "", "", "", "")
         every { mockConfigRepository.rssSupportedSources } returns listOf(expected)
         initSUT()
         assertEquals(listOf(expected), sut.rssSupportedSources)

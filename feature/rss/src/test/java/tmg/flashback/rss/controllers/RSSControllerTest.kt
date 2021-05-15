@@ -7,19 +7,19 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
-import tmg.configuration.controllers.ConfigController
-import tmg.configuration.repository.models.SupportedSource
+import tmg.flashback.rss.repo.RSSRepository
+import tmg.flashback.rss.repo.model.SupportedSource
 import tmg.flashback.rss.repo.model.SupportedArticleSource
 import tmg.testutils.BaseTest
 
 internal class RSSControllerTest: BaseTest() {
 
-    private val mockConfigurationController: ConfigController = mockk(relaxed = true)
+    private val mockRssRepository: RSSRepository = mockk(relaxed = true)
 
     private lateinit var sut: RSSController
 
     private fun initSUT() {
-        sut = RSSController(mockConfigurationController)
+        sut = RSSController(mockRssRepository,)
     }
 
     @Test
@@ -27,7 +27,7 @@ internal class RSSControllerTest: BaseTest() {
 
         val expected = SupportedArticleSource("https://www.google.com", "", "", "", "", "", "")
 
-        every { mockConfigurationController.rssSupportedSources } returns listOf(
+        every { mockRssRepository.supportedSources } returns listOf(
             SupportedSource("https://www.google.com", "", "", "", "", "", "")
         )
         initSUT()
@@ -37,7 +37,7 @@ internal class RSSControllerTest: BaseTest() {
 
     @Test
     fun `supported sources returns empty when nothing in configuration manager`() {
-        every { mockConfigurationController.rssSupportedSources } returns emptyList()
+        every { mockRssRepository.supportedSources } returns emptyList()
         initSUT()
 
         assertEquals(emptyList<SupportedArticleSource>(), sut.sources)
@@ -45,30 +45,30 @@ internal class RSSControllerTest: BaseTest() {
 
     @Test
     fun `supported sources value doesnt change if configuration changes`() {
-        every { mockConfigurationController.rssSupportedSources } returns listOf(
+        every { mockRssRepository.supportedSources } returns listOf(
             SupportedSource("https://www.google1.com", "", "", "", "", "", "")
         )
         initSUT()
 
         assertEquals(1, sut.sources.size)
-        every { mockConfigurationController.rssSupportedSources } returns emptyList()
+        every { mockRssRepository.supportedSources } returns emptyList()
         assertEquals(1, sut.sources.size)
     }
 
     @Test
     fun `add custom feeds returns custom feed value from configuration manager`() {
-        every { mockConfigurationController.rssAddCustom } returns true
+        every { mockRssRepository.addCustom } returns true
         initSUT()
 
         assertTrue(sut.showAddCustomFeeds)
         verify {
-            mockConfigurationController.rssAddCustom
+            mockRssRepository.addCustom
         }
     }
 
     @Test
     fun `get supported source by rss url returns correct item from list`() {
-        every { mockConfigurationController.rssSupportedSources } returns listOf(primary, secondary)
+        every { mockRssRepository.supportedSources } returns listOf(primary, secondary)
         initSUT()
 
         assertEquals(primary.sourceShort, sut.getSupportedSourceByRssUrl("https://primary.com/rss.xml")!!.sourceShort)
@@ -76,10 +76,20 @@ internal class RSSControllerTest: BaseTest() {
 
     @Test
     fun `get supported source by rss url returns no items if not found`() {
-        every { mockConfigurationController.rssSupportedSources } returns listOf(primary, secondary)
+        every { mockRssRepository.supportedSources } returns listOf(primary, secondary)
         initSUT()
 
         assertNull(sut.getSupportedSourceByRssUrl("https://primary.com/rss.xmll"))
+    }
+
+    @Test
+    fun `enabled reads value from repository`() {
+        every { mockRssRepository.enabled } returns true
+        initSUT()
+        assertTrue(sut.enabled)
+        verify {
+            mockRssRepository.enabled
+        }
     }
 
     @ParameterizedTest(name = "get supported source by link with {0} shows {1} item returned")
@@ -92,7 +102,7 @@ internal class RSSControllerTest: BaseTest() {
         "https://www.third.com,"
     )
     fun `get supported source by link returns correct item from list`(link: String, expectedSourceShort: String?) {
-        every { mockConfigurationController.rssSupportedSources } returns listOf(primary, secondary)
+        every { mockRssRepository.supportedSources } returns listOf(primary, secondary)
         initSUT()
 
         assertEquals(expectedSourceShort, sut.getSupportedSourceByLink(link)?.sourceShort)
@@ -100,7 +110,7 @@ internal class RSSControllerTest: BaseTest() {
 
     @Test
     fun `get supported source by link returns no items if not found`() {
-        every { mockConfigurationController.rssSupportedSources } returns listOf(primary, secondary)
+        every { mockRssRepository.supportedSources } returns listOf(primary, secondary)
         initSUT()
 
         assertNull(sut.getSupportedSourceByLink("randomlink.com"))

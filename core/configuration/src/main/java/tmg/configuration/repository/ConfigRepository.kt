@@ -5,7 +5,6 @@ import tmg.configuration.extensions.toJson
 import tmg.configuration.services.RemoteConfigService
 import tmg.configuration.repository.json.*
 import tmg.configuration.repository.models.ForceUpgrade
-import tmg.configuration.repository.models.SupportedSource
 import tmg.core.prefs.manager.PreferenceManager
 
 class ConfigRepository(
@@ -22,9 +21,6 @@ class ConfigRepository(
         private const val keyDataProvidedBy: String = "data_provided"
         private const val keySupportedSeasons: String = "supported_seasons"
         private const val keyDashboardCalendar: String = "dashboard_calendar"
-        private const val keyRss: String = "rss"
-        private const val keyRssAddCustom: String = "rss_add_custom"
-        private const val keyRssSupportedSources: String = "rss_supported_sources"
     }
 
     //region Values
@@ -96,32 +92,6 @@ class ConfigRepository(
      */
     val dashboardCalendar: Boolean by lazy {
         remoteConfigService.getBoolean(keyDashboardCalendar)
-    }
-
-    /**
-     * Enable the RSS feed functionality
-     */
-    val rss: Boolean by lazy {
-        remoteConfigService.getBoolean(keyRss)
-    }
-
-    /**
-     * Enables the ability to add custom RSS feeds
-     *  Section gets removed from the RSS screen but custom URLs are still listed in the users preferences
-     */
-    val rssAddCustom: Boolean by lazy {
-        remoteConfigService.getBoolean(keyRssAddCustom)
-    }
-
-    /**
-     * List of supported articles for the RSS configure functionality
-     */
-    val rssSupportedSources: List<SupportedSource> by lazy {
-        remoteConfigService
-            .getString(keyRssSupportedSources)
-            .toJson<SupportedSourcesJson>()
-            ?.convert()
-            ?: emptyList()
     }
 
     //endregion

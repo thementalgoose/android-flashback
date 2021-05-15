@@ -2,8 +2,8 @@ package tmg.flashback.managers.configuration.models
 
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
-import tmg.configuration.repository.json.SupportedSourceJson
-import tmg.configuration.repository.json.SupportedSourcesJson
+import tmg.flashback.rss.repo.json.SupportedSourceJson
+import tmg.flashback.rss.repo.json.SupportedSourcesJson
 import tmg.flashback.testutils.BaseTest
 
 internal class RemoteConfigSupportedSourcesTest: BaseTest() {
