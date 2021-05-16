@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--===============================================================-->
+
+    <!-- Text sizes -->
+
+    <dimen name="textSizeFeature">32sp</dimen>
+    <dimen name="textSizeXLarge">20sp</dimen>
+    <dimen name="textSizeLarge">16sp</dimen>
+    <dimen name="textSizeMedium">14sp</dimen>
+    <dimen name="textSizeSmall">12sp</dimen>
+    <dimen name="textSizeXSmall">10sp</dimen>
+
+    <!--===============================================================-->
+
+    <!-- Padding -->
+
+    <dimen name="paddingXLarge">64dp</dimen>
+    <dimen name="paddingMedLarge">24dp</dimen>
+    <dimen name="paddingMedium">16dp</dimen>
+    <dimen name="paddingNSmall">12dp</dimen>
+    <dimen name="paddingLarge">32dp</dimen>
+    <dimen name="paddingSmall">8dp</dimen>
+    <dimen name="paddingXSmall">4dp</dimen>
+
+    <!--===============================================================-->
+
+    <!-- Radius -->
+
+    <dimen name="radiusLarge">24dp</dimen>
+    <dimen name="radiusMedium">12dp</dimen>
+    <dimen name="radiusSmall">6dp</dimen>
+
+    <!--===============================================================-->
+
+    <!-- Toolbar -->
+
+    <dimen name="toolbarSettingsIcon">36dp</dimen>
+    <dimen name="toolbarIconSize">36dp</dimen>
+    <dimen name="toolbarHeight">54dp</dimen>
+    <dimen name="toolbarExpandedSpacer">16dp</dimen>
+
+    <!--===============================================================-->
+
+    <!-- Bottom sheet -->
+
+    <dimen name="bottomSheetPillWidth">36dp</dimen>
+    <dimen name="bottomSheetPillHeight">6dp</dimen>
+
+    <!--===============================================================-->
+
+</resources>

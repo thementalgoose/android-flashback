@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/backgroundPrimary">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/appbar"
+        android:background="@null"
+        app:elevation="0dp"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$Behavior">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_scrollFlags="exitUntilCollapsed|scroll|enterAlways">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/titlebar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/backgroundPrimary"
+                android:fitsSystemWindows="false">
+
+                <TextView
+                    android:id="@+id/header"
+                    style="@style/Text.Toolbar"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:fitsSystemWindows="true"
+                    android:gravity="center"
+                    android:paddingTop="@dimen/paddingMedium"
+                    android:paddingBottom="@dimen/paddingMedium"
+                    app:layout_constraintStart_toEndOf="@id/back"
+                    app:layout_constraintEnd_toStartOf="@id/settings"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="News" />
+
+                <ImageButton
+                    android:id="@+id/back"
+                    android:layout_width="@dimen/toolbarSettingsIcon"
+                    android:layout_height="@dimen/toolbarSettingsIcon"
+                    android:layout_marginStart="@dimen/paddingSmall"
+                    android:layout_marginTop="@dimen/paddingSmall"
+                    android:layout_marginEnd="@dimen/paddingMedium"
+                    android:layout_marginBottom="@dimen/paddingSmall"
+                    android:background="@null"
+                    android:foreground="@drawable/ripple_rounded_small"
+                    android:importantForAccessibility="no"
+                    android:scaleType="center"
+                    android:src="@drawable/ic_back"
+                    android:tint="?attr/contentPrimary"
+                    app:layout_constraintBottom_toBottomOf="@id/header"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/header" />
+
+                <ImageButton
+                    android:visibility="invisible"
+                    android:id="@+id/settings"
+                    android:layout_width="@dimen/toolbarSettingsIcon"
+                    android:layout_height="@dimen/toolbarSettingsIcon"
+                    android:layout_marginEnd="@dimen/paddingMedium"
+                    android:importantForAccessibility="no"
+                    app:layout_constraintBottom_toBottomOf="@id/back"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/back" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/list"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:fitsSystemWindows="false"
+        android:overScrollMode="never"
+        tools:listitem="@layout/view_driver_season" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

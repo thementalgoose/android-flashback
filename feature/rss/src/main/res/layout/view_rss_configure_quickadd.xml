@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="@dimen/paddingMedium"
+    android:paddingTop="10dp"
+    android:paddingEnd="@dimen/paddingMedium"
+    android:paddingBottom="10dp">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/imageContainer"
+        android:layout_width="@dimen/newsIconSize"
+        android:layout_height="@dimen/newsIconSize"
+        app:cardCornerRadius="18dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <View
+            android:id="@+id/imageBackground"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.7"
+            tools:background="#ff0000" />
+
+        <TextView
+            android:id="@+id/label"
+            style="@style/RSS.Items.SourceThumb"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="AS" />
+
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/title"
+        style="@style/RSS.Configure.Item.Url"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/paddingNSmall"
+        android:layout_marginEnd="@dimen/paddingXSmall"
+        android:paddingBottom="2dp"
+        app:layout_constraintEnd_toStartOf="@id/visit_website"
+        app:layout_constraintStart_toEndOf="@id/imageContainer"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="www.autosport.com" />
+
+    <TextView
+        android:id="@+id/description"
+        style="@style/RSS.Configure.Item.RssFeed"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/paddingXSmall"
+        android:ellipsize="marquee"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:paddingTop="1dp"
+        app:layout_constraintEnd_toStartOf="@id/visit_website"
+        app:layout_constraintStart_toStartOf="@id/title"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        tools:text="https://www.autosport.com/feed/f1" />
+
+    <ImageButton
+        android:id="@+id/add"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:background="@null"
+        android:contentDescription="@string/ab_rss_configure_supported_add"
+        android:foreground="@drawable/ripple_rounded_small"
+        android:paddingStart="@dimen/paddingSmall"
+        android:paddingEnd="@dimen/paddingSmall"
+        app:layout_constraintBottom_toBottomOf="@id/description"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_rss_configure_add" />
+
+    <TextView
+        android:id="@+id/visit_website"
+        style="@style/RSS.Configure.Item.VisitWebsite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/paddingXSmall"
+        android:background="@drawable/rss_background_input"
+        android:clickable="true"
+        android:drawablePadding="@dimen/paddingXSmall"
+        android:focusable="true"
+        android:foreground="@drawable/ripple_circle"
+        android:gravity="start|center"
+        android:paddingStart="@dimen/paddingSmall"
+        android:paddingTop="@dimen/paddingXSmall"
+        android:paddingEnd="@dimen/paddingSmall"
+        android:paddingBottom="@dimen/paddingXSmall"
+        android:text="@string/rss_configure_visit_website"
+        app:drawableStartCompat="@drawable/ic_rss_visit_website"
+        app:layout_constraintBottom_toBottomOf="@id/add"
+        app:layout_constraintEnd_toStartOf="@id/add"
+        app:layout_constraintTop_toTopOf="@id/add"
+        tools:text="Visit website" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

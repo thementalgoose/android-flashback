@@ -1,7 +1,10 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
 
-    apply from: rootDir.absolutePath + "/versions.gradle"
+    apply from: rootDir.absolutePath + "/base-versions.gradle"
+    ext {
+        kotlin_version = '1.4.31'
+    }
 
     ext.kotlinCompilerArgs = [
             "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi",
@@ -25,7 +28,7 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'io.fabric.tools:gradle:1.31.2'
         classpath 'com.google.firebase:firebase-crashlytics-gradle:2.5.2'
-        classpath "de.mannodermaus.gradle.plugins:android-junit5:1.6.2.0"
+        classpath "de.mannodermaus.gradle.plugins:android-junit5:1.7.1.1"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$navigation"
     }
 }
@@ -44,6 +47,24 @@ task clean(type: Delete) {
 }
 
 task testModules {
-    dependsOn ':app:testSandDebugUnitTest', ':app-rss:testDebugUnitTest', ':app-statistics:testDebugUnitTest', ':data-firebase:testDebugUnitTest', ':data:test', ':core:testDebugUnitTest', 'clean'
+    dependsOn ':app:testSandDebugUnitTest',
+            ':feature:common:testDebugUnitTest',
+            ':feature:formula1:testDebugUnitTest',
+            ':feature:rss:testDebugUnitTest',
+            ':feature:statistics:testDebugUnitTest',
+            ':feature:statistics-data:test',
+            ':feature:statistics-data-firebase:testDebugUnitTest',
+            ':feature:upnext:testDebugUnitTest',
+            ':core:ads:testDebugUnitTest',
+            ':core:analytics:testDebugUnitTest',
+            ':core:appshortcuts:testDebugUnitTest',
+            ':core:configuration:testDebugUnitTest',
+            ':core:crash-reporting:testDebugUnitTest',
+            ':core:device:testDebugUnitTest',
+            ':core:notifications:testDebugUnitTest',
+            ':core:preferences:testDebugUnitTest',
+            ':core:tutorial:testDebugUnitTest',
+            ':core:ui:testDebugUnitTest',
+            'clean'
     print "Tests passed successfully!"
 }

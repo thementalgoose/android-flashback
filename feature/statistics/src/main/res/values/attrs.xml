@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="f1Podium1" format="color" />
+    <attr name="f1Podium2" format="color" />
+    <attr name="f1Podium3" format="color" />
+
+    <attr name="f1DeltaPositive" format="color" />
+    <attr name="f1DeltaNeutral" format="color|reference" />
+    <attr name="f1DeltaNegative" format="color" />
+
+    <attr name="f1ResultsPartial" format="color" />
+    <attr name="f1ResultsFull" format="color" />
+    <attr name="f1ResultsNeutral" format="color" />
+
+    <attr name="f1FastestSector" format="color" />
+
+    <attr name="f1FavouriteSeason" format="color" />
+
+    <attr name="f1Championship" format="color" />
+
+    <attr name="f1PipeColor" format="color" />
+
+</resources>

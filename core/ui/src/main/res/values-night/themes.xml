@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
+
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+
+        <!-- Content -->
+        <item name="contentPrimary">#f8f8f8</item>
+        <item name="contentSecondary">#f2f2f2</item>
+        <item name="contentTertiary">#eeeeee</item>
+        <item name="contentPrimaryInverse">#181818</item>
+        <item name="contentSecondaryInverse">#383838</item>
+        <item name="contentTertiaryInverse">#484848</item>
+
+        <!-- Backgrounds -->
+        <item name="backgroundPrimary">#181818</item>
+        <item name="backgroundSecondary">#383838</item>
+        <item name="backgroundTertiary">#484848</item>
+        <item name="backgroundPrimaryInverse">#f8f8f8</item>
+        <item name="backgroundSecondaryInverse">#f2f2f2</item>
+        <item name="backgroundTertiaryInverse">#eeeeee</item>
+        <item name="backgroundNav">#383838</item>
+        <item name="backgroundItem">?attr/backgroundPrimary</item>
+        <item name="backgroundItemSelected">?attr/backgroundSecondary</item>
+
+        <!-- Ripple -->
+        <item name="rippleColor">#44ffffff</item>
+
+    </style>
+</resources>

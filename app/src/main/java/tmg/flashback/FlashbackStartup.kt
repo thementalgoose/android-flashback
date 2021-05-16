@@ -2,21 +2,21 @@ package tmg.flashback
 
 import android.os.Build
 import android.util.Log
+import androidx.appcompat.app.AppCompatDelegate
 import com.github.stkent.bugshaker.BugShaker
 import com.github.stkent.bugshaker.flow.dialog.AlertDialogType
 import com.jakewharton.threetenabp.AndroidThreeTen
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import tmg.flashback.statistics.controllers.NotificationController
-import tmg.flashback.core.controllers.AnalyticsController
-import tmg.flashback.core.controllers.CrashController
-import tmg.flashback.core.controllers.DeviceController
-import tmg.flashback.core.enums.Theme
-import tmg.flashback.core.enums.UserProperty.*
-import tmg.flashback.core.repositories.CoreRepository
-import tmg.flashback.managers.notifications.PushNotificationManager
+import tmg.crash_reporting.controllers.CrashController
+import tmg.core.device.controllers.DeviceController
+import tmg.core.analytics.UserProperty.*
+import tmg.core.analytics.manager.AnalyticsManager
 import tmg.flashback.managers.widgets.WidgetManager
-import tmg.flashback.statistics.extensions.updateAllWidgets
+import tmg.core.ui.controllers.ThemeController
+import tmg.core.ui.model.Theme
+import tmg.flashback.upnext.extensions.updateAllWidgets
+import tmg.notifications.controllers.NotificationController
 import tmg.utilities.extensions.isInDayMode
 
 /**
@@ -26,20 +26,26 @@ import tmg.utilities.extensions.isInDayMode
  */
 class FlashbackStartup(
     private val deviceController: DeviceController,
-    private val prefsNotification: NotificationController,
     private val crashController: CrashController,
     private val widgetManager: WidgetManager,
-    private val coreRepository: CoreRepository,
-    private val analyticsController: AnalyticsController,
-    private val notificationManager: PushNotificationManager,
+    private val themeController: ThemeController,
+    private val analyticsManager: AnalyticsManager,
+    private val notificationController: NotificationController
 ) {
     fun startup(application: FlashbackApplication) {
 
         // ThreeTen
         AndroidThreeTen.init(application)
 
+        // Theming
+        when (themeController.theme) {
+            Theme.DEFAULT -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+            Theme.DAY -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            Theme.NIGHT -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        }
+
         // Shake to report a bug
-        if (deviceController.shakeToReport) {
+        if (crashController.shakeToReport) {
             Log.i("Flashback", "Enabling shake to report")
             BugShaker.get(application)
                     .setEmailAddresses("thementalgoose@gmail.com")
@@ -55,53 +61,31 @@ class FlashbackStartup(
         deviceController.appOpened()
 
         // Crash Reporting
-        crashController.initialise()
+        crashController.initialise(
+            deviceUdid = deviceController.deviceUdid,
+            appOpenedCount = deviceController.appOpenedCount,
+            appFirstOpened = deviceController.appFirstBoot
+        )
 
         // Channels
-        notificationManager.createChannels()
-
-        // Opt in to all notifications
-        notificationsOptIn()
+        GlobalScope.launch {
+            notificationController.createNotificationChannels()
+            notificationController.subscribe()
+        }
 
         // Initialise user properties
-        analyticsController.setUserProperty(DEVICE_MODEL, Build.MODEL)
-        analyticsController.setUserProperty(OS_VERSION, Build.VERSION.SDK_INT.toString())
-        analyticsController.setUserProperty(APP_VERSION, BuildConfig.VERSION_NAME)
-        analyticsController.setUserProperty(WIDGET_USAGE, if (widgetManager.hasWidgets) "true" else "false")
-        analyticsController.setUserProperty(DEVICE_THEME, when (coreRepository.theme) {
+        analyticsManager.initialise(userId = deviceController.deviceUdid)
+        analyticsManager.setUserProperty(DEVICE_MODEL, Build.MODEL)
+        analyticsManager.setUserProperty(OS_VERSION, Build.VERSION.SDK_INT.toString())
+        analyticsManager.setUserProperty(APP_VERSION, BuildConfig.VERSION_NAME)
+        analyticsManager.setUserProperty(WIDGET_USAGE, if (widgetManager.hasWidgets) "true" else "false")
+        analyticsManager.setUserProperty(DEVICE_THEME, when (themeController.theme) {
             Theme.DAY -> "day"
             Theme.NIGHT -> "night"
-            Theme.AUTO -> if (application.isInDayMode()) "day" else "night"
+            Theme.DEFAULT -> if (application.isInDayMode()) "day (default)" else "night (default)"
         })
 
         // Update Widgets
         application.updateAllWidgets()
-    }
-
-    private fun notificationsOptIn() {
-
-        // Enrol for race push notifications
-        if (prefsNotification.raceOptInUndecided) {
-            GlobalScope.launch {
-                val result = notificationManager.raceSubscribe()
-                Log.i("Flashback", "Auto enrol push notifications race - $result")
-            }
-        }
-
-        // Enrol for qualifying push notifications
-        if (prefsNotification.qualifyingOptInUndecided) {
-            GlobalScope.launch {
-                val result = notificationManager.qualifyingSubscribe()
-                Log.i("Flashback", "Auto enrol push notifications qualifying - $result")
-            }
-        }
-
-        // Enrol for qualifying push notifications
-        if (prefsNotification.seasonInfoOptInUndecided) {
-            GlobalScope.launch {
-                val result = notificationManager.seasonInfoSubscribe()
-                Log.i("Flashback", "Auto enrol push notifications misc - $result")
-            }
-        }
     }
 }

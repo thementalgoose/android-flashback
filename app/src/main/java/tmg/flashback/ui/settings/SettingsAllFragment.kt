@@ -1,58 +1,44 @@
 package tmg.flashback.ui.settings
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.android.viewmodel.ext.android.viewModel
+import tmg.core.ui.settings.SettingsFragment
 import tmg.flashback.R
-import tmg.flashback.constants.ViewType
-import tmg.flashback.constants.logEvent
-import tmg.flashback.core.ui.BaseFragment
-import tmg.flashback.core.utils.ScreenAnalytics
-import tmg.flashback.databinding.FragmentAllSettingsBinding
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 
-class SettingsAllFragment: BaseFragment<FragmentAllSettingsBinding>() {
+class SettingsAllFragment: SettingsFragment<SettingsAllViewModel>() {
 
-    private val viewModel: SettingsAllViewModel by viewModel()
+    override val viewModel: SettingsAllViewModel by viewModel()
 
-    override val screenAnalytics = ScreenAnalytics(
-        screenName = "Settings - All"
-    )
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-    private lateinit var adapter: SettingsAllAdapter
-
-    override fun inflateView(inflater: LayoutInflater) =
-        FragmentAllSettingsBinding.inflate(inflater)
+        logScreenViewed("Settings all")
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        analyticsController.logEvent(ViewType.SETTINGS_ALL)
-
-        adapter = SettingsAllAdapter(
-                categoryClicked = viewModel.inputs::clickCategory
-        )
-        binding.list.adapter = adapter
-        binding.list.layoutManager = LinearLayoutManager(context)
-
-        observe(viewModel.outputs.categories) {
-            adapter.list = it
+        observeEvent(viewModel.outputs.openAppearance) {
+            findNavController().navigate(R.id.graph_action_appearance)
         }
-
-        observeEvent(viewModel.outputs.navigateToo) {
-            when (it) {
-                Category.CUSTOMISATION -> findNavController().navigate(R.id.graph_action_customisation)
-                Category.STATISTICS -> findNavController().navigate(R.id.graph_action_statistics)
-                Category.NOTIFICATIONS -> findNavController().navigate(R.id.graph_action_notifications)
-                Category.RSS -> findNavController().navigate(R.id.graph_action_rss)
-                Category.WIDGETS -> findNavController().navigate(R.id.graph_action_widgets)
-                Category.DEVICE -> findNavController().navigate(R.id.graph_action_device)
-                Category.ABOUT -> findNavController().navigate(R.id.graph_action_about)
-            }
+        observeEvent(viewModel.outputs.openStatistics) {
+            findNavController().navigate(R.id.graph_action_statistics)
+        }
+        observeEvent(viewModel.outputs.openRss) {
+            findNavController().navigate(R.id.graph_action_rss)
+        }
+        observeEvent(viewModel.outputs.openNotifications) {
+            findNavController().navigate(R.id.graph_action_notifications)
+        }
+        observeEvent(viewModel.outputs.openSupport) {
+            findNavController().navigate(R.id.graph_action_support)
+        }
+        observeEvent(viewModel.outputs.openAbout) {
+            findNavController().navigate(R.id.graph_action_about)
         }
     }
 }

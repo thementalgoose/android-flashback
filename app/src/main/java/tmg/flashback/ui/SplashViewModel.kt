@@ -3,13 +3,14 @@ package tmg.flashback.ui
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import tmg.common.controllers.ForceUpgradeController
+import tmg.configuration.controllers.ConfigController
 import tmg.flashback.BuildConfig
-import tmg.flashback.core.controllers.FeatureController
-import tmg.flashback.core.controllers.ConfigurationController
-import tmg.flashback.core.ui.BaseViewModel
 import tmg.flashback.managers.appshortcuts.AppShortcutManager
+import tmg.flashback.rss.controllers.RSSController
 import tmg.utilities.lifecycle.Event
 
 //region Inputs
@@ -33,9 +34,10 @@ interface SplashViewModelOutputs {
 
 class SplashViewModel(
     private val shortcutManager: AppShortcutManager,
-    private val featureController: FeatureController,
-    private val configurationController: ConfigurationController
-): BaseViewModel(), SplashViewModelInputs, SplashViewModelOutputs {
+    private val rssController: RSSController,
+    private val configurationController: ConfigController,
+    private val forceUpgradeController: ForceUpgradeController
+): ViewModel(), SplashViewModelInputs, SplashViewModelOutputs {
 
     var inputs: SplashViewModelInputs = this
     var outputs: SplashViewModelOutputs = this
@@ -76,7 +78,7 @@ class SplashViewModel(
     }
 
     private fun goToNextScreen() {
-        if (configurationController.forceUpgrade != null) {
+        if (forceUpgradeController.shouldForceUpgrade) {
             goToForceUpgrade.value = Event()
         }
         else {
@@ -89,7 +91,7 @@ class SplashViewModel(
     private fun performConfigUpdates() {
 
         // Shortcuts for RSS
-        when (featureController.rssEnabled) {
+        when (rssController.enabled) {
             true -> shortcutManager.enable()
             false -> shortcutManager.disable()
         }

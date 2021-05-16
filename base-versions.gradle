@@ -1,0 +1,31 @@
+ext {
+    kotlin_version = "1.5.0"
+    koin_version = "2.2.2"
+    coroutines = "1.4.1"
+    navigation = "2.3.5"
+
+    mockk = "1.10.3-jdk8"
+    junit = "5.5.2"
+
+    threeten = "1.2.2"
+    threetenbp = "1.4.1"
+
+    android_constraint = "2.0.4"
+    android_material = "1.3.0"
+    android_lifecycle = "2.3.0"
+
+    swipe_refresh = "1.1.0"
+    slidr = "2.1.0"
+
+    circleimageview = "3.1.0"
+    glide = "4.12.0"
+
+    tmg_utils = "2.1.4"
+    tmg_about_this_app = "5.0.1"
+    tmg_labelled_progressbar = "1.0.7"
+    tmg_test_utils = "1.0.1"
+
+    lottie = "3.4.0"
+
+    firebase_bom = "26.5.0"
+}

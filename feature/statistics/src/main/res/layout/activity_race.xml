@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/backgroundPrimary">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        app:elevation="0dp"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$Behavior">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_scrollFlags="exitUntilCollapsed|scroll|enterAlways">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/titlebar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/backgroundPrimary">
+
+                <TextView
+                    android:id="@+id/grandprix"
+                    style="@style/Text.Toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/paddingMedium"
+                    android:layout_marginEnd="@dimen/paddingMedium"
+                    android:ellipsize="end"
+                    android:fitsSystemWindows="true"
+                    android:gravity="center"
+                    android:lines="1"
+                    android:maxLines="1"
+                    android:paddingStart="@dimen/toolbarSettingsIcon"
+                    android:paddingTop="@dimen/paddingMedium"
+                    android:paddingEnd="@dimen/toolbarSettingsIcon"
+                    android:paddingBottom="@dimen/paddingMedium"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Indianapolis 500" />
+
+                <ImageButton
+                    android:id="@+id/back"
+                    android:layout_width="@dimen/toolbarSettingsIcon"
+                    android:layout_height="@dimen/toolbarSettingsIcon"
+                    android:layout_marginStart="@dimen/paddingSmall"
+                    android:layout_marginTop="@dimen/paddingSmall"
+                    android:layout_marginEnd="@dimen/paddingMedium"
+                    android:layout_marginBottom="@dimen/paddingSmall"
+                    android:background="@drawable/ripple_rounded_small"
+                    android:importantForAccessibility="no"
+                    android:scaleType="center"
+                    android:src="@drawable/ic_back"
+                    android:tint="?attr/contentPrimary"
+                    app:layout_constraintBottom_toBottomOf="@id/grandprix"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/grandprix" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="?attr/actionBarSize"
+        android:overScrollMode="never"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/paddingMedium">
+
+                <ImageView
+                    android:id="@+id/imgCountry"
+                    android:layout_width="@dimen/raceImageSize"
+                    android:layout_height="@dimen/raceImageSize"
+                    android:layout_marginStart="@dimen/paddingMedium"
+                    app:layout_constraintBottom_toBottomOf="@id/tvDate"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@drawable/au" />
+
+                <TextView
+                    android:id="@+id/tvCircuitName"
+                    style="@style/Text.Race.Header"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/paddingMedium"
+                    android:layout_marginEnd="@dimen/paddingMedium"
+                    android:lines="2"
+                    android:minLines="2"
+                    app:layout_constraintEnd_toStartOf="@id/trackLayout"
+                    app:layout_constraintStart_toEndOf="@id/imgCountry"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Albert Park Grand Prix Circuit" />
+
+                <ImageView
+                    android:id="@+id/trackLayout"
+                    android:layout_width="100dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="@dimen/paddingMedium"
+                    app:layout_constraintBottom_toBottomOf="@id/tvDate"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tint="?attr/contentPrimary"
+                    tools:layout_width="100dp"
+                    tools:src="@drawable/circuit_albert_park" />
+
+                <TextView
+                    android:id="@+id/tvRoundInfo"
+                    style="@style/Text.Race.Round"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/paddingXSmall"
+                    app:layout_constraintEnd_toEndOf="@id/tvCircuitName"
+                    app:layout_constraintStart_toStartOf="@id/tvCircuitName"
+                    app:layout_constraintTop_toBottomOf="@id/tvCircuitName"
+                    tools:text="2019 » Round 2" />
+
+                <TextView
+                    android:id="@+id/tvDate"
+                    style="@style/Text.Race.Date"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="@id/tvRoundInfo"
+                    app:layout_constraintStart_toStartOf="@id/tvRoundInfo"
+                    app:layout_constraintTop_toBottomOf="@id/tvRoundInfo"
+                    tools:text="21st January 2020" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="0dp"
+                    android:id="@+id/links"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/paddingMedium"
+                    android:clipToPadding="false"
+                    android:overScrollMode="never"
+                    android:paddingStart="@dimen/paddingMedium"
+                    android:paddingEnd="@dimen/paddingMedium"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvDate"
+                    tools:itemCount="1"
+                    tools:listitem="@layout/view_link_pill" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvContent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:nestedScrollingEnabled="false"
+                android:overScrollMode="never"
+                tools:listitem="@layout/view_race_qualifying_result" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/menu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="?attr/backgroundNav"
+        app:itemIconTint="@drawable/selector_bottom_nav_color"
+        app:itemTextColor="@drawable/selector_bottom_nav_color"
+        app:menu="@menu/menu_race" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -8,11 +8,11 @@
         android:name=".FlashbackApplication"
         android:allowBackup="true"
         android:fullBackupContent="false"
-        android:icon="@mipmap/logo"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/logo_round"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/LightTheme">
+        android:theme="@style/FlashbackAppTheme">
 
         <meta-data
             android:name="google_analytics_automatic_screen_reporting_enabled"
@@ -24,7 +24,7 @@
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
-            android:resource="@color/logo_gradient_1" />
+            android:resource="@color/brand_primary" />
 
         <activity
             android:name=".ui.SplashActivity"
@@ -36,7 +36,8 @@
         </activity>
 
         <activity
-            android:name=".statistics.ui.dashboard.DashboardActivity"
+            android:name=".ui.dashboard.DashboardActivity"
+            android:exported="false"
             android:label="" />
 
         <activity
@@ -50,8 +51,9 @@
             android:theme="@style/Translucent" />
 
         <activity
-            android:name=".ui.settings.release.ReleaseActivity"
+            android:name="tmg.common.ui.releasenotes.ReleaseActivity"
             android:label=""
+            android:exported="false"
             android:theme="@style/Translucent" />
 
         <activity
@@ -60,8 +62,9 @@
             android:theme="@style/Translucent" />
 
         <activity
-            android:name=".ui.settings.privacy.PrivacyPolicyActivity"
+            android:name="tmg.common.ui.privacypolicy.PrivacyPolicyActivity"
             android:label=""
+            android:exported="false"
             android:theme="@style/Translucent" />
 
         <activity
@@ -80,18 +83,21 @@
             android:theme="@style/Translucent" />
 
         <activity
-            android:name=".ui.admin.maintenance.MaintenanceActivity"
+            android:name=".statistics.ui.admin.maintenance.MaintenanceActivity"
             android:label=""
+            android:exported="false"
             android:theme="@style/Translucent" />
 
         <activity
-            android:name=".ui.admin.forceupgrade.ForceUpgradeActivity"
+            android:name="tmg.common.ui.forceupgrade.ForceUpgradeActivity"
             android:label=""
+            android:exported="false"
             android:theme="@style/Translucent" />
 
         <activity
-            android:name="tmg.components.about.AboutThisAppActivity"
+            android:name="tmg.aboutthisapp.AboutThisAppActivity"
             android:label=""
+            android:exported="false"
             android:theme="@style/Translucent" />
 
         <activity
@@ -109,7 +115,7 @@
         <!-- Subscribing -->
 
         <service
-            android:name=".services.RaceNotificationService"
+            android:name="tmg.notifications.services.NotificationService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
@@ -119,7 +125,7 @@
         <!-- Widgets -->
 
         <receiver
-            android:name=".statistics.widgets.upnext.UpNextWidgetProvider"
+            android:name=".upnext.widgets.UpNextWidgetProvider"
             android:label="@string/widget_up_next_title">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />

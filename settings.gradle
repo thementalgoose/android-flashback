@@ -1,8 +1,22 @@
-include ':app'
-include ':app-statistics'
-include ':app-rss'
-include ':data-firebase'
-include ':data'
-include ':core'
-
 rootProject.name = "android-flashback"
+
+include ':app'
+
+include ':feature:common'
+include ':feature:statistics'
+include ':feature:statistics-data-firebase'
+include ':feature:statistics-data'
+include ':feature:upnext'
+include ':feature:formula1'
+include ':feature:rss'
+
+include ':core:ads'
+include ':core:analytics'
+include ':core:appshortcuts'
+include ':core:configuration'
+include ':core:crash-reporting'
+include ':core:device'
+include ':core:notifications'
+include ':core:preferences'
+include ':core:tutorial'
+include ':core:ui'
