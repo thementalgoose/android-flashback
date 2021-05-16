@@ -51,10 +51,12 @@ class SeasonViewHolder(
         when (season.selected) {
             true -> {
                 binding.label.setTextColor(context.theme.getColor(R.attr.contentPrimary))
+                binding.label.alpha = 1.0f
                 binding.highlight.invisible()
             }
             false -> {
                 binding.label.setTextColor(context.theme.getColor(R.attr.contentTertiary))
+                binding.label.alpha = 0.8f
                 binding.highlight.visible()
             }
         }
