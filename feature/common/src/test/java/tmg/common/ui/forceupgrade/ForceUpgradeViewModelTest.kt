@@ -44,9 +44,7 @@ internal class ForceUpgradeViewModelTest: BaseTest() {
             assertValue(Pair("Error :(", "Please restart the app"))
         }
         sut.outputs.showLink.test {
-            // TODO: Replace this once https://github.com/thementalgoose/android-test-utilities/pull/2 is merged
-            assertEmittedCount(1)
-            assertValueAt(null, 0)
+            assertValue(null)
         }
     }
 
@@ -86,9 +84,7 @@ internal class ForceUpgradeViewModelTest: BaseTest() {
             assertValue(Pair("title", "message"))
         }
         sut.outputs.showLink.test {
-            // TODO: Replace this once https://github.com/thementalgoose/android-test-utilities/pull/2 is merged
-            assertEmittedCount(1)
-            assertValueAt(null, 0)
+            assertValue(null)
         }
 
         verify {
