@@ -15,14 +15,6 @@ class DriverSeasonActivity: BaseActivity() {
     private lateinit var binding: ActivityDriverSeasonBinding
     private val viewModel: DriverSeasonViewModel by viewModel()
 
-//    override val screenAnalytics get() = ScreenAnalytics(
-//        screenName = "Driver Season Overview",
-//        attributes = mapOf(
-//            "extra_driver_id" to driverId,
-//            "extra_season" to "$season"
-//        )
-//    )
-
     private lateinit var driverId: String
     private lateinit var driverName: String
     private var season: Int = -1
@@ -37,14 +29,14 @@ class DriverSeasonActivity: BaseActivity() {
             driverName = it.getString(keyDriverName)!!
             season = it.getInt(keyDriverSeason)
 
-//            analyticsController.logEvent(ViewType.DRIVER_SEASON, mapOf(
-//                "driver_id" to driverId,
-//                "driver_name" to driverName,
-//                "season" to season.toString()
-//            ))
-
             viewModel.inputs.setup(driverId, season)
         }
+
+        logScreenViewed("Driver Season Overview", mapOf(
+            "driver_id" to driverId,
+            "driver_name" to driverName,
+            "season" to season.toString()
+        ))
 
         @SuppressLint("SetTextI18n")
         binding.header.text = "$driverName $season"

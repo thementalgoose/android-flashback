@@ -17,13 +17,6 @@ class ConstructorActivity: BaseActivity() {
     private lateinit var binding: ActivityConstructorBinding
     private val viewModel: ConstructorViewModel by viewModel()
 
-//    override val screenAnalytics get() = ScreenAnalytics(
-//        screenName = "Constructor Overview",
-//        attributes = mapOf(
-//            "extra_constructor" to constructorId
-//        )
-//    )
-
     private lateinit var constructorId: String
     private lateinit var constructorName: String
     private lateinit var adapter: ConstructorSummaryAdapter
@@ -37,13 +30,13 @@ class ConstructorActivity: BaseActivity() {
             constructorId = it.getString(keyConstructorId)!!
             constructorName = it.getString(keyConstructorName)!!
 
-//            analyticsController.logEvent(ViewType.CONSTRUCTOR, mapOf(
-//                "constructor_id" to constructorId,
-//                "constructor_name" to constructorName
-//            ))
-
             viewModel.inputs.setup(constructorId)
         }
+
+        logScreenViewed("Constructor Overview", mapOf(
+            "constructor_id" to constructorId,
+            "constructor_name" to constructorName
+        ))
 
         binding.header.text = constructorName
 

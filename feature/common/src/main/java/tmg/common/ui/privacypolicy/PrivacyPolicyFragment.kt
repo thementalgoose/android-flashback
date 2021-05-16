@@ -18,6 +18,12 @@ class PrivacyPolicyFragment: BaseFragment<FragmentPrivacyPolicyBinding>() {
     override fun inflateView(inflater: LayoutInflater) = FragmentPrivacyPolicyBinding
         .inflate(inflater)
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        logScreenViewed("Privacy Policy")
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

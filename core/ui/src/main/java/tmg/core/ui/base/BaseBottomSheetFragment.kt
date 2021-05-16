@@ -8,10 +8,14 @@ import androidx.viewbinding.ViewBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import org.koin.android.ext.android.inject
+import tmg.core.analytics.manager.AnalyticsManager
 
 abstract class BaseBottomSheetFragment<T: ViewBinding>: BottomSheetDialogFragment() {
 
     lateinit var binding: T
+
+    protected val analyticsManager: AnalyticsManager by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -23,6 +27,13 @@ abstract class BaseBottomSheetFragment<T: ViewBinding>: BottomSheetDialogFragmen
     }
 
     abstract fun inflateView(inflater: LayoutInflater): T
+
+    /**
+     * Logging screen analytics
+     */
+    fun logScreenViewed(name: String, params: Map<String, String> = mapOf()) {
+        analyticsManager.viewScreen(name, this::class.java, params)
+    }
 
     val behavior: BottomSheetBehavior<*>
         get() {

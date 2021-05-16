@@ -121,6 +121,15 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(),
                 .setDuration(250L)
                 .start()
         }
+
+        when (panelState) {
+            PanelState.Opening -> {}
+            PanelState.Opened -> {
+                analyticsManager.logEvent("Dashboard opened")
+            }
+            PanelState.Closing -> { }
+            PanelState.Closed -> { }
+        }
     }
 
     //endregion

@@ -13,6 +13,12 @@ class SettingsNotificationFragment: SettingsFragment<SettingsNotificationViewMod
 
     override val viewModel: SettingsNotificationViewModel by viewModel()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        logScreenViewed("Settings Notifications")
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

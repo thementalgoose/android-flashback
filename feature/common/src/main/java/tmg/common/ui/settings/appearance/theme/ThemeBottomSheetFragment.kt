@@ -24,6 +24,12 @@ class ThemeBottomSheetFragment: BaseBottomSheetFragment<FragmentBottomSheetTheme
     override fun inflateView(inflater: LayoutInflater) =
         FragmentBottomSheetThemeBinding.inflate(inflater)
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        logScreenViewed("Settings Appearance Theme Picker")
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

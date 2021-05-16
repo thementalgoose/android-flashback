@@ -108,6 +108,11 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
             round = it.getInt(keyRound)
             circuitId = it.getString(keyCircuitId)!!
 
+            logScreenViewed("Race Results", mapOf(
+                "race_season" to season.toString(),
+                "race_round" to round.toString(),
+            ))
+
             defaultToRace = it.getBoolean(keyDefaultToRace)
 
             initialCountry = it.getString(keyCountry, "")
@@ -122,7 +127,7 @@ class RaceActivity : BaseActivity(), RaceAdapterCallback {
             viewModel.inputs.initialise(season, round, initialDate)
         }
 
-        // Setup
+
 
         raceAdapter = RaceAdapter(this)
         binding.rvContent.adapter = raceAdapter

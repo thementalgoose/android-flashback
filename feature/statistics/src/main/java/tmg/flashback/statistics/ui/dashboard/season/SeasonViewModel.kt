@@ -23,8 +23,6 @@ import tmg.core.ui.controllers.ThemeController
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.statistics.R
 import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
-import tmg.flashback.statistics.constants.ViewType
-import tmg.flashback.statistics.constants.logEvent
 import tmg.flashback.statistics.controllers.SeasonController
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
 import tmg.utilities.extensions.combinePair
@@ -117,16 +115,16 @@ class SeasonViewModel(
             val (season, history) = seasonAndHistory
 
             when (menuItemType) {
-                SeasonNavItem.CALENDAR -> analyticsManager.logEvent(ViewType.DASHBOARD_SEASON_CALENDAR, mapOf(
+                SeasonNavItem.CALENDAR -> analyticsManager.logEvent("Dashboard calendar", mapOf(
                     "season" to season.season.toString()
                 ))
-                SeasonNavItem.SCHEDULE -> analyticsManager.logEvent(ViewType.DASHBOARD_SEASON_SCHEDULE, mapOf(
+                SeasonNavItem.SCHEDULE -> analyticsManager.logEvent("Dashboard schedule", mapOf(
                     "season" to season.season.toString()
                 ))
-                SeasonNavItem.DRIVERS -> analyticsManager.logEvent(ViewType.DASHBOARD_SEASON_DRIVER, mapOf(
+                SeasonNavItem.DRIVERS -> analyticsManager.logEvent("Dashboard drivers", mapOf(
                     "season" to season.season.toString()
                 ))
-                SeasonNavItem.CONSTRUCTORS -> analyticsManager.logEvent(ViewType.DASHBOARD_SEASON_CONSTRUCTOR, mapOf(
+                SeasonNavItem.CONSTRUCTORS -> analyticsManager.logEvent("Dashboard constructors", mapOf(
                     "season" to season.season.toString()
                 ))
             }

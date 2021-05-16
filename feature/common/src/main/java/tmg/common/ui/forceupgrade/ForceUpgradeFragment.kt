@@ -20,6 +20,12 @@ class ForceUpgradeFragment: BaseFragment<FragmentLockoutBinding>() {
     override fun inflateView(inflater: LayoutInflater) = FragmentLockoutBinding
         .inflate(inflater)
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        logScreenViewed("Force upgrade")
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

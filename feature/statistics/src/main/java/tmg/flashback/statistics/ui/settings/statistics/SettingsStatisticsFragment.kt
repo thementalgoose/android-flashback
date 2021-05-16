@@ -12,6 +12,12 @@ class SettingsStatisticsFragment: SettingsFragment<SettingsStatisticsViewModel>(
 
     override val viewModel: SettingsStatisticsViewModel by viewModel()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        logScreenViewed("Settings Statistics")
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

@@ -7,8 +7,10 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.core.app.ActivityCompat.finishAffinity
+import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.core.ui.base.BaseFragment
+import tmg.core.ui.navigation.NavigationProvider
 import tmg.flashback.statistics.databinding.FragmentMaintenanceBinding
 import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.observe
@@ -20,17 +22,19 @@ class MaintenanceFragment: BaseFragment<FragmentMaintenanceBinding>() {
 
     private val viewModel: MaintenanceViewModel by viewModel()
 
-//    override val screenAnalytics = ScreenAnalytics(
-//        screenName = "Maintenance"
-//    )
+    private val navigationProvider: NavigationProvider by inject()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        logScreenViewed("Maintenance")
+    }
 
     override fun inflateView(inflater: LayoutInflater) = FragmentMaintenanceBinding
         .inflate(inflater)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-//        analyticsController.logEvent(ViewType.MAINTENANCE)
 
         binding.btnLink.setOnClickListener {
             viewModel.inputs.clickLink()
@@ -61,8 +65,7 @@ class MaintenanceFragment: BaseFragment<FragmentMaintenanceBinding>() {
         observeEvent(viewModel.outputs.returnToHome) {
             activity?.let {
                 it.finish()
-                // TODO: Fix this!
-//                startActivity(Intent(it, SplashActivity::class.java))
+                startActivity(navigationProvider.relaunchAppIntent(it))
             }
         }
     }

@@ -18,6 +18,12 @@ class AnimationSpeedBottomSheetFragment: BaseBottomSheetFragment<FragmentBottomS
 
     private lateinit var adapter: BottomSheetAdapter
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        logScreenViewed("Settings Appearance Animation Speed Picker")
+    }
+
     override fun inflateView(inflater: LayoutInflater) =
         FragmentBottomSheetAnimationSpeedBinding.inflate(inflater)
 

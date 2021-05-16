@@ -12,14 +12,10 @@ class RSSSettingsFragment: SettingsFragment<RSSSettingsViewModel>() {
 
     override val viewModel: RSSSettingsViewModel by viewModel()
 
-//    override val screenAnalytics = ScreenAnalytics(
-//        screenName = "Settings - RSS"
-//    )
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        analyticsController.logEvent(ViewType.SETTINGS_RSS)
+        logScreenViewed("Settings RSS", emptyMap())
 
         observeEvent(viewModel.outputs.goToConfigure) {
             findNavController().navigate(R.id.graph_action_configure)
