@@ -28,33 +28,16 @@
 
     <!-- =========================================== -->
 
-    <!-- =========================================== -->
+    <!--#region Season List -->
 
-    <!--#region App Lockout -->
-
-    <style name="Text.Lockout.Text" parent="Text">
-
-    </style>
-
-    <style name="Text.Lockout.Button" parent="Text">
+    <style name="Text.Dashboard.List.Item" parent="Text">
         <item name="android:textStyle">bold</item>
-        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="Text.Dashboard.List.Header" parent="Text">
+        <item name="android:textStyle">bold</item>
     </style>
 
     <!--#endregion -->
-
-    <!-- =========================================== -->
-
-    <!-- =========================================== -->
-
-    <!--#region Release Notes -->
-
-    <style name="Text.ReleaseNotes.Content" parent="Text" />
-
-    <!--#endregion -->
-
-    <!-- =========================================== -->
-
-    <!-- =========================================== -->
 
 </resources>

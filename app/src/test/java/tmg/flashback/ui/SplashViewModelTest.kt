@@ -3,20 +3,22 @@ package tmg.flashback.ui
 import io.mockk.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.flashback.core.controllers.FeatureController
-import tmg.flashback.core.controllers.ConfigurationController
-import tmg.flashback.core.model.ForceUpgrade
+import tmg.common.controllers.ForceUpgradeController
+import tmg.configuration.controllers.ConfigController
+import tmg.common.repository.model.ForceUpgrade
 import tmg.flashback.managers.appshortcuts.AppShortcutManager
-import tmg.flashback.testutils.BaseTest
-import tmg.flashback.testutils.assertEventFired
-import tmg.flashback.testutils.assertEventNotFired
-import tmg.flashback.testutils.test
+import tmg.flashback.rss.controllers.RSSController
+import tmg.testutils.BaseTest
+import tmg.testutils.livedata.assertEventFired
+import tmg.testutils.livedata.assertEventNotFired
+import tmg.testutils.livedata.test
 
 internal class  SplashViewModelTest: BaseTest() {
 
     private var mockAppShortcutManager: AppShortcutManager = mockk(relaxed = true)
-    private var mockFeatureController: FeatureController = mockk(relaxed = true)
-    private var mockConfigurationManager: ConfigurationController = mockk(relaxed = true)
+    private var mockRssController: RSSController = mockk(relaxed = true)
+    private var mockConfigurationManager: ConfigController = mockk(relaxed = true)
+    private var mockForceUpgradeController: ForceUpgradeController = mockk(relaxed = true)
 
     private lateinit var sut: SplashViewModel
 
@@ -24,11 +26,11 @@ internal class  SplashViewModelTest: BaseTest() {
     internal fun setUp() {
         every { mockAppShortcutManager.enable() } returns true
         every { mockAppShortcutManager.disable() } returns true
-        every { mockConfigurationManager.forceUpgrade } returns null
+        every { mockForceUpgradeController.shouldForceUpgrade } returns false
     }
 
     private fun initSUT() {
-        sut = SplashViewModel(mockAppShortcutManager, mockFeatureController, mockConfigurationManager)
+        sut = SplashViewModel(mockAppShortcutManager, mockRssController, mockConfigurationManager, mockForceUpgradeController)
     }
 
     @Test
@@ -88,7 +90,7 @@ internal class  SplashViewModelTest: BaseTest() {
     fun `start fetch and activate when success sets updates shortcut manager`() = coroutineTest {
 
         every { mockConfigurationManager.requireSynchronisation } returns true
-        every { mockFeatureController.rssEnabled } returns true
+        every { mockRssController.enabled } returns true
         coEvery { mockConfigurationManager.fetchAndApply() } returns true
 
         initSUT()
@@ -117,7 +119,7 @@ internal class  SplashViewModelTest: BaseTest() {
     @Test
     fun `start fetch and activate when success it fires go to force upgrade if force upgrade exists`() = coroutineTest {
 
-        every { mockConfigurationManager.forceUpgrade } returns ForceUpgrade("upgrade", "please", null)
+        every { mockForceUpgradeController.shouldForceUpgrade } returns true
         every { mockConfigurationManager.requireSynchronisation } returns true
         coEvery { mockConfigurationManager.fetchAndApply() } returns true
 
@@ -216,7 +218,7 @@ internal class  SplashViewModelTest: BaseTest() {
     @Test
     fun `start activate go to force upgrade fired if activate fails and force upgrade exists`() = coroutineTest {
 
-        every { mockConfigurationManager.forceUpgrade } returns ForceUpgrade("upgrade", "please", null)
+        every { mockForceUpgradeController.shouldForceUpgrade } returns true
         every { mockConfigurationManager.requireSynchronisation } returns false
         coEvery { mockConfigurationManager.applyPending() } returns false
 
@@ -251,7 +253,7 @@ internal class  SplashViewModelTest: BaseTest() {
     @Test
     fun `start activate go to force upgrade fired if activate passes`() {
 
-        every { mockConfigurationManager.forceUpgrade } returns ForceUpgrade("upgrade", "please", null)
+        every { mockForceUpgradeController.shouldForceUpgrade } returns true
         every { mockConfigurationManager.requireSynchronisation } returns false
         coEvery { mockConfigurationManager.applyPending() } returns true
 

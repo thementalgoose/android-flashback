@@ -25,51 +25,12 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      # Unit Tests - Checking differences
-      - name: Unit tests - Checking difference
-        run: |
-          echo "lines_app=$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }} | grep -E '^app/' -c)" >> $GITHUB_ENV
-          echo "lines_app_rss=$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }} | grep -E '^app-rss/' -c)" >> $GITHUB_ENV
-          echo "lines_app_statistics=$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }} | grep -E '^app-statistics/' -c)" >> $GITHUB_ENV
-          echo "lines_data=$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }} | grep -E '^data/' -c)" >> $GITHUB_ENV
-          echo "lines_data_firebase=$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }} | grep -E '^data-firebase/' -c)" >> $GITHUB_ENV
-          echo "lines_core=$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }} | grep -E '^core/' -c)" >> $GITHUB_ENV
+      # Running unit tests
+      - name: Unit tests
+        run: ./gradlew testModules
 
-
-      # Unit Tests - Core
-      - name: Unit tests - Core
-        run: ./gradlew :core:testDebugUnitTest
-        if: ${{ env.lines_core != 0 }}
-
-      # Unit Tests - Data-Firebase
-      - name: Unit tests - Data-Firebase
-        run: ./gradlew :data-firebase:testDebugUnitTest
-        if: ${{ env.lines_data_firebase != 0 }}
-
-      # Unit Tests - Data
-      - name: Unit tests - Data
-        run: ./gradlew :data:test
-        if: ${{ env.lines_data != 0 }}
-
-      # Unit Tests - App-RSS
-      - name: Unit tests - App-RSS
-        run: ./gradlew :app-rss:testDebugUnitTest
-        if: ${{ env.lines_app_rss != 0 }}
-
-      # Unit Tests - App-Statistics
-      - name: Unit tests - App-Statistics
-        run: ./gradlew :app-statistics:testDebugUnitTest
-        if: ${{ env.lines_app_statistics != 0 }}
-
-      # Unit Tests - App
-      - name: Unit tests - App
-        run: ./gradlew :app:testSandDebugUnitTest
-        if: ${{ env.lines_app != 0 }}
-
-      # Leaving comment if failed
-      - name: Notify PR
-        if: ${{ failure() }}
-        uses: peter-evans/commit-comment@v1
+      - name: Publish Test Report
+        uses: mikepenz/action-junit-report@v2
+        if: always()
         with:
-          body: |
-            Unit tests failed for commit ${{ github.sha }}
+          report_paths: '**/build/test-results/**/TEST-*.xml'

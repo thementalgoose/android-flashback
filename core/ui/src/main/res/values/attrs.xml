@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Backgrounds -->
+
+    <attr name="backgroundPrimary" format="color" />
+    <attr name="backgroundPrimaryInverse" format="color" />
+    <attr name="backgroundSecondary" format="color" />
+    <attr name="backgroundSecondaryInverse" format="color" />
+    <attr name="backgroundTertiary" format="color" />
+    <attr name="backgroundTertiaryInverse" format="color" />
+    <attr name="backgroundNav" format="color" />
+
+    <!-- Items -->
+
+    <attr name="backgroundItem" format="color" />
+    <attr name="backgroundItemSelected" format="color" />
+
+    <!-- Content -->
+
+    <attr name="contentPrimary" format="color" />
+    <attr name="contentSecondary" format="color" />
+    <attr name="contentTertiary" format="color" />
+    <attr name="contentPrimaryInverse" format="color" />
+    <attr name="contentSecondaryInverse" format="color" />
+    <attr name="contentTertiaryInverse" format="color" />
+
+    <!-- Ripple -->
+
+    <attr name="rippleColor" format="color" />
+
+</resources>
