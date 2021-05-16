@@ -31,6 +31,7 @@
     <!--#region Season List -->
 
     <style name="Text.Dashboard.List.Item" parent="Text">
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="Text.Dashboard.List.Header" parent="Text">

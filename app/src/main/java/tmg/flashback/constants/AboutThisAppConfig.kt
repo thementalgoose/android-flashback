@@ -21,7 +21,7 @@ object AboutThisAppConfig {
         themeRes = R.style.FlashbackAppTheme_AboutThisApp,
         name = context.getString(R.string.app_name),
         nameDesc = context.getString(R.string.about_desc),
-        imageUrl = "https://lh3.googleusercontent.com/l7T59nmp3joS3CUWEw-_mfmZAwXMHmiikR6uvQLFTXGy1-BlUICXxJZ9UCcvQlWhvQ",
+        imageRes = R.mipmap.ic_launcher,
         subtitle = context.getString(R.string.dependency_thank_you),
         footnote = context.getString(R.string.about_additional),
         guid = deviceUdid,
@@ -114,9 +114,9 @@ object AboutThisAppConfig {
         ),
         AboutThisAppDependency(
             order = 11,
-            dependencyName = "Components + Utilities",
+            dependencyName = "Labelled Progress Bar",
             author = "Jordan Fisher",
-            url = "https://github.com/thementalgoose/android-utilities",
+            url = "https://github.com/thementalgoose/android-labelled-progress-bar",
             imageUrl = "https://avatars1.githubusercontent.com/u/5982159"
         )
     )

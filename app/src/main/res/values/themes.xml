@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- DAY -->
+
     <style name="FlashbackAppTheme" parent="AppTheme">
 
         <!-- Material theme colours -->
@@ -8,6 +10,8 @@
         <item name="colorPrimary">#0274D1</item>
         <item name="colorPrimaryDark">#0274D1</item>
         <item name="colorAccent">#00E2E4</item>
+
+        <item name="android:statusBarColor">#0274D1</item>
 
         <!-- =============================================================================== -->
 
