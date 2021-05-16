@@ -7,15 +7,18 @@
     android:layout_height="wrap_content"
     android:clickable="true"
     android:focusable="true"
-    android:foreground="?attr/selectableItemBackground">
+    android:foreground="@drawable/ripple_rectangle">
 
     <TextView
         android:id="@+id/provided_by"
         style="@style/Text.Home.Message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/paddingMedium"
+        android:layout_marginEnd="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/icon"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -27,6 +30,7 @@
         android:layout_height="@dimen/sharedErgast"
         android:layout_marginStart="2dp"
         android:layout_marginTop="@dimen/paddingSmall"
+        android:layout_marginEnd="@dimen/paddingMedium"
         android:layout_marginBottom="@dimen/paddingSmall"
         android:importantForAccessibility="no"
         android:scaleType="fitCenter"

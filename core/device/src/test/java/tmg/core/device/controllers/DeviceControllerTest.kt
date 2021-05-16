@@ -9,16 +9,15 @@ import org.threeten.bp.LocalDate
 import tmg.core.device.repository.DeviceRepository
 import tmg.core.device.managers.BuildConfigManager
 
-// TODO: Check coverage
 internal class DeviceControllerTest {
 
     private var mockDeviceRepository: DeviceRepository = mockk(relaxed = true)
     private var mockBuildConfigManager: BuildConfigManager = mockk(relaxed = true)
 
-    private lateinit var sut: tmg.core.device.controllers.DeviceController
+    private lateinit var sut: DeviceController
 
     private fun initSUT() {
-        sut = tmg.core.device.controllers.DeviceController(
+        sut = DeviceController(
             mockDeviceRepository,
             mockBuildConfigManager
         )

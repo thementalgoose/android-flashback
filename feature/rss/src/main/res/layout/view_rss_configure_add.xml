@@ -29,7 +29,7 @@
         android:layout_height="0dp"
         android:background="@null"
         android:contentDescription="@string/ab_rss_configure_add"
-        android:foreground="@drawable/rss_round_ripple"
+        android:foreground="@drawable/ripple_rounded_small"
         android:paddingStart="@dimen/paddingSmall"
         android:paddingEnd="@dimen/paddingSmall"
         app:layout_constraintBottom_toBottomOf="parent"

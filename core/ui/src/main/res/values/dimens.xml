@@ -35,7 +35,6 @@
     <!--===============================================================-->
 
     <!-- Toolbar -->
-    <!-- TODO: Look at moving these higher up the stack -->
 
     <dimen name="toolbarSettingsIcon">36dp</dimen>
     <dimen name="toolbarIconSize">36dp</dimen>
