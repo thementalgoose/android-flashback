@@ -291,7 +291,7 @@ internal class SeasonViewModelTest: BaseTest() {
         }
 
         verify {
-            mockAnalyticsController.logEvent("Dashboard schedule", any())
+            mockAnalyticsController.logEvent("select_dashboard_schedule", any())
         }
     }
 
@@ -378,7 +378,7 @@ internal class SeasonViewModelTest: BaseTest() {
         }
 
         verify {
-            mockAnalyticsController.logEvent("Dashboard calendar", any())
+            mockAnalyticsController.logEvent("select_dashboard_calendar", any())
         }
     }
 
@@ -399,7 +399,7 @@ internal class SeasonViewModelTest: BaseTest() {
         }
 
         verify {
-            mockAnalyticsController.logEvent("Dashboard calendar", any())
+            mockAnalyticsController.logEvent("select_dashboard_calendar", any())
         }
     }
 
@@ -467,7 +467,7 @@ internal class SeasonViewModelTest: BaseTest() {
         }
 
         verify {
-            mockAnalyticsController.logEvent("Dashboard drivers", any())
+            mockAnalyticsController.logEvent("select_dashboard_driver", any())
         }
     }
 
@@ -548,7 +548,7 @@ internal class SeasonViewModelTest: BaseTest() {
         }
 
         verify {
-            mockAnalyticsController.logEvent("Dashboard constructors", any())
+            mockAnalyticsController.logEvent("select_dashboard_constructor", any())
         }
     }
 

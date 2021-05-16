@@ -125,7 +125,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(),
         when (panelState) {
             PanelState.Opening -> {}
             PanelState.Opened -> {
-                analyticsManager.logEvent("Dashboard opened")
+                analyticsManager.logEvent("open_dashboard")
             }
             PanelState.Closing -> { }
             PanelState.Closed -> { }
