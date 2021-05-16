@@ -39,6 +39,12 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
 //        attributes = analyticsData
 //    )
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        logScreenViewed("Dashboard", analyticsData)
+    }
+
     override fun inflateView(inflater: LayoutInflater) =
         FragmentDashboardSeasonBinding.inflate(layoutInflater)
 
@@ -144,7 +150,7 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
      */
     fun selectSeason(season: Int) {
         analyticsData["extra_season_id"] = season.toString()
-//        recordScreenViewed()
+        logScreenViewed("Dashboard", analyticsData)
         viewModel.inputs.selectSeason(season)
     }
 
@@ -154,7 +160,7 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
      */
     fun selectCalendar() {
         analyticsData["extra_view_type"] = SeasonNavItem.CALENDAR.name
-//        recordScreenViewed()
+        logScreenViewed("Dashboard", analyticsData)
         viewModel.inputs.clickItem(SeasonNavItem.CALENDAR)
     }
 
@@ -164,7 +170,7 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
      */
     fun selectSchedule() {
         analyticsData["extra_view_type"] = SeasonNavItem.SCHEDULE.name
-//        recordScreenViewed()
+        logScreenViewed("Dashboard", analyticsData)
         viewModel.inputs.clickItem(SeasonNavItem.SCHEDULE)
     }
 
@@ -174,7 +180,7 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
      */
     fun selectDrivers() {
         analyticsData["extra_view_type"] = SeasonNavItem.DRIVERS.name
-//        recordScreenViewed()
+        logScreenViewed("Dashboard", analyticsData)
         viewModel.inputs.clickItem(SeasonNavItem.DRIVERS)
     }
 
@@ -184,7 +190,7 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
      */
     fun selectConstructors() {
         analyticsData["extra_view_type"] = SeasonNavItem.CONSTRUCTORS.name
-//        recordScreenViewed()
+        logScreenViewed("Dashboard", analyticsData)
         viewModel.inputs.clickItem(SeasonNavItem.CONSTRUCTORS)
     }
 

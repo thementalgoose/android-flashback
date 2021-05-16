@@ -8,12 +8,16 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
+import org.koin.android.ext.android.inject
+import tmg.core.analytics.manager.AnalyticsManager
 
 abstract class BaseFragment<T: ViewBinding>: Fragment() {
 
     private var _binding: T? = null
     protected val binding: T
         get() = _binding!!
+
+    protected val analyticsManager: AnalyticsManager by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,6 +33,13 @@ abstract class BaseFragment<T: ViewBinding>: Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    /**
+     * Logging screen analytics
+     */
+    fun logScreenViewed(name: String, params: Map<String, String> = mapOf()) {
+        analyticsManager.viewScreen(name, this::class.java, params)
     }
 
     /**

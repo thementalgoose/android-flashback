@@ -20,6 +20,12 @@ class SettingsAboutFragment: SettingsFragment<SettingsAboutViewModel>() {
     private val navigationProvider: NavigationProvider by inject()
     private val buildConfigManager: BuildConfigManager by inject()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        logScreenViewed("Settings About")
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

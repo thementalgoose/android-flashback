@@ -16,7 +16,7 @@ internal class FirebaseAnalyticsService(
         if (BuildConfig.DEBUG) {
             Log.i(
                 "Analytics",
-                "Log Event $key | ${bundle?.keySet()?.joinToString(separator = ",")}"
+                "Log Event $key | ${bundle.toString()}"
             )
         }
         analytics.logEvent(key, bundle)

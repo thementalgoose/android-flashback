@@ -9,6 +9,12 @@ class SettingsSupportFragment: SettingsFragment<SettingsSupportViewModel>() {
 
     override val viewModel: SettingsSupportViewModel by viewModel()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        logScreenViewed("Settings Support")
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
     }

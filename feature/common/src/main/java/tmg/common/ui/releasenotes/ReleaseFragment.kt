@@ -13,6 +13,12 @@ class ReleaseFragment: BaseFragment<FragmentReleaseNotesBinding>() {
     override fun inflateView(inflater: LayoutInflater) = FragmentReleaseNotesBinding
         .inflate(inflater)
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        logScreenViewed("Release notes")
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

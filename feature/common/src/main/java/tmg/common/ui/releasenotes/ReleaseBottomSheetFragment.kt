@@ -14,6 +14,12 @@ class ReleaseBottomSheetFragment: BaseBottomSheetFragment<FragmentBottomSheetRel
     // TODO: Move over to view model
     private val releaseNotesController: ReleaseNotesController by inject()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        logScreenViewed("Release notes popup")
+    }
+
     override fun inflateView(inflater: LayoutInflater) =
         FragmentBottomSheetReleaseNotesBinding.inflate(inflater)
 

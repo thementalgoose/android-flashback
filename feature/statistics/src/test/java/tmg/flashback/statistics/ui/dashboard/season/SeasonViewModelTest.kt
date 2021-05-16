@@ -23,7 +23,6 @@ import tmg.flashback.data.models.stats.History
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.statistics.*
 import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
-import tmg.flashback.statistics.constants.ViewType
 import tmg.flashback.statistics.controllers.SeasonController
 import tmg.flashback.statistics.ui.dashboard.season.SeasonViewModel.Companion.daysUntilDataProvidedBannerMovedToBottom
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
@@ -291,9 +290,9 @@ internal class SeasonViewModelTest: BaseTest() {
             assertListHasSublist(expected)
         }
 
-//        verify {
-//            mockAnalyticsController.logEvent(ViewType.DASHBOARD_SEASON_SCHEDULE, any())
-//        }
+        verify {
+            mockAnalyticsController.logEvent("Dashboard schedule", any())
+        }
     }
 
     //endregion
@@ -378,9 +377,9 @@ internal class SeasonViewModelTest: BaseTest() {
             assertValue(listOf(SeasonItem.ErrorItem(SyncDataItem.ProvidedBy())) + expected)
         }
 
-//        verify {
-//            mockAnalyticsController.logEvent(ViewType.DASHBOARD_SEASON_CALENDAR, any())
-//        }
+        verify {
+            mockAnalyticsController.logEvent("Dashboard calendar", any())
+        }
     }
 
     @Test
@@ -399,9 +398,9 @@ internal class SeasonViewModelTest: BaseTest() {
             assertListMatchesItem { it is SeasonItem.CalendarWeek && it.race == historyRound2 && it.forMonth == Month.OCTOBER }
         }
 
-//        verify {
-//            mockAnalyticsController.logEvent(ViewType.DASHBOARD_SEASON_CALENDAR, any())
-//        }
+        verify {
+            mockAnalyticsController.logEvent("Dashboard calendar", any())
+        }
     }
 
     //endregion
@@ -467,9 +466,9 @@ internal class SeasonViewModelTest: BaseTest() {
             assertValue(expected)
         }
 
-//        verify {
-//            mockAnalyticsController.logEvent(ViewType.DASHBOARD_SEASON_DRIVER, any())
-//        }
+        verify {
+            mockAnalyticsController.logEvent("Dashboard drivers", any())
+        }
     }
 
     @Test
@@ -548,9 +547,9 @@ internal class SeasonViewModelTest: BaseTest() {
             assertValue(expected)
         }
 
-//        verify {
-//            mockAnalyticsController.logEvent(ViewType.DASHBOARD_SEASON_CONSTRUCTOR, any())
-//        }
+        verify {
+            mockAnalyticsController.logEvent("Dashboard constructors", any())
+        }
     }
 
     @Test

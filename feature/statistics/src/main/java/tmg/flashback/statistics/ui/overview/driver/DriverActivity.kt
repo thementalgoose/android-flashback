@@ -18,13 +18,6 @@ class DriverActivity: BaseActivity() {
     private lateinit var binding: ActivityDriverBinding
     private val viewModel: DriverViewModel by viewModel()
 
-//    override val screenAnalytics get() = ScreenAnalytics(
-//        screenName = "Driver Overview",
-//        attributes = mapOf(
-//            "extra_driver_id" to driverId
-//        )
-//    )
-
     private lateinit var driverId: String
     private lateinit var driverName: String
     private lateinit var adapter: DriverSummaryAdapter
@@ -38,13 +31,13 @@ class DriverActivity: BaseActivity() {
             driverId = it.getString(keyDriverId)!!
             driverName = it.getString(keyDriverName)!!
 
-//            analyticsController.logEvent(ViewType.DRIVER, mapOf(
-//                "driver_id" to driverId,
-//                "driver_name" to driverName
-//            ))
-
             viewModel.inputs.setup(driverId)
         }
+
+        logScreenViewed("Driver Overview", mapOf(
+            "driver_id" to driverId,
+            "driver_name" to driverName,
+        ))
 
         binding.header.text = driverName
 

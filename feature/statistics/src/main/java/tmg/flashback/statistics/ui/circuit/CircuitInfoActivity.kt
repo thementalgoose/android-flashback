@@ -21,13 +21,6 @@ class CircuitInfoActivity: BaseActivity() {
     private lateinit var binding: ActivityCircuitInfoBinding
     private val viewModel: CircuitInfoViewModel by viewModel()
 
-//    override val screenAnalytics get() = ScreenAnalytics(
-//        screenName = "Circuit Overview",
-//        attributes = mapOf(
-//            "extra_circuit" to circuitId
-//        )
-//    )
-
     private lateinit var circuitId: String
     private lateinit var circuitName: String
     private lateinit var adapter: CircuitInfoAdapter
@@ -40,12 +33,12 @@ class CircuitInfoActivity: BaseActivity() {
         intent?.extras?.let {
             circuitId = it.getString(keyCircuit)!!
             circuitName = it.getString(keyCircuitName)!!
-
-//            analyticsController.logEvent(ViewType.CIRCUIT, mapOf(
-//                "circuit_id" to circuitId,
-//                "circuit_name" to circuitName
-//            ))
         }
+
+        logScreenViewed("Circuit Overview", mapOf(
+            "circuit_id" to circuitId,
+            "circuit_name" to circuitName
+        ))
 
         binding.header.text = circuitName
 
