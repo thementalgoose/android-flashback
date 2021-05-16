@@ -61,7 +61,7 @@ internal class SettingsNotificationViewModelTest: BaseTest() {
         initSUT()
         sut.clickPreference(sut.models.findPref(R.string.settings_notifications_channel_qualifying_title))
         sut.outputs.openNotificationsChannel.test {
-            assertDataEventValue("NotificationQualifying")
+            assertDataEventValue("qualifying")
         }
     }
 
@@ -70,7 +70,7 @@ internal class SettingsNotificationViewModelTest: BaseTest() {
         initSUT()
         sut.clickPreference(sut.models.findPref(R.string.settings_notifications_channel_race_title))
         sut.outputs.openNotificationsChannel.test {
-            assertDataEventValue("NotificationRace")
+            assertDataEventValue("race")
         }
     }
 
