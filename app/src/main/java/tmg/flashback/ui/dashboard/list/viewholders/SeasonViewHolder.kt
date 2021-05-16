@@ -83,8 +83,6 @@ class SeasonViewHolder(
         binding.pipeTop.setBackgroundColor(colour)
         binding.pipeBottom.setBackgroundColor(colour)
 
-        println("$previous - $currentSeason - $next")
-
         binding.pipeTop.show(next != null && next == currentSeason + 1)
         binding.pipeBottom.show(previous != null && previous == currentSeason - 1 )
     }
