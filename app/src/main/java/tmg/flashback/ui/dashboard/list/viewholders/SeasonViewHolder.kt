@@ -85,8 +85,8 @@ class SeasonViewHolder(
 
         println("$previous - $currentSeason - $next")
 
-        binding.pipeTop.show(!currentSeason.toString().endsWith('9') && next != null && next == currentSeason + 1 && season.fixed == HeaderType.ALL)
-        binding.pipeBottom.show(!currentSeason.toString().endsWith('0') && previous == currentSeason - 1  && season.fixed == HeaderType.ALL)
+        binding.pipeTop.show(next != null && next == currentSeason + 1)
+        binding.pipeBottom.show(previous != null && previous == currentSeason - 1 )
     }
 
     //region View.OnClickListener
