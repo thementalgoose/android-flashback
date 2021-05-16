@@ -18,12 +18,12 @@ class AppNavigationProvider(
 ): NavigationProvider, NotificationNavigationProvider {
 
     override fun relaunchAppIntent(context: Context): Intent {
-        analyticsManager.logEvent("Relaunch app")
+        analyticsManager.logEvent("relaunch_app")
         return Intent(context, SplashActivity::class.java)
     }
 
     override fun aboutAppIntent(context: Context): Intent {
-        analyticsManager.viewScreen("About This App", AboutThisAppActivity::class.java, mapOf(
+        analyticsManager.viewScreen("open_about_this_app", AboutThisAppActivity::class.java, mapOf(
             "version" to buildConfigManager.versionName
         ))
         return AboutThisAppActivity.intent(context, AboutThisAppConfig.configuration(context,
