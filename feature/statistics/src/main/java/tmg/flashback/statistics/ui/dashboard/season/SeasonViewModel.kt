@@ -115,16 +115,16 @@ class SeasonViewModel(
             val (season, history) = seasonAndHistory
 
             when (menuItemType) {
-                SeasonNavItem.CALENDAR -> analyticsManager.logEvent("Dashboard calendar", mapOf(
+                SeasonNavItem.CALENDAR -> analyticsManager.logEvent("select_dashboard_calendar", mapOf(
                     "season" to season.season.toString()
                 ))
-                SeasonNavItem.SCHEDULE -> analyticsManager.logEvent("Dashboard schedule", mapOf(
+                SeasonNavItem.SCHEDULE -> analyticsManager.logEvent("select_dashboard_schedule", mapOf(
                     "season" to season.season.toString()
                 ))
-                SeasonNavItem.DRIVERS -> analyticsManager.logEvent("Dashboard drivers", mapOf(
+                SeasonNavItem.DRIVERS -> analyticsManager.logEvent("select_dashboard_driver", mapOf(
                     "season" to season.season.toString()
                 ))
-                SeasonNavItem.CONSTRUCTORS -> analyticsManager.logEvent("Dashboard constructors", mapOf(
+                SeasonNavItem.CONSTRUCTORS -> analyticsManager.logEvent("select_dashboard_constructor", mapOf(
                     "season" to season.season.toString()
                 ))
             }
