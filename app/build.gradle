@@ -217,7 +217,6 @@ task generateRemoteConfigDefaults {
     }
 
     println("Remote config defaults - file generated")
-    println(new File(filePath).text)
 }
 
 tasks.whenTaskAdded { task ->
