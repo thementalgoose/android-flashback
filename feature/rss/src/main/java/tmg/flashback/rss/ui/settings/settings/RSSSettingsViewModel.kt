@@ -27,7 +27,7 @@ class RSSSettingsViewModel(
         private val rssRepository: RSSRepository
 ): SettingsViewModel(), RSSSettingsViewModelInputs, RSSSettingsViewModelOutputs {
 
-    override val models: List<SettingsModel> = listOf(
+    override val models: List<SettingsModel> get() = listOf(
         SettingsModel.Header(R.string.settings_rss_configure),
         SettingsModel.Pref(
             title = R.string.settings_rss_configure_sources_title,
