@@ -34,7 +34,7 @@
             android:clickable="true"
             android:contentDescription="@string/about_this_app_ab_back_button"
             android:focusable="true"
-            android:foreground="@drawable/rounded_ripple"
+            android:foreground="@drawable/ripple_rounded_small"
             android:padding="@dimen/paddingSmall"
             app:layout_constraintBottom_toBottomOf="@id/toolbarGuideline"
             app:layout_constraintStart_toStartOf="parent"
