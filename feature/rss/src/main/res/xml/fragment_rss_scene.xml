@@ -67,7 +67,7 @@
 
         <OnSwipe
             app:dragDirection="dragUp"
-            app:touchAnchorId="@id/dataList"
+            app:touchAnchorId="@id/swipeRefresh"
             app:touchAnchorSide="top" />
 
         <KeyFrameSet>

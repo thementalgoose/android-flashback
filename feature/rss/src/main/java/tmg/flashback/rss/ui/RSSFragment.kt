@@ -52,6 +52,11 @@ class RSSFragment: BaseFragment<FragmentRssBinding>() {
         binding.dataList.adapter = adapter
         binding.dataList.layoutManager = LinearLayoutManager(context)
 
+        binding.swipeRefresh.setOnRefreshListener {
+            binding.swipeRefresh.isRefreshing = false
+            viewModel.inputs.refresh()
+        }
+
         binding.refresh.setOnClickListener {
             viewModel.inputs.refresh()
         }
@@ -87,6 +92,8 @@ class RSSFragment: BaseFragment<FragmentRssBinding>() {
                 binding.dataList.smoothScrollToPosition(0)
             }
         }
+
+        viewModel.inputs.refresh()
     }
 
     private fun openConfigure(screen: InitialScreen) {
