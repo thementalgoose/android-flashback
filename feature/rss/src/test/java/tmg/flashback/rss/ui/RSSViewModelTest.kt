@@ -62,9 +62,10 @@ class RSSViewModelTest: BaseTest() {
 
         sut = RSSViewModel(
             mockRSSDB,
-                mockRssRepository,
+            mockRssRepository,
             mockConnectivityManager
         )
+        sut.refresh()
     }
 
     @Test

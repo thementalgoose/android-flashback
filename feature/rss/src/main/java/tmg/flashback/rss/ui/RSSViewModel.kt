@@ -10,9 +10,11 @@ import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.core.device.managers.NetworkConnectivityManager
 import androidx.lifecycle.ViewModel
+import kotlinx.coroutines.channels.BroadcastChannel
 import tmg.flashback.rss.repo.RSSRepository
 import tmg.flashback.rss.repo.RssAPI
 import tmg.utilities.extensions.then
+import tmg.utilities.lifecycle.Event
 
 //region Inputs
 
@@ -40,13 +42,16 @@ class RSSViewModel(
     RSSViewModelOutputs {
 
     override val isRefreshing: MutableLiveData<Boolean> = MutableLiveData()
-    private val refreshNews: ConflatedBroadcastChannel<Boolean> = ConflatedBroadcastChannel()
+    private val refreshNews: ConflatedBroadcastChannel<Event> = ConflatedBroadcastChannel()
     private val newsList: Flow<List<RSSItem>> = refreshNews
         .asFlow()
+        .filter { it.processEvent }
         .then {
             isRefreshing.value = true
         }
-        .flatMapLatest { RSSDB.getNews() }
+        .flatMapLatest {
+            RSSDB.getNews()
+        }
         .map { response ->
             if (response.isNoNetwork || !connectivityManager.isConnected) {
                 return@map listOf<RSSItem>(RSSItem.NoNetwork)
@@ -77,14 +82,10 @@ class RSSViewModel(
     var inputs: RSSViewModelInputs = this
     var outputs: RSSViewModelOutputs = this
 
-    init {
-        refresh()
-    }
-
     //region Inputs
 
     override fun refresh() {
-        refreshNews.offer(true)
+        refreshNews.offer(Event())
     }
 
     //endregion
