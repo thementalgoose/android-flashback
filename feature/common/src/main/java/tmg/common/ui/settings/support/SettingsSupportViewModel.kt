@@ -28,7 +28,7 @@ class SettingsSupportViewModel(
     private val analyticsManager: AnalyticsManager
 ): SettingsViewModel(), SettingsSupportViewModelInputs, SettingsSupportViewModelOutputs {
 
-    override val models: List<SettingsModel> = listOf(
+    override val models: List<SettingsModel> get() = listOf(
         SettingsModel.Header(R.string.settings_help),
         SettingsModel.SwitchPref(
             title = R.string.settings_help_crash_reporting_title,
