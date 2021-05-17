@@ -11,7 +11,7 @@
         <item name="colorPrimaryDark">#00E2E4</item>
         <item name="colorAccent">#0274D1</item>
 
-        <item name="android:statusBarColor">#0274D1</item>
+        <item name="android:statusBarColor">?attr/backgroundPrimary</item>
 
         <!-- =============================================================================== -->
 
@@ -45,10 +45,10 @@
 
     <style name="FlashbackAppTheme.AboutThisApp" parent="FlashbackAppTheme">
 
-        <item name="android:statusBarColor">?attr/colorPrimary</item>
+        <item name="android:statusBarColor">?attr/colorAccent</item>
 
         <!-- About This App Activity -->
-        <item name="aboutThisApp_header">?attr/colorPrimary</item>
+        <item name="aboutThisApp_header">?attr/colorAccent</item>
         <item name="aboutThisApp_textPrimary">#f8f8f8</item>
         <item name="aboutThisApp_textSecondary">#e8e8e8</item>
         <item name="aboutThisApp_textToolbar">#f8f8f8</item>

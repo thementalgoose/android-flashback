@@ -14,6 +14,7 @@
         <item name="contentTertiaryInverse">#484848</item>
 
         <!-- Backgrounds -->
+        <item name="backgroundContainer">#040404</item>
         <item name="backgroundPrimary">#181818</item>
         <item name="backgroundSecondary">#383838</item>
         <item name="backgroundTertiary">#484848</item>

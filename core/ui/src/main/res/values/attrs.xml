@@ -3,6 +3,7 @@
 
     <!-- Backgrounds -->
 
+    <attr name="backgroundContainer" format="color" />
     <attr name="backgroundPrimary" format="color" />
     <attr name="backgroundPrimaryInverse" format="color" />
     <attr name="backgroundSecondary" format="color" />
