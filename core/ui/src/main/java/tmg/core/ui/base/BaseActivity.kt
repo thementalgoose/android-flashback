@@ -48,6 +48,9 @@ abstract class BaseActivity : AppCompatActivity() {
             swipeDismissInterface = Slidr.attach(this)
             overridePendingTransition(R.anim.activity_enter, R.anim.activity_exit)
         }
+        else {
+            overridePendingTransition(-1, R.anim.activity_exit)
+        }
     }
 
     /**
@@ -55,6 +58,11 @@ abstract class BaseActivity : AppCompatActivity() {
      */
     fun logScreenViewed(name: String, params: Map<String, String> = mapOf()) {
         analyticsManager.viewScreen(name, this::class.java, params)
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        overridePendingTransition(R.anim.activity_enter, R.anim.activity_exit)
     }
 
     override fun finish() {

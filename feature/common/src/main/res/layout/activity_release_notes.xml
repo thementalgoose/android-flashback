@@ -8,7 +8,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragments"
-        android:name="tmg.flashback.ui.settings.release.ReleaseFragment"
+        android:name="tmg.common.ui.releasenotes.ReleaseFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -8,7 +8,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragments"
-        android:name="tmg.flashback.ui.settings.privacy.PrivacyPolicyFragment"
+        android:name="tmg.common.ui.privacypolicy.PrivacyPolicyFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
