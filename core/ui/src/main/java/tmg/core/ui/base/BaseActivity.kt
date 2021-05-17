@@ -46,10 +46,10 @@ abstract class BaseActivity : AppCompatActivity() {
 
         if (swipeDismissInitialise) {
             swipeDismissInterface = Slidr.attach(this)
-            overridePendingTransition(R.anim.activity_enter, R.anim.activity_exit)
+//            overridePendingTransition(R.anim.activity_enter, R.anim.activity_exit)
         }
         else {
-            overridePendingTransition(-1, R.anim.activity_exit)
+//            overridePendingTransition(-1, R.anim.activity_exit)
         }
     }
 
@@ -62,11 +62,11 @@ abstract class BaseActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
-        overridePendingTransition(R.anim.activity_enter, R.anim.activity_exit)
+//        overridePendingTransition(R.anim.activity_enter, R.anim.activity_exit)
     }
 
     override fun finish() {
         super.finish()
-        overridePendingTransition(R.anim.activity_enter, R.anim.activity_exit)
+//        overridePendingTransition(R.anim.activity_enter, R.anim.activity_exit)
     }
 }
