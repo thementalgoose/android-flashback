@@ -1,6 +1,7 @@
 package tmg.flashback.rss.network
 
 import kotlinx.coroutines.flow.*
+import org.threeten.bp.LocalDateTime
 import retrofit2.HttpException
 import tmg.flashback.rss.BuildConfig
 import tmg.flashback.rss.controllers.RSSController
@@ -10,6 +11,7 @@ import tmg.flashback.rss.network.shared.buildRetrofit
 import tmg.flashback.rss.repo.RSSRepository
 import tmg.flashback.rss.repo.RssAPI
 import tmg.flashback.rss.repo.model.Article
+import tmg.flashback.rss.repo.model.ArticleSource
 import tmg.flashback.rss.repo.model.Response
 import java.lang.NullPointerException
 import java.lang.RuntimeException
@@ -80,6 +82,7 @@ class RSS(
     }
 
     private fun getAll(): Flow<List<Response<List<Article>>>> = flow {
+        if (repository.rssUrls.isEmpty()) { emit(emptyList()) }
         combine(repository.rssUrls.map { get(it) }) {
             it.toList()
         }.collect {
