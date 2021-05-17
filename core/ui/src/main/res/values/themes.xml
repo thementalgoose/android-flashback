@@ -14,6 +14,7 @@
         <item name="contentTertiaryInverse">#eeeeee</item>
 
         <!-- Backgrounds -->
+        <item name="backgroundContainer">#f4f4f4</item>
         <item name="backgroundPrimary">#f8f8f8</item>
         <item name="backgroundSecondary">#f2f2f2</item>
         <item name="backgroundTertiary">#eeeeee</item>
