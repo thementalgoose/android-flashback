@@ -21,7 +21,9 @@ sealed class SettingsModel(
         val getState: () -> Boolean,
         val saveState: (value: Boolean) -> Unit,
         val saveStateNotification: ((value: Boolean) -> Unit)? = null
-    ): SettingsModel(R.layout.view_settings_preference_switch)
+    ): SettingsModel(R.layout.view_settings_preference_switch) {
+        val initialState: Boolean = getState()
+    }
 
     data class Pref(
         @StringRes

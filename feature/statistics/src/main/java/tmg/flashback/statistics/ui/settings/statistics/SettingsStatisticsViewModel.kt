@@ -30,7 +30,7 @@ class SettingsStatisticsViewModel(
         private val seasonController: SeasonController
 ): SettingsViewModel(), SettingsStatisticsViewModelInputs, SettingsStatisticsViewModelOutputs {
 
-    override val models: List<SettingsModel> = mutableListOf<SettingsModel>().apply {
+    override val models: List<SettingsModel> get() = mutableListOf<SettingsModel>().apply {
         add(SettingsModel.Header(R.string.settings_statistics))
         add(SettingsModel.SwitchPref(
                 title = R.string.settings_customisation_qualifying_delta_title,
