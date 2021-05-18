@@ -5,24 +5,23 @@ import tmg.aboutthisapp.AboutThisAppConfiguration
 import tmg.aboutthisapp.AboutThisAppDependency
 import tmg.flashback.R
 
-
 /**
  * About This App Configuration and data
  */
-
 object AboutThisAppConfig {
 
     // Configuration item
     fun configuration(
         context: Context,
         appVersion: String,
-        deviceUdid: String
+        deviceUdid: String,
+        rssEnabled: Boolean
     ) = AboutThisAppConfiguration(
         themeRes = R.style.FlashbackAppTheme_AboutThisApp,
         name = context.getString(R.string.app_name),
         nameDesc = context.getString(R.string.about_desc),
         imageRes = R.mipmap.ic_launcher,
-        subtitle = context.getString(R.string.dependency_thank_you),
+        subtitle = if (rssEnabled) context.getString(R.string.dependency_thank_you_rss) else context.getString(R.string.dependency_thank_you),
         footnote = context.getString(R.string.about_additional),
         guid = deviceUdid,
         appVersion = appVersion,
