@@ -7,7 +7,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.Year
 import tmg.flashback.rss.controllers.RSSController
-import tmg.flashback.statistics.R
+import tmg.flashback.R
 import tmg.flashback.statistics.controllers.SeasonController
 import tmg.flashback.upnext.controllers.UpNextController
 import tmg.flashback.upnext.repository.model.TimeListDisplayType
