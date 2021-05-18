@@ -8,13 +8,15 @@ import tmg.core.device.controllers.DeviceController
 import tmg.core.device.managers.BuildConfigManager
 import tmg.core.ui.navigation.NavigationProvider
 import tmg.flashback.constants.AboutThisAppConfig
+import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.ui.SplashActivity
 import tmg.notifications.navigation.NotificationNavigationProvider
 
 class AppNavigationProvider(
     private val buildConfigManager: BuildConfigManager,
     private val deviceController: DeviceController,
-    private val analyticsManager: AnalyticsManager
+    private val analyticsManager: AnalyticsManager,
+    private val rssController: RSSController
 ): NavigationProvider, NotificationNavigationProvider {
 
     override fun relaunchAppIntent(context: Context): Intent {
@@ -28,7 +30,8 @@ class AppNavigationProvider(
         ))
         return AboutThisAppActivity.intent(context, AboutThisAppConfig.configuration(context,
             appVersion = buildConfigManager.versionName,
-            deviceUdid = deviceController.deviceUdid
+            deviceUdid = deviceController.deviceUdid,
+            rssEnabled = rssController.enabled
         ))
     }
 }
