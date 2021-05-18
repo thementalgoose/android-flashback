@@ -22,8 +22,6 @@ class SettingsAllActivity: BaseActivity(), NavController.OnDestinationChangedLis
         binding = ActivitySettingsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        overridePendingTransition(R.anim.activity_enter, R.anim.activity_exit)
-
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragments) as NavHostFragment
         navController = navHostFragment.navController
 

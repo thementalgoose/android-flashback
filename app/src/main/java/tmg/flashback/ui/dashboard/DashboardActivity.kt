@@ -9,7 +9,6 @@ class DashboardActivity: BaseActivity() {
 
     private lateinit var binding: ActivityDashboardBinding
 
-    override val swipeDismissInitialise: Boolean = false
     override val themeType: DisplayType = DisplayType.DEFAULT
 
     override fun onCreate(savedInstanceState: Bundle?) {
