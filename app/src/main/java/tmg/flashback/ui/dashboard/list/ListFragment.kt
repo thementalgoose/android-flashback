@@ -13,10 +13,12 @@ import com.google.android.material.snackbar.Snackbar
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.core.ui.base.BaseFragment
+import tmg.core.ui.navigation.NavigationProvider
 import tmg.flashback.databinding.FragmentDashboardListBinding
 import tmg.flashback.rss.ui.RSSActivity
 import tmg.flashback.statistics.BuildConfig
 import tmg.flashback.statistics.R
+import tmg.flashback.ui.dashboard.DashboardNavigationCallback
 import tmg.flashback.ui.settings.SettingsAllActivity
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
@@ -25,8 +27,11 @@ class ListFragment: BaseFragment<FragmentDashboardListBinding>() {
 
     private val viewModel: ListViewModel by viewModel()
 
+    private val navigationProvider: NavigationProvider by inject()
+
     private var adapter: ListAdapter? = null
-    private val dashboardNavigationCallback: tmg.flashback.ui.dashboard.DashboardNavigationCallback? get() = parentFragment as? tmg.flashback.ui.dashboard.DashboardNavigationCallback
+    private val dashboardNavigationCallback: DashboardNavigationCallback?
+        get() = parentFragment as? DashboardNavigationCallback
 
     @Suppress("RedundantNullableReturnType")
     private val tickReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
@@ -54,6 +59,7 @@ class ListFragment: BaseFragment<FragmentDashboardListBinding>() {
                      when (it) {
                          "rss" -> viewModel.inputs.clickRss()
                          "settings" -> viewModel.inputs.clickSettings()
+                         "contact" -> viewModel.inputs.clickContact()
                      }
                 },
                 timeDisplayFormatClicked = viewModel.inputs::clickTimeDisplayType
@@ -81,6 +87,12 @@ class ListFragment: BaseFragment<FragmentDashboardListBinding>() {
         observeEvent(viewModel.outputs.openRss) {
             context?.let {
                 startActivity(Intent(it, RSSActivity::class.java))
+            }
+        }
+
+        observeEvent(viewModel.outputs.openContact) {
+            context?.let {
+                startActivity(navigationProvider.aboutAppIntent(it))
             }
         }
 

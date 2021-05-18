@@ -2,8 +2,8 @@ package tmg.flashback.ui.dashboard.list
 
 import androidx.lifecycle.*
 import kotlinx.coroutines.flow.combine
-import tmg.flashback.statistics.R
 import androidx.lifecycle.ViewModel
+import tmg.flashback.R
 import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.statistics.controllers.SeasonController
 import tmg.flashback.upnext.controllers.UpNextController
@@ -27,6 +27,7 @@ interface ListViewModelInputs {
     fun clickTimeDisplayType(type: TimeListDisplayType)
 
     fun clickSettings()
+    fun clickContact()
 }
 
 //endregion
@@ -41,6 +42,7 @@ interface ListViewModelOutputs {
 
     val openSettings: LiveData<Event>
     val openRss: LiveData<Event>
+    val openContact: LiveData<Event>
 }
 
 //endregion
@@ -91,6 +93,13 @@ class ListViewModel(
                     itemId = "settings",
                     label = R.string.dashboard_season_list_extra_settings_title,
                     icon = R.drawable.nav_settings
+                )
+            )
+            add(
+                ListItem.Button(
+                    itemId = "contact",
+                    label = R.string.dashboard_season_list_extra_contact_title,
+                    icon = R.drawable.ic_contact
                 )
             )
         }
@@ -160,6 +169,7 @@ class ListViewModel(
     override val showSeasonEvent: MutableLiveData<DataEvent<Int>> = MutableLiveData()
     override val openSettings: MutableLiveData<Event> = MutableLiveData()
     override val openRss: MutableLiveData<Event> = MutableLiveData()
+    override val openContact: MutableLiveData<Event> = MutableLiveData()
     override val defaultSeasonUpdated: MutableLiveData<DataEvent<Int?>> = MutableLiveData()
 
     var inputs: ListViewModelInputs = this
@@ -216,6 +226,10 @@ class ListViewModel(
 
     override fun clickSettings() {
         openSettings.value = Event()
+    }
+
+    override fun clickContact() {
+        openContact.value = Event()
     }
 
     override fun clickTimeDisplayType(type: TimeListDisplayType) {
