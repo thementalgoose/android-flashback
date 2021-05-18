@@ -214,6 +214,18 @@ internal class ListViewModelTest: BaseTest() {
         }
     }
 
+    @Test
+    fun `contact link fires open contact event`() {
+
+        initSUT()
+
+        sut.inputs.clickContact()
+
+        sut.outputs.openContact.test {
+            assertEventFired()
+        }
+    }
+
     //endregion
 
     @Test
@@ -394,6 +406,7 @@ internal class ListViewModelTest: BaseTest() {
         expected.add(ListItem.Divider)
         expected.add(headerLinks)
         expected.add(buttonSettings)
+        expected.add(buttonContact)
         expected.add(ListItem.Divider)
         if (showFavourites) {
             expected.add(headerFavouriteOpen)
@@ -423,8 +436,12 @@ internal class ListViewModelTest: BaseTest() {
     }.reversed()
 
     private val buttonSettings = ListItem.Button("settings",
-        R.string.dashboard_season_list_extra_settings_title,
-        R.drawable.nav_settings
+            R.string.dashboard_season_list_extra_settings_title,
+            R.drawable.nav_settings
+    )
+    private val buttonContact = ListItem.Button("contact",
+            R.string.dashboard_season_list_extra_contact_title,
+            R.drawable.ic_contact
     )
 
     //endregion
