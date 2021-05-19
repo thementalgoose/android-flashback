@@ -20,8 +20,8 @@ android {
         applicationId "tmg.flashback"
         minSdkVersion 23
         targetSdkVersion 30
-        versionCode 64
-        versionName "6.0.5"
+        versionCode 65
+        versionName "6.0.6"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunnerArgument "runnerBuilder", "de.mannodermaus.junit5.AndroidJUnit5Builder"
