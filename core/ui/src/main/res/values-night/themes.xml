@@ -2,9 +2,6 @@
 <resources>
     <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
 
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
-
         <!-- Content -->
         <item name="contentPrimary">#f8f8f8</item>
         <item name="contentSecondary">#f2f2f2</item>
