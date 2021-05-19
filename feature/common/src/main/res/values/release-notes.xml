@@ -177,7 +177,7 @@
         <br/>• Adds a new calendar view to the dashboard
         <br/>• Made it clearer when data is currently unavailable in the app
         <br/>• Bug fixes and backend improvements, mainly around loading feedback]]></string>
-    <string name="release_64"><![CDATA[<b>6.0.5</b> - Rebrand time!
+    <string name="release_65"><![CDATA[<b>6.0.6</b> - Rebrand time!
         <br/>• Changes colour scheme from purple to blue
         <br/>• Fixed bug in season list showing glitched indicator when certain defaults are selected
         <br/>• Adds pull to refresh support for RSS feed
