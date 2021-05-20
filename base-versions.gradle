@@ -20,7 +20,7 @@ ext {
     glide = "4.12.0"
 
     tmg_utils = "2.1.4"
-    tmg_about_this_app = "5.0.1"
+    tmg_about_this_app = "5.0.3"
     tmg_labelled_progressbar = "1.0.7"
     tmg_test_utils = "1.0.1"
 

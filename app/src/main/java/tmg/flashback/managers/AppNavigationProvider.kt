@@ -9,6 +9,8 @@ import tmg.core.device.managers.BuildConfigManager
 import tmg.core.ui.navigation.NavigationProvider
 import tmg.flashback.constants.AboutThisAppConfig
 import tmg.flashback.rss.controllers.RSSController
+import tmg.flashback.rss.repo.model.SupportedArticleSource
+import tmg.flashback.rss.repo.model.SupportedSource
 import tmg.flashback.ui.SplashActivity
 import tmg.notifications.navigation.NotificationNavigationProvider
 
@@ -31,7 +33,7 @@ class AppNavigationProvider(
         return AboutThisAppActivity.intent(context, AboutThisAppConfig.configuration(context,
             appVersion = buildConfigManager.versionName,
             deviceUdid = deviceController.deviceUdid,
-            rssEnabled = rssController.enabled
+            rssSources = if (rssController.enabled) rssController.sources else emptyList()
         ))
     }
 }
