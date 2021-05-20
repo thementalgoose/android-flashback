@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:bottom="4dp"
+        android:drawable="@drawable/about_this_app_dependency_rss_icon"
+        android:end="4dp"
+        android:start="4dp"
+        android:top="4dp" />
+</layer-list>
