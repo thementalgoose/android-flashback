@@ -98,10 +98,7 @@ class RSSFragment: BaseFragment<FragmentRssBinding>() {
 
     private fun openConfigure(screen: InitialScreen) {
         activity?.let {
-            startActivityForResult(
-                RSSSettingsActivity.intent(it, screen),
-                1001
-            )
+            startActivity(RSSSettingsActivity.intent(it, screen))
         }
     }
 
