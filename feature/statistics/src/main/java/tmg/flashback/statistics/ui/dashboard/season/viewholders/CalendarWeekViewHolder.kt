@@ -47,6 +47,7 @@ class CalendarWeekViewHolder(
 
         cells.forEach {
             it.day.text = ""
+            it.day.setBackgroundResource(0)
         }
 
         val startingIndex = item.startingDay.dayOfWeek.value - 1
