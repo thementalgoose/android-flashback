@@ -3,20 +3,11 @@
     <string name="splash_try_again">Try again</string>
     <string name="splash_sync_required_failed">We need to sync some information to continue. Please make sure you have an active internet connection and try again (you\'ll only need to do this once)</string>
 
+    <!-- About This App Dependencies -->
+    <string name="about_this_app_dependency_rss">RSS source: %s</string>
 
     <string name="settings_title">Settings</string>
 
-    <!-- On pole or 4th -->
-    <!-- On pole or 2nd -->
-    <!-- On pole or 2nd -->
-
-    <string name="home_driver_best_quali">Best qualifying</string>
-    <string name="home_driver_best_finish">Best finish</string>
-    <string name="home_driver_best_view_more">Season overview</string>
-
-    <!-- On pole or 2nd -->
-
-    <!-- Standings -->
 
     <!-- App Shortcut -->
     <string name="app_shortcut_rss_shorttitle">RSS</string>
