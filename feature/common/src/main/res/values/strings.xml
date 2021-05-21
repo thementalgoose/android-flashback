@@ -46,12 +46,7 @@
     <string name="about_name">Flashback</string>
     <string name="about_desc">Formula 1 statistics</string>
     <string name="dependency_thank_you">The statistics provided throughout this app are supported by the Ergast API and cached by the flashback team. Like the Ergast API, we cannot guarantee the accuracy of the data provided (please let us know however if you spot an issue by emailing us above). Alternatively you can contact the Ergast API team or any of the supported sources by clicking the item in the list below. Flashback is in no way affiliated with any of the items listed below.\n\nA big thank you to the Ergast team and everyone listed below for making this app possible!</string>
-    <string name="about_additional">Special thanks to\n
-    - Icons made by Freepik from www.flaticon.com\n
-    - Icons made by Vitaly Gorbachev from www.flaticon.com\n
-    - Animations made by LottieFiles from www.lottiefiles.com\n
-    - Animations made by Abhishekb Kaushal from www.lottiefiles.com\n\n
-    If we\'ve missed anyone or anything please let us know!</string>
+    <string name="about_additional">Special thanks to everyone above! If we\'ve missed anyone or anything please let us know!</string>
     <string name="about_this_app_email">Email</string>
     <string name="about_this_app_play">Play</string>
 
