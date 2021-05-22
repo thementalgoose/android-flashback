@@ -45,10 +45,10 @@
     <!-- About -->
     <string name="about_name">Flashback</string>
     <string name="about_desc">Contact Information</string>
-    <string name="dependency_thank_you">The Formula 1 statistics in this app are provided by the Ergast API and cached by the Flashback team in firebase. Like the Ergast API, we cannot guarantee the accuracy of the data provided (please let us know however if you spot an issue by emailing us above)\n\nA big thank you to everyone listed below for making this app possible! Click any one of the items in the list below to find more information about the libraries and services used within the app.</string>
+    <string name="dependency_thank_you"><b>Developed by:</b> Jordan Fisher\n<b>Email: </b> thementalgoose@gmail.com\n\nThe Formula 1 statistics in this app are provided by the Ergast API and cached by the Flashback team in firebase. Like the Ergast API, we cannot guarantee the accuracy of the data provided (please let us know however if you spot an issue by emailing us above)\n\nA big thank you to everyone listed below for making this app possible! Click any one of the items in the list below to find more information about the libraries and services used within the app.</string>
     <string name="about_additional">Special thanks to everyone above! If we\'ve missed anyone or anything please let us know!</string>
-    <string name="about_this_app_email">Email</string>
-    <string name="about_this_app_play">Play</string>
+    <string name="about_this_app_email">Send Email</string>
+    <string name="about_this_app_play">Google Play</string>
 
     <!-- Privacy Policy -->
     <string name="privacy_policy_title">Privacy Policy</string>
