@@ -48,6 +48,8 @@ internal class SettingsStatisticsViewModelTest: BaseTest() {
                 Pair(R.string.settings_home, null),
                 Pair(R.string.settings_customisation_season_all_expanded_title, R.string.settings_customisation_season_all_expanded_description),
                 Pair(R.string.settings_customisation_season_favourited_expanded_title, R.string.settings_customisation_season_favourited_expanded_description),
+                Pair(R.string.settings_information_title, null),
+                Pair(R.string.settings_information_at_top_title, R.string.settings_information_at_top_description),
         )
 
         sut.models.assertExpectedOrder(expected)
@@ -67,6 +69,8 @@ internal class SettingsStatisticsViewModelTest: BaseTest() {
                 Pair(R.string.settings_default_season_title, R.string.settings_default_season_description),
                 Pair(R.string.settings_customisation_season_all_expanded_title, R.string.settings_customisation_season_all_expanded_description),
                 Pair(R.string.settings_customisation_season_favourited_expanded_title, R.string.settings_customisation_season_favourited_expanded_description),
+                Pair(R.string.settings_information_title, null),
+                Pair(R.string.settings_information_at_top_title, R.string.settings_information_at_top_description),
         )
 
         sut.models.assertExpectedOrder(expected)
@@ -134,6 +138,15 @@ internal class SettingsStatisticsViewModelTest: BaseTest() {
         sut.clickSwitchPreference(sut.models.findSwitch(R.string.settings_customisation_season_favourited_expanded_title), true)
         verify {
             mockSeasonController.favouritesExpanded = true
+        }
+    }
+
+    @Test
+    fun `clicking toggle for data provided by at top updates toggle`() {
+        initSUT()
+        sut.clickSwitchPreference(sut.models.findSwitch(R.string.settings_information_at_top_title), true)
+        verify {
+            mockSeasonController.dataProvidedByAtTop = true
         }
     }
 }

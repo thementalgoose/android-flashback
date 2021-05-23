@@ -190,14 +190,12 @@ class RaceViewModel(
                                         )
                                     )
                                 }
-                                list.add(RaceModel.ErrorItem(SyncDataItem.ProvidedBy()))
                             }
                             else {
                                 when {
                                     roundData.date > LocalDate.now() -> list.add(RaceModel.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.IN_FUTURE_RACE)))
                                     else -> list.add(RaceModel.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.COMING_SOON_RACE)))
                                 }
-                                list.add(RaceModel.ErrorItem(SyncDataItem.ProvidedBy()))
                             }
                         }
                         RaceAdapterType.QUALIFYING_POS_1,
@@ -212,7 +210,6 @@ class RaceViewModel(
                                     showQualifying
                                 )
                             })
-                            list.add(RaceModel.ErrorItem(SyncDataItem.ProvidedBy()))
                             if (driverIds.isNotEmpty()) {
                                 appHintNotifyQualifying()
                             }

@@ -62,6 +62,29 @@ internal class SeasonControllerTest: BaseTest() {
 
     //endregion
 
+    //region Data Provided by at top
+
+    @Test
+    fun `data provided by at top reads from repository`() {
+        every { mockStatisticsRepository.dataProvidedByAtTop } returns true
+        initSUT()
+        assertTrue(sut.dataProvidedByAtTop)
+        verify {
+            mockStatisticsRepository.dataProvidedByAtTop
+        }
+    }
+
+    @Test
+    fun `data provided by at top saves value to repository`() {
+        initSUT()
+        sut.dataProvidedByAtTop = true
+        verify {
+            mockStatisticsRepository.dataProvidedByAtTop = true
+        }
+    }
+
+    //endregion
+
     //region Default year
 
     @Test

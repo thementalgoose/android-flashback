@@ -127,6 +127,9 @@
     <string name="settings_customisation_season_all_expanded_description">Expand the all section in the menu by default</string>
     <string name="settings_customisation_season_favourited_expanded_title">Favourites section</string>
     <string name="settings_customisation_season_favourited_expanded_description">Expand the favourites section in the menu by default</string>
+    <string name="settings_information_title">Information</string>
+    <string name="settings_information_at_top_title">Show provided by at top</string>
+    <string name="settings_information_at_top_description">Show the "Data provided by" option at the top of each screen. Otherwise it will be displayed at the bottom</string>
 
     <!-- Error states -->
     <string name="shared_unavailable_circuit_not_found">We can\'t find any information on this circuit.</string>

@@ -73,6 +73,13 @@ class SettingsStatisticsViewModel(
                 getState = { seasonController.favouritesExpanded },
                 saveState = { seasonController.favouritesExpanded = it }
         ))
+        add(SettingsModel.Header(R.string.settings_information_title))
+        add(SettingsModel.SwitchPref(
+                title = R.string.settings_information_at_top_title,
+                description = R.string.settings_information_at_top_description,
+                getState = { seasonController.dataProvidedByAtTop },
+                saveState = { seasonController.dataProvidedByAtTop = it }
+        ))
     }
 
     var inputs: SettingsStatisticsViewModelInputs = this

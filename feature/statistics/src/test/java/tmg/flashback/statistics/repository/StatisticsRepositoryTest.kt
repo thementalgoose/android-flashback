@@ -346,6 +346,32 @@ internal class StatisticsRepositoryTest {
 
     //endregion
 
+    //region Data Provided by label at top
+
+    @Test
+    fun `provided by at top reads value from preferences repository`() {
+
+        every { mockPreferenceManager.getBoolean(keyProvidedByAtTop, true) } returns true
+        initSUT()
+
+        assertTrue(sut.dataProvidedByAtTop)
+        verify {
+            mockPreferenceManager.getBoolean(keyProvidedByAtTop, true)
+        }
+    }
+
+    @Test
+    fun `provided by at top saves value to shared prefs repository`() {
+        initSUT()
+
+        sut.dataProvidedByAtTop = true
+        verify {
+            mockPreferenceManager.save(keyProvidedByAtTop, true)
+        }
+    }
+
+    //endregion
+
     companion object {
 
         // Config
@@ -363,5 +389,6 @@ internal class StatisticsRepositoryTest {
         private const val keyShowGridPenaltiesInQualifying: String = "SHOW_GRID_PENALTIES_IN_QUALIFYING"
         private const val keyFavouriteSeasons: String = "FAVOURITE_SEASONS"
         private const val keyDefaultSeason: String = "DEFAULT_SEASON"
+        private const val keyProvidedByAtTop: String = "PROVIDED_BY_AT_TOP"
     }
 }
