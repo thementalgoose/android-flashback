@@ -73,7 +73,6 @@ class SeasonViewModel(
         private val analyticsManager: AnalyticsManager
 ): ViewModel(), SeasonViewModelInputs, SeasonViewModelOutputs {
 
-    private val showBannerAtTop: Boolean = showBannerAtTop()
     private val currentTab: ConflatedBroadcastChannel<SeasonNavItem> =
         ConflatedBroadcastChannel(SeasonNavItem.SCHEDULE)
     private val currentTabFlow: Flow<SeasonNavItem> = currentTab.asFlow()
@@ -131,9 +130,6 @@ class SeasonViewModel(
 
             val appBannerMessage = seasonController.banner
             val list: MutableList<SeasonItem> = mutableListOf()
-            if (showBannerAtTop) {
-                list.add(SeasonItem.ErrorItem(SyncDataItem.ProvidedBy()))
-            }
             val historyRounds = history?.rounds ?: emptyList()
             val rounds = season.rounds
 
@@ -155,9 +151,6 @@ class SeasonViewModel(
                         else ->
                             list.addAll(historyRounds.toCalendar(season.season))
                     }
-                    if (!showBannerAtTop) {
-                        list.add(SeasonItem.ErrorItem(SyncDataItem.ProvidedBy("calendar")))
-                    }
                 }
                 SeasonNavItem.SCHEDULE -> {
                     when {
@@ -169,9 +162,6 @@ class SeasonViewModel(
                             list.addError(SyncDataItem.Unavailable(DataUnavailable.MISSING_RACE))
                         else ->
                             list.addAll(historyRounds.toScheduleList())
-                    }
-                    if (!showBannerAtTop) {
-                        list.add(SeasonItem.ErrorItem(SyncDataItem.ProvidedBy("schedule")))
                     }
                 }
                 SeasonNavItem.DRIVERS -> {
@@ -190,9 +180,6 @@ class SeasonViewModel(
                             val driverStandings = rounds.driverStandings()
                             list.addAll(driverStandings.toDriverList(rounds))
                         }
-                    }
-                    if (!showBannerAtTop) {
-                        list.add(SeasonItem.ErrorItem(SyncDataItem.ProvidedBy("drivers")))
                     }
                 }
                 SeasonNavItem.CONSTRUCTORS -> {
@@ -213,9 +200,6 @@ class SeasonViewModel(
                             val constructorStandings = season.constructorStandings()
                             list.addAll(constructorStandings.toConstructorList())
                         }
-                    }
-                    if (!showBannerAtTop) {
-                        list.add(SeasonItem.ErrorItem(SyncDataItem.ProvidedBy("constructors")))
                     }
                 }
             }
@@ -277,14 +261,6 @@ class SeasonViewModel(
     }
 
     //endregion
-
-    /**
-     * Should show the "Data provided by" banner at the top or the bottom
-     */
-    private fun showBannerAtTop(): Boolean {
-        val daysBetween = ChronoUnit.DAYS.between(deviceController.appFirstBoot, LocalDate.now())
-        return daysBetween <= 5 // TODO: Make this a constant!
-    }
 
     /**
      * Extract the calendar of events out into a formatted display list
@@ -385,9 +361,5 @@ class SeasonViewModel(
                 )
             }
             .sortedByDescending { it.points }
-    }
-
-    companion object {
-        const val daysUntilDataProvidedBannerMovedToBottom: Int = 5
     }
 }

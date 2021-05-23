@@ -18,6 +18,31 @@ abstract class SyncAdapter<T> : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
     private val navigationProvider: NavigationProvider by inject()
     private val seasonController: SeasonController by inject()
 
+    open val providedByAtTopIndex: Int = 0
+
+    protected fun List<T>.addDataProvidedByItem(): List<T> {
+        val item = dataProvidedItem(SyncDataItem.ProvidedBy()) ?: return this
+
+        return if (seasonController.dataProvidedByAtTop) {
+            if (providedByAtTopIndex < this.size) {
+                // Valid to be added at that position
+                this.toMutableList()
+                        .apply { add(providedByAtTopIndex, item) }
+            } else {
+                // Not valid. Add it at the bottom
+                this.toMutableList()
+                        .apply { add(item) }
+            }
+        } else {
+            // Not valid. Add it at the bottom
+            this.toMutableList().apply {
+                add(item)
+            }
+        }
+    }
+
+    abstract fun dataProvidedItem(syncDataItem: SyncDataItem): T?
+
     abstract var list: List<T>
 
     abstract fun viewType(position: Int): Int
@@ -26,23 +51,23 @@ abstract class SyncAdapter<T> : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
         val layoutInflater = LayoutInflater.from(parent.context)
         return when (viewType) {
             R.layout.view_shared_data_unavailable -> DataUnavailableViewHolder(
-                ViewSharedDataUnavailableBinding.inflate(layoutInflater, parent, false)
+                    ViewSharedDataUnavailableBinding.inflate(layoutInflater, parent, false)
             )
             R.layout.view_shared_no_network -> NoNetworkViewHolder(
-                ViewSharedNoNetworkBinding.inflate(layoutInflater, parent, false)
+                    ViewSharedNoNetworkBinding.inflate(layoutInflater, parent, false)
             )
             R.layout.view_shared_internal_error -> InternalErrorOccurredViewHolder(
-                ViewSharedInternalErrorBinding.inflate(layoutInflater, parent, false)
+                    ViewSharedInternalErrorBinding.inflate(layoutInflater, parent, false)
             )
             R.layout.view_shared_message -> MessageViewHolder(
-                ViewSharedMessageBinding.inflate(layoutInflater, parent, false)
+                    ViewSharedMessageBinding.inflate(layoutInflater, parent, false)
             )
             R.layout.view_shared_constructor_championship_not_awarded -> ConstructorsChampionshipNotAwardedViewHolder(
-                ViewSharedConstructorChampionshipNotAwardedBinding.inflate(layoutInflater, parent, false)
+                    ViewSharedConstructorChampionshipNotAwardedBinding.inflate(layoutInflater, parent, false)
             )
             R.layout.view_shared_provided -> ProvidedByViewHolder(
-                navigationProvider,
-                ViewSharedProvidedBinding.inflate(layoutInflater, parent, false)
+                    navigationProvider,
+                    ViewSharedProvidedBinding.inflate(layoutInflater, parent, false)
             )
             else -> throw Error("${this.javaClass.simpleName} Does not have a supported layout id to create a viewholder by")
         }
@@ -54,7 +79,8 @@ abstract class SyncAdapter<T> : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
             is SyncDataItem.Message -> (holder as MessageViewHolder).bind(item.msg)
             is SyncDataItem.MessageRes -> (holder as MessageViewHolder).bind(item.msg, item.values)
             is SyncDataItem.ProvidedBy -> (holder as ProvidedByViewHolder).bind(seasonController.dataProvidedBy)
-            else -> { }
+            else -> {
+            }
         }
     }
 

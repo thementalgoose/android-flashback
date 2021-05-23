@@ -13,6 +13,7 @@ import tmg.flashback.statistics.ui.overview.viewholders.StatsViewHolder
 import tmg.flashback.statistics.ui.race.viewholders.SkeletonLoadingViewHolder
 import tmg.flashback.statistics.ui.shared.pill.PillItem
 import tmg.flashback.statistics.ui.shared.sync.SyncAdapter
+import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.utilities.difflist.GenericDiffCallback
 
 @Suppress("EXPERIMENTAL_API_USAGE", "EXPERIMENTAL_OVERRIDE")
@@ -27,6 +28,8 @@ class ConstructorSummaryAdapter(
             field = value
             result.dispatchUpdatesTo(this)
         }
+
+    override fun dataProvidedItem(syncDataItem: SyncDataItem) = ConstructorSummaryItem.ErrorItem(syncDataItem)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)

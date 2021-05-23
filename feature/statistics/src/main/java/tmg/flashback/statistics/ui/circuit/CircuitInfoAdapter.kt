@@ -11,6 +11,7 @@ import tmg.flashback.statistics.ui.circuit.viewholders.HeaderViewHolder
 import tmg.flashback.statistics.ui.circuit.viewholders.RaceViewHolder
 import tmg.flashback.statistics.ui.circuit.viewholders.TrackViewHolder
 import tmg.flashback.statistics.ui.shared.sync.SyncAdapter
+import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.utilities.difflist.calculateDiff
 
 @Suppress("EXPERIMENTAL_API_USAGE", "EXPERIMENTAL_OVERRIDE")
@@ -21,11 +22,16 @@ class CircuitInfoAdapter(
 ): SyncAdapter<CircuitItem>() {
 
     override var list: List<CircuitItem> = emptyList()
-        set(value) {
+        set(initialValue) {
+            val value = initialValue.addDataProvidedByItem()
             val result = calculateDiff(field, value)
             field = value
             result.dispatchUpdatesTo(this)
         }
+
+    override val providedByAtTopIndex: Int = 1
+
+    override fun dataProvidedItem(syncDataItem: SyncDataItem) = CircuitItem.ErrorItem(syncDataItem)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)

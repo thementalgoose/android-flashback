@@ -9,6 +9,7 @@ import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.*
 import tmg.flashback.statistics.ui.dashboard.season.viewholders.*
 import tmg.flashback.statistics.ui.shared.sync.SyncAdapter
+import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 
 @KoinApiExtension
 class SeasonAdapter(
@@ -19,11 +20,14 @@ class SeasonAdapter(
 ): SyncAdapter<SeasonItem>() {
 
     override var list: List<SeasonItem> = emptyList()
-        set(value) {
+        set(initialValue) {
+            val value = initialValue.addDataProvidedByItem()
             val result = DiffUtil.calculateDiff(DiffCallback(field, value))
             field = value
             result.dispatchUpdatesTo(this)
         }
+
+    override fun dataProvidedItem(syncDataItem: SyncDataItem) = SeasonItem.ErrorItem(syncDataItem)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
