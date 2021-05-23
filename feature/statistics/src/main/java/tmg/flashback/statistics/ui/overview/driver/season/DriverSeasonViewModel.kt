@@ -159,8 +159,6 @@ class DriverSeasonViewModel(
                         }
                         .sortedBy { it.round }
                     )
-
-                    list.add(DriverSeasonItem.ErrorItem(SyncDataItem.ProvidedBy()))
                 }
             }
             return@map list

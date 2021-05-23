@@ -16,6 +16,7 @@ import tmg.flashback.statistics.ui.overview.viewholders.StatsViewHolder
 import tmg.flashback.statistics.ui.race.viewholders.SkeletonLoadingViewHolder
 import tmg.flashback.statistics.ui.shared.pill.PillItem
 import tmg.flashback.statistics.ui.shared.sync.SyncAdapter
+import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.utilities.difflist.GenericDiffCallback
 
 @Suppress("EXPERIMENTAL_API_USAGE", "EXPERIMENTAL_OVERRIDE")
@@ -25,11 +26,16 @@ class DriverSummaryAdapter(
 ): SyncAdapter<DriverSummaryItem>() {
 
     override var list: List<DriverSummaryItem> = listOf(DriverSummaryItem.Loading)
-        set(value) {
+        set(initialValue) {
+            val value = initialValue.addDataProvidedByItem()
             val result = DiffUtil.calculateDiff(GenericDiffCallback(field, value))
             field = value
             result.dispatchUpdatesTo(this)
         }
+
+    override val providedByAtTopIndex: Int = 1
+
+    override fun dataProvidedItem(syncDataItem: SyncDataItem) = DriverSummaryItem.ErrorItem(syncDataItem)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
