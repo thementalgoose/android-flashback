@@ -53,8 +53,7 @@ internal class DriverViewModelTest: BaseTest() {
         every { mockDriverRepository.getDriverOverview(any()) } returns flow { emit(null) }
 
         val expected = listOf(
-            DriverSummaryItem.ErrorItem(SyncDataItem.NoNetwork),
-            DriverSummaryItem.ErrorItem(SyncDataItem.ProvidedBy())
+            DriverSummaryItem.ErrorItem(SyncDataItem.NoNetwork)
         )
 
         initSUT()
@@ -69,8 +68,7 @@ internal class DriverViewModelTest: BaseTest() {
 
         every { mockDriverRepository.getDriverOverview(any()) } returns flow { emit(null) }
         val expected = listOf(
-            DriverSummaryItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.DRIVER_NOT_EXIST)),
-            DriverSummaryItem.ErrorItem(SyncDataItem.ProvidedBy())
+            DriverSummaryItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.DRIVER_NOT_EXIST))
         )
 
         initSUT()

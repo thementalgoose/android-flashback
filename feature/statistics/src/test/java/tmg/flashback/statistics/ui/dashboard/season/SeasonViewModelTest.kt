@@ -24,7 +24,6 @@ import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.statistics.*
 import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
 import tmg.flashback.statistics.controllers.SeasonController
-import tmg.flashback.statistics.ui.dashboard.season.SeasonViewModel.Companion.daysUntilDataProvidedBannerMovedToBottom
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertDataEventValue
@@ -204,7 +203,6 @@ internal class SeasonViewModelTest: BaseTest() {
         every { mockHistoryRepository.historyFor(any()) } returns flow { emit(historyListWithEmptyRound) }
 
         val expected = listOf<SeasonItem>(
-            SeasonItem.ErrorItem(SyncDataItem.ProvidedBy()),
             SeasonItem.ErrorItem(SyncDataItem.NoNetwork)
         )
 
@@ -224,7 +222,6 @@ internal class SeasonViewModelTest: BaseTest() {
         every { mockHistoryRepository.historyFor(any()) } returns flow { emit(historyItemWithEmptyRound) }
 
         val expected = listOf<SeasonItem>(
-            SeasonItem.ErrorItem(SyncDataItem.ProvidedBy()),
             SeasonItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.EARLY_IN_SEASON))
         )
 
@@ -243,7 +240,6 @@ internal class SeasonViewModelTest: BaseTest() {
         every { mockHistoryRepository.historyFor(any()) } returns flow { emit(historyListWithEmptyRound) }
 
         val expected = listOf<SeasonItem>(
-            SeasonItem.ErrorItem(SyncDataItem.ProvidedBy()),
             SeasonItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.MISSING_RACE))
         )
 
@@ -308,7 +304,6 @@ internal class SeasonViewModelTest: BaseTest() {
         every { mockHistoryRepository.historyFor(any()) } returns flow { emit(historyListWithEmptyRound) }
 
         val expected = listOf<SeasonItem>(
-            SeasonItem.ErrorItem(SyncDataItem.ProvidedBy()),
             SeasonItem.ErrorItem(SyncDataItem.NoNetwork)
         )
 
@@ -330,7 +325,6 @@ internal class SeasonViewModelTest: BaseTest() {
         every { mockHistoryRepository.historyFor(any()) } returns flow { emit(historyItemWithEmptyRound) }
 
         val expected = listOf<SeasonItem>(
-            SeasonItem.ErrorItem(SyncDataItem.ProvidedBy()),
             SeasonItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.EARLY_IN_SEASON))
         )
 
@@ -351,7 +345,6 @@ internal class SeasonViewModelTest: BaseTest() {
         every { mockHistoryRepository.historyFor(any()) } returns flow { emit(historyListWithEmptyRound) }
 
         val expected = listOf<SeasonItem>(
-            SeasonItem.ErrorItem(SyncDataItem.ProvidedBy()),
             SeasonItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.MISSING_RACE))
         )
 
@@ -374,7 +367,6 @@ internal class SeasonViewModelTest: BaseTest() {
         advanceUntilIdle()
 
         sut.outputs.list.test {
-            assertValue(listOf(SeasonItem.ErrorItem(SyncDataItem.ProvidedBy())) + expected)
         }
 
         verify {
@@ -414,7 +406,6 @@ internal class SeasonViewModelTest: BaseTest() {
         every { mockSeasonOverviewRepository.getSeasonOverview(any()) } returns flow { emit(mockSeason.copy(rounds = emptyList())) }
 
         val expected = listOf<SeasonItem>(
-                SeasonItem.ErrorItem(SyncDataItem.ProvidedBy()),
                 SeasonItem.ErrorItem(SyncDataItem.NoNetwork)
         )
 
@@ -433,7 +424,6 @@ internal class SeasonViewModelTest: BaseTest() {
         every { mockSeasonOverviewRepository.getSeasonOverview(any()) } returns flow { emit(mockSeason.copy(rounds = emptyList())) }
 
         val expected = listOf<SeasonItem>(
-                SeasonItem.ErrorItem(SyncDataItem.ProvidedBy()),
                 SeasonItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.IN_FUTURE_SEASON))
         )
 
@@ -450,7 +440,6 @@ internal class SeasonViewModelTest: BaseTest() {
     fun `when home type is drivers list driver standings in order`() = coroutineTest {
 
         val expected = listOf<SeasonItem>(
-                SeasonItem.ErrorItem(SyncDataItem.ProvidedBy()),
             expectedDriver3,
             expectedDriver4,
             expectedDriver1,
@@ -497,7 +486,6 @@ internal class SeasonViewModelTest: BaseTest() {
         every { mockSeasonOverviewRepository.getSeasonOverview(any()) } returns flow { emit(mockSeason.copy(rounds = emptyList())) }
 
         val expected = listOf<SeasonItem>(
-                SeasonItem.ErrorItem(SyncDataItem.ProvidedBy()),
                 SeasonItem.ErrorItem(SyncDataItem.NoNetwork)
         )
 
@@ -516,7 +504,6 @@ internal class SeasonViewModelTest: BaseTest() {
         every { mockSeasonOverviewRepository.getSeasonOverview(any()) } returns flow { emit(mockSeason.copy(rounds = emptyList())) }
 
         val expected = listOf<SeasonItem>(
-                SeasonItem.ErrorItem(SyncDataItem.ProvidedBy()),
                 SeasonItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.IN_FUTURE_SEASON))
         )
 
@@ -533,7 +520,6 @@ internal class SeasonViewModelTest: BaseTest() {
     fun `when home type is constructors list driver standings in order`() = coroutineTest {
 
         val expected = listOf<SeasonItem>(
-                SeasonItem.ErrorItem(SyncDataItem.ProvidedBy()),
             expectedConstructorAlpha,
             expectedConstructorBeta
         )
@@ -579,7 +565,6 @@ internal class SeasonViewModelTest: BaseTest() {
 
         sut.outputs.list.test {
             assertValue(listOf(
-                    SeasonItem.ErrorItem(SyncDataItem.ProvidedBy()),
                     SeasonItem.ErrorItem(SyncDataItem.ConstructorsChampionshipNotAwarded)
             ))
         }
@@ -601,35 +586,6 @@ internal class SeasonViewModelTest: BaseTest() {
     }
 
     //endregion
-
-    //region Data provided by banner
-
-    @Test
-    fun `banner moves to the bottom when first boot time is greater than 5 days after`() = coroutineTest {
-
-        every { mockDeviceController.appFirstBoot } returns LocalDate.now().minusDays(daysUntilDataProvidedBannerMovedToBottom.toLong() + 1L)
-
-        initSUT()
-
-        sut.outputs.list.test {
-            assertListHasLastItem(SeasonItem.ErrorItem(SyncDataItem.ProvidedBy("schedule")))
-        }
-    }
-
-    @Test
-    fun `banner is at the top when first boot time is less than or equal to 10 days after`() = coroutineTest {
-
-        every { mockDeviceController.appFirstBoot } returns LocalDate.now().minusDays(daysUntilDataProvidedBannerMovedToBottom.toLong())
-
-        initSUT()
-
-        sut.outputs.list.test {
-            assertListHasFirstItem(SeasonItem.ErrorItem(SyncDataItem.ProvidedBy()))
-        }
-    }
-
-    //endregion
-
 
     //region Mock Data - Calendar
 
