@@ -32,6 +32,16 @@ class SeasonController(
 
     //endregion
 
+    //region Provided by location
+
+    var dataProvidedByAtTop: Boolean
+        get() = statisticsRepository.dataProvidedByAtTop
+        set(value) {
+            statisticsRepository.dataProvidedByAtTop = value
+        }
+
+    //endregion
+
     //region Default season shown
 
     fun clearDefault() {

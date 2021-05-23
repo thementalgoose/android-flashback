@@ -28,6 +28,7 @@ class StatisticsRepository(
         private const val keyShowGridPenaltiesInQualifying: String = "SHOW_GRID_PENALTIES_IN_QUALIFYING"
         private const val keyFavouriteSeasons: String = "FAVOURITE_SEASONS"
         private const val keyDefaultSeason: String = "DEFAULT_SEASON"
+        private const val keyProvidedByAtTop: String = "PROVIDED_BY_AT_TOP"
     }
 
     /**
@@ -130,4 +131,10 @@ class StatisticsRepository(
             preferenceManager.save(keyDefaultSeason, valueToSave)
         }
 
+    /**
+     * Whether or not the "Data provided by" cell is displayed at the top of lists or not
+     */
+    var dataProvidedByAtTop: Boolean
+        get() = preferenceManager.getBoolean(keyProvidedByAtTop, true)
+        set(value) = preferenceManager.save(keyProvidedByAtTop, value)
 }

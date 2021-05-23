@@ -14,6 +14,7 @@ import tmg.flashback.statistics.ui.overview.driver.season.viewholders.RaceHeader
 import tmg.flashback.statistics.ui.overview.driver.season.viewholders.RaceViewHolder
 import tmg.flashback.statistics.ui.overview.viewholders.DriverHistoryViewHolder
 import tmg.flashback.statistics.ui.shared.sync.SyncAdapter
+import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.utilities.difflist.GenericDiffCallback
 
 @Suppress("EXPERIMENTAL_API_USAGE", "EXPERIMENTAL_OVERRIDE")
@@ -22,11 +23,14 @@ class DriverSeasonAdapter(
 ): SyncAdapter<DriverSeasonItem>() {
 
     override var list: List<DriverSeasonItem> = emptyList()
-        set(value) {
+        set(initialValue) {
+            val value = initialValue.addDataProvidedByItem()
             val result = DiffUtil.calculateDiff(GenericDiffCallback(field, value))
             field = value
             result.dispatchUpdatesTo(this)
         }
+
+    override fun dataProvidedItem(syncDataItem: SyncDataItem) = DriverSeasonItem.ErrorItem(syncDataItem)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
