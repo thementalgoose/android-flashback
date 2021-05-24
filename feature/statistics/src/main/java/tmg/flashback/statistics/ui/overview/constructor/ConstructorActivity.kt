@@ -7,61 +7,31 @@ import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.core.ui.base.BaseActivity
+import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.ActivityConstructorBinding
 import tmg.flashback.statistics.ui.overview.constructor.summary.ConstructorSummaryAdapter
+import tmg.utilities.extensions.loadFragment
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 
 class ConstructorActivity: BaseActivity() {
 
     private lateinit var binding: ActivityConstructorBinding
-    private val viewModel: ConstructorViewModel by viewModel()
-
-    private lateinit var constructorId: String
-    private lateinit var constructorName: String
-    private lateinit var adapter: ConstructorSummaryAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityConstructorBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        lateinit var constructorName: String
+        lateinit var constructorId: String
+
         intent?.extras?.let {
             constructorId = it.getString(keyConstructorId)!!
             constructorName = it.getString(keyConstructorName)!!
-
-            viewModel.inputs.setup(constructorId)
         }
 
-        logScreenViewed("Constructor Overview", mapOf(
-            "constructor_id" to constructorId,
-            "constructor_name" to constructorName
-        ))
-
-        binding.header.text = constructorName
-
-        adapter = ConstructorSummaryAdapter(
-                openUrl = viewModel.inputs::openUrl,
-                openSeason = viewModel.inputs::openSeason
-        )
-        binding.list.adapter = adapter
-        binding.list.layoutManager = LinearLayoutManager(this)
-
-        binding.back.setOnClickListener {
-            onBackPressed()
-        }
-
-        observe(viewModel.outputs.list) {
-            adapter.list = it
-        }
-
-        observeEvent(viewModel.outputs.openUrl) {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(it)))
-        }
-
-        observeEvent(viewModel.outputs.openSeason) {
-
-        }
+        loadFragment(ConstructorFragment.instance(constructorId, constructorName), R.id.container)
     }
 
     companion object {
