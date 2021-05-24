@@ -13,17 +13,16 @@ import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.ActivityCircuitInfoBinding
 import tmg.flashback.statistics.ui.race.RaceActivity
 import tmg.utilities.extensions.copyToClipboard
+import tmg.utilities.extensions.loadFragment
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 
 class CircuitInfoActivity: BaseActivity() {
 
     private lateinit var binding: ActivityCircuitInfoBinding
-    private val viewModel: CircuitInfoViewModel by viewModel()
 
     private lateinit var circuitId: String
     private lateinit var circuitName: String
-    private lateinit var adapter: CircuitInfoAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,68 +34,7 @@ class CircuitInfoActivity: BaseActivity() {
             circuitName = it.getString(keyCircuitName)!!
         }
 
-        logScreenViewed("Circuit Overview", mapOf(
-            "circuit_id" to circuitId,
-            "circuit_name" to circuitName
-        ))
-
-        binding.header.text = circuitName
-
-        binding.swipeContainer.isEnabled = false
-        adapter = CircuitInfoAdapter(
-            clickShowOnMap = viewModel.inputs::clickShowOnMap,
-            clickWikipedia = viewModel.inputs::clickWikipedia,
-            clickRace = {
-                val raceIntent = RaceActivity.intent(
-                    context = this,
-                    season = it.season,
-                    round = it.round,
-                    circuitId = circuitId,
-                    raceName = it.name,
-                    trackName = circuitName,
-                    date = it.date
-                )
-                startActivity(raceIntent)
-            }
-        )
-        binding.list.adapter = adapter
-        binding.list.layoutManager = LinearLayoutManager(this)
-
-        binding.back.setOnClickListener {
-            onBackPressed()
-        }
-
-
-        observe(viewModel.outputs.list) {
-            adapter.list = it
-        }
-
-        observe(viewModel.outputs.isLoading) {
-            binding.swipeContainer.isRefreshing = it
-        }
-
-        observe(viewModel.outputs.circuitName) {
-            binding.header.text = it
-        }
-
-        observeEvent(viewModel.outputs.goToMap) { (mapUri, coordinates) ->
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(mapUri))
-            try {
-                startActivity(intent)
-            } catch (e: ActivityNotFoundException) {
-                copyToClipboard("$circuitName - $coordinates")
-                Toast.makeText(this, getString(R.string.no_app_copy_clipboard), Toast.LENGTH_LONG).show()
-            }
-        }
-
-        observeEvent(viewModel.outputs.goToWikipediaPage) {
-            if (it.isNotEmpty()) {
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(it))
-                startActivity(intent)
-            }
-        }
-
-        viewModel.inputs.circuitId(circuitId)
+        loadFragment(CircuitInfoFragment.instance(circuitId, circuitName), R.id.container)
     }
 
     companion object {

@@ -44,6 +44,7 @@ class ConstructorFragment: BaseFragment<FragmentConstructorBinding>() {
         binding.titleExpanded.text = constructorName
         binding.titleCollapsed.text = constructorName
 
+        binding.swipeRefresh.isEnabled = false
         adapter = ConstructorSummaryAdapter(
                 openUrl = viewModel.inputs::openUrl,
                 openSeason = viewModel.inputs::openSeason
