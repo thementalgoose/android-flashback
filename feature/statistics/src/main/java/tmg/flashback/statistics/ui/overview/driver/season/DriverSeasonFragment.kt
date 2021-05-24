@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -17,18 +18,18 @@ class DriverSeasonFragment: BaseFragment<FragmentDriverSeasonBinding>() {
 
     private val viewModel: DriverSeasonViewModel by viewModel()
 
+    private lateinit var driverId: String
+    private lateinit var driverName: String
+    private var season: Int = -1
     private lateinit var seasonAdapter: DriverSeasonAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        seasonAdapter = DriverSeasonAdapter(
-                itemClicked = viewModel.inputs::clickSeasonRound
-        )
-
         arguments?.let {
-            val driverId: String = it.getString(keyDriverId)!!
-            val season: Int = it.getInt(keySeason)
+            driverName = it.getString(keyDriverName)!!
+            driverId = it.getString(keyDriverId)!!
+            season = it.getInt(keySeason)
             viewModel.inputs.setup(driverId, season)
         }
     }
@@ -39,8 +40,25 @@ class DriverSeasonFragment: BaseFragment<FragmentDriverSeasonBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.list.adapter = seasonAdapter
-        binding.list.layoutManager = LinearLayoutManager(context)
+        logScreenViewed("Driver Season Overview", mapOf(
+                "driver_id" to driverId,
+                "driver_name" to driverName,
+                "season" to season.toString()
+        ))
+
+        binding.titleExpanded.text = "$driverName\n$season"
+        binding.titleCollapsed.text = "$driverName $season"
+
+        binding.swipeRefresh.isEnabled = false
+        seasonAdapter = DriverSeasonAdapter(
+                itemClicked = viewModel.inputs::clickSeasonRound
+        )
+        binding.dataList.adapter = seasonAdapter
+        binding.dataList.layoutManager = LinearLayoutManager(context)
+
+        binding.back.setOnClickListener {
+            activity?.onBackPressed()
+        }
 
         observe(viewModel.outputs.list) {
             seasonAdapter.list = it
@@ -61,26 +79,22 @@ class DriverSeasonFragment: BaseFragment<FragmentDriverSeasonBinding>() {
                 startActivity(intent)
             }
         }
-
-        ViewCompat.setOnApplyWindowInsetsListener(binding.list) { _, inset ->
-            binding.list.setPadding(0, 0, 0, inset.systemWindowInsetBottom)
-            inset
-        }
     }
 
     companion object {
 
         private const val keySeason: String = "keySeason"
         private const val keyDriverId: String = "keyDriverId"
+        private const val keyDriverName: String = "driverName"
 
-        fun instance(season: Int, driverId: String): DriverSeasonFragment {
-            val fragment = DriverSeasonFragment()
-            val bundle = Bundle().apply {
-                putInt(keySeason, season)
-                putString(keyDriverId, driverId)
+        fun instance(season: Int, driverId: String, driverName: String): DriverSeasonFragment {
+            return DriverSeasonFragment().apply {
+                arguments = bundleOf(
+                        keyDriverName to driverName,
+                        keySeason to season,
+                        keyDriverId to driverId
+                )
             }
-            fragment.arguments = bundle
-            return fragment
         }
     }
 }

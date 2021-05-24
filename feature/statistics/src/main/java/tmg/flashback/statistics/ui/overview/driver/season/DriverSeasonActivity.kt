@@ -1,19 +1,16 @@
 package tmg.flashback.statistics.ui.overview.driver.season
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.core.ui.base.BaseActivity
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.ActivityDriverSeasonBinding
 import tmg.utilities.extensions.loadFragment
 
-class DriverSeasonActivity: BaseActivity() {
+class DriverSeasonActivity : BaseActivity() {
 
     private lateinit var binding: ActivityDriverSeasonBinding
-    private val viewModel: DriverSeasonViewModel by viewModel()
 
     private lateinit var driverId: String
     private lateinit var driverName: String
@@ -28,24 +25,9 @@ class DriverSeasonActivity: BaseActivity() {
             driverId = it.getString(keyDriverId)!!
             driverName = it.getString(keyDriverName)!!
             season = it.getInt(keyDriverSeason)
-
-            viewModel.inputs.setup(driverId, season)
         }
 
-        logScreenViewed("Driver Season Overview", mapOf(
-            "driver_id" to driverId,
-            "driver_name" to driverName,
-            "season" to season.toString()
-        ))
-
-        @SuppressLint("SetTextI18n")
-        binding.header.text = "$driverName $season"
-
-        binding.back.setOnClickListener {
-            onBackPressed()
-        }
-
-        loadFragment(DriverSeasonFragment.instance(season, driverId), R.id.fragment)
+        loadFragment(DriverSeasonFragment.instance(season, driverId, driverName), R.id.container)
     }
 
     companion object {
