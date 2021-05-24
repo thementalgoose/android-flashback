@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="?attr/backgroundPrimary"
-        app:layoutDescription="@xml/fragment_driver_season_scene"
+        app:layoutDescription="@xml/fragment_driver_scene"
         tools:showPaths="true">
 
         <androidx.constraintlayout.widget.Guideline
@@ -87,7 +87,7 @@
                 android:clipToPadding="false"
                 android:overScrollMode="never"
                 android:paddingBottom="@dimen/paddingXLarge"
-                tools:listitem="@layout/view_driver_season" />
+                tools:listitem="@layout/view_constructor_summary_history" />
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
