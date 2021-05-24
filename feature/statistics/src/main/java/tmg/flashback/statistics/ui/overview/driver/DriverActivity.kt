@@ -7,20 +7,20 @@ import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.core.ui.base.BaseActivity
+import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.ActivityDriverBinding
 import tmg.flashback.statistics.ui.overview.driver.summary.DriverSummaryAdapter
 import tmg.flashback.statistics.ui.overview.driver.season.DriverSeasonActivity
+import tmg.utilities.extensions.loadFragment
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 
-class DriverActivity: BaseActivity() {
+class DriverActivity : BaseActivity() {
 
     private lateinit var binding: ActivityDriverBinding
-    private val viewModel: DriverViewModel by viewModel()
 
     private lateinit var driverId: String
     private lateinit var driverName: String
-    private lateinit var adapter: DriverSummaryAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,41 +30,9 @@ class DriverActivity: BaseActivity() {
         intent?.extras?.let {
             driverId = it.getString(keyDriverId)!!
             driverName = it.getString(keyDriverName)!!
-
-            viewModel.inputs.setup(driverId)
         }
 
-        logScreenViewed("Driver Overview", mapOf(
-            "driver_id" to driverId,
-            "driver_name" to driverName,
-        ))
-
-        binding.header.text = driverName
-
-        adapter = DriverSummaryAdapter(
-                openUrl = viewModel.inputs::openUrl,
-                seasonClicked = viewModel.inputs::openSeason
-        )
-        binding.list.adapter = adapter
-        binding.list.layoutManager = LinearLayoutManager(this)
-
-        binding.back.setOnClickListener { 
-            onBackPressed()
-        }
-
-        observe(viewModel.outputs.list) {
-            adapter.list = it
-        }
-
-        observeEvent(viewModel.outputs.openSeason) { (driverId, season) ->
-            val intent = DriverSeasonActivity.intent(this, driverId, driverName, season)
-            startActivity(intent)
-        }
-
-        observeEvent(viewModel.outputs.openUrl) {
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(it))
-            startActivity(intent)
-        }
+        loadFragment(DriverFragment.instance(driverId, driverName), R.id.container)
     }
 
     companion object {
@@ -79,5 +47,4 @@ class DriverActivity: BaseActivity() {
             return intent
         }
     }
-
 }
