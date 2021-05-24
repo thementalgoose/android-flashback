@@ -71,18 +71,25 @@
             app:layout_constraintTop_toTopOf="@id/toolbarGuideline"
             tools:text="2021" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/dataList"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:clipToPadding="false"
-            android:overScrollMode="never"
-            android:paddingBottom="@dimen/paddingXLarge"
+            android:id="@+id/swipeRefresh"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/titleExpanded"
-            tools:listitem="@layout/view_dashboard_season_track" />
+            app:layout_constraintTop_toBottomOf="@id/titleExpanded">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/dataList"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:clipToPadding="false"
+                android:overScrollMode="never"
+                android:paddingBottom="@dimen/paddingXLarge"
+                tools:listitem="@layout/view_constructor_summary_history" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     </androidx.constraintlayout.motion.widget.MotionLayout>
 
