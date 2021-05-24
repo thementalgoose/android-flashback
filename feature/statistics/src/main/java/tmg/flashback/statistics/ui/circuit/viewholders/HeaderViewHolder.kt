@@ -54,7 +54,7 @@ class HeaderViewHolder(
         val thisYear = item.circuit.results.filter { it.date.year == currentSeasonYear }
         if (thisYear.isNotEmpty()) {
             subtitle += if (thisYear.size == 1) {
-                "<br/>${getString(R.string.circuit_info_status_this_year_single, thisYear[0].round.ordinalAbbreviation)}"
+                "<br/>${getString(R.string.circuit_info_status_this_year_single, thisYear[0].round)}"
             } else {
                 val roundList = thisYear.map { "<b>${it.round.ordinalAbbreviation}</b>" }
                 var result = ""
