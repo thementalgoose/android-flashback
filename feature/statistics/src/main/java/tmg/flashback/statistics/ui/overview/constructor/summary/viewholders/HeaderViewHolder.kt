@@ -29,6 +29,7 @@ class HeaderViewHolder(
                 .load(context.getFlagResourceAlpha3(item.constructorNationalityISO))
                 .into(binding.nationality)
 
+        binding.nationality.contentDescription = item.constructorNationality
         binding.colour.setBackgroundColor(item.constructorColor)
 
         adapter.list = mutableListOf(
