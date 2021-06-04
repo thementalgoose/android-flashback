@@ -82,6 +82,10 @@ dependencies {
     implementation "org.koin:koin-android-viewmodel:$koin_version"
     implementation "org.koin:koin-android-ext:$koin_version"
 
+    // Coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines"
+
     // ThreeTen
     implementation "com.jakewharton.threetenabp:threetenabp:$threeten"
     testImplementation ("org.threeten:threetenbp:$threetenbp") {

@@ -19,8 +19,8 @@ dependencies {
 
     // Android stuff
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.core:core-ktx:1.3.2'
-    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'androidx.core:core-ktx:1.5.0'
+    implementation 'androidx.appcompat:appcompat:1.3.0'
 
     // Swipe refresh
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:$swipe_refresh"
@@ -28,6 +28,10 @@ dependencies {
     // Navigation
     implementation "androidx.navigation:navigation-fragment-ktx:$navigation"
     implementation "androidx.navigation:navigation-ui-ktx:$navigation"
+
+    // Lifecycle
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$android_lifecycle"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$android_lifecycle"
 
     // Material components
     implementation "com.google.android.material:material:$android_material"
