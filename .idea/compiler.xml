@@ -2,32 +2,32 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="1.7">
-      <module name="android-flashback.app" target="1.8" />
+      <module name="android-flashback.app" target="11" />
       <module name="android-flashback.base" target="1.8" />
       <module name="android-flashback.common" target="11" />
       <module name="android-flashback.configuration" target="11" />
-      <module name="android-flashback.core.ads" target="1.8" />
-      <module name="android-flashback.core.analytics" target="1.8" />
-      <module name="android-flashback.core.appshortcuts" target="1.8" />
-      <module name="android-flashback.core.configuration" target="1.8" />
-      <module name="android-flashback.core.crash-reporting" target="1.8" />
-      <module name="android-flashback.core.device" target="1.8" />
-      <module name="android-flashback.core.notifications" target="1.8" />
-      <module name="android-flashback.core.preferences" target="1.8" />
-      <module name="android-flashback.core.tutorial" target="1.8" />
-      <module name="android-flashback.core.ui" target="1.8" />
+      <module name="android-flashback.core.ads" target="11" />
+      <module name="android-flashback.core.analytics" target="11" />
+      <module name="android-flashback.core.appshortcuts" target="11" />
+      <module name="android-flashback.core.configuration" target="11" />
+      <module name="android-flashback.core.crash-reporting" target="11" />
+      <module name="android-flashback.core.device" target="11" />
+      <module name="android-flashback.core.notifications" target="11" />
+      <module name="android-flashback.core.preferences" target="11" />
+      <module name="android-flashback.core.tutorial" target="11" />
+      <module name="android-flashback.core.ui" target="11" />
       <module name="android-flashback.data-firebase" target="11" />
-      <module name="android-flashback.feature.common" target="1.8" />
-      <module name="android-flashback.feature.formula1" target="1.8" />
-      <module name="android-flashback.feature.rss" target="1.8" />
+      <module name="android-flashback.feature.common" target="11" />
+      <module name="android-flashback.feature.formula1" target="11" />
+      <module name="android-flashback.feature.rss" target="11" />
       <module name="android-flashback.feature.rss.rss" target="1.8" />
-      <module name="android-flashback.feature.statistics" target="1.8" />
-      <module name="android-flashback.feature.statistics-data-firebase" target="1.8" />
+      <module name="android-flashback.feature.statistics" target="11" />
+      <module name="android-flashback.feature.statistics-data-firebase" target="11" />
       <module name="android-flashback.feature.statistics.data-firebase" target="1.8" />
       <module name="android-flashback.feature.statistics.statistics" target="1.8" />
       <module name="android-flashback.feature.statistics.widgets" target="1.8" />
       <module name="android-flashback.feature.statistics_data_firebase" target="1.8" />
-      <module name="android-flashback.feature.upnext" target="1.8" />
+      <module name="android-flashback.feature.upnext" target="11" />
       <module name="android-flashback.feature.upnext.upnext" target="1.8" />
       <module name="android-flashback.feature.upnext.widgets" target="1.8" />
       <module name="android-flashback.notifications" target="11" />

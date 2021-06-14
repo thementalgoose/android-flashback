@@ -6,7 +6,7 @@ import com.bumptech.glide.Glide
 import tmg.flashback.statistics.R
 import tmg.core.ui.model.AnimationSpeed
 import tmg.flashback.statistics.ui.dashboard.season.SeasonItem
-import tmg.flashback.core.extensions.getColor
+import tmg.core.ui.extensions.getColor
 import tmg.flashback.statistics.databinding.ViewDashboardSeasonDriverBinding
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.utilities.extensions.views.context
