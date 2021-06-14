@@ -52,8 +52,6 @@ jobs:
         run: |
           echo "pr_branch=release/${{ github.event.inputs.versionCode }}" >> $GITHUB_ENV
           echo "file=release-notes/${{ github.event.inputs.versionName }}.json" >> $GITHUB_ENV
-          echo "${{ env.file }}"
-          echo "${{ env.pr_branch }}"
 
       # Create JSON
       - name: Create json
@@ -75,17 +73,17 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-      #          git checkout -b ${{ env.pr_branch }}
-      #          git status
-      #          git add release-notes/
-      #          git commit -am "Bumped version to ${{ github.event.inputs.versionName }} (${{ github.event.inputs.versionCode }})"
+          git checkout -b ${{ env.pr_branch }}
+          git status
+          git add release-notes/
+          git commit -am "Bumped version to ${{ github.event.inputs.versionName }} (${{ github.event.inputs.versionCode }})"
 
-      # Push branch to github
-      #      - name: Push changes
-      #        uses: ad-m/github-push-action@master
-      #        with:
-      #          github_token: ${{ secrets.GITHUB_TOKEN }}
-      #          branch: ${{ env.pr_branch }}
+       # Push branch to github
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ env.pr_branch }}
 
       # Raise PR
 #      - name: Initialize Pull Request
