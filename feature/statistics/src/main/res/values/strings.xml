@@ -75,7 +75,7 @@
 
     <!-- Race -->
     <string name="race_round" formatted="false">Round %d</string>
-    <string name="race_round_format" formatted="false"><![CDATA[Round <b>%s</b> /// %s]]></string>
+    <string name="race_round_format" formatted="false"><![CDATA[Round <b>%s</b>]]></string>
     <string name="race_qualifying_no_data">Not found</string>
     <plurals name="race_points">
         <item quantity="one">%d point</item>
