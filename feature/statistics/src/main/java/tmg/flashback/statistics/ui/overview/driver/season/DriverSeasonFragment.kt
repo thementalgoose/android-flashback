@@ -11,6 +11,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.core.ui.base.BaseFragment
 import tmg.flashback.statistics.databinding.FragmentDriverSeasonBinding
 import tmg.flashback.statistics.ui.race.RaceActivity
+import tmg.flashback.statistics.ui.race.RaceData
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 
@@ -66,7 +67,7 @@ class DriverSeasonFragment: BaseFragment<FragmentDriverSeasonBinding>() {
 
         observeEvent(viewModel.outputs.openSeasonRound) { result ->
             context?.let {
-                val intent: Intent = RaceActivity.intent(it,
+                val intent: Intent = RaceActivity.intent(it, RaceData(
                         season = result.season,
                         round = result.round,
                         circuitId = result.circuitId,
@@ -75,7 +76,7 @@ class DriverSeasonFragment: BaseFragment<FragmentDriverSeasonBinding>() {
                         trackName = result.circuitName,
                         countryISO = result.raceCountryISO,
                         date = result.date
-                )
+                ))
                 startActivity(intent)
             }
         }
