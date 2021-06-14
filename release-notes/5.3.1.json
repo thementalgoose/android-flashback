@@ -1,0 +1,10 @@
+{
+    "versionCode": 33,
+    "versionName": "5.3.1",
+    "isMajor": true,
+    "title": "",
+    "notes": [
+        "Adds copy of privacy policy in app",
+        "Adds auto enrolment into notification support"
+    ]
+}

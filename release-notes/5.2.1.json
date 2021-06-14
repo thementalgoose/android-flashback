@@ -1,0 +1,17 @@
+{
+    "versionCode": 31,
+    "versionName": "5.2.1",
+    "isMajor": true,
+    "title": "",
+    "notes": [
+        "Increases minimum support to Android 6.0 Marshmellow (API 23)",
+        "Adds initial landscape support and a custom view for the home screen",
+        "Changes RSS news animation and close animation to reduce crash rates",
+        "Fixes crash when Show on map is pressed on certain devices",
+        "Fixes some theming issues for new RSS feed section of the app",
+        "Updated firebase analytics to 18.0.0",
+        "Updated firebase auth to 20.0.1",
+        "Updated firebase firestore to 22.0.0",
+        "Updated firebase crashlytics to 17.3.0"
+    ]
+}

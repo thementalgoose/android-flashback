@@ -1,0 +1,18 @@
+{
+    "versionCode": 13,
+    "versionName": "4.3.5",
+    "isMajor": true,
+    "title": "",
+    "notes": [
+        "Moved news to its own screen",
+        "Fixed race status oversight in prep for 2020 season start",
+        "Changed loading stack to only show spinner and not skeleton views on initial load",
+        "Tidied up network logging",
+        "Fixed pit lane starts not being filtered properly in qualifying view",
+        "Updated swiperefesh to 1.1.0",
+        "Updated components to 2.1.0",
+        "Updated utilities to 2.0.1",
+        "Updated firebase analytics to 17.4.3",
+        "Updated firebase crashlytics to 2.10.1"
+    ]
+}

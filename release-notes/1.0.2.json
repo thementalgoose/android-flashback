@@ -1,0 +1,10 @@
+{
+    "versionCode": 2,
+    "versionName": "1.0.2",
+    "isMajor": true,
+    "title": "",
+    "notes": [
+        "Changed app flow to default to the season overview screens rather than the 2019 season",
+        "Changed theme throughout so it can be more customisable down the road"
+    ]
+}
