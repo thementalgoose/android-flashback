@@ -7,7 +7,7 @@ import tmg.flashback.statistics.R
 import tmg.core.ui.model.AnimationSpeed
 import tmg.flashback.statistics.ui.dashboard.season.SeasonItem
 import tmg.flashback.statistics.ui.shared.driverlist.DriverListAdapter
-import tmg.flashback.core.extensions.getColor
+import tmg.core.ui.extensions.getColor
 import tmg.flashback.statistics.databinding.ViewDashboardSeasonConstructorBinding
 import tmg.utilities.extensions.views.context
 import tmg.utilities.extensions.views.getString

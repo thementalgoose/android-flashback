@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import tmg.core.ui.model.AnimationSpeed
 import tmg.flashback.statistics.ui.overview.driver.season.DriverSeasonItem
 import tmg.flashback.data.enums.isStatusFinished
-import tmg.flashback.core.extensions.getColor
+import tmg.core.ui.extensions.getColor
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.ViewDriverSeasonBinding
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3

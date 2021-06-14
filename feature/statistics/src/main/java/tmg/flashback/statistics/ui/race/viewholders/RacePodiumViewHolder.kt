@@ -4,7 +4,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import tmg.flashback.statistics.ui.race.RaceModel
-import tmg.flashback.core.extensions.getColor
+import tmg.core.ui.extensions.getColor
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.LayoutPodiumBinding
 import tmg.flashback.statistics.databinding.ViewRaceRacePodiumBinding
