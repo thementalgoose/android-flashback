@@ -1,7 +1,7 @@
 {
     "versionCode": 45,
     "versionName": "5.6.1",
-    "isMajor": true,
+    "isMajor": false,
     "title": "",
     "notes": [
         "Adds swipe to dismiss gesture throughout the app",

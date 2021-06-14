@@ -1,7 +1,7 @@
 {
     "versionCode": 34,
     "versionName": "5.3.4",
-    "isMajor": true,
+    "isMajor": false,
     "title": "",
     "notes": [
         "Fixes driver overview where drivers swap teams mid season",

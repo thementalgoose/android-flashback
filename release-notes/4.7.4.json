@@ -1,7 +1,7 @@
 {
     "versionCode": 24,
     "versionName": "4.7.4",
-    "isMajor": true,
+    "isMajor": false,
     "title": "",
     "notes": [
         "Fixes issue with track layout displayed in 2020 Sakhir Grand Prix race",

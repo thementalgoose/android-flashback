@@ -1,7 +1,7 @@
 {
     "versionCode": 18,
     "versionName": "4.5.0",
-    "isMajor": true,
+    "isMajor": false,
     "title": "",
     "notes": [
         "Backend fixes to data management",

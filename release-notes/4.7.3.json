@@ -1,7 +1,7 @@
 {
     "versionCode": 23,
     "versionName": "4.7.3",
-    "isMajor": true,
+    "isMajor": false,
     "title": "",
     "notes": [
         "Fixes issue with driver stats qualifying data taking into account DNS",

@@ -1,7 +1,7 @@
 {
     "versionCode": 48,
     "versionName": "5.6.8",
-    "isMajor": true,
+    "isMajor": false,
     "title": "",
     "notes": [
         "Up next section now supports event start times!",

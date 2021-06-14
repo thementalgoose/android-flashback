@@ -1,7 +1,7 @@
 {
     "versionCode": 50,
     "versionName": "5.7.0",
-    "isMajor": true,
+    "isMajor": false,
     "title": "",
     "notes": [
         "Added categories to the settings screens",
