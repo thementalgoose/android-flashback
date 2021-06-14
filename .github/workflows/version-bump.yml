@@ -21,7 +21,7 @@ name: Version bumping
       notes:
         description: 'Notes line'
         required: true
-        default: "'New release!','Also this happened'"
+        default: '"New release!","Also this happened"'
 
 jobs:
   addrelease:
@@ -36,6 +36,14 @@ jobs:
         run: |
           echo "pr_branch=release/${{ github.event.inputs.versionCode }}" >> $GITHUB_ENV
           echo "file=release-notes/${{ github.event.inputs.versionName }}.json" >> $GITHUB_ENV
+          echo "existing_version_name=cat app/build.gradle | grep '        versionName '" >> $GITHUB_ENV
+          echo "existing_version_code=cat app/build.gradle | grep '        versionCode '" >> $GITHUB_ENV
+
+      # Update build.gradle
+      - name: Update build.gradle
+        run: |
+          sed "s/${{ env.existing_version_code }}/versionCode ${{ github.event.inputs.versionCode }}/g" app/build.gradle >> app/build.gradle
+          sed "s/${{ env.existing_version_name }}/versionName ${{ github.event.inputs.versionName }}/g" app/build.gradle >> app/build.gradle
 
       # Create JSON
       - name: Create json
@@ -43,11 +51,11 @@ jobs:
         env:
           JSON: |
             {
-              'versionName': '${{ github.event.inputs.versionName }}',
-              'versionCode': '${{ github.event.inputs.versionCode }}',
-              'isMajor': '${{ github.event.inputs.isMajor }}',
-              'title': '${{ github.event.inputs.title }}',
-              'notes': [
+              "versionName": "${{ github.event.inputs.versionName }}",
+              "versionCode": "${{ github.event.inputs.versionCode }}",
+              "isMajor": "${{ github.event.inputs.isMajor }}",
+              "title": "${{ github.event.inputs.title }}",
+              "notes": [
                 ${{ github.event.inputs.notes }}
               ]
             }
