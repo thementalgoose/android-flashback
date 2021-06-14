@@ -18,26 +18,10 @@ name: Version bumping
         description: 'Title for release'
         required: false
         default: ''
-      notes1:
-        description: 'Notes line 1'
+      notes:
+        description: 'Notes line'
         required: true
-        default: 'New release!'
-      notes2:
-        description: 'Notes line 2'
-        required: false
-        default: ''
-      notes3:
-        description: 'Notes line 3'
-        required: false
-        default: ''
-      notes4:
-        description: 'Notes line 4'
-        required: false
-        default: ''
-      notes5:
-        description: 'Notes line 5'
-        required: false
-        default: ''
+        default: "'New release!','Also this happened'"
 
 jobs:
   addrelease:
@@ -59,12 +43,12 @@ jobs:
         env:
           JSON: |
             {
-              'versionName': '${{ github.event.inputs.versionName }}',
-              'versionCode': '${{ github.event.inputs.versionCode }}'
-              'isMajor': '${{ github.event.inputs.isMajor }}',
-              'title': '${{ github.event.inputs.title }}',
-              'notes': [
-                '${{ github.event.inputs.notes1 }}'
+              'versionName': '${{ github.event.inputs.versionName }}',\n
+              'versionCode': '${{ github.event.inputs.versionCode }}',\n
+              'isMajor': '${{ github.event.inputs.isMajor }}',\n
+              'title': '${{ github.event.inputs.title }}',\n
+              'notes': [\n
+                ${{ github.event.inputs.notes }}
               ]
             }
 
@@ -86,14 +70,14 @@ jobs:
           branch: ${{ env.pr_branch }}
 
       # Raise PR
-#      - name: Initialize Pull Request
-#        uses: gha-utilities/init-pull-request@v0.3.1
-#        with:
-#          verbose: true
-#          pull_request_token: ${{ secrets.GITHUB_TOKEN }}
-#          head: ${{ env.pr_branch }}
-#          base: main
-#          title: 'Release: ${{ github.event.inputs.versionName }} (${{ github.event.inputs.versionCode }})'
-#          body: >
-#            Perhaps a multi-line description
-#            about latest features and such.
+      - name: Initialize Pull Request
+        uses: gha-utilities/init-pull-request@v0.3.1
+        with:
+          verbose: true
+          pull_request_token: ${{ secrets.GITHUB_TOKEN }}
+          head: ${{ env.pr_branch }}
+          base: main
+          title: 'Release: ${{ github.event.inputs.versionName }} (${{ github.event.inputs.versionCode }})'
+          body: >
+            Perhaps a multi-line description
+            about latest features and such.
