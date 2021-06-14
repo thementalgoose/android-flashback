@@ -32,6 +32,10 @@ name: Version bumping
         description: 'Notes line 4'
         required: true
         default: ''
+      notes5:
+        description: 'Notes line 4'
+        required: true
+        default: ''
 jobs:
   add_release:
     runs-on: ubuntu-latest
@@ -39,9 +43,22 @@ jobs:
       # Checkout
       - uses: actions/checkout@v2
 
-      # Create JSON file
-      - run: |
-          echo "test" >> release-notes/my.json
+      # Create JSON
+      - name: create-json
+        id: create-json
+        uses: jsdaniell/create-json@1.1.2
+        with:
+          name: "release-notes/${{ github.event.inputs.version_name }}.json"
+          json: """{
+  'versionName': '${{ github.event.inputs.version_name }}',
+  'versionCode': '${{ github.event.inputs.version_code }}',
+  'isMajor': '${{ github.event.inputs.is_major }}',
+  'title': ${{ github.event.inputs.title }}',
+  'notes': [
+    '${{ github.event.inputs.notes1 }}'
+  ]
+}
+"""
 
       # Perform git checkout updates
       - name: Commit changes
