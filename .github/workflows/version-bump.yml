@@ -74,6 +74,7 @@ jobs:
         uses: peter-evans/create-pull-request@v3
         with:
           branch: ${{ env.pr_branch }}
+          base: main
           labels: Release
           title: 'Release ${{ github.event.inputs.versionName }} (${{ github.event.inputs.versionCode }})'
           assignees: thementalgoose
