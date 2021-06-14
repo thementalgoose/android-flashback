@@ -70,12 +70,12 @@ jobs:
           branch: ${{ env.pr_branch }}
 
       # Raise PR
-      - name: Initialize Pull Request
-        uses: peter-evans/create-pull-request@v3
+      - name: pull-request
+        uses: repo-sync/pull-request@v2
         with:
-          branch: ${{ env.pr_branch }}
-          base: main
-          labels: Release
-          title: 'Release ${{ github.event.inputs.versionName }} (${{ github.event.inputs.versionCode }})'
-          assignees: thementalgoose
-          draft: false
+          source_branch: "${{ env.pr_branch }}"
+          destination_branch: "main"
+          pr_title: "Release ${{ github.event.inputs.versionName }} (${{ github.event.inputs.versionCode }})"
+          pr_assignee: "thementalgoose"
+          pr_label: "Release"
+          github_token: ${{ secrets.GITHUB_TOKEN }}
