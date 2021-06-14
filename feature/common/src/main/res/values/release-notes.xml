@@ -182,5 +182,7 @@
         <br/>• Fixed bug in season list showing glitched indicator when certain defaults are selected
         <br/>• Adds pull to refresh support for RSS feed
         <br/>• Fixed a bug with the calendar view where single digit days get squashed]]></string>
+    <string name="release_71"><![CDATA[<b>6.1.3</b>
+        <br/>• Tweaked toolbar design for most screens]]></string>
 
 </resources>
