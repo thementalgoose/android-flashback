@@ -1,0 +1,13 @@
+{
+    "versionCode": 57,
+    "versionName": "5.9.1",
+    "isMajor": false,
+    "title": "",
+    "notes": [
+        "Updates layout of schedule view on the home screen! Added more subtle animations throughout",
+        "Reduced time taken to load RSS feed",
+        "Adds a new calendar view to the dashboard",
+        "Made it clearer when data is currently unavailable in the app",
+        "Bug fixes and backend improvements, mainly around loading feedback"
+    ]
+}

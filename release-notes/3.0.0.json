@@ -1,0 +1,11 @@
+{
+    "versionCode": 6,
+    "versionName": "3.0.0",
+    "isMajor": true,
+    "title": "",
+    "notes": [
+        "Added championship standings options to all seasons",
+        "Added daily sync for current",
+        "Updated firebase dependencies"
+    ]
+}

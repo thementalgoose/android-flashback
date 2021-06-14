@@ -1,0 +1,10 @@
+{
+    "versionCode": 32,
+    "versionName": "5.3.0",
+    "isMajor": true,
+    "title": "",
+    "notes": [
+        "Added notification support! Get notified for races and qualifying sessions 30 minutes before",
+        "Fixed theming gaps in Android 6.0 and 6.1"
+    ]
+}

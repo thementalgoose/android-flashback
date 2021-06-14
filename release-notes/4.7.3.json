@@ -1,0 +1,11 @@
+{
+    "versionCode": 23,
+    "versionName": "4.7.3",
+    "isMajor": false,
+    "title": "",
+    "notes": [
+        "Fixes issue with driver stats qualifying data taking into account DNS",
+        "Adds ability to customise bar animations throughout the app",
+        "Fixes typos throughout error messages"
+    ]
+}
