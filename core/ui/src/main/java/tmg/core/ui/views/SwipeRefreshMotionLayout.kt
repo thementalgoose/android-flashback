@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import androidx.constraintlayout.motion.widget.MotionLayout
+import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 
@@ -34,17 +35,22 @@ class SwipeRefreshMotionLayout : MotionLayout {
             return super.onNestedPreScroll(target, dx, dy, consumed, type)
         }
 
-        val recyclerView = target.getChildAt(0)
-        if (recyclerView !is RecyclerView) {
-            return super.onNestedPreScroll(target, dx, dy, consumed, type)
+        when (val directChild = target.getChildAt(0)) {
+            is RecyclerView -> {
+                val canScrollVertically = directChild.canScrollVertically(-1)
+                if (dy < 0 && canScrollVertically) {
+                    // don't start motionLayout transition
+                    return
+                }
+            }
+            is NestedScrollView -> {
+                val canScrollVertically = directChild.canScrollVertically(-1)
+                if (dy < 0 && canScrollVertically) {
+                    // don't start motionLayout transition
+                    return
+                }
+            }
         }
-
-        val canScrollVertically = recyclerView.canScrollVertically(-1)
-        if (dy < 0 && canScrollVertically) {
-            // don't start motionLayout transition
-            return;
-        }
-
-        super.onNestedPreScroll(target, dx, dy, consumed, type)
+        return super.onNestedPreScroll(target, dx, dy, consumed, type)
     }
 }
