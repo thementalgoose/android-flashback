@@ -16,7 +16,7 @@ name: Version bumping
         default: 'false'
       title:
         description: 'Title for release'
-        required: true
+        required: false
         default: ''
       notes1:
         description: 'Notes line 1'
@@ -24,19 +24,19 @@ name: Version bumping
         default: 'New release!'
       notes2:
         description: 'Notes line 2'
-        required: true
+        required: false
         default: ''
       notes3:
         description: 'Notes line 3'
-        required: true
+        required: false
         default: ''
       notes4:
         description: 'Notes line 4'
-        required: true
+        required: false
         default: ''
       notes5:
-        description: 'Notes line 4'
-        required: true
+        description: 'Notes line 5'
+        required: false
         default: ''
 
 jobs:
@@ -56,12 +56,10 @@ jobs:
           echo "${{ env.pr_branch }}"
 
       # Create JSON
-      - name: create-json
-        id: create-json
-        uses: jsdaniell/create-json@1.1.2
-        with:
-          name: ${{ env.file }}
-          json: >
+      - name: Create json
+        run: echo $JSON >> ${{ env.file }}
+        env:
+          JSON: >
             {
               'versionName': '${{ github.event.inputs.versionName }}',
               'versionCode': '${{ github.event.inputs.versionCode }}'
