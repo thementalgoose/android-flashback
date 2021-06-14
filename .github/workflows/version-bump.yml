@@ -43,11 +43,11 @@ jobs:
         env:
           JSON: |
             {
-              'versionName': '${{ github.event.inputs.versionName }}',\n
-              'versionCode': '${{ github.event.inputs.versionCode }}',\n
-              'isMajor': '${{ github.event.inputs.isMajor }}',\n
-              'title': '${{ github.event.inputs.title }}',\n
-              'notes': [\n
+              'versionName': '${{ github.event.inputs.versionName }}',
+              'versionCode': '${{ github.event.inputs.versionCode }}',
+              'isMajor': '${{ github.event.inputs.isMajor }}',
+              'title': '${{ github.event.inputs.title }}',
+              'notes': [
                 ${{ github.event.inputs.notes }}
               ]
             }
@@ -71,13 +71,10 @@ jobs:
 
       # Raise PR
       - name: Initialize Pull Request
-        uses: gha-utilities/init-pull-request@v0.3.1
+        uses: peter-evans/create-pull-request@v3
         with:
-          verbose: true
-          pull_request_token: ${{ secrets.GITHUB_TOKEN }}
-          head: ${{ env.pr_branch }}
-          base: main
-          title: 'Release: ${{ github.event.inputs.versionName }} (${{ github.event.inputs.versionCode }})'
-          body: >
-            Perhaps a multi-line description
-            about latest features and such.
+          branch: ${{ env.pr_branch }}
+          labels: Release
+          title: 'Release ${{ github.event.inputs.versionName }} (${{ github.event.inputs.versionCode }})'
+          assignees: thementalgoose
+          draft: false
