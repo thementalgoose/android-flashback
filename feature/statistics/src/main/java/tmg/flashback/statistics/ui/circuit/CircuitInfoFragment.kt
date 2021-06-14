@@ -17,6 +17,7 @@ import tmg.flashback.statistics.databinding.FragmentCircuitInfoBinding
 import tmg.flashback.statistics.ui.overview.constructor.ConstructorFragment
 import tmg.flashback.statistics.ui.overview.constructor.ConstructorViewModel
 import tmg.flashback.statistics.ui.race.RaceActivity
+import tmg.flashback.statistics.ui.race.RaceData
 import tmg.utilities.extensions.copyToClipboard
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
@@ -55,15 +56,17 @@ class CircuitInfoFragment: BaseFragment<FragmentCircuitInfoBinding>() {
                 clickWikipedia = viewModel.inputs::clickWikipedia,
                 clickRace = {
                     context?.let { context ->
-                        val raceIntent = RaceActivity.intent(
-                                context = context,
-                                season = it.season,
-                                round = it.round,
-                                circuitId = circuitId,
-                                raceName = it.name,
-                                trackName = circuitName,
-                                date = it.date
-                        )
+                        val raceIntent = RaceActivity.intent(context, RaceData(
+                            season = it.season,
+                            round = it.round,
+                            circuitId = circuitId,
+                            defaultToRace = true,
+                            country = "",
+                            raceName = it.name,
+                            trackName = circuitName,
+                            countryISO = "",
+                            date = it.date
+                        ))
                         startActivity(raceIntent)
                     }
                 }
