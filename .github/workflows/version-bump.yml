@@ -2,15 +2,15 @@ name: Version bumping
 'on':
   workflow_dispatch:
     inputs:
-      version_name:
+      versionName:
         description: 'Version name (ie. 1.0.0)'
         required: true
         default: '0.0.0'
-      version_code:
+      versionCode:
         description: 'Version code (ie. 1)'
         required: true
         default: '0'
-      is_major:
+      isMajor:
         description: 'Is this a major release'
         required: true
         default: 'false'
@@ -38,8 +38,9 @@ name: Version bumping
         description: 'Notes line 4'
         required: true
         default: ''
+
 jobs:
-  add_release:
+  addrelease:
     runs-on: ubuntu-latest
     steps:
       # Checkout
@@ -50,11 +51,11 @@ jobs:
         id: create-json
         uses: jsdaniell/create-json@1.1.2
         with:
-          name: "release-notes/${{ github.event.inputs.version_name }}.json"
+          name: "release-notes/${{ github.event.inputs.versionName }}.json"
           json: """{
-  'versionName': '${{ github.event.inputs.version_name }}',
-  'versionCode': '${{ github.event.inputs.version_code }}',
-  'isMajor': '${{ github.event.inputs.is_major }}',
+  'versionName': '${{ github.event.inputs.versionName }}',
+  'versionCode': '${{ github.event.inputs.versionCode }}',
+  'isMajor': '${{ github.event.inputs.isMajor }}',
   'title': ${{ github.event.inputs.title }}',
   'notes': [
     '${{ github.event.inputs.notes1 }}'
@@ -65,14 +66,14 @@ jobs:
       # Perform git checkout updates
       - name: Commit changes
         run: |
-          echo "pr_branch=release/${{ github.event.inputs.version_code }}"
+          echo "pr_branch=release/${{ github.event.inputs.versionCode }}"
           echo "${{ env.pr_branch }}"
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git checkout -b ${{ env.pr_branch }}
           git status
           git add release-notes/
-          git commit -am "Bumped version to ${{ github.event.inputs.version_name }} (${{ github.event.inputs.version_code }})"
+          git commit -am "Bumped version to ${{ github.event.inputs.versionName }} (${{ github.event.inputs.versionCode }})"
 
       # Push branch to github
       - name: Push changes
@@ -89,7 +90,7 @@ jobs:
           pull_request_token: ${{ secrets.GITHUB_TOKEN }}
           head: ${{ env.pr_branch }}
           base: main
-          title: 'Release: ${{ github.event.inputs.version_name }} (${{ github.event.inputs.version_code }})'
+          title: 'Release: ${{ github.event.inputs.versionName }} (${{ github.event.inputs.versionCode }})'
           body: >
             Perhaps a multi-line description
             about latest features and such.
