@@ -33,8 +33,7 @@ class ReleaseBottomSheetFragment: BaseBottomSheetFragment<FragmentBottomSheetRel
         binding.tvReleaseNotesDescription.text = releaseNotesController
             .majorReleaseNotes
             .map { getString(it.release) }
-            .joinToString("<br/><br/>")
-            .fromHtml()
+            .joinToString("\n\n")
 
         releaseNotesController.markReleaseNotesSeen()
     }

@@ -1,5 +1,6 @@
 package tmg.common.controllers
 
+import tmg.common.constants.ReleaseNotes
 import tmg.common.repository.ReleaseNotesRepository
 import tmg.core.device.managers.BuildConfigManager
 
@@ -22,13 +23,13 @@ class ReleaseNotesController(
      * The release notes to show since the release notes had last been read
      * Will show only those which are considered major (and will only show the last one!)
      */
-    val majorReleaseNotes: List<Releases>
+    val majorReleaseNotes: List<ReleaseNotes>
         get() {
             val currentVersion = buildConfigManager.versionCode
             val lastVersion = releaseNotesLastSeenVersionCode
 
             return if (currentVersion > lastVersion) {
-                Releases.values()
+                ReleaseNotes.values()
                         .sortedByDescending { it.version }
                         .filter { it.version in (lastVersion + 1)..currentVersion }
                         .filter { it.isMajor }
