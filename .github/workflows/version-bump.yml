@@ -5,9 +5,11 @@ name: Version bumping
       version_name:
         description: 'Version name (ie. 1.0.0)'
         required: true
+        default: '0.0.0'
       version_code:
         description: 'Version code (ie. 1)'
         required: true
+        default: '0'
       is_major:
         description: 'Is this a major release'
         required: true
