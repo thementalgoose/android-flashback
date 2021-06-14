@@ -1,0 +1,11 @@
+{
+    "versionCode": 10,
+    "versionName": "4.3.0",
+    "isMajor": true,
+    "title": "",
+    "notes": [
+        "Added news feed to the app",
+        "Added ability to toggle preferred news sources",
+        "Added status for race data being synchronised"
+    ]
+}

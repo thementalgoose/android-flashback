@@ -1,0 +1,11 @@
+{
+    "versionCode": 22,
+    "versionName": "4.7.2",
+    "isMajor": false,
+    "title": "",
+    "notes": [
+        "Fixes issue with 2020 Racing Point penalty not being shown in the preview",
+        "Fixed position delta always being 0 for podium sitters",
+        "Fixed DNF label showing up for not finished status"
+    ]
+}

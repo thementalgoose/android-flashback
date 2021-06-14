@@ -1,0 +1,13 @@
+{
+    "versionCode": 50,
+    "versionName": "5.7.0",
+    "isMajor": false,
+    "title": "",
+    "notes": [
+        "Added categories to the settings screens",
+        "Fixed bug in theme preference not being applied immediately",
+        "Updated android material to 1.3.0",
+        "Updated android lifecycle to 2.3.0",
+        "Updated firebase crashlytics to 2.5.0"
+    ]
+}

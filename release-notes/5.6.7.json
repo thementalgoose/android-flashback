@@ -1,0 +1,13 @@
+{
+    "versionCode": 47,
+    "versionName": "5.6.7",
+    "isMajor": true,
+    "title": "",
+    "notes": [
+        "Adds an up next widget for your home screen!",
+        "Fixes over-animation throughout menu list when nothing seems to change",
+        "Minor optimisations for tablet layout sizing",
+        "Fixes some rare crashes with certain older seasons dates being misaligned",
+        "App will now handle errors much more gracefully and notify the flashback team of inconsistent data"
+    ]
+}

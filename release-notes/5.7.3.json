@@ -1,0 +1,11 @@
+{
+    "versionCode": 53,
+    "versionName": "5.7.3",
+    "isMajor": false,
+    "title": "",
+    "notes": [
+        "Adds 2 more track layouts to races and circuits screens",
+        "Minor updates in prep for 2021 season",
+        "Batch of tech debt and dependency updates"
+    ]
+}
