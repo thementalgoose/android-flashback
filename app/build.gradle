@@ -284,9 +284,11 @@ enum class ReleaseNotes(
         }
     }
     def xmlStringsFile = new File(stringsXMLLocation)
+    xmlStringsFile.getParentFile().mkdirs()
     xmlStringsFile.write(xmlWriter.toString())
 
     def kotlinFile = new File(kotlinFileLocation)
+    kotlinFile.getParentFile().mkdirs()
     kotlinFile.write(kotlinFileContents.replace("[[VERSION_ENUM_VALUES]]", enumValues))
 
     println("Release notes - Generated")
