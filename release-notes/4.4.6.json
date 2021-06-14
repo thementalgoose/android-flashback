@@ -1,0 +1,11 @@
+{
+    "versionCode": 16,
+    "versionName": "4.4.6",
+    "isMajor": true,
+    "title": "",
+    "notes": [
+        "Updated layout for driver season status to be less confusing",
+        "Fixed theming bugs on maps links",
+        "Fixed incorrect round being used as reference message for driver stats"
+    ]
+}

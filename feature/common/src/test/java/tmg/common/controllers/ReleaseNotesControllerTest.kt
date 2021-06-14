@@ -5,7 +5,6 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
-import tmg.common.constants.Releases
 import tmg.common.repository.ReleaseNotesRepository
 import tmg.core.device.managers.BuildConfigManager
 

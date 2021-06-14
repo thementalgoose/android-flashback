@@ -1,0 +1,10 @@
+{
+    "versionCode": 8,
+    "versionName": "4.1.0",
+    "isMajor": true,
+    "title": "",
+    "notes": [
+        "Added dark mode toggle to settings",
+        "Added grid penalty indicator to race qualifying view"
+    ]
+}

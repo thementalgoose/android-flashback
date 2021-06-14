@@ -1,0 +1,14 @@
+{
+    "versionCode": 14,
+    "versionName": "4.4.1",
+    "isMajor": true,
+    "title": "",
+    "notes": [
+        "Addressed some bugs that have risen due to season starting",
+        "Fixed issue with partial qualifying data not displaying when race data is unavailable",
+        "Added setting to expand season list to full height by default",
+        "Fixed some wording oversights with races being scheduled in the future or past",
+        "Fixed optional message being displayed",
+        "Moved app banner position to pinned position at the top of the display"
+    ]
+}

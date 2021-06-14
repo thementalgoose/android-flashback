@@ -1,0 +1,13 @@
+{
+    "versionCode": 40,
+    "versionName": "5.5.0",
+    "isMajor": true,
+    "title": "",
+    "notes": [
+        "Adds a new dashboard homescreen with sliding panes for season list",
+        "Adds a new Up Next section to the season list so you can see how long it is until the next race",
+        "Adds ability to show qualifying delta by long clicking qualifying results",
+        "Fix for progress bar values sometimes being fractionally incorrect after animation",
+        "Other minor bug fixes and performance improvements"
+    ]
+}

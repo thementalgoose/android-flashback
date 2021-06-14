@@ -3,10 +3,8 @@ package tmg.common.ui.releasenotes
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import tmg.common.constants.Releases
 import tmg.common.databinding.FragmentReleaseNotesBinding
 import tmg.core.ui.base.BaseFragment
-import tmg.utilities.extensions.fromHtml
 
 class ReleaseFragment: BaseFragment<FragmentReleaseNotesBinding>() {
 

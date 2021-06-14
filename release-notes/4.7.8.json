@@ -1,0 +1,10 @@
+{
+    "versionCode": 26,
+    "versionName": "4.7.8",
+    "isMajor": true,
+    "title": "",
+    "notes": [
+        "Adds wikipedia links to driver overview, race and circuit information screens",
+        "Fixes some constructor penalties not being applied to disqualified teams throughout F1"
+    ]
+}

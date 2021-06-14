@@ -1,0 +1,14 @@
+{
+    "versionCode": 45,
+    "versionName": "5.6.1",
+    "isMajor": true,
+    "title": "",
+    "notes": [
+        "Adds swipe to dismiss gesture throughout the app",
+        "Adds ability to set a default season to load the app into",
+        "Adds 6 more track layouts to races and circuit screens",
+        "Adds ability to view website link for RSS sources",
+        "Fixes back behavior through the app",
+        "Other minor bug fixes and crash fixes"
+    ]
+}

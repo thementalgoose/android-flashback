@@ -1,6 +1,5 @@
 package tmg.common.controllers
 
-import tmg.common.constants.Releases
 import tmg.common.repository.ReleaseNotesRepository
 import tmg.core.device.managers.BuildConfigManager
 

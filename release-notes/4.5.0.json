@@ -1,0 +1,13 @@
+{
+    "versionCode": 18,
+    "versionName": "4.5.0",
+    "isMajor": true,
+    "title": "",
+    "notes": [
+        "Backend fixes to data management",
+        "Added notification for when results are being pulled",
+        "Fix for Perez qualifying data showing up in Round 4 2020 data",
+        "Fix for closing driver season dropdown collapsing again",
+        "Moved constructor color bars to edge"
+    ]
+}
