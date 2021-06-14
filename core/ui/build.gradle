@@ -34,4 +34,5 @@ dependencies {
 
     // ConstraintLayout
     implementation "androidx.constraintlayout:constraintlayout:$android_constraint"
+    implementation project(path: ':core:crash-reporting')
 }

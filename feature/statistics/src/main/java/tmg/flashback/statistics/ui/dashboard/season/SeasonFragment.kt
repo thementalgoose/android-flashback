@@ -17,6 +17,7 @@ import tmg.flashback.statistics.databinding.FragmentDashboardSeasonBinding
 import tmg.flashback.statistics.ui.overview.constructor.ConstructorActivity
 import tmg.flashback.statistics.ui.overview.driver.DriverActivity
 import tmg.flashback.statistics.ui.race.RaceActivity
+import tmg.flashback.statistics.ui.race.RaceData
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 
@@ -103,8 +104,7 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
 
         observeEvent(viewModel.outputs.openRace) { track ->
             context?.let {
-                val intent = RaceActivity.intent(
-                    context = it,
+                val intent = RaceActivity.intent(it, RaceData(
                     season = track.season,
                     round = track.round,
                     circuitId = track.circuitId,
@@ -114,7 +114,7 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
                     countryISO = track.raceCountryISO,
                     date = track.date,
                     defaultToRace = track.hasResults || !track.hasQualifying
-                )
+                ))
                 startActivity(intent)
             }
         }

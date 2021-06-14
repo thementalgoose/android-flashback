@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import org.koin.android.ext.android.inject
 import tmg.core.analytics.manager.AnalyticsManager
+import tmg.crash_reporting.controllers.CrashController
 
 abstract class BaseFragment<T: ViewBinding>: Fragment() {
 
@@ -18,6 +19,8 @@ abstract class BaseFragment<T: ViewBinding>: Fragment() {
         get() = _binding!!
 
     protected val analyticsManager: AnalyticsManager by inject()
+
+    protected val crashManager: CrashController by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater,
