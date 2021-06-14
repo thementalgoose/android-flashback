@@ -59,7 +59,7 @@ jobs:
       - name: Create json
         run: echo $JSON >> ${{ env.file }}
         env:
-          JSON: >
+          JSON: |
             {
               'versionName': '${{ github.event.inputs.versionName }}',
               'versionCode': '${{ github.event.inputs.versionCode }}'
