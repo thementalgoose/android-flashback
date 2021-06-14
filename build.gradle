@@ -2,9 +2,6 @@
 buildscript {
 
     apply from: rootDir.absolutePath + "/base-versions.gradle"
-    ext {
-        kotlin_version = '1.4.31'
-    }
 
     ext.kotlinCompilerArgs = [
             "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi",
