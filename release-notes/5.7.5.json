@@ -1,7 +1,7 @@
 {
     "versionCode": 54,
     "versionName": "5.7.5",
-    "isMajor": true,
+    "isMajor": false,
     "title": "",
     "notes": [
         "Adds FP1, FP2, FP3, Qualifying and Race times for up next section",

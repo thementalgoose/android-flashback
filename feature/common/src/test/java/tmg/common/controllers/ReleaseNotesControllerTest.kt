@@ -5,6 +5,7 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
+import tmg.common.constants.ReleaseNotes
 import tmg.common.repository.ReleaseNotesRepository
 import tmg.core.device.managers.BuildConfigManager
 
@@ -25,7 +26,7 @@ internal class ReleaseNotesControllerTest {
         every { mockReleaseNotesRepository.releaseNotesSeenAppVersion } returns 30
         initSUT()
 
-        assertEquals(emptyList<Releases>(), sut.majorReleaseNotes)
+        assertEquals(emptyList<ReleaseNotes>(), sut.majorReleaseNotes)
     }
 
     @Test
@@ -34,7 +35,7 @@ internal class ReleaseNotesControllerTest {
         every { mockReleaseNotesRepository.releaseNotesSeenAppVersion } returns 22
         initSUT()
 
-        assertEquals(emptyList<Releases>(), sut.majorReleaseNotes)
+        assertEquals(emptyList<ReleaseNotes>(), sut.majorReleaseNotes)
     }
 
     @Test
@@ -43,7 +44,7 @@ internal class ReleaseNotesControllerTest {
         every { mockReleaseNotesRepository.releaseNotesSeenAppVersion } returns 27
         initSUT()
 
-        assertEquals(listOf(Releases.VERSION_28), sut.majorReleaseNotes)
+        assertEquals(listOf(ReleaseNotes.VERSION_28), sut.majorReleaseNotes)
     }
 
     @Test
@@ -52,7 +53,7 @@ internal class ReleaseNotesControllerTest {
         every { mockReleaseNotesRepository.releaseNotesSeenAppVersion } returns 28
         initSUT()
 
-        assertEquals(listOf(Releases.VERSION_31), sut.majorReleaseNotes)
+        assertEquals(listOf(ReleaseNotes.VERSION_31), sut.majorReleaseNotes)
     }
 
     @Test
@@ -62,7 +63,7 @@ internal class ReleaseNotesControllerTest {
         initSUT()
 
         assertEquals(
-            listOf(Releases.VERSION_40, Releases.VERSION_32, Releases.VERSION_31),
+            listOf(ReleaseNotes.VERSION_40, ReleaseNotes.VERSION_32, ReleaseNotes.VERSION_31),
             sut.majorReleaseNotes
         )
     }

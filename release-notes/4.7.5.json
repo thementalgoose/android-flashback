@@ -1,7 +1,7 @@
 {
     "versionCode": 25,
     "versionName": "4.7.5",
-    "isMajor": true,
+    "isMajor": false,
     "title": "",
     "notes": [
         "Adds setting option to open news articles in external browser by default",

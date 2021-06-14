@@ -1,7 +1,7 @@
 {
     "versionCode": 53,
     "versionName": "5.7.3",
-    "isMajor": true,
+    "isMajor": false,
     "title": "",
     "notes": [
         "Adds 2 more track layouts to races and circuits screens",

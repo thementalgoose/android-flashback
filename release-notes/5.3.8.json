@@ -1,7 +1,7 @@
 {
     "versionCode": 38,
     "versionName": "5.3.8",
-    "isMajor": true,
+    "isMajor": false,
     "title": "",
     "notes": [
         "App preparations for 2021! Will default to 2020 until 2021 calendar is confirmed",

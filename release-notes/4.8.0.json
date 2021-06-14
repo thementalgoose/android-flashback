@@ -1,7 +1,7 @@
 {
     "versionCode": 27,
     "versionName": "4.8.0",
-    "isMajor": true,
+    "isMajor": false,
     "title": "",
     "notes": [
         "Handles constructors championship starting in 1958 properly",

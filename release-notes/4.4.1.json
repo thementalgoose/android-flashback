@@ -1,7 +1,7 @@
 {
     "versionCode": 14,
     "versionName": "4.4.1",
-    "isMajor": true,
+    "isMajor": false,
     "title": "",
     "notes": [
         "Addressed some bugs that have risen due to season starting",

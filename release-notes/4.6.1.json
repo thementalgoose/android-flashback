@@ -1,7 +1,7 @@
 {
     "versionCode": 20,
     "versionName": "4.6.1",
-    "isMajor": true,
+    "isMajor": false,
     "title": "",
     "notes": [
         "Added RaceFans.net as a supported news site in the news tab",

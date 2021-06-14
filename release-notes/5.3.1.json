@@ -1,7 +1,7 @@
 {
     "versionCode": 33,
     "versionName": "5.3.1",
-    "isMajor": true,
+    "isMajor": false,
     "title": "",
     "notes": [
         "Adds copy of privacy policy in app",

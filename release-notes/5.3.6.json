@@ -1,7 +1,7 @@
 {
     "versionCode": 36,
     "versionName": "5.3.6",
-    "isMajor": true,
+    "isMajor": false,
     "title": "",
     "notes": [
         "Adds window for default season being shown to be previous year until calendar is confirmed",

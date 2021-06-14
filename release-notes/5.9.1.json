@@ -1,7 +1,7 @@
 {
     "versionCode": 57,
     "versionName": "5.9.1",
-    "isMajor": true,
+    "isMajor": false,
     "title": "",
     "notes": [
         "Updates layout of schedule view on the home screen! Added more subtle animations throughout",
