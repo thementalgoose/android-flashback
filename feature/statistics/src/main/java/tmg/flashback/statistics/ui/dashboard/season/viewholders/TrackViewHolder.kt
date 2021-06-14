@@ -7,7 +7,7 @@ import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.ui.dashboard.season.SeasonItem
-import tmg.flashback.core.extensions.getColor
+import tmg.core.ui.extensions.getColor
 import tmg.flashback.statistics.databinding.ViewDashboardSeasonTrackBinding
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.utilities.extensions.ordinalAbbreviation

@@ -5,7 +5,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.statistics.ui.race.RaceModel
 import tmg.flashback.data.enums.isStatusFinished
-import tmg.flashback.core.extensions.getColor
+import tmg.core.ui.extensions.getColor
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.ViewRaceRaceResultBinding
 import tmg.flashback.statistics.extensions.iconRes

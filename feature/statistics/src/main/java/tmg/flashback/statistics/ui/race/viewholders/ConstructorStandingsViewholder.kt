@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import tmg.core.ui.model.AnimationSpeed
 import tmg.flashback.data.models.stats.Driver
 import tmg.flashback.statistics.ui.race.RaceModel
-import tmg.flashback.core.extensions.getColor
+import tmg.core.ui.extensions.getColor
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.LayoutConstructorDriverBinding
 import tmg.flashback.statistics.databinding.ViewRaceConstructorBinding

@@ -1,4 +1,4 @@
-package tmg.flashback.core.extensions
+package tmg.core.ui.extensions
 
 import android.content.res.Resources
 import android.util.TypedValue
