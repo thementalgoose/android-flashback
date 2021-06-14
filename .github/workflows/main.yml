@@ -5,6 +5,7 @@ name: Main
       - main
     paths-ignore:
       - '**.md'
+      - '**.yml'
 jobs:
   unit_tests:
     runs-on: ubuntu-latest
