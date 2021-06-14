@@ -50,8 +50,8 @@ jobs:
       # Variables
       - name: Variables
         run: |
-          echo "pr_branch=release/${{ github.event.inputs.versionCode }}"
-          echo "file=release-notes/${{ github.event.inputs.versionName }}.json"
+          echo "pr_branch=release/${{ github.event.inputs.versionCode }}" >> $GITHUB_ENV
+          echo "file=release-notes/${{ github.event.inputs.versionName }}.json" >> $GITHUB_ENV
           echo "${{ env.file }}"
           echo "${{ env.pr_branch }}"
 
