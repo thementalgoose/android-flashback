@@ -142,18 +142,14 @@ private fun Map<String, FSeasonStatisticsPoints>.convertDriver(drivers: List<Dri
                 position = it.value.pos ?: -1
             )
         }
-        .sortedBy {
-            if (it.position != -1) {
-                it.position
-            } else {
-                it.points
+        .let { list ->
+            if (list.any { it.position == -1}) {
+                return@let list
+                    .sortedByDescending { it.points }
+                    .mapIndexed { index, seasonStanding -> seasonStanding.copy(position = index + 1) }
             }
-        }
-        .mapIndexed { index, seasonStanding ->
-            if (seasonStanding.position == -1) {
-                seasonStanding.copy(position = index + 1)
-            }
-            seasonStanding
+            return@let list
+                .sortedBy { it.position }
         }
 
 private fun Map<String, FSeasonStatisticsPoints>.convertConstructor(constructors: List<Constructor>): ConstructorStandings = this
@@ -164,16 +160,12 @@ private fun Map<String, FSeasonStatisticsPoints>.convertConstructor(constructors
                 position = it.value.pos ?: -1
             )
         }
-        .sortedBy {
-            if (it.position != -1) {
-                it.position
-            } else {
-                it.points
+        .let { list ->
+            if (list.any { it.position == -1}) {
+                return@let list
+                    .sortedByDescending { it.points }
+                    .mapIndexed { index, seasonStanding -> seasonStanding.copy(position = index + 1) }
             }
-        }
-        .mapIndexed { index, seasonStanding ->
-            if (seasonStanding.position == -1) {
-                seasonStanding.copy(position = index + 1)
-            }
-            seasonStanding
+            return@let list
+                .sortedBy { it.position }
         }
