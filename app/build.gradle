@@ -21,8 +21,8 @@ android {
         applicationId "tmg.flashback"
         minSdkVersion 23
         targetSdkVersion 30
-        versionCode 70
-        versionName "6.1.1"
+        versionCode versionCode
+        versionName versionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunnerArgument "runnerBuilder", "de.mannodermaus.junit5.AndroidJUnit5Builder"
@@ -230,7 +230,7 @@ task generateReleaseNotes {
     println("Release notes - Generating...")
 
     // Folder with release notes json
-    def folder = "release-notes"
+    def folder = "release/notes"
 
     def stringsXMLLocation = "feature/common/src/main/res/values/release-notes.xml"
     def kotlinFileLocation = "feature/common/src/main/java/tmg/common/constants/ReleaseNotes.kt"
