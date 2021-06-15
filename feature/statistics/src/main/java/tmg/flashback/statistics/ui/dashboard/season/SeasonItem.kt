@@ -5,6 +5,7 @@ import org.threeten.bp.LocalDate
 import org.threeten.bp.Month
 import tmg.flashback.statistics.R
 import tmg.core.ui.model.AnimationSpeed
+import tmg.flashback.data.models.stats.Driver
 import tmg.flashback.data.models.stats.HistoryRound
 import tmg.flashback.data.models.stats.Round
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
@@ -40,7 +41,7 @@ sealed class SeasonItem(
     data class Driver(
         val season: Int,
         val points: Int,
-        val driver: tmg.flashback.data.models.stats.RoundDriver,
+        val driver: tmg.flashback.data.models.stats.Driver,
         val driverId: String = driver.id,
         val position: Int,
         val bestQualifying: Pair<Int, List<Round>>?,

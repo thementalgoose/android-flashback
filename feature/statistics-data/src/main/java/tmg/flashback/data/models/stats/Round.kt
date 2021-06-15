@@ -114,14 +114,6 @@ fun Map<String, Triple<Constructor, Map<String, Pair<Driver, Int>>, Int>>.maxCon
 }
 
 /**
- * Get the maximum points that a driver has scores in the season
- * (ie. Points that the drivers champion has scored)
- */
-fun Map<String, Pair<RoundDriver, Int>>.maxDriverPointsInSeason(): Int {
-    return this.values.maxByOrNull { it.second }?.second ?: 0
-}
-
-/**
  * Get all the points that drivers in a constructor has achieved
  */
 fun Map<String, Pair<Driver, Int>>.allPoints(): Int = this.map { it.value.second }.sum()

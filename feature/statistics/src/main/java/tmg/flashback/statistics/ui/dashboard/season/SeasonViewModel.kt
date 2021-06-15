@@ -177,8 +177,7 @@ class SeasonViewModel(
                             if (maxRound != null && historyRounds.size != rounds.size) {
                                 list.addError(SyncDataItem.MessageRes(R.string.results_accurate_for, listOf(maxRound.name, maxRound.round)))
                             }
-                            val driverStandings = rounds.driverStandings()
-                            list.addAll(driverStandings.toDriverList(rounds))
+                            list.addAll(season.driverStandings.toDriverList(rounds))
                         }
                     }
                 }
@@ -198,7 +197,7 @@ class SeasonViewModel(
                                 list.addError(SyncDataItem.MessageRes(R.string.results_accurate_for, listOf(maxRound.name, maxRound.round)))
                             }
                             val constructorStandings = season.constructorStandings()
-                            list.addAll(constructorStandings.toConstructorList())
+                            list.addAll(constructorStandings.toConstructorList(season))
                         }
                     }
                 }
@@ -321,21 +320,19 @@ class SeasonViewModel(
     /**
      * Convert the driver standings construct into a list of home items to display on the home page
      */
-    private fun DriverStandingsRound.toDriverList(rounds: List<Round>): List<SeasonItem> {
+    private fun List<SeasonStanding<Driver>>.toDriverList(rounds: List<Round>): List<SeasonItem> {
         return this
-            .values
-            .sortedByDescending { it.second }
+            .sortedBy { it.position }
             .toList()
-            .mapIndexed { index: Int, pair: Pair<RoundDriver, Int> ->
-                val (roundDriver, points) = pair
+            .mapIndexed { index: Int, standing: SeasonStanding<Driver> ->
                 SeasonItem.Driver(
                     season = season.value,
-                    driver = roundDriver,
-                    points = points,
+                    driver = standing.item,
+                    points = standing.points,
                     position = index + 1,
-                    bestQualifying = rounds.bestQualifyingResultFor(roundDriver.id),
-                    bestFinish = rounds.bestRaceResultFor(roundDriver.id),
-                    maxPointsInSeason = this.maxDriverPointsInSeason(),
+                    bestQualifying = rounds.bestQualifyingResultFor(standing.item.id),
+                    bestFinish = rounds.bestRaceResultFor(standing.item.id),
+                    maxPointsInSeason = this.maxByOrNull { it.points }?.points ?: 0,
                     animationSpeed = themeController.animationSpeed
                 )
             }
@@ -344,18 +341,18 @@ class SeasonViewModel(
     /**
      * Convert the constructor standings construct into a list of home items to display on the home page
      */
-    private fun ConstructorStandingsRound.toConstructorList(): List<SeasonItem> {
+    private fun ConstructorStandingsRound.toConstructorList(season: Season): List<SeasonItem> {
         return this
             .values
             .toList()
             .mapIndexed { index: Int, triple: Triple<Constructor, Map<String, Pair<Driver, Int>>, Int> ->
                 val (constructor, driverPoints, constructorPoints) = triple
                 SeasonItem.Constructor(
-                    season = season.value,
+                    season = season.season,
                     position = index + 1,
                     constructor = constructor,
                     driver = driverPoints.values.sortedByDescending { it.second },
-                    points = constructorPoints,
+                    points = season.constructorStandings.firstOrNull { it.item.id == constructor.id }?.points ?: constructorPoints,
                     maxPointsInSeason = this.maxConstructorPointsInSeason(),
                     barAnimation = themeController.animationSpeed
                 )
