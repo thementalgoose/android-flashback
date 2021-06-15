@@ -35,7 +35,7 @@ jobs:
       - name: Variables
         run: |
           echo "pr_branch=release/${{ github.event.inputs.versionCode }}" >> $GITHUB_ENV
-          echo "file=release-notes/${{ github.event.inputs.versionName }}.json" >> $GITHUB_ENV
+          echo "file=release/notes/${{ github.event.inputs.versionName }}.json" >> $GITHUB_ENV
 
       # Update build.gradle
       - name: Update build.gradle
