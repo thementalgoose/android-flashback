@@ -13,7 +13,8 @@ data class FSeasonStatistics(
 )
 
 data class FSeasonStatisticsPoints(
-        val p: Int? = 0
+        val p: Int? = 0,
+        val pos: Int? = null
 )
 
 data class FSeasonOverviewDriver(

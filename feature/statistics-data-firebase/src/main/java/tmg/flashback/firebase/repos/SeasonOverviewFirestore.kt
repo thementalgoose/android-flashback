@@ -50,8 +50,8 @@ class SeasonOverviewFirestore(
                             drivers = emptyList(),
                             constructors = emptyList(),
                             rounds = emptyList(),
-                            constructorStandings = emptyMap(),
-                            driverStandings = emptyMap()
+                            constructorStandings = emptyList(),
+                            driverStandings = emptyList()
                     )
                 }
     }
