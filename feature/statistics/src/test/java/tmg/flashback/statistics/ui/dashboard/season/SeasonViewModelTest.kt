@@ -616,7 +616,7 @@ internal class SeasonViewModelTest: BaseTest() {
     private val expectedDriver1 = SeasonItem.Driver(
             season = 2019,
             points = 21,
-            driver = mockDriver1,
+            driver = mockDriver1.toDriver(),
             driverId = mockDriver1.id,
             position = 3,
             bestQualifying = Pair(1, listOf(mockRound1)),
@@ -627,7 +627,7 @@ internal class SeasonViewModelTest: BaseTest() {
     private val expectedDriver2 = SeasonItem.Driver(
             season = 2019,
             points = 18,
-            driver = mockDriver2,
+            driver = mockDriver2.toDriver(),
             driverId = mockDriver2.id,
             position = 4,
             bestQualifying = Pair(2, listOf(mockRound1)),
@@ -638,7 +638,7 @@ internal class SeasonViewModelTest: BaseTest() {
     private val expectedDriver3 = SeasonItem.Driver(
             season = 2019,
             points = 27,
-            driver = mockDriver3,
+            driver = mockDriver3.toDriver(),
             driverId = mockDriver3.id,
             position = 1,
             bestQualifying = Pair(3, listOf(mockRound1, mockRound2)),
@@ -649,7 +649,7 @@ internal class SeasonViewModelTest: BaseTest() {
     private val expectedDriver4 = SeasonItem.Driver(
             season = 2019,
             points = 24,
-            driver = mockDriver4,
+            driver = mockDriver4.toDriver(),
             driverId = mockDriver4.id,
             position = 2,
             bestQualifying = Pair(1, listOf(mockRound2)),

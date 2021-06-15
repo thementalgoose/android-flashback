@@ -177,7 +177,15 @@ class SeasonViewModel(
                             if (maxRound != null && historyRounds.size != rounds.size) {
                                 list.addError(SyncDataItem.MessageRes(R.string.results_accurate_for, listOf(maxRound.name, maxRound.round)))
                             }
-                            list.addAll(season.driverStandings.toDriverList(rounds))
+                            when {
+                                season.driverStandings.isEmpty() -> {
+                                    val driverStandings = rounds.driverStandings()
+                                    list.addAll(driverStandings.toDriverList(rounds))
+                                }
+                                else -> {
+                                    list.addAll(season.driverStandings.toDriverList(rounds))
+                                }
+                            }
                         }
                     }
                 }
@@ -333,6 +341,30 @@ class SeasonViewModel(
                     bestQualifying = rounds.bestQualifyingResultFor(standing.item.id),
                     bestFinish = rounds.bestRaceResultFor(standing.item.id),
                     maxPointsInSeason = this.maxByOrNull { it.points }?.points ?: 0,
+                    animationSpeed = themeController.animationSpeed
+                )
+            }
+    }
+    /**
+     * Convert the driver standings construct into a list of home items to display on the home page
+     * Compatibility function
+     */
+    @Deprecated("Should not be required if the standings model is available. Data migration in progress", replaceWith = ReplaceWith("List<SeasonStanding<Driver>>.toDriverList(rounds: List<Round>)"))
+    private fun DriverStandingsRound.toDriverList(rounds: List<Round>): List<SeasonItem> {
+        return this
+            .values
+            .sortedByDescending { it.second }
+            .toList()
+            .mapIndexed { index: Int, pair: Pair<RoundDriver, Int> ->
+                val (roundDriver, points) = pair
+                SeasonItem.Driver(
+                    season = season.value,
+                    driver = roundDriver.toDriver(),
+                    points = points,
+                    position = index + 1,
+                    bestQualifying = rounds.bestQualifyingResultFor(roundDriver.id),
+                    bestFinish = rounds.bestRaceResultFor(roundDriver.id),
+                    maxPointsInSeason = this.values.maxByOrNull { it.second }?.second ?: 0,
                     animationSpeed = themeController.animationSpeed
                 )
             }
