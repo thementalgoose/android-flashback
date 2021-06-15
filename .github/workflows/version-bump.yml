@@ -40,12 +40,12 @@ jobs:
       # Update build.gradle
       - name: Update build.gradle
         run: |
-          sed "s/versionCode=.*/versionCode=${{ github.event.inputs.versionCode }}/g" gradle.properties >> gradle.properties
-          sed "s/versionName=.*/versionName=${{ github.event.inputs.versionName }}/g" gradle.properties >> gradle.properties
+          sed "s/versionCode=.*/versionCode=${{ github.event.inputs.versionCode }}/g" gradle.properties > gradle.properties
+          sed "s/versionName=.*/versionName=${{ github.event.inputs.versionName }}/g" gradle.properties > gradle.properties
 
       # Create JSON
       - name: Create json
-        run: echo $JSON >> ${{ env.file }}
+        run: echo $JSON > ${{ env.file }}
         env:
           JSON: |
             {
