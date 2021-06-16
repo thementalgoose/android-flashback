@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+
+    <!--#region Dashboard Up Next -->
+
+    <style name="Text.Dashboard.UpNext.Title" parent="Text">
+        <item name="android:textSize">26sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!--#endregion -->
+
     <!--#region Widgets -->
 
     <style name="Text.Widget.Title" parent="Text">

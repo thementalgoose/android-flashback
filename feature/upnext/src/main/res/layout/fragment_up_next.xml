@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/track"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:importantForAccessibility="no"
+        android:paddingStart="@dimen/paddingLarge"
+        android:paddingTop="@dimen/paddingLarge"
+        android:paddingEnd="@dimen/paddingLarge"
+        android:paddingBottom="@dimen/paddingLarge"
+        app:layout_constraintBottom_toBottomOf="@id/divider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="?attr/contentPrimaryInverse"
+        tools:src="@drawable/circuit_ricard" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/divider"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <TextView
+        style="@style/Text.Dashboard.UpNext.Title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingStart="@dimen/paddingMedium"
+        android:paddingTop="@dimen/paddingSmall"
+        android:paddingEnd="@dimen/paddingMedium"
+        android:paddingBottom="@dimen/paddingSmall"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/divider"
+        tools:text="French Grand Prix" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
