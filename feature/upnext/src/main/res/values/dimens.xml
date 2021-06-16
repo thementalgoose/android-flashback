@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <dimen name="upNextCircuitHeight">180dp</dimen>
+
     <dimen name="widgetCircuitWidth">60dp</dimen>
     <dimen name="widgetCircuitHeight">60dp</dimen>
     <dimen name="widgetRefreshWidth">24dp</dimen>
