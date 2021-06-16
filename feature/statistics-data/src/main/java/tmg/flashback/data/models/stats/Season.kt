@@ -41,7 +41,7 @@ fun Season.constructorStandings(): ConstructorStandingsRound = this.constructors
             }
 
             // Constructor points
-            val constructorPoints = this.constructorStandings[constructor.id]
+            val constructorPoints = this.constructorStandings.firstOrNull { it.item.id == constructor.id }
                     ?.let { (_, points) -> points }
                     ?: driverMap.map { it.value.second }.sum()
 
