@@ -75,7 +75,6 @@ internal val mockDriver4 = mockDriver1.copy(
     constructor = mockConstructorBeta,
     constructorAtEndOfSeason = mockConstructorBeta
 )
-
 //endregion
 
 
@@ -404,8 +403,8 @@ internal val mockSeason = Season(
     drivers = listOf(mockDriver1.toDriver(), mockDriver2.toDriver(), mockDriver3.toDriver(), mockDriver4.toDriver()),
     constructors = listOf(mockConstructorAlpha, mockConstructorBeta),
     rounds = listOf(mockRound1, mockRound2),
-    driverStandings = emptyMap(),
-    constructorStandings = emptyMap()
+    driverStandings = emptyList(),
+    constructorStandings = emptyList()
 )
 
 //endregion

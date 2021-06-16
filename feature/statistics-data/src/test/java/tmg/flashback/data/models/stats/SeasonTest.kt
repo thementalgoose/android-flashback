@@ -91,9 +91,9 @@ class SeasonTest {
         )
 
         val mockSeasonWithConstructorStandings = mockSeason.copy(
-                constructorStandings = mapOf(
-                        mockConstructorAlpha.id to Pair(mockConstructorAlpha, alphaPoints),
-                        mockConstructorBeta.id to Pair(mockConstructorBeta, betaPoints)
+                constructorStandings = listOf(
+                    SeasonStanding<Constructor>(mockConstructorAlpha, alphaPoints, if (alphaPoints > betaPoints) 1 else 2),
+                    SeasonStanding<Constructor>(mockConstructorBeta, betaPoints, if (alphaPoints > betaPoints) 1 else 2)
                 )
         )
 

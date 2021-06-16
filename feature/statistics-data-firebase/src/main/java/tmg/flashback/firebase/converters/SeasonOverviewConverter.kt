@@ -27,10 +27,10 @@ fun FSeason.convert(season: Int): Season {
                     },
             driverStandings = this.standings?.drivers?.let {
                 return@let it.convertDriver(drivers)
-            } ?: mapOf(),
+            } ?: emptyList(),
             constructorStandings = this.standings?.constructors?.let {
                 return@let it.convertConstructor(constructors)
-            } ?: mapOf()
+            } ?: emptyList()
     )
 }
 
@@ -136,12 +136,36 @@ private fun FSeason.constructorAtEndOfSeason(driverId: String): Constructor {
 // key = driverId, value = model
 private fun Map<String, FSeasonStatisticsPoints>.convertDriver(drivers: List<Driver>): DriverStandings = this
         .map {
-            it.key to Pair(drivers.first { driver -> driver.id == it.key }, it.value.p ?: 0)
+            SeasonStanding(
+                item = drivers.first { driver -> driver.id == it.key },
+                points = it.value.p ?: 0,
+                position = it.value.pos ?: -1
+            )
         }
-        .toMap()
+        .let { list ->
+            if (list.any { it.position == -1}) {
+                return@let list
+                    .sortedByDescending { it.points }
+                    .mapIndexed { index, seasonStanding -> seasonStanding.copy(position = index + 1) }
+            }
+            return@let list
+                .sortedBy { it.position }
+        }
 
 private fun Map<String, FSeasonStatisticsPoints>.convertConstructor(constructors: List<Constructor>): ConstructorStandings = this
         .map {
-            it.key to Pair(constructors.first { constructor -> constructor.id == it.key }, it.value.p ?: 0)
+            SeasonStanding(
+                item = constructors.first { constructor -> constructor.id == it.key },
+                points = it.value.p ?: 0,
+                position = it.value.pos ?: -1
+            )
         }
-        .toMap()
+        .let { list ->
+            if (list.any { it.position == -1}) {
+                return@let list
+                    .sortedByDescending { it.points }
+                    .mapIndexed { index, seasonStanding -> seasonStanding.copy(position = index + 1) }
+            }
+            return@let list
+                .sortedBy { it.position }
+        }

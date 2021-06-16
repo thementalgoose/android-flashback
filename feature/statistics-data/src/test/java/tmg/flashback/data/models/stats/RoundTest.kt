@@ -97,18 +97,6 @@ class RoundTest {
     }
 
     @Test
-    fun `(List) driverStandings maxDriverPointsInSeason returns the most points `() {
-
-        val example = mapOf(
-                "1" to Pair(mockDriver1, 21),
-                "2" to Pair(mockDriver2, 18),
-                "3" to Pair(mockDriver3, 27),
-                "4" to Pair(mockDriver4, 24)
-        )
-        assertEquals(27, example.maxDriverPointsInSeason())
-    }
-
-    @Test
     fun `(List) allPoints for constructorStandings individual item returns the sum of the points`() {
 
         val example = mapOf(
