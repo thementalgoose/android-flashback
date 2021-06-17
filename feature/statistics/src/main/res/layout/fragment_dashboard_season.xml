@@ -42,6 +42,22 @@
             app:srcCompat="@drawable/ic_menu"
             app:tint="?attr/contentPrimary" />
 
+        <ImageView
+            android:id="@+id/now"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/paddingSmall"
+            android:clickable="true"
+            android:contentDescription="@string/ab_dashboard_now"
+            android:focusable="true"
+            android:foreground="@drawable/ripple_rounded_small"
+            android:padding="@dimen/paddingSmall"
+            app:layout_constraintBottom_toBottomOf="@id/toolbarGuideline"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_now"
+            app:tint="?attr/contentPrimary" />
+
         <TextView
             android:id="@+id/titleCollapsed"
             style="@style/Text.Toolbar.Collapsed"
@@ -51,7 +67,7 @@
             android:layout_marginEnd="@dimen/paddingMedium"
             android:alpha="0.0"
             app:layout_constraintBottom_toBottomOf="@id/toolbarGuideline"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/now"
             app:layout_constraintStart_toStartOf="@id/menu"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="2021" />

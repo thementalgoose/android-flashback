@@ -33,7 +33,7 @@
 
         <!-- Set layout_gravity on the end panel to "end" -->
         <FrameLayout
-            android:id="@+id/other"
+            android:id="@+id/upnext"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="end"

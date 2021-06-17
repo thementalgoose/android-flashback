@@ -8,7 +8,7 @@ import tmg.flashback.upnext.ui.dashboard.UpNextViewModel
 
 val upNextModule = module {
 
-    viewModel { UpNextViewModel() }
+    viewModel { UpNextViewModel(get()) }
 
     single { UpNextController(get()) }
     single { UpNextRepository(get()) }

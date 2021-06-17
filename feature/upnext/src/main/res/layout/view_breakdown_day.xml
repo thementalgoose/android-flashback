@@ -5,12 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingStart="@dimen/paddingMedium"
-    android:paddingTop="@dimen/paddingSmall"
+    android:paddingTop="@dimen/paddingXSmall"
     android:paddingEnd="@dimen/paddingMedium"
-    android:paddingBottom="@dimen/paddingSmall">
+    android:paddingBottom="@dimen/paddingXSmall">
 
     <TextView
         style="@style/Text.Dashboard.UpNext.Day.Label"
+        android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"

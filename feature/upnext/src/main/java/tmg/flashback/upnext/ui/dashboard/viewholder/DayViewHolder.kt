@@ -9,6 +9,6 @@ class DayViewHolder(
 ): RecyclerView.ViewHolder(binding.root) {
 
     fun bind(item: UpNextBreakdownModel.Day) {
-
+        binding.title.text = item.label
     }
 }

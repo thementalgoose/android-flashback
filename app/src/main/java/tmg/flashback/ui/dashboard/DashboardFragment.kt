@@ -20,6 +20,7 @@ import tmg.flashback.statistics.ui.admin.maintenance.MaintenanceActivity
 import tmg.flashback.ui.dashboard.list.ListFragment
 import tmg.flashback.statistics.ui.dashboard.season.SeasonFragment
 import tmg.flashback.statistics.ui.dashboard.season.SeasonFragmentCallback
+import tmg.flashback.upnext.ui.dashboard.UpNextFragment
 import tmg.utilities.extensions.observeEvent
 
 class DashboardFragment : BaseFragment<FragmentDashboardBinding>(),
@@ -35,6 +36,9 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(),
     private val listTag: String = "list"
     private val listFragment: ListFragment?
         get() = childFragmentManager.findFragmentByTag(listTag) as? ListFragment
+    private val upNextTag: String = "list"
+    private val upNextFragment: UpNextFragment?
+        get() = childFragmentManager.findFragmentByTag(upNextTag) as? UpNextFragment
 
     override fun inflateView(inflater: LayoutInflater) =
         FragmentDashboardBinding.inflate(inflater)
@@ -44,10 +48,10 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(),
 
         loadFragment(SeasonFragment(), R.id.season, seasonTag)
         loadFragment(ListFragment(), R.id.list, listTag)
-        loadFragment(Fragment(), R.id.other, "rightPane")
+        loadFragment(UpNextFragment(), R.id.upnext, upNextTag)
 
-        binding.panels.setEndPanelLockState(lockState = OverlappingPanelsLayout.LockState.CLOSE)
         binding.panels.registerStartPanelStateListeners(this)
+        binding.panels.registerEndPanelStateListeners(this)
 
         if (!seasonController.dashboardCalendar) {
             binding.navigation.menu.removeItem(R.id.nav_calendar)
@@ -89,6 +93,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(),
         observeEvent(viewModel.outputs.appConfigSynced) {
             listFragment?.refresh()
             seasonFragment?.refresh()
+            upNextFragment?.refresh()
         }
 
         observeEvent(viewModel.outputs.openReleaseNotes) {
@@ -152,8 +157,13 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(),
     //endregion
 
     //region SeasonFragmentCallback
+
     override fun openMenu() {
         binding.panels.openStartPanel()
+    }
+
+    override fun openNow() {
+        binding.panels.openEndPanel()
     }
 
     //endregion

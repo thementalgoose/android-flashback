@@ -4,6 +4,12 @@
 
     <!--#region Dashboard Up Next -->
 
+    <style name="Text.Dashboard.UpNext.Hero" parent="Text">
+        <item name="android:fontFamily">@font/montserrat</item>
+        <item name="android:textSize">@dimen/textSizeXLarge</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="Text.Dashboard.UpNext.Title" parent="Text">
         <item name="android:textSize">26sp</item>
         <item name="android:textStyle">bold</item>
@@ -18,7 +24,6 @@
     </style>
 
     <style name="Text.Dashboard.UpNext.Item.Time" parent="Text">
-        <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/textSizeLarge</item>
     </style>
 
