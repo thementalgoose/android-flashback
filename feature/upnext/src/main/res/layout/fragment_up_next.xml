@@ -97,10 +97,16 @@
         android:id="@+id/timezone"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:paddingStart="@dimen/paddingMedium"
+        android:paddingTop="@dimen/paddingSmall"
+        android:paddingEnd="@dimen/paddingMedium"
+        android:paddingBottom="@dimen/paddingSmall"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/divider"
-        tools:itemCount="1" />
+        tools:itemCount="1"
+        tools:listitem="@layout/view_timezone" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/content"
