@@ -1,5 +1,8 @@
 package tmg.flashback.upnext.ui.timezone
 
+import androidx.annotation.StringRes
+
 data class TimezoneItem(
-    val label: String
+    @StringRes
+    val label: Int
 )

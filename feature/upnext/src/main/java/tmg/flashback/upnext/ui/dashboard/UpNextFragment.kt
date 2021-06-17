@@ -47,6 +47,10 @@ class UpNextFragment: BaseFragment<FragmentUpNextBinding>() {
             binding.title.text = schedule.title
             binding.subtitle.text = schedule.subtitle
         }
+
+        observe(viewModel.outputs.timezones) {
+            timezoneAdapter.list = it
+        }
     }
 
     fun refresh() {

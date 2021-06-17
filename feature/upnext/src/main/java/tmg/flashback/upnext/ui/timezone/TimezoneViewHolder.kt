@@ -8,6 +8,6 @@ class TimezoneViewHolder(
 ): RecyclerView.ViewHolder(binding.root) {
 
     fun bind(timezoneItem: TimezoneItem) {
-        binding.title.text = timezoneItem.label
+        binding.title.setText(timezoneItem.label)
     }
 }
