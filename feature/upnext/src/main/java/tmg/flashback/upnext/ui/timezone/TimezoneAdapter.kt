@@ -4,11 +4,12 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import tmg.flashback.upnext.R
 import tmg.flashback.upnext.databinding.ViewTimezoneBinding
 
 class TimezoneAdapter: RecyclerView.Adapter<TimezoneViewHolder>() {
 
-    var list: List<TimezoneItem> = listOf(TimezoneItem("Your time"), TimezoneItem("Europe/London"))
+    var list: List<TimezoneItem> = emptyList()
         @SuppressLint("NotifyDataSetChanged")
         set(value) {
             field = value
