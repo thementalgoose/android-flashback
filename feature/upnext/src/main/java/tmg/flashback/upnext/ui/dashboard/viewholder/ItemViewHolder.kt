@@ -12,14 +12,16 @@ class ItemViewHolder(
 ): RecyclerView.ViewHolder(binding.root) {
 
     fun bind(item: UpNextBreakdownModel.Item) {
-        when (item.item.isInPast) {
+        when (item.isInPast) {
             false -> {
-                println("Item ${item.label} is in the past")
-                binding.container.alpha = 1.0f
+                println("Item ${item.label} is NOT in the past")
+                binding.title.alpha = 1.0f
+                binding.time.alpha = 1.0f
             }
             true -> {
-                println("Item ${item.label} is NOT in the past")
-                binding.container.alpha = 0.4f
+                println("Item ${item.label} is in the past")
+                binding.title.alpha = 0.4f
+                binding.time.alpha = 0.4f
             }
         }
 

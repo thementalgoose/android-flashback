@@ -83,7 +83,7 @@ class UpNextFragment: BaseFragment<FragmentUpNextBinding>() {
 
     override fun onResume() {
         super.onResume()
-        upNextAdapter?.refreshUpNext()
+        viewModel.inputs.refresh()
         context?.registerReceiver(tickReceiver, IntentFilter(Intent.ACTION_TIME_TICK))
     }
 
