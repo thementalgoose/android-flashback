@@ -9,7 +9,8 @@ sealed class UpNextBreakdownModel(
 ) {
     data class Item(
         val label: String,
-        val item: Timestamp
+        val item: Timestamp,
+        val isInPast: Boolean = item.isInPast
     ): UpNextBreakdownModel(R.layout.view_breakdown_item)
 
     data class Day(

@@ -19,6 +19,7 @@ class UpNextBreakdownAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var list: List<UpNextBreakdownModel> = emptyList()
         set(value) {
+            println(value)
             val result = DiffUtil.calculateDiff(GenericDiffCallback(field, value))
             field = value
             result.dispatchUpdatesTo(this)
