@@ -12,11 +12,6 @@ sealed class ListItem(
 ) {
     object Hero: ListItem(R.layout.view_season_list_hero)
 
-    data class UpNext(
-            val upNextSchedule: UpNextSchedule,
-            val timeFormatType: TimeListDisplayType
-    ): ListItem(R.layout.view_season_list_up_next)
-
     object Divider: ListItem(R.layout.view_season_list_divider)
 
     data class Button(

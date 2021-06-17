@@ -93,7 +93,24 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:text="Circuit Paul Ricard" />
 
+
+    <TextView
+        android:id="@+id/shown_helper"
+        style="@style/Text.Dashboard.UpNext.Info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="start"
+        android:paddingStart="@dimen/paddingMedium"
+        android:paddingEnd="@dimen/paddingMedium"
+        android:paddingBottom="@dimen/paddingSmall"
+        app:layout_constraintTop_toTopOf="@id/divider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="@string/dashboard_up_next_shown_in_device_time"/>
+
+    <!-- Gone temporarily while we only support device time -->
     <androidx.recyclerview.widget.RecyclerView
+        android:visibility="gone"
         android:id="@+id/timezone"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -117,7 +134,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/timezone"
+        app:layout_constraintTop_toBottomOf="@id/shown_helper"
         app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -36,7 +36,6 @@ internal class ListViewModelTest: BaseTest() {
         every { mockSeasonController.defaultSeason } returns 2018
 
         every { mockUpNextController.getNextEvent() } returns null
-        every { mockUpNextController.upNextDisplayType } returns TimeListDisplayType.LOCAL
 
         every { mockSeasonController.supportedSeasons } returns List(currentYear - 1949) { it + 1950 }.toSet()
 
@@ -133,12 +132,12 @@ internal class ListViewModelTest: BaseTest() {
         initSUT()
 
         sut.outputs.list.test {
-            assertListDoesNotMatchItem { it is ListItem.UpNext }
+            assertListDoesNotMatchItem { it is ListItem.Header && it.type == HeaderType.UP_NEXT }
         }
     }
 
     @Test
-    fun `up next section shown when valid next race item found`() {
+    fun `up next section shown with button`() {
 
         val expected = UpNextSchedule(1,2,"test", null, emptyList(),null,null)
         every { mockUpNextController.getNextEvent() } returns expected
@@ -146,21 +145,7 @@ internal class ListViewModelTest: BaseTest() {
         initSUT()
 
         sut.outputs.list.test {
-            assertListMatchesItem { it is ListItem.UpNext }
-        }
-    }
-
-    @Test
-    fun `clicking time display list format with type puts it in up next item`() = coroutineTest {
-
-        val expected = UpNextSchedule(1,2,"test", null, emptyList(),null,null)
-        every { mockUpNextController.getNextEvent() } returns expected
-        initSUT()
-
-        sut.inputs.clickTimeDisplayType(TimeListDisplayType.RELATIVE)
-
-        sut.outputs.list.test {
-            assertListMatchesItem { it is ListItem.UpNext && it.timeFormatType == TimeListDisplayType.RELATIVE }
+            assertListMatchesItem { it is ListItem.Header && it.type == HeaderType.UP_NEXT }
         }
     }
 

@@ -1,5 +1,6 @@
 package tmg.flashback.upnext.ui.dashboard
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -22,6 +23,11 @@ class UpNextBreakdownAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             field = value
             result.dispatchUpdatesTo(this)
         }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun refreshUpNext() {
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)

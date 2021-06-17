@@ -72,7 +72,7 @@ class UpNextViewModel(
                         val day = date.dayOfMonth
                         return@map Pair(date, mutableListOf<UpNextBreakdownModel>().apply {
                             add(UpNextBreakdownModel.Divider)
-                            add(UpNextBreakdownModel.Day(date.format(DateTimeFormatter.ofPattern("EEEE '" + day.ordinalAbbreviation + "' MMM"))))
+                            add(UpNextBreakdownModel.Day(date.format(DateTimeFormatter.ofPattern("EEEE '" + day.ordinalAbbreviation + "' MMMM"))))
                             addAll(values
                                 .sortedBy { it.timestamp.string() }
                                 .map {
