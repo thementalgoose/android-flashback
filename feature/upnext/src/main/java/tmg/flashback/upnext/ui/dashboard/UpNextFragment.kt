@@ -10,6 +10,7 @@ import tmg.flashback.formula1.enums.TrackLayout
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.upnext.R
 import tmg.flashback.upnext.databinding.FragmentUpNextBinding
+import tmg.flashback.upnext.ui.timezone.TimezoneAdapter
 import tmg.utilities.extensions.observe
 
 class UpNextFragment: BaseFragment<FragmentUpNextBinding>() {
@@ -17,6 +18,7 @@ class UpNextFragment: BaseFragment<FragmentUpNextBinding>() {
     private val viewModel: UpNextViewModel by viewModel()
 
     private lateinit var upNextAdapter: UpNextBreakdownAdapter
+    private lateinit var timezoneAdapter: TimezoneAdapter
 
     override fun inflateView(inflater: LayoutInflater) = FragmentUpNextBinding
         .inflate(inflater)
@@ -27,6 +29,10 @@ class UpNextFragment: BaseFragment<FragmentUpNextBinding>() {
         upNextAdapter = UpNextBreakdownAdapter()
         binding.content.layoutManager = LinearLayoutManager(context)
         binding.content.adapter = upNextAdapter
+
+        timezoneAdapter = TimezoneAdapter()
+        binding.timezone.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        binding.timezone.adapter = timezoneAdapter
 
         observe(viewModel.outputs.content) {
             upNextAdapter.list = it

@@ -17,11 +17,13 @@
         <entry key="feature/statistics/src/main/res/layout/fragment_dashboard_season.xml" value="0.3848958333333333" />
         <entry key="feature/statistics/src/main/res/layout/view_driver_season_header.xml" value="0.3848958333333333" />
         <entry key="feature/statistics/src/main/res/layout/view_link_pill.xml" value="0.3026041666666667" />
+        <entry key="feature/upnext/src/main/res/drawable/background_timezone.xml" value="0.4010416666666667" />
         <entry key="feature/upnext/src/main/res/drawable/widget_circuit_unknown.xml" value="0.4010416666666667" />
         <entry key="feature/upnext/src/main/res/layout/fragment_up_next.xml" value="0.30572916666666666" />
         <entry key="feature/upnext/src/main/res/layout/view_breakdown_day.xml" value="0.3026041666666667" />
         <entry key="feature/upnext/src/main/res/layout/view_breakdown_divider.xml" value="0.3848958333333333" />
         <entry key="feature/upnext/src/main/res/layout/view_breakdown_item.xml" value="0.3026041666666667" />
+        <entry key="feature/upnext/src/main/res/layout/view_timezone.xml" value="0.3848958333333333" />
         <entry key="feature/upnext/src/main/res/layout/view_up_next_time_list.xml" value="0.3026041666666667" />
       </map>
     </option>
