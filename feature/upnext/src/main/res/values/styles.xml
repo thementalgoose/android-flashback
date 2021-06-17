@@ -9,6 +9,23 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="Text.Dashboard.UpNext.Subtitle" parent="Text">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Text.Dashboard.UpNext.Item.Label" parent="Text">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Text.Dashboard.UpNext.Item.Time" parent="Text">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/textSizeLarge</item>
+    </style>
+
+    <style name="Text.Dashboard.UpNext.Day.Label" parent="Text">
+        <item name="android:textSize">@dimen/textSizeMedium</item>
+    </style>
+
     <!--#endregion -->
 
     <!--#region Widgets -->

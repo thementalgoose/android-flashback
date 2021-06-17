@@ -3,7 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="feature/statistics/src/main/res/drawable/background_link_pill.xml" value="0.31875" />
+        <entry key="feature/statistics/src/main/res/layout/view_link_pill.xml" value="0.3026041666666667" />
         <entry key="feature/upnext/src/main/res/layout/fragment_up_next.xml" value="0.30572916666666666" />
+        <entry key="feature/upnext/src/main/res/layout/view_breakdown_day.xml" value="0.3026041666666667" />
+        <entry key="feature/upnext/src/main/res/layout/view_breakdown_item.xml" value="0.3026041666666667" />
+        <entry key="feature/upnext/src/main/res/layout/view_up_next_time_list.xml" value="0.3026041666666667" />
       </map>
     </option>
   </component>
