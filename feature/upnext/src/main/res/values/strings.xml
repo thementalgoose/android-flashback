@@ -13,6 +13,8 @@
         <item quantity="other">%d days to go</item>
     </plurals>
 
+    <string name="dashboard_up_next_all_day">All day</string>
+
     <string name="dashboard_up_next_date_today">Today</string>
     <string name="dashboard_up_next_date_starts_at_tomorrow">%s tomorrow</string>
     <string name="dashboard_up_next_date_starts_at_today">%s today</string>

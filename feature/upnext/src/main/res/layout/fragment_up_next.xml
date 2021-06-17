@@ -5,20 +5,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/hero"
+        style="@style/Text.Dashboard.UpNext.Hero"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/paddingSmall"
+        android:paddingStart="@dimen/paddingMedium"
+        android:paddingTop="@dimen/paddingSmall"
+        android:paddingEnd="@dimen/paddingSmall"
+        android:paddingBottom="@dimen/paddingNSmall"
+        android:text="@string/dashboard_up_next_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:id="@+id/track"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:importantForAccessibility="no"
         android:paddingStart="@dimen/paddingLarge"
-        android:paddingTop="@dimen/paddingLarge"
+        android:paddingTop="@dimen/paddingSmall"
         android:paddingEnd="@dimen/paddingLarge"
-        android:paddingBottom="@dimen/paddingLarge"
+        android:paddingBottom="@dimen/paddingSmall"
         app:layout_constraintBottom_toTopOf="@id/flag"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/track_edge"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tint="?attr/contentPrimaryInverse"
+        app:layout_constraintTop_toBottomOf="@id/hero"
+        app:tint="?attr/contentPrimary"
         tools:src="@drawable/circuit_ricard" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -26,15 +41,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.5" />
+        app:layout_constraintGuide_percent="0.4" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/track_edge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.7" />
 
     <ImageView
         android:id="@+id/flag"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/toolbarIconSize"
+        android:layout_height="@dimen/toolbarIconSize"
+        android:layout_marginStart="@dimen/paddingMedium"
+        android:layout_marginEnd="@dimen/paddingMedium"
         android:importantForAccessibility="no"
         app:layout_constraintBottom_toTopOf="@id/title"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         tools:src="@drawable/fr" />
 
@@ -44,7 +69,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/paddingSmall"
-        android:gravity="center"
+        android:gravity="start"
         android:paddingStart="@dimen/paddingMedium"
         android:paddingTop="@dimen/paddingSmall"
         android:paddingEnd="@dimen/paddingMedium"
@@ -58,7 +83,7 @@
         style="@style/Text.Dashboard.UpNext.Subtitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:gravity="start"
         android:paddingStart="@dimen/paddingMedium"
         android:paddingTop="@dimen/paddingSmall"
         android:paddingEnd="@dimen/paddingMedium"
@@ -81,9 +106,12 @@
         android:id="@+id/content"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:overScrollMode="never"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/timezone" />
+        app:layout_constraintTop_toBottomOf="@id/timezone"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

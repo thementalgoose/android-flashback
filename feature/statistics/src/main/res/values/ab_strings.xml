@@ -9,6 +9,7 @@
     <string name="ab_season_list_more">More options for %d season</string>
 
     <string name="ab_dashboard_menu">Menu</string>
+    <string name="ab_dashboard_now">Up Next</string>
 
     <string name="ab_back">Back</string>
 </resources>

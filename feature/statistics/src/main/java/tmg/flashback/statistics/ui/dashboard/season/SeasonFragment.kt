@@ -35,11 +35,6 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
     private val seasonFragmentCallback: SeasonFragmentCallback?
         get() = parentFragment as? SeasonFragmentCallback
 
-//    override val screenAnalytics get() = ScreenAnalytics(
-//        screenName = "Dashboard",
-//        attributes = analyticsData
-//    )
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -80,8 +75,16 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
             viewModel.inputs.clickMenu()
         }
 
+        binding.now.setOnClickListener {
+            viewModel.inputs.clickNow()
+        }
+
         observeEvent(viewModel.outputs.openMenu) {
             seasonFragmentCallback?.openMenu()
+        }
+
+        observeEvent(viewModel.outputs.openNow) {
+            seasonFragmentCallback?.openNow()
         }
 
         observe(viewModel.outputs.label) {

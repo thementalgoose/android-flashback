@@ -15,4 +15,6 @@ sealed class UpNextBreakdownModel(
     data class Day(
         val label: String
     ): UpNextBreakdownModel(R.layout.view_breakdown_day)
+
+    object Divider: UpNextBreakdownModel(R.layout.view_breakdown_divider)
 }
