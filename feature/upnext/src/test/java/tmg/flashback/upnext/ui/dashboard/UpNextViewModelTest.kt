@@ -63,7 +63,7 @@ internal class UpNextViewModelTest: BaseTest() {
             zone = ZoneId.systemDefault()
         )
         every { mockUpNextController.getNextEvent() } returns mockUpNext.copy(values = listOf(
-            UpNextScheduleTimestamp("Qualifying", qualifyingTimestamp),
+            UpNextScheduleTimestamp("qualifying", qualifyingTimestamp),
             UpNextScheduleTimestamp("race", raceTimestamp),
             UpNextScheduleTimestamp("practice", practiceTimestamp)
         ))
@@ -107,7 +107,7 @@ internal class UpNextViewModelTest: BaseTest() {
             zone = ZoneId.systemDefault()
         )
         every { mockUpNextController.getNextEvent() } returns mockUpNext.copy(values = listOf(
-            UpNextScheduleTimestamp("Qualifying", qualifyingTimestamp),
+            UpNextScheduleTimestamp("qualifying", qualifyingTimestamp),
             UpNextScheduleTimestamp("race", raceTimestamp),
             UpNextScheduleTimestamp("practice", practiceTimestamp)
         ))
@@ -149,7 +149,7 @@ internal class UpNextViewModelTest: BaseTest() {
             zone = ZoneId.systemDefault()
         )
         every { mockUpNextController.getNextEvent() } returns mockUpNext.copy(values = listOf(
-            UpNextScheduleTimestamp("Qualifying", qualifyingTimestamp),
+            UpNextScheduleTimestamp("qualifying", qualifyingTimestamp),
             UpNextScheduleTimestamp("race", raceTimestamp),
             UpNextScheduleTimestamp("practice", practiceTimestamp)
         ))
@@ -188,7 +188,7 @@ internal class UpNextViewModelTest: BaseTest() {
             assertValue(UpNextSchedule(
                 title = "Nothing here yet!",
                 subtitle = "Please check back later when we know more",
-                values = emptyList(),
+                values = emptyList()
                 flag = null,
                 circuitId = null,
                 season = 0,
