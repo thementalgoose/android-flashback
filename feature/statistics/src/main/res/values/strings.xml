@@ -21,6 +21,7 @@
 
     <string name="dashboard_season_list_extra_title">Links</string>
     <string name="dashboard_season_list_extra_rss_title">RSS feed</string>
+    <string name="dashboard_season_list_up_next_moved">Up next has moved!</string>
     <string name="dashboard_season_list_extra_settings_title">Settings</string>
     <string name="dashboard_season_list_extra_contact_title">Contact</string>
     <string name="dashboard_season_list_default_banner_automatic">No default season set</string>

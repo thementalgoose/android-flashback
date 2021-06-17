@@ -19,6 +19,10 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="Text.Dashboard.UpNext.Info" parent="Text">
+        <item name="android:textColor">?attr/contentSecondary</item>
+    </style>
+
     <style name="Text.Dashboard.UpNext.Item.Label" parent="Text">
         <item name="android:textStyle">bold</item>
     </style>

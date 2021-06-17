@@ -33,16 +33,6 @@ class ListFragment: BaseFragment<FragmentDashboardListBinding>() {
     private val dashboardNavigationCallback: DashboardNavigationCallback?
         get() = parentFragment as? DashboardNavigationCallback
 
-    @Suppress("RedundantNullableReturnType")
-    private val tickReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
-        override fun onReceive(p0: Context?, p1: Intent?) {
-            if (BuildConfig.DEBUG) {
-                Log.i("Flashback", "Broadcast Receiver tick for time update")
-            }
-            adapter?.refreshUpNext()
-        }
-    }
-
     override fun inflateView(inflater: LayoutInflater) =
         FragmentDashboardListBinding.inflate(layoutInflater)
 
@@ -60,9 +50,9 @@ class ListFragment: BaseFragment<FragmentDashboardListBinding>() {
                          "rss" -> viewModel.inputs.clickRss()
                          "settings" -> viewModel.inputs.clickSettings()
                          "contact" -> viewModel.inputs.clickContact()
+                         "up_next_moved" -> dashboardNavigationCallback?.openNow()
                      }
-                },
-                timeDisplayFormatClicked = viewModel.inputs::clickTimeDisplayType
+                }
         )
         binding.list.layoutManager = LinearLayoutManager(context)
         binding.list.adapter = adapter
@@ -108,19 +98,6 @@ class ListFragment: BaseFragment<FragmentDashboardListBinding>() {
                         }
                         .show()
             }
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        adapter?.refreshUpNext()
-        context?.registerReceiver(tickReceiver, IntentFilter(Intent.ACTION_TIME_TICK))
-    }
-
-    override fun onPause() {
-        super.onPause()
-        if (tickReceiver != null) {
-            context?.unregisterReceiver(tickReceiver)
         }
     }
 
