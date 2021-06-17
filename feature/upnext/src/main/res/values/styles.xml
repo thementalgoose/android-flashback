@@ -21,6 +21,8 @@
 
     <style name="Text.Dashboard.UpNext.Info" parent="Text">
         <item name="android:textColor">?attr/contentSecondary</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:textSize">@dimen/textSizeSmall</item>
     </style>
 
     <style name="Text.Dashboard.UpNext.Item.Label" parent="Text">

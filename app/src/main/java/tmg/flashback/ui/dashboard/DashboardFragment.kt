@@ -24,7 +24,8 @@ import tmg.flashback.upnext.ui.dashboard.UpNextFragment
 import tmg.utilities.extensions.observeEvent
 
 class DashboardFragment : BaseFragment<FragmentDashboardBinding>(),
-    OverlappingPanelsLayout.PanelStateListener, DashboardNavigationCallback, SeasonFragmentCallback {
+    OverlappingPanelsLayout.PanelStateListener, DashboardNavigationCallback,
+    SeasonFragmentCallback {
 
     private val viewModel: DashboardViewModel by viewModel()
 
@@ -52,6 +53,8 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(),
 
         binding.panels.registerStartPanelStateListeners(this)
         binding.panels.registerEndPanelStateListeners(this)
+
+//        binding.panels.listener
 
         if (!seasonController.dashboardCalendar) {
             binding.navigation.menu.removeItem(R.id.nav_calendar)
@@ -115,25 +118,30 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(),
     //region OverlappingPanelsLayout.PanelStateListener
 
     override fun onPanelStateChange(panelState: PanelState) {
-        when (panelState) {
-            PanelState.Opened, PanelState.Opening -> binding.navigation.animate()
-                .translationY(binding.navigation.height.toFloat())
+
+
+        if (binding.panels.getSelectedPanel() == OverlappingPanelsLayout.Panel.CENTER) {
+            binding.navigation.animate()
+                .translationY(0.0f)
                 .setDuration(250L)
                 .start()
-
-            else -> binding.navigation.animate()
-                .translationY(0.0f)
+        } else {
+            binding.navigation.animate()
+                .translationY(binding.navigation.height.toFloat())
                 .setDuration(250L)
                 .start()
         }
 
         when (panelState) {
-            PanelState.Opening -> {}
+            PanelState.Opening -> {
+            }
             PanelState.Opened -> {
                 analyticsManager.logEvent("open_dashboard")
             }
-            PanelState.Closing -> { }
-            PanelState.Closed -> { }
+            PanelState.Closing -> {
+            }
+            PanelState.Closed -> {
+            }
         }
     }
 
