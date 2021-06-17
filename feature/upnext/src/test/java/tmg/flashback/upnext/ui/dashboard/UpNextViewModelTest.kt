@@ -136,13 +136,13 @@ internal class UpNextViewModelTest: BaseTest() {
             originalTime = practice.toLocalTime(),
             zone = ZoneId.systemDefault()
         )
-        val qualifying: LocalDateTime = LocalDateTime.of(2023, 1, 9, 1, 0, 0)
+        val qualifying: LocalDateTime = LocalDateTime.of(2023, 1, 9, 2, 0, 0)
         val qualifyingTimestamp = Timestamp(
             originalDate = qualifying.toLocalDate(),
             originalTime = qualifying.toLocalTime(),
             zone = ZoneId.systemDefault()
         )
-        val race: LocalDateTime = LocalDateTime.of(2023, 1, 9, 1, 0, 0)
+        val race: LocalDateTime = LocalDateTime.of(2023, 1, 9, 3, 0, 0)
         val raceTimestamp = Timestamp(
             originalDate = race.toLocalDate(),
             originalTime = race.toLocalTime(),
@@ -188,7 +188,7 @@ internal class UpNextViewModelTest: BaseTest() {
             assertValue(UpNextSchedule(
                 title = "Nothing here yet!",
                 subtitle = "Please check back later when we know more",
-                values = emptyList()
+                values = emptyList(),
                 flag = null,
                 circuitId = null,
                 season = 0,
