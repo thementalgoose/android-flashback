@@ -1,11 +1,7 @@
 package tmg.flashback.ui.dashboard.list
 
-import android.content.BroadcastReceiver
-import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,7 +12,6 @@ import tmg.core.ui.base.BaseFragment
 import tmg.core.ui.navigation.NavigationProvider
 import tmg.flashback.databinding.FragmentDashboardListBinding
 import tmg.flashback.rss.ui.RSSActivity
-import tmg.flashback.statistics.BuildConfig
 import tmg.flashback.statistics.R
 import tmg.flashback.ui.dashboard.DashboardNavigationCallback
 import tmg.flashback.ui.settings.SettingsAllActivity
