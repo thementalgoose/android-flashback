@@ -88,6 +88,18 @@ internal class SeasonViewModelTest: BaseTest() {
     }
 
     @Test
+    fun `clickNow fires open now event`() {
+
+        initSUT()
+
+        sut.inputs.clickNow()
+
+        sut.outputs.openNow.test {
+            assertEventFired()
+        }
+    }
+
+    @Test
     fun `clickTrack fires show race event`() {
 
         val mock: SeasonItem.Track = mockk(relaxed = true)

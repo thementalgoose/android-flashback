@@ -74,7 +74,7 @@ class ListViewModel(
         upNextController.getNextEvent()?.let {
             list.add(ListItem.Divider)
             list.add(ListItem.Header(type = HeaderType.UP_NEXT, expanded = null))
-            list.add(ListItem.UpNext(it, timeListDisplayType))
+            list.add(ListItem.Button("up_next_moved", R.string.dashboard_season_list_up_next_moved, R.drawable.ic_moved))
         }
 
         // Extra buttons

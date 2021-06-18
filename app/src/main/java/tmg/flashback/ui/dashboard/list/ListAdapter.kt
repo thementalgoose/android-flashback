@@ -10,7 +10,6 @@ import tmg.flashback.databinding.ViewSeasonListDividerBinding
 import tmg.flashback.databinding.ViewSeasonListHeaderBinding
 import tmg.flashback.databinding.ViewSeasonListHeroBinding
 import tmg.flashback.databinding.ViewSeasonListSeasonBinding
-import tmg.flashback.databinding.ViewSeasonListUpNextBinding
 import tmg.flashback.ui.dashboard.list.viewholders.*
 import tmg.flashback.upnext.repository.model.TimeListDisplayType
 
@@ -20,8 +19,7 @@ class ListAdapter(
     var seasonClicked: (season: Int) -> Unit,
     var setDefaultClicked: (season: Int) -> Unit,
     var clearDefaultClicked: () -> Unit,
-    val buttonClicked: (String) -> Unit,
-    val timeDisplayFormatClicked: (TimeListDisplayType) -> Unit
+    val buttonClicked: (String) -> Unit
 ): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var list: List<ListItem> = emptyList()
@@ -30,13 +28,6 @@ class ListAdapter(
             field = value
             result.dispatchUpdatesTo(this)
         }
-
-    fun refreshUpNext() {
-        val index = list.indexOfFirst { it is ListItem.UpNext }
-        if (index != -1) {
-            notifyItemChanged(index)
-        }
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -58,10 +49,6 @@ class ListAdapter(
             R.layout.view_season_list_hero -> HeroViewHolder(
                 ViewSeasonListHeroBinding.inflate(layoutInflater, parent, false)
             )
-            R.layout.view_season_list_up_next -> UpNextViewHolder(
-                ViewSeasonListUpNextBinding.inflate(layoutInflater, parent, false),
-                timeDisplayFormatClicked
-            )
             R.layout.view_season_list_button -> ButtonViewHolder(
                 buttonClicked,
                 ViewSeasonListButtonBinding.inflate(layoutInflater, parent, false)
@@ -82,7 +69,6 @@ class ListAdapter(
                 (holder as SeasonViewHolder).bind(previous, item, next)
             }
             is ListItem.Header -> (holder as HeaderViewHolder).bind(item)
-            is ListItem.UpNext -> (holder as UpNextViewHolder).bind(item)
             is ListItem.Button -> (holder as ButtonViewHolder).bind(item)
         }
     }
