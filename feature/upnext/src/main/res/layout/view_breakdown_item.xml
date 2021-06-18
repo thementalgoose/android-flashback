@@ -2,8 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:id="@+id/container"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingStart="@dimen/paddingMedium"
     android:paddingTop="@dimen/paddingXSmall"
@@ -11,8 +11,8 @@
     android:paddingBottom="@dimen/paddingXSmall">
 
     <TextView
-        style="@style/Text.Dashboard.UpNext.Item.Label"
         android:id="@+id/title"
+        style="@style/Text.Dashboard.UpNext.Item.Label"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -22,8 +22,8 @@
         tools:text="Qualifying" />
 
     <TextView
-        style="@style/Text.Dashboard.UpNext.Item.Time"
         android:id="@+id/time"
+        style="@style/Text.Dashboard.UpNext.Item.Time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"

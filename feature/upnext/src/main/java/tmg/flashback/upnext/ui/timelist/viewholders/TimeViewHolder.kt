@@ -4,8 +4,8 @@ import androidx.recyclerview.widget.RecyclerView
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
 import org.threeten.bp.format.DateTimeFormatter
-import tmg.flashback.data.utils.daysBetween
-import tmg.flashback.data.utils.secondsBetween
+import tmg.flashback.upnext.utils.daysBetween
+import tmg.flashback.upnext.utils.secondsBetween
 import tmg.flashback.upnext.R
 import tmg.flashback.upnext.databinding.ViewUpNextTimeListBinding
 import tmg.flashback.upnext.extensions.secondsToHHmm

@@ -19,9 +19,11 @@
     <string name="dashboard_up_next_all_day">All day</string>
 
     <string name="dashboard_up_next_date_today">Today</string>
-    <string name="dashboard_up_next_date_starts_at_tomorrow">%s tomorrow</string>
-    <string name="dashboard_up_next_date_starts_at_today">%s today</string>
-    <string name="dashboard_up_next_date_starts_at_yesterday">%s yesterday</string>
+    <string name="dashboard_up_next_date_tomorrow">Tomorrow</string>
+    <string name="dashboard_up_next_date_yesterday">Yesterday</string>
+    <string name="dashboard_up_next_date_next">%s days</string>
+    <string name="dashboard_up_next_date_previous">%s days ago</string>
+
     <string name="dashboard_up_next_date_date_on_time">%s on %s</string>
     <string name="dashboard_up_next_date_localtime"><![CDATA[(local)]]></string>
     <string name="dashboard_up_next_date_absolute"><![CDATA[<b>%s</b>]]></string>
