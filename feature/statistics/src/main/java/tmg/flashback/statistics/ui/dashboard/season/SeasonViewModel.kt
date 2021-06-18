@@ -35,6 +35,7 @@ import tmg.utilities.models.StringHolder
 
 interface SeasonViewModelInputs {
     fun clickMenu()
+    fun clickNow()
     fun clickItem(item: SeasonNavItem)
 
     fun refresh()
@@ -51,6 +52,7 @@ interface SeasonViewModelInputs {
 
 interface SeasonViewModelOutputs {
     val openMenu: LiveData<Event>
+    val openNow: LiveData<Event>
 
     val openRace: LiveData<DataEvent<SeasonItem.Track>>
     val openDriver: LiveData<DataEvent<SeasonItem.Driver>>
@@ -86,6 +88,7 @@ class SeasonViewModel(
 
     override val showLoading: MutableLiveData<Boolean> = MutableLiveData(true)
     override val openMenu: MutableLiveData<Event> = MutableLiveData()
+    override val openNow: MutableLiveData<Event> = MutableLiveData()
 
     /**
      * Label to be shown at the top of the screen to indicate what year it is
@@ -235,6 +238,10 @@ class SeasonViewModel(
 
     override fun clickMenu() {
         openMenu.value = Event()
+    }
+
+    override fun clickNow() {
+        openNow.value = Event()
     }
 
     override fun clickItem(item: SeasonNavItem) {

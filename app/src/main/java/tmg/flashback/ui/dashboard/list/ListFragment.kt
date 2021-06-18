@@ -1,11 +1,7 @@
 package tmg.flashback.ui.dashboard.list
 
-import android.content.BroadcastReceiver
-import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,7 +12,6 @@ import tmg.core.ui.base.BaseFragment
 import tmg.core.ui.navigation.NavigationProvider
 import tmg.flashback.databinding.FragmentDashboardListBinding
 import tmg.flashback.rss.ui.RSSActivity
-import tmg.flashback.statistics.BuildConfig
 import tmg.flashback.statistics.R
 import tmg.flashback.ui.dashboard.DashboardNavigationCallback
 import tmg.flashback.ui.settings.SettingsAllActivity
@@ -32,16 +27,6 @@ class ListFragment: BaseFragment<FragmentDashboardListBinding>() {
     private var adapter: ListAdapter? = null
     private val dashboardNavigationCallback: DashboardNavigationCallback?
         get() = parentFragment as? DashboardNavigationCallback
-
-    @Suppress("RedundantNullableReturnType")
-    private val tickReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
-        override fun onReceive(p0: Context?, p1: Intent?) {
-            if (BuildConfig.DEBUG) {
-                Log.i("Flashback", "Broadcast Receiver tick for time update")
-            }
-            adapter?.refreshUpNext()
-        }
-    }
 
     override fun inflateView(inflater: LayoutInflater) =
         FragmentDashboardListBinding.inflate(layoutInflater)
@@ -60,9 +45,9 @@ class ListFragment: BaseFragment<FragmentDashboardListBinding>() {
                          "rss" -> viewModel.inputs.clickRss()
                          "settings" -> viewModel.inputs.clickSettings()
                          "contact" -> viewModel.inputs.clickContact()
+                         "up_next_moved" -> dashboardNavigationCallback?.openNow()
                      }
-                },
-                timeDisplayFormatClicked = viewModel.inputs::clickTimeDisplayType
+                }
         )
         binding.list.layoutManager = LinearLayoutManager(context)
         binding.list.adapter = adapter
@@ -108,19 +93,6 @@ class ListFragment: BaseFragment<FragmentDashboardListBinding>() {
                         }
                         .show()
             }
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        adapter?.refreshUpNext()
-        context?.registerReceiver(tickReceiver, IntentFilter(Intent.ACTION_TIME_TICK))
-    }
-
-    override fun onPause() {
-        super.onPause()
-        if (tickReceiver != null) {
-            context?.unregisterReceiver(tickReceiver)
         }
     }
 
