@@ -6,8 +6,6 @@ import org.junit.jupiter.params.provider.CsvSource
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
 import org.threeten.bp.format.DateTimeFormatter
-import tmg.flashback.data.utils.daysBetween
-import tmg.flashback.data.utils.secondsBetween
 
 internal class LocalDateTimeUtilsTest {
 

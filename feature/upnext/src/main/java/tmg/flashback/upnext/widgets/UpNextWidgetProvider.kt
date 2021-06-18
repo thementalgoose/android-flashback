@@ -26,7 +26,7 @@ import tmg.core.device.managers.BuildConfigManager
 import tmg.core.ui.navigation.NavigationProvider
 import tmg.flashback.formula1.enums.TrackLayout
 import tmg.crash_reporting.controllers.CrashController
-import tmg.flashback.data.utils.daysBetween
+import tmg.flashback.upnext.utils.daysBetween
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.upnext.R
 import tmg.flashback.upnext.controllers.UpNextController

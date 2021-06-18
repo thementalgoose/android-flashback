@@ -1,4 +1,4 @@
-package tmg.flashback.data.utils
+package tmg.flashback.upnext.utils
 
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
