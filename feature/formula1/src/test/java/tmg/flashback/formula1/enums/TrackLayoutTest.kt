@@ -12,7 +12,7 @@ internal class TrackLayoutTest {
     )
     fun `testing override values pull overriden enum`(year: Int, raceName: String, expected: TrackLayout) {
 
-        val actual = TrackLayout.getOverride(year, raceName)
+        val actual = TrackLayout.getTrack(SAKHIR.circuitId, year, raceName)
         assertEquals(expected, actual)
     }
 }

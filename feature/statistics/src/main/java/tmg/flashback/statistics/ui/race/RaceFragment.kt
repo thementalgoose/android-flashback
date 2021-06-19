@@ -184,7 +184,7 @@ class RaceFragment: BaseFragment<FragmentRaceBinding>(), RaceAdapterCallback {
         }
 
         @Suppress("RemoveExplicitTypeArguments")
-        val track = TrackLayout.getOverride(raceData.season, raceData.raceName) ?: raceData.circuitId.toEnum<TrackLayout> { it.circuitId }
+        val track = TrackLayout.getTrack(raceData.circuitId, raceData.season, raceData.raceName)
         binding.trackLayout.show(track != null)
         if (track != null) {
             binding.trackLayout.setImageResource(track.icon)
