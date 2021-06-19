@@ -108,7 +108,8 @@ class CalendarWeekViewHolder(
             binding.flag.setImageResource(context.getFlagResourceAlpha3(item.race.countryISO))
 
             binding.raceData.show(false)
-            val track = TrackLayout.getOverride(item.race.season, item.race.raceName) ?: item.race.circuitId.toEnum { it.circuitId }
+
+            val track = TrackLayout.getTrack(item.race.circuitId, item.race.season, item.race.raceName)
             binding.circuit.show(track != null)
             if (track != null) {
                 binding.circuit.setImageResource(track.icon)
