@@ -62,14 +62,14 @@ enum class TrackLayout(
 
     companion object {
 
-        fun getTrack(circuitId: String, year: Int? = null, raceName: String? = null): TrackLayout? {
+        fun getTrack(circuitId: String?, year: Int? = null, raceName: String? = null): TrackLayout? {
             if (year != null && raceName != null) {
                 return getOverride(year, raceName) ?: getTrack(circuitId)
             }
             return getTrack(circuitId)
         }
 
-        private fun getTrack(circuitId: String): TrackLayout? {
+        private fun getTrack(circuitId: String?): TrackLayout? {
             return TrackLayout
                 .values()
                 .firstOrNull { it.circuitId == circuitId }
