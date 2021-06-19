@@ -61,10 +61,24 @@ enum class TrackLayout(
     ZANDVOORT("zandvoort", R.drawable.circuit_zandvoort);
 
     companion object {
-        fun getOverride(year: Int, raceName: String): TrackLayout? {
+
+        fun getTrack(circuitId: String?, year: Int? = null, raceName: String? = null): TrackLayout? {
+            if (year != null && raceName != null) {
+                return getOverride(year, raceName) ?: getTrack(circuitId)
+            }
+            return getTrack(circuitId)
+        }
+
+        private fun getTrack(circuitId: String?): TrackLayout? {
+            return TrackLayout
+                .values()
+                .firstOrNull { it.circuitId == circuitId }
+        }
+
+        private fun getOverride(year: Int, raceName: String): TrackLayout? {
             return TrackLayout
                     .values()
-                    .firstOrNull { it.override.contains("${year} ${raceName}") }
+                    .firstOrNull { it.override.contains("$year $raceName") }
         }
     }
 }

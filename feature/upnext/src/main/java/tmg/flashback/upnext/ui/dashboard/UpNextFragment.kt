@@ -55,7 +55,7 @@ class UpNextFragment: BaseFragment<FragmentUpNextBinding>() {
         }
 
         observe(viewModel.outputs.data) { schedule ->
-            val trackLayout = TrackLayout.values().firstOrNull { it.circuitId == schedule.circuitId } ?: TrackLayout.getOverride(schedule.season, schedule.title)
+            val trackLayout = TrackLayout.getTrack(schedule.circuitId, schedule.season, schedule.title)
             binding.track.setImageResource(trackLayout?.icon ?: R.drawable.circuit_unknown)
             if (context != null && schedule.flag != null) {
                 binding.flag.setImageResource(requireContext().getFlagResourceAlpha3(schedule.flag))
