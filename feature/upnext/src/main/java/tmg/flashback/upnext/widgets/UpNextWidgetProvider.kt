@@ -166,12 +166,7 @@ class UpNextWidgetProvider : AppWidgetProvider(), KoinComponent {
                 remoteView.setOnClickPendingIntent(R.id.circuit, getRefreshWidgetPendingIntent(context, widgetId, appWidgetIds))
                 remoteView.setOnClickPendingIntent(R.id.refresh, getRefreshWidgetPendingIntent(context, widgetId, appWidgetIds))
 
-//                if (appRepository.widgetOpenApp) {
-                    remoteView.setOnClickPendingIntent(R.id.container, getOpenAppPendingIntent(context))
-//                }
-//                else {
-//                    remoteView.setOnClickPendingIntent(R.id.container, getRefreshWidgetPendingIntent(context, widgetId, appWidgetIds))
-//                }
+                remoteView.setOnClickPendingIntent(R.id.container, getOpenAppPendingIntent(context))
                 appWidgetManager?.updateAppWidget(widgetId, remoteView)
             } catch (e: RuntimeException) {
                 crashController.logError(e, "Widget Up Next provider couldn't be set up")
