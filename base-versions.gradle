@@ -1,14 +1,14 @@
 ext {
-    kotlin_version = "1.5.0"
+    kotlin_version = "1.5.10"
     koin_version = "2.2.2"
-    coroutines = "1.4.1"
+    coroutines = "1.5.0"
     navigation = "2.3.5"
 
     mockk = "1.10.3-jdk8"
     junit = "5.5.2"
 
-    threeten = "1.2.2"
-    threetenbp = "1.4.1"
+    threeten = "1.3.1"
+    threetenbp = "1.5.1"
 
     android_constraint = "2.0.4"
     android_material = "1.3.0"
