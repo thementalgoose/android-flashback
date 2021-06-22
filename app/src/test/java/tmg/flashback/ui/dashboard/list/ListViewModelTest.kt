@@ -23,7 +23,6 @@ internal class ListViewModelTest: BaseTest() {
     private var minYear: Int = 1950
 
     private val mockSeasonController: SeasonController = mockk(relaxed = true)
-    private val mockUpNextController: UpNextController = mockk(relaxed = true)
     private val mockRssController: RSSController = mockk(relaxed = true)
 
     @BeforeEach
@@ -35,8 +34,6 @@ internal class ListViewModelTest: BaseTest() {
 
         every { mockSeasonController.defaultSeason } returns 2018
 
-        every { mockUpNextController.getNextEvent() } returns null
-
         every { mockSeasonController.supportedSeasons } returns List(currentYear - 1949) { it + 1950 }.toSet()
 
         every { mockRssController.enabled } returns false
@@ -45,7 +42,6 @@ internal class ListViewModelTest: BaseTest() {
     private fun initSUT() {
         sut = ListViewModel(
             mockSeasonController,
-            mockUpNextController,
             mockRssController
         )
     }
@@ -117,35 +113,6 @@ internal class ListViewModelTest: BaseTest() {
             assertListMatchesItem {
                 it is ListItem.Season && !it.showClearDefault
             }
-        }
-    }
-
-    //endregion
-
-    //region Up Next section
-
-    @Test
-    fun `up next section not shown item is null`() {
-
-        every { mockUpNextController.getNextEvent() } returns null
-
-        initSUT()
-
-        sut.outputs.list.test {
-            assertListDoesNotMatchItem { it is ListItem.Header && it.type == HeaderType.UP_NEXT }
-        }
-    }
-
-    @Test
-    fun `up next section shown with button`() {
-
-        val expected = UpNextSchedule(1,2,"test", null, emptyList(),null,null)
-        every { mockUpNextController.getNextEvent() } returns expected
-
-        initSUT()
-
-        sut.outputs.list.test {
-            assertListMatchesItem { it is ListItem.Header && it.type == HeaderType.UP_NEXT }
         }
     }
 
