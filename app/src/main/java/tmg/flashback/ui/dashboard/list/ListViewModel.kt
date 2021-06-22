@@ -24,8 +24,6 @@ interface ListViewModelInputs {
     fun clickClearDefaultSeason()
     fun clickSetDefaultSeason(season: Int)
 
-    fun clickTimeDisplayType(type: TimeListDisplayType)
-
     fun clickSettings()
     fun clickContact()
 }
@@ -49,7 +47,6 @@ interface ListViewModelOutputs {
 
 class ListViewModel(
         private val seasonController: SeasonController,
-        private val upNextController: UpNextController,
         private val rssController: RSSController
 ) : ViewModel(), ListViewModelInputs, ListViewModelOutputs {
 
@@ -69,13 +66,6 @@ class ListViewModel(
     ) { currentSeason, favouriteExpanded, allExpanded, _ ->
 
         val list: MutableList<ListItem> = mutableListOf(ListItem.Hero)
-
-        // Up next
-        upNextController.getNextEvent()?.let {
-            list.add(ListItem.Divider)
-            list.add(ListItem.Header(type = HeaderType.UP_NEXT, expanded = null))
-            list.add(ListItem.Button("up_next_moved", R.string.dashboard_season_list_up_next_moved, R.drawable.ic_moved))
-        }
 
         // Extra buttons
         val buttonsList = mutableListOf<ListItem.Button>().apply {
@@ -163,9 +153,6 @@ class ListViewModel(
     }
         .asLiveData(viewModelScope.coroutineContext)
 
-
-    private var timeListDisplayType: TimeListDisplayType = upNextController.upNextDisplayType
-
     override val showSeasonEvent: MutableLiveData<DataEvent<Int>> = MutableLiveData()
     override val openSettings: MutableLiveData<Event> = MutableLiveData()
     override val openRss: MutableLiveData<Event> = MutableLiveData()
@@ -193,7 +180,6 @@ class ListViewModel(
             HeaderType.ALL -> {
                 selectionHeaderAll.postValue(to ?: (selectionHeaderAll.value != true))
             }
-            HeaderType.UP_NEXT -> { /* Do nothing */ }
             HeaderType.LINKS -> { /* Do nothing */ }
         }
     }
@@ -230,11 +216,6 @@ class ListViewModel(
 
     override fun clickContact() {
         openContact.value = Event()
-    }
-
-    override fun clickTimeDisplayType(type: TimeListDisplayType) {
-        timeListDisplayType = type
-        refreshList.postValue(Event())
     }
 
     //endregion
