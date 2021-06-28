@@ -24,11 +24,13 @@ class ItemViewHolder(
         }
 
         binding.title.text = item.label
-        item.item.ifDateAndTime { utc, local ->
-            binding.time.text = local.format(DateTimeFormatter.ofPattern("HH:mm"))
-        }
-        item.item.ifDate { local ->
-            binding.time.text = context.getString(R.string.dashboard_up_next_all_day)
-        }
+        item.item.on(
+            dateAndTime = { utc, local ->
+                binding.time.text = local.format(DateTimeFormatter.ofPattern("HH:mm"))
+            },
+            dateOnly = {
+                binding.time.text = context.getString(R.string.dashboard_up_next_all_day)
+            }
+        )
     }
 }
