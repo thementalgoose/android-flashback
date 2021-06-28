@@ -29,6 +29,9 @@ data class Round(
         )
     }
 
+    val hasSprintQualifying: Boolean
+        get() = qSprint.isNotEmpty()
+
     val q1FastestLap: LapTime?
         get() = q1.fastest()
     val q2FastestLap: LapTime?
