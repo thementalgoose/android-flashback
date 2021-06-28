@@ -60,6 +60,7 @@ data class FRound(
         val driverCon: Map<String, String>? = null,
         val circuit: FSeasonOverviewRaceCircuit = FSeasonOverviewRaceCircuit(),
         val qualifying: Map<String, FSeasonOverviewRaceQualifying>? = null,
+        val sprintQualifying: Map<String, FSeasonOverviewRaceSprintQualifying>? = null,
         val race: Map<String, FSeasonOverviewRaceRace>? = null
 )
 
@@ -83,6 +84,16 @@ data class FSeasonOverviewRaceQualifying(
         val q1: String? = null,
         val q2: String? = null,
         val q3: String? = null
+)
+
+data class FSeasonOverviewRaceSprintQualifying(
+        val result: Int? = null,
+        val grid: Int? = null,
+        val resultText: String = "",
+        val qualified: Int? = null,
+        val status: String? = null,
+        val points: Int? = null,
+        val time: String? = null
 )
 
 data class FSeasonOverviewRaceRace(
