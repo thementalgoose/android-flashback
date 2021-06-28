@@ -45,6 +45,8 @@ interface RaceViewModelOutputs {
     val goToDriverOverview: LiveData<DataEvent<Pair<String, String>>>
     val goToConstructorOverview: LiveData<DataEvent<Pair<String, String>>>
 
+    val showSprintQualifying: LiveData<Boolean>
+
     val showAppHintLongPress: LiveData<Event>
 
     val showLinks: LiveData<Boolean>
@@ -80,6 +82,7 @@ class RaceViewModel(
     override val showAppHintLongPress: MutableLiveData<Event> = MutableLiveData()
     override val showLinks: MutableLiveData<Boolean> = MutableLiveData(false)
     override val goToWikipedia: MutableLiveData<DataEvent<String>> = MutableLiveData()
+    override val showSprintQualifying: MutableLiveData<Boolean> = MutableLiveData(false)
 
     private val seasonRoundFlow: Flow<Round?> = seasonRound
         .asFlow()
@@ -115,6 +118,8 @@ class RaceViewModel(
 
                 wikipedia = roundData.wikipediaUrl
                 showLinks.value = wikipedia != null
+
+                showSprintQualifying.value = roundData.hasSprintQualifying
 
                 // Constructor standings, models are constructors
                 if (viewType == RaceAdapterType.CONSTRUCTOR_STANDINGS) {

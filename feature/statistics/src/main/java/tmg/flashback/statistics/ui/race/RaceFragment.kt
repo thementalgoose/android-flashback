@@ -114,6 +114,10 @@ class RaceFragment: BaseFragment<FragmentRaceBinding>(), RaceAdapterCallback {
             }
         }
 
+        observe(viewModel.outputs.showSprintQualifying) {
+            binding.menu.menu.findItem(R.id.nav_sprint_qualifying).isVisible = it
+        }
+
         observe(viewModel.outputs.seasonRoundData) { (season, round) ->
             binding.tvRoundInfo.text = getString(
                 R.string.race_round_format,
