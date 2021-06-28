@@ -37,11 +37,15 @@ internal class TimestampTest {
         var resultDateOnly: LocalDate? = null
         var resultDateTimeUTC: LocalDateTime? = null
         var resultDateTimeDevice: LocalDateTime? = null
-        sut.ifDate { resultDateOnly = it }
-        sut.ifDateAndTime { utc, local ->
-            resultDateTimeDevice = local
-            resultDateTimeUTC = utc
-        }
+        sut.on(
+            dateOnly = {
+                resultDateOnly = it
+            },
+            dateAndTime = { utc, local ->
+                resultDateTimeDevice = local
+                resultDateTimeUTC = utc
+            }
+        )
 
         assertEquals(LocalDate.of(2020, 1, 1), resultDateOnly)
         assertNull(resultDateTimeUTC)
@@ -59,11 +63,15 @@ internal class TimestampTest {
         var resultDateOnly: LocalDate? = null
         var resultDateTimeUTC: LocalDateTime? = null
         var resultDateTimeDevice: LocalDateTime? = null
-        sut.ifDate { resultDateOnly = it }
-        sut.ifDateAndTime { utc, local ->
-            resultDateTimeDevice = local
-            resultDateTimeUTC = utc
-        }
+        sut.on(
+            dateOnly = {
+                resultDateOnly = it
+            },
+            dateAndTime = { utc, local ->
+                resultDateTimeDevice = local
+                resultDateTimeUTC = utc
+            }
+        )
 
         assertNull(resultDateOnly)
         assertEquals(LocalDateTime.of(2020, 1, 1, 12, 0), resultDateTimeUTC)
@@ -102,11 +110,15 @@ internal class TimestampTest {
         var resultDateOnly: LocalDate? = null
         var resultDateTimeUTC: LocalDateTime? = null
         var resultDateTimeDevice: LocalDateTime? = null
-        sut.ifDate { resultDateOnly = it }
-        sut.ifDateAndTime { utc, local ->
-            resultDateTimeDevice = local
-            resultDateTimeUTC = utc
-        }
+        sut.on(
+            dateOnly = {
+                resultDateOnly = it
+            },
+            dateAndTime = { utc, local ->
+                resultDateTimeDevice = local
+                resultDateTimeUTC = utc
+            }
+        )
 
         assertNull(resultDateOnly)
         assertEquals(LocalDateTime.of(2020, 1, 1, 12, 0), resultDateTimeUTC)

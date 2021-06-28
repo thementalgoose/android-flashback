@@ -44,24 +44,19 @@ data class Timestamp(
     }
 
     /**
-     * Run the [callback] block if there is a date and a time set
-     * @param callback Callback containing utc time and local device time
+     * Given the timestamp has been initialised, do something based on what data has been provided
+     * One of the callbacks is guaranteed to be ran
+     *
+     * @param dateAndTime fires if a timestamp has been provided
+     * @param dateOnly fires if only a local date has been provided
      */
-    fun ifDateAndTime(callback: (utc: LocalDateTime, local: LocalDateTime) -> Unit) {
-        deviceLocalDateTime?.let {
-            if (!isDateOnly) {
-                callback(originalDate.atTime(originalTime), it)
-            }
-        }
-    }
-
-    /**
-     * Run the [callback] block if there is only a date set
-     * @param callback Callback containing only the date
-     */
-    fun ifDate(callback: (date: LocalDate) -> Unit) {
-        if (isDateOnly || deviceLocalDateTime == null) {
-            callback(originalDate)
+    fun on(
+        dateAndTime: (utc: LocalDateTime, local: LocalDateTime) -> Unit = { utc, local -> },
+        dateOnly: (date: LocalDate) -> Unit = { }
+    ) {
+        when {
+            isDateOnly || deviceLocalDateTime == null -> dateOnly(originalDate)
+            else -> dateAndTime(originalDate.atTime(originalTime), deviceLocalDateTime!!)
         }
     }
 
