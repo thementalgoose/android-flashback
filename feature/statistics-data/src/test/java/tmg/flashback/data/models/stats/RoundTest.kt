@@ -15,6 +15,30 @@ class RoundTest {
     }
 
     @Test
+    fun `has sprint qualifying when sprint quali results are not empty`() {
+
+        val sprintQualiRound = mockRound1.copy(
+            qSprint = mapOf(mockDriver1.id to RoundSprintQualifyingResult(
+                driver = round1RaceResultDriver1.driver,
+                time = round1RaceResultDriver1.time,
+                points = round1RaceResultDriver1.points,
+                grid = round1RaceResultDriver1.grid,
+                qualified = round1RaceResultDriver1.qualified,
+                finish = round1RaceResultDriver1.finish,
+                status = round1RaceResultDriver1.status,
+            ))
+        )
+        assertTrue(sprintQualiRound.hasSprintQualifying)
+    }
+
+    @Test
+    fun `does not have sprint qualifying when sprint quali results are empty`() {
+
+        val sprintQualiRound = mockRound1.copy(qSprint = emptyMap())
+        assertFalse(sprintQualiRound.hasSprintQualifying)
+    }
+
+    @Test
     fun `fastest laps in q1, q2 and q3 return the fastest lap`() {
 
         assertEquals(LapTime(0, 1, 1, 0), mockRound1.q1FastestLap)
