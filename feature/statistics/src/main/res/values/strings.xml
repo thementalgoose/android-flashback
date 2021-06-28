@@ -10,6 +10,7 @@
     <string name="nav_schedule">Schedule</string>
     <string name="nav_race">Race</string>
     <string name="nav_qualifying">Qualifying</string>
+    <string name="nav_sprint_qualifying">Sprint</string>
 
     <!-- Dashboard -->
     <string name="home_season_header_current">Now</string>
