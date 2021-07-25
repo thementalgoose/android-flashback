@@ -16,7 +16,8 @@ sealed class SeasonItem(
     object CalendarHeader: SeasonItem(R.layout.view_dashboard_season_calendar_header)
 
     data class CalendarMonth(
-        val month: Month
+        val month: Month,
+        val year: Int
     ): SeasonItem(R.layout.view_dashboard_season_calendar_month)
 
     data class CalendarWeek(
