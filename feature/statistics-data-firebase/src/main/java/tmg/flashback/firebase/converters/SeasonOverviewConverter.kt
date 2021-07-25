@@ -41,52 +41,80 @@ fun FRound.convert(
     val driverList = (fSeason.drivers ?: emptyMap()).values
             .map { driver ->
                 driver.convert(
-                        fSeason.constructors ?: emptyMap(),
-                        driverCon?.toList()?.firstOrNull { it.first == driver.id }?.second,
-                        fSeason.constructorAtEndOfSeason(driver.id)
+                    fSeason.constructors ?: emptyMap(),
+                    driverCon?.toList()?.firstOrNull { it.first == driver.id }?.second,
+                    fSeason.constructorAtEndOfSeason(driver.id)
                 )
             }
     val constructorList = (fSeason.constructors ?: emptyMap()).values
             .map { constructor -> constructor.convert() }
 
+    val sprintQualifyingMap = (sprintQualifying ?: mapOf())
+            .map { (driverId, sprintQualiResult) ->
+                driverId to RoundSprintQualifyingResult(
+                    driver = driverList.first { it.id == driverId },
+                    time = sprintQualiResult.time?.toLapTime(),
+                    points = sprintQualiResult.points ?: 0,
+                    grid = sprintQualiResult.grid ?: 0,
+                    qualified = getSprintQualified(sprintQualiResult),
+                    finish = sprintQualiResult.result ?: 0,
+                    status = sprintQualiResult.status ?: raceStatusUnknown
+                )
+            }
+            .toMap()
+
     val raceMap = (race ?: mapOf())
             .map { (driverId, raceResult) ->
                 driverId to RoundRaceResult(
-                        driver = driverList.first { it.id == driverId },
-                        time = raceResult.time?.toLapTime(),
-                        points = raceResult.points ?: 0,
-                        grid = raceResult.grid ?: 0,
-                        qualified = getQualified(raceResult),
-                        finish = raceResult.result ?: 0,
-                        status = raceResult.status ?: raceStatusUnknown,
-                        fastestLap = raceResult.fastestLap?.convert()
+                    driver = driverList.first { it.id == driverId },
+                    time = raceResult.time?.toLapTime(),
+                    points = raceResult.points ?: 0,
+                    grid = raceResult.grid ?: 0,
+                    qualified = getQualified(raceResult, sprintQualifying?.get(driverId) ),
+                    finish = raceResult.result ?: 0,
+                    status = raceResult.status ?: raceStatusUnknown,
+                    fastestLap = raceResult.fastestLap?.convert()
                 )
             }
             .toMap()
 
     return Round(
-            season = season,
-            round = round,
-            date = fromDateRequired(date),
-            time = fromTime(time),
-            name = name,
-            wikipediaUrl = wiki,
-            drivers = driverList,
-            constructors = constructorList,
-            circuit = circuit.convert(),
-            q1 = qualifying.onResult(fSeason, driverCon ?: emptyMap()) { it.q1 },
-            q2 = qualifying.onResult(fSeason, driverCon ?: emptyMap()) { it.q2 },
-            q3 = qualifying.onResult(fSeason, driverCon ?: emptyMap()) { it.q3 },
-            race = raceMap
+        season = season,
+        round = round,
+        date = fromDateRequired(date),
+        time = fromTime(time),
+        name = name,
+        wikipediaUrl = wiki,
+        drivers = driverList,
+        constructors = constructorList,
+        circuit = circuit.convert(),
+        q1 = qualifying.onResult(fSeason, driverCon ?: emptyMap()) { it.q1 },
+        q2 = qualifying.onResult(fSeason, driverCon ?: emptyMap()) { it.q2 },
+        q3 = qualifying.onResult(fSeason, driverCon ?: emptyMap()) { it.q3 },
+        qSprint = sprintQualifyingMap,
+        race = raceMap
     )
 }
 
-private fun getQualified(raceResult: FSeasonOverviewRaceRace): Int? {
+private fun getQualified(raceResult: FSeasonOverviewRaceRace, sprintQualifyingResult: FSeasonOverviewRaceSprintQualifying?): Int? {
+    if (sprintQualifyingResult != null) {
+        return getSprintQualified(sprintQualifyingResult)
+    }
     if (raceResult.qualified != -1 && raceResult.qualified != 0) {
         return raceResult.qualified
     }
     if (raceResult.grid != null && raceResult.grid != -1 && raceResult.grid != 0) {
         return raceResult.grid
+    }
+    return null
+}
+
+private fun getSprintQualified(sprintQualiResult: FSeasonOverviewRaceSprintQualifying): Int? {
+    if (sprintQualiResult.qualified != -1 && sprintQualiResult.qualified != 0) {
+        return sprintQualiResult.qualified
+    }
+    if (sprintQualiResult.grid != null && sprintQualiResult.grid != -1 && sprintQualiResult.grid != 0) {
+        return sprintQualiResult.grid
     }
     return null
 }
