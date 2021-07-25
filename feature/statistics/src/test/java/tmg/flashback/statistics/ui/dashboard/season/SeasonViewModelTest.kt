@@ -607,7 +607,7 @@ internal class SeasonViewModelTest: BaseTest() {
             .values()
             .map { month ->
                 val list = mutableListOf<SeasonItem>()
-                list.add(SeasonItem.CalendarMonth(month))
+                list.add(SeasonItem.CalendarMonth(month, season))
                 list.add(SeasonItem.CalendarWeek(month, LocalDate.of(season, month.value, 1), null))
                 val nextMonday = LocalDate.of(season, month.value, 1).with(TemporalAdjusters.next(DayOfWeek.MONDAY))
                 for (x in 0 until LocalDate.of(season, month.value, 1).with(TemporalAdjusters.lastDayOfMonth()).dayOfMonth step 7) {
