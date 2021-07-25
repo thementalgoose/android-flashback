@@ -9,6 +9,8 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
+import org.threeten.bp.LocalDate
+import org.threeten.bp.Month
 import tmg.core.ui.base.BaseFragment
 import tmg.flashback.statistics.R
 import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
@@ -92,9 +94,18 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
             binding.titleExpanded.text = getString(R.string.home_season_arrow, it.msg ?: currentSeasonYear.toString())
         }
 
-        observe(viewModel.outputs.list) {
-            adapter.list = it
-            binding.dataList.smoothScrollToPosition(0)
+        observe(viewModel.outputs.list) { list ->
+            adapter.list = list
+            if (list.any { it is SeasonItem.CalendarMonth && it.year == currentSeasonYear }) {
+                val currentMonth = LocalDate.now().month
+                val positionToScrollTo = list
+                    .indexOfFirst { it is SeasonItem.CalendarMonth && it.month == currentMonth }
+
+                (binding.dataList.layoutManager as? LinearLayoutManager)?.scrollToPositionWithOffset(positionToScrollTo.coerceAtLeast(0), 0)
+            }
+            else {
+                binding.dataList.smoothScrollToPosition(0)
+            }
         }
 
         observe(viewModel.outputs.showLoading) {
