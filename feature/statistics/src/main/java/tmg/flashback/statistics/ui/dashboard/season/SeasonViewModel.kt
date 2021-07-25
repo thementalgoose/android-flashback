@@ -293,7 +293,7 @@ class SeasonViewModel(
                 }
             }
 
-            list.add(SeasonItem.CalendarMonth(month))
+            list.add(SeasonItem.CalendarMonth(month, season))
             list.add(SeasonItem.CalendarWeek(month, start, this.firstOrNull { it.date >= start && it.date <= end }))
             while (start.month == month) {
                 start = start.with(TemporalAdjusters.next(DayOfWeek.MONDAY))
