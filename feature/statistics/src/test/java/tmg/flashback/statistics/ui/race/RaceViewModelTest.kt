@@ -772,8 +772,6 @@ internal class RaceViewModelTest: BaseTest() {
 
     //endregion
 
-
-
     private fun convertDriverToSingle(round: Round, roundDriver: RoundDriver,
                                       expectedGrid: Int,
                                       expectedFinish: Int,
