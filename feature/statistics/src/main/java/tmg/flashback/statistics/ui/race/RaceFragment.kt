@@ -86,6 +86,10 @@ class RaceFragment: BaseFragment<FragmentRaceBinding>(), RaceAdapterCallback {
                     viewModel.inputs.orderBy(RaceAdapterType.QUALIFYING_POS)
                     true
                 }
+                R.id.nav_sprint_qualifying -> {
+                    viewModel.inputs.orderBy(RaceAdapterType.QUALIFYING_SPRINT)
+                    true
+                }
                 R.id.nav_race -> {
                     viewModel.inputs.orderBy(RaceAdapterType.RACE)
                     true

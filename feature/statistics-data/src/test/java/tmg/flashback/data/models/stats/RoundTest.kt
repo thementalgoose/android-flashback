@@ -166,8 +166,32 @@ class RoundTest {
         assertEquals(Pair(1, listOf(mockRound1)), listOf(mockRound1, mockRound2).bestRaceResultFor(mockDriver4.id))
     }
 
-    private val expectedDriver1: RoundDriverOverview = RoundDriverOverview(q1 = mockRound1Driver1Q1, q2 = mockRound1Driver1Q2, q3 = mockRound1Driver1Q3, race = round1RaceResultDriver1)
-    private val expectedDriver2: RoundDriverOverview = RoundDriverOverview(q1 = mockRound1Driver2Q1, q2 = mockRound1Driver2Q2, q3 = mockRound1Driver2Q3, race = round1RaceResultDriver2)
-    private val expectedDriver3: RoundDriverOverview = RoundDriverOverview(q1 = mockRound1Driver3Q1, q2 = mockRound1Driver3Q2, q3 = null, race = round1RaceResultDriver3)
-    private val expectedDriver4: RoundDriverOverview = RoundDriverOverview(q1 = mockRound1Driver4Q1, q2 = null, q3 = null, race = round1RaceResultDriver4)
+    private val expectedDriver1: RoundDriverOverview = RoundDriverOverview(
+        q1 = mockRound1Driver1Q1,
+        q2 = mockRound1Driver1Q2,
+        q3 = mockRound1Driver1Q3,
+        qSprint = null,
+        race = round1RaceResultDriver1
+    )
+    private val expectedDriver2: RoundDriverOverview = RoundDriverOverview(
+        q1 = mockRound1Driver2Q1,
+        q2 = mockRound1Driver2Q2,
+        q3 = mockRound1Driver2Q3,
+        qSprint = null,
+        race = round1RaceResultDriver2
+    )
+    private val expectedDriver3: RoundDriverOverview = RoundDriverOverview(
+        q1 = mockRound1Driver3Q1,
+        q2 = mockRound1Driver3Q2,
+        q3 = null,
+        qSprint = null,
+        race = round1RaceResultDriver3
+    )
+    private val expectedDriver4: RoundDriverOverview = RoundDriverOverview(
+        q1 = mockRound1Driver4Q1,
+        q2 = null,
+        q3 = null,
+        qSprint = null,
+        race = round1RaceResultDriver4
+    )
 }

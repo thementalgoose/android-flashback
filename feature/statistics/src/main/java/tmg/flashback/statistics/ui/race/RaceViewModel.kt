@@ -155,44 +155,17 @@ class RaceViewModel(
                             if (roundData.race.isNotEmpty()) {
                                 var startIndex = 0
                                 if (driverIds.size >= 3) {
-                                    list.add(
-                                        RaceModel.Podium(
-                                            driverFirst = getDriverModel(
-                                                roundData,
-                                                viewType,
-                                                driverIds[0],
-                                                showQualifying
-                                            ),
-                                            driverSecond = getDriverModel(
-                                                roundData,
-                                                viewType,
-                                                driverIds[1],
-                                                showQualifying
-                                            ),
-                                            driverThird = getDriverModel(
-                                                roundData,
-                                                viewType,
-                                                driverIds[2],
-                                                showQualifying
-                                            )
-                                        )
-                                    )
+                                    list.add(RaceModel.Podium(
+                                        driverFirst = getDriverModel(roundData, viewType, driverIds[0], showQualifying),
+                                        driverSecond = getDriverModel(roundData, viewType, driverIds[1], showQualifying),
+                                        driverThird = getDriverModel(roundData, viewType, driverIds[2], showQualifying)
+                                    ))
                                     startIndex = 3
-                                    list.add(
-                                        RaceModel.RaceHeader(
-                                            roundData.season,
-                                            roundData.round
-                                        )
-                                    )
+                                    list.add(RaceModel.RaceHeader(roundData.season, roundData.round))
                                 }
                                 for (i in startIndex until driverIds.size) {
                                     list.add(
-                                        getDriverModel(
-                                            roundData,
-                                            viewType,
-                                            driverIds[i],
-                                            showQualifying
-                                        )
+                                        getDriverModel(roundData, viewType, driverIds[i], showQualifying)
                                     )
                                 }
                             }
@@ -203,17 +176,18 @@ class RaceViewModel(
                                 }
                             }
                         }
+                        RaceAdapterType.QUALIFYING_SPRINT -> {
+                            list.add(RaceModel.RaceHeader(roundData.season, roundData.round))
+                            list.addAll(driverIds.mapIndexed { _, driverId ->
+                                getDriverModel(roundData, viewType, driverId, showQualifying)
+                            })
+                        }
                         RaceAdapterType.QUALIFYING_POS_1,
                         RaceAdapterType.QUALIFYING_POS_2,
                         RaceAdapterType.QUALIFYING_POS -> {
                             list.add(RaceModel.QualifyingHeader(showQualifying))
                             list.addAll(driverIds.mapIndexed { _, driverId ->
-                                getDriverModel(
-                                    roundData,
-                                    viewType,
-                                    driverId,
-                                    showQualifying
-                                )
+                                getDriverModel(roundData, viewType, driverId, showQualifying)
                             })
                             if (driverIds.isNotEmpty()) {
                                 appHintNotifyQualifying()
@@ -315,6 +289,7 @@ class RaceViewModel(
                             ?: driverOverview.race?.grid ?: Int.MAX_VALUE
                         RaceAdapterType.QUALIFYING_POS -> driverOverview.race?.qualified
                             ?: driverOverview.race?.grid ?: Int.MAX_VALUE
+                        RaceAdapterType.QUALIFYING_SPRINT -> driverOverview.qSprint?.finish
                         else -> it.finish
                     }
                 }
@@ -330,6 +305,7 @@ class RaceViewModel(
                     val q3 = roundData.q3[it.id]
 
                     return@sortedBy when (viewType) {
+                        RaceAdapterType.QUALIFYING_SPRINT -> roundData.qSprint[it.id]?.finish
                         RaceAdapterType.QUALIFYING_POS_1 -> q1?.position
                         RaceAdapterType.QUALIFYING_POS_2 -> q2?.position ?: q1?.position
                         else -> q3?.position ?: q2?.position ?: q1?.position
@@ -367,6 +343,7 @@ class RaceViewModel(
             q1 = overview.q1,
             q2 = overview.q2,
             q3 = overview.q3,
+            qSprint = overview.qSprint,
             race = race,
             qualified = overview.race?.qualified ?: round.getQualifyingOnlyPosByDriverId(driverId),
             q1Delta = if (toggleQualifyingDelta ?: raceController.showQualifyingDelta) round.q1FastestLap?.deltaTo(overview.q1?.time) else null,
