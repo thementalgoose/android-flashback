@@ -52,6 +52,10 @@ class RaceAdapter(
             R.layout.view_race_race_header -> RaceResultHeaderViewHolder(
                 ViewRaceRaceHeaderBinding.inflate(layoutInflater, parent, false)
             )
+            R.layout.view_race_sprint_qualifying_result -> RaceSprintQualifyingViewHolder(
+                callback::driverClicked,
+                ViewRaceSprintQualifyingResultBinding.inflate(layoutInflater, parent, false)
+            )
             R.layout.view_race_qualifying_header -> QualifyingHeaderViewHolder(
                 ViewRaceQualifyingHeaderBinding.inflate(layoutInflater, parent, false),
                 callback
@@ -84,6 +88,7 @@ class RaceAdapter(
             is RaceModel.Single -> {
                 when (viewType) {
                     RaceAdapterType.RACE -> (holder as RaceResultViewHolder).bind(item)
+                    RaceAdapterType.QUALIFYING_SPRINT -> (holder as RaceSprintQualifyingViewHolder).bind(item)
                     else -> (holder as QualifyingResultViewHolder).bind(item, viewType)
                 }
             }

@@ -23,6 +23,7 @@ sealed class RaceModel(
         val q1: RoundQualifyingResult?,
         val q2: RoundQualifyingResult?,
         val q3: RoundQualifyingResult?,
+        val qSprint: RoundSprintQualifyingResult?,
         val race: SingleRace?,
         val qualified: Int?,
         val q1Delta: String?,
@@ -35,6 +36,7 @@ sealed class RaceModel(
         fun layoutIdByViewType(type: RaceAdapterType): Int {
             return when (type) {
                 RaceAdapterType.RACE -> R.layout.view_race_race_result
+                RaceAdapterType.QUALIFYING_SPRINT -> R.layout.view_race_sprint_qualifying_result
                 RaceAdapterType.QUALIFYING_POS_1 -> R.layout.view_race_qualifying_result
                 RaceAdapterType.QUALIFYING_POS_2 -> R.layout.view_race_qualifying_result
                 RaceAdapterType.QUALIFYING_POS -> R.layout.view_race_qualifying_result
