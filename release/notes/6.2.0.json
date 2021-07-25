@@ -2,8 +2,9 @@
   "versionCode": 80,
   "versionName": "6.2.0",
   "isMajor": false,
-  "title": "",
+  "title": "Sprint Qualifying",
   "notes": [
-    "Sprint qualifying support! Now supports grand prix sprint qualifying data"
+    "Sprint qualifying support! Now supports grand prix sprint qualifying data",
+    "Layout tweaks throughout in order to make UI look more consistent"
   ]
 }
