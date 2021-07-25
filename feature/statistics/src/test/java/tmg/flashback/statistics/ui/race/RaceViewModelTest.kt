@@ -6,6 +6,7 @@ import io.mockk.verify
 import kotlinx.coroutines.flow.flow
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestFactory
 import org.threeten.bp.LocalDate
 import tmg.flashback.statistics.controllers.RaceController
 import tmg.core.ui.model.AnimationSpeed
@@ -14,6 +15,8 @@ import tmg.flashback.data.models.stats.LapTime
 import tmg.flashback.data.models.stats.Round
 import tmg.flashback.data.models.stats.RoundDriver
 import tmg.core.ui.controllers.ThemeController
+import tmg.flashback.data.enums.RaceStatus
+import tmg.flashback.data.models.stats.RoundSprintQualifyingResult
 import tmg.flashback.statistics.mockRound1
 import tmg.flashback.statistics.mockRound3
 import tmg.flashback.statistics.testutils.*
@@ -433,6 +436,50 @@ internal class RaceViewModelTest: BaseTest() {
     }
 
     @Test
+    fun `when sprint qualifying doesnt exist the tab is hidden`() {
+
+        every { mockRaceController.showQualifyingDelta } returns false
+        every { mockRaceController.showGridPenaltiesInQualifying } returns false
+        every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow { emit(mockRound3) }
+
+        initSUT(orderBy = QUALIFYING_POS)
+
+        sut.outputs.showSprintQualifying.test {
+            assertValue(false)
+        }
+    }
+
+    @Test
+    fun `when sprint qualifying data exists the tab is shown`() = coroutineTest {
+
+        every { mockRaceController.showQualifyingDelta } returns false
+        every { mockRaceController.showGridPenaltiesInQualifying } returns false
+        every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow { emit(mockRound3.copy(
+            qSprint = mapOf(
+                mockDriver1.id to RoundSprintQualifyingResult(
+                    driver = mockDriver1,
+                    time = LapTime(),
+                    points = 1,
+                    grid = 1,
+                    qualified = 1,
+                    finish = 1,
+                    status = "Finished"
+                )
+            )
+        )) }
+
+        initSUT(orderBy = QUALIFYING_SPRINT)
+        advanceUntilIdle()
+
+        sut.outputs.raceItems.test {
+            assertEmittedCount(1)
+        }
+        sut.outputs.showSprintQualifying.test {
+            assertValue(true)
+        }
+    }
+
+    @Test
     fun `clicking go to driver with driver id and name fires go to driver event`() {
 
         val expectedDriverId = "driver-id"
@@ -751,6 +798,7 @@ internal class RaceViewModelTest: BaseTest() {
             q1 = overview.q1,
             q2 = overview.q2,
             q3 = overview.q3,
+            qSprint = overview.qSprint,
             race = overview.race?.let {
                 SingleRace(
                     points = it.points,

@@ -25,6 +25,7 @@ data class Round(
                 q1 = q1[driverId],
                 q2 = q2[driverId],
                 q3 = q3[driverId],
+                qSprint = qSprint[driverId],
                 race = race[driverId]
         )
     }
@@ -76,6 +77,7 @@ data class RoundDriverOverview(
         val q1: RoundQualifyingResult?,
         val q2: RoundQualifyingResult?,
         val q3: RoundQualifyingResult?,
+        val qSprint: RoundSprintQualifyingResult?,
         val race: RoundRaceResult?
 )
 
