@@ -63,10 +63,12 @@ class ConstructorViewHolder(
             }
         }
 
-        val driverPoints = item.driver.sumBy { it.second }
-        binding.penalty.show(item.points != driverPoints)
+        val driverPoints = item.driver.sumOf { it.second }
         if (item.points < driverPoints) {
+            binding.penalty.show(true)
             binding.penalty.text = getString(R.string.home_constructor_penalty, driverPoints - item.points)
+        } else {
+            binding.penalty.show(true)
         }
 
         adapter.list = item.driver
