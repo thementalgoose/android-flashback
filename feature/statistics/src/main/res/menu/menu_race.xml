@@ -7,6 +7,12 @@
         android:title="@string/nav_qualifying" />
 
     <item
+        android:id="@+id/nav_sprint_qualifying"
+        android:icon="@drawable/nav_sprint_qualifying"
+        android:title="@string/nav_sprint_qualifying"
+        android:visible="false" />
+
+    <item
         android:id="@+id/nav_race"
         android:icon="@drawable/nav_race"
         android:title="@string/nav_race" />

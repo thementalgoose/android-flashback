@@ -2,6 +2,7 @@ package tmg.flashback.statistics.ui.race
 
 enum class RaceAdapterType {
     RACE,
+    QUALIFYING_SPRINT,
     QUALIFYING_POS_1,
     QUALIFYING_POS_2,
     QUALIFYING_POS,

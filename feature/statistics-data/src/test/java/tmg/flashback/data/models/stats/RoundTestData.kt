@@ -496,7 +496,8 @@ internal val mockRound1: Round = Round(
                 mockDriver2.id to round1RaceResultDriver2,
                 mockDriver3.id to round1RaceResultDriver3,
                 mockDriver4.id to round1RaceResultDriver4
-        )
+        ),
+        qSprint = emptyMap()
 )
 
 
@@ -604,7 +605,8 @@ internal val mockRound2: Round = Round(
                 mockDriver2.id to round2RaceResultDriver2,
                 mockDriver3.id to round2RaceResultDriver3,
                 mockDriver4.id to round2RaceResultDriver4
-        )
+        ),
+        qSprint = emptyMap()
 )
 
 //endregion

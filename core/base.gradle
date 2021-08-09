@@ -77,10 +77,10 @@ android {
 dependencies {
 
     // Koin
-    implementation "org.koin:koin-android:$koin_version"
-    implementation "org.koin:koin-android-scope:$koin_version"
-    implementation "org.koin:koin-android-viewmodel:$koin_version"
-    implementation "org.koin:koin-android-ext:$koin_version"
+    implementation "io.insert-koin:koin-android:$koin_version"
+    implementation "io.insert-koin:koin-android-scope:$koin_version"
+    implementation "io.insert-koin:koin-android-viewmodel:$koin_version"
+    implementation "io.insert-koin:koin-android-ext:$koin_version"
 
     // ThreeTen
     implementation "com.jakewharton.threetenabp:threetenabp:$threeten"

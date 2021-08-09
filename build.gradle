@@ -11,21 +11,23 @@ buildscript {
 
     repositories {
         google()
-        jcenter()
         mavenCentral()
         maven {
             url 'https://maven.fabric.io/public'
         }
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
         maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.2.1'
-        classpath "com.github.triplet.gradle:play-publisher:3.5.0-SNAPSHOT"
+        classpath 'com.android.tools.build:gradle:4.2.2'
+        classpath "com.github.triplet.gradle:play-publisher:3.4.0-agp4.2"
         classpath 'com.google.gms:google-services:4.3.8'
         classpath "org.koin:koin-gradle-plugin:$koin_version"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'io.fabric.tools:gradle:1.31.2'
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.7.0'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.7.1'
         classpath "de.mannodermaus.gradle.plugins:android-junit5:1.7.1.1"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$navigation"
     }
@@ -34,7 +36,22 @@ buildscript {
 allprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
+        jcenter() {
+            content {
+                // https://github.com/Faltenreich/SkeletonLayout/issues/29
+                includeModule("com.faltenreich", "skeletonlayout")
+
+                // https://github.com/wangjiejacques/flagkit
+                includeModule("com.jwang123.flagkit", "flagkit")
+
+                // https://github.com/AdevintaSpain/Barista/issues/382
+                includeModule("com.schibsted.spain", "barista")
+
+                // Marked read only by owner, not around forever
+                includeModule("com.github.stkent", "bugshaker")
+            }
+        }
         maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
         maven { url 'https://jitpack.io' }
     }

@@ -25,7 +25,7 @@ val appModule = module {
 
     viewModel { SplashViewModel(get(), get(), get(), get()) }
     viewModel { SettingsAllViewModel(get()) }
-    viewModel { DashboardViewModel(get(), get(), get(), get(), get()) }
+    viewModel { DashboardViewModel(get(), get(), get(), get(), get(), get()) }
     viewModel { ListViewModel(get(), get(), get()) }
 
     single { FlashbackStartup(get(), get(), get(), get(), get(), get()) }
