@@ -27,12 +27,14 @@ class RSSSettingsViewModel(
         private val rssRepository: RSSRepository
 ): SettingsViewModel(), RSSSettingsViewModelInputs, RSSSettingsViewModelOutputs {
 
+    private val configureOnClick = { goToConfigure.value = Event() }
+
     override val models: List<SettingsModel> get() = listOf(
         SettingsModel.Header(R.string.settings_rss_configure),
         SettingsModel.Pref(
             title = R.string.settings_rss_configure_sources_title,
             description = R.string.settings_rss_configure_sources_description,
-            onClick = { goToConfigure.value = Event() }
+            onClick = configureOnClick
         ),
         SettingsModel.Header(R.string.settings_rss_appearance_title),
         SettingsModel.SwitchPref(

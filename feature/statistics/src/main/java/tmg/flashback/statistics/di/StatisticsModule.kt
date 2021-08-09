@@ -21,7 +21,7 @@ val statisticsModule = module {
 
     viewModel { MaintenanceViewModel(get(), get()) }
     viewModel { CircuitInfoViewModel(get(), get()) }
-    viewModel { SeasonViewModel(get(), get(), get(), get(), get(), get(), get()) }
+    viewModel { SeasonViewModel(get(), get(), get(), get(), get(), get()) }
     viewModel { ConstructorViewModel(get(), get()) }
     viewModel { DriverViewModel(get(), get()) }
     viewModel { DriverSeasonViewModel(get(), get(), get()) }
