@@ -5,6 +5,7 @@ import io.mockk.mockk
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.ZoneId
 import tmg.flashback.formula1.model.Timestamp
@@ -73,13 +74,13 @@ internal class UpNextViewModelTest: BaseTest() {
         sut.outputs.content.test {
             assertValue(listOf(
                 UpNextBreakdownModel.Divider,
-                UpNextBreakdownModel.Day("Wednesday 1st January"),
+                UpNextBreakdownModel.Day("Wednesday 1st January", LocalDate.of(2020, 1, 1)),
                 UpNextBreakdownModel.Item("practice", practiceTimestamp),
                 UpNextBreakdownModel.Divider,
-                UpNextBreakdownModel.Day("Thursday 2nd January"),
+                UpNextBreakdownModel.Day("Thursday 2nd January", LocalDate.of(2020, 1, 2)),
                 UpNextBreakdownModel.Item("qualifying", qualifyingTimestamp),
                 UpNextBreakdownModel.Divider,
-                UpNextBreakdownModel.Day("Friday 3rd January"),
+                UpNextBreakdownModel.Day("Friday 3rd January", LocalDate.of(2020, 1, 3)),
                 UpNextBreakdownModel.Item("race", raceTimestamp)
             ))
         }
@@ -117,10 +118,10 @@ internal class UpNextViewModelTest: BaseTest() {
         sut.outputs.content.test {
             assertValue(listOf(
                 UpNextBreakdownModel.Divider,
-                UpNextBreakdownModel.Day("Wednesday 1st January"),
+                UpNextBreakdownModel.Day("Wednesday 1st January", LocalDate.of(2020, 1, 1)),
                 UpNextBreakdownModel.Item("practice", practiceTimestamp),
                 UpNextBreakdownModel.Divider,
-                UpNextBreakdownModel.Day("Thursday 2nd January"),
+                UpNextBreakdownModel.Day("Thursday 2nd January", LocalDate.of(2020, 1, 2)),
                 UpNextBreakdownModel.Item("qualifying", qualifyingTimestamp),
                 UpNextBreakdownModel.Item("race", raceTimestamp)
             ))
@@ -159,7 +160,7 @@ internal class UpNextViewModelTest: BaseTest() {
         sut.outputs.content.test {
             assertValue(listOf(
                 UpNextBreakdownModel.Divider,
-                UpNextBreakdownModel.Day("Monday 9th January"),
+                UpNextBreakdownModel.Day("Monday 9th January", LocalDate.of(2020, 1, 9)),
                 UpNextBreakdownModel.Item("practice", practiceTimestamp),
                 UpNextBreakdownModel.Item("qualifying", qualifyingTimestamp),
                 UpNextBreakdownModel.Item("race", raceTimestamp)

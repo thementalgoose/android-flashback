@@ -12,6 +12,7 @@ import tmg.common.controllers.ReleaseNotesController
 import tmg.core.device.managers.BuildConfigManager
 import tmg.flashback.data.db.DataRepository
 import tmg.flashback.statistics.BuildConfig
+import tmg.flashback.upnext.controllers.UpNextController
 import tmg.flashback.upnext.extensions.updateAllWidgets
 import tmg.utilities.lifecycle.Event
 
@@ -29,6 +30,8 @@ interface DashboardViewModelOutputs {
     val openAppLockout: LiveData<Event>
     val openReleaseNotes: LiveData<Event>
 
+    val showUpNext: LiveData<Boolean>
+
     val appConfigSynced: LiveData<Event>
 }
 
@@ -37,6 +40,7 @@ interface DashboardViewModelOutputs {
 class DashboardViewModel(
     private val applicationContext: Context,
     private val dataRepository: DataRepository,
+    private val upNextController: UpNextController,
     private val buildConfigManager: BuildConfigManager,
     private val configurationController: ConfigController,
     private val releaseNotesController: ReleaseNotesController
@@ -52,6 +56,7 @@ class DashboardViewModel(
 
     override val openReleaseNotes: MutableLiveData<Event> = MutableLiveData()
     override val appConfigSynced: MutableLiveData<Event> = MutableLiveData()
+    override val showUpNext: MutableLiveData<Boolean> = MutableLiveData()
 
     var inputs: DashboardViewModelInputs = this
     var outputs: DashboardViewModelOutputs = this
@@ -72,6 +77,8 @@ class DashboardViewModel(
         if (releaseNotesController.pendingReleaseNotes) {
             openReleaseNotes.value = Event()
         }
+
+        showUpNext.value = upNextController.getNextEvent() != null
     }
 
     //region Inputs
