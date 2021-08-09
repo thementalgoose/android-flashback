@@ -160,7 +160,7 @@ internal class UpNextViewModelTest: BaseTest() {
         sut.outputs.content.test {
             assertValue(listOf(
                 UpNextBreakdownModel.Divider,
-                UpNextBreakdownModel.Day("Monday 9th January", LocalDate.of(2020, 1, 9)),
+                UpNextBreakdownModel.Day("Monday 9th January", LocalDate.of(2023, 1, 9)),
                 UpNextBreakdownModel.Item("practice", practiceTimestamp),
                 UpNextBreakdownModel.Item("qualifying", qualifyingTimestamp),
                 UpNextBreakdownModel.Item("race", raceTimestamp)
