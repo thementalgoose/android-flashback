@@ -42,21 +42,43 @@
             app:srcCompat="@drawable/ic_menu"
             app:tint="?attr/contentPrimary" />
 
-        <ImageView
-            android:id="@+id/now"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/upNextContainer"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="@drawable/ripple_rounded_small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/paddingSmall"
-            android:clickable="true"
-            android:contentDescription="@string/ab_dashboard_now"
-            android:focusable="true"
-            android:foreground="@drawable/ripple_rounded_small"
-            android:padding="@dimen/paddingSmall"
+            android:paddingStart="@dimen/paddingSmall"
             app:layout_constraintBottom_toBottomOf="@id/toolbarGuideline"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_now"
-            app:tint="?attr/contentPrimary" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/now"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:importantForAccessibility="no"
+                android:padding="@dimen/paddingSmall"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_up_next"
+                app:tint="?attr/contentPrimary" />
+
+            <TextView
+                android:id="@+id/upnextLabel"
+                style="@style/Text.Dashboard.Calendar.Month"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/dashboard_season_list_up_next_race"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/now"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Next race" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             android:id="@+id/titleCollapsed"
@@ -64,10 +86,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/paddingSmall"
-            android:layout_marginEnd="@dimen/paddingMedium"
+            android:layout_marginEnd="@dimen/paddingSmall"
             android:alpha="0.0"
             app:layout_constraintBottom_toBottomOf="@id/toolbarGuideline"
-            app:layout_constraintEnd_toStartOf="@id/now"
+            app:layout_constraintEnd_toStartOf="@id/upNextContainer"
             app:layout_constraintStart_toStartOf="@id/menu"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="2021" />
