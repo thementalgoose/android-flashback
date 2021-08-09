@@ -103,10 +103,25 @@
         android:paddingStart="@dimen/paddingMedium"
         android:paddingEnd="@dimen/paddingMedium"
         android:paddingBottom="@dimen/paddingSmall"
-        app:layout_constraintTop_toTopOf="@id/divider"
+        app:layout_constraintTop_toBottomOf="@id/startsIn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:text="@string/dashboard_up_next_shown_in_device_time"/>
+
+
+    <TextView
+        android:id="@+id/startsIn"
+        style="@style/Text.Dashboard.UpNext.Info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="start"
+        android:paddingStart="@dimen/paddingMedium"
+        android:paddingEnd="@dimen/paddingMedium"
+        android:paddingBottom="@dimen/paddingXSmall"
+        app:layout_constraintTop_toTopOf="@id/divider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="The first event starts in 1 day"/>
 
     <!-- Gone temporarily while we only support device time -->
     <androidx.recyclerview.widget.RecyclerView

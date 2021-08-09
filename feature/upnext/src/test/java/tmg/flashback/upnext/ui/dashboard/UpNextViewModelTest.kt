@@ -179,6 +179,91 @@ internal class UpNextViewModelTest: BaseTest() {
 
     //endregion
 
+    //region Remaining days
+
+    @Test
+    fun `remaining days is taken of minimum event time`() {
+        val practice: LocalDateTime = LocalDateTime.now().plusDays(7L)
+        val practiceTimestamp = Timestamp(
+            originalDate = practice.toLocalDate(),
+            originalTime = practice.toLocalTime(),
+            zone = ZoneId.systemDefault()
+        )
+        val qualifying: LocalDateTime = LocalDateTime.now().plusDays(9L)
+        val qualifyingTimestamp = Timestamp(
+            originalDate = qualifying.toLocalDate(),
+            originalTime = qualifying.toLocalTime(),
+            zone = ZoneId.systemDefault()
+        )
+
+        every { mockUpNextController.getNextEvent() } returns mockUpNext.copy(values = listOf(
+            UpNextScheduleTimestamp("practice", practiceTimestamp),
+            UpNextScheduleTimestamp("qualifying", qualifyingTimestamp),
+        ))
+
+        initSUT()
+
+        sut.outputs.remainingDays.test {
+            assertValue(7)
+        }
+    }
+
+    @Test
+    fun `remaining days is capped at 0 if minimum event time has already passed`() {
+        val practice: LocalDateTime = LocalDateTime.now().minusDays(1L)
+        val practiceTimestamp = Timestamp(
+            originalDate = practice.toLocalDate(),
+            originalTime = practice.toLocalTime(),
+            zone = ZoneId.systemDefault()
+        )
+        val qualifying: LocalDateTime = LocalDateTime.now().plusDays(9L)
+        val qualifyingTimestamp = Timestamp(
+            originalDate = qualifying.toLocalDate(),
+            originalTime = qualifying.toLocalTime(),
+            zone = ZoneId.systemDefault()
+        )
+
+        every { mockUpNextController.getNextEvent() } returns mockUpNext.copy(values = listOf(
+            UpNextScheduleTimestamp("practice", practiceTimestamp),
+            UpNextScheduleTimestamp("qualifying", qualifyingTimestamp),
+        ))
+
+        initSUT()
+
+        sut.outputs.remainingDays.test {
+            assertValue(0)
+        }
+    }
+
+    @Test
+    fun `remaining days is set to 0 is minumim is today`() {
+        val practice: LocalDateTime = LocalDateTime.now()
+        val practiceTimestamp = Timestamp(
+            originalDate = practice.toLocalDate(),
+            originalTime = practice.toLocalTime(),
+            zone = ZoneId.systemDefault()
+        )
+        val qualifying: LocalDateTime = LocalDateTime.now().plusDays(9L)
+        val qualifyingTimestamp = Timestamp(
+            originalDate = qualifying.toLocalDate(),
+            originalTime = qualifying.toLocalTime(),
+            zone = ZoneId.systemDefault()
+        )
+
+        every { mockUpNextController.getNextEvent() } returns mockUpNext.copy(values = listOf(
+            UpNextScheduleTimestamp("practice", practiceTimestamp),
+            UpNextScheduleTimestamp("qualifying", qualifyingTimestamp),
+        ))
+
+        initSUT()
+
+        sut.outputs.remainingDays.test {
+            assertValue(0)
+        }
+    }
+
+    //endregion
+
     //region Empty Up Next
 
     @Test
@@ -213,6 +298,15 @@ internal class UpNextViewModelTest: BaseTest() {
         initSUT()
         sut.outputs.timezones.test {
             assertValue(emptyList())
+        }
+    }
+
+    @Test
+    fun `remaining days is 0 when next event is null`() {
+        every { mockUpNextController.getNextEvent() } returns null
+        initSUT()
+        sut.outputs.remainingDays.test {
+            assertValue(0)
         }
     }
 

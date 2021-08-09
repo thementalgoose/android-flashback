@@ -20,6 +20,7 @@ import tmg.flashback.upnext.databinding.FragmentUpNextBinding
 import tmg.flashback.upnext.ui.timezone.TimezoneAdapter
 import tmg.flashback.upnext.utils.daysBetween
 import tmg.utilities.extensions.observe
+import tmg.utilities.extensions.views.show
 
 class UpNextFragment: BaseFragment<FragmentUpNextBinding>() {
 
@@ -69,6 +70,11 @@ class UpNextFragment: BaseFragment<FragmentUpNextBinding>() {
                 binding.title.text = "${schedule.season} ${schedule.title}"
                 binding.subtitle.text = schedule.subtitle
             }
+        }
+
+        observe(viewModel.outputs.remainingDays) {
+            binding.startsIn.show(it != 0)
+            binding.startsIn.text = resources.getQuantityString(R.plurals.dashboard_up_next_starts_in, it, it)
         }
 
         observe(viewModel.outputs.timezones) {

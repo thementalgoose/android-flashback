@@ -10,7 +10,9 @@ import tmg.flashback.upnext.R
 import tmg.flashback.upnext.controllers.UpNextController
 import tmg.flashback.upnext.repository.json.UpNextItemJson
 import tmg.flashback.upnext.repository.model.UpNextSchedule
+import tmg.flashback.upnext.repository.model.UpNextScheduleTimestamp
 import tmg.flashback.upnext.ui.timezone.TimezoneItem
+import tmg.flashback.upnext.utils.daysBetween
 import tmg.utilities.extensions.ordinalAbbreviation
 
 //region Inputs
@@ -27,6 +29,7 @@ interface UpNextViewModelOutputs {
     val data: LiveData<UpNextSchedule>
     val content: LiveData<List<UpNextBreakdownModel>>
     val timezones: LiveData<List<TimezoneItem>>
+    val remainingDays: LiveData<Int>
 }
 
 //endregion
@@ -39,6 +42,7 @@ class UpNextViewModel(
     override val data: MutableLiveData<UpNextSchedule> = MutableLiveData()
     override val content: MutableLiveData<List<UpNextBreakdownModel>> = MutableLiveData()
     override val timezones: MutableLiveData<List<TimezoneItem>> = MutableLiveData()
+    override val remainingDays: MutableLiveData<Int> = MutableLiveData()
 
     var inputs: UpNextViewModelInputs = this
     var outputs: UpNextViewModelOutputs = this
@@ -63,6 +67,7 @@ class UpNextViewModel(
                 )
                 content.value = emptyList()
                 timezones.value = emptyList()
+                remainingDays.value = 0
             }
             else -> {
                 data.value = schedule
@@ -87,13 +92,15 @@ class UpNextViewModel(
                 timezones.value = listOf(
                     TimezoneItem(R.string.dashboard_up_next_your_time)
                 )
+                remainingDays.value = getRemainingDays(schedule.values)
             }
         }
     }
 
     //endregion
 
-    //region Outputs
-
-    //endregion
+    private fun getRemainingDays(list: List<UpNextScheduleTimestamp>): Int {
+        val earliestDate = list.minByOrNull { it.timestamp.originalDate }?.timestamp?.originalDate ?: return 0
+        return daysBetween(LocalDate.now(), earliestDate).coerceAtLeast(0)
+    }
 }
