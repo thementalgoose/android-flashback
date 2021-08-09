@@ -33,10 +33,10 @@
         app:constraintSetEnd="@id/end"
         app:constraintSetStart="@+id/start"
         app:duration="300"
-        app:motionInterpolator="easeInOut">
+        app:motionInterpolator="linear">
 
         <OnClick
-            app:clickAction="transitionToEnd"
+            app:clickAction="toggle"
             app:targetId="@id/calendar"/>
 
         <KeyFrameSet>
