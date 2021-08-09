@@ -21,6 +21,8 @@
         <entry key="feature/statistics/src/main/res/drawable/nav_qualifying.xml" value="0.5640625" />
         <entry key="feature/statistics/src/main/res/drawable/nav_sprint_qualifying.xml" value="0.5640625" />
         <entry key="feature/statistics/src/main/res/layout/fragment_dashboard_season.xml" value="0.3848958333333333" />
+        <entry key="feature/statistics/src/main/res/layout/view_dashboard_season_constructor.xml" value="0.25" />
+        <entry key="feature/statistics/src/main/res/layout/view_dashboard_season_driver.xml" value="0.26979166666666665" />
         <entry key="feature/statistics/src/main/res/layout/view_dashboard_season_track.xml" value="0.3953125" />
         <entry key="feature/statistics/src/main/res/layout/view_driver_season_header.xml" value="0.3848958333333333" />
         <entry key="feature/statistics/src/main/res/layout/view_link_pill.xml" value="0.3026041666666667" />
@@ -36,5 +38,5 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" default="false" project-jdk-name="11" project-jdk-type="JavaSDK" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" project-jdk-name="11" project-jdk-type="JavaSDK" />
 </project>
