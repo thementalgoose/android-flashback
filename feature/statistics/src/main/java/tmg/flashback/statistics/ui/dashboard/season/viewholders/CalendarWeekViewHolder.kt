@@ -92,11 +92,6 @@ class CalendarWeekViewHolder(
             binding.raceName.text = ""
             binding.round.text = ""
 
-            binding.container.setInterpolatedProgress(0.0f)
-            binding.container.setTransition(R.id.start, R.id.start)
-            binding.container.isEnabled = false
-            binding.container.isClickable = false
-
         } else {
             hasExpandingContent = true
             if (item.race.date < LocalDate.now()) {
@@ -117,14 +112,19 @@ class CalendarWeekViewHolder(
             binding.circuitName.text = "${item.race.circuitName}, ${item.race.country}"
             binding.raceName.text = item.race.raceName
             binding.round.text = "#${item.race.round}"
-
-            binding.container.setInterpolatedProgress(0.0f)
-            binding.container.setTransition(R.id.start, R.id.end)
-            binding.container.isEnabled = true
-            binding.container.isClickable = true
         }
 
+        binding.container.isEnabled = false
+        binding.container.isClickable = false
+
+        binding.container.setTransition(R.id.click)
+        binding.container.getTransition(R.id.click).apply {
+            setEnable(false)
+        }
+        binding.container.setInterpolatedProgress(0.0f)
         binding.container.progress = 0.0f
+
+        binding.container.isInteractionEnabled = hasExpandingContent
     }
 
     companion object {
@@ -137,7 +137,9 @@ class CalendarWeekViewHolder(
     override fun onClick(p0: View?) {
         when (p0) {
             binding.raceData -> {
-                calendarWeekRaceClicked(item)
+                if (hasExpandingContent) {
+                    calendarWeekRaceClicked(item)
+                }
             }
         }
     }
