@@ -33,7 +33,7 @@
         app:constraintSetEnd="@id/end"
         app:constraintSetStart="@+id/start"
         app:duration="300"
-        app:motionInterpolator="linear">
+        app:motionInterpolator="easeInOut">
 
         <OnClick
             app:clickAction="toggle"
