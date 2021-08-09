@@ -1,6 +1,7 @@
 package tmg.flashback.upnext.ui.dashboard
 
 import androidx.annotation.LayoutRes
+import org.threeten.bp.LocalDate
 import tmg.flashback.formula1.model.Timestamp
 import tmg.flashback.upnext.R
 
@@ -14,7 +15,8 @@ sealed class UpNextBreakdownModel(
     ): UpNextBreakdownModel(R.layout.view_breakdown_item)
 
     data class Day(
-        val label: String
+        val label: String,
+        val day: LocalDate
     ): UpNextBreakdownModel(R.layout.view_breakdown_day)
 
     object Divider: UpNextBreakdownModel(R.layout.view_breakdown_divider)
