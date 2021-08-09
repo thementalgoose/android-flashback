@@ -17,16 +17,21 @@ data class Round(
         val q1: Map<String, RoundQualifyingResult>,
         val q2: Map<String, RoundQualifyingResult>,
         val q3: Map<String, RoundQualifyingResult>,
-        val race: Map<String, RoundRaceResult>
+        val qSprint: Map<String, RoundSprintQualifyingResult>,
+        val race: Map<String, RoundRaceResult>,
 ) {
     fun driverOverview(driverId: String): RoundDriverOverview {
         return RoundDriverOverview(
                 q1 = q1[driverId],
                 q2 = q2[driverId],
                 q3 = q3[driverId],
+                qSprint = qSprint[driverId],
                 race = race[driverId]
         )
     }
+
+    val hasSprintQualifying: Boolean
+        get() = qSprint.isNotEmpty()
 
     val q1FastestLap: LapTime?
         get() = q1.fastest()
@@ -72,6 +77,7 @@ data class RoundDriverOverview(
         val q1: RoundQualifyingResult?,
         val q2: RoundQualifyingResult?,
         val q3: RoundQualifyingResult?,
+        val qSprint: RoundSprintQualifyingResult?,
         val race: RoundRaceResult?
 )
 
@@ -79,6 +85,16 @@ data class RoundQualifyingResult(
         val driver: RoundDriver,
         val time: LapTime?,
         val position: Int
+)
+
+data class RoundSprintQualifyingResult(
+        val driver: RoundDriver,
+        val time: LapTime?,
+        val points: Int,
+        val grid: Int,
+        val qualified: Int?,
+        val finish: Int,
+        val status: RaceStatus,
 )
 
 data class RoundRaceResult(

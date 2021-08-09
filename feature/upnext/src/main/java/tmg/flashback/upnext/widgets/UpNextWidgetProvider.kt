@@ -121,9 +121,11 @@ class UpNextWidgetProvider : AppWidgetProvider(), KoinComponent {
                     remoteView.setTextViewText(R.id.days, context.getString(R.string.dashboard_up_next_date_today))
                     remoteView.setTextViewText(R.id.daystogo, eventsToday.joinToString(separator = ", ") {
                         var result: String? = null
-                        it.timestamp.ifDateAndTime { utc, local ->
-                            result = local.toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm"))
-                        }
+                        it.timestamp.on(
+                            dateAndTime = { utc, local ->
+                                result = local.toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm"))
+                            }
+                        )
                         if (result == null) {
                             return@joinToString it.label
                         }
@@ -145,9 +147,11 @@ class UpNextWidgetProvider : AppWidgetProvider(), KoinComponent {
                     remoteView.setTextViewText(R.id.days, context.resources.getQuantityString(R.plurals.dashboard_up_next_suffix_days, days, days))
                     remoteView.setTextViewText(R.id.daystogo, next.joinToString(separator = ", ") {
                         var result: String? = null
-                        it.timestamp.ifDateAndTime { utc, local ->
-                            result = local.toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm"))
-                        }
+                        it.timestamp.on(
+                            dateAndTime = { utc, local ->
+                                result = local.toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm"))
+                            }
+                        )
                         if (result == null) {
                             return@joinToString it.label
                         }
@@ -162,12 +166,7 @@ class UpNextWidgetProvider : AppWidgetProvider(), KoinComponent {
                 remoteView.setOnClickPendingIntent(R.id.circuit, getRefreshWidgetPendingIntent(context, widgetId, appWidgetIds))
                 remoteView.setOnClickPendingIntent(R.id.refresh, getRefreshWidgetPendingIntent(context, widgetId, appWidgetIds))
 
-//                if (appRepository.widgetOpenApp) {
-                    remoteView.setOnClickPendingIntent(R.id.container, getOpenAppPendingIntent(context))
-//                }
-//                else {
-//                    remoteView.setOnClickPendingIntent(R.id.container, getRefreshWidgetPendingIntent(context, widgetId, appWidgetIds))
-//                }
+                remoteView.setOnClickPendingIntent(R.id.container, getOpenAppPendingIntent(context))
                 appWidgetManager?.updateAppWidget(widgetId, remoteView)
             } catch (e: RuntimeException) {
                 crashController.logError(e, "Widget Up Next provider couldn't be set up")

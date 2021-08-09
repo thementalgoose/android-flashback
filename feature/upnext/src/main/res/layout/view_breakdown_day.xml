@@ -4,16 +4,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingStart="@dimen/paddingMedium"
     android:paddingTop="@dimen/paddingXSmall"
     android:paddingEnd="@dimen/paddingMedium"
     android:paddingBottom="@dimen/paddingXSmall">
 
+    <ImageView
+        android:id="@+id/defaultIndicator"
+        android:layout_width="0dp"
+        android:layout_height="20dp"
+        android:alpha="0.4"
+        android:importantForAccessibility="no"
+        android:scaleType="fitCenter"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_current_day_indicator"
+        tools:visibility="visible" />
+
     <TextView
-        style="@style/Text.Dashboard.UpNext.Day.Label"
         android:id="@+id/title"
+        style="@style/Text.Dashboard.UpNext.Day.Label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/paddingMedium"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

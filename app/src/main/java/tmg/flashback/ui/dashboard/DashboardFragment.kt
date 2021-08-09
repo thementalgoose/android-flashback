@@ -21,6 +21,7 @@ import tmg.flashback.ui.dashboard.list.ListFragment
 import tmg.flashback.statistics.ui.dashboard.season.SeasonFragment
 import tmg.flashback.statistics.ui.dashboard.season.SeasonFragmentCallback
 import tmg.flashback.upnext.ui.dashboard.UpNextFragment
+import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 
 class DashboardFragment : BaseFragment<FragmentDashboardBinding>(),
@@ -91,6 +92,10 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(),
                 startActivity(Intent(it, MaintenanceActivity::class.java))
                 it.finishAffinity()
             }
+        }
+
+        observe(viewModel.outputs.showUpNext) {
+            seasonFragment?.showUpNext(it)
         }
 
         observeEvent(viewModel.outputs.appConfigSynced) {

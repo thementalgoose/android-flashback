@@ -38,6 +38,7 @@ interface SeasonViewModelInputs {
     fun clickNow()
     fun clickItem(item: SeasonNavItem)
 
+    fun showUpNext(value: Boolean = true)
     fun refresh()
     fun selectSeason(season: Int)
 
@@ -53,6 +54,7 @@ interface SeasonViewModelInputs {
 interface SeasonViewModelOutputs {
     val openMenu: LiveData<Event>
     val openNow: LiveData<Event>
+    val showUpNext: LiveData<Boolean>
 
     val openRace: LiveData<DataEvent<SeasonItem.Track>>
     val openDriver: LiveData<DataEvent<SeasonItem.Driver>>
@@ -66,7 +68,6 @@ interface SeasonViewModelOutputs {
 //endregion
 
 class SeasonViewModel(
-        private val deviceController: DeviceController,
         private val themeController: ThemeController,
         private val historyRepository: HistoryRepository,
         private val seasonOverviewRepository: SeasonOverviewRepository,
@@ -89,6 +90,7 @@ class SeasonViewModel(
     override val showLoading: MutableLiveData<Boolean> = MutableLiveData(true)
     override val openMenu: MutableLiveData<Event> = MutableLiveData()
     override val openNow: MutableLiveData<Event> = MutableLiveData()
+    override val showUpNext: MutableLiveData<Boolean> = MutableLiveData(false)
 
     /**
      * Label to be shown at the top of the screen to indicate what year it is
@@ -240,6 +242,10 @@ class SeasonViewModel(
         openMenu.value = Event()
     }
 
+    override fun showUpNext(value: Boolean) {
+        showUpNext.value = value
+    }
+
     override fun clickNow() {
         openNow.value = Event()
     }
@@ -293,7 +299,7 @@ class SeasonViewModel(
                 }
             }
 
-            list.add(SeasonItem.CalendarMonth(month))
+            list.add(SeasonItem.CalendarMonth(month, season))
             list.add(SeasonItem.CalendarWeek(month, start, this.firstOrNull { it.date >= start && it.date <= end }))
             while (start.month == month) {
                 start = start.with(TemporalAdjusters.next(DayOfWeek.MONDAY))

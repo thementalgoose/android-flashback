@@ -28,7 +28,10 @@ fun Season.constructorStandings(): ConstructorStandingsRound = this.constructors
             this.rounds.forEach { round ->
                 val driversInRoundForConstructor = round.drivers
                         .filter { roundDriver -> roundDriver.constructor.id == constructor.id }
-                        .map { it to (round.race[it.id]?.points ?: 0) }
+                        .map { driver ->
+                            val points = (round.race[driver.id]?.points ?: 0) + (round.qSprint[driver.id]?.points ?: 0)
+                            driver to points
+                        }
 
                 driversInRoundForConstructor.forEach { (roundDriver, points) ->
                     if (!driverMap.containsKey(roundDriver.id)) {

@@ -9,6 +9,8 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
+import org.threeten.bp.LocalDate
+import org.threeten.bp.Month
 import tmg.core.ui.base.BaseFragment
 import tmg.flashback.statistics.R
 import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
@@ -20,6 +22,7 @@ import tmg.flashback.statistics.ui.race.RaceActivity
 import tmg.flashback.statistics.ui.race.RaceData
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
+import tmg.utilities.extensions.views.show
 
 class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
 
@@ -75,7 +78,7 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
             viewModel.inputs.clickMenu()
         }
 
-        binding.now.setOnClickListener {
+        binding.upNextContainer.setOnClickListener {
             viewModel.inputs.clickNow()
         }
 
@@ -87,14 +90,27 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
             seasonFragmentCallback?.openNow()
         }
 
+        observe(viewModel.outputs.showUpNext) {
+            binding.upNextContainer.show(it)
+        }
+
         observe(viewModel.outputs.label) {
             binding.titleCollapsed.text = getString(R.string.home_season_arrow, it.msg ?: currentSeasonYear.toString())
             binding.titleExpanded.text = getString(R.string.home_season_arrow, it.msg ?: currentSeasonYear.toString())
         }
 
-        observe(viewModel.outputs.list) {
-            adapter.list = it
-            binding.dataList.smoothScrollToPosition(0)
+        observe(viewModel.outputs.list) { list ->
+            adapter.list = list
+            if (list.any { it is SeasonItem.CalendarMonth && it.year == currentSeasonYear }) {
+                val currentMonth = LocalDate.now().month
+                val positionToScrollTo = list
+                    .indexOfFirst { it is SeasonItem.CalendarMonth && it.month == currentMonth }
+
+                (binding.dataList.layoutManager as? LinearLayoutManager)?.scrollToPositionWithOffset(positionToScrollTo.coerceAtLeast(0), 0)
+            }
+            else {
+                binding.dataList.smoothScrollToPosition(0)
+            }
         }
 
         observe(viewModel.outputs.showLoading) {
@@ -195,6 +211,13 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
         analyticsData["extra_view_type"] = SeasonNavItem.CONSTRUCTORS.name
         logScreenViewed("Dashboard", analyticsData)
         viewModel.inputs.clickItem(SeasonNavItem.CONSTRUCTORS)
+    }
+
+    /**
+     * Publically accessible method for telling the season to show the up next prompt
+     */
+    fun showUpNext(value: Boolean) {
+        viewModel.inputs.showUpNext(value)
     }
 
     /**
