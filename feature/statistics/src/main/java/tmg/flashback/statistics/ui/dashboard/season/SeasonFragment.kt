@@ -22,6 +22,7 @@ import tmg.flashback.statistics.ui.race.RaceActivity
 import tmg.flashback.statistics.ui.race.RaceData
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
+import tmg.utilities.extensions.views.show
 
 class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
 
@@ -77,7 +78,7 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
             viewModel.inputs.clickMenu()
         }
 
-        binding.now.setOnClickListener {
+        binding.upNextContainer.setOnClickListener {
             viewModel.inputs.clickNow()
         }
 
@@ -87,6 +88,10 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
 
         observeEvent(viewModel.outputs.openNow) {
             seasonFragmentCallback?.openNow()
+        }
+
+        observe(viewModel.outputs.showUpNext) {
+            binding.upNextContainer.show(it)
         }
 
         observe(viewModel.outputs.label) {
@@ -206,6 +211,13 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
         analyticsData["extra_view_type"] = SeasonNavItem.CONSTRUCTORS.name
         logScreenViewed("Dashboard", analyticsData)
         viewModel.inputs.clickItem(SeasonNavItem.CONSTRUCTORS)
+    }
+
+    /**
+     * Publically accessible method for telling the season to show the up next prompt
+     */
+    fun showUpNext(value: Boolean) {
+        viewModel.inputs.showUpNext(value)
     }
 
     /**

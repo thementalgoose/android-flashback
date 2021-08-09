@@ -42,7 +42,6 @@ internal class SeasonViewModelTest: BaseTest() {
 
     lateinit var sut: SeasonViewModel
 
-    private val mockDeviceController: DeviceController = mockk(relaxed = true)
     private val mockThemeController: ThemeController = mockk(relaxed = true)
     private val mockHistoryRepository: HistoryRepository = mockk(relaxed = true)
     private val mockSeasonOverviewRepository: SeasonOverviewRepository = mockk(relaxed = true)
@@ -63,7 +62,6 @@ internal class SeasonViewModelTest: BaseTest() {
 
     private fun initSUT() {
         sut = SeasonViewModel(
-            mockDeviceController,
             mockThemeController,
             mockHistoryRepository,
             mockSeasonOverviewRepository,
@@ -72,6 +70,32 @@ internal class SeasonViewModelTest: BaseTest() {
             mockAnalyticsController
         )
     }
+
+    //region Showing up next
+
+    @Test
+    fun `showUpNext defaults to false`() {
+
+        initSUT()
+
+        sut.outputs.showUpNext.test {
+            assertValue(false)
+        }
+    }
+
+    @Test
+    fun `showUpNext changes to true when input with true`() {
+
+        initSUT()
+
+        sut.inputs.showUpNext()
+
+        sut.outputs.showUpNext.test {
+            assertValue(true)
+        }
+    }
+
+    //endregion
 
     //region Navigation
 

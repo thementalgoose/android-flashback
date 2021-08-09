@@ -13,6 +13,7 @@ import tmg.configuration.controllers.ConfigController
 import tmg.core.device.managers.BuildConfigManager
 import tmg.flashback.data.db.DataRepository
 import tmg.flashback.data.models.AppLockout
+import tmg.flashback.upnext.controllers.UpNextController
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertEventFired
 import tmg.testutils.livedata.assertEventNotFired
@@ -24,6 +25,7 @@ internal class DashboardViewModelTest: BaseTest() {
 
     private val mockContext: Context = mockk(relaxed = true)
     private val mockDataRepository: DataRepository = mockk(relaxed = true)
+    private val mockUpNextController: UpNextController = mockk(relaxed = true)
     private val mockBuildConfigManager: BuildConfigManager = mockk(relaxed = true)
     private val mockConfigurationController: ConfigController = mockk(relaxed = true)
     private val mockReleaseNotesCOntroller: ReleaseNotesController = mockk(relaxed = true)
@@ -38,11 +40,40 @@ internal class DashboardViewModelTest: BaseTest() {
         sut = DashboardViewModel(
             mockContext,
             mockDataRepository,
+            mockUpNextController,
             mockBuildConfigManager,
             mockConfigurationController,
             mockReleaseNotesCOntroller
         )
     }
+
+    //region Showing up next
+
+    @Test
+    fun `showing up next returns true if next event is not null`() {
+
+        every { mockUpNextController.getNextEvent() } returns mockk()
+
+        initSUT()
+
+        sut.outputs.showUpNext.test {
+            assertValue(true)
+        }
+    }
+
+    @Test
+    fun `showing up next returns false if next event is null`() {
+
+        every { mockUpNextController.getNextEvent() } returns null
+
+        initSUT()
+
+        sut.outputs.showUpNext.test {
+            assertValue(false)
+        }
+    }
+
+    //endregion
 
     //region App Lockout
 
