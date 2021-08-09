@@ -2,17 +2,16 @@ package tmg.flashback.statistics.ui.dashboard.season.viewholders
 
 import android.graphics.Color
 import android.view.View
-import androidx.core.view.isVisible
+import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.recyclerview.widget.RecyclerView
 import org.threeten.bp.LocalDate
+import tmg.flashback.formula1.enums.TrackLayout
+import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.LayoutDashboardSeasonCalendarWeekBinding
 import tmg.flashback.statistics.databinding.ViewDashboardSeasonCalendarWeekBinding
-import tmg.flashback.formula1.enums.TrackLayout
 import tmg.flashback.statistics.ui.dashboard.season.SeasonItem
-import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.utilities.extensions.getColor
-import tmg.utilities.extensions.toEnum
 import tmg.utilities.extensions.views.context
 import tmg.utilities.extensions.views.show
 
@@ -36,7 +35,6 @@ class CalendarWeekViewHolder(
     private lateinit var item: SeasonItem.CalendarWeek
 
     init {
-        binding.calendar.setOnClickListener(this)
         binding.raceData.setOnClickListener(this)
     }
 
@@ -89,7 +87,6 @@ class CalendarWeekViewHolder(
             binding.highlight.show(false)
             binding.flag.show(false)
 
-            binding.raceData.show(false)
             binding.circuit.setImageResource(0)
             binding.circuitName.text = ""
             binding.raceName.text = ""
@@ -107,8 +104,6 @@ class CalendarWeekViewHolder(
             binding.flag.show(true)
             binding.flag.setImageResource(context.getFlagResourceAlpha3(item.race.countryISO))
 
-            binding.raceData.show(false)
-
             val track = TrackLayout.getTrack(item.race.circuitId, item.race.season, item.race.raceName)
             binding.circuit.show(track != null)
             if (track != null) {
@@ -118,6 +113,18 @@ class CalendarWeekViewHolder(
             binding.raceName.text = item.race.raceName
             binding.round.text = "#${item.race.round}"
         }
+
+        binding.container.isEnabled = false
+        binding.container.isClickable = false
+
+        binding.container.setTransition(R.id.click)
+        binding.container.getTransition(R.id.click).apply {
+            setEnable(false)
+        }
+        binding.container.setInterpolatedProgress(0.0f)
+        binding.container.progress = 0.0f
+
+        binding.container.isInteractionEnabled = hasExpandingContent
     }
 
     companion object {
@@ -129,18 +136,10 @@ class CalendarWeekViewHolder(
 
     override fun onClick(p0: View?) {
         when (p0) {
-            binding.calendar -> {
-                if (hasExpandingContent) {
-                    if (binding.raceData.isVisible) {
-                        binding.raceData.show(false)
-                    }
-                    else {
-                        binding.raceData.show(true)
-                    }
-                }
-            }
             binding.raceData -> {
-                calendarWeekRaceClicked(item)
+                if (hasExpandingContent) {
+                    calendarWeekRaceClicked(item)
+                }
             }
         }
     }
