@@ -9,26 +9,32 @@
         <entry key="app/src/main/res/layout/fragment_dashboard_list.xml" value="0.2441123188405797" />
         <entry key="app/src/main/res/layout/view_season_list_divider.xml" value="0.3848958333333333" />
         <entry key="app/src/main/res/layout/view_season_list_hero.xml" value="0.3848958333333333" />
+        <entry key="app/src/main/res/layout/view_season_list_season.xml" value="0.4895833333333333" />
         <entry key="app/src/main/res/layout/view_season_list_up_next.xml" value="0.26646403242147926" />
         <entry key="core/ui/src/main/res/drawable/ic_menu.xml" value="0.4010416666666667" />
         <entry key="feature/formula1/src/main/res/drawable/circuit_adelaide.xml" value="0.4010416666666667" />
         <entry key="feature/formula1/src/main/res/drawable/circuit_unknown.xml" value="0.4010416666666667" />
         <entry key="feature/formula1/src/main/res/drawable/nationality_not_found.xml" value="0.4010416666666667" />
         <entry key="feature/statistics/src/main/res/drawable/background_link_pill.xml" value="0.31875" />
+        <entry key="feature/statistics/src/main/res/drawable/ic_default_indicator.xml" value="0.5635416666666667" />
         <entry key="feature/statistics/src/main/res/drawable/ic_now.xml" value="0.4010416666666667" />
         <entry key="feature/statistics/src/main/res/drawable/ic_pos_up.xml" value="0.4114583333333333" />
         <entry key="feature/statistics/src/main/res/drawable/ic_race_status.xml" value="0.4114583333333333" />
+        <entry key="feature/statistics/src/main/res/drawable/ic_up_next.xml" value="0.41510416666666666" />
         <entry key="feature/statistics/src/main/res/drawable/nav_qualifying.xml" value="0.5640625" />
         <entry key="feature/statistics/src/main/res/drawable/nav_sprint_qualifying.xml" value="0.5640625" />
-        <entry key="feature/statistics/src/main/res/layout/fragment_dashboard_season.xml" value="0.3848958333333333" />
+        <entry key="feature/statistics/src/main/res/layout/fragment_dashboard_season.xml" value="0.5" />
+        <entry key="feature/statistics/src/main/res/layout/view_dashboard_season_constructor.xml" value="0.25" />
+        <entry key="feature/statistics/src/main/res/layout/view_dashboard_season_driver.xml" value="0.26979166666666665" />
         <entry key="feature/statistics/src/main/res/layout/view_dashboard_season_track.xml" value="0.3953125" />
         <entry key="feature/statistics/src/main/res/layout/view_driver_season_header.xml" value="0.3848958333333333" />
         <entry key="feature/statistics/src/main/res/layout/view_link_pill.xml" value="0.3026041666666667" />
         <entry key="feature/statistics/src/main/res/menu/menu_race.xml" value="0.5479166666666667" />
         <entry key="feature/upnext/src/main/res/drawable/background_timezone.xml" value="0.4010416666666667" />
+        <entry key="feature/upnext/src/main/res/drawable/ic_current_day_indicator.xml" value="0.5635416666666667" />
         <entry key="feature/upnext/src/main/res/drawable/widget_circuit_unknown.xml" value="0.4010416666666667" />
         <entry key="feature/upnext/src/main/res/layout/fragment_up_next.xml" value="0.30572916666666666" />
-        <entry key="feature/upnext/src/main/res/layout/view_breakdown_day.xml" value="0.3026041666666667" />
+        <entry key="feature/upnext/src/main/res/layout/view_breakdown_day.xml" value="0.5" />
         <entry key="feature/upnext/src/main/res/layout/view_breakdown_divider.xml" value="0.3848958333333333" />
         <entry key="feature/upnext/src/main/res/layout/view_breakdown_item.xml" value="0.3026041666666667" />
         <entry key="feature/upnext/src/main/res/layout/view_timezone.xml" value="0.3848958333333333" />
@@ -36,5 +42,5 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" default="false" project-jdk-name="11" project-jdk-type="JavaSDK" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" project-jdk-name="11" project-jdk-type="JavaSDK" />
 </project>
