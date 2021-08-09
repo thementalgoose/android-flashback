@@ -16,6 +16,13 @@
     <string name="dashboard_up_next_your_time">Device time</string>
     <string name="dashboard_up_next_shown_in_device_time">All times shown in your timezone</string>
 
+    <plurals name="dashboard_up_next_starts_in">
+        <item quantity="zero">The first event starts today</item>
+        <item quantity="one">The first event starts in %d day</item>
+        <item quantity="other">The first event starts in %d days</item>
+    </plurals>
+    <string name="dashboard_up_next_starts_in">All times shown in your timezone</string>
+
     <string name="dashboard_up_next_all_day">All day</string>
 
     <string name="dashboard_up_next_date_today">Today</string>
