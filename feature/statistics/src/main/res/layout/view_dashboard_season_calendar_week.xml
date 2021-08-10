@@ -1,27 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:layoutDescription="@xml/view_dashboard_season_calendar_week_scene">
+    android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/raceData"
-        android:layout_width="match_parent"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
         android:clickable="true"
         android:focusable="true"
-        android:layout_height="0dp"
-        android:transformPivotY="0dp"
-        android:alpha="0.0"
         android:foreground="@drawable/ripple_rectangle"
-        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/calendar"
+        app:layout_constraintTop_toTopOf="parent"
         tools:visibility="visible">
+
+        <ImageView
+            android:id="@+id/background"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:alpha="0.4"
+            android:background="?attr/colorPrimary"
+            android:importantForAccessibility="no"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/round"
@@ -46,9 +53,8 @@
             android:lines="1"
             android:maxLines="1"
             android:paddingStart="@dimen/paddingMedium"
-            android:paddingTop="@dimen/paddingSmall"
+            android:paddingTop="@dimen/paddingXSmall"
             android:paddingEnd="@dimen/paddingXSmall"
-            android:paddingBottom="1dp"
             app:layout_constraintEnd_toStartOf="@id/round"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -61,11 +67,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
             android:lines="1"
-            android:paddingStart="@dimen/paddingMedium"
-            android:paddingTop="1dp"
-            android:paddingEnd="@dimen/paddingXSmall"
-            android:paddingBottom="@dimen/paddingSmall"
             android:maxLines="1"
+            android:paddingStart="@dimen/paddingMedium"
+            android:paddingEnd="@dimen/paddingXSmall"
+            android:paddingBottom="@dimen/paddingXSmall"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/round"
             app:layout_constraintStart_toStartOf="parent"
@@ -81,23 +86,25 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:tint="?attr/contentPrimary" />
+            app:tint="?attr/contentPrimary"
+            tools:src="@drawable/circuit_albert_park" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/calendar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:clickable="true"
         android:focusable="true"
         android:foreground="@drawable/ripple_rectangle"
         android:paddingStart="@dimen/paddingMedium"
         android:paddingEnd="0dp"
-        app:visibilityMode="ignore"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:visibilityMode="ignore">
 
         <ImageView
             android:id="@+id/highlight"
@@ -202,4 +209,4 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.constraintlayout.motion.widget.MotionLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
