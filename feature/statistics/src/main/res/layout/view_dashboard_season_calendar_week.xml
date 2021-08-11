@@ -1,58 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:layoutDescription="@xml/view_dashboard_season_calendar_week_scene">
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.65" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/raceData"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:clickable="true"
         android:focusable="true"
-        android:layout_height="0dp"
-        android:transformPivotY="0dp"
-        android:alpha="0.0"
         android:foreground="@drawable/ripple_rectangle"
-        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/guideline"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/calendar"
+        app:layout_constraintTop_toTopOf="parent"
         tools:visibility="visible">
 
-        <TextView
-            android:id="@+id/round"
-            style="@style/Text.Dashboard.Calendar.Race.Round"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:gravity="center"
-            android:lines="1"
-            android:maxLines="1"
-            android:paddingStart="@dimen/paddingSmall"
-            android:paddingEnd="@dimen/paddingSmall"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/circuit"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="#3" />
-
-        <TextView
-            android:id="@+id/raceName"
-            style="@style/Text.Dashboard.Calendar.Race.Name"
+        <ImageView
+            android:id="@+id/background"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:lines="1"
-            android:maxLines="1"
-            android:paddingStart="@dimen/paddingMedium"
-            android:paddingTop="@dimen/paddingSmall"
-            android:paddingEnd="@dimen/paddingXSmall"
-            android:paddingBottom="1dp"
-            app:layout_constraintEnd_toStartOf="@id/round"
+            android:layout_height="0dp"
+            android:alpha="0.4"
+            android:background="?attr/colorPrimary"
+            android:importantForAccessibility="no"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="British Grand Prix" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/circuitName"
@@ -60,44 +44,49 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
-            android:lines="1"
-            android:paddingStart="@dimen/paddingMedium"
-            android:paddingTop="1dp"
+            android:ellipsize="end"
+            android:lines="2"
+            android:maxLines="2"
+            android:paddingStart="@dimen/paddingSmall"
             android:paddingEnd="@dimen/paddingXSmall"
-            android:paddingBottom="@dimen/paddingSmall"
-            android:maxLines="1"
+            android:paddingBottom="@dimen/paddingXSmall"
+            android:paddingTop="@dimen/paddingXSmall"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/round"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/raceName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/circuit"
+            app:layout_constraintTop_toTopOf="parent"
             tools:text="British Grand Prix" />
 
         <ImageView
             android:id="@+id/circuit"
             android:layout_width="@dimen/dashboardCalendarImageSize"
             android:layout_height="0dp"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
             android:layout_marginEnd="@dimen/paddingMedium"
             android:importantForAccessibility="no"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:tint="?attr/contentPrimary" />
+            app:tint="?attr/contentPrimary"
+            tools:src="@drawable/circuit_albert_park" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/calendar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:clickable="true"
         android:focusable="true"
         android:foreground="@drawable/ripple_rectangle"
         android:paddingStart="@dimen/paddingMedium"
         android:paddingEnd="0dp"
-        app:visibilityMode="ignore"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:visibilityMode="ignore">
 
         <ImageView
             android:id="@+id/highlight"
@@ -202,4 +191,4 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.constraintlayout.motion.widget.MotionLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,6 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import org.koin.core.component.KoinApiExtension
+import org.koin.core.component.inject
+import org.koin.experimental.property.inject
+import tmg.core.ui.controllers.ThemeController
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.*
 import tmg.flashback.statistics.ui.dashboard.season.viewholders.*
@@ -18,6 +21,8 @@ class SeasonAdapter(
     private val driverClicked: (driver: SeasonItem.Driver) -> Unit,
     private val constructorClicked: (constructor: SeasonItem.Constructor) -> Unit
 ): SyncAdapter<SeasonItem>() {
+
+    private val themeController: ThemeController by inject()
 
     override var list: List<SeasonItem> = emptyList()
         set(initialValue) {
@@ -52,7 +57,8 @@ class SeasonAdapter(
             )
             R.layout.view_dashboard_season_calendar_week -> CalendarWeekViewHolder(
                 ViewDashboardSeasonCalendarWeekBinding.inflate(layoutInflater, parent, false),
-                calendarWeekRaceClicked
+                calendarWeekRaceClicked,
+                themeController.animationSpeed
             )
             else -> super.onCreateViewHolder(parent, viewType)
         }
