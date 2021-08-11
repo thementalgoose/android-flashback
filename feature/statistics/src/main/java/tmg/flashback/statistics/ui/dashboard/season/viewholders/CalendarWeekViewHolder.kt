@@ -1,14 +1,19 @@
 package tmg.flashback.statistics.ui.dashboard.season.viewholders
 
 import android.animation.AnimatorSet
-import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
 import android.graphics.Color
 import android.view.View
+import android.view.animation.AccelerateInterpolator
+import android.view.animation.AnimationSet
 import android.view.animation.DecelerateInterpolator
+import android.view.animation.Interpolator
+import android.view.animation.LinearInterpolator
 import androidx.core.animation.addListener
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.delay
 import org.threeten.bp.LocalDate
+import tmg.core.ui.model.AnimationSpeed
 import tmg.flashback.formula1.enums.TrackLayout
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.statistics.R
@@ -17,11 +22,14 @@ import tmg.flashback.statistics.databinding.ViewDashboardSeasonCalendarWeekBindi
 import tmg.flashback.statistics.ui.dashboard.season.SeasonItem
 import tmg.utilities.extensions.getColor
 import tmg.utilities.extensions.views.context
+import tmg.utilities.extensions.views.gone
 import tmg.utilities.extensions.views.show
+import tmg.utilities.extensions.views.visible
 
 class CalendarWeekViewHolder(
     private val binding: ViewDashboardSeasonCalendarWeekBinding,
     private val calendarWeekRaceClicked: (track: SeasonItem.CalendarWeek) -> Unit,
+    private val animationSpeed: AnimationSpeed
 ) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
 
     private val cells: List<LayoutDashboardSeasonCalendarWeekBinding> by lazy {
@@ -38,6 +46,12 @@ class CalendarWeekViewHolder(
     private var hasExpandingContent: Boolean = false
     private lateinit var item: SeasonItem.CalendarWeek
 
+    // Flag to stop enterance animation clicks
+    private var isExpanded: Boolean = false
+
+    // Animators
+    private var animation: AnimatorSet? = null
+
     init {
         binding.raceData.setOnClickListener(this)
         binding.calendar.setOnClickListener(this)
@@ -46,21 +60,21 @@ class CalendarWeekViewHolder(
     fun bind(item: SeasonItem.CalendarWeek) {
         this.item = item
 
+        // Reset content
+        isExpanded = false
+        cancelAnimations()
         binding.highlight.show(item.race != null)
-
         cells.forEach {
             it.day.text = ""
             it.day.setBackgroundResource(0)
         }
 
+        // Drawing calendar content
         val startingIndex = item.startingDay.dayOfWeek.value - 1
-
         val dayOfMonth = item.startingDay.dayOfMonth
         val lastDayOfMonth: LocalDate =
             item.startingDay.withDayOfMonth(item.startingDay.lengthOfMonth())
-
         var lastSimulatedDay = 0
-
         for ((offset, x) in (startingIndex until cells.size).withIndex()) {
 
             val day = (dayOfMonth + offset)
@@ -86,6 +100,7 @@ class CalendarWeekViewHolder(
             lastSimulatedDay = day
         }
 
+        // Race data binding
         if (lastSimulatedDay > lastDayOfMonth.dayOfMonth || item.race == null) {
             hasExpandingContent = false
             binding.highlight.alpha = alphaHighlightEnabled
@@ -94,16 +109,16 @@ class CalendarWeekViewHolder(
 
             binding.circuit.setImageResource(0)
             binding.circuitName.text = ""
-            binding.raceName.text = ""
-            binding.round.text = ""
 
         } else {
             hasExpandingContent = true
             if (item.race.date < LocalDate.now()) {
                 binding.highlight.alpha = alphaHighlightDisabled
+                binding.background.alpha = alphaHighlightDisabled
             }
             else {
                 binding.highlight.alpha = alphaHighlightEnabled
+                binding.background.alpha = alphaHighlightEnabled
             }
             binding.highlight.show(true)
             binding.flag.show(true)
@@ -114,9 +129,7 @@ class CalendarWeekViewHolder(
             if (track != null) {
                 binding.circuit.setImageResource(track.icon)
             }
-            binding.circuitName.text = "${item.race.circuitName}, ${item.race.country}"
-            binding.raceName.text = item.race.raceName
-            binding.round.text = "#${item.race.round}"
+            binding.circuitName.text = "${item.race.circuitName} (#${item.race.round})"
         }
 
         binding.calendar.translationX = 0.0f
@@ -125,54 +138,83 @@ class CalendarWeekViewHolder(
         binding.raceData.translationX = binding.root.width.toFloat()
     }
 
-    companion object {
-        private const val alphaHighlightEnabled = 0.6f
-        private const val alphaHighlightDisabled = 0.2f
+    /**
+     * Animate the views from [calendarXInitial] to [calendarXFinal]
+     * @param calendarXInitial Pixel value of the x initial position, null = current position
+     * @param calendarXFinal Pixel value of the x final position
+     */
+    private fun animateFrom(
+        calendarXInitial: Float? = null,
+        calendarXFinal: Float,
+        interpolator: Interpolator = LinearInterpolator(),
+        duration: Long = animationSpeed.millis.toLong()
+    ): AnimatorSet {
 
-        private const val textAlpha = 0.35f
-    }
-
-    private fun animateContentIn() {
-
+        val initial = calendarXInitial ?: binding.raceData.translationX
+        val final = calendarXFinal
         val screenWidth = binding.root.width.toFloat()
-        val finalTranslationInScreenWidth = binding.raceData.width.toFloat()
 
-        binding.raceData.translationX = screenWidth
-        binding.raceData.visibility = View.VISIBLE
-
-        // Race data animating in
-        val raceDataInTranslator = ValueAnimator.ofFloat(screenWidth, finalTranslationInScreenWidth)
-        raceDataInTranslator.addUpdateListener {
-            val value = it.animatedValue as Float
-            binding.raceData.translationX = value
-        }
-        raceDataInTranslator.addListener(
-            onEnd = { binding.raceData.translationX = finalTranslationInScreenWidth }
-        )
-
-        // Calendar animating out to the left
-        val calendarViewOutTranslator = ValueAnimator.ofFloat(0.0f, -(screenWidth - finalTranslationInScreenWidth))
-        calendarViewOutTranslator.addUpdateListener {
+        // Calendar view
+        val calendarTranslator = ValueAnimator.ofFloat(initial, final)
+        calendarTranslator.addUpdateListener {
             val value = it.animatedValue as Float
             binding.calendar.translationX = value
         }
-        calendarViewOutTranslator.addListener(
-            onEnd = { binding.calendar.translationX = -(screenWidth - finalTranslationInScreenWidth) }
+        calendarTranslator.addListener(
+            onEnd = { binding.calendar.translationX = final }
         )
 
-        // Playing them together
+        // Race Data view
+        val raceDataTranslator = ValueAnimator.ofFloat(initial + screenWidth, final + screenWidth)
+        raceDataTranslator.addUpdateListener {
+            val value = it.animatedValue as Float
+            binding.raceData.translationX = value
+        }
+        raceDataTranslator.addListener(
+            onEnd = { binding.raceData.translationX = final + screenWidth }
+        )
+
         val animatorSet = AnimatorSet()
-        animatorSet.playTogether(raceDataInTranslator, calendarViewOutTranslator)
-        animatorSet.interpolator = DecelerateInterpolator()
-        animatorSet.duration = 500L
-        animatorSet.start()
+        animatorSet.playTogether(calendarTranslator, raceDataTranslator)
+        animatorSet.interpolator = interpolator
+        animatorSet.duration = duration
+        return animatorSet
+    }
+
+    /**
+     * Cancel any current animations
+     */
+    private fun cancelAnimations() {
+        animation?.cancel()
+        animation = null
     }
 
     override fun onClick(p0: View?) {
         when (p0) {
             binding.calendar -> {
-                if (hasExpandingContent) {
-                    animateContentIn()
+                if (hasExpandingContent && !isExpanded) {
+
+                    binding.raceData.visible()
+
+                    isExpanded = true
+                    val initialAnimation = animateFrom(
+                        calendarXInitial = 0f,
+                        calendarXFinal = -(binding.raceData.width.toFloat()),
+                        interpolator = DecelerateInterpolator()
+                    )
+                    val delayedReverse = animateFrom(
+                        calendarXInitial = -(binding.raceData.width.toFloat()),
+                        calendarXFinal = 0f,
+                        interpolator = AccelerateInterpolator()
+                    )
+                    delayedReverse.startDelay = 3000L
+                    delayedReverse.addListener(
+                        onEnd = { isExpanded = false }
+                    )
+
+                    animation = AnimatorSet()
+                    animation?.playTogether(initialAnimation, delayedReverse)
+                    animation?.start()
                 }
             }
             binding.raceData -> {
@@ -181,5 +223,12 @@ class CalendarWeekViewHolder(
                 }
             }
         }
+    }
+
+    companion object {
+        private const val alphaHighlightEnabled = 0.4f
+        private const val alphaHighlightDisabled = 0.2f
+
+        private const val textAlpha = 0.35f
     }
 }
