@@ -51,6 +51,8 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/paddingSmall"
             android:paddingStart="@dimen/paddingSmall"
+            android:paddingTop="@dimen/paddingSmall"
+            android:paddingBottom="@dimen/paddingSmall"
             app:layout_constraintBottom_toBottomOf="@id/toolbarGuideline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">
