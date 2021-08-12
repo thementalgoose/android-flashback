@@ -68,7 +68,7 @@ class ConstructorViewHolder(
             binding.penalty.show(true)
             binding.penalty.text = getString(R.string.home_constructor_penalty, driverPoints - item.points)
         } else {
-            binding.penalty.show(true)
+            binding.penalty.show(false)
         }
 
         adapter.list = item.driver
