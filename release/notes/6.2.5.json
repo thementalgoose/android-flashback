@@ -1,0 +1,10 @@
+{
+  "versionCode": 85,
+  "versionName": "6.2.5",
+  "isMajor": false,
+  "title": "",
+  "notes": [
+    "Adds new horizontal animation for calendar view tracks!",
+    "Usual assortment of bug fixes"
+  ]
+}
