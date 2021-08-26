@@ -1,6 +1,7 @@
 package tmg.flashback.ui
 
 import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -54,6 +55,14 @@ internal class SyncViewModelTest: BaseTest() {
         sut.outputs.showResync.test {
             assertValue(false)
         }
+    }
+
+    @Test
+    fun `starting sync ensures cache is reset`() = coroutineTest {
+        initSUT()
+        sut.inputs.start()
+
+        coVerify { mockConfigurationManager.ensureCacheReset() }
     }
 
     @Test

@@ -7,5 +7,5 @@ object Migrations {
      * Increment this number by 1 when a new build comes out that requires
      *   a remote config fetch before
      */
-    const val configurationSyncCount: Int = 1
+    const val configurationSyncCount: Int = 2
 }

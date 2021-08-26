@@ -25,6 +25,18 @@ class ConfigController(
         get() = Migrations.configurationSyncCount != configRepository.remoteConfigSync
 
     /**
+     * Reset the cache if it hasn't been refreshed
+     */
+    suspend fun ensureCacheReset(): Boolean {
+        val existing = configRepository.resetAtMigrationVersion
+        if (existing != Migrations.configurationSyncCount) {
+            configRepository.resetAtMigrationVersion = Migrations.configurationSyncCount
+            configService.reset()
+        }
+        return true
+    }
+
+    /**
      * Fetch the latest configuration setup for the app.
      *  This will not be applied until [fetchAndApply] or [applyPending] is called
      */
@@ -39,6 +51,13 @@ class ConfigController(
         val result = configService.fetch(true)
         configRepository.remoteConfigSync = Migrations.configurationSyncCount
         return result
+    }
+
+    /**
+     * Reset the local cache
+     */
+    suspend fun reset(): Boolean {
+        return configService.reset()
     }
 
     /**

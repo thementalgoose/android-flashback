@@ -81,6 +81,11 @@ class FirebaseRemoteConfigService: RemoteConfigService {
         }
     }
 
+    override suspend fun reset(): Boolean {
+        remoteConfig.reset().await()
+        return true
+    }
+
     override fun initialiseRemoteConfig() {
         remoteConfig.setDefaultsAsync(R.xml.remote_config_defaults)
         remoteConfig.setConfigSettingsAsync(remoteConfigSettings)
