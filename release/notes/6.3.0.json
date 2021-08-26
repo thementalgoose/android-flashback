@@ -1,0 +1,11 @@
+{
+  "versionCode": 89,
+  "versionName": "6.3.0",
+  "isMajor": true,
+  "title": "Android 12 support",
+  "notes": [
+    "Adds initial support for android 12",
+    "Adds android 12 splash screen support",
+    "Small fixes in prep for the rest of the 2021 season"
+  ]
+}
