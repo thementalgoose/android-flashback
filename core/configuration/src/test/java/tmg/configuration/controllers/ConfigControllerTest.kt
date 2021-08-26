@@ -57,6 +57,29 @@ internal class ConfigControllerTest {
 
     //endregion
 
+    //region reset check
+
+    @Test
+    fun `reset check calls reset if existing version doesnt match migrations`() {
+
+        every { mockConfigRepository.resetAtMigrationVersion } returns Migrations.configurationSyncCount - 1
+
+        initSUT()
+        verify { mockConfigRepository.resetAtMigrationVersion = Migrations.configurationSyncCount }
+        coVerify { mockConfigService.reset() }
+    }
+
+    @Test
+    fun `reset check doesnt call reset if existing version matches match migrations`() {
+        every { mockConfigRepository.resetAtMigrationVersion } returns Migrations.configurationSyncCount
+
+        initSUT()
+        verify(exactly = 0) { mockConfigRepository.resetAtMigrationVersion = Migrations.configurationSyncCount }
+        coVerify(exactly = 0) { mockConfigService.reset() }
+    }
+
+    //endregion
+
     //region Fetching / updating logic
 
     @Test
