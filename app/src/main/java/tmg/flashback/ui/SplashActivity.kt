@@ -16,8 +16,6 @@ class SplashActivity: AppCompatActivity() {
     private lateinit var binding: ActivitySplashBinding
     private val viewModel: SplashViewModel by viewModel()
 
-//    private val analyticsManager: AnalyticsManager by inject()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySplashBinding.inflate(layoutInflater)
@@ -48,15 +46,5 @@ class SplashActivity: AppCompatActivity() {
         }
 
         viewModel.inputs.start()
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-//        analyticsManager.viewScreen(
-//                screenName = "Splash screen",
-//                clazz = this.javaClass,
-//                params = emptyMap()
-//        )
     }
 }
