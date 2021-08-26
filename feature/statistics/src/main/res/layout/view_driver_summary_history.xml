@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:clipToPadding="false"
         android:nestedScrollingEnabled="false"
-        android:overScrollMode="never"
+        android:overScrollMode="@integer/overScrollMode"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/year"
         app:layout_constraintTop_toTopOf="parent"
