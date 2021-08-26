@@ -15,12 +15,12 @@ apply plugin: "androidx.navigation.safeargs.kotlin"
 apply from: rootDir.absolutePath + "/base-dependencies.gradle"
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion project.ext.compileSdkVersion
 
     defaultConfig {
         applicationId "tmg.flashback"
-        minSdkVersion 23
-        targetSdkVersion 30
+        minSdkVersion project.ext.minSdkVersion
+        targetSdkVersion project.ext.targetSdkVersion
         versionCode 86
         versionName "6.2.6"
 
