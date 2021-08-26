@@ -128,7 +128,7 @@
                 android:layout_height="wrap_content"
                 android:paddingBottom="@dimen/paddingXLarge"
                 android:clipToPadding="false"
-                android:overScrollMode="never" />
+                android:overScrollMode="@integer/overScrollMode" />
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
