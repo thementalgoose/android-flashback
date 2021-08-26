@@ -52,7 +52,7 @@ class ForceUpgradeViewModel(
         }
 
         viewModelScope.launch {
-            configController.fetch()
+            configController.fetchAndApply()
         }
     }
 
