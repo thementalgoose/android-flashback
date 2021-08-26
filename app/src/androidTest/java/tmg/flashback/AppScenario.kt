@@ -24,7 +24,6 @@ import tmg.flashback.ui.EspressoUtils.assertTextDisplayed
 import tmg.flashback.ui.EspressoUtils.assertViewDisplayed
 import tmg.flashback.ui.EspressoUtils.clickOn
 import tmg.flashback.ui.EspressoUtils.collapseAppBar
-import tmg.flashback.ui.SplashActivity
 
 /**
  * Instrumented test, which will execute on an Android device.
