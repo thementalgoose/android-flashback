@@ -18,6 +18,7 @@ ext {
     android_constraint = "2.0.4"
     android_material = "1.3.0"
     android_lifecycle = "2.3.0"
+    android_splashscreen = "1.0.0-alpha01"
 
     swipe_refresh = "1.1.0"
 
