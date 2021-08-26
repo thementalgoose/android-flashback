@@ -72,9 +72,9 @@ jobs:
       - name: Unit tests - feature:upnext
         run: ./gradlew :feature:upnext:testDebugUnitTest
         if: ${{ env.lines_feature_upnext != 0 }}
-      - name: Unit tests - core:ads
-        run: ./gradlew :core:ads:testDebugUnitTest
-        if: ${{ env.lines_core_ads != 0 }}
+#      - name: Unit tests - core:ads
+#        run: ./gradlew :core:ads:testDebugUnitTest
+#        if: ${{ env.lines_core_ads != 0 }}
       - name: Unit tests - core:analytics
         run: ./gradlew :core:analytics:testDebugUnitTest
         if: ${{ env.lines_core_analytics != 0 }}
