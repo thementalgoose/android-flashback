@@ -70,7 +70,7 @@ task testModules {
             ':feature:statistics-data:test',
             ':feature:statistics-data-firebase:testDebugUnitTest',
             ':feature:upnext:testDebugUnitTest',
-            ':core:ads:testDebugUnitTest',
+//            ':core:ads:testDebugUnitTest',
             ':core:analytics:testDebugUnitTest',
             ':core:appshortcuts:testDebugUnitTest',
             ':core:configuration:testDebugUnitTest',
