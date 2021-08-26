@@ -111,6 +111,22 @@ internal class ConfigControllerTest {
     }
 
     @Test
+    fun `fetch and apply calls update in manager but doesnt saves remote config sync if not successful fetch`() {
+        coEvery { mockConfigService.fetch(true) } returns false
+        initSUT()
+        runBlockingTest {
+            sut.fetchAndApply()
+        }
+
+        coVerify {
+            mockConfigService.fetch(true)
+        }
+        verify(exactly = 0) {
+            mockConfigRepository.remoteConfigSync = Migrations.configurationSyncCount
+        }
+    }
+
+    @Test
     fun `apply pending calls manager`() {
         initSUT()
         runBlockingTest {

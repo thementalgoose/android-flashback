@@ -46,10 +46,13 @@ class ConfigController(
 
     /**
      * Fetch the latest configuration and apply it immediately. Returns true if update is found and applied, false otherwise
+     *  Resets the config count to bypass this as a failsafe?
      */
     suspend fun fetchAndApply(): Boolean {
         val result = configService.fetch(true)
-        configRepository.remoteConfigSync = Migrations.configurationSyncCount
+        if (result) {
+            configRepository.remoteConfigSync = Migrations.configurationSyncCount
+        }
         return result
     }
 
