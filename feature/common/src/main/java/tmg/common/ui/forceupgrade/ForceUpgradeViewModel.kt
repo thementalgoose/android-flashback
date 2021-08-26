@@ -1,10 +1,12 @@
 package tmg.common.ui.forceupgrade
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import tmg.common.BuildConfig
 import tmg.common.controllers.ForceUpgradeController
 import tmg.configuration.controllers.ConfigController
 import tmg.utilities.lifecycle.DataEvent
@@ -52,7 +54,10 @@ class ForceUpgradeViewModel(
         }
 
         viewModelScope.launch {
-            configController.fetchAndApply()
+            val result = configController.fetchAndApply()
+            if (BuildConfig.DEBUG) {
+                Log.i("Flashback", "Force Upgrade fetch and apply $result")
+            }
         }
     }
 
