@@ -7,11 +7,11 @@ apply plugin: "androidx.navigation.safeargs.kotlin"
 apply from: rootDir.absolutePath + "/base-dependencies.gradle"
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion project.ext.compileSdkVersion
 
     defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 30
+        minSdkVersion project.ext.minSdkVersion
+        targetSdkVersion project.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
 

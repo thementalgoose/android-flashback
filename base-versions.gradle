@@ -1,4 +1,9 @@
 ext {
+
+    compileSdkVersion = 31
+    targetSdkVersion = 31
+    minSdkVersion = 23
+
     kotlin_version = "1.5.10"
     koin_version = "2.2.2"
     coroutines = "1.5.0"
