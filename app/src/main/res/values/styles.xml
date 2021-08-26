@@ -1,9 +1,12 @@
 <resources>
 
-    <style name="Launcher" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowBackground">@drawable/launch_screen</item>
-        <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:windowTranslucentNavigation">true</item>
+    <style name="Launcher" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/splash_screen</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/logo_foreground</item>
+        <item name="windowSplashScreenAnimationDuration">500</item>
+        <item name="postSplashScreenTheme">@style/FlashbackAppTheme</item>
+<!--        <item name="android:windowTranslucentStatus">true</item>-->
+<!--        <item name="android:windowTranslucentNavigation">true</item>-->
     </style>
 
     <style name="Translucent" parent="Theme.AppCompat.Light.NoActionBar">
