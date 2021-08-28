@@ -142,7 +142,7 @@
     <string name="shared_unavailable_early_season">We don\'t have any data on this season or the calendar has not been confirmed yet. We will add this information as soon it\'s available</string>
     <string name="shared_unavailable_future_race">This race has not yet happened, please check back after the race to see the results</string>
     <string name="shared_unavailable_coming_soon_race">We don\'t have this information yet, it should be available after the race (race results usually take between 2 – 6 hours to appear, but can take longer)</string>
-    <string name="shared_unavailable_missing_race">Unfortunately we don\'t have any information for this yet, please check back you have an internet connection and try again</string>
+    <string name="shared_unavailable_missing_race">Unfortunately we don\'t have any information for this yet, please check you have an internet connection and try again</string>
     <string name="shared_network_error">A network error occurred! Please check you are connected to the internet and try again</string>
     <string name="shared_network_internal_error">A network error occurred and we weren\'t able to find any articles. Please check your internet connection or try again later</string>
     <string name="shared_constructor_championship_not_awarded">The constructors championship did not start until 1958</string>
