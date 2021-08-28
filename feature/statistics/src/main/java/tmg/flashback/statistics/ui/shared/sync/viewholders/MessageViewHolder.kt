@@ -31,8 +31,8 @@ class MessageViewHolder(
 
     private fun setupClickable(url: String?) {
         this.messageUrl = url
-        binding.message.isClickable = url == null
-        binding.message.isFocusable = url == null
+        binding.message.isClickable = url != null
+        binding.message.isFocusable = url != null
         if (messageUrl == null) {
             binding.message.setOnClickListener(null)
         } else {
