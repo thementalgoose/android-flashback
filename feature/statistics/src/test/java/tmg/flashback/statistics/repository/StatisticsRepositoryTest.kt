@@ -9,6 +9,8 @@ import tmg.configuration.manager.ConfigManager
 import tmg.core.prefs.manager.PreferenceManager
 import tmg.flashback.statistics.repository.json.AllSeasonsJson
 import java.time.Year
+import tmg.flashback.statistics.repository.json.BannerJson
+import tmg.flashback.statistics.repository.models.Banner
 
 internal class StatisticsRepositoryTest {
 
@@ -73,12 +75,22 @@ internal class StatisticsRepositoryTest {
     //region Banner
 
     @Test
-    fun `banner value is returned from config repository`() {
-        every { mockConfigManager.getString(keyDefaultBanner) } returns "value"
+    fun `banner is returned from config repository`() {
+        every { mockConfigManager.getJson<BannerJson>(keyDefaultBanner) } returns BannerJson("hey", "sup")
         initSUT()
-        assertEquals("value", sut.banner)
+        assertEquals(Banner("hey", "sup"), sut.banner)
         verify {
-            mockConfigManager.getString(keyDefaultBanner)
+            mockConfigManager.getJson<BannerJson>(keyDefaultBanner)
+        }
+    }
+
+    @Test
+    fun `banner returned as null results null value`() {
+        every { mockConfigManager.getJson<BannerJson>(keyDefaultBanner) } returns null
+        initSUT()
+        assertNull(sut.banner)
+        verify {
+            mockConfigManager.getJson<BannerJson>(keyDefaultBanner)
         }
     }
 
