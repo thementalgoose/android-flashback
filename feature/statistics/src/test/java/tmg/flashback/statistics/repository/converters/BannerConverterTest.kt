@@ -14,7 +14,7 @@ internal class BannerConverterTest {
             url = null
         )
 
-        assertEquals(Banner("hey", "hey"), json.convert())
+        assertNull(json.convert())
     }
 
     @Test
@@ -24,7 +24,7 @@ internal class BannerConverterTest {
             url = "hey"
         )
 
-        assertEquals(Banner("hey", "hey"), json.convert())
+        assertNull(json.convert())
     }
 
     @Test
