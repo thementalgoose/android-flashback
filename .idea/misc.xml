@@ -55,6 +55,7 @@
         <entry key="feature/statistics/src/main/res/layout/view_dashboard_season_track.xml" value="0.3953125" />
         <entry key="feature/statistics/src/main/res/layout/view_driver_season_header.xml" value="0.3848958333333333" />
         <entry key="feature/statistics/src/main/res/layout/view_link_pill.xml" value="0.3026041666666667" />
+        <entry key="feature/statistics/src/main/res/layout/view_shared_message.xml" value="0.29270833333333335" />
         <entry key="feature/statistics/src/main/res/menu/menu_race.xml" value="0.5479166666666667" />
         <entry key="feature/upnext/src/main/res/drawable/background_timezone.xml" value="0.4010416666666667" />
         <entry key="feature/upnext/src/main/res/drawable/ic_current_day_indicator.xml" value="0.5635416666666667" />
