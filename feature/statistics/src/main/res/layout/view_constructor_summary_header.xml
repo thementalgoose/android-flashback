@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/paddingMedium"
         android:clipToPadding="false"
-        android:overScrollMode="never"
+        android:overScrollMode="@integer/overScrollMode"
         android:paddingStart="@dimen/paddingMedium"
         android:paddingEnd="@dimen/paddingMedium"
         app:layout_constraintBottom_toBottomOf="parent"
