@@ -24,6 +24,7 @@ import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.statistics.*
 import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
 import tmg.flashback.statistics.controllers.SeasonController
+import tmg.flashback.statistics.repository.models.Banner
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertDataEventValue
@@ -207,7 +208,7 @@ internal class SeasonViewModelTest: BaseTest() {
     fun `when app banner model exists and show is true then it's added to the data`() = coroutineTest {
 
         val expectedMessage = "Testing the custom app banner!"
-        every { mockSeasonController.banner } returns expectedMessage
+        every { mockSeasonController.banner } returns Banner(expectedMessage)
 
         initSUT()
 

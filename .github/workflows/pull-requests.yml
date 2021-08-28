@@ -33,8 +33,8 @@ jobs:
           echo "lines_feature_formula1=$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                   | grep -E '^feature/formula1/' -c)" >> $GITHUB_ENV
           echo "lines_feature_rss=$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                        | grep -E '^feature/rss/' -c)" >> $GITHUB_ENV
           echo "lines_feature_statistics=$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                 | grep -E '^feature/statistics/' -c)" >> $GITHUB_ENV
-          echo "lines_feature_statistics_data=$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}            | grep -E '^feature/statistics_data/' -c)" >> $GITHUB_ENV
-          echo "lines_feature_statistics_data_firebase=$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}   | grep -E '^feature/statistics_data_firebase/' -c)" >> $GITHUB_ENV
+          echo "lines_feature_statistics_data=$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}            | grep -E '^feature/statistics-data/' -c)" >> $GITHUB_ENV
+          echo "lines_feature_statistics_data_firebase=$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}   | grep -E '^feature/statistics-data-firebase/' -c)" >> $GITHUB_ENV
           echo "lines_feature_upnext=$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                     | grep -E '^feature/upnext/' -c)" >> $GITHUB_ENV
           echo "lines_core_ads=$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                           | grep -E '^core/ads/' -c)" >> $GITHUB_ENV
           echo "lines_core_analytics=$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                     | grep -E '^core/analytics/' -c)" >> $GITHUB_ENV

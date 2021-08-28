@@ -1,11 +1,11 @@
 apply from: rootDir.absolutePath + "/core/base.gradle"
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion project.ext.compileSdkVersion
 
     defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 30
+        minSdkVersion project.ext.minSdkVersion
+        targetSdkVersion project.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
     }
