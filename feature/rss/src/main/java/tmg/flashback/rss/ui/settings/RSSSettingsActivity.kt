@@ -36,7 +36,7 @@ class RSSSettingsActivity : BaseActivity(), NavController.OnDestinationChangedLi
             supportFragmentManager.findFragmentById(R.id.fragments) as NavHostFragment
         val controller = navHostFragment.findNavController().apply {
             val graph = navInflater.inflate(R.navigation.graph_rss_settings)
-            graph.startDestination = initialScreen.startFragmentId
+            graph.setStartDestination(initialScreen.startFragmentId)
             this.graph = graph
         }
         navController = controller
