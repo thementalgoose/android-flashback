@@ -30,7 +30,7 @@ internal class ForceUpgradeViewModelTest: BaseTest() {
 
         initSUT()
         coVerify {
-            mockConfigurationController.fetch()
+            mockConfigurationController.fetchAndApply()
         }
     }
 

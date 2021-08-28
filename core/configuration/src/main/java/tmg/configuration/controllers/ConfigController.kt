@@ -25,6 +25,18 @@ class ConfigController(
         get() = Migrations.configurationSyncCount != configRepository.remoteConfigSync
 
     /**
+     * Reset the cache if it hasn't been refreshed
+     */
+    suspend fun ensureCacheReset(): Boolean {
+        val existing = configRepository.resetAtMigrationVersion
+        if (existing != Migrations.configurationSyncCount) {
+            configRepository.resetAtMigrationVersion = Migrations.configurationSyncCount
+            configService.reset()
+        }
+        return true
+    }
+
+    /**
      * Fetch the latest configuration setup for the app.
      *  This will not be applied until [fetchAndApply] or [applyPending] is called
      */
@@ -34,11 +46,21 @@ class ConfigController(
 
     /**
      * Fetch the latest configuration and apply it immediately. Returns true if update is found and applied, false otherwise
+     *  Resets the config count to bypass this as a failsafe?
      */
     suspend fun fetchAndApply(): Boolean {
         val result = configService.fetch(true)
-        configRepository.remoteConfigSync = Migrations.configurationSyncCount
+        if (result) {
+            configRepository.remoteConfigSync = Migrations.configurationSyncCount
+        }
         return result
+    }
+
+    /**
+     * Reset the local cache
+     */
+    suspend fun reset(): Boolean {
+        return configService.reset()
     }
 
     /**

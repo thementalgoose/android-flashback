@@ -2,23 +2,25 @@ package tmg.flashback.ui
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.common.ui.forceupgrade.ForceUpgradeActivity
-import tmg.flashback.databinding.ActivitySplashBinding
-import tmg.flashback.ui.dashboard.DashboardActivity
+import tmg.core.ui.base.BaseActivity
+import tmg.flashback.databinding.ActivitySyncBinding
+import tmg.flashback.ui.dashboard.HomeActivity
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 import tmg.utilities.extensions.views.show
 
-class SplashActivity: AppCompatActivity() {
+class SyncActivity: BaseActivity() {
 
-    private lateinit var binding: ActivitySplashBinding
-    private val viewModel: SplashViewModel by viewModel()
+    private val viewModel: SyncViewModel by viewModel()
+
+    private lateinit var binding: ActivitySyncBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivitySplashBinding.inflate(layoutInflater)
+
+        binding = ActivitySyncBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         observe(viewModel.outputs.showLoading) {
@@ -32,12 +34,12 @@ class SplashActivity: AppCompatActivity() {
         }
 
         observeEvent(viewModel.outputs.goToDashboard) {
-            startActivity(Intent(this@SplashActivity, DashboardActivity::class.java))
+            startActivity(Intent(this@SyncActivity, HomeActivity::class.java))
             finish()
         }
 
         observeEvent(viewModel.outputs.goToForceUpgrade) {
-            startActivity(Intent(this@SplashActivity, ForceUpgradeActivity::class.java))
+            startActivity(Intent(this@SyncActivity, ForceUpgradeActivity::class.java))
             finish()
         }
 
