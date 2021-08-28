@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test
 import tmg.configuration.constants.Migrations
 import tmg.configuration.services.RemoteConfigService
 import tmg.configuration.repository.ConfigRepository
+import tmg.testutils.BaseTest
 
 internal class ConfigControllerTest {
 
@@ -57,23 +58,29 @@ internal class ConfigControllerTest {
 
     //endregion
 
-    //region reset check
+    //region ensure cache reset check
 
     @Test
-    fun `reset check calls reset if existing version doesnt match migrations`() {
+    fun `ensure cache reset check calls reset if existing version doesnt match migrations`() {
 
         every { mockConfigRepository.resetAtMigrationVersion } returns Migrations.configurationSyncCount - 1
 
         initSUT()
+        runBlockingTest {
+            sut.ensureCacheReset()
+        }
         verify { mockConfigRepository.resetAtMigrationVersion = Migrations.configurationSyncCount }
         coVerify { mockConfigService.reset() }
     }
 
     @Test
-    fun `reset check doesnt call reset if existing version matches match migrations`() {
+    fun `ensure cache check doesnt call reset if existing version matches match migrations`() {
         every { mockConfigRepository.resetAtMigrationVersion } returns Migrations.configurationSyncCount
 
         initSUT()
+        runBlockingTest {
+            sut.ensureCacheReset()
+        }
         verify(exactly = 0) { mockConfigRepository.resetAtMigrationVersion = Migrations.configurationSyncCount }
         coVerify(exactly = 0) { mockConfigService.reset() }
     }
