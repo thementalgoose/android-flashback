@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test
 import tmg.configuration.controllers.ConfigController
 import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
 import tmg.flashback.statistics.repository.StatisticsRepository
+import tmg.flashback.statistics.repository.models.Banner
 import tmg.testutils.BaseTest
 
 internal class SeasonControllerTest: BaseTest() {
@@ -38,9 +39,9 @@ internal class SeasonControllerTest: BaseTest() {
 
     @Test
     fun `banner reads value from repository`() {
-        every { mockStatisticsRepository.banner } returns "banner"
+        every { mockStatisticsRepository.banner } returns Banner("hello", "world")
         initSUT()
-        assertEquals("banner", sut.banner)
+        assertEquals(Banner("hello", "world"), sut.banner)
         verify {
             mockStatisticsRepository.banner
         }
