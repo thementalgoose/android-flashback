@@ -35,19 +35,19 @@ data class DriverOverview(
 
     val careerWins: Int by lazy {
         return@lazy standings
-                .sumBy { it.wins }
+                .sumOf { it.wins }
     }
     val careerPodiums: Int by lazy {
         return@lazy standings
-                .sumBy { it.podiums }
+                .sumOf { it.podiums }
     }
     val careerPoints: Int by lazy {
         return@lazy standings
-                .sumBy { it.points }
+                .sumOf { it.points }
     }
     val careerRaces: Int by lazy {
         return@lazy standings
-                .sumBy { it.races }
+                .sumOf { it.races }
     }
 
     val constructors: List<Pair<Int, SlimConstructor>> by lazy {
