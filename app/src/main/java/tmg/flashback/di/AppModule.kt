@@ -15,18 +15,20 @@ import tmg.flashback.managers.widgets.WidgetManager
 import tmg.flashback.managers.AppPreferencesManager
 import tmg.flashback.managers.AppNavigationProvider
 import tmg.flashback.managers.AppStyleManager
-import tmg.flashback.ui.SplashViewModel
+import tmg.flashback.ui.SyncViewModel
 import tmg.flashback.ui.dashboard.DashboardViewModel
+import tmg.flashback.ui.dashboard.HomeViewModel
 import tmg.flashback.ui.dashboard.list.ListViewModel
 import tmg.flashback.ui.settings.SettingsAllViewModel
 import tmg.notifications.navigation.NotificationNavigationProvider
 
 val appModule = module {
 
-    viewModel { SplashViewModel(get(), get(), get(), get()) }
     viewModel { SettingsAllViewModel(get()) }
     viewModel { DashboardViewModel(get(), get(), get(), get(), get(), get()) }
     viewModel { ListViewModel(get(), get()) }
+    viewModel { HomeViewModel(get(), get(), get(), get()) }
+    viewModel { SyncViewModel(get(), get(), get(), get()) }
 
     single { FlashbackStartup(get(), get(), get(), get(), get(), get()) }
 

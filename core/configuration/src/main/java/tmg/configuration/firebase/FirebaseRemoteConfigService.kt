@@ -1,5 +1,6 @@
 package tmg.configuration.firebase
 
+import android.util.Log
 import com.google.firebase.FirebaseException
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigException
@@ -79,6 +80,14 @@ class FirebaseRemoteConfigService: RemoteConfigService {
             }
             false
         }
+    }
+
+    override suspend fun reset(): Boolean {
+        if (BuildConfig.DEBUG) {
+            Log.i("Flashback", "Config service reset called")
+        }
+        remoteConfig.reset().await()
+        return true
     }
 
     override fun initialiseRemoteConfig() {
