@@ -9,9 +9,7 @@ import tmg.core.device.managers.BuildConfigManager
 import tmg.core.ui.navigation.NavigationProvider
 import tmg.flashback.constants.AboutThisAppConfig
 import tmg.flashback.rss.controllers.RSSController
-import tmg.flashback.rss.repo.model.SupportedArticleSource
-import tmg.flashback.rss.repo.model.SupportedSource
-import tmg.flashback.ui.SplashActivity
+import tmg.flashback.ui.dashboard.HomeActivity
 import tmg.notifications.navigation.NotificationNavigationProvider
 
 class AppNavigationProvider(
@@ -23,7 +21,7 @@ class AppNavigationProvider(
 
     override fun relaunchAppIntent(context: Context): Intent {
         analyticsManager.logEvent("relaunch_app")
-        return Intent(context, SplashActivity::class.java)
+        return Intent(context, HomeActivity::class.java)
     }
 
     override fun aboutAppIntent(context: Context): Intent {

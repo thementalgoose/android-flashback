@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test
 import tmg.configuration.constants.Migrations
 import tmg.configuration.services.RemoteConfigService
 import tmg.configuration.repository.ConfigRepository
+import tmg.testutils.BaseTest
 
 internal class ConfigControllerTest {
 
@@ -57,6 +58,35 @@ internal class ConfigControllerTest {
 
     //endregion
 
+    //region ensure cache reset check
+
+    @Test
+    fun `ensure cache reset check calls reset if existing version doesnt match migrations`() {
+
+        every { mockConfigRepository.resetAtMigrationVersion } returns Migrations.configurationSyncCount - 1
+
+        initSUT()
+        runBlockingTest {
+            sut.ensureCacheReset()
+        }
+        verify { mockConfigRepository.resetAtMigrationVersion = Migrations.configurationSyncCount }
+        coVerify { mockConfigService.reset() }
+    }
+
+    @Test
+    fun `ensure cache check doesnt call reset if existing version matches match migrations`() {
+        every { mockConfigRepository.resetAtMigrationVersion } returns Migrations.configurationSyncCount
+
+        initSUT()
+        runBlockingTest {
+            sut.ensureCacheReset()
+        }
+        verify(exactly = 0) { mockConfigRepository.resetAtMigrationVersion = Migrations.configurationSyncCount }
+        coVerify(exactly = 0) { mockConfigService.reset() }
+    }
+
+    //endregion
+
     //region Fetching / updating logic
 
     @Test
@@ -83,6 +113,22 @@ internal class ConfigControllerTest {
             mockConfigService.fetch(true)
         }
         verify {
+            mockConfigRepository.remoteConfigSync = Migrations.configurationSyncCount
+        }
+    }
+
+    @Test
+    fun `fetch and apply calls update in manager but doesnt saves remote config sync if not successful fetch`() {
+        coEvery { mockConfigService.fetch(true) } returns false
+        initSUT()
+        runBlockingTest {
+            sut.fetchAndApply()
+        }
+
+        coVerify {
+            mockConfigService.fetch(true)
+        }
+        verify(exactly = 0) {
             mockConfigRepository.remoteConfigSync = Migrations.configurationSyncCount
         }
     }

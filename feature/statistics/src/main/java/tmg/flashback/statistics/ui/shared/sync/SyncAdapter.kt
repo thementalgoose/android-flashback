@@ -76,8 +76,8 @@ abstract class SyncAdapter<T> : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
     fun bindErrors(holder: RecyclerView.ViewHolder, item: SyncDataItem) {
         when (item) {
             is SyncDataItem.Unavailable -> (holder as DataUnavailableViewHolder).bind(item.type)
-            is SyncDataItem.Message -> (holder as MessageViewHolder).bind(item.msg)
-            is SyncDataItem.MessageRes -> (holder as MessageViewHolder).bind(item.msg, item.values)
+            is SyncDataItem.Message -> (holder as MessageViewHolder).bind(item.msg, item.clickUrl)
+            is SyncDataItem.MessageRes -> (holder as MessageViewHolder).bind(item.msg, item.values, item.clickUrl)
             is SyncDataItem.ProvidedBy -> (holder as ProvidedByViewHolder).bind(seasonController.dataProvidedBy)
             else -> {
             }

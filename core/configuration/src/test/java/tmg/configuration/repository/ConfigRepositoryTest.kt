@@ -40,7 +40,31 @@ internal class ConfigRepositoryTest {
 
     //endregion
 
+    //region Remote Config Sync count
+
+    @Test
+    fun `remote config reset to migration version calls shared prefs repository`() {
+        every { mockPreferenceManager.getInt(keyRemoteConfigResetCalledAtMigrationVersion, any()) } returns 3
+        initSUT()
+        assertEquals(sut.resetAtMigrationVersion, 3)
+        verify {
+            mockPreferenceManager.getInt(keyRemoteConfigResetCalledAtMigrationVersion, 0)
+        }
+    }
+
+    @Test
+    fun `remote config reset to migration version saves in shared prefs repository`() {
+        initSUT()
+        sut.resetAtMigrationVersion = 2
+        verify {
+            mockPreferenceManager.save(keyRemoteConfigResetCalledAtMigrationVersion, 2)
+        }
+    }
+
+    //endregion
+
     companion object {
         private const val keyRemoteConfigSync: String = "REMOTE_CONFIG_SYNC_COUNT"
+        private const val keyRemoteConfigResetCalledAtMigrationVersion: String = "REMOTE_CONFIG_RESET_CALL"
     }
 }

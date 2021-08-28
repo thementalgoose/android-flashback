@@ -5,6 +5,8 @@ import tmg.configuration.manager.ConfigManager
 import tmg.flashback.statistics.repository.json.AllSeasonsJson
 import tmg.core.prefs.manager.PreferenceManager
 import tmg.flashback.statistics.repository.converters.convert
+import tmg.flashback.statistics.repository.json.BannerJson
+import tmg.flashback.statistics.repository.models.Banner
 
 class StatisticsRepository(
         private val preferenceManager: PreferenceManager,
@@ -41,8 +43,10 @@ class StatisticsRepository(
     /**
      * Banner to be displayed at the top of the screen
      */
-    val banner: String?
-        get() = configManager.getString(keyDefaultBanner)
+    val banner: Banner?
+        get() = configManager
+            .getJson<BannerJson>(keyDefaultBanner)
+            ?.convert()
 
     /**
      * Banner to be displayed at the top of the screen
