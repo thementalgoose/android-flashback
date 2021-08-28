@@ -78,7 +78,7 @@ internal class StatisticsRepositoryTest {
     fun `banner is returned from config repository`() {
         every { mockConfigManager.getJson<BannerJson>(keyDefaultBanner) } returns BannerJson("hey", "sup")
         initSUT()
-        assertEquals(Banner("hey", "sup"), sut.supportedSeasons)
+        assertEquals(Banner("hey", "sup"), sut.banner)
         verify {
             mockConfigManager.getJson<BannerJson>(keyDefaultBanner)
         }
@@ -88,7 +88,7 @@ internal class StatisticsRepositoryTest {
     fun `banner returned as null results null value`() {
         every { mockConfigManager.getJson<BannerJson>(keyDefaultBanner) } returns null
         initSUT()
-        assertNull(sut.supportedSeasons)
+        assertNull(sut.banner)
         verify {
             mockConfigManager.getJson<BannerJson>(keyDefaultBanner)
         }
