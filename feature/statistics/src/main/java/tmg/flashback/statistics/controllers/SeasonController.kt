@@ -3,6 +3,7 @@ package tmg.flashback.statistics.controllers
 import tmg.configuration.controllers.ConfigController
 import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
 import tmg.flashback.statistics.repository.StatisticsRepository
+import tmg.flashback.statistics.repository.models.Banner
 
 /**
  * All the preferences surrounding the season, list of all seasons
@@ -20,7 +21,7 @@ class SeasonController(
 
     //region Banner
 
-    val banner: String?
+    val banner: Banner?
         get() = statisticsRepository.banner
 
     //endregion

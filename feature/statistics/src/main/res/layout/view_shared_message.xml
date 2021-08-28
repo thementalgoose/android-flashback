@@ -10,6 +10,7 @@
         style="@style/Text.Home.Message"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:foreground="@drawable/ripple_rectangle"
         android:gravity="center|start"
         android:paddingStart="@dimen/paddingMedium"
         android:paddingTop="@dimen/paddingSmall"

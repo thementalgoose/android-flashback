@@ -15,13 +15,15 @@ sealed class SyncDataItem(
     object InternalError: SyncDataItem(R.layout.view_shared_internal_error)
 
     data class Message(
-            val msg: String
+            val msg: String,
+            val clickUrl: String? = null
     ): SyncDataItem(R.layout.view_shared_message)
 
     data class MessageRes(
             @StringRes
             val msg: Int,
-            val values: List<Any> = emptyList()
+            val values: List<Any> = emptyList(),
+            val clickUrl: String? = null
     ): SyncDataItem(R.layout.view_shared_message)
 
     data class Unavailable(

@@ -139,9 +139,7 @@ class SeasonViewModel(
             val rounds = season.rounds
 
             appBannerMessage?.let {
-                if (it.isNotEmpty()) {
-                    list.addError(SyncDataItem.Message(it))
-                }
+                list.addError(SyncDataItem.Message(it.message, it.url))
             }
 
             when (menuItemType) {
