@@ -32,33 +32,33 @@ data class ConstructorOverview(
     val races: Int by lazy {
         return@lazy standings
             .filter { it.races >= 0 }
-            .sumBy { it.races }
+            .sumOf { it.races }
     }
 
     val raceEntries: Int by lazy {
         return@lazy standings
-            .sumBy { standing ->
+            .sumOf { standing ->
                 standing.drivers
                     .values
                     .filter { it.races >= 0 }
-                    .sumBy { it.races }
+                    .sumOf { it.races }
             }
     }
 
     val totalWins: Int by lazy {
         return@lazy standings
             .filter { it.wins >= 0 }
-            .sumBy { it.wins }
+            .sumOf { it.wins }
     }
     val totalPodiums: Int by lazy {
         return@lazy standings
             .filter { it.podiums >= 0 }
-            .sumBy { it.podiums }
+            .sumOf { it.podiums }
     }
     val totalPoints: Int by lazy {
         return@lazy standings
             .filter { it.points >= 0 }
-            .sumBy { it.points }
+            .sumOf { it.points }
     }
 
     val bestFinish: Int by lazy {
@@ -77,28 +77,28 @@ data class ConstructorOverview(
             .map { it.qualifyingPole }
             .filterNotNull()
             .filter { it >= 0 }
-            .sumBy { it }
+            .sumOf { it }
     }
     val totalQualifyingFrontRow: Int by lazy {
         return@lazy standings
             .map { it.qualifyingFrontRow }
             .filterNotNull()
             .filter { it >= 0 }
-            .sumBy { it }
+            .sumOf { it }
     }
     val totalQualifyingTop3: Int by lazy {
         return@lazy standings
             .map { it.qualifyingTop3 }
             .filterNotNull()
             .filter { it >= 0 }
-            .sumBy { it }
+            .sumOf { it }
     }
 
     val finishesInPoints: Int by lazy {
         return@lazy standings
             .filter { it.finishInPoints >= 0 }
             .map { it.finishInPoints }
-            .sumBy { it }
+            .sumOf { it }
     }
 
     fun isWorldChampionFor(season: Int): Boolean {
@@ -135,17 +135,17 @@ data class ConstructorOverviewStanding(
     val qualifyingPole: Int? by lazy {
         return@lazy drivers.values
             .filter { it.qualifyingP1 >= 0 }
-            .sumBy { it.qualifyingP1 }
+            .sumOf { it.qualifyingP1 }
     }
 
     val qualifyingFrontRow: Int? by lazy {
         return@lazy drivers.values
-            .sumBy { it.qualifyingP1.positive() + it.qualifyingP2.positive() }
+            .sumOf { it.qualifyingP1.positive() + it.qualifyingP2.positive() }
     }
 
     val qualifyingTop3: Int? by lazy {
         return@lazy drivers.values
-            .sumBy {
+            .sumOf {
                 it.qualifyingP1.positive() +
                         it.qualifyingP2.positive() +
                         it.qualifyingP3.positive()
@@ -155,24 +155,24 @@ data class ConstructorOverviewStanding(
     val driverPoints: Int? by lazy {
         return@lazy drivers.values
             .filter { it.points >= 0 }
-            .sumBy { it.points }
+            .sumOf { it.points }
     }
 
     val finishInPoints: Int by lazy {
         return@lazy drivers.values
             .filter { it.finishesInPoints >= 0 }
-            .sumBy { it.finishesInPoints }
+            .sumOf { it.finishesInPoints }
     }
 
     val wins: Int by lazy {
         return@lazy drivers.values
             .filter { it.finishesInP1 >= 0 }
-            .sumBy { it.finishesInP1 }
+            .sumOf { it.finishesInP1 }
     }
 
     val podiums: Int by lazy {
         return@lazy drivers.values
-            .sumBy {
+            .sumOf {
                 it.finishesInP1.positive() +
                         it.finishesInP2.positive() +
                         it.finishesInP3.positive()
