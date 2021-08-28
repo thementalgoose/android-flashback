@@ -28,7 +28,8 @@
 
         <activity
             android:name=".ui.SplashActivity"
-            android:theme="@style/Launcher">
+            android:theme="@style/Launcher"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -126,7 +127,8 @@
 
         <receiver
             android:name=".upnext.widgets.UpNextWidgetProvider"
-            android:label="@string/widget_up_next_title">
+            android:label="@string/widget_up_next_title"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
