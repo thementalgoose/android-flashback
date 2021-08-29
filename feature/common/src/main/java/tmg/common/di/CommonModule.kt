@@ -27,7 +27,7 @@ val commonModule = module {
 
     viewModel { PrivacyPolicyViewModel() }
 
-    viewModel { SettingsAppearanceViewModel(get()) }
+    viewModel { SettingsAppearanceViewModel(get(), get()) }
     viewModel { SettingsAboutViewModel() }
     viewModel { SettingsSupportViewModel(get(), get()) }
     viewModel { SettingsNotificationViewModel(get()) }

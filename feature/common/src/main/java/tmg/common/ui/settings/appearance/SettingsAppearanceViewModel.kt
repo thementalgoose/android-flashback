@@ -2,6 +2,7 @@ package tmg.common.ui.settings.appearance
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import tmg.core.device.managers.BuildConfigManager
 import tmg.core.ui.settings.SettingsModel
 import tmg.core.ui.settings.SettingsViewModel
 import tmg.core.ui.R
@@ -26,14 +27,15 @@ interface SettingsAppearanceViewModelOutputs {
 //endregion
 
 class SettingsAppearanceViewModel(
-    private val themeController: ThemeController
+    private val themeController: ThemeController,
+    private val buildConfig: BuildConfigManager
 ): SettingsViewModel(), SettingsAppearanceViewModelInputs,
     SettingsAppearanceViewModelOutputs {
 
     override val models: List<SettingsModel> = mutableListOf<SettingsModel>().apply {
         add(SettingsModel.Header(R.string.settings_theme_title))
 
-        if (themeController.enableThemePicker) {
+        if (themeController.enableThemePicker && buildConfig.isMonetThemeSupported) {
             add(SettingsModel.Pref(
                 title = R.string.settings_theme_theme_title,
                 description = R.string.settings_theme_theme_description,
