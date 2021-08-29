@@ -1,11 +1,12 @@
 {
-  "versionCode": 89,
-  "versionName": "6.3.0",
+  "versionCode": 90,
+  "versionName": "6.3.1",
   "isMajor": true,
   "title": "Android 12 support",
   "notes": [
     "Adds initial support for android 12",
     "Adds android 12 splash screen support",
-    "Small fixes in prep for the rest of the 2021 season"
+    "Adds support for half points throughout season in light of 2021 Belgium Grand Prix result",
+    "More minor fixes in preparation for last half of 2021 season"
   ]
 }
