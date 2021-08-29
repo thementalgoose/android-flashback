@@ -42,9 +42,9 @@ data class Round(
 
     val constructorStandings: List<RoundConstructorStandings>
         get() {
-            val standings: MutableMap<String, Int> = mutableMapOf()
+            val standings: MutableMap<String, Double> = mutableMapOf()
             for ((driverId, raceResult) in race) {
-                var previousPoints = standings.getOrPut(raceResult.driver.constructor.id) { 0 }
+                var previousPoints = standings.getOrPut(raceResult.driver.constructor.id) { 0.0 }
                 previousPoints += raceResult.points
                 standings[raceResult.driver.constructor.id] = previousPoints
             }
@@ -52,7 +52,7 @@ data class Round(
                 RoundConstructorStandings(
                         standings.getOrElse(
                                 it.id
-                        ) { 0 }, it
+                        ) { 0.0 }, it
                 )
             }
         }
@@ -90,7 +90,7 @@ data class RoundQualifyingResult(
 data class RoundSprintQualifyingResult(
         val driver: RoundDriver,
         val time: LapTime?,
-        val points: Int,
+        val points: Double,
         val grid: Int,
         val qualified: Int?,
         val finish: Int,
@@ -100,7 +100,7 @@ data class RoundSprintQualifyingResult(
 data class RoundRaceResult(
         val driver: RoundDriver,
         val time: LapTime?,
-        val points: Int,
+        val points: Double,
         val grid: Int,
         val qualified: Int?,
         val finish: Int,

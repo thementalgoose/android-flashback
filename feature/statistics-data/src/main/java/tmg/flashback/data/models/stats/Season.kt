@@ -24,18 +24,18 @@ data class Season(
 fun Season.constructorStandings(): ConstructorStandingsRound = this.constructors
         .map { constructor ->
             // Driver map should contain driver id -> Driver, points for each constructor
-            val driverMap = mutableMapOf<String, Pair<Driver, Int>>()
+            val driverMap = mutableMapOf<String, Pair<Driver, Double>>()
             this.rounds.forEach { round ->
                 val driversInRoundForConstructor = round.drivers
                         .filter { roundDriver -> roundDriver.constructor.id == constructor.id }
                         .map { driver ->
-                            val points = (round.race[driver.id]?.points ?: 0) + (round.qSprint[driver.id]?.points ?: 0)
+                            val points = (round.race[driver.id]?.points ?: 0.0) + (round.qSprint[driver.id]?.points ?: 0.0)
                             driver to points
                         }
 
                 driversInRoundForConstructor.forEach { (roundDriver, points) ->
                     if (!driverMap.containsKey(roundDriver.id)) {
-                        driverMap[roundDriver.id] = Pair(roundDriver.toDriver(), 0)
+                        driverMap[roundDriver.id] = Pair(roundDriver.toDriver(), 0.0)
                     }
                     val existingValue = driverMap.getValue(roundDriver.id)
 
@@ -57,15 +57,15 @@ fun Season.constructorStandings(): ConstructorStandingsRound = this.constructors
  */
 // TODO: Re-implement this method to include the driver standings data to include penalties etc.
 fun List<Round>.driverStandings(): DriverStandingsRound {
-    val returnMap: MutableMap<String, Pair<RoundDriver, Int>> = mutableMapOf()
+    val returnMap: MutableMap<String, Pair<RoundDriver, Double>> = mutableMapOf()
     this.forEach { round ->
         round.drivers.forEach {
             if (!returnMap.containsKey(it.id)) {
-                returnMap[it.id] = Pair(it, 0)
+                returnMap[it.id] = Pair(it, 0.0)
             }
 
             val (driver, points) = returnMap[it.id]!!
-            returnMap[it.id] = Pair(driver, points + (round.race[it.id]?.points ?: 0))
+            returnMap[it.id] = Pair(driver, points + (round.race[it.id]?.points ?: 0.0))
         }
     }
 
