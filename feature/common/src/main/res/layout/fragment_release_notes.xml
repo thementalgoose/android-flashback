@@ -71,28 +71,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/toolbarGuideline" />
 
-        <androidx.core.widget.NestedScrollView
-            android:id="@+id/content"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/dataList"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:clipToPadding="false"
             android:overScrollMode="@integer/overScrollMode"
+            android:paddingBottom="@dimen/paddingXLarge"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/titleExpanded">
-
-            <TextView
-                android:id="@+id/releaseNotes"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clipToPadding="false"
-                android:paddingStart="@dimen/paddingMedium"
-                android:paddingTop="@dimen/paddingSmall"
-                android:paddingEnd="@dimen/paddingMedium"
-                android:paddingBottom="@dimen/paddingXLarge"
-                android:textColor="?attr/contentPrimary" />
-
-        </androidx.core.widget.NestedScrollView>
+            app:layout_constraintTop_toBottomOf="@id/titleExpanded"
+            tools:listitem="@layout/view_release_note"/>
 
     </androidx.constraintlayout.motion.widget.MotionLayout>
 
