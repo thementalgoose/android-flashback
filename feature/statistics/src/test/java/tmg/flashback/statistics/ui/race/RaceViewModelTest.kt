@@ -175,15 +175,15 @@ internal class RaceViewModelTest: BaseTest() {
 
         val expected = listOf<RaceModel>(
             RaceModel.ConstructorStandings(
-                mockConstructorBeta, 30, listOf(
-                    Pair(mockDriver4.toDriver(), 20),
-                    Pair(mockDriver2.toDriver(), 10)
+                mockConstructorBeta, 30.0, listOf(
+                    Pair(mockDriver4.toDriver(), 20.0),
+                    Pair(mockDriver2.toDriver(), 10.0)
                 ), AnimationSpeed.NONE
             ),
             RaceModel.ConstructorStandings(
-                mockConstructorAlpha, 20, listOf(
-                    Pair(mockDriver3.toDriver(), 15),
-                    Pair(mockDriver1.toDriver(), 5)
+                mockConstructorAlpha, 20.0, listOf(
+                    Pair(mockDriver3.toDriver(), 15.0),
+                    Pair(mockDriver1.toDriver(), 5.0)
                 ), AnimationSpeed.NONE
             )
         )
@@ -459,7 +459,7 @@ internal class RaceViewModelTest: BaseTest() {
                 mockDriver1.id to RoundSprintQualifyingResult(
                     driver = mockDriver1,
                     time = LapTime(),
-                    points = 1,
+                    points = 1.0,
                     grid = 1,
                     qualified = 1,
                     finish = 1,
