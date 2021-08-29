@@ -245,6 +245,7 @@ import tmg.common.R
 enum class ReleaseNotes(
         val version: Int,
         val isMajor: Boolean = false,
+        val versionName: String,
         @StringRes
         val release: Int
 ) {
@@ -280,7 +281,7 @@ enum class ReleaseNotes(
             def releaseNotesString = "${parsedJson.versionName} ${parsedJson.title}${notesString}"
             string(name: "release_${parsedJson.versionCode}", releaseNotesString)
 
-            enumValues += "    VERSION_${parsedJson.versionCode}(version = ${parsedJson.versionCode}, isMajor = ${parsedJson.isMajor}, release = R.string.release_${parsedJson.versionCode}),\n"
+            enumValues += "    VERSION_${parsedJson.versionCode}(version = ${parsedJson.versionCode}, isMajor = ${parsedJson.isMajor}, versionName = ${parsedJson.versionName}, release = R.string.release_${parsedJson.versionCode}),\n"
         }
     }
     def xmlStringsFile = new File(stringsXMLLocation)
