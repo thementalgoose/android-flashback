@@ -8,6 +8,7 @@ import tmg.core.ui.model.AnimationSpeed
 import tmg.flashback.statistics.ui.dashboard.season.SeasonItem
 import tmg.flashback.statistics.ui.shared.driverlist.DriverListAdapter
 import tmg.core.ui.extensions.getColor
+import tmg.flashback.firebase.extensions.pointsDisplay
 import tmg.flashback.statistics.databinding.ViewDashboardSeasonConstructorBinding
 import tmg.utilities.extensions.views.context
 import tmg.utilities.extensions.views.getString
@@ -50,14 +51,14 @@ class ConstructorViewHolder(
 
         when (item.barAnimation) {
             AnimationSpeed.NONE -> {
-                binding.lpvProgress.setProgress(maxProgress) { item.points.toString() }
+                binding.lpvProgress.setProgress(maxProgress) { item.points.pointsDisplay() }
             }
             else -> {
                 binding.lpvProgress.timeLimit = item.barAnimation.millis
                 binding.lpvProgress.animateProgress(maxProgress) {
                     when (it) {
-                        maxProgress -> item.points.toString()
-                        else -> (it * maxPoints.toFloat()).toInt().coerceIn(0, item.points).toString()
+                        maxProgress -> item.points.pointsDisplay()
+                        else -> (it * maxPoints.toFloat()).toDouble().coerceIn(0.0, item.points).pointsDisplay()
                     }
                 }
             }
@@ -66,7 +67,7 @@ class ConstructorViewHolder(
         val driverPoints = item.driver.sumOf { it.second }
         if (item.points < driverPoints) {
             binding.penalty.show(true)
-            binding.penalty.text = getString(R.string.home_constructor_penalty, driverPoints - item.points)
+            binding.penalty.text = getString(R.string.home_constructor_penalty, (driverPoints - item.points).pointsDisplay())
         } else {
             binding.penalty.show(false)
         }

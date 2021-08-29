@@ -36,9 +36,9 @@ sealed class ConstructorSummaryItem(
         val season: Int,
         val isInProgress: Boolean,
         val championshipPosition: Int,
-        val points: Int,
+        val points: Double,
         @ColorInt
-            val colour: Int,
+        val colour: Int,
         val drivers: List<ConstructorOverviewDriverStanding>
     ): ConstructorSummaryItem(
             R.layout.view_constructor_summary_history

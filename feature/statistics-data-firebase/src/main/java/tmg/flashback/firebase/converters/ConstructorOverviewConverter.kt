@@ -52,7 +52,7 @@ fun FConstructorOverviewStandings.convert(data: FConstructorOverviewData, driver
                     .toMap(),
             isInProgress = if (this.s >= currentYear) (this.inProgress ?: false) else false,
             championshipStanding = this.championshipStanding ?: 0,
-            points = this.p ?: 0,
+            points = this.p ?: 0.0,
             season = this.s,
             races = this.races ?: 0,
     )
@@ -90,7 +90,7 @@ fun FConstructorOverviewStandingsDriver.convert(driver: ConstructorDriver): Cons
             driver = driver,
             bestFinish = this.bF ?: -1,
             bestQualifying = this.bQ ?: -1,
-            points = this.p ?: 0,
+            points = this.p ?: 0.0,
             finishesInP1 = this.p1 ?: 0,
             finishesInP2 = this.p2 ?: 0,
             finishesInP3 = this.p3 ?: 0,

@@ -41,13 +41,13 @@ sealed class SeasonItem(
 
     data class Driver(
         val season: Int,
-        val points: Int,
+        val points: Double,
         val driver: tmg.flashback.data.models.stats.Driver,
         val driverId: String = driver.id,
         val position: Int,
         val bestQualifying: Pair<Int, List<Round>>?,
         val bestFinish: Pair<Int, List<Round>>?,
-        val maxPointsInSeason: Int,
+        val maxPointsInSeason: Double,
         val animationSpeed: AnimationSpeed
     ) : SeasonItem(R.layout.view_dashboard_season_driver)
 
@@ -56,9 +56,9 @@ sealed class SeasonItem(
         val position: Int,
         val constructor: tmg.flashback.data.models.stats.Constructor,
         val constructorId: String = constructor.id,
-        val driver: List<Pair<tmg.flashback.data.models.stats.Driver, Int>>,
-        val points: Int,
-        val maxPointsInSeason: Int,
+        val driver: List<Pair<tmg.flashback.data.models.stats.Driver, Double>>,
+        val points: Double,
+        val maxPointsInSeason: Double,
         val barAnimation: AnimationSpeed
     ) : SeasonItem(R.layout.view_dashboard_season_constructor)
 

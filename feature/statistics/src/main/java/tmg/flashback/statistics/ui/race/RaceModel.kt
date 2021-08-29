@@ -56,8 +56,8 @@ sealed class RaceModel(
 
     data class ConstructorStandings(
         val constructor: Constructor,
-        val points: Int,
-        val driver: List<Pair<Driver, Int>>,
+        val points: Double,
+        val driver: List<Pair<Driver, Double>>,
         val animationSpeed: AnimationSpeed
     ) : RaceModel(R.layout.view_race_constructor)
 
@@ -69,7 +69,7 @@ sealed class RaceModel(
 }
 
 data class SingleRace(
-    val points: Int,
+    val points: Double,
     val result: LapTime,
     val pos: Int,
     val gridPos: Int,
