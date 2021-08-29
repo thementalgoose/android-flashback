@@ -4,7 +4,7 @@
         <item name="windowSplashScreenBackground">@color/splash_screen</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/logo_foreground</item>
         <item name="windowSplashScreenAnimationDuration">500</item>
-        <item name="postSplashScreenTheme">@style/FlashbackAppTheme</item>
+        <item name="postSplashScreenTheme">@style/FlashbackAppTheme.Default</item>
 <!--        <item name="android:windowTranslucentStatus">true</item>-->
 <!--        <item name="android:windowTranslucentNavigation">true</item>-->
     </style>
