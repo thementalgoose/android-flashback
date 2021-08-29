@@ -5,18 +5,17 @@ import android.content.res.Configuration
 import android.content.res.Resources
 import io.mockk.*
 import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 import tmg.core.prefs.manager.PreferenceManager
 import tmg.core.ui.managers.StyleManager
 import tmg.core.ui.model.AnimationSpeed
-import tmg.core.ui.model.Theme
+import tmg.core.ui.model.NightMode
 import tmg.testutils.BaseTest
 import tmg.utilities.extensions.isInDayMode
 
-internal class ThemeControllerTest: BaseTest() {
+internal class NightModeControllerTest: BaseTest() {
 
     private val mockApplicationContext: Context = mockk(relaxed = true)
     private val mockPreferenceManager: PreferenceManager = mockk()
@@ -63,17 +62,17 @@ internal class ThemeControllerTest: BaseTest() {
     @Test
     fun `saving theme writes correct value to preference manager`() {
         initSUT()
-        sut.theme = Theme.DAY
+        sut.nightMode = NightMode.DAY
         verify {
-            mockPreferenceManager.save(keyTheme, Theme.DAY.key)
+            mockPreferenceManager.save(keyTheme, NightMode.DAY.key)
         }
     }
 
     @Test
     fun `retrieving theme queries preference manager`() {
-        every { mockPreferenceManager.getString(any()) } returns Theme.DAY.key
+        every { mockPreferenceManager.getString(any()) } returns NightMode.DAY.key
         initSUT()
-        assertEquals(Theme.DAY, sut.theme)
+        assertEquals(NightMode.DAY, sut.nightMode)
         verify {
             mockPreferenceManager.getString(keyTheme, null)
         }
@@ -83,7 +82,7 @@ internal class ThemeControllerTest: BaseTest() {
     fun `retrieving theme defaults to DEFAULT when no value found in shared preferences`() {
         every { mockPreferenceManager.getString(any()) } returns null
         initSUT()
-        assertEquals(Theme.DEFAULT, sut.theme)
+        assertEquals(NightMode.DEFAULT, sut.nightMode)
         verify {
             mockPreferenceManager.getString(keyTheme, null)
         }
@@ -99,19 +98,19 @@ internal class ThemeControllerTest: BaseTest() {
 //        "DEFAULT,true,DAY",
 //        "DEFAULT,false,NIGHT"
     )
-    fun `getting style with theme and is in day mode returns expected theme`(themeValue: Theme, isInDayMode: Boolean, expectedThemeValue: Theme) {
-        every { mockPreferenceManager.getString(keyTheme) } returns themeValue.key
-        every { mockStyleManager.getStyleResource(Theme.DEFAULT) } returns Theme.DEFAULT.ordinal
-        every { mockStyleManager.getStyleResource(Theme.DAY) } returns Theme.DAY.ordinal
-        every { mockStyleManager.getStyleResource(Theme.NIGHT) } returns Theme.NIGHT.ordinal
+    fun `getting style with theme and is in day mode returns expected theme`(nightModeValue: NightMode, isInDayMode: Boolean, expectedNightModeValue: NightMode) {
+        every { mockPreferenceManager.getString(keyTheme) } returns nightModeValue.key
+        every { mockStyleManager.getStyleResource(NightMode.DEFAULT) } returns NightMode.DEFAULT.ordinal
+        every { mockStyleManager.getStyleResource(NightMode.DAY) } returns NightMode.DAY.ordinal
+        every { mockStyleManager.getStyleResource(NightMode.NIGHT) } returns NightMode.NIGHT.ordinal
 //        stubConfiguration(isInDayMode)
 
         initSUT()
 
-        assertEquals(expectedThemeValue.ordinal, sut.themeStyle)
+        assertEquals(expectedNightModeValue.ordinal, sut.themeStyle)
         verify {
             mockPreferenceManager.getString(keyTheme)
-            mockStyleManager.getStyleResource(expectedThemeValue)
+            mockStyleManager.getStyleResource(expectedNightModeValue)
         }
     }
 

@@ -1,9 +1,9 @@
 package tmg.core.ui.managers
 
 import androidx.annotation.StyleRes
-import tmg.core.ui.model.Theme
+import tmg.core.ui.model.NightMode
 
 interface StyleManager {
     @StyleRes
-    fun getStyleResource(theme: Theme): Int
+    fun getStyleResource(nightMode: NightMode): Int
 }
