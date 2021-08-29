@@ -1,8 +1,5 @@
 package tmg.core.ui.controllers
 
-import android.content.Context
-import android.content.res.Configuration
-import android.content.res.Resources
 import io.mockk.*
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
@@ -15,7 +12,6 @@ import tmg.core.ui.model.AnimationSpeed
 import tmg.core.ui.model.NightMode
 import tmg.core.ui.model.Theme
 import tmg.testutils.BaseTest
-import tmg.utilities.extensions.isInDayMode
 
 internal class ThemeControllerTest: BaseTest() {
 
@@ -168,6 +164,7 @@ internal class ThemeControllerTest: BaseTest() {
 
         every { mockPreferenceManager.getString(keyTheme) } returns theme.key
         every { mockPreferenceManager.getString(keyNightMode) } returns nightMode.key
+        every { mockConfigManager.getBoolean(keyMaterialYou) } returns true
 
         every { mockStyleManager.getStyleResource(theme, nightMode) } returns theme.ordinal * nightMode.ordinal
 
