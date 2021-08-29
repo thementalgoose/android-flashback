@@ -3,11 +3,16 @@
 
     <!-- Settings page -->
     <string name="settings_theme_title">Customisation</string>
+    <string name="settings_theme_nightmode_title">Dark mode</string>
+    <string name="settings_theme_nightmode_description">Pick your app theme dark mode preference</string>
+    <string name="settings_theme_nightmode_follow_system">Follow system preferences</string>
+    <string name="settings_theme_nightmode_light">Light mode</string>
+    <string name="settings_theme_nightmode_dark">Dark mode</string>
     <string name="settings_theme_theme_title">App theme</string>
-    <string name="settings_theme_theme_description">Pick your app theme preference</string>
-    <string name="settings_theme_theme_follow_system">Follow system preferences</string>
-    <string name="settings_theme_theme_light">Light mode</string>
-    <string name="settings_theme_theme_dark">Dark mode</string>
+    <string name="settings_theme_theme_description">Pick your app colour schemes</string>
+    <string name="settings_theme_theme_default">Default</string>
+    <string name="settings_theme_theme_material_you">Android 12 Material You</string>
+    <string name="settings_theme_theme_applied_later">Your theme will be applied after you restart the app</string>
     <string name="settings_theme_animation_speed_title">Animation speed</string>
     <string name="settings_theme_animation_speed_description">Pick the speed of the animated views throughout the app.</string>
     <string name="settings_animation_speed_instant">No animation</string>

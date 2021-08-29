@@ -1,46 +1,44 @@
-package tmg.common.ui.settings.appearance.theme
+package tmg.common.ui.settings.appearance.nightmode
 
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.common.ui.settings.appearance.nightmode.NightMoveViewModel
 import tmg.core.ui.bottomsheet.BottomSheetItem
 import tmg.core.ui.controllers.ThemeController
 import tmg.core.ui.extensions.icon
 import tmg.core.ui.extensions.label
-import tmg.core.ui.model.Theme
+import tmg.core.ui.model.NightMode
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertDataEventValue
 import tmg.testutils.livedata.test
 import tmg.utilities.models.Selected
 import tmg.utilities.models.StringHolder
 
-internal class ThemeViewModelTest: BaseTest() {
+internal class NightModeViewModelTest: BaseTest() {
 
     private val mockThemeController: ThemeController = mockk(relaxed = true)
 
-    private lateinit var sut: ThemeViewModel
+    private lateinit var sut: NightMoveViewModel
 
     private fun initSUT() {
-        sut = ThemeViewModel(mockThemeController)
+        sut = NightMoveViewModel(mockThemeController)
     }
 
     @BeforeEach
     internal fun setUp() {
-        every { mockThemeController.theme } returns Theme.DEFAULT
+        every { mockThemeController.nightMode } returns NightMode.DEFAULT
     }
 
     @Test
     fun `init loads nightmode list`() {
         initSUT()
         sut.outputs.themePreferences.test {
-            assertValue(Theme.values().map {
+            assertValue(NightMode.values().map {
                 Selected(
                     BottomSheetItem(it.ordinal, it.icon, StringHolder(it.label)),
-                    it == Theme.DEFAULT
+                    it == NightMode.DEFAULT
                 )
             })
         }
@@ -49,28 +47,28 @@ internal class ThemeViewModelTest: BaseTest() {
     @Test
     fun `selecting nightmode updates value in controller`() {
         initSUT()
-        sut.inputs.selectTheme(Theme.MATERIAL_YOU)
+        sut.inputs.selectNightMode(NightMode.DAY)
         verify {
-            mockThemeController.theme = Theme.MATERIAL_YOU
+            mockThemeController.nightMode = NightMode.DAY
         }
     }
 
     @Test
     fun `selecting nightmode sends nightmode updated event`() {
         initSUT()
-        sut.inputs.selectTheme(Theme.MATERIAL_YOU)
-        sut.outputs.themeUpdated.test {
-            assertDataEventValue(Pair(Theme.MATERIAL_YOU, false))
+        sut.inputs.selectNightMode(NightMode.DAY)
+        sut.outputs.nightModeUpdated.test {
+            assertDataEventValue(Pair(NightMode.DAY, false))
         }
     }
 
     @Test
     fun `selecting nightmode sends nightmode updated event with same selection`() {
-        every { mockThemeController.theme } returns Theme.MATERIAL_YOU
+        every { mockThemeController.nightMode } returns NightMode.DAY
         initSUT()
-        sut.inputs.selectTheme(Theme.MATERIAL_YOU)
-        sut.outputs.themeUpdated.test {
-            assertDataEventValue(Pair(Theme.MATERIAL_YOU, true))
+        sut.inputs.selectNightMode(NightMode.DAY)
+        sut.outputs.nightModeUpdated.test {
+            assertDataEventValue(Pair(NightMode.DAY, true))
         }
     }
 }

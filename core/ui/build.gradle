@@ -16,6 +16,7 @@ dependencies {
     // Preferences library
     implementation project(path: ':core:preferences')
     implementation project(path: ':core:analytics')
+    implementation project(path: ':core:configuration')
 
     // Android stuff
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"

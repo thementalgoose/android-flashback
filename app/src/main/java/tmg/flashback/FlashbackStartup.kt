@@ -14,7 +14,7 @@ import tmg.core.analytics.UserProperty.*
 import tmg.core.analytics.manager.AnalyticsManager
 import tmg.flashback.managers.widgets.WidgetManager
 import tmg.core.ui.controllers.ThemeController
-import tmg.core.ui.model.Theme
+import tmg.core.ui.model.NightMode
 import tmg.flashback.upnext.extensions.updateAllWidgets
 import tmg.notifications.controllers.NotificationController
 import tmg.utilities.extensions.isInDayMode
@@ -38,10 +38,10 @@ class FlashbackStartup(
         AndroidThreeTen.init(application)
 
         // Theming
-        when (themeController.theme) {
-            Theme.DEFAULT -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-            Theme.DAY -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-            Theme.NIGHT -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        when (themeController.nightMode) {
+            NightMode.DEFAULT -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+            NightMode.DAY -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            NightMode.NIGHT -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         }
 
         // Shake to report a bug
@@ -79,10 +79,10 @@ class FlashbackStartup(
         analyticsManager.setUserProperty(OS_VERSION, Build.VERSION.SDK_INT.toString())
         analyticsManager.setUserProperty(APP_VERSION, BuildConfig.VERSION_NAME)
         analyticsManager.setUserProperty(WIDGET_USAGE, if (widgetManager.hasWidgets) "true" else "false")
-        analyticsManager.setUserProperty(DEVICE_THEME, when (themeController.theme) {
-            Theme.DAY -> "day"
-            Theme.NIGHT -> "night"
-            Theme.DEFAULT -> if (application.isInDayMode()) "day (default)" else "night (default)"
+        analyticsManager.setUserProperty(DEVICE_THEME, when (themeController.nightMode) {
+            NightMode.DAY -> "day"
+            NightMode.NIGHT -> "night"
+            NightMode.DEFAULT -> if (application.isInDayMode()) "day (default)" else "night (default)"
         })
 
         // Update Widgets

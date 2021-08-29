@@ -1,7 +1,6 @@
 package tmg.flashback
 
 import android.app.Application
-import androidx.appcompat.app.AppCompatDelegate
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
@@ -10,7 +9,6 @@ import tmg.configuration.di.configModule
 import tmg.core.analytics.di.analyticsModule
 import tmg.core.device.di.deviceModule
 import tmg.core.ui.di.uiModule
-import tmg.core.ui.model.Theme
 import tmg.crash_reporting.di.crashReportingModule
 import tmg.flashback.di.appModule
 import tmg.flashback.rss.di.rssModule
