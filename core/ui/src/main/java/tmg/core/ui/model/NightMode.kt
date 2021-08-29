@@ -1,6 +1,6 @@
 package tmg.core.ui.model
 
-enum class Theme(
+enum class NightMode(
     val key: String
 ) {
     DEFAULT("AUTO"),

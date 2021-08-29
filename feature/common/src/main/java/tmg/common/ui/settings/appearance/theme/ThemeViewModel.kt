@@ -7,7 +7,7 @@ import tmg.core.ui.bottomsheet.BottomSheetItem
 import tmg.core.ui.controllers.ThemeController
 import tmg.core.ui.extensions.icon
 import tmg.core.ui.extensions.label
-import tmg.core.ui.model.Theme
+import tmg.core.ui.model.NightMode
 import tmg.utilities.lifecycle.DataEvent
 import tmg.utilities.models.Selected
 import tmg.utilities.models.StringHolder
@@ -15,7 +15,7 @@ import tmg.utilities.models.StringHolder
 //region Inputs
 
 interface ThemeViewModelInputs {
-    fun selectTheme(theme: Theme)
+    fun selectTheme(nightMode: NightMode)
 }
 
 //endregion
@@ -25,7 +25,7 @@ interface ThemeViewModelInputs {
 interface ThemeViewModelOutputs {
 
     val themePreferences: LiveData<List<Selected<BottomSheetItem>>>
-    val themeUpdated: LiveData<DataEvent<Pair<Theme, Boolean>>>
+    val nightModeUpdated: LiveData<DataEvent<Pair<NightMode, Boolean>>>
 }
 
 //endregion
@@ -38,7 +38,7 @@ class ThemeViewModel(
     var outputs: ThemeViewModelOutputs = this
 
     override val themePreferences: MutableLiveData<List<Selected<BottomSheetItem>>> = MutableLiveData()
-    override val themeUpdated: MutableLiveData<DataEvent<Pair<Theme, Boolean>>> = MutableLiveData()
+    override val nightModeUpdated: MutableLiveData<DataEvent<Pair<NightMode, Boolean>>> = MutableLiveData()
 
     init {
 
@@ -47,19 +47,19 @@ class ThemeViewModel(
 
     //region Inputs
 
-    override fun selectTheme(theme: Theme) {
-        val same = themeController.theme == theme
-        themeController.theme = theme
+    override fun selectTheme(nightMode: NightMode) {
+        val same = themeController.nightMode == nightMode
+        themeController.nightMode = nightMode
         updateThemeList()
-        themeUpdated.value = DataEvent(Pair(theme, same))
+        nightModeUpdated.value = DataEvent(Pair(nightMode, same))
     }
 
     //endregion
 
     private fun updateThemeList() {
-        themePreferences.value = Theme.values()
+        themePreferences.value = NightMode.values()
                 .map {
-                    Selected(BottomSheetItem(it.ordinal, it.icon, StringHolder(it.label)), it == themeController.theme)
+                    Selected(BottomSheetItem(it.ordinal, it.icon, StringHolder(it.label)), it == themeController.nightMode)
                 }
     }
 }

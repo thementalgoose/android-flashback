@@ -3,11 +3,9 @@ package tmg.core.ui.controllers
 import android.content.Context
 import androidx.annotation.StyleRes
 import tmg.core.prefs.manager.PreferenceManager
-import tmg.core.prefs.manager.SharedPreferenceManager
-import tmg.core.ui.R
 import tmg.core.ui.managers.StyleManager
 import tmg.core.ui.model.AnimationSpeed
-import tmg.core.ui.model.Theme
+import tmg.core.ui.model.NightMode
 import tmg.utilities.extensions.isInDayMode
 import tmg.utilities.extensions.toEnum
 
@@ -31,20 +29,20 @@ class ThemeController(
     /**
      * Theme preference
      */
-    var theme: Theme
-        get() = preferenceManager.getString(keyTheme)?.toEnum<Theme> { it.key } ?: Theme.DEFAULT
+    var nightMode: NightMode
+        get() = preferenceManager.getString(keyTheme)?.toEnum<NightMode> { it.key } ?: NightMode.DEFAULT
         set(value) = preferenceManager.save(keyTheme, value.key)
 
     @get:StyleRes
     val themeStyle: Int
         get() {
-            return when (theme) {
-                Theme.DEFAULT -> if (applicationContext.isInDayMode()) {
-                    styleManager.getStyleResource(Theme.DAY)
+            return when (nightMode) {
+                NightMode.DEFAULT -> if (applicationContext.isInDayMode()) {
+                    styleManager.getStyleResource(NightMode.DAY)
                 } else {
-                    styleManager.getStyleResource(Theme.NIGHT)
+                    styleManager.getStyleResource(NightMode.NIGHT)
                 }
-                else -> styleManager.getStyleResource(theme)
+                else -> styleManager.getStyleResource(nightMode)
             }
         }
 }
