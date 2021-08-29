@@ -21,6 +21,7 @@
         <entry key="app/src/main/res/layout/view_season_list_up_next.xml" value="0.26646403242147926" />
         <entry key="core/ui/src/main/res/drawable/ic_menu.xml" value="0.4010416666666667" />
         <entry key="core/ui/src/main/res/drawable/ic_nightmode_auto.xml" value="0.44722222222222224" />
+        <entry key="core/ui/src/main/res/drawable/ic_nightmode_dark.xml" value="0.4765625" />
         <entry key="core/ui/src/main/res/drawable/ic_theme_default.xml" value="0.44722222222222224" />
         <entry key="core/ui/src/main/res/drawable/ic_theme_material_you.xml" value="0.44722222222222224" />
         <entry key="core/ui/src/main/res/layout/fragment_settings.xml" value="0.4311594202898551" />
