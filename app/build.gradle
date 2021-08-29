@@ -247,6 +247,8 @@ enum class ReleaseNotes(
         val isMajor: Boolean = false,
         val versionName: String,
         @StringRes
+        val title: Int,
+        @StringRes
         val release: Int
 ) {
 [[VERSION_ENUM_VALUES]]
@@ -274,14 +276,22 @@ enum class ReleaseNotes(
             def parsedJson = new JsonSlurper().parseText(json.text)
 
             def notesString = ""
+            def count = 0
             for (note in parsedJson.notes) {
-                notesString += "\\n- ${note}"
+                if (count == 0) {
+                    notesString += "- ${note}"
+                }
+                else {
+                    notesString += "\\n- ${note}"
+                }
+                count++
             }
 
-            def releaseNotesString = "${parsedJson.versionName} ${parsedJson.title}${notesString}"
+            def releaseNotesString = "${notesString}"
             string(name: "release_${parsedJson.versionCode}", releaseNotesString)
+            string(name: "release_${parsedJson.versionCode}_title", parsedJson.title)
 
-            enumValues += "    VERSION_${parsedJson.versionCode}(version = ${parsedJson.versionCode}, isMajor = ${parsedJson.isMajor}, versionName = ${parsedJson.versionName}, release = R.string.release_${parsedJson.versionCode}),\n"
+            enumValues += "    VERSION_${parsedJson.versionCode}(version = ${parsedJson.versionCode}, isMajor = ${parsedJson.isMajor}, versionName = \"${parsedJson.versionName}\", title = R.string.release_${parsedJson.versionCode}_title, release = R.string.release_${parsedJson.versionCode}),\n"
         }
     }
     def xmlStringsFile = new File(stringsXMLLocation)
