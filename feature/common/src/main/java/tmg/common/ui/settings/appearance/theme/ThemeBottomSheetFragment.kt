@@ -3,6 +3,7 @@ package tmg.common.ui.settings.appearance.theme
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
@@ -49,7 +50,7 @@ class ThemeBottomSheetFragment: BaseBottomSheetFragment<FragmentBottomSheetTheme
 
         observeEvent(viewModel.outputs.themeUpdated) { (value, isSameSelection) ->
             if (!isSameSelection) {
-                Snackbar.make(binding.list, R.string.settings_theme_theme_applied_later, Snackbar.LENGTH_LONG).show()
+                Toast.makeText(context, R.string.settings_theme_theme_applied_later, Toast.LENGTH_LONG).show()
             }
             dismiss()
         }
