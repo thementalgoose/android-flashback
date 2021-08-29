@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.data.models.stats.ConstructorOverviewDriverStanding
+import tmg.flashback.firebase.extensions.pointsDisplay
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.LayoutConstructorDriverLabelBinding
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
@@ -36,7 +37,7 @@ class DriverListStatAdapter: RecyclerView.Adapter<DriverListStatAdapter.ViewHold
         fun bind(item: ConstructorOverviewDriverStanding) {
             binding.tvName.text = item.driver.name
             binding.imgFlag.setImageResource(itemView.context.getFlagResourceAlpha3(item.driver.nationalityISO))
-            binding.tvNumber.text = itemView.context.resources.getQuantityString(R.plurals.race_points, item.points, item.points)
+            binding.tvNumber.text = itemView.context.resources.getQuantityString(R.plurals.race_points, item.points.toInt(), item.points.pointsDisplay())
 
             binding.standing.text = item.championshipStanding.ordinalAbbreviation
         }

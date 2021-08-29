@@ -126,7 +126,7 @@ class RaceViewModel(
                     val list: List<RaceModel.ConstructorStandings> = roundData
                         .constructorStandings
                         .map {
-                            val drivers: List<Pair<Driver, Int>> = getDriverFromConstructor(roundData, it.constructor.id)
+                            val drivers: List<Pair<Driver, Double>> = getDriverFromConstructor(roundData, it.constructor.id)
                             RaceModel.ConstructorStandings(it.constructor, it.points, drivers, themeController.animationSpeed)
                         }
                         .sortedByDescending { it.points }
@@ -248,11 +248,11 @@ class RaceViewModel(
 //        }
     }
 
-    private fun getDriverFromConstructor(round: Round, constructorId: String): List<Pair<Driver, Int>> {
+    private fun getDriverFromConstructor(round: Round, constructorId: String): List<Pair<Driver, Double>> {
         return round
             .drivers
             .filter { it.constructor.id == constructorId }
-            .map { Pair(it.toDriver(), round.race[it.id]?.points ?: 0) }
+            .map { Pair(it.toDriver(), round.race[it.id]?.points ?: 0.0) }
             .sortedByDescending { it.second }
     }
 

@@ -96,7 +96,7 @@ class ConstructorOverviewStandingTest {
             "0,0,0",
             "-1,0,0"
     )
-    fun `driver points`(driver1: Int, driver2: Int, expected: Int) {
+    fun `driver points`(driver1: Double, driver2: Double, expected: Double) {
         val sut = mockConstructorOverviewStanding1.copy(drivers = mapOf(
                 mockDriver1.id to mockConstructorOverviewStanding1Driver1.copy(
                         points = driver1

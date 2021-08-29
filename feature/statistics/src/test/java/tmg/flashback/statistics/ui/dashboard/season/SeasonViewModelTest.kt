@@ -652,46 +652,46 @@ internal class SeasonViewModelTest: BaseTest() {
 
     private val expectedDriver1 = SeasonItem.Driver(
             season = 2019,
-            points = 21,
+            points = 21.0,
             driver = mockDriver1.toDriver(),
             driverId = mockDriver1.id,
             position = 3,
             bestQualifying = Pair(1, listOf(mockRound1)),
             bestFinish = Pair(1, listOf(mockRound2)),
-            maxPointsInSeason = 27,
+            maxPointsInSeason = 27.0,
             animationSpeed = AnimationSpeed.NONE
     )
     private val expectedDriver2 = SeasonItem.Driver(
             season = 2019,
-            points = 18,
+            points = 18.0,
             driver = mockDriver2.toDriver(),
             driverId = mockDriver2.id,
             position = 4,
             bestQualifying = Pair(2, listOf(mockRound1)),
             bestFinish = Pair(3, listOf(mockRound1, mockRound2)),
-            maxPointsInSeason = 27,
+            maxPointsInSeason = 27.0,
             animationSpeed = AnimationSpeed.NONE
     )
     private val expectedDriver3 = SeasonItem.Driver(
             season = 2019,
-            points = 27,
+            points = 27.0,
             driver = mockDriver3.toDriver(),
             driverId = mockDriver3.id,
             position = 1,
             bestQualifying = Pair(3, listOf(mockRound1, mockRound2)),
             bestFinish = Pair(2, listOf(mockRound1, mockRound2)),
-            maxPointsInSeason = 27,
+            maxPointsInSeason = 27.0,
             animationSpeed = AnimationSpeed.NONE
     )
     private val expectedDriver4 = SeasonItem.Driver(
             season = 2019,
-            points = 24,
+            points = 24.0,
             driver = mockDriver4.toDriver(),
             driverId = mockDriver4.id,
             position = 2,
             bestQualifying = Pair(1, listOf(mockRound2)),
             bestFinish = Pair(1, listOf(mockRound1)),
-            maxPointsInSeason = 27,
+            maxPointsInSeason = 27.0,
             animationSpeed = AnimationSpeed.NONE
     )
 
@@ -705,11 +705,11 @@ internal class SeasonViewModelTest: BaseTest() {
             constructor = mockConstructorAlpha,
             constructorId = mockConstructorAlpha.id,
             driver = listOf(
-                    Pair(mockDriver3.toDriver(), 27),
-                    Pair(mockDriver1.toDriver(), 21)
+                    Pair(mockDriver3.toDriver(), 27.0),
+                    Pair(mockDriver1.toDriver(), 21.0)
             ),
-            points = 48,
-            maxPointsInSeason = 48,
+            points = 48.0,
+            maxPointsInSeason = 48.0,
             barAnimation = AnimationSpeed.NONE
     )
     private val expectedConstructorBeta = SeasonItem.Constructor(
@@ -718,11 +718,11 @@ internal class SeasonViewModelTest: BaseTest() {
             constructor = mockConstructorBeta,
             constructorId = mockConstructorBeta.id,
             driver = listOf(
-                    Pair(mockDriver4.toDriver(), 24),
-                    Pair(mockDriver2.toDriver(), 18)
+                    Pair(mockDriver4.toDriver(), 24.0),
+                    Pair(mockDriver2.toDriver(), 18.0)
             ),
-            points = 42,
-            maxPointsInSeason = 48,
+            points = 42.0,
+            maxPointsInSeason = 48.0,
             barAnimation = AnimationSpeed.NONE
     )
 

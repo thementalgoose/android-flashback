@@ -32,7 +32,7 @@ data class FConstructorOverviewStandings(
         val championshipStanding: Int? = null,
         val drivers: Map<String, FConstructorOverviewStandingsDriver>? = null,
         val inProgress: Boolean? = null,
-        val p: Int? = null, // Points
+        val p: Double? = null, // Points
         val races: Int? = null,
         val s: Int = 0 // Season
 )
@@ -40,7 +40,7 @@ data class FConstructorOverviewStandings(
 data class FConstructorOverviewStandingsDriver(
         val bF: Int? = null, // Best Finish
         val bQ: Int? = null, // Best Qualifying
-        val p: Int? = null, // Points
+        val p: Double? = null, // Points
         val p1: Int? = null, // P1 finishes
         val p2: Int? = null, // P2 finishes
         val p3: Int? = null, // P3 finishes

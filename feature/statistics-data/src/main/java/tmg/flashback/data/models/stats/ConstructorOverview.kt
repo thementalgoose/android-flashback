@@ -55,7 +55,7 @@ data class ConstructorOverview(
             .filter { it.podiums >= 0 }
             .sumOf { it.podiums }
     }
-    val totalPoints: Int by lazy {
+    val totalPoints: Double by lazy {
         return@lazy standings
             .filter { it.points >= 0 }
             .sumOf { it.points }
@@ -114,7 +114,7 @@ data class ConstructorOverviewStanding(
     val drivers: Map<String, ConstructorOverviewDriverStanding>,
     val isInProgress: Boolean,
     val championshipStanding: Int,
-    val points: Int,
+    val points: Double,
     val season: Int,
     val races: Int
 ) {
@@ -152,7 +152,7 @@ data class ConstructorOverviewStanding(
             }
     }
 
-    val driverPoints: Int? by lazy {
+    val driverPoints: Double? by lazy {
         return@lazy drivers.values
             .filter { it.points >= 0 }
             .sumOf { it.points }
@@ -184,7 +184,7 @@ data class ConstructorOverviewDriverStanding(
     val driver: ConstructorDriver,
     val bestFinish: Int,
     val bestQualifying: Int,
-    val points: Int,
+    val points: Double,
     val finishesInP1: Int,
     val finishesInP2: Int,
     val finishesInP3: Int,

@@ -14,6 +14,7 @@ import tmg.flashback.statistics.ui.overview.constructor.summary.addError
 import tmg.flashback.statistics.ui.overview.driver.summary.PipeType
 import tmg.flashback.data.db.stats.ConstructorRepository
 import tmg.flashback.data.models.stats.ConstructorOverview
+import tmg.flashback.firebase.extensions.pointsDisplay
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
@@ -167,7 +168,7 @@ class ConstructorViewModel(
         list.addStat(
                 icon = R.drawable.ic_race_points,
                 label = R.string.constructor_overview_stat_points,
-                value = overview.totalPoints.toString()
+                value = overview.totalPoints.pointsDisplay()
         )
         list.addStat(
                 icon = R.drawable.ic_finishes_in_points,

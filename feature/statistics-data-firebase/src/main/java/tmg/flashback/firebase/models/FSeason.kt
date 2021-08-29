@@ -13,7 +13,7 @@ data class FSeasonStatistics(
 )
 
 data class FSeasonStatisticsPoints(
-        val p: Int? = 0,
+        val p: Double? = 0.0,
         val pos: Int? = null
 )
 
@@ -42,7 +42,7 @@ data class FSeasonOverviewConstructor(
 
 data class FSeasonOverviewPoints(
         val position: Int = -1,
-        val points: Int = -1
+        val points: Double = -1.0
 )
 
 data class FSeasonOverviewPointsConfig(
@@ -92,7 +92,7 @@ data class FSeasonOverviewRaceSprintQualifying(
         val resultText: String = "",
         val qualified: Int? = null,
         val status: String? = null,
-        val points: Int? = null,
+        val points: Double? = null,
         val time: String? = null
 )
 
@@ -102,7 +102,7 @@ data class FSeasonOverviewRaceRace(
         val resultText: String = "",
         val qualified: Int? = null,
         val status: String? = null,
-        val points: Int? = null,
+        val points: Double? = null,
         val time: String? = null,
         val fastestLap: FSeasonOverviewRaceRaceFastestLap? = null
 )
