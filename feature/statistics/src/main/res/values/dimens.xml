@@ -76,7 +76,7 @@
     <dimen name="podiumDriverImage">86dp</dimen>
 
     <dimen name="qualifyingListPositionWidth">24dp</dimen>
-    <dimen name="raceResultPointsWidth">24dp</dimen>
+    <dimen name="raceResultPointsWidth">36dp</dimen>
 
     <dimen name="countryImageSize">28dp</dimen>
 

@@ -125,8 +125,8 @@ val List<Round>.upcoming: Int
  * Get the maximum points that a team has scored in the season
  * (ie. Points that the constructors champion has scored)
  */
-fun Map<String, Triple<Constructor, Map<String, Pair<Driver, Int>>, Int>>.maxConstructorPointsInSeason(): Int {
-    return this.values.maxByOrNull { it.third }?.third ?: 0
+fun Map<String, Triple<Constructor, Map<String, Pair<Driver, Double>>, Double>>.maxConstructorPointsInSeason(): Double {
+    return this.values.maxByOrNull { it.third }?.third ?: 0.0
 }
 
 /**

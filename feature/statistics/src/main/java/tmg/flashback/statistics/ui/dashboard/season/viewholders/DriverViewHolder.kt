@@ -7,6 +7,7 @@ import tmg.flashback.statistics.R
 import tmg.core.ui.model.AnimationSpeed
 import tmg.flashback.statistics.ui.dashboard.season.SeasonItem
 import tmg.core.ui.extensions.getColor
+import tmg.flashback.firebase.extensions.pointsDisplay
 import tmg.flashback.statistics.databinding.ViewDashboardSeasonDriverBinding
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.utilities.extensions.views.context
@@ -58,15 +59,18 @@ class DriverViewHolder(
 
         when (item.animationSpeed) {
             AnimationSpeed.NONE -> {
-                binding.lpvProgress.setProgress(maxProgress) { item.points.toString() }
+                binding.lpvProgress.setProgress(maxProgress) { item.points.pointsDisplay() }
             }
             else -> {
                 binding.lpvProgress.timeLimit = item.animationSpeed.millis
                 binding.lpvProgress.animateProgress(maxProgress) {
                     when (it) {
-                        maxProgress -> item.points.toString()
+                        maxProgress -> item.points.pointsDisplay()
                         0.0f -> "0"
-                        else -> (it * item.maxPointsInSeason.toFloat()).toInt().coerceIn(0, item.points).toString()
+                        else -> (it * item.maxPointsInSeason.toFloat())
+                            .toDouble()
+                            .coerceIn(0.0, item.points)
+                            .pointsDisplay()
                     }
                 }
             }

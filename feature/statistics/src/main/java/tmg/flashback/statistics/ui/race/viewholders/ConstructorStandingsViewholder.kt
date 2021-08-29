@@ -7,6 +7,7 @@ import tmg.core.ui.model.AnimationSpeed
 import tmg.flashback.data.models.stats.Driver
 import tmg.flashback.statistics.ui.race.RaceModel
 import tmg.core.ui.extensions.getColor
+import tmg.flashback.firebase.extensions.pointsDisplay
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.LayoutConstructorDriverBinding
 import tmg.flashback.statistics.databinding.ViewRaceConstructorBinding
@@ -26,7 +27,7 @@ class ConstructorStandingsViewholder(
         binding.container.setOnClickListener(this)
     }
 
-    fun bind(model: RaceModel.ConstructorStandings, maxPointsByAnyTeam: Int) {
+    fun bind(model: RaceModel.ConstructorStandings, maxPointsByAnyTeam: Double) {
 
         constructorId = model.constructor.id
         constructorName = model.constructor.name
@@ -57,15 +58,15 @@ class ConstructorStandingsViewholder(
 
             when (model.animationSpeed) {
                 AnimationSpeed.NONE -> {
-                    lpvProgress.setProgress(maxPercentage) { model.points.toString() }
+                    lpvProgress.setProgress(maxPercentage) { model.points.pointsDisplay() }
                 }
                 else -> {
                     lpvProgress.timeLimit = model.animationSpeed.millis
                     lpvProgress.animateProgress(maxPercentage) {
                         when (it) {
-                            maxPercentage -> model.points.toString()
+                            maxPercentage -> model.points.pointsDisplay()
                             0.0f -> "0"
-                            else -> (it * maxPointsByAnyTeam.toFloat()).toInt().coerceIn(0, model.points).toString()
+                            else -> (it * maxPointsByAnyTeam.toFloat()).toDouble().coerceIn(0.0, model.points).pointsDisplay()
                         }
                     }
                 }
@@ -73,9 +74,9 @@ class ConstructorStandingsViewholder(
         }
     }
 
-    private fun setDriver(layout: LayoutConstructorDriverBinding, driver: Driver, points: Int, @ColorInt constructorColor: Int) {
+    private fun setDriver(layout: LayoutConstructorDriverBinding, driver: Driver, points: Double, @ColorInt constructorColor: Int) {
         layout.tvName.text = driver.name
-        layout.tvNumber.text = context.resources.getQuantityString(R.plurals.race_points, points, points)
+        layout.tvNumber.text = context.resources.getQuantityString(R.plurals.race_points, points.toInt(), points.pointsDisplay())
         layout.imgFlag.setImageResource(context.getFlagResourceAlpha3(driver.nationalityISO))
     }
 
