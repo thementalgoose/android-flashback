@@ -15,6 +15,7 @@ import tmg.utilities.extensions.toEmptyIfZero
 import tmg.utilities.extensions.views.*
 import tmg.utilities.utils.ColorUtils.Companion.darken
 import kotlin.math.abs
+import tmg.flashback.firebase.extensions.pointsDisplay
 import tmg.flashback.statistics.databinding.ViewRaceSprintQualifyingResultBinding
 
 class RaceSprintQualifyingViewHolder(
@@ -48,7 +49,9 @@ class RaceSprintQualifyingViewHolder(
 
             constructorColor.setBackgroundColor(model.driver.constructor.color)
 
-            tvPoints.text = model.qSprint?.points?.toEmptyIfZero() ?: ""
+            tvPoints.text = model.qSprint?.points?.pointsDisplay().let {
+                if (it == null || it == "0") "" else it
+            }
 
             tvStartedAbsolute.text = model.qSprint?.grid?.position() ?: ""
             val diff = (model.qSprint?.grid ?: 0) - (model.qSprint?.finish ?: 0)

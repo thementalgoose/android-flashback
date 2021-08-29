@@ -15,6 +15,7 @@ import tmg.utilities.extensions.toEmptyIfZero
 import tmg.utilities.extensions.views.*
 import tmg.utilities.utils.ColorUtils.Companion.darken
 import kotlin.math.abs
+import tmg.flashback.firebase.extensions.pointsDisplay
 
 class RaceResultViewHolder(
         val driverClicked: (driverId: String, driverName: String) -> Unit,
@@ -47,7 +48,9 @@ class RaceResultViewHolder(
 
             constructorColor.setBackgroundColor(model.driver.constructor.color)
 
-            tvPoints.text = model.race?.points?.toEmptyIfZero() ?: ""
+            tvPoints.text = model.race?.points?.pointsDisplay().let {
+                if (it == null || it == "0") "" else it
+            }
 
             tvStartedAbsolute.text = model.race?.gridPos?.position() ?: ""
             val diff = (model.race?.gridPos ?: 0) - (model.race?.pos ?: 0)

@@ -351,7 +351,7 @@ class SeasonViewModel(
                     position = index + 1,
                     bestQualifying = rounds.bestQualifyingResultFor(standing.item.id),
                     bestFinish = rounds.bestRaceResultFor(standing.item.id),
-                    maxPointsInSeason = this.maxByOrNull { it.points }?.points ?: 0,
+                    maxPointsInSeason = this.maxByOrNull { it.points }?.points ?: 0.0,
                     animationSpeed = themeController.animationSpeed
                 )
             }
@@ -366,7 +366,7 @@ class SeasonViewModel(
             .values
             .sortedByDescending { it.second }
             .toList()
-            .mapIndexed { index: Int, pair: Pair<RoundDriver, Int> ->
+            .mapIndexed { index: Int, pair: Pair<RoundDriver, Double> ->
                 val (roundDriver, points) = pair
                 SeasonItem.Driver(
                     season = season.value,
@@ -375,7 +375,7 @@ class SeasonViewModel(
                     position = index + 1,
                     bestQualifying = rounds.bestQualifyingResultFor(roundDriver.id),
                     bestFinish = rounds.bestRaceResultFor(roundDriver.id),
-                    maxPointsInSeason = this.values.maxByOrNull { it.second }?.second ?: 0,
+                    maxPointsInSeason = this.values.maxByOrNull { it.second }?.second ?: 0.0,
                     animationSpeed = themeController.animationSpeed
                 )
             }
@@ -388,7 +388,7 @@ class SeasonViewModel(
         return this
             .values
             .toList()
-            .mapIndexed { index: Int, triple: Triple<Constructor, Map<String, Pair<Driver, Int>>, Int> ->
+            .mapIndexed { index: Int, triple: Triple<Constructor, Map<String, Pair<Driver, Double>>, Double> ->
                 val (constructor, driverPoints, constructorPoints) = triple
                 SeasonItem.Constructor(
                     season = season.season,

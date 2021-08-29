@@ -35,7 +35,7 @@ internal class ConstructorOverviewConverterTest: BaseTest() {
         val model = FConstructorOverviewStandingsDriver(null, null, null, null, null, null, null, null, null, null, null, null, null).convert(constructorDriver)
         assertEquals(-1, model.bestFinish)
         assertEquals(-1, model.bestQualifying)
-        assertEquals(0, model.points)
+        assertEquals(0.0, model.points)
         assertEquals(0, model.finishesInP1)
         assertEquals(0, model.finishesInP2)
         assertEquals(0, model.finishesInP3)

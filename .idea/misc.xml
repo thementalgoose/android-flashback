@@ -20,6 +20,10 @@
         <entry key="app/src/main/res/layout/view_season_list_season.xml" value="0.4895833333333333" />
         <entry key="app/src/main/res/layout/view_season_list_up_next.xml" value="0.26646403242147926" />
         <entry key="core/ui/src/main/res/drawable/ic_menu.xml" value="0.4010416666666667" />
+        <entry key="core/ui/src/main/res/drawable/ic_nightmode_auto.xml" value="0.44722222222222224" />
+        <entry key="core/ui/src/main/res/drawable/ic_nightmode_dark.xml" value="0.4765625" />
+        <entry key="core/ui/src/main/res/drawable/ic_theme_default.xml" value="0.44722222222222224" />
+        <entry key="core/ui/src/main/res/drawable/ic_theme_material_you.xml" value="0.44722222222222224" />
         <entry key="core/ui/src/main/res/layout/fragment_settings.xml" value="0.4311594202898551" />
         <entry key="core/ui/src/main/res/layout/view_bottom_sheet_item.xml" value="0.4311594202898551" />
         <entry key="core/ui/src/main/res/layout/view_settings_category.xml" value="0.4311594202898551" />
@@ -59,6 +63,9 @@
         <entry key="feature/statistics/src/main/res/layout/view_dashboard_season_track.xml" value="0.3953125" />
         <entry key="feature/statistics/src/main/res/layout/view_driver_season_header.xml" value="0.3848958333333333" />
         <entry key="feature/statistics/src/main/res/layout/view_link_pill.xml" value="0.3026041666666667" />
+        <entry key="feature/statistics/src/main/res/layout/view_race_qualifying_result.xml" value="0.34375" />
+        <entry key="feature/statistics/src/main/res/layout/view_race_race_header.xml" value="0.75" />
+        <entry key="feature/statistics/src/main/res/layout/view_race_race_result.xml" value="0.5" />
         <entry key="feature/statistics/src/main/res/layout/view_shared_message.xml" value="0.29270833333333335" />
         <entry key="feature/statistics/src/main/res/menu/menu_race.xml" value="0.5479166666666667" />
         <entry key="feature/upnext/src/main/res/drawable/background_timezone.xml" value="0.4010416666666667" />

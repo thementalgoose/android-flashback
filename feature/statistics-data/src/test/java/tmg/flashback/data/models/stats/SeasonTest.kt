@@ -34,10 +34,10 @@ class SeasonTest {
     @Test
     fun `constructorStandings calculates standings properly with no constructor data provided`() {
 
-        val driver1Points = mockSeason.rounds.sumOf { it.race[mockDriver1.id]?.points ?: 0 }
-        val driver2Points = mockSeason.rounds.sumOf { it.race[mockDriver2.id]?.points ?: 0 }
-        val driver3Points = mockSeason.rounds.sumOf { it.race[mockDriver3.id]?.points ?: 0 }
-        val driver4Points = mockSeason.rounds.sumOf { it.race[mockDriver4.id]?.points ?: 0 }
+        val driver1Points = mockSeason.rounds.sumOf { it.race[mockDriver1.id]?.points ?: 0.0 }
+        val driver2Points = mockSeason.rounds.sumOf { it.race[mockDriver2.id]?.points ?: 0.0 }
+        val driver3Points = mockSeason.rounds.sumOf { it.race[mockDriver3.id]?.points ?: 0.0 }
+        val driver4Points = mockSeason.rounds.sumOf { it.race[mockDriver4.id]?.points ?: 0.0 }
         val expected = mapOf(
                 mockConstructorAlpha.id to Triple(
                         mockConstructorAlpha,
@@ -63,13 +63,13 @@ class SeasonTest {
     @Test
     fun `constructorStandings calculates standings properly with no standings constructors data provided`() {
 
-        val driver1Points = mockSeason.rounds.sumOf { it.race[mockDriver1.id]?.points ?: 0 }
-        val driver2Points = mockSeason.rounds.sumOf { it.race[mockDriver2.id]?.points ?: 0 }
-        val driver3Points = mockSeason.rounds.sumOf { it.race[mockDriver3.id]?.points ?: 0 }
-        val driver4Points = mockSeason.rounds.sumOf { it.race[mockDriver4.id]?.points ?: 0 }
+        val driver1Points = mockSeason.rounds.sumOf { it.race[mockDriver1.id]?.points ?: 0.0 }
+        val driver2Points = mockSeason.rounds.sumOf { it.race[mockDriver2.id]?.points ?: 0.0 }
+        val driver3Points = mockSeason.rounds.sumOf { it.race[mockDriver3.id]?.points ?: 0.0 }
+        val driver4Points = mockSeason.rounds.sumOf { it.race[mockDriver4.id]?.points ?: 0.0 }
 
-        val alphaPoints = 20
-        val betaPoints = 16
+        val alphaPoints = 20.0
+        val betaPoints = 16.0
 
         val expected = mapOf(
                 mockConstructorAlpha.id to Triple(

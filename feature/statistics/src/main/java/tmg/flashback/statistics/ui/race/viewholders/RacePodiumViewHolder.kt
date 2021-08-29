@@ -14,6 +14,7 @@ import tmg.utilities.extensions.views.context
 import tmg.utilities.extensions.views.gone
 import tmg.utilities.extensions.views.visible
 import kotlin.math.abs
+import tmg.flashback.firebase.extensions.pointsDisplay
 
 class RacePodiumViewHolder(
         val driverClicked: (driverId: String, driverName: String) -> Unit,
@@ -29,7 +30,7 @@ class RacePodiumViewHolder(
     private fun bind(model: RaceModel.Single, layout: LayoutPodiumBinding, pointsLayout: TextView) {
         layout.apply {
 
-            pointsLayout.text = itemView.context.getString(R.string.round_podium_points, model.race?.points)
+            pointsLayout.text = itemView.context.getString(R.string.round_podium_points, model.race?.points?.pointsDisplay() ?: "")
             tvDriver.text = model.driver.name
             tvNumber.text = model.driver.number.toString()
             tvNumber.colorHighlight = model.driver.constructor.color
