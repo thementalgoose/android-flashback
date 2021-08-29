@@ -78,7 +78,7 @@ internal class SettingsAppearanceViewModelTest: BaseTest() {
     fun `clicking pref model for night mode shows event`() {
         initSUT()
         sut.clickPreference(sut.models.findPref(R.string.settings_theme_nightmode_title))
-        sut.outputs.openTheme.test {
+        sut.outputs.openNightMode.test {
             assertEventFired()
         }
     }
