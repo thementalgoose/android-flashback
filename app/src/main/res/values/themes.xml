@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <style name="FlashbackAppTheme.Default" parent="FlashbackAppTheme" />
+
+    <style name="FlashbackAppTheme.MaterialYou" parent="FlashbackAppTheme" />
+
     <!-- DAY -->
 
     <style name="FlashbackAppTheme" parent="AppTheme">
