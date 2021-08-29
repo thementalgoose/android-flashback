@@ -54,7 +54,7 @@ fun FRound.convert(
                 driverId to RoundSprintQualifyingResult(
                     driver = driverList.first { it.id == driverId },
                     time = sprintQualiResult.time?.toLapTime(),
-                    points = sprintQualiResult.points ?: 0,
+                    points = sprintQualiResult.points ?: 0.0,
                     grid = sprintQualiResult.grid ?: 0,
                     qualified = getSprintQualified(sprintQualiResult),
                     finish = sprintQualiResult.result ?: 0,
@@ -68,7 +68,7 @@ fun FRound.convert(
                 driverId to RoundRaceResult(
                     driver = driverList.first { it.id == driverId },
                     time = raceResult.time?.toLapTime(),
-                    points = raceResult.points ?: 0,
+                    points = raceResult.points ?: 0.0,
                     grid = raceResult.grid ?: 0,
                     qualified = getQualified(raceResult, sprintQualifying?.get(driverId) ),
                     finish = raceResult.result ?: 0,
@@ -166,7 +166,7 @@ private fun Map<String, FSeasonStatisticsPoints>.convertDriver(drivers: List<Dri
         .map {
             SeasonStanding(
                 item = drivers.first { driver -> driver.id == it.key },
-                points = it.value.p ?: 0,
+                points = it.value.p ?: 0.0,
                 position = it.value.pos ?: -1
             )
         }
@@ -184,7 +184,7 @@ private fun Map<String, FSeasonStatisticsPoints>.convertConstructor(constructors
         .map {
             SeasonStanding(
                 item = constructors.first { constructor -> constructor.id == it.key },
-                points = it.value.p ?: 0,
+                points = it.value.p ?: 0.0,
                 position = it.value.pos ?: -1
             )
         }
