@@ -20,12 +20,19 @@
         <entry key="app/src/main/res/layout/view_season_list_season.xml" value="0.4895833333333333" />
         <entry key="app/src/main/res/layout/view_season_list_up_next.xml" value="0.26646403242147926" />
         <entry key="core/ui/src/main/res/drawable/ic_menu.xml" value="0.4010416666666667" />
+        <entry key="core/ui/src/main/res/drawable/ic_nightmode_auto.xml" value="0.44722222222222224" />
+        <entry key="core/ui/src/main/res/drawable/ic_theme_default.xml" value="0.44722222222222224" />
+        <entry key="core/ui/src/main/res/drawable/ic_theme_material_you.xml" value="0.44722222222222224" />
         <entry key="core/ui/src/main/res/layout/fragment_settings.xml" value="0.4311594202898551" />
         <entry key="core/ui/src/main/res/layout/view_bottom_sheet_item.xml" value="0.4311594202898551" />
         <entry key="core/ui/src/main/res/layout/view_settings_category.xml" value="0.4311594202898551" />
+        <entry key="feature/common/src/main/res/layout/activity_release_notes.xml" value="0.2890625" />
         <entry key="feature/common/src/main/res/layout/fragment_bottom_sheet_animation_speed.xml" value="0.4311594202898551" />
         <entry key="feature/common/src/main/res/layout/fragment_bottom_sheet_release_notes.xml" value="0.4311594202898551" />
         <entry key="feature/common/src/main/res/layout/fragment_bottom_sheet_theme.xml" value="0.4311594202898551" />
+        <entry key="feature/common/src/main/res/layout/fragment_privacy_policy.xml" value="0.2890625" />
+        <entry key="feature/common/src/main/res/layout/fragment_release_notes.xml" value="0.2890625" />
+        <entry key="feature/common/src/main/res/layout/view_release_note.xml" value="0.2890625" />
         <entry key="feature/formula1/src/main/res/drawable/circuit_adelaide.xml" value="0.4010416666666667" />
         <entry key="feature/formula1/src/main/res/drawable/circuit_unknown.xml" value="0.4010416666666667" />
         <entry key="feature/formula1/src/main/res/drawable/nationality_not_found.xml" value="0.4010416666666667" />
@@ -43,7 +50,7 @@
         <entry key="feature/statistics/src/main/res/layout/activity_race.xml" value="0.4311594202898551" />
         <entry key="feature/statistics/src/main/res/layout/fragment_circuit_info.xml" value="0.26570415400202635" />
         <entry key="feature/statistics/src/main/res/layout/fragment_constructor.xml" value="0.34601449275362317" />
-        <entry key="feature/statistics/src/main/res/layout/fragment_dashboard_season.xml" value="0.5" />
+        <entry key="feature/statistics/src/main/res/layout/fragment_dashboard_season.xml" value="0.465625" />
         <entry key="feature/statistics/src/main/res/layout/fragment_driver.xml" value="0.34601449275362317" />
         <entry key="feature/statistics/src/main/res/layout/fragment_driver_season.xml" value="0.34601449275362317" />
         <entry key="feature/statistics/src/main/res/layout/fragment_maintenance.xml" value="0.4311594202898551" />

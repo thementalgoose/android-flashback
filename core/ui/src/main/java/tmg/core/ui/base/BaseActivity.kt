@@ -1,6 +1,7 @@
 package tmg.core.ui.base
 
 import android.os.Bundle
+import androidx.annotation.StyleRes
 import androidx.appcompat.app.AppCompatActivity
 import org.koin.android.ext.android.inject
 import tmg.core.analytics.manager.AnalyticsManager
@@ -30,10 +31,13 @@ abstract class BaseActivity : AppCompatActivity() {
 //        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(themeController.themeStyle)
-
+        setTheme(themeRes)
         super.onCreate(savedInstanceState)
     }
+
+    protected val themeRes: Int
+        @StyleRes
+        get() = themeController.themeStyle
 
     /**
      * Logging screen analytics
