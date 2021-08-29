@@ -13,4 +13,6 @@ interface BuildConfigManager {
     val versionName: String
 
     val isNotificationChannelsSupported: Boolean
+
+    val isMonetThemeSupported: Boolean
 }
