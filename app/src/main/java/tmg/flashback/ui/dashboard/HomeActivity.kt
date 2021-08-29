@@ -1,11 +1,13 @@
 package tmg.flashback.ui.dashboard
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.ViewTreeObserver
 import androidx.core.splashscreen.SplashScreen
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.core.splashscreen.SplashScreenViewProvider
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.common.repository.model.ForceUpgrade
 import tmg.common.ui.forceupgrade.ForceUpgradeActivity
@@ -27,7 +29,12 @@ class HomeActivity: BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+//        setTheme(R.style.FlashbackAppTheme_MaterialYou)
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+//            splashScreen.setSplashScreenTheme(R.style.FlashbackAppTheme_MaterialYou)
+//        }
         val splashScreen = installSplashScreen()
+//        setTheme(R.style.FlashbackAppTheme_MaterialYou)
 
         binding = ActivityDashboardBinding.inflate(layoutInflater)
         setContentView(binding.root)
