@@ -11,6 +11,7 @@ import tmg.common.ui.privacypolicy.PrivacyPolicyViewModel
 import tmg.common.ui.settings.about.SettingsAboutViewModel
 import tmg.common.ui.settings.appearance.SettingsAppearanceViewModel
 import tmg.common.ui.settings.appearance.animation.AnimationSpeedViewModel
+import tmg.common.ui.settings.appearance.nightmode.NightMoveViewModel
 import tmg.common.ui.settings.appearance.theme.ThemeViewModel
 import tmg.common.ui.settings.notifications.SettingsNotificationViewModel
 import tmg.common.ui.settings.support.SettingsSupportViewModel
@@ -26,10 +27,11 @@ val commonModule = module {
 
     viewModel { PrivacyPolicyViewModel() }
 
-    viewModel { SettingsAppearanceViewModel() }
+    viewModel { SettingsAppearanceViewModel(get(), get()) }
     viewModel { SettingsAboutViewModel() }
     viewModel { SettingsSupportViewModel(get(), get()) }
     viewModel { SettingsNotificationViewModel(get()) }
+    viewModel { NightMoveViewModel(get()) }
     viewModel { ThemeViewModel(get()) }
     viewModel { AnimationSpeedViewModel(get()) }
 }

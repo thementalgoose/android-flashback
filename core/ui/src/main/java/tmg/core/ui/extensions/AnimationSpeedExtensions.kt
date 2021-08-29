@@ -1,5 +1,6 @@
 package tmg.core.ui.extensions
 
+import androidx.annotation.DrawableRes
 import tmg.core.ui.R
 import tmg.core.ui.model.AnimationSpeed
 
@@ -12,6 +13,7 @@ val AnimationSpeed.label: Int
     }
 
 val AnimationSpeed.icon: Int
+    @DrawableRes
     get() = when (this) {
         AnimationSpeed.NONE -> R.drawable.ic_bar_animation_none
         AnimationSpeed.QUICK -> R.drawable.ic_bar_animation_quick

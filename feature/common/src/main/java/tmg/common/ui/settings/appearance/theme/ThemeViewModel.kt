@@ -7,6 +7,7 @@ import tmg.core.ui.bottomsheet.BottomSheetItem
 import tmg.core.ui.controllers.ThemeController
 import tmg.core.ui.extensions.icon
 import tmg.core.ui.extensions.label
+import tmg.core.ui.model.NightMode
 import tmg.core.ui.model.Theme
 import tmg.utilities.lifecycle.DataEvent
 import tmg.utilities.models.Selected
@@ -23,15 +24,15 @@ interface ThemeViewModelInputs {
 //region Outputs
 
 interface ThemeViewModelOutputs {
-
     val themePreferences: LiveData<List<Selected<BottomSheetItem>>>
     val themeUpdated: LiveData<DataEvent<Pair<Theme, Boolean>>>
 }
 
 //endregion
 
+
 class ThemeViewModel(
-        private val themeController: ThemeController
+    private val themeController: ThemeController
 ): ViewModel(), ThemeViewModelInputs, ThemeViewModelOutputs {
 
     var inputs: ThemeViewModelInputs = this
@@ -41,7 +42,6 @@ class ThemeViewModel(
     override val themeUpdated: MutableLiveData<DataEvent<Pair<Theme, Boolean>>> = MutableLiveData()
 
     init {
-
         updateThemeList()
     }
 
@@ -58,8 +58,8 @@ class ThemeViewModel(
 
     private fun updateThemeList() {
         themePreferences.value = Theme.values()
-                .map {
-                    Selected(BottomSheetItem(it.ordinal, it.icon, StringHolder(it.label)), it == themeController.theme)
-                }
+            .map {
+                Selected(BottomSheetItem(it.ordinal, it.icon, StringHolder(it.label)), it == themeController.theme)
+            }
     }
 }

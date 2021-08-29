@@ -17,4 +17,7 @@ class AppBuildConfigManager : BuildConfigManager {
 
     override val isNotificationChannelsSupported: Boolean
         get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
+
+    override val isMonetThemeSupported: Boolean
+        get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
 }
