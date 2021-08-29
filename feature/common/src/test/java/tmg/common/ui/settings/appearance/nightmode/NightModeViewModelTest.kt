@@ -1,4 +1,4 @@
-package tmg.common.ui.settings.appearance.theme
+package tmg.common.ui.settings.appearance.nightmode
 
 import io.mockk.every
 import io.mockk.mockk
@@ -20,10 +20,10 @@ internal class NightModeViewModelTest: BaseTest() {
 
     private val mockThemeController: ThemeController = mockk(relaxed = true)
 
-    private lateinit var sut: ThemeViewModel
+    private lateinit var sut: NightMoveViewModel
 
     private fun initSUT() {
-        sut = ThemeViewModel(mockThemeController)
+        sut = NightMoveViewModel(mockThemeController)
     }
 
     @BeforeEach
@@ -32,7 +32,7 @@ internal class NightModeViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `init loads theme list`() {
+    fun `init loads nightmode list`() {
         initSUT()
         sut.outputs.themePreferences.test {
             assertValue(NightMode.values().map {
@@ -45,28 +45,28 @@ internal class NightModeViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `selecting theme updates value in controller`() {
+    fun `selecting nightmode updates value in controller`() {
         initSUT()
-        sut.inputs.selectTheme(NightMode.DAY)
+        sut.inputs.selectNightMode(NightMode.DAY)
         verify {
             mockThemeController.nightMode = NightMode.DAY
         }
     }
 
     @Test
-    fun `selecting theme sends theme updated event`() {
+    fun `selecting nightmode sends nightmode updated event`() {
         initSUT()
-        sut.inputs.selectTheme(NightMode.DAY)
+        sut.inputs.selectNightMode(NightMode.DAY)
         sut.outputs.nightModeUpdated.test {
             assertDataEventValue(Pair(NightMode.DAY, false))
         }
     }
 
     @Test
-    fun `selecting theme sends theme updated event with same selection`() {
+    fun `selecting nightmode sends nightmode updated event with same selection`() {
         every { mockThemeController.nightMode } returns NightMode.DAY
         initSUT()
-        sut.inputs.selectTheme(NightMode.DAY)
+        sut.inputs.selectNightMode(NightMode.DAY)
         sut.outputs.nightModeUpdated.test {
             assertDataEventValue(Pair(NightMode.DAY, true))
         }

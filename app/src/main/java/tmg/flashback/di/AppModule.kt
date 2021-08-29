@@ -33,7 +33,7 @@ val appModule = module {
     single { FlashbackStartup(get(), get(), get(), get(), get(), get()) }
 
     single<PreferenceManager> { AppPreferencesManager(get()) }
-    single<StyleManager> { AppStyleManager() }
+    single<StyleManager> { AppStyleManager(get()) }
 
     single<NavigationProvider> { AppNavigationProvider(get(), get(), get(), get()) }
     single<NotificationNavigationProvider> { AppNavigationProvider(get(), get(), get(), get()) }

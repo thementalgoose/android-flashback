@@ -1,18 +1,19 @@
 package tmg.core.ui.extensions
 
+import androidx.annotation.DrawableRes
 import tmg.core.ui.R
 import tmg.core.ui.model.NightMode
+import tmg.core.ui.model.Theme
 
-val NightMode.label: Int
+val Theme.label: Int
     get() = when (this) {
-        NightMode.DAY -> R.string.settings_theme_theme_light
-        NightMode.DEFAULT -> R.string.settings_theme_theme_follow_system
-        NightMode.NIGHT -> R.string.settings_theme_theme_dark
+        Theme.DEFAULT -> R.string.settings_theme_theme_default
+        Theme.MATERIAL_YOU -> R.string.settings_theme_theme_material_you
     }
 
-val NightMode.icon: Int
+val Theme.icon: Int
+    @DrawableRes
     get() = when (this) {
-        NightMode.DAY -> R.drawable.ic_theme_light
-        NightMode.DEFAULT -> R.drawable.ic_theme_auto
-        NightMode.NIGHT -> R.drawable.ic_theme_dark
+        Theme.DEFAULT -> R.drawable.ic_theme_default
+        Theme.MATERIAL_YOU -> R.drawable.ic_theme_material_you
     }

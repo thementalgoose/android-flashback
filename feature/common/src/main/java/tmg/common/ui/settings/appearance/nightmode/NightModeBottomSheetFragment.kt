@@ -1,45 +1,42 @@
-package tmg.common.ui.settings.appearance.theme
+package tmg.common.ui.settings.appearance.nightmode
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatDelegate.*
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.snackbar.Snackbar
 import org.koin.android.viewmodel.ext.android.viewModel
-import tmg.common.R
+import tmg.common.databinding.FragmentBottomSheetNightModeBinding
 import tmg.common.databinding.FragmentBottomSheetThemeBinding
 import tmg.core.ui.base.BaseBottomSheetFragment
 import tmg.core.ui.bottomsheet.BottomSheetAdapter
 import tmg.core.ui.model.NightMode
-import tmg.core.ui.model.Theme
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 
-class ThemeBottomSheetFragment: BaseBottomSheetFragment<FragmentBottomSheetThemeBinding>() {
+class NightModeBottomSheetFragment: BaseBottomSheetFragment<FragmentBottomSheetNightModeBinding>() {
 
-    private val viewModel: ThemeViewModel by viewModel()
+    private val viewModel: NightMoveViewModel by viewModel()
 
     private lateinit var adapter: BottomSheetAdapter
 
     override fun inflateView(inflater: LayoutInflater) =
-        FragmentBottomSheetThemeBinding.inflate(inflater)
+        FragmentBottomSheetNightModeBinding.inflate(inflater)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        logScreenViewed("Settings Appearance Color Theme Picker")
+        logScreenViewed("Settings Appearance Night Mode Picker")
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         adapter = BottomSheetAdapter(
-            itemClicked = {
-                viewModel.inputs.selectTheme(Theme.values()[it.id])
-            }
+                itemClicked = {
+                    viewModel.inputs.selectNightMode(NightMode.values()[it.id])
+                }
         )
-
         binding.list.adapter = adapter
         binding.list.layoutManager = LinearLayoutManager(context)
 
@@ -47,9 +44,13 @@ class ThemeBottomSheetFragment: BaseBottomSheetFragment<FragmentBottomSheetTheme
             adapter.list = it
         }
 
-        observeEvent(viewModel.outputs.themeUpdated) { (value, isSameSelection) ->
+        observeEvent(viewModel.outputs.nightModeUpdated) { (value, isSameSelection) ->
             if (!isSameSelection) {
-                Snackbar.make(binding.list, R.string.settings_theme_theme_applied_later, Snackbar.LENGTH_LONG).show()
+                when (value) {
+                    NightMode.DEFAULT -> setDefaultNightMode(MODE_NIGHT_FOLLOW_SYSTEM)
+                    NightMode.DAY -> setDefaultNightMode(MODE_NIGHT_NO)
+                    NightMode.NIGHT -> setDefaultNightMode(MODE_NIGHT_YES)
+                }
             }
             dismiss()
         }
