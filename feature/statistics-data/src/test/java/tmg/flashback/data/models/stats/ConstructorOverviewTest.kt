@@ -79,7 +79,7 @@ class ConstructorOverviewTest {
             "-1,0,0",
             "4,2,6"
     )
-    fun `points`(s1: Int, s2: Int, expected: Int) {
+    fun `points`(s1: Double, s2: Double, expected: Double) {
         val sut = mockConstructorOverview.copy(standings = listOf(
                 mockConstructorOverviewStanding1.copy(points = s1),
                 mockConstructorOverviewStanding2.copy(points = s2)
