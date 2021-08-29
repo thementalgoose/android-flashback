@@ -12,6 +12,7 @@ import tmg.core.device.managers.NetworkConnectivityManager
 import tmg.flashback.statistics.ui.overview.constructor.summary.ConstructorSummaryItem
 import tmg.flashback.statistics.ui.overview.driver.summary.PipeType
 import tmg.flashback.data.db.stats.ConstructorRepository
+import tmg.flashback.firebase.extensions.pointsDisplay
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.ui.overview.constructor.ConstructorViewModel
 import tmg.flashback.statistics.ui.overviews.*
@@ -225,7 +226,7 @@ internal class ConstructorViewModelTest: BaseTest() {
                 ConstructorSummaryItem.Stat(
                         icon = R.drawable.ic_race_points,
                         label = R.string.constructor_overview_stat_points,
-                        value = mockConstructorOverview.totalPoints.toString()
+                        value = mockConstructorOverview.totalPoints.pointsDisplay()
                 ),
                 ConstructorSummaryItem.Stat(
                         icon = R.drawable.ic_finishes_in_points,
