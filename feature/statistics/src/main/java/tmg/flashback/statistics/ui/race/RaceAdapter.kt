@@ -101,7 +101,7 @@ class RaceAdapter(
 
     // TODO: Look at moving this out to the view model
     private fun maxPointsByAnyTeam(): Double {
-        val defaultPoints = 43.0
+        val defaultPoints = 20.0
         return list
                 .map { (it as? RaceModel.ConstructorStandings)?.points ?: defaultPoints }
                 .maxOrNull() ?: defaultPoints
