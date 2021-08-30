@@ -12,7 +12,7 @@ fun Double.pointsDisplay(): String {
     val formatter = DecimalFormatSymbols.getInstance()
     formatter.decimalSeparator = '.'
     formatter.monetaryDecimalSeparator = '.'
-    val df = DecimalFormat("#.#")
+    val df = DecimalFormat("#.#", formatter)
     df.roundingMode = RoundingMode.CEILING
     var result = df.format(this)
     if (result.contains(',')) {
