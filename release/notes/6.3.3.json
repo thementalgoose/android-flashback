@@ -1,0 +1,10 @@
+{
+  "versionCode": 92,
+  "versionName": "6.3.3",
+  "isMajor": false,
+  "title": "",
+  "notes": [
+    "Adds sprint qualifying fixes",
+    "Minor bugs for android 12 compatibility with widgets and notifications"
+  ]
+}
