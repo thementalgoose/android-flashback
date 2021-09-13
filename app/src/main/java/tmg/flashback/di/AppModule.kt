@@ -38,7 +38,7 @@ val appModule = module {
     single<NavigationProvider> { AppNavigationProvider(get(), get(), get(), get()) }
     single<NotificationNavigationProvider> { AppNavigationProvider(get(), get(), get(), get()) }
 
-    single<AppShortcutManager> { AndroidAppShortcutManager(get()) }
+    single<AppShortcutManager> { AndroidAppShortcutManager(get(), get()) }
     single<BuildConfigManager> { AppBuildConfigManager() }
     single<WidgetManager> { AppWidgetManager(get()) }
 }
