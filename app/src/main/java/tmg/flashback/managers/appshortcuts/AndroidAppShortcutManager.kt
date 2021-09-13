@@ -8,16 +8,26 @@ import android.graphics.drawable.Icon
 import android.net.Uri
 import android.os.Build
 import androidx.annotation.RequiresApi
+import tmg.core.device.managers.BuildConfigManager
 import tmg.flashback.R
 import tmg.flashback.rss.ui.RSSActivity
 
 class AndroidAppShortcutManager(
-        private val context: Context
+        private val context: Context,
+        private val buildConfigManager: BuildConfigManager
 ): AppShortcutManager {
     private val shortcutIdRss: String = "rss"
 
-    @RequiresApi(Build.VERSION_CODES.N_MR1)
-    private val shortcutManager: ShortcutManager? = context.getSystemService(Context.SHORTCUT_SERVICE) as? ShortcutManager
+    private val isAppShortcutsEnabled: Boolean
+        get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1 && buildConfigManager.isAppShortcutsSupported
+
+    private val shortcutManager: ShortcutManager? by lazy {
+        if (isAppShortcutsEnabled) {
+            context.getSystemService(Context.SHORTCUT_SERVICE) as? ShortcutManager
+        } else {
+            null
+        }
+    }
 
     @RequiresApi(Build.VERSION_CODES.N_MR1)
     private fun buildRssShortcut(): ShortcutInfo {
@@ -34,7 +44,7 @@ class AndroidAppShortcutManager(
      * Enable all app shortcuts
      */
     override fun enable(): Boolean {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
+        if (isAppShortcutsEnabled) {
             val shortcut = buildRssShortcut()
             if (shortcutManager?.dynamicShortcuts?.size != 1) {
                 shortcutManager?.dynamicShortcuts = listOf(shortcut)
@@ -47,7 +57,7 @@ class AndroidAppShortcutManager(
      * Disable any and all app shortcuts
      */
     override fun disable(): Boolean {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
+        if (isAppShortcutsEnabled) {
             shortcutManager?.removeAllDynamicShortcuts()
             shortcutManager?.disableShortcuts(listOf(shortcutIdRss))
         }
