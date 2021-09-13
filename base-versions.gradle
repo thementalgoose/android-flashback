@@ -32,7 +32,7 @@ ext {
     tmg_labelled_progressbar = "1.0.7"
     tmg_test_utils = "1.1.0"
 
-    lottie = "3.4.0"
+    lottie = "4.1.0"
 
-    firebase_bom = "26.5.0"
+    firebase_bom = "28.4.0"
 }
