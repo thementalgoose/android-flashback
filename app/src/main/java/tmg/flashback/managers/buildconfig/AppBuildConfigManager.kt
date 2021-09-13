@@ -20,4 +20,7 @@ class AppBuildConfigManager : BuildConfigManager {
 
     override val isMonetThemeSupported: Boolean
         get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+
+    override val isAppShortcutsSupported: Boolean
+        get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1
 }

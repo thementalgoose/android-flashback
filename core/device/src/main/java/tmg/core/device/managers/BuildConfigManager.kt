@@ -15,4 +15,6 @@ interface BuildConfigManager {
     val isNotificationChannelsSupported: Boolean
 
     val isMonetThemeSupported: Boolean
+
+    val isAppShortcutsSupported: Boolean
 }
