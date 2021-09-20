@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/paddingMedium"
         android:layout_marginEnd="@dimen/paddingMedium"
-        android:text="Australia"
+        tools:text="Australia"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/imgCountry"
         app:layout_constraintTop_toTopOf="@id/imgCountry" />

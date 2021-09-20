@@ -51,6 +51,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/paddingSmall"
             android:paddingStart="@dimen/paddingSmall"
+            android:contentDescription="@string/ab_dashboard_now"
             android:paddingTop="@dimen/paddingSmall"
             android:paddingBottom="@dimen/paddingSmall"
             app:layout_constraintBottom_toBottomOf="@id/toolbarGuideline"
