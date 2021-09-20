@@ -1,4 +1,18 @@
-apply from: rootDir.absolutePath + "/base.gradle"
+apply plugin:  'com.android.library'
+apply from: rootDir.absolutePath + "/gradle/config-android.gradle"
+apply from: rootDir.absolutePath + "/gradle/config-junit5.gradle"
+apply from: rootDir.absolutePath + "/gradle/config-koin.gradle"
+
+android {
+    compileSdkVersion project.ext.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion project.ext.minSdkVersion
+        targetSdkVersion project.ext.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+    }
+}
 
 dependencies {
 
@@ -13,9 +27,9 @@ dependencies {
     implementation project(path: ':core:ui')
 
     // About This App
-    implementation "com.github.thementalgoose:android-about-this-app:$tmg_about_this_app"
+    implementation deps.tmg.aboutthisapp
 
     // CircleImageView
-    implementation "de.hdodenhof:circleimageview:$circleimageview"
+    implementation deps.circleimageview
 
 }

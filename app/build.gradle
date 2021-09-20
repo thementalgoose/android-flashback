@@ -357,45 +357,45 @@ dependencies {
     }
 
     // Splash screen
-    implementation "androidx.core:core-splashscreen:$android_splashscreen"
+    implementation deps.androidx.splashscreen
 
     // Discord Overlapping panels
-    implementation "com.github.discord:OverlappingPanels:0.1.1"
+    implementation deps.discord
 
     // TMG dependencies
-    implementation "com.github.thementalgoose:android-about-this-app:$tmg_about_this_app"
-    implementation "com.github.thementalgoose:android-utilities:$tmg_utils"
-    implementation "com.github.thementalgoose:android-labelled-progress-bar:$tmg_labelled_progressbar"
+    implementation deps.tmg.aboutthisapp
+    implementation deps.tmg.utilities
+    implementation deps.tmg.labelledprogressbar
 
     // Preferences
-    implementation "androidx.preference:preference-ktx:1.1.1"
+    implementation deps.androidx.preference
 
     // Glide
-    implementation "com.github.bumptech.glide:glide:$glide"
-    kapt "com.github.bumptech.glide:compiler:$glide"
+    implementation deps.glide.glide
+    kapt deps.glide.kapt
 
     // BugShaker
-    implementation "com.github.stkent:bugshaker:2.0.0"
+    implementation deps.bugshaker
 
     // Lottie
-    implementation "com.airbnb.android:lottie:$lottie"
+    implementation deps.lottie
 
     // Skeleton Layout
-    implementation "com.faltenreich:skeletonlayout:2.0.1"
+    implementation deps.skeletonlayout
 
     // Circle Image View
-    implementation "de.hdodenhof:circleimageview:$circleimageview"
+    implementation deps.circleimageview
 
     // Notifications + Config
-    implementation platform("com.google.firebase:firebase-bom:$firebase_bom")
-    implementation "com.google.firebase:firebase-analytics"
-    implementation "com.google.firebase:firebase-messaging"
-    implementation "com.google.firebase:firebase-config"
-    implementation "com.google.firebase:firebase-crashlytics"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.1.1"
+    implementation platform(deps.firebase.bom)
+    implementation deps.firebase.analytics
+    implementation deps.firebase.messaging
+    implementation deps.firebase.config
+    implementation deps.firebase.crashlytics
+    implementation deps.kotlin.playservices
 
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines"
+    implementation deps.kotlin.core
+    implementation deps.kotlin.android
 }
 
 apply plugin: 'com.google.gms.google-services'

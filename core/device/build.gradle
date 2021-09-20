@@ -1,4 +1,7 @@
-apply from: rootDir.absolutePath + "/core/base.gradle"
+apply plugin:  'com.android.library'
+apply from: rootDir.absolutePath + "/gradle/config-android.gradle"
+apply from: rootDir.absolutePath + "/gradle/config-junit5.gradle"
+apply from: rootDir.absolutePath + "/gradle/config-koin.gradle"
 
 android {
     compileSdkVersion project.ext.compileSdkVersion
