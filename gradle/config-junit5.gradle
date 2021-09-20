@@ -41,6 +41,16 @@ android {
     }
 }
 
+tasks.withType(Test) {
+    testLogging {
+        exceptionFormat 'full'
+        showCauses true
+        showExceptions true
+        showStackTraces true
+        showStandardStreams true
+    }
+}
+
 dependencies {
     testImplementation depsTest.junit5.api
     testImplementation depsTest.junit5.engine

@@ -1,0 +1,89 @@
+import groovy.json.JsonBuilder
+import groovy.json.JsonSlurper
+import groovy.xml.MarkupBuilder
+
+/**
+ * Generate the release notes format used within the app
+ *
+ * Reads release notes directory
+ * - values/release-notes.xml file with strings folders
+ */
+task generateReleaseNotes {
+    println("Release notes - Generating...")
+
+    // Folder with release notes json
+    def folder = "release/notes"
+
+    def stringsXMLLocation = "feature/common/src/main/res/values/release-notes.xml"
+    def kotlinFileLocation = "feature/common/src/main/java/tmg/common/constants/ReleaseNotes.kt"
+    def kotlinFileContents = """package tmg.common.constants
+
+import androidx.annotation.StringRes
+import tmg.common.R
+
+/** 
+ * This file is auto generated! Please do not modify! 
+ */
+enum class ReleaseNotes(
+        val version: Int,
+        val isMajor: Boolean = false,
+        val versionName: String,
+        @StringRes
+        val title: Int,
+        @StringRes
+        val release: Int
+) {
+[[VERSION_ENUM_VALUES]]
+}
+"""
+
+    // Get list of JSON files
+    def filesList = []
+    def directory = new File(folder)
+    directory.eachFileRecurse { file ->
+        if (file.name != ".DS_Store") {
+            filesList << file.path
+        }
+    }
+
+    def enumValues = ""
+
+    // Process each one, generating resources
+    def xmlWriter = new StringWriter()
+    def xmlStrings = new MarkupBuilder(xmlWriter)
+    def total = 0
+    xmlStrings.resources() {
+        for (file in filesList.sort()) {
+            def json = new File(file)
+            def parsedJson = new JsonSlurper().parseText(json.text)
+
+            def notesString = ""
+            def count = 0
+            for (note in parsedJson.notes) {
+                if (count == 0) {
+                    notesString += "- ${note}"
+                }
+                else {
+                    notesString += "\\n- ${note}"
+                }
+                count++
+            }
+
+            def releaseNotesString = "${notesString}"
+            string(name: "release_${parsedJson.versionCode}", releaseNotesString)
+            string(name: "release_${parsedJson.versionCode}_title", parsedJson.title)
+
+            enumValues += "    VERSION_${parsedJson.versionCode}(version = ${parsedJson.versionCode}, isMajor = ${parsedJson.isMajor}, versionName = \"${parsedJson.versionName}\", title = R.string.release_${parsedJson.versionCode}_title, release = R.string.release_${parsedJson.versionCode}),\n"
+            total++
+        }
+    }
+    def xmlStringsFile = new File(stringsXMLLocation)
+    xmlStringsFile.getParentFile().mkdirs()
+    xmlStringsFile.write(xmlWriter.toString())
+
+    def kotlinFile = new File(kotlinFileLocation)
+    kotlinFile.getParentFile().mkdirs()
+    kotlinFile.write(kotlinFileContents.replace("[[VERSION_ENUM_VALUES]]", enumValues))
+
+    println("Release notes - Generated ${total} notes")
+}
