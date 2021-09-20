@@ -2,6 +2,7 @@ import com.github.triplet.gradle.androidpublisher.ResolutionStrategy
 
 apply plugin: 'com.android.application'
 apply from: rootDir.absolutePath + "/gradle/config-android.gradle"
+apply from: rootDir.absolutePath + "/gradle/config-util.gradle"
 apply from: rootDir.absolutePath + "/gradle/config-junit5.gradle"
 
 apply plugin: 'koin'
