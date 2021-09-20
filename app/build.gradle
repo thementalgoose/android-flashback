@@ -1,18 +1,18 @@
 import com.github.triplet.gradle.androidpublisher.ResolutionStrategy
-import groovy.json.JsonBuilder
-import groovy.json.JsonSlurper
-import groovy.xml.MarkupBuilder
 
 apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
+apply from: rootDir.absolutePath + "/gradle/config-android.gradle"
+apply from: rootDir.absolutePath + "/gradle/config-junit5.gradle"
+
 apply plugin: 'koin'
+apply from: rootDir.absolutePath + "/gradle/config-koin.gradle"
+
 apply plugin: 'com.google.firebase.crashlytics'
 apply plugin: 'de.mannodermaus.android-junit5'
 apply plugin: 'com.github.triplet.play'
-apply plugin: "androidx.navigation.safeargs.kotlin"
 
-apply from: rootDir.absolutePath + "/base-dependencies.gradle"
+apply from: rootDir.absolutePath + "/gradle/script-remoteconfig.gradle"
+apply from: rootDir.absolutePath + "/gradle/script-releasenotes.gradle"
 
 android {
     compileSdkVersion project.ext.compileSdkVersion
@@ -26,10 +26,6 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunnerArgument "runnerBuilder", "de.mannodermaus.junit5.AndroidJUnit5Builder"
-    }
-
-    buildFeatures {
-        viewBinding true
     }
 
     signingConfigs {
@@ -50,16 +46,6 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
-    }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-
-    kotlinOptions {
-        jvmTarget = '1.8'
-        freeCompilerArgs += kotlinCompilerArgs
     }
 
     packagingOptions {
@@ -88,45 +74,6 @@ android {
         }
     }
 
-    sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
-        androidTest.java.srcDirs += 'src/androidTest/kotlin'
-        androidTest.resources.srcDirs += 'src/androidTest/res'
-        test.java.srcDirs += 'src/test/java'
-    }
-
-    testOptions {
-        junitPlatform {
-            testLogging {
-                events "passed", "skipped", "failed", "standardOut", "standardError"
-            }
-        }
-        unitTests {
-            includeAndroidResources = true
-            returnDefaultValues = true
-            all {
-                afterSuite { desc, result ->
-                    if (!desc.parent) {
-                        println "\n======================================================================="
-                        println "${desc.displayName}"
-                        println "Test result: ${result.resultType}"
-                        println "Test summary: ${result.testCount} tests, " +
-                                "${result.successfulTestCount} succeeded, " +
-                                "${result.failedTestCount} failed, " +
-                                "${result.skippedTestCount} skipped"
-                        println "======================================================================="
-                    }
-                }
-                useJUnitPlatform()
-                testLogging {
-                    showStandardStreams = true
-                    events "passed", "skipped", "failed", "standardOut", "standardError"
-                }
-            }
-        }
-        animationsDisabled = true
-    }
-
     packagingOptions {
         exclude "META-INF/LICENSE*"
     }
@@ -137,176 +84,6 @@ play {
     serviceAccountCredentials = file(System.getenv("PRIVATE_KEY") ?: "flashback.json")
     defaultToAppBundles = true
     resolutionStrategy = ResolutionStrategy.IGNORE
-}
-
-tasks.withType(Test) {
-    testLogging {
-        exceptionFormat 'full'
-        showCauses true
-        showExceptions true
-        showStackTraces true
-        showStandardStreams true
-    }
-}
-
-/**
- * Generating the default remote config values
- */
-task generateRemoteConfigDefaults {
-
-    println("Remote Config - Generating...")
-
-    def year = new Date().format('yyyy')
-
-    def supportedSeasonsModel = new Object()
-    supportedSeasonsModel.metaClass.seasons = []
-    for (item in 1950..year.toInteger()) {
-        def season = new Object()
-        season.metaClass.s = item
-        supportedSeasonsModel.seasons.add(season)
-    }
-    def jsonBuilder = new JsonBuilder()
-    jsonBuilder(supportedSeasonsModel)
-    def supportedSeasons = jsonBuilder.toString()
-
-    def filePath = project.projectDir.absolutePath + "/../core/configuration/src/main/res/xml/remote_config_defaults.xml"
-    new File(filePath).getParentFile().mkdirs()
-    new File(filePath).withWriter { writer ->
-        def xmlBuilder = new MarkupBuilder(writer)
-        xmlBuilder.doubleQuotes = true
-        xmlBuilder.mkp.xmlDeclaration(version: '1.0', encoding: 'utf-8')
-
-        xmlBuilder.defaultsMap {
-            entry {
-                key('default_year')
-                value(year)
-            }
-            entry {
-                key('up_next')
-                value()
-            }
-            entry {
-                key('banner')
-                value()
-            }
-            entry {
-                key('force_upgrade')
-                value()
-            }
-            entry {
-                key('data_provided')
-                value('Data provided by Ergast API')
-            }
-            entry {
-                key('supported_seasons')
-                value(supportedSeasons)
-            }
-            entry {
-                key('dashboard_calendar')
-                value('false')
-            }
-            entry {
-                key('rss')
-                value('false')
-            }
-            entry {
-                key('rss_add_custom')
-                value('true')
-            }
-            entry {
-                key('rss_supported_sources')
-                value('{"sources":[{"rssLink":"https://www.autosport.com/rss/feed/f1","sourceShort":"AS","source":"https://www.autosport.com","colour":"#FF0000","textColour":"#ffffff","title":"Autosport","contactLink":"https://www.autosport.com/contact/"},{"rssLink":"https://crash.net/rss/f1","sourceShort":"C","source":"https://www.crash.net","colour":"#E91B1C","textColour":"#ffffff","title":"Crash.net","contactLink":"https://www.crash.net/contact"},{"rssLink":"https://motorsport.com/rss/f1/news/","sourceShort":"MS","source":"https://www.motorsport.com","colour":"#FFD806","textColour":"#181818","title":"Motorsport","contactLink":"https://www.motorsport.com/info/contact/"},{"rssLink":"https://www.pitpass.com/fes_php/fes_usr_sit_newsfeed.php","sourceShort":"PP","source":"https://www.pitpass.com","colour":"#611818","textColour":"#ffffff","title":"PitPass","contactLink":"https://www.pitpass.com/contact-us"},{"rssLink":"https://www.f1-fansite.com/feed/","sourceShort":"FF","source":"https://www.f1-fansite.com","colour":"#DF2C19","textColour":"#ffffff","title":"F1 Fansite","contactLink":"https://www.f1-fansite.com/about-us/"},{"rssLink":"https://feeds.bbci.co.uk/sport/formula1/rss.xml","sourceShort":"BBC","source":"https://www.bbc.co.uk","colour":"#FFD04C","textColour":"#181818","title":"BBC Sport","contactLink":"https://www.bbc.co.uk/sport/15561348"},{"rssLink":"https://www.theguardian.com/sport/formulaone/rss","sourceShort":"TG","source":"https://www.theguardian.com","colour":"#002B60","textColour":"#ffffff","title":"The Guardian","contactLink":"https://www.theguardian.com/help/contact-us"},{"rssLink":"https://wtf1.com/feed/","sourceShort":"WTF","source":"https://wtf1.com","colour":"#F66733","textColour":"#ffffff","title":"WTF1","contactLink":"https://wtf1.com/about-us/"},{"rssLink":"https://www.grandprix247.com/feed/","sourceShort":"GP","source":"https://www.grandprix247.com","colour":"#BD0216","textColour":"#ffffff","title":"GrandPrix247","contactLink":"https://www.grandprix247.com/contact/"},{"rssLink":"https://en.f1i.com/news/feed","sourceShort":"F1I","source":"https://en.f1i.com","colour":"#EC192D","textColour":"#ffffff","title":"F1i","contactLink":"https://f1i.com/contact"},{"rssLink":"https://www.f1technical.net/rss/news.xml","sourceShort":"FT","source":"https://www.f1technical.net/","colour":"#2E6A9B","textColour":"#ffffff","title":"F1Technical","contactLink":"https://www.f1technical.net/pr/feedback.php"}]}')
-            }
-            entry {
-                key('material_you')
-                value('false')
-            }
-        }
-    }
-
-    println("Remote Config - Generated")
-}
-
-/**
- * Processing the release notes strings file
- */
-task generateReleaseNotes {
-    println("Release notes - Generating...")
-
-    // Folder with release notes json
-    def folder = "release/notes"
-
-    def stringsXMLLocation = "feature/common/src/main/res/values/release-notes.xml"
-    def kotlinFileLocation = "feature/common/src/main/java/tmg/common/constants/ReleaseNotes.kt"
-    def kotlinFileContents = """package tmg.common.constants
-
-import androidx.annotation.StringRes
-import tmg.common.R
-
-/** 
- * This file is auto generated! Please do not modify! 
- */
-enum class ReleaseNotes(
-        val version: Int,
-        val isMajor: Boolean = false,
-        val versionName: String,
-        @StringRes
-        val title: Int,
-        @StringRes
-        val release: Int
-) {
-[[VERSION_ENUM_VALUES]]
-}
-"""
-
-    // Get list of JSON files
-    def filesList = []
-    def directory = new File(folder)
-    directory.eachFileRecurse { file ->
-        if (file.name != ".DS_Store") {
-            filesList << file.path
-        }
-    }
-
-    def enumValues = ""
-
-    // Process each one, generating resources
-    def xmlWriter = new StringWriter()
-    def xmlStrings = new MarkupBuilder(xmlWriter)
-    xmlStrings.resources() {
-        for (file in filesList.sort()) {
-            def json = new File(file)
-            println("> Processing " + file)
-            def parsedJson = new JsonSlurper().parseText(json.text)
-
-            def notesString = ""
-            def count = 0
-            for (note in parsedJson.notes) {
-                if (count == 0) {
-                    notesString += "- ${note}"
-                }
-                else {
-                    notesString += "\\n- ${note}"
-                }
-                count++
-            }
-
-            def releaseNotesString = "${notesString}"
-            string(name: "release_${parsedJson.versionCode}", releaseNotesString)
-            string(name: "release_${parsedJson.versionCode}_title", parsedJson.title)
-
-            enumValues += "    VERSION_${parsedJson.versionCode}(version = ${parsedJson.versionCode}, isMajor = ${parsedJson.isMajor}, versionName = \"${parsedJson.versionName}\", title = R.string.release_${parsedJson.versionCode}_title, release = R.string.release_${parsedJson.versionCode}),\n"
-        }
-    }
-    def xmlStringsFile = new File(stringsXMLLocation)
-    xmlStringsFile.getParentFile().mkdirs()
-    xmlStringsFile.write(xmlWriter.toString())
-
-    def kotlinFile = new File(kotlinFileLocation)
-    kotlinFile.getParentFile().mkdirs()
-    kotlinFile.write(kotlinFileContents.replace("[[VERSION_ENUM_VALUES]]", enumValues))
-
-    println("Release notes - Generated")
 }
 
 tasks.whenTaskAdded { task ->
@@ -393,9 +170,6 @@ dependencies {
     implementation deps.firebase.config
     implementation deps.firebase.crashlytics
     implementation deps.kotlin.playservices
-
-    implementation deps.kotlin.core
-    implementation deps.kotlin.android
 }
 
 apply plugin: 'com.google.gms.google-services'
