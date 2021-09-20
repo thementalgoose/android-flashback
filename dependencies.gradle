@@ -58,7 +58,7 @@ allprojects {
                         okhttp                                  : "com.squareup.okhttp3:okhttp:$okhttp3",
                         okhttp_logging                          : "com.squareup.okhttp3:logging-interceptor:$okhttp3"
                 ],
-                skeletonlayout                                  : "com.faltenreich:skeletonlayout:2.0.1",
+                skeletonlayout                                  : "com.faltenreich:skeletonlayout:4.0.0",
                 threeten : [
                         threeten                                : "org.threeten:threetenbp:$threetenbp",
                         backport                                : "com.jakewharton.threetenabp:threetenabp:$threeten"
