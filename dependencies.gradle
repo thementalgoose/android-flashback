@@ -1,0 +1,96 @@
+allprojects {
+
+    apply from: rootDir.absolutePath + "/versions.gradle"
+
+    ext {
+
+        deps = [
+                androidx : [
+                        core : "androidx.core:core-ktx:$android_corektx",
+                        appcompat : "androidx.appcompat:appcompat:$android_appcompat",
+                        constraintlayout : "androidx.constraintlayout:constraintlayout:$android_constraint",
+                        lifecycle_viewmodel : "androidx.lifecycle:lifecycle-viewmodel-ktx:$android_lifecycle",
+                        lifecycle_livedata : "androidx.lifecycle:lifecycle-livedata-ktx:$android_lifecycle",
+                        material : "com.google.android.material:material:$android_material",
+                        navigation_fragment : "androidx.navigation:navigation-fragment-ktx:$navigation",
+                        navigation_ui : "androidx.navigation:navigation-ui-ktx:$navigation",
+                        preference : "androidx.preference:preference-ktx:1.1.1",
+                        splashscreen : "androidx.core:core-splashscreen:$android_splashscreen",
+                        swiperefreshlayout : "androidx.swiperefreshlayout:swiperefreshlayout:$swipe_refresh"
+                ],
+                bugshaker : "com.github.stkent:bugshaker:2.0.0",
+                circleimageview : "de.hdodenhof:circleimageview:$circleimageview",
+                kotlin : [
+                        stdlib: "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version",
+                        core: "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines",
+                        android: "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines",
+                        playservices: "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.1.1"
+                ],
+                discord : "com.github.discord:OverlappingPanels:0.1.1",
+                flagkit : "com.jwang123.flagkit:flagkit:1.0",
+                firebase : [
+                        bom: "com.google.firebase:firebase-bom:$firebase_bom",
+                        auth: "com.google.firebase:firebase-auth",
+                        analytics: "com.google.firebase:firebase-analytics",
+                        common: "com.google.firebase:firebase-common-ktx",
+                        config: "com.google.firebase:firebase-config",
+                        crashlytics: "com.google.firebase:firebase-crashlytics",
+                        firestore: "com.google.firebase:firebase-firestore",
+                        firestore_ktx: "com.google.firebase:firebase-firestore-ktx",
+                        messaging: "com.google.firebase:firebase-messaging"
+                ],
+                glide : [
+                        glide : "com.github.bumptech.glide:glide:$glide",
+                        kapt : "com.github.bumptech.glide:compiler:$glide"
+                ],
+                gson : "com.google.code.gson:gson:2.8.6",
+                koin : [
+                        koin : "io.insert-koin:koin-android:$koin_version",
+                        koin_scope : "io.insert-koin:koin-android-scope:$koin_version",
+                        koin_viewmodel : "io.insert-koin:koin-android-viewmodel:$koin_version",
+                        koin_ext : "io.insert-koin:koin-android-ext:$koin_version"
+                ],
+                lottie : "com.airbnb.android:lottie:$lottie",
+                retrofit : [
+                        retrofit : "com.squareup.retrofit2:retrofit:$retrofit",
+                        retrofit_simplexml : "com.squareup.retrofit2:converter-simplexml:$retrofit",
+                        retrofit_jaxb : "com.squareup.retrofit2:converter-jaxb:$retrofit",
+                        retrofit_gson : "com.squareup.retrofit2:converter-gson:$retrofit",
+                        okhttp : "com.squareup.okhttp3:okhttp:$okhttp3",
+                        okhttp_logging : "com.squareup.okhttp3:logging-interceptor:$okhttp3"
+                ],
+                skeletonlayout : "com.faltenreich:skeletonlayout:2.0.1",
+                threeten : [
+                        threeten: "org.threeten:threetenbp:$threetenbp",
+                        backport: "com.jakewharton.threetenabp:threetenabp:$threeten"
+                ],
+                tmg : [
+                        aboutthisapp : "com.github.thementalgoose:android-about-this-app:$tmg_about_this_app",
+                        labelledprogressbar : "com.github.thementalgoose:android-labelled-progress-bar:$tmg_labelled_progressbar",
+                        utilities : "com.github.thementalgoose:android-utilities:$tmg_utils"
+                ]
+        ]
+
+        depsTest = [
+                androidx : [
+                        core : 'androidx.test:core:1.4.0',
+                        core_testing : 'androidx.arch.core:core-testing:2.1.0',
+                        lifecycle : "androidx.lifecycle:lifecycle-compiler:$android_lifecycle"
+                ],
+                kotlin : [
+                        reflect : "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version",
+                        core : "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines",
+                        test : "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines"
+                ],
+                junit5 : [
+                        api : "org.junit.jupiter:junit-jupiter-api:$junit",
+                        engine :  "org.junit.jupiter:junit-jupiter-engine:$junit",
+                        params : "org.junit.jupiter:junit-jupiter-params:$junit"
+                ],
+                mockk : "io.mockk:mockk:$mockk",
+                tmg : [
+                        testutils : "com.github.thementalgoose:android-test-utilities:$tmg_test_utils"
+                ]
+        ]
+    }
+}

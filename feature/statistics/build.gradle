@@ -1,4 +1,18 @@
-apply from: rootDir.absolutePath + "/base.gradle"
+apply plugin:  'com.android.library'
+apply from: rootDir.absolutePath + "/gradle/config-android.gradle"
+apply from: rootDir.absolutePath + "/gradle/config-junit5.gradle"
+apply from: rootDir.absolutePath + "/gradle/config-koin.gradle"
+
+android {
+    compileSdkVersion project.ext.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion project.ext.minSdkVersion
+        targetSdkVersion project.ext.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+    }
+}
 
 dependencies {
 
@@ -20,21 +34,21 @@ dependencies {
 
 
     // Swipe refresh
-    implementation "androidx.swiperefreshlayout:swiperefreshlayout:$swipe_refresh"
+    implementation deps.androidx.swiperefreshlayout
 
     // TMG dependencies
-    implementation "com.github.thementalgoose:android-labelled-progress-bar:$tmg_labelled_progressbar"
+    implementation deps.tmg.labelledprogressbar
 
     // Glide
-    implementation "com.github.bumptech.glide:glide:$glide"
-    kapt "com.github.bumptech.glide:compiler:$glide"
+    implementation deps.glide.glide
+    kapt deps.glide.kapt
 
     // Flagkit
-    implementation 'com.jwang123.flagkit:flagkit:1.0'
+    implementation deps.flagkit
 
     // Lottie
-    implementation "com.airbnb.android:lottie:$lottie"
+    implementation deps.lottie
 
     // Skeleton Layout
-    implementation 'com.faltenreich:skeletonlayout:2.0.1'
+    implementation deps.skeletonlayout
 }

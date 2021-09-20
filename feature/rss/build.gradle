@@ -1,8 +1,17 @@
-apply from: rootDir.absolutePath + "/base.gradle"
+apply plugin:  'com.android.library'
+apply from: rootDir.absolutePath + "/gradle/config-android.gradle"
+apply from: rootDir.absolutePath + "/gradle/config-junit5.gradle"
+apply from: rootDir.absolutePath + "/gradle/config-koin.gradle"
 
-ext {
-    retrofit = "2.9.0"
-    okhttp3 = "4.7.2"
+android {
+    compileSdkVersion project.ext.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion project.ext.minSdkVersion
+        targetSdkVersion project.ext.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+    }
 }
 
 dependencies {
@@ -17,20 +26,19 @@ dependencies {
     implementation project(path: ':core:ui')
 
     // Swipe refresh
-    implementation "androidx.swiperefreshlayout:swiperefreshlayout:$swipe_refresh"
+    implementation deps.androidx.swiperefreshlayout
 
     // Retrofit
-    implementation "com.squareup.retrofit2:retrofit:$retrofit"
-    implementation "com.squareup.retrofit2:converter-simplexml:$retrofit"
-    implementation "com.squareup.retrofit2:converter-jaxb:$retrofit"
-    implementation "com.squareup.retrofit2:converter-gson:$retrofit"
-    implementation "com.squareup.okhttp3:okhttp:$okhttp3"
-    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp3"
-    implementation 'org.conscrypt:conscrypt-android:2.2.1'
+    implementation deps.retrofit.retrofit
+    implementation deps.retrofit.retrofit_simplexml
+    implementation deps.retrofit.retrofit_jaxb
+    implementation deps.retrofit.retrofit_gson
+    implementation deps.retrofit.okhttp
+    implementation deps.retrofit.okhttp_logging
 
     // TMG dependencies
-    implementation "com.github.thementalgoose:android-labelled-progress-bar:$tmg_labelled_progressbar"
+    implementation deps.tmg.labelledprogressbar
 
     // Lottie
-    implementation "com.airbnb.android:lottie:$lottie"
+    implementation deps.lottie
 }
