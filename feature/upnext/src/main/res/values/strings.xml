@@ -26,39 +26,7 @@
     <string name="dashboard_up_next_all_day">All day</string>
 
     <string name="dashboard_up_next_date_today">Today</string>
-    <string name="dashboard_up_next_date_tomorrow">Tomorrow</string>
-    <string name="dashboard_up_next_date_yesterday">Yesterday</string>
     <string name="dashboard_up_next_date_next">%s days</string>
     <string name="dashboard_up_next_date_previous">%s days ago</string>
-
-    <string name="dashboard_up_next_date_date_on_time">%s on %s</string>
-    <string name="dashboard_up_next_date_localtime"><![CDATA[(local)]]></string>
-    <string name="dashboard_up_next_date_absolute"><![CDATA[<b>%s</b>]]></string>
-    <string name="dashboard_up_next_round">Round %s</string>
-    <string name="dashboard_up_next_datetime_now">Now</string>
-    <string name="dashboard_up_next_datetime_started">Started</string>
-    <plurals name="dashboard_up_next_datetime_mins">
-        <item quantity="one">%d minute</item>
-        <item quantity="other">%d minutes</item>
-        <item quantity="zero">Starting now!</item>
-    </plurals>
-    <string name="dashboard_up_next_datetime_hour_min">%d hrs %d mins</string>
-    <string name="dashboard_up_next_datetime_hour">%d hours</string>
-    <plurals name="dashboard_up_next_datetime_started_mins">
-        <item quantity="zero">Starting now!</item>
-        <item quantity="one">Started a minute ago</item>
-        <item quantity="other">Started %d minutes ago</item>
-    </plurals>
-    <plurals name="dashboard_up_next_datetime_started_hour">
-        <item quantity="one">Started over an hour ago</item>
-        <item quantity="other">Started over %d hours ago</item>
-    </plurals>
-    <plurals name="dashboard_up_next_datetime_started_days">
-        <item quantity="one">Yesterday</item>
-        <item quantity="other">Started %d days ago</item>
-    </plurals>
-    <string name="dashboard_up_next_datetime_absolute"><![CDATA[<b>%s</b> at <b>%s</b> local time]]></string>
-    <string name="dashboard_up_next_timefilter_utc">UTC</string>
-    <string name="dashboard_up_next_timefilter_delta">Now</string>
 
 </resources>
