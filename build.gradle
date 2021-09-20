@@ -39,14 +39,8 @@ allprojects {
         mavenCentral()
         jcenter() {
             content {
-                // https://github.com/Faltenreich/SkeletonLayout/issues/29
-                includeModule("com.faltenreich", "skeletonlayout")
-
                 // https://github.com/wangjiejacques/flagkit
                 includeModule("com.jwang123.flagkit", "flagkit")
-
-                // https://github.com/AdevintaSpain/Barista/issues/382
-                includeModule("com.schibsted.spain", "barista")
 
                 // Marked read only by owner, not around forever
                 includeModule("com.github.stkent", "bugshaker")
