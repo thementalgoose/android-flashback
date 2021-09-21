@@ -1,0 +1,73 @@
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-parcelize'
+apply plugin: 'androidx.navigation.safeargs.kotlin'
+
+android {
+    compileSdkVersion project.ext.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion project.ext.minSdkVersion
+        targetSdkVersion project.ext.targetSdkVersion
+        versionCode project.ext.versionCode
+        versionName project.ext.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+        freeCompilerArgs += kotlinCompilerArgs
+    }
+}
+
+dependencies {
+
+    // Core
+    implementation deps.kotlin.stdlib
+    implementation deps.androidx.core
+    implementation deps.androidx.appcompat
+
+    // Test
+    testImplementation depsTest.kotlin.reflect
+    testImplementation depsTest.kotlin.core
+    testImplementation depsTest.kotlin.test
+
+    // Coroutines
+    implementation deps.kotlin.core
+    implementation deps.kotlin.android
+
+    // Lifecycle
+    implementation deps.androidx.lifecycle_viewmodel
+    implementation deps.androidx.lifecycle_livedata
+
+    // Navigation
+    implementation deps.androidx.navigation_fragment
+    implementation deps.androidx.navigation_ui
+
+    // Material components
+    implementation deps.androidx.material
+
+    // ConstraintLayout
+    implementation deps.androidx.constraintlayout
+
+    // Preferences
+    implementation deps.androidx.preference
+}

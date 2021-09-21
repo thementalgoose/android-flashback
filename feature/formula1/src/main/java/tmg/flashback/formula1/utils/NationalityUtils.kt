@@ -1,4 +1,4 @@
-package tmg.flashback.statistics.ui.util
+package tmg.flashback.formula1.utils
 
 import java.util.*
 

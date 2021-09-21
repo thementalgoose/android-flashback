@@ -6,7 +6,7 @@ import tmg.utilities.extensions.managerConnectivity
 
 internal class AndroidNetworkConnectivityManager(
     val context: Context
-) : tmg.core.device.managers.NetworkConnectivityManager {
+) : NetworkConnectivityManager {
     override val isConnected: Boolean
         get() {
             val connectivityManager = context.managerConnectivity

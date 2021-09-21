@@ -1,4 +1,8 @@
-apply from: rootDir.absolutePath + "/core/base.gradle"
+apply plugin:  'com.android.library'
+apply from: rootDir.absolutePath + "/gradle/config-android.gradle"
+apply from: rootDir.absolutePath + "/gradle/config-util.gradle"
+apply from: rootDir.absolutePath + "/gradle/config-junit5.gradle"
+apply from: rootDir.absolutePath + "/gradle/config-koin.gradle"
 
 android {
     compileSdkVersion project.ext.compileSdkVersion
@@ -6,8 +10,8 @@ android {
     defaultConfig {
         minSdkVersion project.ext.minSdkVersion
         targetSdkVersion project.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode project.ext.versionCode
+        versionName project.ext.versionName
     }
 }
 
@@ -17,12 +21,15 @@ dependencies {
     implementation project(path: ':core:preferences')
 
     // Firebase Remote Config
-    implementation platform("com.google.firebase:firebase-bom:$firebase_bom")
-    implementation 'com.google.firebase:firebase-config'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.1.1'
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines"
+    implementation platform(deps.firebase.bom)
+    implementation deps.firebase.config
+    implementation deps.firebase.analytics
+
+    // Coroutines
+    implementation deps.kotlin.playservices
+    implementation deps.kotlin.core
+    implementation deps.kotlin.android
 
     // Gson
-    implementation "com.google.code.gson:gson:2.8.6"
+    implementation deps.gson
 }
