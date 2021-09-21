@@ -22,8 +22,8 @@ android {
         applicationId "tmg.flashback"
         minSdkVersion project.ext.minSdkVersion
         targetSdkVersion project.ext.targetSdkVersion
-        versionCode 93
-        versionName "6.3.4"
+        versionCode project.ext.versionCode // generatedVersionCode
+        versionName project.ext.versionName // generatedVersionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunnerArgument "runnerBuilder", "de.mannodermaus.junit5.AndroidJUnit5Builder"
@@ -130,9 +130,9 @@ dependencies {
     androidTestRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junit"
     androidTestImplementation "io.mockk:mockk-android:$mockk"
     androidTestImplementation "io.insert-koin:koin-test:$koin_version"
-    androidTestImplementation('com.schibsted.spain:barista:4.0.0') {
-        exclude group: 'org.jetbrains.kotlin' // Only if you already use Kotlin in your project
-    }
+//    androidTestImplementation('com.schibsted.spain:barista:4.0.0') {
+//        exclude group: 'org.jetbrains.kotlin' // Only if you already use Kotlin in your project
+//    }
 
     // Splash screen
     implementation deps.androidx.splashscreen
@@ -166,10 +166,14 @@ dependencies {
 
     // Notifications + Config
     implementation platform(deps.firebase.bom)
+    implementation deps.firebase.auth
     implementation deps.firebase.analytics
-    implementation deps.firebase.messaging
+    implementation deps.firebase.common
     implementation deps.firebase.config
     implementation deps.firebase.crashlytics
+    implementation deps.firebase.firestore
+    implementation deps.firebase.firestore_ktx
+    implementation deps.firebase.messaging
     implementation deps.kotlin.playservices
 }
 

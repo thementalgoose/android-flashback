@@ -10,8 +10,8 @@ android {
     defaultConfig {
         minSdkVersion project.ext.minSdkVersion
         targetSdkVersion project.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode project.ext.versionCode
+        versionName project.ext.versionName
     }
 }
 
@@ -23,6 +23,7 @@ dependencies {
     // Firebase Remote Config
     implementation platform(deps.firebase.bom)
     implementation deps.firebase.config
+    implementation deps.firebase.analytics
 
     // Coroutines
     implementation deps.kotlin.playservices
