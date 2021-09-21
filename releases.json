@@ -511,5 +511,15 @@
       "Adds sprint qualifying fixes",
       "Minor bugs for android 12 compatibility with widgets and notifications"
     ]
+  },
+  {
+    "versionCode": 94,
+    "versionName": "6.3.5",
+    "isMajor": false,
+    "title": "",
+    "notes": [
+      "Accessibility bug fixes throughout all screen",
+      "Minor bug fixes, general dependency updates and refactoring"
+    ]
   }
 ]
