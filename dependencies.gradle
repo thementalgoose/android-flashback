@@ -23,7 +23,7 @@ allprojects {
                         stdlib                                  : "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version",
                         core                                    : "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines",
                         android                                 : "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines",
-                        playservices                            : "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.1.1"
+                        playservices                            : "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:$coroutines"
                 ],
                 discord                                         : "com.github.discord:OverlappingPanels:0.1.1",
                 flagkit                                         : "com.jwang123.flagkit:flagkit:1.0",

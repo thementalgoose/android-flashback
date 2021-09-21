@@ -1,9 +1,0 @@
-{
-  "versionCode": 75,
-  "versionName": "6.1.5",
-  "isMajor": false,
-  "title": "",
-  "notes": [
-    "Updated layout for the rest of the apps to adopt Android 12 style collapsible headers"
-  ]
-}

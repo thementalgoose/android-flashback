@@ -1,12 +1,32 @@
+import groovy.json.JsonSlurper
+
+private static def getLastNote() {
+    def releaseNotes = "releases.json"
+    def json = new File(releaseNotes)
+    def parsedJson = new JsonSlurper().parseText(json.text)
+    return parsedJson[parsedJson.size - 1]
+}
+
+private static def getVersionName() {
+    return getLastNote().versionName as String
+}
+
+private static def getVersionCode() {
+    return getLastNote().versionCode as Integer
+}
+
 ext {
 
     compileSdkVersion = 31
     targetSdkVersion = 31
     minSdkVersion = 23
 
-    kotlin_version = "1.5.21"
+    versionName = getVersionName()
+    versionCode = getVersionCode()
+
+    kotlin_version = "1.5.31"
     koin_version = "2.2.2"
-    coroutines = "1.5.0"
+    coroutines = "1.5.2"
     navigation = "2.4.0-alpha07"
     mockk = "1.10.3-jdk8"
     junit = "5.5.2"

@@ -12,7 +12,7 @@ task generateReleaseNotes {
     println("Release notes - Generating...")
 
     // Folder with release notes json
-    def folder = "release/notes"
+    def releaseNotes = "releases.json"
 
     def stringsXMLLocation = "feature/common/src/main/res/values/release-notes.xml"
     def kotlinFileLocation = "feature/common/src/main/java/tmg/common/constants/ReleaseNotes.kt"
@@ -37,15 +37,6 @@ enum class ReleaseNotes(
 }
 """
 
-    // Get list of JSON files
-    def filesList = []
-    def directory = new File(folder)
-    directory.eachFileRecurse { file ->
-        if (file.name != ".DS_Store") {
-            filesList << file.path
-        }
-    }
-
     def enumValues = ""
 
     // Process each one, generating resources
@@ -53,27 +44,26 @@ enum class ReleaseNotes(
     def xmlStrings = new MarkupBuilder(xmlWriter)
     def total = 0
     xmlStrings.resources() {
-        for (file in filesList.sort()) {
-            def json = new File(file)
-            def parsedJson = new JsonSlurper().parseText(json.text)
+        def json = new File(releaseNotes)
+        def parsedJson = new JsonSlurper().parseText(json.text)
 
+        for (noteObj in parsedJson) {
             def notesString = ""
             def count = 0
-            for (note in parsedJson.notes) {
+            for (note in noteObj.notes) {
                 if (count == 0) {
                     notesString += "- ${note}"
-                }
-                else {
+                } else {
                     notesString += "\\n- ${note}"
                 }
                 count++
             }
 
             def releaseNotesString = "${notesString}"
-            string(name: "release_${parsedJson.versionCode}", releaseNotesString)
-            string(name: "release_${parsedJson.versionCode}_title", parsedJson.title)
+            string(name: "release_${noteObj.versionCode}", releaseNotesString)
+            string(name: "release_${noteObj.versionCode}_title", noteObj.title)
 
-            enumValues += "    VERSION_${parsedJson.versionCode}(version = ${parsedJson.versionCode}, isMajor = ${parsedJson.isMajor}, versionName = \"${parsedJson.versionName}\", title = R.string.release_${parsedJson.versionCode}_title, release = R.string.release_${parsedJson.versionCode}),\n"
+            enumValues += "    VERSION_${noteObj.versionCode}(version = ${noteObj.versionCode}, isMajor = ${noteObj.isMajor}, versionName = \"${noteObj.versionName}\", title = R.string.release_${noteObj.versionCode}_title, release = R.string.release_${noteObj.versionCode}),\n"
             total++
         }
     }
