@@ -1,4 +1,8 @@
-apply from: rootDir.absolutePath + "/core/base.gradle"
+apply plugin:  'com.android.library'
+apply from: rootDir.absolutePath + "/gradle/config-android.gradle"
+apply from: rootDir.absolutePath + "/gradle/config-util.gradle"
+apply from: rootDir.absolutePath + "/gradle/config-junit5.gradle"
+apply from: rootDir.absolutePath + "/gradle/config-koin.gradle"
 
 android {
     compileSdkVersion project.ext.compileSdkVersion
@@ -6,8 +10,8 @@ android {
     defaultConfig {
         minSdkVersion project.ext.minSdkVersion
         targetSdkVersion project.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode project.ext.versionCode
+        versionName project.ext.versionName
     }
 }
 
@@ -17,23 +21,23 @@ dependencies {
     implementation project(path: ':core:preferences')
     implementation project(path: ':core:analytics')
     implementation project(path: ':core:configuration')
+    implementation project(path: ':core:crash-reporting')
 
     // Android stuff
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation "androidx.core:core-ktx:$android_corektx"
-    implementation "androidx.appcompat:appcompat:$android_appcompat"
+    implementation deps.kotlin.stdlib
+    implementation deps.androidx.core
+    implementation deps.androidx.appcompat
 
     // Swipe refresh
-    implementation "androidx.swiperefreshlayout:swiperefreshlayout:$swipe_refresh"
+    implementation deps.androidx.swiperefreshlayout
 
     // Navigation
-    implementation "androidx.navigation:navigation-fragment-ktx:$navigation"
-    implementation "androidx.navigation:navigation-ui-ktx:$navigation"
+    implementation deps.androidx.navigation_fragment
+    implementation deps.androidx.navigation_ui
 
     // Material components
-    implementation "com.google.android.material:material:$android_material"
+    implementation deps.androidx.material
 
     // ConstraintLayout
-    implementation "androidx.constraintlayout:constraintlayout:$android_constraint"
-    implementation project(path: ':core:crash-reporting')
+    implementation deps.androidx.constraintlayout
 }

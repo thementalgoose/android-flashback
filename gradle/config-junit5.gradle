@@ -1,44 +1,6 @@
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
 apply plugin: 'de.mannodermaus.android-junit5'
-apply plugin: 'kotlin-kapt'
-apply plugin: "androidx.navigation.safeargs.kotlin"
-
-apply from: rootDir.absolutePath + "/base-dependencies.gradle"
 
 android {
-    compileSdkVersion project.ext.compileSdkVersion
-
-    defaultConfig {
-        minSdkVersion project.ext.minSdkVersion
-        targetSdkVersion project.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles "consumer-rules.pro"
-    }
-
-    buildFeatures {
-        viewBinding true
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-
-    kotlinOptions {
-        jvmTarget = '1.8'
-        freeCompilerArgs += kotlinCompilerArgs
-    }
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
@@ -77,4 +39,29 @@ android {
             }
         }
     }
+}
+
+tasks.withType(Test) {
+    testLogging {
+        exceptionFormat 'full'
+        showCauses true
+        showExceptions true
+        showStackTraces true
+        showStandardStreams true
+    }
+}
+
+dependencies {
+    testImplementation depsTest.junit5.api
+    testImplementation depsTest.junit5.engine
+    testImplementation depsTest.junit5.params
+    testRuntimeOnly depsTest.junit5.engine
+
+    testImplementation depsTest.mockk
+
+    testImplementation depsTest.tmg.testutils
+
+    testImplementation depsTest.androidx.core
+    testImplementation depsTest.androidx.core_testing
+    kaptTest depsTest.androidx.lifecycle
 }

@@ -57,7 +57,6 @@ interface RaceViewModelOutputs {
 
 class RaceViewModel(
     private val seasonOverviewRepository: SeasonOverviewRepository,
-//    private val appHintsController: AppHintsController,
     private val raceController: RaceController,
     private val themeController: ThemeController,
     private val connectivityManager: tmg.core.device.managers.NetworkConnectivityManager
