@@ -7,7 +7,6 @@ import androidx.annotation.StringRes
 import org.threeten.bp.LocalDateTime
 import tmg.notifications.BuildConfig
 import tmg.notifications.NotificationRegistration
-import tmg.notifications.R
 import tmg.notifications.managers.RemoteNotificationManager
 import tmg.notifications.managers.SystemAlarmManager
 import tmg.notifications.managers.SystemNotificationManager
@@ -15,7 +14,7 @@ import tmg.notifications.repository.NotificationRepository
 
 class NotificationController(
     private val notificationRepository: NotificationRepository,
-    private val localNotificationManager: SystemNotificationManager,
+    private val systemNotificationManager: SystemNotificationManager,
     private val remoteNotificationManager: RemoteNotificationManager,
     private val alarmManager: SystemAlarmManager
 ) {
@@ -81,15 +80,13 @@ class NotificationController(
         notificationRepository.notificationIds = emptySet()
     }
 
-    val numberOfScheduledNotifications: Int
-        get() = notificationRepository.notificationIds.size
-
     /**
      * Subscribe to receive notifications from these topics
      */
     // TODO: To be removed / trimmed down to only default
     suspend fun subscribeToRemoteNotifications(): Boolean {
 
+        // Legacy
         remoteNotificationManager.unsubscribeToTopic("race")
         remoteNotificationManager.unsubscribeToTopic("qualifying")
 
@@ -107,13 +104,13 @@ class NotificationController(
      * Create notification channels for the device
      */
     fun createNotificationChannel(channelId: String, @StringRes label: Int) {
-        localNotificationManager.createChannel(channelId, label)
+        systemNotificationManager.createChannel(channelId, label)
     }
 
     /**
      * Delete a notification channel
      */
     fun deleteNotificationChannel(channelId: String) {
-        localNotificationManager.cancelChannel(channelId)
+        systemNotificationManager.cancelChannel(channelId)
     }
 }

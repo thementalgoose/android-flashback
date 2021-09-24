@@ -20,71 +20,7 @@ internal class NotificationRepositoryTest {
         sut = NotificationRepository(mockPreferenceManager)
     }
 
-    //region Race enabled
-
-    @Test
-    fun `race notifications update saves value in shared prefs repository`() {
-
-        initSUT()
-
-        sut.enabledRace = NotificationRegistration.OPT_IN
-        verify {
-            mockPreferenceManager.save(RACE_KEY, NotificationRegistration.OPT_IN.key)
-        }
-    }
-
-    @ParameterizedTest
-    @CsvSource(
-        ",DEFAULT",
-        "OPT_IN,OPT_IN",
-        "OPT_OUT,OPT_OUT"
-    )
-    fun `race notifications read unrecognised resolves to default`(key: String?, expected: NotificationRegistration) {
-        every { mockPreferenceManager.getString(any(), any()) } returns key
-
-        initSUT()
-
-        assertEquals(expected, sut.enabledRace)
-        verify {
-            mockPreferenceManager.getString(RACE_KEY, "")
-        }
-    }
-
-    //endregion
-
-    //region Qualifying enabled
-
-    @Test
-    fun `qualifying notifications update saves value in shared prefs repository`() {
-
-        initSUT()
-
-        sut.enabledQualifying = NotificationRegistration.OPT_IN
-        verify {
-            mockPreferenceManager.save(QUALIFYING_KEY, NotificationRegistration.OPT_IN.key)
-        }
-    }
-
-    @ParameterizedTest
-    @CsvSource(
-        ",DEFAULT",
-        "OPT_IN,OPT_IN",
-        "OPT_OUT,OPT_OUT"
-    )
-    fun `qualifying notifications read unrecognised resolves to default`(key: String?, expected: NotificationRegistration) {
-        every { mockPreferenceManager.getString(any(), any()) } returns key
-
-        initSUT()
-
-        assertEquals(expected, sut.enabledQualifying)
-        verify {
-            mockPreferenceManager.getString(QUALIFYING_KEY, "")
-        }
-    }
-
-    //endregion
-
-    //region Qualifying enabled
+    //region Season info enabled
 
     @Test
     fun `season info notifications update saves value in shared prefs repository`() {
