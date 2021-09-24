@@ -11,7 +11,7 @@ fun FHistorySeason.convertWin(): List<WinnerSeason> {
     } ?: emptyList()
 }
 
-fun FHistorySeasonWin.convert(): WinnerSeason {
+private fun FHistorySeasonWin.convert(): WinnerSeason {
     return WinnerSeason(
         season = s,
         driver = this.driver?.map { it.convert() } ?: emptyList(),
@@ -19,7 +19,7 @@ fun FHistorySeasonWin.convert(): WinnerSeason {
     )
 }
 
-fun FHistorySeasonWinDriver.convert(): WinnerSeasonDriver {
+private fun FHistorySeasonWinDriver.convert(): WinnerSeasonDriver {
     return WinnerSeasonDriver(
         id,
         name,
@@ -28,7 +28,7 @@ fun FHistorySeasonWinDriver.convert(): WinnerSeasonDriver {
     )
 }
 
-fun FHistorySeasonWinConstructor.convert(): WinnerSeasonConstructor {
+private fun FHistorySeasonWinConstructor.convert(): WinnerSeasonConstructor {
     return WinnerSeasonConstructor(
         id,
         name,
