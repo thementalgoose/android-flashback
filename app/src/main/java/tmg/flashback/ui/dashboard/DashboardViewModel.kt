@@ -72,8 +72,8 @@ class DashboardViewModel(
             }
             if (activate) {
                 appConfigSynced.value = Event()
-                applicationContext.updateAllWidgets()
                 upNextController.scheduleNotifications()
+                applicationContext.updateAllWidgets()
             }
         }
 

@@ -8,9 +8,7 @@
 
         <!-- Local notifications -->
 
-        <receiver android:name=".receiver.LocalNotificationBroadcastReceiver">
-
-        </receiver>
+        <receiver android:name="tmg.notifications.receiver.LocalNotificationBroadcastReceiver" />
 
         <!-- Remote notifications -->
 

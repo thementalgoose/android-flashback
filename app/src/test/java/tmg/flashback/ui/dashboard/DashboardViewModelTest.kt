@@ -6,7 +6,6 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.flow.flow
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.common.controllers.ReleaseNotesController
@@ -29,12 +28,14 @@ internal class DashboardViewModelTest: BaseTest() {
     private val mockUpNextController: UpNextController = mockk(relaxed = true)
     private val mockBuildConfigManager: BuildConfigManager = mockk(relaxed = true)
     private val mockConfigurationController: ConfigController = mockk(relaxed = true)
-    private val mockReleaseNotesCOntroller: ReleaseNotesController = mockk(relaxed = true)
+    private val mockReleaseNotesController: ReleaseNotesController = mockk(relaxed = true)
 
     @BeforeEach
     internal fun setUp() {
         coEvery { mockConfigurationController.applyPending() } returns false
-        every { mockReleaseNotesCOntroller.pendingReleaseNotes } returns false
+        every { mockReleaseNotesController.pendingReleaseNotes } returns false
+        every { mockUpNextController.getNextEvent() } returns mockk()
+        every { mockUpNextController.shouldShowNotificationOnboarding } returns true
     }
 
     private fun initSUT() {
@@ -44,7 +45,7 @@ internal class DashboardViewModelTest: BaseTest() {
             mockUpNextController,
             mockBuildConfigManager,
             mockConfigurationController,
-            mockReleaseNotesCOntroller
+            mockReleaseNotesController
         )
     }
 
@@ -159,11 +160,11 @@ internal class DashboardViewModelTest: BaseTest() {
         initSUT()
         advanceUntilIdle()
 
-        verify {
-            mockUpNextController.scheduleNotifications()
-        }
         sut.outputs.appConfigSynced.test {
             assertEventFired()
+        }
+        verify {
+            mockUpNextController.scheduleNotifications()
         }
     }
 
@@ -173,7 +174,9 @@ internal class DashboardViewModelTest: BaseTest() {
 
     @Test
     fun `init if release notes are pending then open release notes is fired`() {
-        every { mockReleaseNotesCOntroller.pendingReleaseNotes } returns true
+        // Because notification onboarding takes priority over release notes
+        every { mockUpNextController.shouldShowNotificationOnboarding } returns false
+        every { mockReleaseNotesController.pendingReleaseNotes } returns true
         initSUT()
         sut.outputs.openReleaseNotes.test {
             assertEventFired()
@@ -182,7 +185,8 @@ internal class DashboardViewModelTest: BaseTest() {
 
     @Test
     fun `init if release notes are not pending then open release notes not fired`() {
-        every { mockReleaseNotesCOntroller.pendingReleaseNotes } returns false
+        every { mockUpNextController.shouldShowNotificationOnboarding } returns false
+        every { mockReleaseNotesController.pendingReleaseNotes } returns false
         initSUT()
         sut.outputs.openReleaseNotes.test {
             assertEventNotFired()

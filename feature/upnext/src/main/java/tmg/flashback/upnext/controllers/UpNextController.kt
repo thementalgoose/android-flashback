@@ -113,7 +113,7 @@ class UpNextController(
             }
             .flatten()
             .filter { it.timestamp.originalTime != null }
-            .filter { !it.timestamp.isInPast }
+            .filter { !it.timestamp.isInPastRelativeToo(upNextRepository.notificationReminderPeriod.seconds.toLong()) }
             .filter {
                 when (it.channel) {
                     NotificationChannel.RACE -> notificationRace
@@ -133,6 +133,9 @@ class UpNextController(
                     utcDateTime = utc
                 }
             )
+
+            // Remove the notification reminder period
+            utcDateTime = utcDateTime.minusSeconds(upNextRepository.notificationReminderPeriod.seconds.toLong())
 
             val text = "${it.title} ${it.label} starts in 30 minutes"
 
