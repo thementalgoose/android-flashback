@@ -116,9 +116,37 @@ internal class NotificationRepositoryTest {
 
     //endregion
 
+    //region Notification Ids
+
+    @Test
+    fun `settings notification ids saves to preference manager`() {
+        initSUT()
+
+        sut.notificationIds = setOf(123, 124, 125)
+        verify {
+            mockPreferenceManager.save(keyNotificationIds, setOf("123", "124", "125"))
+        }
+    }
+
+    @Test
+    fun `settings notification ids retreives to preference manager ignoring invalid`() {
+        val expected = setOf(123, 124)
+        every { mockPreferenceManager.getSet(keyNotificationIds, any()) } returns mutableSetOf("123", "null", "123", "124")
+        initSUT()
+
+        assertEquals(expected, sut.notificationIds)
+        verify {
+            mockPreferenceManager.getSet(keyNotificationIds, emptySet())
+        }
+    }
+
+    //endregion
+
     companion object {
         private const val RACE_KEY = "NOTIFICATION_RACE"
         private const val QUALIFYING_KEY = "NOTIFICATION_QUALIFYING"
         private const val SEASON_INFO_KEY = "NOTIFICATION_SEASON_INFO"
+
+        private const val keyNotificationIds = "NOTIFICATION_IDS"
     }
 }

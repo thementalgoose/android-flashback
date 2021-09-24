@@ -12,21 +12,40 @@
         <item quantity="one">Tomorrow</item>
         <item quantity="other">%d days to go</item>
     </plurals>
-
     <string name="dashboard_up_next_your_time">Device time</string>
     <string name="dashboard_up_next_shown_in_device_time">All times shown in your timezone</string>
-
     <plurals name="dashboard_up_next_starts_in">
         <item quantity="zero">The first event starts today</item>
         <item quantity="one">The first event starts in %d day</item>
         <item quantity="other">The first event starts in %d days</item>
     </plurals>
     <string name="dashboard_up_next_starts_in">All times shown in your timezone</string>
-
     <string name="dashboard_up_next_all_day">All day</string>
-
     <string name="dashboard_up_next_date_today">Today</string>
     <string name="dashboard_up_next_date_next">%s days</string>
     <string name="dashboard_up_next_date_previous">%s days ago</string>
+
+    <!-- Notifications -->
+    <string name="notification_reminder_mins_60">1 hour</string>
+    <string name="notification_reminder_mins_30">30 minutes</string>
+    <string name="notification_reminder_mins_15">15 minutes</string>
+    <string name="notification_starts_in" formatted="false">%s %s starts in %s</string>
+
+    <string name="notification_onboarding_title">Notifications</string>
+    <string name="notification_onboarding_description">Get notified of upcoming events in the world of formula 1. You can change these anytime in the settings</string>
+
+    <!-- Settings -->
+    <string name="settings_up_next_category_title">Notification Categories</string>
+    <string name="settings_up_next_category_race_title">Race notifications</string>
+    <string name="settings_up_next_category_race_descrition">Get notified for race starts 30 minutes before</string>
+    <string name="settings_up_next_category_qualifying_title">Qualifying</string>
+    <string name="settings_up_next_category_qualifying_descrition">Get notified for qualifying and sprint qualifying starts 30 minutes before</string>
+    <string name="settings_up_next_category_free_practice_title">Free Practice</string>
+    <string name="settings_up_next_category_free_practice_descrition">Get notified when free practice starts 30 minutes before</string>
+    <string name="settings_up_next_category_other_title">Other</string>
+    <string name="settings_up_next_category_other_descrition">Get notified for other F1 events starts (ie. Winter testing) 30 minutes before</string>
+    <string name="settings_up_next_title">Notification Settings</string>
+    <string name="settings_up_next_time_before_title">Notice</string>
+    <string name="settings_up_next_time_before_description">How far in advance should we notify you for events?</string>
 
 </resources>

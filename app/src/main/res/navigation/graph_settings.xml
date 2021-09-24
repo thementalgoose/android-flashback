@@ -31,7 +31,7 @@
             app:destination="@id/graph_rss_settings" />
         <action
             android:id="@+id/graph_action_notifications"
-            app:destination="@id/settingsNotificationFragment"
+            app:destination="@id/settingsUpNextNotificationsFragment"
             app:enterAnim="@anim/settings_enter"
             app:exitAnim="@anim/settings_exit"
             app:popEnterAnim="@anim/settings_pop_enter"
@@ -62,9 +62,9 @@
         android:label="SettingsCustomisationFragment" />
     <include app:graph="@navigation/graph_rss_settings" />
     <fragment
-        android:id="@+id/settingsNotificationFragment"
-        android:name="tmg.common.ui.settings.notifications.SettingsNotificationFragment"
-        android:label="SettingsStatisticsFragment" />
+        android:id="@+id/settingsUpNextNotificationsFragment"
+        android:name="tmg.flashback.upnext.ui.settings.UpNextSettingsFragment"
+        android:label="SettingsNotificationFragment" />
     <fragment
         android:id="@+id/settingsSupportFragment"
         android:name="tmg.common.ui.settings.support.SettingsSupportFragment"

@@ -4,12 +4,16 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
+import org.threeten.bp.Clock
+import org.threeten.bp.LocalDateTime
 import tmg.common.ui.forceupgrade.ForceUpgradeActivity
 import tmg.core.ui.base.BaseActivity
 import tmg.core.ui.model.DisplayType
 import tmg.flashback.databinding.ActivityDashboardBinding
 import tmg.flashback.ui.SyncActivity
+import tmg.notifications.controllers.NotificationController
 
 class HomeActivity: BaseActivity() {
 

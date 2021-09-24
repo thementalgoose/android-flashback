@@ -9,6 +9,7 @@ import tmg.configuration.controllers.ConfigController
 import tmg.flashback.BuildConfig
 import tmg.flashback.managers.appshortcuts.AppShortcutManager
 import tmg.flashback.rss.controllers.RSSController
+import tmg.flashback.upnext.controllers.UpNextController
 
 //region Inputs
 
@@ -35,6 +36,7 @@ class HomeViewModel(
     private val rssController: RSSController,
     private val forceUpgradeController: ForceUpgradeController,
     private val shortcutManager: AppShortcutManager,
+    private val upNextController: UpNextController
 ): ViewModel(), HomeViewModelInputs, HomeViewModelOutputs {
 
     override var requiresSync: Boolean = false
@@ -71,5 +73,8 @@ class HomeViewModel(
             true -> shortcutManager.enable()
             false -> shortcutManager.disable()
         }
+
+        // Schedule notifications
+        upNextController.scheduleNotifications()
     }
 }

@@ -4,6 +4,7 @@ import android.content.Context
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.verify
 import kotlinx.coroutines.flow.flow
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
@@ -158,6 +159,9 @@ internal class DashboardViewModelTest: BaseTest() {
         initSUT()
         advanceUntilIdle()
 
+        verify {
+            mockUpNextController.scheduleNotifications()
+        }
         sut.outputs.appConfigSynced.test {
             assertEventFired()
         }
@@ -181,6 +185,28 @@ internal class DashboardViewModelTest: BaseTest() {
         every { mockReleaseNotesCOntroller.pendingReleaseNotes } returns false
         initSUT()
         sut.outputs.openReleaseNotes.test {
+            assertEventNotFired()
+        }
+    }
+
+    //endregion
+
+    //region Release notes
+
+    @Test
+    fun `init if up next onboarding are pending then open up next onboarding is fired`() {
+        every { mockUpNextController.shouldShowNotificationOnboarding } returns true
+        initSUT()
+        sut.outputs.openUpNextNotificationOnboarding.test {
+            assertEventFired()
+        }
+    }
+
+    @Test
+    fun `init if up next onboarding are not pending then open up next onboarding not fired`() {
+        every { mockUpNextController.shouldShowNotificationOnboarding } returns false
+        initSUT()
+        sut.outputs.openUpNextNotificationOnboarding.test {
             assertEventNotFired()
         }
     }

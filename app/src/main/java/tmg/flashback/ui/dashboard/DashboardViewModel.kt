@@ -28,6 +28,7 @@ interface DashboardViewModelInputs {
 
 interface DashboardViewModelOutputs {
     val openAppLockout: LiveData<Event>
+    val openUpNextNotificationOnboarding: LiveData<Event>
     val openReleaseNotes: LiveData<Event>
 
     val showUpNext: LiveData<Boolean>
@@ -43,7 +44,7 @@ class DashboardViewModel(
     private val upNextController: UpNextController,
     private val buildConfigManager: BuildConfigManager,
     private val configurationController: ConfigController,
-    private val releaseNotesController: ReleaseNotesController
+    private val releaseNotesController: ReleaseNotesController,
 ): ViewModel(), DashboardViewModelInputs, DashboardViewModelOutputs {
 
     override val openAppLockout: LiveData<Event> = dataRepository
@@ -55,6 +56,7 @@ class DashboardViewModel(
         .asLiveData(viewModelScope.coroutineContext)
 
     override val openReleaseNotes: MutableLiveData<Event> = MutableLiveData()
+    override val openUpNextNotificationOnboarding: MutableLiveData<Event> = MutableLiveData()
     override val appConfigSynced: MutableLiveData<Event> = MutableLiveData()
     override val showUpNext: MutableLiveData<Boolean> = MutableLiveData()
 
@@ -71,14 +73,17 @@ class DashboardViewModel(
             if (activate) {
                 appConfigSynced.value = Event()
                 applicationContext.updateAllWidgets()
+                upNextController.scheduleNotifications()
             }
         }
 
-        if (releaseNotesController.pendingReleaseNotes) {
+        showUpNext.value = upNextController.getNextEvent() != null
+
+        if (upNextController.shouldShowNotificationOnboarding) {
+            openUpNextNotificationOnboarding.value = Event()
+        } else if (releaseNotesController.pendingReleaseNotes) {
             openReleaseNotes.value = Event()
         }
-
-        showUpNext.value = upNextController.getNextEvent() != null
     }
 
     //region Inputs
