@@ -4,14 +4,14 @@ import io.mockk.*
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.jupiter.api.Test
 import tmg.notifications.NotificationRegistration
-import tmg.notifications.managers.PushNotificationManager
+import tmg.notifications.managers.RemoteNotificationManager
 import tmg.notifications.repository.NotificationRepository
 import tmg.testutils.BaseTest
 
 internal class NotificationControllerTest: BaseTest() {
 
     private val mockNotificationRepository: NotificationRepository = mockk(relaxed = true)
-    private val mockNotificationManager: PushNotificationManager = mockk(relaxed = true)
+    private val mockNotificationManager: RemoteNotificationManager = mockk(relaxed = true)
 
     private lateinit var sut: NotificationController
 
@@ -28,7 +28,7 @@ internal class NotificationControllerTest: BaseTest() {
 
         initSUT()
         runBlockingTest {
-            sut.subscribe()
+            sut.subscribeToRemoteNotifications()
         }
 
         coVerify {
@@ -55,7 +55,7 @@ internal class NotificationControllerTest: BaseTest() {
 
         initSUT()
         runBlockingTest {
-            sut.subscribe()
+            sut.subscribeToRemoteNotifications()
         }
 
         coVerify {
@@ -83,7 +83,7 @@ internal class NotificationControllerTest: BaseTest() {
 
         initSUT()
         runBlockingTest {
-            sut.subscribe()
+            sut.subscribeToRemoteNotifications()
         }
 
         coVerify(exactly = 0) {

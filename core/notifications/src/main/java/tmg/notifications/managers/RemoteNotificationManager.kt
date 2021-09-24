@@ -2,7 +2,7 @@ package tmg.notifications.managers
 
 import androidx.annotation.StringRes
 
-interface PushNotificationManager {
+interface RemoteNotificationManager {
 
     suspend fun subscribeToTopic(topic: String): Boolean
     suspend fun unsubscribeToTopic(topic: String): Boolean
