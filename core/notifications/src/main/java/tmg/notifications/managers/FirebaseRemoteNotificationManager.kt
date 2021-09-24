@@ -6,13 +6,12 @@ import android.content.Context
 import android.os.Build
 import androidx.annotation.StringRes
 import com.google.firebase.messaging.FirebaseMessaging
-import tmg.notifications.R
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
-internal class FirebasePushNotificationManager(
+internal class FirebaseRemoteNotificationManager(
     private val applicationContext: Context
-): PushNotificationManager {
+): RemoteNotificationManager {
 
     companion object {
         const val topicRace: String = "race"
@@ -40,6 +39,7 @@ internal class FirebasePushNotificationManager(
         }
     }
 
+    // TODO: Move this to SystemNotificationManager
     override fun createChannel(channelId: String, @StringRes channelName: Int) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
