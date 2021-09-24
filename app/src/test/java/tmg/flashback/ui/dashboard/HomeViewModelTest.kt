@@ -12,6 +12,7 @@ import tmg.common.controllers.ForceUpgradeController
 import tmg.configuration.controllers.ConfigController
 import tmg.flashback.managers.appshortcuts.AppShortcutManager
 import tmg.flashback.rss.controllers.RSSController
+import tmg.flashback.upnext.controllers.UpNextController
 import tmg.testutils.BaseTest
 
 internal class HomeViewModelTest: BaseTest() {
@@ -20,6 +21,7 @@ internal class HomeViewModelTest: BaseTest() {
     private var mockRssController: RSSController = mockk(relaxed = true)
     private var mockConfigurationManager: ConfigController = mockk(relaxed = true)
     private var mockForceUpgradeController: ForceUpgradeController = mockk(relaxed = true)
+    private var mockUpNextController: UpNextController = mockk(relaxed = true)
 
     private lateinit var sut: HomeViewModel
 
@@ -34,7 +36,7 @@ internal class HomeViewModelTest: BaseTest() {
     }
 
     private fun initSUT() {
-        sut = HomeViewModel(mockConfigurationManager, mockRssController, mockForceUpgradeController, mockAppShortcutManager)
+        sut = HomeViewModel(mockConfigurationManager, mockRssController, mockForceUpgradeController, mockAppShortcutManager, mockUpNextController)
     }
 
     @Test
@@ -70,6 +72,7 @@ internal class HomeViewModelTest: BaseTest() {
 
         coVerify { mockConfigurationManager.applyPending() }
         verify { mockAppShortcutManager.disable() }
+        verify { mockUpNextController.scheduleNotifications() }
 
         assertFalse(sut.requiresSync)
         assertFalse(sut.forceUpgrade)
@@ -85,6 +88,7 @@ internal class HomeViewModelTest: BaseTest() {
 
         coVerify { mockConfigurationManager.applyPending() }
         verify { mockAppShortcutManager.enable() }
+        verify { mockUpNextController.scheduleNotifications() }
 
         assertFalse(sut.requiresSync)
         assertFalse(sut.forceUpgrade)

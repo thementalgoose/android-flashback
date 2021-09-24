@@ -112,16 +112,6 @@
             android:label=""
             android:theme="@style/Translucent" />
 
-        <!-- Subscribing -->
-
-        <service
-            android:name="tmg.notifications.services.NotificationService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
-
         <!-- Widgets -->
 
         <receiver

@@ -9,6 +9,7 @@ import tmg.common.controllers.ForceUpgradeController
 import tmg.configuration.controllers.ConfigController
 import tmg.flashback.managers.appshortcuts.AppShortcutManager
 import tmg.flashback.rss.controllers.RSSController
+import tmg.flashback.upnext.controllers.UpNextController
 import tmg.utilities.lifecycle.Event
 
 //region Inputs
@@ -34,7 +35,8 @@ class SyncViewModel(
     private val shortcutManager: AppShortcutManager,
     private val rssController: RSSController,
     private val configurationController: ConfigController,
-    private val forceUpgradeController: ForceUpgradeController
+    private val forceUpgradeController: ForceUpgradeController,
+    private val upNextController: UpNextController
 ): ViewModel(), SyncViewModelInputs, SyncViewModelOutputs {
 
     var inputs: SyncViewModelInputs = this
@@ -80,5 +82,8 @@ class SyncViewModel(
             true -> shortcutManager.enable()
             false -> shortcutManager.disable()
         }
+
+        // Schedule notifications
+        upNextController.scheduleNotifications()
     }
 }

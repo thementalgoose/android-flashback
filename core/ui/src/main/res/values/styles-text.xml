@@ -52,7 +52,9 @@
         <item name="android:textSize">@dimen/textSizeLarge</item>
     </style>
 
-    <style name="Text.Settings.Preference.Description" parent="Text" />
+    <style name="Text.Settings.Preference.Description" parent="Text">
+        <item name="android:textColor">?attr/contentTertiary</item>
+    </style>
 
     <!-- #endregion -->
 

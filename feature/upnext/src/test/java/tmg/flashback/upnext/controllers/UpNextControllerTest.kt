@@ -2,25 +2,29 @@ package tmg.flashback.upnext.controllers
 
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.verify
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.formula1.model.Timestamp
+import tmg.flashback.upnext.model.NotificationReminder
 import tmg.flashback.upnext.repository.UpNextRepository
 import tmg.flashback.upnext.repository.model.UpNextSchedule
 import tmg.flashback.upnext.repository.model.UpNextScheduleTimestamp
+import tmg.notifications.controllers.NotificationController
 import tmg.testutils.BaseTest
 
 internal class UpNextControllerTest : BaseTest() {
 
+    private var mockNotificationController: NotificationController = mockk(relaxed = true)
     private var mockUpNextRepository: UpNextRepository = mockk(relaxed = true)
 
     private lateinit var sut: UpNextController
 
     private fun initSUT() {
-        sut = UpNextController(mockUpNextRepository)
+        sut = UpNextController(mockNotificationController, mockUpNextRepository)
     }
 
     @Test
@@ -83,6 +87,7 @@ internal class UpNextControllerTest : BaseTest() {
         assertEquals(expected, sut.getNextEvent())
     }
 
+    @Test
     fun `second last event shown when last of second item is shown with last all in future`() {
         val expected = generateUpNextItem(-1 to "01:00", 0 to "12:00")
         val list = listOf(
@@ -271,27 +276,185 @@ internal class UpNextControllerTest : BaseTest() {
 
     //endregion
 
-    //region Up Next Display Type
 
-    // TODO: Re-enable support for this preference!
-//    @Test
-//    fun `up next display type reads value from core`() {
-//        every { mockCoreRepository.displayListTypePref } returns TimeListDisplayType.LOCAL
-//        initSUT()
-//
-//        assertEquals(TimeListDisplayType.LOCAL, sut.upNextDisplayType)
-//    }
-//
-//    @Test
-//    fun `up next display type writes value to core when updated`() {
-//        every { mockCoreRepository.displayListTypePref } returns TimeListDisplayType.LOCAL
-//        initSUT()
-//        sut.upNextDisplayType = TimeListDisplayType.RELATIVE
-//
-//        verify {
-//            mockCoreRepository.displayListTypePref = TimeListDisplayType.RELATIVE
-//        }
-//    }
+    //region Notification preferences - Race
+
+    @Test
+    fun `is notification race reads value from preferences repository with default to true`() {
+        every { mockUpNextRepository.notificationRace } returns true
+
+        initSUT()
+
+        assertTrue(sut.notificationRace)
+        verify {
+            mockUpNextRepository.notificationRace
+        }
+    }
+
+    @Test
+    fun `setting notification race enabled saves value from preferences repository`() {
+        initSUT()
+
+        sut.notificationRace = true
+        verify {
+            mockUpNextRepository.notificationRace = true
+            // TODO: Verify schedule
+        }
+    }
+
+    //endregion
+
+    //region Notification preferences - Qualifying
+
+    @Test
+    fun `is notification qualifying reads value from preferences repository with default to true`() {
+        every { mockUpNextRepository.notificationQualifying } returns true
+
+        initSUT()
+
+        assertTrue(sut.notificationQualifying)
+        verify {
+            mockUpNextRepository.notificationQualifying
+        }
+    }
+
+    @Test
+    fun `setting notification qualifying enabled saves value from preferences repository`() {
+        initSUT()
+
+        sut.notificationQualifying = true
+        verify {
+            mockUpNextRepository.notificationQualifying = true
+            // TODO: Verify schedule
+        }
+    }
+
+    //endregion
+
+    //region Notification preferences - Free Practice
+
+    @Test
+    fun `is notification free practice reads value from preferences repository with default to true`() {
+        every { mockUpNextRepository.notificationFreePractice } returns true
+
+        initSUT()
+
+        assertTrue(sut.notificationFreePractice)
+        verify {
+            mockUpNextRepository.notificationFreePractice
+        }
+    }
+
+    @Test
+    fun `setting notification free practice enabled saves value from preferences repository`() {
+        initSUT()
+
+        sut.notificationFreePractice = true
+        verify {
+            mockUpNextRepository.notificationFreePractice = true
+            // TODO: Verify schedule
+        }
+    }
+
+    //endregion
+
+    //region Notification preferences - Other
+
+    @Test
+    fun `is notification other reads value from preferences repository with default to true`() {
+        every { mockUpNextRepository.notificationOther } returns true
+
+        initSUT()
+
+        assertTrue(sut.notificationSeasonInfo)
+        verify {
+            mockUpNextRepository.notificationOther
+        }
+    }
+
+    @Test
+    fun `setting notification other enabled saves value from preferences repository`() {
+        initSUT()
+
+        sut.notificationSeasonInfo = true
+        verify {
+            mockUpNextRepository.notificationOther = true
+            // TODO: Verify schedule
+        }
+    }
+
+    //endregion
+
+    //region Notification reminder
+
+    @Test
+    fun `is notification reminder period reads value from preferences repository`() {
+        every { mockUpNextRepository.notificationReminderPeriod } returns NotificationReminder.MINUTES_30
+
+        initSUT()
+
+        assertEquals(NotificationReminder.MINUTES_30, sut.notificationReminder)
+        verify {
+            mockUpNextRepository.notificationReminderPeriod
+        }
+    }
+
+    //endregion
+
+    //region Notification onboarding
+
+    @Test
+    fun `notification onboarding reads value from repository`() {
+        every { mockUpNextRepository.seenNotificationOnboarding } returns true
+
+        initSUT()
+
+        assertTrue(sut.shouldShowNotificationOnboarding)
+        verify {
+            mockUpNextRepository.seenNotificationOnboarding
+        }
+    }
+
+    @Test
+    fun `marking notifications seen marks onboarding seen in repository`() {
+        every { mockUpNextRepository.seenNotificationOnboarding } returns false
+
+        initSUT()
+
+        sut.seenOnboarding()
+        verify {
+            mockUpNextRepository.seenNotificationOnboarding = true
+        }
+    }
+
+    //endregion
+
+    //region Schedule notification filtering
+
+    @Test
+    fun `when finding notifications to schedule it assigns correct channel ids`() {
+        TODO()
+    }
+
+    @Test
+    fun `when finding notifications to schedule it filters out items in the past`() {
+        TODO()
+    }
+
+    @Test
+    fun `when finding notifications to schedule it filters out those which have a preference to be shown only`() {
+        TODO()
+    }
+
+    @Test
+    fun `when finding notifications to schedule it cancels all notifications as part of the flow`() {
+        TODO()
+    }
+
+    @Test
+    fun `when finding notifications to schedule it scheduled accurately the local notifications with the manager`() {
+        TODO()
+    }
 
     //endregion
 

@@ -5,6 +5,7 @@ import tmg.flashback.formula1.model.Timestamp
 data class UpNextSchedule(
         val season: Int,
         val round: Int,
+        val id: Int = round,
         val title: String,
         val subtitle: String?,
         val values: List<UpNextScheduleTimestamp>,

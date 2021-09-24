@@ -21,6 +21,7 @@ import tmg.flashback.ui.dashboard.list.ListFragment
 import tmg.flashback.statistics.ui.dashboard.season.SeasonFragment
 import tmg.flashback.statistics.ui.dashboard.season.SeasonFragmentCallback
 import tmg.flashback.upnext.ui.dashboard.UpNextFragment
+import tmg.flashback.upnext.ui.onboarding.OnboardingNotificationBottomSheetFragment
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 
@@ -107,6 +108,11 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(),
         observeEvent(viewModel.outputs.openReleaseNotes) {
             ReleaseBottomSheetFragment()
                 .show(parentFragmentManager, "RELEASE_NOTES")
+        }
+
+        observeEvent(viewModel.outputs.openUpNextNotificationOnboarding) {
+            OnboardingNotificationBottomSheetFragment()
+                .show(parentFragmentManager, "UP_NEXT_ONBOARDING")
         }
     }
 
