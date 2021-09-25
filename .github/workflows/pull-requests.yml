@@ -22,14 +22,14 @@ jobs:
           versionCodeString=`echo $content | grep versionCode | tail -1`
           versionNameString=`echo $content | grep versionName | tail -1`
 
-          versionCode=`echo "${versionCodeString//[^0-9]/}"`
-          versionName=`echo "${versionNameString//[^0-9.]/}"`
+          echo $versionCodeString
+          echo $versionNameString
 
-          echo 'versionCode=$versionCode' >> $GITHUB_ENV
-          echo 'versionName=$versionName' >> $GITHUB_ENV
+          echo "versionCode=$(echo "${versionCodeString//[^0-9]/}")" >> $GITHUB_ENV
+          echo "versionName=$(echo "${versionNameString//[^0-9.]/}")" >> $GITHUB_ENV
 
-          echo VersionCode ${{ env.versionCode }}
-          echo VersionName ${{ env.versionName }}
+          echo "VersionCode ${{ env.versionCode }}"
+          echo "VersionName ${{ env.versionName }}"
 
   unit_test_diff_check:
     runs-on: ubuntu-latest
