@@ -4,6 +4,18 @@ name: Release
     types: [published]
   workflow_dispatch:
 jobs:
+
+  json_checker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: json-syntax-check
+        uses: limitusus/json-syntax-check@v1
+        with:
+          pattern: "\\.json$"
+
   build_test_deploy:
     runs-on: ubuntu-latest
     steps:
