@@ -95,82 +95,82 @@ jobs:
 
       - name: Test stage
         run: |
-          echo "Results for app ${{ needs.unit_test_diff_check.outputs.app }}"
-          echo "Results for core ui ${{ needs.unit_test_diff_check.outputs.core_ui }}"
-          echo "Results for feature up next ${{ needs.unit_test_diff_check.outputs.feature_upnext }}"
+          echo "Results for app ${{ needs.unit_test_diff_check.outputs.app == true }}"
+          echo "Results for core ui ${{ needs.unit_test_diff_check.outputs.core_ui == true }}"
+          echo "Results for feature up next ${{ needs.unit_test_diff_check.outputs.feature_upnext == true }}"
 
       # Unit Tests
       - name: Unit tests - app
         run: ./gradlew :app:testSandDebugUnitTest
-        if: ${{ needs.unit_test_diff_check.outputs.app }}
+        if: ${{ needs.unit_test_diff_check.outputs.app == true  }}
 
       - name: Unit tests - feature:common
         run: ./gradlew :feature:common:testDebugUnitTest
-        if: ${{ needs.unit_test_diff_check.outputs.feature_common  }}
+        if: ${{ needs.unit_test_diff_check.outputs.feature_common == true }}
 
       - name: Unit tests - feature:formula1
         run: ./gradlew :feature:formula1:testDebugUnitTest
-        if: ${{ needs.unit_test_diff_check.outputs.feature_formula1  }}
+        if: ${{ needs.unit_test_diff_check.outputs.feature_formula1 == true }}
 
       - name: Unit tests - feature:rss
         run: ./gradlew :feature:rss:testDebugUnitTest
-        if: ${{ needs.unit_test_diff_check.outputs.feature_rss }}
+        if: ${{ needs.unit_test_diff_check.outputs.feature_rss == true }}
 
       - name: Unit tests - feature:statistics
         run: ./gradlew :feature:statistics:testDebugUnitTest
-        if: ${{ needs.unit_test_diff_check.outputs.feature_statistics }}
+        if: ${{ needs.unit_test_diff_check.outputs.feature_statistics == true }}
 
       - name: Unit tests - feature:statistics-data
         run: ./gradlew :feature:statistics-data:test
-        if: ${{ needs.unit_test_diff_check.outputs.feature_statistics_data }}
+        if: ${{ needs.unit_test_diff_check.outputs.feature_statistics_data == true }}
 
       - name: Unit tests - feature:statistics-data-firebase
         run: ./gradlew :feature:statistics-data-firebase:testDebugUnitTest
-        if: ${{ needs.unit_test_diff_check.outputs.feature_statistics_data_firebase }}
+        if: ${{ needs.unit_test_diff_check.outputs.feature_statistics_data_firebase == true }}
 
       - name: Unit tests - feature:upnext
         run: ./gradlew :feature:upnext:testDebugUnitTest
-        if: ${{ needs.unit_test_diff_check.outputs.feature_upnext }}
+        if: ${{ needs.unit_test_diff_check.outputs.feature_upnext == true }}
 
       - name: Unit tests - core:ads
         run: ./gradlew :core:ads:testDebugUnitTest
-        if: ${{ needs.unit_test_diff_check.outputs.core_ads }}
+        if: ${{ needs.unit_test_diff_check.outputs.core_ads == true }}
 
       - name: Unit tests - core:analytics
         run: ./gradlew :core:analytics:testDebugUnitTest
-        if: ${{ needs.unit_test_diff_check.outputs.core_analytics }}
+        if: ${{ needs.unit_test_diff_check.outputs.core_analytics == true }}
 
       - name: Unit tests - core:appshortcuts
         run: ./gradlew :core:appshortcuts:testDebugUnitTest
-        if: ${{ needs.unit_test_diff_check.outputs.core_appshortcuts }}
+        if: ${{ needs.unit_test_diff_check.outputs.core_appshortcuts == true }}
 
       - name: Unit tests - core:configuration
         run: ./gradlew :core:configuration:testDebugUnitTest
-        if: ${{ needs.unit_test_diff_check.outputs.core_configuration }}
+        if: ${{ needs.unit_test_diff_check.outputs.core_configuration == true }}
 
       - name: Unit tests - core:crash-reporting
         run: ./gradlew :core:crash-reporting:testDebugUnitTest
-        if: ${{ needs.unit_test_diff_check.outputs.core_crash_reporting }}
+        if: ${{ needs.unit_test_diff_check.outputs.core_crash_reporting == true }}
 
       - name: Unit tests - core:device
         run: ./gradlew :core:device:testDebugUnitTest
-        if: ${{ needs.unit_test_diff_check.outputs.core_device }}
+        if: ${{ needs.unit_test_diff_check.outputs.core_device == true }}
 
       - name: Unit tests - core:notifications
         run: ./gradlew :core:notifications:testDebugUnitTest
-        if: ${{ needs.unit_test_diff_check.outputs.core_notifications }}
+        if: ${{ needs.unit_test_diff_check.outputs.core_notifications == true }}
 
       - name: Unit tests - core:preferences
         run: ./gradlew :core:preferences:testDebugUnitTest
-        if: ${{ needs.unit_test_diff_check.outputs.core_preferences }}
+        if: ${{ needs.unit_test_diff_check.outputs.core_preferences == true }}
 
       - name: Unit tests - core:tutorial
         run: ./gradlew :core:tutorial:testDebugUnitTest
-        if: ${{ needs.unit_test_diff_check.outputs.core_tutorial }}
+        if: ${{ needs.unit_test_diff_check.outputs.core_tutorial == true }}
 
       - name: Unit tests - core:ui
         run: ./gradlew :core:ui:testDebugUnitTest
-        if: ${{ needs.unit_test_diff_check.outputs.core_ui }}
+        if: ${{ needs.unit_test_diff_check.outputs.core_ui == true }}
 
       # Publish test report
       - name: Publish Test Report

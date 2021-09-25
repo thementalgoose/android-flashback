@@ -7,6 +7,18 @@ name: Main
       - '**.md'
       - '**.yml'
 jobs:
+
+  json_checker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: json-syntax-check
+        uses: limitusus/json-syntax-check@v1
+        with:
+          pattern: "\\.json$"
+
   unit_tests:
     runs-on: ubuntu-latest
     steps:
