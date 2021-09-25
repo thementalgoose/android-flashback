@@ -1,27 +1,87 @@
-name: Pull Request - Unit Tests
+name: Pull Request
 'on':
   pull_request:
     branches:
       - main
 jobs:
+
   json_checker:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       - name: json-syntax-check
         uses: limitusus/json-syntax-check@v1
         with:
           pattern: "\\.json$"
+
+  unit_test_diff_check:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      # Checkout branch in head vs. base so diff can be checked
+      - name: Checkout - branches
+        run: git checkout ${{ github.base_ref }}
+      - name: Checkout - head
+        run: git checkout ${{ github.head_ref }}
+
+      # Generate output list of modules
+      - name: Calculate change
+        id: change
+        run: |
+          echo "::set-output name=app::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                                | grep -E '^app/' -c)"
+          echo "::set-output name=feature_common::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                     | grep -E '^feature/common/' -c)"
+          echo "::set-output name=feature_formula1::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                   | grep -E '^feature/formula1/' -c)"
+          echo "::set-output name=feature_rss::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                        | grep -E '^feature/rss/' -c)"
+          echo "::set-output name=feature_statistics::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                 | grep -E '^feature/statistics/' -c)"
+          echo "::set-output name=feature_statistics_data::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}            | grep -E '^feature/statistics-data/' -c)"
+          echo "::set-output name=feature_statistics_data_firebase::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}   | grep -E '^feature/statistics-data-firebase/' -c)"
+          echo "::set-output name=feature_upnext::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                     | grep -E '^feature/upnext/' -c)"
+          echo "::set-output name=core_ads::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                           | grep -E '^core/ads/' -c)"
+          echo "::set-output name=core_analytics::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                     | grep -E '^core/analytics/' -c)"
+          echo "::set-output name=core_appshortcuts::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                  | grep -E '^core/appshortcuts/' -c)"
+          echo "::set-output name=core_configuration::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                 | grep -E '^core/configuration/' -c)"
+          echo "::set-output name=core_crash_reporting::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}               | grep -E '^core/crash-reporting/' -c)"
+          echo "::set-output name=core_device::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                        | grep -E '^core/device/' -c)"
+          echo "::set-output name=core_notifications::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                 | grep -E '^core/notifications/' -c)"
+          echo "::set-output name=core_preferences::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                   | grep -E '^core/preferences/' -c)"
+          echo "::set-output name=core_tutorial::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                      | grep -E '^core/tutorial/' -c)"
+          echo "::set-output name=core_ui::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                            | grep -E '^core/ui/' -c)"
+
+    outputs:
+      app: ${{ steps.change.outputs.app != 0 }}
+      feature_common: ${{ steps.change.outputs.feature_common != 0 }}
+      feature_formula1: ${{ steps.change.outputs.feature_formula1 != 0 }}
+      feature_rss: ${{ steps.change.outputs.feature_rss != 0 }}
+      feature_statistics: ${{ steps.change.outputs.feature_statistics != 0 }}
+      feature_statistics_data: ${{ steps.change.outputs.feature_statistics_data != 0 }}
+      feature_statistics_data_firebase: ${{ steps.change.outputs.feature_statistics_data_firebase != 0 }}
+      feature_upnext: ${{ steps.change.outputs.feature_upnext != 0 }}
+      core_ads: ${{ steps.change.outputs.core_ads != 0 }}
+      core_analytics: ${{ steps.change.outputs.core_analytics != 0 }}
+      core_appshortcuts: ${{ steps.change.outputs.core_appshortcuts != 0 }}
+      core_configuration: ${{ steps.change.outputs.core_configuration != 0 }}
+      core_crash_reporting: ${{ steps.change.outputs.core_crash_reporting != 0 }}
+      core_device: ${{ steps.change.outputs.core_device != 0 }}
+      core_notifications: ${{ steps.change.outputs.core_notifications != 0 }}
+      core_preferences: ${{ steps.change.outputs.core_preferences != 0 }}
+      core_tutorial: ${{ steps.change.outputs.core_tutorial != 0 }}
+      core_ui: ${{ steps.change.outputs.core_ui != 0 }}
+
   unit_tests:
     runs-on: ubuntu-latest
+    needs: unit_test_diff_check
     steps:
       # Checkout
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-
-      - run: git checkout ${{ github.base_ref }}
-      - run: git checkout ${{ github.head_ref }}
 
       # Caching gradle
       - uses: actions/cache@v2
@@ -33,83 +93,84 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      # Unit Tests - Checking differences
-      - name: Unit tests - Checking difference
+      - name: Test stage
         run: |
-          echo "lines_app=$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                                | grep -E '^app/' -c)" >> $GITHUB_ENV
-          echo "lines_feature_common=$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                     | grep -E '^feature/common/' -c)" >> $GITHUB_ENV
-          echo "lines_feature_formula1=$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                   | grep -E '^feature/formula1/' -c)" >> $GITHUB_ENV
-          echo "lines_feature_rss=$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                        | grep -E '^feature/rss/' -c)" >> $GITHUB_ENV
-          echo "lines_feature_statistics=$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                 | grep -E '^feature/statistics/' -c)" >> $GITHUB_ENV
-          echo "lines_feature_statistics_data=$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}            | grep -E '^feature/statistics-data/' -c)" >> $GITHUB_ENV
-          echo "lines_feature_statistics_data_firebase=$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}   | grep -E '^feature/statistics-data-firebase/' -c)" >> $GITHUB_ENV
-          echo "lines_feature_upnext=$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                     | grep -E '^feature/upnext/' -c)" >> $GITHUB_ENV
-          echo "lines_core_ads=$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                           | grep -E '^core/ads/' -c)" >> $GITHUB_ENV
-          echo "lines_core_analytics=$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                     | grep -E '^core/analytics/' -c)" >> $GITHUB_ENV
-          echo "lines_core_appshortcuts=$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                  | grep -E '^core/appshortcuts/' -c)" >> $GITHUB_ENV
-          echo "lines_core_configuration=$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                 | grep -E '^core/configuration/' -c)" >> $GITHUB_ENV
-          echo "lines_core_crash_reporting=$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}               | grep -E '^core/crash-reporting/' -c)" >> $GITHUB_ENV
-          echo "lines_core_device=$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                        | grep -E '^core/device/' -c)" >> $GITHUB_ENV
-          echo "lines_core_notifications=$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                 | grep -E '^core/notifications/' -c)" >> $GITHUB_ENV
-          echo "lines_core_preferences=$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                   | grep -E '^core/preferences/' -c)" >> $GITHUB_ENV
-          echo "lines_core_tutorial=$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                      | grep -E '^core/tutorial/' -c)" >> $GITHUB_ENV
-          echo "lines_core_ui=$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                            | grep -E '^core/ui/' -c)" >> $GITHUB_ENV
+          echo "Results for core ${{ needs.unit_test_diff_check.outputs.core }}"
+          echo "Results for core ui ${{ needs.unit_test_diff_check.outputs.core_ui }}"
+          echo "Results for feature up next ${{ needs.unit_test_diff_check.outputs.feature_upnext }}"
 
       # Unit Tests
       - name: Unit tests - app
         run: ./gradlew :app:testSandDebugUnitTest
-        if: ${{ env.lines_app != 0 }}
+        if: ${{ needs.unit_test_diff_check.outputs.app }}
+
       - name: Unit tests - feature:common
         run: ./gradlew :feature:common:testDebugUnitTest
-        if: ${{ env.lines_feature_common != 0 }}
+        if: ${{ needs.unit_test_diff_check.feature_common }}
+
       - name: Unit tests - feature:formula1
         run: ./gradlew :feature:formula1:testDebugUnitTest
-        if: ${{ env.lines_feature_formula1 != 0 }}
+        if: ${{ needs.unit_test_diff_check.feature_formula1 }}
+
       - name: Unit tests - feature:rss
         run: ./gradlew :feature:rss:testDebugUnitTest
-        if: ${{ env.lines_feature_rss != 0 }}
+        if: ${{ needs.unit_test_diff_check.feature_rss }}
+
       - name: Unit tests - feature:statistics
         run: ./gradlew :feature:statistics:testDebugUnitTest
-        if: ${{ env.lines_feature_statistics != 0 }}
+        if: ${{ needs.unit_test_diff_check.feature_statistics }}
+
       - name: Unit tests - feature:statistics-data
         run: ./gradlew :feature:statistics-data:test
-        if: ${{ env.lines_feature_statistics_data != 0 }}
+        if: ${{ needs.unit_test_diff_check.feature_statistics_data }}
+
       - name: Unit tests - feature:statistics-data-firebase
         run: ./gradlew :feature:statistics-data-firebase:testDebugUnitTest
-        if: ${{ env.lines_feature_statistics_data_firebase != 0 }}
+        if: ${{ needs.unit_test_diff_check.feature_statistics_data_firebase }}
+
       - name: Unit tests - feature:upnext
         run: ./gradlew :feature:upnext:testDebugUnitTest
-        if: ${{ env.lines_feature_upnext != 0 }}
+        if: ${{ needs.unit_test_diff_check.feature_upnext }}
+
       - name: Unit tests - core:ads
         run: ./gradlew :core:ads:testDebugUnitTest
-        if: ${{ env.lines_core_ads != 0 }}
+        if: ${{ needs.unit_test_diff_check.core_ads }}
+
       - name: Unit tests - core:analytics
         run: ./gradlew :core:analytics:testDebugUnitTest
-        if: ${{ env.lines_core_analytics != 0 }}
+        if: ${{ needs.unit_test_diff_check.core_analytics }}
+
       - name: Unit tests - core:appshortcuts
         run: ./gradlew :core:appshortcuts:testDebugUnitTest
-        if: ${{ env.lines_core_appshortcuts != 0 }}
+        if: ${{ needs.unit_test_diff_check.core_appshortcuts }}
+
       - name: Unit tests - core:configuration
         run: ./gradlew :core:configuration:testDebugUnitTest
-        if: ${{ env.lines_core_configuration != 0 }}
+        if: ${{ needs.unit_test_diff_check.core_configuration }}
+
       - name: Unit tests - core:crash-reporting
         run: ./gradlew :core:crash-reporting:testDebugUnitTest
-        if: ${{ env.lines_core_crash_reporting != 0 }}
+        if: ${{ needs.unit_test_diff_check.core_crash_reporting }}
+
       - name: Unit tests - core:device
         run: ./gradlew :core:device:testDebugUnitTest
-        if: ${{ env.lines_core_device != 0 }}
+        if: ${{ needs.unit_test_diff_check.core_device }}
+
       - name: Unit tests - core:notifications
         run: ./gradlew :core:notifications:testDebugUnitTest
-        if: ${{ env.lines_core_notifications != 0 }}
+        if: ${{ needs.unit_test_diff_check.core_notifications }}
+
       - name: Unit tests - core:preferences
         run: ./gradlew :core:preferences:testDebugUnitTest
-        if: ${{ env.lines_core_preferences != 0 }}
+        if: ${{ needs.unit_test_diff_check.core_preferences }}
+
       - name: Unit tests - core:tutorial
         run: ./gradlew :core:tutorial:testDebugUnitTest
-        if: ${{ env.lines_core_tutorial != 0 }}
+        if: ${{ needs.unit_test_diff_check.core_tutorial }}
+
       - name: Unit tests - core:ui
         run: ./gradlew :core:ui:testDebugUnitTest
-        if: ${{ env.lines_core_ui != 0 }}
+        if: ${{ needs.unit_test_diff_check.core_ui }}
 
       # Publish test report
       - name: Publish Test Report
