@@ -6,6 +6,7 @@ import tmg.flashback.upnext.model.NotificationReminder
 import tmg.flashback.upnext.repository.converters.convert
 import tmg.flashback.upnext.repository.json.UpNextJson
 import tmg.flashback.upnext.repository.model.UpNextSchedule
+import tmg.utilities.extensions.toEnum
 
 class UpNextRepository(
     private val configManager: ConfigManager,
@@ -19,6 +20,7 @@ class UpNextRepository(
         private const val keyNotificationQualifying: String = "UP_NEXT_NOTIFICATION_QUALIFYING"
         private const val keyNotificationFreePractice: String = "UP_NEXT_NOTIFICATION_FREE_PRACTICE"
         private const val keyNotificationOther: String = "UP_NEXT_NOTIFICATION_OTHER"
+        private const val keyNotificationReminder: String = "UP_NEXT_NOTIFICATION_REMINDER"
 
         private const val keyNotificationOnboarding: String = "UP_NEXT_NOTIFICATION_ONBOARDING"
     }
@@ -49,6 +51,7 @@ class UpNextRepository(
         get() = preferenceManager.getBoolean(keyNotificationOnboarding, false)
         set(value) = preferenceManager.save(keyNotificationOnboarding, value)
 
-    // TODO: Move this to be user customisable
-    val notificationReminderPeriod: NotificationReminder = NotificationReminder.MINUTES_30
+    var notificationReminderPeriod: NotificationReminder
+        get() = preferenceManager.getInt(keyNotificationReminder, NotificationReminder.MINUTES_30.seconds).toEnum<NotificationReminder> { it.seconds } ?: NotificationReminder.MINUTES_30
+        set(value) = preferenceManager.save(keyNotificationReminder, value.seconds)
 }
