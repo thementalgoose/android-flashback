@@ -10,7 +10,9 @@ import org.threeten.bp.Clock
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.LocalTime
+import org.threeten.bp.ZoneId
 import org.threeten.bp.format.DateTimeFormatter
+import org.threeten.bp.format.TextStyle
 import tmg.flashback.formula1.model.Timestamp
 import tmg.flashback.upnext.model.NotificationReminder
 import tmg.flashback.upnext.repository.UpNextRepository
@@ -475,19 +477,25 @@ internal class UpNextControllerTest : BaseTest() {
     private fun verifyScheduleLocal(times: Int = 1, upNextSchedule: UpNextSchedule, index: Int, item: UpNextScheduleTimestamp) {
         val channelId = getCategoryBasedOnLabel(item.label).channelId
         var timestampUtc: LocalDateTime? = null
+        var timestampLocal: LocalDateTime? = null
         item.timestamp.on(
             dateAndTime = { utc, local ->
                 timestampUtc = utc
+                timestampLocal = local
             }
         )
         val requestCode = getRequestCode(timestampUtc!!)
         timestampUtc = timestampUtc?.minusMinutes(30)
+
+        val timezone: String = ZoneId.systemDefault().id
+        val timestring = timestampLocal!!.toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm"))
+
         verify(exactly = times) {
             mockNotificationController.scheduleLocalNotification(
                 requestCode = requestCode,
                 channelId = channelId,
                 title = "${item.label} starts in 30 minutes",
-                text = "${upNextSchedule.title} ${item.label} starts in 30 minutes",
+                text = "${upNextSchedule.title} ${item.label} starts in 30 minutes at $timestring $timezone (device time)",
                 timestamp = timestampUtc!!
             )
         }

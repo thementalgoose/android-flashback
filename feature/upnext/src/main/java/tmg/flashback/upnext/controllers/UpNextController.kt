@@ -1,11 +1,14 @@
 package tmg.flashback.upnext.controllers
 
 import android.util.Log
+import java.time.format.TextStyle
+import java.util.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.LocalTime
+import org.threeten.bp.ZoneId
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.formula1.model.Timestamp
 import tmg.flashback.upnext.BuildConfig
@@ -154,7 +157,16 @@ class UpNextController(
             // Remove the notification reminder period
             val scheduleTime = it.utcDateTime.minusSeconds(upNextRepository.notificationReminderPeriod.seconds.toLong())
 
-            val text = "${it.title} ${it.label} starts in 30 minutes"
+            var deviceDateTime: LocalDateTime? = null
+            it.timestamp.on(
+                dateAndTime = { utc, local ->
+                    deviceDateTime = local
+                }
+            )
+
+            val timezone = ZoneId.systemDefault().id
+            val at = deviceDateTime?.let { " at ${it.toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm"))} $timezone (device time)"} ?: ""
+            val text = "${it.title} ${it.label} starts in 30 minutes$at"
 
             notificationController.scheduleLocalNotification(
                 requestCode = it.requestCode,
