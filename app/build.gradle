@@ -87,6 +87,7 @@ play {
     resolutionStrategy = ResolutionStrategy.IGNORE
 }
 
+// Adds generate tasks to assemble
 tasks.whenTaskAdded { task ->
     if (task.name.contains("assemble")) {
         task.dependsOn generateRemoteConfigDefaults
