@@ -11,15 +11,15 @@ jobs:
       - name: Get version
         run: echo "GIT_TAG=`echo $(git describe --tags --abbrev=0)`" >> $GITHUB_ENV
 
-      - name: test
-        run: echo "${{ name }}" >> $GITHUB_ENV
+#      - name: test
+#        run: echo "${{ github.name }}" >> $GITHUB_ENV
 
       - name: Send webhook
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         uses: Ilshidur/action-discord@master
         with:
-          args: "PR message ${{ name }}"
+          args: "PR message ${{ github.name }}"
 
   json_checker:
     runs-on: ubuntu-latest
