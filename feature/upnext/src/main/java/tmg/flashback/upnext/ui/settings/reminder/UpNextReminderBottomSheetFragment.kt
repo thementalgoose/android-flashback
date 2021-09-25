@@ -10,6 +10,7 @@ import tmg.core.ui.bottomsheet.BottomSheetAdapter
 import tmg.flashback.upnext.databinding.FragmentBottomSheetNotificationsReminderBinding
 import tmg.flashback.upnext.model.NotificationReminder
 import tmg.utilities.extensions.observe
+import tmg.utilities.extensions.observeEvent
 
 class UpNextReminderBottomSheetFragment: BaseBottomSheetFragment<FragmentBottomSheetNotificationsReminderBinding>() {
 
@@ -33,6 +34,9 @@ class UpNextReminderBottomSheetFragment: BaseBottomSheetFragment<FragmentBottomS
 
         observe(viewModel.outputs.notificationPrefs) {
             adapter.list = it
+        }
+
+        observeEvent(viewModel.outputs.updated) {
             dismiss()
         }
     }

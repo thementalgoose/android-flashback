@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import tmg.core.ui.bottomsheet.BottomSheetItem
 import tmg.flashback.upnext.controllers.UpNextController
 import tmg.flashback.upnext.model.NotificationReminder
+import tmg.utilities.lifecycle.Event
 import tmg.utilities.models.Selected
 import tmg.utilities.models.StringHolder
 
@@ -21,6 +22,7 @@ interface UpNextReminderViewModelInputs {
 
 interface UpNextReminderViewModelOutputs {
     val notificationPrefs: LiveData<List<Selected<BottomSheetItem>>>
+    val updated: LiveData<Event>
 }
 
 //endregion
@@ -34,6 +36,7 @@ class UpNextReminderViewModel(
     var outputs: UpNextReminderViewModelOutputs = this
 
     override val notificationPrefs: MutableLiveData<List<Selected<BottomSheetItem>>> = MutableLiveData()
+    override val updated: MutableLiveData<Event> = MutableLiveData()
 
     init {
         updateList()
@@ -44,6 +47,7 @@ class UpNextReminderViewModel(
     override fun selectNotificationReminder(reminder: NotificationReminder) {
         upNextController.notificationReminder = reminder
         updateList()
+        updated.value = Event()
     }
 
     //endregion

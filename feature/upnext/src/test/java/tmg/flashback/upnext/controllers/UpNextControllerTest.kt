@@ -1,5 +1,6 @@
 package tmg.flashback.upnext.controllers
 
+import android.content.Context
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -28,6 +29,7 @@ internal class UpNextControllerTest : BaseTest() {
 
     private var mockNotificationController: NotificationController = mockk(relaxed = true)
     private var mockUpNextRepository: UpNextRepository = mockk(relaxed = true)
+    private var mockApplicationContext: Context = mockk(relaxed = true)
 
     private lateinit var sut: UpNextController
 
@@ -42,7 +44,7 @@ internal class UpNextControllerTest : BaseTest() {
     }
 
     private fun initSUT() {
-        sut = UpNextController(mockNotificationController, mockUpNextRepository)
+        sut = UpNextController(mockApplicationContext, mockNotificationController, mockUpNextRepository)
     }
 
     @Test
@@ -487,25 +489,20 @@ internal class UpNextControllerTest : BaseTest() {
     private fun verifyScheduleLocal(times: Int = 1, upNextSchedule: UpNextSchedule, index: Int, item: UpNextScheduleTimestamp) {
         val channelId = getCategoryBasedOnLabel(item.label).channelId
         var timestampUtc: LocalDateTime? = null
-        var timestampLocal: LocalDateTime? = null
         item.timestamp.on(
             dateAndTime = { utc, local ->
                 timestampUtc = utc
-                timestampLocal = local
             }
         )
         val requestCode = getRequestCode(timestampUtc!!)
         timestampUtc = timestampUtc?.minusMinutes(30)
 
-        val timezone: String = ZoneId.systemDefault().id
-        val timestring = timestampLocal!!.toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm"))
-
         verify(exactly = times) {
             mockNotificationController.scheduleLocalNotification(
                 requestCode = requestCode,
                 channelId = channelId,
-                title = "${item.label} starts in 30 minutes",
-                text = "${upNextSchedule.title} ${item.label} starts in 30 minutes at $timestring $timezone (device time)",
+                title = "" /* TODO: Inject the NotificationUtils properly - This is handled there! */,
+                text = "" /* TODO: Inject the NotificationUtils properly - This is handled there! */,
                 timestamp = timestampUtc!!
             )
         }

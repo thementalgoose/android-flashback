@@ -9,6 +9,7 @@ import tmg.core.ui.bottomsheet.BottomSheetItem
 import tmg.flashback.upnext.controllers.UpNextController
 import tmg.flashback.upnext.model.NotificationReminder
 import tmg.testutils.BaseTest
+import tmg.testutils.livedata.assertEventFired
 import tmg.testutils.livedata.test
 import tmg.utilities.models.Selected
 import tmg.utilities.models.StringHolder
@@ -47,6 +48,15 @@ internal class UpNextReminderViewModelTest: BaseTest() {
         sut.inputs.selectNotificationReminder(NotificationReminder.MINUTES_60)
         verify {
             mockUpNextController.notificationReminder = NotificationReminder.MINUTES_60
+        }
+    }
+
+    @Test
+    fun `selecting notification reminder updates notifies updated event`() {
+        initSUT()
+        sut.inputs.selectNotificationReminder(NotificationReminder.MINUTES_60)
+        sut.outputs.updated.test {
+            assertEventFired()
         }
     }
 }
