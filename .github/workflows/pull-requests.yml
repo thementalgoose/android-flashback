@@ -19,20 +19,13 @@ jobs:
       - name: Release information
         run: |
           content=`cat releases.json`
-          echo "versionCodeString=$(cat releases.json | grep versionCode | tail -1)" >> $GITHUB_ENV
-          echo "versionNameString=$(cat releases.json | grep versionName | tail -1)" >> $GITHUB_ENV
+          echo "versionCode=$(sh ./scripts/getVersionCode.sh)" >> $GITHUB_ENV
+          echo "versionName=$(sh ./scripts/getVersionCode.sh)" >> $GITHUB_ENV
 
-      - name: Release information parsing
+      - name: Further test
         run: |
-          echo "versionCode=$(echo "${${{ env.versionCodeString }}//[^0-9]/}")" >> $GITHUB_ENV
-          echo "versionName=$(echo "${${{ env.versionNameString }}//[^0-9.]/}")" >> $GITHUB_ENV
-
-      - name: Variables available
-        run: |
-          echo "VersionCode ${{ env.versionCode }}"
-          echo "VersionCodeString ${{ env.versionCodeString }}"
-          echo "VersionName ${{ env.versionName }}"
-          echo "VersionNameString ${{ env.versionCodeString }}"
+          echo ${{ env.versionCode }}
+          echo ${{ env.versionName }}
 
   unit_test_diff_check:
     runs-on: ubuntu-latest
