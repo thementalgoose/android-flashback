@@ -29,7 +29,9 @@
     <string name="notification_reminder_mins_60">1 hour</string>
     <string name="notification_reminder_mins_30">30 minutes</string>
     <string name="notification_reminder_mins_15">15 minutes</string>
-    <string name="notification_starts_in" formatted="false">%s %s starts in %s</string>
+    <string name="notification_content_title" formatted="false">%s starts in %s</string>
+    <string name="notification_content_text" formatted="false">%s %s starts in %s at %s</string>
+    <string name="notification_content_text_device_time" formatted="false">%s %s (device time)</string>
 
     <string name="notification_onboarding_title">Notifications</string>
     <string name="notification_onboarding_description">Get notified of upcoming events in the world of formula 1. You can change these anytime in the settings</string>
@@ -47,5 +49,8 @@
     <string name="settings_up_next_title">Notification Settings</string>
     <string name="settings_up_next_time_before_title">Notice</string>
     <string name="settings_up_next_time_before_description">How far in advance should we notify you for events?</string>
+
+    <string name="settings_up_next_reminder_title">Reminder</string>
+    <string name="settings_up_next_reminder_description">How long before the event do you want Flashback to notify you?</string>
 
 </resources>
