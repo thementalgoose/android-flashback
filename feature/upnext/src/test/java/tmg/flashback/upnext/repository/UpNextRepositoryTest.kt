@@ -15,8 +15,8 @@ import tmg.flashback.upnext.repository.model.UpNextSchedule
 
 internal class UpNextRepositoryTest {
 
-    private val mockConfigManager: ConfigManager = mockk()
-    private val mockPreferenceManager: PreferenceManager = mockk()
+    private val mockConfigManager: ConfigManager = mockk(relaxed = true)
+    private val mockPreferenceManager: PreferenceManager = mockk(relaxed = true)
 
     private lateinit var sut: UpNextRepository
 

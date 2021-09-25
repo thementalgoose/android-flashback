@@ -4,8 +4,10 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
+import org.threeten.bp.LocalDateTime
 import org.threeten.bp.LocalTime
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.formula1.model.Timestamp
@@ -13,6 +15,9 @@ import tmg.flashback.upnext.model.NotificationReminder
 import tmg.flashback.upnext.repository.UpNextRepository
 import tmg.flashback.upnext.repository.model.UpNextSchedule
 import tmg.flashback.upnext.repository.model.UpNextScheduleTimestamp
+import tmg.flashback.upnext.utils.NotificationUtils
+import tmg.flashback.upnext.utils.NotificationUtils.getCategoryBasedOnLabel
+import tmg.flashback.upnext.utils.NotificationUtils.getRequestCode
 import tmg.notifications.controllers.NotificationController
 import tmg.testutils.BaseTest
 
@@ -22,6 +27,16 @@ internal class UpNextControllerTest : BaseTest() {
     private var mockUpNextRepository: UpNextRepository = mockk(relaxed = true)
 
     private lateinit var sut: UpNextController
+
+    @BeforeEach
+    internal fun setUp() {
+        every { mockUpNextRepository.notificationReminderPeriod } returns NotificationReminder.MINUTES_30
+
+        every { mockUpNextRepository.notificationRace } returns true
+        every { mockUpNextRepository.notificationQualifying } returns true
+        every { mockUpNextRepository.notificationFreePractice } returns true
+        every { mockUpNextRepository.notificationOther } returns true
+    }
 
     private fun initSUT() {
         sut = UpNextController(mockNotificationController, mockUpNextRepository)
@@ -409,7 +424,7 @@ internal class UpNextControllerTest : BaseTest() {
 
         initSUT()
 
-        assertTrue(sut.shouldShowNotificationOnboarding)
+        assertFalse(sut.shouldShowNotificationOnboarding)
         verify {
             mockUpNextRepository.seenNotificationOnboarding
         }
@@ -432,31 +447,95 @@ internal class UpNextControllerTest : BaseTest() {
     //region Schedule notification filtering
 
     @Test
-    fun `when finding notifications to schedule it assigns correct channel ids`() {
-        TODO()
-    }
-
-    @Test
-    fun `when finding notifications to schedule it filters out items in the past`() {
-        TODO()
-    }
-
-    @Test
-    fun `when finding notifications to schedule it filters out those which have a preference to be shown only`() {
-        TODO()
-    }
-
-    @Test
-    fun `when finding notifications to schedule it cancels all notifications as part of the flow`() {
-        TODO()
-    }
-
-    @Test
     fun `when finding notifications to schedule it scheduled accurately the local notifications with the manager`() {
-        TODO()
+
+        every { mockUpNextRepository.upNext } returns exampleUpNextList
+
+        initSUT()
+        sut.scheduleNotifications()
+
+        verify {
+            mockNotificationController.cancelAllNotifications()
+        }
+
+        verifyScheduleLocal(times = 0, past, 0, past.values[0])
+        verifyScheduleLocal(times = 0, past, 1, past.values[1])
+        verifyScheduleLocal(times = 0, present, 0, present.values[0])
+
+        verifyScheduleLocal(times = 1, present, 1, present.values[1])
+        verifyScheduleLocal(times = 1, present, 2, present.values[2])
+        verifyScheduleLocal(times = 1, future, 0, future.values[0])
     }
 
     //endregion
+
+    private fun verifyScheduleLocal(times: Int = 1, upNextSchedule: UpNextSchedule, index: Int, item: UpNextScheduleTimestamp) {
+        val requestCode = getRequestCode(upNextSchedule.season, upNextSchedule.round, index)
+        val channelId = getCategoryBasedOnLabel(item.label).channelId
+        var timestampUtc: LocalDateTime? = null
+        item.timestamp.on(
+            dateAndTime = { utc, local ->
+                timestampUtc = utc
+            }
+        )
+        timestampUtc = timestampUtc?.minusMinutes(30)
+        verify(exactly = times) {
+            mockNotificationController.scheduleLocalNotification(
+                requestCode = requestCode,
+                channelId = channelId,
+                title = "${item.label} starts in 30 minutes",
+                text = "${upNextSchedule.title} ${item.label} starts in 30 minutes",
+                timestamp = timestampUtc!!
+            )
+        }
+    }
+
+    private val past: UpNextSchedule = generateUpNextItem(
+        season = 2020,
+        round = 2,
+            "qualifying" to LocalDateTime.now().minusDays(2L),
+            "race" to LocalDateTime.now().minusDays(1L)
+    )
+    private val present: UpNextSchedule = generateUpNextItem(
+        season = 2020,
+        round = 3,
+            "fp3" to LocalDateTime.now().minusHours(1L),
+            "qualifying" to LocalDateTime.now().plusMinutes(5L),
+            "race" to LocalDateTime.now().plusHours(8L)
+    )
+    private val future: UpNextSchedule = generateUpNextItem(
+        season = 2020,
+        round = 4,
+            "fp3" to LocalDateTime.now().plusDays(1L)
+    )
+    private val exampleUpNextList: List<UpNextSchedule> = listOf(
+        past, present, future
+    )
+
+
+    private fun generateUpNextItem(
+        season: Int,
+        round: Int,
+        vararg delta: Pair<String, LocalDateTime>
+    ): UpNextSchedule {
+        return UpNextSchedule(
+            season = season,
+            round = round,
+            title = "Grand Prix $season $round",
+            subtitle = null,
+            values = delta.map { (label, datetime) ->
+                UpNextScheduleTimestamp(
+                    label = label,
+                    timestamp = Timestamp(
+                        datetime.toLocalDate(),
+                        datetime.toLocalTime()
+                    )
+                )
+            },
+            flag = null,
+            circuitId = null
+        )
+    }
 
     private fun generateUpNextItem(vararg delta: Pair<Int, String>): UpNextSchedule {
         return UpNextSchedule(
