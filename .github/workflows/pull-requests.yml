@@ -20,7 +20,8 @@ jobs:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         with:
           nodetail: true
-          title: "Release ${{ env.GIT_TAG }} ${{ github.workflow_url }} deployment to internal test track failed"
+          title: "Release ${{ env.GIT_TAG }} deployment to internal test track failed"
+          description: "Run number ${{ github.run_number }}"
           color: 0xff91a4
 
       - name: Notify discord of success
@@ -30,8 +31,8 @@ jobs:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         with:
           nodetail: true
-          title: "Release ${{ env.GIT_TAG }} ${{ github.workflow_url }} deployment to internal test track successful"
-          description: ""
+          title: "Release ${{ env.GIT_TAG }} deployment to internal test track successful"
+          description: "Run number ${{ github.run_number }}"
           color: 0x35a55f
 
   json_checker:
