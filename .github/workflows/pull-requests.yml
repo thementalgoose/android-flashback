@@ -8,20 +8,15 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: kceb/pull-request-url-action@v1
-        id: pr-url
-
       - name: Get version
         run: echo "GIT_TAG=`echo $(git describe --tags --abbrev=0)`" >> $GITHUB_ENV
-
-      - run: echo "${{ steps.pr-url.outputs.url }}"
 
       - name: Send webhook
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         uses: Ilshidur/action-discord@master
         with:
-          args: "PR message - ${{ steps.pr-url.outputs.url }}"
+          args: "PR message - ${{ github.event.number }}"
 
   json_checker:
     runs-on: ubuntu-latest
