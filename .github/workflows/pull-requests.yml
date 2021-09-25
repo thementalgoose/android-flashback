@@ -12,7 +12,7 @@ jobs:
         run: echo "GIT_TAG=`echo $(git describe --tags --abbrev=0)`" >> $GITHUB_ENV
 
       - name: test
-        run: echo ${{ EVENT_PAYLOAD }}
+        run: echo "${{ EVENT_PAYLOAD }}"
 
       - name: Send webhook
         env:
