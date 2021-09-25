@@ -5,17 +5,6 @@ name: Pull Request
       - main
 jobs:
 
-  test:
-    runs-on: ubuntu-latest
-    steps:
-
-      - name: Send webhook
-        env:
-          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-        uses: Ilshidur/action-discord@master
-        with:
-          args: "PR message - https://github.com/thementalgoose/android-flashback/pull/${{ github.event.number }}"
-
   json_checker:
     runs-on: ubuntu-latest
     steps:
@@ -104,11 +93,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - name: Test stage
-        run: |
-          echo "Results for app ${{ needs.unit_test_diff_check.outputs.app == 'true' }}"
-          echo "Results for core ui ${{ needs.unit_test_diff_check.outputs.core_ui == 'true' }}"
-          echo "Results for feature up next ${{ needs.unit_test_diff_check.outputs.feature_upnext == 'true' }}"
+      - name: Test fail
+        run: fail()
 
       # Unit Tests
       - name: Unit tests - app
@@ -200,7 +186,5 @@ jobs:
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         with:
-          nodetail: true
           title: "Pull request has failing tests"
-          description: "https://github.com/thementalgoose/android-flashback/pull/${{ github.event.number }}"
           color: 0xff91a4
