@@ -22,10 +22,13 @@ jobs:
           echo "versionCodeString=$(cat releases.json | grep versionCode | tail -1)" >> $GITHUB_ENV
           echo "versionNameString=$(cat releases.json | grep versionName | tail -1)" >> $GITHUB_ENV
 
-
+      - name: Release information parsing
+        run: |
           echo "versionCode=$(echo "${${{ env.versionCodeString }}//[^0-9]/}")" >> $GITHUB_ENV
           echo "versionName=$(echo "${${{ env.versionNameString }}//[^0-9.]/}")" >> $GITHUB_ENV
 
+      - name: Variables available
+        run: |
           echo "VersionCode ${{ env.versionCode }}"
           echo "VersionCodeString ${{ env.versionCodeString }}"
           echo "VersionName ${{ env.versionName }}"
