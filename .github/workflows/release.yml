@@ -77,17 +77,29 @@ jobs:
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
         run: ./gradlew publishLiveReleaseBundle
 
-  send_webhook:
+  discord_notify_success:
     runs-on: ubuntu-latest
     needs: deploy
-    if: success()
+    if: always()
     steps:
-      - name: Get version
+
+      - name: Git tag
         run: echo "GIT_TAG=`echo $(git describe --tags --abbrev=0)`" >> $GITHUB_ENV
 
-      - name: Send webhook
-        env:
-          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-        uses: Ilshidur/action-discord@master
+      - name: Notify discord of failure
+        uses: sarisia/actions-status-discord@v1
+        if: failure()
         with:
-          args: 'Version ${{ GIT_TAG }} released'
+          nodetail: true
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          title: "Release ${{ GIT_TAG }} deployment to internal test track failed"
+          color: 0xff91a4
+
+      - name: Notify discord of success
+        uses: sarisia/actions-status-discord@v1
+        if: success()
+        with:
+          nodetail: true
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          title: "Release ${{ GIT_TAG }} deployment to internal test track successful"
+          color: 0xff35a55f
