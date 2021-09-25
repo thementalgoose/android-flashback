@@ -93,79 +93,76 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - name: Test fail
-        run: fail()
-
       # Unit Tests
-      - name: Unit tests - app
+      - name: :app
         run: ./gradlew :app:testSandDebugUnitTest
         if: ${{ needs.unit_test_diff_check.outputs.app == 'true' }}
 
-      - name: Unit tests - feature:common
+      - name: :feature:common
         run: ./gradlew :feature:common:testDebugUnitTest
         if: ${{ needs.unit_test_diff_check.outputs.feature_common == 'true' }}
 
-      - name: Unit tests - feature:formula1
+      - name: :feature:formula1
         run: ./gradlew :feature:formula1:testDebugUnitTest
         if: ${{ needs.unit_test_diff_check.outputs.feature_formula1 == 'true' }}
 
-      - name: Unit tests - feature:rss
+      - name: :feature:rss
         run: ./gradlew :feature:rss:testDebugUnitTest
         if: ${{ needs.unit_test_diff_check.outputs.feature_rss == 'true' }}
 
-      - name: Unit tests - feature:statistics
+      - name: :feature:statistics
         run: ./gradlew :feature:statistics:testDebugUnitTest
         if: ${{ needs.unit_test_diff_check.outputs.feature_statistics == 'true' }}
 
-      - name: Unit tests - feature:statistics-data
+      - name: :feature:statistics-data
         run: ./gradlew :feature:statistics-data:test
         if: ${{ needs.unit_test_diff_check.outputs.feature_statistics_data == 'true' }}
 
-      - name: Unit tests - feature:statistics-data-firebase
+      - name: :feature:statistics-data-firebase
         run: ./gradlew :feature:statistics-data-firebase:testDebugUnitTest
         if: ${{ needs.unit_test_diff_check.outputs.feature_statistics_data_firebase == 'true' }}
 
-      - name: Unit tests - feature:upnext
+      - name: :feature:upnext
         run: ./gradlew :feature:upnext:testDebugUnitTest
         if: ${{ needs.unit_test_diff_check.outputs.feature_upnext == 'true' }}
 
-      - name: Unit tests - core:ads
+      - name: :core:ads
         run: ./gradlew :core:ads:testDebugUnitTest
         if: ${{ needs.unit_test_diff_check.outputs.core_ads == 'true' }}
 
-      - name: Unit tests - core:analytics
+      - name: :core:analytics
         run: ./gradlew :core:analytics:testDebugUnitTest
         if: ${{ needs.unit_test_diff_check.outputs.core_analytics == 'true' }}
 
-      - name: Unit tests - core:appshortcuts
+      - name: :core:appshortcuts
         run: ./gradlew :core:appshortcuts:testDebugUnitTest
         if: ${{ needs.unit_test_diff_check.outputs.core_appshortcuts == 'true' }}
 
-      - name: Unit tests - core:configuration
+      - name: :core:configuration
         run: ./gradlew :core:configuration:testDebugUnitTest
         if: ${{ needs.unit_test_diff_check.outputs.core_configuration == 'true' }}
 
-      - name: Unit tests - core:crash-reporting
+      - name: :core:crash-reporting
         run: ./gradlew :core:crash-reporting:testDebugUnitTest
         if: ${{ needs.unit_test_diff_check.outputs.core_crash_reporting == 'true' }}
 
-      - name: Unit tests - core:device
+      - name: :core:device
         run: ./gradlew :core:device:testDebugUnitTest
         if: ${{ needs.unit_test_diff_check.outputs.core_device == 'true' }}
 
-      - name: Unit tests - core:notifications
+      - name: :core:notifications
         run: ./gradlew :core:notifications:testDebugUnitTest
         if: ${{ needs.unit_test_diff_check.outputs.core_notifications == 'true' }}
 
-      - name: Unit tests - core:preferences
+      - name: :core:preferences
         run: ./gradlew :core:preferences:testDebugUnitTest
         if: ${{ needs.unit_test_diff_check.outputs.core_preferences == 'true' }}
 
-      - name: Unit tests - core:tutorial
+      - name: :core:tutorial
         run: ./gradlew :core:tutorial:testDebugUnitTest
         if: ${{ needs.unit_test_diff_check.outputs.core_tutorial == 'true' }}
 
-      - name: Unit tests - core:ui
+      - name: :core:ui
         run: ./gradlew :core:ui:testDebugUnitTest
         if: ${{ needs.unit_test_diff_check.outputs.core_ui == 'true' }}
 
