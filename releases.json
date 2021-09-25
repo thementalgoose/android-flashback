@@ -521,5 +521,15 @@
       "Accessibility bug fixes throughout all screen",
       "Minor bug fixes, general dependency updates and refactoring"
     ]
+  },
+  {
+    "versionCode": 95,
+    "versionName": "6.4.0",
+    "isMajor": true,
+    "title": "Local notifications",
+    "notes": [
+      "Adds notification support for free practice",
+      "Improves experience of enroling in notifications",
+    ]
   }
 ]
