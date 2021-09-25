@@ -1,10 +1,14 @@
 package tmg.flashback.upnext.controllers
 
+import android.util.Log
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.LocalTime
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.formula1.model.Timestamp
+import tmg.flashback.upnext.BuildConfig
 import tmg.flashback.upnext.model.NotificationChannel
 import tmg.flashback.upnext.model.NotificationReminder
 import tmg.flashback.upnext.repository.UpNextRepository
@@ -62,28 +66,28 @@ class UpNextController(
         get() = upNextRepository.notificationRace
         set(value) {
             upNextRepository.notificationRace = value
-            scheduleNotifications()
+            GlobalScope.launch { scheduleNotifications(force = true) }
         }
 
     var notificationQualifying: Boolean
         get() = upNextRepository.notificationQualifying
         set(value) {
             upNextRepository.notificationQualifying = value
-            scheduleNotifications()
+            GlobalScope.launch { scheduleNotifications(force = true) }
         }
 
     var notificationFreePractice: Boolean
         get() = upNextRepository.notificationFreePractice
         set(value) {
             upNextRepository.notificationFreePractice = value
-            scheduleNotifications()
+            GlobalScope.launch { scheduleNotifications(force = true) }
         }
 
     var notificationSeasonInfo: Boolean
         get() = upNextRepository.notificationOther
         set(value) {
             upNextRepository.notificationOther = value
-            scheduleNotifications()
+            GlobalScope.launch { scheduleNotifications(force = true) }
         }
 
     val notificationReminder: NotificationReminder
@@ -92,7 +96,7 @@ class UpNextController(
     /**
      * Schedule notifications
      */
-    fun scheduleNotifications() {
+    fun scheduleNotifications(force: Boolean = false) {
         val upNextItemsToSchedule = upNextRepository
             .upNext
             .filter { schedule ->
@@ -114,6 +118,19 @@ class UpNextController(
             .flatten()
             .filter { it.timestamp.originalTime != null }
             .filter { !it.timestamp.isInPastRelativeToo(upNextRepository.notificationReminderPeriod.seconds.toLong()) }
+            .map {
+                it.apply {
+                    var utcDateTime: LocalDateTime = it.timestamp.originalDate.atTime(it.timestamp.originalTime)
+                    it.timestamp.on(
+                        dateAndTime = { utc, _ ->
+                            utcDateTime = utc
+                        }
+                    )
+
+                    this.utcDateTime = utcDateTime
+                    this.requestCode = NotificationUtils.getRequestCode(utcDateTime)
+                }
+            }
             .filter {
                 when (it.channel) {
                     NotificationChannel.RACE -> notificationRace
@@ -123,28 +140,28 @@ class UpNextController(
                 }
             }
 
+        if (upNextItemsToSchedule.map { it.requestCode }.toSet() == notificationController.notificationsCurrentlyScheduled && !force) {
+            if (BuildConfig.DEBUG) {
+                Log.d("Flashback", "Up Next items have remained unchanged since last sync - Skipping scheduling")
+            }
+            return
+        }
+
         notificationController.cancelAllNotifications()
 
         upNextItemsToSchedule.forEach {
-            val requestCode = NotificationUtils.getRequestCode(it.season, it.round, it.value)
-            var utcDateTime: LocalDateTime = it.timestamp.originalDate.atTime(it.timestamp.originalTime)
-            it.timestamp.on(
-                dateAndTime = { utc, _ ->
-                    utcDateTime = utc
-                }
-            )
 
             // Remove the notification reminder period
-            utcDateTime = utcDateTime.minusSeconds(upNextRepository.notificationReminderPeriod.seconds.toLong())
+            val scheduleTime = it.utcDateTime.minusSeconds(upNextRepository.notificationReminderPeriod.seconds.toLong())
 
             val text = "${it.title} ${it.label} starts in 30 minutes"
 
             notificationController.scheduleLocalNotification(
-                requestCode = requestCode,
+                requestCode = it.requestCode,
                 channelId = getCategoryBasedOnLabel(it.label).channelId,
                 title = "${it.label} starts in 30 minutes",
                 text = text,
-                timestamp = utcDateTime
+                timestamp = scheduleTime
             )
         }
     }
@@ -159,5 +176,8 @@ class UpNextController(
         val label: String,
         val timestamp: Timestamp,
         val channel: NotificationChannel
-    )
+    ) {
+        var requestCode: Int = -1
+        lateinit var utcDateTime: LocalDateTime
+    }
 }

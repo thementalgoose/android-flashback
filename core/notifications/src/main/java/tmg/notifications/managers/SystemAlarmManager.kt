@@ -49,7 +49,7 @@ class SystemAlarmManager(
         val instant = requestTimestamp.toInstant(ZoneOffset.UTC)
 
         if (BuildConfig.DEBUG) {
-            Log.d("Flashback", "Scheduling alarm wakeup for ${instant.toEpochMilli()} (current system is ${System.currentTimeMillis()}, with millis diff being ${instant.toEpochMilli() - System.currentTimeMillis()})")
+            Log.d("Flashback", "Scheduling alarm wakeup for ${instant.toEpochMilli()} (current system is ${System.currentTimeMillis()}, with millis diff being ${(instant.toEpochMilli() - System.currentTimeMillis()) / 1000} seconds)")
         }
         AlarmManagerCompat.setExactAndAllowWhileIdle(alarmManager, AlarmManager.RTC_WAKEUP, instant.toEpochMilli(), pendingIntent)
     }

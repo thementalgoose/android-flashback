@@ -2,6 +2,7 @@ package tmg.notifications.controllers
 
 import io.mockk.*
 import kotlinx.coroutines.test.runBlockingTest
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDateTime
 import tmg.notifications.NotificationRegistration
@@ -153,6 +154,21 @@ internal class NotificationControllerTest: BaseTest() {
         sut.deleteNotificationChannel(expectedChannelId)
         verify {
             mockSystemNotificationManager.cancelChannel(expectedChannelId)
+        }
+    }
+
+    //endregion
+
+    //region Get currently scheduled ids
+
+    @Test
+    fun `currently scheduled notification ids returns from repository`() {
+        val expected = setOf(198, 12039493)
+        every { mockNotificationRepository.notificationIds } returns expected
+        initSUT()
+        assertEquals(expected, sut.notificationsCurrentlyScheduled)
+        verify {
+            mockNotificationRepository.notificationIds
         }
     }
 

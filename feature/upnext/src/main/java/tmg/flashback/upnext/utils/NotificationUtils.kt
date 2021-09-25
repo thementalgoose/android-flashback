@@ -1,11 +1,17 @@
 package tmg.flashback.upnext.utils
 
 import java.util.*
+import org.threeten.bp.LocalDateTime
+import org.threeten.bp.ZoneOffset
+import org.threeten.bp.temporal.TemporalField
 import tmg.flashback.upnext.model.NotificationChannel
 
 object NotificationUtils {
-    fun getRequestCode(season: Int, round: Int, value: Int): Int {
-        return ((season * 10000) + (round * 100) + value).coerceIn(0, Int.MAX_VALUE)
+    fun getRequestCode(date: LocalDateTime): Int {
+        return date
+            .toEpochSecond(ZoneOffset.UTC)
+            .coerceIn(0, Int.MAX_VALUE.toLong())
+            .toInt()
     }
 
     fun getCategoryBasedOnLabel(label: String): NotificationChannel {

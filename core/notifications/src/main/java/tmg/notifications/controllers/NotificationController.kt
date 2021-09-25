@@ -80,6 +80,9 @@ class NotificationController(
         notificationRepository.notificationIds = emptySet()
     }
 
+    val notificationsCurrentlyScheduled: Set<Int>
+        get() = notificationRepository.notificationIds
+
     /**
      * Subscribe to receive notifications from these topics
      */
