@@ -268,7 +268,7 @@ internal class UpNextRepositoryTest {
 
         assertEquals(NotificationReminder.MINUTES_15, sut.notificationReminderPeriod)
         verify {
-            mockPreferenceManager.getInt(keyNotificationOnboarding, 1800)
+            mockPreferenceManager.getInt(keyNotificationReminder, 1800)
         }
     }
 
@@ -280,7 +280,7 @@ internal class UpNextRepositoryTest {
 
         assertEquals(NotificationReminder.MINUTES_30, sut.notificationReminderPeriod)
         verify {
-            mockPreferenceManager.getInt(keyNotificationOnboarding, 1800)
+            mockPreferenceManager.getInt(keyNotificationReminder, 1800)
         }
     }
 
