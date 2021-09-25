@@ -11,6 +11,7 @@ import tmg.common.controllers.ForceUpgradeController
 import tmg.configuration.controllers.ConfigController
 import tmg.flashback.managers.appshortcuts.AppShortcutManager
 import tmg.flashback.rss.controllers.RSSController
+import tmg.flashback.upnext.controllers.UpNextController
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertEventFired
 import tmg.testutils.livedata.test
@@ -21,6 +22,7 @@ internal class SyncViewModelTest: BaseTest() {
     private var mockRssController: RSSController = mockk(relaxed = true)
     private var mockConfigurationManager: ConfigController = mockk(relaxed = true)
     private var mockForceUpgradeController: ForceUpgradeController = mockk(relaxed = true)
+    private var mockUpNextController: UpNextController = mockk(relaxed = true)
 
     private lateinit var sut: SyncViewModel
 
@@ -34,7 +36,7 @@ internal class SyncViewModelTest: BaseTest() {
     }
 
     private fun initSUT() {
-        sut = SyncViewModel(mockAppShortcutManager, mockRssController, mockConfigurationManager, mockForceUpgradeController)
+        sut = SyncViewModel(mockAppShortcutManager, mockRssController, mockConfigurationManager, mockForceUpgradeController, mockUpNextController)
     }
 
     @Test
@@ -72,6 +74,7 @@ internal class SyncViewModelTest: BaseTest() {
         initSUT()
         sut.inputs.start()
 
+        verify { mockUpNextController.scheduleNotifications() }
         verify { mockAppShortcutManager.enable() }
     }
 
@@ -82,6 +85,7 @@ internal class SyncViewModelTest: BaseTest() {
         initSUT()
         sut.inputs.start()
 
+        verify { mockUpNextController.scheduleNotifications() }
         verify { mockAppShortcutManager.disable() }
     }
 

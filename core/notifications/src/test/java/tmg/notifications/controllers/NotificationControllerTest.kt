@@ -2,45 +2,46 @@ package tmg.notifications.controllers
 
 import io.mockk.*
 import kotlinx.coroutines.test.runBlockingTest
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import org.threeten.bp.LocalDateTime
 import tmg.notifications.NotificationRegistration
-import tmg.notifications.managers.PushNotificationManager
+import tmg.notifications.managers.RemoteNotificationManager
+import tmg.notifications.managers.SystemAlarmManager
+import tmg.notifications.managers.SystemNotificationManager
 import tmg.notifications.repository.NotificationRepository
 import tmg.testutils.BaseTest
 
 internal class NotificationControllerTest: BaseTest() {
 
     private val mockNotificationRepository: NotificationRepository = mockk(relaxed = true)
-    private val mockNotificationManager: PushNotificationManager = mockk(relaxed = true)
+    private val mockSystemNotificationManager: SystemNotificationManager = mockk(relaxed = true)
+    private val mockRemoteNotificationManager: RemoteNotificationManager = mockk(relaxed = true)
+    private val mockAlarmManager: SystemAlarmManager = mockk(relaxed = true)
 
     private lateinit var sut: NotificationController
 
     private fun initSUT() {
-        sut = NotificationController(mockNotificationRepository, mockNotificationManager)
+        sut = NotificationController(mockNotificationRepository, mockSystemNotificationManager, mockRemoteNotificationManager, mockAlarmManager)
     }
 
     @Test
     fun `subscribe method subscribes to topics if all are set to default`() = coroutineTest {
-        coEvery { mockNotificationManager.subscribeToTopic(any()) } returns true
-        every { mockNotificationRepository.enabledRace } returns NotificationRegistration.DEFAULT
-        every { mockNotificationRepository.enabledQualifying } returns NotificationRegistration.DEFAULT
+        coEvery { mockRemoteNotificationManager.subscribeToTopic(any()) } returns true
         every { mockNotificationRepository.enabledSeasonInfo } returns NotificationRegistration.DEFAULT
 
         initSUT()
         runBlockingTest {
-            sut.subscribe()
+            sut.subscribeToRemoteNotifications()
         }
 
         coVerify {
-            mockNotificationManager.subscribeToTopic(keyTopicRace)
-            mockNotificationManager.subscribeToTopic(keyTopicQualifying)
-            mockNotificationManager.subscribeToTopic(keyTopicSeasonInfo)
+            mockRemoteNotificationManager.subscribeToTopic(keyTopicSeasonInfo)
+            // Legacy
+            mockRemoteNotificationManager.unsubscribeToTopic("race")
+            mockRemoteNotificationManager.unsubscribeToTopic("qualifying")
         }
         verify {
-            mockNotificationRepository.enabledRace
-            mockNotificationRepository.enabledRace = NotificationRegistration.OPT_IN
-            mockNotificationRepository.enabledQualifying
-            mockNotificationRepository.enabledQualifying = NotificationRegistration.OPT_IN
             mockNotificationRepository.enabledSeasonInfo
             mockNotificationRepository.enabledSeasonInfo = NotificationRegistration.OPT_IN
         }
@@ -48,57 +49,132 @@ internal class NotificationControllerTest: BaseTest() {
 
     @Test
     fun `subscribe method doesnt update repository if subscription fails`() {
-        coEvery { mockNotificationManager.subscribeToTopic(any()) } returns false
-        every { mockNotificationRepository.enabledRace } returns NotificationRegistration.DEFAULT
-        every { mockNotificationRepository.enabledQualifying } returns NotificationRegistration.DEFAULT
+        coEvery { mockRemoteNotificationManager.subscribeToTopic(any()) } returns false
         every { mockNotificationRepository.enabledSeasonInfo } returns NotificationRegistration.DEFAULT
 
         initSUT()
         runBlockingTest {
-            sut.subscribe()
+            sut.subscribeToRemoteNotifications()
         }
 
         coVerify {
-            mockNotificationManager.subscribeToTopic(keyTopicRace)
-            mockNotificationManager.subscribeToTopic(keyTopicQualifying)
-            mockNotificationManager.subscribeToTopic(keyTopicSeasonInfo)
+            mockRemoteNotificationManager.subscribeToTopic(keyTopicSeasonInfo)
         }
         verify {
-            mockNotificationRepository.enabledRace
-            mockNotificationRepository.enabledQualifying
             mockNotificationRepository.enabledSeasonInfo
         }
         verify(exactly = 0) {
-            mockNotificationRepository.enabledRace = NotificationRegistration.OPT_IN
-            mockNotificationRepository.enabledQualifying = NotificationRegistration.OPT_IN
             mockNotificationRepository.enabledSeasonInfo = NotificationRegistration.OPT_IN
         }
     }
 
     @Test
     fun `subscribe method does nothing if topics if already subscribed`() {
-        every { mockNotificationRepository.enabledRace } returns NotificationRegistration.OPT_IN
-        every { mockNotificationRepository.enabledQualifying } returns NotificationRegistration.OPT_IN
         every { mockNotificationRepository.enabledSeasonInfo } returns NotificationRegistration.OPT_IN
 
         initSUT()
         runBlockingTest {
-            sut.subscribe()
+            sut.subscribeToRemoteNotifications()
         }
 
         coVerify(exactly = 0) {
-            mockNotificationManager.subscribeToTopic(any())
+            mockRemoteNotificationManager.subscribeToTopic(any())
         }
         verify(exactly = 0) {
-            mockNotificationRepository.enabledRace = NotificationRegistration.OPT_IN
-            mockNotificationRepository.enabledQualifying = NotificationRegistration.OPT_IN
             mockNotificationRepository.enabledSeasonInfo = NotificationRegistration.OPT_IN
         }
     }
 
+    //region Scheduling notifications
+
+    @Test
+    fun `scheduling notification schedules with manager and updates ids`() {
+
+        val expectedRequestCode: Int = 9
+        val expectedChannelId: String = "channelId"
+        val expectedTitle: String = "title"
+        val expectedText: String = "text"
+        val expectedTimestamp: LocalDateTime = LocalDateTime.now()
+
+        every { mockNotificationRepository.notificationIds } returns setOf(1,4)
+        initSUT()
+        sut.scheduleLocalNotification(expectedRequestCode, expectedChannelId, expectedTitle, expectedText, expectedTimestamp)
+        verify {
+            mockAlarmManager.schedule(expectedRequestCode, expectedChannelId, expectedTitle, expectedText, expectedTimestamp)
+            mockNotificationRepository.notificationIds = setOf(1,4,9)
+        }
+    }
+
+    //endregion
+
+    //region Cancel notifications
+
+    @Test
+    fun `cancel specific notification cancels and removes from repository`() {
+        every { mockNotificationRepository.notificationIds } returns setOf(1,4)
+        initSUT()
+        sut.cancelLocalNotification(1)
+        verify {
+            mockAlarmManager.cancel(1)
+            mockNotificationRepository.notificationIds = setOf(4)
+        }
+    }
+
+    @Test
+    fun `cancel all notifications cancels request for all in repository and clears repository`() {
+        every { mockNotificationRepository.notificationIds } returns setOf(1,4)
+        initSUT()
+        sut.cancelAllNotifications()
+        verify {
+            mockAlarmManager.cancel(1)
+            mockAlarmManager.cancel(4)
+            mockNotificationRepository.notificationIds = emptySet()
+        }
+    }
+
+    //endregion
+
+    //region Notification channels
+
+    @Test
+    fun `create notification channel tells local manager to create channel`() {
+        val expectedChannelId = "channelId"
+        val expectedLabel = 3
+        initSUT()
+        sut.createNotificationChannel(expectedChannelId, expectedLabel)
+        verify {
+            mockSystemNotificationManager.createChannel(expectedChannelId, expectedLabel)
+        }
+    }
+
+    @Test
+    fun `delete notification channel tells local manager to delete channel`() {
+        val expectedChannelId = "channelId"
+        initSUT()
+        sut.deleteNotificationChannel(expectedChannelId)
+        verify {
+            mockSystemNotificationManager.cancelChannel(expectedChannelId)
+        }
+    }
+
+    //endregion
+
+    //region Get currently scheduled ids
+
+    @Test
+    fun `currently scheduled notification ids returns from repository`() {
+        val expected = setOf(198, 12039493)
+        every { mockNotificationRepository.notificationIds } returns expected
+        initSUT()
+        assertEquals(expected, sut.notificationsCurrentlyScheduled)
+        verify {
+            mockNotificationRepository.notificationIds
+        }
+    }
+
+    //endregion
+
     companion object {
-        private const val keyTopicRace: String = "race"
-        private const val keyTopicQualifying: String = "qualifying"
         private const val keyTopicSeasonInfo: String = "seasonInfo"
     }
 }

@@ -9,30 +9,12 @@ class NotificationRepository(
 ) {
 
     companion object {
-        private const val keyNotificationRace: String = "NOTIFICATION_RACE"
-        private const val keyNotificationQualifying: String = "NOTIFICATION_QUALIFYING"
         private const val keyNotificationSeasonInfo: String = "NOTIFICATION_SEASON_INFO"
+
+        private const val keyNotificationIds: String = "NOTIFICATION_IDS"
     }
 
-    // TODO: Move these out!
-    var enabledRace: NotificationRegistration
-        set(value) = preferenceManager.save(keyNotificationRace, value.key)
-        get() = preferenceManager
-            .getString(keyNotificationRace, "")
-            ?.toEnum<NotificationRegistration> {
-                it.key
-            }
-            ?: NotificationRegistration.DEFAULT
-
-    var enabledQualifying: NotificationRegistration
-        set(value) = preferenceManager.save(keyNotificationQualifying, value.key)
-        get() = preferenceManager
-            .getString(keyNotificationQualifying, "")
-            ?.toEnum<NotificationRegistration> {
-                it.key
-            }
-            ?: NotificationRegistration.DEFAULT
-
+    // TODO: To be removed
     var enabledSeasonInfo: NotificationRegistration
         set(value) = preferenceManager.save(keyNotificationSeasonInfo, value.key)
         get() = preferenceManager
@@ -41,5 +23,12 @@ class NotificationRepository(
                 it.key
             }
             ?: NotificationRegistration.DEFAULT
+
+
+    var notificationIds: Set<Int>
+        get() = preferenceManager.getSet(keyNotificationIds, setOf())
+            .mapNotNull { it.toIntOrNull() }
+            .toSet()
+        set(value) = preferenceManager.save(keyNotificationIds, value.map { it.toString() }.toSet())
 
 }

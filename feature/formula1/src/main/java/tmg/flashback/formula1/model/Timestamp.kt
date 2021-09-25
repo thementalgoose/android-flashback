@@ -73,6 +73,15 @@ data class Timestamp(
         }
 
     /**
+     * Is the timestamp considered in the past based on UTC?
+     */
+    fun isInPastRelativeToo(deltaSeconds: Long) = if (deviceLocalDateTime != null) {
+        deviceLocalDateTime!! < LocalDateTime.now().plusSeconds(deltaSeconds)
+    } else {
+        originalDate < LocalDate.now()
+    }
+
+    /**
      * Is the timestamp considered to be today
      */
     val isToday: Boolean
