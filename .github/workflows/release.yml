@@ -83,8 +83,11 @@ jobs:
     if: always()
     steps:
 
-      - name: Git tag
-        run: echo "GIT_TAG=`echo $(git describe --tags --abbrev=0)`" >> $GITHUB_ENV
+      - name: Release information
+        run: |
+          content=`cat releases.json`
+          echo "versionCode=$(echo `sh ./scripts/getVersionCode.sh`)" >> $GITHUB_ENV
+          echo "versionName=$(echo `sh ./scripts/getVersionName.sh`)" >> $GITHUB_ENV
 
       - name: Notify discord of failure
         uses: sarisia/actions-status-discord@v1
@@ -93,7 +96,7 @@ jobs:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         with:
           nodetail: true
-          title: "Release ${{ env.GIT_TAG }} deployment to internal test track failed"
+          title: "Release ${{ env.versionName }} (${{ env.versionCode }}) deployment to internal test track failed"
           description: "Run number ${{ github.run_number }} [Actions](https://github.com/thementalgoose/android-flashback/actions)"
           color: 0xff91a4
 
@@ -104,7 +107,7 @@ jobs:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         with:
           nodetail: true
-          title: "Release ${{ env.GIT_TAG }} deployment to internal test track successful"
+          title: "Release ${{ env.versionName }} (${{ env.versionCode }}) deployment to internal test track successful"
           description: "Run number ${{ github.run_number }} [Actions](https://github.com/thementalgoose/android-flashback/actions)"
           color: 0x35a55f
 
