@@ -65,14 +65,14 @@ class UpNextSettingsViewModel(
                 upNextController.notificationSeasonInfo = it
             }
         ))
-//        add(SettingsModel.Header(R.string.settings_up_next_title))
-//        add(SettingsModel.Pref(
-//            title = R.string.settings_up_next_time_before_title,
-//            description = R.string.settings_up_next_time_before_description,
-//            onClick = {
-//                openTimePicker.value = Event()
-//            }
-//        ))
+        add(SettingsModel.Header(R.string.settings_up_next_title))
+        add(SettingsModel.Pref(
+            title = R.string.settings_up_next_time_before_title,
+            description = R.string.settings_up_next_time_before_description,
+            onClick = {
+                openTimePicker.value = Event()
+            }
+        ))
     }
 
     override val openTimePicker: MutableLiveData<Event> = MutableLiveData()

@@ -1,5 +1,6 @@
 package tmg.flashback.upnext.controllers
 
+import android.content.Context
 import android.util.Log
 import java.time.format.TextStyle
 import java.util.*
@@ -12,18 +13,22 @@ import org.threeten.bp.ZoneId
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.formula1.model.Timestamp
 import tmg.flashback.upnext.BuildConfig
+import tmg.flashback.upnext.R
 import tmg.flashback.upnext.model.NotificationChannel
 import tmg.flashback.upnext.model.NotificationReminder
 import tmg.flashback.upnext.repository.UpNextRepository
 import tmg.flashback.upnext.repository.model.UpNextSchedule
 import tmg.flashback.upnext.utils.NotificationUtils
 import tmg.flashback.upnext.utils.NotificationUtils.getCategoryBasedOnLabel
+import tmg.flashback.upnext.utils.NotificationUtils.getNotificationTitleText
 import tmg.notifications.controllers.NotificationController
+import tmg.utilities.models.StringHolder
 
 /**
  * Up Next functionality on the home screen
  */
 class UpNextController(
+    private val applicationContext: Context,
     private val notificationController: NotificationController,
     private val upNextRepository: UpNextRepository
 ) {
@@ -93,8 +98,12 @@ class UpNextController(
             GlobalScope.launch { scheduleNotifications(force = true) }
         }
 
-    val notificationReminder: NotificationReminder
+    var notificationReminder: NotificationReminder
         get() = upNextRepository.notificationReminderPeriod
+        set(value) {
+            upNextRepository.notificationReminderPeriod = value
+            GlobalScope.launch { scheduleNotifications(force = true) }
+        }
 
     /**
      * Schedule notifications
@@ -152,26 +161,19 @@ class UpNextController(
 
         notificationController.cancelAllNotifications()
 
+        val reminderPeriod = upNextRepository.notificationReminderPeriod
+
         upNextItemsToSchedule.forEach {
 
             // Remove the notification reminder period
-            val scheduleTime = it.utcDateTime.minusSeconds(upNextRepository.notificationReminderPeriod.seconds.toLong())
+            val scheduleTime = it.utcDateTime.minusSeconds(reminderPeriod.seconds.toLong())
 
-            var deviceDateTime: LocalDateTime? = null
-            it.timestamp.on(
-                dateAndTime = { utc, local ->
-                    deviceDateTime = local
-                }
-            )
-
-            val timezone = ZoneId.systemDefault().id
-            val at = deviceDateTime?.let { " at ${it.toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm"))} $timezone (device time)"} ?: ""
-            val text = "${it.title} ${it.label} starts in 30 minutes$at"
+            val (title, text) = getNotificationTitleText(applicationContext, it.title, it.label, it.timestamp, reminderPeriod)
 
             notificationController.scheduleLocalNotification(
                 requestCode = it.requestCode,
                 channelId = getCategoryBasedOnLabel(it.label).channelId,
-                title = "${it.label} starts in 30 minutes",
+                title = title,
                 text = text,
                 timestamp = scheduleTime
             )

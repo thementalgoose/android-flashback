@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import tmg.configuration.manager.ConfigManager
 import tmg.core.prefs.manager.PreferenceManager
+import tmg.flashback.upnext.model.NotificationReminder
 import tmg.flashback.upnext.repository.json.UpNextItemJson
 import tmg.flashback.upnext.repository.json.UpNextJson
 import tmg.flashback.upnext.repository.json.UpNextScheduleJson
@@ -257,6 +258,44 @@ internal class UpNextRepositoryTest {
 
     //endregion
 
+    //region Notification preferences - Reminder
+
+    @Test
+    fun `is notification reminder reads value from preferences repository`() {
+        every { mockPreferenceManager.getInt(any(), any()) } returns 900
+
+        initSUT()
+
+        assertEquals(NotificationReminder.MINUTES_15, sut.notificationReminderPeriod)
+        verify {
+            mockPreferenceManager.getInt(keyNotificationReminder, 1800)
+        }
+    }
+
+    @Test
+    fun `is notification reminder reads value from preferences repository with invalid defaults to 30 mins`() {
+        every { mockPreferenceManager.getInt(any(), any()) } returns 1
+
+        initSUT()
+
+        assertEquals(NotificationReminder.MINUTES_30, sut.notificationReminderPeriod)
+        verify {
+            mockPreferenceManager.getInt(keyNotificationReminder, 1800)
+        }
+    }
+
+    @Test
+    fun `setting notification reminder enabled saves value from preferences repository`() {
+        initSUT()
+
+        sut.notificationReminderPeriod = NotificationReminder.MINUTES_60
+        verify {
+            mockPreferenceManager.save(keyNotificationReminder, NotificationReminder.MINUTES_60.seconds)
+        }
+    }
+
+    //endregion
+
     companion object {
         private const val keyUpNext: String = "up_next"
 
@@ -264,7 +303,7 @@ internal class UpNextRepositoryTest {
         private const val keyNotificationQualifying: String = "UP_NEXT_NOTIFICATION_QUALIFYING"
         private const val keyNotificationFreePractice: String = "UP_NEXT_NOTIFICATION_FREE_PRACTICE"
         private const val keyNotificationOther: String = "UP_NEXT_NOTIFICATION_OTHER"
-
+        private const val keyNotificationReminder: String = "UP_NEXT_NOTIFICATION_REMINDER"
 
         private const val keyNotificationOnboarding: String = "UP_NEXT_NOTIFICATION_ONBOARDING"
     }
