@@ -16,17 +16,6 @@ jobs:
         with:
           pattern: "\\.json$"
 
-      - name: Release information
-        run: |
-          content=`cat releases.json`
-          echo "versionCode=$(echo `sh ./scripts/getVersionCode.sh`)" >> $GITHUB_ENV
-          echo "versionName=$(echo `sh ./scripts/getVersionName.sh`)" >> $GITHUB_ENV
-
-      - name: Further test
-        run: |
-          echo ${{ env.versionCode }}
-          echo ${{ env.versionName }}
-
   unit_test_diff_check:
     runs-on: ubuntu-latest
     steps:

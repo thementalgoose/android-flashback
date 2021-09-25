@@ -86,15 +86,8 @@ jobs:
       - name: Release information
         run: |
           content=`cat releases.json`
-          versionCodeString=`echo $content | grep versionCode | tail -1`
-          versionNameString=`echo $content | grep versionName | tail -1`
-
-          versionCode=`echo "${versionCodeString//[^0-9]/}"`
-          versionName=`echo "${versionNameString//[^0-9.]/}"`
-
-          echo 'versionCode=$versionCode' >> $GITHUB_ENV
-          echo 'versionName=$versionName' >> $GITHUB_ENV
-
+          echo "versionCode=$(echo `sh ./scripts/getVersionCode.sh`)" >> $GITHUB_ENV
+          echo "versionName=$(echo `sh ./scripts/getVersionName.sh`)" >> $GITHUB_ENV
 
       - name: Notify discord of failure
         uses: sarisia/actions-status-discord@v1
