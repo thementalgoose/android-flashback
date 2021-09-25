@@ -10,4 +10,7 @@
     <dimen name="widgetFlagSize">16dp</dimen>
     <dimen name="widgetMinWidth">250dp</dimen>
 
+    <dimen name="upNextBellIconIndicatorWidth">16dp</dimen>
+    <dimen name="upNextBellIconIndicatorHeight">16dp</dimen>
+
 </resources>
