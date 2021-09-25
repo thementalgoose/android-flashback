@@ -20,7 +20,7 @@ jobs:
         run: |
           content=`cat releases.json`
           echo "versionCode=$(sh ./scripts/getVersionCode.sh)" >> $GITHUB_ENV
-          echo "versionName=$(sh ./scripts/getVersionCode.sh)" >> $GITHUB_ENV
+          echo "versionName=$(sh ./scripts/getVersionName.sh)" >> $GITHUB_ENV
 
       - name: Further test
         run: |
