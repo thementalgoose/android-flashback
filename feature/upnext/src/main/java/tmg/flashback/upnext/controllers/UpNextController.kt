@@ -93,8 +93,12 @@ class UpNextController(
             GlobalScope.launch { scheduleNotifications(force = true) }
         }
 
-    val notificationReminder: NotificationReminder
+    var notificationReminder: NotificationReminder
         get() = upNextRepository.notificationReminderPeriod
+        set(value) {
+            upNextRepository.notificationReminderPeriod = value
+            GlobalScope.launch { scheduleNotifications(force = true) }
+        }
 
     /**
      * Schedule notifications

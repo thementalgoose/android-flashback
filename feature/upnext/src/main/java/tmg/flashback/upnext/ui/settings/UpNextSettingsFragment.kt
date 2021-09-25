@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.Toast
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.core.ui.settings.SettingsFragment
+import tmg.flashback.upnext.ui.settings.reminder.UpNextReminderBottomSheetFragment
 import tmg.utilities.extensions.observeEvent
 
 class UpNextSettingsFragment: SettingsFragment<UpNextSettingsViewModel>() {
@@ -21,7 +22,8 @@ class UpNextSettingsFragment: SettingsFragment<UpNextSettingsViewModel>() {
         super.onViewCreated(view, savedInstanceState)
 
         observeEvent(viewModel.outputs.openTimePicker) {
-            Toast.makeText(context, "Open Time Picker", Toast.LENGTH_LONG).show()
+            UpNextReminderBottomSheetFragment()
+                .show(parentFragmentManager, "TIME_PICKER")
         }
     }
 }

@@ -417,6 +417,16 @@ internal class UpNextControllerTest : BaseTest() {
         }
     }
 
+    @Test
+    fun `is notification reminder period writes value from preferences repository`() {
+        initSUT()
+
+        sut.notificationReminder = NotificationReminder.MINUTES_60
+        verify {
+            mockUpNextRepository.notificationReminderPeriod = NotificationReminder.MINUTES_60
+        }
+    }
+
     //endregion
 
     //region Notification onboarding

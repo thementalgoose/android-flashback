@@ -8,8 +8,11 @@ import org.junit.jupiter.api.Test
 import tmg.flashback.upnext.R
 import tmg.flashback.upnext.controllers.UpNextController
 import tmg.flashback.upnext.testutils.assertExpectedOrder
+import tmg.flashback.upnext.testutils.findPref
 import tmg.flashback.upnext.testutils.findSwitch
 import tmg.testutils.BaseTest
+import tmg.testutils.livedata.assertEventFired
+import tmg.testutils.livedata.test
 
 internal class UpNextSettingsViewModelTest: BaseTest() {
 
@@ -38,7 +41,9 @@ internal class UpNextSettingsViewModelTest: BaseTest() {
             Pair(R.string.settings_up_next_category_race_title, R.string.settings_up_next_category_race_descrition),
             Pair(R.string.settings_up_next_category_qualifying_title, R.string.settings_up_next_category_qualifying_descrition),
             Pair(R.string.settings_up_next_category_free_practice_title, R.string.settings_up_next_category_free_practice_descrition),
-            Pair(R.string.settings_up_next_category_other_title, R.string.settings_up_next_category_other_descrition)
+            Pair(R.string.settings_up_next_category_other_title, R.string.settings_up_next_category_other_descrition),
+            Pair(R.string.settings_up_next_title, null),
+            Pair(R.string.settings_up_next_time_before_title, R.string.settings_up_next_time_before_description)
         )
 
         sut.models.assertExpectedOrder(expected)
@@ -77,6 +82,15 @@ internal class UpNextSettingsViewModelTest: BaseTest() {
         sut.clickSwitchPreference(sut.models.findSwitch(R.string.settings_up_next_category_other_title), true)
         verify {
             mockUpNextController.notificationSeasonInfo = true
+        }
+    }
+
+    @Test
+    fun `clicking toggle for reminders opens event`() {
+        initSUT()
+        sut.clickPreference(sut.models.findPref(R.string.settings_up_next_time_before_title))
+        sut.outputs.openTimePicker.test {
+            assertEventFired()
         }
     }
 }
