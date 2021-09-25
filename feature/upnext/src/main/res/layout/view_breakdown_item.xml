@@ -15,19 +15,33 @@
         style="@style/Text.Dashboard.UpNext.Item.Label"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/paddingXSmall"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/time"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Qualifying" />
 
+    <ImageView
+        android:id="@+id/bellIndicator"
+        android:layout_width="@dimen/upNextBellIconIndicatorWidth"
+        android:layout_height="@dimen/upNextBellIconIndicatorHeight"
+        android:alpha="0.4"
+        android:contentDescription="@string/ab_up_next_bell_indicator"
+        android:importantForAccessibility="no"
+        android:src="@drawable/ic_notification_indicator_bell"
+        app:layout_constraintBottom_toBottomOf="@id/time"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/time" />
+
     <TextView
         android:id="@+id/time"
         style="@style/Text.Dashboard.UpNext.Item.Time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingEnd="@dimen/paddingXSmall"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/bellIndicator"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="14:00" />
 

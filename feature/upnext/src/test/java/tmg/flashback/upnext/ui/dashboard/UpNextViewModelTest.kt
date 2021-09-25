@@ -29,6 +29,10 @@ internal class UpNextViewModelTest: BaseTest() {
 
     @BeforeEach
     internal fun setUp() {
+        every { mockUpNextController.notificationRace } returns true
+        every { mockUpNextController.notificationQualifying } returns true
+        every { mockUpNextController.notificationFreePractice } returns false
+        every { mockUpNextController.notificationSeasonInfo } returns false
         every { mockUpNextController.getNextEvent() } returns mockUpNext
     }
 
@@ -75,13 +79,13 @@ internal class UpNextViewModelTest: BaseTest() {
             assertValue(listOf(
                 UpNextBreakdownModel.Divider,
                 UpNextBreakdownModel.Day("Wednesday 1st January", LocalDate.of(2020, 1, 1)),
-                UpNextBreakdownModel.Item("practice", practiceTimestamp),
+                UpNextBreakdownModel.Item("practice", practiceTimestamp, false),
                 UpNextBreakdownModel.Divider,
                 UpNextBreakdownModel.Day("Thursday 2nd January", LocalDate.of(2020, 1, 2)),
-                UpNextBreakdownModel.Item("qualifying", qualifyingTimestamp),
+                UpNextBreakdownModel.Item("qualifying", qualifyingTimestamp, true),
                 UpNextBreakdownModel.Divider,
                 UpNextBreakdownModel.Day("Friday 3rd January", LocalDate.of(2020, 1, 3)),
-                UpNextBreakdownModel.Item("race", raceTimestamp)
+                UpNextBreakdownModel.Item("race", raceTimestamp, true)
             ))
         }
     }
@@ -119,11 +123,11 @@ internal class UpNextViewModelTest: BaseTest() {
             assertValue(listOf(
                 UpNextBreakdownModel.Divider,
                 UpNextBreakdownModel.Day("Wednesday 1st January", LocalDate.of(2020, 1, 1)),
-                UpNextBreakdownModel.Item("practice", practiceTimestamp),
+                UpNextBreakdownModel.Item("practice", practiceTimestamp, false),
                 UpNextBreakdownModel.Divider,
                 UpNextBreakdownModel.Day("Thursday 2nd January", LocalDate.of(2020, 1, 2)),
-                UpNextBreakdownModel.Item("qualifying", qualifyingTimestamp),
-                UpNextBreakdownModel.Item("race", raceTimestamp)
+                UpNextBreakdownModel.Item("qualifying", qualifyingTimestamp, true),
+                UpNextBreakdownModel.Item("race", raceTimestamp, true)
             ))
         }
     }
@@ -161,9 +165,9 @@ internal class UpNextViewModelTest: BaseTest() {
             assertValue(listOf(
                 UpNextBreakdownModel.Divider,
                 UpNextBreakdownModel.Day("Monday 9th January", LocalDate.of(2023, 1, 9)),
-                UpNextBreakdownModel.Item("practice", practiceTimestamp),
-                UpNextBreakdownModel.Item("qualifying", qualifyingTimestamp),
-                UpNextBreakdownModel.Item("race", raceTimestamp)
+                UpNextBreakdownModel.Item("practice", practiceTimestamp, false),
+                UpNextBreakdownModel.Item("qualifying", qualifyingTimestamp, true),
+                UpNextBreakdownModel.Item("race", raceTimestamp, true)
             ))
         }
     }
