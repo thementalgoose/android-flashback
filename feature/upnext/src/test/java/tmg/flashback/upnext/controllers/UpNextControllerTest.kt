@@ -6,6 +6,7 @@ import io.mockk.verify
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.threeten.bp.Clock
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.LocalTime
@@ -462,7 +463,9 @@ internal class UpNextControllerTest : BaseTest() {
         verifyScheduleLocal(times = 0, past, 1, past.values[1])
         verifyScheduleLocal(times = 0, present, 0, present.values[0])
 
-        verifyScheduleLocal(times = 1, present, 1, present.values[1])
+        // Qualifying while in the future is ahead of 30 minute notice period!
+        verifyScheduleLocal(times = 0, present, 1, present.values[1])
+
         verifyScheduleLocal(times = 1, present, 2, present.values[2])
         verifyScheduleLocal(times = 1, future, 0, future.values[0])
     }
@@ -493,20 +496,20 @@ internal class UpNextControllerTest : BaseTest() {
     private val past: UpNextSchedule = generateUpNextItem(
         season = 2020,
         round = 2,
-            "qualifying" to LocalDateTime.now().minusDays(2L),
-            "race" to LocalDateTime.now().minusDays(1L)
+            "qualifying" to LocalDateTime.now(Clock.systemUTC()).minusDays(2L),
+            "race" to LocalDateTime.now(Clock.systemUTC()).minusDays(1L)
     )
     private val present: UpNextSchedule = generateUpNextItem(
         season = 2020,
         round = 3,
-            "fp3" to LocalDateTime.now().minusHours(1L),
-            "qualifying" to LocalDateTime.now().plusMinutes(5L),
-            "race" to LocalDateTime.now().plusHours(8L)
+            "fp3" to LocalDateTime.now(Clock.systemUTC()).minusHours(1L),
+            "qualifying" to LocalDateTime.now(Clock.systemUTC()).plusMinutes(5L),
+            "race" to LocalDateTime.now(Clock.systemUTC()).plusHours(8L)
     )
     private val future: UpNextSchedule = generateUpNextItem(
         season = 2020,
         round = 4,
-            "fp3" to LocalDateTime.now().plusDays(1L)
+            "fp3" to LocalDateTime.now(Clock.systemUTC()).plusDays(1L)
     )
     private val exampleUpNextList: List<UpNextSchedule> = listOf(
         past, present, future
