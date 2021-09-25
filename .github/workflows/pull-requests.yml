@@ -12,14 +12,14 @@ jobs:
         run: echo "GIT_TAG=`echo $(git describe --tags --abbrev=0)`" >> $GITHUB_ENV
 
       - name: test
-        run: echo "${{ EVENT_PAYLOAD }}"
+        run: echo "${{ EVENT_PAYLOAD }}" >> $GITHUB_ENV
 
       - name: Send webhook
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         uses: Ilshidur/action-discord@master
         with:
-          args: 'PR message ${{ GIT_TAG }} - '
+          args: "PR message - "
 
   json_checker:
     runs-on: ubuntu-latest
