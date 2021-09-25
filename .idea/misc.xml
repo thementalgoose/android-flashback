@@ -78,6 +78,7 @@
         <entry key="feature/statistics/src/main/res/menu/menu_race.xml" value="0.5479166666666667" />
         <entry key="feature/upnext/src/main/res/drawable/background_timezone.xml" value="0.4010416666666667" />
         <entry key="feature/upnext/src/main/res/drawable/ic_current_day_indicator.xml" value="0.5635416666666667" />
+        <entry key="feature/upnext/src/main/res/drawable/ic_notification_indicator_bell.xml" value="0.5458333333333333" />
         <entry key="feature/upnext/src/main/res/drawable/ic_notification_practice.xml" value="0.49907407407407406" />
         <entry key="feature/upnext/src/main/res/drawable/ic_notification_qualifying.xml" value="0.49907407407407406" />
         <entry key="feature/upnext/src/main/res/drawable/ic_notification_race.xml" value="0.49907407407407406" />
@@ -87,7 +88,7 @@
         <entry key="feature/upnext/src/main/res/layout/fragment_up_next.xml" value="0.30572916666666666" />
         <entry key="feature/upnext/src/main/res/layout/view_breakdown_day.xml" value="0.5" />
         <entry key="feature/upnext/src/main/res/layout/view_breakdown_divider.xml" value="0.3848958333333333" />
-        <entry key="feature/upnext/src/main/res/layout/view_breakdown_item.xml" value="0.3026041666666667" />
+        <entry key="feature/upnext/src/main/res/layout/view_breakdown_item.xml" value="0.7880377754459601" />
         <entry key="feature/upnext/src/main/res/layout/view_timezone.xml" value="0.3848958333333333" />
         <entry key="feature/upnext/src/main/res/layout/view_up_next_time_list.xml" value="0.3026041666666667" />
       </map>

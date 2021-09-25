@@ -11,6 +11,7 @@ sealed class UpNextBreakdownModel(
     data class Item(
         val label: String,
         val item: Timestamp,
+        val showBellIndicator: Boolean,
         val isInPast: Boolean = item.isInPast
     ): UpNextBreakdownModel(R.layout.view_breakdown_item)
 

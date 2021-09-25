@@ -8,10 +8,12 @@ import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.formula1.model.Timestamp
 import tmg.flashback.upnext.R
 import tmg.flashback.upnext.controllers.UpNextController
+import tmg.flashback.upnext.model.NotificationChannel
 import tmg.flashback.upnext.repository.json.UpNextItemJson
 import tmg.flashback.upnext.repository.model.UpNextSchedule
 import tmg.flashback.upnext.repository.model.UpNextScheduleTimestamp
 import tmg.flashback.upnext.ui.timezone.TimezoneItem
+import tmg.flashback.upnext.utils.NotificationUtils
 import tmg.flashback.upnext.utils.daysBetween
 import tmg.utilities.extensions.ordinalAbbreviation
 
@@ -81,7 +83,13 @@ class UpNextViewModel(
                             addAll(values
                                 .sortedBy { it.timestamp.string() }
                                 .map {
-                                    UpNextBreakdownModel.Item(it.label, it.timestamp)
+                                    val showBellIndicator = when (NotificationUtils.getCategoryBasedOnLabel(it.label)) {
+                                        NotificationChannel.RACE -> upNextController.notificationRace
+                                        NotificationChannel.QUALIFYING -> upNextController.notificationQualifying
+                                        NotificationChannel.FREE_PRACTICE -> upNextController.notificationFreePractice
+                                        NotificationChannel.SEASON_INFO -> upNextController.notificationSeasonInfo
+                                    }
+                                    UpNextBreakdownModel.Item(it.label, it.timestamp, showBellIndicator)
                                 })
                         })
                     }
