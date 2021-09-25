@@ -11,7 +11,7 @@ import org.koin.android.ext.android.inject
 import tmg.notifications.R
 import tmg.notifications.navigation.NotificationNavigationProvider
 
-class NotificationService : FirebaseMessagingService() {
+class RemoteNotificationService : FirebaseMessagingService() {
 
     private val navigationProvider: NotificationNavigationProvider by inject()
 
@@ -55,5 +55,4 @@ class NotificationService : FirebaseMessagingService() {
 
         notificationManager.notify(0 /* ID of notification */, notificationBuilder.build())
     }
-
 }

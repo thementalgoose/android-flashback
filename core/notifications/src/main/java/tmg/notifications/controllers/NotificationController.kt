@@ -1,60 +1,119 @@
 package tmg.notifications.controllers
 
+import android.annotation.SuppressLint
 import android.os.Build
+import android.util.Log
 import androidx.annotation.StringRes
+import org.threeten.bp.LocalDateTime
+import tmg.notifications.BuildConfig
 import tmg.notifications.NotificationRegistration
-import tmg.notifications.R
-import tmg.notifications.managers.PushNotificationManager
+import tmg.notifications.managers.RemoteNotificationManager
+import tmg.notifications.managers.SystemAlarmManager
+import tmg.notifications.managers.SystemNotificationManager
 import tmg.notifications.repository.NotificationRepository
 
 class NotificationController(
     private val notificationRepository: NotificationRepository,
-    private val notificationManager: PushNotificationManager
+    private val systemNotificationManager: SystemNotificationManager,
+    private val remoteNotificationManager: RemoteNotificationManager,
+    private val alarmManager: SystemAlarmManager
 ) {
 
     companion object {
-        const val keyTopicRace: String = "race"
-        const val keyTopicQualifying: String = "qualifying"
-        const val keyTopicSeasonInfo: String = "seasonInfo"
+        const val channelIdOther: String = "seasonInfo"
     }
 
     /**
      * Notifications channels supported
      */
     val isNotificationChannelsSupported: Boolean
+        @SuppressLint("AnnotateVersionCheck")
         get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
+
+    /**
+     * Schedule a local notification
+     */
+    fun scheduleLocalNotification(
+        requestCode: Int,
+        channelId: String,
+        title: String,
+        text: String,
+        timestamp: LocalDateTime
+    ) {
+        alarmManager.schedule(requestCode, channelId, title, text, timestamp)
+        notificationRepository.notificationIds = notificationRepository.notificationIds
+            .toMutableSet()
+            .apply { add(requestCode) }
+
+        if (BuildConfig.DEBUG) {
+            Log.d("Flashback", "Scheduled notification $title / $text - $requestCode")
+        }
+    }
+
+    /**
+     * Cancel a specific notification
+     */
+    fun cancelLocalNotification(requestCode: Int) {
+        alarmManager.cancel(requestCode)
+        notificationRepository.notificationIds = notificationRepository.notificationIds
+            .toMutableSet()
+            .apply {
+                remove(requestCode)
+            }
+
+        if (BuildConfig.DEBUG) {
+            Log.d("Flashback", "Notification - Cancelled $requestCode, leaving ${notificationRepository.notificationIds}")
+        }
+    }
+
+    /**
+     * Cancel all local notifications that have been scheduled
+     */
+    fun cancelAllNotifications() {
+        if (BuildConfig.DEBUG) {
+            Log.d("Flashback", "Notification - Cancelling all (all = ${notificationRepository.notificationIds}")
+        }
+        notificationRepository.notificationIds
+            .forEach { requestCode ->
+                alarmManager.cancel(requestCode)
+            }
+        notificationRepository.notificationIds = emptySet()
+    }
+
+    val notificationsCurrentlyScheduled: Set<Int>
+        get() = notificationRepository.notificationIds
 
     /**
      * Subscribe to receive notifications from these topics
      */
-    suspend fun subscribe(): Boolean {
-        if (notificationRepository.enabledRace == NotificationRegistration.DEFAULT) {
-            val result = notificationManager.subscribeToTopic(keyTopicRace)
-            if (result) {
-                notificationRepository.enabledRace = NotificationRegistration.OPT_IN
-            }
-        }
-        if (notificationRepository.enabledQualifying == NotificationRegistration.DEFAULT) {
-            val result = notificationManager.subscribeToTopic(keyTopicQualifying)
-            if (result) {
-                notificationRepository.enabledQualifying = NotificationRegistration.OPT_IN
-            }
-        }
+    // TODO: To be removed / trimmed down to only default
+    suspend fun subscribeToRemoteNotifications(): Boolean {
+
+        // Legacy
+        remoteNotificationManager.unsubscribeToTopic("race")
+        remoteNotificationManager.unsubscribeToTopic("qualifying")
+
         if (notificationRepository.enabledSeasonInfo == NotificationRegistration.DEFAULT) {
-            val result = notificationManager.subscribeToTopic(keyTopicSeasonInfo)
+            val result = remoteNotificationManager.subscribeToTopic(channelIdOther)
             if (result) {
                 notificationRepository.enabledSeasonInfo = NotificationRegistration.OPT_IN
             }
         }
+
         return true
     }
 
     /**
      * Create notification channels for the device
      */
-    fun createNotificationChannels() {
-        notificationManager.createChannel(keyTopicRace, R.string.notification_channel_race)
-        notificationManager.createChannel(keyTopicQualifying, R.string.notification_channel_qualifying)
-        notificationManager.createChannel(keyTopicSeasonInfo, R.string.notification_channel_info)
+    fun createNotificationChannel(channelId: String, @StringRes label: Int) {
+        systemNotificationManager.createChannel(channelId, label)
+    }
+
+    /**
+     * Delete a notification channel
+     */
+    fun deleteNotificationChannel(channelId: String) {
+        systemNotificationManager.cancelChannel(channelId)
     }
 }

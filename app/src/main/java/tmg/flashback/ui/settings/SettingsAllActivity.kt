@@ -49,7 +49,7 @@ class SettingsAllActivity: BaseActivity(), NavController.OnDestinationChangedLis
             R.id.settingsStatisticsFragment -> updateTitle(R.string.settings_all_statistics)
             R.id.rssSettingsFragment -> updateTitle(R.string.settings_rss_title)
             R.id.rssSettingsConfigureFragment -> updateTitle(R.string.settings_rss_configure)
-            R.id.settingsNotificationFragment -> updateTitle(R.string.settings_all_notifications)
+            R.id.settingsUpNextNotificationsFragment -> updateTitle(R.string.settings_all_notifications)
             R.id.settingsSupportFragment -> updateTitle(R.string.settings_all_support)
             R.id.settingsAboutFragment -> updateTitle(R.string.settings_all_about)
         }

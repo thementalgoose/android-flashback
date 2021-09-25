@@ -5,7 +5,7 @@
         <!-- Content -->
         <item name="contentPrimary">#181818</item>
         <item name="contentSecondary">#383838</item>
-        <item name="contentTertiary">#484848</item>
+        <item name="contentTertiary">#585858</item>
         <item name="contentPrimaryInverse">#f8f8f8</item>
         <item name="contentSecondaryInverse">#f2f2f2</item>
         <item name="contentTertiaryInverse">#eeeeee</item>
@@ -14,7 +14,7 @@
         <item name="backgroundContainer">#f4f4f4</item>
         <item name="backgroundPrimary">#f8f8f8</item>
         <item name="backgroundSecondary">#f2f2f2</item>
-        <item name="backgroundTertiary">#eeeeee</item>
+        <item name="backgroundTertiary">#dddddd</item>
         <item name="backgroundPrimaryInverse">#181818</item>
         <item name="backgroundSecondaryInverse">#383838</item>
         <item name="backgroundTertiaryInverse">#484848</item>

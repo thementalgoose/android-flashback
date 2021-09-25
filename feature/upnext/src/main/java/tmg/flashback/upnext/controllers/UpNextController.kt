@@ -1,23 +1,32 @@
 package tmg.flashback.upnext.controllers
 
+import android.util.Log
+import java.time.format.TextStyle
+import java.util.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import org.threeten.bp.LocalDate
+import org.threeten.bp.LocalDateTime
 import org.threeten.bp.LocalTime
+import org.threeten.bp.ZoneId
 import org.threeten.bp.format.DateTimeFormatter
+import tmg.flashback.formula1.model.Timestamp
+import tmg.flashback.upnext.BuildConfig
+import tmg.flashback.upnext.model.NotificationChannel
+import tmg.flashback.upnext.model.NotificationReminder
 import tmg.flashback.upnext.repository.UpNextRepository
-import tmg.flashback.upnext.repository.model.TimeListDisplayType
 import tmg.flashback.upnext.repository.model.UpNextSchedule
+import tmg.flashback.upnext.utils.NotificationUtils
+import tmg.flashback.upnext.utils.NotificationUtils.getCategoryBasedOnLabel
+import tmg.notifications.controllers.NotificationController
 
 /**
  * Up Next functionality on the home screen
  */
 class UpNextController(
+    private val notificationController: NotificationController,
     private val upNextRepository: UpNextRepository
 ) {
-
-    /**
-     * The value that the menu should default too when showing time list types
-     */
-    var upNextDisplayType: TimeListDisplayType = TimeListDisplayType.RELATIVE
 
     /**
      * Get the next race to display in the up next schedule
@@ -39,5 +48,148 @@ class UpNextController(
                 val minDateInEvent = schedule.values.minByOrNull { it.timestamp.originalDate.atTime(it.timestamp.originalTime ?: LocalTime.parse("10:00", DateTimeFormatter.ofPattern("HH:mm"))) }!!
                 return@minByOrNull minDateInEvent.timestamp.string()
             }
+    }
+
+    //region Notification preferences
+
+    /**
+     * Should the user be prompted for showing a notification onboarding bottom sheet
+     */
+    val shouldShowNotificationOnboarding: Boolean
+        get() = !upNextRepository.seenNotificationOnboarding
+
+    /**
+     * Tell the system that we've seen the onboarding sheet
+     */
+    fun seenOnboarding() {
+        upNextRepository.seenNotificationOnboarding = true
+    }
+
+    var notificationRace: Boolean
+        get() = upNextRepository.notificationRace
+        set(value) {
+            upNextRepository.notificationRace = value
+            GlobalScope.launch { scheduleNotifications(force = true) }
+        }
+
+    var notificationQualifying: Boolean
+        get() = upNextRepository.notificationQualifying
+        set(value) {
+            upNextRepository.notificationQualifying = value
+            GlobalScope.launch { scheduleNotifications(force = true) }
+        }
+
+    var notificationFreePractice: Boolean
+        get() = upNextRepository.notificationFreePractice
+        set(value) {
+            upNextRepository.notificationFreePractice = value
+            GlobalScope.launch { scheduleNotifications(force = true) }
+        }
+
+    var notificationSeasonInfo: Boolean
+        get() = upNextRepository.notificationOther
+        set(value) {
+            upNextRepository.notificationOther = value
+            GlobalScope.launch { scheduleNotifications(force = true) }
+        }
+
+    val notificationReminder: NotificationReminder
+        get() = upNextRepository.notificationReminderPeriod
+
+    /**
+     * Schedule notifications
+     */
+    fun scheduleNotifications(force: Boolean = false) {
+        val upNextItemsToSchedule = upNextRepository
+            .upNext
+            .filter { schedule ->
+                schedule.values.any { it.timestamp.originalDate >= LocalDate.now() }
+            }
+            .map { schedule ->
+                schedule.values.mapIndexed { index, timestamp ->
+                    NotificationModel(
+                        season = schedule.season,
+                        round = schedule.round,
+                        value = index,
+                        title = schedule.title,
+                        label = timestamp.label,
+                        timestamp = timestamp.timestamp,
+                        channel = getCategoryBasedOnLabel(timestamp.label)
+                    )
+                }
+            }
+            .flatten()
+            .filter { it.timestamp.originalTime != null }
+            .filter { !it.timestamp.isInPastRelativeToo(upNextRepository.notificationReminderPeriod.seconds.toLong()) }
+            .map {
+                it.apply {
+                    var utcDateTime: LocalDateTime = it.timestamp.originalDate.atTime(it.timestamp.originalTime)
+                    it.timestamp.on(
+                        dateAndTime = { utc, _ ->
+                            utcDateTime = utc
+                        }
+                    )
+
+                    this.utcDateTime = utcDateTime
+                    this.requestCode = NotificationUtils.getRequestCode(utcDateTime)
+                }
+            }
+            .filter {
+                when (it.channel) {
+                    NotificationChannel.RACE -> notificationRace
+                    NotificationChannel.QUALIFYING -> notificationQualifying
+                    NotificationChannel.FREE_PRACTICE -> notificationFreePractice
+                    NotificationChannel.SEASON_INFO -> notificationSeasonInfo
+                }
+            }
+
+        if (upNextItemsToSchedule.map { it.requestCode }.toSet() == notificationController.notificationsCurrentlyScheduled && !force) {
+            if (BuildConfig.DEBUG) {
+                Log.d("Flashback", "Up Next items have remained unchanged since last sync - Skipping scheduling")
+            }
+            return
+        }
+
+        notificationController.cancelAllNotifications()
+
+        upNextItemsToSchedule.forEach {
+
+            // Remove the notification reminder period
+            val scheduleTime = it.utcDateTime.minusSeconds(upNextRepository.notificationReminderPeriod.seconds.toLong())
+
+            var deviceDateTime: LocalDateTime? = null
+            it.timestamp.on(
+                dateAndTime = { utc, local ->
+                    deviceDateTime = local
+                }
+            )
+
+            val timezone = ZoneId.systemDefault().id
+            val at = deviceDateTime?.let { " at ${it.toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm"))} $timezone (device time)"} ?: ""
+            val text = "${it.title} ${it.label} starts in 30 minutes$at"
+
+            notificationController.scheduleLocalNotification(
+                requestCode = it.requestCode,
+                channelId = getCategoryBasedOnLabel(it.label).channelId,
+                title = "${it.label} starts in 30 minutes",
+                text = text,
+                timestamp = scheduleTime
+            )
+        }
+    }
+
+    //endregion
+
+    inner class NotificationModel(
+        val season: Int,
+        val round: Int,
+        val value: Int,
+        val title: String,
+        val label: String,
+        val timestamp: Timestamp,
+        val channel: NotificationChannel
+    ) {
+        var requestCode: Int = -1
+        lateinit var utcDateTime: LocalDateTime
     }
 }

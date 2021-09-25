@@ -16,6 +16,7 @@ import tmg.flashback.managers.widgets.WidgetManager
 import tmg.core.ui.controllers.ThemeController
 import tmg.core.ui.model.NightMode
 import tmg.flashback.upnext.extensions.updateAllWidgets
+import tmg.flashback.upnext.model.NotificationChannel
 import tmg.notifications.controllers.NotificationController
 import tmg.utilities.extensions.isInDayMode
 
@@ -69,8 +70,15 @@ class FlashbackStartup(
 
         // Channels
         GlobalScope.launch {
-            notificationController.createNotificationChannels()
-            notificationController.subscribe()
+
+            // Legacy: Remove these existing channels which were previously used for remote notifications
+            notificationController.deleteNotificationChannel("race")
+            notificationController.deleteNotificationChannel("qualifying")
+
+            NotificationChannel.values().forEach {
+                notificationController.createNotificationChannel(it.channelId, it.label)
+            }
+            notificationController.subscribeToRemoteNotifications()
         }
 
         // Initialise user properties
