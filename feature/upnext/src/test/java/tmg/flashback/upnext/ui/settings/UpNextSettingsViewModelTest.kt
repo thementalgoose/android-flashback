@@ -13,7 +13,7 @@ import tmg.testutils.BaseTest
 
 internal class UpNextSettingsViewModelTest: BaseTest() {
 
-    private val mockUpNextController: UpNextController = mockk()
+    private val mockUpNextController: UpNextController = mockk(relaxed = true)
 
     private lateinit var sut: UpNextSettingsViewModel
 

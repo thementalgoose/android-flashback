@@ -8,26 +8,28 @@ import org.junit.jupiter.api.Test
 import tmg.core.ui.bottomsheet.BottomSheetItem
 import tmg.flashback.upnext.controllers.UpNextController
 import tmg.flashback.upnext.model.NotificationChannel
+import tmg.testutils.BaseTest
 import tmg.testutils.livedata.test
 import tmg.utilities.models.Selected
 import tmg.utilities.models.StringHolder
 
-internal class OnboardingNotificationViewModelTest {
+internal class OnboardingNotificationViewModelTest: BaseTest() {
 
     private val mockUpNextController: UpNextController = mockk(relaxed = true)
 
     private lateinit var sut: OnboardingNotificationViewModel
 
-    private fun initSUT() {
-        sut = OnboardingNotificationViewModel(mockUpNextController)
-    }
-
     @BeforeEach
     internal fun setUp() {
+        every { mockUpNextController.seenOnboarding() } returns Unit
         every { mockUpNextController.notificationRace } returns true
         every { mockUpNextController.notificationQualifying } returns true
         every { mockUpNextController.notificationFreePractice } returns true
         every { mockUpNextController.notificationSeasonInfo } returns true
+    }
+
+    private fun initSUT() {
+        sut = OnboardingNotificationViewModel(mockUpNextController)
     }
 
     @Test
@@ -90,10 +92,19 @@ internal class OnboardingNotificationViewModelTest {
     @Test
     fun `selecting notification channel updates list with new values`() {
         initSUT()
-        sut.inputs.selectNotificationChannel(NotificationChannel.RACE)
+        sut.notificationPreferences.test {
+            assertValue(NotificationChannel.values().map {
+                Selected(
+                    BottomSheetItem(it.ordinal, it.icon, StringHolder(it.label)),
+                    true
+                )
+            })
+        }
 
         // Assumes selecting channel works
         every { mockUpNextController.notificationRace } returns false
+        sut.inputs.selectNotificationChannel(NotificationChannel.RACE)
+
         sut.notificationPreferences.test {
             assertValue(NotificationChannel.values().map {
                 Selected(
