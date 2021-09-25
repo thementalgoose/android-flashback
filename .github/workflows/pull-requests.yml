@@ -8,15 +8,13 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Get version
-        run: echo "GIT_TAG=`echo $(git describe --tags --abbrev=0)`" >> $GITHUB_ENV
 
       - name: Send webhook
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         uses: Ilshidur/action-discord@master
         with:
-          args: "PR message - ${{ github.event.number }}"
+          args: "PR message - https://github.com/thementalgoose/android-flashback/pull/${{ github.event.number }}"
 
   json_checker:
     runs-on: ubuntu-latest
@@ -191,3 +189,18 @@ jobs:
         if: always()
         with:
           report_paths: '**/build/test-results/**/TEST-*.xml'
+
+  discord_notify:
+    runs-on: ubuntu-latest
+    needs: unit_tests
+    if: failure()
+    steps:
+      - name: Notify discord of failure
+        uses: sarisia/actions-status-discord@v1
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        with:
+          nodetail: true
+          title: "Pull request has failing tests"
+          description: "https://github.com/thementalgoose/android-flashback/pull/${{ github.event.number }}"
+          color: 0xff91a4
