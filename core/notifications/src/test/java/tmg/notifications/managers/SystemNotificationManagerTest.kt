@@ -39,7 +39,7 @@ internal class SystemNotificationManagerTest: BaseTest() {
     }
 
     @Test
-    @Ignore
+    @Ignore("Internal android class throws null pointer")
     fun `building notification builds notification properly with intent from navigation provider`() {
 
         /* Cannot work in unit test environment because of internal notification builder */
