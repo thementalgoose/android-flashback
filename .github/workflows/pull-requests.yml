@@ -19,14 +19,11 @@ jobs:
       - name: Release information
         run: |
           content=`cat releases.json`
-          versionCodeString=`echo $content | grep versionCode | tail -1`
-          versionNameString=`echo $content | grep versionName | tail -1`
+          echo "versionCodeString=$(cat releases.json | grep versionCode | tail -1)" >> $GITHUB_ENV
+          echo "versionNameString=$(cat releases.json | grep versionName | tail -1)" >> $GITHUB_ENV
 
-          echo $versionCodeString
-          echo $versionNameString
-
-          echo "versionCode=$(echo "${versionCodeString//[^0-9]/}")" >> $GITHUB_ENV
-          echo "versionName=$(echo "${versionNameString//[^0-9.]/}")" >> $GITHUB_ENV
+          echo "versionCode=$(${{ env.versionCodeString }}//[^0-9]/})" >> $GITHUB_ENV
+          echo "versionName=$(${{ env.versionNameString }}//[^0-9.]/})" >> $GITHUB_ENV
 
           echo "VersionCode ${{ env.versionCode }}"
           echo "VersionName ${{ env.versionName }}"
