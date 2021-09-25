@@ -19,7 +19,7 @@ jobs:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         uses: Ilshidur/action-discord@master
         with:
-          args: "PR message ${{ GITHUB_EVENT_NAME }} - ${{ GITHUB_JOB }}"
+          args: "PR message - ${{ GITHUB_JOB }}"
 
   json_checker:
     runs-on: ubuntu-latest
