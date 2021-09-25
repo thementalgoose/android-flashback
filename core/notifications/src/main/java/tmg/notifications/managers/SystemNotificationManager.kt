@@ -6,6 +6,7 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Build
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
@@ -49,6 +50,7 @@ class SystemNotificationManager(
 
         val notificationBuilder = NotificationCompat.Builder(applicationContext, channelId)
             .setSmallIcon(icon)
+            .setStyle(NotificationCompat.BigTextStyle().bigText(text))
             .setContentTitle(title)
             .setContentText(text)
             .setAutoCancel(true)
