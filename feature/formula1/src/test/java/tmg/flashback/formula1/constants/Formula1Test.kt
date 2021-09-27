@@ -6,7 +6,7 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 import org.threeten.bp.Year
 
-internal class Formula1Test() {
+internal class Formula1Test {
 
     @ParameterizedTest(name = "Max points in {0} season is {1}")
     @CsvSource(
@@ -20,6 +20,12 @@ internal class Formula1Test() {
     fun `maxPoints by season returns correct amount of points`(season: Int, expectedPoints: Int) {
 
         assertEquals(expectedPoints, Formula1.maxPointsBySeason(season))
+    }
+
+    @Test
+    fun `constructor championship starts in 1958`() {
+
+        assertEquals(1958, Formula1.constructorChampionshipStarts)
     }
 
     @Test
