@@ -531,5 +531,14 @@
       "Adds notification support for free practice",
       "Improves experience of enroling in notifications"
     ]
+  },
+  {
+    "versionCode": 97,
+    "versionName": "6.4.2",
+    "isMajor": false,
+    "title": "",
+    "notes": [
+      "Minor bug fixes to new notification support"
+    ]
   }
 ]
