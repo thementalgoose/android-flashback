@@ -84,7 +84,6 @@ jobs:
 
       - name: Release information
         run: |
-          content=`cat releases.json`
           echo "versionCode=$(echo `sh ./scripts/getVersionCode.sh`)" >> $GITHUB_ENV
           echo "versionName=$(echo `sh ./scripts/getVersionName.sh`)" >> $GITHUB_ENV
 
