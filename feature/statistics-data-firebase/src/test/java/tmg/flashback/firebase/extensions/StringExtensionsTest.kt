@@ -3,7 +3,7 @@ package tmg.flashback.firebase.extensions
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
-internal class StringExtensionsKtTest {
+internal class StringExtensionsTest {
 
     data class TestPojo(
         val str: String,
