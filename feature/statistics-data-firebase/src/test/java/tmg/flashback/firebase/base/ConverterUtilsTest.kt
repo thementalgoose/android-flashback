@@ -8,7 +8,7 @@ import tmg.flashback.firebase.base.ConverterUtils.fromDate
 import tmg.flashback.firebase.base.ConverterUtils.fromDateRequired
 import tmg.flashback.firebase.base.ConverterUtils.fromTime
 import tmg.flashback.firebase.base.ConverterUtils.fromTimeRequired
-import tmg.flashback.firebase.testutils.BaseTest
+import tmg.testutils.BaseTest
 
 internal class ConverterUtilsTest: BaseTest() {
 

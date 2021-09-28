@@ -38,7 +38,9 @@ data class FSeasonOverviewConstructor(
         val nationality: String = "",
         val nationalityISO: String = "",
         val colour: String = ""
-)
+) {
+        companion object
+}
 
 data class FSeasonOverviewPoints(
         val position: Int = -1,
