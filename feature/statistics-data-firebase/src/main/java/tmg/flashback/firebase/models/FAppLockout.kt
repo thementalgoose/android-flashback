@@ -7,4 +7,6 @@ data class FAppLockout(
     val linkText: String? = null,
     val link: String? = null,
     val version: Int? = null
-)
+) {
+    companion object
+}

@@ -4,6 +4,9 @@ import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import tmg.flashback.data.db.DataRepository
 import tmg.flashback.data.db.stats.*
+import tmg.flashback.firebase.mappers.AppLockoutMapper
+import tmg.flashback.firebase.mappers.CircuitMapper
+import tmg.flashback.firebase.mappers.HistoryMapper
 import tmg.flashback.firebase.repos.*
 import tmg.flashback.statistics.controllers.RaceController
 import tmg.flashback.statistics.controllers.SeasonController
@@ -35,11 +38,16 @@ val statisticsModule = module {
     // App
     single { StatisticsRepository(get(), get()) }
 
+    // Firestore Mappers
+    single { AppLockoutMapper() }
+    single { CircuitMapper(get()) }
+    single { HistoryMapper(2020, get()) }
+
     // Firestore
-    single<DataRepository> { DataFirestore(get()) }
+    single<DataRepository> { DataFirestore(get(), get()) }
     single<SeasonOverviewRepository> { SeasonOverviewFirestore(get()) }
-    single<HistoryRepository> { HistoryFirestore(get()) }
-    single<CircuitRepository> { CircuitFirestore(get()) }
+    single<HistoryRepository> { HistoryFirestore(get(), get()) }
+    single<CircuitRepository> { CircuitFirestore(get(), get()) }
     single<DriverRepository> { DriverFirestore(get()) }
     single<ConstructorRepository> { ConstructorFirestore(get()) }
 

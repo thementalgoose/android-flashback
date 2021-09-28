@@ -6,15 +6,17 @@ import tmg.flashback.data.db.DataRepository
 import tmg.flashback.data.models.AppLockout
 import tmg.flashback.firebase.converters.convert
 import tmg.flashback.firebase.FirebaseRepo
+import tmg.flashback.firebase.mappers.AppLockoutMapper
 import tmg.flashback.firebase.models.FAppLockout
 
 class DataFirestore(
-        crashController: CrashController
+        crashController: CrashController,
+        private val appLockoutMapper: AppLockoutMapper
 ): FirebaseRepo(crashController), DataRepository {
 
     override fun appLockout(): Flow<AppLockout?> {
         crashController.log("document(data/app-lockout)")
         return document("data/app-lockout")
-            .getDoc<FAppLockout, AppLockout> { it.convert() }
+            .getDoc<FAppLockout, AppLockout> { appLockoutMapper.mapAppLockout(it) }
     }
 }

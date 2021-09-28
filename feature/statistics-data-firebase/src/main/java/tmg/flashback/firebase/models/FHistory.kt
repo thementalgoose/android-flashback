@@ -3,7 +3,9 @@ package tmg.flashback.firebase.models
 data class FHistorySeason(
     val all: Map<String, Map<String, FHistorySeasonRound?>?> = mapOf(),
     val win: Map<String, FHistorySeasonWin>? = null
-)
+) {
+    companion object
+}
 
 data class FHistorySeasonRound(
     val date: String = "",
@@ -17,24 +19,32 @@ data class FHistorySeasonRound(
     val data: Boolean? = null,
     val hasQ: Boolean? = null,
     val hasR: Boolean? = null
-)
+) {
+    companion object
+}
 
 data class FHistorySeasonWin(
     val s: Int = 0, // Season
     val constr: List<FHistorySeasonWinConstructor>? = emptyList(),
     val driver: List<FHistorySeasonWinDriver>? = emptyList()
-)
+) {
+    companion object
+}
 
 data class FHistorySeasonWinConstructor(
     val id: String = "",
     val name: String = "",
     val color: String = "",
     val p: Int = 0 // Points
-)
+) {
+    companion object
+}
 
 data class FHistorySeasonWinDriver(
     val id: String = "",
     val name: String = "",
     val img: String = "",
     val p: Int = 0 // Points
-)
+) {
+    companion object
+}

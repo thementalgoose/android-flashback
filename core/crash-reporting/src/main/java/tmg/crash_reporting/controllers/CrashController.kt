@@ -47,9 +47,16 @@ class CrashController(
         }
     }
 
-    fun logError(error: Exception, msg: String) {
+    // TODO: Remove this
+    fun logError(error: Exception, msg: String?) {
         if (enabled) {
-            crashService.logException(error, msg)
+            crashService.logException(error, msg ?: error.message ?: "Error occurred")
+        }
+    }
+
+    fun logException(error: Exception, msg: String? = null) {
+        if (enabled) {
+            crashService.logException(error, msg ?: error.message ?: "Error occurred")
         }
     }
 }
