@@ -3,7 +3,7 @@ package tmg.flashback.firebase.converters
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import tmg.flashback.firebase.currentYear
-import tmg.flashback.firebase.testutils.BaseTest
+import tmg.testutils.BaseTest
 
 internal class HistoryConverterTest: BaseTest() {
 
