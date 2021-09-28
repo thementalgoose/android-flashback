@@ -7,14 +7,16 @@ import tmg.flashback.firebase.converters.convert
 import tmg.flashback.firebase.models.FDriverOverview
 import tmg.flashback.data.db.stats.DriverRepository
 import tmg.flashback.data.models.stats.DriverOverview
+import tmg.flashback.firebase.mappers.DriverMapper
 
 class DriverFirestore(
-        crashController: CrashController
+        crashController: CrashController,
+        private val driverMapper: DriverMapper
 ) : FirebaseRepo(crashController), DriverRepository {
 
     override fun getDriverOverview(driverId: String): Flow<DriverOverview?> {
         crashController.log("document(drivers/$driverId)")
         return document("drivers/$driverId")
-                .getDoc<FDriverOverview, DriverOverview> { it.convert() }
+                .getDoc<FDriverOverview, DriverOverview> { driverMapper.mapDriverOverview(it) }
     }
 }

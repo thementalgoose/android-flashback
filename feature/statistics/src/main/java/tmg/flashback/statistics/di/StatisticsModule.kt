@@ -48,7 +48,7 @@ val statisticsModule = module {
     single<SeasonOverviewRepository> { SeasonOverviewFirestore(get()) }
     single<HistoryRepository> { HistoryFirestore(get(), get()) }
     single<CircuitRepository> { CircuitFirestore(get(), get()) }
-    single<DriverRepository> { DriverFirestore(get()) }
+    single<DriverRepository> { DriverFirestore(get(), get()) }
     single<ConstructorRepository> { ConstructorFirestore(get()) }
 
 }

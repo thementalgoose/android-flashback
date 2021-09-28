@@ -3,7 +3,9 @@ package tmg.flashback.firebase.models
 data class FDriverOverview(
         val driver: FDriverOverviewDriver = FDriverOverviewDriver(),
         val standings: Map<String, FDriverOverviewStanding>? = null
-)
+) {
+        companion object
+}
 
 data class FDriverOverviewDriver(
         val dob: String = "",
@@ -16,7 +18,9 @@ data class FDriverOverviewDriver(
         val photoUrl: String? = null,
         val surname: String = "",
         val wikiUrl: String = ""
-)
+) {
+        companion object
+}
 
 data class FDriverOverviewStanding(
         val bestFinish: Int? = null,
@@ -34,31 +38,31 @@ data class FDriverOverviewStanding(
         // Season
         val s: Int = -1,
         val wins: Int? = null
-)
+) {
+        companion object
+}
 
 data class FDriverOverviewStandingConstructor(
         val color: String = "#888888",
         val id: String = "",
         val name: String = ""
-)
+) {
+        companion object
+}
 
 data class FDriverOverviewStandingHistory(
-        val cId: String = "",
-        val cName: String = "",
-        val cCountry: String = "",
-        // Nationality iso
-        val cISO: String? = "",
-        // Constructor id
-        val con: String? = null,
+        val cId: String = "", // Circuit Id
+        val cName: String = "", // Circuit Name
+        val cCountry: String = "", // Circuit Country
+        val cISO: String? = "", // Nationality iso
+        val con: String? = null, // Constructor id
         val date: String = "",
-        // Finish
-        val f: Int? = null,
+        val f: Int? = null, // Finish
         val fStatus: String? = null,
-        // Points
-        val p: Int? = null,
-        // Qualifyied
-        val q: Int? = null,
-        // Round
-        val r: Int = -1,
+        val p: Int? = null, // Points
+        val q: Int? = null, // Qualifyied
+        val r: Int = -1, // Round
         val rName: String? = null
-)
+) {
+        companion object
+}
