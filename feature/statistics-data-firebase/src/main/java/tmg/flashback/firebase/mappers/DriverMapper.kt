@@ -6,10 +6,8 @@ import tmg.flashback.data.models.stats.DriverOverviewRace
 import tmg.flashback.data.models.stats.DriverOverviewStanding
 import tmg.flashback.data.models.stats.SlimConstructor
 import tmg.flashback.firebase.base.ConverterUtils.fromDateRequired
-import tmg.flashback.firebase.converters.convert
 import tmg.flashback.firebase.currentYear
 import tmg.flashback.firebase.models.FDriverOverview
-import tmg.flashback.firebase.models.FDriverOverviewDriver
 import tmg.flashback.firebase.models.FDriverOverviewStanding
 import tmg.flashback.firebase.models.FDriverOverviewStandingConstructor
 import tmg.flashback.firebase.models.FDriverOverviewStandingHistory

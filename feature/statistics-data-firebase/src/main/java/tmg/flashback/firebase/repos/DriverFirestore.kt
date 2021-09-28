@@ -3,7 +3,6 @@ package tmg.flashback.firebase.repos
 import kotlinx.coroutines.flow.Flow
 import tmg.crash_reporting.controllers.CrashController
 import tmg.flashback.firebase.FirebaseRepo
-import tmg.flashback.firebase.converters.convert
 import tmg.flashback.firebase.models.FDriverOverview
 import tmg.flashback.data.db.stats.DriverRepository
 import tmg.flashback.data.models.stats.DriverOverview
