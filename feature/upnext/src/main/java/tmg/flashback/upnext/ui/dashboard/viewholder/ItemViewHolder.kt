@@ -24,12 +24,12 @@ class ItemViewHolder(
             false -> {
                 binding.title.alpha = 1.0f
                 binding.time.alpha = 1.0f
-                binding.bellIndicator.alpha = 0.4f
+                binding.bellIndicator.alpha = 1.0f
             }
             true -> {
                 binding.title.alpha = 0.4f
                 binding.time.alpha = 0.4f
-                binding.bellIndicator.alpha = 0.2f
+                binding.bellIndicator.alpha = 0.4f
             }
         }
 
