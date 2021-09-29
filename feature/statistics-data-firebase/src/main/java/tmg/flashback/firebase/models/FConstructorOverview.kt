@@ -4,7 +4,9 @@ data class FConstructorOverview(
         val data: FConstructorOverviewData = FConstructorOverviewData(),
         val drivers: Map<String, FConstructorOverviewDrivers>? = null,
         val standings: Map<String, FConstructorOverviewStandings>? = null
-)
+) {
+        companion object
+}
 
 data class FConstructorOverviewData(
         val colour: String = "",
@@ -13,7 +15,9 @@ data class FConstructorOverviewData(
         val nationality: String = "",
         val nationalityISO: String = "",
         val wikiUrl: String = ""
-)
+) {
+        companion object
+}
 
 data class FConstructorOverviewDrivers(
         val dob: String = "",
@@ -26,7 +30,9 @@ data class FConstructorOverviewDrivers(
         val photoUrl: String? = null,
         val surname: String = "",
         val wikiUrl: String = ""
-)
+) {
+        companion object
+}
 
 data class FConstructorOverviewStandings(
         val championshipStanding: Int? = null,
@@ -35,7 +41,9 @@ data class FConstructorOverviewStandings(
         val p: Double? = null, // Points
         val races: Int? = null,
         val s: Int = 0 // Season
-)
+) {
+        companion object
+}
 
 data class FConstructorOverviewStandingsDriver(
         val bF: Int? = null, // Best Finish
@@ -51,5 +59,7 @@ data class FConstructorOverviewStandingsDriver(
         val q10: Int? = null, // Qualified top 10      OPTIONAL
         val races: Int? = null,
         val pos: Int? = null // Championship position
-)
+) {
+        companion object
+}
 

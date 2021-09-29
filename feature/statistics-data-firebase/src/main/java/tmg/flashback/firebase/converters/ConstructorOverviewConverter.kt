@@ -81,7 +81,6 @@ fun FConstructorOverviewDrivers.convert(data: FConstructorOverviewData): Constru
                     nationalityISO = data.nationalityISO,
                     color = data.colour.toColorInt()
             )
-
     )
 }
 

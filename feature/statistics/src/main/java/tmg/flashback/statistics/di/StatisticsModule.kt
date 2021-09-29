@@ -6,6 +6,7 @@ import tmg.flashback.data.db.DataRepository
 import tmg.flashback.data.db.stats.*
 import tmg.flashback.firebase.mappers.AppLockoutMapper
 import tmg.flashback.firebase.mappers.CircuitMapper
+import tmg.flashback.firebase.mappers.ConstructorMapper
 import tmg.flashback.firebase.mappers.DriverMapper
 import tmg.flashback.firebase.mappers.HistoryMapper
 import tmg.flashback.firebase.repos.*
@@ -44,6 +45,7 @@ val statisticsModule = module {
     single { CircuitMapper(get()) }
     single { HistoryMapper(2020, get()) }
     single { DriverMapper() }
+    single { ConstructorMapper() }
 
     // Firestore
     single<DataRepository> { DataFirestore(get(), get()) }
@@ -51,6 +53,6 @@ val statisticsModule = module {
     single<HistoryRepository> { HistoryFirestore(get(), get()) }
     single<CircuitRepository> { CircuitFirestore(get(), get()) }
     single<DriverRepository> { DriverFirestore(get(), get()) }
-    single<ConstructorRepository> { ConstructorFirestore(get()) }
+    single<ConstructorRepository> { ConstructorFirestore(get(), get()) }
 
 }
