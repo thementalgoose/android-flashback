@@ -31,8 +31,8 @@ internal fun FSeasonStatistics.Companion.model(
 )
 
 internal fun FSeasonStatisticsPoints.Companion.model(
-    p: Double? = 0.0,
-    pos: Int? = null
+    p: Double? = 1.0,
+    pos: Int? = 2
 ): FSeasonStatisticsPoints = FSeasonStatisticsPoints(
     p = p,
     pos = pos

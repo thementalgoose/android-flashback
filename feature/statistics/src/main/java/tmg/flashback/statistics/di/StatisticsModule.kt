@@ -9,6 +9,7 @@ import tmg.flashback.firebase.mappers.CircuitMapper
 import tmg.flashback.firebase.mappers.ConstructorMapper
 import tmg.flashback.firebase.mappers.DriverMapper
 import tmg.flashback.firebase.mappers.HistoryMapper
+import tmg.flashback.firebase.mappers.SeasonOverviewMapper
 import tmg.flashback.firebase.repos.*
 import tmg.flashback.statistics.controllers.RaceController
 import tmg.flashback.statistics.controllers.SeasonController
@@ -46,6 +47,7 @@ val statisticsModule = module {
     single { HistoryMapper(2020, get()) }
     single { DriverMapper() }
     single { ConstructorMapper() }
+    single { SeasonOverviewMapper(get()) }
 
     // Firestore
     single<DataRepository> { DataFirestore(get(), get()) }
