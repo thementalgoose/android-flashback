@@ -42,6 +42,10 @@
         <entry key="feature/formula1/src/main/res/drawable/circuit_indianapolis.xml" value="0.21875" />
         <entry key="feature/formula1/src/main/res/drawable/circuit_jerez.xml" value="0.36614583333333334" />
         <entry key="feature/formula1/src/main/res/drawable/circuit_losail.xml" value="0.36614583333333334" />
+        <entry key="feature/formula1/src/main/res/drawable/circuit_monza.xml" value="0.21875" />
+        <entry key="feature/formula1/src/main/res/drawable/circuit_mugello.xml" value="0.21875" />
+        <entry key="feature/formula1/src/main/res/drawable/circuit_nurburgring.xml" value="0.21875" />
+        <entry key="feature/formula1/src/main/res/drawable/circuit_osterreichring.xml" value="0.21875" />
         <entry key="feature/formula1/src/main/res/drawable/circuit_unknown.xml" value="0.4010416666666667" />
         <entry key="feature/formula1/src/main/res/drawable/circuit_yeongam.xml" value="0.21875" />
         <entry key="feature/formula1/src/main/res/drawable/nationality_not_found.xml" value="0.4010416666666667" />

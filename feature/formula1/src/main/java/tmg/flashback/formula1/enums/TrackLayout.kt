@@ -45,6 +45,7 @@ enum class TrackLayout(
     MUGELLO("mugello", R.drawable.circuit_mugello),
     NURBURGRING("nurburgring", R.drawable.circuit_nurburgring),
     OSTERREICHRING("osterreichring", R.drawable.circuit_osterreichring),
+    PHOENIX("phoenix", R.drawable.circuit_phoenix),
     RED_BULL_RING("red_bull_ring", R.drawable.circuit_red_bull_ring),
     RICARD("ricard", R.drawable.circuit_ricard),
     RODRIGUEZ("rodriguez", R.drawable.circuit_rodriguez),
