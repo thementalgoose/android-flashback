@@ -2,11 +2,12 @@ package tmg.flashback.firebase.mappers
 
 import io.mockk.mockk
 import io.mockk.verify
-import java.lang.NullPointerException
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
+import org.threeten.bp.format.DateTimeParseException
 import tmg.crash_reporting.controllers.CrashController
+import tmg.flashback.data.models.stats.CircuitSummary
 import tmg.flashback.data.models.stats.Constructor
 import tmg.flashback.data.models.stats.ConstructorStandings
 import tmg.flashback.data.models.stats.Driver
@@ -15,10 +16,12 @@ import tmg.flashback.data.models.stats.FastestLap
 import tmg.flashback.data.models.stats.SeasonStanding
 import tmg.flashback.data.models.stats.noTime
 import tmg.flashback.data.utils.toLapTime
-import tmg.flashback.firebase.models.FConstructorOverviewStandings
-import tmg.flashback.firebase.models.FConstructorOverviewStandingsDriver
+import tmg.flashback.firebase.models.FRound
+import tmg.flashback.firebase.models.FSeason
 import tmg.flashback.firebase.models.FSeasonOverviewConstructor
 import tmg.flashback.firebase.models.FSeasonOverviewDriver
+import tmg.flashback.firebase.models.FSeasonOverviewRaceCircuit
+import tmg.flashback.firebase.models.FSeasonOverviewRaceCircuitLocation
 import tmg.flashback.firebase.models.FSeasonOverviewRaceRaceFastestLap
 import tmg.flashback.firebase.models.FSeasonStatistics
 import tmg.flashback.firebase.models.FSeasonStatisticsPoints
@@ -36,12 +39,12 @@ internal class SeasonOverviewMapperTest: BaseTest() {
     }
 
     @Test
-    fun `Driver maps fields correctly`() {
+    fun `DriverStandings maps fields correctly`() {
         initSUT()
 
         val input = FSeasonStatistics.model()
-        val inputDrivers = listOf(
-            FSeasonOverviewDriver.model() to FSeasonOverviewConstructor.model()
+        val inputDrivers = listOfNotNull(
+            sut.mapDriver(FSeason.model(), "driverId")
         )
         val expected: DriverStandings = listOf(
             SeasonStanding(
@@ -74,20 +77,20 @@ internal class SeasonOverviewMapperTest: BaseTest() {
     }
 
     @Test
-    fun `Driver points default to 0 if not specified`() {
+    fun `DriverStandings points default to 0 if not specified`() {
         initSUT()
 
         val input = FSeasonStatistics.model(drivers = mapOf(
             "driverId" to FSeasonStatisticsPoints.model(p = null)
         ))
-        val inputDrivers = listOf(
-            FSeasonOverviewDriver.model() to FSeasonOverviewConstructor.model()
+        val inputDrivers = listOfNotNull(
+            sut.mapDriver(FSeason.model(), "driverId")
         )
         assertEquals(0.0, sut.mapDriverStandings(input, inputDrivers)[0].points)
     }
 
     @Test
-    fun `Driver if constructor not found then not included in standings and logs to crashlytics`() {
+    fun `DriverStandings if driver not found then not included in standings and logs to crashlytics`() {
         initSUT()
 
         val input = FSeasonStatistics.model(drivers = mapOf(
@@ -100,8 +103,15 @@ internal class SeasonOverviewMapperTest: BaseTest() {
                 pos = null
             )
         ))
-        val inputDrivers = listOf(
-            FSeasonOverviewDriver.model(id = "driverId1") to FSeasonOverviewConstructor.model()
+        val inputDrivers = listOfNotNull(
+            sut.mapDriver(FSeason.model(
+                drivers = mapOf(
+                    "driverId1" to FSeasonOverviewDriver.model(id = "driverId1")
+                ),
+                race = mapOf(
+                    "r1" to FRound.model(driverCon = mapOf("driverId1" to "constructorId"))
+                )
+            ), "driverId1")
         )
 
         val result = sut.mapDriverStandings(input, inputDrivers)
@@ -115,7 +125,7 @@ internal class SeasonOverviewMapperTest: BaseTest() {
     }
 
     @Test
-    fun `Driver if position is not specified then order determined by points`() {
+    fun `DriverStandings if position is not specified then order determined by points`() {
         initSUT()
 
         val input = FSeasonStatistics.model(drivers = mapOf(
@@ -128,10 +138,24 @@ internal class SeasonOverviewMapperTest: BaseTest() {
                 pos = null
             )
         ))
-        val inputDrivers = listOf(
-            FSeasonOverviewDriver.model(id = "driverId1") to FSeasonOverviewConstructor.model(),
-            FSeasonOverviewDriver.model(id = "driverId2") to FSeasonOverviewConstructor.model()
-        )
+
+        val inputDrivers = FSeason.model(
+            drivers = mapOf(
+                "driverId1" to FSeasonOverviewDriver.model(id = "driverId1"),
+                "driverId2" to FSeasonOverviewDriver.model(id = "driverId2")
+            ),
+            race = mapOf("r1" to FRound.model(
+                driverCon = mapOf(
+                    "driverId1" to "constructorId",
+                    "driverId2" to "constructorId"
+                )
+            ))
+        ).let {
+            listOfNotNull(
+                sut.mapDriver(it, "driverId1"),
+                sut.mapDriver(it, "driverId2")
+            )
+        }
 
         val result = sut.mapDriverStandings(input, inputDrivers)
         assertEquals(2, result.size)
@@ -230,6 +254,140 @@ internal class SeasonOverviewMapperTest: BaseTest() {
         assertEquals(1, result[0].position)
         assertEquals("constructorId1", result[1].item.id)
         assertEquals(2, result[1].position)
+    }
+
+    @Test
+    fun `CircuitSummary maps fields correctly`() {
+        initSUT()
+
+        val input = FSeasonOverviewRaceCircuit.model()
+        val expected = CircuitSummary(
+            id = "circuitId",
+            name = "circuitName",
+            wikiUrl = "wikiUrl",
+            locality = "locality",
+            country = "country",
+            countryISO = "countryISO",
+            locationLat = 51.101,
+            locationLng = -1.101
+        )
+
+        assertEquals(expected, sut.mapCircuit(input))
+    }
+
+    @Test
+    fun `CircuitSummary defaults location to 0 if null`() {
+        initSUT()
+
+        val input = FSeasonOverviewRaceCircuit.model(
+            location = FSeasonOverviewRaceCircuitLocation(
+                lat = null,
+                lng = null
+            )
+        )
+        assertEquals(0.0, sut.mapCircuit(input).locationLat)
+        assertEquals(0.0, sut.mapCircuit(input).locationLng)
+    }
+
+    @Test
+    fun `CircuitSummary defaults location to 0 if invalid`() {
+        initSUT()
+
+        val input = FSeasonOverviewRaceCircuit.model(
+            location = FSeasonOverviewRaceCircuitLocation(
+                lat = "hello",
+                lng = "world"
+            )
+        )
+        assertEquals(0.0, sut.mapCircuit(input).locationLat)
+        assertEquals(0.0, sut.mapCircuit(input).locationLng)
+    }
+
+    @Test
+    fun `Driver maps fields correctly`() {
+        initSUT()
+
+        val input = FSeason.model()
+        val expected = Driver(
+            id = "driverId",
+            firstName = "firstName",
+            lastName = "lastName",
+            code = "ALB",
+            number = 23,
+            wikiUrl = "wikiUrl",
+            photoUrl = "photoUrl",
+            dateOfBirth = LocalDate.of(1995, 10, 12),
+            nationality = "nationality",
+            nationalityISO = "nationalityISO",
+            constructorAtEndOfSeason = Constructor(
+                id = "constructorId",
+                name = "constructorName",
+                wikiUrl = "wikiUrl",
+                nationality = "nationality",
+                nationalityISO = "nationalityISO",
+                color = 0
+            )
+        )
+
+        assertEquals(expected, sut.mapDriver(input, "driverId"))
+    }
+
+    @Test
+    fun `Driver returns null if constructor is not available in top list`() {
+        initSUT()
+
+        val input = FSeason.model(constructors = null)
+        assertNull(sut.mapDriver(input, "driverId"))
+    }
+
+    @Test
+    fun `Driver returns null if constructor not assigned to driver is not available in top list`() {
+        initSUT()
+
+        val input = FSeason.model(constructors = mapOf(
+            "constructorId2" to FSeasonOverviewConstructor.model(id = "constructorId2")
+        ))
+        assertNull(sut.mapDriver(input, "driverId"))
+    }
+
+    @Test
+    fun `Driver returns null if no race with driver in`() {
+        initSUT()
+
+        val input = FSeason.model(race = mapOf(
+            "r1" to FRound.model(
+                driverCon = mapOf(
+                    "driverId" to "constructorId2"
+                )
+            )
+        ))
+        assertNull(sut.mapDriver(input, "driverId"))
+    }
+
+    @Test
+    fun `Driver number returns 0 if number is null`() {
+        initSUT()
+
+        val input = FSeason.model(drivers = mapOf(
+            "driverId" to FSeasonOverviewDriver.model(
+                number = null
+            )
+        ))
+        assertEquals(0, sut.mapDriver(input, "driverId")!!.number)
+    }
+
+    @Test
+    fun `Driver invalid date of birth crashes mapper`() {
+        initSUT()
+
+        val input = FSeason.model(drivers = mapOf(
+            "driverId" to FSeasonOverviewDriver.model(
+                dob = "invalid"
+            )
+        ))
+        assertThrows(DateTimeParseException::class.java) {
+            sut.mapDriver(input, "driverId")
+        }
     }
 
     @Test
