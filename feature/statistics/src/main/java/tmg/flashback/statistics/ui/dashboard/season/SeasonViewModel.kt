@@ -366,11 +366,11 @@ class SeasonViewModel(
             .values
             .sortedByDescending { it.second }
             .toList()
-            .mapIndexed { index: Int, pair: Pair<RoundDriver, Double> ->
+            .mapIndexed { index: Int, pair: Pair<Driver, Double> ->
                 val (roundDriver, points) = pair
                 SeasonItem.Driver(
                     season = season.value,
-                    driver = roundDriver.toDriver(),
+                    driver = roundDriver,
                     points = points,
                     position = index + 1,
                     bestQualifying = rounds.bestQualifyingResultFor(roundDriver.id),

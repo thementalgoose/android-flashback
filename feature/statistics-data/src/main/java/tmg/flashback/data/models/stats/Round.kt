@@ -11,7 +11,7 @@ data class Round(
         val time: LocalTime?,
         val name: String,
         val wikipediaUrl: String?,
-        val drivers: List<RoundDriver>,
+        val drivers: List<Driver>,
         val constructors: List<Constructor>,
         val circuit: CircuitSummary,
         val q1: Map<String, RoundQualifyingResult>,
@@ -82,13 +82,13 @@ data class RoundDriverOverview(
 )
 
 data class RoundQualifyingResult(
-        val driver: RoundDriver,
+        val driver: ConstructorDriver,
         val time: LapTime?,
         val position: Int
 )
 
 data class RoundSprintQualifyingResult(
-        val driver: RoundDriver,
+        val driver: ConstructorDriver,
         val time: LapTime?,
         val points: Double,
         val grid: Int,
@@ -98,7 +98,7 @@ data class RoundSprintQualifyingResult(
 )
 
 data class RoundRaceResult(
-        val driver: RoundDriver,
+        val driver: ConstructorDriver,
         val time: LapTime?,
         val points: Double,
         val grid: Int,

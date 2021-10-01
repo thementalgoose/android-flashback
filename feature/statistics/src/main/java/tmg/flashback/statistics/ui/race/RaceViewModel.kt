@@ -250,8 +250,8 @@ class RaceViewModel(
     private fun getDriverFromConstructor(round: Round, constructorId: String): List<Pair<Driver, Double>> {
         return round
             .drivers
-            .filter { it.constructor.id == constructorId }
-            .map { Pair(it.toDriver(), round.race[it.id]?.points ?: 0.0) }
+            .filter { it.constructors.get(round.round)?.id == constructorId }
+            .map { Pair(it, round.race[it.id]?.points ?: 0.0) }
             .sortedByDescending { it.second }
     }
 
@@ -338,7 +338,7 @@ class RaceViewModel(
         return RaceModel.Single(
             season = round.season,
             round = round.round,
-            driver = round.drivers.first { it.id == driverId },
+            driver = round.drivers.first { it.id == driverId }.toConstructorDriver(round.round),
             q1 = overview.q1,
             q2 = overview.q2,
             q3 = overview.q3,

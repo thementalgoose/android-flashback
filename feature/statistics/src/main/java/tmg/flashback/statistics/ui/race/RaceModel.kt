@@ -19,7 +19,7 @@ sealed class RaceModel(
     data class Single(
         val season: Int,
         val round: Int,
-        val driver: RoundDriver,
+        val driver: ConstructorDriver,
         val q1: RoundQualifyingResult?,
         val q2: RoundQualifyingResult?,
         val q3: RoundQualifyingResult?,

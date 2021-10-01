@@ -5,7 +5,7 @@ import tmg.flashback.firebase.base.ConverterUtils.fromDateRequired
 import tmg.flashback.firebase.base.ConverterUtils.isDateValid
 import tmg.flashback.firebase.currentYear
 import tmg.flashback.firebase.models.*
-import tmg.flashback.data.models.ConstructorDriver
+import tmg.flashback.data.models.stats.ConstructorDriver
 import tmg.flashback.data.models.stats.Constructor
 import tmg.flashback.data.models.stats.ConstructorOverview
 import tmg.flashback.data.models.stats.ConstructorOverviewDriverStanding
