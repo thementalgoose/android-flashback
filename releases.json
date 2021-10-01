@@ -533,11 +533,13 @@
     ]
   },
   {
-    "versionCode": 98,
-    "versionName": "6.4.3",
+    "versionCode": 99,
+    "versionName": "6.4.4",
     "isMajor": false,
     "title": "",
     "notes": [
+      "Adds more track layouts for older F1 races",
+      "Minor theming updates in Up next section",
       "Minor bug fixes to new notification support"
     ]
   }
