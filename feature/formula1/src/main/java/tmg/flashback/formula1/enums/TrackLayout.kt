@@ -65,7 +65,8 @@ enum class TrackLayout(
     WATKINS_GLEN("watkins_glen", R.drawable.circuit_watkins_glen),
     YAS_MARINA("yas_marina", R.drawable.circuit_yas_marina),
     YEONGAM("yeongam", R.drawable.circuit_yeongam),
-    ZANDVOORT("zandvoort", R.drawable.circuit_zandvoort);
+    ZANDVOORT("zandvoort", R.drawable.circuit_zandvoort),
+    ZOLDER("zolder", R.drawable.circuit_zolder);
 
     companion object {
 
