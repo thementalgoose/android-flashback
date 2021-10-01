@@ -287,7 +287,7 @@ val mockConstructorBeta: Constructor = Constructor(
 
 //region Drivers
 
-val mockDriver1: RoundDriver = RoundDriver(
+val mockDriver1: Driver = Driver(
         id = "1",
         firstName = "name1",
         lastName = "last1",
@@ -298,29 +298,41 @@ val mockDriver1: RoundDriver = RoundDriver(
         dateOfBirth = LocalDate.of(1995, 1, 1),
         nationality = "British",
         nationalityISO = "GBR",
-        constructor = mockConstructorAlpha,
-        constructorAtEndOfSeason = mockConstructorAlpha
+        constructors = mapOf(
+                1 to mockConstructorAlpha,
+                2 to mockConstructorAlpha
+        ),
+        startingConstructor = mockConstructorAlpha
 )
 val mockDriver2 = mockDriver1.copy(
         id = "2",
         firstName = "name2",
         lastName = "name2",
-        constructor = mockConstructorBeta,
-        constructorAtEndOfSeason = mockConstructorBeta
+        constructors = mapOf(
+                1 to mockConstructorBeta,
+                2 to mockConstructorBeta
+        ),
+        startingConstructor = mockConstructorBeta
 )
 val mockDriver3 = mockDriver1.copy(
         id = "3",
         firstName = "name3",
         lastName = "name3",
-        constructor = mockConstructorAlpha,
-        constructorAtEndOfSeason = mockConstructorAlpha
+        constructors = mapOf(
+                1 to mockConstructorAlpha,
+                2 to mockConstructorAlpha
+        ),
+        startingConstructor = mockConstructorAlpha
 )
 val mockDriver4 = mockDriver1.copy(
         id = "4",
         firstName = "name4",
         lastName = "name4",
-        constructor = mockConstructorBeta,
-        constructorAtEndOfSeason = mockConstructorBeta
+        constructors = mapOf(
+                1 to mockConstructorBeta,
+                2 to mockConstructorBeta
+        ),
+        startingConstructor = mockConstructorBeta
 )
 
 //endregion

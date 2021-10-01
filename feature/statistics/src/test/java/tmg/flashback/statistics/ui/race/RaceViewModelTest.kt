@@ -13,9 +13,9 @@ import tmg.core.ui.model.AnimationSpeed
 import tmg.flashback.data.db.stats.SeasonOverviewRepository
 import tmg.flashback.data.models.stats.LapTime
 import tmg.flashback.data.models.stats.Round
-import tmg.flashback.data.models.stats.RoundDriver
 import tmg.core.ui.controllers.ThemeController
 import tmg.flashback.data.enums.RaceStatus
+import tmg.flashback.data.models.stats.ConstructorDriver
 import tmg.flashback.data.models.stats.RoundSprintQualifyingResult
 import tmg.flashback.statistics.mockRound1
 import tmg.flashback.statistics.mockRound3
@@ -176,14 +176,14 @@ internal class RaceViewModelTest: BaseTest() {
         val expected = listOf<RaceModel>(
             RaceModel.ConstructorStandings(
                 mockConstructorBeta, 30.0, listOf(
-                    Pair(mockDriver4.toDriver(), 20.0),
-                    Pair(mockDriver2.toDriver(), 10.0)
+                    Pair(mockDriver4.toConstructorDriver(), 20.0),
+                    Pair(mockDriver2.toConstructorDriver(), 10.0)
                 ), AnimationSpeed.NONE
             ),
             RaceModel.ConstructorStandings(
                 mockConstructorAlpha, 20.0, listOf(
-                    Pair(mockDriver3.toDriver(), 15.0),
-                    Pair(mockDriver1.toDriver(), 5.0)
+                    Pair(mockDriver3.toConstructorDriver(), 15.0),
+                    Pair(mockDriver1.toConstructorDriver(), 5.0)
                 ), AnimationSpeed.NONE
             )
         )
@@ -245,26 +245,26 @@ internal class RaceViewModelTest: BaseTest() {
         val expected = listOf(
             RaceModel.Podium(
                 convertDriverToSingle(
-                    round = mockRound1, roundDriver = mockDriver4,
+                    round = mockRound1, roundDriver = mockDriver4.toConstructorDriver(),
                     expectedQualified = 4,
                     expectedGrid = 3,
                     expectedFinish = 1
                 ),
                 convertDriverToSingle(
-                    round = mockRound1, roundDriver = mockDriver3,
+                    round = mockRound1, roundDriver = mockDriver3.toConstructorDriver(),
                     expectedQualified = 3,
                     expectedGrid = 4,
                     expectedFinish = 2
                 ),
                 convertDriverToSingle(
-                    round = mockRound1, roundDriver = mockDriver2,
+                    round = mockRound1, roundDriver = mockDriver2.toConstructorDriver(),
                     expectedQualified = 2,
                     expectedGrid = 2,
                     expectedFinish = 3
                 )
             ),
             RaceModel.RaceHeader(expectedSeasonRound.first, expectedSeasonRound.second),
-            convertDriverToSingle(round = mockRound1, roundDriver = mockDriver1,
+            convertDriverToSingle(round = mockRound1, roundDriver = mockDriver1.toConstructorDriver(),
                 expectedQualified = 1,
                 expectedGrid = 1,
                 expectedFinish = 4
@@ -457,7 +457,7 @@ internal class RaceViewModelTest: BaseTest() {
         every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow { emit(mockRound3.copy(
             qSprint = mapOf(
                 mockDriver1.id to RoundSprintQualifyingResult(
-                    driver = mockDriver1,
+                    driver = mockDriver1.toConstructorDriver(),
                     time = LapTime(),
                     points = 1.0,
                     grid = 1,
@@ -624,22 +624,22 @@ internal class RaceViewModelTest: BaseTest() {
     //region Round 1 expected qualifying orders
 
     private val expectedQ3Order: List<RaceModel> = listOf(
-        convertDriverToSingle(round = mockRound1, roundDriver = mockDriver1,
+        convertDriverToSingle(round = mockRound1, roundDriver = mockDriver1.toConstructorDriver(),
             expectedQualified = 1,
             expectedGrid = 1,
             expectedFinish = 4
         ),
-        convertDriverToSingle(round = mockRound1, roundDriver = mockDriver2,
+        convertDriverToSingle(round = mockRound1, roundDriver = mockDriver2.toConstructorDriver(),
             expectedQualified = 2,
             expectedGrid = 2,
             expectedFinish = 3
         ),
-        convertDriverToSingle(round = mockRound1, roundDriver = mockDriver3,
+        convertDriverToSingle(round = mockRound1, roundDriver = mockDriver3.toConstructorDriver(),
             expectedQualified = 3,
             expectedGrid = 4,
             expectedFinish = 2
         ),
-        convertDriverToSingle(round = mockRound1, roundDriver = mockDriver4,
+        convertDriverToSingle(round = mockRound1, roundDriver = mockDriver4.toConstructorDriver(),
             expectedQualified = 4,
             expectedGrid = 3,
             expectedFinish = 1
@@ -655,25 +655,25 @@ internal class RaceViewModelTest: BaseTest() {
         fadeDNF = true
     )
     ): List<RaceModel> = listOf(
-        convertDriverToSingle(round = round, roundDriver = mockDriver1,
+        convertDriverToSingle(round = round, roundDriver = mockDriver1.toConstructorDriver(),
             expectedQualified = 1,
             expectedGrid = 1,
             expectedFinish = 4,
             displayPrefs = displayPrefs
         ),
-        convertDriverToSingle(round = round, roundDriver = mockDriver2,
+        convertDriverToSingle(round = round, roundDriver = mockDriver2.toConstructorDriver(),
             expectedQualified = 2,
             expectedGrid = 2,
             expectedFinish = 3,
             displayPrefs = displayPrefs
         ),
-        convertDriverToSingle(round = round, roundDriver = mockDriver3,
+        convertDriverToSingle(round = round, roundDriver = mockDriver3.toConstructorDriver(),
             expectedQualified = 3,
             expectedGrid = 4,
             expectedFinish = 2,
             displayPrefs = displayPrefs
         ),
-        convertDriverToSingle(round = round, roundDriver = mockDriver4,
+        convertDriverToSingle(round = round, roundDriver = mockDriver4.toConstructorDriver(),
             expectedQualified = 4,
             expectedGrid = 3,
             expectedFinish = 1,
@@ -682,44 +682,44 @@ internal class RaceViewModelTest: BaseTest() {
     )
 
     private val expectedQ2Order: List<RaceModel> = listOf(
-        convertDriverToSingle(round = mockRound1, roundDriver = mockDriver2,
+        convertDriverToSingle(round = mockRound1, roundDriver = mockDriver2.toConstructorDriver(),
             expectedQualified = 2,
             expectedGrid = 2,
             expectedFinish = 3
         ),
-        convertDriverToSingle(round = mockRound1, roundDriver = mockDriver1,
+        convertDriverToSingle(round = mockRound1, roundDriver = mockDriver1.toConstructorDriver(),
             expectedQualified = 1,
             expectedGrid = 1,
             expectedFinish = 4
         ),
-        convertDriverToSingle(round = mockRound1, roundDriver = mockDriver3,
+        convertDriverToSingle(round = mockRound1, roundDriver = mockDriver3.toConstructorDriver(),
             expectedQualified = 3,
             expectedGrid = 4,
             expectedFinish = 2
         ),
-        convertDriverToSingle(round = mockRound1, roundDriver = mockDriver4,
+        convertDriverToSingle(round = mockRound1, roundDriver = mockDriver4.toConstructorDriver(),
             expectedQualified = 4,
             expectedGrid = 3,
             expectedFinish = 1
         )
     )
     private val expectedQ1Order: List<RaceModel> = listOf(
-        convertDriverToSingle(round = mockRound1, roundDriver = mockDriver1,
+        convertDriverToSingle(round = mockRound1, roundDriver = mockDriver1.toConstructorDriver(),
             expectedQualified = 1,
             expectedGrid = 1,
             expectedFinish = 4
         ),
-        convertDriverToSingle(round = mockRound1, roundDriver = mockDriver3,
+        convertDriverToSingle(round = mockRound1, roundDriver = mockDriver3.toConstructorDriver(),
             expectedQualified = 3,
             expectedGrid = 4,
             expectedFinish = 2
         ),
-        convertDriverToSingle(round = mockRound1, roundDriver = mockDriver2,
+        convertDriverToSingle(round = mockRound1, roundDriver = mockDriver2.toConstructorDriver(),
             expectedQualified = 2,
             expectedGrid = 2,
             expectedFinish = 3
         ),
-        convertDriverToSingle(round = mockRound1, roundDriver = mockDriver4,
+        convertDriverToSingle(round = mockRound1, roundDriver = mockDriver4.toConstructorDriver(),
             expectedQualified = 4,
             expectedGrid = 3,
             expectedFinish = 1
@@ -732,7 +732,7 @@ internal class RaceViewModelTest: BaseTest() {
     //region Round 1 Qualifying deltas check
 
     private val expectedQ3OrderWithQualifyingDeltas: List<RaceModel> = listOf(
-        convertDriverToSingle(round = mockRound1, roundDriver = mockDriver1,
+        convertDriverToSingle(round = mockRound1, roundDriver = mockDriver1.toConstructorDriver(),
             expectedQualified = 1,
             expectedGrid = 1,
             expectedFinish = 4,
@@ -741,7 +741,7 @@ internal class RaceViewModelTest: BaseTest() {
             expectedQ3Delta = null,
             displayPrefs = DisplayPrefs(true, true, true, true, false, true)
         ),
-        convertDriverToSingle(round = mockRound1, roundDriver = mockDriver2,
+        convertDriverToSingle(round = mockRound1, roundDriver = mockDriver2.toConstructorDriver(),
             expectedQualified = 2,
             expectedGrid = 2,
             expectedFinish = 3,
@@ -750,7 +750,7 @@ internal class RaceViewModelTest: BaseTest() {
             expectedQ3Delta = "+1.000",
             displayPrefs = DisplayPrefs(true, true, true, true, false, true)
         ),
-        convertDriverToSingle(round = mockRound1, roundDriver = mockDriver3,
+        convertDriverToSingle(round = mockRound1, roundDriver = mockDriver3.toConstructorDriver(),
             expectedQualified = 3,
             expectedGrid = 4,
             expectedFinish = 2,
@@ -759,7 +759,7 @@ internal class RaceViewModelTest: BaseTest() {
             expectedQ3Delta = null,
             displayPrefs = DisplayPrefs(true, true, true, true, false, true)
         ),
-        convertDriverToSingle(round = mockRound1, roundDriver = mockDriver4,
+        convertDriverToSingle(round = mockRound1, roundDriver = mockDriver4.toConstructorDriver(),
             expectedQualified = 4,
             expectedGrid = 3,
             expectedFinish = 1,
@@ -772,7 +772,7 @@ internal class RaceViewModelTest: BaseTest() {
 
     //endregion
 
-    private fun convertDriverToSingle(round: Round, roundDriver: RoundDriver,
+    private fun convertDriverToSingle(round: Round, roundDriver: ConstructorDriver,
                                       expectedGrid: Int,
                                       expectedFinish: Int,
                                       expectedQualified: Int,

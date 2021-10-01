@@ -7,6 +7,7 @@ import tmg.core.ui.model.AnimationSpeed
 import tmg.flashback.data.models.stats.Driver
 import tmg.flashback.statistics.ui.race.RaceModel
 import tmg.core.ui.extensions.getColor
+import tmg.flashback.data.models.stats.ConstructorDriver
 import tmg.flashback.firebase.extensions.pointsDisplay
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.LayoutConstructorDriverBinding
@@ -74,7 +75,7 @@ class ConstructorStandingsViewholder(
         }
     }
 
-    private fun setDriver(layout: LayoutConstructorDriverBinding, driver: Driver, points: Double, @ColorInt constructorColor: Int) {
+    private fun setDriver(layout: LayoutConstructorDriverBinding, driver: ConstructorDriver, points: Double, @ColorInt constructorColor: Int) {
         layout.tvName.text = driver.name
         layout.tvNumber.text = context.resources.getQuantityString(R.plurals.race_points, points.toInt(), points.pointsDisplay())
         layout.imgFlag.setImageResource(context.getFlagResourceAlpha3(driver.nationalityISO))

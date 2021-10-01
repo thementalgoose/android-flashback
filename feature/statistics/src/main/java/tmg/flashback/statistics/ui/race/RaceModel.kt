@@ -57,7 +57,7 @@ sealed class RaceModel(
     data class ConstructorStandings(
         val constructor: Constructor,
         val points: Double,
-        val driver: List<Pair<Driver, Double>>,
+        val driver: List<Pair<ConstructorDriver, Double>>,
         val animationSpeed: AnimationSpeed
     ) : RaceModel(R.layout.view_race_constructor)
 
