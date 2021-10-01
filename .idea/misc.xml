@@ -38,8 +38,28 @@
         <entry key="feature/common/src/main/res/layout/fragment_release_notes.xml" value="0.2890625" />
         <entry key="feature/common/src/main/res/layout/view_release_note.xml" value="0.2890625" />
         <entry key="feature/formula1/src/main/res/drawable/circuit_adelaide.xml" value="0.4010416666666667" />
+        <entry key="feature/formula1/src/main/res/drawable/circuit_brands_hatch.xml" value="0.21875" />
+        <entry key="feature/formula1/src/main/res/drawable/circuit_dijon.xml" value="0.21875" />
+        <entry key="feature/formula1/src/main/res/drawable/circuit_george.xml" value="0.21875" />
         <entry key="feature/formula1/src/main/res/drawable/circuit_hanoi.xml" value="0.3675925925925926" />
+        <entry key="feature/formula1/src/main/res/drawable/circuit_indianapolis.xml" value="0.21875" />
+        <entry key="feature/formula1/src/main/res/drawable/circuit_jarama.xml" value="0.21875" />
+        <entry key="feature/formula1/src/main/res/drawable/circuit_jerez.xml" value="0.36614583333333334" />
+        <entry key="feature/formula1/src/main/res/drawable/circuit_long_beach.xml" value="0.21875" />
+        <entry key="feature/formula1/src/main/res/drawable/circuit_losail.xml" value="0.36614583333333334" />
+        <entry key="feature/formula1/src/main/res/drawable/circuit_monza.xml" value="0.21875" />
+        <entry key="feature/formula1/src/main/res/drawable/circuit_mosport.xml" value="0.21875" />
+        <entry key="feature/formula1/src/main/res/drawable/circuit_mugello.xml" value="0.21875" />
+        <entry key="feature/formula1/src/main/res/drawable/circuit_nurburgring.xml" value="0.21875" />
+        <entry key="feature/formula1/src/main/res/drawable/circuit_osterreichring.xml" value="0.21875" />
+        <entry key="feature/formula1/src/main/res/drawable/circuit_phoenix.xml" value="0.21875" />
+        <entry key="feature/formula1/src/main/res/drawable/circuit_sebring.xml" value="0.21875" />
+        <entry key="feature/formula1/src/main/res/drawable/circuit_tremblant.xml" value="0.21875" />
         <entry key="feature/formula1/src/main/res/drawable/circuit_unknown.xml" value="0.4010416666666667" />
+        <entry key="feature/formula1/src/main/res/drawable/circuit_valencia.xml" value="0.21875" />
+        <entry key="feature/formula1/src/main/res/drawable/circuit_watkins_glen.xml" value="0.21875" />
+        <entry key="feature/formula1/src/main/res/drawable/circuit_yeongam.xml" value="0.21875" />
+        <entry key="feature/formula1/src/main/res/drawable/circuit_zolder.xml" value="0.21875" />
         <entry key="feature/formula1/src/main/res/drawable/nationality_not_found.xml" value="0.4010416666666667" />
         <entry key="feature/rss/src/main/res/layout/activity_rss.xml" value="0.3260416666666667" />
         <entry key="feature/rss/src/main/res/layout/fragment_rss.xml" value="0.4311594202898551" />
