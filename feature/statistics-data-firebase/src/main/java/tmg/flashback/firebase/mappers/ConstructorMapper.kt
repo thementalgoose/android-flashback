@@ -1,7 +1,7 @@
 package tmg.flashback.firebase.mappers
 
 import androidx.core.graphics.toColorInt
-import tmg.flashback.data.models.ConstructorDriver
+import tmg.flashback.data.models.stats.ConstructorDriver
 import tmg.flashback.data.models.stats.Constructor
 import tmg.flashback.data.models.stats.ConstructorOverview
 import tmg.flashback.data.models.stats.ConstructorOverviewDriverStanding

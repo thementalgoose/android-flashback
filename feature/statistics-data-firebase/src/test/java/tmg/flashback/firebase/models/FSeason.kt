@@ -156,8 +156,8 @@ internal fun FSeasonOverviewRaceSprintQualifying.Companion.model(
     resultText: String = "2",
     qualified: Int? = 3,
     status: String? = "Finished",
-    points: Double? = 12.0,
-    time: String? = null
+    points: Double? = 15.0,
+    time: String? = "26:23.123"
 ): FSeasonOverviewRaceSprintQualifying = FSeasonOverviewRaceSprintQualifying(
     result = result,
     grid = grid,
