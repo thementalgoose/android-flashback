@@ -38,6 +38,7 @@ enum class TrackLayout(
     JEREZ("jerez", R.drawable.circuit_jerez),
     MAGNY_COURS("magny_cours", R.drawable.circuit_magny_cours),
     MARINA_BAY("marina_bay", R.drawable.circuit_marina_bay),
+    MIAMI("miami", R.drawable.circuit_miami),
     MONACO("monaco", R.drawable.circuit_monaco),
     MONZA("monza", R.drawable.circuit_monza),
     MUGELLO("mugello", R.drawable.circuit_mugello),
