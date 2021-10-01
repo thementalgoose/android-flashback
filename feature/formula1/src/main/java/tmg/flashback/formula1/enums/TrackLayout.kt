@@ -59,6 +59,7 @@ enum class TrackLayout(
     SOCHI("sochi", R.drawable.circuit_sochi),
     SPA("spa", R.drawable.circuit_spa),
     SUZUKA("suzuka", R.drawable.circuit_suzuka),
+    TREMBLANT("tremblant", R.drawable.circuit_tremblant),
     VALENCIA("valencia", R.drawable.circuit_valencia),
     VILLENEUVE("villeneuve", R.drawable.circuit_villeneuve),
     YAS_MARINA("yas_marina", R.drawable.circuit_yas_marina),
