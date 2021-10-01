@@ -1,6 +1,5 @@
 package tmg.flashback.data.models.stats
 
-import tmg.flashback.data.models.ConstructorDriver
 import tmg.flashback.data.utils.positive
 
 data class ConstructorOverview(

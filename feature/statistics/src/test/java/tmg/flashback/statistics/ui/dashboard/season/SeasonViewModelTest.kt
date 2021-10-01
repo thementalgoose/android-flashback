@@ -653,7 +653,7 @@ internal class SeasonViewModelTest: BaseTest() {
     private val expectedDriver1 = SeasonItem.Driver(
             season = 2019,
             points = 21.0,
-            driver = mockDriver1.toDriver(),
+            driver = mockDriver1,
             driverId = mockDriver1.id,
             position = 3,
             bestQualifying = Pair(1, listOf(mockRound1)),
@@ -664,7 +664,7 @@ internal class SeasonViewModelTest: BaseTest() {
     private val expectedDriver2 = SeasonItem.Driver(
             season = 2019,
             points = 18.0,
-            driver = mockDriver2.toDriver(),
+            driver = mockDriver2,
             driverId = mockDriver2.id,
             position = 4,
             bestQualifying = Pair(2, listOf(mockRound1)),
@@ -675,7 +675,7 @@ internal class SeasonViewModelTest: BaseTest() {
     private val expectedDriver3 = SeasonItem.Driver(
             season = 2019,
             points = 27.0,
-            driver = mockDriver3.toDriver(),
+            driver = mockDriver3,
             driverId = mockDriver3.id,
             position = 1,
             bestQualifying = Pair(3, listOf(mockRound1, mockRound2)),
@@ -686,7 +686,7 @@ internal class SeasonViewModelTest: BaseTest() {
     private val expectedDriver4 = SeasonItem.Driver(
             season = 2019,
             points = 24.0,
-            driver = mockDriver4.toDriver(),
+            driver = mockDriver4,
             driverId = mockDriver4.id,
             position = 2,
             bestQualifying = Pair(1, listOf(mockRound2)),
@@ -705,8 +705,8 @@ internal class SeasonViewModelTest: BaseTest() {
             constructor = mockConstructorAlpha,
             constructorId = mockConstructorAlpha.id,
             driver = listOf(
-                    Pair(mockDriver3.toDriver(), 27.0),
-                    Pair(mockDriver1.toDriver(), 21.0)
+                    Pair(mockDriver3.toConstructorDriver(), 27.0),
+                    Pair(mockDriver1.toConstructorDriver(), 21.0)
             ),
             points = 48.0,
             maxPointsInSeason = 48.0,
@@ -718,8 +718,8 @@ internal class SeasonViewModelTest: BaseTest() {
             constructor = mockConstructorBeta,
             constructorId = mockConstructorBeta.id,
             driver = listOf(
-                    Pair(mockDriver4.toDriver(), 24.0),
-                    Pair(mockDriver2.toDriver(), 18.0)
+                    Pair(mockDriver4.toConstructorDriver(), 24.0),
+                    Pair(mockDriver2.toConstructorDriver(), 18.0)
             ),
             points = 42.0,
             maxPointsInSeason = 48.0,

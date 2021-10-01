@@ -9,12 +9,12 @@ import tmg.flashback.data.utils.toMaxIfZero
 import tmg.flashback.firebase.models.*
 
 fun FSeason.convert(season: Int): Season {
-    val drivers = (this.drivers ?: mapOf())
-            .values
-            .map { it.convert(this.constructorAtEndOfSeason(it.id)) }
     val constructors = (this.constructors ?: mapOf())
             .values
             .map { it.convert() }
+    val drivers = (this.drivers ?: mapOf())
+            .values
+            .map { it.convert(this.race, constructors) }
 
     return Season(
             season = season,
@@ -23,7 +23,7 @@ fun FSeason.convert(season: Int): Season {
             rounds = (this.race ?: mapOf())
                     .values
                     .map {
-                        it.convert(this)
+                        it.convert(this, drivers)
                     },
             driverStandings = this.standings?.drivers?.let {
                 return@let it.convertDriver(drivers)
@@ -35,24 +35,16 @@ fun FSeason.convert(season: Int): Season {
 }
 
 fun FRound.convert(
-        fSeason: FSeason
+        fSeason: FSeason,
+        driverList: List<Driver>
 ): Round {
-
-    val driverList = (fSeason.drivers ?: emptyMap()).values
-            .map { driver ->
-                driver.convert(
-                    fSeason.constructors ?: emptyMap(),
-                    driverCon?.toList()?.firstOrNull { it.first == driver.id }?.second,
-                    fSeason.constructorAtEndOfSeason(driver.id)
-                )
-            }
     val constructorList = (fSeason.constructors ?: emptyMap()).values
             .map { constructor -> constructor.convert() }
 
     val sprintQualifyingMap = (sprintQualifying ?: mapOf())
             .map { (driverId, sprintQualiResult) ->
                 driverId to RoundSprintQualifyingResult(
-                    driver = driverList.first { it.id == driverId },
+                    driver = driverList.first { it.id == driverId }.toConstructorDriver(this.round),
                     time = sprintQualiResult.time?.toLapTime(),
                     points = sprintQualiResult.points ?: 0.0,
                     grid = sprintQualiResult.grid ?: 0,
@@ -66,7 +58,7 @@ fun FRound.convert(
     val raceMap = (race ?: mapOf())
             .map { (driverId, raceResult) ->
                 driverId to RoundRaceResult(
-                    driver = driverList.first { it.id == driverId },
+                    driver = driverList.first { it.id == driverId }.toConstructorDriver(this.round),
                     time = raceResult.time?.toLapTime(),
                     points = raceResult.points ?: 0.0,
                     grid = raceResult.grid ?: 0,
@@ -85,12 +77,12 @@ fun FRound.convert(
         time = fromTime(time),
         name = name,
         wikipediaUrl = wiki,
-        drivers = driverList,
+        drivers = driverList.map { it.toConstructorDriver(round) },
         constructors = constructorList,
         circuit = circuit.convert(),
-        q1 = qualifying.onResult(fSeason, driverCon ?: emptyMap()) { it.q1 },
-        q2 = qualifying.onResult(fSeason, driverCon ?: emptyMap()) { it.q2 },
-        q3 = qualifying.onResult(fSeason, driverCon ?: emptyMap()) { it.q3 },
+        q1 = qualifying.onResult(fSeason, round) { it.q1 },
+        q2 = qualifying.onResult(fSeason, round) { it.q2 },
+        q3 = qualifying.onResult(fSeason, round) { it.q3 },
         qSprint = sprintQualifyingMap,
         race = raceMap
     )
@@ -121,7 +113,7 @@ private fun getSprintQualified(sprintQualiResult: FSeasonOverviewRaceSprintQuali
 
 private fun Map<String, FSeasonOverviewRaceQualifying>?.onResult(
         season: FSeason,
-        driverOverrideMap: Map<String, String>,
+        round: Int,
         callback: (race: FSeasonOverviewRaceQualifying) -> String?
 ): Map<String, RoundQualifyingResult> {
 
@@ -134,9 +126,11 @@ private fun Map<String, FSeasonOverviewRaceQualifying>?.onResult(
             .sortedBy { (_, _, lapTime) -> lapTime?.totalMillis.toMaxIfZero() }
             .mapIndexed { index, triplet ->
                 val (driverId, item, lapTime) = triplet
-                val driver = drivers.values.first { it.id == driverId }.convert(constructors, driverOverrideMap.toList().firstOrNull { it.first == driverId }?.second, season.constructorAtEndOfSeason(driverId))
+                val driver = drivers.values
+                    .first { it.id == driverId }
+                    .convert(season.race, constructors.map { (_, value) -> value.convert() })
                 return@mapIndexed driverId to RoundQualifyingResult(
-                        driver = driver,
+                        driver = driver.toConstructorDriver(round),
                         time = lapTime,
                         position = (if (lapTime == null) (item.pos) else null) ?: (index + 1)
                 )
