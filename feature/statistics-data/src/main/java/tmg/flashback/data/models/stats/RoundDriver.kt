@@ -7,6 +7,7 @@ import tmg.flashback.data.models.ConstructorDriver
  * Class to hold the driver in a specific round of a season
  * - Includes what constructor they are driving for in this round
  */
+// TODO Convert this to just one driver object with map of constructors
 data class RoundDriver(
         val id: String,
         val firstName: String,

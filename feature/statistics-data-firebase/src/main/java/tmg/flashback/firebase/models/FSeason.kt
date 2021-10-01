@@ -34,6 +34,8 @@ data class FSeasonOverviewDriver(
         val dob: String = "",
         val nationality: String = "",
         val nationalityISO: String = "",
+        // TODO: Look at removing this?
+        @Deprecated("MAYBE!")
         val constructorId: String = ""
 ) {
         companion object

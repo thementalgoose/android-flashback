@@ -16,6 +16,7 @@ data class Driver(
         val dateOfBirth: LocalDate,
         val nationality: String,
         val nationalityISO: String,
+        // TODO Make this map of round to constructor
         val constructorAtEndOfSeason: Constructor
 ) {
     fun forRound(constructor: Constructor = constructorAtEndOfSeason): RoundDriver {
