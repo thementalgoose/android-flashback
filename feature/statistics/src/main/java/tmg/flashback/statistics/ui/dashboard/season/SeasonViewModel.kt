@@ -366,11 +366,32 @@ class SeasonViewModel(
             .values
             .sortedByDescending { it.second }
             .toList()
-            .mapIndexed { index: Int, pair: Pair<Driver, Double> ->
+            .mapIndexed { index: Int, pair: Pair<ConstructorDriver, Double> ->
                 val (roundDriver, points) = pair
+
+                // TODO: This should be refactored out!
+                val rebuildDriver = Driver(
+                    id = roundDriver.id,
+                    firstName = roundDriver.firstName,
+                    lastName = roundDriver.lastName,
+                    code = roundDriver.code,
+                    number = roundDriver.number,
+                    wikiUrl = roundDriver.wikiUrl,
+                    photoUrl = roundDriver.photoUrl,
+                    dateOfBirth = roundDriver.dateOfBirth,
+                    nationality = roundDriver.nationality,
+                    nationalityISO = roundDriver.nationalityISO,
+                    constructors = rounds
+                        .map { round ->
+                            round.round to round.drivers.first { driv -> driv.id == roundDriver.id }.constructor
+                        }
+                        .toMap(),
+                    startingConstructor = roundDriver.constructor,
+                )
+
                 SeasonItem.Driver(
                     season = season.value,
-                    driver = roundDriver,
+                    driver = rebuildDriver,
                     points = points,
                     position = index + 1,
                     bestQualifying = rounds.bestQualifyingResultFor(roundDriver.id),
@@ -388,7 +409,7 @@ class SeasonViewModel(
         return this
             .values
             .toList()
-            .mapIndexed { index: Int, triple: Triple<Constructor, Map<String, Pair<Driver, Double>>, Double> ->
+            .mapIndexed { index: Int, triple: Triple<Constructor, Map<String, Pair<ConstructorDriver, Double>>, Double> ->
                 val (constructor, driverPoints, constructorPoints) = triple
                 SeasonItem.Constructor(
                     season = season.season,

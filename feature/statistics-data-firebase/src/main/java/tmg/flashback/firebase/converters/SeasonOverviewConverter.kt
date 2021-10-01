@@ -77,7 +77,7 @@ fun FRound.convert(
         time = fromTime(time),
         name = name,
         wikipediaUrl = wiki,
-        drivers = driverList,
+        drivers = driverList.map { it.toConstructorDriver(round) },
         constructors = constructorList,
         circuit = circuit.convert(),
         q1 = qualifying.onResult(fSeason, round) { it.q1 },

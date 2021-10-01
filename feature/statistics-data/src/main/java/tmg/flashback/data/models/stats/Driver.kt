@@ -25,7 +25,7 @@ data class Driver(
             .maxByOrNull { it.key }
             ?.value
 
-    fun toConstructorDriver(round: Int): ConstructorDriver {
+    fun toConstructorDriver(round: Int = 0): ConstructorDriver {
         return ConstructorDriver(
             id = this.id,
             firstName = this.firstName,
