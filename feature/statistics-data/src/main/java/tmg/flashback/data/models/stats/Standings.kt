@@ -2,7 +2,7 @@ package tmg.flashback.data.models.stats
 
 typealias ConstructorStandingsRound = Map<String, Triple<Constructor, Map<String, Pair<Driver, Double>>, Double>> // Constructor, driver id -> points per driver, constructor points
 
-typealias DriverStandingsRound = Map<String, Pair<RoundDriver, Double>>
+typealias DriverStandingsRound = Map<String, Pair<Driver, Double>>
 
 typealias ConstructorStandings = List<SeasonStanding<Constructor>>
 
@@ -15,7 +15,7 @@ data class RoundConstructorStandings(
 
 data class RoundDriverStandings(
     val points: Double,
-    val driver: RoundDriver
+    val driver: ConstructorDriver
 )
 
 data class SeasonStanding<T>(

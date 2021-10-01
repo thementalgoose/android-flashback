@@ -16,22 +16,28 @@ data class Driver(
         val dateOfBirth: LocalDate,
         val nationality: String,
         val nationalityISO: String,
-        val constructorAtEndOfSeason: Constructor
+        val constructors: Map<Int, Constructor>,
+        val startingConstructor: Constructor
+
 ) {
-    fun forRound(constructor: Constructor = constructorAtEndOfSeason): RoundDriver {
-        return RoundDriver(
-                id = id,
-                firstName = firstName,
-                lastName = lastName,
-                code = code,
-                number = number,
-                wikiUrl = wikiUrl,
-                photoUrl = photoUrl,
-                dateOfBirth = dateOfBirth,
-                nationality = nationality,
-                nationalityISO = nationalityISO,
-                constructor = constructor,
-                constructorAtEndOfSeason = constructorAtEndOfSeason
+    val constructorAtEndOfSeason: Constructor?
+        get() = constructors
+            .maxByOrNull { it.key }
+            ?.value
+
+    fun toConstructorDriver(round: Int): ConstructorDriver {
+        return ConstructorDriver(
+            id = this.id,
+            firstName = this.firstName,
+            lastName = this.lastName,
+            code = this.code,
+            number = this.number,
+            wikiUrl = this.wikiUrl,
+            photoUrl = this.photoUrl,
+            dateOfBirth = this.dateOfBirth,
+            nationality = this.nationality,
+            nationalityISO = this.nationalityISO,
+            constructor = this.constructors.getOrElse(round, { this.startingConstructor }),
         )
     }
 

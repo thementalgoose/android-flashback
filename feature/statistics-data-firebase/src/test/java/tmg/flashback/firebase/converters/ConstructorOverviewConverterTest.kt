@@ -8,7 +8,7 @@ import tmg.flashback.firebase.models.FConstructorOverviewData
 import tmg.flashback.firebase.models.FConstructorOverviewStandings
 import tmg.flashback.firebase.models.FConstructorOverviewStandingsDriver
 import tmg.flashback.firebase.testutils.BaseTest
-import tmg.flashback.data.models.ConstructorDriver
+import tmg.flashback.data.models.stats.ConstructorDriver
 
 internal class ConstructorOverviewConverterTest: BaseTest() {
 

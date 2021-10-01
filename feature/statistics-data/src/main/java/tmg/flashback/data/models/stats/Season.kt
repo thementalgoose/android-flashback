@@ -27,7 +27,7 @@ fun Season.constructorStandings(): ConstructorStandingsRound = this.constructors
             val driverMap = mutableMapOf<String, Pair<Driver, Double>>()
             this.rounds.forEach { round ->
                 val driversInRoundForConstructor = round.drivers
-                        .filter { roundDriver -> roundDriver.constructor.id == constructor.id }
+                        .filter { roundDriver -> roundDriver.constructors.get(round.round)?.id == constructor.id }
                         .map { driver ->
                             val points = (round.race[driver.id]?.points ?: 0.0) + (round.qSprint[driver.id]?.points ?: 0.0)
                             driver to points
@@ -35,11 +35,11 @@ fun Season.constructorStandings(): ConstructorStandingsRound = this.constructors
 
                 driversInRoundForConstructor.forEach { (roundDriver, points) ->
                     if (!driverMap.containsKey(roundDriver.id)) {
-                        driverMap[roundDriver.id] = Pair(roundDriver.toDriver(), 0.0)
+                        driverMap[roundDriver.id] = Pair(roundDriver, 0.0)
                     }
                     val existingValue = driverMap.getValue(roundDriver.id)
 
-                    driverMap[roundDriver.id] = Pair(roundDriver.toDriver(), existingValue.second + points)
+                    driverMap[roundDriver.id] = Pair(roundDriver, existingValue.second + points)
                 }
             }
 
@@ -57,7 +57,7 @@ fun Season.constructorStandings(): ConstructorStandingsRound = this.constructors
  */
 // TODO: Re-implement this method to include the driver standings data to include penalties etc.
 fun List<Round>.driverStandings(): DriverStandingsRound {
-    val returnMap: MutableMap<String, Pair<RoundDriver, Double>> = mutableMapOf()
+    val returnMap: MutableMap<String, Pair<Driver, Double>> = mutableMapOf()
     this.forEach { round ->
         round.drivers.forEach {
             if (!returnMap.containsKey(it.id)) {
