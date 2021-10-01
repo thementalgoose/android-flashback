@@ -44,6 +44,7 @@ enum class TrackLayout(
     MARINA_BAY("marina_bay", R.drawable.circuit_marina_bay),
     MONACO("monaco", R.drawable.circuit_monaco),
     MONZA("monza", R.drawable.circuit_monza),
+    MOSPORT("mosport", R.drawable.circuit_mosport),
     MUGELLO("mugello", R.drawable.circuit_mugello),
     NURBURGRING("nurburgring", R.drawable.circuit_nurburgring),
     OSTERREICHRING("osterreichring", R.drawable.circuit_osterreichring),
