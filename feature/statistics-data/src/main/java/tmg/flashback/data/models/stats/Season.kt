@@ -1,5 +1,7 @@
 package tmg.flashback.data.models.stats
 
+import org.threeten.bp.LocalDate
+
 data class Season(
         val season: Int,
         val drivers: List<Driver>,
@@ -24,7 +26,7 @@ data class Season(
 fun Season.constructorStandings(): ConstructorStandingsRound = this.constructors
         .map { constructor ->
             // Driver map should contain driver id -> Driver, points for each constructor
-            val driverMap = mutableMapOf<String, Pair<Driver, Double>>()
+            val driverMap = mutableMapOf<String, Pair<ConstructorDriver, Double>>()
             this.rounds.forEach { round ->
                 val driversInRoundForConstructor = round.drivers
                         .filter { roundDriver -> roundDriver.constructor.id == constructor.id }
@@ -35,11 +37,11 @@ fun Season.constructorStandings(): ConstructorStandingsRound = this.constructors
 
                 driversInRoundForConstructor.forEach { (roundDriver, points) ->
                     if (!driverMap.containsKey(roundDriver.id)) {
-                        driverMap[roundDriver.id] = Pair(roundDriver.toDriver(), 0.0)
+                        driverMap[roundDriver.id] = Pair(roundDriver, 0.0)
                     }
                     val existingValue = driverMap.getValue(roundDriver.id)
 
-                    driverMap[roundDriver.id] = Pair(roundDriver.toDriver(), existingValue.second + points)
+                    driverMap[roundDriver.id] = Pair(roundDriver, existingValue.second + points)
                 }
             }
 
@@ -56,8 +58,10 @@ fun Season.constructorStandings(): ConstructorStandingsRound = this.constructors
  * Get the driver standings for the season
  */
 // TODO: Re-implement this method to include the driver standings data to include penalties etc.
+@Deprecated("This method should be depended on, use the standings object inside the season model for a more accurate reflection")
 fun List<Round>.driverStandings(): DriverStandingsRound {
-    val returnMap: MutableMap<String, Pair<RoundDriver, Double>> = mutableMapOf()
+    val returnMap: MutableMap<String, Pair<ConstructorDriver, Double>> = mutableMapOf()
+
     this.forEach { round ->
         round.drivers.forEach {
             if (!returnMap.containsKey(it.id)) {

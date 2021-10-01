@@ -42,16 +42,16 @@ class SeasonTest {
                 mockConstructorAlpha.id to Triple(
                         mockConstructorAlpha,
                         mutableMapOf(
-                                mockDriver1.id to Pair(mockDriver1.toDriver(), driver1Points),
-                                mockDriver3.id to Pair(mockDriver3.toDriver(), driver3Points)
+                                mockDriver1.id to Pair(mockDriver1.toConstructorDriver(1), driver1Points),
+                                mockDriver3.id to Pair(mockDriver3.toConstructorDriver(1), driver3Points)
                         ).toMap(),
                         driver1Points + driver3Points
                 ),
                 mockConstructorBeta.id to Triple(
                         mockConstructorBeta,
                         mutableMapOf(
-                                mockDriver2.id to Pair(mockDriver2.toDriver(), driver2Points),
-                                mockDriver4.id to Pair(mockDriver4.toDriver(), driver4Points)
+                                mockDriver2.id to Pair(mockDriver2.toConstructorDriver(1), driver2Points),
+                                mockDriver4.id to Pair(mockDriver4.toConstructorDriver(1), driver4Points)
                         ).toMap(),
                         driver2Points + driver4Points
                 )
@@ -75,16 +75,16 @@ class SeasonTest {
                 mockConstructorAlpha.id to Triple(
                         mockConstructorAlpha,
                         mutableMapOf(
-                                mockDriver1.id to Pair(mockDriver1.toDriver(), driver1Points),
-                                mockDriver3.id to Pair(mockDriver3.toDriver(), driver3Points)
+                                mockDriver1.id to Pair(mockDriver1.toConstructorDriver(1), driver1Points),
+                                mockDriver3.id to Pair(mockDriver3.toConstructorDriver(1), driver3Points)
                         ).toMap(),
                         alphaPoints
                 ),
                 mockConstructorBeta.id to Triple(
                         mockConstructorBeta,
                         mutableMapOf(
-                                mockDriver2.id to Pair(mockDriver2.toDriver(), driver2Points),
-                                mockDriver4.id to Pair(mockDriver4.toDriver(), driver4Points)
+                                mockDriver2.id to Pair(mockDriver2.toConstructorDriver(1), driver2Points),
+                                mockDriver4.id to Pair(mockDriver4.toConstructorDriver(1), driver4Points)
                         ).toMap(),
                         betaPoints
                 )
