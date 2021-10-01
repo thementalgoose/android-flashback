@@ -97,12 +97,12 @@ class RoundTest {
 
         val example = mapOf(
                 "alpha" to Triple(mockConstructorAlpha, mapOf(
-                        "1" to Pair(mockDriver1, 21.0),
-                        "3" to Pair(mockDriver3, 27.0)
+                        "1" to Pair(mockDriver1.toConstructorDriver(), 21.0),
+                        "3" to Pair(mockDriver3.toConstructorDriver(), 27.0)
                 ), 48.0),
                 "beta" to Triple(mockConstructorBeta, mapOf(
-                        "4" to Pair(mockDriver4, 24.0),
-                        "2" to Pair(mockDriver2, 18.0)
+                        "4" to Pair(mockDriver4.toConstructorDriver(), 24.0),
+                        "2" to Pair(mockDriver2.toConstructorDriver(), 18.0)
                 ), 42.0)
         )
         assertEquals(48.0, example.maxConstructorPointsInSeason())
