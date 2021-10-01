@@ -22,6 +22,7 @@ enum class TrackLayout(
     BAK("BAK", R.drawable.circuit_bak),
     BRANDS_HATCH("brands_hatch", R.drawable.circuit_brands_hatch),
     CATALUNYA("catalunya", R.drawable.circuit_catalunya),
+    DIJON("dijon", R.drawable.circuit_dijon),
     DONINGTON("donington", R.drawable.circuit_donington),
     ESTORIL("estoril", R.drawable.circuit_estoril),
     FAIR_PARK("fair_park", R.drawable.circuit_fair_park),
