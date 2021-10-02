@@ -8,6 +8,7 @@ internal fun FCircuit.Companion.model(
     locality: String = "locality",
     locationLat: Double? = 1.0,
     locationLng: Double? = 2.0,
+    location: FCircuitLocation = FCircuitLocation.model(),
     wikiUrl: String? = "wikiUrl",
     results: Map<String, FCircuitResult>? = mapOf(
         "s2020r1" to FCircuitResult.model()
@@ -20,8 +21,17 @@ internal fun FCircuit.Companion.model(
     locality = locality,
     locationLat = locationLat,
     locationLng = locationLng,
+    location = location,
     wikiUrl = wikiUrl,
     results = results
+)
+
+internal fun FCircuitLocation.Companion.model(
+    lat: String? = "1.0",
+    lng: String? = "2.0"
+): FCircuitLocation = FCircuitLocation(
+    lat = lat,
+    lng = lng
 )
 
 internal fun FCircuitResult.Companion.model(
