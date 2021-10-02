@@ -16,7 +16,7 @@ import tmg.flashback.firebase.models.FHistorySeasonWinDriver
 
 class HistoryMapper(
     // TODO: Move this to DI from Flashback module and build config field
-    private val allDataUpTo: Int = 2020,
+    private val allDataUpTo: Int,
     private val crashController: CrashController
 ) {
 

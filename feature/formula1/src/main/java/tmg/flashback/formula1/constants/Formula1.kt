@@ -11,6 +11,11 @@ object Formula1 {
         get() = Year.now().value
 
     /**
+     * What season should the API have all the data up too
+     */
+    val allDataUpToo: Int = 2020
+
+    /**
      * When did F1 start
      */
     const val minimumSupportedYear = 1950
