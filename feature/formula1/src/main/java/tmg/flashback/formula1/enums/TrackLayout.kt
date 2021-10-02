@@ -40,6 +40,7 @@ enum class TrackLayout(
     JEDDAH("jeddah", R.drawable.circuit_jeddah),
     JEREZ("jerez", R.drawable.circuit_jerez),
     LONG_BEACH("long_beach", R.drawable.circuit_long_beach),
+    LOSAIL("losail", R.drawable.circuit_losail),
     MAGNY_COURS("magny_cours", R.drawable.circuit_magny_cours),
     MARINA_BAY("marina_bay", R.drawable.circuit_marina_bay),
     MIAMI("miami", R.drawable.circuit_miami),
