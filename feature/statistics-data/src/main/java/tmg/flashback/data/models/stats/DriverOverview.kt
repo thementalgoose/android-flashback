@@ -41,7 +41,7 @@ data class DriverOverview(
         return@lazy standings
                 .sumOf { it.podiums }
     }
-    val careerPoints: Int by lazy {
+    val careerPoints: Double by lazy {
         return@lazy standings
                 .sumOf { it.points }
     }
@@ -164,7 +164,7 @@ data class DriverOverviewStanding(
         val bestQualifyingQuantity: Int,
         val championshipStanding: Int,
         val isInProgress: Boolean,
-        val points: Int,
+        val points: Double,
         val podiums: Int,
         val races: Int,
         val season: Int,
@@ -232,7 +232,7 @@ data class DriverOverviewStanding(
 data class DriverOverviewRace(
         val status: String,
         val finished: Int,
-        val points: Int,
+        val points: Double,
         val qualified: Int,
         val round: Int,
         val season: Int,

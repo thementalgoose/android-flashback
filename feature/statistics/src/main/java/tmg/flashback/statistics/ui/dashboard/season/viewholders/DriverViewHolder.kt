@@ -3,6 +3,7 @@ package tmg.flashback.statistics.ui.dashboard.season.viewholders
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import kotlin.math.roundToInt
 import tmg.flashback.statistics.R
 import tmg.core.ui.model.AnimationSpeed
 import tmg.flashback.statistics.ui.dashboard.season.SeasonItem
@@ -68,9 +69,9 @@ class DriverViewHolder(
                         maxProgress -> item.points.pointsDisplay()
                         0.0f -> "0"
                         else -> (it * item.maxPointsInSeason.toFloat())
-                            .toDouble()
-                            .coerceIn(0.0, item.points)
-                            .pointsDisplay()
+                            .coerceIn(0.0f, item.points.toFloat())
+                            .roundToInt()
+                            .toString()
                     }
                 }
             }
