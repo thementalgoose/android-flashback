@@ -4,7 +4,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import tmg.crash_reporting.controllers.CrashController
 import tmg.flashback.firebase.FirebaseRepo
-import tmg.flashback.firebase.converters.convert
 import tmg.flashback.firebase.models.FHistorySeason
 import tmg.flashback.data.db.stats.HistoryRepository
 import tmg.flashback.data.models.stats.History

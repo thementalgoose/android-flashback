@@ -60,7 +60,7 @@ val statisticsModule = module {
 
     // Firestore
     single<DataRepository> { DataFirestore(get(), get()) }
-    single<SeasonOverviewRepository> { SeasonOverviewFirestore(get()) }
+    single<SeasonOverviewRepository> { SeasonOverviewFirestore(get(), get()) }
     single<HistoryRepository> { HistoryFirestore(get(), get()) }
     single<CircuitRepository> { CircuitFirestore(get(), get()) }
     single<DriverRepository> { DriverFirestore(get(), get()) }
