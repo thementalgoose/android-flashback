@@ -28,7 +28,6 @@ class SeasonOverviewMapper(
      * Map a season entire season object
      */
     fun mapSeason(input: FSeason, season: Int): Season {
-
         val drivers = (input.drivers ?: emptyMap()).mapNotNull { (_, value) -> driverMapper.mapDriver(input, value.id) }
         val fConstructors = (input.constructors ?: emptyMap()).map { it.value }
         val constructors = fConstructors.map { constructorMapper.mapConstructor(it) }
