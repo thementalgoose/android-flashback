@@ -104,7 +104,7 @@ jobs:
         with:
           nodetail: true
           title: "Release ${{ env.versionName }} (${{ env.versionCode }}) deployment to internal test track failed"
-          description: "Run number ${{ github.run_number }} [Actions](https://github.com/thementalgoose/android-flashback/actions)"
+          description: "Run number ${{ github.run_number }}\n[Action run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})"
           color: 0xff91a4
 
       - name: Notify discord of success
@@ -115,6 +115,6 @@ jobs:
         with:
           nodetail: true
           title: "Release ${{ env.versionName }} (${{ env.versionCode }}) deployment to internal test track successful"
-          description: "Run number ${{ github.run_number }} [Actions](https://github.com/thementalgoose/android-flashback/actions)"
+          description: "Run number ${{ github.run_number }}\n[Action run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})"
           color: 0x35a55f
 
