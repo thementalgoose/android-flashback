@@ -61,7 +61,7 @@ task testModules {
             ':feature:formula1:testDebugUnitTest',
             ':feature:rss:testDebugUnitTest',
             ':feature:statistics:testDebugUnitTest',
-            ':feature:statistics-data:test',
+            ':feature:statistics-data:testDebugUnitTest',
             ':feature:statistics-data-firebase:testDebugUnitTest',
             ':feature:upnext:testDebugUnitTest',
             ':core:ads:testDebugUnitTest',
