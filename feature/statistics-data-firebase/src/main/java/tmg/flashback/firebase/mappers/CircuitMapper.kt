@@ -22,8 +22,8 @@ class CircuitMapper(
             locality = input.locality,
             country = input.country,
             countryISO = input.countryISO ?: "",
-            locationLat = input.locationLat,
-            locationLng = input.locationLng,
+            locationLat = input.location?.lat?.toDoubleOrNull() ?: 0.0,
+            locationLng = input.location?.lng?.toDoubleOrNull() ?: 0.0,
             results = input.results
                 ?.mapNotNull { (_, value) ->
                     mapCircuitRace(input.id, value)

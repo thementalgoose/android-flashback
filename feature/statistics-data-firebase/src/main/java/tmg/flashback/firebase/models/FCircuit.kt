@@ -6,10 +6,20 @@ data class FCircuit(
     val countryISO: String? = "",
     val id: String = "",
     val locality: String = "",
+    @Deprecated("This field shouldn't be used, use location object")
     val locationLat: Double? = null,
+    @Deprecated("This field shouldn't be used, use location object")
     val locationLng: Double? = null,
+    val location: FCircuitLocation? = null,
     val wikiUrl: String? = null,
     val results: Map<String, FCircuitResult>? = null
+) {
+    companion object
+}
+
+data class FCircuitLocation(
+    val lat: String? = null,
+    val lng: String? = null
 ) {
     companion object
 }

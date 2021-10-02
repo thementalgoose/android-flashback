@@ -1,8 +1,8 @@
 package tmg.flashback.data.models.stats
 
+import android.graphics.Color
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
-import java.awt.Color
 
 internal val mockLocalDateOfRound1: LocalDate = LocalDate.of(2020, 5, 10)
 internal val mockLocalTimeOfRound1: LocalTime = LocalTime.of(14, 10)
@@ -50,7 +50,7 @@ internal val mockConstructorAlpha: Constructor = Constructor(
         wikiUrl = "https://www.wiki.com",
         nationality = "British",
         nationalityISO = "GBR",
-        color = Color.GREEN.rgb
+        color = Color.GREEN
 )
 internal val mockConstructorBeta: Constructor = Constructor(
         id = "beta",
@@ -58,7 +58,7 @@ internal val mockConstructorBeta: Constructor = Constructor(
         wikiUrl = "https://www.wiki.com",
         nationality = "German",
         nationalityISO = "DEU",
-        color = Color.BLUE.rgb
+        color = Color.BLUE
 )
 
 //endregion
@@ -120,7 +120,7 @@ internal val mockDriver4 = mockDriver1.copy(
 internal val mockDriverSlimConstructor = SlimConstructor(
         id = "slim",
         name = "slim",
-        color = Color.CYAN.rgb
+        color = Color.CYAN
 )
 internal val mockDriverRound11 = DriverOverviewRace(
         status = "Finished",
