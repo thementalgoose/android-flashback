@@ -1,54 +1,20 @@
-apply plugin: 'java-library'
-apply plugin: 'kotlin'
+apply plugin:  'com.android.library'
+apply from: rootDir.absolutePath + "/gradle/config-android.gradle"
+apply from: rootDir.absolutePath + "/gradle/config-util.gradle"
+apply from: rootDir.absolutePath + "/gradle/config-junit5.gradle"
+apply from: rootDir.absolutePath + "/gradle/config-koin.gradle"
 
-apply from: rootDir.absolutePath + "/versions.gradle"
+android {
+    compileSdkVersion project.ext.compileSdkVersion
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_1_7
-    targetCompatibility = JavaVersion.VERSION_1_7
+    defaultConfig {
+        minSdkVersion project.ext.minSdkVersion
+        targetSdkVersion project.ext.targetSdkVersion
+        versionCode project.ext.versionCode
+        versionName project.ext.versionName
+    }
 }
 
 dependencies {
-    // Unit tests
-    testImplementation "org.junit.jupiter:junit-jupiter-api:$junit"
-    testImplementation "org.junit.jupiter:junit-jupiter-engine:$junit"
-    testImplementation "org.junit.jupiter:junit-jupiter-params:$junit"
-    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junit"
-    testImplementation "io.mockk:mockk:$mockk"
 
-    // ThreeTen
-    implementation "com.jakewharton.threetenabp:threetenabp:$threeten"
-    testImplementation ("org.threeten:threetenbp:$threetenbp") {
-        exclude group:'com.jakewharton.threetenabp', module:'threetenabp'
-    }
-
-    // Kotlin
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-
-    // Coroutines
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines"
-}
-
-sourceSets {
-    main.java.srcDirs += 'src/main/kotlin'
-    test.java.srcDirs += 'src/test/java'
-}
-
-test {
-    useJUnitPlatform()
-    testLogging {
-        events "passed", "skipped", "failed", "standardOut", "standardError"
-    }
-    afterSuite { desc, result ->
-        if (!desc.parent) {
-            println "\n======================================================================="
-            println "${desc.displayName}"
-            println "Test result: ${result.resultType}"
-            println "Test summary: ${result.testCount} tests, " +
-                    "${result.successfulTestCount} succeeded, " +
-                    "${result.failedTestCount} failed, " +
-                    "${result.skippedTestCount} skipped"
-            println "======================================================================="
-        }
-    }
 }

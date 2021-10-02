@@ -115,7 +115,7 @@ jobs:
         if: ${{ needs.unit_test_diff_check.outputs.feature_statistics == 'true' }}
 
       - name: :feature:statistics-data
-        run: ./gradlew :feature:statistics-data:test
+        run: ./gradlew :feature:statistics-data:testDebugUnitTest
         if: ${{ needs.unit_test_diff_check.outputs.feature_statistics_data == 'true' }}
 
       - name: :feature:statistics-data-firebase
