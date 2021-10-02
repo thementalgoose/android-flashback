@@ -64,11 +64,11 @@ class DriverOverviewStandingTest {
 
     @ParameterizedTest(name = "Expected {2} when rounds [{0}, {1}]")
     @CsvSource(
-            "0,3,1",
-            "3,3,2",
-            "0,0,0"
+            "0.0,3.0,1",
+            "3.0,3.0,2",
+            "0.0,0.0,0"
     )
-    fun `finishes in points`(r1: Int, r2: Int, expected: Int) {
+    fun `finishes in points`(r1: Double, r2: Double, expected: Int) {
         val sut = mockDriverStanding1.copy(raceOverview = listOf(
                 mockDriverRound11.copy(points = r1),
                 mockDriverRound12.copy(points = r2)

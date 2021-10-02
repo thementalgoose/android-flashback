@@ -92,13 +92,13 @@ class DriverOverviewTest {
 
     @ParameterizedTest(name = "Expected {2} when SeasonA=[{0}] and SeasonB=[{1}]")
     @CsvSource(
-            "3,1,4",
-            "1,2,3",
-            "4,5,9",
-            "0,0,0",
-            "0,3,3"
+            "3.0,1.0,4.0",
+            "1.0,2.0,3.0",
+            "4.0,5.0,9.0",
+            "0.0,0.0,0.0",
+            "0.0,3.0,3.0"
     )
-    fun `career points`(s1: Int, s2: Int, expected: Int) {
+    fun `career points`(s1: Double, s2: Double, expected: Double) {
         val sut = mockDriverOverview.copy(standings = listOf(
                 mockDriverStanding1.copy(points = s1),
                 mockDriverStanding2.copy(points = s2)
