@@ -11,6 +11,7 @@ import tmg.core.ui.model.AnimationSpeed
 import tmg.flashback.statistics.ui.overview.driver.summary.PipeType.*
 import tmg.flashback.data.db.stats.DriverRepository
 import tmg.flashback.data.models.stats.DriverOverviewRace
+import tmg.flashback.firebase.extensions.pointsDisplay
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.ui.overview.driver.season.DriverSeasonItem
 import tmg.flashback.statistics.ui.overview.driver.season.DriverSeasonViewModel
@@ -212,7 +213,7 @@ internal class DriverSeasonViewModelTest: BaseTest() {
                 DriverSeasonItem.Stat(
                         icon = R.drawable.ic_race_points,
                         label = R.string.driver_overview_stat_career_points,
-                        value = mockDriverOverview2019Standing.points.toString()
+                        value = mockDriverOverview2019Standing.points.pointsDisplay()
                 ),
                 DriverSeasonItem.Stat(
                         icon = R.drawable.ic_qualifying_pole,

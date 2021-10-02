@@ -13,6 +13,7 @@ import tmg.flashback.statistics.ui.overview.driver.summary.DriverSummaryItem
 import tmg.flashback.statistics.ui.overview.driver.summary.PipeType
 import tmg.flashback.statistics.ui.overview.driver.summary.PipeType.*
 import tmg.flashback.data.db.stats.DriverRepository
+import tmg.flashback.firebase.extensions.pointsDisplay
 import tmg.flashback.statistics.R
 import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
 import tmg.flashback.statistics.ui.overview.driver.DriverViewModel
@@ -246,7 +247,7 @@ internal class DriverViewModelTest: BaseTest() {
             DriverSummaryItem.Stat(
                 icon = R.drawable.ic_race_points,
                 label = R.string.driver_overview_stat_career_points,
-                value = mockDriverOverview.careerPoints.toString()
+                value = mockDriverOverview.careerPoints.pointsDisplay()
             ),
             DriverSummaryItem.Stat(
                 icon = R.drawable.ic_qualifying_pole,
