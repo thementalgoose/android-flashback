@@ -4,7 +4,6 @@ import kotlinx.coroutines.flow.Flow
 import tmg.crash_reporting.controllers.CrashController
 import tmg.flashback.data.db.DataRepository
 import tmg.flashback.data.models.AppLockout
-import tmg.flashback.firebase.converters.convert
 import tmg.flashback.firebase.FirebaseRepo
 import tmg.flashback.firebase.mappers.AppLockoutMapper
 import tmg.flashback.firebase.models.FAppLockout
