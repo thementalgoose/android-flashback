@@ -47,7 +47,7 @@ internal fun FDriverOverviewStanding.Companion.model(
         "s2020" to FDriverOverviewStandingHistory.model()
     ),
     inProgress: Boolean? = true,
-    p: Int? = 25, // Points
+    p: Double? = 25.0, // Points
     podiums: Int? = 1,
     races: Int? = 1,
     s: Int = 2020, // Season
@@ -77,7 +77,7 @@ internal fun FDriverOverviewStandingHistory.Companion.model(
     date: String = "2020-01-01",
     f: Int? = 1, // Finish
     fStatus: String? = "1",
-    p: Int? = 25, // Points
+    p: Double? = 25.0, // Points
     q: Int? = 1, // Qualifyied
     r: Int = 1, // Round
     rName: String? = "raceName"
