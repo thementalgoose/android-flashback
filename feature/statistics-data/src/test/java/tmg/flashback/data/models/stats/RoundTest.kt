@@ -60,10 +60,10 @@ class RoundTest {
     fun `driverStandings returns correct driver standings`() {
 
         val expected = listOf(
-                RoundDriverStandings(driver = mockDriver1, points = 5.0),
-                RoundDriverStandings(driver = mockDriver2, points = 10.0),
-                RoundDriverStandings(driver = mockDriver3, points = 15.0),
-                RoundDriverStandings(driver = mockDriver4, points = 20.0)
+                RoundDriverStandings(driver = mockDriver1.toConstructorDriver(1), points = 5.0),
+                RoundDriverStandings(driver = mockDriver2.toConstructorDriver(1), points = 10.0),
+                RoundDriverStandings(driver = mockDriver3.toConstructorDriver(1), points = 15.0),
+                RoundDriverStandings(driver = mockDriver4.toConstructorDriver(1), points = 20.0)
         )
         assertEquals(expected, mockRound1.driverStandings)
     }
@@ -75,16 +75,16 @@ class RoundTest {
                 "alpha" to Triple(
                         mockConstructorAlpha,
                         mapOf(
-                                "1" to Pair(mockDriver1.toDriver(), 21.0),
-                                "3" to Pair(mockDriver3.toDriver(), 27.0)
+                                "1" to Pair(mockDriver1.toConstructorDriver(1), 21.0),
+                                "3" to Pair(mockDriver3.toConstructorDriver(1), 27.0)
                         ),
                         48.0
                 ),
                 "beta" to Triple(
                         mockConstructorBeta,
                         mapOf(
-                                "4" to Pair(mockDriver4.toDriver(), 24.0),
-                                "2" to Pair(mockDriver2.toDriver(), 18.0)
+                                "4" to Pair(mockDriver4.toConstructorDriver(1), 24.0),
+                                "2" to Pair(mockDriver2.toConstructorDriver(1), 18.0)
                         ),
                         42.0
                 )
@@ -97,12 +97,12 @@ class RoundTest {
 
         val example = mapOf(
                 "alpha" to Triple(mockConstructorAlpha, mapOf(
-                        "1" to Pair(mockDriver1.toDriver(), 21.0),
-                        "3" to Pair(mockDriver3.toDriver(), 27.0)
+                        "1" to Pair(mockDriver1.toConstructorDriver(), 21.0),
+                        "3" to Pair(mockDriver3.toConstructorDriver(), 27.0)
                 ), 48.0),
                 "beta" to Triple(mockConstructorBeta, mapOf(
-                        "4" to Pair(mockDriver4.toDriver(), 24.0),
-                        "2" to Pair(mockDriver2.toDriver(), 18.0)
+                        "4" to Pair(mockDriver4.toConstructorDriver(), 24.0),
+                        "2" to Pair(mockDriver2.toConstructorDriver(), 18.0)
                 ), 42.0)
         )
         assertEquals(48.0, example.maxConstructorPointsInSeason())
@@ -112,10 +112,10 @@ class RoundTest {
     fun `(List) driverStandings calculates driver standings for season overview`() {
 
         val driverStandings = mapOf(
-                "1" to Pair(mockDriver1, 21.0),
-                "2" to Pair(mockDriver2, 18.0),
-                "3" to Pair(mockDriver3, 27.0),
-                "4" to Pair(mockDriver4, 24.0)
+                "1" to Pair(mockDriver1.toConstructorDriver(1), 21.0),
+                "2" to Pair(mockDriver2.toConstructorDriver(1), 18.0),
+                "3" to Pair(mockDriver3.toConstructorDriver(1), 27.0),
+                "4" to Pair(mockDriver4.toConstructorDriver(1), 24.0)
         )
         assertEquals(driverStandings, listOf(mockRound1, mockRound2).driverStandings())
     }
@@ -124,8 +124,8 @@ class RoundTest {
     fun `(List) allPoints for constructorStandings individual item returns the sum of the points`() {
 
         val example = mapOf(
-                "1" to Pair(mockDriver1.toDriver(), 21),
-                "3" to Pair(mockDriver3.toDriver(), 27)
+                "1" to Pair(mockDriver1, 21),
+                "3" to Pair(mockDriver3, 27)
         )
         assertEquals(48, example.allPoints())
     }

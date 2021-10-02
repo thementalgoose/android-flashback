@@ -5,6 +5,7 @@ import org.threeten.bp.LocalDate
 import org.threeten.bp.Month
 import tmg.flashback.statistics.R
 import tmg.core.ui.model.AnimationSpeed
+import tmg.flashback.data.models.stats.ConstructorDriver
 import tmg.flashback.data.models.stats.Driver
 import tmg.flashback.data.models.stats.HistoryRound
 import tmg.flashback.data.models.stats.Round
@@ -56,7 +57,7 @@ sealed class SeasonItem(
         val position: Int,
         val constructor: tmg.flashback.data.models.stats.Constructor,
         val constructorId: String = constructor.id,
-        val driver: List<Pair<tmg.flashback.data.models.stats.Driver, Double>>,
+        val driver: List<Pair<ConstructorDriver, Double>>,
         val points: Double,
         val maxPointsInSeason: Double,
         val barAnimation: AnimationSpeed

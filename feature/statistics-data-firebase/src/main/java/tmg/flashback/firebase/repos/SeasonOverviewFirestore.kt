@@ -5,12 +5,13 @@ import kotlinx.coroutines.flow.map
 import tmg.crash_reporting.controllers.CrashController
 import tmg.flashback.data.db.stats.SeasonOverviewRepository
 import tmg.flashback.data.models.stats.*
-import tmg.flashback.firebase.converters.convert
 import tmg.flashback.firebase.FirebaseRepo
+import tmg.flashback.firebase.mappers.SeasonOverviewMapper
 import tmg.flashback.firebase.models.FSeason
 
 class SeasonOverviewFirestore(
-        crashController: CrashController
+        crashController: CrashController,
+        private val seasonOverviewMapper: SeasonOverviewMapper
 ) : FirebaseRepo(crashController), SeasonOverviewRepository {
 
     override fun getCircuits(season: Int): Flow<List<CircuitSummary>> {
@@ -74,6 +75,8 @@ class SeasonOverviewFirestore(
     private fun getSeason(season: Int, context: String): Flow<Season?> {
         crashController.log("document(seasons/$season) for $context")
         return document("seasons/$season")
-                .getDoc<FSeason, Season> { it.convert(season) }
+                .getDoc<FSeason, Season> {
+                    seasonOverviewMapper.mapSeason(it, season)
+                }
     }
 }

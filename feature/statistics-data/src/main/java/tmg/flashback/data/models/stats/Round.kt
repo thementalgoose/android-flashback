@@ -11,7 +11,7 @@ data class Round(
         val time: LocalTime?,
         val name: String,
         val wikipediaUrl: String?,
-        val drivers: List<RoundDriver>,
+        val drivers: List<ConstructorDriver>,
         val constructors: List<Constructor>,
         val circuit: CircuitSummary,
         val q1: Map<String, RoundQualifyingResult>,
@@ -43,7 +43,7 @@ data class Round(
     val constructorStandings: List<RoundConstructorStandings>
         get() {
             val standings: MutableMap<String, Double> = mutableMapOf()
-            for ((driverId, raceResult) in race) {
+            for ((_, raceResult) in race) {
                 var previousPoints = standings.getOrPut(raceResult.driver.constructor.id) { 0.0 }
                 previousPoints += raceResult.points
                 standings[raceResult.driver.constructor.id] = previousPoints
@@ -82,13 +82,13 @@ data class RoundDriverOverview(
 )
 
 data class RoundQualifyingResult(
-        val driver: RoundDriver,
+        val driver: ConstructorDriver,
         val time: LapTime?,
         val position: Int
 )
 
 data class RoundSprintQualifyingResult(
-        val driver: RoundDriver,
+        val driver: ConstructorDriver,
         val time: LapTime?,
         val points: Double,
         val grid: Int,
@@ -98,7 +98,7 @@ data class RoundSprintQualifyingResult(
 )
 
 data class RoundRaceResult(
-        val driver: RoundDriver,
+        val driver: ConstructorDriver,
         val time: LapTime?,
         val points: Double,
         val grid: Int,
@@ -125,7 +125,7 @@ val List<Round>.upcoming: Int
  * Get the maximum points that a team has scored in the season
  * (ie. Points that the constructors champion has scored)
  */
-fun Map<String, Triple<Constructor, Map<String, Pair<Driver, Double>>, Double>>.maxConstructorPointsInSeason(): Double {
+fun Map<String, Triple<Constructor, Map<String, Pair<ConstructorDriver, Double>>, Double>>.maxConstructorPointsInSeason(): Double {
     return this.values.maxByOrNull { it.third }?.third ?: 0.0
 }
 
