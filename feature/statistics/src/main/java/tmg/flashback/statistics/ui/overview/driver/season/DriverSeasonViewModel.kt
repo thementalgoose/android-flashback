@@ -17,6 +17,7 @@ import tmg.flashback.statistics.ui.overview.driver.summary.PipeType
 import tmg.flashback.data.db.stats.DriverRepository
 import tmg.flashback.data.models.stats.DriverOverviewStanding
 import tmg.core.ui.controllers.ThemeController
+import tmg.flashback.firebase.extensions.pointsDisplay
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
@@ -235,7 +236,7 @@ class DriverSeasonViewModel(
         list.addStat(
             icon = R.drawable.ic_race_points,
             label = R.string.driver_overview_stat_career_points,
-            value = overview.points.toString()
+            value = overview.points.pointsDisplay()
         )
         list.addStat(
             icon = R.drawable.ic_qualifying_pole,

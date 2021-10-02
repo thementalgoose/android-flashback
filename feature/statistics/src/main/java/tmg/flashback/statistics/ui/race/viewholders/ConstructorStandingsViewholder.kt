@@ -3,6 +3,7 @@ package tmg.flashback.statistics.ui.race.viewholders
 import android.view.View
 import androidx.annotation.ColorInt
 import androidx.recyclerview.widget.RecyclerView
+import kotlin.math.roundToInt
 import tmg.core.ui.model.AnimationSpeed
 import tmg.flashback.data.models.stats.Driver
 import tmg.flashback.statistics.ui.race.RaceModel
@@ -67,7 +68,10 @@ class ConstructorStandingsViewholder(
                         when (it) {
                             maxPercentage -> model.points.pointsDisplay()
                             0.0f -> "0"
-                            else -> (it * maxPointsByAnyTeam.toFloat()).toDouble().coerceIn(0.0, model.points).pointsDisplay()
+                            else -> (it * maxPointsByAnyTeam.toFloat())
+                                .coerceIn(0.0f, model.points.toFloat())
+                                .roundToInt()
+                                .toString()
                         }
                     }
                 }

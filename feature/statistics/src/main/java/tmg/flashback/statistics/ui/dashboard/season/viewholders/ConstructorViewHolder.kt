@@ -3,6 +3,7 @@ package tmg.flashback.statistics.ui.dashboard.season.viewholders
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlin.math.roundToInt
 import tmg.flashback.statistics.R
 import tmg.core.ui.model.AnimationSpeed
 import tmg.flashback.statistics.ui.dashboard.season.SeasonItem
@@ -58,7 +59,7 @@ class ConstructorViewHolder(
                 binding.lpvProgress.animateProgress(maxProgress) {
                     when (it) {
                         maxProgress -> item.points.pointsDisplay()
-                        else -> (it * maxPoints.toFloat()).toDouble().coerceIn(0.0, item.points).pointsDisplay()
+                        else -> (it * maxPoints.toFloat()).coerceIn(0.0f, item.points.toFloat()).roundToInt().toString()
                     }
                 }
             }
