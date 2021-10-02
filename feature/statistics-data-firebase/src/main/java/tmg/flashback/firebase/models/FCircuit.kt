@@ -10,7 +10,9 @@ data class FCircuit(
     val locationLng: Double? = null,
     val wikiUrl: String? = null,
     val results: Map<String, FCircuitResult>? = null
-)
+) {
+    companion object
+}
 
 data class FCircuitResult(
     val date: String? = null,
@@ -19,4 +21,6 @@ data class FCircuitResult(
     val season: Int = -1,
     val round: Int = -1,
     val wikiUrl: String? = null
-)
+) {
+    companion object
+}
