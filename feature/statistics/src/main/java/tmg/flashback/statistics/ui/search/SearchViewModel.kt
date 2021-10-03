@@ -52,6 +52,7 @@ interface SearchViewModelOutputs {
     val selectedCategory: LiveData<SearchCategory?>
 
     val openLink: LiveData<DataEvent<SearchItem>>
+    val isLoading: LiveData<Boolean>
 
     val results: LiveData<List<SearchItem>>
 }
@@ -67,6 +68,8 @@ class SearchViewModel(
 
     private val category: MutableStateFlow<SearchCategory?> = MutableStateFlow(null)
     private val search: MutableStateFlow<String> = MutableStateFlow("")
+
+    override val isLoading: MutableLiveData<Boolean> = MutableLiveData(false)
 
     override val results: LiveData<List<SearchItem>> = category
         .filterNotNull()
@@ -105,6 +108,9 @@ class SearchViewModel(
         .onStart {
             emit(listOf(SearchItem.Placeholder))
         }
+        .also {
+            isLoading.value = false
+        }
         .asLiveData(viewModelScope.coroutineContext)
 
     override val selectedCategory: LiveData<SearchCategory?> = category
@@ -116,7 +122,10 @@ class SearchViewModel(
     //region Inputs
 
     override fun inputCategory(searchCategory: SearchCategory) {
-        category.value = searchCategory
+        if (category.value != searchCategory) {
+            isLoading.value = true
+            category.value = searchCategory
+        }
     }
 
     override fun inputSearch(search: String) {
