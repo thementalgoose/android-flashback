@@ -1,6 +1,8 @@
 package tmg.flashback.statistics.ui.search
 
 import androidx.annotation.LayoutRes
+import org.threeten.bp.LocalDate
+import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 
@@ -39,14 +41,26 @@ sealed class SearchItem(
         val location: String
     ): SearchItem(
         layoutId = R.layout.view_search_circuit,
-        searchBy = "${name.lowercase()} $nationality $location"
+        searchBy = "${name.lowercase()} ${nationality.lowercase()} ${location.lowercase()}"
     )
 
     data class Race(
-        val raceId: String
+        val raceId: String,
+        val season: Int,
+        val round: Int,
+        val raceName: String,
+        val country: String,
+        val countryISO: String,
+        val circuitName: String,
+        val date: LocalDate
     ): SearchItem(
         layoutId = R.layout.view_search_race,
-        searchBy = raceId.lowercase()
+        searchBy = "$round $season ${raceName.lowercase()} ${circuitName.lowercase()} ${country.lowercase()} ${DateTimeFormatter.ofPattern("MMMM").format(date).lowercase()}"
+    )
+
+    object Placeholder: SearchItem(
+        layoutId = R.layout.view_search_placeholder,
+        searchBy = null
     )
 
     data class ErrorItem(

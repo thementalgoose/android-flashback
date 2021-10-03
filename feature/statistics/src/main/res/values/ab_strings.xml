@@ -10,4 +10,5 @@
     <string name="ab_dashboard_now">Up Next</string>
 
     <string name="ab_back">Back</string>
+    <string name="ab_input_clear">Clear input</string>
 </resources>

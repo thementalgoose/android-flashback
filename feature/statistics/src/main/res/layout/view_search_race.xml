@@ -1,7 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
     android:layout_width="match_parent"
-    android:background="#baf872"
-    android:layout_height="100dp">
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="@drawable/ripple_rectangle"
+    android:paddingStart="@dimen/paddingMedium"
+    android:paddingTop="@dimen/paddingNSmall"
+    android:paddingEnd="@dimen/paddingMedium"
+    android:paddingBottom="@dimen/paddingNSmall"
+    tools:background="?attr/backgroundPrimary">
+
+    <TextView
+        android:id="@+id/title"
+        style="@style/Text.Search.Race.Name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingEnd="@dimen/paddingSmall"
+        app:layout_constraintEnd_toStartOf="@id/round"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="2020 Bahrain Grand Prix" />
+
+    <TextView
+        android:id="@+id/circuit"
+        style="@style/Text.Search.Race.Nationality"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/title"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        tools:text="Bahrain International Circuit" />
+
+    <TextView
+        android:id="@+id/round"
+        style="@style/Text.Search.Race.Round"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        app:layout_constraintBottom_toBottomOf="@id/title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/title"
+        tools:text="#1" />
+
+    <TextView
+        android:id="@+id/country"
+        style="@style/Text.Search.Race.Nationality"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:paddingEnd="@dimen/paddingSmall"
+        app:layout_constraintStart_toStartOf="@id/title"
+        app:layout_constraintTop_toBottomOf="@id/circuit"
+        tools:text="Bahrain" />
+
+    <ImageView
+        android:id="@+id/raceISO"
+        android:layout_width="@dimen/searchNationalityImageSize"
+        android:layout_height="@dimen/searchNationalityImageSize"
+        android:importantForAccessibility="no"
+        app:layout_constraintBottom_toBottomOf="@id/country"
+        app:layout_constraintStart_toEndOf="@id/country"
+        app:layout_constraintTop_toTopOf="@id/country"
+        tools:src="@drawable/bh"
+        tools:text="Australian" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
