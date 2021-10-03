@@ -83,12 +83,15 @@ class SearchFragment: BaseFragment<FragmentSearchBinding>(), FragmentResultListe
             }
         }
 
+        observe(viewModel.outputs.isLoading) {
+            isLoading = it
+        }
+
         observe(viewModel.outputs.results) {
+            isLoading = false
             adapter.list = it
         }
     }
-
-
 
     companion object {
         const val keySearchCategory = "searchCategory"

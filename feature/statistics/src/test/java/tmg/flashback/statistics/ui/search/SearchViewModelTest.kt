@@ -101,6 +101,15 @@ internal class SearchViewModelTest: BaseTest() {
     }
 
     @Test
+    fun `isLoading is set to true when category input`() = coroutineTest {
+        initSUT()
+        sut.inputs.inputCategory(SearchCategory.CONSTRUCTOR)
+        sut.outputs.isLoading.test {
+            assertValue(true)
+        }
+    }
+
+    @Test
     fun `search results for drivers are mapped properly`() = coroutineTest {
         initSUT()
         sut.inputs.inputCategory(SearchCategory.DRIVER)
