@@ -47,7 +47,7 @@
         android:id="@+id/driverNationality"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/paddingXSmall"
+        android:layout_marginTop="2dp"
         android:paddingEnd="@dimen/paddingSmall"
         app:layout_constraintStart_toStartOf="@id/driverName"
         app:layout_constraintTop_toBottomOf="@id/driverName"
@@ -59,7 +59,7 @@
         android:layout_height="@dimen/searchNationalityImageSize"
         app:layout_constraintBottom_toBottomOf="@id/driverNationality"
         app:layout_constraintStart_toEndOf="@id/driverNationality"
-        app:layout_constraintTop_toBottomOf="@id/driverName"
+        app:layout_constraintTop_toTopOf="@id/driverNationality"
         tools:src="@drawable/au"
         tools:text="Australian" />
 
