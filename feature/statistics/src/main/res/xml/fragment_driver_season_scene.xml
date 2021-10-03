@@ -17,7 +17,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/type"
+            app:layout_constraintTop_toBottomOf="@id/input"
             app:layout_constraintVertical_bias="0.0" />
     </ConstraintSet>
 
@@ -55,7 +55,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Constraint
-            android:id="@+id/input"
+            android:id="@+id/type"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/paddingMedium"
@@ -65,15 +65,15 @@
             app:layout_constraintTop_toBottomOf="@id/titleExpanded" />
 
         <Constraint
-            android:id="@+id/type"
+            android:id="@+id/input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/paddingMedium"
             android:layout_marginTop="@dimen/paddingSmall"
+            android:layout_marginStart="@dimen/paddingMedium"
             android:layout_marginEnd="@dimen/paddingMedium"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/input" />
+            app:layout_constraintTop_toBottomOf="@id/type" />
 
     </ConstraintSet>
 
