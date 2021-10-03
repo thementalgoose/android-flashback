@@ -19,7 +19,9 @@ import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.utilities.difflist.GenericDiffCallback
 
 @Suppress("EXPERIMENTAL_API_USAGE", "EXPERIMENTAL_OVERRIDE")
-class SearchAdapter: SyncAdapter<SearchItem>() {
+class SearchAdapter(
+    private val itemClicked: (item: SearchItem) -> Unit
+): SyncAdapter<SearchItem>() {
 
     override var list: List<SearchItem> = emptyList()
         set(initialValue) {
@@ -37,16 +39,20 @@ class SearchAdapter: SyncAdapter<SearchItem>() {
         val layoutInflater = LayoutInflater.from(parent.context)
         return when (viewType) {
             R.layout.view_search_constructor -> SearchConstructorViewHolder(
-                ViewSearchConstructorBinding.inflate(layoutInflater, parent, false)
+                ViewSearchConstructorBinding.inflate(layoutInflater, parent, false),
+                itemClicked
             )
             R.layout.view_search_driver -> SearchDriverViewHolder(
-                ViewSearchDriverBinding.inflate(layoutInflater, parent, false)
+                ViewSearchDriverBinding.inflate(layoutInflater, parent, false),
+                itemClicked
             )
             R.layout.view_search_circuit -> SearchCircuitViewHolder(
-                ViewSearchCircuitBinding.inflate(layoutInflater, parent, false)
+                ViewSearchCircuitBinding.inflate(layoutInflater, parent, false),
+                itemClicked
             )
             R.layout.view_search_race -> SearchRaceViewHolder(
-                ViewSearchRaceBinding.inflate(layoutInflater, parent, false)
+                ViewSearchRaceBinding.inflate(layoutInflater, parent, false),
+                itemClicked
             )
             else -> super.onCreateViewHolder(parent, viewType)
         }

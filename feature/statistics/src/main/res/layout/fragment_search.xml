@@ -86,6 +86,7 @@
                 android:layout_height="0dp"
                 android:clipToPadding="false"
                 android:overScrollMode="@integer/overScrollMode"
+                android:paddingTop="@dimen/paddingMedium"
                 android:paddingBottom="@dimen/paddingXLarge" />
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
@@ -95,8 +96,8 @@
             style="@style/Input.Text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/paddingMedium"
             android:layout_marginStart="@dimen/paddingMedium"
+            android:layout_marginTop="@dimen/paddingMedium"
             android:layout_marginEnd="@dimen/paddingMedium"
             android:hint="@string/search_hint"
             android:imeOptions="actionSend"

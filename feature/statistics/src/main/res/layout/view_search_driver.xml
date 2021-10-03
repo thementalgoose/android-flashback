@@ -9,24 +9,25 @@
     android:focusable="true"
     android:foreground="@drawable/ripple_rectangle"
     android:paddingStart="@dimen/paddingMedium"
-    android:paddingTop="@dimen/paddingSmall"
+    android:paddingTop="@dimen/paddingNSmall"
     android:paddingEnd="@dimen/paddingMedium"
-    android:paddingBottom="@dimen/paddingSmall">
+    android:paddingBottom="@dimen/paddingNSmall">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="@dimen/searchImageSize"
         android:layout_height="@dimen/searchImageSize"
         app:cardCornerRadius="@dimen/radiusSmall"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:scaleType="centerCrop"
             android:id="@+id/driverImage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:importantForAccessibility="no"
+            android:scaleType="centerCrop"
             tools:background="?attr/colorPrimary" />
 
     </androidx.cardview.widget.CardView>
@@ -36,7 +37,7 @@
         style="@style/Text.Search.Driver.Name"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_marginStart="@dimen/paddingSmall"
+        android:layout_marginStart="@dimen/paddingNSmall"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/cardView"
         app:layout_constraintTop_toTopOf="parent"
@@ -46,6 +47,7 @@
         android:id="@+id/driverNationality"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/paddingXSmall"
         android:paddingEnd="@dimen/paddingSmall"
         app:layout_constraintStart_toStartOf="@id/driverName"
         app:layout_constraintTop_toBottomOf="@id/driverName"
