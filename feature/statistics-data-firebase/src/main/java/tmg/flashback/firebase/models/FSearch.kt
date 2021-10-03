@@ -17,3 +17,19 @@ data class FSearchDriverModel(
 ) {
     companion object
 }
+
+data class FSearchConstructor(
+    val constructors: Map<String, FSearchConstructorModel>
+) {
+    companion object
+}
+
+data class FSearchConstructorModel(
+    val name: String? = null,
+    val nat: String? = null,
+    val natISO: String? = null,
+    val wikiUrl: String? = null,
+    val color: String? = null
+) {
+    companion object
+}

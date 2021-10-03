@@ -18,7 +18,7 @@ data class SearchConstructor(
     val name: String,
     val nationality: String,
     val nationalityISO: String,
-    val wikiUrl: String,
+    val wikiUrl: String?,
     val colour: Int
 )
 
@@ -30,7 +30,7 @@ data class SearchCircuit(
     val locationLng: Double,
     val location: String,
     val name: String,
-    val wikiUrl: String
+    val wikiUrl: String?
 )
 
 data class SearchRace(
