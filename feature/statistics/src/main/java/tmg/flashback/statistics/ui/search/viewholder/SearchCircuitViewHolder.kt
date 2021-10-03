@@ -39,6 +39,4 @@ class SearchCircuitViewHolder(
     override fun onClick(p0: View?) {
         itemClicked(item)
     }
-
-
 }

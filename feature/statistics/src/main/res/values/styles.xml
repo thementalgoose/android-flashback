@@ -448,6 +448,17 @@
         <item name="android:textColorHint">?attr/contentTertiary</item>
     </style>
 
+    <style name="Text.Search.GetStarted" parent="Text">
+        <item name="android:textColor">?attr/contentPrimary</item>
+        <item name="android:textColorHint">?attr/contentTertiary</item>
+    </style>
+
+
+    <style name="Text.Search.Input" parent="Text">
+        <item name="android:textColor">?attr/contentPrimary</item>
+        <item name="android:textColorHint">?attr/contentTertiary</item>
+    </style>
+
     <style name="Text.Search.Driver.Name" parent="Text">
         <item name="android:textSize">@dimen/textSizeLarge</item>
         <item name="android:textStyle">bold</item>
@@ -476,6 +487,23 @@
     </style>
 
     <style name="Text.Search.Circuit.Location" parent="Text">
+        <item name="android:textColor">?attr/contentTertiary</item>
+    </style>
+
+    <style name="Text.Search.Race.Name" parent="Text">
+        <item name="android:textSize">@dimen/textSizeLarge</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Text.Search.Race.Nationality" parent="Text">
+        <item name="android:textColor">?attr/contentTertiary</item>
+    </style>
+
+    <style name="Text.Search.Race.Round" parent="Text">
+        <item name="android:textColor">?attr/contentTertiary</item>
+    </style>
+
+    <style name="Text.Search.Race.Location" parent="Text">
         <item name="android:textColor">?attr/contentTertiary</item>
     </style>
 

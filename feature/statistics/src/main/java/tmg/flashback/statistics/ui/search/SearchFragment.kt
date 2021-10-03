@@ -44,8 +44,12 @@ class SearchFragment: BaseFragment<FragmentSearchBinding>(), FragmentResultListe
         binding.type.setOnClickListener {
             viewModel.inputs.openCategory()
         }
-        binding.input.doOnTextChanged { text, _, _, _ ->
+        binding.textInput.doOnTextChanged { text, _, _, _ ->
             viewModel.inputs.inputSearch(text.toString())
+            binding.textClear.isEnabled = !text.isNullOrEmpty()
+        }
+        binding.textClear.setOnClickListener {
+            binding.textInput.setText("")
         }
 
         // Listen for category callback

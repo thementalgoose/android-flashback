@@ -75,6 +75,7 @@
         <entry key="feature/statistics/src/main/res/drawable/calendar_race_background.xml" value="0.3776041666666667" />
         <entry key="feature/statistics/src/main/res/drawable/calendar_race_highlight.xml" value="0.3776041666666667" />
         <entry key="feature/statistics/src/main/res/drawable/ic_default_indicator.xml" value="0.5635416666666667" />
+        <entry key="feature/statistics/src/main/res/drawable/ic_input_clear.xml" value="0.46770833333333334" />
         <entry key="feature/statistics/src/main/res/drawable/ic_now.xml" value="0.4010416666666667" />
         <entry key="feature/statistics/src/main/res/drawable/ic_pos_up.xml" value="0.4114583333333333" />
         <entry key="feature/statistics/src/main/res/drawable/ic_race_status.xml" value="0.4114583333333333" />
@@ -101,7 +102,7 @@
         <entry key="feature/statistics/src/main/res/layout/fragment_driver_season.xml" value="0.34601449275362317" />
         <entry key="feature/statistics/src/main/res/layout/fragment_maintenance.xml" value="0.4311594202898551" />
         <entry key="feature/statistics/src/main/res/layout/fragment_race.xml" value="0.34601449275362317" />
-        <entry key="feature/statistics/src/main/res/layout/fragment_search.xml" value="0.22" />
+        <entry key="feature/statistics/src/main/res/layout/fragment_search.xml" value="0.67" />
         <entry key="feature/statistics/src/main/res/layout/layout_constructor_driver.xml" value="0.15476190476190477" />
         <entry key="feature/statistics/src/main/res/layout/layout_podium.xml" value="0.3932291666666667" />
         <entry key="feature/statistics/src/main/res/layout/view_circuit_info_header.xml" value="0.1765625" />
@@ -117,7 +118,8 @@
         <entry key="feature/statistics/src/main/res/layout/view_search_circuit.xml" value="0.5463541666666667" />
         <entry key="feature/statistics/src/main/res/layout/view_search_constructor.xml" value="0.5463541666666667" />
         <entry key="feature/statistics/src/main/res/layout/view_search_driver.xml" value="0.5463541666666667" />
-        <entry key="feature/statistics/src/main/res/layout/view_search_race.xml" value="0.5463541666666667" />
+        <entry key="feature/statistics/src/main/res/layout/view_search_placeholder.xml" value="0.4515625" />
+        <entry key="feature/statistics/src/main/res/layout/view_search_race.xml" value="0.5" />
         <entry key="feature/statistics/src/main/res/layout/view_shared_message.xml" value="0.29270833333333335" />
         <entry key="feature/statistics/src/main/res/menu/menu_race.xml" value="0.5479166666666667" />
         <entry key="feature/statistics/src/main/res/xml/fragment_search_scene.xml" value="0.5463541666666667" />

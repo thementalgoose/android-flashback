@@ -17,6 +17,8 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.startWith
 import tmg.flashback.data.db.stats.SearchRepository
 import tmg.flashback.data.models.stats.History
 import tmg.flashback.data.models.stats.HistoryRound
@@ -83,7 +85,7 @@ class SearchViewModel(
                 SearchCategory.RACE -> searchRepository
                     .allRaces()
                     .mapListItem { it.rounds }
-                    .map { it.flatten().sortedBy { "${it.season}-${it.round.extendTo(2)}" } }
+                    .map { it.flatten().sortedByDescending { "${it.season}-${it.round.extendTo(2)}" } }
                     .mapRaces()
             }
         }
@@ -97,6 +99,9 @@ class SearchViewModel(
                 }
                 return@filter it.searchBy.contains(searchTerm.lowercase())
             }
+        }
+        .onStart {
+            emit(listOf(SearchItem.Placeholder))
         }
         .asLiveData(Dispatchers.IO)
 
@@ -167,7 +172,14 @@ class SearchViewModel(
         return this
             .mapListItem {
                 SearchItem.Race(
-                    raceId = "${it.season}-${it.round}"
+                    raceId = "${it.season}-${it.round}",
+                    season = it.season,
+                    round = it.round,
+                    raceName = it.raceName,
+                    country = it.country,
+                    countryISO = it.countryISO,
+                    circuitName = it.circuitName,
+                    date = it.date
                 )
             }
     }
