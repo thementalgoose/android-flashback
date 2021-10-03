@@ -3,10 +3,12 @@ package tmg.flashback.firebase.mappers
 import androidx.core.graphics.toColorInt
 import java.lang.NullPointerException
 import tmg.crash_reporting.controllers.CrashController
+import tmg.flashback.data.models.stats.SearchCircuit
 import tmg.flashback.data.models.stats.SearchConstructor
 import tmg.flashback.data.models.stats.SearchDriver
 import tmg.flashback.firebase.base.ConverterUtils.fromDateRequired
 import tmg.flashback.firebase.base.ConverterUtils.isDateValid
+import tmg.flashback.firebase.models.FSearchCircuitModel
 import tmg.flashback.firebase.models.FSearchConstructorModel
 import tmg.flashback.firebase.models.FSearchDriverModel
 
@@ -63,6 +65,35 @@ class SearchMapper(
             nationalityISO = input.natISO,
             wikiUrl = input.wikiUrl,
             colour = input.color.toColorInt(),
+        )
+    }
+
+    fun mapSearchCircuit(input: FSearchCircuitModel, id: String): SearchCircuit? {
+        if (input.location == null) {
+            crashController.logException(NullPointerException("SearchMapper.mapSearchCircuit Circuit id $id has a null location"))
+            return null
+        }
+        if (input.country == null) {
+            crashController.logException(NullPointerException("SearchMapper.mapSearchCircuit Circuit id $id has a null country"))
+            return null
+        }
+        if (input.countryISO == null) {
+            crashController.logException(NullPointerException("SearchMapper.mapSearchCircuit Circuit id $id has a null country iso"))
+            return null
+        }
+        if (input.name == null) {
+            crashController.logException(NullPointerException("SearchMapper.mapSearchCircuit Circuit id $id has a null name"))
+            return null
+        }
+        return SearchCircuit(
+            id = id,
+            country = input.country,
+            countryISO = input.countryISO,
+            locationLat = input.location.lat?.toDoubleOrNull() ?: 0.0,
+            locationLng = input.location.lng?.toDoubleOrNull() ?: 0.0,
+            location = input.loc ?: "",
+            name = input.name,
+            wikiUrl = input.wikiUrl,
         )
     }
 }
