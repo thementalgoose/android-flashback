@@ -72,75 +72,60 @@
             app:layout_constraintTop_toTopOf="@id/toolbarGuideline" />
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/swipeRefresh"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:id="@+id/swipeRefresh"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/titleExpanded">
+            app:layout_constraintTop_toBottomOf="@id/type">
 
-            <androidx.core.widget.NestedScrollView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/dataList"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <androidx.appcompat.widget.AppCompatEditText
-                        android:id="@+id/input"
-                        style="@style/Input.Text"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/paddingMedium"
-                        android:layout_marginEnd="@dimen/paddingMedium"
-                        android:hint="@string/search_hint"
-                        android:imeOptions="actionSend"
-                        android:importantForAutofill="no"
-                        android:inputType="textUri"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/titleExpanded" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/type"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/paddingMedium"
-                        android:layout_marginTop="@dimen/paddingSmall"
-                        android:layout_marginEnd="@dimen/paddingMedium"
-                        android:background="@drawable/background_input"
-                        android:clickable="true"
-                        android:drawableEnd="@drawable/ic_spinner_down"
-                        android:focusable="true"
-                        android:foreground="@drawable/ripple_rounded_medium"
-                        android:hint="@string/search_category_hint"
-                        android:paddingStart="@dimen/paddingMedium"
-                        android:paddingTop="@dimen/paddingMedium"
-                        android:paddingEnd="@dimen/paddingMedium"
-                        android:paddingBottom="@dimen/paddingMedium"
-                        android:textAllCaps="false"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/input" />
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/list"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="@dimen/paddingSmall"
-                        android:clipToPadding="false"
-                        android:overScrollMode="@integer/overScrollMode"
-                        android:paddingBottom="@dimen/paddingXLarge" />
-
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-            </androidx.core.widget.NestedScrollView>
+                android:layout_height="0dp"
+                android:clipToPadding="false"
+                android:overScrollMode="@integer/overScrollMode"
+                android:paddingBottom="@dimen/paddingXLarge" />
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/input"
+            style="@style/Input.Text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/paddingMedium"
+            android:layout_marginEnd="@dimen/paddingMedium"
+            android:hint="@string/search_hint"
+            android:imeOptions="actionSend"
+            android:importantForAutofill="no"
+            android:inputType="textUri"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/titleExpanded" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/paddingMedium"
+            android:layout_marginTop="@dimen/paddingSmall"
+            android:layout_marginEnd="@dimen/paddingMedium"
+            android:background="@drawable/background_input"
+            android:clickable="true"
+            android:drawableEnd="@drawable/ic_spinner_down"
+            android:focusable="true"
+            android:foreground="@drawable/ripple_rounded_medium"
+            android:hint="@string/search_category_hint"
+            android:paddingStart="@dimen/paddingMedium"
+            android:paddingTop="@dimen/paddingMedium"
+            android:paddingEnd="@dimen/paddingMedium"
+            android:paddingBottom="@dimen/paddingMedium"
+            android:textAllCaps="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/input" />
 
     </tmg.core.ui.views.SwipeRefreshMotionLayout>
 

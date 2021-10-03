@@ -9,20 +9,32 @@ sealed class SearchItem(
     val layoutId: Int
 ) {
     data class Driver(
-        val driverId: String
-    ): SearchItem(R.layout.view_search_driver)
+        val driverId: String,
+        val name: String,
+        val nationality: String,
+        val nationalityISO: String,
+        val imageUrl: String?
+    ): SearchItem(
+        layoutId = R.layout.view_search_driver
+    )
 
     data class Constructor(
         val constructorId: String
-    ): SearchItem(R.layout.view_search_constructor)
+    ): SearchItem(
+        layoutId = R.layout.view_search_constructor
+    )
 
     data class Circuit(
         val circuitId: String
-    ): SearchItem(R.layout.view_search_circuit)
+    ): SearchItem(
+        layoutId = R.layout.view_search_circuit
+    )
 
     data class Race(
         val raceId: String
-    ): SearchItem(R.layout.view_search_race)
+    ): SearchItem(
+        layoutId = R.layout.view_search_race
+    )
 
     data class ErrorItem(
         val item: SyncDataItem

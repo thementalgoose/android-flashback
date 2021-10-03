@@ -35,8 +35,8 @@ class SearchFragment: BaseFragment<FragmentSearchBinding>(), FragmentResultListe
         }
 
         adapter = SearchAdapter()
-        binding.list.adapter = adapter
-        binding.list.layoutManager = LinearLayoutManager(context)
+        binding.dataList.adapter = adapter
+        binding.dataList.layoutManager = LinearLayoutManager(context)
 
         binding.type.setOnClickListener {
             viewModel.inputs.openCategory()
