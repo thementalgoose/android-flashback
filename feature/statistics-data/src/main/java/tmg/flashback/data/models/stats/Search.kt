@@ -32,14 +32,3 @@ data class SearchCircuit(
     val name: String,
     val wikiUrl: String?
 )
-
-data class SearchRace(
-    val round: Int,
-    val season: Int,
-    val circuit: String,
-    val circuitId: String,
-    val country: String,
-    val countryISO: String,
-    val date: LocalDate,
-    val name: String
-)
