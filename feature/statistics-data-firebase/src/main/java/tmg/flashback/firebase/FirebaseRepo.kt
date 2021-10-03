@@ -29,7 +29,7 @@ open class FirebaseRepo(
      * Firestore collection instance retreiver
      * @param collectionPath Path to collection in firestore
      */
-    @Deprecated("This should not be used due to exponential cost concerns. Consider using document() to access dirctly",
+    @Deprecated("This should not be used due to exponential cost concerns. Consider using document() to access directly",
         ReplaceWith("document(documentPath)")
     )
     protected fun collection(collectionPath: String): CollectionReference = FirebaseFirestore
