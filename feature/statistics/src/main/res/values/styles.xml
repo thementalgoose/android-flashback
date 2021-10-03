@@ -432,4 +432,22 @@
 
     <!--#endregion -->
 
+    <!-- =========================================== -->
+
+    <!-- =========================================== -->
+
+    <!--#region Search -->
+
+    <style name="Input.Text" parent="Text">
+        <item name="android:paddingStart">@dimen/paddingMedium</item>
+        <item name="android:paddingEnd">@dimen/paddingMedium</item>
+        <item name="android:paddingTop">@dimen/paddingMedium</item>
+        <item name="android:paddingBottom">@dimen/paddingMedium</item>
+        <item name="android:background">@drawable/background_input</item>
+        <item name="android:textColor">?attr/contentPrimary</item>
+        <item name="android:textColorHint">?attr/contentTertiary</item>
+    </style>
+
+    <!--#endregion -->
+
 </resources>

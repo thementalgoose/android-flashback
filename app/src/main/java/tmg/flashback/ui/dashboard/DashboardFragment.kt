@@ -21,6 +21,7 @@ import tmg.flashback.statistics.ui.admin.maintenance.MaintenanceActivity
 import tmg.flashback.ui.dashboard.list.ListFragment
 import tmg.flashback.statistics.ui.dashboard.season.SeasonFragment
 import tmg.flashback.statistics.ui.dashboard.season.SeasonFragmentCallback
+import tmg.flashback.statistics.ui.search.SearchActivity
 import tmg.flashback.upnext.ui.dashboard.UpNextFragment
 import tmg.flashback.upnext.ui.onboarding.OnboardingNotificationBottomSheetFragment
 import tmg.utilities.extensions.observe
@@ -63,6 +64,9 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(),
         }
         if (searchController.enabled) {
             binding.search.show()
+            binding.search.setOnClickListener {
+                viewModel.inputs.clickSearch()
+            }
         }
 
         binding.navigation.setOnNavigationItemSelectedListener {
@@ -100,6 +104,12 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(),
 
         observe(viewModel.outputs.showUpNext) {
             seasonFragment?.showUpNext(it)
+        }
+
+        observeEvent(viewModel.outputs.openSearch) {
+            context?.let {
+                startActivity(SearchActivity.intent(it))
+            }
         }
 
         observeEvent(viewModel.outputs.appConfigSynced) {

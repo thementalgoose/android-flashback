@@ -49,6 +49,16 @@ internal class DashboardViewModelTest: BaseTest() {
         )
     }
 
+    @Test
+    fun `clicking search opens search screen`() {
+        initSUT()
+
+        sut.inputs.clickSearch()
+        sut.outputs.openSearch.test {
+            assertEventFired()
+        }
+    }
+
     //region Showing up next
 
     @Test

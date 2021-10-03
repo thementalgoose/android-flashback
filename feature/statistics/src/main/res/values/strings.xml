@@ -134,6 +134,11 @@
     <string name="settings_information_at_top_title">Show provided by at top</string>
     <string name="settings_information_at_top_description">Show the "Data provided by" option at the top of each screen. Otherwise it will be displayed at the bottom</string>
 
+    <!-- Search -->
+    <string name="search_title">Search</string>
+    <string name="search_hint">…</string>
+    <string name="search_category_hint">Category</string>
+
     <!-- Error states -->
     <string name="shared_unavailable_circuit_not_found">We can\'t find any information on this circuit.</string>
     <string name="shared_unavailable_driver_not_found">We can\'t find any information on this driver.</string>
