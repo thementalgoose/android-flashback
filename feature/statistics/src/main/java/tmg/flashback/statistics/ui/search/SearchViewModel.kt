@@ -36,6 +36,8 @@ interface SearchViewModelInputs {
 
     fun inputSearch(search: String)
     fun inputCategory(searchCategory: SearchCategory)
+
+    fun clickItem(searchItem: SearchItem)
 }
 
 //endregion
@@ -86,8 +88,12 @@ class SearchViewModel(
             }
         }
         .combine(search) { searchItems, searchTerm ->
-            println("Searching ${searchItems.size} items by $searchTerm")
-            searchItems
+            searchItems.filter {
+                if (it.searchBy == null) {
+                    return@filter true
+                }
+                return@filter it.searchBy.contains(searchTerm.lowercase())
+            }
         }
         .asLiveData(Dispatchers.IO)
 
@@ -107,6 +113,10 @@ class SearchViewModel(
 
     override fun openCategory() {
         openCategoryPicker.value = DataEvent(category.value)
+    }
+
+    override fun clickItem(searchItem: SearchItem) {
+        println("Item clicked $searchItem")
     }
 
     //endregion

@@ -5,7 +5,8 @@ import tmg.flashback.statistics.databinding.ViewSearchCircuitBinding
 import tmg.flashback.statistics.ui.search.SearchItem
 
 class SearchCircuitViewHolder(
-    private val binding: ViewSearchCircuitBinding
+    private val binding: ViewSearchCircuitBinding,
+    private val itemClicked: (item: SearchItem) -> Unit
 ): RecyclerView.ViewHolder(binding.root) {
 
     fun bind(item: SearchItem.Circuit) {

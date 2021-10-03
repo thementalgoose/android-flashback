@@ -3,6 +3,7 @@ package tmg.flashback.statistics.ui.search
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.FragmentResultListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -34,13 +35,19 @@ class SearchFragment: BaseFragment<FragmentSearchBinding>(), FragmentResultListe
             activity?.finish()
         }
 
-        adapter = SearchAdapter()
+        adapter = SearchAdapter(
+            viewModel.inputs::clickItem
+        )
         binding.dataList.adapter = adapter
         binding.dataList.layoutManager = LinearLayoutManager(context)
 
         binding.type.setOnClickListener {
             viewModel.inputs.openCategory()
         }
+        binding.input.doOnTextChanged { text, _, _, _ ->
+            viewModel.inputs.inputSearch(text.toString())
+        }
+
         // Listen for category callback
         parentFragmentManager.setFragmentResultListener(
             keySearchCategory,
