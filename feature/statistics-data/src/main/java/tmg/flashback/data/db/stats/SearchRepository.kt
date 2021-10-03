@@ -5,7 +5,6 @@ import tmg.flashback.data.models.stats.History
 import tmg.flashback.data.models.stats.SearchCircuit
 import tmg.flashback.data.models.stats.SearchConstructor
 import tmg.flashback.data.models.stats.SearchDriver
-import tmg.flashback.data.models.stats.SearchRace
 
 interface SearchRepository {
     fun allDrivers(): Flow<List<SearchDriver>>
