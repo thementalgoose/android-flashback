@@ -139,6 +139,13 @@
     <string name="search_hint">…</string>
     <string name="search_category_hint">Category</string>
 
+    <string name="search_category_bottom_sheet_title">Category</string>
+    <string name="search_category_bottom_sheet_description">Which category of Formula 1 do you want to search</string>
+    <string name="search_category_driver">Drivers</string>
+    <string name="search_category_constructor">Constructors</string>
+    <string name="search_category_circuits">Circuits</string>
+    <string name="search_category_races">Races</string>
+
     <!-- Error states -->
     <string name="shared_unavailable_circuit_not_found">We can\'t find any information on this circuit.</string>
     <string name="shared_unavailable_driver_not_found">We can\'t find any information on this driver.</string>

@@ -78,13 +78,22 @@
         <entry key="feature/statistics/src/main/res/drawable/ic_now.xml" value="0.4010416666666667" />
         <entry key="feature/statistics/src/main/res/drawable/ic_pos_up.xml" value="0.4114583333333333" />
         <entry key="feature/statistics/src/main/res/drawable/ic_race_status.xml" value="0.4114583333333333" />
+        <entry key="feature/statistics/src/main/res/drawable/ic_search_circuits.xml" value="0.36666666666666664" />
+        <entry key="feature/statistics/src/main/res/drawable/ic_search_constructor.xml" value="0.36666666666666664" />
+        <entry key="feature/statistics/src/main/res/drawable/ic_search_driver.xml" value="0.36666666666666664" />
+        <entry key="feature/statistics/src/main/res/drawable/ic_search_race.xml" value="0.36666666666666664" />
         <entry key="feature/statistics/src/main/res/drawable/ic_spinner_down.xml" value="0.4046875" />
+        <entry key="feature/statistics/src/main/res/drawable/ic_track_icon.xml" value="0.36666666666666664" />
         <entry key="feature/statistics/src/main/res/drawable/ic_up_next.xml" value="0.41510416666666666" />
+        <entry key="feature/statistics/src/main/res/drawable/nav_constructor.xml" value="0.36666666666666664" />
+        <entry key="feature/statistics/src/main/res/drawable/nav_driver.xml" value="0.36666666666666664" />
         <entry key="feature/statistics/src/main/res/drawable/nav_qualifying.xml" value="0.5640625" />
+        <entry key="feature/statistics/src/main/res/drawable/nav_race.xml" value="0.36666666666666664" />
         <entry key="feature/statistics/src/main/res/drawable/nav_sprint_qualifying.xml" value="0.5640625" />
         <entry key="feature/statistics/src/main/res/layout/activity_driver_comparison.xml" value="0.3260416666666667" />
         <entry key="feature/statistics/src/main/res/layout/activity_race.xml" value="0.4311594202898551" />
         <entry key="feature/statistics/src/main/res/layout/activity_search.xml" value="0.26570415400202635" />
+        <entry key="feature/statistics/src/main/res/layout/fragment_bottom_sheet_category.xml" value="0.3885416666666667" />
         <entry key="feature/statistics/src/main/res/layout/fragment_circuit_info.xml" value="0.26570415400202635" />
         <entry key="feature/statistics/src/main/res/layout/fragment_constructor.xml" value="0.34601449275362317" />
         <entry key="feature/statistics/src/main/res/layout/fragment_dashboard_season.xml" value="0.1" />

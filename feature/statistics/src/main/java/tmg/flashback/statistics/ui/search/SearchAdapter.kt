@@ -9,6 +9,7 @@ import tmg.flashback.statistics.databinding.ViewSearchCircuitBinding
 import tmg.flashback.statistics.databinding.ViewSearchConstructorBinding
 import tmg.flashback.statistics.databinding.ViewSearchDriverBinding
 import tmg.flashback.statistics.databinding.ViewSearchRaceBinding
+import tmg.flashback.statistics.ui.circuit.CircuitItem
 import tmg.flashback.statistics.ui.search.viewholder.SearchCircuitViewHolder
 import tmg.flashback.statistics.ui.search.viewholder.SearchConstructorViewHolder
 import tmg.flashback.statistics.ui.search.viewholder.SearchDriverViewHolder
@@ -57,6 +58,7 @@ class SearchAdapter: SyncAdapter<SearchItem>() {
             is SearchItem.Constructor -> (holder as SearchConstructorViewHolder).bind(item)
             is SearchItem.Driver -> (holder as SearchDriverViewHolder).bind(item)
             is SearchItem.Race -> (holder as SearchRaceViewHolder).bind(item)
+            is SearchItem.ErrorItem -> bindErrors(holder, item.item)
         }
     }
 }
