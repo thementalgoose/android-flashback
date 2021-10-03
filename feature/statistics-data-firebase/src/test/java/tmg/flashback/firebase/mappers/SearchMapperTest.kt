@@ -7,8 +7,10 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
 import tmg.crash_reporting.controllers.CrashController
+import tmg.flashback.data.models.stats.SearchCircuit
 import tmg.flashback.data.models.stats.SearchConstructor
 import tmg.flashback.data.models.stats.SearchDriver
+import tmg.flashback.firebase.models.FSearchCircuitModel
 import tmg.flashback.firebase.models.FSearchConstructorModel
 import tmg.flashback.firebase.models.FSearchDriver
 import tmg.flashback.firebase.models.FSearchDriverModel
@@ -125,7 +127,7 @@ internal class SearchMapperTest: BaseTest() {
     }
 
     @Test
-    fun `SearchController returns null if name is null`() {
+    fun `SearchConstructor returns null if name is null`() {
         initSUT()
 
         val input = FSearchConstructorModel.model(name = null)
@@ -136,7 +138,7 @@ internal class SearchMapperTest: BaseTest() {
     }
 
     @Test
-    fun `SearchController returns null if nationality iso is null`() {
+    fun `SearchConstructor returns null if nationality iso is null`() {
         initSUT()
 
         val input = FSearchConstructorModel.model(natISO = null)
@@ -147,11 +149,78 @@ internal class SearchMapperTest: BaseTest() {
     }
 
     @Test
-    fun `SearchController returns null if colour is null`() {
+    fun `SearchConstructor returns null if colour is null`() {
         initSUT()
 
         val input = FSearchConstructorModel.model(color = null)
         assertNull(sut.mapSearchConstructor(input, "constructorId"))
+        verify {
+            mockCrashController.logException(any())
+        }
+    }
+
+    @Test
+    fun `SearchCircuit maps fields correctly`() {
+        initSUT()
+
+        val input = FSearchCircuitModel.model()
+        val inputId = "circuitId"
+        val expected = SearchCircuit(
+            id = "circuitId",
+            country = "country",
+            countryISO = "countryISO",
+            locationLat = 1.0,
+            locationLng = 2.0,
+            location = "location",
+            name = "name",
+            wikiUrl = "wikiUrl",
+        )
+
+        assertEquals(expected, sut.mapSearchCircuit(input, inputId))
+        verify(exactly = 0) {
+            mockCrashController.logException(any())
+        }
+    }
+
+    @Test
+    fun `SearchCircuit returns null if country iso is null`() {
+        initSUT()
+
+        val input = FSearchCircuitModel.model(countryISO = null)
+        assertNull(sut.mapSearchCircuit(input, "circuitId"))
+        verify {
+            mockCrashController.logException(any())
+        }
+    }
+
+    @Test
+    fun `SearchCircuit returns null if country is null`() {
+        initSUT()
+
+        val input = FSearchCircuitModel.model(country = null)
+        assertNull(sut.mapSearchCircuit(input, "circuitId"))
+        verify {
+            mockCrashController.logException(any())
+        }
+    }
+
+    @Test
+    fun `SearchCircuit returns null if location is null`() {
+        initSUT()
+
+        val input = FSearchCircuitModel.model(loc = null)
+        assertNull(sut.mapSearchCircuit(input, "circuitId"))
+        verify {
+            mockCrashController.logException(any())
+        }
+    }
+
+    @Test
+    fun `SearchCircuit returns null if name is null`() {
+        initSUT()
+
+        val input = FSearchCircuitModel.model(name = null)
+        assertNull(sut.mapSearchCircuit(input, "circuitId"))
         verify {
             mockCrashController.logException(any())
         }

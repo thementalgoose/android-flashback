@@ -69,7 +69,7 @@ class SearchMapper(
     }
 
     fun mapSearchCircuit(input: FSearchCircuitModel, id: String): SearchCircuit? {
-        if (input.location == null) {
+        if (input.loc == null) {
             crashController.logException(NullPointerException("SearchMapper.mapSearchCircuit Circuit id $id has a null location"))
             return null
         }
@@ -89,9 +89,9 @@ class SearchMapper(
             id = id,
             country = input.country,
             countryISO = input.countryISO,
-            locationLat = input.location.lat?.toDoubleOrNull() ?: 0.0,
-            locationLng = input.location.lng?.toDoubleOrNull() ?: 0.0,
-            location = input.loc ?: "",
+            locationLat = input.location?.lat?.toDoubleOrNull() ?: 0.0,
+            locationLng = input.location?.lng?.toDoubleOrNull() ?: 0.0,
+            location = input.loc,
             name = input.name,
             wikiUrl = input.wikiUrl,
         )
