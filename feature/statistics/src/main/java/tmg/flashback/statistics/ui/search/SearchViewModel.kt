@@ -51,6 +51,8 @@ interface SearchViewModelOutputs {
     val openCategoryPicker: LiveData<DataEvent<SearchCategory?>>
     val selectedCategory: LiveData<SearchCategory?>
 
+    val openLink: LiveData<DataEvent<SearchItem>>
+
     val results: LiveData<List<SearchItem>>
 }
 
@@ -103,11 +105,13 @@ class SearchViewModel(
         .onStart {
             emit(listOf(SearchItem.Placeholder))
         }
-        .asLiveData(Dispatchers.IO)
+        .asLiveData(viewModelScope.coroutineContext)
 
-    override val openCategoryPicker: MutableLiveData<DataEvent<SearchCategory?>> = MutableLiveData()
     override val selectedCategory: LiveData<SearchCategory?> = category
         .asLiveData(viewModelScope.coroutineContext)
+
+    override val openCategoryPicker: MutableLiveData<DataEvent<SearchCategory?>> = MutableLiveData()
+    override val openLink: MutableLiveData<DataEvent<SearchItem>> = MutableLiveData()
 
     //region Inputs
 
@@ -124,7 +128,7 @@ class SearchViewModel(
     }
 
     override fun clickItem(searchItem: SearchItem) {
-        println("Item clicked $searchItem")
+        openLink.value = DataEvent(searchItem)
     }
 
     //endregion

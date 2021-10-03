@@ -146,6 +146,7 @@
     <string name="search_category_circuits">Circuits</string>
     <string name="search_category_races">Races</string>
     <string name="search_category_get_started">Get started searching through drivers, constructors, circuits or events by selecting a category from the dropdown above</string>
+    <string name="search_category_ensure_internet">If it\'s taking a while to load, please make sure you are connected to the internet and try again!</string>
 
     <!-- Error states -->
     <string name="shared_unavailable_circuit_not_found">We can\'t find any information on this circuit.</string>
