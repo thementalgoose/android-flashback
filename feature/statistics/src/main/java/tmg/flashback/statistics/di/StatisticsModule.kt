@@ -9,6 +9,7 @@ import tmg.flashback.firebase.mappers.CircuitMapper
 import tmg.flashback.firebase.mappers.ConstructorMapper
 import tmg.flashback.firebase.mappers.DriverMapper
 import tmg.flashback.firebase.mappers.HistoryMapper
+import tmg.flashback.firebase.mappers.SearchMapper
 import tmg.flashback.firebase.mappers.SeasonOverviewMapper
 import tmg.flashback.firebase.mappers.seasonoverview.SeasonOverviewConstructorMapper
 import tmg.flashback.firebase.mappers.seasonoverview.SeasonOverviewDriverMapper
@@ -52,6 +53,7 @@ val statisticsModule = module {
     single { HistoryMapper(Formula1.allDataUpToo, get()) }
     single { DriverMapper() }
     single { ConstructorMapper() }
+    single { SearchMapper(get()) }
     single { SeasonOverviewMapper(get(), get(), get(), get()) }
     single { SeasonOverviewConstructorMapper() }
     single { SeasonOverviewDriverMapper(get()) }
@@ -65,5 +67,6 @@ val statisticsModule = module {
     single<CircuitRepository> { CircuitFirestore(get(), get()) }
     single<DriverRepository> { DriverFirestore(get(), get()) }
     single<ConstructorRepository> { ConstructorFirestore(get(), get()) }
+    single<SearchRepository> { SearchFirestore(get(), get(), get()) }
 
 }
