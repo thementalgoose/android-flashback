@@ -3,11 +3,20 @@ package tmg.flashback.statistics.ui.search
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import androidx.fragment.app.FragmentResultListener
 import androidx.recyclerview.widget.LinearLayoutManager
+import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.core.ui.base.BaseFragment
+import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.FragmentSearchBinding
+import tmg.flashback.statistics.ui.search.category.CategoryBottomSheetFragment
+import tmg.utilities.extensions.observe
+import tmg.utilities.extensions.observeEvent
+import tmg.utilities.extensions.toEnum
 
-class SearchFragment: BaseFragment<FragmentSearchBinding>() {
+class SearchFragment: BaseFragment<FragmentSearchBinding>(), FragmentResultListener {
+
+    private val viewModel: SearchViewModel by viewModel()
 
     private lateinit var adapter: SearchAdapter
 
@@ -29,18 +38,45 @@ class SearchFragment: BaseFragment<FragmentSearchBinding>() {
         binding.list.adapter = adapter
         binding.list.layoutManager = LinearLayoutManager(context)
 
-        adapter.list = listOf<SearchItem>(
-            SearchItem.Circuit("CIRCUIT ID"),
-            SearchItem.Driver("Fdjsfsd ID2"),
-            SearchItem.Race("CIRCUIT ID2"),
-            SearchItem.Constructor("CIRCUIT ID2"),
-            SearchItem.Driver("CIRCUIT ID2"),
-            SearchItem.Circuit("CIRCUIT ID3"),
-            SearchItem.Circuit("123 ID3"),
-            SearchItem.Constructor("2313 ID3"),
-            SearchItem.Circuit("sdfsdgdsg ID3"),
-            SearchItem.Driver("CIRCUIT ID5"),
-            SearchItem.Circuit("CIRCUIT ID7")
+        binding.type.setOnClickListener {
+            viewModel.inputs.openCategory()
+        }
+        // Listen for category callback
+        parentFragmentManager.setFragmentResultListener(
+            keySearchCategory,
+            viewLifecycleOwner,
+            this
         )
+
+        observeEvent(viewModel.outputs.openCategoryPicker) {
+            val instance = CategoryBottomSheetFragment.instance(it)
+            instance.show(parentFragmentManager, "CATEGORY")
+        }
+
+        observe(viewModel.outputs.selectedCategory) {
+            when (it) {
+                null -> binding.type.setText(R.string.search_category_hint)
+                else -> binding.type.setText(it.label)
+            }
+        }
+
+        observe(viewModel.outputs.results) {
+            adapter.list = it
+        }
+    }
+
+    companion object {
+        const val keySearchCategory = "searchCategory"
+    }
+
+    override fun onFragmentResult(requestKey: String, result: Bundle) {
+        when (requestKey) {
+            keySearchCategory -> {
+                val category = result.getInt(keySearchCategory).toEnum<SearchCategory>()
+                if (category != null) {
+                    viewModel.inputs.inputCategory(category)
+                }
+            }
+        }
     }
 }

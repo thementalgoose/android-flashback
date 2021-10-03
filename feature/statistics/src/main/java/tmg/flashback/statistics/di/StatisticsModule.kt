@@ -28,6 +28,8 @@ import tmg.flashback.statistics.ui.overview.constructor.ConstructorViewModel
 import tmg.flashback.statistics.ui.overview.driver.DriverViewModel
 import tmg.flashback.statistics.ui.overview.driver.season.DriverSeasonViewModel
 import tmg.flashback.statistics.ui.race.RaceViewModel
+import tmg.flashback.statistics.ui.search.SearchViewModel
+import tmg.flashback.statistics.ui.search.category.CategoryViewModel
 import tmg.flashback.statistics.ui.settings.statistics.SettingsStatisticsViewModel
 
 val statisticsModule = module {
@@ -39,6 +41,8 @@ val statisticsModule = module {
     viewModel { DriverViewModel(get(), get()) }
     viewModel { DriverSeasonViewModel(get(), get(), get()) }
     viewModel { RaceViewModel(get(), get(), get(), get()) }
+    viewModel { SearchViewModel(get()) }
+    viewModel { CategoryViewModel() }
 
     viewModel { SettingsStatisticsViewModel(get(), get()) }
 
