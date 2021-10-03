@@ -47,3 +47,27 @@ internal fun FSearchConstructorModel.Companion.model(
     wikiUrl = wikiUrl,
     color = color
 )
+
+internal fun FSearchCircuit.Companion.model(
+    circuits: Map<String, FSearchCircuitModel> = mapOf(
+        "circuitId" to FSearchCircuitModel.model()
+    )
+): FSearchCircuit = FSearchCircuit(
+    circuits = circuits
+)
+
+internal fun FSearchCircuitModel.Companion.model(
+    country: String? = "country",
+    countryISO: String? = "countryISO",
+    location: FCircuitLocation? = FCircuitLocation.model(),
+    loc: String? = "location",
+    name: String? = "name",
+    wikiUrl: String? = "wikiUrl"
+): FSearchCircuitModel = FSearchCircuitModel(
+    country = country,
+    countryISO = countryISO,
+    location = location,
+    loc = loc,
+    name = name,
+    wikiUrl = wikiUrl,
+)
