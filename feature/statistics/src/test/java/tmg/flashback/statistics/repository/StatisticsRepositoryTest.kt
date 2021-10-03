@@ -110,6 +110,20 @@ internal class StatisticsRepositoryTest {
 
     //endregion
 
+    //region Server search enabled
+
+    @Test
+    fun `server search is returned from config repository`() {
+        every { mockConfigManager.getBoolean(keySearch) } returns true
+        initSUT()
+        assertTrue(sut.searchEnabled)
+        verify {
+            mockConfigManager.getBoolean(keySearch)
+        }
+    }
+
+    //endregion
+
     //region Dashboard calendar
 
     @Test
@@ -392,6 +406,7 @@ internal class StatisticsRepositoryTest {
         private const val keyDataProvidedBy: String = "data_provided"
         private const val keySupportedSeasons: String = "supported_seasons"
         private const val keyDashboardCalendar: String = "dashboard_calendar"
+        private const val keySearch: String = "search"
 
         // Prefs
         private const val keyShowQualifyingDelta: String = "SHOW_QUALIFYING_DELTA"
