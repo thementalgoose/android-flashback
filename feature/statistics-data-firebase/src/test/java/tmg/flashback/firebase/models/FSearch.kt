@@ -25,3 +25,25 @@ internal fun FSearchDriverModel.Companion.model(
     sname = sname,
     wikiUrl = wikiUrl
 )
+
+internal fun FSearchConstructor.Companion.model(
+    constructors: Map<String, FSearchConstructorModel> = mapOf(
+        "constructorId" to FSearchConstructorModel.model()
+    )
+): FSearchConstructor = FSearchConstructor(
+    constructors = constructors
+)
+
+internal fun FSearchConstructorModel.Companion.model(
+    name: String? = "constructorName",
+    nat: String? = "nationality",
+    natISO: String? = "nationalityISO",
+    wikiUrl: String? = "wikiUrl",
+    color: String? = "#ff0000"
+): FSearchConstructorModel = FSearchConstructorModel(
+    name = name,
+    nat = nat,
+    natISO = natISO,
+    wikiUrl = wikiUrl,
+    color = color
+)
