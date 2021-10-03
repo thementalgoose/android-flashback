@@ -72,13 +72,13 @@
             app:layout_constraintTop_toTopOf="@id/toolbarGuideline" />
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefresh"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:id="@+id/swipeRefresh"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/type">
+            app:layout_constraintTop_toBottomOf="@id/input">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/dataList"
@@ -95,6 +95,7 @@
             style="@style/Input.Text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/paddingMedium"
             android:layout_marginStart="@dimen/paddingMedium"
             android:layout_marginEnd="@dimen/paddingMedium"
             android:hint="@string/search_hint"
@@ -103,14 +104,13 @@
             android:inputType="textUri"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/titleExpanded" />
+            app:layout_constraintTop_toBottomOf="@id/type" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/type"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/paddingMedium"
-            android:layout_marginTop="@dimen/paddingSmall"
             android:layout_marginEnd="@dimen/paddingMedium"
             android:background="@drawable/background_input"
             android:clickable="true"
@@ -125,7 +125,7 @@
             android:textAllCaps="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/input" />
+            app:layout_constraintTop_toBottomOf="@id/titleExpanded" />
 
     </tmg.core.ui.views.SwipeRefreshMotionLayout>
 
