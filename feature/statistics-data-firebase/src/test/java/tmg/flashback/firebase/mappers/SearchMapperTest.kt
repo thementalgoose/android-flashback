@@ -7,7 +7,9 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
 import tmg.crash_reporting.controllers.CrashController
+import tmg.flashback.data.models.stats.SearchConstructor
 import tmg.flashback.data.models.stats.SearchDriver
+import tmg.flashback.firebase.models.FSearchConstructorModel
 import tmg.flashback.firebase.models.FSearchDriver
 import tmg.flashback.firebase.models.FSearchDriverModel
 import tmg.flashback.firebase.models.model
@@ -91,11 +93,65 @@ internal class SearchMapperTest: BaseTest() {
     }
 
     @Test
-    fun `SearchDriver throws exception if date of birth is invalid`() {
+    fun `SearchDriver returns null if date of birth is invalid`() {
         initSUT()
 
         val input = FSearchDriverModel.model(dob = "invalid")
         assertNull(sut.mapSearchDriver(input, "driverId"))
+        verify {
+            mockCrashController.logException(any())
+        }
+    }
+
+    @Test
+    fun `SearchConstructor maps fields correctly`() {
+        initSUT()
+
+        val input = FSearchConstructorModel.model()
+        val inputId = "constructorId"
+        val expected = SearchConstructor(
+            id = "constructorId",
+            name = "constructorName",
+            nationality = "nationality",
+            nationalityISO = "nationalityISO",
+            wikiUrl = "wikiUrl",
+            colour = 0
+        )
+
+        assertEquals(expected, sut.mapSearchConstructor(input, inputId))
+        verify(exactly = 0) {
+            mockCrashController.logException(any())
+        }
+    }
+
+    @Test
+    fun `SearchController returns null if name is null`() {
+        initSUT()
+
+        val input = FSearchConstructorModel.model(name = null)
+        assertNull(sut.mapSearchConstructor(input, "constructorId"))
+        verify {
+            mockCrashController.logException(any())
+        }
+    }
+
+    @Test
+    fun `SearchController returns null if nationality iso is null`() {
+        initSUT()
+
+        val input = FSearchConstructorModel.model(natISO = null)
+        assertNull(sut.mapSearchConstructor(input, "constructorId"))
+        verify {
+            mockCrashController.logException(any())
+        }
+    }
+
+    @Test
+    fun `SearchController returns null if colour is null`() {
+        initSUT()
+
+        val input = FSearchConstructorModel.model(color = null)
+        assertNull(sut.mapSearchConstructor(input, "constructorId"))
         verify {
             mockCrashController.logException(any())
         }
