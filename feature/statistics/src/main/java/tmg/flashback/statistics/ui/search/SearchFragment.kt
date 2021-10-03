@@ -19,6 +19,18 @@ class SearchFragment: BaseFragment<FragmentSearchBinding>(), FragmentResultListe
 
     private val viewModel: SearchViewModel by viewModel()
 
+    var isLoading: Boolean = false
+        set(value) {
+            if (value) {
+                binding.dataList.alpha = 0.5f
+                binding.swipeRefresh.isRefreshing = true
+            } else {
+                binding.swipeRefresh.isRefreshing = false
+                binding.dataList.alpha = 1.0f
+            }
+            field = value
+        }
+
     private lateinit var adapter: SearchAdapter
 
     override fun inflateView(inflater: LayoutInflater) = FragmentSearchBinding
@@ -75,6 +87,8 @@ class SearchFragment: BaseFragment<FragmentSearchBinding>(), FragmentResultListe
             adapter.list = it
         }
     }
+
+
 
     companion object {
         const val keySearchCategory = "searchCategory"
