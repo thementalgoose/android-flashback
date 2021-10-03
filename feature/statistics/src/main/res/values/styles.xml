@@ -453,6 +453,32 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="Text.Search.Driver.Nationality" parent="Text">
+        <item name="android:textColor">?attr/contentTertiary</item>
+    </style>
+
+    <style name="Text.Search.Constructor.Name" parent="Text">
+        <item name="android:textSize">@dimen/textSizeLarge</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Text.Search.Constructor.Nationality" parent="Text">
+        <item name="android:textColor">?attr/contentTertiary</item>
+    </style>
+
+    <style name="Text.Search.Circuit.Name" parent="Text">
+        <item name="android:textSize">@dimen/textSizeLarge</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Text.Search.Circuit.Nationality" parent="Text">
+        <item name="android:textColor">?attr/contentTertiary</item>
+    </style>
+
+    <style name="Text.Search.Circuit.Location" parent="Text">
+        <item name="android:textColor">?attr/contentTertiary</item>
+    </style>
+
     <!--#endregion -->
 
 </resources>

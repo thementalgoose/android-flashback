@@ -96,6 +96,8 @@
     <dimen name="searchImageSize">36dp</dimen>
     <dimen name="searchNationalityImageSize">16dp</dimen>
 
+    <dimen name="searchTrackSize">72dp</dimen>
+
     <!--===============================================================-->
 
 </resources>

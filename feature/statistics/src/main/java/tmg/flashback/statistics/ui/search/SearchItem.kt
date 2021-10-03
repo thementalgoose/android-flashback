@@ -21,17 +21,25 @@ sealed class SearchItem(
     )
 
     data class Constructor(
-        val constructorId: String
+        val constructorId: String,
+        val name: String,
+        val nationality: String,
+        val nationalityISO: String,
+        val colour: Int
     ): SearchItem(
         layoutId = R.layout.view_search_constructor,
-        searchBy = constructorId.lowercase()
+        searchBy = name.lowercase()
     )
 
     data class Circuit(
-        val circuitId: String
+        val circuitId: String,
+        val name: String,
+        val nationality: String,
+        val nationalityISO: String,
+        val location: String
     ): SearchItem(
         layoutId = R.layout.view_search_circuit,
-        searchBy = circuitId.lowercase()
+        searchBy = "${name.lowercase()} $nationality $location"
     )
 
     data class Race(

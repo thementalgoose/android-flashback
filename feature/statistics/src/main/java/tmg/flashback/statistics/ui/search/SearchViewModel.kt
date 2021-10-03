@@ -92,6 +92,9 @@ class SearchViewModel(
                 if (it.searchBy == null) {
                     return@filter true
                 }
+                if (searchTerm.isBlank() || searchTerm.isEmpty()) {
+                    return@filter true
+                }
                 return@filter it.searchBy.contains(searchTerm.lowercase())
             }
         }
@@ -137,7 +140,11 @@ class SearchViewModel(
     private fun Flow<List<SearchConstructor>>.mapConstructors(): Flow<List<SearchItem>> {
         return this.mapListItem {
             SearchItem.Constructor(
-                constructorId = it.id
+                constructorId = it.id,
+                name = it.name,
+                nationality = it.nationality,
+                nationalityISO = it.nationalityISO,
+                colour = it.colour
             )
         }
     }
@@ -146,7 +153,11 @@ class SearchViewModel(
     private fun Flow<List<SearchCircuit>>.mapCircuits(): Flow<List<SearchItem>> {
         return this.mapListItem {
             SearchItem.Circuit(
-                circuitId = it.id
+                circuitId = it.id,
+                name = it.name,
+                nationality = it.country,
+                nationalityISO = it.countryISO,
+                location = it.location
             )
         }
     }
