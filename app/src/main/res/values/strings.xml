@@ -4,11 +4,14 @@
     <string name="splash_sync_info">Flashback is syncing some settings…</string>
     <string name="splash_sync_required_failed">We need to sync some information to continue. Please make sure you have an active internet connection and try again (you\'ll only need to do this once)</string>
 
+    <!-- Dashboard -->
+    <string name="dashboard_search">Search</string>
+
     <!-- About This App Dependencies -->
     <string name="about_this_app_dependency_rss">RSS source: %s</string>
 
+    <!-- Settings -->
     <string name="settings_title">Settings</string>
-
 
     <!-- App Shortcut -->
     <string name="app_shortcut_rss_shorttitle">RSS</string>
