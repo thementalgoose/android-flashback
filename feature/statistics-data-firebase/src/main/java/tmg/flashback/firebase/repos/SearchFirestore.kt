@@ -3,15 +3,12 @@ package tmg.flashback.firebase.repos
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.mapNotNull
 import tmg.crash_reporting.controllers.CrashController
 import tmg.flashback.data.db.stats.SearchRepository
 import tmg.flashback.data.models.stats.History
 import tmg.flashback.data.models.stats.SearchCircuit
 import tmg.flashback.data.models.stats.SearchConstructor
 import tmg.flashback.data.models.stats.SearchDriver
-import tmg.flashback.data.models.stats.SearchRace
 import tmg.flashback.firebase.FirebaseRepo
 import tmg.flashback.firebase.mappers.HistoryMapper
 import tmg.flashback.firebase.mappers.SearchMapper
