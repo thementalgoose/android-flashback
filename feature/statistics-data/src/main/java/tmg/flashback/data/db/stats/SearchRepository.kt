@@ -7,8 +7,8 @@ import tmg.flashback.data.models.stats.SearchDriver
 import tmg.flashback.data.models.stats.SearchRace
 
 interface SearchRepository {
-    fun allDrivers(): Flow<SearchDriver>
-    fun allConstructors(): Flow<SearchConstructor>
-    fun allCircuits(): Flow<SearchCircuit>
-    fun allRaces(): Flow<SearchRace>
+    fun allDrivers(): Flow<List<SearchDriver>>
+    fun allConstructors(): Flow<List<SearchConstructor>>
+    fun allCircuits(): Flow<List<SearchCircuit>>
+    fun allRaces(): Flow<List<SearchRace>>
 }

@@ -10,7 +10,7 @@ data class SearchDriver(
     val nationality: String,
     val nationalityISO: String,
     val dateOfBirth: LocalDate,
-    val wikiUrl: String
+    val wikiUrl: String?
 )
 
 data class SearchConstructor(
