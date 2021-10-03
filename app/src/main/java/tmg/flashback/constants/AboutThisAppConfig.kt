@@ -36,6 +36,14 @@ object AboutThisAppConfig {
                 ),
                 AboutThisAppDependency(
                         order = list.size + 1,
+                        dependencyName = "Lottie: Baback Jafari",
+                        author = "Baback Jafari",
+                        imageUrl = "https://assets4.lottiefiles.com/avatars/300_8243-998405194.jpg",
+                        backgroundColor = Color.TRANSPARENT,
+                        url = "https://lottiefiles.com/LottieFiles"
+                ),
+                AboutThisAppDependency(
+                        order = list.size + 1,
                         dependencyName = "FlatIcon: Freepik",
                         author = "Freepik",
                         imageUrl = "https://img-authors.flaticon.com/freepik.jpg",

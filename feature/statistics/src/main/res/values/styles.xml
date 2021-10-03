@@ -449,7 +449,7 @@
     </style>
 
     <style name="Text.Search.GetStarted" parent="Text">
-        <item name="android:textColor">?attr/contentPrimary</item>
+        <item name="android:textColor">?attr/contentTertiary</item>
         <item name="android:textColorHint">?attr/contentTertiary</item>
     </style>
 
