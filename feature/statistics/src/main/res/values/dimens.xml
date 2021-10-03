@@ -91,4 +91,11 @@
 
     <!--===============================================================-->
 
+    <!-- Search -->
+
+    <dimen name="searchImageSize">36dp</dimen>
+    <dimen name="searchNationalityImageSize">16dp</dimen>
+
+    <!--===============================================================-->
+
 </resources>

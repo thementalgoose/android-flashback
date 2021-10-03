@@ -448,6 +448,11 @@
         <item name="android:textColorHint">?attr/contentTertiary</item>
     </style>
 
+    <style name="Text.Search.Driver.Name" parent="Text">
+        <item name="android:textSize">@dimen/textSizeLarge</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <!--#endregion -->
 
 </resources>

@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,9 +19,11 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import tmg.flashback.data.db.stats.SearchRepository
 import tmg.flashback.data.models.stats.History
+import tmg.flashback.data.models.stats.HistoryRound
 import tmg.flashback.data.models.stats.SearchCircuit
 import tmg.flashback.data.models.stats.SearchConstructor
 import tmg.flashback.data.models.stats.SearchDriver
+import tmg.flashback.data.utils.extendTo
 import tmg.flashback.statistics.ui.search.viewholder.SearchDriverViewHolder
 import tmg.utilities.lifecycle.DataEvent
 import tmg.utilities.lifecycle.Event
@@ -64,15 +68,20 @@ class SearchViewModel(
             when (category) {
                 SearchCategory.DRIVER -> searchRepository
                     .allDrivers()
+                    .map { it.sortedBy { "${it.firstName} ${it.lastName}" }}
                     .mapDrivers()
                 SearchCategory.CONSTRUCTOR -> searchRepository
                     .allConstructors()
+                    .map { it.sortedBy { it.name }}
                     .mapConstructors()
                 SearchCategory.CIRCUIT -> searchRepository
                     .allCircuits()
+                    .map { it.sortedBy { it.name }}
                     .mapCircuits()
                 SearchCategory.RACE -> searchRepository
                     .allRaces()
+                    .mapListItem { it.rounds }
+                    .map { it.flatten().sortedBy { "${it.season}-${it.round.extendTo(2)}" } }
                     .mapRaces()
             }
         }
@@ -80,7 +89,7 @@ class SearchViewModel(
             println("Searching ${searchItems.size} items by $searchTerm")
             searchItems
         }
-        .asLiveData(viewModelScope.coroutineContext)
+        .asLiveData(Dispatchers.IO)
 
     override val openCategoryPicker: MutableLiveData<DataEvent<SearchCategory?>> = MutableLiveData()
     override val selectedCategory: LiveData<SearchCategory?> = category
@@ -105,7 +114,11 @@ class SearchViewModel(
     private fun Flow<List<SearchDriver>>.mapDrivers(): Flow<List<SearchItem>> {
         return this.mapListItem {
             SearchItem.Driver(
-                driverId = it.id
+                driverId = it.id,
+                name = "${it.firstName} ${it.lastName}",
+                nationality = it.nationality,
+                nationalityISO = it.nationalityISO,
+                imageUrl = it.image
             )
         }
     }
@@ -129,10 +142,8 @@ class SearchViewModel(
     }
 
 
-    private fun Flow<List<History>>.mapRaces(): Flow<List<SearchItem>> {
+    private fun Flow<List<HistoryRound>>.mapRaces(): Flow<List<SearchItem>> {
         return this
-            .mapListItem { it.rounds }
-            .map { it.flatten() }
             .mapListItem {
                 SearchItem.Race(
                     raceId = "${it.season}-${it.round}"
