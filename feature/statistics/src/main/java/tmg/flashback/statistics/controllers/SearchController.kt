@@ -9,6 +9,7 @@ class SearchController(
     /**
      * Is the search functionality enabled
      */
-    val enabled: Boolean
-        get() = statisticsRepository.searchEnabled
+    val enabled: Boolean by lazy {
+        statisticsRepository.searchEnabled
+    }
 }
