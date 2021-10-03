@@ -47,6 +47,11 @@
             android:theme="@style/Translucent" />
 
         <activity
+            android:name=".statistics.ui.search.SearchActivity"
+            android:label=""
+            android:theme="@style/Translucent" />
+
+        <activity
             android:name=".statistics.ui.circuit.CircuitInfoActivity"
             android:label=""
             android:theme="@style/Translucent" />
