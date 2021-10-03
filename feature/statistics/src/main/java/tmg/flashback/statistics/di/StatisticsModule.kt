@@ -18,6 +18,7 @@ import tmg.flashback.firebase.mappers.seasonoverview.SeasonOverviewStandingsMapp
 import tmg.flashback.firebase.repos.*
 import tmg.flashback.formula1.constants.Formula1
 import tmg.flashback.statistics.controllers.RaceController
+import tmg.flashback.statistics.controllers.SearchController
 import tmg.flashback.statistics.controllers.SeasonController
 import tmg.flashback.statistics.repository.StatisticsRepository
 import tmg.flashback.statistics.ui.admin.maintenance.MaintenanceViewModel
@@ -43,6 +44,7 @@ val statisticsModule = module {
 
     single { RaceController(get()) }
     single { SeasonController(get()) }
+    single { SearchController(get()) }
 
     // App
     single { StatisticsRepository(get(), get()) }
