@@ -432,4 +432,81 @@
 
     <!--#endregion -->
 
+    <!-- =========================================== -->
+
+    <!-- =========================================== -->
+
+    <!--#region Search -->
+
+    <style name="Input.Text" parent="Text">
+        <item name="android:paddingStart">@dimen/paddingMedium</item>
+        <item name="android:paddingEnd">@dimen/paddingMedium</item>
+        <item name="android:paddingTop">@dimen/paddingMedium</item>
+        <item name="android:paddingBottom">@dimen/paddingMedium</item>
+        <item name="android:background">@drawable/background_input</item>
+        <item name="android:textColor">?attr/contentPrimary</item>
+        <item name="android:textColorHint">?attr/contentTertiary</item>
+    </style>
+
+    <style name="Text.Search.GetStarted" parent="Text">
+        <item name="android:textColor">?attr/contentTertiary</item>
+        <item name="android:textColorHint">?attr/contentTertiary</item>
+    </style>
+
+
+    <style name="Text.Search.Input" parent="Text">
+        <item name="android:textColor">?attr/contentPrimary</item>
+        <item name="android:textColorHint">?attr/contentTertiary</item>
+    </style>
+
+    <style name="Text.Search.Driver.Name" parent="Text">
+        <item name="android:textSize">@dimen/textSizeLarge</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Text.Search.Driver.Nationality" parent="Text">
+        <item name="android:textColor">?attr/contentTertiary</item>
+    </style>
+
+    <style name="Text.Search.Constructor.Name" parent="Text">
+        <item name="android:textSize">@dimen/textSizeLarge</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Text.Search.Constructor.Nationality" parent="Text">
+        <item name="android:textColor">?attr/contentTertiary</item>
+    </style>
+
+    <style name="Text.Search.Circuit.Name" parent="Text">
+        <item name="android:textSize">@dimen/textSizeLarge</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Text.Search.Circuit.Nationality" parent="Text">
+        <item name="android:textColor">?attr/contentTertiary</item>
+    </style>
+
+    <style name="Text.Search.Circuit.Location" parent="Text">
+        <item name="android:textColor">?attr/contentTertiary</item>
+    </style>
+
+    <style name="Text.Search.Race.Name" parent="Text">
+        <item name="android:textSize">@dimen/textSizeLarge</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Text.Search.Race.Nationality" parent="Text">
+        <item name="android:textColor">?attr/contentTertiary</item>
+    </style>
+
+    <style name="Text.Search.Race.Round" parent="Text">
+        <item name="android:textColor">?attr/contentTertiary</item>
+    </style>
+
+    <style name="Text.Search.Race.Location" parent="Text">
+        <item name="android:textColor">?attr/contentTertiary</item>
+    </style>
+
+    <!--#endregion -->
+
 </resources>
