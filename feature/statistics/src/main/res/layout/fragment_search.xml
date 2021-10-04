@@ -76,11 +76,10 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:clipToPadding="false"
-            android:paddingTop="@dimen/paddingMedium"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/input">
+            app:layout_constraintTop_toBottomOf="@id/titleExpanded">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/dataList"
@@ -88,21 +87,52 @@
                 android:layout_height="0dp"
                 android:clipToPadding="false"
                 android:overScrollMode="@integer/overScrollMode"
-                android:paddingBottom="@dimen/paddingXLarge" />
+                android:paddingBottom="@dimen/paddingXXLarge"
+                tools:listitem="@layout/view_search_circuit" />
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <View
+            android:id="@+id/viewBreak"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/radiusMedium"
+            android:background="?attr/backgroundPrimary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/input" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/paddingMedium"
-            android:layout_marginTop="@dimen/paddingMedium"
             android:layout_marginEnd="@dimen/paddingMedium"
+            android:layout_marginBottom="@dimen/paddingMedium"
             android:background="@drawable/background_input"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/type">
+            app:layout_constraintStart_toStartOf="parent">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:drawableEnd="@drawable/ic_spinner_down"
+                android:drawablePadding="@dimen/paddingXSmall"
+                android:focusable="true"
+                android:foreground="@drawable/ripple_rounded_medium"
+                android:hint="@string/search_category_hint"
+                android:paddingStart="@dimen/paddingMedium"
+                android:paddingTop="@dimen/paddingMedium"
+                android:paddingEnd="@dimen/paddingMedium"
+                android:paddingBottom="@dimen/paddingMedium"
+                android:textAllCaps="false"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/textInput"
@@ -114,13 +144,12 @@
                 android:imeOptions="actionSend"
                 android:importantForAutofill="no"
                 android:inputType="textUri"
-                android:paddingStart="@dimen/paddingMedium"
                 android:paddingTop="@dimen/paddingMedium"
                 android:paddingEnd="@dimen/paddingMedium"
                 android:paddingBottom="@dimen/paddingMedium"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/textClear"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@id/type"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageButton
@@ -138,27 +167,6 @@
                 app:srcCompat="@drawable/ic_input_clear" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/type"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/paddingMedium"
-            android:layout_marginEnd="@dimen/paddingMedium"
-            android:background="@drawable/background_input"
-            android:clickable="true"
-            android:drawableEnd="@drawable/ic_spinner_down"
-            android:focusable="true"
-            android:foreground="@drawable/ripple_rounded_medium"
-            android:hint="@string/search_category_hint"
-            android:paddingStart="@dimen/paddingMedium"
-            android:paddingTop="@dimen/paddingMedium"
-            android:paddingEnd="@dimen/paddingMedium"
-            android:paddingBottom="@dimen/paddingMedium"
-            android:textAllCaps="false"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/titleExpanded" />
 
         <com.reddit.indicatorfastscroll.FastScrollerView
             android:id="@+id/fastscroller"
