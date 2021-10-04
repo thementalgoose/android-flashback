@@ -7,6 +7,7 @@ import android.view.View
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.FragmentResultListener
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.reddit.indicatorfastscroll.FastScrollItemIndicator
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.threeten.bp.LocalDate
 import tmg.core.ui.base.BaseFragment
@@ -21,6 +22,7 @@ import tmg.flashback.statistics.ui.search.category.CategoryBottomSheetFragment
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 import tmg.utilities.extensions.toEnum
+import tmg.utilities.extensions.views.closeKeyboard
 
 class SearchFragment: BaseFragment<FragmentSearchBinding>(), FragmentResultListener {
 
@@ -50,26 +52,64 @@ class SearchFragment: BaseFragment<FragmentSearchBinding>(), FragmentResultListe
 
         binding.swipeRefresh.isEnabled = false
 
-        binding.back.setOnClickListener {
-            activity?.finish()
-        }
-
         adapter = SearchAdapter(
             viewModel.inputs::clickItem
         )
         binding.dataList.adapter = adapter
         binding.dataList.layoutManager = LinearLayoutManager(context)
 
+        // Fast indicator
+//        binding.fastscroller.setupWithRecyclerView(binding.dataList, { position ->
+//            val item = adapter.list.getOrNull(position) ?: return@setupWithRecyclerView null
+//            when (item) {
+//                is SearchItem.Circuit -> {
+//                    val char = item.name.getOrNull(0)
+//                    if (char != null) {
+//                        return@setupWithRecyclerView FastScrollItemIndicator.Text(char.toString())
+//                    }
+//                }
+//                is SearchItem.Constructor -> {
+//                    val char = item.name.getOrNull(0)
+//                    if (char != null) {
+//                        return@setupWithRecyclerView FastScrollItemIndicator.Text(char.toString())
+//                    }
+//                }
+//                is SearchItem.Driver -> {
+//                    val char = item.name.getOrNull(0)
+//                    if (char != null) {
+//                        return@setupWithRecyclerView FastScrollItemIndicator.Text(char.toString())
+//                    }
+//                }
+//                is SearchItem.Race -> {
+//                    return@setupWithRecyclerView null
+//                }
+//                is SearchItem.ErrorItem -> FastScrollItemIndicator.Icon(R.drawable.ic_search_scroll_icon_error)
+//                SearchItem.Placeholder -> FastScrollItemIndicator.Icon(R.drawable.ic_search_scroll_icon_search)
+//            }
+//            return@setupWithRecyclerView null
+//        })
+//        binding.fastscrollerThumb.setupWithFastScroller(binding.fastscroller)
+
+        // Buttons / Inputs
+        binding.back.setOnClickListener {
+            activity?.finish()
+        }
         binding.type.setOnClickListener {
             viewModel.inputs.openCategory()
         }
         binding.textInput.doOnTextChanged { text, _, _, _ ->
             viewModel.inputs.inputSearch(text.toString())
+            binding.textClear.closeKeyboard()
+            binding.textClear.clearFocus()
             binding.textClear.isEnabled = !text.isNullOrEmpty()
+            binding.textClear.alpha = if (text.isNullOrEmpty()) 0.5f else 1.0f
         }
         binding.textClear.setOnClickListener {
             binding.textInput.setText("")
         }
+
+        // Clear input
+        binding.textInput.setText("")
 
         // Listen for category callback
         parentFragmentManager.setFragmentResultListener(

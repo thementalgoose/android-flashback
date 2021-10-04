@@ -166,6 +166,14 @@ object AboutThisAppConfig {
                         url = "https://github.com/thementalgoose/android-labelled-progress-bar",
                         backgroundColor = Color.TRANSPARENT,
                         imageUrl = "https://avatars1.githubusercontent.com/u/5982159"
+                ),
+                AboutThisAppDependency(
+                        order = 12,
+                        dependencyName = "IndicatorFastScroll",
+                        author = "reddit",
+                        url = "https://github.com/reddit/IndicatorFastScroll",
+                        backgroundColor = Color.WHITE,
+                        imageUrl = "https://avatars.githubusercontent.com/u/14248?s=200&v=4"
                 )
         )
     }

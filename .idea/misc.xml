@@ -83,6 +83,8 @@
         <entry key="feature/statistics/src/main/res/drawable/ic_search_constructor.xml" value="0.36666666666666664" />
         <entry key="feature/statistics/src/main/res/drawable/ic_search_driver.xml" value="0.36666666666666664" />
         <entry key="feature/statistics/src/main/res/drawable/ic_search_race.xml" value="0.36666666666666664" />
+        <entry key="feature/statistics/src/main/res/drawable/ic_search_scroll_icon_error.xml" value="0.5625" />
+        <entry key="feature/statistics/src/main/res/drawable/ic_search_scroll_icon_search.xml" value="0.5625" />
         <entry key="feature/statistics/src/main/res/drawable/ic_spinner_down.xml" value="0.4046875" />
         <entry key="feature/statistics/src/main/res/drawable/ic_track_icon.xml" value="0.36666666666666664" />
         <entry key="feature/statistics/src/main/res/drawable/ic_up_next.xml" value="0.41510416666666666" />

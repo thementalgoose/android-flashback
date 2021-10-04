@@ -50,6 +50,9 @@ allprojects {
                         koin_ext                                : "io.insert-koin:koin-android-ext:$koin_version"
                 ],
                 lottie                                          : "com.airbnb.android:lottie:$lottie",
+                reddit : [
+                        indicator                               : "com.reddit:indicator-fast-scroll:$reddit_indicator"
+                ],
                 retrofit : [
                         retrofit                                : "com.squareup.retrofit2:retrofit:$retrofit",
                         retrofit_simplexml                      : "com.squareup.retrofit2:converter-simplexml:$retrofit",
