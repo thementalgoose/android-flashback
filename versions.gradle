@@ -41,6 +41,7 @@ ext {
     swipe_refresh = "1.1.0"
     circleimageview = "3.1.0"
     glide = "4.12.0"
+    reddit_indicator = "1.4.0"
     tmg_utils = "2.2.0"
     tmg_about_this_app = "5.1.0"
     tmg_labelled_progressbar = "1.0.7"

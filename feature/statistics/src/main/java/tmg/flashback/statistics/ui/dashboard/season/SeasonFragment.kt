@@ -7,6 +7,7 @@ import android.view.View.IMPORTANT_FOR_ACCESSIBILITY_NO
 import android.view.View.IMPORTANT_FOR_ACCESSIBILITY_YES
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.threeten.bp.LocalDate
@@ -73,6 +74,17 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
         )
         binding.dataList.layoutManager = LinearLayoutManager(context)
         binding.dataList.adapter = adapter
+
+        binding.dataList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (dy > 0) {
+                    seasonFragmentCallback?.scrollDown()
+                } else if (dy < 0) {
+                    seasonFragmentCallback?.scrollUp()
+                }
+            }
+        })
 
         binding.menu.setOnClickListener {
             viewModel.inputs.clickMenu()

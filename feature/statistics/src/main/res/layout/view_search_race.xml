@@ -20,7 +20,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:paddingEnd="@dimen/paddingSmall"
-        app:layout_constraintEnd_toStartOf="@id/round"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="2020 Bahrain Grand Prix" />
@@ -41,10 +41,11 @@
         style="@style/Text.Search.Race.Round"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/paddingSmall"
         android:layout_marginTop="2dp"
-        app:layout_constraintBottom_toBottomOf="@id/title"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/title"
+        app:layout_constraintBottom_toBottomOf="@id/country"
+        app:layout_constraintStart_toEndOf="@id/raceISO"
+        app:layout_constraintTop_toTopOf="@id/country"
         tools:text="#1" />
 
     <TextView

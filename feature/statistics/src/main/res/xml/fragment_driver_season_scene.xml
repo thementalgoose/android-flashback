@@ -20,21 +20,6 @@
             app:layout_constraintGuide_begin="@dimen/toolbarHeight" />
 
         <Constraint
-            android:id="@+id/progress"
-            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:indeterminate="true"
-            app:layout_constraintBottom_toBottomOf="@+id/titleExpanded"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/titleExpanded">
-
-            <PropertySet app:visibilityMode="ignore" />
-
-        </Constraint>
-
-        <Constraint
             android:id="@+id/titleExpanded"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -55,8 +40,8 @@
             android:layout_marginEnd="@dimen/paddingMedium"
             android:alpha="1.0"
             app:layout_constraintBottom_toBottomOf="@id/toolbarGuideline"
-            app:layout_constraintEnd_toStartOf="@id/upNextContainer"
-            app:layout_constraintStart_toEndOf="@id/menu"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/back"
             app:layout_constraintTop_toTopOf="parent" />
 
     </ConstraintSet>
@@ -69,7 +54,7 @@
 
         <OnSwipe
             app:dragDirection="dragUp"
-            app:touchAnchorId="@id/dataList"
+            app:touchAnchorId="@id/swipeRefresh"
             app:touchAnchorSide="top" />
 
         <KeyFrameSet>

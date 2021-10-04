@@ -209,5 +209,17 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(),
         binding.panels.openEndPanel()
     }
 
+    override fun scrollUp() {
+        if (searchController.enabled) {
+            binding.search.extend()
+        }
+    }
+
+    override fun scrollDown() {
+        if (searchController.enabled) {
+            binding.search.shrink()
+        }
+    }
+
     //endregion
 }

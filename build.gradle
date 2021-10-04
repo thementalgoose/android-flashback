@@ -44,6 +44,9 @@ allprojects {
 
                 // Marked read only by owner, not around forever
                 includeModule("com.github.stkent", "bugshaker")
+
+                // Required
+                includeModule("com.reddit", "indicator-fast-scroll")
             }
         }
         maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
