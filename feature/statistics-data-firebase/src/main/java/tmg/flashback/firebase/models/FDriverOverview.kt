@@ -32,7 +32,7 @@ data class FDriverOverviewStanding(
         val history: Map<String, FDriverOverviewStandingHistory>? = null,
         val inProgress: Boolean? = null,
         // Points
-        val p: Int? = null,
+        val p: Double? = null,
         val podiums: Int? = null,
         val races: Int? = null,
         // Season
@@ -59,7 +59,7 @@ data class FDriverOverviewStandingHistory(
         val date: String = "",
         val f: Int? = null, // Finish
         val fStatus: String? = null,
-        val p: Int? = null, // Points
+        val p: Double? = null, // Points
         val q: Int? = null, // Qualifyied
         val r: Int = -1, // Round
         val rName: String? = null

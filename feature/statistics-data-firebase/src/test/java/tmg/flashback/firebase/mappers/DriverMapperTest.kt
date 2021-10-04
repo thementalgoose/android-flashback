@@ -53,7 +53,7 @@ internal class DriverMapperTest: BaseTest() {
                     bestQualifyingQuantity = 5,
                     championshipStanding = 1,
                     isInProgress = false,
-                    points = 25,
+                    points = 25.0,
                     podiums = 1,
                     races = 1,
                     season = 2020,
@@ -69,7 +69,7 @@ internal class DriverMapperTest: BaseTest() {
                         DriverOverviewRace(
                             status = "1",
                             finished = 1,
-                            points = 25,
+                            points = 25.0,
                             qualified = 1,
                             round = 1,
                             season = 2020,
@@ -146,7 +146,7 @@ internal class DriverMapperTest: BaseTest() {
             bestQualifyingQuantity = 5,
             championshipStanding = 1,
             isInProgress = false,
-            points = 25,
+            points = 25.0,
             podiums = 1,
             races = 1,
             season = 2020,
@@ -162,7 +162,7 @@ internal class DriverMapperTest: BaseTest() {
                 DriverOverviewRace(
                     status = "1",
                     finished = 1,
-                    points = 25,
+                    points = 25.0,
                     qualified = 1,
                     round = 1,
                     season = 2020,
@@ -253,7 +253,7 @@ internal class DriverMapperTest: BaseTest() {
         initSUT()
 
         val input = FDriverOverviewStanding.model(p = null)
-        assertEquals(0, sut.mapDriverOverviewStanding(input).points)
+        assertEquals(0.0, sut.mapDriverOverviewStanding(input).points)
     }
 
     @Test
@@ -290,7 +290,7 @@ internal class DriverMapperTest: BaseTest() {
         val expected = DriverOverviewRace(
             status = "1",
             finished = 1,
-            points = 25,
+            points = 25.0,
             qualified = 1,
             round = 1,
             season = inputSeason,
@@ -345,7 +345,7 @@ internal class DriverMapperTest: BaseTest() {
         initSUT()
 
         val input = FDriverOverviewStandingHistory.model(p = null)
-        assertEquals(0, sut.mapDriverOverviewRace(2020, emptyList(), input).points)
+        assertEquals(0.0, sut.mapDriverOverviewRace(2020, emptyList(), input).points)
     }
 
     @Test
