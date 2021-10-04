@@ -13,7 +13,8 @@ enum class DataUnavailable {
     MISSING_RACE,
     DRIVER_NOT_EXIST,
     CONSTRUCTOR_NOT_EXIST,
-    CIRCUIT_NOT_EXIST
+    CIRCUIT_NOT_EXIST,
+    NO_SEARCH_RESULTS
 }
 
 class DataUnavailableViewHolder(
@@ -30,6 +31,7 @@ class DataUnavailableViewHolder(
             DataUnavailable.CIRCUIT_NOT_EXIST -> getString(R.string.shared_unavailable_circuit_not_found)
             DataUnavailable.DRIVER_NOT_EXIST -> getString(R.string.shared_unavailable_driver_not_found)
             DataUnavailable.CONSTRUCTOR_NOT_EXIST -> getString(R.string.shared_unavailable_constructor_not_found)
+            DataUnavailable.NO_SEARCH_RESULTS -> getString(R.string.shared_unavailable_no_search_results)
         }
     }
 }

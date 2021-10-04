@@ -152,6 +152,7 @@
     <string name="shared_unavailable_circuit_not_found">We can\'t find any information on this circuit.</string>
     <string name="shared_unavailable_driver_not_found">We can\'t find any information on this driver.</string>
     <string name="shared_unavailable_constructor_not_found">We can\'t find any information on this constructor.</string>
+    <string name="shared_unavailable_no_search_results">No search results found for your query</string>
     <string name="shared_unavailable_future_season">This season has not started yet, please check back after the first race to see the results!</string>
     <string name="shared_unavailable_early_season">We don\'t have any data on this season or the calendar has not been confirmed yet. We will add this information as soon it\'s available</string>
     <string name="shared_unavailable_future_race">This race has not yet happened, please check back after the race to see the results</string>

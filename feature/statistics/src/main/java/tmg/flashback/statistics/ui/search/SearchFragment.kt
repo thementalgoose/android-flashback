@@ -1,5 +1,6 @@
 package tmg.flashback.statistics.ui.search
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,9 +8,15 @@ import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.FragmentResultListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.android.viewmodel.ext.android.viewModel
+import org.threeten.bp.LocalDate
 import tmg.core.ui.base.BaseFragment
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.FragmentSearchBinding
+import tmg.flashback.statistics.ui.circuit.CircuitInfoActivity
+import tmg.flashback.statistics.ui.overview.constructor.ConstructorActivity
+import tmg.flashback.statistics.ui.overview.driver.DriverActivity
+import tmg.flashback.statistics.ui.race.RaceActivity
+import tmg.flashback.statistics.ui.race.RaceData
 import tmg.flashback.statistics.ui.search.category.CategoryBottomSheetFragment
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
@@ -90,6 +97,55 @@ class SearchFragment: BaseFragment<FragmentSearchBinding>(), FragmentResultListe
         observe(viewModel.outputs.results) {
             isLoading = false
             adapter.list = it
+        }
+
+        observeEvent(viewModel.outputs.openLink) { searchItem ->
+            context?.let { context ->
+                val intent: Intent? = when (searchItem) {
+                    is SearchItem.Circuit -> {
+                        CircuitInfoActivity.intent(
+                            context = context,
+                            circuitId = searchItem.circuitId,
+                            circuitName = searchItem.name
+                        )
+                    }
+                    is SearchItem.Constructor -> {
+                        ConstructorActivity.intent(
+                            context = context,
+                            constructorId = searchItem.constructorId,
+                            constructorName = searchItem.name
+                        )
+                    }
+                    is SearchItem.Driver -> {
+                        DriverActivity.intent(
+                            context = context,
+                            driverId = searchItem.driverId,
+                            driverName = searchItem.name
+                        )
+                    }
+                    is SearchItem.Race -> {
+                        RaceActivity.intent(
+                            context = context,
+                            raceData = RaceData(
+                                season = searchItem.season,
+                                round = searchItem.round,
+                                circuitId = searchItem.circuitId,
+                                defaultToRace = true,
+                                country = searchItem.country,
+                                raceName = searchItem.raceName,
+                                trackName = searchItem.circuitName,
+                                countryISO = searchItem.countryISO,
+                                date = searchItem.date,
+                            )
+                        )
+                    }
+                    else -> null
+                }
+
+                if (intent != null) {
+                    startActivity(intent)
+                }
+            }
         }
     }
 

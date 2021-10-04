@@ -12,6 +12,8 @@ import tmg.flashback.data.models.stats.HistoryRound
 import tmg.flashback.data.models.stats.SearchCircuit
 import tmg.flashback.data.models.stats.SearchConstructor
 import tmg.flashback.data.models.stats.SearchDriver
+import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
+import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertDataEventValue
 import tmg.testutils.livedata.test
@@ -174,6 +176,7 @@ internal class SearchViewModelTest: BaseTest() {
                     round = 1,
                     raceName = "raceName",
                     country = "country",
+                    circuitId = "circuitId",
                     countryISO = "countryISO",
                     circuitName = "circuitName",
                     date = LocalDate.of(2020, 1, 1)
@@ -217,6 +220,44 @@ internal class SearchViewModelTest: BaseTest() {
                     nationality = "nationality",
                     nationalityISO = "nationalityISO",
                     colour = 0
+                )
+            ), 1)
+        }
+    }
+
+    @Test
+    fun `search results shows data unavailable item if no results round`() = coroutineTest {
+        every { mockSearchRepository.allConstructors() } returns flow {
+            emit(
+                listOf(
+                    SearchConstructor(
+                        id = "constructorId",
+                        name = "name",
+                        nationality = "nationality",
+                        nationalityISO = "nationalityISO",
+                        wikiUrl = "wikiUrl",
+                        colour = 0
+                    ),
+                    SearchConstructor(
+                        id = "constructorId",
+                        name = "test",
+                        nationality = "nationality",
+                        nationalityISO = "nationalityISO",
+                        wikiUrl = "wikiUrl",
+                        colour = 0
+                    )
+                )
+            )
+        }
+        initSUT()
+        sut.inputs.inputCategory(SearchCategory.CONSTRUCTOR)
+        sut.inputs.inputSearch("testing")
+        sut.outputs.results.test {
+            assertValueAt(listOf(
+                SearchItem.ErrorItem(
+                    SyncDataItem.Unavailable(
+                        DataUnavailable.NO_SEARCH_RESULTS
+                    )
                 )
             ), 1)
         }

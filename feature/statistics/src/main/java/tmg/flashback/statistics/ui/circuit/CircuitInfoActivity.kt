@@ -1,21 +1,12 @@
 package tmg.flashback.statistics.ui.circuit
 
-import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.widget.Toast
-import androidx.recyclerview.widget.LinearLayoutManager
-import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.core.ui.base.BaseActivity
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.ActivityCircuitInfoBinding
-import tmg.flashback.statistics.ui.race.RaceActivity
-import tmg.utilities.extensions.copyToClipboard
 import tmg.utilities.extensions.loadFragment
-import tmg.utilities.extensions.observe
-import tmg.utilities.extensions.observeEvent
 
 class CircuitInfoActivity: BaseActivity() {
 

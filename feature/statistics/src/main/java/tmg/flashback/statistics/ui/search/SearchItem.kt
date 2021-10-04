@@ -51,6 +51,7 @@ sealed class SearchItem(
         val raceName: String,
         val country: String,
         val countryISO: String,
+        val circuitId: String,
         val circuitName: String,
         val date: LocalDate
     ): SearchItem(
