@@ -10,7 +10,6 @@ import tmg.flashback.statistics.databinding.ViewSearchConstructorBinding
 import tmg.flashback.statistics.databinding.ViewSearchDriverBinding
 import tmg.flashback.statistics.databinding.ViewSearchPlaceholderBinding
 import tmg.flashback.statistics.databinding.ViewSearchRaceBinding
-import tmg.flashback.statistics.ui.circuit.CircuitItem
 import tmg.flashback.statistics.ui.search.viewholder.SearchCircuitViewHolder
 import tmg.flashback.statistics.ui.search.viewholder.SearchConstructorViewHolder
 import tmg.flashback.statistics.ui.search.viewholder.SearchDriverViewHolder

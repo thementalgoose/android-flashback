@@ -27,6 +27,8 @@ import tmg.flashback.data.models.stats.SearchConstructor
 import tmg.flashback.data.models.stats.SearchDriver
 import tmg.flashback.data.utils.extendTo
 import tmg.flashback.statistics.ui.search.viewholder.SearchDriverViewHolder
+import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
+import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
 import tmg.utilities.lifecycle.DataEvent
 import tmg.utilities.lifecycle.Event
 
@@ -103,6 +105,14 @@ class SearchViewModel(
                     return@filter true
                 }
                 return@filter it.searchBy.contains(searchTerm.lowercase())
+            }
+        }
+        .map { list ->
+            if (list.isEmpty()) {
+                return@map listOf(SearchItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.NO_SEARCH_RESULTS)))
+            }
+            else {
+                return@map list
             }
         }
         .onStart {
@@ -190,6 +200,7 @@ class SearchViewModel(
                     round = it.round,
                     raceName = it.raceName,
                     country = it.country,
+                    circuitId = it.circuitId,
                     countryISO = it.countryISO,
                     circuitName = it.circuitName,
                     date = it.date

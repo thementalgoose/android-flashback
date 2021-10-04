@@ -118,8 +118,11 @@
         <entry key="feature/statistics/src/main/res/layout/view_search_circuit.xml" value="0.5463541666666667" />
         <entry key="feature/statistics/src/main/res/layout/view_search_constructor.xml" value="0.5463541666666667" />
         <entry key="feature/statistics/src/main/res/layout/view_search_driver.xml" value="0.5463541666666667" />
+        <entry key="feature/statistics/src/main/res/layout/view_search_empty.xml" value="0.39221014492753625" />
         <entry key="feature/statistics/src/main/res/layout/view_search_placeholder.xml" value="0.4515625" />
         <entry key="feature/statistics/src/main/res/layout/view_search_race.xml" value="0.5" />
+        <entry key="feature/statistics/src/main/res/layout/view_shared_data_unavailable.xml" value="0.39221014492753625" />
+        <entry key="feature/statistics/src/main/res/layout/view_shared_internal_error.xml" value="0.39221014492753625" />
         <entry key="feature/statistics/src/main/res/layout/view_shared_message.xml" value="0.29270833333333335" />
         <entry key="feature/statistics/src/main/res/menu/menu_race.xml" value="0.5479166666666667" />
         <entry key="feature/statistics/src/main/res/xml/fragment_search_scene.xml" value="0.5463541666666667" />
