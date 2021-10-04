@@ -19,6 +19,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/input"
             app:layout_constraintVertical_bias="0.0" />
+
     </ConstraintSet>
 
     <ConstraintSet android:id="@+id/end">
@@ -73,12 +74,13 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/type"
             app:layout_constraintTop_toBottomOf="@id/titleExpanded" />
+
         <Constraint
             android:id="@+id/fastscroller"
-            app:layout_constraintEnd_toEndOf="parent"
             android:layout_width="32dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/input" />
 
     </ConstraintSet>
