@@ -42,7 +42,7 @@ class DriverMapper {
             bestQualifyingQuantity = input.bestQualifyingQuantity ?: 0,
             championshipStanding = input.championshipStanding ?: 0,
             isInProgress = if (input.s >= currentYear) (input.inProgress ?: false) else false,
-            points = input.p ?: 0,
+            points = input.p ?: 0.0,
             podiums = input.podiums ?: 0,
             races = input.races ?: 0,
             season = input.s,
@@ -63,7 +63,7 @@ class DriverMapper {
     fun mapDriverOverviewRace(season: Int, constructors: List<FDriverOverviewStandingConstructor>, input: FDriverOverviewStandingHistory): DriverOverviewRace {
         return DriverOverviewRace(
             finished = input.f ?: 0,
-            points = input.p ?: 0,
+            points = input.p ?: 0.0,
             qualified = input.q ?: 0,
             round = input.r,
             season = season,

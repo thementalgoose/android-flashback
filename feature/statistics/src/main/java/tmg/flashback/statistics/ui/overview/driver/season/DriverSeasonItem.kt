@@ -47,7 +47,7 @@ sealed class DriverSeasonItem(
             val qualified: Int,
             val finished: Int?,
             val raceStatus: RaceStatus,
-            val points: Int,
+            val points: Double,
             val maxPoints: Int,
             val animationSpeed: AnimationSpeed
     ): DriverSeasonItem(R.layout.view_driver_season)

@@ -2,10 +2,12 @@ package tmg.flashback.statistics.ui.overview.driver.season.viewholders
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import kotlin.math.roundToInt
 import tmg.core.ui.model.AnimationSpeed
 import tmg.flashback.statistics.ui.overview.driver.season.DriverSeasonItem
 import tmg.flashback.data.enums.isStatusFinished
 import tmg.core.ui.extensions.getColor
+import tmg.flashback.firebase.extensions.pointsDisplay
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.ViewDriverSeasonBinding
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
@@ -74,8 +76,10 @@ class RaceViewHolder(
 
                 binding.lpvProgress.animateProgress(maxProgress) {
                     when (it) {
-                        maxProgress -> item.points.toString()
-                        else -> (it * item.maxPoints.toFloat()).toInt().coerceIn(0, item.points)
+                        maxProgress -> item.points.pointsDisplay()
+                        else -> (it * item.maxPoints.toDouble())
+                            .coerceIn(0.0, item.points)
+                            .roundToInt()
                             .toString()
                     }
                 }
