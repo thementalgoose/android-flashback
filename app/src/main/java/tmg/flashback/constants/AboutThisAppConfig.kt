@@ -36,6 +36,14 @@ object AboutThisAppConfig {
                 ),
                 AboutThisAppDependency(
                         order = list.size + 1,
+                        dependencyName = "Lottie: Baback Jafari",
+                        author = "Baback Jafari",
+                        imageUrl = "https://assets4.lottiefiles.com/avatars/300_8243-998405194.jpg",
+                        backgroundColor = Color.TRANSPARENT,
+                        url = "https://lottiefiles.com/LottieFiles"
+                ),
+                AboutThisAppDependency(
+                        order = list.size + 1,
                         dependencyName = "FlatIcon: Freepik",
                         author = "Freepik",
                         imageUrl = "https://img-authors.flaticon.com/freepik.jpg",
@@ -158,6 +166,14 @@ object AboutThisAppConfig {
                         url = "https://github.com/thementalgoose/android-labelled-progress-bar",
                         backgroundColor = Color.TRANSPARENT,
                         imageUrl = "https://avatars1.githubusercontent.com/u/5982159"
+                ),
+                AboutThisAppDependency(
+                        order = 12,
+                        dependencyName = "IndicatorFastScroll",
+                        author = "reddit",
+                        url = "https://github.com/reddit/IndicatorFastScroll",
+                        backgroundColor = Color.WHITE,
+                        imageUrl = "https://avatars.githubusercontent.com/u/14248?s=200&v=4"
                 )
         )
     }

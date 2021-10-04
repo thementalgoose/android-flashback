@@ -19,7 +19,7 @@ import tmg.utilities.lifecycle.Event
 //region Inputs
 
 interface DashboardViewModelInputs {
-
+    fun clickSearch()
 }
 
 //endregion
@@ -30,6 +30,7 @@ interface DashboardViewModelOutputs {
     val openAppLockout: LiveData<Event>
     val openUpNextNotificationOnboarding: LiveData<Event>
     val openReleaseNotes: LiveData<Event>
+    val openSearch: LiveData<Event>
 
     val showUpNext: LiveData<Boolean>
 
@@ -59,6 +60,7 @@ class DashboardViewModel(
     override val openUpNextNotificationOnboarding: MutableLiveData<Event> = MutableLiveData()
     override val appConfigSynced: MutableLiveData<Event> = MutableLiveData()
     override val showUpNext: MutableLiveData<Boolean> = MutableLiveData()
+    override val openSearch: MutableLiveData<Event> = MutableLiveData()
 
     var inputs: DashboardViewModelInputs = this
     var outputs: DashboardViewModelOutputs = this
@@ -87,6 +89,10 @@ class DashboardViewModel(
     }
 
     //region Inputs
+
+    override fun clickSearch() {
+        openSearch.value = Event()
+    }
 
     //endregion
 

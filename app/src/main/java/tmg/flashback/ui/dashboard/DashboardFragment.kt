@@ -15,11 +15,13 @@ import tmg.common.ui.releasenotes.ReleaseBottomSheetFragment
 import tmg.core.ui.base.BaseFragment
 import tmg.flashback.R
 import tmg.flashback.databinding.FragmentDashboardBinding
+import tmg.flashback.statistics.controllers.SearchController
 import tmg.flashback.statistics.controllers.SeasonController
 import tmg.flashback.statistics.ui.admin.maintenance.MaintenanceActivity
 import tmg.flashback.ui.dashboard.list.ListFragment
 import tmg.flashback.statistics.ui.dashboard.season.SeasonFragment
 import tmg.flashback.statistics.ui.dashboard.season.SeasonFragmentCallback
+import tmg.flashback.statistics.ui.search.SearchActivity
 import tmg.flashback.upnext.ui.dashboard.UpNextFragment
 import tmg.flashback.upnext.ui.onboarding.OnboardingNotificationBottomSheetFragment
 import tmg.utilities.extensions.observe
@@ -31,6 +33,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(),
 
     private val viewModel: DashboardViewModel by viewModel()
 
+    private val searchController: SearchController by inject()
     private val seasonController: SeasonController by inject()
 
     private val seasonTag: String = "season"
@@ -56,10 +59,14 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(),
         binding.panels.registerStartPanelStateListeners(this)
         binding.panels.registerEndPanelStateListeners(this)
 
-//        binding.panels.listener
-
         if (!seasonController.dashboardCalendar) {
             binding.navigation.menu.removeItem(R.id.nav_calendar)
+        }
+        if (searchController.enabled) {
+            binding.search.show()
+            binding.search.setOnClickListener {
+                viewModel.inputs.clickSearch()
+            }
         }
 
         binding.navigation.setOnNavigationItemSelectedListener {
@@ -99,6 +106,12 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(),
             seasonFragment?.showUpNext(it)
         }
 
+        observeEvent(viewModel.outputs.openSearch) {
+            context?.let {
+                startActivity(SearchActivity.intent(it))
+            }
+        }
+
         observeEvent(viewModel.outputs.appConfigSynced) {
             listFragment?.refresh()
             seasonFragment?.refresh()
@@ -130,17 +143,28 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(),
 
     override fun onPanelStateChange(panelState: PanelState) {
 
-
         if (binding.panels.getSelectedPanel() == OverlappingPanelsLayout.Panel.CENTER) {
             binding.navigation.animate()
                 .translationY(0.0f)
                 .setDuration(250L)
                 .start()
+            if (searchController.enabled) {
+                binding.search.animate()
+                    .translationY(0.0f)
+                    .setDuration(250L)
+                    .start()
+            }
         } else {
             binding.navigation.animate()
                 .translationY(binding.navigation.height.toFloat())
                 .setDuration(250L)
                 .start()
+            if (searchController.enabled) {
+                binding.search.animate()
+                    .translationY(binding.navigation.height.toFloat())
+                    .setDuration(250L)
+                    .start()
+            }
         }
 
         when (panelState) {
@@ -183,6 +207,18 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(),
 
     override fun openNow() {
         binding.panels.openEndPanel()
+    }
+
+    override fun scrollUp() {
+        if (searchController.enabled) {
+            binding.search.extend()
+        }
+    }
+
+    override fun scrollDown() {
+        if (searchController.enabled) {
+            binding.search.shrink()
+        }
     }
 
     //endregion

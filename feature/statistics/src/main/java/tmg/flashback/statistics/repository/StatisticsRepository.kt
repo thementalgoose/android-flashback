@@ -21,6 +21,7 @@ class StatisticsRepository(
         private const val keyDataProvidedBy: String = "data_provided"
         private const val keySupportedSeasons: String = "supported_seasons"
         private const val keyDashboardCalendar: String = "dashboard_calendar"
+        private const val keySearch: String = "search"
 
         // Prefs
         private const val keyShowQualifyingDelta: String = "SHOW_QUALIFYING_DELTA"
@@ -69,6 +70,12 @@ class StatisticsRepository(
                 .getJson<AllSeasonsJson>(keySupportedSeasons)
                 ?.convert()
                 ?: emptySet()
+
+    /**
+     * Is the searching of the statistics functionality enabled server side
+     */
+    val searchEnabled: Boolean
+        get() = configManager.getBoolean(keySearch)
 
     /**
      * Show the qualifying delta in the layout

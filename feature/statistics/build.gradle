@@ -33,7 +33,6 @@ dependencies {
     implementation project(path: ':core:preferences')
     implementation project(path: ':core:ui')
 
-
     // Swipe refresh
     implementation deps.androidx.swiperefreshlayout
 
@@ -52,4 +51,7 @@ dependencies {
 
     // Skeleton Layout
     implementation deps.skeletonlayout
+
+    // Reddit fast indicator
+    implementation deps.reddit.indicator
 }
