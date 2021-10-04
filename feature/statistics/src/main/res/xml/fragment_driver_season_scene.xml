@@ -9,16 +9,6 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_begin="@dimen/toolbarHeight" />
-        <Constraint
-            android:id="@+id/swipeRefresh"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/input"
-            app:layout_constraintVertical_bias="0.0" />
     </ConstraintSet>
 
     <ConstraintSet android:id="@+id/end">
@@ -28,6 +18,21 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_begin="@dimen/toolbarHeight" />
+
+        <Constraint
+            android:id="@+id/progress"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            app:layout_constraintBottom_toBottomOf="@+id/titleExpanded"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/titleExpanded">
+
+            <PropertySet app:visibilityMode="ignore" />
+
+        </Constraint>
 
         <Constraint
             android:id="@+id/titleExpanded"
@@ -50,29 +55,9 @@
             android:layout_marginEnd="@dimen/paddingMedium"
             android:alpha="1.0"
             app:layout_constraintBottom_toBottomOf="@id/toolbarGuideline"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/back"
+            app:layout_constraintEnd_toStartOf="@id/upNextContainer"
+            app:layout_constraintStart_toEndOf="@id/menu"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <Constraint
-            android:id="@+id/type"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/paddingMedium"
-            android:layout_marginEnd="@dimen/paddingSmall"
-            app:layout_constraintEnd_toStartOf="@id/input"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/titleExpanded" />
-
-        <Constraint
-            android:id="@+id/input"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/paddingSmall"
-            android:layout_marginEnd="@dimen/paddingMedium"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/type"
-            app:layout_constraintTop_toBottomOf="@id/titleExpanded" />
 
     </ConstraintSet>
 
@@ -84,7 +69,7 @@
 
         <OnSwipe
             app:dragDirection="dragUp"
-            app:touchAnchorId="@id/swipeRefresh"
+            app:touchAnchorId="@id/dataList"
             app:touchAnchorSide="top" />
 
         <KeyFrameSet>
