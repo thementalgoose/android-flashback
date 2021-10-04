@@ -19,7 +19,7 @@ sealed class SearchItem(
         val imageUrl: String?
     ): SearchItem(
         layoutId = R.layout.view_search_driver,
-        searchBy = name.lowercase()
+        searchBy = "${name.lowercase()} ${nationality.lowercase()}"
     )
 
     data class Constructor(
@@ -30,7 +30,7 @@ sealed class SearchItem(
         val colour: Int
     ): SearchItem(
         layoutId = R.layout.view_search_constructor,
-        searchBy = name.lowercase()
+        searchBy = "${name.lowercase()} ${nationality.lowercase()}"
     )
 
     data class Circuit(
@@ -56,7 +56,7 @@ sealed class SearchItem(
         val date: LocalDate
     ): SearchItem(
         layoutId = R.layout.view_search_race,
-        searchBy = "$round $season ${raceName.lowercase()} ${circuitName.lowercase()} ${country.lowercase()} ${DateTimeFormatter.ofPattern("MMMM").format(date).lowercase()}"
+        searchBy = "$season $round $season ${raceName.lowercase()} ${circuitName.lowercase()} ${country.lowercase()} ${DateTimeFormatter.ofPattern("MMMM").format(date).lowercase()}"
     )
 
     object Placeholder: SearchItem(

@@ -99,12 +99,12 @@ class SearchFragment: BaseFragment<FragmentSearchBinding>(), FragmentResultListe
         }
         binding.textInput.doOnTextChanged { text, _, _, _ ->
             viewModel.inputs.inputSearch(text.toString())
-            binding.textClear.closeKeyboard()
-            binding.textClear.clearFocus()
             binding.textClear.isEnabled = !text.isNullOrEmpty()
             binding.textClear.alpha = if (text.isNullOrEmpty()) 0.5f else 1.0f
         }
         binding.textClear.setOnClickListener {
+            binding.textClear.closeKeyboard()
+            binding.textClear.clearFocus()
             binding.textInput.setText("")
         }
 
