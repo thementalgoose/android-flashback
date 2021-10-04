@@ -552,5 +552,16 @@
       "Content bug fixes throughout the app in older seasons",
       "Improved error handling when data is missing"
     ]
+  },
+  {
+    "versionCode": 102,
+    "versionName": "6.5.0",
+    "isMajor": true,
+    "title": "Search",
+    "notes": [
+      "Flashback now supports search! Search for any driver, constructor, circuit or race from the entire history of F1",
+      "Updates notification banners to be more descriptive",
+      "Minor updates to settings ordering and wording"
+    ]
   }
 ]
