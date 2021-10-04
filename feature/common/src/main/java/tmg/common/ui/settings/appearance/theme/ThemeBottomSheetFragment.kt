@@ -4,15 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.snackbar.Snackbar
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.common.R
 import tmg.common.databinding.FragmentBottomSheetThemeBinding
 import tmg.core.ui.base.BaseBottomSheetFragment
 import tmg.core.ui.bottomsheet.BottomSheetAdapter
-import tmg.core.ui.model.NightMode
 import tmg.core.ui.model.Theme
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
