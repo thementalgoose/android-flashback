@@ -58,8 +58,7 @@ class ThemeController(
     }
 
     @get:StyleRes
-    val themeStyle: Int
-        get() {
-            return styleManager.getStyleResource(theme, nightMode)
-        }
+    val themeStyle: Int by lazy {
+        styleManager.getStyleResource(theme, nightMode)
+    }
 }

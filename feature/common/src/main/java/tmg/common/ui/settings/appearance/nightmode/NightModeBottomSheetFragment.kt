@@ -4,10 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.app.AppCompatDelegate.*
+import androidx.core.os.bundleOf
+import androidx.fragment.app.setFragmentResult
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.common.databinding.FragmentBottomSheetNightModeBinding
 import tmg.common.databinding.FragmentBottomSheetThemeBinding
+import tmg.common.ui.settings.appearance.SettingsAppearanceFragment
 import tmg.core.ui.base.BaseBottomSheetFragment
 import tmg.core.ui.bottomsheet.BottomSheetAdapter
 import tmg.core.ui.model.NightMode
@@ -52,6 +55,9 @@ class NightModeBottomSheetFragment: BaseBottomSheetFragment<FragmentBottomSheetN
                     NightMode.NIGHT -> setDefaultNightMode(MODE_NIGHT_YES)
                 }
             }
+            setFragmentResult(SettingsAppearanceFragment.requestKey, bundleOf(
+                SettingsAppearanceFragment.bundleKey to !isSameSelection
+            ))
             dismiss()
         }
     }
