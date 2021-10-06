@@ -64,6 +64,7 @@ internal class CircuitMapperTest: BaseTest() {
     @Test
     fun `Circuit get location defaults to fallback values`() {
         initSUT()
+        every { mockLocationMapper.mapCircuitLocation(any()) } returns null
 
         val input = FCircuit.model(
             location = null,

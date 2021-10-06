@@ -2,7 +2,8 @@ package tmg.flashback.firebase.mappers.seasonoverview
 
 import io.mockk.every
 import io.mockk.mockk
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
@@ -20,9 +21,7 @@ import tmg.flashback.firebase.mappers.LocationMapper
 import tmg.flashback.firebase.mappers.seasonoverview.SeasonOverviewRaceMapper.Qualifying.Q1
 import tmg.flashback.firebase.mappers.seasonoverview.SeasonOverviewRaceMapper.Qualifying.Q2
 import tmg.flashback.firebase.mappers.seasonoverview.SeasonOverviewRaceMapper.Qualifying.Q3
-import tmg.flashback.firebase.models.FSeason
 import tmg.flashback.firebase.models.FSeasonOverviewRaceCircuit
-import tmg.flashback.firebase.models.FSeasonOverviewRaceCircuitLocation
 import tmg.flashback.firebase.models.FSeasonOverviewRaceQualifying
 import tmg.flashback.firebase.models.FSeasonOverviewRaceRace
 import tmg.flashback.firebase.models.FSeasonOverviewRaceRaceFastestLap
