@@ -1,15 +1,20 @@
 package tmg.flashback.firebase.mappers
 
+import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import java.lang.NullPointerException
 import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
 import tmg.crash_reporting.controllers.CrashController
+import tmg.flashback.data.models.stats.Location
 import tmg.flashback.data.models.stats.SearchCircuit
 import tmg.flashback.data.models.stats.SearchConstructor
 import tmg.flashback.data.models.stats.SearchDriver
+import tmg.flashback.firebase.models.FCircuitLocation
+import tmg.flashback.firebase.models.FSearchCircuit
 import tmg.flashback.firebase.models.FSearchCircuitModel
 import tmg.flashback.firebase.models.FSearchConstructorModel
 import tmg.flashback.firebase.models.FSearchDriver
@@ -20,11 +25,17 @@ import tmg.testutils.BaseTest
 internal class SearchMapperTest: BaseTest() {
 
     private val mockCrashController: CrashController = mockk(relaxed = true)
+    private val mockLocationMapper: LocationMapper = mockk(relaxed = true)
 
     private lateinit var sut: SearchMapper
 
     private fun initSUT() {
-        sut = SearchMapper(mockCrashController)
+        sut = SearchMapper(mockCrashController, mockLocationMapper)
+    }
+
+    @BeforeEach
+    internal fun setUp() {
+        every { mockLocationMapper.mapCircuitLocation(any()) } returns Location(1.0, 2.0)
     }
 
     @Test
@@ -169,9 +180,11 @@ internal class SearchMapperTest: BaseTest() {
             id = "circuitId",
             country = "country",
             countryISO = "countryISO",
-            locationLat = 1.0,
-            locationLng = 2.0,
-            location = "location",
+            location = Location(
+                lat = 1.0,
+                lng = 2.0
+            ),
+            locationName = "location",
             name = "name",
             wikiUrl = "wikiUrl",
         )

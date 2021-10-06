@@ -119,7 +119,7 @@ internal fun FSeasonOverviewRaceCircuit.Companion.model(
     locality: String = "locality",
     country: String = "country",
     countryISO: String = "countryISO",
-    location: FSeasonOverviewRaceCircuitLocation = FSeasonOverviewRaceCircuitLocation.model()
+    location: FCircuitLocation = FCircuitLocation.model()
 ): FSeasonOverviewRaceCircuit = FSeasonOverviewRaceCircuit(
     id = id,
     name = name,
@@ -128,14 +128,6 @@ internal fun FSeasonOverviewRaceCircuit.Companion.model(
     country = country,
     countryISO = countryISO,
     location = location
-)
-
-internal fun FSeasonOverviewRaceCircuitLocation.Companion.model(
-    lat: String? = "51.101",
-    lng: String? = "-1.101"
-): FSeasonOverviewRaceCircuitLocation = FSeasonOverviewRaceCircuitLocation(
-    lat = lat,
-    lng = lng
 )
 
 internal fun FSeasonOverviewRaceQualifying.Companion.model(

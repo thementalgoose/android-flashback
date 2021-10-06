@@ -1,14 +1,17 @@
 package tmg.flashback.firebase.mappers
 
+import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
 import tmg.crash_reporting.controllers.CrashController
 import tmg.flashback.data.models.stats.Circuit
 import tmg.flashback.data.models.stats.CircuitRace
+import tmg.flashback.data.models.stats.Location
 import tmg.flashback.firebase.models.FCircuit
 import tmg.flashback.firebase.models.FCircuitResult
 import tmg.flashback.firebase.models.model
@@ -17,11 +20,17 @@ import tmg.testutils.BaseTest
 internal class CircuitMapperTest: BaseTest() {
 
     private val mockCrashController: CrashController = mockk(relaxed = true)
+    private val mockLocationMapper: LocationMapper = mockk(relaxed = true)
 
     private lateinit var sut: CircuitMapper
 
     private fun initSUT() {
-        sut = CircuitMapper(mockCrashController)
+        sut = CircuitMapper(mockCrashController, mockLocationMapper)
+    }
+
+    @BeforeEach
+    internal fun setUp() {
+        every { mockLocationMapper.mapCircuitLocation(any()) } returns Location(1.0, 2.0)
     }
 
     @Test
@@ -35,8 +44,7 @@ internal class CircuitMapperTest: BaseTest() {
             country = "country",
             countryISO = "countryISO",
             locality = "locality",
-            locationLat = 1.0,
-            locationLng = 2.0,
+            location = Location(1.0, 2.0),
             wikiUrl = "wikiUrl",
             results = listOf(
                 CircuitRace(
@@ -51,6 +59,20 @@ internal class CircuitMapperTest: BaseTest() {
         )
 
         assertEquals(expected, sut.mapCircuit(input))
+    }
+
+    @Test
+    fun `Circuit get location defaults to fallback values`() {
+        initSUT()
+        every { mockLocationMapper.mapCircuitLocation(any()) } returns null
+
+        val input = FCircuit.model(
+            location = null,
+            locationLat = 4.0,
+            locationLng = 5.0
+        )
+        assertEquals(4.0, sut.mapCircuit(input).location!!.lat)
+        assertEquals(5.0, sut.mapCircuit(input).location!!.lng)
     }
 
     @Test

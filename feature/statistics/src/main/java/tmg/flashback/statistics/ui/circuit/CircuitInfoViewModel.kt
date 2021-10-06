@@ -1,10 +1,14 @@
 package tmg.flashback.statistics.ui.circuit
 
 import androidx.lifecycle.*
+import java.lang.NullPointerException
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.*
+import tmg.core.device.managers.NetworkConnectivityManager
+import tmg.crash_reporting.controllers.CrashController
 import tmg.flashback.data.db.stats.CircuitRepository
 import tmg.flashback.data.models.stats.Circuit
+import tmg.flashback.data.models.stats.Location
 import tmg.flashback.statistics.extensions.circuitIcon
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.utilities.extensions.then
@@ -35,12 +39,12 @@ interface CircuitInfoViewModelOutputs {
 
 @Suppress("EXPERIMENTAL_API_USAGE")
 class CircuitInfoViewModel(
-        private val circuitRepository: CircuitRepository,
-        private val connectivityManager: tmg.core.device.managers.NetworkConnectivityManager
+    private val circuitRepository: CircuitRepository,
+    private val connectivityManager: NetworkConnectivityManager,
+    private val crashController: CrashController
 ) : ViewModel(), CircuitInfoViewModelInputs, CircuitInfoViewModelOutputs {
 
-    private var circuitLat: Double? = null
-    private var circuitLng: Double? = null
+    private var circuitLocation: Location? = null
     private var wikipedia: String? = null
     private var name: String? = null
 
@@ -63,8 +67,7 @@ class CircuitInfoViewModel(
     override val list: LiveData<List<CircuitItem>> = circuit
         .map {
             name = it?.name
-            circuitLat = it?.locationLat
-            circuitLng = it?.locationLng
+            circuitLocation = it?.location
             wikipedia = it?.wikiUrl
             when {
                 it == null && !connectivityManager.isConnected -> {
@@ -114,9 +117,11 @@ class CircuitInfoViewModel(
     }
 
     override fun clickShowOnMap() {
-        val mapsIntent = "geo:0,0?q=$circuitLat,$circuitLng ($name)"
-        val mapsLatLng = "$circuitLat,$circuitLng"
-        goToMap.postValue(DataEvent(Pair(mapsIntent, mapsLatLng)))
+        circuitLocation?.let { location ->
+            val mapsIntent = "geo:0,0?q=${location.lat},${location.lng} ($name)"
+            val mapsLatLng = "${location.lat},${location.lng}"
+            goToMap.postValue(DataEvent(Pair(mapsIntent, mapsLatLng)))
+        } ?: crashController.logException(NullPointerException("Circuit location is null for ${circuitIdentifier.valueOrNull}"))
     }
 
     override fun clickWikipedia() {
