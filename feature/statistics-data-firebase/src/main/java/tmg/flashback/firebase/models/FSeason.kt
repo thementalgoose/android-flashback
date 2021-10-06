@@ -78,13 +78,6 @@ data class FSeasonOverviewRaceCircuit(
     companion object
 }
 
-data class FSeasonOverviewRaceCircuitLocation(
-    val lat: String? = "",
-    val lng: String? = ""
-) {
-    companion object
-}
-
 data class FSeasonOverviewRaceQualifying(
     val pos: Int? = null,
     val q1: String? = null,
