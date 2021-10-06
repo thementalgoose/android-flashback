@@ -6,9 +6,9 @@ internal fun FCircuit.Companion.model(
     countryISO: String? = "countryISO",
     id: String = "circuitId",
     locality: String = "locality",
-    locationLat: Double? = 1.0,
-    locationLng: Double? = 2.0,
-    location: FCircuitLocation = FCircuitLocation.model(),
+    locationLat: Double? = null,
+    locationLng: Double? = null,
+    location: FCircuitLocation? = FCircuitLocation.model(),
     wikiUrl: String? = "wikiUrl",
     results: Map<String, FCircuitResult>? = mapOf(
         "s2020r1" to FCircuitResult.model()

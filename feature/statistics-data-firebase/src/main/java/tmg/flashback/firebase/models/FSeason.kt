@@ -69,11 +69,11 @@ data class FRound(
 data class FSeasonOverviewRaceCircuit(
     val id: String = "",
     val name: String = "",
-    val wikiUrl: String = "",
+    val wikiUrl: String? = "",
     val locality: String = "",
     val country: String = "",
     val countryISO: String = "",
-    val location: FSeasonOverviewRaceCircuitLocation = FSeasonOverviewRaceCircuitLocation()
+    val location: FCircuitLocation? = FCircuitLocation()
 ) {
     companion object
 }

@@ -185,7 +185,7 @@ class SearchViewModel(
                 name = it.name,
                 nationality = it.country,
                 nationalityISO = it.countryISO,
-                location = it.location
+                location = it.locationName
             )
         }
     }

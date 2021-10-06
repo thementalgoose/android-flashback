@@ -26,9 +26,8 @@ data class SearchCircuit(
     val id: String,
     val country: String,
     val countryISO: String,
-    val locationLat: Double,
-    val locationLng: Double,
-    val location: String,
+    val location: Location?,
+    val locationName: String,
     val name: String,
     val wikiUrl: String?
 )
