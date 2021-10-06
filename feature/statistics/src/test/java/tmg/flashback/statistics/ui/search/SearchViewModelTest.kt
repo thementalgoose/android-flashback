@@ -9,6 +9,7 @@ import org.threeten.bp.LocalDate
 import tmg.flashback.data.db.stats.SearchRepository
 import tmg.flashback.data.models.stats.History
 import tmg.flashback.data.models.stats.HistoryRound
+import tmg.flashback.data.models.stats.Location
 import tmg.flashback.data.models.stats.SearchCircuit
 import tmg.flashback.data.models.stats.SearchConstructor
 import tmg.flashback.data.models.stats.SearchDriver
@@ -37,9 +38,8 @@ internal class SearchViewModelTest: BaseTest() {
                         id = "circuitId",
                         country = "country",
                         countryISO = "countryISO",
-                        locationLat = 0.0,
-                        locationLng = 1.0,
-                        location = "location",
+                        location = Location(0.0, 1.0),
+                        locationName = "location",
                         name = "name",
                         wikiUrl = "wikiUrl"
                     )
