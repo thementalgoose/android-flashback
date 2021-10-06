@@ -76,6 +76,12 @@ class SeasonViewHolder(
         else {
             binding.defaultIndicator.gone()
         }
+        if (season.season == currentSeasonYear) {
+            binding.currentSeasonIndicator.show()
+        }
+        else {
+            binding.currentSeasonIndicator.gone()
+        }
 
         binding.more.contentDescription = getString(R.string.ab_season_list_more, season.season)
 
