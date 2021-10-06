@@ -18,7 +18,8 @@
         app:layout_constraintBottom_toBottomOf="@id/cardview"
         app:layout_constraintEnd_toEndOf="@id/cardview"
         app:layout_constraintStart_toStartOf="@id/cardview"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:background="?attr/colorPrimary" />
 
     <View
         android:id="@+id/pipeBottom"
@@ -28,15 +29,17 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/cardview"
         app:layout_constraintStart_toStartOf="@id/cardview"
-        app:layout_constraintTop_toTopOf="@id/cardview" />
+        app:layout_constraintTop_toTopOf="@id/cardview"
+        tools:background="?attr/colorPrimary" />
 
     <TextView
         android:id="@+id/label"
         style="@style/Text.Dashboard.List.Item"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:paddingStart="@dimen/paddingMedium"
+        android:layout_marginStart="@dimen/paddingMedium"
         android:paddingTop="@dimen/paddingNSmall"
+        android:paddingStart="0dp"
         android:paddingEnd="0dp"
         android:paddingBottom="@dimen/paddingNSmall"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -87,7 +90,8 @@
         android:elevation="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:background="?attr/colorPrimary" />
 
     <tmg.core.ui.views.CircleView
         android:id="@+id/highlight"
@@ -100,7 +104,7 @@
         app:layout_constraintTop_toTopOf="@id/cardview" />
 
     <ImageView
-        android:id="@+id/defaultIndicator"
+        android:id="@+id/currentSeasonIndicator"
         android:layout_width="0dp"
         android:layout_height="@dimen/seasonListCircleSize"
         android:alpha="0.4"
@@ -111,5 +115,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_default_indicator" />
+
+    <ImageView
+        android:id="@+id/defaultIndicator"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/seasonListCircleSize"
+        android:alpha="0.4"
+        android:importantForAccessibility="no"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/cardview"
+        app:layout_constraintEnd_toStartOf="@id/label"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_default_tick" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
