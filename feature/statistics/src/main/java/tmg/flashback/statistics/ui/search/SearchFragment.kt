@@ -53,7 +53,10 @@ class SearchFragment: BaseFragment<FragmentSearchBinding>(), FragmentResultListe
         binding.swipeRefresh.isEnabled = false
 
         adapter = SearchAdapter(
-            viewModel.inputs::clickItem
+            itemClicked = {
+                stopInputFocus()
+                viewModel.inputs.clickItem(it)
+            }
         )
         binding.dataList.adapter = adapter
         binding.dataList.layoutManager = LinearLayoutManager(context)
@@ -103,9 +106,8 @@ class SearchFragment: BaseFragment<FragmentSearchBinding>(), FragmentResultListe
             binding.textClear.alpha = if (text.isNullOrEmpty()) 0.5f else 1.0f
         }
         binding.textClear.setOnClickListener {
-            binding.textClear.closeKeyboard()
-            binding.textClear.clearFocus()
             binding.textInput.setText("")
+            stopInputFocus()
         }
 
         // Clear input
@@ -120,6 +122,7 @@ class SearchFragment: BaseFragment<FragmentSearchBinding>(), FragmentResultListe
 
         observeEvent(viewModel.outputs.openCategoryPicker) {
             val instance = CategoryBottomSheetFragment.instance(it)
+            stopInputFocus()
             instance.show(parentFragmentManager, "CATEGORY")
         }
 
@@ -187,6 +190,14 @@ class SearchFragment: BaseFragment<FragmentSearchBinding>(), FragmentResultListe
                 }
             }
         }
+    }
+
+    private fun stopInputFocus() {
+        binding.textInput.closeKeyboard()
+        binding.textInput.isFocusableInTouchMode = false
+        binding.textInput.isFocusable = false
+        binding.textInput.isFocusableInTouchMode = true
+        binding.textInput.isFocusable = true
     }
 
     companion object {
