@@ -3,17 +3,20 @@ package tmg.flashback.firebase.mappers
 import androidx.core.graphics.toColorInt
 import java.lang.NullPointerException
 import tmg.crash_reporting.controllers.CrashController
+import tmg.flashback.data.models.stats.Location
 import tmg.flashback.data.models.stats.SearchCircuit
 import tmg.flashback.data.models.stats.SearchConstructor
 import tmg.flashback.data.models.stats.SearchDriver
 import tmg.flashback.firebase.base.ConverterUtils.fromDateRequired
 import tmg.flashback.firebase.base.ConverterUtils.isDateValid
+import tmg.flashback.firebase.models.FCircuitLocation
 import tmg.flashback.firebase.models.FSearchCircuitModel
 import tmg.flashback.firebase.models.FSearchConstructorModel
 import tmg.flashback.firebase.models.FSearchDriverModel
 
 class SearchMapper(
-    private val crashController: CrashController
+    private val crashController: CrashController,
+    private val locationMapper: LocationMapper
 ) {
 
     fun mapSearchDriver(input: FSearchDriverModel, id: String): SearchDriver? {
@@ -89,9 +92,8 @@ class SearchMapper(
             id = id,
             country = input.country,
             countryISO = input.countryISO,
-            locationLat = input.location?.lat?.toDoubleOrNull() ?: 0.0,
-            locationLng = input.location?.lng?.toDoubleOrNull() ?: 0.0,
-            location = input.loc,
+            location = locationMapper.mapCircuitLocation(input.location),
+            locationName = input.loc,
             name = input.name,
             wikiUrl = input.wikiUrl,
         )

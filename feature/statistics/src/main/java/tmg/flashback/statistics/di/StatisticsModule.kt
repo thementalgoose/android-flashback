@@ -9,6 +9,7 @@ import tmg.flashback.firebase.mappers.CircuitMapper
 import tmg.flashback.firebase.mappers.ConstructorMapper
 import tmg.flashback.firebase.mappers.DriverMapper
 import tmg.flashback.firebase.mappers.HistoryMapper
+import tmg.flashback.firebase.mappers.LocationMapper
 import tmg.flashback.firebase.mappers.SearchMapper
 import tmg.flashback.firebase.mappers.SeasonOverviewMapper
 import tmg.flashback.firebase.mappers.seasonoverview.SeasonOverviewConstructorMapper
@@ -35,7 +36,7 @@ import tmg.flashback.statistics.ui.settings.statistics.SettingsStatisticsViewMod
 val statisticsModule = module {
 
     viewModel { MaintenanceViewModel(get(), get()) }
-    viewModel { CircuitInfoViewModel(get(), get()) }
+    viewModel { CircuitInfoViewModel(get(), get(), get()) }
     viewModel { SeasonViewModel(get(), get(), get(), get(), get(), get()) }
     viewModel { ConstructorViewModel(get(), get()) }
     viewModel { DriverViewModel(get(), get()) }
@@ -55,15 +56,16 @@ val statisticsModule = module {
 
     // Firestore Mappers
     single { AppLockoutMapper() }
-    single { CircuitMapper(get()) }
+    single { CircuitMapper(get(), get()) }
     single { HistoryMapper(Formula1.allDataUpToo, get()) }
     single { DriverMapper() }
     single { ConstructorMapper() }
-    single { SearchMapper(get()) }
+    single { SearchMapper(get(), get()) }
+    single { LocationMapper() }
     single { SeasonOverviewMapper(get(), get(), get(), get()) }
     single { SeasonOverviewConstructorMapper() }
     single { SeasonOverviewDriverMapper(get()) }
-    single { SeasonOverviewRaceMapper() }
+    single { SeasonOverviewRaceMapper(get()) }
     single { SeasonOverviewStandingsMapper(get(), get(), get()) }
 
     // Firestore

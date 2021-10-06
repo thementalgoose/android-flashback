@@ -9,13 +9,16 @@ import tmg.flashback.data.models.stats.RoundRaceResult
 import tmg.flashback.data.models.stats.RoundSprintQualifyingResult
 import tmg.flashback.data.utils.toLapTime
 import tmg.flashback.data.utils.toMaxIfZero
+import tmg.flashback.firebase.mappers.LocationMapper
 import tmg.flashback.firebase.models.FSeasonOverviewRaceCircuit
 import tmg.flashback.firebase.models.FSeasonOverviewRaceQualifying
 import tmg.flashback.firebase.models.FSeasonOverviewRaceRace
 import tmg.flashback.firebase.models.FSeasonOverviewRaceRaceFastestLap
 import tmg.flashback.firebase.models.FSeasonOverviewRaceSprintQualifying
 
-class SeasonOverviewRaceMapper {
+class SeasonOverviewRaceMapper(
+    private val locationMapper: LocationMapper
+) {
 
     enum class Qualifying { Q1, Q2, Q3 }
 
@@ -120,12 +123,11 @@ class SeasonOverviewRaceMapper {
         return CircuitSummary(
             id = input.id,
             name = input.name,
-            wikiUrl = input.wikiUrl,
+            wikiUrl = input.wikiUrl ?: "",
             locality = input.locality,
             country = input.country,
             countryISO = input.countryISO,
-            locationLat = input.location.lat?.toDoubleOrNull() ?: 0.0,
-            locationLng = input.location.lng?.toDoubleOrNull() ?: 0.0
+            location = locationMapper.mapCircuitLocation(input.location)
         )
     }
 

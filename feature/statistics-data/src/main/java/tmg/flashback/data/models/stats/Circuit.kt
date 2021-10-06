@@ -10,8 +10,7 @@ data class Circuit(
     val locality: String,
     val country: String,
     val countryISO: String,
-    val locationLat: Double?,
-    val locationLng: Double?,
+    val location: Location?,
     val results: List<CircuitRace>
 )
 
@@ -31,6 +30,5 @@ data class CircuitSummary(
     val locality: String,
     val country: String,
     val countryISO: String,
-    val locationLat: Double,
-    val locationLng: Double
+    val location: Location?
 )

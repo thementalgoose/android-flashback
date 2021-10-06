@@ -105,8 +105,7 @@ internal val mockCircuitCharlie = CircuitSummary(
     locality = "Italian",
     country = "Italy",
     countryISO = "ITA",
-    locationLat = 51.1,
-    locationLng = 1.03
+    location = Location(51.1, 1.03)
 )
 internal val mockCircuitDelta = CircuitSummary(
     id = "delta",
@@ -115,8 +114,7 @@ internal val mockCircuitDelta = CircuitSummary(
     locality = "German",
     country = "Germany",
     countryISO = "DEU",
-    locationLat = 51.1,
-    locationLng = 1.03
+    location = Location(51.1, 1.03)
 )
 
 //endregion
