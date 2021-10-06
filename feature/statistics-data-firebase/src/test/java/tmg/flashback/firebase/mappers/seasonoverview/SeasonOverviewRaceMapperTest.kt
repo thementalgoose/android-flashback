@@ -1,17 +1,22 @@
 package tmg.flashback.firebase.mappers.seasonoverview
 
+import io.mockk.every
+import io.mockk.mockk
 import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
 import tmg.flashback.data.models.stats.CircuitSummary
 import tmg.flashback.data.models.stats.Constructor
 import tmg.flashback.data.models.stats.Driver
 import tmg.flashback.data.models.stats.FastestLap
+import tmg.flashback.data.models.stats.Location
 import tmg.flashback.data.models.stats.RoundQualifyingResult
 import tmg.flashback.data.models.stats.RoundRaceResult
 import tmg.flashback.data.models.stats.RoundSprintQualifyingResult
 import tmg.flashback.data.models.stats.noTime
 import tmg.flashback.data.utils.toLapTime
+import tmg.flashback.firebase.mappers.LocationMapper
 import tmg.flashback.firebase.mappers.seasonoverview.SeasonOverviewRaceMapper.Qualifying.Q1
 import tmg.flashback.firebase.mappers.seasonoverview.SeasonOverviewRaceMapper.Qualifying.Q2
 import tmg.flashback.firebase.mappers.seasonoverview.SeasonOverviewRaceMapper.Qualifying.Q3
@@ -27,10 +32,17 @@ import tmg.testutils.BaseTest
 
 internal class SeasonOverviewRaceMapperTest: BaseTest() {
 
+    private val mockLocationMapper: LocationMapper = mockk(relaxed = true)
+
     private lateinit var sut: SeasonOverviewRaceMapper
 
     private fun initSUT() {
-        sut = SeasonOverviewRaceMapper()
+        sut = SeasonOverviewRaceMapper(mockLocationMapper)
+    }
+
+    @BeforeEach
+    internal fun setUp() {
+        every { mockLocationMapper.mapCircuitLocation(any()) } returns Location(1.0, 2.0)
     }
 
     @Test
@@ -329,39 +341,13 @@ internal class SeasonOverviewRaceMapperTest: BaseTest() {
             locality = "locality",
             country = "country",
             countryISO = "countryISO",
-            locationLat = 51.101,
-            locationLng = -1.101
+            location = Location(
+                lat = 1.0,
+                lng = 2.0
+            )
         )
 
         assertEquals(expected, sut.mapCircuit(input))
-    }
-
-    @Test
-    fun `CircuitSummary defaults location to 0 if null`() {
-        initSUT()
-
-        val input = FSeasonOverviewRaceCircuit.model(
-            location = FSeasonOverviewRaceCircuitLocation(
-                lat = null,
-                lng = null
-            )
-        )
-        assertEquals(0.0, sut.mapCircuit(input).locationLat)
-        assertEquals(0.0, sut.mapCircuit(input).locationLng)
-    }
-
-    @Test
-    fun `CircuitSummary defaults location to 0 if invalid`() {
-        initSUT()
-
-        val input = FSeasonOverviewRaceCircuit.model(
-            location = FSeasonOverviewRaceCircuitLocation(
-                lat = "hello",
-                lng = "world"
-            )
-        )
-        assertEquals(0.0, sut.mapCircuit(input).locationLat)
-        assertEquals(0.0, sut.mapCircuit(input).locationLng)
     }
 
     @Test
