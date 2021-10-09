@@ -5,12 +5,12 @@ import tmg.flashback.data.models.stats.DriverOverview
 import tmg.flashback.data.models.stats.DriverOverviewRace
 import tmg.flashback.data.models.stats.DriverOverviewStanding
 import tmg.flashback.data.models.stats.SlimConstructor
-import tmg.flashback.firebase.base.ConverterUtils.fromDateRequired
 import tmg.flashback.firebase.currentYear
 import tmg.flashback.firebase.models.FDriverOverview
 import tmg.flashback.firebase.models.FDriverOverviewStanding
 import tmg.flashback.firebase.models.FDriverOverviewStandingConstructor
 import tmg.flashback.firebase.models.FDriverOverviewStandingHistory
+import tmg.utilities.utils.LocalDateUtils.requireFromDate
 
 class DriverMapper {
 
@@ -23,7 +23,7 @@ class DriverMapper {
             number = input.driver.driverNumber?.toIntOrNull() ?: 0,
             wikiUrl = input.driver.wikiUrl,
             photoUrl = input.driver.photoUrl,
-            dateOfBirth = fromDateRequired(input.driver.dob),
+            dateOfBirth = requireFromDate(input.driver.dob),
             nationality = input.driver.nationality,
             nationalityISO = input.driver.nationalityISO ?: "",
             standings = input.standings
@@ -68,7 +68,7 @@ class DriverMapper {
             round = input.r,
             season = season,
             raceName = input.rName ?: "",
-            date = fromDateRequired(input.date),
+            date = requireFromDate(input.date),
             constructor = when (constructors.size) {
                 0 -> null
                 1 -> mapSlimConstructor(constructors.first())

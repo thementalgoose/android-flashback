@@ -14,14 +14,11 @@ import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.core.ui.base.BaseFragment
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.FragmentCircuitInfoBinding
-import tmg.flashback.statistics.ui.overview.constructor.ConstructorFragment
-import tmg.flashback.statistics.ui.overview.constructor.ConstructorViewModel
 import tmg.flashback.statistics.ui.race.RaceActivity
 import tmg.flashback.statistics.ui.race.RaceData
-import tmg.utilities.extensions.copyToClipboard
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
-import tmg.utilities.utils.ClipboardUtils.Companion.copyToClipboard
+import tmg.utilities.utils.ClipboardUtils.copyToClipboard
 
 class CircuitInfoFragment: BaseFragment<FragmentCircuitInfoBinding>() {
 
