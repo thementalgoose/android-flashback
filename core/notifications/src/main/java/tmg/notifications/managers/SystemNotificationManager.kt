@@ -7,6 +7,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.media.RingtoneManager
 import android.os.Build
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
@@ -14,6 +15,7 @@ import androidx.core.app.NotificationCompat
 import java.lang.NullPointerException
 import tmg.crash_reporting.controllers.CrashController
 import tmg.notifications.R
+import tmg.notifications.model.NotificationPriority
 import tmg.notifications.navigation.NotificationNavigationProvider
 
 class SystemNotificationManager(
@@ -36,6 +38,7 @@ class SystemNotificationManager(
         channelId: String,
         title: String,
         text: String,
+        priority: NotificationPriority = NotificationPriority.DEFAULT,
         @DrawableRes icon: Int = R.drawable.ic_notification
     ): Notification {
         val contextToUse = context ?: applicationContext
@@ -48,11 +51,18 @@ class SystemNotificationManager(
             PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE
         )
 
+        val defaultAlarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+
         val notificationBuilder = NotificationCompat.Builder(applicationContext, channelId)
             .setSmallIcon(icon)
             .setStyle(NotificationCompat.BigTextStyle().bigText(text))
             .setContentTitle(title)
             .setContentText(text)
+            .setSound(defaultAlarmSound)
+            .setPriority(when (priority) {
+                NotificationPriority.HIGH -> NotificationCompat.PRIORITY_HIGH
+                NotificationPriority.DEFAULT -> NotificationCompat.PRIORITY_DEFAULT
+            })
             .setAutoCancel(true)
             .setContentIntent(pendingIntent)
 
