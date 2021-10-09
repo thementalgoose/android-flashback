@@ -3,20 +3,21 @@ package tmg.flashback.statistics.ui.race.viewholders
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import tmg.flashback.statistics.ui.race.RaceModel
-import tmg.flashback.data.enums.isStatusFinished
-import tmg.core.ui.extensions.getColor
-import tmg.flashback.statistics.R
-import tmg.flashback.statistics.databinding.ViewRaceRaceResultBinding
-import tmg.flashback.statistics.extensions.iconRes
-import tmg.flashback.formula1.utils.getFlagResourceAlpha3
-import tmg.flashback.statistics.ui.util.position
-import tmg.utilities.extensions.toEmptyIfZero
-import tmg.utilities.extensions.views.*
-import tmg.utilities.utils.ColorUtils.Companion.darken
 import kotlin.math.abs
+import tmg.core.ui.extensions.getColor
+import tmg.flashback.data.enums.isStatusFinished
 import tmg.flashback.firebase.extensions.pointsDisplay
+import tmg.flashback.formula1.utils.getFlagResourceAlpha3
+import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.ViewRaceSprintQualifyingResultBinding
+import tmg.flashback.statistics.extensions.iconRes
+import tmg.flashback.statistics.ui.race.RaceModel
+import tmg.flashback.statistics.ui.util.position
+import tmg.utilities.extensions.views.context
+import tmg.utilities.extensions.views.getString
+import tmg.utilities.extensions.views.gone
+import tmg.utilities.extensions.views.visible
+import tmg.utilities.utils.ColorUtils.Companion.darken
 
 class RaceSprintQualifyingViewHolder(
     val driverClicked: (driverId: String, driverName: String) -> Unit,
