@@ -6,6 +6,7 @@ import tmg.core.device.managers.BuildConfigManager
 import tmg.core.prefs.manager.PreferenceManager
 import tmg.core.ui.managers.StyleManager
 import tmg.core.ui.navigation.NavigationProvider
+import tmg.flashback.DebugController
 import tmg.flashback.FlashbackStartup
 import tmg.flashback.managers.appshortcuts.AndroidAppShortcutManager
 import tmg.flashback.managers.appshortcuts.AppShortcutManager
@@ -26,11 +27,13 @@ val appModule = module {
 
     viewModel { SettingsAllViewModel(get()) }
     viewModel { DashboardViewModel(get(), get(), get(), get(), get(), get()) }
-    viewModel { ListViewModel(get(), get()) }
+    viewModel { ListViewModel(get(), get(), get()) }
     viewModel { HomeViewModel(get(), get(), get(), get(), get()) }
     viewModel { SyncViewModel(get(), get(), get(), get(), get()) }
 
     single { FlashbackStartup(get(), get(), get(), get(), get(), get()) }
+
+    single { DebugController() }
 
     single<PreferenceManager> { AppPreferencesManager(get()) }
     single<StyleManager> { AppStyleManager() }
