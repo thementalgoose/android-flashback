@@ -1,13 +1,13 @@
 package tmg.flashback.upnext.repository.converters
 
 import org.threeten.bp.format.DateTimeParseException
-import tmg.configuration.utils.DateConverters
-import tmg.configuration.utils.TimeConverters
 import tmg.flashback.formula1.model.Timestamp
 import tmg.flashback.upnext.repository.json.UpNextJson
 import tmg.flashback.upnext.repository.json.UpNextScheduleJson
 import tmg.flashback.upnext.repository.model.UpNextSchedule
 import tmg.flashback.upnext.repository.model.UpNextScheduleTimestamp
+import tmg.utilities.utils.LocalDateUtils.Companion.requireFromDate
+import tmg.utilities.utils.LocalTimeUtils.Companion.fromTime
 
 fun UpNextJson.convert(): List<UpNextSchedule> {
     if (schedule == null) {
@@ -32,14 +32,14 @@ fun UpNextScheduleJson.convert(): UpNextSchedule? {
             return@mapNotNull null
         }
         val date = try {
-            DateConverters.fromDateRequired(it.d)
+            requireFromDate(it.d)
         } catch (e: DateTimeParseException) {
             /* Do nothing */
             return@mapNotNull null
         }
         return@mapNotNull UpNextScheduleTimestamp(
                 label = it.type,
-                timestamp = Timestamp(date, TimeConverters.fromTime(it.t))
+                timestamp = Timestamp(date, fromTime(it.t))
         )
     }
     if (values.isEmpty()) {

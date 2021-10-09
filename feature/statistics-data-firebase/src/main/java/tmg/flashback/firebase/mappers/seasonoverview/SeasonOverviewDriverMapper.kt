@@ -2,8 +2,8 @@ package tmg.flashback.firebase.mappers.seasonoverview
 
 import tmg.flashback.data.models.stats.Constructor
 import tmg.flashback.data.models.stats.Driver
-import tmg.flashback.firebase.base.ConverterUtils
 import tmg.flashback.firebase.models.FSeason
+import tmg.utilities.utils.LocalDateUtils.Companion.requireFromDate
 
 class SeasonOverviewDriverMapper(
     private val constructorMapper: SeasonOverviewConstructorMapper
@@ -57,7 +57,7 @@ class SeasonOverviewDriverMapper(
             number = driver.number ?: 0,
             wikiUrl = driver.wikiUrl,
             photoUrl = driver.photoUrl,
-            dateOfBirth = ConverterUtils.fromDateRequired(driver.dob),
+            dateOfBirth = requireFromDate(driver.dob),
             nationality = driver.nationality,
             nationalityISO = driver.nationalityISO,
             constructors = constructorMap,

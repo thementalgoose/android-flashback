@@ -6,13 +6,13 @@ import tmg.flashback.data.models.stats.Constructor
 import tmg.flashback.data.models.stats.ConstructorOverview
 import tmg.flashback.data.models.stats.ConstructorOverviewDriverStanding
 import tmg.flashback.data.models.stats.ConstructorOverviewStanding
-import tmg.flashback.firebase.base.ConverterUtils.fromDateRequired
 import tmg.flashback.firebase.currentYear
 import tmg.flashback.firebase.models.FConstructorOverview
 import tmg.flashback.firebase.models.FConstructorOverviewData
 import tmg.flashback.firebase.models.FConstructorOverviewDrivers
 import tmg.flashback.firebase.models.FConstructorOverviewStandings
 import tmg.flashback.firebase.models.FConstructorOverviewStandingsDriver
+import tmg.utilities.utils.LocalDateUtils.Companion.requireFromDate
 
 class ConstructorMapper {
 
@@ -84,7 +84,7 @@ class ConstructorMapper {
             number = input.driverNumber?.toIntOrNull() ?: 0,
             wikiUrl = input.wikiUrl,
             photoUrl = input.photoUrl,
-            dateOfBirth = fromDateRequired(input.dob),
+            dateOfBirth = requireFromDate(input.dob),
             nationality = input.nationality,
             nationalityISO = input.nationalityISO,
             constructor = mapConstructor(constructorData)
