@@ -6,6 +6,7 @@ import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.Year
+import tmg.flashback.DebugController
 import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.R
 import tmg.flashback.statistics.controllers.SeasonController
@@ -24,6 +25,7 @@ internal class ListViewModelTest: BaseTest() {
 
     private val mockSeasonController: SeasonController = mockk(relaxed = true)
     private val mockRssController: RSSController = mockk(relaxed = true)
+    private val mockDebugController: DebugController = mockk(relaxed = true)
 
     @BeforeEach
     internal fun setUp() {
@@ -31,18 +33,19 @@ internal class ListViewModelTest: BaseTest() {
         every { mockSeasonController.favouriteSeasons } returns setOf()
         every { mockSeasonController.favouritesExpanded } returns true
         every { mockSeasonController.allExpanded } returns true
-
         every { mockSeasonController.defaultSeason } returns 2018
-
         every { mockSeasonController.supportedSeasons } returns List(currentYear - 1949) { it + 1950 }.toSet()
 
         every { mockRssController.enabled } returns false
+
+        every { mockDebugController.listItem } returns null
     }
 
     private fun initSUT() {
         sut = ListViewModel(
             mockSeasonController,
-            mockRssController
+            mockRssController,
+            mockDebugController
         )
     }
 

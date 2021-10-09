@@ -10,6 +10,8 @@ include ':feature:upnext'
 include ':feature:formula1'
 include ':feature:rss'
 
+include ':feature:debug'
+
 include ':core:ads'
 include ':core:analytics'
 include ':core:appshortcuts'
