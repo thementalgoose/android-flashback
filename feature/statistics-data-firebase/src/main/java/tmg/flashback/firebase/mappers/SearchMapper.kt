@@ -3,16 +3,14 @@ package tmg.flashback.firebase.mappers
 import androidx.core.graphics.toColorInt
 import java.lang.NullPointerException
 import tmg.crash_reporting.controllers.CrashController
-import tmg.flashback.data.models.stats.Location
 import tmg.flashback.data.models.stats.SearchCircuit
 import tmg.flashback.data.models.stats.SearchConstructor
 import tmg.flashback.data.models.stats.SearchDriver
-import tmg.flashback.firebase.base.ConverterUtils.fromDateRequired
-import tmg.flashback.firebase.base.ConverterUtils.isDateValid
-import tmg.flashback.firebase.models.FCircuitLocation
 import tmg.flashback.firebase.models.FSearchCircuitModel
 import tmg.flashback.firebase.models.FSearchConstructorModel
 import tmg.flashback.firebase.models.FSearchDriverModel
+import tmg.utilities.utils.LocalDateUtils.isDateValid
+import tmg.utilities.utils.LocalDateUtils.requireFromDate
 
 class SearchMapper(
     private val crashController: CrashController,
@@ -43,7 +41,7 @@ class SearchMapper(
             image = input.image,
             nationality = input.nat ?: "",
             nationalityISO = input.natISO,
-            dateOfBirth = fromDateRequired(input.dob),
+            dateOfBirth = requireFromDate(input.dob),
             wikiUrl = input.wikiUrl
         )
     }

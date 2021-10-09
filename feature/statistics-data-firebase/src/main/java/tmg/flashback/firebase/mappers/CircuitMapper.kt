@@ -5,11 +5,11 @@ import tmg.crash_reporting.controllers.CrashController
 import tmg.flashback.data.models.stats.Circuit
 import tmg.flashback.data.models.stats.CircuitRace
 import tmg.flashback.data.models.stats.Location
-import tmg.flashback.firebase.base.ConverterUtils
-import tmg.flashback.firebase.base.ConverterUtils.fromDateRequired
-import tmg.flashback.firebase.base.ConverterUtils.fromTime
 import tmg.flashback.firebase.models.FCircuit
 import tmg.flashback.firebase.models.FCircuitResult
+import tmg.utilities.utils.LocalDateUtils.isDateValid
+import tmg.utilities.utils.LocalDateUtils.requireFromDate
+import tmg.utilities.utils.LocalTimeUtils.fromTime
 
 class CircuitMapper(
     private val crashController: CrashController,
@@ -47,7 +47,7 @@ class CircuitMapper(
     }
 
     fun mapCircuitRace(circuitId: String, input: FCircuitResult): CircuitRace? {
-        if (!ConverterUtils.isDateValid(input.date)) {
+        if (!isDateValid(input.date)) {
             crashController.logException(NullPointerException("CircuitMapper.mapCircuitRace circuitId=$circuitId input date of \"${input.date}\" is not valid"))
             return null
         }
@@ -56,7 +56,7 @@ class CircuitMapper(
             season = input.season,
             round = input.round,
             wikiUrl = input.wikiUrl ?: "",
-            date = fromDateRequired(input.date!!),
+            date = requireFromDate(input.date!!),
             time = fromTime(input.time)
         )
     }

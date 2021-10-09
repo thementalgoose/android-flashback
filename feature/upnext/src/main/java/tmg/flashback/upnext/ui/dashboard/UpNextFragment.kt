@@ -10,7 +10,6 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.android.viewmodel.ext.android.viewModel
-import org.threeten.bp.LocalDate
 import tmg.core.ui.base.BaseFragment
 import tmg.flashback.formula1.enums.TrackLayout
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
@@ -18,7 +17,6 @@ import tmg.flashback.upnext.BuildConfig
 import tmg.flashback.upnext.R
 import tmg.flashback.upnext.databinding.FragmentUpNextBinding
 import tmg.flashback.upnext.ui.timezone.TimezoneAdapter
-import tmg.flashback.upnext.utils.daysBetween
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.views.show
 

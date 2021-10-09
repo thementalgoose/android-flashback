@@ -16,7 +16,7 @@ import tmg.utilities.extensions.views.context
 import tmg.utilities.extensions.views.getString
 import tmg.utilities.extensions.views.gone
 import tmg.utilities.extensions.views.show
-import tmg.utilities.utils.ColorUtils.Companion.darken
+import tmg.utilities.utils.ColorUtils.darken
 
 class QualifyingResultViewHolder(
     private val binding: ViewRaceQualifyingResultBinding,

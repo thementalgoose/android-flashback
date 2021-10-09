@@ -7,12 +7,12 @@ import tmg.flashback.data.models.stats.HistoryRound
 import tmg.flashback.data.models.stats.WinnerSeason
 import tmg.flashback.data.models.stats.WinnerSeasonConstructor
 import tmg.flashback.data.models.stats.WinnerSeasonDriver
-import tmg.flashback.firebase.base.ConverterUtils.fromDateRequired
 import tmg.flashback.firebase.models.FHistorySeason
 import tmg.flashback.firebase.models.FHistorySeasonRound
 import tmg.flashback.firebase.models.FHistorySeasonWin
 import tmg.flashback.firebase.models.FHistorySeasonWinConstructor
 import tmg.flashback.firebase.models.FHistorySeasonWinDriver
+import tmg.utilities.utils.LocalDateUtils.requireFromDate
 
 class HistoryMapper(
     // TODO: Move this to DI from Flashback module and build config field
@@ -52,7 +52,7 @@ class HistoryMapper(
 
     fun mapHistoryRound(input: FHistorySeasonRound): HistoryRound {
         return HistoryRound(
-            date = fromDateRequired(input.date),
+            date = requireFromDate(input.date),
             season = input.s,
             round = input.r,
             circuitId = input.circuitId,

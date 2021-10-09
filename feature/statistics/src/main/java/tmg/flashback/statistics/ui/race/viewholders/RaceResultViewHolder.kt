@@ -13,9 +13,9 @@ import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.statistics.ui.util.position
 import tmg.utilities.extensions.toEmptyIfZero
 import tmg.utilities.extensions.views.*
-import tmg.utilities.utils.ColorUtils.Companion.darken
 import kotlin.math.abs
 import tmg.flashback.firebase.extensions.pointsDisplay
+import tmg.utilities.utils.ColorUtils.darken
 
 class RaceResultViewHolder(
         val driverClicked: (driverId: String, driverName: String) -> Unit,

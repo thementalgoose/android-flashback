@@ -1,12 +1,9 @@
 package tmg.flashback.firebase.mappers
 
-import tmg.crash_reporting.controllers.CrashController
 import tmg.flashback.data.models.stats.Constructor
 import tmg.flashback.data.models.stats.Driver
 import tmg.flashback.data.models.stats.Round
 import tmg.flashback.data.models.stats.Season
-import tmg.flashback.firebase.base.ConverterUtils.fromDateRequired
-import tmg.flashback.firebase.base.ConverterUtils.fromTime
 import tmg.flashback.firebase.mappers.seasonoverview.SeasonOverviewConstructorMapper
 import tmg.flashback.firebase.mappers.seasonoverview.SeasonOverviewDriverMapper
 import tmg.flashback.firebase.mappers.seasonoverview.SeasonOverviewRaceMapper
@@ -16,6 +13,8 @@ import tmg.flashback.firebase.mappers.seasonoverview.SeasonOverviewRaceMapper.Qu
 import tmg.flashback.firebase.mappers.seasonoverview.SeasonOverviewStandingsMapper
 import tmg.flashback.firebase.models.FRound
 import tmg.flashback.firebase.models.FSeason
+import tmg.utilities.utils.LocalDateUtils.requireFromDate
+import tmg.utilities.utils.LocalTimeUtils.fromTime
 
 class SeasonOverviewMapper(
     private val raceMapper: SeasonOverviewRaceMapper,
@@ -52,7 +51,7 @@ class SeasonOverviewMapper(
         return Round(
             season = input.season,
             round = input.round,
-            date = fromDateRequired(input.date),
+            date = requireFromDate(input.date),
             time = fromTime(input.time),
             name = input.name,
             wikipediaUrl = input.wiki,

@@ -26,13 +26,13 @@ import tmg.core.device.managers.BuildConfigManager
 import tmg.core.ui.navigation.NavigationProvider
 import tmg.flashback.formula1.enums.TrackLayout
 import tmg.crash_reporting.controllers.CrashController
-import tmg.flashback.upnext.utils.daysBetween
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.upnext.R
 import tmg.flashback.upnext.controllers.UpNextController
 import tmg.flashback.upnext.repository.model.UpNextSchedule
 import tmg.utilities.extensions.toEnum
 import java.lang.Exception
+import tmg.utilities.utils.LocalDateUtils.daysBetween
 
 @KoinApiExtension
 class UpNextWidgetProvider : AppWidgetProvider(), KoinComponent {
