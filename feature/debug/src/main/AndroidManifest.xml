@@ -1,0 +1,11 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="tmg.flashback.debug">
+
+    <application>
+
+        <activity android:name=".DebugActivity"
+            android:exported="false" />
+
+    </application>
+
+</manifest>
