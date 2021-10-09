@@ -15,7 +15,7 @@ import tmg.utilities.extensions.toEmptyIfZero
 import tmg.utilities.extensions.views.*
 import kotlin.math.abs
 import tmg.flashback.firebase.extensions.pointsDisplay
-import tmg.utilities.utils.ColorUtils.darken
+import tmg.utilities.utils.ColorUtils.Companion.darken
 
 class RaceResultViewHolder(
         val driverClicked: (driverId: String, driverName: String) -> Unit,

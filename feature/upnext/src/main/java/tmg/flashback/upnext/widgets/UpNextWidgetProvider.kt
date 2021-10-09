@@ -32,7 +32,7 @@ import tmg.flashback.upnext.controllers.UpNextController
 import tmg.flashback.upnext.repository.model.UpNextSchedule
 import tmg.utilities.extensions.toEnum
 import java.lang.Exception
-import tmg.utilities.utils.LocalDateUtils.daysBetween
+import tmg.utilities.utils.LocalDateUtils.Companion.daysBetween
 
 @KoinApiExtension
 class UpNextWidgetProvider : AppWidgetProvider(), KoinComponent {

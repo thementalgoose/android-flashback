@@ -7,9 +7,9 @@ import tmg.flashback.data.models.stats.CircuitRace
 import tmg.flashback.data.models.stats.Location
 import tmg.flashback.firebase.models.FCircuit
 import tmg.flashback.firebase.models.FCircuitResult
-import tmg.utilities.utils.LocalDateUtils.isDateValid
-import tmg.utilities.utils.LocalDateUtils.requireFromDate
-import tmg.utilities.utils.LocalTimeUtils.fromTime
+import tmg.utilities.utils.LocalDateUtils.Companion.isDateValid
+import tmg.utilities.utils.LocalDateUtils.Companion.requireFromDate
+import tmg.utilities.utils.LocalTimeUtils.Companion.fromTime
 
 class CircuitMapper(
     private val crashController: CrashController,

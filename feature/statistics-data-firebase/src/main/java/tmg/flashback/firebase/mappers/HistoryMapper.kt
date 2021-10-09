@@ -12,7 +12,7 @@ import tmg.flashback.firebase.models.FHistorySeasonRound
 import tmg.flashback.firebase.models.FHistorySeasonWin
 import tmg.flashback.firebase.models.FHistorySeasonWinConstructor
 import tmg.flashback.firebase.models.FHistorySeasonWinDriver
-import tmg.utilities.utils.LocalDateUtils.requireFromDate
+import tmg.utilities.utils.LocalDateUtils.Companion.requireFromDate
 
 class HistoryMapper(
     // TODO: Move this to DI from Flashback module and build config field

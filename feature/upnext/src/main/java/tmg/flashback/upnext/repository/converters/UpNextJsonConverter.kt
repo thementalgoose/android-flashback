@@ -6,8 +6,8 @@ import tmg.flashback.upnext.repository.json.UpNextJson
 import tmg.flashback.upnext.repository.json.UpNextScheduleJson
 import tmg.flashback.upnext.repository.model.UpNextSchedule
 import tmg.flashback.upnext.repository.model.UpNextScheduleTimestamp
-import tmg.utilities.utils.LocalDateUtils.requireFromDate
-import tmg.utilities.utils.LocalTimeUtils.fromTime
+import tmg.utilities.utils.LocalDateUtils.Companion.requireFromDate
+import tmg.utilities.utils.LocalTimeUtils.Companion.fromTime
 
 fun UpNextJson.convert(): List<UpNextSchedule> {
     if (schedule == null) {

@@ -18,7 +18,7 @@ import tmg.flashback.statistics.ui.race.RaceActivity
 import tmg.flashback.statistics.ui.race.RaceData
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
-import tmg.utilities.utils.ClipboardUtils.copyToClipboard
+import tmg.utilities.utils.ClipboardUtils.Companion.copyToClipboard
 
 class CircuitInfoFragment: BaseFragment<FragmentCircuitInfoBinding>() {
 

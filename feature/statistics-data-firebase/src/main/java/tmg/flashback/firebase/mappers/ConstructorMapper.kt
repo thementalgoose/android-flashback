@@ -12,7 +12,7 @@ import tmg.flashback.firebase.models.FConstructorOverviewData
 import tmg.flashback.firebase.models.FConstructorOverviewDrivers
 import tmg.flashback.firebase.models.FConstructorOverviewStandings
 import tmg.flashback.firebase.models.FConstructorOverviewStandingsDriver
-import tmg.utilities.utils.LocalDateUtils.requireFromDate
+import tmg.utilities.utils.LocalDateUtils.Companion.requireFromDate
 
 class ConstructorMapper {
 

@@ -13,7 +13,7 @@ import tmg.flashback.upnext.repository.model.UpNextScheduleTimestamp
 import tmg.flashback.upnext.ui.timezone.TimezoneItem
 import tmg.flashback.upnext.utils.NotificationUtils
 import tmg.utilities.extensions.ordinalAbbreviation
-import tmg.utilities.utils.LocalDateUtils.daysBetween
+import tmg.utilities.utils.LocalDateUtils.Companion.daysBetween
 
 //region Inputs
 
