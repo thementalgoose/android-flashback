@@ -25,6 +25,7 @@
             <option value="$PROJECT_DIR$/core/ui" />
             <option value="$PROJECT_DIR$/feature" />
             <option value="$PROJECT_DIR$/feature/common" />
+            <option value="$PROJECT_DIR$/feature/debug" />
             <option value="$PROJECT_DIR$/feature/formula1" />
             <option value="$PROJECT_DIR$/feature/rss" />
             <option value="$PROJECT_DIR$/feature/statistics" />

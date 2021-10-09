@@ -107,6 +107,9 @@ dependencies {
     implementation project(path: ":feature:rss")
     implementation project(path: ":feature:common")
 
+    // Debug module
+    debugImplementation project(path: ":feature:debug")
+
     // Core modules
     implementation project(path: ":core:analytics")
     implementation project(path: ":core:configuration")

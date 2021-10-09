@@ -10,6 +10,7 @@ import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.core.ui.base.BaseFragment
 import tmg.core.ui.navigation.NavigationProvider
+import tmg.flashback.DebugController
 import tmg.flashback.databinding.FragmentDashboardListBinding
 import tmg.flashback.rss.ui.RSSActivity
 import tmg.flashback.statistics.R
@@ -23,6 +24,8 @@ class ListFragment: BaseFragment<FragmentDashboardListBinding>() {
     private val viewModel: ListViewModel by viewModel()
 
     private val navigationProvider: NavigationProvider by inject()
+
+    private val debugController: DebugController by inject()
 
     private var adapter: ListAdapter? = null
     private val dashboardNavigationCallback: DashboardNavigationCallback?
@@ -46,6 +49,9 @@ class ListFragment: BaseFragment<FragmentDashboardListBinding>() {
                          "settings" -> viewModel.inputs.clickSettings()
                          "contact" -> viewModel.inputs.clickContact()
                          "up_next_moved" -> dashboardNavigationCallback?.openNow()
+                         "debug_list_item" -> {
+                             context?.let { debugController.goToDebugActivity(it) }
+                         }
                      }
                 }
         )

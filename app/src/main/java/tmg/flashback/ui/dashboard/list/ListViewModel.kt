@@ -3,6 +3,7 @@ package tmg.flashback.ui.dashboard.list
 import androidx.lifecycle.*
 import kotlinx.coroutines.flow.combine
 import androidx.lifecycle.ViewModel
+import tmg.flashback.DebugController
 import tmg.flashback.R
 import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.statistics.controllers.SeasonController
@@ -47,7 +48,8 @@ interface ListViewModelOutputs {
 
 class ListViewModel(
         private val seasonController: SeasonController,
-        private val rssController: RSSController
+        private val rssController: RSSController,
+        private val debugController: DebugController
 ) : ViewModel(), ListViewModelInputs, ListViewModelOutputs {
 
     private var selectionHeaderFavouited: MutableLiveData<Boolean> =
@@ -92,6 +94,9 @@ class ListViewModel(
                     icon = R.drawable.ic_contact
                 )
             )
+            debugController.listItem?.let {
+                add(it)
+            }
         }
         if (buttonsList.isNotEmpty()) {
             list.add(ListItem.Divider)
