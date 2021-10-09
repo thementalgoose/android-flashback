@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/Text.Toolbar.Expanded"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/paddingMedium"
+            android:paddingTop="@dimen/paddingXLarge"
+            android:paddingEnd="@dimen/paddingMedium"
+            android:paddingBottom="@dimen/paddingMedium"
+            android:text="@string/debug_title" />
+
+        <Button
+            android:id="@+id/sendNotification"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/paddingMedium"
+            android:layout_marginEnd="@dimen/paddingMedium"
+            android:text="@string/debug_notification_send_local"
+            android:textAllCaps="false" />
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>
