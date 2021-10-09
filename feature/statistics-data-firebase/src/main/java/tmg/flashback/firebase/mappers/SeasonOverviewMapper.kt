@@ -13,8 +13,8 @@ import tmg.flashback.firebase.mappers.seasonoverview.SeasonOverviewRaceMapper.Qu
 import tmg.flashback.firebase.mappers.seasonoverview.SeasonOverviewStandingsMapper
 import tmg.flashback.firebase.models.FRound
 import tmg.flashback.firebase.models.FSeason
-import tmg.utilities.utils.LocalDateUtils.requireFromDate
-import tmg.utilities.utils.LocalTimeUtils.fromTime
+import tmg.utilities.utils.LocalDateUtils.Companion.requireFromDate
+import tmg.utilities.utils.LocalTimeUtils.Companion.fromTime
 
 class SeasonOverviewMapper(
     private val raceMapper: SeasonOverviewRaceMapper,

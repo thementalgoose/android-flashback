@@ -9,8 +9,8 @@ import tmg.flashback.data.models.stats.SearchDriver
 import tmg.flashback.firebase.models.FSearchCircuitModel
 import tmg.flashback.firebase.models.FSearchConstructorModel
 import tmg.flashback.firebase.models.FSearchDriverModel
-import tmg.utilities.utils.LocalDateUtils.isDateValid
-import tmg.utilities.utils.LocalDateUtils.requireFromDate
+import tmg.utilities.utils.LocalDateUtils.Companion.isDateValid
+import tmg.utilities.utils.LocalDateUtils.Companion.requireFromDate
 
 class SearchMapper(
     private val crashController: CrashController,

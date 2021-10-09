@@ -17,7 +17,7 @@ import tmg.utilities.extensions.views.context
 import tmg.utilities.extensions.views.getString
 import tmg.utilities.extensions.views.gone
 import tmg.utilities.extensions.views.visible
-import tmg.utilities.utils.ColorUtils.darken
+import tmg.utilities.utils.ColorUtils.Companion.darken
 
 class RaceSprintQualifyingViewHolder(
     val driverClicked: (driverId: String, driverName: String) -> Unit,

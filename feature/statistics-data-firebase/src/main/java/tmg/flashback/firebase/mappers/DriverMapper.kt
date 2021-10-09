@@ -10,7 +10,7 @@ import tmg.flashback.firebase.models.FDriverOverview
 import tmg.flashback.firebase.models.FDriverOverviewStanding
 import tmg.flashback.firebase.models.FDriverOverviewStandingConstructor
 import tmg.flashback.firebase.models.FDriverOverviewStandingHistory
-import tmg.utilities.utils.LocalDateUtils.requireFromDate
+import tmg.utilities.utils.LocalDateUtils.Companion.requireFromDate
 
 class DriverMapper {
 
