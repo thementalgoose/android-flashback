@@ -2,7 +2,7 @@
     package="tmg.flashback.statistics">
 
     <application>
-        
+
         <activity
             android:name=".ui.race.RaceActivity"
             android:label=""
