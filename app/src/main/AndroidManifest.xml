@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+
     <application
         android:name=".FlashbackApplication"
         android:allowBackup="true"
@@ -32,55 +33,24 @@
             android:exported="true"
             android:theme="@style/Launcher"
             android:label="@string/app_name">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
 
         <activity android:name=".ui.SyncActivity"
+            android:exported="false"
             android:label="" />
-
-        <activity
-            android:name=".statistics.ui.race.RaceActivity"
-            android:label=""
-            android:theme="@style/Translucent" />
-
-        <activity
-            android:name=".statistics.ui.search.SearchActivity"
-            android:label=""
-            android:theme="@style/Translucent" />
-
-        <activity
-            android:name=".statistics.ui.circuit.CircuitInfoActivity"
-            android:label=""
-            android:theme="@style/Translucent" />
 
         <activity
             android:name=".ui.settings.SettingsAllActivity"
             android:label=""
-            android:theme="@style/Translucent" />
-
-        <activity
-            android:name=".statistics.ui.overview.driver.DriverActivity"
-            android:label=""
-            android:theme="@style/Translucent" />
-
-        <activity
-            android:name=".statistics.ui.overview.driver.season.DriverSeasonActivity"
-            android:label=""
-            android:theme="@style/Translucent" />
-
-        <activity
-            android:name=".statistics.ui.overview.constructor.ConstructorActivity"
-            android:label=""
-            android:theme="@style/Translucent" />
-
-        <activity
-            android:name=".statistics.ui.admin.maintenance.MaintenanceActivity"
-            android:label=""
             android:exported="false"
             android:theme="@style/Translucent" />
+
 
         <activity
             android:name="tmg.aboutthisapp.AboutThisAppActivity"
