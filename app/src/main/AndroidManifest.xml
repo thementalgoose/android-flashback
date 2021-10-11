@@ -4,7 +4,6 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
     <application
         android:name=".FlashbackApplication"
         android:allowBackup="true"
@@ -117,20 +116,6 @@
             android:exported="false"
             android:label=""
             android:theme="@style/Translucent" />
-
-        <!-- Widgets -->
-
-        <receiver
-            android:name=".upnext.widgets.UpNextWidgetProvider"
-            android:label="@string/widget_up_next_title"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-            </intent-filter>
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/widget_up_next" />
-        </receiver>
 
     </application>
 
