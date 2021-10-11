@@ -88,18 +88,6 @@
             android:exported="false"
             android:theme="@style/Translucent" />
 
-        <activity
-            android:name=".rss.ui.RSSActivity"
-            android:exported="false"
-            android:label=""
-            android:theme="@style/Translucent" />
-
-        <activity
-            android:name=".rss.ui.settings.RSSSettingsActivity"
-            android:exported="false"
-            android:label=""
-            android:theme="@style/Translucent" />
-
         <!-- Widgets -->
 
         <receiver
