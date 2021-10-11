@@ -57,20 +57,8 @@
             android:theme="@style/Translucent" />
 
         <activity
-            android:name="tmg.common.ui.releasenotes.ReleaseActivity"
-            android:label=""
-            android:exported="false"
-            android:theme="@style/Translucent" />
-
-        <activity
             android:name=".ui.settings.SettingsAllActivity"
             android:label=""
-            android:theme="@style/Translucent" />
-
-        <activity
-            android:name="tmg.common.ui.privacypolicy.PrivacyPolicyActivity"
-            android:label=""
-            android:exported="false"
             android:theme="@style/Translucent" />
 
         <activity
@@ -90,12 +78,6 @@
 
         <activity
             android:name=".statistics.ui.admin.maintenance.MaintenanceActivity"
-            android:label=""
-            android:exported="false"
-            android:theme="@style/Translucent" />
-
-        <activity
-            android:name="tmg.common.ui.forceupgrade.ForceUpgradeActivity"
             android:label=""
             android:exported="false"
             android:theme="@style/Translucent" />
