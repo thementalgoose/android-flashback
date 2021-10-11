@@ -563,5 +563,15 @@
       "Updates notification banners to be more descriptive",
       "Minor updates to settings ordering and wording"
     ]
+  },
+  {
+    "versionCode": 106,
+    "versionName": "6.5.4",
+    "isMajor": false,
+    "title": "",
+    "notes": [
+      "Adds sound and priority to notifications",
+      "Minor behind the scenes refactoring"
+    ]
   }
 ]
