@@ -1,0 +1,23 @@
+package tmg.flashback.upnext.receivers
+
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.util.Log
+import org.koin.core.component.KoinApiExtension
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
+import tmg.flashback.upnext.controllers.UpNextController
+
+@KoinApiExtension
+class UpNextNotificationBootReceiver: BroadcastReceiver(), KoinComponent {
+
+    private val upNextController: UpNextController by inject()
+
+    override fun onReceive(context: Context?, intent: Intent?) {
+
+        // Reschedule notifications
+        Log.i("Flashback", "Rescheduling notifications for upcoming events")
+        upNextController.scheduleNotifications(true)
+    }
+}
