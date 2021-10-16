@@ -5,6 +5,7 @@ import org.threeten.bp.format.DateTimeFormatter
 import tmg.crash_reporting.services.CrashService
 import tmg.crash_reporting.repository.CrashRepository
 import java.lang.Exception
+import java.util.*
 
 class CrashController(
     private val crashRepository: CrashRepository,
@@ -31,7 +32,7 @@ class CrashController(
             enableCrashReporting = crashRepository.isEnabled,
             deviceUdid = deviceUdid, // deviceRepository.deviceUdid,
             appOpenedCount = appOpenedCount, // deviceRepository.appOpenedCount,
-            appFirstOpened = appFirstOpened.format(DateTimeFormatter.ofPattern("dd MMM yyyy")) // // deviceRepository.appFirstOpened
+            appFirstOpened = appFirstOpened.format(DateTimeFormatter.ofPattern("dd MMM yyyy", Locale.UK)) // // deviceRepository.appFirstOpened
         )
     }
 
