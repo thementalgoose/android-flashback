@@ -31,7 +31,6 @@ interface RaceViewModelInputs {
     fun goToDriver(driverId: String, driverName: String)
     fun goToConstructor(constructorId: String, constructorName: String)
     fun toggleQualifyingDelta(toNewState: Boolean)
-    fun clickWikipedia()
 }
 
 //endregion
@@ -39,18 +38,11 @@ interface RaceViewModelInputs {
 //region Outputs
 
 interface RaceViewModelOutputs {
-    val circuitInfo: LiveData<Round>
     val raceItems: LiveData<Triple<RaceAdapterType, List<RaceModel>, SeasonRound>>
-    val seasonRoundData: LiveData<SeasonRound>
     val goToDriverOverview: LiveData<DataEvent<Pair<String, String>>>
     val goToConstructorOverview: LiveData<DataEvent<Pair<String, String>>>
 
     val showSprintQualifying: LiveData<Boolean>
-
-    val showAppHintLongPress: LiveData<Event>
-
-    val showLinks: LiveData<Boolean>
-    val goToWikipedia: LiveData<DataEvent<String>>
 }
 
 //endregion
@@ -65,7 +57,6 @@ class RaceViewModel(
     var inputs: RaceViewModelInputs = this
     var outputs: RaceViewModelOutputs = this
 
-    private var wikipedia: String? = null
     private var roundDate: LocalDate? = null
     private var toggleQualifyingDelta: Boolean? = null
     private val seasonRound: ConflatedBroadcastChannel<SeasonRound> = ConflatedBroadcastChannel()
@@ -78,23 +69,12 @@ class RaceViewModel(
 
     override val goToDriverOverview: MutableLiveData<DataEvent<Pair<String, String>>> = MutableLiveData()
     override val goToConstructorOverview: MutableLiveData<DataEvent<Pair<String, String>>> = MutableLiveData()
-    override val showAppHintLongPress: MutableLiveData<Event> = MutableLiveData()
-    override val showLinks: MutableLiveData<Boolean> = MutableLiveData(false)
-    override val goToWikipedia: MutableLiveData<DataEvent<String>> = MutableLiveData()
     override val showSprintQualifying: MutableLiveData<Boolean> = MutableLiveData(false)
 
     private val seasonRoundFlow: Flow<Round?> = seasonRound
         .asFlow()
         .flatMapLatest { (season, round) -> seasonOverviewRepository.getSeasonRound(season, round) }
         .shareIn(viewModelScope, SharingStarted.Lazily)
-
-    override val seasonRoundData: LiveData<SeasonRound> = seasonRound
-        .asFlow()
-        .asLiveData(viewModelScope.coroutineContext)
-
-    override val circuitInfo: LiveData<Round> = seasonRoundFlow
-        .filterNotNull()
-        .asLiveData(viewModelScope.coroutineContext)
 
     override val raceItems: LiveData<Triple<RaceAdapterType, List<RaceModel>, SeasonRound>> = seasonRoundFlow
             .combineTriple(viewTypeFlow, seasonRound.asFlow())
@@ -115,20 +95,28 @@ class RaceViewModel(
                     return@map Triple(viewType, list, seasonRoundValue)
                 }
 
-                wikipedia = roundData.wikipediaUrl
-                showLinks.value = wikipedia != null
-
                 showSprintQualifying.value = roundData.hasSprintQualifying
 
                 // Constructor standings, models are constructors
                 if (viewType == RaceAdapterType.CONSTRUCTOR_STANDINGS) {
-                    val list: List<RaceModel.ConstructorStandings> = roundData
-                        .constructorStandings
-                        .map {
-                            val drivers: List<Pair<ConstructorDriver, Double>> = getDriverFromConstructor(roundData, it.constructor.id)
-                            RaceModel.ConstructorStandings(it.constructor, it.points, drivers, themeController.animationSpeed)
-                        }
-                        .sortedByDescending { it.points }
+                    val list: List<RaceModel> = mutableListOf<RaceModel>().apply {
+                        add(getRaceOverview(roundData))
+                        addAll(roundData
+                            .constructorStandings
+                            .map {
+                                val drivers: List<Pair<ConstructorDriver, Double>> =
+                                    getDriverFromConstructor(roundData, it.constructor.id)
+                                RaceModel.ConstructorStandings(
+                                    it.constructor,
+                                    it.points,
+                                    drivers,
+                                    themeController.animationSpeed
+                                )
+                            }
+                            .sortedByDescending {
+                                it.points
+                            })
+                    }
 
                     return@map Triple(
                         viewType,
@@ -139,7 +127,7 @@ class RaceViewModel(
                 // Race or qualifying - Models are driver models
                 else {
                     val driverIds: List<String> = getOrderedDriverIds(roundData, viewType)
-                    val list: MutableList<RaceModel> = mutableListOf()
+                    val list: MutableList<RaceModel> = mutableListOf(getRaceOverview(roundData))
                     val showQualifying = DisplayPrefs(
                         q1 = roundData.q1.count { it.value.time != null } > 0,
                         q2 = roundData.q2.count { it.value.time != null } > 0,
@@ -188,9 +176,6 @@ class RaceViewModel(
                             list.addAll(driverIds.mapIndexed { _, driverId ->
                                 getDriverModel(roundData, viewType, driverId, showQualifying)
                             })
-                            if (driverIds.isNotEmpty()) {
-                                appHintNotifyQualifying()
-                            }
                         }
                         else -> throw Error("Unsupported view type")
                     }
@@ -225,10 +210,6 @@ class RaceViewModel(
         goToConstructorOverview.value = DataEvent(Pair(constructorId, constructorName))
     }
 
-    override fun clickWikipedia() {
-        goToWikipedia.postValue(DataEvent(wikipedia ?: ""))
-    }
-
     override fun toggleQualifyingDelta(toNewState: Boolean) {
         toggleQualifyingDelta = toNewState
         viewTypeRefresh.offer(UUID.randomUUID().toString())
@@ -236,23 +217,26 @@ class RaceViewModel(
 
     //endregion
 
-    /**
-     * Check if we need to notify the user for the long click qualifying delta seasons!
-     */
-    private fun appHintNotifyQualifying() {
-
-//        if (appHintsController.showQualifyingLongPress) {
-//            appHintsController.showQualifyingLongPress = true
-//            showAppHintLongPress.value = Event()
-//        }
-    }
-
     private fun getDriverFromConstructor(round: Round, constructorId: String): List<Pair<ConstructorDriver, Double>> {
         return round
             .drivers
             .filter { it.constructor.id == constructorId }
             .map { Pair(it, round.race[it.id]?.points ?: 0.0) }
             .sortedByDescending { it.second }
+    }
+
+    private fun getRaceOverview(roundData: Round): RaceModel.Overview {
+        return RaceModel.Overview(
+            raceName = roundData.name,
+            country = roundData.circuit.country,
+            countryISO = roundData.circuit.countryISO,
+            circuitId = roundData.circuit.id,
+            circuitName = roundData.circuit.name,
+            round = roundData.round,
+            season = roundData.season,
+            raceDate = roundData.date,
+            wikipedia = roundData.wikipediaUrl
+        )
     }
 
     /**

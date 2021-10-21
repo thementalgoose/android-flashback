@@ -8,6 +8,7 @@ import org.koin.core.component.KoinApiExtension
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.*
 import tmg.flashback.statistics.ui.race.viewholders.*
+import tmg.flashback.statistics.ui.shared.pill.PillItem
 import tmg.flashback.statistics.ui.shared.sync.SyncAdapter
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 
@@ -22,6 +23,8 @@ class RaceAdapter(
     override var list: List<RaceModel> = listOf(RaceModel.Loading)
 
     override fun dataProvidedItem(syncDataItem: SyncDataItem) = RaceModel.ErrorItem(syncDataItem)
+
+    override val providedByAtTopIndex: Int = 1
 
     fun update(type: RaceAdapterType, list: List<RaceModel>) {
         val sourceList = list.addDataProvidedByItem()
@@ -41,6 +44,10 @@ class RaceAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         return when (viewType) {
+            R.layout.view_race_overview -> OverviewViewHolder(
+                callback::pillClicked,
+                ViewRaceOverviewBinding.inflate(layoutInflater, parent, false)
+            )
             R.layout.view_race_race_podium -> RacePodiumViewHolder(
                 callback::driverClicked,
                 ViewRaceRacePodiumBinding.inflate(layoutInflater, parent, false)
@@ -84,6 +91,7 @@ class RaceAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (val item = list[position]) {
+            is RaceModel.Overview -> (holder as OverviewViewHolder).bind(item)
             is RaceModel.Podium -> (holder as RacePodiumViewHolder).bind(item.driverFirst, item.driverSecond, item.driverThird)
             is RaceModel.Single -> {
                 when (viewType) {
@@ -116,13 +124,15 @@ class RaceAdapter(
         private val newType: RaceAdapterType
     ) : DiffUtil.Callback() {
 
-        override fun areItemsTheSame(old: Int, new: Int): Boolean = oldList[old] == newList[new]
+        override fun areItemsTheSame(old: Int, new: Int): Boolean = oldList[old] == newList[new] || isOverview(oldList[old], newList[new])
 
         override fun getOldListSize(): Int = oldList.size
 
         override fun getNewListSize(): Int = newList.size
 
-        override fun areContentsTheSame(o: Int, n: Int): Boolean = areItemsTheSame(o, n) && oldType == newType
+        override fun areContentsTheSame(o: Int, n: Int): Boolean = areItemsTheSame(o, n) && oldType == newType && !isOverview(oldList[o], newList[n])
+
+        private fun isOverview(old: RaceModel, new: RaceModel) = old is RaceModel.Overview && new is RaceModel.Overview
     }
 
     //endregion
@@ -133,4 +143,5 @@ interface RaceAdapterCallback {
     fun driverClicked(driverId: String, driverName: String)
     fun constructorClicked(constructorId: String, constructorName: String)
     fun toggleQualifyingDeltas(toNewState: Boolean)
+    fun pillClicked(pillItem: PillItem)
 }

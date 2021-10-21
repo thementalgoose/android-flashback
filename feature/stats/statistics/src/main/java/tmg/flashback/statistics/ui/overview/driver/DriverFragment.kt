@@ -14,6 +14,7 @@ import tmg.flashback.statistics.ui.overview.driver.season.DriverSeasonActivity
 import tmg.flashback.statistics.ui.overview.driver.summary.DriverSummaryAdapter
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
+import tmg.utilities.extensions.viewUrl
 
 class DriverFragment: BaseFragment<FragmentDriverBinding>() {
 
@@ -70,8 +71,7 @@ class DriverFragment: BaseFragment<FragmentDriverBinding>() {
         }
 
         observeEvent(viewModel.outputs.openUrl) {
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(it))
-            startActivity(intent)
+            viewUrl(it)
         }
     }
 

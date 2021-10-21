@@ -12,11 +12,14 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import org.koin.android.ext.android.inject
 import tmg.core.analytics.manager.AnalyticsManager
+import tmg.crash_reporting.controllers.CrashController
 import tmg.flashback.rss.R
 import tmg.flashback.rss.databinding.FragmentWebBinding
 import tmg.flashback.rss.repo.RSSRepository
 import tmg.utilities.extensions.getColor
+import tmg.utilities.extensions.viewUrl
 import tmg.utilities.extensions.views.show
+import java.lang.NullPointerException
 import java.lang.RuntimeException
 import java.net.MalformedURLException
 
@@ -29,6 +32,7 @@ class WebFragment : Fragment() {
 
     private val repository: RSSRepository by inject()
     private val analyticsManager: AnalyticsManager by inject()
+    private val crashController: CrashController by inject()
 
     private lateinit var pageTitle: String
     private lateinit var pageUrl: String
@@ -136,15 +140,18 @@ class WebFragment : Fragment() {
     }
 
     private fun openInBrowser() {
-        val intent: Intent = Intent(Intent.ACTION_VIEW, Uri.parse(binding!!.webview.url))
-        startActivity(Intent.createChooser(intent, getString(R.string.choose_browser)))
+        binding?.webview?.url?.let {
+            viewUrl(it)
+        } ?: crashController.logException(NullPointerException("URL cannot be retreived from webview to open in browser"))
     }
 
     private fun share() {
-        val intent: Intent = Intent(Intent.ACTION_SEND)
-        intent.type = "text/plain"
-        intent.putExtra(Intent.EXTRA_TEXT, binding!!.webview.url)
-        startActivity(Intent.createChooser(intent, getString(R.string.choose_share)))
+        binding?.webview?.url?.let {
+            val intent: Intent = Intent(Intent.ACTION_SEND)
+            intent.type = "text/plain"
+            intent.putExtra(Intent.EXTRA_TEXT, it)
+            startActivity(Intent.createChooser(intent, getString(R.string.choose_share)))
+        } ?: crashController.logException(NullPointerException("URL cannot be retreived from webview to share"))
     }
 
     override fun onPause() {
