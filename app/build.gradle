@@ -100,8 +100,8 @@ tasks.whenTaskAdded { task ->
 dependencies {
 
     // Feature modules
-    implementation project(path: ":feature:statistics")
-    implementation project(path: ":feature:statistics-data-firebase")
+    implementation project(path: ":feature:stats:statistics")
+    implementation project(path: ":feature:stats:data-firestore")
     implementation project(path: ":feature:formula1")
     implementation project(path: ":feature:upnext")
     implementation project(path: ":feature:rss")
