@@ -39,9 +39,9 @@ jobs:
           echo "::set-output name=feature_common::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                     | grep -E '^feature/common/' -c)"
           echo "::set-output name=feature_formula1::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                   | grep -E '^feature/formula1/' -c)"
           echo "::set-output name=feature_rss::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                        | grep -E '^feature/rss/' -c)"
-          echo "::set-output name=feature_statistics::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                 | grep -E '^feature/statistics/' -c)"
-          echo "::set-output name=feature_statistics_data::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}            | grep -E '^feature/statistics-data/' -c)"
-          echo "::set-output name=feature_statistics_data_firebase::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}   | grep -E '^feature/statistics-data-firebase/' -c)"
+          echo "::set-output name=feature_statistics::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                 | grep -E '^feature/stats/statistics/' -c)"
+          echo "::set-output name=feature_statistics_data::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}            | grep -E '^feature/stats/data/' -c)"
+          echo "::set-output name=feature_statistics_data_firebase::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}   | grep -E '^feature/stats/data-firestore/' -c)"
           echo "::set-output name=feature_upnext::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                     | grep -E '^feature/upnext/' -c)"
           echo "::set-output name=core_ads::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                           | grep -E '^core/ads/' -c)"
           echo "::set-output name=core_analytics::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                     | grep -E '^core/analytics/' -c)"
@@ -110,16 +110,16 @@ jobs:
         run: ./gradlew :feature:rss:testDebugUnitTest
         if: ${{ needs.unit_test_diff_check.outputs.feature_rss == 'true' }}
 
-      - name: :feature:statistics
-        run: ./gradlew :feature:statistics:testDebugUnitTest
+      - name: :feature:stats:statistics
+        run: ./gradlew :feature:stats:statistics:testDebugUnitTest
         if: ${{ needs.unit_test_diff_check.outputs.feature_statistics == 'true' }}
 
-      - name: :feature:statistics-data
-        run: ./gradlew :feature:statistics-data:testDebugUnitTest
+      - name: :feature:stats:data
+        run: ./gradlew :feature:stats:data:testDebugUnitTest
         if: ${{ needs.unit_test_diff_check.outputs.feature_statistics_data == 'true' }}
 
-      - name: :feature:statistics-data-firebase
-        run: ./gradlew :feature:statistics-data-firebase:testDebugUnitTest
+      - name: :feature:stats:data-firestore
+        run: ./gradlew :feature:stats:data-firestore:testDebugUnitTest
         if: ${{ needs.unit_test_diff_check.outputs.feature_statistics_data_firebase == 'true' }}
 
       - name: :feature:upnext

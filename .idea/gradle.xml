@@ -32,6 +32,9 @@
             <option value="$PROJECT_DIR$/feature/stats" />
             <option value="$PROJECT_DIR$/feature/stats/data" />
             <option value="$PROJECT_DIR$/feature/stats/data-firestore" />
+            <option value="$PROJECT_DIR$/feature/stats/race" />
+            <option value="$PROJECT_DIR$/feature/stats/search" />
+            <option value="$PROJECT_DIR$/feature/stats/season" />
             <option value="$PROJECT_DIR$/feature/upnext" />
           </set>
         </option>
