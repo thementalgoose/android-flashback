@@ -1,8 +1,10 @@
 package tmg.flashback.debug
 
+import android.content.Intent
 import android.os.Bundle
 import tmg.core.ui.base.BaseActivity
 import tmg.flashback.debug.databinding.ActivityDebugBinding
+import tmg.flashback.debug.styleguide.StyleGuideActivity
 import tmg.notifications.receiver.LocalNotificationBroadcastReceiver
 
 class DebugActivity: BaseActivity() {
@@ -22,6 +24,10 @@ class DebugActivity: BaseActivity() {
                 description = "This is a long description inside the notification"
             )
             sendBroadcast(intent)
+        }
+
+        binding.styleGuide.setOnClickListener {
+            startActivity(Intent(this, StyleGuideActivity::class.java))
         }
     }
 }

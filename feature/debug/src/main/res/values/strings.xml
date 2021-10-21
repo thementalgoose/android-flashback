@@ -5,4 +5,5 @@
     <string name="debug_title">Debug</string>
 
     <string name="debug_notification_send_local">Send notification</string>
+    <string name="debug_style_guide">Style guide</string>
 </resources>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/paddingMedium"
+        android:paddingEnd="@dimen/paddingMedium">
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Display3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Heading 3" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/paddingMedium" />
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Display2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Heading 2" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/paddingMedium" />
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Display1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Heading 1" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/paddingMedium" />
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Title" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/paddingMedium" />
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Body1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Body 1" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/paddingMedium" />
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Body2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Body 2" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/paddingMedium" />
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Caption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Caption" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/paddingMedium" />
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Headline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Headline" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/paddingMedium" />
+
+    </LinearLayout>
+
+</ScrollView>
