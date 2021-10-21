@@ -6,6 +6,9 @@
         <activity android:name=".DebugActivity"
             android:exported="false" />
 
+        <activity android:name=".styleguide.StyleGuideActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>

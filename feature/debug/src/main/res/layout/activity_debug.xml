@@ -27,6 +27,15 @@
             android:text="@string/debug_notification_send_local"
             android:textAllCaps="false" />
 
+        <Button
+            android:id="@+id/styleGuide"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/paddingMedium"
+            android:layout_marginEnd="@dimen/paddingMedium"
+            android:text="@string/debug_style_guide"
+            android:textAllCaps="false" />
+
     </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>
