@@ -3,7 +3,7 @@ rootProject.name = "android-flashback"
 include ':app'
 
 include ':feature:common'
-include ':feature:statistics'
+include ':feature:stats:statistics'
 include ':feature:stats:data-firestore'
 include ':feature:stats:data'
 include ':feature:upnext'
