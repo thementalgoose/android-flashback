@@ -11,12 +11,13 @@
         android:layout_width="match_parent"
         android:layout_height="0dp" />
 
+
     <tmg.core.ui.views.SwipeRefreshMotionLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="?attr/backgroundPrimary"
-        app:layoutDescription="@xml/fragment_constructor_scene"
+        app:layoutDescription="@xml/fragment_race_scene"
         tools:showPaths="true">
 
         <androidx.constraintlayout.widget.Guideline
@@ -71,120 +72,6 @@
             app:layout_constraintTop_toTopOf="@id/toolbarGuideline"
             tools:text="2021" />
 
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/swipeRefresh"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@id/menu"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/titleExpanded">
-
-            <androidx.core.widget.NestedScrollView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="?attr/actionBarSize"
-                android:overScrollMode="@integer/overScrollMode"
-                app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingBottom="@dimen/paddingMedium">
-
-                        <ImageView
-                            android:id="@+id/imgCountry"
-                            android:layout_width="@dimen/raceImageSize"
-                            android:layout_height="@dimen/raceImageSize"
-                            android:layout_marginStart="@dimen/paddingMedium"
-                            app:layout_constraintBottom_toBottomOf="@id/tvDate"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            tools:src="@drawable/au" />
-
-                        <TextView
-                            android:id="@+id/tvCircuitName"
-                            style="@style/Text.Race.Header"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_marginStart="@dimen/paddingMedium"
-                            android:layout_marginEnd="@dimen/paddingMedium"
-                            android:lines="2"
-                            android:minLines="2"
-                            app:layout_constraintEnd_toStartOf="@id/trackLayout"
-                            app:layout_constraintStart_toEndOf="@id/imgCountry"
-                            app:layout_constraintTop_toTopOf="parent"
-                            tools:text="Albert Park Grand Prix Circuit" />
-
-                        <ImageView
-                            android:id="@+id/trackLayout"
-                            android:layout_width="100dp"
-                            android:layout_height="0dp"
-                            android:layout_marginEnd="@dimen/paddingMedium"
-                            app:layout_constraintBottom_toBottomOf="@id/tvDate"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:tint="?attr/contentPrimary"
-                            tools:layout_width="100dp"
-                            tools:src="@drawable/circuit_albert_park" />
-
-                        <TextView
-                            android:id="@+id/tvRoundInfo"
-                            style="@style/Text.Race.Round"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/paddingXSmall"
-                            app:layout_constraintEnd_toEndOf="@id/tvCircuitName"
-                            app:layout_constraintStart_toStartOf="@id/tvCircuitName"
-                            app:layout_constraintTop_toBottomOf="@id/tvCircuitName"
-                            tools:text="2019 » Round 2" />
-
-                        <TextView
-                            android:id="@+id/tvDate"
-                            style="@style/Text.Race.Date"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            app:layout_constraintEnd_toEndOf="@id/tvRoundInfo"
-                            app:layout_constraintStart_toStartOf="@id/tvRoundInfo"
-                            app:layout_constraintTop_toBottomOf="@id/tvRoundInfo"
-                            tools:text="21st January 2020" />
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/links"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/paddingMedium"
-                            android:clipToPadding="false"
-                            android:overScrollMode="@integer/overScrollMode"
-                            android:paddingStart="@dimen/paddingMedium"
-                            android:paddingEnd="@dimen/paddingMedium"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/tvDate"
-                            tools:itemCount="1"
-                            tools:listitem="@layout/view_link_pill" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rvContent"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:nestedScrollingEnabled="false"
-                        android:overScrollMode="@integer/overScrollMode"
-                        tools:listitem="@layout/view_race_qualifying_result" />
-
-                </LinearLayout>
-
-            </androidx.core.widget.NestedScrollView>
-
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/menu"
             android:layout_width="match_parent"
@@ -199,6 +86,26 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:menu="@menu/menu_race" />
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:id="@+id/swipeRefresh"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/titleExpanded">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/dataList"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:clipToPadding="false"
+                android:overScrollMode="@integer/overScrollMode"
+                android:paddingBottom="@dimen/paddingXLarge"
+                tools:listitem="@layout/view_constructor_summary_history" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     </tmg.core.ui.views.SwipeRefreshMotionLayout>
 

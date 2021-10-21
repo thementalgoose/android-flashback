@@ -11,6 +11,7 @@ import tmg.core.ui.base.BaseFragment
 import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
+import tmg.utilities.extensions.viewUrl
 import tmg.utilities.extensions.views.show
 
 class ForceUpgradeFragment: BaseFragment<FragmentLockoutBinding>() {
@@ -46,9 +47,7 @@ class ForceUpgradeFragment: BaseFragment<FragmentLockoutBinding>() {
         }
 
         observeEvent(viewModel.outputs.openLinkEvent) { link ->
-            val intent = Intent(Intent.ACTION_VIEW)
-            intent.data = Uri.parse(link)
-            startActivity(intent)
+            viewUrl(link)
         }
     }
 }

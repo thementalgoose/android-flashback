@@ -17,7 +17,8 @@ sealed class PillItem(
     )
 
     data class Circuit(
-            val circuitId: String? = null
+            val circuitId: String,
+            val circuitName: String
     ): PillItem(
             icon = R.drawable.ic_track_icon,
             label = StringHolder(R.string.circuit_info_circuit)
