@@ -12,6 +12,7 @@ import tmg.core.device.managers.BuildConfigManager
 import tmg.core.ui.navigation.NavigationProvider
 import tmg.core.ui.settings.SettingsFragment
 import tmg.utilities.extensions.observeEvent
+import tmg.utilities.extensions.viewUrl
 
 class SettingsAboutFragment: SettingsFragment<SettingsAboutViewModel>() {
 
@@ -45,8 +46,7 @@ class SettingsAboutFragment: SettingsFragment<SettingsAboutViewModel>() {
         }
 
         observeEvent(viewModel.outputs.openReview) {
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=${buildConfigManager.applicationId}"))
-            startActivity(intent)
+            viewUrl("http://play.google.com/store/apps/details?id=${buildConfigManager.applicationId}")
         }
     }
 }

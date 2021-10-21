@@ -14,6 +14,7 @@ import tmg.flashback.statistics.databinding.FragmentConstructorBinding
 import tmg.flashback.statistics.ui.overview.constructor.summary.ConstructorSummaryAdapter
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
+import tmg.utilities.extensions.viewUrl
 
 class ConstructorFragment: BaseFragment<FragmentConstructorBinding>() {
 
@@ -61,7 +62,7 @@ class ConstructorFragment: BaseFragment<FragmentConstructorBinding>() {
         }
 
         observeEvent(viewModel.outputs.openUrl) {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(it)))
+            viewUrl(it)
         }
 
         observeEvent(viewModel.outputs.openSeason) {

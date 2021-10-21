@@ -18,6 +18,7 @@ import tmg.flashback.statistics.ui.race.RaceActivity
 import tmg.flashback.statistics.ui.race.RaceData
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
+import tmg.utilities.extensions.viewUrl
 import tmg.utilities.utils.ClipboardUtils.Companion.copyToClipboard
 
 class CircuitInfoFragment: BaseFragment<FragmentCircuitInfoBinding>() {
@@ -89,10 +90,7 @@ class CircuitInfoFragment: BaseFragment<FragmentCircuitInfoBinding>() {
         }
 
         observeEvent(viewModel.outputs.goToMap) { (mapUri, coordinates) ->
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(mapUri))
-            try {
-                startActivity(intent)
-            } catch (e: ActivityNotFoundException) {
+            if (!viewUrl(mapUri)) {
                 context?.let {
                     copyToClipboard(it, "$circuitName - $coordinates")
                     Toast.makeText(it, getString(R.string.no_app_copy_clipboard), Toast.LENGTH_LONG).show()
@@ -102,8 +100,7 @@ class CircuitInfoFragment: BaseFragment<FragmentCircuitInfoBinding>() {
 
         observeEvent(viewModel.outputs.goToWikipediaPage) {
             if (it.isNotEmpty()) {
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(it))
-                startActivity(intent)
+                viewUrl(it)
             }
         }
 
