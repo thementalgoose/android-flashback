@@ -15,6 +15,7 @@ import tmg.flashback.statistics.databinding.FragmentMaintenanceBinding
 import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
+import tmg.utilities.extensions.viewUrl
 import tmg.utilities.extensions.views.gone
 import tmg.utilities.extensions.views.visible
 
@@ -57,9 +58,7 @@ class MaintenanceFragment: BaseFragment<FragmentMaintenanceBinding>() {
         }
 
         observeEvent(viewModel.outputs.openLinkEvent) { link ->
-            val intent = Intent(Intent.ACTION_VIEW)
-            intent.data = Uri.parse(link)
-            startActivity(intent)
+            viewUrl(link)
         }
 
         observeEvent(viewModel.outputs.returnToHome) {

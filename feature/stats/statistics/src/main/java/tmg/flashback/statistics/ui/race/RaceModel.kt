@@ -1,6 +1,7 @@
 package tmg.flashback.statistics.ui.race
 
 import androidx.annotation.LayoutRes
+import org.threeten.bp.LocalDate
 import tmg.core.ui.model.AnimationSpeed
 import tmg.flashback.data.enums.RaceStatus
 import tmg.flashback.data.models.stats.*
@@ -10,6 +11,18 @@ import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 sealed class RaceModel(
         @LayoutRes val layoutId: Int
 ) {
+    data class Overview(
+        val raceName: String,
+        val country: String,
+        val countryISO: String,
+        val circuitId: String,
+        val circuitName: String,
+        val round: Int,
+        val season: Int,
+        val raceDate: LocalDate?,
+        val wikipedia: String?
+    ) : RaceModel(R.layout.view_race_overview)
+
     data class Podium(
         val driverFirst: Single,
         val driverSecond: Single,

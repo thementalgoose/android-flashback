@@ -15,6 +15,7 @@ import tmg.flashback.rss.repo.RSSRepository
 import tmg.flashback.rss.ui.settings.InitialScreen
 import tmg.flashback.rss.ui.settings.RSSSettingsActivity
 import tmg.utilities.extensions.observe
+import tmg.utilities.extensions.viewUrl
 
 class RSSFragment: BaseFragment<FragmentRssBinding>() {
 
@@ -38,8 +39,7 @@ class RSSFragment: BaseFragment<FragmentRssBinding>() {
             },
             articleClicked = { article, _ ->
                 if (repository.newsOpenInExternalBrowser) {
-                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(article.link))
-                    startActivity(intent)
+                    viewUrl(article.link)
                 } else {
                     val action = RSSFragmentDirections.actionRSSFragmentToWebFragment(
                         title = article.title,
