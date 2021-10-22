@@ -75,6 +75,7 @@ task testModules {
             ':core:device:testDebugUnitTest',
             ':core:notifications:testDebugUnitTest',
             ':core:preferences:testDebugUnitTest',
+            ':core:style:testDebugUnitTest',
             ':core:tutorial:testDebugUnitTest',
             ':core:ui:testDebugUnitTest',
             'clean'
