@@ -9,7 +9,6 @@ import com.jakewharton.threetenabp.AndroidThreeTen
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import tmg.crash_reporting.controllers.CrashController
-import tmg.flashback.ads.controller.AdsController
 import tmg.flashback.device.controllers.DeviceController
 import tmg.flashback.analytics.UserProperty.*
 import tmg.flashback.analytics.manager.AnalyticsManager
@@ -32,8 +31,8 @@ class FlashbackStartup(
     private val widgetManager: WidgetManager,
     private val themeController: ThemeController,
     private val analyticsManager: AnalyticsManager,
-    private val notificationController: NotificationController,
-    private val adsController: AdsController
+    private val notificationController: NotificationController
+//    private val adsController: AdsController
 ) {
     fun startup(application: FlashbackApplication) {
 
@@ -71,7 +70,7 @@ class FlashbackStartup(
         )
 
         // Adverts
-        adsController.initialise(application)
+//        adsController.initialise(application)
 
         // Channels
         GlobalScope.launch {
