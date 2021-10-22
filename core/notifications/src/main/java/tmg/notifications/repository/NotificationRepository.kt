@@ -1,6 +1,6 @@
 package tmg.notifications.repository
 
-import tmg.core.prefs.manager.PreferenceManager
+import tmg.flashback.prefs.manager.PreferenceManager
 import tmg.notifications.NotificationRegistration
 import tmg.utilities.extensions.toEnum
 

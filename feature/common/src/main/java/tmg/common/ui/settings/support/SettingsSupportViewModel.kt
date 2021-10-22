@@ -1,9 +1,9 @@
 package tmg.common.ui.settings.support
 
-import tmg.core.analytics.manager.AnalyticsManager
+import tmg.flashback.analytics.manager.AnalyticsManager
 import tmg.common.R
-import tmg.core.ui.settings.SettingsModel
-import tmg.core.ui.settings.SettingsViewModel
+import tmg.flashback.ui.settings.SettingsModel
+import tmg.flashback.ui.settings.SettingsViewModel
 import tmg.crash_reporting.controllers.CrashController
 
 //region Inputs

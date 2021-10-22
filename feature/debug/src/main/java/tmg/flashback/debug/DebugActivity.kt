@@ -1,7 +1,7 @@
 package tmg.flashback.debug
 
 import android.os.Bundle
-import tmg.core.ui.base.BaseActivity
+import tmg.flashback.ui.base.BaseActivity
 import tmg.flashback.debug.databinding.ActivityDebugBinding
 import tmg.notifications.receiver.LocalNotificationBroadcastReceiver
 

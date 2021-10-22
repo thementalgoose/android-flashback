@@ -9,11 +9,10 @@ import androidx.fragment.app.setFragmentResult
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.common.databinding.FragmentBottomSheetNightModeBinding
-import tmg.common.databinding.FragmentBottomSheetThemeBinding
 import tmg.common.ui.settings.appearance.SettingsAppearanceFragment
-import tmg.core.ui.base.BaseBottomSheetFragment
-import tmg.core.ui.bottomsheet.BottomSheetAdapter
-import tmg.core.ui.model.NightMode
+import tmg.flashback.ui.base.BaseBottomSheetFragment
+import tmg.flashback.ui.bottomsheet.BottomSheetAdapter
+import tmg.flashback.ui.model.NightMode
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 

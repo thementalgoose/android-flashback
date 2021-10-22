@@ -2,8 +2,8 @@ package tmg.flashback.statistics.ui.settings.statistics
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import tmg.core.ui.settings.SettingsModel
-import tmg.core.ui.settings.SettingsViewModel
+import tmg.flashback.ui.settings.SettingsModel
+import tmg.flashback.ui.settings.SettingsViewModel
 import tmg.flashback.statistics.controllers.RaceController
 import tmg.flashback.statistics.controllers.SeasonController
 import tmg.flashback.statistics.R

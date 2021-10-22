@@ -3,7 +3,7 @@ package tmg.flashback.statistics.ui.search
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import tmg.core.ui.base.BaseActivity
+import tmg.flashback.ui.base.BaseActivity
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.ActivitySearchBinding
 import tmg.utilities.extensions.loadFragment

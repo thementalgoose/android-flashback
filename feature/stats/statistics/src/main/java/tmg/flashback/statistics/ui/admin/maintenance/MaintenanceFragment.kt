@@ -1,7 +1,5 @@
 package tmg.flashback.statistics.ui.admin.maintenance
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -9,8 +7,8 @@ import android.view.View
 import androidx.core.app.ActivityCompat.finishAffinity
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
-import tmg.core.ui.base.BaseFragment
-import tmg.core.ui.navigation.NavigationProvider
+import tmg.flashback.ui.base.BaseFragment
+import tmg.flashback.ui.navigation.NavigationProvider
 import tmg.flashback.statistics.databinding.FragmentMaintenanceBinding
 import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.observe

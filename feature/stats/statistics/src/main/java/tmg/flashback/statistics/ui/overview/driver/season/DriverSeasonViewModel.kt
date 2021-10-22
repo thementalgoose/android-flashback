@@ -16,7 +16,7 @@ import androidx.lifecycle.ViewModel
 import tmg.flashback.statistics.ui.overview.driver.summary.PipeType
 import tmg.flashback.data.db.stats.DriverRepository
 import tmg.flashback.data.models.stats.DriverOverviewStanding
-import tmg.core.ui.controllers.ThemeController
+import tmg.flashback.ui.controllers.ThemeController
 import tmg.flashback.firebase.extensions.pointsDisplay
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
@@ -46,7 +46,7 @@ interface DriverSeasonViewModelOutputs {
 @Suppress("EXPERIMENTAL_API_USAGE")
 class DriverSeasonViewModel(
     private val driverRepository: DriverRepository,
-    private val connectivityManager: tmg.core.device.managers.NetworkConnectivityManager,
+    private val connectivityManager: tmg.flashback.device.managers.NetworkConnectivityManager,
     private val themeController: ThemeController
 ) : ViewModel(),
     DriverSeasonViewModelInputs,

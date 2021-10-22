@@ -3,14 +3,13 @@ package tmg.common.ui.settings.appearance
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.FragmentResultListener
-import androidx.fragment.app.setFragmentResultListener
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.common.ui.settings.appearance.animation.AnimationSpeedBottomSheetFragment
 import tmg.common.ui.settings.appearance.nightmode.NightModeBottomSheetFragment
 import tmg.common.ui.settings.appearance.theme.ThemeBottomSheetFragment
-import tmg.core.ui.navigation.NavigationProvider
-import tmg.core.ui.settings.SettingsFragment
+import tmg.flashback.ui.navigation.NavigationProvider
+import tmg.flashback.ui.settings.SettingsFragment
 import tmg.utilities.extensions.observeEvent
 
 class SettingsAppearanceFragment: SettingsFragment<SettingsAppearanceViewModel>(),

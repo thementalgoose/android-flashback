@@ -1,16 +1,15 @@
 package tmg.common.ui.settings.about
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.common.ui.privacypolicy.PrivacyPolicyActivity
 import tmg.common.ui.releasenotes.ReleaseActivity
-import tmg.core.device.managers.BuildConfigManager
-import tmg.core.ui.navigation.NavigationProvider
-import tmg.core.ui.settings.SettingsFragment
+import tmg.flashback.device.managers.BuildConfigManager
+import tmg.flashback.ui.navigation.NavigationProvider
+import tmg.flashback.ui.settings.SettingsFragment
 import tmg.utilities.extensions.observeEvent
 import tmg.utilities.extensions.viewUrl
 

@@ -4,7 +4,7 @@ import androidx.lifecycle.*
 import java.lang.NullPointerException
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.*
-import tmg.core.device.managers.NetworkConnectivityManager
+import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.crash_reporting.controllers.CrashController
 import tmg.flashback.data.db.stats.CircuitRepository
 import tmg.flashback.data.models.stats.Circuit

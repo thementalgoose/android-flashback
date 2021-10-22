@@ -5,9 +5,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kotlin.math.roundToInt
 import tmg.flashback.statistics.R
-import tmg.core.ui.model.AnimationSpeed
+import tmg.flashback.ui.model.AnimationSpeed
 import tmg.flashback.statistics.ui.dashboard.season.SeasonItem
-import tmg.core.ui.extensions.getColor
+import tmg.flashback.ui.extensions.getColor
 import tmg.flashback.firebase.extensions.pointsDisplay
 import tmg.flashback.statistics.databinding.ViewDashboardSeasonDriverBinding
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3

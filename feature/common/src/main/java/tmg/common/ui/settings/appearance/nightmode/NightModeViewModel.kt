@@ -3,11 +3,11 @@ package tmg.common.ui.settings.appearance.nightmode
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import tmg.core.ui.bottomsheet.BottomSheetItem
-import tmg.core.ui.controllers.ThemeController
-import tmg.core.ui.extensions.icon
-import tmg.core.ui.extensions.label
-import tmg.core.ui.model.NightMode
+import tmg.flashback.ui.bottomsheet.BottomSheetItem
+import tmg.flashback.ui.controllers.ThemeController
+import tmg.flashback.ui.extensions.icon
+import tmg.flashback.ui.extensions.label
+import tmg.flashback.ui.model.NightMode
 import tmg.utilities.lifecycle.DataEvent
 import tmg.utilities.models.Selected
 import tmg.utilities.models.StringHolder

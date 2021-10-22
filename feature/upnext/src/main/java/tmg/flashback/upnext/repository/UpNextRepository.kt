@@ -1,7 +1,7 @@
 package tmg.flashback.upnext.repository
 
 import tmg.configuration.manager.ConfigManager
-import tmg.core.prefs.manager.PreferenceManager
+import tmg.flashback.prefs.manager.PreferenceManager
 import tmg.flashback.upnext.model.NotificationReminder
 import tmg.flashback.upnext.repository.converters.convert
 import tmg.flashback.upnext.repository.json.UpNextJson

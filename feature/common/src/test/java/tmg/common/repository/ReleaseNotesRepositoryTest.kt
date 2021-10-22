@@ -5,7 +5,7 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
-import tmg.core.prefs.manager.PreferenceManager
+import tmg.flashback.prefs.manager.PreferenceManager
 
 internal class ReleaseNotesRepositoryTest {
 

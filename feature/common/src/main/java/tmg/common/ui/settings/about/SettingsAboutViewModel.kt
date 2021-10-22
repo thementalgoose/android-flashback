@@ -3,8 +3,8 @@ package tmg.common.ui.settings.about
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import tmg.common.R
-import tmg.core.ui.settings.SettingsModel
-import tmg.core.ui.settings.SettingsViewModel
+import tmg.flashback.ui.settings.SettingsModel
+import tmg.flashback.ui.settings.SettingsViewModel
 import tmg.utilities.lifecycle.Event
 
 //region Inputs

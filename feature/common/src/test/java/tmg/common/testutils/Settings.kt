@@ -2,7 +2,7 @@ package tmg.common.testutils
 
 import androidx.annotation.StringRes
 import org.junit.jupiter.api.Assertions
-import tmg.core.ui.settings.SettingsModel
+import tmg.flashback.ui.settings.SettingsModel
 
 fun List<SettingsModel>.findSwitch(@StringRes title: Int): SettingsModel.SwitchPref {
     return this

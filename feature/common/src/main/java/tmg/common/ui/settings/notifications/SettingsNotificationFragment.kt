@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.provider.Settings
 import android.view.View
 import org.koin.android.viewmodel.ext.android.viewModel
-import tmg.core.ui.settings.SettingsFragment
+import tmg.flashback.ui.settings.SettingsFragment
 import tmg.utilities.extensions.observeEvent
 
 class SettingsNotificationFragment: SettingsFragment<SettingsNotificationViewModel>() {

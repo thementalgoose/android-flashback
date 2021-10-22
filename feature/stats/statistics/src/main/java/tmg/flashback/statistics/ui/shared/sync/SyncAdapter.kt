@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import org.koin.core.component.KoinApiExtension
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import tmg.core.ui.navigation.NavigationProvider
+import tmg.flashback.ui.navigation.NavigationProvider
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.controllers.SeasonController
 import tmg.flashback.statistics.databinding.*

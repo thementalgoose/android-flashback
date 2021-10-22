@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="2020" />
 
-    <tmg.core.ui.views.PassThroughRecyclerView
+    <tmg.flashback.ui.views.PassThroughRecyclerView
         android:id="@+id/constructorList"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

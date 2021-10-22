@@ -1,7 +1,7 @@
 package tmg.flashback.statistics.ui.search.category
 
 import org.junit.jupiter.api.Test
-import tmg.core.ui.bottomsheet.BottomSheetItem
+import tmg.flashback.ui.bottomsheet.BottomSheetItem
 import tmg.flashback.statistics.ui.search.SearchCategory
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertDataEventValue

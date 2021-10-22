@@ -12,11 +12,10 @@ import org.threeten.bp.DayOfWeek
 import org.threeten.bp.LocalDate
 import org.threeten.bp.Month
 import org.threeten.bp.temporal.TemporalAdjusters
-import tmg.core.analytics.manager.AnalyticsManager
-import tmg.core.device.controllers.DeviceController
-import tmg.core.device.managers.NetworkConnectivityManager
-import tmg.core.ui.controllers.ThemeController
-import tmg.core.ui.model.AnimationSpeed
+import tmg.flashback.analytics.manager.AnalyticsManager
+import tmg.flashback.device.managers.NetworkConnectivityManager
+import tmg.flashback.ui.controllers.ThemeController
+import tmg.flashback.ui.model.AnimationSpeed
 import tmg.flashback.data.db.stats.HistoryRepository
 import tmg.flashback.data.db.stats.SeasonOverviewRepository
 import tmg.flashback.data.models.stats.History
@@ -32,8 +31,6 @@ import tmg.testutils.livedata.assertEventFired
 import tmg.testutils.livedata.assertListContainsItem
 import tmg.testutils.livedata.assertListDoesNotMatchItem
 import tmg.testutils.livedata.assertListExcludesItem
-import tmg.testutils.livedata.assertListHasFirstItem
-import tmg.testutils.livedata.assertListHasLastItem
 import tmg.testutils.livedata.assertListHasSublist
 import tmg.testutils.livedata.assertListMatchesItem
 import tmg.testutils.livedata.test

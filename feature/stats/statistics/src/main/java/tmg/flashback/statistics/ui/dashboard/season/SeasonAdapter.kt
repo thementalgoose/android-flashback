@@ -6,8 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import org.koin.core.component.KoinApiExtension
 import org.koin.core.component.inject
-import org.koin.experimental.property.inject
-import tmg.core.ui.controllers.ThemeController
+import tmg.flashback.ui.controllers.ThemeController
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.*
 import tmg.flashback.statistics.ui.dashboard.season.viewholders.*

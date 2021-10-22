@@ -3,7 +3,7 @@ package tmg.flashback.upnext.ui.onboarding
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import tmg.core.ui.bottomsheet.BottomSheetItem
+import tmg.flashback.ui.bottomsheet.BottomSheetItem
 import tmg.flashback.upnext.controllers.UpNextController
 import tmg.flashback.upnext.model.NotificationChannel
 import tmg.utilities.models.Selected

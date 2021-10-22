@@ -6,8 +6,7 @@ import android.view.View
 import org.koin.android.ext.android.inject
 import tmg.common.controllers.ReleaseNotesController
 import tmg.common.databinding.FragmentBottomSheetReleaseNotesBinding
-import tmg.core.ui.base.BaseBottomSheetFragment
-import tmg.utilities.extensions.fromHtml
+import tmg.flashback.ui.base.BaseBottomSheetFragment
 
 class ReleaseBottomSheetFragment: BaseBottomSheetFragment<FragmentBottomSheetReleaseNotesBinding>() {
 

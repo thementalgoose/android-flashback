@@ -7,7 +7,7 @@ import android.view.View
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.common.R
 import tmg.common.databinding.FragmentPrivacyPolicyBinding
-import tmg.core.ui.base.BaseFragment
+import tmg.flashback.ui.base.BaseFragment
 import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.observeEvent
 

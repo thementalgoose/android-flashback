@@ -8,7 +8,6 @@ import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import tmg.core.device.managers.NetworkConnectivityManager
 import tmg.flashback.statistics.ui.overview.driver.summary.DriverSummaryItem
 import tmg.flashback.statistics.ui.overview.driver.summary.PipeType
 import tmg.flashback.statistics.ui.overview.driver.summary.addError
@@ -46,7 +45,7 @@ interface DriverViewModelOutputs {
 @Suppress("EXPERIMENTAL_API_USAGE")
 class DriverViewModel(
         private val driverRepository: DriverRepository,
-        private val connectivityManager: tmg.core.device.managers.NetworkConnectivityManager
+        private val connectivityManager: tmg.flashback.device.managers.NetworkConnectivityManager
 ): ViewModel(), DriverViewModelInputs, DriverViewModelOutputs {
 
     var inputs: DriverViewModelInputs = this

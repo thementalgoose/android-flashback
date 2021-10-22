@@ -1,6 +1,6 @@
 package tmg.configuration.repository
 
-import tmg.core.prefs.manager.PreferenceManager
+import tmg.flashback.prefs.manager.PreferenceManager
 
 class ConfigRepository(
         private val preferenceManager: PreferenceManager

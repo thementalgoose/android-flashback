@@ -1,9 +1,8 @@
 package tmg.flashback.managers
 
-import android.content.Context
-import tmg.core.ui.managers.StyleManager
-import tmg.core.ui.model.NightMode
-import tmg.core.ui.model.Theme
+import tmg.flashback.ui.managers.StyleManager
+import tmg.flashback.ui.model.NightMode
+import tmg.flashback.ui.model.Theme
 import tmg.flashback.R
 
 class AppStyleManager: StyleManager {

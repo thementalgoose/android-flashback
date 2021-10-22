@@ -8,7 +8,6 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
-import tmg.core.device.managers.NetworkConnectivityManager
 import tmg.flashback.statistics.ui.overview.constructor.summary.ConstructorSummaryItem
 import tmg.flashback.statistics.ui.overview.driver.summary.PipeType
 import tmg.flashback.data.db.stats.ConstructorRepository
@@ -32,7 +31,7 @@ internal class ConstructorViewModelTest: BaseTest() {
     lateinit var sut: ConstructorViewModel
 
     private var mockConstructorRepository: ConstructorRepository = mockk(relaxed = true)
-    private var mockConnectivityManager: tmg.core.device.managers.NetworkConnectivityManager = mockk(relaxed = true)
+    private var mockConnectivityManager: tmg.flashback.device.managers.NetworkConnectivityManager = mockk(relaxed = true)
 
     @BeforeEach
     internal fun setUp() {

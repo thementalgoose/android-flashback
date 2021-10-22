@@ -34,7 +34,7 @@ internal class DriverViewModelTest: BaseTest() {
     lateinit var sut: DriverViewModel
 
     private var mockDriverRepository: DriverRepository = mockk()
-    private var mockConnectivityManager: tmg.core.device.managers.NetworkConnectivityManager = mockk()
+    private var mockConnectivityManager: tmg.flashback.device.managers.NetworkConnectivityManager = mockk()
 
     @BeforeEach
     internal fun setUp() {

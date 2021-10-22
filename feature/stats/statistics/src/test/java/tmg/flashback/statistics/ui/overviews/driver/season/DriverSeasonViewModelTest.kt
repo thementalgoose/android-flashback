@@ -5,9 +5,9 @@ import io.mockk.mockk
 import kotlinx.coroutines.flow.flow
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.core.device.managers.NetworkConnectivityManager
-import tmg.core.ui.controllers.ThemeController
-import tmg.core.ui.model.AnimationSpeed
+import tmg.flashback.device.managers.NetworkConnectivityManager
+import tmg.flashback.ui.controllers.ThemeController
+import tmg.flashback.ui.model.AnimationSpeed
 import tmg.flashback.statistics.ui.overview.driver.summary.PipeType.*
 import tmg.flashback.data.db.stats.DriverRepository
 import tmg.flashback.data.models.stats.DriverOverviewRace

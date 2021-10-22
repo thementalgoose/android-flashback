@@ -4,10 +4,9 @@ import android.view.View
 import androidx.annotation.ColorInt
 import androidx.recyclerview.widget.RecyclerView
 import kotlin.math.roundToInt
-import tmg.core.ui.model.AnimationSpeed
-import tmg.flashback.data.models.stats.Driver
+import tmg.flashback.ui.model.AnimationSpeed
 import tmg.flashback.statistics.ui.race.RaceModel
-import tmg.core.ui.extensions.getColor
+import tmg.flashback.ui.extensions.getColor
 import tmg.flashback.data.models.stats.ConstructorDriver
 import tmg.flashback.firebase.extensions.pointsDisplay
 import tmg.flashback.statistics.R

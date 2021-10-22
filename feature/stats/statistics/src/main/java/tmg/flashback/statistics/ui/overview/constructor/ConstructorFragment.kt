@@ -1,15 +1,12 @@
 package tmg.flashback.statistics.ui.overview.constructor
 
-import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.android.viewmodel.ext.android.viewModel
-import tmg.core.ui.base.BaseFragment
+import tmg.flashback.ui.base.BaseFragment
 import tmg.flashback.statistics.databinding.FragmentConstructorBinding
 import tmg.flashback.statistics.ui.overview.constructor.summary.ConstructorSummaryAdapter
 import tmg.utilities.extensions.observe

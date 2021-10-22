@@ -2,9 +2,7 @@ package tmg.flashback.rss.ui.settings.settings
 
 import io.mockk.mockk
 import io.mockk.verify
-import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import tmg.core.ui.settings.SettingsModel
 import tmg.flashback.rss.R
 import tmg.flashback.rss.repo.RSSRepository
 import tmg.flashback.rss.testutils.assertExpectedOrder

@@ -5,15 +5,13 @@ import android.animation.ValueAnimator
 import android.graphics.Color
 import android.view.View
 import android.view.animation.AccelerateInterpolator
-import android.view.animation.AnimationSet
 import android.view.animation.DecelerateInterpolator
 import android.view.animation.Interpolator
 import android.view.animation.LinearInterpolator
 import androidx.core.animation.addListener
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.coroutines.delay
 import org.threeten.bp.LocalDate
-import tmg.core.ui.model.AnimationSpeed
+import tmg.flashback.ui.model.AnimationSpeed
 import tmg.flashback.formula1.enums.TrackLayout
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.statistics.R
@@ -22,7 +20,6 @@ import tmg.flashback.statistics.databinding.ViewDashboardSeasonCalendarWeekBindi
 import tmg.flashback.statistics.ui.dashboard.season.SeasonItem
 import tmg.utilities.extensions.getColor
 import tmg.utilities.extensions.views.context
-import tmg.utilities.extensions.views.gone
 import tmg.utilities.extensions.views.show
 import tmg.utilities.extensions.views.visible
 

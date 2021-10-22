@@ -3,14 +3,12 @@ package tmg.common.ui.settings.support
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.common.R
 import tmg.common.testutils.assertExpectedOrder
 import tmg.common.testutils.findSwitch
-import tmg.core.analytics.manager.AnalyticsManager
-import tmg.core.ui.settings.SettingsModel
+import tmg.flashback.analytics.manager.AnalyticsManager
 import tmg.crash_reporting.controllers.CrashController
 import tmg.testutils.BaseTest
 

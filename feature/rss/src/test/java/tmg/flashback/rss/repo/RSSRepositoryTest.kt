@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import tmg.configuration.manager.ConfigManager
-import tmg.core.prefs.manager.PreferenceManager
+import tmg.flashback.prefs.manager.PreferenceManager
 import tmg.flashback.rss.repo.json.SupportedSourceJson
 import tmg.flashback.rss.repo.json.SupportedSourcesJson
 import tmg.flashback.rss.repo.model.SupportedSource

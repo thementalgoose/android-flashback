@@ -3,13 +3,12 @@ package tmg.flashback.statistics.ui.search.category
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.android.viewmodel.ext.android.viewModel
-import tmg.core.ui.base.BaseBottomSheetFragment
-import tmg.core.ui.bottomsheet.BottomSheetAdapter
+import tmg.flashback.ui.base.BaseBottomSheetFragment
+import tmg.flashback.ui.bottomsheet.BottomSheetAdapter
 import tmg.flashback.statistics.databinding.FragmentBottomSheetCategoryBinding
 import tmg.flashback.statistics.ui.search.SearchCategory
 import tmg.flashback.statistics.ui.search.SearchFragment

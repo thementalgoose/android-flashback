@@ -2,17 +2,11 @@ package tmg.flashback.statistics.ui.overview.constructor
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import androidx.recyclerview.widget.LinearLayoutManager
-import org.koin.android.viewmodel.ext.android.viewModel
-import tmg.core.ui.base.BaseActivity
+import tmg.flashback.ui.base.BaseActivity
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.ActivityConstructorBinding
-import tmg.flashback.statistics.ui.overview.constructor.summary.ConstructorSummaryAdapter
 import tmg.utilities.extensions.loadFragment
-import tmg.utilities.extensions.observe
-import tmg.utilities.extensions.observeEvent
 
 class ConstructorActivity: BaseActivity() {
 

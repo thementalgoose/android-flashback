@@ -4,13 +4,12 @@ import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import org.junit.Ignore
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
-import tmg.core.device.managers.NetworkConnectivityManager
+import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.crash_reporting.controllers.CrashController
 import tmg.flashback.data.db.stats.CircuitRepository
 import tmg.flashback.data.models.stats.Circuit
@@ -26,7 +25,6 @@ import tmg.testutils.livedata.assertListContainsItem
 import tmg.testutils.livedata.assertListHasSublist
 import tmg.testutils.livedata.assertListNotEmpty
 import tmg.testutils.livedata.test
-import tmg.testutils.livedata.testObserve
 
 internal class CircuitInfoViewModelTest: BaseTest() {
 

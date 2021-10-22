@@ -10,7 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.android.viewmodel.ext.android.viewModel
-import tmg.core.ui.base.BaseFragment
+import tmg.flashback.ui.base.BaseFragment
 import tmg.flashback.formula1.enums.TrackLayout
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.upnext.BuildConfig

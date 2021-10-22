@@ -2,24 +2,20 @@ package tmg.flashback.statistics.ui.race
 
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.verify
 import kotlinx.coroutines.flow.flow
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.TestFactory
 import org.threeten.bp.LocalDate
 import tmg.flashback.statistics.controllers.RaceController
-import tmg.core.ui.model.AnimationSpeed
+import tmg.flashback.ui.model.AnimationSpeed
 import tmg.flashback.data.db.stats.SeasonOverviewRepository
 import tmg.flashback.data.models.stats.LapTime
 import tmg.flashback.data.models.stats.Round
-import tmg.core.ui.controllers.ThemeController
-import tmg.flashback.data.enums.RaceStatus
+import tmg.flashback.ui.controllers.ThemeController
 import tmg.flashback.data.models.stats.ConstructorDriver
 import tmg.flashback.data.models.stats.RoundSprintQualifyingResult
 import tmg.flashback.statistics.mockRound1
 import tmg.flashback.statistics.mockRound3
-import tmg.flashback.statistics.testutils.*
 import tmg.flashback.statistics.ui.overviews.*
 import tmg.flashback.statistics.ui.race.RaceAdapterType.*
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
@@ -27,8 +23,6 @@ import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
 import tmg.flashback.statistics.ui.util.SeasonRound
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertDataEventValue
-import tmg.testutils.livedata.assertEventFired
-import tmg.testutils.livedata.assertEventNotFired
 import tmg.testutils.livedata.test
 
 internal class RaceViewModelTest: BaseTest() {
@@ -38,7 +32,7 @@ internal class RaceViewModelTest: BaseTest() {
     private val mockSeasonOverviewRepository: SeasonOverviewRepository = mockk(relaxed = true)
     private val mockThemeController: ThemeController = mockk(relaxed = true)
     private val mockRaceController: RaceController = mockk(relaxed = true)
-    private val mockConnectivityManager: tmg.core.device.managers.NetworkConnectivityManager = mockk(relaxed = true)
+    private val mockConnectivityManager: tmg.flashback.device.managers.NetworkConnectivityManager = mockk(relaxed = true)
 
     private val expectedSeasonRound: SeasonRound = SeasonRound(2019, 1)
 

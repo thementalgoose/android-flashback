@@ -6,9 +6,9 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.common.testutils.assertExpectedOrder
 import tmg.common.testutils.findPref
-import tmg.core.device.managers.BuildConfigManager
-import tmg.core.ui.R
-import tmg.core.ui.controllers.ThemeController
+import tmg.flashback.device.managers.BuildConfigManager
+import tmg.flashback.ui.R
+import tmg.flashback.ui.controllers.ThemeController
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertEventFired
 import tmg.testutils.livedata.test

@@ -2,11 +2,11 @@ package tmg.common.ui.settings.appearance
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import tmg.core.device.managers.BuildConfigManager
-import tmg.core.ui.settings.SettingsModel
-import tmg.core.ui.settings.SettingsViewModel
-import tmg.core.ui.R
-import tmg.core.ui.controllers.ThemeController
+import tmg.flashback.device.managers.BuildConfigManager
+import tmg.flashback.ui.settings.SettingsModel
+import tmg.flashback.ui.settings.SettingsViewModel
+import tmg.flashback.ui.R
+import tmg.flashback.ui.controllers.ThemeController
 import tmg.utilities.lifecycle.Event
 
 //region Inputs

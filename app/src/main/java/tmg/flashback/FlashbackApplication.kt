@@ -6,9 +6,9 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import tmg.common.di.commonModule
 import tmg.configuration.di.configModule
-import tmg.core.analytics.di.analyticsModule
-import tmg.core.device.di.deviceModule
-import tmg.core.ui.di.uiModule
+import tmg.flashback.analytics.di.analyticsModule
+import tmg.flashback.device.di.deviceModule
+import tmg.flashback.ui.di.uiModule
 import tmg.crash_reporting.di.crashReportingModule
 import tmg.flashback.di.appModule
 import tmg.flashback.rss.di.rssModule

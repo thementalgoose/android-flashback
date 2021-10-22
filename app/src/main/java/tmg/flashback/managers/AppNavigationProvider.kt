@@ -3,10 +3,10 @@ package tmg.flashback.managers
 import android.content.Context
 import android.content.Intent
 import tmg.aboutthisapp.AboutThisAppActivity
-import tmg.core.analytics.manager.AnalyticsManager
-import tmg.core.device.controllers.DeviceController
-import tmg.core.device.managers.BuildConfigManager
-import tmg.core.ui.navigation.NavigationProvider
+import tmg.flashback.analytics.manager.AnalyticsManager
+import tmg.flashback.device.controllers.DeviceController
+import tmg.flashback.device.managers.BuildConfigManager
+import tmg.flashback.ui.navigation.NavigationProvider
 import tmg.flashback.constants.AboutThisAppConfig
 import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.ui.dashboard.HomeActivity

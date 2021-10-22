@@ -4,7 +4,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import kotlin.math.abs
-import tmg.core.ui.extensions.getColor
+import tmg.flashback.ui.extensions.getColor
 import tmg.flashback.data.enums.isStatusFinished
 import tmg.flashback.firebase.extensions.pointsDisplay
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3

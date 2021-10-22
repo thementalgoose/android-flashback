@@ -1,7 +1,7 @@
 package tmg.flashback.statistics.ui.admin.maintenance
 
 import android.os.Bundle
-import tmg.core.ui.base.BaseActivity
+import tmg.flashback.ui.base.BaseActivity
 import tmg.flashback.statistics.databinding.ActivityMaintenanceBinding
 
 class MaintenanceActivity: BaseActivity() {

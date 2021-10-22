@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.navigation.fragment.findNavController
 import org.koin.android.viewmodel.ext.android.viewModel
-import tmg.core.ui.settings.SettingsFragment
+import tmg.flashback.ui.settings.SettingsFragment
 import tmg.flashback.rss.R
 import tmg.utilities.extensions.observeEvent
 

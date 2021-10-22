@@ -3,7 +3,7 @@ package tmg.flashback.statistics.ui.shared.sync.viewholders
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import tmg.core.ui.navigation.NavigationProvider
+import tmg.flashback.ui.navigation.NavigationProvider
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.ViewSharedProvidedBinding
 import tmg.utilities.extensions.fromHtml

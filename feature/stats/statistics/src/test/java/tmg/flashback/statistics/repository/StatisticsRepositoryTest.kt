@@ -6,7 +6,7 @@ import io.mockk.verify
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import tmg.configuration.manager.ConfigManager
-import tmg.core.prefs.manager.PreferenceManager
+import tmg.flashback.prefs.manager.PreferenceManager
 import tmg.flashback.statistics.repository.json.AllSeasonsJson
 import java.time.Year
 import tmg.flashback.statistics.repository.json.BannerJson

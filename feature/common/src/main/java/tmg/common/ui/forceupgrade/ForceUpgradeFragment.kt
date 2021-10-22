@@ -1,13 +1,11 @@
 package tmg.common.ui.forceupgrade
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.common.databinding.FragmentLockoutBinding
-import tmg.core.ui.base.BaseFragment
+import tmg.flashback.ui.base.BaseFragment
 import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent

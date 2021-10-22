@@ -6,8 +6,7 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import tmg.common.constants.ReleaseNotes
 import tmg.common.databinding.FragmentReleaseNotesBinding
-import tmg.core.ui.base.BaseFragment
-import tmg.utilities.extensions.fromHtml
+import tmg.flashback.ui.base.BaseFragment
 
 class ReleaseFragment: BaseFragment<FragmentReleaseNotesBinding>() {
 

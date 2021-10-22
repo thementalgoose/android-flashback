@@ -2,7 +2,7 @@ package tmg.flashback.upnext.testutils
 
 import androidx.annotation.StringRes
 import org.junit.jupiter.api.Assertions
-import tmg.core.ui.settings.SettingsModel
+import tmg.flashback.ui.settings.SettingsModel
 
 // TODO: Look at combining these into a module!
 

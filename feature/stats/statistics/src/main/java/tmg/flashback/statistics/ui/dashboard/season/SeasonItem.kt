@@ -4,9 +4,8 @@ import androidx.annotation.LayoutRes
 import org.threeten.bp.LocalDate
 import org.threeten.bp.Month
 import tmg.flashback.statistics.R
-import tmg.core.ui.model.AnimationSpeed
+import tmg.flashback.ui.model.AnimationSpeed
 import tmg.flashback.data.models.stats.ConstructorDriver
-import tmg.flashback.data.models.stats.Driver
 import tmg.flashback.data.models.stats.HistoryRound
 import tmg.flashback.data.models.stats.Round
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem

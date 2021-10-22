@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.android.viewmodel.ext.android.viewModel
-import tmg.core.ui.base.BaseBottomSheetFragment
-import tmg.core.ui.bottomsheet.BottomSheetAdapter
+import tmg.flashback.ui.base.BaseBottomSheetFragment
+import tmg.flashback.ui.bottomsheet.BottomSheetAdapter
 import tmg.flashback.upnext.databinding.FragmentBottomSheetNotificationsOnboardingBinding
 import tmg.flashback.upnext.model.NotificationChannel
 import tmg.utilities.extensions.observe

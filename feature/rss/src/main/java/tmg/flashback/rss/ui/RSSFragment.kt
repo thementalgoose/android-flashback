@@ -1,7 +1,5 @@
 package tmg.flashback.rss.ui
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +7,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
-import tmg.core.ui.base.BaseFragment
+import tmg.flashback.ui.base.BaseFragment
 import tmg.flashback.rss.databinding.FragmentRssBinding
 import tmg.flashback.rss.repo.RSSRepository
 import tmg.flashback.rss.ui.settings.InitialScreen

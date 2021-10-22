@@ -3,7 +3,7 @@ package tmg.flashback.statistics.ui.overview.driver.season
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import tmg.core.ui.base.BaseActivity
+import tmg.flashback.ui.base.BaseActivity
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.ActivityDriverSeasonBinding
 import tmg.utilities.extensions.loadFragment

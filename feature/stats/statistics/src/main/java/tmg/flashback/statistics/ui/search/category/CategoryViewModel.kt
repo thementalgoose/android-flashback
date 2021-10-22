@@ -3,10 +3,9 @@ package tmg.flashback.statistics.ui.search.category
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import tmg.core.ui.bottomsheet.BottomSheetItem
+import tmg.flashback.ui.bottomsheet.BottomSheetItem
 import tmg.flashback.statistics.ui.search.SearchCategory
 import tmg.utilities.lifecycle.DataEvent
-import tmg.utilities.lifecycle.Event
 import tmg.utilities.models.Selected
 import tmg.utilities.models.StringHolder
 

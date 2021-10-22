@@ -2,9 +2,8 @@ package tmg.flashback.upnext.ui.settings
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import org.koin.android.viewmodel.ext.android.viewModel
-import tmg.core.ui.settings.SettingsFragment
+import tmg.flashback.ui.settings.SettingsFragment
 import tmg.flashback.upnext.ui.settings.reminder.UpNextReminderBottomSheetFragment
 import tmg.utilities.extensions.observeEvent
 

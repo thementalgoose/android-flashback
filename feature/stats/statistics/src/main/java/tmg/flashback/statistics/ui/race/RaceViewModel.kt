@@ -11,16 +11,14 @@ import androidx.lifecycle.ViewModel
 import tmg.flashback.statistics.controllers.RaceController
 import tmg.flashback.data.db.stats.SeasonOverviewRepository
 import tmg.flashback.data.models.stats.*
-import tmg.core.ui.controllers.ThemeController
+import tmg.flashback.ui.controllers.ThemeController
 import tmg.flashback.formula1.constants.Formula1.showComingSoonMessageForNextDays
-import tmg.flashback.statistics.ui.race.*
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
 import tmg.flashback.statistics.ui.util.SeasonRound
 import tmg.utilities.extensions.combinePair
 import tmg.utilities.extensions.combineTriple
 import tmg.utilities.lifecycle.DataEvent
-import tmg.utilities.lifecycle.Event
 import java.util.*
 
 //region Inputs
@@ -51,7 +49,7 @@ class RaceViewModel(
     private val seasonOverviewRepository: SeasonOverviewRepository,
     private val raceController: RaceController,
     private val themeController: ThemeController,
-    private val connectivityManager: tmg.core.device.managers.NetworkConnectivityManager
+    private val connectivityManager: tmg.flashback.device.managers.NetworkConnectivityManager
 ) : ViewModel(), RaceViewModelInputs, RaceViewModelOutputs {
 
     var inputs: RaceViewModelInputs = this

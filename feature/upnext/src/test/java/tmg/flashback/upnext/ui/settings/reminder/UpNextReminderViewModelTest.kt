@@ -5,7 +5,7 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.core.ui.bottomsheet.BottomSheetItem
+import tmg.flashback.ui.bottomsheet.BottomSheetItem
 import tmg.flashback.upnext.controllers.UpNextController
 import tmg.flashback.upnext.model.NotificationReminder
 import tmg.testutils.BaseTest

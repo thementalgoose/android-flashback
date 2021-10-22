@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import tmg.common.constants.ReleaseNotes
 import tmg.common.repository.ReleaseNotesRepository
-import tmg.core.device.managers.BuildConfigManager
+import tmg.flashback.device.managers.BuildConfigManager
 
 internal class ReleaseNotesControllerTest {
 

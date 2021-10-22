@@ -5,13 +5,12 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.statistics.ui.race.RaceModel
 import tmg.flashback.data.enums.isStatusFinished
-import tmg.core.ui.extensions.getColor
+import tmg.flashback.ui.extensions.getColor
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.ViewRaceRaceResultBinding
 import tmg.flashback.statistics.extensions.iconRes
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.statistics.ui.util.position
-import tmg.utilities.extensions.toEmptyIfZero
 import tmg.utilities.extensions.views.*
 import kotlin.math.abs
 import tmg.flashback.firebase.extensions.pointsDisplay

@@ -8,7 +8,6 @@ import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import tmg.core.device.managers.NetworkConnectivityManager
 import tmg.flashback.statistics.ui.overview.constructor.summary.ConstructorSummaryItem
 import tmg.flashback.statistics.ui.overview.constructor.summary.addError
 import tmg.flashback.statistics.ui.overview.driver.summary.PipeType
@@ -45,7 +44,7 @@ interface ConstructorViewModelOutputs {
 @Suppress("EXPERIMENTAL_API_USAGE")
 class ConstructorViewModel(
         private val constructorRepository: ConstructorRepository,
-        private val connectivityManager: tmg.core.device.managers.NetworkConnectivityManager
+        private val connectivityManager: tmg.flashback.device.managers.NetworkConnectivityManager
 ): ViewModel(), ConstructorViewModelInputs, ConstructorViewModelOutputs {
 
     var inputs: ConstructorViewModelInputs = this

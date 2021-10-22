@@ -22,8 +22,8 @@ import org.koin.core.component.inject
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.configuration.controllers.ConfigController
-import tmg.core.device.managers.BuildConfigManager
-import tmg.core.ui.navigation.NavigationProvider
+import tmg.flashback.device.managers.BuildConfigManager
+import tmg.flashback.ui.navigation.NavigationProvider
 import tmg.flashback.formula1.enums.TrackLayout
 import tmg.crash_reporting.controllers.CrashController
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3

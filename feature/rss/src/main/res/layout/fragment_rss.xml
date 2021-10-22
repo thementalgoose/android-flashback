@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp" />
 
-    <tmg.core.ui.views.SwipeRefreshMotionLayout
+    <tmg.flashback.ui.views.SwipeRefreshMotionLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -122,7 +122,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/titleExpanded">
 
-            <tmg.core.ui.views.LockableRecyclerView
+            <tmg.flashback.ui.views.LockableRecyclerView
                 android:id="@+id/dataList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -132,6 +132,6 @@
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    </tmg.core.ui.views.SwipeRefreshMotionLayout>
+    </tmg.flashback.ui.views.SwipeRefreshMotionLayout>
 
 </LinearLayout>

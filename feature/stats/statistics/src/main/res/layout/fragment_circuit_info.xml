@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<tmg.core.ui.views.SwipeRefreshMotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<tmg.flashback.ui.views.SwipeRefreshMotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
@@ -82,4 +82,4 @@
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-</tmg.core.ui.views.SwipeRefreshMotionLayout>
+</tmg.flashback.ui.views.SwipeRefreshMotionLayout>

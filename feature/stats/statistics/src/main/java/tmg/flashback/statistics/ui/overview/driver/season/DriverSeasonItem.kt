@@ -2,7 +2,7 @@ package tmg.flashback.statistics.ui.overview.driver.season
 
 import androidx.annotation.*
 import org.threeten.bp.LocalDate
-import tmg.core.ui.model.AnimationSpeed
+import tmg.flashback.ui.model.AnimationSpeed
 import tmg.flashback.statistics.ui.overview.driver.summary.PipeType
 import tmg.flashback.data.enums.RaceStatus
 import tmg.flashback.data.models.stats.SlimConstructor

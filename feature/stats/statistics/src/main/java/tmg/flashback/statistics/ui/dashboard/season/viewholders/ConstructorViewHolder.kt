@@ -5,10 +5,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlin.math.roundToInt
 import tmg.flashback.statistics.R
-import tmg.core.ui.model.AnimationSpeed
+import tmg.flashback.ui.model.AnimationSpeed
 import tmg.flashback.statistics.ui.dashboard.season.SeasonItem
 import tmg.flashback.statistics.ui.shared.driverlist.DriverListAdapter
-import tmg.core.ui.extensions.getColor
+import tmg.flashback.ui.extensions.getColor
 import tmg.flashback.firebase.extensions.pointsDisplay
 import tmg.flashback.statistics.databinding.ViewDashboardSeasonConstructorBinding
 import tmg.utilities.extensions.views.context

@@ -2,12 +2,10 @@ package tmg.common.ui.settings.notifications
 
 import io.mockk.every
 import io.mockk.mockk
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.common.testutils.assertExpectedOrder
 import tmg.common.testutils.findPref
-import tmg.core.ui.settings.SettingsModel
 import tmg.notifications.R
 import tmg.notifications.controllers.NotificationController
 import tmg.testutils.BaseTest

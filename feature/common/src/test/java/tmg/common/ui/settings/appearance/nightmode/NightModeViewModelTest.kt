@@ -5,11 +5,11 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.core.ui.bottomsheet.BottomSheetItem
-import tmg.core.ui.controllers.ThemeController
-import tmg.core.ui.extensions.icon
-import tmg.core.ui.extensions.label
-import tmg.core.ui.model.NightMode
+import tmg.flashback.ui.bottomsheet.BottomSheetItem
+import tmg.flashback.ui.controllers.ThemeController
+import tmg.flashback.ui.extensions.icon
+import tmg.flashback.ui.extensions.label
+import tmg.flashback.ui.model.NightMode
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertDataEventValue
 import tmg.testutils.livedata.test

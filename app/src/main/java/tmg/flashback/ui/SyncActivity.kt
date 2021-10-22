@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.common.ui.forceupgrade.ForceUpgradeActivity
-import tmg.core.ui.base.BaseActivity
+import tmg.flashback.ui.base.BaseActivity
 import tmg.flashback.databinding.ActivitySyncBinding
 import tmg.flashback.ui.dashboard.HomeActivity
 import tmg.utilities.extensions.observe

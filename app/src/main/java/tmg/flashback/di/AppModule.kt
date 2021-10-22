@@ -2,10 +2,10 @@ package tmg.flashback.di
 
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
-import tmg.core.device.managers.BuildConfigManager
-import tmg.core.prefs.manager.PreferenceManager
-import tmg.core.ui.managers.StyleManager
-import tmg.core.ui.navigation.NavigationProvider
+import tmg.flashback.device.managers.BuildConfigManager
+import tmg.flashback.prefs.manager.PreferenceManager
+import tmg.flashback.ui.managers.StyleManager
+import tmg.flashback.ui.navigation.NavigationProvider
 import tmg.flashback.DebugController
 import tmg.flashback.FlashbackStartup
 import tmg.flashback.managers.appshortcuts.AndroidAppShortcutManager

@@ -3,10 +3,10 @@ package tmg.flashback.statistics.ui.overview.driver.season.viewholders
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import kotlin.math.roundToInt
-import tmg.core.ui.model.AnimationSpeed
+import tmg.flashback.ui.model.AnimationSpeed
 import tmg.flashback.statistics.ui.overview.driver.season.DriverSeasonItem
 import tmg.flashback.data.enums.isStatusFinished
-import tmg.core.ui.extensions.getColor
+import tmg.flashback.ui.extensions.getColor
 import tmg.flashback.firebase.extensions.pointsDisplay
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.ViewDriverSeasonBinding

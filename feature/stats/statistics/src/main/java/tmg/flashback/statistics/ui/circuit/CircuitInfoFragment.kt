@@ -1,9 +1,5 @@
 package tmg.flashback.statistics.ui.circuit
 
-import android.content.ActivityNotFoundException
-import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +7,7 @@ import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.android.viewmodel.ext.android.viewModel
-import tmg.core.ui.base.BaseFragment
+import tmg.flashback.ui.base.BaseFragment
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.FragmentCircuitInfoBinding
 import tmg.flashback.statistics.ui.race.RaceActivity

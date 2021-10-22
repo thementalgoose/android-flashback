@@ -1,6 +1,6 @@
 package tmg.crash_reporting.repository
 
-import tmg.core.prefs.manager.PreferenceManager
+import tmg.flashback.prefs.manager.PreferenceManager
 
 class CrashRepository(
     private val preferenceManager: PreferenceManager

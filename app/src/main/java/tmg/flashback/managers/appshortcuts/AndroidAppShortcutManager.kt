@@ -8,7 +8,7 @@ import android.graphics.drawable.Icon
 import android.net.Uri
 import android.os.Build
 import androidx.annotation.RequiresApi
-import tmg.core.device.managers.BuildConfigManager
+import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.R
 import tmg.flashback.rss.ui.RSSActivity
 

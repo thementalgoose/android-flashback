@@ -2,7 +2,7 @@ package tmg.common.ui.privacypolicy
 
 import android.os.Bundle
 import tmg.common.databinding.ActivityPrivacyPolicyBinding
-import tmg.core.ui.base.BaseActivity
+import tmg.flashback.ui.base.BaseActivity
 
 class PrivacyPolicyActivity: BaseActivity() {
 

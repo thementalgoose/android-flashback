@@ -2,7 +2,7 @@ package tmg.common.ui.releasenotes
 
 import android.os.Bundle
 import tmg.common.databinding.ActivityReleaseNotesBinding
-import tmg.core.ui.base.BaseActivity
+import tmg.flashback.ui.base.BaseActivity
 
 class ReleaseActivity : BaseActivity() {
 

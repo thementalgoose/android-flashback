@@ -2,7 +2,7 @@ package tmg.flashback.rss.ui
 
 import android.os.Bundle
 import tmg.flashback.rss.databinding.ActivityRssBinding
-import tmg.core.ui.base.BaseActivity
+import tmg.flashback.ui.base.BaseActivity
 
 class RSSActivity: BaseActivity() {
 

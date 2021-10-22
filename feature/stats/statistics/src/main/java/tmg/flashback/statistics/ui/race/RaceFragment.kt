@@ -1,29 +1,20 @@
 package tmg.flashback.statistics.ui.race
 
 import android.annotation.SuppressLint
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.android.ext.android.inject
-import org.threeten.bp.LocalDate
-import org.threeten.bp.format.DateTimeFormatter
-import tmg.core.ui.base.BaseFragment
-import tmg.flashback.formula1.enums.TrackLayout
-import tmg.flashback.formula1.utils.getFlagResourceAlpha3
+import tmg.flashback.ui.base.BaseFragment
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.FragmentRaceBinding
 import tmg.flashback.statistics.ui.circuit.CircuitInfoActivity
 import tmg.flashback.statistics.ui.overview.constructor.ConstructorActivity
 import tmg.flashback.statistics.ui.overview.driver.DriverActivity
-import tmg.flashback.statistics.ui.shared.pill.PillAdapter
 import tmg.flashback.statistics.ui.shared.pill.PillItem
 import tmg.utilities.extensions.*
-import tmg.utilities.extensions.views.show
 
 class RaceFragment: BaseFragment<FragmentRaceBinding>(), RaceAdapterCallback {
 

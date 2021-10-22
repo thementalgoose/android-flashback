@@ -2,18 +2,11 @@ package tmg.flashback.statistics.ui.overview.driver
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import androidx.recyclerview.widget.LinearLayoutManager
-import org.koin.android.viewmodel.ext.android.viewModel
-import tmg.core.ui.base.BaseActivity
+import tmg.flashback.ui.base.BaseActivity
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.ActivityDriverBinding
-import tmg.flashback.statistics.ui.overview.driver.summary.DriverSummaryAdapter
-import tmg.flashback.statistics.ui.overview.driver.season.DriverSeasonActivity
 import tmg.utilities.extensions.loadFragment
-import tmg.utilities.extensions.observe
-import tmg.utilities.extensions.observeEvent
 
 class DriverActivity : BaseActivity() {
 

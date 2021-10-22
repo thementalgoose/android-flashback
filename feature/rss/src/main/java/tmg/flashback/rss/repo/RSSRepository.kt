@@ -3,7 +3,7 @@ package tmg.flashback.rss.repo
 import tmg.configuration.manager.ConfigManager
 import tmg.flashback.rss.repo.json.SupportedSourcesJson
 import tmg.flashback.rss.repo.model.SupportedSource
-import tmg.core.prefs.manager.PreferenceManager
+import tmg.flashback.prefs.manager.PreferenceManager
 import tmg.flashback.rss.repo.converters.convert
 
 class RSSRepository(
