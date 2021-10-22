@@ -20,6 +20,8 @@ dependencies {
     implementation project(path: ':core:configuration')
     implementation project(path: ':core:preferences')
 
+    implementation project(path: ':core:style')
+
     implementation deps.play.ads
     implementation deps.androidx.workmanager
 }
