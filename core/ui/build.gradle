@@ -17,11 +17,11 @@ android {
 
 dependencies {
 
-    // Preferences library
     implementation project(path: ':core:preferences')
     implementation project(path: ':core:analytics')
     implementation project(path: ':core:configuration')
     implementation project(path: ':core:crash-reporting')
+    api project(path: ':core:style')
 
     // Android stuff
     implementation deps.kotlin.stdlib
