@@ -51,6 +51,7 @@ jobs:
           echo "::set-output name=core_device::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                        | grep -E '^core/device/' -c)"
           echo "::set-output name=core_notifications::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                 | grep -E '^core/notifications/' -c)"
           echo "::set-output name=core_preferences::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                   | grep -E '^core/preferences/' -c)"
+          echo "::set-output name=core_style::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                   | grep -E '^core/style/' -c)"
           echo "::set-output name=core_tutorial::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                      | grep -E '^core/tutorial/' -c)"
           echo "::set-output name=core_ui::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                            | grep -E '^core/ui/' -c)"
 
@@ -71,6 +72,7 @@ jobs:
       core_device: ${{ steps.change.outputs.core_device != 0 }}
       core_notifications: ${{ steps.change.outputs.core_notifications != 0 }}
       core_preferences: ${{ steps.change.outputs.core_preferences != 0 }}
+      core_style: ${{ steps.change.outputs.core_style != 0 }}
       core_tutorial: ${{ steps.change.outputs.core_tutorial != 0 }}
       core_ui: ${{ steps.change.outputs.core_ui != 0 }}
 
@@ -157,6 +159,10 @@ jobs:
       - name: :core:preferences
         run: ./gradlew :core:preferences:testDebugUnitTest
         if: ${{ needs.unit_test_diff_check.outputs.core_preferences == 'true' }}
+
+      - name: :core:style
+        run: ./gradlew :core:style:testDebugUnitTest
+        if: ${{ needs.unit_test_diff_check.outputs.core_style == 'true' }}
 
       - name: :core:tutorial
         run: ./gradlew :core:tutorial:testDebugUnitTest
