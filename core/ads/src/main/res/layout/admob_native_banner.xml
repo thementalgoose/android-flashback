@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.gms.ads.nativead.NativeAdView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:background="?attr/colorPrimaryDark">
+    android:clipToPadding="false"
+    android:foreground="@drawable/ripple_rectangle"
+    android:paddingStart="@dimen/paddingMedium"
+    android:paddingTop="@dimen/paddingSmall"
+    android:paddingEnd="@dimen/paddingMedium"
+    android:paddingBottom="@dimen/paddingSmall">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -12,27 +17,59 @@
 
         <ImageView
             android:id="@+id/ad_app_icon"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="@dimen/admobIconImageSize"
+            android:layout_height="@dimen/admobIconImageSize"
+            android:layout_marginTop="@dimen/paddingSmall"
+            android:importantForAccessibility="no"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:textColor="#123123"
             android:id="@+id/ad_headline"
+            style="@style/Text.Admob.Title"
             android:layout_width="0dp"
-            tools:text="Heyu"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/paddingMedium"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/ad_app_icon"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Heyu" />
+
+        <TextView
+            android:id="@+id/ad_body"
+            style="@style/Text.Admob.Body"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/paddingMedium"
+            android:layout_marginTop="2dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/ad_app_icon"
+            app:layout_constraintTop_toBottomOf="@id/ad_headline"
+            tools:text="Heyu" />
 
         <com.google.android.gms.ads.nativead.MediaView
             android:id="@+id/ad_media"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/admobBannerHeight"
+            android:layout_marginTop="2dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/ad_headline"
+            app:layout_constraintTop_toBottomOf="@id/ad_body" />
+
+        <TextView
+            style="@style/Text.Admob.Badge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/advertisement_badge"
+            android:paddingStart="@dimen/paddingSmall"
+            android:paddingTop="@dimen/paddingXSmall"
+            android:paddingEnd="@dimen/paddingSmall"
+            android:paddingBottom="@dimen/paddingXSmall"
+            android:text="@string/admob_advertisement"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ad_headline" />
+            app:layout_constraintStart_toStartOf="@id/ad_media"
+            app:layout_constraintTop_toBottomOf="@id/ad_media" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

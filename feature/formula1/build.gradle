@@ -18,7 +18,6 @@ android {
 dependencies {
 
     // Core modules
-    implementation project(path: ':core:ads')
     implementation project(path: ':core:analytics')
     implementation project(path: ':core:configuration')
     implementation project(path: ':core:crash-reporting')

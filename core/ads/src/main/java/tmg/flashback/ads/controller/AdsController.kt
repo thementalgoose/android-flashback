@@ -17,8 +17,7 @@ class AdsController(
     /**
      * Are adverts enabled or not based off the configuration
      */
-    val areAdvertsEnabled: Boolean
-        get() = repository.isEnabled
+    val areAdvertsEnabled: Boolean by lazy { repository.isEnabled }
 
     /**
      * Initialise the ad manager and any test device ids for debug mode

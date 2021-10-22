@@ -40,6 +40,16 @@ internal class AdsControllerTest: BaseTest() {
     }
 
     @Test
+    fun `are adverts enabled doesnt change if repository value does`() {
+        every { mockRepository.isEnabled } returns true
+        initSUT()
+        assertTrue(sut.areAdvertsEnabled)
+
+        every { mockRepository.isEnabled } returns false
+        assertTrue(sut.areAdvertsEnabled)
+    }
+
+    @Test
     fun `initialize the manager`() {
         initSUT()
         sut.initialise(mockk())
