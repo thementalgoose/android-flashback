@@ -21,6 +21,7 @@
             <option value="$PROJECT_DIR$/core/device" />
             <option value="$PROJECT_DIR$/core/notifications" />
             <option value="$PROJECT_DIR$/core/preferences" />
+            <option value="$PROJECT_DIR$/core/style" />
             <option value="$PROJECT_DIR$/core/tutorial" />
             <option value="$PROJECT_DIR$/core/ui" />
             <option value="$PROJECT_DIR$/feature" />
@@ -28,9 +29,10 @@
             <option value="$PROJECT_DIR$/feature/debug" />
             <option value="$PROJECT_DIR$/feature/formula1" />
             <option value="$PROJECT_DIR$/feature/rss" />
-            <option value="$PROJECT_DIR$/feature/statistics" />
-            <option value="$PROJECT_DIR$/feature/statistics-data" />
-            <option value="$PROJECT_DIR$/feature/statistics-data-firebase" />
+            <option value="$PROJECT_DIR$/feature/stats" />
+            <option value="$PROJECT_DIR$/feature/stats/data" />
+            <option value="$PROJECT_DIR$/feature/stats/data-firestore" />
+            <option value="$PROJECT_DIR$/feature/stats/statistics" />
             <option value="$PROJECT_DIR$/feature/upnext" />
           </set>
         </option>

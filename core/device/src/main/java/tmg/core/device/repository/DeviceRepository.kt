@@ -4,6 +4,7 @@ import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.core.prefs.manager.PreferenceManager
 import java.util.*
+import org.threeten.bp.format.DateTimeParseException
 
 class DeviceRepository(
     private val preferenceManager: PreferenceManager
@@ -15,7 +16,7 @@ class DeviceRepository(
         private const val keyAppVersion: String = "RELEASE_NOTES" // Used to be release notes
     }
 
-    private val dateFormat: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd")
+    private val dateFormat: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd", Locale.UK)
 
     /**
      * How many times the application onCreate has been called
@@ -35,7 +36,13 @@ class DeviceRepository(
                 appFirstOpened = result
                 return result
             }
-            return LocalDate.parse(value, dateFormat)
+            return try {
+                LocalDate.parse(value, dateFormat)
+            } catch (e: DateTimeParseException) {
+                val result = LocalDate.now()
+                appFirstOpened = result
+                result
+            }
         }
         set(value) = preferenceManager.save(keyAppFirstBoot, value.format(dateFormat))
 

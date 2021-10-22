@@ -16,6 +16,7 @@ import tmg.flashback.rss.databinding.FragmentRssSettingsConfigureBinding
 import tmg.utilities.extensions.managerClipboard
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
+import tmg.utilities.extensions.viewUrl
 
 class RSSConfigureFragment: BaseFragment<FragmentRssSettingsConfigureBinding>() {
 
@@ -46,17 +47,16 @@ class RSSConfigureFragment: BaseFragment<FragmentRssSettingsConfigureBinding>() 
         }
 
         observeEvent(viewModel.outputs.openWebsite) {
-            try {
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(it.article.contactLink))
-                startActivity(intent)
-            } catch (e: ActivityNotFoundException) {
-                context?.let { context ->
-                    Snackbar.make(binding.configuration, R.string.rss_configure_cannot_open_page, Snackbar.LENGTH_INDEFINITE)
-                        .setAction(R.string.rss_configure_cannot_open_page_action) { _ ->
-                            val clipData = ClipData.newPlainText(it.article.title, it.article.contactLink ?: it.article.source)
-                            context.managerClipboard?.setPrimaryClip(clipData)
-                        }
-                        .show()
+            it.article.contactLink?.let { contactLink ->
+                if (!viewUrl(contactLink)) {
+                    context?.let { context ->
+                        Snackbar.make(binding.configuration, R.string.rss_configure_cannot_open_page, Snackbar.LENGTH_INDEFINITE)
+                            .setAction(R.string.rss_configure_cannot_open_page_action) { _ ->
+                                val clipData = ClipData.newPlainText(it.article.title, it.article.contactLink ?: it.article.source)
+                                context.managerClipboard?.setPrimaryClip(clipData)
+                            }
+                            .show()
+                    }
                 }
             }
         }
