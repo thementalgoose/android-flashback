@@ -6,6 +6,8 @@ import tmg.flashback.ui.R
 import tmg.utilities.models.Selected
 import tmg.flashback.ui.databinding.ViewBottomSheetItemBinding
 import tmg.utilities.extensions.views.context
+import tmg.utilities.extensions.views.gone
+import tmg.utilities.extensions.views.show
 
 class BottomSheetViewHolder(
     private val binding: ViewBottomSheetItemBinding,

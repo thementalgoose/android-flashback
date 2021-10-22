@@ -110,6 +110,9 @@ dependencies {
     // Debug module
     debugImplementation project(path: ":feature:debug")
 
+
+    implementation project(path: ":core:ads")
+
     // Core modules
     implementation project(path: ":core:analytics")
     implementation project(path: ":core:configuration")

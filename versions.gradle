@@ -38,6 +38,8 @@ ext {
     android_splashscreen = "1.0.0-alpha01"
     android_corektx = "1.6.0"
     android_appcompat = "1.3.1"
+    android_workmanager = "2.7.0"
+    play_ads = "20.4.0"
     swipe_refresh = "1.1.0"
     circleimageview = "3.1.0"
     glide = "4.12.0"

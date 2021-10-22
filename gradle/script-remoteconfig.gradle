@@ -80,6 +80,10 @@ task generateRemoteConfigDefaults {
                 key('material_you')
                 value('false')
             }
+            entry {
+                key('adverts')
+                value('false')
+            }
         }
     }
 

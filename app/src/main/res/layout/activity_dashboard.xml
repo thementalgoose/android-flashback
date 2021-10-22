@@ -17,4 +17,12 @@
         app:layout_constraintTop_toTopOf="parent"
         app:navGraph="@navigation/graph_dashboard" />
 
+    <tmg.flashback.ads.views.NativeBanner
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:background="#869687"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
