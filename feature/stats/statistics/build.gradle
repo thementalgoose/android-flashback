@@ -17,27 +17,41 @@ android {
 
 dependencies {
 
-    implementation project(path: ':core:preferences')
+    // Formula 1 base data
+    implementation project(path: ':feature:formula1')
+
+    // Firebase module
+    implementation project(path: ':feature:stats:data-firestore')
+
+    // Core modules
+    implementation project(path: ':core:ads')
     implementation project(path: ':core:analytics')
     implementation project(path: ':core:configuration')
     implementation project(path: ':core:crash-reporting')
-    api project(path: ':core:style')
-
-    // Android stuff
-    implementation deps.kotlin.stdlib
-    implementation deps.androidx.core
-    implementation deps.androidx.appcompat
+    implementation project(path: ':core:device')
+    implementation project(path: ':core:notifications')
+    implementation project(path: ':core:preferences')
+    implementation project(path: ':core:ui')
 
     // Swipe refresh
     implementation deps.androidx.swiperefreshlayout
 
-    // Navigation
-    implementation deps.androidx.navigation_fragment
-    implementation deps.androidx.navigation_ui
+    // TMG dependencies
+    implementation deps.tmg.labelledprogressbar
 
-    // Material components
-    implementation deps.androidx.material
+    // Glide
+    implementation deps.glide.glide
+    kapt deps.glide.kapt
 
-    // ConstraintLayout
-    implementation deps.androidx.constraintlayout
+    // Flagkit
+    implementation deps.flagkit
+
+    // Lottie
+    implementation deps.lottie
+
+    // Skeleton Layout
+    implementation deps.skeletonlayout
+
+    // Reddit fast indicator
+    implementation deps.reddit.indicator
 }
