@@ -2,6 +2,11 @@
 <resources>
     <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
 
+
+        <item name="colorPrimary">#00E2E4</item>
+        <item name="colorPrimaryDark">#00E2E4</item>
+        <item name="colorAccent">#0274D1</item>
+
         <!-- Content -->
         <item name="contentPrimary">#f8f8f8</item>
         <item name="contentSecondary">#f2f2f2</item>
