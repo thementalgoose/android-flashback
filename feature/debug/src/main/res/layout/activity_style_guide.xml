@@ -11,38 +11,32 @@
         android:paddingStart="@dimen/paddingMedium"
         android:paddingEnd="@dimen/paddingMedium">
 
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/paddingMedium" />
+
         <TextView
-            style="@style/TextAppearance.AppCompat.Display3"
+            style="@style/Text.Headline.1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Heading 3" />
+            android:text="Headline 1" />
 
         <Space
             android:layout_width="match_parent"
             android:layout_height="@dimen/paddingMedium" />
 
         <TextView
-            style="@style/TextAppearance.AppCompat.Display2"
+            style="@style/Text.Headline.2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Heading 2" />
+            android:text="Headline 2" />
 
         <Space
             android:layout_width="match_parent"
             android:layout_height="@dimen/paddingMedium" />
 
         <TextView
-            style="@style/TextAppearance.AppCompat.Display1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Heading 1" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/paddingMedium" />
-
-        <TextView
-            style="@style/TextAppearance.AppCompat.Title"
+            style="@style/Text.Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Title" />
@@ -52,7 +46,17 @@
             android:layout_height="@dimen/paddingMedium" />
 
         <TextView
-            style="@style/TextAppearance.AppCompat.Body1"
+            style="@style/Text.Section"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Section" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/paddingMedium" />
+
+        <TextView
+            style="@style/Text.Body.1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Body 1" />
@@ -62,7 +66,7 @@
             android:layout_height="@dimen/paddingMedium" />
 
         <TextView
-            style="@style/TextAppearance.AppCompat.Body2"
+            style="@style/Text.Body.2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Body 2" />
@@ -72,7 +76,7 @@
             android:layout_height="@dimen/paddingMedium" />
 
         <TextView
-            style="@style/TextAppearance.AppCompat.Caption"
+            style="@style/Text.Caption"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Caption" />
@@ -81,15 +85,60 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/paddingMedium" />
 
-        <TextView
-            style="@style/TextAppearance.AppCompat.Headline"
+        <View
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Headline" />
+            android:layout_height="1dp"
+            android:background="?attr/backgroundTertiary" />
 
         <Space
             android:layout_width="match_parent"
             android:layout_height="@dimen/paddingMedium" />
+
+        <TextView
+            style="@style/Style.Button.Primary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Body 2" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/paddingMedium" />
+
+        <TextView
+            style="@style/Style.Button.Secondary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Section" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/paddingMedium" />
+
+        <TextView
+            style="@style/Style.Button.Tertiary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Caption" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/paddingMedium" />
+
+        <EditText
+            style="@style/Style.Input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Type here.." />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/paddingMedium" />
+
+        <CheckBox
+            style="@style/Style.Checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true" />
 
     </LinearLayout>
 
