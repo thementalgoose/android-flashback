@@ -8,6 +8,10 @@
 
 Flashback is a Formula 1 statistics app!
 
+### Style guide
+
+![styleguide](res/styleguide.png)
+
 ### Architecture
 
 ![architecture](res/architecture.png)

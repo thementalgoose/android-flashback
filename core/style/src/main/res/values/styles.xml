@@ -6,4 +6,33 @@
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
+
+
+
+
+    <style name="Text">
+        <item name="android:textColor">?attr/contentPrimary</item>
+    </style>
+
+    <style name="Style.Text" parent="Text">
+
+    </style>
+
+    <style name="Style.Text" parent="Text">
+
+    </style>
+
+    <style name="Style.Text" parent="Text">
+
+    </style>
+
+    <style name="Style.Text" parent="Text">
+
+    </style>
+
+    <style name="Style.Text" parent="Text">
+
+    </style>
+
+
 </resources>
