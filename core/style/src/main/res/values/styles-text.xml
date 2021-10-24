@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Text">
-        <item name="android:textColor">?attr/contentPrimary</item>
-    </style>
-
     <style name="Text.Toolbar" parent="Text">
         <item name="android:fontFamily">@font/montserrat</item>
         <item name="android:textSize">@dimen/textSizeXLarge</item>
