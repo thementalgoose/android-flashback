@@ -41,7 +41,7 @@ class HomeViewModel(
 
     override var requiresSync: Boolean = false
     override var forceUpgrade: Boolean = false
-    override var appliedChanges: Boolean = false
+    override var appliedChanges: Boolean = true
 
     var outputs: HomeViewModelOutputs = this
 
@@ -60,7 +60,7 @@ class HomeViewModel(
                         Log.i("Flashback", "Pending configuration applied $result")
                     }
                     performConfigUpdates()
-                    appliedChanges = true
+                    appliedChanges = false
                 }
             }
         }
