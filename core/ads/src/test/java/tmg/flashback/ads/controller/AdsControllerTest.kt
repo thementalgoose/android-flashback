@@ -15,7 +15,8 @@ internal class AdsControllerTest: BaseTest() {
     private val mockRepository: AdsRepository = mockk(relaxed = true)
     private val mockManager: AdsManager = mockk(relaxed = true)
 
-    private val mockNativeAds: List<NativeAd> = listOf(mockk(relaxed = true))
+    private val mockNativeAd: NativeAd = mockk(relaxed = true)
+    private val mockNativeAds: List<NativeAd> = listOf(mockNativeAd)
 
     private lateinit var sut: AdsController
 
@@ -88,7 +89,7 @@ internal class AdsControllerTest: BaseTest() {
         every { mockRepository.isEnabled } returns true
         initSUT()
         runBlockingTest {
-            assertEquals(mockNativeAds, sut.getAd(mockk()))
+            assertEquals(mockNativeAd, sut.getAd(mockk()))
         }
         coVerify {
             mockManager.getNativeAd(any())
