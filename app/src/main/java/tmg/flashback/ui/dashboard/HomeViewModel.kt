@@ -4,8 +4,10 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import org.koin.experimental.property.inject
 import tmg.common.controllers.ForceUpgradeController
 import tmg.configuration.controllers.ConfigController
+import tmg.crash_reporting.controllers.CrashController
 import tmg.flashback.BuildConfig
 import tmg.flashback.managers.appshortcuts.AppShortcutManager
 import tmg.flashback.rss.controllers.RSSController
@@ -34,6 +36,7 @@ interface HomeViewModelOutputs {
 class HomeViewModel(
     private val configurationController: ConfigController,
     private val rssController: RSSController,
+    private val crashController: CrashController,
     private val forceUpgradeController: ForceUpgradeController,
     private val shortcutManager: AppShortcutManager,
     private val upNextController: UpNextController
@@ -55,11 +58,15 @@ class HomeViewModel(
             }
             else -> {
                 viewModelScope.launch {
-                    val result = configurationController.applyPending()
-                    if (BuildConfig.DEBUG) {
-                        Log.i("Flashback", "Pending configuration applied $result")
+                    try {
+                        val result = configurationController.applyPending()
+                        if (BuildConfig.DEBUG) {
+                            Log.i("Flashback", "Pending configuration applied $result")
+                        }
+                        performConfigUpdates()
+                    } catch (e: Exception) {
+                        crashController.logException(e)
                     }
-                    performConfigUpdates()
                     appliedChanges = false
                 }
             }

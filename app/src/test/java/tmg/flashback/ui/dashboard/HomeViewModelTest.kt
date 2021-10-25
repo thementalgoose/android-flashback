@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.common.controllers.ForceUpgradeController
 import tmg.configuration.controllers.ConfigController
+import tmg.crash_reporting.controllers.CrashController
 import tmg.flashback.managers.appshortcuts.AppShortcutManager
 import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.upnext.controllers.UpNextController
@@ -20,6 +21,7 @@ internal class HomeViewModelTest: BaseTest() {
     private var mockAppShortcutManager: AppShortcutManager = mockk(relaxed = true)
     private var mockRssController: RSSController = mockk(relaxed = true)
     private var mockConfigurationManager: ConfigController = mockk(relaxed = true)
+    private var mockCrashController: CrashController = mockk(relaxed = true)
     private var mockForceUpgradeController: ForceUpgradeController = mockk(relaxed = true)
     private var mockUpNextController: UpNextController = mockk(relaxed = true)
 
@@ -36,7 +38,14 @@ internal class HomeViewModelTest: BaseTest() {
     }
 
     private fun initSUT() {
-        sut = HomeViewModel(mockConfigurationManager, mockRssController, mockForceUpgradeController, mockAppShortcutManager, mockUpNextController)
+        sut = HomeViewModel(
+            mockConfigurationManager,
+            mockRssController,
+            mockCrashController,
+            mockForceUpgradeController,
+            mockAppShortcutManager,
+            mockUpNextController
+        )
     }
 
     @Test
@@ -48,7 +57,7 @@ internal class HomeViewModelTest: BaseTest() {
 
         assertTrue(sut.requiresSync)
         assertFalse(sut.forceUpgrade)
-        assertFalse(sut.appliedChanges)
+        assertTrue(sut.appliedChanges)
     }
 
     @Test
@@ -60,7 +69,7 @@ internal class HomeViewModelTest: BaseTest() {
 
         assertFalse(sut.requiresSync)
         assertTrue(sut.forceUpgrade)
-        assertFalse(sut.appliedChanges)
+        assertTrue(sut.appliedChanges)
     }
 
     @Test
@@ -76,7 +85,7 @@ internal class HomeViewModelTest: BaseTest() {
 
         assertFalse(sut.requiresSync)
         assertFalse(sut.forceUpgrade)
-        assertTrue(sut.appliedChanges)
+        assertFalse(sut.appliedChanges)
     }
 
     @Test
@@ -92,6 +101,6 @@ internal class HomeViewModelTest: BaseTest() {
 
         assertFalse(sut.requiresSync)
         assertFalse(sut.forceUpgrade)
-        assertTrue(sut.appliedChanges)
+        assertFalse(sut.appliedChanges)
     }
 }
