@@ -40,6 +40,7 @@
         <entry key="core/ui/src/main/res/layout/view_settings_preference.xml" value="0.35507246376811596" />
         <entry key="feature/common/src/main/res/layout/activity_release_notes.xml" value="0.2890625" />
         <entry key="feature/common/src/main/res/layout/fragment_bottom_sheet_animation_speed.xml" value="0.4311594202898551" />
+        <entry key="feature/common/src/main/res/layout/fragment_bottom_sheet_night_mode.xml" value="0.5463541666666667" />
         <entry key="feature/common/src/main/res/layout/fragment_bottom_sheet_release_notes.xml" value="0.4311594202898551" />
         <entry key="feature/common/src/main/res/layout/fragment_bottom_sheet_theme.xml" value="0.4311594202898551" />
         <entry key="feature/common/src/main/res/layout/fragment_privacy_policy.xml" value="0.2890625" />
@@ -141,6 +142,7 @@
         <entry key="feature/stats/statistics/src/main/res/drawable/background_link_pill.xml" value="0.159" />
         <entry key="feature/stats/statistics/src/main/res/drawable/ic_wikipedia.xml" value="0.214" />
         <entry key="feature/stats/statistics/src/main/res/layout/activity_race.xml" value="0.1" />
+        <entry key="feature/stats/statistics/src/main/res/layout/fragment_bottom_sheet_category.xml" value="0.5463541666666667" />
         <entry key="feature/stats/statistics/src/main/res/layout/fragment_driver.xml" value="0.1" />
         <entry key="feature/stats/statistics/src/main/res/layout/fragment_race.xml" value="0.22" />
         <entry key="feature/stats/statistics/src/main/res/layout/layout_driver.xml" value="0.5463541666666667" />
