@@ -573,5 +573,16 @@
       "Adds sound and priority to notifications",
       "Minor behind the scenes refactoring"
     ]
+  },
+  {
+    "versionCode": 109,
+    "versionName": "6.5.7",
+    "isMajor": false,
+    "title": "",
+    "notes": [
+      "Simplifies wording for default season management",
+      "Fixes some padding issues for Widgets in Android 12",
+      "Usual assortment of bug fixes and preparations for new features"
+    ]
   }
 ]
