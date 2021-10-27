@@ -7,10 +7,10 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:orientation="vertical"
-    android:paddingStart="@dimen/paddingSmall"
-    android:paddingTop="@dimen/paddingXSmall"
-    android:paddingEnd="@dimen/paddingSmall"
-    android:paddingBottom="@dimen/paddingXSmall"
+    android:paddingStart="@dimen/paddingMedium"
+    android:paddingTop="@dimen/paddingMedium"
+    android:paddingEnd="@dimen/paddingMedium"
+    android:paddingBottom="@dimen/paddingMedium"
     tools:background="#181818">
 
     <RelativeLayout
@@ -80,11 +80,12 @@
             android:layout_alignParentEnd="true"
             android:importantForAccessibility="no"
             app:tint="#fcfcfc"
-            tools:src="@drawable/circuit_albert_park" />
+            tools:src="@drawable/circuit_bahrain" />
 
         <ImageView
             android:id="@+id/flag"
             android:layout_width="@dimen/widgetFlagSize"
+            app:srcCompat="@drawable/bh"
             android:layout_height="@dimen/widgetFlagSize"
             android:layout_below="@id/circuit"
             android:layout_alignStart="@id/circuit"
