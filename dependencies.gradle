@@ -62,7 +62,13 @@ allprojects {
                         retrofit_jaxb                           : "com.squareup.retrofit2:converter-jaxb:$retrofit",
                         retrofit_gson                           : "com.squareup.retrofit2:converter-gson:$retrofit",
                         okhttp                                  : "com.squareup.okhttp3:okhttp:$okhttp3",
-                        okhttp_logging                          : "com.squareup.okhttp3:logging-interceptor:$okhttp3"
+                        okhttp_logging                          : "com.squareup.okhttp3:logging-interceptor:$okhttp3",
+                        kotlinx_serialization                   : "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0"
+                ],
+                room : [
+                        runtime                                 : "androidx.room:room-runtime:$room",
+                        compiler                                : "androidx.room:room-compiler:$room",
+                        ktx                                     : "androidx.room:room-ktx:$room"
                 ],
                 skeletonlayout                                  : "com.faltenreich:skeletonlayout:4.0.0",
                 threeten : [
@@ -94,6 +100,7 @@ allprojects {
                         params                                  : "org.junit.jupiter:junit-jupiter-params:$junit"
                 ],
                 mockk                                           : "io.mockk:mockk:$mockk",
+                room                                            : "androidx.room:room-testing:$room",
                 tmg : [
                         testutils                               : "com.github.thementalgoose:android-test-utilities:$tmg_test_utils"
                 ]

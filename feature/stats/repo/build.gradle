@@ -19,6 +19,7 @@ dependencies {
 
     // Modules
     api project(path: ':feature:stats:data')
+    implementation project(path: ':feature:stats:network')
 
     // Explicit crash reporting link
     implementation project(path: ':core:crash-reporting')
