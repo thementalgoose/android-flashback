@@ -154,6 +154,7 @@
         <entry key="feature/upnext/src/main/res/layout/view_breakdown_item.xml" value="0.7880377754459601" />
         <entry key="feature/upnext/src/main/res/layout/view_timezone.xml" value="0.3848958333333333" />
         <entry key="feature/upnext/src/main/res/layout/view_up_next_time_list.xml" value="0.3026041666666667" />
+        <entry key="feature/upnext/src/main/res/layout/widget_up_next.xml" value="0.2" />
       </map>
     </option>
   </component>
