@@ -1,5 +1,7 @@
 package tmg.flashback.statistics.network.models.drivers
 
+typealias AllDrivers = Map<String, DriverData>
+
 data class DriverData(
     val id: String,
     val firstName: String,
