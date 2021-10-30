@@ -66,6 +66,8 @@ task testModules {
             ':feature:stats:statistics:testDebugUnitTest',
             ':feature:stats:data:testDebugUnitTest',
             ':feature:stats:data-firestore:testDebugUnitTest',
+            ':feature:stats:repo:testDebugUnitTest',
+            ':feature:stats:network:testDebugUnitTest',
             ':feature:upnext:testDebugUnitTest',
             ':core:ads:testDebugUnitTest',
             ':core:analytics:testDebugUnitTest',
