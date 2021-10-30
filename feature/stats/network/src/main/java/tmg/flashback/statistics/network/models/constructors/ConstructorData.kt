@@ -1,9 +1,12 @@
 package tmg.flashback.statistics.network.models.constructors
 
+import kotlinx.serialization.Serializable
 import tmg.flashback.statistics.network.models.drivers.DriverData
 
-typealias AllConstructors = Map<String, ConstructorData>
+@Serializable
+class AllConstructors: HashMap<String, ConstructorData>()
 
+@Serializable
 data class ConstructorData(
     val id: String,
     val colour: String,

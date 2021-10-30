@@ -25,6 +25,9 @@ allprojects {
                         android                                 : "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines",
                         playservices                            : "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:$coroutines"
                 ],
+                kotlinx : [
+                        serialization                           : "org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinx_serialization"
+                ],
                 discord                                         : "com.github.discord:OverlappingPanels:0.1.3",
                 flagkit                                         : "com.jwang123.flagkit:flagkit:1.0",
                 firebase : [
