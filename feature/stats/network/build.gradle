@@ -3,6 +3,7 @@ apply from: rootDir.absolutePath + "/gradle/config-android.gradle"
 apply from: rootDir.absolutePath + "/gradle/config-util.gradle"
 apply from: rootDir.absolutePath + "/gradle/config-junit5.gradle"
 apply from: rootDir.absolutePath + "/gradle/config-koin.gradle"
+apply plugin: 'kotlinx-serialization'
 
 android {
     compileSdkVersion project.ext.compileSdkVersion
@@ -26,11 +27,12 @@ dependencies {
     // Swipe refresh
     implementation deps.androidx.swiperefreshlayout
 
+    // Kotlinx serialization
+    implementation deps.kotlinx.serialization
+
     // Retrofit
     implementation deps.retrofit.retrofit
-    implementation deps.retrofit.retrofit_simplexml
-    implementation deps.retrofit.retrofit_jaxb
-    implementation deps.retrofit.retrofit_gson
+    implementation deps.retrofit.kotlinx_serialization
     implementation deps.retrofit.okhttp
     implementation deps.retrofit.okhttp_logging
 }

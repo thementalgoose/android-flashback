@@ -1,7 +1,11 @@
 package tmg.flashback.statistics.network.models.overview
 
-typealias Overview = Map<String, OverviewRace>
+import kotlinx.serialization.Serializable
 
+@Serializable
+class Overview: HashMap<String, OverviewRace>()
+
+@Serializable
 data class OverviewRace(
     val season: Int,
     val round: Int,

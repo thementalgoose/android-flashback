@@ -1,11 +1,15 @@
 package tmg.flashback.statistics.network.models.races
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class Race(
     val data: RaceData,
     val race: Map<String, RaceResult>,
     val qualifying: Map<String, QualifyingResult>
 )
 
+@Serializable
 data class RaceResult(
     val driverId: String,
     val driverNumber: String,
@@ -19,11 +23,13 @@ data class RaceResult(
     val fastestLap: FastestLap?
 )
 
+@Serializable
 data class FastestLap(
     val position: Int,
     val time: String
 )
 
+@Serializable
 data class QualifyingResult(
     val driverId: String,
     val driverNumber: String?,
@@ -36,6 +42,7 @@ data class QualifyingResult(
     val qSprint: SprintQualifyingResult?
 )
 
+@Serializable
 data class SprintQualifyingResult(
     val points: Double,
     val qualified: Int,
