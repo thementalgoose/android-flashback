@@ -17,4 +17,10 @@ android {
 
 dependencies {
 
+    // Room
+    implementation deps.room.runtime
+    kapt deps.room.compiler
+    implementation deps.room.ktx
+
+    testImplementation depsTest.room
 }
