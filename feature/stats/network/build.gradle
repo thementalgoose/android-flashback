@@ -23,11 +23,14 @@ dependencies {
     // Explicit crash reporting link
     implementation project(path: ':core:crash-reporting')
 
-    // Firebase
-    implementation platform(deps.firebase.bom)
-    implementation deps.firebase.auth
-    implementation deps.firebase.common
-    implementation deps.firebase.firestore
-    implementation deps.firebase.firestore_ktx
-    implementation deps.kotlin.playservices
+    // Swipe refresh
+    implementation deps.androidx.swiperefreshlayout
+
+    // Retrofit
+    implementation deps.retrofit.retrofit
+    implementation deps.retrofit.retrofit_simplexml
+    implementation deps.retrofit.retrofit_jaxb
+    implementation deps.retrofit.retrofit_gson
+    implementation deps.retrofit.okhttp
+    implementation deps.retrofit.okhttp_logging
 }
