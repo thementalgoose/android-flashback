@@ -13,8 +13,8 @@ data class DriverData(
     val dob: String,
     val nationality: String,
     val nationalityISO: String,
-    val photoUrl: String?,
-    val wikiUrl: String?,
-    val code: String?,
-    val permanentNumber: String?
+    val photoUrl: String? = null,
+    val wikiUrl: String? = null,
+    val code: String? = null,
+    val permanentNumber: String? = null
 )

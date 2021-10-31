@@ -48,7 +48,6 @@ class CircuitInfoFragment: BaseFragment<FragmentCircuitInfoBinding>() {
         binding.titleExpanded.text = circuitName
         binding.titleCollapsed.text = circuitName
 
-        binding.swipeRefresh.isEnabled = false
         adapter = CircuitInfoAdapter(
                 clickShowOnMap = viewModel.inputs::clickShowOnMap,
                 clickWikipedia = viewModel.inputs::clickWikipedia,
@@ -74,6 +73,10 @@ class CircuitInfoFragment: BaseFragment<FragmentCircuitInfoBinding>() {
 
         binding.back.setOnClickListener {
             activity?.finish()
+        }
+
+        binding.swipeRefresh.setOnRefreshListener {
+            viewModel.inputs.refresh()
         }
 
         observe(viewModel.outputs.list) {

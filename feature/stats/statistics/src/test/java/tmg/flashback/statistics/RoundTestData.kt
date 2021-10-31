@@ -439,7 +439,7 @@ internal val mockSeason = Season(
 
 //region History
 
-internal val mockHistoryRound1 = HistoryRound(
+internal val mockHistoryRound1 = RoundOverview(
     date = mockLocalDateOfRound1,
     season = 2019,
     round = 1,
@@ -452,7 +452,7 @@ internal val mockHistoryRound1 = HistoryRound(
     hasResults = true
 )
 
-internal val mockHistoryRound2 = HistoryRound(
+internal val mockHistoryRound2 = RoundOverview(
     date = mockLocalDateOfRound2,
     season = 2019,
     round = 2,
@@ -470,7 +470,7 @@ internal val mockHistoryRound3 = mockHistoryRound2.copy(
     raceName = "Round 3"
 )
 
-internal val mockHistory = History(
+internal val mockHistory = SeasonOverview(
     2019,
     winner = WinnerSeason(
         season = 2019,
@@ -485,7 +485,7 @@ internal val mockHistory = History(
             WinnerSeasonConstructor(mockConstructorBeta.id, mockConstructorBeta.name, mockConstructorBeta.color.hexColor, 42)
         )
     ),
-    rounds = listOf(
+    roundOverviews = listOf(
         mockHistoryRound1,
         mockHistoryRound2
     )

@@ -16,9 +16,8 @@ import tmg.core.analytics.manager.AnalyticsManager
 import tmg.core.device.managers.NetworkConnectivityManager
 import tmg.core.ui.controllers.ThemeController
 import tmg.core.ui.model.AnimationSpeed
-import tmg.flashback.data.db.stats.HistoryRepository
 import tmg.flashback.data.db.stats.SeasonOverviewRepository
-import tmg.flashback.formula1.model.History
+import tmg.flashback.formula1.model.SeasonOverview
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.statistics.*
 import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
@@ -91,6 +90,20 @@ internal class SeasonViewModelTest: BaseTest() {
         sut.outputs.showUpNext.test {
             assertValue(true)
         }
+    }
+
+    //endregion
+
+    //region Refresh
+
+    @Test
+    fun `refresh makes network request and sets loading`() {
+        TODO("Implement me")
+    }
+
+    @Test
+    fun `refresh shows refresh error if network request fails`() {
+        TODO("Implement me")
     }
 
     //endregion
@@ -231,7 +244,7 @@ internal class SeasonViewModelTest: BaseTest() {
     @Test
     fun `when home type is schedule and history rounds is empty and network not connected, show no network error`() = coroutineTest {
 
-        val historyListWithEmptyRound = History(2019, null, emptyList())
+        val historyListWithEmptyRound = SeasonOverview(2019, null, emptyList())
 
         every { mockNetworkConnectivityManager.isConnected } returns false
         every { mockHistoryRepository.historyFor(any()) } returns flow { emit(historyListWithEmptyRound) }
@@ -250,7 +263,7 @@ internal class SeasonViewModelTest: BaseTest() {
     @Test
     fun `when home type is schedule and history rounds is empty and network is connected and year is current year, show early in season error`() = coroutineTest {
 
-        val historyItemWithEmptyRound = History(currentSeasonYear, null, emptyList())
+        val historyItemWithEmptyRound = SeasonOverview(currentSeasonYear, null, emptyList())
 
         every { mockSeasonOverviewRepository.getSeasonOverview(any()) } returns flow { emit(mockSeason.copy(season = currentSeasonYear)) }
         every { mockHistoryRepository.historyFor(any()) } returns flow { emit(historyItemWithEmptyRound) }
@@ -269,7 +282,7 @@ internal class SeasonViewModelTest: BaseTest() {
     @Test
     fun `when home type is schedule and history rounds is empty and network is connected and year is in the past, show missing race data message`() = coroutineTest {
 
-        val historyListWithEmptyRound = History(2019, null, emptyList())
+        val historyListWithEmptyRound = SeasonOverview(2019, null, emptyList())
 
         every { mockHistoryRepository.historyFor(any()) } returns flow { emit(historyListWithEmptyRound) }
 
@@ -332,7 +345,7 @@ internal class SeasonViewModelTest: BaseTest() {
     @Test
     fun `when home type is calendar and history rounds is empty and network not connected, show no network error`() = coroutineTest {
 
-        val historyListWithEmptyRound = History(2019, null, emptyList())
+        val historyListWithEmptyRound = SeasonOverview(2019, null, emptyList())
 
         every { mockNetworkConnectivityManager.isConnected } returns false
         every { mockHistoryRepository.historyFor(any()) } returns flow { emit(historyListWithEmptyRound) }
@@ -353,7 +366,7 @@ internal class SeasonViewModelTest: BaseTest() {
     @Test
     fun `when home type is calendar and history rounds is empty and network is connected and year is current year, show early in season error`() = coroutineTest {
 
-        val historyItemWithEmptyRound = History(currentSeasonYear, null, emptyList())
+        val historyItemWithEmptyRound = SeasonOverview(currentSeasonYear, null, emptyList())
 
         every { mockSeasonOverviewRepository.getSeasonOverview(any()) } returns flow { emit(mockSeason.copy(season = currentSeasonYear)) }
         every { mockHistoryRepository.historyFor(any()) } returns flow { emit(historyItemWithEmptyRound) }
@@ -374,7 +387,7 @@ internal class SeasonViewModelTest: BaseTest() {
     @Test
     fun `when home type is calendar and history rounds is empty and network is connected and year is in the past, show missing race data message`() = coroutineTest {
 
-        val historyListWithEmptyRound = History(2019, null, emptyList())
+        val historyListWithEmptyRound = SeasonOverview(2019, null, emptyList())
 
         every { mockHistoryRepository.historyFor(any()) } returns flow { emit(historyListWithEmptyRound) }
 
@@ -413,7 +426,7 @@ internal class SeasonViewModelTest: BaseTest() {
 
         val historyRound1 = mockHistoryRound1.copy(date = LocalDate.of(2019, 7, 7))
         val historyRound2 = mockHistoryRound2.copy(date = LocalDate.of(2019, 10, 13))
-        every { mockHistoryRepository.historyFor(any()) } returns flow { emit(mockHistory.copy(rounds = listOf(historyRound1, historyRound2))) }
+        every { mockHistoryRepository.historyFor(any()) } returns flow { emit(mockHistory.copy(roundOverviews = listOf(historyRound1, historyRound2))) }
 
         initSUT()
         sut.inputs.clickItem(SeasonNavItem.CALENDAR)
@@ -497,7 +510,7 @@ internal class SeasonViewModelTest: BaseTest() {
     @Test
     fun `when home type is drivers and history rounds size doesnt match rounds available, show results as of header box in response`() = coroutineTest {
 
-        every { mockHistoryRepository.historyFor(any()) } returns flow { emit(History(2019, null, listOf(mockHistoryRound1, mockHistoryRound2, mockHistoryRound3))) }
+        every { mockHistoryRepository.historyFor(any()) } returns flow { emit(SeasonOverview(2019, null, listOf(mockHistoryRound1, mockHistoryRound2, mockHistoryRound3))) }
 
         initSUT()
         sut.inputs.clickItem(SeasonNavItem.DRIVERS)
@@ -575,7 +588,7 @@ internal class SeasonViewModelTest: BaseTest() {
     @Test
     fun `when home type is constructors and history rounds size doesnt match rounds available, show results as of header box in response`() = coroutineTest {
 
-        every { mockHistoryRepository.historyFor(any()) } returns flow { emit(History(2019, null, listOf(mockHistoryRound1, mockHistoryRound2, mockHistoryRound3))) }
+        every { mockHistoryRepository.historyFor(any()) } returns flow { emit(SeasonOverview(2019, null, listOf(mockHistoryRound1, mockHistoryRound2, mockHistoryRound3))) }
 
         initSUT()
         sut.inputs.clickItem(SeasonNavItem.CONSTRUCTORS)

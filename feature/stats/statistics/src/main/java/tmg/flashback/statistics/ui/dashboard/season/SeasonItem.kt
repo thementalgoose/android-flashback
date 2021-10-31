@@ -6,7 +6,7 @@ import org.threeten.bp.Month
 import tmg.flashback.statistics.R
 import tmg.core.ui.model.AnimationSpeed
 import tmg.flashback.formula1.model.ConstructorDriver
-import tmg.flashback.formula1.model.HistoryRound
+import tmg.flashback.formula1.model.RoundOverview
 import tmg.flashback.formula1.model.Round
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 
@@ -23,7 +23,7 @@ sealed class SeasonItem(
     data class CalendarWeek(
         val forMonth: Month,
         val startingDay: LocalDate,
-        val race: HistoryRound?
+        val race: RoundOverview?
     ): SeasonItem(R.layout.view_dashboard_season_calendar_week)
 
     data class Track(

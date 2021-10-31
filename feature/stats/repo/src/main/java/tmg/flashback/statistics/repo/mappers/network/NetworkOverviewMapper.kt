@@ -19,8 +19,8 @@ class NetworkOverviewMapper {
             countryISO = overview.countryISO,
             date = overview.date,
             time = overview.time,
-            hasRace = overview.hasResults,
-            hasQualifying = overview.hasQualifying,
+            hasRace = overview.hasRace,
+            hasQualifying = overview.hasQualifying
         )
     }
 }

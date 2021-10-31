@@ -252,21 +252,22 @@ internal val mockSeason: Season = Season(
 
 //region History
 
-internal val mockRound1History: HistoryRound = mockRound1.toHistory()
-internal val mockRound2History: HistoryRound = mockRound2.toHistory()
+internal val MOCK_ROUND_1_OVERVIEW: RoundOverview = mockRound1.toHistory()
+internal val MOCK_ROUND_2_OVERVIEW: RoundOverview = mockRound2.toHistory()
 
-internal val mockHistory: History = History(
-        season = 2019,
-        winner = WinnerSeason(
-                season = 2019,
-                driver = listOf(WinnerSeasonDriver(mockDriverCharlie.id, mockDriverCharlie.name, mockDriverCharlie.photoUrl, 43)),
-                constructor = listOf(WinnerSeasonConstructor(mockConstructorBlue.id, mockConstructorBlue.name, "#0000ff", 83))
-        ),
-        rounds = listOf(
-                mockRound1History,
-                mockRound2History
+internal val MOCK_SEASON_OVERVIEW: SeasonOverview =
+        SeasonOverview(
+            season = 2019,
+            winner = WinnerSeason(
+                    season = 2019,
+                    driver = listOf(WinnerSeasonDriver(mockDriverCharlie.id, mockDriverCharlie.name, mockDriverCharlie.photoUrl, 43)),
+                    constructor = listOf(WinnerSeasonConstructor(mockConstructorBlue.id, mockConstructorBlue.name, "#0000ff", 83))
+            ),
+            roundOverviews = listOf(
+                    MOCK_ROUND_1_OVERVIEW,
+                    MOCK_ROUND_2_OVERVIEW
+            )
         )
-)
 
 //endregion
 
@@ -391,8 +392,8 @@ private fun mockRound(
         race = buildRace(mockAllDrivers.map { it.forRound() }, finishOrder)
 )
 
-private fun Round.toHistory(): HistoryRound {
-    return HistoryRound(
+private fun Round.toHistory(): RoundOverview {
+    return RoundOverview(
             date = this.date,
             season = this.season,
             round = this.round,

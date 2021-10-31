@@ -7,7 +7,9 @@ data class CircuitRace(
     val name: String,
     val season: Int,
     val round: Int,
-    val wikiUrl: String,
+    val wikiUrl: String?,
     val date: LocalDate,
     val time: LocalTime?
-)
+) {
+    companion object
+}

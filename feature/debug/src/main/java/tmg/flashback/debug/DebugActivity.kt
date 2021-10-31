@@ -1,14 +1,25 @@
 package tmg.flashback.debug
 
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 import tmg.core.ui.base.BaseActivity
 import tmg.flashback.debug.databinding.ActivityDebugBinding
+import tmg.flashback.statistics.repo.CircuitRepository
+import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.notifications.receiver.LocalNotificationBroadcastReceiver
 
 class DebugActivity: BaseActivity() {
 
     private lateinit var binding: ActivityDebugBinding
 
+    private val overviewRepository: OverviewRepository by inject()
+    private val circuitRepository: CircuitRepository by inject()
+
+    @Suppress("EXPERIMENTAL_API_USAGE")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDebugBinding.inflate(layoutInflater)
@@ -23,5 +34,39 @@ class DebugActivity: BaseActivity() {
             )
             sendBroadcast(intent)
         }
+
+        binding.networkOverview.setOnClickListener {
+            GlobalScope.launch {
+                log("Sending request")
+                val result = overviewRepository.fetchOverview()
+                log("Result $result")
+                runOnUiThread {
+                    Toast.makeText(applicationContext, "Result $result", Toast.LENGTH_LONG).show()
+                }
+            }
+        }
+
+        binding.networkDrivers.setOnClickListener {
+            Toast.makeText(applicationContext, "Not implemented", Toast.LENGTH_LONG).show()
+        }
+
+        binding.networkConstructors.setOnClickListener {
+            Toast.makeText(applicationContext, "Not implemented", Toast.LENGTH_LONG).show()
+        }
+
+        binding.networkCircuits.setOnClickListener {
+            GlobalScope.launch {
+                log("Sending request")
+                val result = circuitRepository.fetchAllCircuits()
+                log("Result $result")
+                runOnUiThread {
+                    Toast.makeText(applicationContext, "Result $result", Toast.LENGTH_LONG).show()
+                }
+            }
+        }
+    }
+
+    private fun log(msg: String) {
+        Log.d("Debug", msg)
     }
 }

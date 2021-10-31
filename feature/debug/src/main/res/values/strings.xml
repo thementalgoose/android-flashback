@@ -5,4 +5,10 @@
     <string name="debug_title">Debug</string>
 
     <string name="debug_notification_send_local">Send notification</string>
+
+    <string name="debug_network_title">Network Requests</string>
+    <string name="debug_network_overview">overview.json</string>
+    <string name="debug_network_drivers">drivers.json</string>
+    <string name="debug_network_constructors">constructors.json</string>
+    <string name="debug_network_circuits">circuits.json</string>
 </resources>

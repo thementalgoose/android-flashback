@@ -5,10 +5,10 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 import org.threeten.bp.LocalDate
 
-class HistoryTest {
+class SeasonOverviewTest {
 
-    private lateinit var mockHistoryRound1: tmg.flashback.formula1.model.HistoryRound
-    private lateinit var mockHistoryRound2: tmg.flashback.formula1.model.HistoryRound
+    private lateinit var mockRoundOverview1: tmg.flashback.formula1.model.RoundOverview
+    private lateinit var mockRoundOverview2: tmg.flashback.formula1.model.RoundOverview
 
     private val previous = LocalDate.now().minusDays(1)
     private val now = LocalDate.now()
@@ -27,10 +27,10 @@ class HistoryTest {
 
         initMockStates(mockState1, mockState2)
 
-        val mock = tmg.flashback.formula1.model.History(
+        val mock = tmg.flashback.formula1.model.SeasonOverview(
             2020,
             null,
-            listOf(mockHistoryRound1, mockHistoryRound2)
+            listOf(mockRoundOverview1, mockRoundOverview2)
         )
 
         assertEquals(expectedRoundsFound, mock.completed)
@@ -49,10 +49,10 @@ class HistoryTest {
 
         initMockStates(mockState1, mockState2)
 
-        val mock = tmg.flashback.formula1.model.History(
+        val mock = tmg.flashback.formula1.model.SeasonOverview(
             2020,
             null,
-            listOf(mockHistoryRound1, mockHistoryRound2)
+            listOf(mockRoundOverview1, mockRoundOverview2)
         )
 
         assertEquals(expectedRoundsFound, mock.upcoming)
@@ -71,17 +71,17 @@ class HistoryTest {
 
         initMockStates(mockState1, mockState2)
 
-        val mock = tmg.flashback.formula1.model.History(
+        val mock = tmg.flashback.formula1.model.SeasonOverview(
             2020,
             null,
-            listOf(mockHistoryRound1, mockHistoryRound2)
+            listOf(mockRoundOverview1, mockRoundOverview2)
         )
 
         assertEquals(expectedRoundsFound, mock.scheduledToday)
     }
 
     private fun initMockStates(mockState1: String, mockState2: String) {
-        mockHistoryRound1 = tmg.flashback.formula1.model.HistoryRound(
+        mockRoundOverview1 = tmg.flashback.formula1.model.RoundOverview(
             date = getDate(mockState1),
             season = 2020,
             round = 1,
@@ -93,7 +93,7 @@ class HistoryTest {
             hasQualifying = false,
             hasResults = false
         )
-        mockHistoryRound2 = tmg.flashback.formula1.model.HistoryRound(
+        mockRoundOverview2 = tmg.flashback.formula1.model.RoundOverview(
             date = getDate(mockState2),
             season = 2020,
             round = 2,

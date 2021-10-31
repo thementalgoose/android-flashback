@@ -3,8 +3,7 @@ package tmg.flashback.statistics.repo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import tmg.crash_reporting.controllers.CrashController
-import tmg.flashback.formula1.model.History
-import tmg.flashback.formula1.model.HistoryRound
+import tmg.flashback.formula1.model.SeasonOverview
 import tmg.flashback.statistics.network.api.FlashbackApi
 import tmg.flashback.statistics.network.models.overview.Overview
 import tmg.flashback.statistics.network.utils.data
@@ -23,6 +22,7 @@ class OverviewRepository(
 ) {
     suspend fun fetchOverview(): Boolean {
         val result = api.getOverview()
+        println("OkHttp ${result.hasData} ${result}")
         if (!result.hasData) {
             return false
         }
@@ -39,6 +39,7 @@ class OverviewRepository(
 
     private suspend fun fetchOverviews(data: Overview?): Boolean {
 
+        println("OkHttp Processing ${data}")
         val allOverviews = (data?.values ?: emptyList())
             .mapNotNull {
                 try {
@@ -48,16 +49,18 @@ class OverviewRepository(
                     null
                 }
             }
+
+        println("OkHttp Saving $allOverviews")
         persistence.overviewDao().insertAll(allOverviews)
         return allOverviews.isNotEmpty()
     }
 
-    fun getOverview(season: Int): Flow<History> {
+    fun getOverview(season: Int): Flow<SeasonOverview> {
         return persistence.overviewDao().getOverview(season)
             .map { overview ->
-                History(
+                SeasonOverview(
                     season = season,
-                    rounds = overview
+                    roundOverviews = overview
                         .filterNotNull()
                         .map { overviewMapper.mapOverview(it) }
                 )

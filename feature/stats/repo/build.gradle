@@ -1,4 +1,4 @@
-apply plugin:  'com.android.library'
+apply plugin: 'com.android.library'
 apply from: rootDir.absolutePath + "/gradle/config-android.gradle"
 apply from: rootDir.absolutePath + "/gradle/config-util.gradle"
 apply from: rootDir.absolutePath + "/gradle/config-junit5.gradle"
@@ -27,4 +27,9 @@ dependencies {
 
     // Retrofit
     implementation deps.retrofit.retrofit
+
+    // Tests
+    testImplementation project(path: ':formula1', configuration: 'unitTestArtifact')
+    testImplementation project(path: ':feature:stats:network', configuration: 'unitTestArtifact')
+    testImplementation project(path: ':feature:stats:room', configuration: 'unitTestArtifact')
 }

@@ -21,9 +21,13 @@ private fun buildFlashbackApi(retrofit: Retrofit): FlashbackApi {
 }
 
 private fun buildRetrofit(baseUrlManager: NetworkConfigManager): Retrofit {
+    val json = Json {
+        ignoreUnknownKeys = true
+    }
+
     val builder = Retrofit.Builder()
         .baseUrl(baseUrlManager.baseUrl)
-        .addConverterFactory(Json.asConverterFactory("application/json".toMediaType()))
+        .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
 
     val client = OkHttpClient.Builder()
     if (baseUrlManager.isDebug) {

@@ -1,4 +1,4 @@
-apply plugin:  'com.android.library'
+apply plugin: 'com.android.library'
 apply from: rootDir.absolutePath + "/gradle/config-android.gradle"
 apply from: rootDir.absolutePath + "/gradle/config-util.gradle"
 apply from: rootDir.absolutePath + "/gradle/config-junit5.gradle"
@@ -29,4 +29,15 @@ dependencies {
 
     // Flagkit
     api deps.flagkit
+}
+
+task jarTests(type: Jar) {
+    classifier = 'tests'
+    from "$buildDir/intermediates/classes/test/debug"
+}
+configurations {
+    unitTestArtifact
+}
+artifacts {
+    unitTestArtifact jarTests
 }
