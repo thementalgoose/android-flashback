@@ -4,6 +4,7 @@ import android.graphics.Color
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
 import tmg.flashback.data.models.stats.*
+import tmg.flashback.formula1.model.*
 
 /**
  * Mock data used for UI testing:
@@ -363,17 +364,17 @@ internal val mockConstructorBlueOverview = ConstructorOverview(
 //region Utilities
 
 private fun mockRound(
-        season: Int,
-        round: Int,
-        date: LocalDate,
-        name: String,
-        drivers: List<Driver>,
-        constructors: List<Constructor>,
-        circuit: CircuitSummary,
-        q1Order: List<Driver>,
-        q2Order: List<Driver>,
-        q3Order: List<Driver>,
-        finishOrder: List<Driver>
+    season: Int,
+    round: Int,
+    date: LocalDate,
+    name: String,
+    drivers: List<Driver>,
+    constructors: List<Constructor>,
+    circuit: CircuitSummary,
+    q1Order: List<Driver>,
+    q2Order: List<Driver>,
+    q3Order: List<Driver>,
+    finishOrder: List<Driver>
 ): Round = Round(
         season = season,
         round = round,

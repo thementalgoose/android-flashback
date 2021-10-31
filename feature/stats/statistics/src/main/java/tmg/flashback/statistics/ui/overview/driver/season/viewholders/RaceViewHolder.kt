@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlin.math.roundToInt
 import tmg.core.ui.model.AnimationSpeed
 import tmg.flashback.statistics.ui.overview.driver.season.DriverSeasonItem
-import tmg.flashback.data.enums.isStatusFinished
+import tmg.flashback.formula1.enums.isStatusFinished
 import tmg.core.ui.extensions.getColor
 import tmg.flashback.firebase.extensions.pointsDisplay
 import tmg.flashback.statistics.R

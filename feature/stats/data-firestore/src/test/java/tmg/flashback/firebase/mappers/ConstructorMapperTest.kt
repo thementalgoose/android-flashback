@@ -7,11 +7,11 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeParseException
-import tmg.flashback.data.models.stats.Constructor
-import tmg.flashback.data.models.stats.ConstructorDriver
-import tmg.flashback.data.models.stats.ConstructorOverview
-import tmg.flashback.data.models.stats.ConstructorOverviewDriverStanding
-import tmg.flashback.data.models.stats.ConstructorOverviewStanding
+import tmg.flashback.formula1.model.Constructor
+import tmg.flashback.formula1.model.ConstructorDriver
+import tmg.flashback.formula1.model.ConstructorOverview
+import tmg.flashback.formula1.model.ConstructorOverviewDriverStanding
+import tmg.flashback.formula1.model.ConstructorOverviewStanding
 import tmg.flashback.firebase.currentYear
 import tmg.flashback.firebase.models.FConstructorOverview
 import tmg.flashback.firebase.models.FConstructorOverviewData
@@ -34,7 +34,7 @@ internal class ConstructorMapperTest: BaseTest() {
         initSUT()
 
         val input = FConstructorOverview.model()
-        val expected = ConstructorOverview(
+        val expected = tmg.flashback.formula1.model.ConstructorOverview(
             id = "constructorId",
             name = "constructorName",
             wikiUrl = "wikiUrl",
@@ -42,10 +42,10 @@ internal class ConstructorMapperTest: BaseTest() {
             nationalityISO = "nationalityISO",
             color = 0,
             standings = listOf(
-                ConstructorOverviewStanding(
+                tmg.flashback.formula1.model.ConstructorOverviewStanding(
                     drivers = mapOf(
-                        "driverId" to ConstructorOverviewDriverStanding(
-                            driver = ConstructorDriver(
+                        "driverId" to tmg.flashback.formula1.model.ConstructorOverviewDriverStanding(
+                            driver = tmg.flashback.formula1.model.ConstructorDriver(
                                 id = "driverId",
                                 firstName = "firstName",
                                 lastName = "lastName",
@@ -56,7 +56,7 @@ internal class ConstructorMapperTest: BaseTest() {
                                 dateOfBirth = LocalDate.of(1995, 10, 12),
                                 nationality = "nationality",
                                 nationalityISO = "nationalityISO",
-                                constructor = Constructor(
+                                constructor = tmg.flashback.formula1.model.Constructor(
                                     id = "constructorId",
                                     name = "constructorName",
                                     wikiUrl = "wikiUrl",
@@ -132,10 +132,10 @@ internal class ConstructorMapperTest: BaseTest() {
         val inputDrivers = mapOf(
             "driverId" to FConstructorOverviewDrivers.model()
         )
-        val expected = ConstructorOverviewStanding(
+        val expected = tmg.flashback.formula1.model.ConstructorOverviewStanding(
             drivers = mapOf(
-                "driverId" to ConstructorOverviewDriverStanding(
-                    driver = ConstructorDriver(
+                "driverId" to tmg.flashback.formula1.model.ConstructorOverviewDriverStanding(
+                    driver = tmg.flashback.formula1.model.ConstructorDriver(
                         id = "driverId",
                         firstName = "firstName",
                         lastName = "lastName",
@@ -146,7 +146,7 @@ internal class ConstructorMapperTest: BaseTest() {
                         dateOfBirth = LocalDate.of(1995, 10, 12),
                         nationality = "nationality",
                         nationalityISO = "nationalityISO",
-                        constructor = Constructor(
+                        constructor = tmg.flashback.formula1.model.Constructor(
                             id = "constructorId",
                             name = "constructorName",
                             wikiUrl = "wikiUrl",
@@ -254,7 +254,7 @@ internal class ConstructorMapperTest: BaseTest() {
         initSUT()
 
         val input = FConstructorOverviewStandingsDriver.model()
-        val expectedDriver = ConstructorDriver(
+        val expectedDriver = tmg.flashback.formula1.model.ConstructorDriver(
             id = "driverId",
             firstName = "firstName",
             lastName = "lastName",
@@ -265,7 +265,7 @@ internal class ConstructorMapperTest: BaseTest() {
             dateOfBirth = LocalDate.of(1995, 10, 12),
             nationality = "nationality",
             nationalityISO = "nationalityISO",
-            constructor = Constructor(
+            constructor = tmg.flashback.formula1.model.Constructor(
                 id = "constructorId",
                 name = "constructorName",
                 wikiUrl = "wikiUrl",
@@ -274,7 +274,7 @@ internal class ConstructorMapperTest: BaseTest() {
                 color = 0
             )
         )
-        val expected = ConstructorOverviewDriverStanding(
+        val expected = tmg.flashback.formula1.model.ConstructorOverviewDriverStanding(
             driver = expectedDriver,
             bestFinish = 1,
             bestQualifying = 1,
@@ -395,7 +395,7 @@ internal class ConstructorMapperTest: BaseTest() {
         initSUT()
 
         val input = FConstructorOverviewDrivers.model()
-        val expected = ConstructorDriver(
+        val expected = tmg.flashback.formula1.model.ConstructorDriver(
             id = "driverId",
             firstName = "firstName",
             lastName = "lastName",
@@ -406,7 +406,7 @@ internal class ConstructorMapperTest: BaseTest() {
             dateOfBirth = LocalDate.of(1995, 10, 12),
             nationality = "nationality",
             nationalityISO = "nationalityISO",
-            constructor = Constructor(
+            constructor = tmg.flashback.formula1.model.Constructor(
                 id = "constructorId",
                 name = "constructorName",
                 nationality = "nationality",
@@ -450,7 +450,7 @@ internal class ConstructorMapperTest: BaseTest() {
         initSUT()
 
         val input = FConstructorOverviewData.model()
-        val expected = Constructor(
+        val expected = tmg.flashback.formula1.model.Constructor(
             id = "constructorId",
             name = "constructorName",
             nationality = "nationality",

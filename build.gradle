@@ -62,7 +62,7 @@ task clean(type: Delete) {
 task testModules {
     dependsOn ':app:testSandDebugUnitTest',
             ':feature:common:testDebugUnitTest',
-            ':feature:formula1:testDebugUnitTest',
+            ':formula1:testDebugUnitTest',
             ':feature:rss:testDebugUnitTest',
             ':feature:stats:statistics:testDebugUnitTest',
             ':feature:stats:data:testDebugUnitTest',

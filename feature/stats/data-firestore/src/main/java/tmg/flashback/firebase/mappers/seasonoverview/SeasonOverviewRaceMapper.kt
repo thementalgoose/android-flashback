@@ -1,14 +1,5 @@
 package tmg.flashback.firebase.mappers.seasonoverview
 
-import tmg.flashback.data.enums.raceStatusUnknown
-import tmg.flashback.data.models.stats.CircuitSummary
-import tmg.flashback.data.models.stats.Driver
-import tmg.flashback.data.models.stats.FastestLap
-import tmg.flashback.data.models.stats.RoundQualifyingResult
-import tmg.flashback.data.models.stats.RoundRaceResult
-import tmg.flashback.data.models.stats.RoundSprintQualifyingResult
-import tmg.flashback.data.utils.toLapTime
-import tmg.flashback.data.utils.toMaxIfZero
 import tmg.flashback.firebase.mappers.LocationMapper
 import tmg.flashback.firebase.models.FSeasonOverviewRaceCircuit
 import tmg.flashback.firebase.models.FSeasonOverviewRaceQualifying
@@ -47,7 +38,9 @@ class SeasonOverviewRaceMapper(
                 })
             }
             .sortedBy { (_, _, lapTime) ->
-                lapTime?.totalMillis.toMaxIfZero()
+                lapTime?.totalMillis.let {
+                    if (this || this == 0) Int.MAX_VALUE else this
+                }
             }
             .mapIndexed { index, (driver, qualifyingResult, lapTime) ->
                 driver.id to RoundQualifyingResult(
@@ -81,7 +74,8 @@ class SeasonOverviewRaceMapper(
                     grid = sprintQualifying.grid ?: 0,
                     qualified = sprintQualifying.getSprintQualified,
                     finish = sprintQualifying.result ?: 0,
-                    status = sprintQualifying.status ?: raceStatusUnknown
+                    status = sprintQualifying.status
+                        ?: tmg.flashback.formula1.enums.raceStatusUnknown
                 )
             }
             .toMap()
@@ -107,9 +101,10 @@ class SeasonOverviewRaceMapper(
                     time = raceResult.time?.toLapTime(),
                     points = raceResult.points ?: 0.0,
                     grid = raceResult.grid ?: 0,
-                    qualified = sprintQualifyingData?.get(driver.id)?.getSprintQualified ?: raceResult.getQualified,
+                    qualified = sprintQualifyingData?.get(driver.id)?.getSprintQualified
+                        ?: raceResult.getQualified,
                     finish = raceResult.result ?: 0,
-                    status = raceResult.status ?: raceStatusUnknown,
+                    status = raceResult.status ?: tmg.flashback.formula1.enums.raceStatusUnknown,
                     fastestLap = raceResult.fastestLap?.let { mapFastestLap(it) }
                 )
             }

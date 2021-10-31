@@ -3,9 +3,9 @@ package tmg.flashback.firebase.mappers
 import androidx.core.graphics.toColorInt
 import java.lang.NullPointerException
 import tmg.crash_reporting.controllers.CrashController
-import tmg.flashback.data.models.stats.SearchCircuit
-import tmg.flashback.data.models.stats.SearchConstructor
-import tmg.flashback.data.models.stats.SearchDriver
+import tmg.flashback.formula1.model.SearchCircuit
+import tmg.flashback.formula1.model.SearchConstructor
+import tmg.flashback.formula1.model.SearchDriver
 import tmg.flashback.firebase.models.FSearchCircuitModel
 import tmg.flashback.firebase.models.FSearchConstructorModel
 import tmg.flashback.firebase.models.FSearchDriverModel
@@ -17,7 +17,7 @@ class SearchMapper(
     private val locationMapper: LocationMapper
 ) {
 
-    fun mapSearchDriver(input: FSearchDriverModel, id: String): SearchDriver? {
+    fun mapSearchDriver(input: FSearchDriverModel, id: String): tmg.flashback.formula1.model.SearchDriver? {
         if (input.fname == null) {
             crashController.logException(NullPointerException("SearchMapper.mapSearchDriver Driver id $id has a null first name"))
             return null
@@ -34,7 +34,7 @@ class SearchMapper(
             crashController.logException(NullPointerException("SearchMapper.mapSearchDriver Driver id $id has a null dob or invalid dob ${input.dob}"))
             return null
         }
-        return SearchDriver(
+        return tmg.flashback.formula1.model.SearchDriver(
             id = id,
             firstName = input.fname,
             lastName = input.sname,
@@ -46,7 +46,7 @@ class SearchMapper(
         )
     }
 
-    fun mapSearchConstructor(input: FSearchConstructorModel, id: String): SearchConstructor? {
+    fun mapSearchConstructor(input: FSearchConstructorModel, id: String): tmg.flashback.formula1.model.SearchConstructor? {
         if (input.name == null) {
             crashController.logException(NullPointerException("SearchMapper.mapSearchConstructor Constructor id $id has a null name"))
             return null
@@ -59,7 +59,7 @@ class SearchMapper(
             crashController.logException(NullPointerException("SearchMapper.mapSearchConstructor Constructor id $id has a null colour"))
             return null
         }
-        return SearchConstructor(
+        return tmg.flashback.formula1.model.SearchConstructor(
             id = id,
             name = input.name,
             nationality = input.nat ?: "",
@@ -69,7 +69,7 @@ class SearchMapper(
         )
     }
 
-    fun mapSearchCircuit(input: FSearchCircuitModel, id: String): SearchCircuit? {
+    fun mapSearchCircuit(input: FSearchCircuitModel, id: String): tmg.flashback.formula1.model.SearchCircuit? {
         if (input.loc == null) {
             crashController.logException(NullPointerException("SearchMapper.mapSearchCircuit Circuit id $id has a null location"))
             return null
@@ -86,7 +86,7 @@ class SearchMapper(
             crashController.logException(NullPointerException("SearchMapper.mapSearchCircuit Circuit id $id has a null name"))
             return null
         }
-        return SearchCircuit(
+        return tmg.flashback.formula1.model.SearchCircuit(
             id = id,
             country = input.country,
             countryISO = input.countryISO,

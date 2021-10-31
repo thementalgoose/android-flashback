@@ -106,8 +106,8 @@ jobs:
         run: ./gradlew :feature:common:testDebugUnitTest
         if: ${{ needs.unit_test_diff_check.outputs.feature_common == 'true' }}
 
-      - name: :feature:formula1
-        run: ./gradlew :feature:formula1:testDebugUnitTest
+      - name: :formula1
+        run: ./gradlew :formula1:testDebugUnitTest
         if: ${{ needs.unit_test_diff_check.outputs.feature_formula1 == 'true' }}
 
       - name: :feature:rss

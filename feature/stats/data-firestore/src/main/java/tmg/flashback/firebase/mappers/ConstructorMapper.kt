@@ -1,11 +1,11 @@
 package tmg.flashback.firebase.mappers
 
 import androidx.core.graphics.toColorInt
-import tmg.flashback.data.models.stats.ConstructorDriver
-import tmg.flashback.data.models.stats.Constructor
-import tmg.flashback.data.models.stats.ConstructorOverview
-import tmg.flashback.data.models.stats.ConstructorOverviewDriverStanding
-import tmg.flashback.data.models.stats.ConstructorOverviewStanding
+import tmg.flashback.formula1.model.ConstructorDriver
+import tmg.flashback.formula1.model.Constructor
+import tmg.flashback.formula1.model.ConstructorOverview
+import tmg.flashback.formula1.model.ConstructorOverviewDriverStanding
+import tmg.flashback.formula1.model.ConstructorOverviewStanding
 import tmg.flashback.firebase.currentYear
 import tmg.flashback.firebase.models.FConstructorOverview
 import tmg.flashback.firebase.models.FConstructorOverviewData
@@ -16,8 +16,8 @@ import tmg.utilities.utils.LocalDateUtils.Companion.requireFromDate
 
 class ConstructorMapper {
 
-    fun mapConstructorOverview(input: FConstructorOverview): ConstructorOverview {
-        val standings: List<ConstructorOverviewStanding> = when {
+    fun mapConstructorOverview(input: FConstructorOverview): tmg.flashback.formula1.model.ConstructorOverview {
+        val standings: List<tmg.flashback.formula1.model.ConstructorOverviewStanding> = when {
             input.drivers.isNullOrEmpty() -> emptyList()
             input.standings.isNullOrEmpty() -> emptyList()
             else -> (input.standings)
@@ -25,7 +25,7 @@ class ConstructorMapper {
                     mapConstructorOverviewStandings(value, input.data, input.drivers)
                 }
         }
-        return ConstructorOverview(
+        return tmg.flashback.formula1.model.ConstructorOverview(
             id = input.data.id,
             name = input.data.name,
             wikiUrl = input.data.wikiUrl,
@@ -36,8 +36,8 @@ class ConstructorMapper {
         )
     }
 
-    fun mapConstructorOverviewStandings(input: FConstructorOverviewStandings, overviewData: FConstructorOverviewData, drivers: Map<String, FConstructorOverviewDrivers>): ConstructorOverviewStanding {
-        return ConstructorOverviewStanding(
+    fun mapConstructorOverviewStandings(input: FConstructorOverviewStandings, overviewData: FConstructorOverviewData, drivers: Map<String, FConstructorOverviewDrivers>): tmg.flashback.formula1.model.ConstructorOverviewStanding {
+        return tmg.flashback.formula1.model.ConstructorOverviewStanding(
             drivers = (input.drivers ?: emptyMap())
                 .map { (key, value) ->
                     drivers[key]?.let { driver ->
@@ -48,7 +48,7 @@ class ConstructorMapper {
                 .filterNotNull()
                 .map { it.driver.id to it }
                 .toMap(),
-            isInProgress =  if (input.s >= currentYear) (input.inProgress ?: false) else false,
+            isInProgress = if (input.s >= currentYear) (input.inProgress ?: false) else false,
             championshipStanding = input.championshipStanding ?: 0,
             points = input.p ?: 0.0,
             season = input.s,
@@ -56,8 +56,8 @@ class ConstructorMapper {
         )
     }
 
-    fun mapConstructorOverviewDriverStanding(input: FConstructorOverviewStandingsDriver, driver: FConstructorOverviewDrivers, constructorData: FConstructorOverviewData): ConstructorOverviewDriverStanding {
-        return ConstructorOverviewDriverStanding(
+    fun mapConstructorOverviewDriverStanding(input: FConstructorOverviewStandingsDriver, driver: FConstructorOverviewDrivers, constructorData: FConstructorOverviewData): tmg.flashback.formula1.model.ConstructorOverviewDriverStanding {
+        return tmg.flashback.formula1.model.ConstructorOverviewDriverStanding(
             driver = mapConstructorDriver(driver, constructorData),
             bestFinish = input.bF ?: -1,
             bestQualifying = input.bQ ?: -1,
@@ -75,8 +75,8 @@ class ConstructorMapper {
         )
     }
 
-    fun mapConstructorDriver(input: FConstructorOverviewDrivers, constructorData: FConstructorOverviewData): ConstructorDriver {
-        return ConstructorDriver(
+    fun mapConstructorDriver(input: FConstructorOverviewDrivers, constructorData: FConstructorOverviewData): tmg.flashback.formula1.model.ConstructorDriver {
+        return tmg.flashback.formula1.model.ConstructorDriver(
             id = input.id,
             firstName = input.firstName,
             lastName = input.surname,
@@ -91,8 +91,8 @@ class ConstructorMapper {
         )
     }
 
-    fun mapConstructor(input: FConstructorOverviewData): Constructor {
-        return Constructor(
+    fun mapConstructor(input: FConstructorOverviewData): tmg.flashback.formula1.model.Constructor {
+        return tmg.flashback.formula1.model.Constructor(
             id = input.id,
             name = input.name,
             wikiUrl = input.wikiUrl,

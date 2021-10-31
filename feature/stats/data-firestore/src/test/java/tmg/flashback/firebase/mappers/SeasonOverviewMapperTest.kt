@@ -9,18 +9,18 @@ import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
 import org.threeten.bp.format.DateTimeParseException
-import tmg.flashback.data.models.stats.CircuitSummary
-import tmg.flashback.data.models.stats.Constructor
-import tmg.flashback.data.models.stats.ConstructorStandings
-import tmg.flashback.data.models.stats.Driver
-import tmg.flashback.data.models.stats.DriverStandings
-import tmg.flashback.data.models.stats.Location
-import tmg.flashback.data.models.stats.Round
-import tmg.flashback.data.models.stats.RoundQualifyingResult
-import tmg.flashback.data.models.stats.RoundRaceResult
-import tmg.flashback.data.models.stats.RoundSprintQualifyingResult
-import tmg.flashback.data.models.stats.Season
-import tmg.flashback.data.models.stats.SeasonStanding
+import tmg.flashback.formula1.model.CircuitSummary
+import tmg.flashback.formula1.model.Constructor
+import tmg.flashback.formula1.model.ConstructorStandings
+import tmg.flashback.formula1.model.Driver
+import tmg.flashback.formula1.model.DriverStandings
+import tmg.flashback.formula1.model.Location
+import tmg.flashback.formula1.model.Round
+import tmg.flashback.formula1.model.RoundQualifyingResult
+import tmg.flashback.formula1.model.RoundRaceResult
+import tmg.flashback.formula1.model.RoundSprintQualifyingResult
+import tmg.flashback.formula1.model.Season
+import tmg.flashback.formula1.model.SeasonStanding
 import tmg.flashback.firebase.mappers.seasonoverview.SeasonOverviewConstructorMapper
 import tmg.flashback.firebase.mappers.seasonoverview.SeasonOverviewDriverMapper
 import tmg.flashback.firebase.mappers.seasonoverview.SeasonOverviewRaceMapper
@@ -41,14 +41,14 @@ internal class SeasonOverviewMapperTest: BaseTest() {
     private val mockStandingMapper: SeasonOverviewStandingsMapper = mockk(relaxed = true)
     private val mockConstructorMapper: SeasonOverviewConstructorMapper = mockk(relaxed = true)
 
-    private val mockQ1: Map<String, RoundQualifyingResult> = mockk(relaxed = true)
-    private val mockQ2: Map<String, RoundQualifyingResult> = mockk(relaxed = true)
-    private val mockQ3: Map<String, RoundQualifyingResult> = mockk(relaxed = true)
-    private val mockQSprint: Map<String, RoundSprintQualifyingResult> = mockk(relaxed = true)
-    private val mockQRace: Map<String, RoundRaceResult> = mockk(relaxed = true)
+    private val mockQ1: Map<String, tmg.flashback.formula1.model.RoundQualifyingResult> = mockk(relaxed = true)
+    private val mockQ2: Map<String, tmg.flashback.formula1.model.RoundQualifyingResult> = mockk(relaxed = true)
+    private val mockQ3: Map<String, tmg.flashback.formula1.model.RoundQualifyingResult> = mockk(relaxed = true)
+    private val mockQSprint: Map<String, tmg.flashback.formula1.model.RoundSprintQualifyingResult> = mockk(relaxed = true)
+    private val mockQRace: Map<String, tmg.flashback.formula1.model.RoundRaceResult> = mockk(relaxed = true)
 
-    private val mockDriverStandings: DriverStandings = mockk(relaxed = true)
-    private val mockConstructorStandings: ConstructorStandings = mockk(relaxed = true)
+    private val mockDriverStandings: tmg.flashback.formula1.model.DriverStandings = mockk(relaxed = true)
+    private val mockConstructorStandings: tmg.flashback.formula1.model.ConstructorStandings = mockk(relaxed = true)
 
     private lateinit var sut: SeasonOverviewMapper
 
@@ -84,12 +84,12 @@ internal class SeasonOverviewMapperTest: BaseTest() {
 
         val input = FSeason.model()
         val inputSeason = 2020
-        val expected = Season(
+        val expected = tmg.flashback.formula1.model.Season(
             season = 2020,
             drivers = listOf(mockDriver()),
             constructors = listOf(mockConstructor()),
             rounds = listOf(
-                Round(
+                tmg.flashback.formula1.model.Round(
                     season = 2020,
                     round = 1,
                     date = LocalDate.of(2020, 1, 1),
@@ -122,7 +122,7 @@ internal class SeasonOverviewMapperTest: BaseTest() {
         initSUT()
 
         val input = FSeason.model(standings = null)
-        assertEquals(emptyList<SeasonStanding<Driver>>(), sut.mapSeason(input, 2020).driverStandings)
+        assertEquals(emptyList<tmg.flashback.formula1.model.SeasonStanding<tmg.flashback.formula1.model.Driver>>(), sut.mapSeason(input, 2020).driverStandings)
     }
 
     @Test
@@ -130,7 +130,7 @@ internal class SeasonOverviewMapperTest: BaseTest() {
         initSUT()
 
         val input = FSeason.model(standings = null)
-        assertEquals(emptyList<SeasonStanding<Constructor>>(), sut.mapSeason(input, 2020).constructorStandings)
+        assertEquals(emptyList<tmg.flashback.formula1.model.SeasonStanding<tmg.flashback.formula1.model.Constructor>>(), sut.mapSeason(input, 2020).constructorStandings)
     }
 
     @Test
@@ -138,7 +138,7 @@ internal class SeasonOverviewMapperTest: BaseTest() {
         initSUT()
 
         val input = FSeason.model(race = null)
-        assertEquals(emptyList<Round>(), sut.mapSeason(input, 2020).rounds)
+        assertEquals(emptyList<tmg.flashback.formula1.model.Round>(), sut.mapSeason(input, 2020).rounds)
     }
 
     @Test
@@ -146,7 +146,7 @@ internal class SeasonOverviewMapperTest: BaseTest() {
         initSUT()
 
         val input = FSeason.model(drivers = null)
-        assertEquals(emptyList<Driver>(), sut.mapSeason(input, 2020).drivers)
+        assertEquals(emptyList<tmg.flashback.formula1.model.Driver>(), sut.mapSeason(input, 2020).drivers)
     }
 
     @Test
@@ -154,7 +154,7 @@ internal class SeasonOverviewMapperTest: BaseTest() {
         initSUT()
 
         val input = FSeason.model(constructors = null)
-        assertEquals(emptyList<Constructor>(), sut.mapSeason(input, 2020).constructors)
+        assertEquals(emptyList<tmg.flashback.formula1.model.Constructor>(), sut.mapSeason(input, 2020).constructors)
     }
 
     @Test
@@ -164,7 +164,7 @@ internal class SeasonOverviewMapperTest: BaseTest() {
         val input = FRound.model()
         val inputDrivers = listOf(mockDriver())
         val inputConstructors = listOf(mockConstructor())
-        val expected = Round(
+        val expected = tmg.flashback.formula1.model.Round(
             season = 2020,
             round = 1,
             date = LocalDate.of(2020, 1, 1),
@@ -202,8 +202,8 @@ internal class SeasonOverviewMapperTest: BaseTest() {
     }
 }
 
-private fun mockDriver(driverId: String = "driverId", constructorsMap: Map<Int, String> = mapOf(1 to "constructorId")): Driver {
-    return Driver(
+private fun mockDriver(driverId: String = "driverId", constructorsMap: Map<Int, String> = mapOf(1 to "constructorId")): tmg.flashback.formula1.model.Driver {
+    return tmg.flashback.formula1.model.Driver(
         id = driverId,
         firstName = "firstName",
         lastName = "lastName",
@@ -216,7 +216,7 @@ private fun mockDriver(driverId: String = "driverId", constructorsMap: Map<Int, 
         nationalityISO = "nationalityISO",
         constructors = constructorsMap
             .map { (key, value) ->
-                key to Constructor(
+                key to tmg.flashback.formula1.model.Constructor(
                     id = value,
                     name = "constructorName",
                     wikiUrl = "wikiUrl",
@@ -226,7 +226,7 @@ private fun mockDriver(driverId: String = "driverId", constructorsMap: Map<Int, 
                 )
             }
             .toMap(),
-        startingConstructor = Constructor(
+        startingConstructor = tmg.flashback.formula1.model.Constructor(
             id = "constructorId",
             name = "constructorName",
             wikiUrl = "wikiUrl",
@@ -236,8 +236,8 @@ private fun mockDriver(driverId: String = "driverId", constructorsMap: Map<Int, 
         ),
     )
 }
-private fun mockConstructor(id: String = "constructorId"): Constructor {
-    return Constructor(
+private fun mockConstructor(id: String = "constructorId"): tmg.flashback.formula1.model.Constructor {
+    return tmg.flashback.formula1.model.Constructor(
         id = id,
         name = "constructorName",
         wikiUrl = "wikiUrl",
@@ -246,15 +246,15 @@ private fun mockConstructor(id: String = "constructorId"): Constructor {
         color = 0
     )
 }
-private fun mockCircuit(id: String = "circuitId"): CircuitSummary {
-    return CircuitSummary(
+private fun mockCircuit(id: String = "circuitId"): tmg.flashback.formula1.model.CircuitSummary {
+    return tmg.flashback.formula1.model.CircuitSummary(
         id = id,
         name = "circuitName",
         wikiUrl = "wikiUrl",
         locality = "locality",
         country = "country",
         countryISO = "countryISO",
-        location = Location(
+        location = tmg.flashback.formula1.model.Location(
             51.101,
             -1.101
         )

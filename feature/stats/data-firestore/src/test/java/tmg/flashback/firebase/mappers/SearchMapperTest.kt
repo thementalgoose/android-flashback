@@ -3,21 +3,17 @@ package tmg.flashback.firebase.mappers
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import java.lang.NullPointerException
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
 import tmg.crash_reporting.controllers.CrashController
-import tmg.flashback.data.models.stats.Location
-import tmg.flashback.data.models.stats.SearchCircuit
-import tmg.flashback.data.models.stats.SearchConstructor
-import tmg.flashback.data.models.stats.SearchDriver
-import tmg.flashback.firebase.models.FCircuitLocation
-import tmg.flashback.firebase.models.FSearchCircuit
+import tmg.flashback.formula1.model.Location
+import tmg.flashback.formula1.model.SearchCircuit
+import tmg.flashback.formula1.model.SearchConstructor
+import tmg.flashback.formula1.model.SearchDriver
 import tmg.flashback.firebase.models.FSearchCircuitModel
 import tmg.flashback.firebase.models.FSearchConstructorModel
-import tmg.flashback.firebase.models.FSearchDriver
 import tmg.flashback.firebase.models.FSearchDriverModel
 import tmg.flashback.firebase.models.model
 import tmg.testutils.BaseTest
@@ -35,7 +31,10 @@ internal class SearchMapperTest: BaseTest() {
 
     @BeforeEach
     internal fun setUp() {
-        every { mockLocationMapper.mapCircuitLocation(any()) } returns Location(1.0, 2.0)
+        every { mockLocationMapper.mapCircuitLocation(any()) } returns tmg.flashback.formula1.model.Location(
+            1.0,
+            2.0
+        )
     }
 
     @Test
@@ -44,7 +43,7 @@ internal class SearchMapperTest: BaseTest() {
 
         val input = FSearchDriverModel.model()
         val inputId = "driverId"
-        val expected = SearchDriver(
+        val expected = tmg.flashback.formula1.model.SearchDriver(
             id = "driverId",
             firstName = "firstName",
             lastName = "lastName",
@@ -122,7 +121,7 @@ internal class SearchMapperTest: BaseTest() {
 
         val input = FSearchConstructorModel.model()
         val inputId = "constructorId"
-        val expected = SearchConstructor(
+        val expected = tmg.flashback.formula1.model.SearchConstructor(
             id = "constructorId",
             name = "constructorName",
             nationality = "nationality",
@@ -176,11 +175,11 @@ internal class SearchMapperTest: BaseTest() {
 
         val input = FSearchCircuitModel.model()
         val inputId = "circuitId"
-        val expected = SearchCircuit(
+        val expected = tmg.flashback.formula1.model.SearchCircuit(
             id = "circuitId",
             country = "country",
             countryISO = "countryISO",
-            location = Location(
+            location = tmg.flashback.formula1.model.Location(
                 lat = 1.0,
                 lng = 2.0
             ),

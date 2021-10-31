@@ -13,6 +13,10 @@ import tmg.flashback.data.db.stats.SeasonOverviewRepository
 import tmg.flashback.data.models.stats.*
 import tmg.core.ui.controllers.ThemeController
 import tmg.flashback.formula1.constants.Formula1.showComingSoonMessageForNextDays
+import tmg.flashback.formula1.model.ConstructorDriver
+import tmg.flashback.formula1.model.LapTime
+import tmg.flashback.formula1.model.Round
+import tmg.flashback.formula1.model.RoundDriverOverview
 import tmg.flashback.statistics.ui.race.*
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
@@ -20,7 +24,6 @@ import tmg.flashback.statistics.ui.util.SeasonRound
 import tmg.utilities.extensions.combinePair
 import tmg.utilities.extensions.combineTriple
 import tmg.utilities.lifecycle.DataEvent
-import tmg.utilities.lifecycle.Event
 import java.util.*
 
 //region Inputs
@@ -302,11 +305,11 @@ class RaceViewModel(
      * Get a [RaceModel.Single] instance for a given driver
      */
     private fun getDriverModel(
-            round: Round,
-            @Suppress("UNUSED_PARAMETER")
+        round: Round,
+        @Suppress("UNUSED_PARAMETER")
         viewType: RaceAdapterType,
-            driverId: String,
-            displayPrefs: DisplayPrefs
+        driverId: String,
+        displayPrefs: DisplayPrefs
     ): RaceModel.Single {
         val overview = round.driverOverview(driverId)
         val race = overview.race?.let {

@@ -1,7 +1,7 @@
 package tmg.flashback.firebase.mappers.seasonoverview
 
-import tmg.flashback.data.models.stats.Constructor
-import tmg.flashback.data.models.stats.Driver
+import tmg.flashback.formula1.model.Constructor
+import tmg.flashback.formula1.model.Driver
 import tmg.flashback.firebase.models.FSeason
 import tmg.utilities.utils.LocalDateUtils.Companion.requireFromDate
 
@@ -14,11 +14,11 @@ class SeasonOverviewDriverMapper(
      * @param input The entire season in the database
      * @param driverId the driver to map
      */
-    fun mapDriver(input: FSeason, driverId: String): Driver? {
+    fun mapDriver(input: FSeason, driverId: String): tmg.flashback.formula1.model.Driver? {
         val driver = input.drivers?.get(driverId) ?: return null
         val constructors = (input.constructors?.values?.toList() ?: emptyList()).map { constructorMapper.mapConstructor(it) }
 
-        val constructorMap: Map<Int, Constructor> = (input.race ?: emptyMap())
+        val constructorMap: Map<Int, tmg.flashback.formula1.model.Constructor> = (input.race ?: emptyMap())
             .map { (_, value) -> Pair(value.round, value.driverCon) }
             .mapNotNull { (round, driverCon) ->
                 val constructorId = driverCon?.get(driverId)
@@ -49,7 +49,7 @@ class SeasonOverviewDriverMapper(
             throw NullPointerException("Converting driver, no constructor value for ${driver.constructorId} in list of available constructors (${potentialDebugInfo?.season} / ${potentialDebugInfo?.round}")
         }
 
-        return Driver(
+        return tmg.flashback.formula1.model.Driver(
             id = driver.id,
             firstName = driver.firstName,
             lastName = driver.lastName,

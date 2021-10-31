@@ -1,10 +1,10 @@
 package tmg.flashback.firebase.mappers.seasonoverview
 
 import tmg.crash_reporting.controllers.CrashController
-import tmg.flashback.data.models.stats.ConstructorStandings
-import tmg.flashback.data.models.stats.Driver
-import tmg.flashback.data.models.stats.DriverStandings
-import tmg.flashback.data.models.stats.SeasonStanding
+import tmg.flashback.formula1.model.ConstructorStandings
+import tmg.flashback.formula1.model.Driver
+import tmg.flashback.formula1.model.DriverStandings
+import tmg.flashback.formula1.model.SeasonStanding
 import tmg.flashback.firebase.models.FSeasonOverviewConstructor
 import tmg.flashback.firebase.models.FSeasonStatistics
 
@@ -17,7 +17,7 @@ class SeasonOverviewStandingsMapper(
     /**
      * Map driver standings from [FSeasonStatistics] to [DriverStandings]
      */
-    fun mapDriverStandings(input: FSeasonStatistics, allDrivers: List<Driver>): DriverStandings {
+    fun mapDriverStandings(input: FSeasonStatistics, allDrivers: List<tmg.flashback.formula1.model.Driver>): tmg.flashback.formula1.model.DriverStandings {
         val orderByPosition = input.drivers?.all { it.value.pos != null && it.value.pos != -1  } ?: false
         return (input.drivers ?: emptyMap())
             .map { (key, value) ->
@@ -41,7 +41,7 @@ class SeasonOverviewStandingsMapper(
                     crashController.logException(NullPointerException("SeasonOverviewMapper.mapDriverStandings standings have $standingsIds vs. available $availableIds"))
                     return@mapNotNull null
                 }
-                return@mapNotNull SeasonStanding(
+                return@mapNotNull tmg.flashback.formula1.model.SeasonStanding(
                     item = driver,
                     points = points,
                     position = position
@@ -52,7 +52,7 @@ class SeasonOverviewStandingsMapper(
     /**
      * Map driver standings from [FSeasonStatistics] to [ConstructorStandings]
      */
-    fun mapConstructorStandings(input: FSeasonStatistics, allConstructors: List<FSeasonOverviewConstructor>): ConstructorStandings {
+    fun mapConstructorStandings(input: FSeasonStatistics, allConstructors: List<FSeasonOverviewConstructor>): tmg.flashback.formula1.model.ConstructorStandings {
 
         val orderByPosition = input.constructors?.all { it.value.pos != null && it.value.pos != -1  } ?: false
         return (input.constructors ?: emptyMap())
@@ -76,7 +76,7 @@ class SeasonOverviewStandingsMapper(
                     crashController.logException(NullPointerException("SeasonOverviewMapper.mapConstructorStandings standings have $standingsIds vs. available $availableIds"))
                     return@mapNotNull null
                 }
-                return@mapNotNull SeasonStanding(
+                return@mapNotNull tmg.flashback.formula1.model.SeasonStanding(
                     item = constructor,
                     points = points,
                     position = position

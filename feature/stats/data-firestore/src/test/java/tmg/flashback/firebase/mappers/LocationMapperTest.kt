@@ -2,9 +2,8 @@ package tmg.flashback.firebase.mappers
 
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
-import tmg.flashback.data.models.stats.Location
+import tmg.flashback.formula1.model.Location
 import tmg.flashback.firebase.models.FCircuitLocation
-import tmg.flashback.firebase.models.FSearchCircuitModel
 import tmg.flashback.firebase.models.model
 import tmg.testutils.BaseTest
 
@@ -21,7 +20,7 @@ internal class LocationMapperTest: BaseTest() {
         initSUT()
 
         val input = FCircuitLocation.model()
-        val expected = Location(
+        val expected = tmg.flashback.formula1.model.Location(
             lat = 1.0,
             lng = 2.0
         )

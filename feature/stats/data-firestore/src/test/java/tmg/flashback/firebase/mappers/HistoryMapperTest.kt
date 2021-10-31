@@ -7,11 +7,11 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
 import tmg.crash_reporting.controllers.CrashController
-import tmg.flashback.data.models.stats.History
-import tmg.flashback.data.models.stats.HistoryRound
-import tmg.flashback.data.models.stats.WinnerSeason
-import tmg.flashback.data.models.stats.WinnerSeasonConstructor
-import tmg.flashback.data.models.stats.WinnerSeasonDriver
+import tmg.flashback.formula1.model.History
+import tmg.flashback.formula1.model.HistoryRound
+import tmg.flashback.formula1.model.WinnerSeason
+import tmg.flashback.formula1.model.WinnerSeasonConstructor
+import tmg.flashback.formula1.model.WinnerSeasonDriver
 import tmg.flashback.firebase.models.FHistorySeason
 import tmg.flashback.firebase.models.FHistorySeasonRound
 import tmg.flashback.firebase.models.FHistorySeasonWin
@@ -38,36 +38,44 @@ internal class HistoryMapperTest: BaseTest() {
         initSUT()
 
         val input = FHistorySeason.model()
-        val expected = listOf(History(
-            season = 2020,
-            winner = WinnerSeason(
+        val expected = listOf(
+            tmg.flashback.formula1.model.History(
                 season = 2020,
-                driver = listOf(WinnerSeasonDriver(
-                    id = "driverId",
-                    name = "driverName",
-                    image = "driverImg",
-                    points = 2
-                )),
-                constructor = listOf(WinnerSeasonConstructor(
-                    id = "constructorId",
-                    name = "constructorName",
-                    color = "constructorColor",
-                    points = 1
-                ))
-            ),
-            rounds = listOf(HistoryRound(
-                date = LocalDate.of(2020, 1, 1),
-                round = 1,
-                season = 2020,
-                raceName = "name",
-                circuitId = "circuitId",
-                circuitName = "circuit",
-                country = "country",
-                countryISO = "countryISO",
-                hasQualifying = true,
-                hasResults = true
-            ))
-        ))
+                winner = tmg.flashback.formula1.model.WinnerSeason(
+                    season = 2020,
+                    driver = listOf(
+                        tmg.flashback.formula1.model.WinnerSeasonDriver(
+                            id = "driverId",
+                            name = "driverName",
+                            image = "driverImg",
+                            points = 2
+                        )
+                    ),
+                    constructor = listOf(
+                        tmg.flashback.formula1.model.WinnerSeasonConstructor(
+                            id = "constructorId",
+                            name = "constructorName",
+                            color = "constructorColor",
+                            points = 1
+                        )
+                    )
+                ),
+                rounds = listOf(
+                    tmg.flashback.formula1.model.HistoryRound(
+                        date = LocalDate.of(2020, 1, 1),
+                        round = 1,
+                        season = 2020,
+                        raceName = "name",
+                        circuitId = "circuitId",
+                        circuitName = "circuit",
+                        country = "country",
+                        countryISO = "countryISO",
+                        hasQualifying = true,
+                        hasResults = true
+                    )
+                )
+            )
+        )
 
         assertEquals(expected, sut.mapHistory(input))
     }
@@ -108,7 +116,7 @@ internal class HistoryMapperTest: BaseTest() {
         initSUT()
 
         val input = FHistorySeasonRound.model()
-        val expected = HistoryRound(
+        val expected = tmg.flashback.formula1.model.HistoryRound(
             date = LocalDate.of(2020, 1, 1),
             round = 1,
             season = 2020,
@@ -161,20 +169,24 @@ internal class HistoryMapperTest: BaseTest() {
         initSUT()
 
         val input = FHistorySeasonWin.model()
-        val expected = WinnerSeason(
+        val expected = tmg.flashback.formula1.model.WinnerSeason(
             season = 2020,
-            driver = listOf(WinnerSeasonDriver(
-                id = "driverId",
-                name = "driverName",
-                image = "driverImg",
-                points = 2
-            )),
-            constructor = listOf(WinnerSeasonConstructor(
-                id = "constructorId",
-                name = "constructorName",
-                color = "constructorColor",
-                points = 1
-            ))
+            driver = listOf(
+                tmg.flashback.formula1.model.WinnerSeasonDriver(
+                    id = "driverId",
+                    name = "driverName",
+                    image = "driverImg",
+                    points = 2
+                )
+            ),
+            constructor = listOf(
+                tmg.flashback.formula1.model.WinnerSeasonConstructor(
+                    id = "constructorId",
+                    name = "constructorName",
+                    color = "constructorColor",
+                    points = 1
+                )
+            )
         )
 
         assertEquals(expected, sut.mapWinnerSeason(input))
@@ -201,7 +213,7 @@ internal class HistoryMapperTest: BaseTest() {
         initSUT()
 
         val input = FHistorySeasonWinDriver.model()
-        val expected = WinnerSeasonDriver(
+        val expected = tmg.flashback.formula1.model.WinnerSeasonDriver(
             id = "driverId",
             name = "driverName",
             image = "driverImg",
@@ -216,7 +228,7 @@ internal class HistoryMapperTest: BaseTest() {
         initSUT()
 
         val input = FHistorySeasonWinConstructor.model()
-        val expected = WinnerSeasonConstructor(
+        val expected = tmg.flashback.formula1.model.WinnerSeasonConstructor(
             id = "constructorId",
             name = "constructorName",
             color = "constructorColor",

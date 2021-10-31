@@ -2,9 +2,9 @@ package tmg.flashback.firebase.mappers
 
 import java.lang.NullPointerException
 import tmg.crash_reporting.controllers.CrashController
-import tmg.flashback.data.models.stats.Circuit
-import tmg.flashback.data.models.stats.CircuitRace
-import tmg.flashback.data.models.stats.Location
+import tmg.flashback.formula1.model.Circuit
+import tmg.flashback.formula1.model.CircuitRace
+import tmg.flashback.formula1.model.Location
 import tmg.flashback.firebase.models.FCircuit
 import tmg.flashback.firebase.models.FCircuitResult
 import tmg.utilities.utils.LocalDateUtils.Companion.isDateValid
@@ -16,8 +16,8 @@ class CircuitMapper(
     private val locationMapper: LocationMapper
 ) {
 
-    fun mapCircuit(input: FCircuit): Circuit {
-        return Circuit(
+    fun mapCircuit(input: FCircuit): tmg.flashback.formula1.model.Circuit {
+        return tmg.flashback.formula1.model.Circuit(
             id = input.id,
             name = input.circuitName,
             wikiUrl = input.wikiUrl,
@@ -33,7 +33,7 @@ class CircuitMapper(
         )
     }
 
-    private fun getLocation(input: FCircuit): Location? {
+    private fun getLocation(input: FCircuit): tmg.flashback.formula1.model.Location? {
         val location = locationMapper.mapCircuitLocation(input.location)
 
         if (location != null) {
@@ -42,16 +42,16 @@ class CircuitMapper(
             val lat = input.locationLat ?: return null
             val lng = input.locationLng ?: return null
 
-            return Location(lat, lng)
+            return tmg.flashback.formula1.model.Location(lat, lng)
         }
     }
 
-    fun mapCircuitRace(circuitId: String, input: FCircuitResult): CircuitRace? {
+    fun mapCircuitRace(circuitId: String, input: FCircuitResult): tmg.flashback.formula1.model.CircuitRace? {
         if (!isDateValid(input.date)) {
             crashController.logException(NullPointerException("CircuitMapper.mapCircuitRace circuitId=$circuitId input date of \"${input.date}\" is not valid"))
             return null
         }
-        return CircuitRace(
+        return tmg.flashback.formula1.model.CircuitRace(
             name = input.name,
             season = input.season,
             round = input.round,

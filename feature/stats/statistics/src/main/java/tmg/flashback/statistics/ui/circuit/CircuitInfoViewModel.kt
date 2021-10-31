@@ -7,8 +7,8 @@ import kotlinx.coroutines.flow.*
 import tmg.core.device.managers.NetworkConnectivityManager
 import tmg.crash_reporting.controllers.CrashController
 import tmg.flashback.data.db.stats.CircuitRepository
-import tmg.flashback.data.models.stats.Circuit
-import tmg.flashback.data.models.stats.Location
+import tmg.flashback.formula1.model.Circuit
+import tmg.flashback.formula1.model.Location
 import tmg.flashback.statistics.extensions.circuitIcon
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.utilities.extensions.then

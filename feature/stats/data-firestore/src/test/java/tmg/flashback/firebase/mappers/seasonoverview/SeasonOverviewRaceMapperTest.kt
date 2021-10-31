@@ -7,15 +7,15 @@ import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
-import tmg.flashback.data.models.stats.CircuitSummary
-import tmg.flashback.data.models.stats.Constructor
-import tmg.flashback.data.models.stats.Driver
-import tmg.flashback.data.models.stats.FastestLap
-import tmg.flashback.data.models.stats.Location
-import tmg.flashback.data.models.stats.RoundQualifyingResult
-import tmg.flashback.data.models.stats.RoundRaceResult
-import tmg.flashback.data.models.stats.RoundSprintQualifyingResult
-import tmg.flashback.data.models.stats.noTime
+import tmg.flashback.formula1.model.CircuitSummary
+import tmg.flashback.formula1.model.Constructor
+import tmg.flashback.formula1.model.Driver
+import tmg.flashback.formula1.model.FastestLap
+import tmg.flashback.formula1.model.Location
+import tmg.flashback.formula1.model.RoundQualifyingResult
+import tmg.flashback.formula1.model.RoundRaceResult
+import tmg.flashback.formula1.model.RoundSprintQualifyingResult
+import tmg.flashback.formula1.model.noTime
 import tmg.flashback.data.utils.toLapTime
 import tmg.flashback.firebase.mappers.LocationMapper
 import tmg.flashback.firebase.mappers.seasonoverview.SeasonOverviewRaceMapper.Qualifying.Q1
@@ -41,7 +41,10 @@ internal class SeasonOverviewRaceMapperTest: BaseTest() {
 
     @BeforeEach
     internal fun setUp() {
-        every { mockLocationMapper.mapCircuitLocation(any()) } returns Location(1.0, 2.0)
+        every { mockLocationMapper.mapCircuitLocation(any()) } returns tmg.flashback.formula1.model.Location(
+            1.0,
+            2.0
+        )
     }
 
     @Test
@@ -53,7 +56,7 @@ internal class SeasonOverviewRaceMapperTest: BaseTest() {
         val allDrivers = listOf(mockDriver())
 
         val expected = mapOf(
-            "driverId" to RoundRaceResult(
+            "driverId" to tmg.flashback.formula1.model.RoundRaceResult(
                 driver = mockDriver().toConstructorDriver(forRound),
                 time = "1:23:23.130".toLapTime(),
                 points = 12.0,
@@ -61,7 +64,7 @@ internal class SeasonOverviewRaceMapperTest: BaseTest() {
                 qualified = 2,
                 finish = 1,
                 status = "Finished",
-                fastestLap = FastestLap(
+                fastestLap = tmg.flashback.formula1.model.FastestLap(
                     rank = 1,
                     lap = 34,
                     lapTime = "1:43.203".toLapTime()
@@ -165,7 +168,7 @@ internal class SeasonOverviewRaceMapperTest: BaseTest() {
         val allDrivers = listOf(mockDriver())
 
         val expected = mapOf(
-            "driverId" to RoundSprintQualifyingResult(
+            "driverId" to tmg.flashback.formula1.model.RoundSprintQualifyingResult(
                 driver = mockDriver().toConstructorDriver(forRound),
                 time = "26:23.123".toLapTime(),
                 points = 15.0,
@@ -267,36 +270,36 @@ internal class SeasonOverviewRaceMapperTest: BaseTest() {
         val allDrivers = listOf(mockDriver(driverId = "driverId"), mockDriver(driverId = "driverId2"))
 
         val expectedQ1 = mapOf(
-            "driverId" to RoundQualifyingResult(
+            "driverId" to tmg.flashback.formula1.model.RoundQualifyingResult(
                 driver = mockDriver(driverId = "driverId").toConstructorDriver(1),
                 time = "1:01.123".toLapTime(),
                 position = 2
             ),
-            "driverId2" to RoundQualifyingResult(
+            "driverId2" to tmg.flashback.formula1.model.RoundQualifyingResult(
                 driver = mockDriver(driverId = "driverId2").toConstructorDriver(1),
                 time = "1:01.122".toLapTime(),
                 position = 1
             )
         )
         val expectedQ2 = mapOf(
-            "driverId" to RoundQualifyingResult(
+            "driverId" to tmg.flashback.formula1.model.RoundQualifyingResult(
                 driver = mockDriver(driverId = "driverId").toConstructorDriver(1),
                 time = "1:02.123".toLapTime(),
                 position = 1
             ),
-            "driverId2" to RoundQualifyingResult(
+            "driverId2" to tmg.flashback.formula1.model.RoundQualifyingResult(
                 driver = mockDriver(driverId = "driverId2").toConstructorDriver(1),
                 time = "1:02.124".toLapTime(),
                 position = 2
             )
         )
         val expectedQ3 = mapOf(
-            "driverId" to RoundQualifyingResult(
+            "driverId" to tmg.flashback.formula1.model.RoundQualifyingResult(
                 driver = mockDriver(driverId = "driverId").toConstructorDriver(1),
                 time = "1:03.123".toLapTime(),
                 position = 1
             ),
-            "driverId2" to RoundQualifyingResult(
+            "driverId2" to tmg.flashback.formula1.model.RoundQualifyingResult(
                 driver = mockDriver(driverId = "driverId2").toConstructorDriver(1),
                 time = "1:04.000".toLapTime(),
                 position = 2
@@ -333,14 +336,14 @@ internal class SeasonOverviewRaceMapperTest: BaseTest() {
         initSUT()
 
         val input = FSeasonOverviewRaceCircuit.model()
-        val expected = CircuitSummary(
+        val expected = tmg.flashback.formula1.model.CircuitSummary(
             id = "circuitId",
             name = "circuitName",
             wikiUrl = "wikiUrl",
             locality = "locality",
             country = "country",
             countryISO = "countryISO",
-            location = Location(
+            location = tmg.flashback.formula1.model.Location(
                 lat = 1.0,
                 lng = 2.0
             )
@@ -354,7 +357,7 @@ internal class SeasonOverviewRaceMapperTest: BaseTest() {
         initSUT()
 
         val input = FSeasonOverviewRaceRaceFastestLap.model()
-        val expected = FastestLap(
+        val expected = tmg.flashback.formula1.model.FastestLap(
             rank = 1,
             lap = 34,
             lapTime = "1:43.203".toLapTime()
@@ -368,12 +371,12 @@ internal class SeasonOverviewRaceMapperTest: BaseTest() {
         initSUT()
 
         val input = FSeasonOverviewRaceRaceFastestLap.model(time = "invalid")
-        assertEquals(noTime, sut.mapFastestLap(input).lapTime)
+        assertEquals(tmg.flashback.formula1.model.noTime, sut.mapFastestLap(input).lapTime)
     }
 }
 
-private fun mockDriver(driverId: String = "driverId", constructorsMap: Map<Int, String> = mapOf(1 to "constructorId")): Driver {
-    return Driver(
+private fun mockDriver(driverId: String = "driverId", constructorsMap: Map<Int, String> = mapOf(1 to "constructorId")): tmg.flashback.formula1.model.Driver {
+    return tmg.flashback.formula1.model.Driver(
         id = driverId,
         firstName = "firstName",
         lastName = "lastName",
@@ -386,7 +389,7 @@ private fun mockDriver(driverId: String = "driverId", constructorsMap: Map<Int, 
         nationalityISO = "nationalityISO",
         constructors = constructorsMap
             .map { (key, value) ->
-                key to Constructor(
+                key to tmg.flashback.formula1.model.Constructor(
                     id = value,
                     name = "constructorName",
                     wikiUrl = "wikiUrl",
@@ -396,7 +399,7 @@ private fun mockDriver(driverId: String = "driverId", constructorsMap: Map<Int, 
                 )
             }
             .toMap(),
-        startingConstructor = Constructor(
+        startingConstructor = tmg.flashback.formula1.model.Constructor(
             id = "constructorId",
             name = "constructorName",
             wikiUrl = "wikiUrl",

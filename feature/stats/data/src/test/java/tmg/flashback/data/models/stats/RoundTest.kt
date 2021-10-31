@@ -2,6 +2,14 @@ package tmg.flashback.data.models.stats
 
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
+import tmg.flashback.formula1.model.allPoints
+import tmg.flashback.formula1.model.bestFinish
+import tmg.flashback.formula1.model.bestQualified
+import tmg.flashback.formula1.model.bestQualifyingResultFor
+import tmg.flashback.formula1.model.bestRaceResultFor
+import tmg.flashback.formula1.model.constructorStandings
+import tmg.flashback.formula1.model.driverStandings
+import tmg.flashback.formula1.model.maxConstructorPointsInSeason
 
 class RoundTest {
 
@@ -18,7 +26,7 @@ class RoundTest {
     fun `has sprint qualifying when sprint quali results are not empty`() {
 
         val sprintQualiRound = mockRound1.copy(
-            qSprint = mapOf(mockDriver1.id to RoundSprintQualifyingResult(
+            qSprint = mapOf(mockDriver1.id to tmg.flashback.formula1.model.RoundSprintQualifyingResult(
                 driver = round1RaceResultDriver1.driver,
                 time = round1RaceResultDriver1.time,
                 points = round1RaceResultDriver1.points,
@@ -26,7 +34,8 @@ class RoundTest {
                 qualified = round1RaceResultDriver1.qualified,
                 finish = round1RaceResultDriver1.finish,
                 status = round1RaceResultDriver1.status,
-            ))
+            )
+            )
         )
         assertTrue(sprintQualiRound.hasSprintQualifying)
     }
@@ -41,17 +50,23 @@ class RoundTest {
     @Test
     fun `fastest laps in q1, q2 and q3 return the fastest lap`() {
 
-        assertEquals(LapTime(0, 1, 1, 0), mockRound1.q1FastestLap)
-        assertEquals(LapTime(0, 1, 1, 0), mockRound1.q2FastestLap)
-        assertEquals(LapTime(0, 1, 1, 0), mockRound1.q3FastestLap)
+        assertEquals(tmg.flashback.formula1.model.LapTime(0, 1, 1, 0), mockRound1.q1FastestLap)
+        assertEquals(tmg.flashback.formula1.model.LapTime(0, 1, 1, 0), mockRound1.q2FastestLap)
+        assertEquals(tmg.flashback.formula1.model.LapTime(0, 1, 1, 0), mockRound1.q3FastestLap)
     }
 
     @Test
     fun `constructorStandings returns correct standings`() {
 
         val expected = listOf(
-                RoundConstructorStandings(constructor = mockConstructorAlpha, points = 20.0), // driver 1 + 3 as they have current constructor as mockConstructorAlpha
-                RoundConstructorStandings(constructor = mockConstructorBeta, points = 30.0) // driver 2 + 4 as they have current constructor as mockConstructorBeta
+            tmg.flashback.formula1.model.RoundConstructorStandings(
+                constructor = mockConstructorAlpha,
+                points = 20.0
+            ), // driver 1 + 3 as they have current constructor as mockConstructorAlpha
+            tmg.flashback.formula1.model.RoundConstructorStandings(
+                constructor = mockConstructorBeta,
+                points = 30.0
+            ) // driver 2 + 4 as they have current constructor as mockConstructorBeta
         )
         assertEquals(expected, mockRound1.constructorStandings)
     }
@@ -60,10 +75,26 @@ class RoundTest {
     fun `driverStandings returns correct driver standings`() {
 
         val expected = listOf(
-                RoundDriverStandings(driver = mockDriver1.toConstructorDriver(1), points = 5.0),
-                RoundDriverStandings(driver = mockDriver2.toConstructorDriver(1), points = 10.0),
-                RoundDriverStandings(driver = mockDriver3.toConstructorDriver(1), points = 15.0),
-                RoundDriverStandings(driver = mockDriver4.toConstructorDriver(1), points = 20.0)
+            tmg.flashback.formula1.model.RoundDriverStandings(
+                driver = mockDriver1.toConstructorDriver(
+                    1
+                ), points = 5.0
+            ),
+            tmg.flashback.formula1.model.RoundDriverStandings(
+                driver = mockDriver2.toConstructorDriver(
+                    1
+                ), points = 10.0
+            ),
+            tmg.flashback.formula1.model.RoundDriverStandings(
+                driver = mockDriver3.toConstructorDriver(
+                    1
+                ), points = 15.0
+            ),
+            tmg.flashback.formula1.model.RoundDriverStandings(
+                driver = mockDriver4.toConstructorDriver(
+                    1
+                ), points = 20.0
+            )
         )
         assertEquals(expected, mockRound1.driverStandings)
     }
@@ -166,32 +197,36 @@ class RoundTest {
         assertEquals(Pair(1, listOf(mockRound1)), listOf(mockRound1, mockRound2).bestRaceResultFor(mockDriver4.id))
     }
 
-    private val expectedDriver1: RoundDriverOverview = RoundDriverOverview(
-        q1 = mockRound1Driver1Q1,
-        q2 = mockRound1Driver1Q2,
-        q3 = mockRound1Driver1Q3,
-        qSprint = null,
-        race = round1RaceResultDriver1
-    )
-    private val expectedDriver2: RoundDriverOverview = RoundDriverOverview(
-        q1 = mockRound1Driver2Q1,
-        q2 = mockRound1Driver2Q2,
-        q3 = mockRound1Driver2Q3,
-        qSprint = null,
-        race = round1RaceResultDriver2
-    )
-    private val expectedDriver3: RoundDriverOverview = RoundDriverOverview(
-        q1 = mockRound1Driver3Q1,
-        q2 = mockRound1Driver3Q2,
-        q3 = null,
-        qSprint = null,
-        race = round1RaceResultDriver3
-    )
-    private val expectedDriver4: RoundDriverOverview = RoundDriverOverview(
-        q1 = mockRound1Driver4Q1,
-        q2 = null,
-        q3 = null,
-        qSprint = null,
-        race = round1RaceResultDriver4
-    )
+    private val expectedDriver1: tmg.flashback.formula1.model.RoundDriverOverview =
+        tmg.flashback.formula1.model.RoundDriverOverview(
+            q1 = mockRound1Driver1Q1,
+            q2 = mockRound1Driver1Q2,
+            q3 = mockRound1Driver1Q3,
+            qSprint = null,
+            race = round1RaceResultDriver1
+        )
+    private val expectedDriver2: tmg.flashback.formula1.model.RoundDriverOverview =
+        tmg.flashback.formula1.model.RoundDriverOverview(
+            q1 = mockRound1Driver2Q1,
+            q2 = mockRound1Driver2Q2,
+            q3 = mockRound1Driver2Q3,
+            qSprint = null,
+            race = round1RaceResultDriver2
+        )
+    private val expectedDriver3: tmg.flashback.formula1.model.RoundDriverOverview =
+        tmg.flashback.formula1.model.RoundDriverOverview(
+            q1 = mockRound1Driver3Q1,
+            q2 = mockRound1Driver3Q2,
+            q3 = null,
+            qSprint = null,
+            race = round1RaceResultDriver3
+        )
+    private val expectedDriver4: tmg.flashback.formula1.model.RoundDriverOverview =
+        tmg.flashback.formula1.model.RoundDriverOverview(
+            q1 = mockRound1Driver4Q1,
+            q2 = null,
+            q3 = null,
+            qSprint = null,
+            race = round1RaceResultDriver4
+        )
 }

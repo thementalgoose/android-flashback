@@ -9,12 +9,10 @@ import kotlinx.coroutines.flow.*
 import org.threeten.bp.DayOfWeek
 import org.threeten.bp.LocalDate
 import org.threeten.bp.Month
-import org.threeten.bp.temporal.ChronoUnit
 import org.threeten.bp.temporal.TemporalAdjusters
 import tmg.core.analytics.manager.AnalyticsManager
 import tmg.flashback.formula1.constants.Formula1.constructorChampionshipStarts
 import androidx.lifecycle.ViewModel
-import tmg.core.device.controllers.DeviceController
 import tmg.core.device.managers.NetworkConnectivityManager
 import tmg.flashback.data.db.stats.HistoryRepository
 import tmg.flashback.data.db.stats.SeasonOverviewRepository
@@ -23,6 +21,7 @@ import tmg.core.ui.controllers.ThemeController
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.statistics.R
 import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
+import tmg.flashback.formula1.model.*
 import tmg.flashback.statistics.controllers.SeasonController
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
 import tmg.utilities.extensions.combinePair

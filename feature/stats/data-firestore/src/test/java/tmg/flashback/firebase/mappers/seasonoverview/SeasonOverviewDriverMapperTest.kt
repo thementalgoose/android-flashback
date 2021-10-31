@@ -7,8 +7,8 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeParseException
-import tmg.flashback.data.models.stats.Constructor
-import tmg.flashback.data.models.stats.Driver
+import tmg.flashback.formula1.model.Constructor
+import tmg.flashback.formula1.model.Driver
 import tmg.flashback.firebase.models.FRound
 import tmg.flashback.firebase.models.FSeason
 import tmg.flashback.firebase.models.FSeasonOverviewConstructor
@@ -38,7 +38,7 @@ internal class SeasonOverviewDriverMapperTest: BaseTest() {
         initSUT()
 
         val input = FSeason.model()
-        val expected = Driver(
+        val expected = tmg.flashback.formula1.model.Driver(
             id = "driverId",
             firstName = "firstName",
             lastName = "lastName",
@@ -50,7 +50,7 @@ internal class SeasonOverviewDriverMapperTest: BaseTest() {
             nationality = "nationality",
             nationalityISO = "nationalityISO",
             constructors = mapOf(
-                1 to Constructor(
+                1 to tmg.flashback.formula1.model.Constructor(
                     id = "constructorId",
                     name = "constructorName",
                     wikiUrl = "wikiUrl",
@@ -59,7 +59,7 @@ internal class SeasonOverviewDriverMapperTest: BaseTest() {
                     color = 0
                 )
             ),
-            startingConstructor = Constructor(
+            startingConstructor = tmg.flashback.formula1.model.Constructor(
                 id = "constructorId",
                 name = "constructorName",
                 wikiUrl = "wikiUrl",
@@ -157,8 +157,8 @@ internal class SeasonOverviewDriverMapperTest: BaseTest() {
         }
     }
 
-    private fun mockConstructor(id: String = "constructorId"): Constructor {
-        return Constructor(
+    private fun mockConstructor(id: String = "constructorId"): tmg.flashback.formula1.model.Constructor {
+        return tmg.flashback.formula1.model.Constructor(
             id = id,
             name = "constructorName",
             wikiUrl = "wikiUrl",

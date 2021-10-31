@@ -2,7 +2,7 @@ package tmg.flashback.statistics.ui.overview.constructor.summary
 
 import androidx.annotation.*
 import tmg.flashback.statistics.ui.overview.driver.summary.PipeType
-import tmg.flashback.data.models.stats.ConstructorOverviewDriverStanding
+import tmg.flashback.formula1.model.ConstructorOverviewDriverStanding
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 

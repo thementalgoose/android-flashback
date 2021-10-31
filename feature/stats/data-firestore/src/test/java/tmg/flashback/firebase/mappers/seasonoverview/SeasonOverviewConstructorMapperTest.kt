@@ -2,7 +2,7 @@ package tmg.flashback.firebase.mappers.seasonoverview
 
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
-import tmg.flashback.data.models.stats.Constructor
+import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.firebase.models.FSeasonOverviewConstructor
 import tmg.flashback.firebase.models.model
 import tmg.testutils.BaseTest
@@ -20,7 +20,7 @@ internal class SeasonOverviewConstructorMapperTest: BaseTest() {
         initSUT()
 
         val input = FSeasonOverviewConstructor.model()
-        val expected = Constructor(
+        val expected = tmg.flashback.formula1.model.Constructor(
             id = "constructorId",
             name = "constructorName",
             wikiUrl = "wikiUrl",

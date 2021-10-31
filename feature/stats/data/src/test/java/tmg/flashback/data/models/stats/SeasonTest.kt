@@ -2,6 +2,7 @@ package tmg.flashback.data.models.stats
 
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
+import tmg.flashback.formula1.model.constructorStandings
 
 class SeasonTest {
 
@@ -92,8 +93,16 @@ class SeasonTest {
 
         val mockSeasonWithConstructorStandings = mockSeason.copy(
                 constructorStandings = listOf(
-                    SeasonStanding<Constructor>(mockConstructorAlpha, alphaPoints, if (alphaPoints > betaPoints) 1 else 2),
-                    SeasonStanding<Constructor>(mockConstructorBeta, betaPoints, if (alphaPoints > betaPoints) 1 else 2)
+                    tmg.flashback.formula1.model.SeasonStanding<tmg.flashback.formula1.model.Constructor>(
+                        mockConstructorAlpha,
+                        alphaPoints,
+                        if (alphaPoints > betaPoints) 1 else 2
+                    ),
+                    tmg.flashback.formula1.model.SeasonStanding<tmg.flashback.formula1.model.Constructor>(
+                        mockConstructorBeta,
+                        betaPoints,
+                        if (alphaPoints > betaPoints) 1 else 2
+                    )
                 )
         )
 

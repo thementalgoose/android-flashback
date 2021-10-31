@@ -9,8 +9,8 @@ class LapTimeTest {
 
     @Test
     fun `initialising empty lap time prints no time`() {
-        val lapTime: LapTime =
-            LapTime()
+        val lapTime: tmg.flashback.formula1.model.LapTime =
+            tmg.flashback.formula1.model.LapTime()
         assertEquals(lapTime.totalMillis, 0)
         assertEquals(lapTime.time, "No time")
         assertEquals(lapTime.toString(), "No time")
@@ -18,8 +18,8 @@ class LapTimeTest {
 
     @Test
     fun `empty lap time object prints no time`() {
-        val lapTime: LapTime =
-            noTime
+        val lapTime: tmg.flashback.formula1.model.LapTime =
+            tmg.flashback.formula1.model.noTime
         assertEquals(lapTime.totalMillis, 0)
         assertEquals(lapTime.time, "No time")
         assertEquals(lapTime.toString(), "No time")
@@ -33,8 +33,8 @@ class LapTimeTest {
     )
     fun `initialising lap time with millis prints correct values`(millis: Int, expectedTime: String) {
 
-        val lapTime: LapTime =
-            LapTime(millis)
+        val lapTime: tmg.flashback.formula1.model.LapTime =
+            tmg.flashback.formula1.model.LapTime(millis)
 
         assertEquals(expectedTime, lapTime.time)
     }
@@ -48,8 +48,8 @@ class LapTimeTest {
     )
     fun `initialising lap time with hour, min, sec and millis prints correct values`(hour: Int?, mins: Int?, seconds: Int?, millis: Int, expectedTime: String) {
 
-        val lapTime: LapTime =
-            LapTime(
+        val lapTime: tmg.flashback.formula1.model.LapTime =
+            tmg.flashback.formula1.model.LapTime(
                 hour ?: 0,
                 mins ?: 0,
                 seconds ?: 0,
@@ -66,10 +66,10 @@ class LapTimeTest {
     )
     fun `delta calculation on lap time prints correct delta`(sourceLapTime: Int, lapTime: Int, expectedDelta: String) {
 
-        val refLapTime: LapTime =
-            LapTime(sourceLapTime)
-        val actualLapTime: LapTime =
-            LapTime(lapTime)
+        val refLapTime: tmg.flashback.formula1.model.LapTime =
+            tmg.flashback.formula1.model.LapTime(sourceLapTime)
+        val actualLapTime: tmg.flashback.formula1.model.LapTime =
+            tmg.flashback.formula1.model.LapTime(lapTime)
 
         assertEquals(expectedDelta, refLapTime.deltaTo(actualLapTime))
     }
@@ -84,8 +84,8 @@ class LapTimeTest {
 
         val expectedMillis = millis + (1000 * seconds) + (1000 * 60 * mins) + (1000 * 60 * 60 * hours)
 
-        val lapTime: LapTime =
-            LapTime(
+        val lapTime: tmg.flashback.formula1.model.LapTime =
+            tmg.flashback.formula1.model.LapTime(
                 hours = hours,
                 mins = mins,
                 seconds = seconds,

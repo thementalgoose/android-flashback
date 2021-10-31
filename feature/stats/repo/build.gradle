@@ -18,17 +18,9 @@ android {
 dependencies {
 
     // Modules
-    api project(path: ':feature:stats:data')
+    implementation project(path: ':feature:stats:room')
     implementation project(path: ':feature:stats:network')
 
     // Explicit crash reporting link
     implementation project(path: ':core:crash-reporting')
-
-    // Firebase
-    implementation platform(deps.firebase.bom)
-    implementation deps.firebase.auth
-    implementation deps.firebase.common
-    implementation deps.firebase.firestore
-    implementation deps.firebase.firestore_ktx
-    implementation deps.kotlin.playservices
 }

@@ -5,7 +5,7 @@ import tmg.crash_reporting.controllers.CrashController
 import tmg.flashback.firebase.FirebaseRepo
 import tmg.flashback.firebase.models.FConstructorOverview
 import tmg.flashback.data.db.stats.ConstructorRepository
-import tmg.flashback.data.models.stats.ConstructorOverview
+import tmg.flashback.formula1.model.ConstructorOverview
 import tmg.flashback.firebase.mappers.ConstructorMapper
 
 class ConstructorFirestore(
@@ -13,10 +13,10 @@ class ConstructorFirestore(
         private val constructorMapper: ConstructorMapper
 ) : FirebaseRepo(crashController), ConstructorRepository {
 
-    override fun getConstructorOverview(constructorId: String): Flow<ConstructorOverview?> {
+    override fun getConstructorOverview(constructorId: String): Flow<tmg.flashback.formula1.model.ConstructorOverview?> {
         crashController.log("document(constructors/$constructorId)")
         return document("constructors/$constructorId")
-                .getDoc<FConstructorOverview, ConstructorOverview> {
+                .getDoc<FConstructorOverview, tmg.flashback.formula1.model.ConstructorOverview> {
                     constructorMapper.mapConstructorOverview(it)
                 }
     }
