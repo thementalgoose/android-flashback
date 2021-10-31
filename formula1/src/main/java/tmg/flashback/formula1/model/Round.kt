@@ -12,7 +12,7 @@ data class Round(
     val wikipediaUrl: String?,
     val drivers: List<ConstructorDriver>,
     val constructors: List<Constructor>,
-    val circuit: CircuitSummary,
+    val circuit: Circuit,
     val q1: Map<String, RoundQualifyingResult>,
     val q2: Map<String, RoundQualifyingResult>,
     val q3: Map<String, RoundQualifyingResult>,

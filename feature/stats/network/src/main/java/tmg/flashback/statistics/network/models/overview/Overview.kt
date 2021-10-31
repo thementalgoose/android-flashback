@@ -14,6 +14,8 @@ data class OverviewRace(
     val circuitId: String,
     val country: String,
     val countryISO: String,
+    val date: String,
+    val time: String?,
     val hasQualifying: Boolean,
     val hasResults: Boolean
 )

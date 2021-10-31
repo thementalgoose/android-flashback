@@ -10,7 +10,6 @@ import org.threeten.bp.LocalDate
 import androidx.lifecycle.ViewModel
 import tmg.flashback.statistics.controllers.RaceController
 import tmg.flashback.data.db.stats.SeasonOverviewRepository
-import tmg.flashback.data.models.stats.*
 import tmg.core.ui.controllers.ThemeController
 import tmg.flashback.formula1.constants.Formula1.showComingSoonMessageForNextDays
 import tmg.flashback.formula1.model.ConstructorDriver

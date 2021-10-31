@@ -8,6 +8,7 @@ import tmg.core.device.managers.NetworkConnectivityManager
 import tmg.crash_reporting.controllers.CrashController
 import tmg.flashback.data.db.stats.CircuitRepository
 import tmg.flashback.formula1.model.Circuit
+import tmg.flashback.formula1.model.CircuitHistory
 import tmg.flashback.formula1.model.Location
 import tmg.flashback.statistics.extensions.circuitIcon
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
@@ -50,7 +51,7 @@ class CircuitInfoViewModel(
 
     private val circuitIdentifier: ConflatedBroadcastChannel<String> = ConflatedBroadcastChannel()
 
-    private val circuit: Flow<Circuit?> = circuitIdentifier
+    private val circuit: Flow<CircuitHistory?> = circuitIdentifier
         .asFlow()
         .flatMapLatest { circuitRepository.getCircuit(it) }
 
@@ -60,15 +61,15 @@ class CircuitInfoViewModel(
     override val isLoading: MutableLiveData<Boolean> = MutableLiveData()
 
     override val circuitName: LiveData<String> = circuit
-        .map { it?.name }
+        .map { it?.data?.name }
         .filterNotNull()
         .asLiveData(viewModelScope.coroutineContext)
 
     override val list: LiveData<List<CircuitItem>> = circuit
         .map {
-            name = it?.name
-            circuitLocation = it?.location
-            wikipedia = it?.wikiUrl
+            name = it?.data?.name
+            circuitLocation = it?.data?.location
+            wikipedia = it?.data?.wikiUrl
             when {
                 it == null && !connectivityManager.isConnected -> {
                     return@map listOf<CircuitItem>(CircuitItem.ErrorItem(SyncDataItem.NoNetwork))
@@ -78,7 +79,7 @@ class CircuitInfoViewModel(
                 }
                 else -> {
                     val list = mutableListOf<CircuitItem>()
-                    it.circuitIcon?.let {
+                    it.data.circuitIcon?.let {
                         list.add(CircuitItem.TrackImage(it))
                     }
                     list.add(CircuitItem.CircuitInfo(it))

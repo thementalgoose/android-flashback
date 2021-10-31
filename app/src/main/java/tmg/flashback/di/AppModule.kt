@@ -15,7 +15,9 @@ import tmg.flashback.managers.widgets.AppWidgetManager
 import tmg.flashback.managers.widgets.WidgetManager
 import tmg.flashback.managers.AppPreferencesManager
 import tmg.flashback.managers.AppNavigationProvider
+import tmg.flashback.managers.AppNetworkConfigManager
 import tmg.flashback.managers.AppStyleManager
+import tmg.flashback.statistics.network.NetworkConfigManager
 import tmg.flashback.ui.SyncViewModel
 import tmg.flashback.ui.dashboard.DashboardViewModel
 import tmg.flashback.ui.dashboard.HomeViewModel
@@ -44,4 +46,6 @@ val appModule = module {
     single<AppShortcutManager> { AndroidAppShortcutManager(get(), get()) }
     single<BuildConfigManager> { AppBuildConfigManager() }
     single<WidgetManager> { AppWidgetManager(get()) }
+
+    single<NetworkConfigManager> { AppNetworkConfigManager() }
 }

@@ -3,14 +3,12 @@ package tmg.flashback.statistics.ui.overview.driver.season
 import androidx.annotation.AttrRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import tmg.flashback.formula1.constants.Formula1.maxPointsBySeason
-import androidx.lifecycle.ViewModel
+import kotlinx.coroutines.flow.map
 import tmg.flashback.statistics.ui.overview.driver.summary.PipeType
 import tmg.flashback.data.db.stats.DriverRepository
 import tmg.flashback.formula1.model.DriverOverviewStanding

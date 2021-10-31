@@ -19,6 +19,10 @@ dependencies {
 
     // Formula 1 base data
     implementation project(path: ':formula1')
+    implementation project(path: ':feature:stats:repo')
+
+    // TODO: Remove this
+    implementation project(path: ':feature:stats:data')
 
     // Firebase module
     implementation project(path: ':feature:stats:data-firestore')
