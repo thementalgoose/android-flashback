@@ -3,8 +3,7 @@ package tmg.flashback.statistics.ui.shared.driverlist
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import tmg.flashback.data.models.stats.ConstructorDriver
-import tmg.flashback.data.models.stats.Driver
+import tmg.flashback.formula1.model.ConstructorDriver
 import tmg.flashback.firebase.extensions.pointsDisplay
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.LayoutConstructorDriverBinding

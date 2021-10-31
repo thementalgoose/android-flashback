@@ -8,10 +8,10 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeParseException
-import tmg.flashback.data.models.stats.DriverOverview
-import tmg.flashback.data.models.stats.DriverOverviewRace
-import tmg.flashback.data.models.stats.DriverOverviewStanding
-import tmg.flashback.data.models.stats.SlimConstructor
+import tmg.flashback.formula1.model.DriverOverview
+import tmg.flashback.formula1.model.DriverOverviewRace
+import tmg.flashback.formula1.model.DriverOverviewStanding
+import tmg.flashback.formula1.model.SlimConstructor
 import tmg.flashback.firebase.currentYear
 import tmg.flashback.firebase.models.FDriverOverview
 import tmg.flashback.firebase.models.FDriverOverviewDriver
@@ -34,7 +34,7 @@ internal class DriverMapperTest: BaseTest() {
         initSUT()
 
         val input = FDriverOverview.model()
-        val expected = DriverOverview(
+        val expected = tmg.flashback.formula1.model.DriverOverview(
             id = "driverId",
             firstName = "firstName",
             lastName = "lastName",
@@ -46,7 +46,7 @@ internal class DriverMapperTest: BaseTest() {
             nationality = "nationality",
             nationalityISO = "nationalityISO",
             standings = listOf(
-                DriverOverviewStanding(
+                tmg.flashback.formula1.model.DriverOverviewStanding(
                     bestFinish = 1,
                     bestFinishQuantity = 4,
                     bestQualifying = 2,
@@ -59,14 +59,14 @@ internal class DriverMapperTest: BaseTest() {
                     season = 2020,
                     wins = 5,
                     constructors = listOf(
-                        SlimConstructor(
+                        tmg.flashback.formula1.model.SlimConstructor(
                             id = "constructorId",
                             name = "constructorName",
                             color = 0
                         )
                     ),
                     raceOverview = listOf(
-                        DriverOverviewRace(
+                        tmg.flashback.formula1.model.DriverOverviewRace(
                             status = "1",
                             finished = 1,
                             points = 25.0,
@@ -75,7 +75,7 @@ internal class DriverMapperTest: BaseTest() {
                             season = 2020,
                             raceName = "raceName",
                             date = LocalDate.of(2020, 1, 1),
-                            constructor = SlimConstructor(
+                            constructor = tmg.flashback.formula1.model.SlimConstructor(
                                 id = "constructorId",
                                 name = "constructorName",
                                 color = 0
@@ -139,7 +139,7 @@ internal class DriverMapperTest: BaseTest() {
         initSUT()
 
         val input = FDriverOverviewStanding.model()
-        val expected = DriverOverviewStanding(
+        val expected = tmg.flashback.formula1.model.DriverOverviewStanding(
             bestFinish = 1,
             bestFinishQuantity = 4,
             bestQualifying = 2,
@@ -152,14 +152,14 @@ internal class DriverMapperTest: BaseTest() {
             season = 2020,
             wins = 5,
             constructors = listOf(
-                SlimConstructor(
+                tmg.flashback.formula1.model.SlimConstructor(
                     id = "constructorId",
                     name = "constructorName",
                     color = 0
                 )
             ),
             raceOverview = listOf(
-                DriverOverviewRace(
+                tmg.flashback.formula1.model.DriverOverviewRace(
                     status = "1",
                     finished = 1,
                     points = 25.0,
@@ -168,7 +168,7 @@ internal class DriverMapperTest: BaseTest() {
                     season = 2020,
                     raceName = "raceName",
                     date = LocalDate.of(2020, 1, 1),
-                    constructor = SlimConstructor(
+                    constructor = tmg.flashback.formula1.model.SlimConstructor(
                         id = "constructorId",
                         name = "constructorName",
                         color = 0
@@ -287,7 +287,7 @@ internal class DriverMapperTest: BaseTest() {
                 name = "constructorName2"
             )
         )
-        val expected = DriverOverviewRace(
+        val expected = tmg.flashback.formula1.model.DriverOverviewRace(
             status = "1",
             finished = 1,
             points = 25.0,
@@ -296,7 +296,7 @@ internal class DriverMapperTest: BaseTest() {
             season = inputSeason,
             raceName = "raceName",
             date = LocalDate.of(2020, 1, 1),
-            constructor = SlimConstructor(
+            constructor = tmg.flashback.formula1.model.SlimConstructor(
                 id = "constructorId2",
                 name = "constructorName2",
                 color = 0
@@ -323,7 +323,7 @@ internal class DriverMapperTest: BaseTest() {
         initSUT()
 
         val input = FDriverOverviewStandingHistory.model()
-        val expected = SlimConstructor(
+        val expected = tmg.flashback.formula1.model.SlimConstructor(
             id = "diff",
             name = "constructorName",
             color = 0

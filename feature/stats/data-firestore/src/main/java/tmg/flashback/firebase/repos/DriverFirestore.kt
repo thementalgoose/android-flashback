@@ -5,7 +5,7 @@ import tmg.crash_reporting.controllers.CrashController
 import tmg.flashback.firebase.FirebaseRepo
 import tmg.flashback.firebase.models.FDriverOverview
 import tmg.flashback.data.db.stats.DriverRepository
-import tmg.flashback.data.models.stats.DriverOverview
+import tmg.flashback.formula1.model.DriverOverview
 import tmg.flashback.firebase.mappers.DriverMapper
 
 class DriverFirestore(
@@ -13,9 +13,9 @@ class DriverFirestore(
         private val driverMapper: DriverMapper
 ) : FirebaseRepo(crashController), DriverRepository {
 
-    override fun getDriverOverview(driverId: String): Flow<DriverOverview?> {
+    override fun getDriverOverview(driverId: String): Flow<tmg.flashback.formula1.model.DriverOverview?> {
         crashController.log("document(drivers/$driverId)")
         return document("drivers/$driverId")
-                .getDoc<FDriverOverview, DriverOverview> { driverMapper.mapDriverOverview(it) }
+                .getDoc<FDriverOverview, tmg.flashback.formula1.model.DriverOverview> { driverMapper.mapDriverOverview(it) }
     }
 }

@@ -3,7 +3,7 @@ package tmg.flashback.di_old.data
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import tmg.flashback.data.db.stats.HistoryRepository
-import tmg.flashback.data.models.stats.History
+import tmg.flashback.formula1.model.History
 
 internal object MockHistoryRepository: HistoryRepository {
 

@@ -6,7 +6,7 @@ import tmg.crash_reporting.controllers.CrashController
 import tmg.flashback.firebase.FirebaseRepo
 import tmg.flashback.firebase.models.FHistorySeason
 import tmg.flashback.data.db.stats.HistoryRepository
-import tmg.flashback.data.models.stats.History
+import tmg.flashback.formula1.model.History
 import tmg.flashback.firebase.mappers.HistoryMapper
 
 class HistoryFirestore(
@@ -14,11 +14,11 @@ class HistoryFirestore(
         private val historyMapper: HistoryMapper
 ): FirebaseRepo(crashController), HistoryRepository {
 
-    override fun historyFor(season: Int): Flow<History?> {
+    override fun historyFor(season: Int): Flow<tmg.flashback.formula1.model.History?> {
         val seasonKey = "${season.toString().substring(0, 3)}0"
         crashController.log("document(overview/$seasonKey) $season")
         return document("overview/season$seasonKey")
-                .getDoc<FHistorySeason,List<History>> {
+                .getDoc<FHistorySeason,List<tmg.flashback.formula1.model.History>> {
                     historyMapper.mapHistory(it)
                 }
                 .map { list ->

@@ -1,8 +1,8 @@
 package tmg.flashback.data.db.stats
 
 import kotlinx.coroutines.flow.Flow
-import tmg.flashback.data.models.stats.History
+import tmg.flashback.formula1.model.History
 
 interface HistoryRepository {
-    fun historyFor(season: Int): Flow<History?>
+    fun historyFor(season: Int): Flow<tmg.flashback.formula1.model.History?>
 }

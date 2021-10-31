@@ -3,8 +3,8 @@ package tmg.flashback.statistics.ui.race
 import androidx.annotation.LayoutRes
 import org.threeten.bp.LocalDate
 import tmg.core.ui.model.AnimationSpeed
-import tmg.flashback.data.enums.RaceStatus
-import tmg.flashback.data.models.stats.*
+import tmg.flashback.formula1.enums.RaceStatus
+import tmg.flashback.formula1.model.*
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 

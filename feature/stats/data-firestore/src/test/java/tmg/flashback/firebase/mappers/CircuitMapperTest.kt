@@ -9,9 +9,9 @@ import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
 import tmg.crash_reporting.controllers.CrashController
-import tmg.flashback.data.models.stats.Circuit
-import tmg.flashback.data.models.stats.CircuitRace
-import tmg.flashback.data.models.stats.Location
+import tmg.flashback.formula1.model.Circuit
+import tmg.flashback.formula1.model.CircuitRace
+import tmg.flashback.formula1.model.Location
 import tmg.flashback.firebase.models.FCircuit
 import tmg.flashback.firebase.models.FCircuitResult
 import tmg.flashback.firebase.models.model
@@ -30,7 +30,10 @@ internal class CircuitMapperTest: BaseTest() {
 
     @BeforeEach
     internal fun setUp() {
-        every { mockLocationMapper.mapCircuitLocation(any()) } returns Location(1.0, 2.0)
+        every { mockLocationMapper.mapCircuitLocation(any()) } returns tmg.flashback.formula1.model.Location(
+            1.0,
+            2.0
+        )
     }
 
     @Test
@@ -38,16 +41,16 @@ internal class CircuitMapperTest: BaseTest() {
         initSUT()
 
         val input = FCircuit.model()
-        val expected = Circuit(
+        val expected = tmg.flashback.formula1.model.Circuit(
             id = "circuitId",
             name = "circuitName",
             country = "country",
             countryISO = "countryISO",
             locality = "locality",
-            location = Location(1.0, 2.0),
+            location = tmg.flashback.formula1.model.Location(1.0, 2.0),
             wikiUrl = "wikiUrl",
             results = listOf(
-                CircuitRace(
+                tmg.flashback.formula1.model.CircuitRace(
                     name = "name",
                     season = 2020,
                     round = 1,
@@ -99,7 +102,7 @@ internal class CircuitMapperTest: BaseTest() {
         initSUT()
 
         val input = FCircuitResult.model()
-        val expected = CircuitRace(
+        val expected = tmg.flashback.formula1.model.CircuitRace(
             name = "name",
             season = 2020,
             round = 1,

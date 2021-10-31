@@ -1,7 +1,7 @@
 package tmg.flashback.statistics.ui.shared.constructorlist
 
 import androidx.recyclerview.widget.RecyclerView
-import tmg.flashback.data.models.stats.SlimConstructor
+import tmg.flashback.formula1.model.SlimConstructor
 import tmg.flashback.statistics.databinding.ViewDriverConstructorsBinding
 
 class ConstructorListViewHolder(

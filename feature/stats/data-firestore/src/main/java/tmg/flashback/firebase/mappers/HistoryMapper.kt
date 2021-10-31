@@ -2,11 +2,11 @@ package tmg.flashback.firebase.mappers
 
 import java.lang.NullPointerException
 import tmg.crash_reporting.controllers.CrashController
-import tmg.flashback.data.models.stats.History
-import tmg.flashback.data.models.stats.HistoryRound
-import tmg.flashback.data.models.stats.WinnerSeason
-import tmg.flashback.data.models.stats.WinnerSeasonConstructor
-import tmg.flashback.data.models.stats.WinnerSeasonDriver
+import tmg.flashback.formula1.model.History
+import tmg.flashback.formula1.model.HistoryRound
+import tmg.flashback.formula1.model.WinnerSeason
+import tmg.flashback.formula1.model.WinnerSeasonConstructor
+import tmg.flashback.formula1.model.WinnerSeasonDriver
 import tmg.flashback.firebase.models.FHistorySeason
 import tmg.flashback.firebase.models.FHistorySeasonRound
 import tmg.flashback.firebase.models.FHistorySeasonWin
@@ -20,7 +20,7 @@ class HistoryMapper(
     private val crashController: CrashController
 ) {
 
-    fun mapHistory(input: FHistorySeason): List<History> {
+    fun mapHistory(input: FHistorySeason): List<tmg.flashback.formula1.model.History> {
         return input.all
             .mapNotNull { (key, rounds) ->
                 val season = getSeason(rounds)
@@ -28,7 +28,7 @@ class HistoryMapper(
                     return@mapNotNull null
                 }
 
-                return@mapNotNull History(
+                return@mapNotNull tmg.flashback.formula1.model.History(
                     season = season,
                     winner = input.win?.get(key)?.let { mapWinnerSeason(it) },
                     rounds = rounds?.mapNotNull mapRounds@{ (_, value) ->
@@ -50,8 +50,8 @@ class HistoryMapper(
             .firstOrNull() ?: -1
     }
 
-    fun mapHistoryRound(input: FHistorySeasonRound): HistoryRound {
-        return HistoryRound(
+    fun mapHistoryRound(input: FHistorySeasonRound): tmg.flashback.formula1.model.HistoryRound {
+        return tmg.flashback.formula1.model.HistoryRound(
             date = requireFromDate(input.date),
             season = input.s,
             round = input.r,
@@ -65,8 +65,8 @@ class HistoryMapper(
         )
     }
 
-    fun mapWinnerSeason(input: FHistorySeasonWin): WinnerSeason {
-        return WinnerSeason(
+    fun mapWinnerSeason(input: FHistorySeasonWin): tmg.flashback.formula1.model.WinnerSeason {
+        return tmg.flashback.formula1.model.WinnerSeason(
             season = input.s,
             driver = input.driver
                 ?.map { mapWinnerSeasonDriver(it) }
@@ -77,8 +77,8 @@ class HistoryMapper(
         )
     }
 
-    fun mapWinnerSeasonDriver(input: FHistorySeasonWinDriver): WinnerSeasonDriver {
-        return WinnerSeasonDriver(
+    fun mapWinnerSeasonDriver(input: FHistorySeasonWinDriver): tmg.flashback.formula1.model.WinnerSeasonDriver {
+        return tmg.flashback.formula1.model.WinnerSeasonDriver(
             id = input.id,
             name = input.name,
             image = input.img,
@@ -86,8 +86,8 @@ class HistoryMapper(
         )
     }
 
-    fun mapWinnerSeasonConstructor(input: FHistorySeasonWinConstructor): WinnerSeasonConstructor {
-        return WinnerSeasonConstructor(
+    fun mapWinnerSeasonConstructor(input: FHistorySeasonWinConstructor): tmg.flashback.formula1.model.WinnerSeasonConstructor {
+        return tmg.flashback.formula1.model.WinnerSeasonConstructor(
             id = input.id,
             name = input.name,
             color = input.color,

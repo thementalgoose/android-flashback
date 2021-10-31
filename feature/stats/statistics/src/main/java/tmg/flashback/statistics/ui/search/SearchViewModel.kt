@@ -5,32 +5,19 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onStart
-import kotlinx.coroutines.flow.startWith
 import tmg.flashback.data.db.stats.SearchRepository
-import tmg.flashback.data.models.stats.History
-import tmg.flashback.data.models.stats.HistoryRound
-import tmg.flashback.data.models.stats.SearchCircuit
-import tmg.flashback.data.models.stats.SearchConstructor
-import tmg.flashback.data.models.stats.SearchDriver
-import tmg.flashback.data.utils.extendTo
-import tmg.flashback.statistics.ui.search.viewholder.SearchDriverViewHolder
+import tmg.flashback.formula1.model.HistoryRound
+import tmg.flashback.formula1.model.SearchCircuit
+import tmg.flashback.formula1.model.SearchConstructor
+import tmg.flashback.formula1.model.SearchDriver
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
 import tmg.utilities.lifecycle.DataEvent
-import tmg.utilities.lifecycle.Event
 
 //region Inputs
 

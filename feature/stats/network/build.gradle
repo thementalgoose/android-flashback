@@ -18,14 +18,8 @@ android {
 
 dependencies {
 
-    // Modules
-    api project(path: ':feature:stats:data')
-
     // Explicit crash reporting link
     implementation project(path: ':core:crash-reporting')
-
-    // Swipe refresh
-    implementation deps.androidx.swiperefreshlayout
 
     // Kotlinx serialization
     implementation deps.kotlinx.serialization

@@ -1,0 +1,28 @@
+package tmg.flashback.statistics.repo.models.overview
+
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity
+data class Overview(
+    @ColumnInfo(name = "season")
+    val season: Int,
+    @ColumnInfo(name = "round")
+    val round: Int,
+    @ColumnInfo(name = "circuit_name")
+    val circuitName: String,
+    @ColumnInfo(name = "circuit_id")
+    val circuitId: String,
+    @ColumnInfo(name = "country")
+    val country: String,
+    @ColumnInfo(name = "country_iso")
+    val countryISO: String,
+    @ColumnInfo(name = "has_race_data")
+    val hasRace: Boolean,
+    @ColumnInfo(name = "has_qualifying_data")
+    val hasQualifying: Boolean,
+    @PrimaryKey
+    @ColumnInfo(name = "id")
+    val id: String = "${season}_${round}"
+)

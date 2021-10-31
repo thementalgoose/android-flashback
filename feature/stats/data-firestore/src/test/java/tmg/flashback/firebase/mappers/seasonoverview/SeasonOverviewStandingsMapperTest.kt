@@ -8,11 +8,11 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
 import tmg.crash_reporting.controllers.CrashController
-import tmg.flashback.data.models.stats.Constructor
-import tmg.flashback.data.models.stats.ConstructorStandings
-import tmg.flashback.data.models.stats.Driver
-import tmg.flashback.data.models.stats.DriverStandings
-import tmg.flashback.data.models.stats.SeasonStanding
+import tmg.flashback.formula1.model.Constructor
+import tmg.flashback.formula1.model.ConstructorStandings
+import tmg.flashback.formula1.model.Driver
+import tmg.flashback.formula1.model.DriverStandings
+import tmg.flashback.formula1.model.SeasonStanding
 import tmg.flashback.firebase.models.FSeasonOverviewConstructor
 import tmg.flashback.firebase.models.FSeasonStatistics
 import tmg.flashback.firebase.models.FSeasonStatisticsPoints
@@ -46,8 +46,8 @@ internal class SeasonOverviewStandingsMapperTest: BaseTest() {
         initSUT()
 
         val input = FSeasonStatistics.model()
-        val expected: DriverStandings = listOf(
-            SeasonStanding(
+        val expected: tmg.flashback.formula1.model.DriverStandings = listOf(
+            tmg.flashback.formula1.model.SeasonStanding(
                 item = mockDriver(),
                 points = 1.0,
                 position = 2,
@@ -128,9 +128,9 @@ internal class SeasonOverviewStandingsMapperTest: BaseTest() {
         initSUT()
 
         val input = FSeasonStatistics.model()
-        val expected: ConstructorStandings = listOf(
-            SeasonStanding(
-                item = Constructor(
+        val expected: tmg.flashback.formula1.model.ConstructorStandings = listOf(
+            tmg.flashback.formula1.model.SeasonStanding(
+                item = tmg.flashback.formula1.model.Constructor(
                     id = "constructorId",
                     name = "constructorName",
                     wikiUrl = "wikiUrl",
@@ -218,8 +218,8 @@ internal class SeasonOverviewStandingsMapperTest: BaseTest() {
 
 }
 
-private fun mockDriver(driverId: String = "driverId", constructorsMap: Map<Int, String> = mapOf(1 to "constructorId")): Driver {
-    return Driver(
+private fun mockDriver(driverId: String = "driverId", constructorsMap: Map<Int, String> = mapOf(1 to "constructorId")): tmg.flashback.formula1.model.Driver {
+    return tmg.flashback.formula1.model.Driver(
         id = driverId,
         firstName = "firstName",
         lastName = "lastName",
@@ -232,7 +232,7 @@ private fun mockDriver(driverId: String = "driverId", constructorsMap: Map<Int, 
         nationalityISO = "nationalityISO",
         constructors = constructorsMap
             .map { (key, value) ->
-                key to Constructor(
+                key to tmg.flashback.formula1.model.Constructor(
                     id = value,
                     name = "constructorName",
                     wikiUrl = "wikiUrl",
@@ -242,7 +242,7 @@ private fun mockDriver(driverId: String = "driverId", constructorsMap: Map<Int, 
                 )
             }
             .toMap(),
-        startingConstructor = Constructor(
+        startingConstructor = tmg.flashback.formula1.model.Constructor(
             id = "constructorId",
             name = "constructorName",
             wikiUrl = "wikiUrl",
@@ -252,8 +252,8 @@ private fun mockDriver(driverId: String = "driverId", constructorsMap: Map<Int, 
         ),
     )
 }
-private fun mockConstructor(id: String = "constructorId"): Constructor {
-    return Constructor(
+private fun mockConstructor(id: String = "constructorId"): tmg.flashback.formula1.model.Constructor {
+    return tmg.flashback.formula1.model.Constructor(
         id = id,
         name = "constructorName",
         wikiUrl = "wikiUrl",

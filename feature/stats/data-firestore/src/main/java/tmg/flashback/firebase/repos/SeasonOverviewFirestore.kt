@@ -14,12 +14,12 @@ class SeasonOverviewFirestore(
         private val seasonOverviewMapper: SeasonOverviewMapper
 ) : FirebaseRepo(crashController), SeasonOverviewRepository {
 
-    override fun getCircuits(season: Int): Flow<List<CircuitSummary>> {
+    override fun getCircuits(season: Int): Flow<List<tmg.flashback.formula1.model.CircuitSummary>> {
         return getSeason(season, "getCircuits")
                 .map { it?.circuits ?: emptyList() }
     }
 
-    override fun getCircuit(season: Int, round: Int): Flow<CircuitSummary?> {
+    override fun getCircuit(season: Int, round: Int): Flow<tmg.flashback.formula1.model.CircuitSummary?> {
         return getRounds(season, "getCircuit $round")
                 .map { rounds -> rounds.firstOrNull { it.round == round } }
                 .map { it?.circuit }
@@ -28,54 +28,54 @@ class SeasonOverviewFirestore(
     override fun getConstructor(
             season: Int,
             constructorId: String
-    ): Flow<Constructor?> {
+    ): Flow<tmg.flashback.formula1.model.Constructor?> {
         return getSeason(season, "getConstructor $constructorId")
                 .map { seasonData -> seasonData?.constructors?.firstOrNull { it.id == constructorId } }
     }
 
-    override fun getDriver(season: Int, driver: String): Flow<Driver?> {
+    override fun getDriver(season: Int, driver: String): Flow<tmg.flashback.formula1.model.Driver?> {
         return getSeason(season, "getDriver $driver")
                 .map { seasonData -> seasonData?.drivers?.firstOrNull { it.id == driver } }
     }
 
-    override fun getAllConstructors(season: Int): Flow<List<Constructor>> {
+    override fun getAllConstructors(season: Int): Flow<List<tmg.flashback.formula1.model.Constructor>> {
         return getSeason(season, "getAllConstructors")
                 .map { it?.constructors ?: emptyList() }
     }
 
-    override fun getSeasonOverview(season: Int): Flow<Season> {
+    override fun getSeasonOverview(season: Int): Flow<tmg.flashback.formula1.model.Season> {
         return getSeason(season, "getSeasonOverview")
                 .map {
-                    return@map it ?: Season(
-                            season = season,
-                            drivers = emptyList(),
-                            constructors = emptyList(),
-                            rounds = emptyList(),
-                            constructorStandings = emptyList(),
-                            driverStandings = emptyList()
+                    return@map it ?: tmg.flashback.formula1.model.Season(
+                        season = season,
+                        drivers = emptyList(),
+                        constructors = emptyList(),
+                        rounds = emptyList(),
+                        constructorStandings = emptyList(),
+                        driverStandings = emptyList()
                     )
                 }
     }
 
-    override fun getSeasonRound(season: Int, round: Int): Flow<Round?> {
+    override fun getSeasonRound(season: Int, round: Int): Flow<tmg.flashback.formula1.model.Round?> {
         return getRounds(season, "getSeasonRound $round")
                 .map { rounds -> rounds.firstOrNull { it.round == round } }
     }
 
-    private fun getRounds(season: Int, context: String): Flow<List<Round>> {
+    private fun getRounds(season: Int, context: String): Flow<List<tmg.flashback.formula1.model.Round>> {
         return getSeason(season, context)
                 .map { it?.rounds ?: emptyList() }
     }
 
-    private fun getSeasonWithRounds(season: Int, context: String): Flow<Pair<Int, List<Round>>> {
+    private fun getSeasonWithRounds(season: Int, context: String): Flow<Pair<Int, List<tmg.flashback.formula1.model.Round>>> {
         return getSeason(season, context)
                 .map { Pair(season, it?.rounds ?: emptyList()) }
     }
 
-    private fun getSeason(season: Int, context: String): Flow<Season?> {
+    private fun getSeason(season: Int, context: String): Flow<tmg.flashback.formula1.model.Season?> {
         crashController.log("document(seasons/$season) for $context")
         return document("seasons/$season")
-                .getDoc<FSeason, Season> {
+                .getDoc<FSeason, tmg.flashback.formula1.model.Season> {
                     seasonOverviewMapper.mapSeason(it, season)
                 }
     }

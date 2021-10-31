@@ -2,7 +2,7 @@ package tmg.flashback.statistics.ui.race.viewholders
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import tmg.flashback.data.models.stats.RoundQualifyingResult
+import tmg.flashback.formula1.model.RoundQualifyingResult
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.LayoutQualifyingTimeBinding
 import tmg.flashback.statistics.databinding.ViewRaceQualifyingResultBinding

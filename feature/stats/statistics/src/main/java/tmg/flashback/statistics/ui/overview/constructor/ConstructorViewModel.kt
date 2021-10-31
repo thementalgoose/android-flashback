@@ -7,13 +7,11 @@ import androidx.lifecycle.*
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.map
-import tmg.core.device.managers.NetworkConnectivityManager
 import tmg.flashback.statistics.ui.overview.constructor.summary.ConstructorSummaryItem
 import tmg.flashback.statistics.ui.overview.constructor.summary.addError
 import tmg.flashback.statistics.ui.overview.driver.summary.PipeType
 import tmg.flashback.data.db.stats.ConstructorRepository
-import tmg.flashback.data.models.stats.ConstructorOverview
+import tmg.flashback.formula1.model.ConstructorOverview
 import tmg.flashback.firebase.extensions.pointsDisplay
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
