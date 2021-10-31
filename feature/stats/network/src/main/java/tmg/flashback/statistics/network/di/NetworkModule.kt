@@ -10,7 +10,7 @@ import retrofit2.Retrofit
 import tmg.flashback.statistics.network.NetworkConfigManager
 import tmg.flashback.statistics.network.api.FlashbackApi
 
-val statisticsNetwork = module {
+val networkModule = module {
 
     factory { buildFlashbackApi(get()) }
     single { buildRetrofit(get()) }

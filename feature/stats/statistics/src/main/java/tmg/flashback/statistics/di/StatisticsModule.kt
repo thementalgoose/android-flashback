@@ -21,6 +21,7 @@ import tmg.flashback.formula1.constants.Formula1
 import tmg.flashback.statistics.controllers.RaceController
 import tmg.flashback.statistics.controllers.SearchController
 import tmg.flashback.statistics.controllers.SeasonController
+import tmg.flashback.statistics.repo.di.repoModule
 import tmg.flashback.statistics.repository.StatisticsRepository
 import tmg.flashback.statistics.ui.admin.maintenance.MaintenanceViewModel
 import tmg.flashback.statistics.ui.circuit.CircuitInfoViewModel
@@ -33,7 +34,7 @@ import tmg.flashback.statistics.ui.search.SearchViewModel
 import tmg.flashback.statistics.ui.search.category.CategoryViewModel
 import tmg.flashback.statistics.ui.settings.statistics.SettingsStatisticsViewModel
 
-val statisticsModule = module {
+val statisticsModule = repoModule + module {
 
     viewModel { MaintenanceViewModel(get(), get()) }
     viewModel { CircuitInfoViewModel(get(), get(), get()) }
@@ -76,5 +77,4 @@ val statisticsModule = module {
     single<DriverRepository> { DriverFirestore(get(), get()) }
     single<ConstructorRepository> { ConstructorFirestore(get(), get()) }
     single<SearchRepository> { SearchFirestore(get(), get(), get()) }
-
 }

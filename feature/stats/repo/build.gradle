@@ -24,4 +24,7 @@ dependencies {
 
     // Explicit crash reporting link
     implementation project(path: ':core:crash-reporting')
+
+    // Retrofit
+    implementation deps.retrofit.retrofit
 }

@@ -35,7 +35,7 @@ class CircuitRepository(
             null
         }
         if (saveModel != null) {
-            persistence.circuitDao().insertCircuitHistory(saveModel)
+//            persistence.circuitDao().insertCircuitHistory(saveModel)
             return true
         }
         return false
