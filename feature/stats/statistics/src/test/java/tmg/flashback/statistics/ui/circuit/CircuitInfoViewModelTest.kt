@@ -11,7 +11,6 @@ import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
 import tmg.core.device.managers.NetworkConnectivityManager
 import tmg.crash_reporting.controllers.CrashController
-import tmg.flashback.data.db.stats.CircuitRepository
 import tmg.flashback.formula1.model.Circuit
 import tmg.flashback.formula1.model.CircuitRace
 import tmg.flashback.formula1.model.Location
