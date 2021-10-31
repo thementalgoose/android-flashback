@@ -22,7 +22,7 @@ data class CircuitResultRace(
     val round: Int,
     val name: String,
     val date: String,
-    val time: String?,
+    val time: String? = null,
     val wikiUrl: String? = null,
 )
 

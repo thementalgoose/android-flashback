@@ -13,8 +13,10 @@ import org.threeten.bp.temporal.TemporalAdjusters
 import tmg.core.analytics.manager.AnalyticsManager
 import tmg.flashback.formula1.constants.Formula1.constructorChampionshipStarts
 import androidx.lifecycle.ViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 import tmg.core.device.managers.NetworkConnectivityManager
-import tmg.flashback.data.db.stats.HistoryRepository
 import tmg.flashback.data.db.stats.SeasonOverviewRepository
 import tmg.core.ui.controllers.ThemeController
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
@@ -22,12 +24,15 @@ import tmg.flashback.statistics.R
 import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
 import tmg.flashback.formula1.model.*
 import tmg.flashback.statistics.controllers.SeasonController
+import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
+import tmg.utilities.extensions.async
 import tmg.utilities.extensions.combinePair
 import tmg.utilities.extensions.then
 import tmg.utilities.lifecycle.DataEvent
 import tmg.utilities.lifecycle.Event
 import tmg.utilities.models.StringHolder
+import kotlin.coroutines.CoroutineContext
 
 //region Inputs
 
@@ -36,8 +41,10 @@ interface SeasonViewModelInputs {
     fun clickNow()
     fun clickItem(item: SeasonNavItem)
 
-    fun showUpNext(value: Boolean = true)
     fun refresh()
+
+    fun showUpNext(value: Boolean = true)
+    fun appConfigSynced()
     fun selectSeason(season: Int)
 
     fun clickTrack(track: SeasonItem.Track)
@@ -58,6 +65,8 @@ interface SeasonViewModelOutputs {
     val openDriver: LiveData<DataEvent<SeasonItem.Driver>>
     val openConstructor: LiveData<DataEvent<SeasonItem.Constructor>>
 
+    val showRefreshError: LiveData<Event>
+
     val showLoading: LiveData<Boolean>
     val label: LiveData<StringHolder>
     val list: LiveData<List<SeasonItem>>
@@ -67,7 +76,7 @@ interface SeasonViewModelOutputs {
 
 class SeasonViewModel(
         private val themeController: ThemeController,
-        private val historyRepository: HistoryRepository,
+        private val overviewRepository: OverviewRepository,
         private val seasonOverviewRepository: SeasonOverviewRepository,
         private val seasonController: SeasonController,
         private val networkConnectivityManager: NetworkConnectivityManager,
@@ -78,12 +87,14 @@ class SeasonViewModel(
         ConflatedBroadcastChannel(SeasonNavItem.SCHEDULE)
     private val currentTabFlow: Flow<SeasonNavItem> = currentTab.asFlow()
     private val season: ConflatedBroadcastChannel<Int> = ConflatedBroadcastChannel(seasonController.defaultSeason)
-    private val currentHistory: Flow<History?> = season.asFlow()
-        .flatMapLatest { historyRepository.historyFor(it) }
+    private val currentSeasonOverview: Flow<SeasonOverview?> = season.asFlow()
+        .flatMapLatest { overviewRepository.getOverview(it) }
 
     override val openRace: MutableLiveData<DataEvent<SeasonItem.Track>> = MutableLiveData()
     override val openDriver: MutableLiveData<DataEvent<SeasonItem.Driver>> = MutableLiveData()
     override val openConstructor: MutableLiveData<DataEvent<SeasonItem.Constructor>> = MutableLiveData()
+
+    override val showRefreshError: MutableLiveData<Event> = MutableLiveData()
 
     override val showLoading: MutableLiveData<Boolean> = MutableLiveData(true)
     override val openMenu: MutableLiveData<Event> = MutableLiveData()
@@ -108,7 +119,7 @@ class SeasonViewModel(
     private val seasonList: Flow<List<SeasonItem>> = season
         .asFlow()
         .flatMapLatest {
-            seasonOverviewRepository.getSeasonOverview(it).combinePair(currentHistory)
+            seasonOverviewRepository.getSeasonOverview(it).combinePair(currentSeasonOverview)
         }
         .combinePair(
             currentTabFlow,
@@ -133,7 +144,7 @@ class SeasonViewModel(
 
             val appBannerMessage = seasonController.banner
             val list: MutableList<SeasonItem> = mutableListOf()
-            val historyRounds = history?.rounds ?: emptyList()
+            val historyRounds = history?.roundOverviews ?: emptyList()
             val rounds = season.rounds
 
             appBannerMessage?.let {
@@ -253,9 +264,20 @@ class SeasonViewModel(
         }
     }
 
-    override fun refresh() {
+    override fun appConfigSynced() {
         this.season.valueOrNull?.let {
             this.season.offer(it)
+        }
+    }
+
+    override fun refresh() {
+        showLoading.value = true
+        viewModelScope.launch(context = Dispatchers.IO) {
+            val result = overviewRepository.fetchOverview(season.value)
+            showLoading.postValue(false)
+            if (!result) {
+                showRefreshError.postValue(Event())
+            }
         }
     }
 
@@ -281,7 +303,7 @@ class SeasonViewModel(
     /**
      * Extract the calendar of events out into a formatted display list
      */
-    private fun List<HistoryRound>.toCalendar(season: Int): List<SeasonItem> {
+    private fun List<RoundOverview>.toCalendar(season: Int): List<SeasonItem> {
         val list = mutableListOf<SeasonItem>()
         list.add(SeasonItem.CalendarHeader)
         Month.values().forEach { month ->
@@ -315,7 +337,7 @@ class SeasonViewModel(
     /**
      * Extract the schedule of tracks out into a list of home items to display on the home screen
      */
-    private fun List<HistoryRound>.toScheduleList(): List<SeasonItem> {
+    private fun List<RoundOverview>.toScheduleList(): List<SeasonItem> {
         return this
             .sortedBy { it.round }
             .map {

@@ -5,10 +5,6 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filterNotNull
 import tmg.crash_reporting.controllers.CrashController
 import tmg.flashback.data.db.stats.SearchRepository
-import tmg.flashback.formula1.model.History
-import tmg.flashback.formula1.model.SearchCircuit
-import tmg.flashback.formula1.model.SearchConstructor
-import tmg.flashback.formula1.model.SearchDriver
 import tmg.flashback.firebase.FirebaseRepo
 import tmg.flashback.firebase.mappers.HistoryMapper
 import tmg.flashback.firebase.mappers.SearchMapper
@@ -63,10 +59,10 @@ class SearchFirestore(
             .filterNotNull()
     }
 
-    override fun allRaces(): Flow<List<tmg.flashback.formula1.model.History>> {
+    override fun allRaces(): Flow<List<tmg.flashback.formula1.model.SeasonOverview>> {
         val historyFlows = overviewKeys.map {
             document("overview/$it")
-                .getDoc<FHistorySeason,List<tmg.flashback.formula1.model.History>> {
+                .getDoc<FHistorySeason,List<tmg.flashback.formula1.model.SeasonOverview>> {
                     historyMapper.mapHistory(it)
                 }
                 .filterNotNull()

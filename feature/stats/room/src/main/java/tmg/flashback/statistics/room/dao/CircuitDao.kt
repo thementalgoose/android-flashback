@@ -1,32 +1,29 @@
 package tmg.flashback.statistics.room.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Transaction
+import androidx.room.*
 import kotlinx.coroutines.flow.Flow
 import tmg.flashback.statistics.room.models.circuit.Circuit
 import tmg.flashback.statistics.room.models.circuit.CircuitHistory
+import tmg.flashback.statistics.room.models.circuit.CircuitRound
+import tmg.flashback.statistics.room.models.circuit.CircuitRoundResult
 
-private typealias RoomCircuitHistory = tmg.flashback.statistics.room.models.circuit.CircuitHistory
 
 @Dao
 interface CircuitDao {
 
     @Query("SELECT * FROM circuit WHERE id == :id LIMIT 1")
-    fun getCircuit(id: String): Circuit?
+    fun getCircuit(id: String): Flow<Circuit?>
 
-    @Query("SELECT * FROM circuit WHERE id == :id LIMIT 1")
-    fun observeCircuit(id: String): Flow<Circuit?>
+    @Transaction
+    @Query("SELECT * FROM circuit WHERE id == :id")
+    fun getCircuitHistory(id: String): Flow<CircuitHistory>
 
-//    @Transaction
-//    @Query("SELECT * FROM circuitround WHERE circuit_id == :id")
-//    fun getCircuitHistory(id: String): Flow<CircuitHistory>
-
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertCircuit(circuit: List<Circuit>)
 
-//    @Transaction
-//    @Insert
-//    fun insertCircuitHistory(circuit: RoomCircuitHistory)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertCircuitRounds(rounds: List<CircuitRound>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertCircuitRoundResults(results: List<CircuitRoundResult>)
 }

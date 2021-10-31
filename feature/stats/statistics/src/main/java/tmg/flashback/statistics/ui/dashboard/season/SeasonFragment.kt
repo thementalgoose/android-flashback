@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.threeten.bp.LocalDate
-import org.threeten.bp.Month
 import tmg.core.ui.base.BaseFragment
 import tmg.flashback.statistics.R
 import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
@@ -94,6 +93,10 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
             viewModel.inputs.clickNow()
         }
 
+        binding.swipeRefresh.setOnRefreshListener {
+            viewModel.inputs.refresh()
+        }
+
         observeEvent(viewModel.outputs.openMenu) {
             seasonFragmentCallback?.openMenu()
         }
@@ -131,6 +134,10 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
             } else {
                 hideLoading()
             }
+        }
+
+        observeEvent(viewModel.outputs.showRefreshError) {
+//            Toast.makeText(context, getString(R.string.))
         }
 
         observeEvent(viewModel.outputs.openRace) { track ->
@@ -236,7 +243,7 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
      * Publicaly accessible method for refreshing the season
      */
     fun refresh() {
-        viewModel.inputs.refresh()
+        viewModel.inputs.appConfigSynced()
     }
 
     //endregion
@@ -248,6 +255,8 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
 
         binding.dataList.locked = true
         binding.dataList.alpha = dataListAlpha
+
+        binding.swipeRefresh.isRefreshing = true
     }
 
     private fun hideLoading() {
@@ -257,6 +266,8 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
 
         binding.dataList.locked = false
         binding.dataList.alpha = 1.0f
+
+        binding.swipeRefresh.isRefreshing = false
     }
 
     companion object {

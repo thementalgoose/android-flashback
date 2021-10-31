@@ -2,20 +2,12 @@ package tmg.flashback.firebase.mappers
 
 import java.lang.NullPointerException
 import tmg.crash_reporting.controllers.CrashController
-import tmg.flashback.formula1.model.History
-import tmg.flashback.formula1.model.HistoryRound
-import tmg.flashback.formula1.model.WinnerSeason
-import tmg.flashback.formula1.model.WinnerSeasonConstructor
-import tmg.flashback.formula1.model.WinnerSeasonDriver
 import tmg.flashback.firebase.models.FHistorySeason
 import tmg.flashback.firebase.models.FHistorySeasonRound
 import tmg.flashback.firebase.models.FHistorySeasonWin
 import tmg.flashback.firebase.models.FHistorySeasonWinConstructor
 import tmg.flashback.firebase.models.FHistorySeasonWinDriver
-import tmg.utilities.utils.LocalDateUtils
-import tmg.utilities.utils.LocalDateUtils.Companion.fromDate
 import tmg.utilities.utils.LocalDateUtils.Companion.requireFromDate
-import tmg.utilities.utils.LocalTimeUtils
 
 class HistoryMapper(
     // TODO: Move this to DI from Flashback module and build config field
@@ -23,7 +15,7 @@ class HistoryMapper(
     private val crashController: CrashController
 ) {
 
-    fun mapHistory(input: FHistorySeason): List<tmg.flashback.formula1.model.History> {
+    fun mapHistory(input: FHistorySeason): List<tmg.flashback.formula1.model.SeasonOverview> {
         return input.all
             .mapNotNull { (key, rounds) ->
                 val season = getSeason(rounds)
@@ -31,10 +23,10 @@ class HistoryMapper(
                     return@mapNotNull null
                 }
 
-                return@mapNotNull tmg.flashback.formula1.model.History(
+                return@mapNotNull tmg.flashback.formula1.model.SeasonOverview(
                     season = season,
 //                    winner = input.win?.get(key)?.let { mapWinnerSeason(it) },
-                    rounds = rounds?.mapNotNull mapRounds@{ (_, value) ->
+                    roundOverviews = rounds?.mapNotNull mapRounds@{ (_, value) ->
                         if (value == null) {
                             crashController.logException(NullPointerException("HistoryMapper.mapHistory season=$season round is set to null"))
                             return@mapRounds null
@@ -53,8 +45,8 @@ class HistoryMapper(
             .firstOrNull() ?: -1
     }
 
-    fun mapHistoryRound(input: FHistorySeasonRound): tmg.flashback.formula1.model.HistoryRound {
-        return tmg.flashback.formula1.model.HistoryRound(
+    fun mapHistoryRound(input: FHistorySeasonRound): tmg.flashback.formula1.model.RoundOverview {
+        return tmg.flashback.formula1.model.RoundOverview(
             date = requireFromDate(input.date),
             time = null,
             season = input.s,

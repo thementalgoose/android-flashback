@@ -130,7 +130,10 @@
         <entry key="feature/statistics/src/main/res/layout/view_shared_message.xml" value="0.29270833333333335" />
         <entry key="feature/statistics/src/main/res/menu/menu_race.xml" value="0.5479166666666667" />
         <entry key="feature/statistics/src/main/res/xml/fragment_search_scene.xml" value="0.5463541666666667" />
+        <entry key="feature/stats/statistics/src/main/res/layout/activity_circuit_info.xml" value="0.2635416666666667" />
         <entry key="feature/stats/statistics/src/main/res/layout/activity_race.xml" value="0.1" />
+        <entry key="feature/stats/statistics/src/main/res/layout/fragment_circuit_info.xml" value="0.1281661600810537" />
+        <entry key="feature/stats/statistics/src/main/res/layout/fragment_dashboard_season.xml" value="0.26570415400202635" />
         <entry key="feature/stats/statistics/src/main/res/layout/fragment_driver.xml" value="0.1" />
         <entry key="feature/stats/statistics/src/main/res/layout/fragment_race.xml" value="0.22" />
         <entry key="feature/stats/statistics/src/main/res/layout/view_race_overview.xml" value="0.42346014492753625" />

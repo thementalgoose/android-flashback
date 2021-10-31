@@ -2,8 +2,7 @@ package tmg.flashback.statistics.network.models.overview
 
 import kotlinx.serialization.Serializable
 
-@Serializable
-class Overview: HashMap<String, OverviewRace>()
+typealias Overview = Map<String, OverviewRace>
 
 @Serializable
 data class OverviewRace(
@@ -15,7 +14,9 @@ data class OverviewRace(
     val country: String,
     val countryISO: String,
     val date: String,
-    val time: String?,
+    val time: String? = null,
     val hasQualifying: Boolean,
-    val hasResults: Boolean
-)
+    val hasRace: Boolean
+) {
+    companion object
+}

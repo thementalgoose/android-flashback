@@ -9,7 +9,6 @@ import tmg.flashback.di_old.remoteconfig.MockRemoteConfigRepository
 import tmg.flashback.di_old.rss.MockRSS
 import tmg.flashback.data.db.stats.ConstructorRepository
 import tmg.flashback.data.db.stats.DriverRepository
-import tmg.flashback.data.db.stats.HistoryRepository
 import tmg.flashback.data.db.stats.SeasonOverviewRepository
 import tmg.flashback.di_old.remoteconfig.MockRemoteConfigManager
 import tmg.flashback.rss.repo.RssAPI

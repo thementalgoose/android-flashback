@@ -2,8 +2,7 @@ package tmg.flashback.statistics.network.models.circuits
 
 import kotlinx.serialization.Serializable
 
-@Serializable
-class AllCircuits: HashMap<String, CircuitData>()
+typealias AllCircuits = Map<String, CircuitData>
 
 @Serializable
 data class CircuitData(

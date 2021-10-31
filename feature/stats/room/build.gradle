@@ -24,3 +24,14 @@ dependencies {
     // Explicit crash reporting link
     implementation project(path: ':core:crash-reporting')
 }
+
+task jarTests(type: Jar) {
+    classifier = 'tests'
+    from "$buildDir/intermediates/classes/test/debug"
+}
+configurations {
+    unitTestArtifact
+}
+artifacts {
+    unitTestArtifact jarTests
+}

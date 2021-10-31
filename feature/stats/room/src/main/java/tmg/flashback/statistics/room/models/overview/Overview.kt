@@ -31,4 +31,6 @@ data class Overview(
     @PrimaryKey
     @ColumnInfo(name = "id")
     val id: String = "${season}_${round}"
-)
+) {
+    companion object
+}

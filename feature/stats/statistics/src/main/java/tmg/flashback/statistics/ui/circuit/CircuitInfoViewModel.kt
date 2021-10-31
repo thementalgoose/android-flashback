@@ -1,19 +1,21 @@
 package tmg.flashback.statistics.ui.circuit
 
 import androidx.lifecycle.*
+import kotlinx.coroutines.Dispatchers
 import java.lang.NullPointerException
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import tmg.core.device.managers.NetworkConnectivityManager
 import tmg.crash_reporting.controllers.CrashController
-import tmg.flashback.data.db.stats.CircuitRepository
-import tmg.flashback.formula1.model.Circuit
 import tmg.flashback.formula1.model.CircuitHistory
 import tmg.flashback.formula1.model.Location
 import tmg.flashback.statistics.extensions.circuitIcon
+import tmg.flashback.statistics.repo.CircuitRepository
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.utilities.extensions.then
 import tmg.utilities.lifecycle.DataEvent
+import tmg.utilities.lifecycle.Event
 
 //region Inputs
 
@@ -21,6 +23,8 @@ interface CircuitInfoViewModelInputs {
     fun circuitId(circuitId: String)
     fun clickShowOnMap()
     fun clickWikipedia()
+
+    fun refresh()
 }
 
 //endregion
@@ -31,6 +35,8 @@ interface CircuitInfoViewModelOutputs {
     val list: LiveData<List<CircuitItem>>
     val circuitName: LiveData<String>
     val isLoading: LiveData<Boolean>
+
+    val showRefreshError: LiveData<Event>
 
     val goToMap: LiveData<DataEvent<Pair<String, String>>> // Maps URI, lat / lng
     val goToWikipediaPage: MutableLiveData<DataEvent<String>>
@@ -53,8 +59,9 @@ class CircuitInfoViewModel(
 
     private val circuit: Flow<CircuitHistory?> = circuitIdentifier
         .asFlow()
-        .flatMapLatest { circuitRepository.getCircuit(it) }
+        .flatMapLatest { circuitRepository.getCircuitHistory(it) }
 
+    override val showRefreshError: MutableLiveData<Event> = MutableLiveData()
     override val goToMap: MutableLiveData<DataEvent<Pair<String, String>>> = MutableLiveData()
     override val goToWikipediaPage: MutableLiveData<DataEvent<String>> = MutableLiveData()
 
@@ -127,6 +134,17 @@ class CircuitInfoViewModel(
 
     override fun clickWikipedia() {
         goToWikipediaPage.postValue(DataEvent(wikipedia ?: ""))
+    }
+
+    override fun refresh() {
+        isLoading.value = true
+        viewModelScope.launch(context = Dispatchers.IO) {
+            val result = circuitRepository.fetchCircuit(circuitIdentifier.value)
+            isLoading.postValue(false)
+            if (!result) {
+                showRefreshError.postValue(Event())
+            }
+        }
     }
 
     //endregion

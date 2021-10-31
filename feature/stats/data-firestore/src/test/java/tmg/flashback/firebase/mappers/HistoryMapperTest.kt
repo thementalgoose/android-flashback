@@ -7,11 +7,6 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
 import tmg.crash_reporting.controllers.CrashController
-import tmg.flashback.formula1.model.History
-import tmg.flashback.formula1.model.HistoryRound
-import tmg.flashback.formula1.model.WinnerSeason
-import tmg.flashback.formula1.model.WinnerSeasonConstructor
-import tmg.flashback.formula1.model.WinnerSeasonDriver
 import tmg.flashback.firebase.models.FHistorySeason
 import tmg.flashback.firebase.models.FHistorySeasonRound
 import tmg.flashback.firebase.models.FHistorySeasonWin
@@ -39,7 +34,7 @@ internal class HistoryMapperTest: BaseTest() {
 
         val input = FHistorySeason.model()
         val expected = listOf(
-            tmg.flashback.formula1.model.History(
+            tmg.flashback.formula1.model.SeasonOverview(
                 season = 2020,
                 winner = tmg.flashback.formula1.model.WinnerSeason(
                     season = 2020,
@@ -60,8 +55,8 @@ internal class HistoryMapperTest: BaseTest() {
                         )
                     )
                 ),
-                rounds = listOf(
-                    tmg.flashback.formula1.model.HistoryRound(
+                roundOverviews = listOf(
+                    tmg.flashback.formula1.model.RoundOverview(
                         date = LocalDate.of(2020, 1, 1),
                         round = 1,
                         season = 2020,
@@ -104,7 +99,7 @@ internal class HistoryMapperTest: BaseTest() {
             )
         ))
 
-        assertEquals(1, sut.mapHistory(input)[0].rounds.size)
+        assertEquals(1, sut.mapHistory(input)[0].roundOverviews.size)
 
         verify {
             mockCrashController.logException(any())
@@ -116,7 +111,7 @@ internal class HistoryMapperTest: BaseTest() {
         initSUT()
 
         val input = FHistorySeasonRound.model()
-        val expected = tmg.flashback.formula1.model.HistoryRound(
+        val expected = tmg.flashback.formula1.model.RoundOverview(
             date = LocalDate.of(2020, 1, 1),
             round = 1,
             season = 2020,
