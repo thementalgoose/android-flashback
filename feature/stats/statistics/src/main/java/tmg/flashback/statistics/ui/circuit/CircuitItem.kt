@@ -5,6 +5,7 @@ import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
 import tmg.flashback.formula1.enums.TrackLayout
 import tmg.flashback.formula1.model.Circuit
+import tmg.flashback.formula1.model.CircuitHistory
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 
@@ -12,7 +13,7 @@ sealed class CircuitItem(
     @LayoutRes val layoutId: Int
 ) {
     data class CircuitInfo(
-        val circuit: Circuit
+        val circuit: CircuitHistory
     ): CircuitItem(R.layout.view_circuit_info_header)
 
     data class Race(

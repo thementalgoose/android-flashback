@@ -7,6 +7,7 @@ import tmg.flashback.formula1.model.CircuitRace
 import tmg.flashback.formula1.model.Location
 import tmg.flashback.firebase.models.FCircuit
 import tmg.flashback.firebase.models.FCircuitResult
+import tmg.flashback.formula1.model.CircuitHistory
 import tmg.utilities.utils.LocalDateUtils.Companion.isDateValid
 import tmg.utilities.utils.LocalDateUtils.Companion.requireFromDate
 import tmg.utilities.utils.LocalTimeUtils.Companion.fromTime
@@ -16,15 +17,17 @@ class CircuitMapper(
     private val locationMapper: LocationMapper
 ) {
 
-    fun mapCircuit(input: FCircuit): tmg.flashback.formula1.model.Circuit {
-        return tmg.flashback.formula1.model.Circuit(
-            id = input.id,
-            name = input.circuitName,
-            wikiUrl = input.wikiUrl,
-            locality = input.locality,
-            country = input.country,
-            countryISO = input.countryISO ?: "",
-            location = getLocation(input),
+    fun mapCircuit(input: FCircuit): CircuitHistory {
+        return CircuitHistory(
+            data = Circuit(
+                id = input.id,
+                name = input.circuitName,
+                wikiUrl = input.wikiUrl,
+                city = input.locality,
+                country = input.country,
+                countryISO = input.countryISO ?: "",
+                location = getLocation(input),
+            ),
             results = input.results
                 ?.mapNotNull { (_, value) ->
                     mapCircuitRace(input.id, value)
@@ -33,7 +36,7 @@ class CircuitMapper(
         )
     }
 
-    private fun getLocation(input: FCircuit): tmg.flashback.formula1.model.Location? {
+    private fun getLocation(input: FCircuit): Location? {
         val location = locationMapper.mapCircuitLocation(input.location)
 
         if (location != null) {
@@ -42,16 +45,16 @@ class CircuitMapper(
             val lat = input.locationLat ?: return null
             val lng = input.locationLng ?: return null
 
-            return tmg.flashback.formula1.model.Location(lat, lng)
+            return Location(lat, lng)
         }
     }
 
-    fun mapCircuitRace(circuitId: String, input: FCircuitResult): tmg.flashback.formula1.model.CircuitRace? {
+    fun mapCircuitRace(circuitId: String, input: FCircuitResult): CircuitRace? {
         if (!isDateValid(input.date)) {
             crashController.logException(NullPointerException("CircuitMapper.mapCircuitRace circuitId=$circuitId input date of \"${input.date}\" is not valid"))
             return null
         }
-        return tmg.flashback.formula1.model.CircuitRace(
+        return CircuitRace(
             name = input.name,
             season = input.season,
             round = input.round,

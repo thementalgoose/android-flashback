@@ -1,10 +1,13 @@
 package tmg.flashback.formula1.model
 
 import org.threeten.bp.LocalDate
+import org.threeten.bp.LocalTime
+
+// TODO: Rename this crap to overview
 
 data class History(
     val season: Int,
-    val winner: WinnerSeason?,
+//    val winner: WinnerSeason?,
     val rounds: List<HistoryRound>
 ) {
     val completed: Int
@@ -17,6 +20,7 @@ data class History(
 
 data class HistoryRound(
     val date: LocalDate,
+    val time: LocalTime?,
     val season: Int,
     val round: Int,
     val raceName: String,

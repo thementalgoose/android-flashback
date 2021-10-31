@@ -50,7 +50,7 @@ internal class CircuitInfoViewModelTest: BaseTest() {
         id = mockCircuitId,
         name = "Test circuit name",
         wikiUrl = "https://www.mockwikiurl.com",
-        locality = "Italy",
+        city = "Italy",
         country = "Italy",
         countryISO = "ITA",
         location = Location(51.0, 1.0),

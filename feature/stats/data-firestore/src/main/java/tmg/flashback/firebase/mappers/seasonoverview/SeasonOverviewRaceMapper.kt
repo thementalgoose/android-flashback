@@ -6,6 +6,8 @@ import tmg.flashback.firebase.models.FSeasonOverviewRaceQualifying
 import tmg.flashback.firebase.models.FSeasonOverviewRaceRace
 import tmg.flashback.firebase.models.FSeasonOverviewRaceRaceFastestLap
 import tmg.flashback.firebase.models.FSeasonOverviewRaceSprintQualifying
+import tmg.flashback.formula1.model.*
+import tmg.flashback.formula1.utils.toLapTime
 
 class SeasonOverviewRaceMapper(
     private val locationMapper: LocationMapper
@@ -38,9 +40,10 @@ class SeasonOverviewRaceMapper(
                 })
             }
             .sortedBy { (_, _, lapTime) ->
-                lapTime?.totalMillis.let {
-                    if (this || this == 0) Int.MAX_VALUE else this
+                if (lapTime?.totalMillis == null || lapTime.totalMillis == 0) {
+                    return@sortedBy Int.MAX_VALUE
                 }
+                return@sortedBy lapTime.totalMillis
             }
             .mapIndexed { index, (driver, qualifyingResult, lapTime) ->
                 driver.id to RoundQualifyingResult(
@@ -114,12 +117,12 @@ class SeasonOverviewRaceMapper(
     /**
      * Map a circuit overview
      */
-    fun mapCircuit(input: FSeasonOverviewRaceCircuit): CircuitSummary {
-        return CircuitSummary(
+    fun mapCircuit(input: FSeasonOverviewRaceCircuit): Circuit {
+        return Circuit(
             id = input.id,
             name = input.name,
             wikiUrl = input.wikiUrl ?: "",
-            locality = input.locality,
+            city = input.locality,
             country = input.country,
             countryISO = input.countryISO,
             location = locationMapper.mapCircuitLocation(input.location)

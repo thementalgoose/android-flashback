@@ -16,7 +16,6 @@ import androidx.lifecycle.ViewModel
 import tmg.core.device.managers.NetworkConnectivityManager
 import tmg.flashback.data.db.stats.HistoryRepository
 import tmg.flashback.data.db.stats.SeasonOverviewRepository
-import tmg.flashback.data.models.stats.*
 import tmg.core.ui.controllers.ThemeController
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.statistics.R

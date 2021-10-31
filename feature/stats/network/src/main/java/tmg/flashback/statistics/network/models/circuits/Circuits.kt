@@ -7,13 +7,13 @@ import tmg.flashback.statistics.network.models.drivers.DriverData
 @Serializable
 data class Circuits(
     val data: CircuitData,
-    val results: Map<String, CircuitResult>
+    val results: Map<String, CircuitResult>?
 )
 
 @Serializable
 data class CircuitResult(
     val race: CircuitResultRace,
-    val preview: List<CircuitPreviewPosition>
+    val preview: List<CircuitPreviewPosition>?
 )
 
 @Serializable
@@ -22,6 +22,7 @@ data class CircuitResultRace(
     val round: Int,
     val name: String,
     val date: String,
+    val time: String?,
     val wikiUrl: String? = null,
 )
 

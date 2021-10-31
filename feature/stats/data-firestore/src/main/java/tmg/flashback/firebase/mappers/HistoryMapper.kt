@@ -12,7 +12,10 @@ import tmg.flashback.firebase.models.FHistorySeasonRound
 import tmg.flashback.firebase.models.FHistorySeasonWin
 import tmg.flashback.firebase.models.FHistorySeasonWinConstructor
 import tmg.flashback.firebase.models.FHistorySeasonWinDriver
+import tmg.utilities.utils.LocalDateUtils
+import tmg.utilities.utils.LocalDateUtils.Companion.fromDate
 import tmg.utilities.utils.LocalDateUtils.Companion.requireFromDate
+import tmg.utilities.utils.LocalTimeUtils
 
 class HistoryMapper(
     // TODO: Move this to DI from Flashback module and build config field
@@ -30,7 +33,7 @@ class HistoryMapper(
 
                 return@mapNotNull tmg.flashback.formula1.model.History(
                     season = season,
-                    winner = input.win?.get(key)?.let { mapWinnerSeason(it) },
+//                    winner = input.win?.get(key)?.let { mapWinnerSeason(it) },
                     rounds = rounds?.mapNotNull mapRounds@{ (_, value) ->
                         if (value == null) {
                             crashController.logException(NullPointerException("HistoryMapper.mapHistory season=$season round is set to null"))
@@ -53,6 +56,7 @@ class HistoryMapper(
     fun mapHistoryRound(input: FHistorySeasonRound): tmg.flashback.formula1.model.HistoryRound {
         return tmg.flashback.formula1.model.HistoryRound(
             date = requireFromDate(input.date),
+            time = null,
             season = input.s,
             round = input.r,
             circuitId = input.circuitId,

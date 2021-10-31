@@ -4,22 +4,22 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import tmg.crash_reporting.controllers.CrashController
 import tmg.flashback.data.db.stats.SeasonOverviewRepository
-import tmg.flashback.data.models.stats.*
 import tmg.flashback.firebase.FirebaseRepo
 import tmg.flashback.firebase.mappers.SeasonOverviewMapper
 import tmg.flashback.firebase.models.FSeason
+import tmg.flashback.formula1.model.Circuit
 
 class SeasonOverviewFirestore(
         crashController: CrashController,
         private val seasonOverviewMapper: SeasonOverviewMapper
 ) : FirebaseRepo(crashController), SeasonOverviewRepository {
 
-    override fun getCircuits(season: Int): Flow<List<tmg.flashback.formula1.model.CircuitSummary>> {
+    override fun getCircuits(season: Int): Flow<List<Circuit>> {
         return getSeason(season, "getCircuits")
                 .map { it?.circuits ?: emptyList() }
     }
 
-    override fun getCircuit(season: Int, round: Int): Flow<tmg.flashback.formula1.model.CircuitSummary?> {
+    override fun getCircuit(season: Int, round: Int): Flow<Circuit?> {
         return getRounds(season, "getCircuit $round")
                 .map { rounds -> rounds.firstOrNull { it.round == round } }
                 .map { it?.circuit }

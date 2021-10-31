@@ -39,8 +39,8 @@ class HeaderViewHolder(
     }
 
     fun bind(item: CircuitItem.CircuitInfo) {
-        binding.imgCountry.setImageResource(context.getFlagResourceAlpha3(item.circuit.countryISO))
-        binding.country.text = item.circuit.country
+        binding.imgCountry.setImageResource(context.getFlagResourceAlpha3(item.circuit.data.countryISO))
+        binding.country.text = item.circuit.data.country
         val previouslyHosted = item.circuit.results.count { it.date <= LocalDate.now() }
         val minYear = item.circuit.results.minByOrNull { it.season }?.season
         val maxYear = item.circuit.results.maxByOrNull { it.season }?.season
@@ -72,7 +72,7 @@ class HeaderViewHolder(
         binding.status.text = subtitle.fromHtml()
 
         linkAdapter.list = mutableListOf<PillItem>().apply {
-            item.circuit.wikiUrl?.let { add(PillItem.Wikipedia(it)) }
+            item.circuit.data.wikiUrl?.let { add(PillItem.Wikipedia(it)) }
             add(PillItem.ShowOnMap())
         }
 
