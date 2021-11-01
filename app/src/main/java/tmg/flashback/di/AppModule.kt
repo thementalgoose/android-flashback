@@ -17,6 +17,7 @@ import tmg.flashback.managers.AppPreferencesManager
 import tmg.flashback.managers.AppNavigationProvider
 import tmg.flashback.managers.AppNetworkConfigManager
 import tmg.flashback.managers.AppStyleManager
+import tmg.flashback.repositories.NetworkConfigRepository
 import tmg.flashback.statistics.network.NetworkConfigManager
 import tmg.flashback.ui.SyncViewModel
 import tmg.flashback.ui.dashboard.DashboardViewModel
@@ -48,4 +49,6 @@ val appModule = module {
     single<WidgetManager> { AppWidgetManager(get()) }
 
     single<NetworkConfigManager> { AppNetworkConfigManager() }
+
+    single { NetworkConfigRepository(get()) }
 }
