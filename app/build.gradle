@@ -66,12 +66,14 @@ android {
             versionNameSuffix '-sand'
 
             buildConfigField "int", "ENVIRONMENT", '1'
+            buildConfigField "String", "BASE_URL", '"' + project.ext.baseUrl + '"'
         }
 
         live {
             dimension 'version'
 
             buildConfigField "int", "ENVIRONMENT", '0'
+            buildConfigField "String", "BASE_URL", '"' + project.ext.baseUrl + '"'
         }
     }
 

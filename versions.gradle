@@ -24,6 +24,8 @@ ext {
     versionName = getVersionName()
     versionCode = getVersionCode()
 
+    baseUrl = "https://flashback.pages.dev"
+
     kotlin_version = "1.5.31"
     koin_version = "2.2.2"
     coroutines = "1.5.2"

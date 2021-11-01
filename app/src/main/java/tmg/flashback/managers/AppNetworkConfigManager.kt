@@ -1,14 +1,19 @@
 package tmg.flashback.managers
 
 import tmg.flashback.BuildConfig
+import tmg.flashback.repositories.NetworkConfigRepository
 import tmg.flashback.statistics.network.NetworkConfigManager
 
-class AppNetworkConfigManager: NetworkConfigManager {
+class AppNetworkConfigManager(
+    private val networkConfigRepository: NetworkConfigRepository
+): NetworkConfigManager {
 
     override val baseUrl: String
-        get() = "https://f1stats-sand.web.app/"
+        get() = networkConfigRepository.configUrl
+
     override val apiKey: String
         get() = ""
+
     override val isDebug: Boolean
         get() = BuildConfig.DEBUG
 
