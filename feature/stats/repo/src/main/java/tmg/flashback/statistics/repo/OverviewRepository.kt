@@ -8,6 +8,7 @@ import tmg.flashback.statistics.network.api.FlashbackApi
 import tmg.flashback.statistics.network.models.overview.Overview
 import tmg.flashback.statistics.network.utils.data
 import tmg.flashback.statistics.network.utils.hasData
+import tmg.flashback.statistics.repo.base.BaseRepository
 import tmg.flashback.statistics.repo.mappers.app.OverviewMapper
 import tmg.flashback.statistics.repo.mappers.network.NetworkOverviewMapper
 import tmg.flashback.statistics.room.FlashbackDatabase
@@ -16,43 +17,37 @@ import java.lang.RuntimeException
 class OverviewRepository(
     private val api: FlashbackApi,
     private val persistence: FlashbackDatabase,
-    private val crashController: CrashController,
+    crashController: CrashController,
     private val overviewMapper: OverviewMapper,
     private val networkOverviewMapper: NetworkOverviewMapper
-) {
-    suspend fun fetchOverview(): Boolean {
+): BaseRepository(crashController) {
+
+    suspend fun fetchOverview(): Boolean = attempt(msgIfFailed = "overview.json") {
         val result = api.getOverview()
-        println("OkHttp ${result.hasData} ${result}")
-        if (!result.hasData) {
-            return false
-        }
-        return fetchOverviews(result.data())
+        if (!result.hasData) return@attempt false
+
+        val data = result.data()
+
+        val allOverview = (data?.values ?: emptyList())
+            .mapNotNull { networkOverviewMapper.mapOverview(it) }
+
+        persistence.overviewDao().insertAll(allOverview)
+
+        return@attempt true
     }
 
-    suspend fun fetchOverview(season: Int): Boolean {
+    suspend fun fetchOverview(season: Int): Boolean = attempt(msgIfFailed = "overview/${season}.json") {
         val result = api.getOverview(season)
-        if (!result.hasData) {
-            return false
-        }
-        return fetchOverviews(result.data())
-    }
+        if (!result.hasData) return@attempt false
 
-    private suspend fun fetchOverviews(data: Overview?): Boolean {
+        val data = result.data()
 
-        println("OkHttp Processing ${data}")
-        val allOverviews = (data?.values ?: emptyList())
-            .mapNotNull {
-                try {
-                    networkOverviewMapper.mapOverview(it)
-                } catch (e: RuntimeException) {
-                    crashController.logException(e, "fetchOverview failed to parse ${it.season} / ${it.round}")
-                    null
-                }
-            }
+        val allOverview = (data?.values ?: emptyList())
+            .mapNotNull { networkOverviewMapper.mapOverview(it) }
 
-        println("OkHttp Saving $allOverviews")
-        persistence.overviewDao().insertAll(allOverviews)
-        return allOverviews.isNotEmpty()
+        persistence.overviewDao().insertAll(allOverview)
+
+        return@attempt true
     }
 
     fun getOverview(season: Int): Flow<SeasonOverview> {
