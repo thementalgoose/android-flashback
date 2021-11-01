@@ -5,6 +5,7 @@ import org.threeten.bp.LocalDate
 /**
  * Data class to hold driver variables
  */
+@Deprecated(message = "Should not be used anymore", replaceWith = ReplaceWith("DriverConstructor"))
 data class DriverWithEmbeddedConstructor(
     val id: String,
     val firstName: String,

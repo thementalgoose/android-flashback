@@ -3,12 +3,7 @@ package tmg.flashback.formula1.model
 import tmg.utilities.extensions.positive
 
 data class ConstructorOverview(
-    val id: String,
-    val name: String,
-    val wikiUrl: String,
-    val nationality: String,
-    val nationalityISO: String,
-    val color: Int,
+    val constructor: Constructor,
     val standings: List<ConstructorOverviewStanding>
 ) {
     val championshipWins: Int by lazy {
@@ -19,9 +14,10 @@ data class ConstructorOverview(
 
     val bestChampionship: Int? by lazy {
         return@lazy standings
-            .filter { !it.isInProgress && it.championshipStanding > 0 }
+            .filter { it.championshipStanding != null }
+            .filter { !it.isInProgress && it.championshipStanding!! > 0 }
             .map { it.championshipStanding }
-            .minByOrNull { it }
+            .minByOrNull { it!! }
     }
 
     val hasChampionshipCurrentlyInProgress: Boolean by lazy {
@@ -60,34 +56,9 @@ data class ConstructorOverview(
             .sumOf { it.points }
     }
 
-    val bestFinish: Int by lazy {
-        return@lazy standings
-            .filter { it.bestFinish != null }
-            .minByOrNull { it.bestFinish!! }?.bestFinish ?: -1
-    }
-    val bestQualifying: Int by lazy {
-        return@lazy standings
-            .filter { it.bestQualifying != null }
-            .minByOrNull { it.bestQualifying!! }?.bestQualifying ?: -1
-    }
-
     val totalQualifyingPoles: Int by lazy {
         return@lazy standings
             .map { it.qualifyingPole }
-            .filterNotNull()
-            .filter { it >= 0 }
-            .sumOf { it }
-    }
-    val totalQualifyingFrontRow: Int by lazy {
-        return@lazy standings
-            .map { it.qualifyingFrontRow }
-            .filterNotNull()
-            .filter { it >= 0 }
-            .sumOf { it }
-    }
-    val totalQualifyingTop3: Int by lazy {
-        return@lazy standings
-            .map { it.qualifyingTop3 }
             .filterNotNull()
             .filter { it >= 0 }
             .sumOf { it }
@@ -112,43 +83,14 @@ data class ConstructorOverview(
 data class ConstructorOverviewStanding(
     val drivers: Map<String, ConstructorOverviewDriverStanding>,
     val isInProgress: Boolean,
-    val championshipStanding: Int,
+    val championshipStanding: Int?,
     val points: Double,
     val season: Int,
     val races: Int
 ) {
-    val bestFinish: Int? by lazy {
-        return@lazy drivers.values
-            .filter { it.bestFinish > 0 }
-            .map { it.bestFinish }
-            .minByOrNull { it }
-    }
-
-    val bestQualifying: Int? by lazy {
-        return@lazy drivers.values
-            .filter { it.bestQualifying > 0 }
-            .map { it.bestQualifying }
-            .minByOrNull { it }
-    }
-
     val qualifyingPole: Int? by lazy {
         return@lazy drivers.values
-            .filter { it.qualifyingP1 >= 0 }
-            .sumOf { it.qualifyingP1 }
-    }
-
-    val qualifyingFrontRow: Int? by lazy {
-        return@lazy drivers.values
-            .sumOf { it.qualifyingP1.positive() + it.qualifyingP2.positive() }
-    }
-
-    val qualifyingTop3: Int? by lazy {
-        return@lazy drivers.values
-            .sumOf {
-                it.qualifyingP1.positive() +
-                        it.qualifyingP2.positive() +
-                        it.qualifyingP3.positive()
-            }
+            .sumOf { it.polePosition }
     }
 
     val driverPoints: Double? by lazy {
@@ -165,33 +107,22 @@ data class ConstructorOverviewStanding(
 
     val wins: Int by lazy {
         return@lazy drivers.values
-            .filter { it.finishesInP1 >= 0 }
-            .sumOf { it.finishesInP1 }
+            .sumOf { it.wins }
     }
 
     val podiums: Int by lazy {
         return@lazy drivers.values
-            .sumOf {
-                it.finishesInP1.positive() +
-                        it.finishesInP2.positive() +
-                        it.finishesInP3.positive()
-            }
+            .sumOf { it.podiums }
     }
 }
 
 data class ConstructorOverviewDriverStanding(
-    val driver: ConstructorDriver,
-    val bestFinish: Int,
-    val bestQualifying: Int,
+    val driver: DriverConstructor,
     val points: Double,
-    val finishesInP1: Int,
-    val finishesInP2: Int,
-    val finishesInP3: Int,
-    val finishesInPoints: Int,
-    val qualifyingP1: Int,
-    val qualifyingP2: Int,
-    val qualifyingP3: Int,
-    val qualifyingTop10: Int?,
+    val wins: Int,
     val races: Int,
-    val championshipStanding: Int
+    val podiums: Int,
+    val finishesInPoints: Int,
+    val polePosition: Int,
+    val championshipStanding: Int?
 )

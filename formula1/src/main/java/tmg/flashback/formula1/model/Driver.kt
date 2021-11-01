@@ -13,4 +13,7 @@ data class Driver(
     val dateOfBirth: LocalDate,
     val nationality: String,
     val nationalityISO: String,
-)
+) {
+    val name: String
+        get() = "$firstName $lastName"
+}

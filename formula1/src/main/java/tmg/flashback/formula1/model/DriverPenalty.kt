@@ -2,6 +2,7 @@ package tmg.flashback.formula1.model
 
 import org.threeten.bp.LocalDate
 
+@Deprecated("Should not be used anymore")
 data class DriverPenalty(
     val season: Int,
     val round: Int? = null,

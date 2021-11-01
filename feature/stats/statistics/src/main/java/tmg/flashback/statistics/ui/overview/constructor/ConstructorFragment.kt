@@ -45,7 +45,6 @@ class ConstructorFragment: BaseFragment<FragmentConstructorBinding>() {
         binding.titleExpanded.text = constructorName
         binding.titleCollapsed.text = constructorName
 
-        binding.swipeRefresh.isEnabled = false
         adapter = ConstructorSummaryAdapter(
                 openUrl = viewModel.inputs::openUrl,
                 openSeason = viewModel.inputs::openSeason
@@ -57,8 +56,16 @@ class ConstructorFragment: BaseFragment<FragmentConstructorBinding>() {
             activity?.finish()
         }
 
+        binding.swipeRefresh.setOnRefreshListener {
+            viewModel.inputs.refresh()
+        }
+
         observe(viewModel.outputs.list) {
             adapter.list = it
+        }
+
+        observe(viewModel.outputs.isLoading) {
+            binding.swipeRefresh.isRefreshing = it
         }
 
         observeEvent(viewModel.outputs.openUrl) {

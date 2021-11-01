@@ -6,7 +6,6 @@ import tmg.core.ui.model.AnimationSpeed
 import tmg.flashback.statistics.ui.overview.driver.summary.PipeType
 import tmg.flashback.formula1.enums.RaceStatus
 import tmg.flashback.formula1.model.Constructor
-import tmg.flashback.formula1.model.SlimConstructor
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 

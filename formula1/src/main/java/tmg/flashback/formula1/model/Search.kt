@@ -2,6 +2,7 @@ package tmg.flashback.formula1.model
 
 import org.threeten.bp.LocalDate
 
+@Deprecated("Should not be used anymore", replaceWith = ReplaceWith("Driver"))
 data class SearchDriver(
     val id: String,
     val firstName: String,
@@ -13,6 +14,7 @@ data class SearchDriver(
     val wikiUrl: String?
 )
 
+@Deprecated("Should not be used anymore", replaceWith = ReplaceWith("Constructor"))
 data class SearchConstructor(
     val id: String,
     val name: String,
@@ -22,6 +24,7 @@ data class SearchConstructor(
     val colour: Int
 )
 
+@Deprecated("Should not be used anymore", replaceWith = ReplaceWith("Circuit"))
 data class SearchCircuit(
     val id: String,
     val country: String,

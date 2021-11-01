@@ -14,6 +14,10 @@ data class ConstructorSeason(
     val championshipStanding: Int?,
     @ColumnInfo(name = "points")
     val points: Double,
+    @ColumnInfo(name = "in_progress")
+    val inProgress: Boolean,
+    @ColumnInfo(name = "races")
+    val races: Int,
     @PrimaryKey
     @ColumnInfo(name = "id")
     val id: String = "${constructorId}_${season}"
