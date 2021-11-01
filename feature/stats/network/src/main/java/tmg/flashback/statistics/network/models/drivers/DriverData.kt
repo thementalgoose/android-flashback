@@ -2,8 +2,7 @@ package tmg.flashback.statistics.network.models.drivers
 
 import kotlinx.serialization.Serializable
 
-@Serializable
-class AllDrivers: HashMap<String, DriverData>()
+typealias AllDrivers = Map<String, DriverData>
 
 @Serializable
 data class DriverData(

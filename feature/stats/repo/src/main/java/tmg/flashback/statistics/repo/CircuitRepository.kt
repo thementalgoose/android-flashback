@@ -1,7 +1,5 @@
 package tmg.flashback.statistics.repo
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.map
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import tmg.crash_reporting.controllers.CrashController
@@ -10,60 +8,50 @@ import tmg.flashback.formula1.model.CircuitHistory
 import tmg.flashback.statistics.network.api.FlashbackApi
 import tmg.flashback.statistics.network.utils.data
 import tmg.flashback.statistics.network.utils.hasData
+import tmg.flashback.statistics.repo.base.BaseRepository
 import tmg.flashback.statistics.repo.mappers.app.CircuitMapper
 import tmg.flashback.statistics.repo.mappers.network.NetworkCircuitMapper
 import tmg.flashback.statistics.room.FlashbackDatabase
-import tmg.flashback.statistics.room.dao.DriverDao
-import java.lang.Exception
 import java.lang.RuntimeException
 
 class CircuitRepository(
     private val api: FlashbackApi,
     private val persistence: FlashbackDatabase,
-    private val crashController: CrashController,
+    crashController: CrashController,
     private val networkCircuitMapper: NetworkCircuitMapper,
     private val circuitMapper: CircuitMapper,
-) {
+): BaseRepository(crashController) {
 
-    suspend fun fetchCircuit(id: String): Boolean {
+    suspend fun fetchCircuit(id: String): Boolean = attempt(msgIfFailed = "circuits/${id}.json") {
         val result = api.getCircuit(id)
-        if (!result.hasData) {
-            return false
+        if (!result.hasData) { return@attempt false }
+
+        val data = result.data() ?: return@attempt false
+
+        val circuit = networkCircuitMapper.mapCircuitData(data.data)
+        val circuitRounds = (data.results?.values ?: emptyList()).map {
+            networkCircuitMapper.mapCircuitRounds(data.data.id, it)
         }
-
-        val data = result.data() ?: return false
-
-        val circuit = attempt("fetchCircuit $id data") {
-            networkCircuitMapper.mapCircuitData(data.data)
-        } ?: return false
-        val circuitRounds = attempt(msgIfFailed = "fetchCircuit $id rounds") {
-            (data.results?.values ?: emptyList()).map {
-                networkCircuitMapper.mapCircuitRounds(data.data.id, it)
-            }
-        } ?: return false
 
         persistence.circuitDao().insertCircuitRounds(circuitRounds)
         persistence.circuitDao().insertCircuit(listOf(circuit))
 
-        return false
+        return@attempt true
     }
 
-    suspend fun fetchAllCircuits(): Boolean {
+    suspend fun fetchAllCircuits(): Boolean = attempt(msgIfFailed = "circuits.json") {
         val result = api.getCircuits()
-        if (!result.hasData) {
-            return false
-        }
-        val allCircuits = (result.data()?.values ?: emptyList())
-            .mapNotNull {
-                try {
-                    networkCircuitMapper.mapCircuitData(it)
-                } catch (e: RuntimeException) {
-                    crashController.logException(e, "fetchAllCircuits parsing ${it.id}")
-                    null
-                }
+        if (!result.hasData) { return@attempt false }
+
+        val data = result.data() ?: return@attempt false
+
+        val allCircuits = data.values
+            .map {
+                networkCircuitMapper.mapCircuitData(it)
             }
+
         persistence.circuitDao().insertCircuit(allCircuits)
-        return allCircuits.isNotEmpty()
+        return@attempt allCircuits.isNotEmpty()
     }
 
     fun getCircuit(id: String): Flow<Circuit?> {
@@ -76,14 +64,5 @@ class CircuitRepository(
             .map { model ->
                 circuitMapper.mapCircuitHistory(model)
             }
-    }
-
-    fun <T> attempt(msgIfFailed: String? = null, closure: () -> T?): T? {
-        return try {
-            closure.invoke()
-        } catch (e: RuntimeException) {
-            crashController.logException(e, msgIfFailed)
-            null
-        }
     }
 }

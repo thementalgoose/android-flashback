@@ -1,13 +1,10 @@
 package tmg.flashback.statistics.repo.mappers.network
 
-import androidx.room.ColumnInfo
-import androidx.room.PrimaryKey
 import tmg.flashback.statistics.network.models.circuits.CircuitData
 import tmg.flashback.statistics.network.models.circuits.CircuitResult
 import tmg.flashback.statistics.network.models.circuits.CircuitResultRace
 import tmg.flashback.statistics.network.models.circuits.Circuits
 import tmg.flashback.statistics.room.models.circuit.*
-import tmg.utilities.utils.LocalDateUtils.Companion.requireFromDate
 import java.lang.RuntimeException
 import kotlin.jvm.Throws
 
