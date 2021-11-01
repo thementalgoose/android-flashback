@@ -16,7 +16,7 @@ class RoundTest {
     @Test
     fun `driverOverview returns driver overview with relevant qualifying result for driver`() {
 
-        assertEquals(expectedDriver1, mockRound1.driverOverview(mockDriver1.id))
+        assertEquals(expectedDriver1, mockRound1.driverOverview(MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.id))
         assertEquals(expectedDriver2, mockRound1.driverOverview(mockDriver2.id))
         assertEquals(expectedDriver3, mockRound1.driverOverview(mockDriver3.id))
         assertEquals(expectedDriver4, mockRound1.driverOverview(mockDriver4.id))
@@ -26,7 +26,7 @@ class RoundTest {
     fun `has sprint qualifying when sprint quali results are not empty`() {
 
         val sprintQualiRound = mockRound1.copy(
-            qSprint = mapOf(mockDriver1.id to tmg.flashback.formula1.model.RoundSprintQualifyingResult(
+            qSprint = mapOf(MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.id to tmg.flashback.formula1.model.RoundSprintQualifyingResult(
                 driver = round1RaceResultDriver1.driver,
                 time = round1RaceResultDriver1.time,
                 points = round1RaceResultDriver1.points,
@@ -76,7 +76,7 @@ class RoundTest {
 
         val expected = listOf(
             tmg.flashback.formula1.model.RoundDriverStandings(
-                driver = mockDriver1.toConstructorDriver(
+                driver = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(
                     1
                 ), points = 5.0
             ),
@@ -106,7 +106,7 @@ class RoundTest {
                 "alpha" to Triple(
                         mockConstructorAlpha,
                         mapOf(
-                                "1" to Pair(mockDriver1.toConstructorDriver(1), 21.0),
+                                "1" to Pair(MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(1), 21.0),
                                 "3" to Pair(mockDriver3.toConstructorDriver(1), 27.0)
                         ),
                         48.0
@@ -128,7 +128,7 @@ class RoundTest {
 
         val example = mapOf(
                 "alpha" to Triple(mockConstructorAlpha, mapOf(
-                        "1" to Pair(mockDriver1.toConstructorDriver(), 21.0),
+                        "1" to Pair(MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(), 21.0),
                         "3" to Pair(mockDriver3.toConstructorDriver(), 27.0)
                 ), 48.0),
                 "beta" to Triple(mockConstructorBeta, mapOf(
@@ -143,7 +143,7 @@ class RoundTest {
     fun `(List) driverStandings calculates driver standings for season overview`() {
 
         val driverStandings = mapOf(
-                "1" to Pair(mockDriver1.toConstructorDriver(1), 21.0),
+                "1" to Pair(MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(1), 21.0),
                 "2" to Pair(mockDriver2.toConstructorDriver(1), 18.0),
                 "3" to Pair(mockDriver3.toConstructorDriver(1), 27.0),
                 "4" to Pair(mockDriver4.toConstructorDriver(1), 24.0)
@@ -155,7 +155,7 @@ class RoundTest {
     fun `(List) allPoints for constructorStandings individual item returns the sum of the points`() {
 
         val example = mapOf(
-                "1" to Pair(mockDriver1, 21),
+                "1" to Pair(MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1, 21),
                 "3" to Pair(mockDriver3, 27)
         )
         assertEquals(48, example.allPoints())
@@ -164,7 +164,7 @@ class RoundTest {
     @Test
     fun `(List) bestQualified for a driver id returns their best qualifying position`() {
 
-        assertEquals(1, listOf(mockRound1, mockRound2).bestQualified(mockDriver1.id))
+        assertEquals(1, listOf(mockRound1, mockRound2).bestQualified(MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.id))
         assertEquals(2, listOf(mockRound1, mockRound2).bestQualified(mockDriver2.id))
         assertEquals(3, listOf(mockRound1, mockRound2).bestQualified(mockDriver3.id))
         assertEquals(1, listOf(mockRound1, mockRound2).bestQualified(mockDriver4.id))
@@ -173,7 +173,7 @@ class RoundTest {
     @Test
     fun `(List) bestQualifyingResultFor for a driver id returns their best qualifying position`() {
 
-        assertEquals(Pair(1, listOf(mockRound1)), listOf(mockRound1, mockRound2).bestQualifyingResultFor(mockDriver1.id))
+        assertEquals(Pair(1, listOf(mockRound1)), listOf(mockRound1, mockRound2).bestQualifyingResultFor(MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.id))
         assertEquals(Pair(2, listOf(mockRound1)), listOf(mockRound1, mockRound2).bestQualifyingResultFor(mockDriver2.id))
         assertEquals(Pair(3, listOf(mockRound1, mockRound2)), listOf(mockRound1, mockRound2).bestQualifyingResultFor(mockDriver3.id)) // Grid penalties not applied to qualifying position
         assertEquals(Pair(1, listOf(mockRound2)), listOf(mockRound1, mockRound2).bestQualifyingResultFor(mockDriver4.id))
@@ -182,7 +182,7 @@ class RoundTest {
     @Test
     fun `(List) bestFinish for a driver id returns their best finish position`() {
 
-        assertEquals(1, listOf(mockRound1, mockRound2).bestFinish(mockDriver1.id))
+        assertEquals(1, listOf(mockRound1, mockRound2).bestFinish(MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.id))
         assertEquals(3, listOf(mockRound1, mockRound2).bestFinish(mockDriver2.id))
         assertEquals(2, listOf(mockRound1, mockRound2).bestFinish(mockDriver3.id))
         assertEquals(1, listOf(mockRound1, mockRound2).bestFinish(mockDriver4.id))
@@ -191,7 +191,7 @@ class RoundTest {
     @Test
     fun `(List) bestRaceResultFor for a driver id returns their best finish position`() {
 
-        assertEquals(Pair(1, listOf(mockRound2)), listOf(mockRound1, mockRound2).bestRaceResultFor(mockDriver1.id))
+        assertEquals(Pair(1, listOf(mockRound2)), listOf(mockRound1, mockRound2).bestRaceResultFor(MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.id))
         assertEquals(Pair(3, listOf(mockRound1, mockRound2)), listOf(mockRound1, mockRound2).bestRaceResultFor(mockDriver2.id))
         assertEquals(Pair(2, listOf(mockRound1, mockRound2)), listOf(mockRound1, mockRound2).bestRaceResultFor(mockDriver3.id)) // Grid penalties not applied to qualifying position
         assertEquals(Pair(1, listOf(mockRound1)), listOf(mockRound1, mockRound2).bestRaceResultFor(mockDriver4.id))

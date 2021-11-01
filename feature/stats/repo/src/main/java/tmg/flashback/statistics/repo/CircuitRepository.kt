@@ -10,25 +10,29 @@ import tmg.flashback.statistics.network.utils.data
 import tmg.flashback.statistics.network.utils.hasData
 import tmg.flashback.statistics.repo.base.BaseRepository
 import tmg.flashback.statistics.repo.mappers.app.CircuitMapper
+import tmg.flashback.statistics.repo.mappers.network.NetworkCircuitDataMapper
 import tmg.flashback.statistics.repo.mappers.network.NetworkCircuitMapper
 import tmg.flashback.statistics.room.FlashbackDatabase
-import java.lang.RuntimeException
 
 class CircuitRepository(
     private val api: FlashbackApi,
     private val persistence: FlashbackDatabase,
     crashController: CrashController,
     private val networkCircuitMapper: NetworkCircuitMapper,
+    private val networkCircuitDataMapper: NetworkCircuitDataMapper,
     private val circuitMapper: CircuitMapper,
 ): BaseRepository(crashController) {
 
-    suspend fun fetchCircuit(id: String): Boolean = attempt(msgIfFailed = "circuits/${id}.json") {
-        val result = api.getCircuit(id)
-        if (!result.hasData) { return@attempt false }
-
-        val data = result.data() ?: return@attempt false
-
-        val circuit = networkCircuitMapper.mapCircuitData(data.data)
+    /**
+     * circuits/{circuitId}.json
+     * Fetch circuit data and history for a specific circuit [circuitId]
+     * @param circuitId
+     */
+    suspend fun fetchCircuit(circuitId: String): Boolean = attempt(
+        apiCall = suspend { api.getCircuit(circuitId) },
+        msgIfFailed = "circuits/${circuitId}.json"
+    ) { data ->
+        val circuit = networkCircuitDataMapper.mapCircuitData(data.data)
         val circuitRounds = (data.results?.values ?: emptyList()).map {
             networkCircuitMapper.mapCircuitRounds(data.data.id, it)
         }
@@ -39,16 +43,16 @@ class CircuitRepository(
         return@attempt true
     }
 
-    suspend fun fetchAllCircuits(): Boolean = attempt(msgIfFailed = "circuits.json") {
-        val result = api.getCircuits()
-        if (!result.hasData) { return@attempt false }
-
-        val data = result.data() ?: return@attempt false
-
+    /**
+     * circuits.json
+     * Fetch circuits data for all circuits currently available
+     */
+    suspend fun fetchCircuits(): Boolean = attempt(
+        apiCall = api::getCircuits,
+        msgIfFailed = "circuits.json"
+    ) { data ->
         val allCircuits = data.values
-            .map {
-                networkCircuitMapper.mapCircuitData(it)
-            }
+            .map { networkCircuitDataMapper.mapCircuitData(it) }
 
         persistence.circuitDao().insertCircuit(allCircuits)
         return@attempt allCircuits.isNotEmpty()

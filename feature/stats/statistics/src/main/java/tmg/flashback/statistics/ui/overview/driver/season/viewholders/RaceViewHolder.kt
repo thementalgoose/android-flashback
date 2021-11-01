@@ -35,7 +35,7 @@ class RaceViewHolder(
         binding.country.setImageResource(context.getFlagResourceAlpha3(item.raceCountryISO))
         binding.circuitName.text = item.circuitName
 
-        if (item.qualified == 0) {
+        if (item.qualified == null || item.qualified == 0) {
             binding.qualified.text = getString(R.string.qualifying_no)
         } else {
             binding.qualified.text = item.qualified.ordinalAbbreviation

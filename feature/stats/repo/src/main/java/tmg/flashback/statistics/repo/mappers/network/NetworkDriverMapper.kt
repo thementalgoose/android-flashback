@@ -1,25 +1,40 @@
 package tmg.flashback.statistics.repo.mappers.network
 
 import tmg.flashback.statistics.network.models.drivers.DriverData
+import tmg.flashback.statistics.network.models.drivers.DriverStanding
+import tmg.flashback.statistics.network.models.drivers.DriverStandingRace
 import tmg.flashback.statistics.room.models.drivers.Driver
+import tmg.flashback.statistics.room.models.drivers.DriverSeason
+import tmg.flashback.statistics.room.models.drivers.DriverSeasonRace
 import java.lang.RuntimeException
 import kotlin.jvm.Throws
 
 class NetworkDriverMapper {
 
     @Throws(RuntimeException::class)
-    fun mapDriverData(driverData: DriverData): Driver {
-        return Driver(
-            id = driverData.id,
-            firstName = driverData.firstName,
-            lastName = driverData.lastName,
-            dob = driverData.dob,
-            nationality = driverData.nationality,
-            nationalityISO = driverData.nationalityISO,
-            photoUrl = driverData.photoUrl,
-            wikiUrl = driverData.wikiUrl,
-            number = driverData.permanentNumber?.toIntOrNull(),
-            code = driverData.code
+    fun mapDriverSeason(driverId: String, driver: DriverStanding): DriverSeason {
+        return DriverSeason(
+            driverId = driverId,
+            season = driver.season,
+            championshipStanding = driver.championshipPosition,
+            points = driver.points,
+            inProgress = driver.inProgress
+        )
+    }
+
+    @Throws(RuntimeException::class)
+    fun mapDriverSeasonRace(driverId: String, season: Int, data: DriverStandingRace): DriverSeasonRace {
+        return DriverSeasonRace(
+            driverId = driverId,
+            season = season,
+            round = data.race.round,
+            constructorId = data.construct.id,
+            sprintQuali = data.sprintQuali ?: false,
+            qualified = data.qualified,
+            gridPos = data.gridPos,
+            finished = data.finished,
+            status = data.status,
+            points = data.points,
         )
     }
 }

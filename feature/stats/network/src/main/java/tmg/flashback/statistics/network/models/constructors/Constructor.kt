@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 import tmg.flashback.statistics.network.models.drivers.DriverData
 
 @Serializable
-data class Constructors(
+data class Constructor(
     val construct: ConstructorData,
     val standings: Map<String, ConstructorStanding>
 )
@@ -14,6 +14,7 @@ data class ConstructorStanding(
     val season: Int,
     val championshipPosition: Int?,
     val points: Double?,
+    val inProgress: Boolean,
     val drivers: Map<String, ConstructorStandingDriver>
 )
 

@@ -10,16 +10,4 @@ import java.lang.RuntimeException
 import kotlin.jvm.Throws
 
 class NetworkConstructorMapper {
-
-    @Throws(RuntimeException::class)
-    fun mapConstructorData(constructorData: ConstructorData): Constructor {
-        return Constructor(
-            id = constructorData.id,
-            colour = constructorData.colour,
-            name = constructorData.name,
-            nationality = constructorData.nationality,
-            nationalityISO = constructorData.nationalityISO,
-            wikiUrl = constructorData.wikiUrl
-        )
-    }
 }

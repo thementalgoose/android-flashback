@@ -42,8 +42,8 @@ sealed class SeasonItem(
     data class Driver(
         val season: Int,
         val points: Double,
-        val driver: tmg.flashback.formula1.model.Driver,
-        val driverId: String = driver.id,
+        val driverWithEmbeddedConstructor: tmg.flashback.formula1.model.DriverWithEmbeddedConstructor,
+        val driverId: String = driverWithEmbeddedConstructor.id,
         val position: Int,
         val bestQualifying: Pair<Int, List<Round>>?,
         val bestFinish: Pair<Int, List<Round>>?,

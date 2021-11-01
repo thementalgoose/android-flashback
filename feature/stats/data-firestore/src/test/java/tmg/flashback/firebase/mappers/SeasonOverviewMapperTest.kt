@@ -10,17 +10,6 @@ import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
 import org.threeten.bp.format.DateTimeParseException
 import tmg.flashback.formula1.model.CircuitSummary
-import tmg.flashback.formula1.model.Constructor
-import tmg.flashback.formula1.model.ConstructorStandings
-import tmg.flashback.formula1.model.Driver
-import tmg.flashback.formula1.model.DriverStandings
-import tmg.flashback.formula1.model.Location
-import tmg.flashback.formula1.model.Round
-import tmg.flashback.formula1.model.RoundQualifyingResult
-import tmg.flashback.formula1.model.RoundRaceResult
-import tmg.flashback.formula1.model.RoundSprintQualifyingResult
-import tmg.flashback.formula1.model.Season
-import tmg.flashback.formula1.model.SeasonStanding
 import tmg.flashback.firebase.mappers.seasonoverview.SeasonOverviewConstructorMapper
 import tmg.flashback.firebase.mappers.seasonoverview.SeasonOverviewDriverMapper
 import tmg.flashback.firebase.mappers.seasonoverview.SeasonOverviewRaceMapper
@@ -86,7 +75,7 @@ internal class SeasonOverviewMapperTest: BaseTest() {
         val inputSeason = 2020
         val expected = tmg.flashback.formula1.model.Season(
             season = 2020,
-            drivers = listOf(mockDriver()),
+            driverWithEmbeddedConstructors = listOf(mockDriver()),
             constructors = listOf(mockConstructor()),
             rounds = listOf(
                 tmg.flashback.formula1.model.Round(
@@ -122,7 +111,7 @@ internal class SeasonOverviewMapperTest: BaseTest() {
         initSUT()
 
         val input = FSeason.model(standings = null)
-        assertEquals(emptyList<tmg.flashback.formula1.model.SeasonStanding<tmg.flashback.formula1.model.Driver>>(), sut.mapSeason(input, 2020).driverStandings)
+        assertEquals(emptyList<tmg.flashback.formula1.model.SeasonStanding<tmg.flashback.formula1.model.DriverWithEmbeddedConstructor>>(), sut.mapSeason(input, 2020).driverStandings)
     }
 
     @Test
@@ -146,7 +135,7 @@ internal class SeasonOverviewMapperTest: BaseTest() {
         initSUT()
 
         val input = FSeason.model(drivers = null)
-        assertEquals(emptyList<tmg.flashback.formula1.model.Driver>(), sut.mapSeason(input, 2020).drivers)
+        assertEquals(emptyList<tmg.flashback.formula1.model.DriverWithEmbeddedConstructor>(), sut.mapSeason(input, 2020).driverWithEmbeddedConstructors)
     }
 
     @Test
@@ -202,8 +191,8 @@ internal class SeasonOverviewMapperTest: BaseTest() {
     }
 }
 
-private fun mockDriver(driverId: String = "driverId", constructorsMap: Map<Int, String> = mapOf(1 to "constructorId")): tmg.flashback.formula1.model.Driver {
-    return tmg.flashback.formula1.model.Driver(
+private fun mockDriver(driverId: String = "driverId", constructorsMap: Map<Int, String> = mapOf(1 to "constructorId")): tmg.flashback.formula1.model.DriverWithEmbeddedConstructor {
+    return tmg.flashback.formula1.model.DriverWithEmbeddedConstructor(
         id = driverId,
         firstName = "firstName",
         lastName = "lastName",

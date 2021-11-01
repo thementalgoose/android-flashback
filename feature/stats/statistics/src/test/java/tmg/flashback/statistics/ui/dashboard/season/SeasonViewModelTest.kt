@@ -663,8 +663,8 @@ internal class SeasonViewModelTest: BaseTest() {
     private val expectedDriver1 = SeasonItem.Driver(
             season = 2019,
             points = 21.0,
-            driver = mockDriver1,
-            driverId = mockDriver1.id,
+            driverWithEmbeddedConstructor = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1,
+            driverId = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.id,
             position = 3,
             bestQualifying = Pair(1, listOf(mockRound1)),
             bestFinish = Pair(1, listOf(mockRound2)),
@@ -674,7 +674,7 @@ internal class SeasonViewModelTest: BaseTest() {
     private val expectedDriver2 = SeasonItem.Driver(
             season = 2019,
             points = 18.0,
-            driver = mockDriver2,
+            driverWithEmbeddedConstructor = mockDriver2,
             driverId = mockDriver2.id,
             position = 4,
             bestQualifying = Pair(2, listOf(mockRound1)),
@@ -685,7 +685,7 @@ internal class SeasonViewModelTest: BaseTest() {
     private val expectedDriver3 = SeasonItem.Driver(
             season = 2019,
             points = 27.0,
-            driver = mockDriver3,
+            driverWithEmbeddedConstructor = mockDriver3,
             driverId = mockDriver3.id,
             position = 1,
             bestQualifying = Pair(3, listOf(mockRound1, mockRound2)),
@@ -696,7 +696,7 @@ internal class SeasonViewModelTest: BaseTest() {
     private val expectedDriver4 = SeasonItem.Driver(
             season = 2019,
             points = 24.0,
-            driver = mockDriver4,
+            driverWithEmbeddedConstructor = mockDriver4,
             driverId = mockDriver4.id,
             position = 2,
             bestQualifying = Pair(1, listOf(mockRound2)),
@@ -716,7 +716,7 @@ internal class SeasonViewModelTest: BaseTest() {
             constructorId = mockConstructorAlpha.id,
             driver = listOf(
                     Pair(mockDriver3.toConstructorDriver(), 27.0),
-                    Pair(mockDriver1.toConstructorDriver(), 21.0)
+                    Pair(MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(), 21.0)
             ),
             points = 48.0,
             maxPointsInSeason = 48.0,

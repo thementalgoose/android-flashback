@@ -47,7 +47,6 @@ class DriverFragment: BaseFragment<FragmentDriverBinding>() {
         binding.titleExpanded.text = driverName
         binding.titleCollapsed.text = driverName
 
-        binding.swipeRefresh.isEnabled = false
         adapter = DriverSummaryAdapter(
                 openUrl = viewModel.inputs::openUrl,
                 seasonClicked = viewModel.inputs::openSeason
@@ -57,6 +56,14 @@ class DriverFragment: BaseFragment<FragmentDriverBinding>() {
 
         binding.back.setOnClickListener {
             activity?.finish()
+        }
+
+        binding.swipeRefresh.setOnRefreshListener {
+            viewModel.inputs.refresh()
+        }
+
+        observe(viewModel.outputs.isLoading) {
+            binding.swipeRefresh.isRefreshing = it
         }
 
         observe(viewModel.outputs.list) {

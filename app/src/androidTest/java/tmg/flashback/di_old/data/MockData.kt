@@ -94,7 +94,7 @@ internal val mockAllConstructors = listOf(
 
 //region Drivers
 
-internal val mockDriverAlex: Driver = Driver(
+internal val MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_ALEX: DriverWithEmbeddedConstructor = DriverWithEmbeddedConstructor(
         id = "alex",
         firstName = "Alex",
         lastName = "Driver1",
@@ -108,7 +108,7 @@ internal val mockDriverAlex: Driver = Driver(
         constructorAtEndOfSeason = mockConstructorGreen
 )
 
-internal val mockDriverBrian: Driver = Driver(
+internal val MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_BRIAN: DriverWithEmbeddedConstructor = DriverWithEmbeddedConstructor(
         id = "brian",
         firstName = "Brian",
         lastName = "Driver2",
@@ -122,7 +122,7 @@ internal val mockDriverBrian: Driver = Driver(
         constructorAtEndOfSeason = mockConstructorGreen
 )
 
-internal val mockDriverCharlie: Driver = Driver(
+internal val MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_CHARLIE: DriverWithEmbeddedConstructor = DriverWithEmbeddedConstructor(
         id = "charlie",
         firstName = "Charlie",
         lastName = "Driver3",
@@ -137,7 +137,7 @@ internal val mockDriverCharlie: Driver = Driver(
 )
 
 
-internal val mockDriverDaniel: Driver = Driver(
+internal val MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_DANIEL: DriverWithEmbeddedConstructor = DriverWithEmbeddedConstructor(
         id = "daniel",
         firstName = "Daniel",
         lastName = "Driver4",
@@ -152,10 +152,10 @@ internal val mockDriverDaniel: Driver = Driver(
 )
 
 internal val mockAllDrivers = listOf(
-        mockDriverAlex,
-        mockDriverBrian,
-        mockDriverCharlie,
-        mockDriverDaniel
+        MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_ALEX,
+        MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_BRIAN,
+        MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_CHARLIE,
+        MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_DANIEL
 )
 
 //endregion
@@ -167,29 +167,29 @@ internal val mockRound1: Round = mockRound(
         round = 1,
         date = LocalDate.of(2019, 3, 4),
         name = "First Grand Prix",
-        drivers = mockAllDrivers,
+        driverWithEmbeddedConstructors = mockAllDrivers,
         constructors = mockAllConstructors,
         circuit = mockCircuitLeicester,
         q1Order = listOf(
-                mockDriverCharlie,
-                mockDriverBrian,
-                mockDriverAlex,
-                mockDriverDaniel
+                MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_CHARLIE,
+                MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_BRIAN,
+                MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_ALEX,
+                MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_DANIEL
         ),
         q2Order = listOf(
-                mockDriverBrian,
-                mockDriverAlex,
-                mockDriverCharlie
+                MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_BRIAN,
+                MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_ALEX,
+                MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_CHARLIE
         ),
         q3Order = listOf(
-                mockDriverAlex,
-                mockDriverBrian
+                MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_ALEX,
+                MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_BRIAN
         ),
         finishOrder = listOf(
-                mockDriverAlex,
-                mockDriverBrian,
-                mockDriverCharlie,
-                mockDriverDaniel
+                MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_ALEX,
+                MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_BRIAN,
+                MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_CHARLIE,
+                MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_DANIEL
         )
 )
 
@@ -198,29 +198,29 @@ internal val mockRound2: Round = mockRound(
         round = 2,
         date = LocalDate.of(2019, 4, 4),
         name = "Second Grand Prix",
-        drivers = mockAllDrivers,
+        driverWithEmbeddedConstructors = mockAllDrivers,
         constructors = mockAllConstructors,
         circuit = mockCircuitLeicester,
         q1Order = listOf(
-                mockDriverAlex,
-                mockDriverBrian,
-                mockDriverDaniel,
-                mockDriverCharlie,
+                MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_ALEX,
+                MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_BRIAN,
+                MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_DANIEL,
+                MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_CHARLIE,
         ),
         q2Order = listOf(
-                mockDriverDaniel,
-                mockDriverBrian,
-                mockDriverAlex
+                MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_DANIEL,
+                MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_BRIAN,
+                MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_ALEX
         ),
         q3Order = listOf(
-                mockDriverDaniel,
-                mockDriverBrian
+                MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_DANIEL,
+                MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_BRIAN
         ),
         finishOrder = listOf(
-                mockDriverCharlie,
-                mockDriverBrian,
-                mockDriverDaniel,
-                mockDriverAlex
+                MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_CHARLIE,
+                MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_BRIAN,
+                MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_DANIEL,
+                MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_ALEX
         )
 )
 
@@ -230,17 +230,17 @@ internal val mockRound2: Round = mockRound(
 
 internal val mockSeason: Season = Season(
         season = 2019,
-        drivers = listOf(mockDriverAlex, mockDriverBrian, mockDriverCharlie, mockDriverDaniel),
+        driverWithEmbeddedConstructors = listOf(MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_ALEX, MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_BRIAN, MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_CHARLIE, MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_DANIEL),
         constructors = listOf(mockConstructorBlue, mockConstructorGreen),
         rounds = listOf(
                 mockRound1,
                 mockRound2
         ),
         driverStandings = mapOf(
-                mockDriverAlex.id to Pair(mockDriverAlex, 24),
-                mockDriverBrian.id to Pair(mockDriverBrian, 33),
-                mockDriverCharlie.id to Pair(mockDriverCharlie, 43),
-                mockDriverDaniel.id to Pair(mockDriverDaniel, 40)
+                MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_ALEX.id to Pair(MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_ALEX, 24),
+                MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_BRIAN.id to Pair(MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_BRIAN, 33),
+                MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_CHARLIE.id to Pair(MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_CHARLIE, 43),
+                MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_DANIEL.id to Pair(MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_DANIEL, 40)
         ),
         constructorStandings = mapOf(
                 mockConstructorGreen.id to Pair(mockConstructorGreen, 57),
@@ -260,7 +260,7 @@ internal val MOCK_SEASON_OVERVIEW: SeasonOverview =
             season = 2019,
             winner = WinnerSeason(
                     season = 2019,
-                    driver = listOf(WinnerSeasonDriver(mockDriverCharlie.id, mockDriverCharlie.name, mockDriverCharlie.photoUrl, 43)),
+                    driver = listOf(WinnerSeasonDriver(MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_CHARLIE.id, MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_CHARLIE.name, MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_CHARLIE.photoUrl, 43)),
                     constructor = listOf(WinnerSeasonConstructor(mockConstructorBlue.id, mockConstructorBlue.name, "#0000ff", 83))
             ),
             roundOverviews = listOf(
@@ -304,17 +304,17 @@ internal val mockDriverDanielStanding: DriverOverviewStanding = DriverOverviewSt
                )
         )
 )
-internal val mockDriverDanielOverview: DriverOverview = DriverOverview(
-        id = mockDriverDaniel.id,
-        firstName = mockDriverDaniel.firstName,
-        lastName = mockDriverDaniel.lastName,
-        code = mockDriverDaniel.code,
-        number = mockDriverDaniel.number,
-        wikiUrl = mockDriverDaniel.wikiUrl,
-        photoUrl = mockDriverDaniel.photoUrl,
-        dateOfBirth = mockDriverDaniel.dateOfBirth,
-        nationality = mockDriverDaniel.nationality,
-        nationalityISO = mockDriverDaniel.nationalityISO,
+internal val MOCK_DRIVER_DANIEL_HISTORY: DriverHistory = DriverHistory(
+        id = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_DANIEL.id,
+        firstName = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_DANIEL.firstName,
+        lastName = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_DANIEL.lastName,
+        code = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_DANIEL.code,
+        number = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_DANIEL.number,
+        wikiUrl = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_DANIEL.wikiUrl,
+        photoUrl = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_DANIEL.photoUrl,
+        dateOfBirth = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_DANIEL.dateOfBirth,
+        nationality = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_DANIEL.nationality,
+        nationalityISO = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_DANIEL.nationalityISO,
         standings = listOf(mockDriverDanielStanding)
 )
 
@@ -323,7 +323,7 @@ internal val mockDriverDanielOverview: DriverOverview = DriverOverview(
 //region ConstructorOverview
 
 internal val mockConstructorBlueOverviewDriverStanding = ConstructorOverviewDriverStanding(
-        driver = mockDriverDaniel.forRound().toConstructorDriver(),
+        driver = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_DANIEL.forRound().toConstructorDriver(),
         bestFinish = 1,
         bestQualifying = 4,
         points = 25,
@@ -341,7 +341,7 @@ internal val mockConstructorBlueOverviewDriverStanding = ConstructorOverviewDriv
 
 internal val mockConstructorBlueOverviewStanding = ConstructorOverviewStanding(
         drivers = mapOf(
-                mockDriverDaniel.id to mockConstructorBlueOverviewDriverStanding
+                MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_DANIEL.id to mockConstructorBlueOverviewDriverStanding
         ),
         isInProgress = false,
         championshipStanding = 1,
@@ -365,17 +365,17 @@ internal val mockConstructorBlueOverview = ConstructorOverview(
 //region Utilities
 
 private fun mockRound(
-    season: Int,
-    round: Int,
-    date: LocalDate,
-    name: String,
-    drivers: List<Driver>,
-    constructors: List<Constructor>,
-    circuit: CircuitSummary,
-    q1Order: List<Driver>,
-    q2Order: List<Driver>,
-    q3Order: List<Driver>,
-    finishOrder: List<Driver>
+        season: Int,
+        round: Int,
+        date: LocalDate,
+        name: String,
+        driverWithEmbeddedConstructors: List<DriverWithEmbeddedConstructor>,
+        constructors: List<Constructor>,
+        circuit: CircuitSummary,
+        q1Order: List<DriverWithEmbeddedConstructor>,
+        q2Order: List<DriverWithEmbeddedConstructor>,
+        q3Order: List<DriverWithEmbeddedConstructor>,
+        finishOrder: List<DriverWithEmbeddedConstructor>
 ): Round = Round(
         season = season,
         round = round,
@@ -383,7 +383,7 @@ private fun mockRound(
         time = LocalTime.of(14, 10),
         name = name,
         wikipediaUrl = "https://www.wikipedia.com",
-        drivers = drivers.map { it.forRound() },
+        drivers = driverWithEmbeddedConstructors.map { it.forRound() },
         constructors = constructors,
         circuit = circuit,
         q1 = buildQualifying(mockAllDrivers.map { it.forRound() }, q1Order),
@@ -407,14 +407,14 @@ private fun Round.toHistory(): RoundOverview {
     )
 }
 
-private fun buildQualifying(drivers: List<RoundDriver>, order: List<Driver>) = order
+private fun buildQualifying(drivers: List<RoundDriver>, order: List<DriverWithEmbeddedConstructor>) = order
         .mapIndexed { index, driverItem ->
             val driver = drivers.first { it.id == driverItem.id }
             return@mapIndexed driver.id to RoundQualifyingResult(driver, LapTime(0, 1, index + 1, 0), index + 1)
         }
         .toMap()
 
-private fun buildRace(drivers: List<RoundDriver>, order: List<Driver>) = order
+private fun buildRace(drivers: List<RoundDriver>, order: List<DriverWithEmbeddedConstructor>) = order
         .mapIndexed { index, driverItem ->
             val driver = drivers.first { it.id == driverItem.id }
             return@mapIndexed driver.id to RoundRaceResult(

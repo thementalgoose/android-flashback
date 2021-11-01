@@ -14,7 +14,6 @@ import tmg.core.analytics.manager.AnalyticsManager
 import tmg.flashback.formula1.constants.Formula1.constructorChampionshipStarts
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import tmg.core.device.managers.NetworkConnectivityManager
 import tmg.flashback.data.db.stats.SeasonOverviewRepository
@@ -26,13 +25,11 @@ import tmg.flashback.formula1.model.*
 import tmg.flashback.statistics.controllers.SeasonController
 import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
-import tmg.utilities.extensions.async
 import tmg.utilities.extensions.combinePair
 import tmg.utilities.extensions.then
 import tmg.utilities.lifecycle.DataEvent
 import tmg.utilities.lifecycle.Event
 import tmg.utilities.models.StringHolder
-import kotlin.coroutines.CoroutineContext
 
 //region Inputs
 
@@ -359,14 +356,14 @@ class SeasonViewModel(
     /**
      * Convert the driver standings construct into a list of home items to display on the home page
      */
-    private fun List<SeasonStanding<Driver>>.toDriverList(rounds: List<Round>): List<SeasonItem> {
+    private fun List<SeasonStanding<DriverWithEmbeddedConstructor>>.toDriverList(rounds: List<Round>): List<SeasonItem> {
         return this
             .sortedBy { it.position }
             .toList()
-            .mapIndexed { index: Int, standing: SeasonStanding<Driver> ->
+            .mapIndexed { index: Int, standing: SeasonStanding<DriverWithEmbeddedConstructor> ->
                 SeasonItem.Driver(
                     season = season.value,
-                    driver = standing.item,
+                    driverWithEmbeddedConstructor = standing.item,
                     points = standing.points,
                     position = index + 1,
                     bestQualifying = rounds.bestQualifyingResultFor(standing.item.id),
@@ -390,7 +387,7 @@ class SeasonViewModel(
                 val (roundDriver, points) = pair
 
                 // TODO: This should be refactored out!
-                val rebuildDriver = Driver(
+                val rebuildDriver = DriverWithEmbeddedConstructor(
                     id = roundDriver.id,
                     firstName = roundDriver.firstName,
                     lastName = roundDriver.lastName,
@@ -411,7 +408,7 @@ class SeasonViewModel(
 
                 SeasonItem.Driver(
                     season = season.value,
-                    driver = rebuildDriver,
+                    driverWithEmbeddedConstructor = rebuildDriver,
                     points = points,
                     position = index + 1,
                     bestQualifying = rounds.bestQualifyingResultFor(roundDriver.id),

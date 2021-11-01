@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.IMPORTANT_FOR_ACCESSIBILITY_NO
 import android.view.View.IMPORTANT_FOR_ACCESSIBILITY_YES
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import org.koin.android.ext.android.inject
@@ -161,7 +160,7 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
                 val intent = DriverActivity.intent(
                     context = it,
                     driverId = driver.driverId,
-                    driverName = driver.driver.name
+                    driverName = driver.driverWithEmbeddedConstructor.name
                 )
                 startActivity(intent)
             }

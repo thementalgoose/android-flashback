@@ -9,7 +9,7 @@ typealias DriverStandingsRound = Map<String, Pair<ConstructorDriver, Double>>
 
 typealias ConstructorStandings = List<SeasonStanding<Constructor>>
 
-typealias DriverStandings = List<SeasonStanding<Driver>>
+typealias DriverStandings = List<SeasonStanding<DriverWithEmbeddedConstructor>>
 
 data class RoundConstructorStandings(
     val points: Double,

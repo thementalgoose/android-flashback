@@ -40,7 +40,7 @@ internal val mockConstructorBeta: Constructor = Constructor(
 
 //region Drivers
 
-internal val mockDriver1: Driver = Driver(
+internal val MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1: DriverWithEmbeddedConstructor = DriverWithEmbeddedConstructor(
     id = "1",
     firstName = "name1",
     lastName = "last1",
@@ -57,7 +57,7 @@ internal val mockDriver1: Driver = Driver(
     ),
     startingConstructor = mockConstructorAlpha
 )
-internal val mockDriver2 = mockDriver1.copy(
+internal val mockDriver2 = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.copy(
     id = "2",
     firstName = "name2",
     lastName = "name2",
@@ -67,7 +67,7 @@ internal val mockDriver2 = mockDriver1.copy(
     ),
     startingConstructor = mockConstructorBeta
 )
-internal val mockDriver3 = mockDriver1.copy(
+internal val mockDriver3 = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.copy(
     id = "3",
     firstName = "name3",
     lastName = "name3",
@@ -77,7 +77,7 @@ internal val mockDriver3 = mockDriver1.copy(
     ),
     startingConstructor = mockConstructorAlpha
 )
-internal val mockDriver4 = mockDriver1.copy(
+internal val mockDriver4 = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.copy(
     id = "4",
     firstName = "name4",
     lastName = "name4",
@@ -188,20 +188,20 @@ internal val mockLocalTimeOfRound3: LocalTime = LocalTime.of(14, 10)
 
 //region Round 1
 
-internal val mockRound1Driver1Q1 = RoundQualifyingResult(driver = mockDriver1.toConstructorDriver(1), time = LapTime(0,1, 1, 0), position = 1)
+internal val mockRound1Driver1Q1 = RoundQualifyingResult(driver = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(1), time = LapTime(0,1, 1, 0), position = 1)
 internal val mockRound1Driver2Q1 = RoundQualifyingResult(driver = mockDriver2.toConstructorDriver(1), time = LapTime(0,1, 3, 0), position = 3)
 internal val mockRound1Driver3Q1 = RoundQualifyingResult(driver = mockDriver3.toConstructorDriver(1), time = LapTime(0,1, 2, 0), position = 2)
 internal val mockRound1Driver4Q1 = RoundQualifyingResult(driver = mockDriver4.toConstructorDriver(1), time = LapTime(0,1, 4, 0), position = 4)
 
-internal val mockRound1Driver1Q2 = RoundQualifyingResult(driver = mockDriver1.toConstructorDriver(1), time = LapTime(0,1, 2, 0), position = 2)
+internal val mockRound1Driver1Q2 = RoundQualifyingResult(driver = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(1), time = LapTime(0,1, 2, 0), position = 2)
 internal val mockRound1Driver2Q2 = RoundQualifyingResult(driver = mockDriver2.toConstructorDriver(1), time = LapTime(0,1, 1, 0), position = 1)
 internal val mockRound1Driver3Q2 = RoundQualifyingResult(driver = mockDriver3.toConstructorDriver(1), time = LapTime(0,1, 3, 0), position = 3)
 
-internal val mockRound1Driver1Q3 = RoundQualifyingResult(driver = mockDriver1.toConstructorDriver(1), time = LapTime(0,1, 1, 0), position = 1)
+internal val mockRound1Driver1Q3 = RoundQualifyingResult(driver = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(1), time = LapTime(0,1, 1, 0), position = 1)
 internal val mockRound1Driver2Q3 = RoundQualifyingResult(driver = mockDriver2.toConstructorDriver(1), time = LapTime(0,1, 2, 0), position = 2)
 
 internal val round1RaceResultDriver1 = RoundRaceResult(
-    driver = mockDriver1.toConstructorDriver(1),
+    driver = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(1),
     time = LapTime(1,0,0,0),
     points = 5.0,
     grid = 1,
@@ -258,7 +258,7 @@ internal val mockRound1: Round = Round(
     time = mockLocalTimeOfRound1,
     name = "Round 1",
     drivers = listOf(
-        mockDriver1.toConstructorDriver(1),
+        MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(1),
         mockDriver2.toConstructorDriver(1),
         mockDriver3.toConstructorDriver(1),
         mockDriver4.toConstructorDriver(1)
@@ -267,22 +267,22 @@ internal val mockRound1: Round = Round(
     circuit = mockCircuitCharlie,
     wikipediaUrl = "http://www.mockwikiurl.com",
     q1 = mapOf(
-        mockDriver1.id to mockRound1Driver1Q1,
+        MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.id to mockRound1Driver1Q1,
         mockDriver2.id to mockRound1Driver2Q1,
         mockDriver3.id to mockRound1Driver3Q1,
         mockDriver4.id to mockRound1Driver4Q1
     ),
     q2 = mapOf(
-        mockDriver1.id to mockRound1Driver1Q2,
+        MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.id to mockRound1Driver1Q2,
         mockDriver2.id to mockRound1Driver2Q2,
         mockDriver3.id to mockRound1Driver3Q2
     ),
     q3 = mapOf(
-        mockDriver1.id to mockRound1Driver1Q3,
+        MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.id to mockRound1Driver1Q3,
         mockDriver2.id to mockRound1Driver2Q3
     ),
     race = mapOf(
-        mockDriver1.id to round1RaceResultDriver1,
+        MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.id to round1RaceResultDriver1,
         mockDriver2.id to round1RaceResultDriver2,
         mockDriver3.id to round1RaceResultDriver3,
         mockDriver4.id to round1RaceResultDriver4
@@ -294,20 +294,20 @@ internal val mockRound1: Round = Round(
 
 //region Round 2
 
-internal val mockRound2Driver1Q1 = RoundQualifyingResult(driver = mockDriver1.toConstructorDriver(2), time = LapTime(0,1, 3, 0), position = 3)
+internal val mockRound2Driver1Q1 = RoundQualifyingResult(driver = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(2), time = LapTime(0,1, 3, 0), position = 3)
 internal val mockRound2Driver2Q1 = RoundQualifyingResult(driver = mockDriver2.toConstructorDriver(2), time = LapTime(0,1, 4, 0), position = 4)
 internal val mockRound2Driver3Q1 = RoundQualifyingResult(driver = mockDriver3.toConstructorDriver(2), time = LapTime(0,1, 1, 0), position = 1)
 internal val mockRound2Driver4Q1 = RoundQualifyingResult(driver = mockDriver4.toConstructorDriver(2), time = LapTime(0,1, 2, 0), position = 2)
 
-internal val mockRound2Driver1Q2 = RoundQualifyingResult(driver = mockDriver1.toConstructorDriver(2), time = LapTime(0,1, 2, 0), position = 2)
+internal val mockRound2Driver1Q2 = RoundQualifyingResult(driver = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(2), time = LapTime(0,1, 2, 0), position = 2)
 internal val mockRound2Driver3Q2 = RoundQualifyingResult(driver = mockDriver3.toConstructorDriver(2), time = LapTime(0,1, 3, 0), position = 3)
 internal val mockRound2Driver4Q2 = RoundQualifyingResult(driver = mockDriver4.toConstructorDriver(2), time = LapTime(0,1, 1, 0), position = 1)
 
-internal val mockRound2Driver1Q3 = RoundQualifyingResult(driver = mockDriver1.toConstructorDriver(2), time = LapTime(0,1, 2, 0), position = 4)
+internal val mockRound2Driver1Q3 = RoundQualifyingResult(driver = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(2), time = LapTime(0,1, 2, 0), position = 4)
 internal val mockRound2Driver4Q3 = RoundQualifyingResult(driver = mockDriver4.toConstructorDriver(2), time = LapTime(0,1, 1, 0), position = 1)
 
 internal val round2RaceResultDriver1 = RoundRaceResult(
-    driver = mockDriver1.toConstructorDriver(2),
+    driver = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(2),
     time = LapTime(1,0,0,0),
     points = 16.0,
     grid = 2,
@@ -364,7 +364,7 @@ internal val mockRound2: Round = Round(
     name = "Round 2",
     wikipediaUrl = "http://www.mockwikiurl.com",
     drivers = listOf(
-        mockDriver1.toConstructorDriver(2),
+        MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(2),
         mockDriver2.toConstructorDriver(2),
         mockDriver3.toConstructorDriver(2),
         mockDriver4.toConstructorDriver(2)
@@ -372,22 +372,22 @@ internal val mockRound2: Round = Round(
     constructors = listOf(mockConstructorAlpha, mockConstructorBeta),
     circuit = mockCircuitDelta,
     q1 = mapOf(
-        mockDriver1.id to mockRound2Driver1Q1,
+        MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.id to mockRound2Driver1Q1,
         mockDriver2.id to mockRound2Driver2Q1,
         mockDriver3.id to mockRound2Driver3Q1,
         mockDriver4.id to mockRound2Driver4Q1
     ),
     q2 = mapOf(
-        mockDriver1.id to mockRound2Driver1Q2,
+        MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.id to mockRound2Driver1Q2,
         mockDriver3.id to mockRound2Driver3Q2,
         mockDriver4.id to mockRound2Driver4Q2
     ),
     q3 = mapOf(
-        mockDriver1.id to mockRound2Driver1Q3,
+        MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.id to mockRound2Driver1Q3,
         mockDriver4.id to mockRound2Driver4Q3
     ),
     race = mapOf(
-        mockDriver1.id to round2RaceResultDriver1,
+        MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.id to round2RaceResultDriver1,
         mockDriver2.id to round2RaceResultDriver2,
         mockDriver3.id to round2RaceResultDriver3,
         mockDriver4.id to round2RaceResultDriver4
@@ -422,7 +422,7 @@ internal val mockRound3 = mockRound1.copy(
 
 internal val mockSeason = Season(
     season = 2019,
-    drivers = listOf(mockDriver1, mockDriver2, mockDriver3, mockDriver4),
+    driverWithEmbeddedConstructors = listOf(MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1, mockDriver2, mockDriver3, mockDriver4),
     constructors = listOf(mockConstructorAlpha, mockConstructorBeta),
     rounds = listOf(mockRound1, mockRound2),
     driverStandings = emptyList(),
@@ -477,7 +477,7 @@ internal val mockHistory = SeasonOverview(
         driver = listOf(
             WinnerSeasonDriver(mockDriver3.id, mockDriver3.name, mockDriver3.photoUrl ?: "", 27),
             WinnerSeasonDriver(mockDriver4.id, mockDriver4.name, mockDriver4.photoUrl ?: "", 24),
-            WinnerSeasonDriver(mockDriver1.id, mockDriver1.name, mockDriver1.photoUrl ?: "", 21),
+            WinnerSeasonDriver(MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.id, MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.name, MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.photoUrl ?: "", 21),
             WinnerSeasonDriver(mockDriver2.id, mockDriver2.name, mockDriver2.photoUrl ?: "", 18)
         ),
         constructor = listOf(

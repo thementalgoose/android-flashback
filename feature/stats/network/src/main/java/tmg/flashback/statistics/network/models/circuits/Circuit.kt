@@ -5,7 +5,7 @@ import tmg.flashback.statistics.network.models.constructors.ConstructorData
 import tmg.flashback.statistics.network.models.drivers.DriverData
 
 @Serializable
-data class Circuits(
+data class Circuit(
     val data: CircuitData,
     val results: Map<String, CircuitResult>?
 )

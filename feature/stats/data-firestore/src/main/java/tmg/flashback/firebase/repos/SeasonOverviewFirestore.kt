@@ -33,9 +33,9 @@ class SeasonOverviewFirestore(
                 .map { seasonData -> seasonData?.constructors?.firstOrNull { it.id == constructorId } }
     }
 
-    override fun getDriver(season: Int, driver: String): Flow<tmg.flashback.formula1.model.Driver?> {
+    override fun getDriver(season: Int, driver: String): Flow<tmg.flashback.formula1.model.DriverWithEmbeddedConstructor?> {
         return getSeason(season, "getDriver $driver")
-                .map { seasonData -> seasonData?.drivers?.firstOrNull { it.id == driver } }
+                .map { seasonData -> seasonData?.driverWithEmbeddedConstructors?.firstOrNull { it.id == driver } }
     }
 
     override fun getAllConstructors(season: Int): Flow<List<tmg.flashback.formula1.model.Constructor>> {
@@ -48,7 +48,7 @@ class SeasonOverviewFirestore(
                 .map {
                     return@map it ?: tmg.flashback.formula1.model.Season(
                         season = season,
-                        drivers = emptyList(),
+                        driverWithEmbeddedConstructors = emptyList(),
                         constructors = emptyList(),
                         rounds = emptyList(),
                         constructorStandings = emptyList(),

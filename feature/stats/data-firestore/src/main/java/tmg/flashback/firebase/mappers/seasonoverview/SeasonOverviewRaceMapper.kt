@@ -21,14 +21,14 @@ class SeasonOverviewRaceMapper(
      * @param forRound The round that the qualifying is for
      * @param fieldToBaseFilteringOn Q1, Q2 or Q3
      * @param input Map of driver id -> qualifying result (pos,q1,q2,q3)
-     * @param allDrivers Top level list of all drivers returned in the season
+     * @param allDriverWithEmbeddedConstructors Top level list of all drivers returned in the season
      */
-    fun mapQualifying(forRound: Int, fieldToBaseFilteringOn: Qualifying, input: Map<String, FSeasonOverviewRaceQualifying>?, allDrivers: List<Driver>): Map<String, RoundQualifyingResult> {
+    fun mapQualifying(forRound: Int, fieldToBaseFilteringOn: Qualifying, input: Map<String, FSeasonOverviewRaceQualifying>?, allDriverWithEmbeddedConstructors: List<DriverWithEmbeddedConstructor>): Map<String, RoundQualifyingResult> {
         return (input ?: mapOf())
             .toSortedMap()
             .toList()
             .map { (driverId, qualifyingResult) ->
-                return@map allDrivers
+                return@map allDriverWithEmbeddedConstructors
                     .first { it.id == driverId }
                     .let { Pair(it, qualifyingResult) }
             }
@@ -60,12 +60,12 @@ class SeasonOverviewRaceMapper(
      *
      * @param forRound The round that the qualifying is for
      * @param input Map of driver id -> sprint quali result
-     * @param allDrivers Top level list of all drivers returned in the season
+     * @param allDriverWithEmbeddedConstructors Top level list of all drivers returned in the season
      */
-    fun mapSprintQualifying(forRound: Int, input: Map<String, FSeasonOverviewRaceSprintQualifying>?, allDrivers: List<Driver>): Map<String, RoundSprintQualifyingResult> {
+    fun mapSprintQualifying(forRound: Int, input: Map<String, FSeasonOverviewRaceSprintQualifying>?, allDriverWithEmbeddedConstructors: List<DriverWithEmbeddedConstructor>): Map<String, RoundSprintQualifyingResult> {
         return (input ?: emptyMap())
             .map { (driverId, sprintQualifying) ->
-                return@map allDrivers
+                return@map allDriverWithEmbeddedConstructors
                     .first { it.id == driverId }
                     .let { Pair(it, sprintQualifying ) }
             }
@@ -89,12 +89,12 @@ class SeasonOverviewRaceMapper(
      *
      * @param forRound The round that the qualifying is for
      * @param input Map of driver id -> sprint quali result
-     * @param allDrivers Top level list of all drivers returned in the season
+     * @param allDriverWithEmbeddedConstructors Top level list of all drivers returned in the season
      */
-    fun mapRace(forRound: Int, input: Map<String, FSeasonOverviewRaceRace>?, sprintQualifyingData: Map<String, FSeasonOverviewRaceSprintQualifying>?, allDrivers: List<Driver>): Map<String, RoundRaceResult> {
+    fun mapRace(forRound: Int, input: Map<String, FSeasonOverviewRaceRace>?, sprintQualifyingData: Map<String, FSeasonOverviewRaceSprintQualifying>?, allDriverWithEmbeddedConstructors: List<DriverWithEmbeddedConstructor>): Map<String, RoundRaceResult> {
         return (input ?: emptyMap())
             .map { (driverId, sprintQualifying) ->
-                return@map allDrivers
+                return@map allDriverWithEmbeddedConstructors
                     .first { it.id == driverId }
                     .let { Pair(it, sprintQualifying ) }
             }

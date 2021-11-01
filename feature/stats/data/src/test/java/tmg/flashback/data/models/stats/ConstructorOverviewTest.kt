@@ -97,7 +97,7 @@ class ConstructorOverviewTest {
     fun `race entries`(s1Driver1: Int, s1Driver2: Int, s2Driver1: Int, s2Driver2: Int, expected: Int) {
         val sut = mockConstructorOverview.copy(standings = listOf(
                 mockConstructorOverviewStanding1.copy(drivers = mapOf(
-                        mockDriver1.id to mockConstructorOverviewStanding1Driver1.copy(
+                        MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.id to mockConstructorOverviewStanding1Driver1.copy(
                                 races = s1Driver1
                         ),
                         mockDriver2.id to mockConstructorOverviewStanding1Driver2.copy(
@@ -105,7 +105,7 @@ class ConstructorOverviewTest {
                         )
                 )),
                 mockConstructorOverviewStanding2.copy(drivers = mapOf(
-                        mockDriver1.id to mockConstructorOverviewStanding2Driver1.copy(
+                        MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.id to mockConstructorOverviewStanding2Driver1.copy(
                                 races = s2Driver1
                         ),
                         mockDriver2.id to mockConstructorOverviewStanding2Driver2.copy(
@@ -126,7 +126,7 @@ class ConstructorOverviewTest {
     fun `wins`(s1Driver1: Int, s1Driver2: Int, s2Driver1: Int, s2Driver2: Int, expected: Int) {
         val sut = mockConstructorOverview.copy(standings = listOf(
                 mockConstructorOverviewStanding1.copy(drivers = mapOf(
-                        mockDriver1.id to mockConstructorOverviewStanding1Driver1.copy(
+                        MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.id to mockConstructorOverviewStanding1Driver1.copy(
                                 finishesInP1 = s1Driver1
                         ),
                         mockDriver2.id to mockConstructorOverviewStanding1Driver2.copy(
@@ -134,7 +134,7 @@ class ConstructorOverviewTest {
                         )
                 )),
                 mockConstructorOverviewStanding2.copy(drivers = mapOf(
-                        mockDriver1.id to mockConstructorOverviewStanding2Driver1.copy(
+                        MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.id to mockConstructorOverviewStanding2Driver1.copy(
                                 finishesInP1 = s2Driver1
                         ),
                         mockDriver2.id to mockConstructorOverviewStanding2Driver2.copy(
@@ -157,7 +157,7 @@ class ConstructorOverviewTest {
     fun `best finish`(s1Driver1: Int, s1Driver2: Int, s2Driver1: Int, s2Driver2: Int, expected: Int) {
         val sut = mockConstructorOverview.copy(standings = listOf(
                 mockConstructorOverviewStanding1.copy(drivers = mapOf(
-                        mockDriver1.id to mockConstructorOverviewStanding1Driver1.copy(
+                        MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.id to mockConstructorOverviewStanding1Driver1.copy(
                                 bestFinish = s1Driver1
                         ),
                         mockDriver2.id to mockConstructorOverviewStanding1Driver2.copy(
@@ -165,7 +165,7 @@ class ConstructorOverviewTest {
                         )
                 )),
                 mockConstructorOverviewStanding2.copy(drivers = mapOf(
-                        mockDriver1.id to mockConstructorOverviewStanding2Driver1.copy(
+                        MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.id to mockConstructorOverviewStanding2Driver1.copy(
                                 bestFinish = s2Driver1
                         ),
                         mockDriver2.id to mockConstructorOverviewStanding2Driver2.copy(
@@ -187,7 +187,7 @@ class ConstructorOverviewTest {
     fun `best qualifying`(s1Driver1: Int, s1Driver2: Int, s2Driver1: Int, s2Driver2: Int, expected: Int) {
         val sut = mockConstructorOverview.copy(standings = listOf(
                 mockConstructorOverviewStanding1.copy(drivers = mapOf(
-                        mockDriver1.id to mockConstructorOverviewStanding1Driver1.copy(
+                        MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.id to mockConstructorOverviewStanding1Driver1.copy(
                                 bestQualifying = s1Driver1
                         ),
                         mockDriver2.id to mockConstructorOverviewStanding1Driver2.copy(
@@ -195,7 +195,7 @@ class ConstructorOverviewTest {
                         )
                 )),
                 mockConstructorOverviewStanding2.copy(drivers = mapOf(
-                        mockDriver1.id to mockConstructorOverviewStanding2Driver1.copy(
+                        MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.id to mockConstructorOverviewStanding2Driver1.copy(
                                 bestQualifying = s2Driver1
                         ),
                         mockDriver2.id to mockConstructorOverviewStanding2Driver2.copy(
@@ -216,7 +216,7 @@ class ConstructorOverviewTest {
     fun `total qualifying on pole`(s1Driver1: Int, s1Driver2: Int, s2Driver1: Int, s2Driver2: Int, expected: Int) {
         val sut = mockConstructorOverview.copy(standings = listOf(
                 mockConstructorOverviewStanding1.copy(drivers = mapOf(
-                        mockDriver1.id to mockConstructorOverviewStanding1Driver1.copy(
+                        MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.id to mockConstructorOverviewStanding1Driver1.copy(
                                 qualifyingP1 = s1Driver1
                         ),
                         mockDriver2.id to mockConstructorOverviewStanding1Driver2.copy(
@@ -224,7 +224,7 @@ class ConstructorOverviewTest {
                         )
                 )),
                 mockConstructorOverviewStanding2.copy(drivers = mapOf(
-                        mockDriver1.id to mockConstructorOverviewStanding2Driver1.copy(
+                        MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.id to mockConstructorOverviewStanding2Driver1.copy(
                                 qualifyingP1 = s2Driver1
                         ),
                         mockDriver2.id to mockConstructorOverviewStanding2Driver2.copy(
@@ -245,7 +245,7 @@ class ConstructorOverviewTest {
     fun `finishes in the points`(s1Driver1: Int, s1Driver2: Int, s2Driver1: Int, s2Driver2: Int, expected: Int) {
         val sut = mockConstructorOverview.copy(standings = listOf(
                 mockConstructorOverviewStanding1.copy(drivers = mapOf(
-                        mockDriver1.id to mockConstructorOverviewStanding1Driver1.copy(
+                        MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.id to mockConstructorOverviewStanding1Driver1.copy(
                                 finishesInPoints = s1Driver1
                         ),
                         mockDriver2.id to mockConstructorOverviewStanding1Driver2.copy(
@@ -253,7 +253,7 @@ class ConstructorOverviewTest {
                         )
                 )),
                 mockConstructorOverviewStanding2.copy(drivers = mapOf(
-                        mockDriver1.id to mockConstructorOverviewStanding2Driver1.copy(
+                        MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.id to mockConstructorOverviewStanding2Driver1.copy(
                                 finishesInPoints = s2Driver1
                         ),
                         mockDriver2.id to mockConstructorOverviewStanding2Driver2.copy(

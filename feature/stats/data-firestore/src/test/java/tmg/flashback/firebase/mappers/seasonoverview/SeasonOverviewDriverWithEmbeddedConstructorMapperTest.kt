@@ -7,8 +7,6 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeParseException
-import tmg.flashback.formula1.model.Constructor
-import tmg.flashback.formula1.model.Driver
 import tmg.flashback.firebase.models.FRound
 import tmg.flashback.firebase.models.FSeason
 import tmg.flashback.firebase.models.FSeasonOverviewConstructor
@@ -16,7 +14,7 @@ import tmg.flashback.firebase.models.FSeasonOverviewDriver
 import tmg.flashback.firebase.models.model
 import tmg.testutils.BaseTest
 
-internal class SeasonOverviewDriverMapperTest: BaseTest() {
+internal class SeasonOverviewDriverWithEmbeddedConstructorMapperTest: BaseTest() {
 
     private val mockConstructorMapper: SeasonOverviewConstructorMapper = mockk(relaxed = true)
 
@@ -38,7 +36,7 @@ internal class SeasonOverviewDriverMapperTest: BaseTest() {
         initSUT()
 
         val input = FSeason.model()
-        val expected = tmg.flashback.formula1.model.Driver(
+        val expected = tmg.flashback.formula1.model.DriverWithEmbeddedConstructor(
             id = "driverId",
             firstName = "firstName",
             lastName = "lastName",

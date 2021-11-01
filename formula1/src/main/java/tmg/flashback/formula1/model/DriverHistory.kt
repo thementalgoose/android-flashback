@@ -3,17 +3,8 @@ package tmg.flashback.formula1.model
 import org.threeten.bp.LocalDate
 import tmg.flashback.formula1.enums.isStatusFinished
 
-data class DriverOverview(
-        val id: String,
-        val firstName: String,
-        val lastName: String,
-        val code: String?,
-        val number: Int,
-        val wikiUrl: String,
-        val photoUrl: String?,
-        val dateOfBirth: LocalDate,
-        val nationality: String,
-        val nationalityISO: String,
+data class DriverHistory(
+        val driver: Driver,
         val standings: List<DriverOverviewStanding>
 ) {
     val championshipWins: Int by lazy {
@@ -24,9 +15,10 @@ data class DriverOverview(
 
     val careerBestChampionship: Int? by lazy {
         return@lazy standings
-                .filter { !it.isInProgress && it.championshipStanding > 0 }
+                .filter { it.championshipStanding != null }
+                .filter { !it.isInProgress && it.championshipStanding!! > 0 }
                 .map { it.championshipStanding }
-                .minByOrNull { it }
+                .minByOrNull { it!! }
     }
 
     val hasChampionshipCurrentlyInProgress: Boolean by lazy {
@@ -50,7 +42,7 @@ data class DriverOverview(
                 .sumOf { it.races }
     }
 
-    val constructors: List<Pair<Int, SlimConstructor>> by lazy {
+    val constructors: List<Pair<Int, Constructor>> by lazy {
         return@lazy standings
                 .sortedBy { it.season }
                 .map { standings ->
@@ -78,14 +70,14 @@ data class DriverOverview(
     }
 
     val careerBestFinish: Int by lazy {
-        return@lazy standings.minByOrNull { it.bestFinish }?.bestFinish ?: -1
+        return@lazy standings.minByOrNull { it.bestFinish ?: Int.MAX_VALUE }?.bestFinish ?: -1
     }
     val careerBestQualifying: Int by lazy {
-        return@lazy standings.minByOrNull { it.bestQualifying }?.bestQualifying ?: -1
+        return@lazy standings.minByOrNull { it.bestQualifying ?: Int.MAX_VALUE }?.bestQualifying ?: -1
     }
 
     val careerConstructorStanding: Int by lazy {
-        return@lazy standings.minByOrNull { it.championshipStanding }?.championshipStanding ?: -1
+        return@lazy standings.minByOrNull { it.championshipStanding ?: Int.MAX_VALUE }?.championshipStanding ?: -1
     }
 
     val careerQualifyingPoles: Int by lazy {
@@ -137,7 +129,7 @@ data class DriverOverview(
                 .flatten()
                 .count {
                     @Suppress("ConvertTwoComparisonsToRangeCheck")
-                    it.qualified >= 1 && it.qualified <= position
+                    it.qualified != null && it.qualified >= 1 && it.qualified <= position
                 }
     }
 
@@ -158,20 +150,35 @@ data class DriverOverview(
 }
 
 data class DriverOverviewStanding(
-    val bestFinish: Int,
-    val bestFinishQuantity: Int,
-    val bestQualifying: Int,
-    val bestQualifyingQuantity: Int,
-    val championshipStanding: Int,
+    val championshipStanding: Int?,
     val isInProgress: Boolean,
     val points: Double,
-    val podiums: Int,
-    val races: Int,
     val season: Int,
-    val wins: Int,
-    val constructors: List<SlimConstructor>,
+    val constructors: List<Constructor>,
     val raceOverview: List<DriverOverviewRace>
 ) {
+    val bestFinish: Int? by lazy {
+        return@lazy raceOverview.minByOrNull { it.finished }?.finished
+    }
+    val bestFinishQuantity: Int by lazy {
+        return@lazy raceOverview.count { it.finished == bestFinish }
+    }
+    val bestQualifying: Int? by lazy {
+        return@lazy raceOverview.minByOrNull { it.qualified ?: Int.MAX_VALUE }?.qualified
+    }
+    val bestQualifyingQuantity: Int by lazy {
+        return@lazy raceOverview.count { it.finished == bestQualifying }
+    }
+    val podiums: Int by lazy {
+        return@lazy raceOverview.count { it.finished <= 3 }
+    }
+    val races: Int by lazy {
+        return@lazy raceOverview.size
+    }
+    val wins: Int by lazy {
+        return@lazy raceOverview.count { it.finished == 1}
+    }
+
     val qualifyingPoles: Int by lazy {
         return@lazy totalQualifyingIn(1)
     }
@@ -219,7 +226,7 @@ data class DriverOverviewStanding(
         return raceOverview
                 .count {
                     @Suppress("ConvertTwoComparisonsToRangeCheck")
-                    it.qualified >= 1 && it.qualified <= position
+                    it.qualified != null && it.qualified >= 1 && it.qualified <= position
                 }
     }
 
@@ -233,12 +240,13 @@ data class DriverOverviewRace(
     val status: String,
     val finished: Int,
     val points: Double,
-    val qualified: Int,
+    val qualified: Int?,
+    val gridPos: Int?,
     val round: Int,
     val season: Int,
     val raceName: String,
     val date: LocalDate,
-    val constructor: SlimConstructor?,
+    val constructor: Constructor?,
     val circuitName: String,
     val circuitId: String,
     val circuitNationality: String,

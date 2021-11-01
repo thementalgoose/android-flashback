@@ -3,12 +3,13 @@ package tmg.flashback.statistics.ui.shared.constructorlist
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.SlimConstructor
 import tmg.flashback.statistics.databinding.ViewDriverConstructorsBinding
 
 class ConstructorListAdapter: RecyclerView.Adapter<ConstructorListViewHolder>() {
 
-    var list: List<SlimConstructor> = emptyList()
+    var list: List<Constructor> = emptyList()
         set(value) {
             field = value
             notifyDataSetChanged()

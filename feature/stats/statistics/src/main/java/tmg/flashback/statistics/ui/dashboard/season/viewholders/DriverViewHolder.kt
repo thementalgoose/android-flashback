@@ -33,24 +33,24 @@ class DriverViewHolder(
         driver = item
 
         binding.tvPosition.text = item.position.toString()
-        binding.layoutDriver.tvName.text = item.driver.name
+        binding.layoutDriver.tvName.text = item.driverWithEmbeddedConstructor.name
         binding.layoutDriver.tvNumber.show(false)
         binding.layoutDriver.imgFlag.show(false)
 
         Glide.with(itemView)
             .clear(binding.image)
         Glide.with(itemView)
-            .load(item.driver.photoUrl)
+            .load(item.driverWithEmbeddedConstructor.photoUrl)
             .into(binding.image)
 
         binding.image.setBackgroundColor(context.theme.getColor(R.attr.contentTertiary))
-        binding.imgDriverFlag.setImageResource(itemView.context.getFlagResourceAlpha3(item.driver.nationalityISO))
+        binding.imgDriverFlag.setImageResource(itemView.context.getFlagResourceAlpha3(item.driverWithEmbeddedConstructor.nationalityISO))
 
-        binding.tvDriverNumber.text = item.driver.number.toString()
-        binding.tvConstructor.text = item.driver.startingConstructor.name
+        binding.tvDriverNumber.text = item.driverWithEmbeddedConstructor.number.toString()
+        binding.tvConstructor.text = item.driverWithEmbeddedConstructor.startingConstructor.name
 
         binding.lpvProgress.backgroundColour = itemView.context.theme.getColor(R.attr.backgroundPrimary)
-        binding.lpvProgress.progressColour = item.driver.startingConstructor.color
+        binding.lpvProgress.progressColour = item.driverWithEmbeddedConstructor.startingConstructor.color
         binding.lpvProgress.textBackgroundColour = context.theme.getColor(R.attr.contentSecondary)
 
         var maxProgress = item.points.toFloat() / item.maxPointsInSeason.toFloat()

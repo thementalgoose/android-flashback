@@ -131,7 +131,7 @@ fun Map<String, Triple<Constructor, Map<String, Pair<ConstructorDriver, Double>>
 /**
  * Get all the points that drivers in a constructor has achieved
  */
-fun Map<String, Pair<Driver, Int>>.allPoints(): Int = this.map { it.value.second }.sum()
+fun Map<String, Pair<DriverWithEmbeddedConstructor, Int>>.allPoints(): Int = this.map { it.value.second }.sum()
 
 
 

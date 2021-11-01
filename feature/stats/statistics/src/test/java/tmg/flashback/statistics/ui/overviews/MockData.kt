@@ -101,7 +101,7 @@ val mockDriverOverview2019Standing = mockDriverOverviewStanding.copy(
                 mockDriverOverviewRaceSecond.copy(season = 2019, round = 2)
         )
 )
-val mockDriverOverview = DriverOverview(
+val mockDriverOverview = DriverHistory(
         id = mockDriverId,
         firstName = mockDriverFirstName,
         lastName = mockDriverLastName,
@@ -287,7 +287,7 @@ val mockConstructorBeta: Constructor = Constructor(
 
 //region Drivers
 
-val mockDriver1: Driver = Driver(
+val MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1: DriverWithEmbeddedConstructor = DriverWithEmbeddedConstructor(
         id = "1",
         firstName = "name1",
         lastName = "last1",
@@ -304,7 +304,7 @@ val mockDriver1: Driver = Driver(
         ),
         startingConstructor = mockConstructorAlpha
 )
-val mockDriver2 = mockDriver1.copy(
+val mockDriver2 = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.copy(
         id = "2",
         firstName = "name2",
         lastName = "name2",
@@ -314,7 +314,7 @@ val mockDriver2 = mockDriver1.copy(
         ),
         startingConstructor = mockConstructorBeta
 )
-val mockDriver3 = mockDriver1.copy(
+val mockDriver3 = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.copy(
         id = "3",
         firstName = "name3",
         lastName = "name3",
@@ -324,7 +324,7 @@ val mockDriver3 = mockDriver1.copy(
         ),
         startingConstructor = mockConstructorAlpha
 )
-val mockDriver4 = mockDriver1.copy(
+val mockDriver4 = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.copy(
         id = "4",
         firstName = "name4",
         lastName = "name4",
@@ -345,7 +345,7 @@ val mockDriver4 = mockDriver1.copy(
  * - Each season had two drivers
  */
 val mockConstructorOverviewStanding1Driver1 = ConstructorOverviewDriverStanding(
-        driver = mockDriver1.toConstructorDriver(),
+        driver = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(),
         bestFinish = 2,
         bestQualifying = 3,
         points = 12.0,
@@ -378,7 +378,7 @@ val mockConstructorOverviewStanding1Driver2 = ConstructorOverviewDriverStanding(
 )
 val mockConstructorOverviewStanding1 = ConstructorOverviewStanding(
         drivers = mapOf(
-                mockDriver1.id to mockConstructorOverviewStanding1Driver1,
+                MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.id to mockConstructorOverviewStanding1Driver1,
                 mockDriver2.id to mockConstructorOverviewStanding1Driver2
         ),
         isInProgress = false,
@@ -389,7 +389,7 @@ val mockConstructorOverviewStanding1 = ConstructorOverviewStanding(
 )
 
 val mockConstructorOverviewStanding2Driver1 = ConstructorOverviewDriverStanding(
-        driver = mockDriver1.toConstructorDriver(),
+        driver = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(),
         bestFinish = 3,
         bestQualifying = 3,
         points = 12.0,
@@ -422,7 +422,7 @@ val mockConstructorOverviewStanding2Driver2 = ConstructorOverviewDriverStanding(
 )
 val mockConstructorOverviewStanding2 = ConstructorOverviewStanding(
         drivers = mapOf(
-                mockDriver1.id to mockConstructorOverviewStanding2Driver1,
+                MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.id to mockConstructorOverviewStanding2Driver1,
                 mockDriver2.id to mockConstructorOverviewStanding2Driver2
         ),
         isInProgress = false,

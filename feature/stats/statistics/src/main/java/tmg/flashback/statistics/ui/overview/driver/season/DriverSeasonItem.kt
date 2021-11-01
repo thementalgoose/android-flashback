@@ -5,6 +5,7 @@ import org.threeten.bp.LocalDate
 import tmg.core.ui.model.AnimationSpeed
 import tmg.flashback.statistics.ui.overview.driver.summary.PipeType
 import tmg.flashback.formula1.enums.RaceStatus
+import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.SlimConstructor
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
@@ -26,7 +27,7 @@ sealed class DriverSeasonItem(
 
     data class RacedFor(
         val season: Int?, // Null = hide season
-        val constructors: SlimConstructor,
+        val constructors: Constructor,
         val type: PipeType,
         val isChampionship: Boolean
     ): DriverSeasonItem(
@@ -43,8 +44,8 @@ sealed class DriverSeasonItem(
         val raceCountryISO: String,
         val date: LocalDate,
         val showConstructorLabel: Boolean,
-        val constructor: SlimConstructor,
-        val qualified: Int,
+        val constructor: Constructor,
+        val qualified: Int?,
         val finished: Int?,
         val raceStatus: RaceStatus,
         val points: Double,
