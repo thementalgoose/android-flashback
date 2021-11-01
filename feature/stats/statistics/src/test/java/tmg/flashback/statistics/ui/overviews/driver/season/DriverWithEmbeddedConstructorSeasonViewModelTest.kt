@@ -9,7 +9,6 @@ import tmg.core.device.managers.NetworkConnectivityManager
 import tmg.core.ui.controllers.ThemeController
 import tmg.core.ui.model.AnimationSpeed
 import tmg.flashback.statistics.ui.overview.driver.summary.PipeType.*
-import tmg.flashback.data.db.stats.DriverRepository
 import tmg.flashback.formula1.model.DriverOverviewRace
 import tmg.flashback.firebase.extensions.pointsDisplay
 import tmg.flashback.statistics.R
@@ -24,7 +23,7 @@ import tmg.testutils.livedata.assertDataEventValue
 import tmg.testutils.livedata.assertListContainsItems
 import tmg.testutils.livedata.test
 
-internal class DriverSeasonViewModelTest: BaseTest() {
+internal class DriverWithEmbeddedConstructorSeasonViewModelTest: BaseTest() {
 
     lateinit var sut: DriverSeasonViewModel
 

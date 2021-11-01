@@ -8,11 +8,6 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
 import tmg.crash_reporting.controllers.CrashController
-import tmg.flashback.formula1.model.Constructor
-import tmg.flashback.formula1.model.ConstructorStandings
-import tmg.flashback.formula1.model.Driver
-import tmg.flashback.formula1.model.DriverStandings
-import tmg.flashback.formula1.model.SeasonStanding
 import tmg.flashback.firebase.models.FSeasonOverviewConstructor
 import tmg.flashback.firebase.models.FSeasonStatistics
 import tmg.flashback.firebase.models.FSeasonStatisticsPoints
@@ -218,8 +213,8 @@ internal class SeasonOverviewStandingsMapperTest: BaseTest() {
 
 }
 
-private fun mockDriver(driverId: String = "driverId", constructorsMap: Map<Int, String> = mapOf(1 to "constructorId")): tmg.flashback.formula1.model.Driver {
-    return tmg.flashback.formula1.model.Driver(
+private fun mockDriver(driverId: String = "driverId", constructorsMap: Map<Int, String> = mapOf(1 to "constructorId")): tmg.flashback.formula1.model.DriverWithEmbeddedConstructor {
+    return tmg.flashback.formula1.model.DriverWithEmbeddedConstructor(
         id = driverId,
         firstName = "firstName",
         lastName = "lastName",

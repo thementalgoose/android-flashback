@@ -9,6 +9,7 @@ data class RaceData(
     val round: Int,
     val name: String,
     val date: String,
+    val time: String?,
     val circuit: CircuitData,
     val wikiUrl: String?
 )

@@ -22,31 +22,32 @@ class OverviewRepository(
     private val networkOverviewMapper: NetworkOverviewMapper
 ): BaseRepository(crashController) {
 
-    suspend fun fetchOverview(): Boolean = attempt(msgIfFailed = "overview.json") {
-        val result = api.getOverview()
-        if (!result.hasData) return@attempt false
-
-        val data = result.data()
-
-        val allOverview = (data?.values ?: emptyList())
+    /**
+     * overview.json
+     * Fetch overview data for all seasons currently available
+     */
+    suspend fun fetchOverview(): Boolean = attempt(
+        apiCall = suspend { api.getOverview() },
+        msgIfFailed = "overview.json"
+    ) { data ->
+        val allOverview = data.values
             .mapNotNull { networkOverviewMapper.mapOverview(it) }
-
         persistence.overviewDao().insertAll(allOverview)
-
         return@attempt true
     }
 
-    suspend fun fetchOverview(season: Int): Boolean = attempt(msgIfFailed = "overview/${season}.json") {
-        val result = api.getOverview(season)
-        if (!result.hasData) return@attempt false
-
-        val data = result.data()
-
-        val allOverview = (data?.values ?: emptyList())
+    /**
+     * overview/{season}.json
+     * Fetch overview data for a specific season [season]
+     * @param season
+     */
+    suspend fun fetchOverview(season: Int): Boolean = attempt(
+        apiCall = suspend { api.getOverview(season) },
+        msgIfFailed = "overview/${season}.json"
+    ) { data ->
+        val allOverview = data.values
             .mapNotNull { networkOverviewMapper.mapOverview(it) }
-
         persistence.overviewDao().insertAll(allOverview)
-
         return@attempt true
     }
 

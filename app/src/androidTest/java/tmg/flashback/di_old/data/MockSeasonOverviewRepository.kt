@@ -27,12 +27,12 @@ internal object MockSeasonOverviewRepository: SeasonOverviewRepository {
         }
     }
 
-    override fun getDriver(season: Int, driver: String): Flow<Driver?> = flow {
+    override fun getDriver(season: Int, driver: String): Flow<DriverWithEmbeddedConstructor?> = flow {
         when (driver) {
-            mockDriverAlex.id -> emit(mockDriverAlex)
-            mockDriverBrian.id -> emit(mockDriverBrian)
-            mockDriverCharlie.id -> emit(mockDriverCharlie)
-            mockDriverDaniel.id -> emit(mockDriverDaniel)
+            MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_ALEX.id -> emit(MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_ALEX)
+            MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_BRIAN.id -> emit(MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_BRIAN)
+            MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_CHARLIE.id -> emit(MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_CHARLIE)
+            MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_DANIEL.id -> emit(MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_DANIEL)
             else -> emit(null)
         }
     }

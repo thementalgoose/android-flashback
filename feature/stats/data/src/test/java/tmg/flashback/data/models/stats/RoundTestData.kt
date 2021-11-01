@@ -65,7 +65,7 @@ internal val mockConstructorBeta: tmg.flashback.formula1.model.Constructor =
 
 //region Drivers
 
-internal val mockDriver1: tmg.flashback.formula1.model.Driver = tmg.flashback.formula1.model.Driver(
+internal val MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1: tmg.flashback.formula1.model.DriverWithEmbeddedConstructor = tmg.flashback.formula1.model.DriverWithEmbeddedConstructor(
     id = "1",
     firstName = "name1",
     lastName = "last1",
@@ -82,7 +82,7 @@ internal val mockDriver1: tmg.flashback.formula1.model.Driver = tmg.flashback.fo
     ),
     startingConstructor = mockConstructorAlpha
 )
-internal val mockDriver2 = mockDriver1.copy(
+internal val mockDriver2 = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.copy(
         id = "2",
         firstName = "name2",
         lastName = "name2",
@@ -92,7 +92,7 @@ internal val mockDriver2 = mockDriver1.copy(
         ),
         startingConstructor = mockConstructorBeta
 )
-internal val mockDriver3 = mockDriver1.copy(
+internal val mockDriver3 = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.copy(
         id = "3",
         firstName = "name3",
         lastName = "name3",
@@ -102,7 +102,7 @@ internal val mockDriver3 = mockDriver1.copy(
         ),
         startingConstructor = mockConstructorAlpha
 )
-internal val mockDriver4 = mockDriver1.copy(
+internal val mockDriver4 = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.copy(
         id = "4",
         firstName = "name4",
         lastName = "name4",
@@ -228,17 +228,17 @@ internal val mockDriverStanding2 = tmg.flashback.formula1.model.DriverOverviewSt
  * careerBestChampionship: 2
  *
  */
-internal val mockDriverOverview = tmg.flashback.formula1.model.DriverOverview(
-    id = mockDriver1.id,
-    firstName = mockDriver1.firstName,
-    lastName = mockDriver1.lastName,
-    code = mockDriver1.code,
-    number = mockDriver1.number,
-    wikiUrl = mockDriver1.wikiUrl,
-    photoUrl = mockDriver1.photoUrl,
-    dateOfBirth = mockDriver1.dateOfBirth,
-    nationality = mockDriver1.nationality,
-    nationalityISO = mockDriver1.nationalityISO,
+internal val mockDriverOverview = tmg.flashback.formula1.model.DriverHistory(
+    id = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.id,
+    firstName = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.firstName,
+    lastName = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.lastName,
+    code = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.code,
+    number = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.number,
+    wikiUrl = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.wikiUrl,
+    photoUrl = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.photoUrl,
+    dateOfBirth = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.dateOfBirth,
+    nationality = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.nationality,
+    nationalityISO = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.nationalityISO,
     standings = listOf(
         mockDriverStanding1,
         mockDriverStanding2
@@ -258,7 +258,7 @@ internal val mockDriverOverview = tmg.flashback.formula1.model.DriverOverview(
 
 internal val mockConstructorOverviewStanding1Driver1 =
     tmg.flashback.formula1.model.ConstructorOverviewDriverStanding(
-        driver = mockDriver1.toConstructorDriver(1),
+        driver = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(1),
         bestFinish = 2,
         bestQualifying = 3,
         points = 12.0,
@@ -293,7 +293,7 @@ internal val mockConstructorOverviewStanding1Driver2 =
 internal val mockConstructorOverviewStanding1 =
     tmg.flashback.formula1.model.ConstructorOverviewStanding(
         drivers = mapOf(
-            mockDriver1.id to mockConstructorOverviewStanding1Driver1,
+            MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.id to mockConstructorOverviewStanding1Driver1,
             mockDriver2.id to mockConstructorOverviewStanding1Driver2
         ),
         isInProgress = false,
@@ -305,7 +305,7 @@ internal val mockConstructorOverviewStanding1 =
 
 internal val mockConstructorOverviewStanding2Driver1 =
     tmg.flashback.formula1.model.ConstructorOverviewDriverStanding(
-        driver = mockDriver1.toConstructorDriver(2),
+        driver = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(2),
         bestFinish = 3,
         bestQualifying = 3,
         points = 12.0,
@@ -340,7 +340,7 @@ internal val mockConstructorOverviewStanding2Driver2 =
 internal val mockConstructorOverviewStanding2 =
     tmg.flashback.formula1.model.ConstructorOverviewStanding(
         drivers = mapOf(
-            mockDriver1.id to mockConstructorOverviewStanding2Driver1,
+            MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.id to mockConstructorOverviewStanding2Driver1,
             mockDriver2.id to mockConstructorOverviewStanding2Driver2
         ),
         isInProgress = false,
@@ -422,7 +422,7 @@ internal val mockConstructorOverview = tmg.flashback.formula1.model.ConstructorO
  */
 
 internal val mockRound1Driver1Q1 = tmg.flashback.formula1.model.RoundQualifyingResult(
-    driver = mockDriver1.toConstructorDriver(1),
+    driver = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(1),
     time = tmg.flashback.formula1.model.LapTime(0, 1, 1, 0),
     position = 1
 )
@@ -443,7 +443,7 @@ internal val mockRound1Driver4Q1 = tmg.flashback.formula1.model.RoundQualifyingR
 )
 
 internal val mockRound1Driver1Q2 = tmg.flashback.formula1.model.RoundQualifyingResult(
-    driver = mockDriver1.toConstructorDriver(1),
+    driver = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(1),
     time = tmg.flashback.formula1.model.LapTime(0, 1, 2, 0),
     position = 2
 )
@@ -459,7 +459,7 @@ internal val mockRound1Driver3Q2 = tmg.flashback.formula1.model.RoundQualifyingR
 )
 
 internal val mockRound1Driver1Q3 = tmg.flashback.formula1.model.RoundQualifyingResult(
-    driver = mockDriver1.toConstructorDriver(1),
+    driver = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(1),
     time = tmg.flashback.formula1.model.LapTime(0, 1, 1, 0),
     position = 1
 )
@@ -500,7 +500,7 @@ internal val round1RaceResultDriver2 = tmg.flashback.formula1.model.RoundRaceRes
     fastestLap = null
 )
 internal val round1RaceResultDriver1 = tmg.flashback.formula1.model.RoundRaceResult(
-    driver = mockDriver1.toConstructorDriver(1),
+    driver = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(1),
     time = tmg.flashback.formula1.model.LapTime(1, 0, 0, 0),
     points = 5.0,
     grid = 1,
@@ -528,7 +528,7 @@ internal val mockRound1: tmg.flashback.formula1.model.Round = tmg.flashback.form
     name = "Round 1",
     wikipediaUrl = "http://www.wikiurl.com",
     drivers = listOf(
-        mockDriver1.toConstructorDriver(1),
+        MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(1),
         mockDriver2.toConstructorDriver(1),
         mockDriver3.toConstructorDriver(1),
         mockDriver4.toConstructorDriver(1)
@@ -536,22 +536,22 @@ internal val mockRound1: tmg.flashback.formula1.model.Round = tmg.flashback.form
     constructors = listOf(mockConstructorAlpha, mockConstructorBeta),
     circuit = mockCircuitCharlie,
     q1 = mapOf(
-        mockDriver1.id to mockRound1Driver1Q1,
+        MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.id to mockRound1Driver1Q1,
         mockDriver2.id to mockRound1Driver2Q1,
         mockDriver3.id to mockRound1Driver3Q1,
         mockDriver4.id to mockRound1Driver4Q1
     ),
     q2 = mapOf(
-        mockDriver1.id to mockRound1Driver1Q2,
+        MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.id to mockRound1Driver1Q2,
         mockDriver2.id to mockRound1Driver2Q2,
         mockDriver3.id to mockRound1Driver3Q2
     ),
     q3 = mapOf(
-        mockDriver1.id to mockRound1Driver1Q3,
+        MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.id to mockRound1Driver1Q3,
         mockDriver2.id to mockRound1Driver2Q3
     ),
     race = mapOf(
-        mockDriver1.id to round1RaceResultDriver1,
+        MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.id to round1RaceResultDriver1,
         mockDriver2.id to round1RaceResultDriver2,
         mockDriver3.id to round1RaceResultDriver3,
         mockDriver4.id to round1RaceResultDriver4
@@ -573,7 +573,7 @@ internal val mockRound1: tmg.flashback.formula1.model.Round = tmg.flashback.form
 
 
 internal val mockRound2Driver1Q1 = tmg.flashback.formula1.model.RoundQualifyingResult(
-    driver = mockDriver1.toConstructorDriver(2),
+    driver = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(2),
     time = tmg.flashback.formula1.model.LapTime(0, 1, 3, 0),
     position = 3
 )
@@ -594,7 +594,7 @@ internal val mockRound2Driver4Q1 = tmg.flashback.formula1.model.RoundQualifyingR
 )
 
 internal val mockRound2Driver1Q2 = tmg.flashback.formula1.model.RoundQualifyingResult(
-    driver = mockDriver1.toConstructorDriver(2),
+    driver = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(2),
     time = tmg.flashback.formula1.model.LapTime(0, 1, 2, 0),
     position = 2
 )
@@ -610,7 +610,7 @@ internal val mockRound2Driver4Q2 = tmg.flashback.formula1.model.RoundQualifyingR
 )
 
 internal val mockRound2Driver1Q3 = tmg.flashback.formula1.model.RoundQualifyingResult(
-    driver = mockDriver1.toConstructorDriver(2),
+    driver = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(2),
     time = tmg.flashback.formula1.model.LapTime(0, 1, 2, 0),
     position = 4
 )
@@ -651,7 +651,7 @@ internal val round2RaceResultDriver2 = tmg.flashback.formula1.model.RoundRaceRes
     fastestLap = null
 )
 internal val round2RaceResultDriver1 = tmg.flashback.formula1.model.RoundRaceResult(
-    driver = mockDriver1.toConstructorDriver(2),
+    driver = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(2),
     time = tmg.flashback.formula1.model.LapTime(1, 0, 0, 0),
     points = 16.0,
     grid = 2,
@@ -678,7 +678,7 @@ internal val mockRound2: tmg.flashback.formula1.model.Round = tmg.flashback.form
     name = "Round 2",
     wikipediaUrl = "http://www.wikiurl.com",
     drivers = listOf(
-        mockDriver1.toConstructorDriver(2),
+        MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(2),
         mockDriver2.toConstructorDriver(2),
         mockDriver3.toConstructorDriver(2),
         mockDriver4.toConstructorDriver(2)
@@ -686,22 +686,22 @@ internal val mockRound2: tmg.flashback.formula1.model.Round = tmg.flashback.form
     constructors = listOf(mockConstructorAlpha, mockConstructorBeta),
     circuit = mockCircuitDelta,
     q1 = mapOf(
-        mockDriver1.id to mockRound2Driver1Q1,
+        MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.id to mockRound2Driver1Q1,
         mockDriver2.id to mockRound2Driver2Q1,
         mockDriver3.id to mockRound2Driver3Q1,
         mockDriver4.id to mockRound2Driver4Q1
     ),
     q2 = mapOf(
-        mockDriver1.id to mockRound2Driver1Q2,
+        MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.id to mockRound2Driver1Q2,
         mockDriver3.id to mockRound2Driver3Q2,
         mockDriver4.id to mockRound2Driver4Q2
     ),
     q3 = mapOf(
-        mockDriver1.id to mockRound2Driver1Q3,
+        MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.id to mockRound2Driver1Q3,
         mockDriver4.id to mockRound2Driver4Q3
     ),
     race = mapOf(
-        mockDriver1.id to round2RaceResultDriver1,
+        MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.id to round2RaceResultDriver1,
         mockDriver2.id to round2RaceResultDriver2,
         mockDriver3.id to round2RaceResultDriver3,
         mockDriver4.id to round2RaceResultDriver4
@@ -739,7 +739,7 @@ internal val mockRound2: tmg.flashback.formula1.model.Round = tmg.flashback.form
 
 internal val mockSeason = tmg.flashback.formula1.model.Season(
     season = 2019,
-    drivers = listOf(mockDriver1, mockDriver2, mockDriver3, mockDriver4),
+    driverWithEmbeddedConstructors = listOf(MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1, mockDriver2, mockDriver3, mockDriver4),
     constructors = listOf(mockConstructorAlpha, mockConstructorBeta),
     rounds = listOf(mockRound1, mockRound2),
     constructorStandings = emptyList(),

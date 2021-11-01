@@ -2,9 +2,7 @@ package tmg.flashback.firebase.mappers.seasonoverview
 
 import tmg.crash_reporting.controllers.CrashController
 import tmg.flashback.formula1.model.ConstructorStandings
-import tmg.flashback.formula1.model.Driver
 import tmg.flashback.formula1.model.DriverStandings
-import tmg.flashback.formula1.model.SeasonStanding
 import tmg.flashback.firebase.models.FSeasonOverviewConstructor
 import tmg.flashback.firebase.models.FSeasonStatistics
 
@@ -17,11 +15,11 @@ class SeasonOverviewStandingsMapper(
     /**
      * Map driver standings from [FSeasonStatistics] to [DriverStandings]
      */
-    fun mapDriverStandings(input: FSeasonStatistics, allDrivers: List<tmg.flashback.formula1.model.Driver>): tmg.flashback.formula1.model.DriverStandings {
+    fun mapDriverStandings(input: FSeasonStatistics, allDriverWithEmbeddedConstructors: List<tmg.flashback.formula1.model.DriverWithEmbeddedConstructor>): tmg.flashback.formula1.model.DriverStandings {
         val orderByPosition = input.drivers?.all { it.value.pos != null && it.value.pos != -1  } ?: false
         return (input.drivers ?: emptyMap())
             .map { (key, value) ->
-                val driver = allDrivers.firstOrNull { driver -> driver.id == key }
+                val driver = allDriverWithEmbeddedConstructors.firstOrNull { driver -> driver.id == key }
                 return@map Triple(driver, value.p ?: 0.0, value.pos ?: -1)
             }
             .let { list ->
@@ -37,7 +35,7 @@ class SeasonOverviewStandingsMapper(
             .mapNotNull { (driver, points, position) ->
                 if (driver == null) {
                     val standingsIds = input.drivers?.map { it.key }?.joinToString(separator = ",") ?: "N/A"
-                    val availableIds = allDrivers.joinToString(separator = ",") { it.id }
+                    val availableIds = allDriverWithEmbeddedConstructors.joinToString(separator = ",") { it.id }
                     crashController.logException(NullPointerException("SeasonOverviewMapper.mapDriverStandings standings have $standingsIds vs. available $availableIds"))
                     return@mapNotNull null
                 }

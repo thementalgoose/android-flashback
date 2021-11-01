@@ -8,14 +8,6 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
 import tmg.flashback.formula1.model.CircuitSummary
-import tmg.flashback.formula1.model.Constructor
-import tmg.flashback.formula1.model.Driver
-import tmg.flashback.formula1.model.FastestLap
-import tmg.flashback.formula1.model.Location
-import tmg.flashback.formula1.model.RoundQualifyingResult
-import tmg.flashback.formula1.model.RoundRaceResult
-import tmg.flashback.formula1.model.RoundSprintQualifyingResult
-import tmg.flashback.formula1.model.noTime
 import tmg.flashback.data.utils.toLapTime
 import tmg.flashback.firebase.mappers.LocationMapper
 import tmg.flashback.firebase.mappers.seasonoverview.SeasonOverviewRaceMapper.Qualifying.Q1
@@ -375,8 +367,8 @@ internal class SeasonOverviewRaceMapperTest: BaseTest() {
     }
 }
 
-private fun mockDriver(driverId: String = "driverId", constructorsMap: Map<Int, String> = mapOf(1 to "constructorId")): tmg.flashback.formula1.model.Driver {
-    return tmg.flashback.formula1.model.Driver(
+private fun mockDriver(driverId: String = "driverId", constructorsMap: Map<Int, String> = mapOf(1 to "constructorId")): tmg.flashback.formula1.model.DriverWithEmbeddedConstructor {
+    return tmg.flashback.formula1.model.DriverWithEmbeddedConstructor(
         id = driverId,
         firstName = "firstName",
         lastName = "lastName",

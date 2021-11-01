@@ -8,10 +8,6 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeParseException
-import tmg.flashback.formula1.model.DriverOverview
-import tmg.flashback.formula1.model.DriverOverviewRace
-import tmg.flashback.formula1.model.DriverOverviewStanding
-import tmg.flashback.formula1.model.SlimConstructor
 import tmg.flashback.firebase.currentYear
 import tmg.flashback.firebase.models.FDriverOverview
 import tmg.flashback.firebase.models.FDriverOverviewDriver
@@ -21,7 +17,7 @@ import tmg.flashback.firebase.models.FDriverOverviewStandingHistory
 import tmg.flashback.firebase.models.model
 import tmg.testutils.BaseTest
 
-internal class DriverMapperTest: BaseTest() {
+internal class DriverWithEmbeddedConstructorMapperTest: BaseTest() {
 
     private lateinit var sut: DriverMapper
 
@@ -34,7 +30,7 @@ internal class DriverMapperTest: BaseTest() {
         initSUT()
 
         val input = FDriverOverview.model()
-        val expected = tmg.flashback.formula1.model.DriverOverview(
+        val expected = tmg.flashback.formula1.model.DriverHistory(
             id = "driverId",
             firstName = "firstName",
             lastName = "lastName",

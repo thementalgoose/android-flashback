@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
-class DriverOverviewTest {
+class DriverWithEmbeddedConstructorOverviewTest {
 
     @ParameterizedTest(name = "Expected {3} when SeasonA=[{0},inProgress=true] and SeasonB=[{1},inProgress={2}]")
     @CsvSource(

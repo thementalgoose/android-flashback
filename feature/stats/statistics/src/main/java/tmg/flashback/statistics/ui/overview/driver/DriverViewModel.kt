@@ -4,22 +4,25 @@ import androidx.annotation.AttrRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.lifecycle.*
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import tmg.flashback.statistics.ui.overview.driver.summary.DriverSummaryItem
 import tmg.flashback.statistics.ui.overview.driver.summary.PipeType
 import tmg.flashback.statistics.ui.overview.driver.summary.addError
-import tmg.flashback.data.db.stats.DriverRepository
-import tmg.flashback.formula1.model.DriverOverview
+import tmg.flashback.formula1.model.DriverHistory
 import tmg.flashback.firebase.extensions.pointsDisplay
 import tmg.flashback.statistics.R
+import tmg.flashback.statistics.repo.DriverRepository
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
 import tmg.flashback.statistics.ui.util.position
 import tmg.utilities.extensions.ordinalAbbreviation
 import tmg.utilities.lifecycle.DataEvent
+import tmg.utilities.lifecycle.Event
 
 //region Inputs
 
@@ -27,6 +30,8 @@ interface DriverViewModelInputs {
     fun setup(driverId: String)
     fun openUrl(url: String)
     fun openSeason(season: Int)
+
+    fun refresh()
 }
 
 //endregion
@@ -37,6 +42,8 @@ interface DriverViewModelOutputs {
     val list: LiveData<List<DriverSummaryItem>>
     val openUrl: LiveData<DataEvent<String>>
     val openSeason: LiveData<DataEvent<Pair<String, Int>>>
+    val isLoading: LiveData<Boolean>
+    val showRefreshError: LiveData<Event>
 }
 
 //endregion
@@ -44,8 +51,8 @@ interface DriverViewModelOutputs {
 
 @Suppress("EXPERIMENTAL_API_USAGE")
 class DriverViewModel(
-        private val driverRepository: DriverRepository,
-        private val connectivityManager: tmg.core.device.managers.NetworkConnectivityManager
+    private val driverRepository: DriverRepository,
+    private val connectivityManager: tmg.core.device.managers.NetworkConnectivityManager
 ): ViewModel(), DriverViewModelInputs, DriverViewModelOutputs {
 
     var inputs: DriverViewModelInputs = this
@@ -69,13 +76,13 @@ class DriverViewModel(
                 else -> {
                     list.add(
                         DriverSummaryItem.Header(
-                        driverFirstname = it.firstName,
-                        driverSurname = it.lastName,
-                        driverNumber = it.number,
-                        driverImg = it.photoUrl ?: "",
-                        driverBirthday = it.dateOfBirth,
-                        driverWikiUrl = it.wikiUrl,
-                        driverNationalityISO = it.nationalityISO
+                        driverFirstname = it.driver.firstName,
+                        driverSurname = it.driver.lastName,
+                        driverNumber = it.driver.number ?: 0,
+                        driverImg = it.driver.photoUrl ?: "",
+                        driverBirthday = it.driver.dateOfBirth,
+                        driverWikiUrl = it.driver.wikiUrl ?: "",
+                        driverNationalityISO = it.driver.nationalityISO
                     ))
 
                     if (it.hasChampionshipCurrentlyInProgress) {
@@ -104,6 +111,8 @@ class DriverViewModel(
 
     override val openUrl: MutableLiveData<DataEvent<String>> = MutableLiveData()
     override val openSeason: MutableLiveData<DataEvent<Pair<String, Int>>> = MutableLiveData()
+    override val isLoading: MutableLiveData<Boolean> = MutableLiveData()
+    override val showRefreshError: MutableLiveData<Event> = MutableLiveData()
 
     init {
 
@@ -125,6 +134,17 @@ class DriverViewModel(
         openSeason.postValue(DataEvent(Pair(driverId.value, season)))
     }
 
+    override fun refresh() {
+        isLoading.value = true
+        viewModelScope.launch(context = Dispatchers.IO) {
+            val result = driverRepository.fetchDriver(driverId.value)
+            isLoading.postValue(false)
+            if (!result) {
+                showRefreshError.postValue(Event())
+            }
+        }
+    }
+
     //endregion
 
     //region Outputs
@@ -134,16 +154,16 @@ class DriverViewModel(
     /**
      * Add career stats for the driver across their career
      */
-    private fun getAllStats(overview: DriverOverview): List<DriverSummaryItem> {
+    private fun getAllStats(history: DriverHistory): List<DriverSummaryItem> {
         val list: MutableList<DriverSummaryItem> = mutableListOf()
         list.addStat(
-            tint = if (overview.championshipWins > 0) R.attr.f1Championship else R.attr.contentSecondary,
+            tint = if (history.championshipWins > 0) R.attr.f1Championship else R.attr.contentSecondary,
             icon = R.drawable.ic_menu_drivers,
             label = R.string.driver_overview_stat_career_drivers_title,
-            value = overview.championshipWins.toString()
+            value = history.championshipWins.toString()
         )
 
-        overview.careerBestChampionship?.let {
+        history.careerBestChampionship?.let {
             list.addStat(
                 icon = R.drawable.ic_championship_order,
                 label = R.string.driver_overview_stat_career_best_championship_position,
@@ -154,57 +174,57 @@ class DriverViewModel(
         list.addStat(
             icon = R.drawable.ic_standings,
             label = R.string.driver_overview_stat_career_wins,
-            value = overview.careerWins.toString()
+            value = history.careerWins.toString()
         )
         list.addStat(
             icon = R.drawable.ic_podium,
             label = R.string.driver_overview_stat_career_podiums,
-            value = overview.careerPodiums.toString()
+            value = history.careerPodiums.toString()
         )
         list.addStat(
             icon = R.drawable.ic_race_starts,
             label = R.string.driver_overview_stat_race_starts,
-            value = overview.raceStarts.toString()
+            value = history.raceStarts.toString()
         )
         list.addStat(
             icon = R.drawable.ic_race_finishes,
             label = R.string.driver_overview_stat_race_finishes,
-            value = overview.raceFinishes.toString()
+            value = history.raceFinishes.toString()
         )
         list.addStat(
             icon = R.drawable.ic_race_retirements,
             label = R.string.driver_overview_stat_race_retirements,
-            value = overview.raceRetirements.toString()
+            value = history.raceRetirements.toString()
         )
         list.addStat(
             icon = R.drawable.ic_best_finish,
             label = R.string.driver_overview_stat_career_best_finish,
-            value = overview.careerBestFinish.position()
+            value = history.careerBestFinish.position()
         )
         list.addStat(
             icon = R.drawable.ic_finishes_in_points,
             label = R.string.driver_overview_stat_career_points_finishes,
-            value = overview.careerFinishesInPoints.toString()
+            value = history.careerFinishesInPoints.toString()
         )
         list.addStat(
             icon = R.drawable.ic_race_points,
             label = R.string.driver_overview_stat_career_points,
-            value = overview.careerPoints.pointsDisplay()
+            value = history.careerPoints.pointsDisplay()
         )
         list.addStat(
             icon = R.drawable.ic_qualifying_pole,
             label = R.string.driver_overview_stat_career_qualifying_pole,
-            value = overview.careerQualifyingPoles.toString()
+            value = history.careerQualifyingPoles.toString()
         )
         list.addStat(
             icon = R.drawable.ic_qualifying_front_row,
             label = R.string.driver_overview_stat_career_qualifying_top_3,
-            value = overview.careerQualifyingTop3.toString()
+            value = history.careerQualifyingTop3.toString()
         )
         list.addStat(
             icon = R.drawable.ic_qualifying_top_ten,
             label = R.string.driver_overview_stat_career_qualifying_top_10,
-            value = overview.totalQualifyingAbove(10).toString()
+            value = history.totalQualifyingAbove(10).toString()
         )
 
         return list
@@ -223,7 +243,7 @@ class DriverViewModel(
     /**
      * Add the directional constructor list at the bottom of the page
      */
-    private fun getConstructorItemList(overview: DriverOverview): List<DriverSummaryItem> {
+    private fun getConstructorItemList(history: DriverHistory): List<DriverSummaryItem> {
         // Team history in chronological order
         // * 2010
         // * 2009
@@ -231,7 +251,7 @@ class DriverViewModel(
         // | 2008
         // ....
 
-        val seasonConstructors = overview.constructors
+        val seasonConstructors = history.constructors
             .reversed()
             .groupBy { it.first }
             .toList()
@@ -245,7 +265,7 @@ class DriverViewModel(
                     current = season,
                     newer = seasonConstructors.getOrNull(index - 1)?.first,
                     prev = seasonConstructors.getOrNull(index + 1)?.first
-                ), overview.isWorldChampionFor(season))
+                ), history.isWorldChampionFor(season))
             }
     }
 

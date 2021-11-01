@@ -2,7 +2,7 @@ package tmg.flashback.formula1.model
 
 data class Season(
     val season: Int,
-    val drivers: List<Driver>,
+    val driverWithEmbeddedConstructors: List<DriverWithEmbeddedConstructor>,
     val constructors: List<Constructor>,
     val rounds: List<Round>,
     val driverStandings: DriverStandings,

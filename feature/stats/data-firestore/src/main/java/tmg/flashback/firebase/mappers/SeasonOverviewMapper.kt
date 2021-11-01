@@ -1,9 +1,5 @@
 package tmg.flashback.firebase.mappers
 
-import tmg.flashback.formula1.model.Constructor
-import tmg.flashback.formula1.model.Driver
-import tmg.flashback.formula1.model.Round
-import tmg.flashback.formula1.model.Season
 import tmg.flashback.firebase.mappers.seasonoverview.SeasonOverviewConstructorMapper
 import tmg.flashback.firebase.mappers.seasonoverview.SeasonOverviewDriverMapper
 import tmg.flashback.firebase.mappers.seasonoverview.SeasonOverviewRaceMapper
@@ -33,7 +29,7 @@ class SeasonOverviewMapper(
 
         return tmg.flashback.formula1.model.Season(
             season = season,
-            drivers = drivers,
+            driverWithEmbeddedConstructors = drivers,
             constructors = constructors,
             rounds = (input.race ?: emptyMap())
                 .map { (_, round) ->
@@ -57,7 +53,7 @@ class SeasonOverviewMapper(
     /**
      * Map a round of a season
      */
-    fun mapRound(input: FRound, allDrivers: List<tmg.flashback.formula1.model.Driver>, allConstructors: List<tmg.flashback.formula1.model.Constructor>): tmg.flashback.formula1.model.Round {
+    fun mapRound(input: FRound, allDriverWithEmbeddedConstructors: List<tmg.flashback.formula1.model.DriverWithEmbeddedConstructor>, allConstructors: List<tmg.flashback.formula1.model.Constructor>): tmg.flashback.formula1.model.Round {
         return tmg.flashback.formula1.model.Round(
             season = input.season,
             round = input.round,
@@ -65,37 +61,37 @@ class SeasonOverviewMapper(
             time = fromTime(input.time),
             name = input.name,
             wikipediaUrl = input.wiki,
-            drivers = allDrivers.map { it.toConstructorDriver(input.round) },
+            drivers = allDriverWithEmbeddedConstructors.map { it.toConstructorDriver(input.round) },
             constructors = allConstructors,
             circuit = raceMapper.mapCircuit(input.circuit),
             q1 = raceMapper.mapQualifying(
                 forRound = input.round,
                 fieldToBaseFilteringOn = Q1,
                 input = input.qualifying,
-                allDrivers = allDrivers
+                allDriverWithEmbeddedConstructors = allDriverWithEmbeddedConstructors
             ),
             q2 = raceMapper.mapQualifying(
                 forRound = input.round,
                 fieldToBaseFilteringOn = Q2,
                 input = input.qualifying,
-                allDrivers = allDrivers
+                allDriverWithEmbeddedConstructors = allDriverWithEmbeddedConstructors
             ),
             q3 = raceMapper.mapQualifying(
                 forRound = input.round,
                 fieldToBaseFilteringOn = Q3,
                 input = input.qualifying,
-                allDrivers = allDrivers
+                allDriverWithEmbeddedConstructors = allDriverWithEmbeddedConstructors
             ),
             qSprint = raceMapper.mapSprintQualifying(
                 forRound = input.round,
                 input = input.sprintQualifying,
-                allDrivers = allDrivers
+                allDriverWithEmbeddedConstructors = allDriverWithEmbeddedConstructors
             ),
             race = raceMapper.mapRace(
                 forRound = input.round,
                 input = input.race,
                 sprintQualifyingData = input.sprintQualifying,
-                allDrivers = allDrivers
+                allDriverWithEmbeddedConstructors = allDriverWithEmbeddedConstructors
             )
         )
     }

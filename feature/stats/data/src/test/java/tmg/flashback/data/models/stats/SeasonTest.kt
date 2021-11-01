@@ -35,7 +35,7 @@ class SeasonTest {
     @Test
     fun `constructorStandings calculates standings properly with no constructor data provided`() {
 
-        val driver1Points = mockSeason.rounds.sumOf { it.race[mockDriver1.id]?.points ?: 0.0 }
+        val driver1Points = mockSeason.rounds.sumOf { it.race[MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.id]?.points ?: 0.0 }
         val driver2Points = mockSeason.rounds.sumOf { it.race[mockDriver2.id]?.points ?: 0.0 }
         val driver3Points = mockSeason.rounds.sumOf { it.race[mockDriver3.id]?.points ?: 0.0 }
         val driver4Points = mockSeason.rounds.sumOf { it.race[mockDriver4.id]?.points ?: 0.0 }
@@ -43,7 +43,7 @@ class SeasonTest {
                 mockConstructorAlpha.id to Triple(
                         mockConstructorAlpha,
                         mutableMapOf(
-                                mockDriver1.id to Pair(mockDriver1.toConstructorDriver(1), driver1Points),
+                                MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.id to Pair(MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(1), driver1Points),
                                 mockDriver3.id to Pair(mockDriver3.toConstructorDriver(1), driver3Points)
                         ).toMap(),
                         driver1Points + driver3Points
@@ -64,7 +64,7 @@ class SeasonTest {
     @Test
     fun `constructorStandings calculates standings properly with no standings constructors data provided`() {
 
-        val driver1Points = mockSeason.rounds.sumOf { it.race[mockDriver1.id]?.points ?: 0.0 }
+        val driver1Points = mockSeason.rounds.sumOf { it.race[MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.id]?.points ?: 0.0 }
         val driver2Points = mockSeason.rounds.sumOf { it.race[mockDriver2.id]?.points ?: 0.0 }
         val driver3Points = mockSeason.rounds.sumOf { it.race[mockDriver3.id]?.points ?: 0.0 }
         val driver4Points = mockSeason.rounds.sumOf { it.race[mockDriver4.id]?.points ?: 0.0 }
@@ -76,7 +76,7 @@ class SeasonTest {
                 mockConstructorAlpha.id to Triple(
                         mockConstructorAlpha,
                         mutableMapOf(
-                                mockDriver1.id to Pair(mockDriver1.toConstructorDriver(1), driver1Points),
+                                MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.id to Pair(MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(1), driver1Points),
                                 mockDriver3.id to Pair(mockDriver3.toConstructorDriver(1), driver3Points)
                         ).toMap(),
                         alphaPoints

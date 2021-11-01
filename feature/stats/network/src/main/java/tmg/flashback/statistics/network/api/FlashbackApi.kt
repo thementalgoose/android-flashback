@@ -5,11 +5,11 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import tmg.flashback.statistics.network.models.MetadataWrapper
 import tmg.flashback.statistics.network.models.circuits.AllCircuits
-import tmg.flashback.statistics.network.models.circuits.Circuits
+import tmg.flashback.statistics.network.models.circuits.Circuit
 import tmg.flashback.statistics.network.models.constructors.AllConstructors
-import tmg.flashback.statistics.network.models.constructors.Constructors
+import tmg.flashback.statistics.network.models.constructors.Constructor
 import tmg.flashback.statistics.network.models.drivers.AllDrivers
-import tmg.flashback.statistics.network.models.drivers.Drivers
+import tmg.flashback.statistics.network.models.drivers.Driver
 import tmg.flashback.statistics.network.models.overview.Overview
 import tmg.flashback.statistics.network.models.races.Round
 import tmg.flashback.statistics.network.models.races.Season
@@ -32,13 +32,13 @@ interface FlashbackApi {
     suspend fun getCircuits(): Response<MetadataWrapper<AllCircuits>>
 
     @GET("circuits/{id}.json")
-    suspend fun getCircuit(@Path("id") id: String): Response<MetadataWrapper<Circuits>>
+    suspend fun getCircuit(@Path("id") id: String): Response<MetadataWrapper<Circuit>>
 
     @GET("drivers/{id}.json")
-    suspend fun getDriver(@Path("id") id: String): Response<MetadataWrapper<Drivers>>
+    suspend fun getDriver(@Path("id") id: String): Response<MetadataWrapper<Driver>>
 
     @GET("constructors/{id}.json")
-    suspend fun getConstructor(@Path("id") id: String): Response<MetadataWrapper<Constructors>>
+    suspend fun getConstructor(@Path("id") id: String): Response<MetadataWrapper<Constructor>>
 
     @GET("races/{season}.json")
     suspend fun getSeason(@Path("season") season: Int): Response<MetadataWrapper<Season>>

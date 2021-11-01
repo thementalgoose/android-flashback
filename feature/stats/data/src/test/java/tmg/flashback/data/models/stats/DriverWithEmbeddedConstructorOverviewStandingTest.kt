@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
-class DriverOverviewStandingTest {
+class DriverWithEmbeddedConstructorOverviewStandingTest {
 
     @ParameterizedTest(name = "Expected {2} when rounds [{0}, {1}]")
     @CsvSource(

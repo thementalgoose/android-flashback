@@ -53,7 +53,7 @@ class DebugActivity: BaseActivity() {
         binding.networkDrivers.setOnClickListener {
             GlobalScope.launch {
                 log("Sending request")
-                val result = driverRepository.fetchAllDrivers()
+                val result = driverRepository.fetchDrivers()
                 log("Result $result")
                 runOnUiThread {
                     Toast.makeText(applicationContext, "Result $result", Toast.LENGTH_LONG).show()
@@ -64,7 +64,7 @@ class DebugActivity: BaseActivity() {
         binding.networkConstructors.setOnClickListener {
             GlobalScope.launch {
                 log("Sending request")
-                val result = constructorRepository.fetchAllConstructors()
+                val result = constructorRepository.fetchConstructors()
                 log("Result $result")
                 runOnUiThread {
                     Toast.makeText(applicationContext, "Result $result", Toast.LENGTH_LONG).show()
@@ -75,7 +75,7 @@ class DebugActivity: BaseActivity() {
         binding.networkCircuits.setOnClickListener {
             GlobalScope.launch {
                 log("Sending request")
-                val result = circuitRepository.fetchAllCircuits()
+                val result = circuitRepository.fetchCircuits()
                 log("Result $result")
                 runOnUiThread {
                     Toast.makeText(applicationContext, "Result $result", Toast.LENGTH_LONG).show()

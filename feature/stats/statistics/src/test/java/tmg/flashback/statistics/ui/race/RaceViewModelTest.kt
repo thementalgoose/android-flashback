@@ -177,7 +177,7 @@ internal class RaceViewModelTest: BaseTest() {
             RaceModel.ConstructorStandings(
                 mockConstructorAlpha, 20.0, listOf(
                     Pair(mockDriver3.toConstructorDriver(), 15.0),
-                    Pair(mockDriver1.toConstructorDriver(), 5.0)
+                    Pair(MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(), 5.0)
                 ), AnimationSpeed.NONE
             )
         )
@@ -261,7 +261,7 @@ internal class RaceViewModelTest: BaseTest() {
                 )
             ),
             RaceModel.RaceHeader(expectedSeasonRound.first, expectedSeasonRound.second),
-            convertDriverToSingle(round = mockRound1, roundDriver = mockDriver1.toConstructorDriver(),
+            convertDriverToSingle(round = mockRound1, roundDriver = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(),
                 expectedQualified = 1,
                 expectedGrid = 1,
                 expectedFinish = 4
@@ -480,8 +480,8 @@ internal class RaceViewModelTest: BaseTest() {
         every { mockRaceController.showGridPenaltiesInQualifying } returns false
         every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow { emit(mockRound3.copy(
             qSprint = mapOf(
-                mockDriver1.id to RoundSprintQualifyingResult(
-                    driver = mockDriver1.toConstructorDriver(),
+                MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.id to RoundSprintQualifyingResult(
+                    driver = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(),
                     time = LapTime(),
                     points = 1.0,
                     grid = 1,
@@ -534,7 +534,7 @@ internal class RaceViewModelTest: BaseTest() {
     //region Round 1 expected qualifying orders
 
     private val expectedQ3Order: List<RaceModel> = listOf(
-        convertDriverToSingle(round = mockRound1, roundDriver = mockDriver1.toConstructorDriver(),
+        convertDriverToSingle(round = mockRound1, roundDriver = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(),
             expectedQualified = 1,
             expectedGrid = 1,
             expectedFinish = 4
@@ -565,7 +565,7 @@ internal class RaceViewModelTest: BaseTest() {
         fadeDNF = true
     )
     ): List<RaceModel> = listOf(
-        convertDriverToSingle(round = round, roundDriver = mockDriver1.toConstructorDriver(),
+        convertDriverToSingle(round = round, roundDriver = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(),
             expectedQualified = 1,
             expectedGrid = 1,
             expectedFinish = 4,
@@ -597,7 +597,7 @@ internal class RaceViewModelTest: BaseTest() {
             expectedGrid = 2,
             expectedFinish = 3
         ),
-        convertDriverToSingle(round = mockRound1, roundDriver = mockDriver1.toConstructorDriver(),
+        convertDriverToSingle(round = mockRound1, roundDriver = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(),
             expectedQualified = 1,
             expectedGrid = 1,
             expectedFinish = 4
@@ -614,7 +614,7 @@ internal class RaceViewModelTest: BaseTest() {
         )
     )
     private val expectedQ1Order: List<RaceModel> = listOf(
-        convertDriverToSingle(round = mockRound1, roundDriver = mockDriver1.toConstructorDriver(),
+        convertDriverToSingle(round = mockRound1, roundDriver = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(),
             expectedQualified = 1,
             expectedGrid = 1,
             expectedFinish = 4
@@ -642,7 +642,7 @@ internal class RaceViewModelTest: BaseTest() {
     //region Round 1 Qualifying deltas check
 
     private val expectedQ3OrderWithQualifyingDeltas: List<RaceModel> = listOf(
-        convertDriverToSingle(round = mockRound1, roundDriver = mockDriver1.toConstructorDriver(),
+        convertDriverToSingle(round = mockRound1, roundDriver = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(),
             expectedQualified = 1,
             expectedGrid = 1,
             expectedFinish = 4,

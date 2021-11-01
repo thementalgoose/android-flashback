@@ -11,10 +11,10 @@ import org.koin.core.context.unloadKoinModules
 import org.koin.test.KoinTest
 import tmg.flashback.di_old.data.*
 import tmg.flashback.di_old.data.mockConstructorBlue
-import tmg.flashback.di_old.data.mockDriverAlex
-import tmg.flashback.di_old.data.mockDriverBrian
-import tmg.flashback.di_old.data.mockDriverCharlie
-import tmg.flashback.di_old.data.mockDriverDaniel
+import tmg.flashback.di_old.data.MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_ALEX
+import tmg.flashback.di_old.data.MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_BRIAN
+import tmg.flashback.di_old.data.MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_CHARLIE
+import tmg.flashback.di_old.data.MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_DANIEL
 import tmg.flashback.di_old.mockModules
 import tmg.flashback.di_old.remoteconfig.MockRemoteConfigRepository
 import tmg.flashback.di_old.rss.mockRssGoogle
@@ -56,10 +56,10 @@ class AppScenario: KoinTest {
 
             this.clickOnDriver()
 
-            assertTextDisplayedInList(mockDriverAlex.name)
-            assertTextDisplayedInList(mockDriverBrian.name)
-            assertTextDisplayedInList(mockDriverCharlie.name)
-            assertTextDisplayedInList(mockDriverDaniel.name)
+            assertTextDisplayedInList(MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_ALEX.name)
+            assertTextDisplayedInList(MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_BRIAN.name)
+            assertTextDisplayedInList(MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_CHARLIE.name)
+            assertTextDisplayedInList(MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_DANIEL.name)
 
             this.clickOnConstructor()
 
@@ -70,34 +70,34 @@ class AppScenario: KoinTest {
 
                 this.clickOnRace()
 
-                assertTextDisplayedInList(mockDriverAlex.name)
-                assertTextDisplayedInList(mockDriverBrian.name)
-                assertTextDisplayedInList(mockDriverCharlie.name)
-                assertTextDisplayedInList(mockDriverDaniel.name)
+                assertTextDisplayedInList(MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_ALEX.name)
+                assertTextDisplayedInList(MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_BRIAN.name)
+                assertTextDisplayedInList(MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_CHARLIE.name)
+                assertTextDisplayedInList(MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_DANIEL.name)
 
                 this.clickOnQualifying()
 
-                assertTextDisplayedInList(mockDriverAlex.name)
-                assertTextDisplayedInList(mockDriverBrian.name)
-                assertTextDisplayedInList(mockDriverCharlie.name)
-                assertTextDisplayedInList(mockDriverDaniel.name)
+                assertTextDisplayedInList(MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_ALEX.name)
+                assertTextDisplayedInList(MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_BRIAN.name)
+                assertTextDisplayedInList(MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_CHARLIE.name)
+                assertTextDisplayedInList(MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_DANIEL.name)
 
                 this.clickOnConstructors()
 
                 assertTextDisplayedInList(mockConstructorGreen.name)
                 assertTextDisplayedInList(mockConstructorBlue.name)
 
-                this.clickOnDriver(mockDriverDaniel.name) {
+                this.clickOnDriver(MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_DANIEL.name) {
 
                     assertItemsAtLeast(12)
-                    assertTextDisplayed(mockDriverDaniel.name)
+                    assertTextDisplayed(MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_DANIEL.name)
                     collapseAppBar()
                     assertTextDisplayedInList(mockSeason.season.toString())
 
                     this.clickOnYear(mockSeason.season) {
 
                         assertItemsAtLeast(12)
-                        assertTextDisplayed("${mockDriverDaniel.name} ${mockSeason.season}")
+                        assertTextDisplayed("${MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_DANIEL.name} ${mockSeason.season}")
                         collapseAppBar()
                         assertTextDisplayedInList(mockRound1.name)
                     }
@@ -117,7 +117,7 @@ class AppScenario: KoinTest {
                 assertItemsAtLeast(10)
             }
 
-            this.clickOnDriver(mockDriverDaniel.name) {
+            this.clickOnDriver(MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_DANIEL.name) {
 
                 assertItemsAtLeast(10)
             }

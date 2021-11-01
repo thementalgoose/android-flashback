@@ -8,8 +8,8 @@ data class RoundWithCircuit(
     @Embedded
     val round: Round,
     @Relation(
-        parentColumn = "id",
-        entityColumn = "circuit_id"
+        parentColumn = "circuit_id",
+        entityColumn = "id"
     )
     val circuit: Circuit
 )
