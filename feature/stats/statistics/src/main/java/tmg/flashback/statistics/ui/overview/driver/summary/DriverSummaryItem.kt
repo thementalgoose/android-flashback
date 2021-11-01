@@ -6,7 +6,6 @@ import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
 import org.threeten.bp.LocalDate
 import tmg.flashback.formula1.model.Constructor
-import tmg.flashback.formula1.model.SlimConstructor
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 

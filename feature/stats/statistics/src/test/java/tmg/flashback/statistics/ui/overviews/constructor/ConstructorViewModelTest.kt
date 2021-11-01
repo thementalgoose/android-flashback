@@ -8,17 +8,14 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
-import tmg.core.device.managers.NetworkConnectivityManager
 import tmg.flashback.statistics.ui.overview.constructor.summary.ConstructorSummaryItem
 import tmg.flashback.statistics.ui.overview.driver.summary.PipeType
-import tmg.flashback.data.db.stats.ConstructorRepository
 import tmg.flashback.firebase.extensions.pointsDisplay
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.ui.overview.constructor.ConstructorViewModel
 import tmg.flashback.statistics.ui.overviews.*
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
-import tmg.flashback.statistics.ui.util.position
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertDataEventValue
 import tmg.testutils.livedata.assertListContainsItem

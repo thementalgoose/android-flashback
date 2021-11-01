@@ -28,7 +28,7 @@ class ConstructorHistoryViewHolder(
 
             year.text = item.season.toString()
             points.text = item.points.pointsDisplay()
-            standing.text = item.championshipPosition.ordinalAbbreviation
+            standing.text = item.championshipPosition?.ordinalAbbreviation ?: "N/A"
 
             inProgress.show(item.isInProgress)
 

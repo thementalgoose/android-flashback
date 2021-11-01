@@ -4,22 +4,24 @@ import androidx.annotation.AttrRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.lifecycle.*
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import tmg.flashback.statistics.ui.overview.constructor.summary.ConstructorSummaryItem
 import tmg.flashback.statistics.ui.overview.constructor.summary.addError
 import tmg.flashback.statistics.ui.overview.driver.summary.PipeType
-import tmg.flashback.data.db.stats.ConstructorRepository
 import tmg.flashback.formula1.model.ConstructorOverview
 import tmg.flashback.firebase.extensions.pointsDisplay
 import tmg.flashback.statistics.R
+import tmg.flashback.statistics.repo.ConstructorRepository
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
-import tmg.flashback.statistics.ui.util.position
 import tmg.utilities.extensions.ordinalAbbreviation
 import tmg.utilities.lifecycle.DataEvent
+import tmg.utilities.lifecycle.Event
 
 //region Inputs
 
@@ -27,6 +29,8 @@ interface ConstructorViewModelInputs {
     fun setup(constructorId: String)
     fun openUrl(url: String)
     fun openSeason(season: Int)
+
+    fun refresh()
 }
 
 //endregion
@@ -37,14 +41,17 @@ interface ConstructorViewModelOutputs {
     val list: LiveData<List<ConstructorSummaryItem>>
     val openUrl: LiveData<DataEvent<String>>
     val openSeason: LiveData<DataEvent<Pair<String, Int>>>
+
+    val isLoading: LiveData<Boolean>
+    val showRefreshError: LiveData<Event>
 }
 
 //endregion
 
 @Suppress("EXPERIMENTAL_API_USAGE")
 class ConstructorViewModel(
-        private val constructorRepository: ConstructorRepository,
-        private val connectivityManager: tmg.core.device.managers.NetworkConnectivityManager
+    private val constructorRepository: ConstructorRepository,
+    private val connectivityManager: tmg.core.device.managers.NetworkConnectivityManager
 ): ViewModel(), ConstructorViewModelInputs, ConstructorViewModelOutputs {
 
     var inputs: ConstructorViewModelInputs = this
@@ -69,11 +76,11 @@ class ConstructorViewModel(
                 else -> {
                     list.add(
                         ConstructorSummaryItem.Header(
-                        constructorName = it.name,
-                        constructorColor = it.color,
-                        constructorNationality = it.nationality,
-                        constructorNationalityISO = it.nationalityISO,
-                        constructorWikiUrl = it.wikiUrl
+                        constructorName = it.constructor.name,
+                        constructorColor = it.constructor.color,
+                        constructorNationality = it.constructor.nationality,
+                        constructorNationalityISO = it.constructor.nationalityISO,
+                        constructorWikiUrl = it.constructor.wikiUrl
                     ))
 
                     if (it.hasChampionshipCurrentlyInProgress) {
@@ -97,6 +104,9 @@ class ConstructorViewModel(
     override val openUrl: MutableLiveData<DataEvent<String>> = MutableLiveData()
     override val openSeason: MutableLiveData<DataEvent<Pair<String, Int>>> = MutableLiveData()
 
+    override val isLoading: MutableLiveData<Boolean> = MutableLiveData()
+    override val showRefreshError: MutableLiveData<Event> = MutableLiveData()
+
     init {
 
     }
@@ -115,6 +125,17 @@ class ConstructorViewModel(
 
     override fun openSeason(season: Int) {
         openSeason.postValue(DataEvent(Pair(constructorId.value, season)))
+    }
+
+    override fun refresh() {
+        isLoading.value = true
+        viewModelScope.launch(context = Dispatchers.IO) {
+            val result = constructorRepository.fetchConstructor(constructorId.value)
+            isLoading.postValue(false)
+            if (!result) {
+                showRefreshError.postValue(Event())
+            }
+        }
     }
 
     //endregion
@@ -159,11 +180,11 @@ class ConstructorViewModel(
                 label = R.string.constructor_overview_stat_race_podiums,
                 value = overview.totalPodiums.toString()
         )
-        list.addStat(
-                icon = R.drawable.ic_status_finished,
-                label = R.string.constructor_overview_stat_best_finish,
-                value = overview.bestFinish.position()
-        )
+//        list.addStat(
+//                icon = R.drawable.ic_status_finished,
+//                label = R.string.constructor_overview_stat_best_finish,
+//                value = overview.bestFinish.position()
+//        )
         list.addStat(
                 icon = R.drawable.ic_race_points,
                 label = R.string.constructor_overview_stat_points,
@@ -179,11 +200,11 @@ class ConstructorViewModel(
                 label = R.string.constructor_overview_stat_qualifying_poles,
                 value = overview.totalQualifyingPoles.toString()
         )
-        list.addStat(
-                icon = R.drawable.ic_qualifying_front_row,
-                label = R.string.constructor_overview_stat_qualifying_top_3,
-                value = overview.totalQualifyingTop3.toString()
-        )
+//        list.addStat(
+//                icon = R.drawable.ic_qualifying_front_row,
+//                label = R.string.constructor_overview_stat_qualifying_top_3,
+//                value = overview.totalQualifyingTop3.toString()
+//        )
 
         return list
     }
@@ -209,7 +230,7 @@ class ConstructorViewModel(
                                 prev = sortedList.getOrNull(index + 1)?.season
                             ),
                             season = item.season,
-                            colour = overview.color,
+                            colour = overview.constructor.color,
                             championshipPosition = item.championshipStanding,
                             points = item.points,
                             isInProgress = item.isInProgress,

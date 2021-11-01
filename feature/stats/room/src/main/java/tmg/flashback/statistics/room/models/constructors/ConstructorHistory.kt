@@ -8,7 +8,7 @@ data class ConstructorHistory(
     @Relation(
         entity = ConstructorSeason::class,
         parentColumn = "id",
-        entityColumn = "constructor_season_id"
+        entityColumn = "constructor_id"
     )
-    val seasons: List<ConstructorSeason>
+    val seasons: List<ConstructorSeasonWithDrivers>
 )

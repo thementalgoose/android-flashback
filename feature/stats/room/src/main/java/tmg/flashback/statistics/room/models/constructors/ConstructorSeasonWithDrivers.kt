@@ -9,7 +9,7 @@ data class ConstructorSeasonWithDrivers(
     @Relation(
         entity = ConstructorSeasonDriver::class,
         parentColumn = "id",
-        entityColumn = "constructor_season_driver_id"
+        entityColumn = "constructor_season_id"
     )
     val drivers: List<ConstructorSeasonDriverWithDriver>
 )

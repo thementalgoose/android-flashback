@@ -32,8 +32,10 @@ class HeaderViewHolder(
         binding.nationality.contentDescription = item.constructorNationality
         binding.colour.setBackgroundColor(item.constructorColor)
 
-        adapter.list = mutableListOf(
-                PillItem.Wikipedia(item.constructorWikiUrl)
-        )
+        adapter.list = mutableListOf<PillItem>().apply {
+            item.constructorWikiUrl?.let {
+                add(PillItem.Wikipedia(it))
+            }
+        }
     }
 }

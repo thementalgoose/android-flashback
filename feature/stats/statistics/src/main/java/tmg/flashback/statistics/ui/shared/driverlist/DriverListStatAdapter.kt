@@ -35,11 +35,11 @@ class DriverListStatAdapter: RecyclerView.Adapter<DriverListStatAdapter.ViewHold
         private val binding: LayoutConstructorDriverLabelBinding
     ): RecyclerView.ViewHolder(binding.root) {
         fun bind(item: ConstructorOverviewDriverStanding) {
-            binding.tvName.text = item.driver.name
-            binding.imgFlag.setImageResource(itemView.context.getFlagResourceAlpha3(item.driver.nationalityISO))
+            binding.tvName.text = item.driver.driver.name
+            binding.imgFlag.setImageResource(itemView.context.getFlagResourceAlpha3(item.driver.driver.nationalityISO))
             binding.tvNumber.text = itemView.context.resources.getQuantityString(R.plurals.race_points, item.points.toInt(), item.points.pointsDisplay())
 
-            binding.standing.text = item.championshipStanding.ordinalAbbreviation
+            binding.standing.text = item.championshipStanding?.ordinalAbbreviation ?: "N/A"
         }
     }
 }

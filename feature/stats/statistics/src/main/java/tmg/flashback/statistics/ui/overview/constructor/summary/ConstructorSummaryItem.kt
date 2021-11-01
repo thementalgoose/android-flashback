@@ -14,7 +14,7 @@ sealed class ConstructorSummaryItem(
             val constructorColor: Int,
             val constructorNationality: String,
             val constructorNationalityISO: String,
-            val constructorWikiUrl: String
+            val constructorWikiUrl: String?
     ): ConstructorSummaryItem(
             R.layout.view_constructor_summary_header
     )
@@ -35,7 +35,7 @@ sealed class ConstructorSummaryItem(
         val pipe: PipeType,
         val season: Int,
         val isInProgress: Boolean,
-        val championshipPosition: Int,
+        val championshipPosition: Int?,
         val points: Double,
         @ColorInt
         val colour: Int,

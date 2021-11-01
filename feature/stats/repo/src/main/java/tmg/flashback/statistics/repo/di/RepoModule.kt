@@ -15,7 +15,7 @@ val repoModule = networkModule + roomModule + module {
     // Mappers - App
     single { CircuitMapper() }
     single { ConstructorDataMapper() }
-    single { ConstructorMapper() }
+    single { ConstructorMapper(get(), get()) }
     single { DriverDataMapper() }
     single { DriverMapper(get(), get()) }
     single { OverviewMapper() }
@@ -32,7 +32,7 @@ val repoModule = networkModule + roomModule + module {
 
     // Repositories
     single { CircuitRepository(get(), get(), get(), get(), get(), get()) }
-    single { ConstructorRepository(get(), get(), get(), get(), get()) }
+    single { ConstructorRepository(get(), get(), get(), get(), get(), get(), get()) }
     single { DriverRepository(get(), get(), get(), get(), get(), get(), get(), get(), get()) }
     single { OverviewRepository(get(), get(), get(), get(), get()) }
 }

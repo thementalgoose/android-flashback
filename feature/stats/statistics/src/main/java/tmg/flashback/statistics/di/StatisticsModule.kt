@@ -6,7 +6,6 @@ import tmg.flashback.data.db.DataRepository
 import tmg.flashback.data.db.stats.*
 import tmg.flashback.firebase.mappers.AppLockoutMapper
 import tmg.flashback.firebase.mappers.CircuitMapper
-import tmg.flashback.firebase.mappers.ConstructorMapper
 import tmg.flashback.firebase.mappers.HistoryMapper
 import tmg.flashback.firebase.mappers.LocationMapper
 import tmg.flashback.firebase.mappers.SearchMapper
@@ -58,7 +57,6 @@ val statisticsModule = repoModule + module {
     single { AppLockoutMapper() }
     single { CircuitMapper(get(), get()) }
     single { HistoryMapper(Formula1.allDataUpToo, get()) }
-    single { ConstructorMapper() }
     single { SearchMapper(get(), get()) }
     single { LocationMapper() }
     single { SeasonOverviewMapper(get(), get(), get(), get()) }
@@ -70,6 +68,5 @@ val statisticsModule = repoModule + module {
     // Firestore
     single<DataRepository> { DataFirestore(get(), get()) }
     single<SeasonOverviewRepository> { SeasonOverviewFirestore(get(), get()) }
-    single<ConstructorRepository> { ConstructorFirestore(get(), get()) }
     single<SearchRepository> { SearchFirestore(get(), get(), get()) }
 }

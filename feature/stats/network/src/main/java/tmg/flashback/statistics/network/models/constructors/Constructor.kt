@@ -15,6 +15,7 @@ data class ConstructorStanding(
     val championshipPosition: Int?,
     val points: Double?,
     val inProgress: Boolean,
+    val races: Int?,
     val drivers: Map<String, ConstructorStandingDriver>
 )
 
@@ -30,6 +31,10 @@ data class ConstructorDriverStandings(
 data class ConstructorStandingDriver(
     val driver: DriverData,
     val points: Double,
-    val championshipPosition: Int,
-    val wins: Int,
+    val wins: Int?,
+    val races: Int?,
+    val podiums: Int?,
+    val pointsFinishes: Int?,
+    val pole: Int?,
+    val championshipPosition: Int?
 )
