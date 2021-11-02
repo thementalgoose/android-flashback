@@ -23,4 +23,6 @@ data class Circuit(
     val country: String,
     @ColumnInfo(name = "country_iso")
     val countryISO: String
-)
+) {
+    companion object
+}
