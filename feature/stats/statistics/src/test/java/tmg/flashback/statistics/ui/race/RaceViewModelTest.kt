@@ -12,7 +12,6 @@ import tmg.flashback.data.db.stats.SeasonOverviewRepository
 import tmg.flashback.formula1.model.LapTime
 import tmg.flashback.formula1.model.Race
 import tmg.core.ui.controllers.ThemeController
-import tmg.flashback.formula1.model.ConstructorDriver
 import tmg.flashback.formula1.model.RaceSprintQualifyingResult
 import tmg.flashback.statistics.MOCK_RACE_1
 import tmg.flashback.statistics.mockRound3

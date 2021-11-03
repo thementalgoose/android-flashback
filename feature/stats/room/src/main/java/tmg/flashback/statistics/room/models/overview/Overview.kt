@@ -12,14 +12,8 @@ data class Overview(
     val round: Int,
     @ColumnInfo(name = "name")
     val name: String,
-    @ColumnInfo(name = "circuit_name")
-    val circuitName: String,
     @ColumnInfo(name = "circuit_id")
     val circuitId: String,
-    @ColumnInfo(name = "country")
-    val country: String,
-    @ColumnInfo(name = "country_iso")
-    val countryISO: String,
     @ColumnInfo(name = "date")
     val date: String,
     @ColumnInfo(name = "time")

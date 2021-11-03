@@ -38,7 +38,7 @@ val repoModule = networkModule + roomModule + module {
     single { CircuitRepository(get(), get(), get(), get(), get(), get()) }
     single { ConstructorRepository(get(), get(), get(), get(), get(), get(), get(), get()) }
     single { DriverRepository(get(), get(), get(), get(), get(), get(), get(), get(), get(), get()) }
-    single { OverviewRepository(get(), get(), get(), get(), get()) }
+    single { OverviewRepository(get(), get(), get(), get(), get(), get()) }
     single { RaceRepository(get(), get(), get(), get(), get(), get(), get(), get(), get(), get()) }
     single { SeasonRepository(get(), get(), get(), get(), get()) }
 }

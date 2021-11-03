@@ -93,22 +93,5 @@ data class Race(
 }
 
 
-/**
- * Get the maximum points that a team has scored in the season
- * (ie. Points that the constructors champion has scored)
- */
-fun Map<String, Triple<Constructor, Map<String, Pair<ConstructorDriver, Double>>, Double>>.maxConstructorPointsInSeason(): Double {
-    return this.values.maxByOrNull { it.third }?.third ?: 0.0
-}
-
-/**
- * Get all the points that drivers in a constructor has achieved
- */
-fun Map<String, Pair<DriverWithEmbeddedConstructor, Int>>.allPoints(): Int =
-    this.map { it.value.second }.sum()
-
-
-
-
 
 
