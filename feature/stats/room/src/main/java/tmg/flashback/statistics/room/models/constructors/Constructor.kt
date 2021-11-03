@@ -19,4 +19,6 @@ data class Constructor(
     val nationalityISO: String,
     @ColumnInfo(name = "wiki_url")
     val wikiUrl: String?
-)
+) {
+    companion object
+}

@@ -23,4 +23,6 @@ data class CircuitRound(
     @PrimaryKey
     @ColumnInfo(name = "id")
     val id: String = "${circuitId}_${season}_${round}"
-)
+) {
+    companion object
+}

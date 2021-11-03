@@ -183,7 +183,7 @@ class SeasonViewModel(
                         else -> {
                             val maxRound = rounds
                                 .filter { it.race.isNotEmpty() }
-                                .maxByOrNull { it.round }
+                                .maxByOrNull { it.raceInfo.round }
                             if (maxRound != null && historyRounds.size != rounds.size) {
                                 list.addError(SyncDataItem.MessageRes(R.string.results_accurate_for, listOf(maxRound.name, maxRound.round)))
                             }
@@ -210,7 +210,7 @@ class SeasonViewModel(
                         else -> {
                             val maxRound = rounds
                                 .filter { it.race.isNotEmpty() }
-                                .maxByOrNull { it.round }
+                                .maxByOrNull { it.raceInfo.round }
                             if (maxRound != null && historyRounds.size != rounds.size) {
                                 list.addError(SyncDataItem.MessageRes(R.string.results_accurate_for, listOf(maxRound.name, maxRound.round)))
                             }

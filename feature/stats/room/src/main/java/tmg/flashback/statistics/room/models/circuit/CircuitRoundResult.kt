@@ -19,4 +19,6 @@ data class CircuitRoundResult(
     @PrimaryKey
     @ColumnInfo(name = "id")
     val id: String = "${season}_${round}_${position}"
-)
+) {
+    companion object
+}
