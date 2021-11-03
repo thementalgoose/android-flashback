@@ -21,4 +21,6 @@ data class ConstructorSeason(
     @PrimaryKey
     @ColumnInfo(name = "id")
     val id: String = "${constructorId}_${season}"
-)
+) {
+    companion object
+}

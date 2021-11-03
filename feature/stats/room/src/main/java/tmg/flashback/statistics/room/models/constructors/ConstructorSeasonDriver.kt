@@ -31,4 +31,6 @@ data class ConstructorSeasonDriver(
     val id: String = "${constructorId}_${season}_${driverId}",
     @ColumnInfo(name = "constructor_season_id")
     val constructorSeasonId: String = "${constructorId}_${season}"
-)
+) {
+    companion object
+}
