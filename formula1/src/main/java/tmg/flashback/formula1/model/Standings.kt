@@ -16,12 +16,6 @@ typealias ConstructorStandings = List<SeasonStanding<Constructor>>
 typealias DriverStandings = List<SeasonStanding<DriverWithEmbeddedConstructor>>
 
 @Deprecated("Should no longer be used", ReplaceWith("SeasonDriverStandings"))
-data class RoundConstructorStandings(
-    val points: Double,
-    val constructor: Constructor
-)
-
-@Deprecated("Should no longer be used", ReplaceWith("SeasonDriverStandings"))
 data class RoundDriverStandings(
     val points: Double,
     val driver: ConstructorDriver

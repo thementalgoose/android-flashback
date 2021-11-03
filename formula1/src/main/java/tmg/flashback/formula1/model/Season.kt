@@ -2,26 +2,30 @@ package tmg.flashback.formula1.model
 
 data class Season(
     val season: Int,
-    val driverWithEmbeddedConstructors: List<DriverWithEmbeddedConstructor>,
-    val constructors: List<Constructor>,
     val races: List<Race>,
+    @Deprecated("Should not be used anymore, query SeasonStandingsDAO directly")
     val driverStandings: DriverStandings,
+    @Deprecated("Should not be used anymore, query SeasonStandingsDAO directly")
     val constructorStandings: ConstructorStandings
+    val drivers: Set<Driver> = races.map { it.drivers }.flatten().toSet(),
+    val constructors: Set<Constructor> = races.map { it.constructors }.flatten().toSet(),
 ) {
+
+
     val circuits: List<Circuit>
-        get() = races.map { it.circuit }
+        get() = races.map { it.raceInfo.circuit }
 
     val firstRace: Race?
-        get() = races.minByOrNull { it.round }
+        get() = races.minByOrNull { it.raceInfo.round }
 
     val lastRace: Race?
-        get() = races.maxByOrNull { it.round }
+        get() = races.maxByOrNull { it.raceInfo.round }
 }
 
 /**
  * Get the constructor standings for the season
  */
-@Deprecated("Query the DAO directly", replaceWith = "SeasonStandingsDao.getConstructorStandings()")
+@Deprecated("Query the DAO directly", replaceWith = ReplaceWith("SeasonStandingsDao.getConstructorStandings()"))
 fun Season.constructorStandings(): ConstructorStandingsRound = this.constructors
         .map { constructor ->
             // Driver map should contain driver id -> Driver, points for each constructor
@@ -58,7 +62,7 @@ fun Season.constructorStandings(): ConstructorStandingsRound = this.constructors
  */
 // TODO: Re-implement this method to include the driver standings data to include penalties etc.
 //@Deprecated("This method should be depended on, use the standings object inside the season model for a more accurate reflection")
-@Deprecated("Query the DAO directly", replaceWith = "SeasonStandingsDao.getConstructorStandings()")
+@Deprecated("Query the DAO directly", replaceWith = ReplaceWith("SeasonStandingsDao.getConstructorStandings()"))
 fun List<Race>.driverStandings(): DriverStandingsRound {
     val returnMap: MutableMap<String, Pair<ConstructorDriver, Double>> = mutableMapOf()
 
