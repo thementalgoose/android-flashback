@@ -1,6 +1,5 @@
 package tmg.flashback.firebase
 
-import kotlin.math.exp
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest

@@ -13,6 +13,7 @@ data class ConstructorStandingWithDrivers(
     )
     val constructor: Constructor,
     @Relation(
+        entity = ConstructorStandingDriver::class,
         parentColumn = "id",
         entityColumn = "constructor_season_id"
     )

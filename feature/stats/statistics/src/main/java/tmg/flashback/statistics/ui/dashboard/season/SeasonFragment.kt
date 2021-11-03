@@ -160,7 +160,7 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
                 val intent = DriverActivity.intent(
                     context = it,
                     driverId = driver.driverId,
-                    driverName = driver.driverWithEmbeddedConstructor.name
+                    driverName = driver.driver.name
                 )
                 startActivity(intent)
             }

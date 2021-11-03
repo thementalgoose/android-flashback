@@ -16,18 +16,18 @@ class NetworkDriverStandingMapper {
             season = season,
             points = data.points,
             position = data.position,
-            inProgress = data.inProgress,
-            races = data.races
+            inProgress = data.inProgress ?: false,
+            races = data.races ?: 0
         )
     }
 
     @Throws(RuntimeException::class)
     fun mapDriverStandingConstructor(season: Int, data: DriverStandings): List<DriverStandingConstructor> {
-        return data.constructors.map { (driverId, points) ->
+        return data.constructors.map { (constructorId, points) ->
             DriverStandingConstructor(
-                constructorId = data.driverId,
+                constructorId = constructorId,
                 season = season,
-                driverId = driverId,
+                driverId = data.driverId,
                 points = points,
             )
         }

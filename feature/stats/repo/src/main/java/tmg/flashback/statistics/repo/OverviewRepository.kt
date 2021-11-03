@@ -3,6 +3,8 @@ package tmg.flashback.statistics.repo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import tmg.crash_reporting.controllers.CrashController
+import tmg.flashback.formula1.model.Overview
+import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.statistics.network.api.FlashbackApi
 import tmg.flashback.statistics.repo.base.BaseRepository
 import tmg.flashback.statistics.repo.mappers.app.OverviewMapper
@@ -46,10 +48,16 @@ class OverviewRepository(
         return@attempt true
     }
 
-    fun getOverview(season: Int): Flow<tmg.flashback.formula1.model.Overview> {
+    fun getOverview(): Flow<List<OverviewRace>> {
+        return persistence.overviewDao().getOverview()
+            .map { list -> list.map { overviewMapper.mapOverview(it) } }
+
+    }
+
+    fun getOverview(season: Int): Flow<Overview> {
         return persistence.overviewDao().getOverview(season)
             .map { overview ->
-                tmg.flashback.formula1.model.Overview(
+                Overview(
                     season = season,
                     overviewRaces = overview
                         .filterNotNull()

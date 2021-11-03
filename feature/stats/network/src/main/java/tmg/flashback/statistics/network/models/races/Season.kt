@@ -18,9 +18,9 @@ data class Season(
 data class DriverStandings(
     val driverId: String,
     val points: Double,
-    val inProgress: Boolean,
-    val races: Int,
-    val position: Int?,
+    val inProgress: Boolean? = null,
+    val races: Int? = null, // TODO: Remove nullability on here!
+    val position: Int? = null,
     val constructors: Map<String, Double>
 )
 
@@ -28,8 +28,8 @@ data class DriverStandings(
 data class ConstructorStandings(
     val constructorId: String,
     val points: Double,
-    val inProgress: Boolean,
-    val races: Int,
-    val position: Int?,
+    val inProgress: Boolean? = null,
+    val races: Int? = null, // TODO: Remove nullability on here!
+    val position: Int? = null,
     val drivers: Map<String, Double>
 )

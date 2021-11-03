@@ -3,11 +3,7 @@ package tmg.flashback.formula1.model
 data class Season(
     val season: Int,
     val races: List<Race>,
-    @Deprecated("Should not be used anymore, query SeasonStandingsDAO directly")
-    val driverStandings: DriverStandings,
-    @Deprecated("Should not be used anymore, query SeasonStandingsDAO directly")
-    val constructorStandings: ConstructorStandings
-    val drivers: Set<Driver> = races.map { it.drivers }.flatten().toSet(),
+    val drivers: Set<Driver> = races.map { it.drivers.map { it.driver } }.flatten().toSet(),
     val constructors: Set<Constructor> = races.map { it.constructors }.flatten().toSet(),
 ) {
 
@@ -20,64 +16,6 @@ data class Season(
 
     val lastRace: Race?
         get() = races.maxByOrNull { it.raceInfo.round }
-}
-
-/**
- * Get the constructor standings for the season
- */
-@Deprecated("Query the DAO directly", replaceWith = ReplaceWith("SeasonStandingsDao.getConstructorStandings()"))
-fun Season.constructorStandings(): ConstructorStandingsRound = this.constructors
-        .map { constructor ->
-            // Driver map should contain driver id -> Driver, points for each constructor
-            val driverMap = mutableMapOf<String, Pair<ConstructorDriver, Double>>()
-            this.races.forEach { round ->
-                val driversInRoundForConstructor = round.drivers
-                        .filter { roundDriver -> roundDriver.constructor.id == constructor.id }
-                        .map { driver ->
-                            val points = (round.race[driver.id]?.points ?: 0.0) + (round.qSprint[driver.id]?.points ?: 0.0)
-                            driver to points
-                        }
-
-                driversInRoundForConstructor.forEach { (roundDriver, points) ->
-                    if (!driverMap.containsKey(roundDriver.id)) {
-                        driverMap[roundDriver.id] = Pair(roundDriver, 0.0)
-                    }
-                    val existingValue = driverMap.getValue(roundDriver.id)
-
-                    driverMap[roundDriver.id] = Pair(roundDriver, existingValue.second + points)
-                }
-            }
-
-            // Constructor points
-            val constructorPoints = this.constructorStandings.firstOrNull { it.item.id == constructor.id }
-                    ?.let { (_, points) -> points }
-                    ?: driverMap.map { it.value.second }.sum()
-
-            constructor.id to Triple(constructor, driverMap, constructorPoints)
-        }
-        .toMap()
-
-/**
- * Get the driver standings for the season
- */
-// TODO: Re-implement this method to include the driver standings data to include penalties etc.
-//@Deprecated("This method should be depended on, use the standings object inside the season model for a more accurate reflection")
-@Deprecated("Query the DAO directly", replaceWith = ReplaceWith("SeasonStandingsDao.getConstructorStandings()"))
-fun List<Race>.driverStandings(): DriverStandingsRound {
-    val returnMap: MutableMap<String, Pair<ConstructorDriver, Double>> = mutableMapOf()
-
-    this.forEach { round ->
-        round.drivers.forEach {
-            if (!returnMap.containsKey(it.id)) {
-                returnMap[it.id] = Pair(it, 0.0)
-            }
-
-            val (driver, points) = returnMap[it.id]!!
-            returnMap[it.id] = Pair(driver, points + (round.race[it.id]?.points ?: 0.0))
-        }
-    }
-
-    return returnMap
 }
 
 /**

@@ -10,6 +10,7 @@ import tmg.flashback.statistics.room.models.race.RaceResult
 @Dao
 interface SeasonDao {
 
+    @Transaction
     @Query("SELECT * FROM RaceInfo WHERE season == :season")
     fun getRaces(season: Int): Flow<List<Race>>
 

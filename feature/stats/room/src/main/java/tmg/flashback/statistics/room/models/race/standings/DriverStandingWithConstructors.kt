@@ -13,6 +13,7 @@ data class DriverStandingWithConstructors(
     )
     val driver: Driver,
     @Relation(
+        entity = DriverStandingConstructor::class,
         parentColumn = "id",
         entityColumn = "driver_season_id"
     )

@@ -1,6 +1,7 @@
 package tmg.flashback.statistics.ui.dashboard.season.viewholders
 
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kotlin.math.roundToInt
@@ -33,24 +34,25 @@ class DriverViewHolder(
         driver = item
 
         binding.tvPosition.text = item.position.toString()
-        binding.layoutDriver.tvName.text = item.driverWithEmbeddedConstructor.name
+        binding.layoutDriver.tvName.text = item.driver.name
         binding.layoutDriver.tvNumber.show(false)
         binding.layoutDriver.imgFlag.show(false)
 
         Glide.with(itemView)
             .clear(binding.image)
         Glide.with(itemView)
-            .load(item.driverWithEmbeddedConstructor.photoUrl)
+            .load(item.driver.photoUrl)
             .into(binding.image)
 
         binding.image.setBackgroundColor(context.theme.getColor(R.attr.contentTertiary))
-        binding.imgDriverFlag.setImageResource(itemView.context.getFlagResourceAlpha3(item.driverWithEmbeddedConstructor.nationalityISO))
+        binding.imgDriverFlag.setImageResource(itemView.context.getFlagResourceAlpha3(item.driver.nationalityISO))
 
-        binding.tvDriverNumber.text = item.driverWithEmbeddedConstructor.number.toString()
-        binding.tvConstructor.text = item.driverWithEmbeddedConstructor.startingConstructor.name
+        binding.tvDriverNumber.text = item.driver.number.toString()
+        binding.tvConstructor.text = item.constructors.joinToString(separator = ", ") { it.name }
 
         binding.lpvProgress.backgroundColour = itemView.context.theme.getColor(R.attr.backgroundPrimary)
-        binding.lpvProgress.progressColour = item.driverWithEmbeddedConstructor.startingConstructor.color
+        // TODO: Look at a way of representing multiple constructors on the driver overview board
+        binding.lpvProgress.progressColour = item.constructors.firstOrNull()?.color ?: context.theme.getColor(R.attr.colorPrimary)
         binding.lpvProgress.textBackgroundColour = context.theme.getColor(R.attr.contentSecondary)
 
         var maxProgress = item.points.toFloat() / item.maxPointsInSeason.toFloat()

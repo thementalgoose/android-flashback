@@ -20,5 +20,5 @@ data class DriverStanding(
     val races: Int,
     @PrimaryKey
     @ColumnInfo(name = "id")
-    val id: String = "${driverId}_${season}"
+    val id: String = "${driverId}_${season}",
 )

@@ -35,17 +35,17 @@ class RaceSprintQualifyingViewHolder(
 
     fun bind(model: RaceModel.Single) {
 
-        driverId = model.driver.id
-        driverName = model.driver.name
+        driverId = model.driver.driver.id
+        driverName = model.driver.driver.name
 
         binding.apply {
             tvPosition.text = model.qSprint?.finish.toString()
-            layoutDriver.tvName.text = model.driver.name
+            layoutDriver.tvName.text = model.driver.driver.name
             layoutDriver.tvNumber.gone()
             layoutDriver.imgFlag.gone()
-            tvDriverNumber.text = model.driver.number.toString()
+            tvDriverNumber.text = model.driver.driver.number.toString()
             tvDriverNumber.colorHighlight = darken(model.driver.constructor.color)
-            imgDriverFlag.setImageResource(context.getFlagResourceAlpha3(model.driver.nationalityISO))
+            imgDriverFlag.setImageResource(context.getFlagResourceAlpha3(model.driver.driver.nationalityISO))
             tvConstructor.text = model.driver.constructor.name
 
             constructorColor.setBackgroundColor(model.driver.constructor.color)
