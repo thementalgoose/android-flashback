@@ -70,7 +70,7 @@
     <string name="constructor_overview_in_progress">Season in progress</string>
 
     <!-- Overview disclaimer -->
-    <string name="results_accurate_for" formatted="false">Results as of the %s (round %d)</string>
+    <string name="results_accurate_for" formatted="false">Results as of the round %d</string>
     <string name="results_accurate_for_round" formatted="false">Results as of the %d, round %s</string>
     <string name="results_accurate_for_year" formatted="false">Results as of the %d %s (round %d)</string>
     <string name="qualifying_header">Q</string>

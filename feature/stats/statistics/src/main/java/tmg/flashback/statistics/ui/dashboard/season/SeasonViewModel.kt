@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.*
 import org.threeten.bp.DayOfWeek
 import org.threeten.bp.LocalDate
@@ -14,9 +13,9 @@ import tmg.core.analytics.manager.AnalyticsManager
 import tmg.flashback.formula1.constants.Formula1.constructorChampionshipStarts
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 import tmg.core.device.managers.NetworkConnectivityManager
-import tmg.flashback.data.db.stats.SeasonOverviewRepository
 import tmg.core.ui.controllers.ThemeController
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.statistics.R
@@ -24,7 +23,9 @@ import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
 import tmg.flashback.formula1.model.*
 import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.statistics.controllers.SeasonController
+import tmg.flashback.statistics.extensions.analyticsLabel
 import tmg.flashback.statistics.repo.OverviewRepository
+import tmg.flashback.statistics.repo.SeasonRepository
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
 import tmg.utilities.extensions.combinePair
 import tmg.utilities.extensions.then
@@ -72,21 +73,18 @@ interface SeasonViewModelOutputs {
 
 //endregion
 
+@ExperimentalCoroutinesApi
 class SeasonViewModel(
-        private val themeController: ThemeController,
-        private val overviewRepository: OverviewRepository,
-        private val seasonOverviewRepository: SeasonOverviewRepository,
-        private val seasonController: SeasonController,
-        private val networkConnectivityManager: NetworkConnectivityManager,
-        private val analyticsManager: AnalyticsManager
+    private val themeController: ThemeController,
+    private val overviewRepository: OverviewRepository,
+    private val seasonRepository: SeasonRepository,
+    private val seasonController: SeasonController,
+    private val networkConnectivityManager: NetworkConnectivityManager,
+    private val analyticsManager: AnalyticsManager
 ): ViewModel(), SeasonViewModelInputs, SeasonViewModelOutputs {
 
-    private val currentTab: ConflatedBroadcastChannel<SeasonNavItem> =
-        ConflatedBroadcastChannel(SeasonNavItem.SCHEDULE)
-    private val currentTabFlow: Flow<SeasonNavItem> = currentTab.asFlow()
-    private val season: ConflatedBroadcastChannel<Int> = ConflatedBroadcastChannel(seasonController.defaultSeason)
-    private val currentOverview: Flow<Overview?> = season.asFlow()
-        .flatMapLatest { overviewRepository.getOverview(it) }
+    private val currentTab: MutableStateFlow<SeasonNavItem> = MutableStateFlow(SeasonNavItem.SCHEDULE)
+    private val season: MutableStateFlow<Int> = MutableStateFlow(seasonController.defaultSeason)
 
     override val openRace: MutableLiveData<DataEvent<SeasonItem.Track>> = MutableLiveData()
     override val openDriver: MutableLiveData<DataEvent<SeasonItem.Driver>> = MutableLiveData()
@@ -102,7 +100,7 @@ class SeasonViewModel(
     /**
      * Label to be shown at the top of the screen to indicate what year it is
      */
-    override val label: LiveData<StringHolder> = season.asFlow()
+    override val label: LiveData<StringHolder> = season
         .map { season ->
             StringHolder(msg = season.toString())
         }
@@ -115,113 +113,93 @@ class SeasonViewModel(
      * - CONSTRUCTORS
      */
     private val seasonList: Flow<List<SeasonItem>> = season
-        .asFlow()
-        .flatMapLatest {
-            seasonOverviewRepository.getSeasonOverview(it).combinePair(currentOverview)
-        }
-        .combinePair(
-            currentTabFlow,
-        )
-        .map { (seasonAndHistory, menuItemType) ->
-            val (season, history) = seasonAndHistory
-
-            when (menuItemType) {
-                SeasonNavItem.CALENDAR -> analyticsManager.logEvent("select_dashboard_calendar", mapOf(
-                    "season" to season.season.toString()
-                ))
-                SeasonNavItem.SCHEDULE -> analyticsManager.logEvent("select_dashboard_schedule", mapOf(
-                    "season" to season.season.toString()
-                ))
-                SeasonNavItem.DRIVERS -> analyticsManager.logEvent("select_dashboard_driver", mapOf(
-                    "season" to season.season.toString()
-                ))
-                SeasonNavItem.CONSTRUCTORS -> analyticsManager.logEvent("select_dashboard_constructor", mapOf(
-                    "season" to season.season.toString()
-                ))
-            }
+        .combinePair(currentTab)
+        .flatMapLatest { (season, menuItem) ->
+            analyticsManager.logEvent(menuItem.analyticsLabel, mapOf(
+                "season" to season.toString()
+            ))
 
             val appBannerMessage = seasonController.banner
-            val list: MutableList<SeasonItem> = mutableListOf()
-            val historyRounds = history?.overviewRaces ?: emptyList()
-            val rounds = season.races
 
-            appBannerMessage?.let {
-                list.addError(SyncDataItem.Message(it.message, it.url))
-            }
-
-            when (menuItemType) {
+            return@flatMapLatest when (menuItem) {
                 SeasonNavItem.CALENDAR -> {
-                    when {
-                        historyRounds.isEmpty() && !networkConnectivityManager.isConnected ->
-                            list.addError(SyncDataItem.NoNetwork)
-                        historyRounds.isEmpty() && season.season == currentSeasonYear ->
-                            list.addError(SyncDataItem.Unavailable(DataUnavailable.EARLY_IN_SEASON))
-                        historyRounds.isEmpty() ->
-                            list.addError(SyncDataItem.Unavailable(DataUnavailable.MISSING_RACE))
-                        else ->
-                            list.addAll(historyRounds.toCalendar(season.season))
-                    }
+                    overviewRepository.getOverview(season)
+                        .map {
+                            val list: MutableList<SeasonItem> = getBannerList()
+                            when {
+                                it.overviewRaces.isEmpty() && !networkConnectivityManager.isConnected ->
+                                    list.addError(SyncDataItem.NoNetwork)
+                                it.overviewRaces.isEmpty() && season == currentSeasonYear ->
+                                    list.addError(SyncDataItem.Unavailable(DataUnavailable.EARLY_IN_SEASON))
+                                it.overviewRaces.isEmpty() ->
+                                    list.addError(SyncDataItem.Unavailable(DataUnavailable.MISSING_RACE))
+                                else ->
+                                    list.addAll(it.overviewRaces.toCalendar(season))
+                            }
+                            return@map list
+                        }
                 }
                 SeasonNavItem.SCHEDULE -> {
-                    when {
-                        historyRounds.isEmpty() && !networkConnectivityManager.isConnected ->
-                            list.addError(SyncDataItem.NoNetwork)
-                        historyRounds.isEmpty() && season.season == currentSeasonYear ->
-                            list.addError(SyncDataItem.Unavailable(DataUnavailable.EARLY_IN_SEASON))
-                        historyRounds.isEmpty() ->
-                            list.addError(SyncDataItem.Unavailable(DataUnavailable.MISSING_RACE))
-                        else ->
-                            list.addAll(historyRounds.toScheduleList())
-                    }
+                    overviewRepository.getOverview(season)
+                        .map {
+                            val list: MutableList<SeasonItem> = getBannerList()
+                            when {
+                                it.overviewRaces.isEmpty() && !networkConnectivityManager.isConnected ->
+                                    list.addError(SyncDataItem.NoNetwork)
+                                it.overviewRaces.isEmpty() && season == currentSeasonYear ->
+                                    list.addError(SyncDataItem.Unavailable(DataUnavailable.EARLY_IN_SEASON))
+                                it.overviewRaces.isEmpty() ->
+                                    list.addError(SyncDataItem.Unavailable(DataUnavailable.MISSING_RACE))
+                                else ->
+                                    list.addAll(it.overviewRaces.toScheduleList())
+                            }
+                            return@map list
+                        }
+
                 }
                 SeasonNavItem.DRIVERS -> {
-                    when {
-                        rounds.isEmpty() && !networkConnectivityManager.isConnected ->
-                            list.addError(SyncDataItem.NoNetwork)
-                        rounds.isEmpty() ->
-                            list.addError(SyncDataItem.Unavailable(DataUnavailable.IN_FUTURE_SEASON))
-                        else -> {
-                            val maxRound = rounds
-                                .filter { it.race.isNotEmpty() }
-                                .maxByOrNull { it.raceInfo.round }
-                            if (maxRound != null && historyRounds.size != rounds.size) {
-                                list.addError(SyncDataItem.MessageRes(R.string.results_accurate_for, listOf(maxRound.name, maxRound.round)))
-                            }
+                    seasonRepository.getDriverStandings(season)
+                        .map { standings ->
+                            val list: MutableList<SeasonItem> = getBannerList()
+                            val results = standings?.standings ?: emptyList()
                             when {
-                                season.driverStandings.isEmpty() -> {
-                                    val driverStandings = rounds.driverStandings()
-                                    list.addAll(driverStandings.toDriverList(rounds))
-                                }
+                                results.isEmpty() && !networkConnectivityManager.isConnected ->
+                                    list.addError(SyncDataItem.NoNetwork)
+                                results.isEmpty() ->
+                                    list.addError(SyncDataItem.Unavailable(DataUnavailable.IN_FUTURE_SEASON))
                                 else -> {
-                                    list.addAll(season.driverStandings.toDriverList(rounds))
+                                    if (results.any { it.inProgress }) {
+                                        list.addError(SyncDataItem.MessageRes(R.string.results_accurate_for, listOf(results.first().races)))
+                                    }
+                                    list.addAll(standings?.toDriverList() ?: emptyList())
                                 }
                             }
+                            return@map list
                         }
-                    }
                 }
                 SeasonNavItem.CONSTRUCTORS -> {
-                    when {
-                        season.season < constructorChampionshipStarts ->
-                            list.addError(SyncDataItem.ConstructorsChampionshipNotAwarded)
-                        rounds.isEmpty() && !networkConnectivityManager.isConnected ->
-                            list.addError(SyncDataItem.NoNetwork)
-                        rounds.isEmpty() ->
-                            list.addError(SyncDataItem.Unavailable(DataUnavailable.IN_FUTURE_SEASON))
-                        else -> {
-                            val maxRound = rounds
-                                .filter { it.race.isNotEmpty() }
-                                .maxByOrNull { it.raceInfo.round }
-                            if (maxRound != null && historyRounds.size != rounds.size) {
-                                list.addError(SyncDataItem.MessageRes(R.string.results_accurate_for, listOf(maxRound.name, maxRound.round)))
+                    seasonRepository.getConstructorStandings(season)
+                        .map { standings ->
+                            val list: MutableList<SeasonItem> = getBannerList()
+                            val results = standings?.standings ?: emptyList()
+                            when {
+                                season < constructorChampionshipStarts ->
+                                    list.addError(SyncDataItem.ConstructorsChampionshipNotAwarded)
+                                results.isEmpty() && !networkConnectivityManager.isConnected ->
+                                    list.addError(SyncDataItem.NoNetwork)
+                                results.isEmpty() ->
+                                    list.addError(SyncDataItem.Unavailable(DataUnavailable.IN_FUTURE_SEASON))
+                                else -> {
+                                    if (results.any { it.inProgress }) {
+                                        list.addError(SyncDataItem.MessageRes(R.string.results_accurate_for, listOf(results.first().races)))
+                                    }
+                                    list.addAll(standings?.toConstructorList() ?: emptyList())
+                                }
                             }
-                            val constructorStandings = season.constructorStandings()
-                            list.addAll(constructorStandings.toConstructorList(season))
+                            return@map list
                         }
-                    }
                 }
             }
-
-            return@map list
         }
         .onStart { emitAll(flow { emptyList<SeasonItem>() }) }
 
@@ -256,16 +234,14 @@ class SeasonViewModel(
     }
 
     override fun clickItem(item: SeasonNavItem) {
-        if (item != currentTab.valueOrNull) {
+        if (item != currentTab.value) {
             showLoading.value = true
-            currentTab.offer(item)
+            currentTab.value = item
         }
     }
 
     override fun appConfigSynced() {
-        this.season.valueOrNull?.let {
-            this.season.offer(it)
-        }
+        this.season.value = this.season.value
     }
 
     override fun refresh() {
@@ -281,7 +257,7 @@ class SeasonViewModel(
 
     override fun selectSeason(season: Int) {
         showLoading.value = true
-        this.season.offer(season)
+        this.season.value = season
     }
 
     override fun clickTrack(track: SeasonItem.Track) {
@@ -297,6 +273,14 @@ class SeasonViewModel(
     }
 
     //endregion
+
+    private fun getBannerList(): MutableList<SeasonItem> {
+        val list = mutableListOf<SeasonItem>()
+        seasonController.banner?.let {
+            list.addError(SyncDataItem.Message(it.message, it.url))
+        }
+        return list
+    }
 
     /**
      * Extract the calendar of events out into a formatted display list
@@ -356,65 +340,18 @@ class SeasonViewModel(
 
     /**
      * Convert the driver standings construct into a list of home items to display on the home page
-     */
-    private fun List<SeasonStanding<DriverWithEmbeddedConstructor>>.toDriverList(races: List<Race>): List<SeasonItem> {
-        return this
-            .sortedBy { it.position }
-            .toList()
-            .mapIndexed { index: Int, standing: SeasonStanding<DriverWithEmbeddedConstructor> ->
-                SeasonItem.Driver(
-                    season = season.value,
-                    driverWithEmbeddedConstructor = standing.item,
-                    points = standing.points,
-                    position = index + 1,
-                    bestQualifying = races.bestQualifyingResultFor(standing.item.id),
-                    bestFinish = races.bestRaceResultFor(standing.item.id),
-                    maxPointsInSeason = this.maxByOrNull { it.points }?.points ?: 0.0,
-                    animationSpeed = themeController.animationSpeed
-                )
-            }
-    }
-    /**
-     * Convert the driver standings construct into a list of home items to display on the home page
      * Compatibility function
      */
-    @Deprecated("Should not be required if the standings model is available. Data migration in progress", replaceWith = ReplaceWith("List<SeasonStanding<Driver>>.toDriverList(rounds: List<Round>)"))
-    private fun DriverStandingsRound.toDriverList(races: List<Race>): List<SeasonItem> {
+    private fun SeasonDriverStandings.toDriverList(): List<SeasonItem> {
         return this
-            .values
-            .sortedByDescending { it.second }
-            .toList()
-            .mapIndexed { index: Int, pair: Pair<ConstructorDriver, Double> ->
-                val (roundDriver, points) = pair
-
-                // TODO: This should be refactored out!
-                val rebuildDriver = DriverWithEmbeddedConstructor(
-                    id = roundDriver.id,
-                    firstName = roundDriver.firstName,
-                    lastName = roundDriver.lastName,
-                    code = roundDriver.code,
-                    number = roundDriver.number,
-                    wikiUrl = roundDriver.wikiUrl,
-                    photoUrl = roundDriver.photoUrl,
-                    dateOfBirth = roundDriver.dateOfBirth,
-                    nationality = roundDriver.nationality,
-                    nationalityISO = roundDriver.nationalityISO,
-                    constructors = races
-                        .map { round ->
-                            round.round to round.drivers.first { driv -> driv.id == roundDriver.id }.constructor
-                        }
-                        .toMap(),
-                    startingConstructor = roundDriver.constructor,
-                )
-
+            .standings
+            .mapIndexed { index: Int, standing: SeasonDriverStandingSeason ->
                 SeasonItem.Driver(
-                    season = season.value,
-                    driverWithEmbeddedConstructor = rebuildDriver,
-                    points = points,
+                    season = standing.season,
+                    driver = standing.driver,
+                    points = standing.points,
                     position = index + 1,
-                    bestQualifying = races.bestQualifyingResultFor(roundDriver.id),
-                    bestFinish = races.bestRaceResultFor(roundDriver.id),
-                    maxPointsInSeason = this.values.maxByOrNull { it.second }?.second ?: 0.0,
+                    maxPointsInSeason = this.standings.maxByOrNull { it.points }?.points ?: 1000.0,
                     animationSpeed = themeController.animationSpeed
                 )
             }
@@ -423,19 +360,19 @@ class SeasonViewModel(
     /**
      * Convert the constructor standings construct into a list of home items to display on the home page
      */
-    private fun ConstructorStandingsRound.toConstructorList(season: Season): List<SeasonItem> {
+    private fun SeasonConstructorStandings.toConstructorList(season: Season): List<SeasonItem> {
         return this
-            .values
-            .toList()
-            .mapIndexed { index: Int, triple: Triple<Constructor, Map<String, Pair<ConstructorDriver, Double>>, Double> ->
-                val (constructor, driverPoints, constructorPoints) = triple
+            .standings
+            .mapIndexed { index: Int, item: SeasonConstructorStandingSeason ->
                 SeasonItem.Constructor(
                     season = season.season,
                     position = index + 1,
                     constructor = constructor,
-                    driver = driverPoints.values.sortedByDescending { it.second },
-                    points = season.constructorStandings.firstOrNull { it.item.id == constructor.id }?.points ?: constructorPoints,
-                    maxPointsInSeason = this.maxConstructorPointsInSeason(),
+                    driver = item.drivers
+                        .map { Pair(it.driver, it.points) }
+                        .sortedByDescending { it.second },
+                    points = item.points,
+                    maxPointsInSeason = this.standings.maxByOrNull { it.points }?.points ?: 1000.0,
                     barAnimation = themeController.animationSpeed
                 )
             }

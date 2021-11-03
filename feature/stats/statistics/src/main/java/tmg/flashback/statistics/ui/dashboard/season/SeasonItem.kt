@@ -6,6 +6,7 @@ import org.threeten.bp.Month
 import tmg.flashback.statistics.R
 import tmg.core.ui.model.AnimationSpeed
 import tmg.flashback.formula1.model.ConstructorDriver
+import tmg.flashback.formula1.model.Driver
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.formula1.model.Race
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
@@ -42,11 +43,9 @@ sealed class SeasonItem(
     data class Driver(
         val season: Int,
         val points: Double,
-        val driverWithEmbeddedConstructor: tmg.flashback.formula1.model.DriverWithEmbeddedConstructor,
-        val driverId: String = driverWithEmbeddedConstructor.id,
+        val driver: tmg.flashback.formula1.model.Driver,
+        val driverId: String = driver.id,
         val position: Int,
-        val bestQualifying: Pair<Int, List<Race>>?,
-        val bestFinish: Pair<Int, List<Race>>?,
         val maxPointsInSeason: Double,
         val animationSpeed: AnimationSpeed
     ) : SeasonItem(R.layout.view_dashboard_season_driver)
@@ -56,7 +55,7 @@ sealed class SeasonItem(
         val position: Int,
         val constructor: tmg.flashback.formula1.model.Constructor,
         val constructorId: String = constructor.id,
-        val driver: List<Pair<ConstructorDriver, Double>>,
+        val driver: List<Pair<tmg.flashback.formula1.model.Driver, Double>>,
         val points: Double,
         val maxPointsInSeason: Double,
         val barAnimation: AnimationSpeed

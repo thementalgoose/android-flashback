@@ -33,15 +33,15 @@ class SeasonRepository(
             }
     }
 
-    fun getDriverStandings(driverId: String): Flow<SeasonDriverStandings?> {
-        return persistence.seasonStandingDao().getDriverStandings(driverId)
+    fun getDriverStandings(season: Int): Flow<SeasonDriverStandings?> {
+        return persistence.seasonStandingDao().getDriverStandings(season)
             .map { standings ->
                 driverStandingMapper.mapDriverStanding(standings)
             }
     }
 
-    fun getConstructorStandings(constructorId: String): Flow<SeasonConstructorStandings?> {
-        return persistence.seasonStandingDao().getConstructorStandings(constructorId)
+    fun getConstructorStandings(season: Int): Flow<SeasonConstructorStandings?> {
+        return persistence.seasonStandingDao().getConstructorStandings(season)
             .map { standings ->
                 constructorStandingMapper.mapConstructorStanding(standings)
             }

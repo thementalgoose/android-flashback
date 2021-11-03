@@ -10,8 +10,8 @@ interface SeasonStandingsDao {
     //region Driver Standings
 
     @Transaction
-    @Query("SELECT * FROM DriverStanding WHERE driver_id == :driverId")
-    fun getDriverStandings(driverId: String): Flow<List<DriverStandingWithConstructors>>
+    @Query("SELECT * FROM DriverStanding WHERE season == :season")
+    fun getDriverStandings(season: Int): Flow<List<DriverStandingWithConstructors>>
 
     @Transaction
     fun insertDriverStandings(standing: DriverStanding, constructors: List<DriverStandingConstructor>) {
@@ -37,8 +37,8 @@ interface SeasonStandingsDao {
     //region Constructor Standings
 
     @Transaction
-    @Query("SELECT * FROM ConstructorStanding WHERE constructor_id == :constructorId")
-    fun getConstructorStandings(constructorId: String): Flow<List<ConstructorStandingWithDrivers>>
+    @Query("SELECT * FROM ConstructorStanding WHERE season == :season")
+    fun getConstructorStandings(season: Int): Flow<List<ConstructorStandingWithDrivers>>
 
     @Transaction
     fun insertConstructorStandings(standing: ConstructorStanding, drivers: List<ConstructorStandingDriver>) {
