@@ -15,8 +15,8 @@ class NetworkConstructorStandingMapper {
             season = season,
             points = data.points,
             position = data.position,
-            inProgress = data.inProgress,
-            races = data.races
+            inProgress = data.inProgress ?: false,
+            races = data.races ?: 0
         )
     }
 

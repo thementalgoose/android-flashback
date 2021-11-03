@@ -5,14 +5,6 @@ import org.koin.dsl.module
 import tmg.flashback.data.db.DataRepository
 import tmg.flashback.data.db.stats.*
 import tmg.flashback.firebase.mappers.AppLockoutMapper
-import tmg.flashback.firebase.mappers.CircuitMapper
-import tmg.flashback.firebase.mappers.HistoryMapper
-import tmg.flashback.firebase.mappers.LocationMapper
-import tmg.flashback.firebase.mappers.SeasonOverviewMapper
-import tmg.flashback.firebase.mappers.seasonoverview.SeasonOverviewConstructorMapper
-import tmg.flashback.firebase.mappers.seasonoverview.SeasonOverviewDriverMapper
-import tmg.flashback.firebase.mappers.seasonoverview.SeasonOverviewRaceMapper
-import tmg.flashback.firebase.mappers.seasonoverview.SeasonOverviewStandingsMapper
 import tmg.flashback.firebase.repos.*
 import tmg.flashback.formula1.constants.Formula1
 import tmg.flashback.statistics.controllers.RaceController
@@ -40,7 +32,7 @@ val statisticsModule = repoModule + module {
     viewModel { DriverViewModel(get(), get()) }
     viewModel { DriverSeasonViewModel(get(), get(), get()) }
     viewModel { RaceViewModel(get(), get(), get(), get()) }
-    viewModel { SearchViewModel(get()) }
+    viewModel { SearchViewModel(get(), get(), get(), get()) }
     viewModel { CategoryViewModel() }
 
     viewModel { SettingsStatisticsViewModel(get(), get()) }
@@ -54,18 +46,7 @@ val statisticsModule = repoModule + module {
 
     // Firestore Mappers
     single { AppLockoutMapper() }
-    single { CircuitMapper(get(), get()) }
-    single { HistoryMapper(Formula1.allDataUpToo, get()) }
-    single { SearchMapper(get(), get()) }
-    single { LocationMapper() }
-    single { SeasonOverviewMapper(get(), get(), get(), get()) }
-    single { SeasonOverviewConstructorMapper() }
-    single { SeasonOverviewDriverMapper(get()) }
-    single { SeasonOverviewRaceMapper(get()) }
-    single { SeasonOverviewStandingsMapper(get(), get(), get()) }
 
     // Firestore
     single<DataRepository> { DataFirestore(get(), get()) }
-    single<SeasonOverviewRepository> { SeasonOverviewFirestore(get(), get()) }
-    single<SearchRepository> { SearchFirestore(get(), get(), get()) }
 }

@@ -15,11 +15,11 @@ data class RaceResult(
     val driverNumber: String,
     val constructorId: String,
     val points: Double,
-    val qualified: Int?,
-    val gridPos: Int?,
+    val qualified: Int? = null,
+    val gridPos: Int? = null,
     val finished: Int,
     val status: String,
-    val time: String,
+    val time: String? = null,
     val fastestLap: FastestLap?
 )
 
@@ -34,12 +34,12 @@ data class QualifyingResult(
     val driverId: String,
     val driverNumber: String?,
     val constructorId: String,
-    val points: Double?,
+    val points: Double? = null,
     val qualified: Int?,
-    val q1: String?,
-    val q2: String?,
-    val q3: String?,
-    val qSprint: SprintQualifyingResult?
+    val q1: String? = null,
+    val q2: String? = null,
+    val q3: String? = null,
+    val qSprint: SprintQualifyingResult? = null
 )
 
 @Serializable

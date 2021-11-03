@@ -1,5 +1,7 @@
 package tmg.flashback.formula1.model
 
+import androidx.annotation.BoolRes
+
 data class Race(
     val raceInfo: RaceInfo,
     val q1: Map<String, RaceQualifyingResult>,
@@ -9,38 +11,40 @@ data class Race(
     val race: Map<String, RaceRaceResult>
 ) {
 
-    val drivers: List<Driver>
+    val drivers: List<DriverConstructor>
     val constructors: List<Constructor>
 
     init {
-        val driverSet: MutableSet<Driver> = mutableSetOf()
+        val driverSet: MutableSet<DriverConstructor> = mutableSetOf()
         val constructorSet: MutableSet<Constructor> = mutableSetOf()
         q1.values.forEach {
             constructorSet.add(it.driver.constructor)
-            driverSet.add(it.driver.driver)
+            driverSet.add(it.driver)
         }
         q2.values.forEach {
             constructorSet.add(it.driver.constructor)
-            driverSet.add(it.driver.driver)
+            driverSet.add(it.driver)
         }
         q3.values.forEach {
             constructorSet.add(it.driver.constructor)
-            driverSet.add(it.driver.driver)
+            driverSet.add(it.driver)
         }
         qSprint.values.forEach {
             constructorSet.add(it.driver.constructor)
-            driverSet.add(it.driver.driver)
+            driverSet.add(it.driver)
         }
         race.values.forEach {
             constructorSet.add(it.driver.constructor)
-            driverSet.add(it.driver.driver)
+            driverSet.add(it.driver)
         }
         this.drivers = driverSet.toList()
         this.constructors = constructorSet.toList()
     }
 
-    fun driverOverview(driverId: String): RaceDriverOverview {
+    fun driverOverview(driverId: String): RaceDriverOverview? {
+        val driver = drivers.firstOrNull { it.driver.id == driverId } ?: return null
         return RaceDriverOverview(
+            driver = driver,
             q1 = q1[driverId],
             q2 = q2[driverId],
             q3 = q3[driverId],
@@ -51,6 +55,10 @@ data class Race(
 
     val hasSprintQualifying: Boolean
         get() = qSprint.isNotEmpty()
+
+    val hasData: Boolean by lazy {
+        q1.isNotEmpty() || q2.isNotEmpty() || q3.isNotEmpty() || qSprint.isNotEmpty() || race.isNotEmpty()
+    }
 
     val q1FastestLap: LapTime?
         get() = q1.fastest()

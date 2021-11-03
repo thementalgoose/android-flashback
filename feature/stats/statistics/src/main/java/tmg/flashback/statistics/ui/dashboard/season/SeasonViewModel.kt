@@ -13,7 +13,6 @@ import tmg.core.analytics.manager.AnalyticsManager
 import tmg.flashback.formula1.constants.Formula1.constructorChampionshipStarts
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 import tmg.core.device.managers.NetworkConnectivityManager
 import tmg.core.ui.controllers.ThemeController
@@ -21,7 +20,6 @@ import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.statistics.R
 import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
 import tmg.flashback.formula1.model.*
-import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.statistics.controllers.SeasonController
 import tmg.flashback.statistics.extensions.analyticsLabel
 import tmg.flashback.statistics.repo.OverviewRepository
@@ -73,7 +71,6 @@ interface SeasonViewModelOutputs {
 
 //endregion
 
-@ExperimentalCoroutinesApi
 class SeasonViewModel(
     private val themeController: ThemeController,
     private val overviewRepository: OverviewRepository,
@@ -248,6 +245,7 @@ class SeasonViewModel(
         showLoading.value = true
         viewModelScope.launch(context = Dispatchers.IO) {
             val result = overviewRepository.fetchOverview(season.value)
+            val anotherResult = seasonRepository.fetchRaces(season.value)
             showLoading.postValue(false)
             if (!result) {
                 showRefreshError.postValue(Event())
@@ -349,6 +347,7 @@ class SeasonViewModel(
                 SeasonItem.Driver(
                     season = standing.season,
                     driver = standing.driver,
+                    constructors = standing.constructors.map { it.constructor },
                     points = standing.points,
                     position = index + 1,
                     maxPointsInSeason = this.standings.maxByOrNull { it.points }?.points ?: 1000.0,
@@ -360,14 +359,14 @@ class SeasonViewModel(
     /**
      * Convert the constructor standings construct into a list of home items to display on the home page
      */
-    private fun SeasonConstructorStandings.toConstructorList(season: Season): List<SeasonItem> {
+    private fun SeasonConstructorStandings.toConstructorList(): List<SeasonItem> {
         return this
             .standings
             .mapIndexed { index: Int, item: SeasonConstructorStandingSeason ->
                 SeasonItem.Constructor(
-                    season = season.season,
+                    season = item.season,
                     position = index + 1,
-                    constructor = constructor,
+                    constructor = item.constructor,
                     driver = item.drivers
                         .map { Pair(it.driver, it.points) }
                         .sortedByDescending { it.second },

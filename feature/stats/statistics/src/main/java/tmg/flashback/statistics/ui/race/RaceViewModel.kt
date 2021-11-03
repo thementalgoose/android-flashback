@@ -4,25 +4,22 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.*
 import org.threeten.bp.LocalDate
 import androidx.lifecycle.ViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import tmg.flashback.statistics.controllers.RaceController
-import tmg.flashback.data.db.stats.SeasonOverviewRepository
 import tmg.core.ui.controllers.ThemeController
 import tmg.flashback.formula1.constants.Formula1.showComingSoonMessageForNextDays
-import tmg.flashback.formula1.model.ConstructorDriver
-import tmg.flashback.formula1.model.LapTime
-import tmg.flashback.formula1.model.Race
-import tmg.flashback.formula1.model.RaceDriverOverview
+import tmg.flashback.formula1.model.*
+import tmg.flashback.statistics.repo.RaceRepository
 import tmg.flashback.statistics.ui.race.*
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
 import tmg.flashback.statistics.ui.util.SeasonRound
 import tmg.utilities.extensions.combinePair
-import tmg.utilities.extensions.combineTriple
 import tmg.utilities.lifecycle.DataEvent
+import java.lang.NullPointerException
 import java.util.*
 
 //region Inputs
@@ -40,7 +37,7 @@ interface RaceViewModelInputs {
 //region Outputs
 
 interface RaceViewModelOutputs {
-    val raceItems: LiveData<Triple<RaceAdapterType, List<RaceModel>, SeasonRound>>
+    val raceItems: LiveData<Pair<RaceAdapterType, List<RaceModel>>>
     val goToDriverOverview: LiveData<DataEvent<Pair<String, String>>>
     val goToConstructorOverview: LiveData<DataEvent<Pair<String, String>>>
 
@@ -50,7 +47,7 @@ interface RaceViewModelOutputs {
 //endregion
 
 class RaceViewModel(
-    private val seasonOverviewRepository: SeasonOverviewRepository,
+    private val raceRepository: RaceRepository,
     private val raceController: RaceController,
     private val themeController: ThemeController,
     private val connectivityManager: tmg.core.device.managers.NetworkConnectivityManager
@@ -61,53 +58,62 @@ class RaceViewModel(
 
     private var roundDate: LocalDate? = null
     private var toggleQualifyingDelta: Boolean? = null
-    private val seasonRound: ConflatedBroadcastChannel<SeasonRound> = ConflatedBroadcastChannel()
+    private val seasonRound: MutableStateFlow<SeasonRound?> = MutableStateFlow(null)
+    private val viewType: MutableStateFlow<RaceAdapterType> = MutableStateFlow(RaceAdapterType.RACE)
+    private val viewTypeRefresh: MutableStateFlow<String> = MutableStateFlow(UUID.randomUUID().toString())
 
-    private var viewType: ConflatedBroadcastChannel<RaceAdapterType> = ConflatedBroadcastChannel()
-    private var viewTypeRefresh: ConflatedBroadcastChannel<String> = ConflatedBroadcastChannel(UUID.randomUUID().toString())
-
-    private var viewTypeFlow = viewType.asFlow()
-        .combinePair(viewTypeRefresh.asFlow())
+    private val viewTypeFlow: Flow<Pair<RaceAdapterType, String>> = viewType.combinePair(viewTypeRefresh)
 
     override val goToDriverOverview: MutableLiveData<DataEvent<Pair<String, String>>> = MutableLiveData()
     override val goToConstructorOverview: MutableLiveData<DataEvent<Pair<String, String>>> = MutableLiveData()
     override val showSprintQualifying: MutableLiveData<Boolean> = MutableLiveData(false)
 
-    private val seasonRaceFlow: Flow<Race?> = seasonRound
-        .asFlow()
-        .flatMapLatest { (season, round) -> seasonOverviewRepository.getSeasonRound(season, round) }
-        .shareIn(viewModelScope, SharingStarted.Lazily)
+    override val raceItems: LiveData<Pair<RaceAdapterType, List<RaceModel>>> = seasonRound
+            .flatMapLatest { seasonRound ->
+                raceRepository.getRace(seasonRound!!.first, seasonRound.second)
+            }
+            .combinePair(viewTypeFlow)
+            .map { (race, viewTypeFlow) ->
+                val (viewType, _) = viewTypeFlow
+                val list = mutableListOf<RaceModel>()
 
-    override val raceItems: LiveData<Triple<RaceAdapterType, List<RaceModel>, SeasonRound>> = seasonRaceFlow
-            .combineTriple(viewTypeFlow, seasonRound.asFlow())
-            .map { (roundData, refreshableViewType, seasonRoundValue) ->
-                val (viewType, _) = refreshableViewType
-                if (roundData == null) {
-                    val list = mutableListOf<RaceModel>()
+                if (race == null) {
                     when {
-                        !connectivityManager.isConnected ->
-                            list.add(RaceModel.ErrorItem(SyncDataItem.NoNetwork))
-                        roundDate != null && roundDate!! > LocalDate.now() ->
+                        !connectivityManager.isConnected -> list.add(RaceModel.ErrorItem(SyncDataItem.NoNetwork))
+                        else -> list.add(RaceModel.ErrorItem(SyncDataItem.Unavailable((DataUnavailable.MISSING_RACE))))
+                    }
+                    return@map Pair(viewType, list.toList())
+                }
+                if (!race.hasData) {
+                    when {
+                        race.raceInfo.date > LocalDate.now() ->
                             list.add(RaceModel.ErrorItem(SyncDataItem.Unavailable((DataUnavailable.IN_FUTURE_RACE))))
-                        roundDate != null && roundDate!! <= LocalDate.now() && roundDate!! >= LocalDate.now().minusDays(showComingSoonMessageForNextDays.toLong()) ->
+                        race.raceInfo.date <= LocalDate.now() && race.raceInfo.date >= LocalDate.now().minusDays(showComingSoonMessageForNextDays.toLong()) ->
                             list.add(RaceModel.ErrorItem(SyncDataItem.Unavailable((DataUnavailable.COMING_SOON_RACE))))
                         else ->
                             list.add(RaceModel.ErrorItem(SyncDataItem.Unavailable((DataUnavailable.MISSING_RACE))))
                     }
-                    return@map Triple(viewType, list, seasonRoundValue)
+                    return@map Pair(viewType, list.toList())
                 }
 
-                showSprintQualifying.value = roundData.hasSprintQualifying
+                list.add(getRaceOverview(race))
 
-                // Constructor standings, models are constructors
-                if (viewType == RaceAdapterType.CONSTRUCTOR_STANDINGS) {
-                    val list: List<RaceModel> = mutableListOf<RaceModel>().apply {
-                        add(getRaceOverview(roundData))
-                        addAll(roundData
+                val driverIds: List<String> = getOrderedDriverIds(race, viewType)
+                val showQualifying = DisplayPrefs(
+                    q1 = race.q1.count { it.value.time != null } > 0,
+                    q2 = race.q2.count { it.value.time != null } > 0,
+                    q3 = race.q3.count { it.value.time != null } > 0,
+                    deltas = toggleQualifyingDelta ?: raceController.showQualifyingDelta,
+                    penalties = raceController.showGridPenaltiesInQualifying,
+                    fadeDNF = raceController.fadeDNF
+                )
+
+                when (viewType) {
+                    RaceAdapterType.CONSTRUCTOR_STANDINGS -> {
+                        list.addAll(race
                             .constructorStandings
                             .map {
-                                val drivers: List<Pair<ConstructorDriver, Double>> =
-                                    getDriverFromConstructor(roundData, it.constructor.id)
+                                val drivers: List<Pair<Driver, Double>> = getDriverFromConstructor(race, it.constructor.id)
                                 RaceModel.ConstructorStandings(
                                     it.constructor,
                                     it.points,
@@ -118,90 +124,70 @@ class RaceViewModel(
                             .sortedByDescending {
                                 it.points
                             })
+
+                        return@map Pair(
+                            viewType,
+                            list
+                        )
                     }
-
-                    return@map Triple(
-                        viewType,
-                        list,
-                        SeasonRound(roundData.season, roundData.round)
-                    )
-                }
-                // Race or qualifying - Models are driver models
-                else {
-                    val driverIds: List<String> = getOrderedDriverIds(roundData, viewType)
-                    val list: MutableList<RaceModel> = mutableListOf(getRaceOverview(roundData))
-                    val showQualifying = DisplayPrefs(
-                        q1 = roundData.q1.count { it.value.time != null } > 0,
-                        q2 = roundData.q2.count { it.value.time != null } > 0,
-                        q3 = roundData.q3.count { it.value.time != null } > 0,
-                        deltas = toggleQualifyingDelta ?: raceController.showQualifyingDelta,
-                        penalties = raceController.showGridPenaltiesInQualifying,
-                        fadeDNF = raceController.fadeDNF
-                    )
-
-                    when (viewType) {
-                        RaceAdapterType.RACE -> {
-                            if (roundData.race.isNotEmpty()) {
-                                var startIndex = 0
-                                if (driverIds.size >= 3) {
-                                    list.add(RaceModel.Podium(
-                                        driverFirst = getDriverModel(roundData, viewType, driverIds[0], showQualifying),
-                                        driverSecond = getDriverModel(roundData, viewType, driverIds[1], showQualifying),
-                                        driverThird = getDriverModel(roundData, viewType, driverIds[2], showQualifying)
-                                    ))
-                                    startIndex = 3
-                                    list.add(RaceModel.RaceHeader(roundData.season, roundData.round))
-                                }
-                                for (i in startIndex until driverIds.size) {
-                                    list.add(
-                                        getDriverModel(roundData, viewType, driverIds[i], showQualifying)
-                                    )
-                                }
+                    RaceAdapterType.RACE -> {
+                        if (race.race.isNotEmpty()) {
+                            var startIndex = 0
+                            if (driverIds.size >= 3) {
+                                list.add(RaceModel.Podium(
+                                    driverFirst = getDriverModel(race, viewType, driverIds[0], showQualifying),
+                                    driverSecond = getDriverModel(race, viewType, driverIds[1], showQualifying),
+                                    driverThird = getDriverModel(race, viewType, driverIds[2], showQualifying)
+                                ))
+                                startIndex = 3
+                                list.add(RaceModel.RaceHeader(race.raceInfo.season, race.raceInfo.round))
                             }
-                            else {
-                                when {
-                                    roundData.date > LocalDate.now() -> list.add(RaceModel.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.IN_FUTURE_RACE)))
-                                    else -> list.add(RaceModel.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.COMING_SOON_RACE)))
-                                }
+                            for (i in startIndex until driverIds.size) {
+                                list.add(
+                                    getDriverModel(race, viewType, driverIds[i], showQualifying)
+                                )
                             }
                         }
-                        RaceAdapterType.QUALIFYING_SPRINT -> {
-                            list.add(RaceModel.RaceHeader(roundData.season, roundData.round))
-                            list.addAll(driverIds.mapIndexed { _, driverId ->
-                                getDriverModel(roundData, viewType, driverId, showQualifying)
-                            })
+                        else {
+                            when {
+                                race.raceInfo.date > LocalDate.now() -> list.add(RaceModel.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.IN_FUTURE_RACE)))
+                                else -> list.add(RaceModel.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.COMING_SOON_RACE)))
+                            }
                         }
-                        RaceAdapterType.QUALIFYING_POS_1,
-                        RaceAdapterType.QUALIFYING_POS_2,
-                        RaceAdapterType.QUALIFYING_POS -> {
-                            list.add(RaceModel.QualifyingHeader(showQualifying))
-                            list.addAll(driverIds.mapIndexed { _, driverId ->
-                                getDriverModel(roundData, viewType, driverId, showQualifying)
-                            })
-                        }
-                        else -> throw Error("Unsupported view type")
                     }
-                    return@map Triple(
-                        viewType,
-                        list,
-                        SeasonRound(roundData.season, roundData.round)
-                    )
+                    RaceAdapterType.QUALIFYING_SPRINT -> {
+                        list.add(RaceModel.RaceHeader(race.raceInfo.season, race.raceInfo.round))
+                        list.addAll(driverIds.mapIndexed { _, driverId ->
+                            getDriverModel(race, viewType, driverId, showQualifying)
+                        })
+                    }
+                    RaceAdapterType.QUALIFYING_POS_1,
+                    RaceAdapterType.QUALIFYING_POS_2,
+                    RaceAdapterType.QUALIFYING_POS -> {
+                        list.add(RaceModel.QualifyingHeader(showQualifying))
+                        list.addAll(driverIds.mapIndexed { _, driverId ->
+                            getDriverModel(race, viewType, driverId, showQualifying)
+                        })
+                    }
+                    else -> throw Error("Unsupported view type")
                 }
+
+                return@map Pair(viewType, list.toList())
             }
             .asLiveData(viewModelScope.coroutineContext)
 
     //region Inputs
 
     override fun initialise(season: Int, round: Int, date: LocalDate?) {
-        val existing: SeasonRound? = seasonRound.valueOrNull
+        val existing: SeasonRound? = seasonRound.value
         if (existing?.first != season || existing.second != round) {
             roundDate = date
-            seasonRound.offer(SeasonRound(season, round))
+            seasonRound.value = SeasonRound(season, round)
         }
     }
 
     override fun orderBy(seasonRaceAdapterType: RaceAdapterType) {
-        viewType.offer(seasonRaceAdapterType)
+        viewType.value = seasonRaceAdapterType
     }
 
     override fun goToDriver(driverId: String, driverName: String) {
@@ -214,30 +200,31 @@ class RaceViewModel(
 
     override fun toggleQualifyingDelta(toNewState: Boolean) {
         toggleQualifyingDelta = toNewState
-        viewTypeRefresh.offer(UUID.randomUUID().toString())
+        viewTypeRefresh.value = UUID.randomUUID().toString()
     }
 
     //endregion
 
-    private fun getDriverFromConstructor(race: Race, constructorId: String): List<Pair<ConstructorDriver, Double>> {
-        return race
-            .drivers
-            .filter { it.constructor.id == constructorId }
-            .map { Pair(it, race.race[it.id]?.points ?: 0.0) }
+    private fun getDriverFromConstructor(race: Race, constructorId: String): List<Pair<Driver, Double>> {
+        return race.race.values
+            .mapNotNull { raceResult ->
+                if (raceResult.driver.constructor.id != constructorId) return@mapNotNull null
+                return@mapNotNull Pair(raceResult.driver.driver, raceResult.points)
+            }
             .sortedByDescending { it.second }
     }
 
-    private fun getRaceOverview(raceData: Race): RaceModel.Overview {
+    private fun getRaceOverview(race: Race): RaceModel.Overview {
         return RaceModel.Overview(
-            raceName = raceData.name,
-            country = raceData.circuit.country,
-            countryISO = raceData.circuit.countryISO,
-            circuitId = raceData.circuit.id,
-            circuitName = raceData.circuit.name,
-            round = raceData.round,
-            season = raceData.season,
-            raceDate = raceData.date,
-            wikipedia = raceData.wikipediaUrl
+            raceName = race.raceInfo.name,
+            country = race.raceInfo.circuit.country,
+            countryISO = race.raceInfo.circuit.countryISO,
+            circuitId = race.raceInfo.circuit.id,
+            circuitName = race.raceInfo.circuit.name,
+            round = race.raceInfo.round,
+            season = race.raceInfo.season,
+            raceDate = race.raceInfo.date,
+            wikipedia = race.raceInfo.wikipediaUrl
         )
     }
 
@@ -249,11 +236,9 @@ class RaceViewModel(
             return emptyList()
         }
         if (raceData.race.isNotEmpty()) {
-            return raceData
-                .race
-                .values
+            return raceData.race.values
                 .sortedBy {
-                    val driverOverview: RaceDriverOverview = raceData.driverOverview(it.driver.id)
+                    val driverOverview: RaceDriverOverview = raceData.driverOverview(it.driver.driver.id) ?: return@sortedBy Int.MAX_VALUE
 
                     if (viewType.isQualifying() &&
                         driverOverview.q1?.position == null &&
@@ -278,25 +263,25 @@ class RaceViewModel(
                         else -> it.finish
                     }
                 }
-                .map { it.driver.id }
+                .map { it.driver.driver.id }
         }
         else {
             return raceData
                 .drivers
                 .sortedBy {
 
-                    val q1 = raceData.q1[it.id]
-                    val q2 = raceData.q2[it.id]
-                    val q3 = raceData.q3[it.id]
+                    val q1 = raceData.q1[it.driver.id]
+                    val q2 = raceData.q2[it.driver.id]
+                    val q3 = raceData.q3[it.driver.id]
 
                     return@sortedBy when (viewType) {
-                        RaceAdapterType.QUALIFYING_SPRINT -> raceData.qSprint[it.id]?.finish
+                        RaceAdapterType.QUALIFYING_SPRINT -> raceData.qSprint[it.driver.id]?.finish
                         RaceAdapterType.QUALIFYING_POS_1 -> q1?.position
                         RaceAdapterType.QUALIFYING_POS_2 -> q2?.position ?: q1?.position
                         else -> q3?.position ?: q2?.position ?: q1?.position
                     }
                 }
-                .map { it.id }
+                .map { it.driver.id }
         }
     }
 
@@ -310,8 +295,8 @@ class RaceViewModel(
         driverId: String,
         displayPrefs: DisplayPrefs
     ): RaceModel.Single {
-        val overview = race.driverOverview(driverId)
-        val race = overview.race?.let {
+        val overview = race.driverOverview(driverId) ?: throw NullPointerException("Driver id $driverId was requested when displaying ${race.raceInfo.season} / ${race.raceInfo.round}")
+        val singleRace = overview.race?.let {
             SingleRace(
                 points = it.points,
                 result = it.time ?: LapTime(),
@@ -322,14 +307,14 @@ class RaceViewModel(
             )
         }
         return RaceModel.Single(
-            season = race.season,
-            round = race.round,
-            driver = race.drivers.first { it.id == driverId },
+            season = race.raceInfo.season,
+            round = race.raceInfo.round,
+            driver = overview.driver,
             q1 = overview.q1,
             q2 = overview.q2,
             q3 = overview.q3,
             qSprint = overview.qSprint,
-            race = race,
+            race = singleRace,
             qualified = overview.race?.qualified ?: race.getQualifyingOnlyPosByDriverId(driverId),
             q1Delta = if (toggleQualifyingDelta ?: raceController.showQualifyingDelta) race.q1FastestLap?.deltaTo(overview.q1?.time) else null,
             q2Delta = if (toggleQualifyingDelta ?: raceController.showQualifyingDelta) race.q2FastestLap?.deltaTo(overview.q2?.time) else null,

@@ -12,6 +12,7 @@ import tmg.flashback.formula1.model.*
 import tmg.flashback.statistics.repo.CircuitRepository
 import tmg.flashback.statistics.repo.ConstructorRepository
 import tmg.flashback.statistics.repo.DriverRepository
+import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
 import tmg.utilities.lifecycle.DataEvent
@@ -49,7 +50,7 @@ class SearchViewModel(
     private val driverRepository: DriverRepository,
     private val constructorRepository: ConstructorRepository,
     private val circuitRepository: CircuitRepository,
-    private val searchRepository: SearchRepository
+    private val overviewRepository: OverviewRepository
 ): ViewModel(), SearchViewModelInputs, SearchViewModelOutputs {
 
     var inputs: SearchViewModelInputs = this
@@ -76,10 +77,11 @@ class SearchViewModel(
                     .getCircuits()
                     .map { it.sortedBy { it.name }}
                     .mapCircuits()
-                SearchCategory.RACE -> searchRepository
-                    .allRaces()
-                    .mapListItem { it.overviewRaces }
-                    .map { it.flatten().sortedByDescending { "${it.season}-${it.round.extendTo(2)}" } }
+                SearchCategory.RACE -> overviewRepository
+                    .getOverview()
+                    .map {
+                        it.sortedByDescending { "${it.season}-${it.round.extendTo(2)}" }
+                    }
                     .mapRaces()
             }
         }

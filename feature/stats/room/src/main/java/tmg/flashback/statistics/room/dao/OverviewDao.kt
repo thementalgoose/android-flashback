@@ -13,6 +13,9 @@ interface OverviewDao {
     @Query("SELECT * FROM overview WHERE season = :season")
     fun getOverview(season: Int): Flow<List<Overview?>>
 
+    @Query("SELECT * FROM overview")
+    fun getOverview(): Flow<List<Overview>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(overviews: List<Overview>)
 }
