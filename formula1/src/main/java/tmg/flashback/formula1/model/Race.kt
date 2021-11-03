@@ -1,16 +1,7 @@
 package tmg.flashback.formula1.model
 
-import org.threeten.bp.LocalDate
-import org.threeten.bp.LocalTime
-
 data class Race(
-    val season: Int,
-    val round: Int,
-    val date: LocalDate,
-    val time: LocalTime?,
-    val name: String,
-    val wikipediaUrl: String?,
-    val circuit: Circuit,
+    val raceInfo: RaceInfo,
     val q1: Map<String, RaceQualifyingResult>,
     val q2: Map<String, RaceQualifyingResult>,
     val q3: Map<String, RaceQualifyingResult>,
@@ -68,8 +59,7 @@ data class Race(
     val q3FastestLap: LapTime?
         get() = q3.fastest()
 
-    @Deprecated("Use the DAO method to access constructor standings")
-    val constructorStandings: List<RoundConstructorStandings>
+    val constructorStandings: List<RaceConstructorStandings>
         get() {
             val standings: MutableMap<String, Double> = mutableMapOf()
             for ((_, raceResult) in race) {
@@ -78,21 +68,12 @@ data class Race(
                 standings[raceResult.driver.constructor.id] = previousPoints
             }
             return constructors.map {
-                RoundConstructorStandings(
+                RaceConstructorStandings(
                     standings.getOrElse(
                         it.id
                     ) { 0.0 }, it
                 )
             }
-        }
-
-    @Deprecated("Use the DAO method to access constructor standings")
-    val driverStandings: List<RoundDriverStandings>
-        get() = race.map { (_, value) ->
-            RoundDriverStandings(
-                value.points,
-                value.driver
-            )
         }
 
     private fun Map<String, RaceQualifyingResult>.fastest(): LapTime? = this

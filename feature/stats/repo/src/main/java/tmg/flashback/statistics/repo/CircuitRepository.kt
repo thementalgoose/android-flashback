@@ -56,6 +56,11 @@ class CircuitRepository(
         return@attempt allCircuits.isNotEmpty()
     }
 
+    fun getCircuits(): Flow<List<Circuit>> {
+        return persistence.circuitDao().getCircuits()
+            .map { list -> list.mapNotNull { circuitMapper.mapCircuit(it) } }
+    }
+
     fun getCircuit(id: String): Flow<Circuit?> {
         return persistence.circuitDao().getCircuit(id)
             .map { circuitMapper.mapCircuit(it) }

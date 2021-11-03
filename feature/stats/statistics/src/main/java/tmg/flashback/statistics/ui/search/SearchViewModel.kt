@@ -8,10 +8,10 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.*
 import tmg.flashback.data.db.stats.SearchRepository
 import tmg.flashback.data.utils.extendTo
-import tmg.flashback.formula1.model.OverviewRace
-import tmg.flashback.formula1.model.SearchCircuit
-import tmg.flashback.formula1.model.SearchConstructor
-import tmg.flashback.formula1.model.SearchDriver
+import tmg.flashback.formula1.model.*
+import tmg.flashback.statistics.repo.CircuitRepository
+import tmg.flashback.statistics.repo.ConstructorRepository
+import tmg.flashback.statistics.repo.DriverRepository
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
 import tmg.utilities.lifecycle.DataEvent
@@ -46,6 +46,9 @@ interface SearchViewModelOutputs {
 //endregion
 
 class SearchViewModel(
+    private val driverRepository: DriverRepository,
+    private val constructorRepository: ConstructorRepository,
+    private val circuitRepository: CircuitRepository,
     private val searchRepository: SearchRepository
 ): ViewModel(), SearchViewModelInputs, SearchViewModelOutputs {
 
@@ -61,16 +64,16 @@ class SearchViewModel(
         .filterNotNull()
         .flatMapLatest { category ->
             when (category) {
-                SearchCategory.DRIVER -> searchRepository
-                    .allDrivers()
+                SearchCategory.DRIVER -> driverRepository
+                    .getDrivers()
                     .map { it.sortedBy { "${it.firstName} ${it.lastName}" }}
                     .mapDrivers()
-                SearchCategory.CONSTRUCTOR -> searchRepository
-                    .allConstructors()
+                SearchCategory.CONSTRUCTOR -> constructorRepository
+                    .getConstructors()
                     .map { it.sortedBy { it.name }}
                     .mapConstructors()
-                SearchCategory.CIRCUIT -> searchRepository
-                    .allCircuits()
+                SearchCategory.CIRCUIT -> circuitRepository
+                    .getCircuits()
                     .map { it.sortedBy { it.name }}
                     .mapCircuits()
                 SearchCategory.RACE -> searchRepository
@@ -136,40 +139,40 @@ class SearchViewModel(
 
     //endregion
 
-    private fun Flow<List<SearchDriver>>.mapDrivers(): Flow<List<SearchItem>> {
+    private fun Flow<List<Driver>>.mapDrivers(): Flow<List<SearchItem>> {
         return this.mapListItem {
             SearchItem.Driver(
                 driverId = it.id,
                 name = "${it.firstName} ${it.lastName}",
                 nationality = it.nationality,
                 nationalityISO = it.nationalityISO,
-                imageUrl = it.image
+                imageUrl = it.photoUrl
             )
         }
     }
 
 
-    private fun Flow<List<SearchConstructor>>.mapConstructors(): Flow<List<SearchItem>> {
+    private fun Flow<List<Constructor>>.mapConstructors(): Flow<List<SearchItem>> {
         return this.mapListItem {
             SearchItem.Constructor(
                 constructorId = it.id,
                 name = it.name,
                 nationality = it.nationality,
                 nationalityISO = it.nationalityISO,
-                colour = it.colour
+                colour = it.color
             )
         }
     }
 
 
-    private fun Flow<List<SearchCircuit>>.mapCircuits(): Flow<List<SearchItem>> {
+    private fun Flow<List<Circuit>>.mapCircuits(): Flow<List<SearchItem>> {
         return this.mapListItem {
             SearchItem.Circuit(
                 circuitId = it.id,
                 name = it.name,
                 nationality = it.country,
                 nationalityISO = it.countryISO,
-                location = it.locationName
+                location = it.city
             )
         }
     }

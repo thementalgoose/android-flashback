@@ -1,6 +1,5 @@
 package tmg.flashback.statistics.repo.mappers.app
 
-import tmg.flashback.formula1.enums.raceStatusUnknown
 import tmg.flashback.formula1.model.*
 import tmg.flashback.formula1.utils.toLapTime
 import tmg.flashback.statistics.room.models.race.QualifyingDriverResult
@@ -16,9 +15,8 @@ class RaceMapper(
 
     private enum class Qualifying { Q1, Q2, Q3 }
 
-    fun mapRace(data: tmg.flashback.statistics.room.models.race.Race?): Race? {
-        if (data == null) return null
-        return Race(
+    fun mapRaceInfo(data: tmg.flashback.statistics.room.models.race.Race): RaceInfo {
+        return RaceInfo(
             season = data.raceInfo.season,
             round = data.raceInfo.round,
             date = requireFromDate(data.raceInfo.date),
@@ -26,6 +24,13 @@ class RaceMapper(
             name = data.raceInfo.name,
             wikipediaUrl = data.raceInfo.wikiUrl,
             circuit = circuitMapper.mapCircuit(data.circuit)!!,
+        )
+    }
+
+    fun mapRace(data: tmg.flashback.statistics.room.models.race.Race?): Race? {
+        if (data == null) return null
+        return Race(
+            raceInfo = mapRaceInfo(data),
             q1 = mapQualifying(
                 fieldToBaseFilteringOn = Qualifying.Q1,
                 input = data.qualifying

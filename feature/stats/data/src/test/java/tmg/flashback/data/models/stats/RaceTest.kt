@@ -59,11 +59,11 @@ class RaceTest {
     fun `constructorStandings returns correct standings`() {
 
         val expected = listOf(
-            tmg.flashback.formula1.model.RoundConstructorStandings(
+            tmg.flashback.formula1.model.RaceConstructorStandings(
                 constructor = mockConstructorAlpha,
                 points = 20.0
             ), // driver 1 + 3 as they have current constructor as mockConstructorAlpha
-            tmg.flashback.formula1.model.RoundConstructorStandings(
+            tmg.flashback.formula1.model.RaceConstructorStandings(
                 constructor = mockConstructorBeta,
                 points = 30.0
             ) // driver 2 + 4 as they have current constructor as mockConstructorBeta

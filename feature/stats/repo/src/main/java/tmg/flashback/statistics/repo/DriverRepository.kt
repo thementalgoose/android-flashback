@@ -73,7 +73,7 @@ class DriverRepository(
             .map { driverMapper.mapDriver(it) }
     }
 
-    fun getAllDrivers(): Flow<List<tmg.flashback.formula1.model.Driver>> {
+    fun getDrivers(): Flow<List<tmg.flashback.formula1.model.Driver>> {
         return persistence.driverDao().getDrivers()
             .map { list -> list.map { driverDataMapper.mapDriver(it) } }
     }

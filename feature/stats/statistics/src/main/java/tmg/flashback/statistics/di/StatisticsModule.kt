@@ -8,7 +8,6 @@ import tmg.flashback.firebase.mappers.AppLockoutMapper
 import tmg.flashback.firebase.mappers.CircuitMapper
 import tmg.flashback.firebase.mappers.HistoryMapper
 import tmg.flashback.firebase.mappers.LocationMapper
-import tmg.flashback.firebase.mappers.SearchMapper
 import tmg.flashback.firebase.mappers.SeasonOverviewMapper
 import tmg.flashback.firebase.mappers.seasonoverview.SeasonOverviewConstructorMapper
 import tmg.flashback.firebase.mappers.seasonoverview.SeasonOverviewDriverMapper

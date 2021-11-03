@@ -18,6 +18,9 @@ interface CircuitDao {
     @Query("SELECT * FROM circuit WHERE id == :id")
     fun getCircuitHistory(id: String): Flow<CircuitHistory>
 
+    @Query("SELECT * FROM Circuit")
+    fun getCircuits(): Flow<List<Circuit>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertCircuit(circuit: List<Circuit>)
 
