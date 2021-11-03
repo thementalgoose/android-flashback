@@ -575,13 +575,14 @@
     ]
   },
   {
-    "versionCode": 109,
-    "versionName": "6.5.7",
+    "versionCode": 110,
+    "versionName": "6.5.8",
     "isMajor": false,
     "title": "",
     "notes": [
       "Simplifies wording for default season management",
       "Fixes some padding issues for Widgets in Android 12",
+      "Fixes some crashes that happen on non-english devices",
       "Usual assortment of bug fixes and preparations for new features"
     ]
   }
