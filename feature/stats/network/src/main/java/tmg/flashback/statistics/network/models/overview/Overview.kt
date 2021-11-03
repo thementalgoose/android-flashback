@@ -1,6 +1,8 @@
 package tmg.flashback.statistics.network.models.overview
 
 import kotlinx.serialization.Serializable
+import tmg.flashback.statistics.network.models.circuits.Circuit
+import tmg.flashback.statistics.network.models.circuits.CircuitData
 
 typealias Overview = Map<String, OverviewRace>
 
@@ -9,10 +11,7 @@ data class OverviewRace(
     val season: Int,
     val round: Int,
     val name: String,
-    val circuit: String,
-    val circuitId: String,
-    val country: String,
-    val countryISO: String,
+    val circuit: CircuitData,
     val date: String,
     val time: String? = null,
     val hasQualifying: Boolean,

@@ -2,7 +2,6 @@ package tmg.flashback.statistics.room
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import tmg.flashback.formula1.model.SeasonStanding
 import tmg.flashback.statistics.room.dao.*
 import tmg.flashback.statistics.room.models.circuit.Circuit
 import tmg.flashback.statistics.room.models.circuit.CircuitRound

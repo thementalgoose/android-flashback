@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.*
-import tmg.flashback.data.db.stats.SearchRepository
 import tmg.flashback.data.utils.extendTo
 import tmg.flashback.formula1.model.*
 import tmg.flashback.statistics.repo.CircuitRepository

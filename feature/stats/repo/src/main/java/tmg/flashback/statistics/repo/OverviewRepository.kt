@@ -8,6 +8,7 @@ import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.statistics.network.api.FlashbackApi
 import tmg.flashback.statistics.repo.base.BaseRepository
 import tmg.flashback.statistics.repo.mappers.app.OverviewMapper
+import tmg.flashback.statistics.repo.mappers.network.NetworkCircuitDataMapper
 import tmg.flashback.statistics.repo.mappers.network.NetworkOverviewMapper
 import tmg.flashback.statistics.room.FlashbackDatabase
 
@@ -16,7 +17,8 @@ class OverviewRepository(
     private val persistence: FlashbackDatabase,
     crashController: CrashController,
     private val overviewMapper: OverviewMapper,
-    private val networkOverviewMapper: NetworkOverviewMapper
+    private val networkOverviewMapper: NetworkOverviewMapper,
+    private val networkCircuitDataMapper: NetworkCircuitDataMapper
 ): BaseRepository(crashController) {
 
     /**
@@ -27,8 +29,10 @@ class OverviewRepository(
         apiCall = suspend { api.getOverview() },
         msgIfFailed = "overview.json"
     ) { data ->
+        val allCircuits = data.values.map { networkCircuitDataMapper.mapCircuitData(it.circuit) }
         val allOverview = data.values
             .mapNotNull { networkOverviewMapper.mapOverview(it) }
+        persistence.circuitDao().insertCircuit(allCircuits)
         persistence.overviewDao().insertAll(allOverview)
         return@attempt true
     }
@@ -42,8 +46,10 @@ class OverviewRepository(
         apiCall = suspend { api.getOverview(season) },
         msgIfFailed = "overview/${season}.json"
     ) { data ->
+        val allCircuits = data.values.map { networkCircuitDataMapper.mapCircuitData(it.circuit) }
         val allOverview = data.values
             .mapNotNull { networkOverviewMapper.mapOverview(it) }
+        persistence.circuitDao().insertCircuit(allCircuits)
         persistence.overviewDao().insertAll(allOverview)
         return@attempt true
     }

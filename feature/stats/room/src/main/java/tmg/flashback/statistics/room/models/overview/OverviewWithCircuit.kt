@@ -1,4 +1,15 @@
 package tmg.flashback.statistics.room.models.overview
 
-class OverviewWithCircuit {
-}
+import androidx.room.Embedded
+import androidx.room.Relation
+import tmg.flashback.statistics.room.models.circuit.Circuit
+
+data class OverviewWithCircuit(
+    @Embedded
+    val overview: Overview,
+    @Relation(
+        parentColumn = "circuit_id",
+        entityColumn = "id"
+    )
+    val circuit: Circuit
+)
