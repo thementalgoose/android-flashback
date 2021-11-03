@@ -6,5 +6,5 @@ interface SearchRepository {
     fun allDrivers(): Flow<List<tmg.flashback.formula1.model.SearchDriver>>
     fun allConstructors(): Flow<List<tmg.flashback.formula1.model.SearchConstructor>>
     fun allCircuits(): Flow<List<tmg.flashback.formula1.model.SearchCircuit>>
-    fun allRaces(): Flow<List<tmg.flashback.formula1.model.SeasonOverview>>
+    fun allRaces(): Flow<List<tmg.flashback.formula1.model.Overview>>
 }

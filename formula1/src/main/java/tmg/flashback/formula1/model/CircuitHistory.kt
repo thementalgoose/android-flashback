@@ -2,5 +2,5 @@ package tmg.flashback.formula1.model
 
 data class CircuitHistory(
     val data: Circuit,
-    val results: List<CircuitRace>
+    val results: List<CircuitHistoryRace>
 )

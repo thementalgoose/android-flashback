@@ -17,7 +17,7 @@ import tmg.core.device.managers.NetworkConnectivityManager
 import tmg.core.ui.controllers.ThemeController
 import tmg.core.ui.model.AnimationSpeed
 import tmg.flashback.data.db.stats.SeasonOverviewRepository
-import tmg.flashback.formula1.model.SeasonOverview
+import tmg.flashback.formula1.model.Overview
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.statistics.*
 import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
@@ -244,7 +244,7 @@ internal class SeasonViewModelTest: BaseTest() {
     @Test
     fun `when home type is schedule and history rounds is empty and network not connected, show no network error`() = coroutineTest {
 
-        val historyListWithEmptyRound = SeasonOverview(2019, null, emptyList())
+        val historyListWithEmptyRound = Overview(2019, null, emptyList())
 
         every { mockNetworkConnectivityManager.isConnected } returns false
         every { mockHistoryRepository.historyFor(any()) } returns flow { emit(historyListWithEmptyRound) }
@@ -263,7 +263,7 @@ internal class SeasonViewModelTest: BaseTest() {
     @Test
     fun `when home type is schedule and history rounds is empty and network is connected and year is current year, show early in season error`() = coroutineTest {
 
-        val historyItemWithEmptyRound = SeasonOverview(currentSeasonYear, null, emptyList())
+        val historyItemWithEmptyRound = Overview(currentSeasonYear, null, emptyList())
 
         every { mockSeasonOverviewRepository.getSeasonOverview(any()) } returns flow { emit(mockSeason.copy(season = currentSeasonYear)) }
         every { mockHistoryRepository.historyFor(any()) } returns flow { emit(historyItemWithEmptyRound) }
@@ -282,7 +282,7 @@ internal class SeasonViewModelTest: BaseTest() {
     @Test
     fun `when home type is schedule and history rounds is empty and network is connected and year is in the past, show missing race data message`() = coroutineTest {
 
-        val historyListWithEmptyRound = SeasonOverview(2019, null, emptyList())
+        val historyListWithEmptyRound = Overview(2019, null, emptyList())
 
         every { mockHistoryRepository.historyFor(any()) } returns flow { emit(historyListWithEmptyRound) }
 
@@ -345,7 +345,7 @@ internal class SeasonViewModelTest: BaseTest() {
     @Test
     fun `when home type is calendar and history rounds is empty and network not connected, show no network error`() = coroutineTest {
 
-        val historyListWithEmptyRound = SeasonOverview(2019, null, emptyList())
+        val historyListWithEmptyRound = Overview(2019, null, emptyList())
 
         every { mockNetworkConnectivityManager.isConnected } returns false
         every { mockHistoryRepository.historyFor(any()) } returns flow { emit(historyListWithEmptyRound) }
@@ -366,7 +366,7 @@ internal class SeasonViewModelTest: BaseTest() {
     @Test
     fun `when home type is calendar and history rounds is empty and network is connected and year is current year, show early in season error`() = coroutineTest {
 
-        val historyItemWithEmptyRound = SeasonOverview(currentSeasonYear, null, emptyList())
+        val historyItemWithEmptyRound = Overview(currentSeasonYear, null, emptyList())
 
         every { mockSeasonOverviewRepository.getSeasonOverview(any()) } returns flow { emit(mockSeason.copy(season = currentSeasonYear)) }
         every { mockHistoryRepository.historyFor(any()) } returns flow { emit(historyItemWithEmptyRound) }
@@ -387,7 +387,7 @@ internal class SeasonViewModelTest: BaseTest() {
     @Test
     fun `when home type is calendar and history rounds is empty and network is connected and year is in the past, show missing race data message`() = coroutineTest {
 
-        val historyListWithEmptyRound = SeasonOverview(2019, null, emptyList())
+        val historyListWithEmptyRound = Overview(2019, null, emptyList())
 
         every { mockHistoryRepository.historyFor(any()) } returns flow { emit(historyListWithEmptyRound) }
 
@@ -426,7 +426,7 @@ internal class SeasonViewModelTest: BaseTest() {
 
         val historyRound1 = mockHistoryRound1.copy(date = LocalDate.of(2019, 7, 7))
         val historyRound2 = mockHistoryRound2.copy(date = LocalDate.of(2019, 10, 13))
-        every { mockHistoryRepository.historyFor(any()) } returns flow { emit(mockHistory.copy(roundOverviews = listOf(historyRound1, historyRound2))) }
+        every { mockHistoryRepository.historyFor(any()) } returns flow { emit(mockHistory.copy(overviewRaces = listOf(historyRound1, historyRound2))) }
 
         initSUT()
         sut.inputs.clickItem(SeasonNavItem.CALENDAR)
@@ -450,7 +450,7 @@ internal class SeasonViewModelTest: BaseTest() {
     fun `when home type is drivers and history rounds is empty and network not connected, show no network error`() = coroutineTest {
 
         every { mockNetworkConnectivityManager.isConnected } returns false
-        every { mockSeasonOverviewRepository.getSeasonOverview(any()) } returns flow { emit(mockSeason.copy(rounds = emptyList())) }
+        every { mockSeasonOverviewRepository.getSeasonOverview(any()) } returns flow { emit(mockSeason.copy(races = emptyList())) }
 
         val expected = listOf<SeasonItem>(
                 SeasonItem.ErrorItem(SyncDataItem.NoNetwork)
@@ -468,7 +468,7 @@ internal class SeasonViewModelTest: BaseTest() {
     @Test
     fun `when home type is drivers and history rounds is empty, show in future season`() = coroutineTest {
 
-        every { mockSeasonOverviewRepository.getSeasonOverview(any()) } returns flow { emit(mockSeason.copy(rounds = emptyList())) }
+        every { mockSeasonOverviewRepository.getSeasonOverview(any()) } returns flow { emit(mockSeason.copy(races = emptyList())) }
 
         val expected = listOf<SeasonItem>(
                 SeasonItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.IN_FUTURE_SEASON))
@@ -510,7 +510,7 @@ internal class SeasonViewModelTest: BaseTest() {
     @Test
     fun `when home type is drivers and history rounds size doesnt match rounds available, show results as of header box in response`() = coroutineTest {
 
-        every { mockHistoryRepository.historyFor(any()) } returns flow { emit(SeasonOverview(2019, null, listOf(mockHistoryRound1, mockHistoryRound2, mockHistoryRound3))) }
+        every { mockHistoryRepository.historyFor(any()) } returns flow { emit(Overview(2019, null, listOf(mockHistoryRound1, mockHistoryRound2, mockHistoryRound3))) }
 
         initSUT()
         sut.inputs.clickItem(SeasonNavItem.DRIVERS)
@@ -518,7 +518,7 @@ internal class SeasonViewModelTest: BaseTest() {
         advanceUntilIdle()
 
         sut.outputs.list.test {
-            assertListContainsItem(SeasonItem.ErrorItem(SyncDataItem.MessageRes(R.string.results_accurate_for, listOf(mockRound2.name, mockRound2.round))))
+            assertListContainsItem(SeasonItem.ErrorItem(SyncDataItem.MessageRes(R.string.results_accurate_for, listOf(MOCK_RACE_2.name, MOCK_RACE_2.round))))
         }
     }
 
@@ -530,7 +530,7 @@ internal class SeasonViewModelTest: BaseTest() {
     fun `when home type is constructors and history rounds is empty and network not connected, show no network error`() = coroutineTest {
 
         every { mockNetworkConnectivityManager.isConnected } returns false
-        every { mockSeasonOverviewRepository.getSeasonOverview(any()) } returns flow { emit(mockSeason.copy(rounds = emptyList())) }
+        every { mockSeasonOverviewRepository.getSeasonOverview(any()) } returns flow { emit(mockSeason.copy(races = emptyList())) }
 
         val expected = listOf<SeasonItem>(
                 SeasonItem.ErrorItem(SyncDataItem.NoNetwork)
@@ -548,7 +548,7 @@ internal class SeasonViewModelTest: BaseTest() {
     @Test
     fun `when home type is constructors and history rounds is empty, show in future season`() = coroutineTest {
 
-        every { mockSeasonOverviewRepository.getSeasonOverview(any()) } returns flow { emit(mockSeason.copy(rounds = emptyList())) }
+        every { mockSeasonOverviewRepository.getSeasonOverview(any()) } returns flow { emit(mockSeason.copy(races = emptyList())) }
 
         val expected = listOf<SeasonItem>(
                 SeasonItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.IN_FUTURE_SEASON))
@@ -588,7 +588,7 @@ internal class SeasonViewModelTest: BaseTest() {
     @Test
     fun `when home type is constructors and history rounds size doesnt match rounds available, show results as of header box in response`() = coroutineTest {
 
-        every { mockHistoryRepository.historyFor(any()) } returns flow { emit(SeasonOverview(2019, null, listOf(mockHistoryRound1, mockHistoryRound2, mockHistoryRound3))) }
+        every { mockHistoryRepository.historyFor(any()) } returns flow { emit(Overview(2019, null, listOf(mockHistoryRound1, mockHistoryRound2, mockHistoryRound3))) }
 
         initSUT()
         sut.inputs.clickItem(SeasonNavItem.CONSTRUCTORS)
@@ -596,7 +596,7 @@ internal class SeasonViewModelTest: BaseTest() {
         advanceUntilIdle()
 
         sut.outputs.list.test {
-            assertListContainsItem(SeasonItem.ErrorItem(SyncDataItem.MessageRes(R.string.results_accurate_for, listOf(mockRound2.name, mockRound2.round))))
+            assertListContainsItem(SeasonItem.ErrorItem(SyncDataItem.MessageRes(R.string.results_accurate_for, listOf(MOCK_RACE_2.name, MOCK_RACE_2.round))))
         }
     }
 
@@ -666,8 +666,8 @@ internal class SeasonViewModelTest: BaseTest() {
             driverWithEmbeddedConstructor = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1,
             driverId = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.id,
             position = 3,
-            bestQualifying = Pair(1, listOf(mockRound1)),
-            bestFinish = Pair(1, listOf(mockRound2)),
+            bestQualifying = Pair(1, listOf(MOCK_RACE_1)),
+            bestFinish = Pair(1, listOf(MOCK_RACE_2)),
             maxPointsInSeason = 27.0,
             animationSpeed = AnimationSpeed.NONE
     )
@@ -677,8 +677,8 @@ internal class SeasonViewModelTest: BaseTest() {
             driverWithEmbeddedConstructor = mockDriver2,
             driverId = mockDriver2.id,
             position = 4,
-            bestQualifying = Pair(2, listOf(mockRound1)),
-            bestFinish = Pair(3, listOf(mockRound1, mockRound2)),
+            bestQualifying = Pair(2, listOf(MOCK_RACE_1)),
+            bestFinish = Pair(3, listOf(MOCK_RACE_1, MOCK_RACE_2)),
             maxPointsInSeason = 27.0,
             animationSpeed = AnimationSpeed.NONE
     )
@@ -688,8 +688,8 @@ internal class SeasonViewModelTest: BaseTest() {
             driverWithEmbeddedConstructor = mockDriver3,
             driverId = mockDriver3.id,
             position = 1,
-            bestQualifying = Pair(3, listOf(mockRound1, mockRound2)),
-            bestFinish = Pair(2, listOf(mockRound1, mockRound2)),
+            bestQualifying = Pair(3, listOf(MOCK_RACE_1, MOCK_RACE_2)),
+            bestFinish = Pair(2, listOf(MOCK_RACE_1, MOCK_RACE_2)),
             maxPointsInSeason = 27.0,
             animationSpeed = AnimationSpeed.NONE
     )
@@ -699,8 +699,8 @@ internal class SeasonViewModelTest: BaseTest() {
             driverWithEmbeddedConstructor = mockDriver4,
             driverId = mockDriver4.id,
             position = 2,
-            bestQualifying = Pair(1, listOf(mockRound2)),
-            bestFinish = Pair(1, listOf(mockRound1)),
+            bestQualifying = Pair(1, listOf(MOCK_RACE_2)),
+            bestFinish = Pair(1, listOf(MOCK_RACE_1)),
             maxPointsInSeason = 27.0,
             animationSpeed = AnimationSpeed.NONE
     )

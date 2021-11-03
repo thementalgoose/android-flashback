@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import tmg.flashback.formula1.constants.Formula1.maxPointsBySeason
 import tmg.flashback.statistics.ui.overview.driver.summary.PipeType
-import tmg.flashback.formula1.model.DriverOverviewStanding
+import tmg.flashback.formula1.model.DriverHistorySeason
 import tmg.core.ui.controllers.ThemeController
 import tmg.flashback.firebase.extensions.pointsDisplay
 import tmg.flashback.statistics.R
@@ -206,7 +206,7 @@ class DriverSeasonViewModel(
     /**
      * Add career stats for the driver across their career
      */
-    private fun getAllStats(overview: DriverOverviewStanding): List<DriverSeasonItem> {
+    private fun getAllStats(overview: DriverHistorySeason): List<DriverSeasonItem> {
         val list: MutableList<DriverSeasonItem> = mutableListOf()
 
         list.addStat(

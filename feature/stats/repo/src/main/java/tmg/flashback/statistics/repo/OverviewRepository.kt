@@ -3,16 +3,11 @@ package tmg.flashback.statistics.repo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import tmg.crash_reporting.controllers.CrashController
-import tmg.flashback.formula1.model.SeasonOverview
 import tmg.flashback.statistics.network.api.FlashbackApi
-import tmg.flashback.statistics.network.models.overview.Overview
-import tmg.flashback.statistics.network.utils.data
-import tmg.flashback.statistics.network.utils.hasData
 import tmg.flashback.statistics.repo.base.BaseRepository
 import tmg.flashback.statistics.repo.mappers.app.OverviewMapper
 import tmg.flashback.statistics.repo.mappers.network.NetworkOverviewMapper
 import tmg.flashback.statistics.room.FlashbackDatabase
-import java.lang.RuntimeException
 
 class OverviewRepository(
     private val api: FlashbackApi,
@@ -51,12 +46,12 @@ class OverviewRepository(
         return@attempt true
     }
 
-    fun getOverview(season: Int): Flow<SeasonOverview> {
+    fun getOverview(season: Int): Flow<tmg.flashback.formula1.model.Overview> {
         return persistence.overviewDao().getOverview(season)
             .map { overview ->
-                SeasonOverview(
+                tmg.flashback.formula1.model.Overview(
                     season = season,
-                    roundOverviews = overview
+                    overviewRaces = overview
                         .filterNotNull()
                         .map { overviewMapper.mapOverview(it) }
                 )

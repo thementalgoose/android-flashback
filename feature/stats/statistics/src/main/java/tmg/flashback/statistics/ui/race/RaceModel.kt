@@ -5,6 +5,7 @@ import org.threeten.bp.LocalDate
 import tmg.core.ui.model.AnimationSpeed
 import tmg.flashback.formula1.enums.RaceStatus
 import tmg.flashback.formula1.model.*
+import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 
@@ -33,10 +34,10 @@ sealed class RaceModel(
         val season: Int,
         val round: Int,
         val driver: ConstructorDriver,
-        val q1: RoundQualifyingResult?,
-        val q2: RoundQualifyingResult?,
-        val q3: RoundQualifyingResult?,
-        val qSprint: RoundSprintQualifyingResult?,
+        val q1: RaceQualifyingResult?,
+        val q2: RaceQualifyingResult?,
+        val q3: RaceQualifyingResult?,
+        val qSprint: RaceSprintQualifyingResult?,
         val race: SingleRace?,
         val qualified: Int?,
         val q1Delta: String?,

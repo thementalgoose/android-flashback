@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.*
 import tmg.flashback.data.db.stats.SearchRepository
 import tmg.flashback.data.utils.extendTo
-import tmg.flashback.formula1.model.RoundOverview
+import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.formula1.model.SearchCircuit
 import tmg.flashback.formula1.model.SearchConstructor
 import tmg.flashback.formula1.model.SearchDriver
@@ -75,7 +75,7 @@ class SearchViewModel(
                     .mapCircuits()
                 SearchCategory.RACE -> searchRepository
                     .allRaces()
-                    .mapListItem { it.roundOverviews }
+                    .mapListItem { it.overviewRaces }
                     .map { it.flatten().sortedByDescending { "${it.season}-${it.round.extendTo(2)}" } }
                     .mapRaces()
             }
@@ -175,7 +175,7 @@ class SearchViewModel(
     }
 
 
-    private fun Flow<List<RoundOverview>>.mapRaces(): Flow<List<SearchItem>> {
+    private fun Flow<List<OverviewRace>>.mapRaces(): Flow<List<SearchItem>> {
         return this
             .mapListItem {
                 SearchItem.Race(

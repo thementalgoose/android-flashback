@@ -10,8 +10,8 @@ class SeasonOverviewConstructorMapper {
      * Map a constructor
      * @param input Constructor to map
      */
-    fun mapConstructor(input: FSeasonOverviewConstructor): tmg.flashback.formula1.model.Constructor {
-        return tmg.flashback.formula1.model.Constructor(
+    fun mapConstructor(input: FSeasonOverviewConstructor): Constructor {
+        return Constructor(
             id = input.id,
             name = input.name,
             wikiUrl = input.wikiUrl,

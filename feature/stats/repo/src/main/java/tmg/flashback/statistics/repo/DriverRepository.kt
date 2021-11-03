@@ -7,6 +7,7 @@ import tmg.flashback.formula1.model.DriverHistory
 import tmg.flashback.statistics.network.api.FlashbackApi
 import tmg.flashback.statistics.network.models.drivers.Driver
 import tmg.flashback.statistics.repo.base.BaseRepository
+import tmg.flashback.statistics.repo.mappers.app.DriverDataMapper
 import tmg.flashback.statistics.repo.mappers.app.DriverMapper
 import tmg.flashback.statistics.repo.mappers.network.*
 import tmg.flashback.statistics.room.FlashbackDatabase
@@ -21,6 +22,7 @@ class DriverRepository(
     private val networkCircuitDataMapper: NetworkCircuitDataMapper,
     private val networkRaceDataMapper: NetworkRaceDataMapper,
     private val driverMapper: DriverMapper,
+    private val driverDataMapper: DriverDataMapper,
 ): BaseRepository(crashController) {
 
     /**
@@ -69,6 +71,11 @@ class DriverRepository(
     fun getDriverOverview(id: String): Flow<DriverHistory?> {
         return persistence.driverDao().getDriverHistory(id)
             .map { driverMapper.mapDriver(it) }
+    }
+
+    fun getAllDrivers(): Flow<List<tmg.flashback.formula1.model.Driver>> {
+        return persistence.driverDao().getDrivers()
+            .map { list -> list.map { driverDataMapper.mapDriver(it) } }
     }
 
     private fun saveConstructors(data: Driver): Boolean {

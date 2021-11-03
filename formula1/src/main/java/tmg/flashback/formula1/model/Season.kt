@@ -4,28 +4,29 @@ data class Season(
     val season: Int,
     val driverWithEmbeddedConstructors: List<DriverWithEmbeddedConstructor>,
     val constructors: List<Constructor>,
-    val rounds: List<Round>,
+    val races: List<Race>,
     val driverStandings: DriverStandings,
     val constructorStandings: ConstructorStandings
 ) {
     val circuits: List<Circuit>
-        get() = rounds.map { it.circuit }
+        get() = races.map { it.circuit }
 
-    val firstRound: Round?
-        get() = rounds.minByOrNull { it.round }
+    val firstRace: Race?
+        get() = races.minByOrNull { it.round }
 
-    val lastRound: Round?
-        get() = rounds.maxByOrNull { it.round }
+    val lastRace: Race?
+        get() = races.maxByOrNull { it.round }
 }
 
 /**
  * Get the constructor standings for the season
  */
+@Deprecated("Query the DAO directly", replaceWith = "SeasonStandingsDao.getConstructorStandings()")
 fun Season.constructorStandings(): ConstructorStandingsRound = this.constructors
         .map { constructor ->
             // Driver map should contain driver id -> Driver, points for each constructor
             val driverMap = mutableMapOf<String, Pair<ConstructorDriver, Double>>()
-            this.rounds.forEach { round ->
+            this.races.forEach { round ->
                 val driversInRoundForConstructor = round.drivers
                         .filter { roundDriver -> roundDriver.constructor.id == constructor.id }
                         .map { driver ->
@@ -56,8 +57,9 @@ fun Season.constructorStandings(): ConstructorStandingsRound = this.constructors
  * Get the driver standings for the season
  */
 // TODO: Re-implement this method to include the driver standings data to include penalties etc.
-@Deprecated("This method should be depended on, use the standings object inside the season model for a more accurate reflection")
-fun List<Round>.driverStandings(): DriverStandingsRound {
+//@Deprecated("This method should be depended on, use the standings object inside the season model for a more accurate reflection")
+@Deprecated("Query the DAO directly", replaceWith = "SeasonStandingsDao.getConstructorStandings()")
+fun List<Race>.driverStandings(): DriverStandingsRound {
     val returnMap: MutableMap<String, Pair<ConstructorDriver, Double>> = mutableMapOf()
 
     this.forEach { round ->
@@ -77,12 +79,12 @@ fun List<Round>.driverStandings(): DriverStandingsRound {
 /**
  * Get the best qualifying position for a given driver
  */
-fun List<Round>.bestQualified(driverId: String): Int? {
+fun List<Race>.bestQualified(driverId: String): Int? {
     val round = this.minByOrNull { it.race[driverId]?.qualified ?: Int.MAX_VALUE }
     return round?.race?.get(driverId)?.qualified
 }
 
-fun List<Round>.bestQualifyingResultFor(driverId: String): Pair<Int, List<Round>>? {
+fun List<Race>.bestQualifyingResultFor(driverId: String): Pair<Int, List<Race>>? {
     val bestQualifyingPosition: Int = this.bestQualified(driverId) ?: return null
     val listOfCircuits = this
             .filter { it.race[driverId]?.qualified == bestQualifyingPosition }
@@ -92,12 +94,12 @@ fun List<Round>.bestQualifyingResultFor(driverId: String): Pair<Int, List<Round>
 /**
  * Get the best finishing position for a given driver
  */
-fun List<Round>.bestFinish(driverId: String): Int? {
+fun List<Race>.bestFinish(driverId: String): Int? {
     val round = this.minByOrNull { it.race[driverId]?.finish ?: Int.MAX_VALUE }
     return round?.race?.get(driverId)?.finish
 }
 
-fun List<Round>.bestRaceResultFor(driverId: String): Pair<Int, List<Round>>? {
+fun List<Race>.bestRaceResultFor(driverId: String): Pair<Int, List<Race>>? {
     val bestQualifyingPosition: Int = this.bestFinish(driverId) ?: return null
     val listOfCircuits = this
             .filter { it.race[driverId]?.finish == bestQualifyingPosition }

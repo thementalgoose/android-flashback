@@ -1,11 +1,10 @@
 package tmg.flashback.statistics.repo.mappers.app
 
-import tmg.flashback.formula1.model.ConstructorOverview
-import tmg.flashback.formula1.model.ConstructorOverviewDriverStanding
-import tmg.flashback.formula1.model.ConstructorOverviewStanding
+import tmg.flashback.formula1.model.ConstructorHistorySeasonDriver
+import tmg.flashback.formula1.model.ConstructorHistorySeason
 import tmg.flashback.formula1.model.DriverConstructor
+import tmg.flashback.formula1.model.ConstructorHistory
 import tmg.flashback.statistics.room.models.constructors.Constructor
-import tmg.flashback.statistics.room.models.constructors.ConstructorHistory
 import tmg.flashback.statistics.room.models.constructors.ConstructorSeasonDriverWithDriver
 import tmg.flashback.statistics.room.models.constructors.ConstructorSeasonWithDrivers
 
@@ -14,9 +13,9 @@ class ConstructorMapper(
     private val driverDataMapper: DriverDataMapper
 ) {
 
-    fun mapConstructor(history: ConstructorHistory?): ConstructorOverview? {
+    fun mapConstructor(history: tmg.flashback.statistics.room.models.constructors.ConstructorHistory?): ConstructorHistory? {
         if (history == null) return null
-        return ConstructorOverview(
+        return ConstructorHistory(
             constructor = constructorDataMapper.mapConstructorData(history.constructor),
             standings = history.seasons.map {
                 mapConstructorSeason(history.constructor, it)
@@ -24,8 +23,8 @@ class ConstructorMapper(
         )
     }
 
-    private fun mapConstructorSeason(constructor: Constructor, data: ConstructorSeasonWithDrivers): ConstructorOverviewStanding {
-        return ConstructorOverviewStanding(
+    private fun mapConstructorSeason(constructor: Constructor, data: ConstructorSeasonWithDrivers): ConstructorHistorySeason {
+        return ConstructorHistorySeason(
             isInProgress = data.constructorSeason.inProgress,
             championshipStanding = data.constructorSeason.championshipStanding,
             points = data.constructorSeason.points,
@@ -39,8 +38,8 @@ class ConstructorMapper(
         )
     }
 
-    private fun mapConstructorSeasonDriver(constructor: Constructor, data: ConstructorSeasonDriverWithDriver): ConstructorOverviewDriverStanding {
-        return ConstructorOverviewDriverStanding(
+    private fun mapConstructorSeasonDriver(constructor: Constructor, data: ConstructorSeasonDriverWithDriver): ConstructorHistorySeasonDriver {
+        return ConstructorHistorySeasonDriver(
             driver = DriverConstructor(
                 driver = driverDataMapper.mapDriver(data.driver),
                 constructor = constructorDataMapper.mapConstructorData(constructor)

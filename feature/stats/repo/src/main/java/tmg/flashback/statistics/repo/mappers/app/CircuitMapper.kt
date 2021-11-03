@@ -2,7 +2,7 @@ package tmg.flashback.statistics.repo.mappers.app
 
 import tmg.flashback.formula1.model.Circuit
 import tmg.flashback.formula1.model.CircuitHistory
-import tmg.flashback.formula1.model.CircuitRace
+import tmg.flashback.formula1.model.CircuitHistoryRace
 import tmg.flashback.formula1.model.Location
 import tmg.flashback.statistics.room.models.circuit.CircuitRoundWithResults
 import tmg.utilities.utils.LocalDateUtils.Companion.requireFromDate
@@ -38,8 +38,8 @@ class CircuitMapper {
         )
     }
 
-    private fun mapCircuitRace(circuitRoundWithResults: CircuitRoundWithResults): CircuitRace {
-        return CircuitRace(
+    private fun mapCircuitRace(circuitRoundWithResults: CircuitRoundWithResults): CircuitHistoryRace {
+        return CircuitHistoryRace(
             name = circuitRoundWithResults.round.name,
             season = circuitRoundWithResults.round.season,
             round = circuitRoundWithResults.round.round,

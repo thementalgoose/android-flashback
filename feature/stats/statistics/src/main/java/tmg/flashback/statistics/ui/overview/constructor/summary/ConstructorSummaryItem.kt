@@ -2,7 +2,7 @@ package tmg.flashback.statistics.ui.overview.constructor.summary
 
 import androidx.annotation.*
 import tmg.flashback.statistics.ui.overview.driver.summary.PipeType
-import tmg.flashback.formula1.model.ConstructorOverviewDriverStanding
+import tmg.flashback.formula1.model.ConstructorHistorySeasonDriver
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 
@@ -39,7 +39,7 @@ sealed class ConstructorSummaryItem(
         val points: Double,
         @ColorInt
         val colour: Int,
-        val drivers: List<ConstructorOverviewDriverStanding>
+        val drivers: List<ConstructorHistorySeasonDriver>
     ): ConstructorSummaryItem(
             R.layout.view_constructor_summary_history
     )

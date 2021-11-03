@@ -9,6 +9,6 @@ data class Round(
     val drivers: Map<String, DriverData>,
     val constructors: Map<String, ConstructorData>,
     val data: RaceData,
-    val race: Map<String, RaceResult>,
-    val qualifying: Map<String, QualifyingResult>
+    val race: Map<String, RaceResult>?,
+    val qualifying: Map<String, QualifyingResult>?
 )

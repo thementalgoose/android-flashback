@@ -6,8 +6,8 @@ import org.threeten.bp.Month
 import tmg.flashback.statistics.R
 import tmg.core.ui.model.AnimationSpeed
 import tmg.flashback.formula1.model.ConstructorDriver
-import tmg.flashback.formula1.model.RoundOverview
-import tmg.flashback.formula1.model.Round
+import tmg.flashback.formula1.model.OverviewRace
+import tmg.flashback.formula1.model.Race
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 
 sealed class SeasonItem(
@@ -23,7 +23,7 @@ sealed class SeasonItem(
     data class CalendarWeek(
         val forMonth: Month,
         val startingDay: LocalDate,
-        val race: RoundOverview?
+        val race: OverviewRace?
     ): SeasonItem(R.layout.view_dashboard_season_calendar_week)
 
     data class Track(
@@ -45,8 +45,8 @@ sealed class SeasonItem(
         val driverWithEmbeddedConstructor: tmg.flashback.formula1.model.DriverWithEmbeddedConstructor,
         val driverId: String = driverWithEmbeddedConstructor.id,
         val position: Int,
-        val bestQualifying: Pair<Int, List<Round>>?,
-        val bestFinish: Pair<Int, List<Round>>?,
+        val bestQualifying: Pair<Int, List<Race>>?,
+        val bestFinish: Pair<Int, List<Race>>?,
         val maxPointsInSeason: Double,
         val animationSpeed: AnimationSpeed
     ) : SeasonItem(R.layout.view_dashboard_season_driver)

@@ -4,6 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import tmg.flashback.data.db.stats.SeasonOverviewRepository
 import tmg.flashback.formula1.model.*
+import tmg.flashback.formula1.model.Constructor
 
 internal object MockSeasonOverviewRepository: SeasonOverviewRepository {
 
@@ -13,8 +14,8 @@ internal object MockSeasonOverviewRepository: SeasonOverviewRepository {
 
     override fun getCircuit(season: Int, round: Int): Flow<CircuitSummary?> = flow {
         when (round) {
-            1 -> emit(mockRound1.circuit)
-            2 -> emit(mockRound2.circuit)
+            1 -> emit(MOCK_RACE_1.circuit)
+            2 -> emit(MOCK_RACE_2.circuit)
             else -> emit(null)
         }
     }
@@ -45,10 +46,10 @@ internal object MockSeasonOverviewRepository: SeasonOverviewRepository {
         emit(mockSeason)
     }
 
-    override fun getSeasonRound(season: Int, round: Int): Flow<Round?> = flow {
+    override fun getSeasonRound(season: Int, round: Int): Flow<Race?> = flow {
         when (round) {
-            1 -> emit(mockRound1)
-            2 -> emit(mockRound2)
+            1 -> emit(MOCK_RACE_1)
+            2 -> emit(MOCK_RACE_2)
             else -> emit(null)
         }
     }

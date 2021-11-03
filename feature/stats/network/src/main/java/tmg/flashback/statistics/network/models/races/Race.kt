@@ -17,7 +17,7 @@ data class RaceResult(
     val points: Double,
     val qualified: Int?,
     val gridPos: Int?,
-    val finished: Int?,
+    val finished: Int,
     val status: String,
     val time: String,
     val fastestLap: FastestLap?

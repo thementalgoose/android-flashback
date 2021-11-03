@@ -20,14 +20,6 @@ data class ConstructorStanding(
 )
 
 @Serializable
-data class ConstructorDriverStandings(
-    val season: Int,
-    val championshipPosition: Int?,
-    val points: Double?,
-    val drivers: Map<String, Double>
-)
-
-@Serializable
 data class ConstructorStandingDriver(
     val driver: DriverData,
     val points: Double,

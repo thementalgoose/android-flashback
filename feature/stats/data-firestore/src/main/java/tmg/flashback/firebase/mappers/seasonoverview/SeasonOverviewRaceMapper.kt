@@ -7,6 +7,7 @@ import tmg.flashback.firebase.models.FSeasonOverviewRaceRace
 import tmg.flashback.firebase.models.FSeasonOverviewRaceRaceFastestLap
 import tmg.flashback.firebase.models.FSeasonOverviewRaceSprintQualifying
 import tmg.flashback.formula1.model.*
+import tmg.flashback.formula1.model.Circuit
 import tmg.flashback.formula1.utils.toLapTime
 
 class SeasonOverviewRaceMapper(
@@ -23,7 +24,7 @@ class SeasonOverviewRaceMapper(
      * @param input Map of driver id -> qualifying result (pos,q1,q2,q3)
      * @param allDriverWithEmbeddedConstructors Top level list of all drivers returned in the season
      */
-    fun mapQualifying(forRound: Int, fieldToBaseFilteringOn: Qualifying, input: Map<String, FSeasonOverviewRaceQualifying>?, allDriverWithEmbeddedConstructors: List<DriverWithEmbeddedConstructor>): Map<String, RoundQualifyingResult> {
+    fun mapQualifying(forRound: Int, fieldToBaseFilteringOn: Qualifying, input: Map<String, FSeasonOverviewRaceQualifying>?, allDriverWithEmbeddedConstructors: List<DriverWithEmbeddedConstructor>): Map<String, RaceQualifyingResult> {
         return (input ?: mapOf())
             .toSortedMap()
             .toList()
@@ -46,7 +47,7 @@ class SeasonOverviewRaceMapper(
                 return@sortedBy lapTime.totalMillis
             }
             .mapIndexed { index, (driver, qualifyingResult, lapTime) ->
-                driver.id to RoundQualifyingResult(
+                driver.id to RaceQualifyingResult(
                     driver = driver.toConstructorDriver(forRound),
                     time = lapTime,
                     position = (if (lapTime == null) qualifyingResult.pos else null) ?: (index + 1)
@@ -62,7 +63,7 @@ class SeasonOverviewRaceMapper(
      * @param input Map of driver id -> sprint quali result
      * @param allDriverWithEmbeddedConstructors Top level list of all drivers returned in the season
      */
-    fun mapSprintQualifying(forRound: Int, input: Map<String, FSeasonOverviewRaceSprintQualifying>?, allDriverWithEmbeddedConstructors: List<DriverWithEmbeddedConstructor>): Map<String, RoundSprintQualifyingResult> {
+    fun mapSprintQualifying(forRound: Int, input: Map<String, FSeasonOverviewRaceSprintQualifying>?, allDriverWithEmbeddedConstructors: List<DriverWithEmbeddedConstructor>): Map<String, RaceSprintQualifyingResult> {
         return (input ?: emptyMap())
             .map { (driverId, sprintQualifying) ->
                 return@map allDriverWithEmbeddedConstructors
@@ -70,7 +71,7 @@ class SeasonOverviewRaceMapper(
                     .let { Pair(it, sprintQualifying ) }
             }
             .map { (driver, sprintQualifying) ->
-                driver.id to RoundSprintQualifyingResult(
+                driver.id to RaceSprintQualifyingResult(
                     driver = driver.toConstructorDriver(forRound),
                     time = sprintQualifying.time?.toLapTime(),
                     points = sprintQualifying.points ?: 0.0,
@@ -91,7 +92,7 @@ class SeasonOverviewRaceMapper(
      * @param input Map of driver id -> sprint quali result
      * @param allDriverWithEmbeddedConstructors Top level list of all drivers returned in the season
      */
-    fun mapRace(forRound: Int, input: Map<String, FSeasonOverviewRaceRace>?, sprintQualifyingData: Map<String, FSeasonOverviewRaceSprintQualifying>?, allDriverWithEmbeddedConstructors: List<DriverWithEmbeddedConstructor>): Map<String, RoundRaceResult> {
+    fun mapRace(forRound: Int, input: Map<String, FSeasonOverviewRaceRace>?, sprintQualifyingData: Map<String, FSeasonOverviewRaceSprintQualifying>?, allDriverWithEmbeddedConstructors: List<DriverWithEmbeddedConstructor>): Map<String, RaceRaceResult> {
         return (input ?: emptyMap())
             .map { (driverId, sprintQualifying) ->
                 return@map allDriverWithEmbeddedConstructors
@@ -99,7 +100,7 @@ class SeasonOverviewRaceMapper(
                     .let { Pair(it, sprintQualifying ) }
             }
             .map { (driver, raceResult) ->
-                driver.id to RoundRaceResult(
+                driver.id to RaceRaceResult(
                     driver = driver.toConstructorDriver(forRound),
                     time = raceResult.time?.toLapTime(),
                     points = raceResult.points ?: 0.0,

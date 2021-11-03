@@ -9,6 +9,7 @@ import tmg.flashback.firebase.mappers.seasonoverview.SeasonOverviewRaceMapper.Qu
 import tmg.flashback.firebase.mappers.seasonoverview.SeasonOverviewStandingsMapper
 import tmg.flashback.firebase.models.FRound
 import tmg.flashback.firebase.models.FSeason
+import tmg.flashback.formula1.model.Constructor
 import tmg.utilities.utils.LocalDateUtils.Companion.requireFromDate
 import tmg.utilities.utils.LocalTimeUtils.Companion.fromTime
 
@@ -31,7 +32,7 @@ class SeasonOverviewMapper(
             season = season,
             driverWithEmbeddedConstructors = drivers,
             constructors = constructors,
-            rounds = (input.race ?: emptyMap())
+            races = (input.race ?: emptyMap())
                 .map { (_, round) ->
                     mapRound(round, drivers, constructors)
                 },
@@ -53,8 +54,8 @@ class SeasonOverviewMapper(
     /**
      * Map a round of a season
      */
-    fun mapRound(input: FRound, allDriverWithEmbeddedConstructors: List<tmg.flashback.formula1.model.DriverWithEmbeddedConstructor>, allConstructors: List<tmg.flashback.formula1.model.Constructor>): tmg.flashback.formula1.model.Round {
-        return tmg.flashback.formula1.model.Round(
+    fun mapRound(input: FRound, allDriverWithEmbeddedConstructors: List<tmg.flashback.formula1.model.DriverWithEmbeddedConstructor>, allConstructors: List<Constructor>): tmg.flashback.formula1.model.Race {
+        return tmg.flashback.formula1.model.Race(
             season = input.season,
             round = input.round,
             date = requireFromDate(input.date),

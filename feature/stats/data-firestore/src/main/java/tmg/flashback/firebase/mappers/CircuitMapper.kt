@@ -3,7 +3,7 @@ package tmg.flashback.firebase.mappers
 import java.lang.NullPointerException
 import tmg.crash_reporting.controllers.CrashController
 import tmg.flashback.formula1.model.Circuit
-import tmg.flashback.formula1.model.CircuitRace
+import tmg.flashback.formula1.model.CircuitHistoryRace
 import tmg.flashback.formula1.model.Location
 import tmg.flashback.firebase.models.FCircuit
 import tmg.flashback.firebase.models.FCircuitResult
@@ -49,12 +49,12 @@ class CircuitMapper(
         }
     }
 
-    fun mapCircuitRace(circuitId: String, input: FCircuitResult): CircuitRace? {
+    fun mapCircuitRace(circuitId: String, input: FCircuitResult): CircuitHistoryRace? {
         if (!isDateValid(input.date)) {
             crashController.logException(NullPointerException("CircuitMapper.mapCircuitRace circuitId=$circuitId input date of \"${input.date}\" is not valid"))
             return null
         }
-        return CircuitRace(
+        return CircuitHistoryRace(
             name = input.name,
             season = input.season,
             round = input.round,

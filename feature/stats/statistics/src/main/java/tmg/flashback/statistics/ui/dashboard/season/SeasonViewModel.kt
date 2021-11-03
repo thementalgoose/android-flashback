@@ -22,6 +22,7 @@ import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.statistics.R
 import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
 import tmg.flashback.formula1.model.*
+import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.statistics.controllers.SeasonController
 import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
@@ -84,7 +85,7 @@ class SeasonViewModel(
         ConflatedBroadcastChannel(SeasonNavItem.SCHEDULE)
     private val currentTabFlow: Flow<SeasonNavItem> = currentTab.asFlow()
     private val season: ConflatedBroadcastChannel<Int> = ConflatedBroadcastChannel(seasonController.defaultSeason)
-    private val currentSeasonOverview: Flow<SeasonOverview?> = season.asFlow()
+    private val currentOverview: Flow<Overview?> = season.asFlow()
         .flatMapLatest { overviewRepository.getOverview(it) }
 
     override val openRace: MutableLiveData<DataEvent<SeasonItem.Track>> = MutableLiveData()
@@ -116,7 +117,7 @@ class SeasonViewModel(
     private val seasonList: Flow<List<SeasonItem>> = season
         .asFlow()
         .flatMapLatest {
-            seasonOverviewRepository.getSeasonOverview(it).combinePair(currentSeasonOverview)
+            seasonOverviewRepository.getSeasonOverview(it).combinePair(currentOverview)
         }
         .combinePair(
             currentTabFlow,
@@ -141,8 +142,8 @@ class SeasonViewModel(
 
             val appBannerMessage = seasonController.banner
             val list: MutableList<SeasonItem> = mutableListOf()
-            val historyRounds = history?.roundOverviews ?: emptyList()
-            val rounds = season.rounds
+            val historyRounds = history?.overviewRaces ?: emptyList()
+            val rounds = season.races
 
             appBannerMessage?.let {
                 list.addError(SyncDataItem.Message(it.message, it.url))
@@ -300,7 +301,7 @@ class SeasonViewModel(
     /**
      * Extract the calendar of events out into a formatted display list
      */
-    private fun List<RoundOverview>.toCalendar(season: Int): List<SeasonItem> {
+    private fun List<OverviewRace>.toCalendar(season: Int): List<SeasonItem> {
         val list = mutableListOf<SeasonItem>()
         list.add(SeasonItem.CalendarHeader)
         Month.values().forEach { month ->
@@ -334,7 +335,7 @@ class SeasonViewModel(
     /**
      * Extract the schedule of tracks out into a list of home items to display on the home screen
      */
-    private fun List<RoundOverview>.toScheduleList(): List<SeasonItem> {
+    private fun List<OverviewRace>.toScheduleList(): List<SeasonItem> {
         return this
             .sortedBy { it.round }
             .map {
@@ -356,7 +357,7 @@ class SeasonViewModel(
     /**
      * Convert the driver standings construct into a list of home items to display on the home page
      */
-    private fun List<SeasonStanding<DriverWithEmbeddedConstructor>>.toDriverList(rounds: List<Round>): List<SeasonItem> {
+    private fun List<SeasonStanding<DriverWithEmbeddedConstructor>>.toDriverList(races: List<Race>): List<SeasonItem> {
         return this
             .sortedBy { it.position }
             .toList()
@@ -366,8 +367,8 @@ class SeasonViewModel(
                     driverWithEmbeddedConstructor = standing.item,
                     points = standing.points,
                     position = index + 1,
-                    bestQualifying = rounds.bestQualifyingResultFor(standing.item.id),
-                    bestFinish = rounds.bestRaceResultFor(standing.item.id),
+                    bestQualifying = races.bestQualifyingResultFor(standing.item.id),
+                    bestFinish = races.bestRaceResultFor(standing.item.id),
                     maxPointsInSeason = this.maxByOrNull { it.points }?.points ?: 0.0,
                     animationSpeed = themeController.animationSpeed
                 )
@@ -378,7 +379,7 @@ class SeasonViewModel(
      * Compatibility function
      */
     @Deprecated("Should not be required if the standings model is available. Data migration in progress", replaceWith = ReplaceWith("List<SeasonStanding<Driver>>.toDriverList(rounds: List<Round>)"))
-    private fun DriverStandingsRound.toDriverList(rounds: List<Round>): List<SeasonItem> {
+    private fun DriverStandingsRound.toDriverList(races: List<Race>): List<SeasonItem> {
         return this
             .values
             .sortedByDescending { it.second }
@@ -398,7 +399,7 @@ class SeasonViewModel(
                     dateOfBirth = roundDriver.dateOfBirth,
                     nationality = roundDriver.nationality,
                     nationalityISO = roundDriver.nationalityISO,
-                    constructors = rounds
+                    constructors = races
                         .map { round ->
                             round.round to round.drivers.first { driv -> driv.id == roundDriver.id }.constructor
                         }
@@ -411,8 +412,8 @@ class SeasonViewModel(
                     driverWithEmbeddedConstructor = rebuildDriver,
                     points = points,
                     position = index + 1,
-                    bestQualifying = rounds.bestQualifyingResultFor(roundDriver.id),
-                    bestFinish = rounds.bestRaceResultFor(roundDriver.id),
+                    bestQualifying = races.bestQualifyingResultFor(roundDriver.id),
+                    bestFinish = races.bestRaceResultFor(roundDriver.id),
                     maxPointsInSeason = this.values.maxByOrNull { it.second }?.second ?: 0.0,
                     animationSpeed = themeController.animationSpeed
                 )

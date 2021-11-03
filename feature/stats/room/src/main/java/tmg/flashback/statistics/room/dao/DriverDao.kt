@@ -10,6 +10,9 @@ import tmg.flashback.statistics.room.models.drivers.DriverSeasonRace
 @Dao
 interface DriverDao {
 
+    @Query("SELECT * FROM driver")
+    fun getDrivers(): Flow<List<Driver>>
+
     @Query("SELECT * FROM driver WHERE id == :id LIMIT 1")
     fun getDriver(id: String): Flow<Driver?>
 
