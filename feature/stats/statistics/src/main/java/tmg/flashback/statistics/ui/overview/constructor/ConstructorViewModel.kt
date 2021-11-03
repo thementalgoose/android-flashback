@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 import tmg.flashback.statistics.ui.overview.constructor.summary.ConstructorSummaryItem
 import tmg.flashback.statistics.ui.overview.constructor.summary.addError
 import tmg.flashback.statistics.ui.overview.driver.summary.PipeType
-import tmg.flashback.formula1.model.ConstructorOverview
+import tmg.flashback.formula1.model.ConstructorHistory
 import tmg.flashback.firebase.extensions.pointsDisplay
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.repo.ConstructorRepository
@@ -147,17 +147,17 @@ class ConstructorViewModel(
     /**
      * Add career stats for the driver across their career
      */
-    private fun getAllStats(overview: ConstructorOverview): List<ConstructorSummaryItem> {
+    private fun getAllStats(history: ConstructorHistory): List<ConstructorSummaryItem> {
         val list: MutableList<ConstructorSummaryItem> = mutableListOf()
 
         list.addStat(
-                tint = if (overview.championshipWins > 0) R.attr.f1Championship else R.attr.contentSecondary,
+                tint = if (history.championshipWins > 0) R.attr.f1Championship else R.attr.contentSecondary,
                 icon = R.drawable.ic_menu_constructors,
                 label = R.string.constructor_overview_stat_titles,
-                value = overview.championshipWins.toString()
+                value = history.championshipWins.toString()
         )
 
-        overview.bestChampionship?.let {
+        history.bestChampionship?.let {
             list.addStat(
                     icon = R.drawable.ic_championship_order,
                     label = R.string.constructor_overview_stat_best_championship_position,
@@ -168,17 +168,17 @@ class ConstructorViewModel(
         list.addStat(
                 icon = R.drawable.ic_race_grid,
                 label = R.string.constructor_overview_stat_races,
-                value = overview.races.toString()
+                value = history.races.toString()
         )
         list.addStat(
                 icon = R.drawable.ic_standings,
                 label = R.string.constructor_overview_stat_race_wins,
-                value = overview.totalWins.toString()
+                value = history.totalWins.toString()
         )
         list.addStat(
                 icon = R.drawable.ic_podium,
                 label = R.string.constructor_overview_stat_race_podiums,
-                value = overview.totalPodiums.toString()
+                value = history.totalPodiums.toString()
         )
 //        list.addStat(
 //                icon = R.drawable.ic_status_finished,
@@ -188,17 +188,17 @@ class ConstructorViewModel(
         list.addStat(
                 icon = R.drawable.ic_race_points,
                 label = R.string.constructor_overview_stat_points,
-                value = overview.totalPoints.pointsDisplay()
+                value = history.totalPoints.pointsDisplay()
         )
         list.addStat(
                 icon = R.drawable.ic_finishes_in_points,
                 label = R.string.constructor_overview_stat_points_finishes,
-                value = overview.finishesInPoints.toString()
+                value = history.finishesInPoints.toString()
         )
         list.addStat(
                 icon = R.drawable.ic_qualifying_pole,
                 label = R.string.constructor_overview_stat_qualifying_poles,
-                value = overview.totalQualifyingPoles.toString()
+                value = history.totalQualifyingPoles.toString()
         )
 //        list.addStat(
 //                icon = R.drawable.ic_qualifying_front_row,
@@ -219,8 +219,8 @@ class ConstructorViewModel(
                 ))
     }
 
-    private fun getHistory(overview: ConstructorOverview): List<ConstructorSummaryItem> {
-        val sortedList = overview.standings.sortedByDescending { it.season }
+    private fun getHistory(history: ConstructorHistory): List<ConstructorSummaryItem> {
+        val sortedList = history.standings.sortedByDescending { it.season }
         return sortedList
                 .mapIndexed { index, item ->
                     ConstructorSummaryItem.History(
@@ -230,7 +230,7 @@ class ConstructorViewModel(
                                 prev = sortedList.getOrNull(index + 1)?.season
                             ),
                             season = item.season,
-                            colour = overview.constructor.color,
+                            colour = history.constructor.color,
                             championshipPosition = item.championshipStanding,
                             points = item.points,
                             isInProgress = item.isInProgress,

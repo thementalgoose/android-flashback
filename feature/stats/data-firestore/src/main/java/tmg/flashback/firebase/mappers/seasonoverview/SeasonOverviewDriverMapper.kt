@@ -1,6 +1,7 @@
 package tmg.flashback.firebase.mappers.seasonoverview
 
 import tmg.flashback.firebase.models.FSeason
+import tmg.flashback.formula1.model.Constructor
 import tmg.utilities.utils.LocalDateUtils.Companion.requireFromDate
 
 class SeasonOverviewDriverMapper(
@@ -16,7 +17,7 @@ class SeasonOverviewDriverMapper(
         val driver = input.drivers?.get(driverId) ?: return null
         val constructors = (input.constructors?.values?.toList() ?: emptyList()).map { constructorMapper.mapConstructor(it) }
 
-        val constructorMap: Map<Int, tmg.flashback.formula1.model.Constructor> = (input.race ?: emptyMap())
+        val constructorMap: Map<Int, Constructor> = (input.race ?: emptyMap())
             .map { (_, value) -> Pair(value.round, value.driverCon) }
             .mapNotNull { (round, driverCon) ->
                 val constructorId = driverCon?.get(driverId)

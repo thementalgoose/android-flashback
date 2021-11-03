@@ -59,10 +59,10 @@ class SearchFirestore(
             .filterNotNull()
     }
 
-    override fun allRaces(): Flow<List<tmg.flashback.formula1.model.SeasonOverview>> {
+    override fun allRaces(): Flow<List<tmg.flashback.formula1.model.Overview>> {
         val historyFlows = overviewKeys.map {
             document("overview/$it")
-                .getDoc<FHistorySeason,List<tmg.flashback.formula1.model.SeasonOverview>> {
+                .getDoc<FHistorySeason,List<tmg.flashback.formula1.model.Overview>> {
                     historyMapper.mapHistory(it)
                 }
                 .filterNotNull()

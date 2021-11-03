@@ -8,6 +8,7 @@ import tmg.flashback.firebase.FirebaseRepo
 import tmg.flashback.firebase.mappers.SeasonOverviewMapper
 import tmg.flashback.firebase.models.FSeason
 import tmg.flashback.formula1.model.Circuit
+import tmg.flashback.formula1.model.Constructor
 
 class SeasonOverviewFirestore(
         crashController: CrashController,
@@ -28,7 +29,7 @@ class SeasonOverviewFirestore(
     override fun getConstructor(
             season: Int,
             constructorId: String
-    ): Flow<tmg.flashback.formula1.model.Constructor?> {
+    ): Flow<Constructor?> {
         return getSeason(season, "getConstructor $constructorId")
                 .map { seasonData -> seasonData?.constructors?.firstOrNull { it.id == constructorId } }
     }
@@ -38,7 +39,7 @@ class SeasonOverviewFirestore(
                 .map { seasonData -> seasonData?.driverWithEmbeddedConstructors?.firstOrNull { it.id == driver } }
     }
 
-    override fun getAllConstructors(season: Int): Flow<List<tmg.flashback.formula1.model.Constructor>> {
+    override fun getAllConstructors(season: Int): Flow<List<Constructor>> {
         return getSeason(season, "getAllConstructors")
                 .map { it?.constructors ?: emptyList() }
     }
@@ -50,26 +51,26 @@ class SeasonOverviewFirestore(
                         season = season,
                         driverWithEmbeddedConstructors = emptyList(),
                         constructors = emptyList(),
-                        rounds = emptyList(),
+                        races = emptyList(),
                         constructorStandings = emptyList(),
                         driverStandings = emptyList()
                     )
                 }
     }
 
-    override fun getSeasonRound(season: Int, round: Int): Flow<tmg.flashback.formula1.model.Round?> {
+    override fun getSeasonRound(season: Int, round: Int): Flow<tmg.flashback.formula1.model.Race?> {
         return getRounds(season, "getSeasonRound $round")
                 .map { rounds -> rounds.firstOrNull { it.round == round } }
     }
 
-    private fun getRounds(season: Int, context: String): Flow<List<tmg.flashback.formula1.model.Round>> {
+    private fun getRounds(season: Int, context: String): Flow<List<tmg.flashback.formula1.model.Race>> {
         return getSeason(season, context)
-                .map { it?.rounds ?: emptyList() }
+                .map { it?.races ?: emptyList() }
     }
 
-    private fun getSeasonWithRounds(season: Int, context: String): Flow<Pair<Int, List<tmg.flashback.formula1.model.Round>>> {
+    private fun getSeasonWithRounds(season: Int, context: String): Flow<Pair<Int, List<tmg.flashback.formula1.model.Race>>> {
         return getSeason(season, context)
-                .map { Pair(season, it?.rounds ?: emptyList()) }
+                .map { Pair(season, it?.races ?: emptyList()) }
     }
 
     private fun getSeason(season: Int, context: String): Flow<tmg.flashback.formula1.model.Season?> {

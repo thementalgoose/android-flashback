@@ -2,6 +2,7 @@ package tmg.flashback.data.models.stats
 
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
+import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.constructorStandings
 
 class SeasonTest {
@@ -14,31 +15,31 @@ class SeasonTest {
 
     @Test
     fun `firstRound returns first round`() {
-        assertEquals(mockRound1, mockSeason.firstRound)
+        assertEquals(MOCK_RACE_1, mockSeason.firstRace)
     }
 
     @Test
     fun `firstRound with no rounds returns null`() {
-        assertNull(mockSeason.copy(rounds = emptyList()).firstRound)
+        assertNull(mockSeason.copy(races = emptyList()).firstRace)
     }
 
     @Test
     fun `lastRound returns first round`() {
-        assertEquals(mockRound2, mockSeason.lastRound)
+        assertEquals(MOCK_RACE_2, mockSeason.lastRace)
     }
 
     @Test
     fun `lastRound with no rounds returns null`() {
-        assertNull(mockSeason.copy(rounds = emptyList()).lastRound)
+        assertNull(mockSeason.copy(races = emptyList()).lastRace)
     }
 
     @Test
     fun `constructorStandings calculates standings properly with no constructor data provided`() {
 
-        val driver1Points = mockSeason.rounds.sumOf { it.race[MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.id]?.points ?: 0.0 }
-        val driver2Points = mockSeason.rounds.sumOf { it.race[mockDriver2.id]?.points ?: 0.0 }
-        val driver3Points = mockSeason.rounds.sumOf { it.race[mockDriver3.id]?.points ?: 0.0 }
-        val driver4Points = mockSeason.rounds.sumOf { it.race[mockDriver4.id]?.points ?: 0.0 }
+        val driver1Points = mockSeason.races.sumOf { it.race[MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.id]?.points ?: 0.0 }
+        val driver2Points = mockSeason.races.sumOf { it.race[mockDriver2.id]?.points ?: 0.0 }
+        val driver3Points = mockSeason.races.sumOf { it.race[mockDriver3.id]?.points ?: 0.0 }
+        val driver4Points = mockSeason.races.sumOf { it.race[mockDriver4.id]?.points ?: 0.0 }
         val expected = mapOf(
                 mockConstructorAlpha.id to Triple(
                         mockConstructorAlpha,
@@ -64,10 +65,10 @@ class SeasonTest {
     @Test
     fun `constructorStandings calculates standings properly with no standings constructors data provided`() {
 
-        val driver1Points = mockSeason.rounds.sumOf { it.race[MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.id]?.points ?: 0.0 }
-        val driver2Points = mockSeason.rounds.sumOf { it.race[mockDriver2.id]?.points ?: 0.0 }
-        val driver3Points = mockSeason.rounds.sumOf { it.race[mockDriver3.id]?.points ?: 0.0 }
-        val driver4Points = mockSeason.rounds.sumOf { it.race[mockDriver4.id]?.points ?: 0.0 }
+        val driver1Points = mockSeason.races.sumOf { it.race[MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.id]?.points ?: 0.0 }
+        val driver2Points = mockSeason.races.sumOf { it.race[mockDriver2.id]?.points ?: 0.0 }
+        val driver3Points = mockSeason.races.sumOf { it.race[mockDriver3.id]?.points ?: 0.0 }
+        val driver4Points = mockSeason.races.sumOf { it.race[mockDriver4.id]?.points ?: 0.0 }
 
         val alphaPoints = 20.0
         val betaPoints = 16.0
@@ -93,12 +94,12 @@ class SeasonTest {
 
         val mockSeasonWithConstructorStandings = mockSeason.copy(
                 constructorStandings = listOf(
-                    tmg.flashback.formula1.model.SeasonStanding<tmg.flashback.formula1.model.Constructor>(
+                    tmg.flashback.formula1.model.SeasonStanding<Constructor>(
                         mockConstructorAlpha,
                         alphaPoints,
                         if (alphaPoints > betaPoints) 1 else 2
                     ),
-                    tmg.flashback.formula1.model.SeasonStanding<tmg.flashback.formula1.model.Constructor>(
+                    tmg.flashback.formula1.model.SeasonStanding<Constructor>(
                         mockConstructorBeta,
                         betaPoints,
                         if (alphaPoints > betaPoints) 1 else 2

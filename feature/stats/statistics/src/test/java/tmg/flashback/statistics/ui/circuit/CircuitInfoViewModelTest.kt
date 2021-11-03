@@ -12,7 +12,7 @@ import org.threeten.bp.LocalTime
 import tmg.core.device.managers.NetworkConnectivityManager
 import tmg.crash_reporting.controllers.CrashController
 import tmg.flashback.formula1.model.Circuit
-import tmg.flashback.formula1.model.CircuitRace
+import tmg.flashback.formula1.model.CircuitHistoryRace
 import tmg.flashback.formula1.model.Location
 import tmg.flashback.formula1.enums.TrackLayout
 import tmg.flashback.statistics.extensions.circuitIcon
@@ -37,7 +37,7 @@ internal class CircuitInfoViewModelTest: BaseTest() {
     private val mockInvalidCircuitId: String = "mockCircuitId"
     private val mockLocalDate: LocalDate = LocalDate.now()
     private val mockLocalTime: LocalTime = LocalTime.now()
-    private val mockCircuitRace = CircuitRace(
+    private val mockCircuitRace = CircuitHistoryRace(
         name = "Test circuit",
         season = 2020,
         round = 1,

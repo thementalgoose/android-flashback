@@ -3,8 +3,8 @@ package tmg.flashback.statistics.room.models.drivers
 import androidx.room.Embedded
 import androidx.room.Relation
 import tmg.flashback.statistics.room.models.constructors.Constructor
-import tmg.flashback.statistics.room.models.round.Round
-import tmg.flashback.statistics.room.models.round.RoundWithCircuit
+import tmg.flashback.statistics.room.models.race.RaceInfo
+import tmg.flashback.statistics.room.models.race.RaceInfoWithCircuit
 
 data class DriverSeasonRaceWithConstructor(
     @Embedded
@@ -15,9 +15,9 @@ data class DriverSeasonRaceWithConstructor(
     )
     val constructor: Constructor,
     @Relation(
-        entity = Round::class,
+        entity = RaceInfo::class,
         parentColumn = "season_round_id",
         entityColumn = "id"
     )
-    val round: RoundWithCircuit
+    val round: RaceInfoWithCircuit
 )

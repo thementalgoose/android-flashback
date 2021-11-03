@@ -1,8 +1,8 @@
 package tmg.flashback.statistics.repo.mappers.app
 
 import tmg.flashback.formula1.model.DriverHistory
-import tmg.flashback.formula1.model.DriverOverviewRace
-import tmg.flashback.formula1.model.DriverOverviewStanding
+import tmg.flashback.formula1.model.DriverHistorySeasonRace
+import tmg.flashback.formula1.model.DriverHistorySeason
 import tmg.flashback.statistics.room.models.drivers.DriverSeasonRaceWithConstructor
 import tmg.flashback.statistics.room.models.drivers.DriverSeasonWithRaces
 import tmg.utilities.utils.LocalDateUtils.Companion.requireFromDate
@@ -22,8 +22,8 @@ class DriverMapper(
         )
     }
 
-    private fun mapDriverSeasonWithRaces(data: DriverSeasonWithRaces): DriverOverviewStanding {
-        return DriverOverviewStanding(
+    private fun mapDriverSeasonWithRaces(data: DriverSeasonWithRaces): DriverHistorySeason {
+        return DriverHistorySeason(
             championshipStanding = data.driverSeason.championshipStanding,
             isInProgress = data.driverSeason.inProgress,
             points = data.driverSeason.points,
@@ -36,8 +36,8 @@ class DriverMapper(
         )
     }
 
-    private fun mapDriverSeasonRace(data: DriverSeasonRaceWithConstructor): DriverOverviewRace {
-        return DriverOverviewRace(
+    private fun mapDriverSeasonRace(data: DriverSeasonRaceWithConstructor): DriverHistorySeasonRace {
+        return DriverHistorySeasonRace(
             status = data.race.status,
             finished = data.race.finished,
             points = data.race.points,
@@ -45,8 +45,8 @@ class DriverMapper(
             gridPos = data.race.gridPos,
             round = data.race.round,
             season = data.race.season,
-            raceName = data.round.round.name,
-            date = requireFromDate(data.round.round.date),
+            raceName = data.round.raceInfo.name,
+            date = requireFromDate(data.round.raceInfo.date),
             constructor = constructorDataMapper.mapConstructorData(data.constructor),
             circuitName = data.round.circuit.name,
             circuitId = data.round.circuit.id,

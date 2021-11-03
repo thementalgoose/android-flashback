@@ -1,5 +1,7 @@
 package tmg.flashback.formula1.model
 
+import tmg.flashback.formula1.model.Location
+
 data class Circuit(
     val id: String,
     val name: String,

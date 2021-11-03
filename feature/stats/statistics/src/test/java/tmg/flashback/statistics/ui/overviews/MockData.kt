@@ -4,6 +4,10 @@ import android.graphics.Color
 import org.threeten.bp.LocalDate
 import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
 import tmg.flashback.formula1.model.*
+import tmg.flashback.formula1.model.Constructor
+import tmg.flashback.formula1.model.ConstructorHistory
+import tmg.flashback.formula1.model.ConstructorHistorySeasonDriver
+import tmg.flashback.formula1.model.ConstructorHistorySeason
 
 const val mockDriverId: String = "mockDriver"
 const val mockDriverFirstName: String = "firstname"
@@ -39,7 +43,7 @@ val mockDriverOverviewConstructor3 = SlimConstructor(
         color = Color.BLUE
 )
 
-val mockDriverOverviewRaceFirst = DriverOverviewRace(
+val mockDriverOverviewRaceFirst = DriverHistorySeasonRace(
         status = "Finished",
         finished = 1,
         points = 25.0,
@@ -54,7 +58,7 @@ val mockDriverOverviewRaceFirst = DriverOverviewRace(
         circuitNationality = "Italy",
         circuitNationalityISO = "ITA"
 )
-val mockDriverOverviewRaceSecond = DriverOverviewRace(
+val mockDriverOverviewRaceSecond = DriverHistorySeasonRace(
         status = "Finished",
         finished = 2,
         points = 18.0,
@@ -70,7 +74,7 @@ val mockDriverOverviewRaceSecond = DriverOverviewRace(
         circuitNationalityISO = "ITA"
 )
 
-private val mockDriverOverviewStanding = DriverOverviewStanding(
+private val mockDriverOverviewStanding = DriverHistorySeason(
         bestFinish = 2,
         bestFinishQuantity = 1,
         bestQualifying = 1,
@@ -344,7 +348,7 @@ val mockDriver4 = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.copy(
  * - Constructor doing two seasons
  * - Each season had two drivers
  */
-val mockConstructorOverviewStanding1Driver1 = ConstructorOverviewDriverStanding(
+val mockConstructorOverviewStanding1Driver1 = ConstructorHistorySeasonDriver(
         driver = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(),
         bestFinish = 2,
         bestQualifying = 3,
@@ -360,7 +364,7 @@ val mockConstructorOverviewStanding1Driver1 = ConstructorOverviewDriverStanding(
         races = 2,
         championshipStanding = 1
 )
-val mockConstructorOverviewStanding1Driver2 = ConstructorOverviewDriverStanding(
+val mockConstructorOverviewStanding1Driver2 = ConstructorHistorySeasonDriver(
         driver = mockDriver2.toConstructorDriver(),
         bestFinish = 3,
         bestQualifying = 1,
@@ -376,7 +380,7 @@ val mockConstructorOverviewStanding1Driver2 = ConstructorOverviewDriverStanding(
         races = 2,
         championshipStanding = 2
 )
-val mockConstructorOverviewStanding1 = ConstructorOverviewStanding(
+val mockConstructorOverviewStanding1 = ConstructorHistorySeason(
         drivers = mapOf(
                 MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.id to mockConstructorOverviewStanding1Driver1,
                 mockDriver2.id to mockConstructorOverviewStanding1Driver2
@@ -388,7 +392,7 @@ val mockConstructorOverviewStanding1 = ConstructorOverviewStanding(
         races = 2
 )
 
-val mockConstructorOverviewStanding2Driver1 = ConstructorOverviewDriverStanding(
+val mockConstructorOverviewStanding2Driver1 = ConstructorHistorySeasonDriver(
         driver = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(),
         bestFinish = 3,
         bestQualifying = 3,
@@ -404,7 +408,7 @@ val mockConstructorOverviewStanding2Driver1 = ConstructorOverviewDriverStanding(
         races = 2,
         championshipStanding = 1
 )
-val mockConstructorOverviewStanding2Driver2 = ConstructorOverviewDriverStanding(
+val mockConstructorOverviewStanding2Driver2 = ConstructorHistorySeasonDriver(
         driver = mockDriver2.toConstructorDriver(),
         bestFinish = 4,
         bestQualifying = 1,
@@ -420,7 +424,7 @@ val mockConstructorOverviewStanding2Driver2 = ConstructorOverviewDriverStanding(
         races = 3,
         championshipStanding = 2
 )
-val mockConstructorOverviewStanding2 = ConstructorOverviewStanding(
+val mockConstructorOverviewStanding2 = ConstructorHistorySeason(
         drivers = mapOf(
                 MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.id to mockConstructorOverviewStanding2Driver1,
                 mockDriver2.id to mockConstructorOverviewStanding2Driver2
@@ -432,7 +436,7 @@ val mockConstructorOverviewStanding2 = ConstructorOverviewStanding(
         races = 3
 )
 
-val mockConstructorOverview = ConstructorOverview(
+val mockConstructorOverview = ConstructorHistory(
         id = mockConstructorAlpha.id,
         name = mockConstructorAlpha.name,
         wikiUrl = mockConstructorAlpha.wikiUrl,

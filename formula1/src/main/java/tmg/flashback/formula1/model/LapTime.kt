@@ -4,7 +4,6 @@ import org.threeten.bp.LocalTime
 import tmg.utilities.extensions.extend
 import kotlin.math.abs
 
-// TODO: Clean up the internals of this class!
 data class LapTime(
     val hours: Int = 0,
     val mins: Int = 0,

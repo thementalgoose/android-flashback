@@ -10,11 +10,11 @@ import tmg.flashback.statistics.controllers.RaceController
 import tmg.core.ui.model.AnimationSpeed
 import tmg.flashback.data.db.stats.SeasonOverviewRepository
 import tmg.flashback.formula1.model.LapTime
-import tmg.flashback.formula1.model.Round
+import tmg.flashback.formula1.model.Race
 import tmg.core.ui.controllers.ThemeController
 import tmg.flashback.formula1.model.ConstructorDriver
-import tmg.flashback.formula1.model.RoundSprintQualifyingResult
-import tmg.flashback.statistics.mockRound1
+import tmg.flashback.formula1.model.RaceSprintQualifyingResult
+import tmg.flashback.statistics.MOCK_RACE_1
 import tmg.flashback.statistics.mockRound3
 import tmg.flashback.statistics.ui.overviews.*
 import tmg.flashback.statistics.ui.race.RaceAdapterType.*
@@ -164,10 +164,10 @@ internal class RaceViewModelTest: BaseTest() {
     @Test
     fun `when view type is (happy) constructor, standings show constructor standings items with list of drivers`() = coroutineTest {
 
-        every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow { emit(mockRound1) }
+        every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow { emit(MOCK_RACE_1) }
 
         val expected = listOf<RaceModel>(
-            mockRound1.getRaceOvevriew(),
+            MOCK_RACE_1.getRaceOvevriew(),
             RaceModel.ConstructorStandings(
                 mockConstructorBeta, 30.0, listOf(
                     Pair(mockDriver4.toConstructorDriver(), 20.0),
@@ -193,13 +193,13 @@ internal class RaceViewModelTest: BaseTest() {
     fun `when view type is race (error) and round date is in the future, show race in future unavailable message`() = coroutineTest {
 
         every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow {
-            emit(mockRound1.copy(
+            emit(MOCK_RACE_1.copy(
                 date = LocalDate.now().plusDays(5L),
                 race = emptyMap()
             ))
         }
         val expected = listOf<RaceModel>(
-            mockRound1.getRaceOvevriew(date = LocalDate.now().plusDays(5L)),
+            MOCK_RACE_1.getRaceOvevriew(date = LocalDate.now().plusDays(5L)),
             RaceModel.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.IN_FUTURE_RACE)),
         )
 
@@ -214,13 +214,13 @@ internal class RaceViewModelTest: BaseTest() {
     fun `when view type is race (error) and round date is in the past, show race data coming soon unavailable message`() = coroutineTest {
 
         every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow {
-            emit(mockRound1.copy(
+            emit(MOCK_RACE_1.copy(
                 date = LocalDate.now().minusDays(5L),
                 race = emptyMap()
             ))
         }
         val expected = listOf<RaceModel>(
-            mockRound1.getRaceOvevriew(date = LocalDate.now().minusDays(5L)),
+            MOCK_RACE_1.getRaceOvevriew(date = LocalDate.now().minusDays(5L)),
             RaceModel.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.COMING_SOON_RACE)),
         )
 
@@ -236,32 +236,32 @@ internal class RaceViewModelTest: BaseTest() {
 
         every { mockRaceController.showQualifyingDelta } returns false
         every { mockRaceController.showGridPenaltiesInQualifying } returns false
-        every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow { emit(mockRound1) }
+        every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow { emit(MOCK_RACE_1) }
 
         val expected = listOf(
-            mockRound1.getRaceOvevriew(),
+            MOCK_RACE_1.getRaceOvevriew(),
             RaceModel.Podium(
                 convertDriverToSingle(
-                    round = mockRound1, roundDriver = mockDriver4.toConstructorDriver(),
+                    race = MOCK_RACE_1, roundDriver = mockDriver4.toConstructorDriver(),
                     expectedQualified = 4,
                     expectedGrid = 3,
                     expectedFinish = 1
                 ),
                 convertDriverToSingle(
-                    round = mockRound1, roundDriver = mockDriver3.toConstructorDriver(),
+                    race = MOCK_RACE_1, roundDriver = mockDriver3.toConstructorDriver(),
                     expectedQualified = 3,
                     expectedGrid = 4,
                     expectedFinish = 2
                 ),
                 convertDriverToSingle(
-                    round = mockRound1, roundDriver = mockDriver2.toConstructorDriver(),
+                    race = MOCK_RACE_1, roundDriver = mockDriver2.toConstructorDriver(),
                     expectedQualified = 2,
                     expectedGrid = 2,
                     expectedFinish = 3
                 )
             ),
             RaceModel.RaceHeader(expectedSeasonRound.first, expectedSeasonRound.second),
-            convertDriverToSingle(round = mockRound1, roundDriver = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(),
+            convertDriverToSingle(race = MOCK_RACE_1, roundDriver = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(),
                 expectedQualified = 1,
                 expectedGrid = 1,
                 expectedFinish = 4
@@ -280,11 +280,11 @@ internal class RaceViewModelTest: BaseTest() {
 
         every { mockRaceController.showQualifyingDelta } returns false
         every { mockRaceController.showGridPenaltiesInQualifying } returns false
-        every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow { emit(mockRound1) }
+        every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow { emit(MOCK_RACE_1) }
 
         val showQualifying = DisplayPrefs(true, true, true, false, false, true)
         val expected = mutableListOf<RaceModel>(
-            mockRound1.getRaceOvevriew(),
+            MOCK_RACE_1.getRaceOvevriew(),
             RaceModel.QualifyingHeader(showQualifying)
         )
         expected.addAll(expectedQ3Order)
@@ -301,11 +301,11 @@ internal class RaceViewModelTest: BaseTest() {
 
         every { mockRaceController.showQualifyingDelta } returns false
         every { mockRaceController.showGridPenaltiesInQualifying } returns false
-        every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow { emit(mockRound1) }
+        every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow { emit(MOCK_RACE_1) }
 
         val showQualifying = DisplayPrefs(true, true, true, false, false, true)
         val expected = mutableListOf<RaceModel>(
-            mockRound1.getRaceOvevriew(),
+            MOCK_RACE_1.getRaceOvevriew(),
             RaceModel.QualifyingHeader(showQualifying)
         )
         expected.addAll(expectedQ2Order)
@@ -322,11 +322,11 @@ internal class RaceViewModelTest: BaseTest() {
 
         every { mockRaceController.showQualifyingDelta } returns false
         every { mockRaceController.showGridPenaltiesInQualifying } returns false
-        every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow { emit(mockRound1) }
+        every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow { emit(MOCK_RACE_1) }
 
         val showQualifying = DisplayPrefs(true, true, true, false, false, true)
         val expected = mutableListOf<RaceModel>(
-            mockRound1.getRaceOvevriew(),
+            MOCK_RACE_1.getRaceOvevriew(),
             RaceModel.QualifyingHeader(showQualifying)
         )
         expected.addAll(expectedQ1Order)
@@ -343,23 +343,23 @@ internal class RaceViewModelTest: BaseTest() {
 
         every { mockRaceController.showQualifyingDelta } returns false
         every { mockRaceController.showGridPenaltiesInQualifying } returns false
-        every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow { emit(mockRound1) }
+        every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow { emit(MOCK_RACE_1) }
 
         val showQualifying = DisplayPrefs(true, true, true, false, false, true)
         val expectedQ3 = mutableListOf<RaceModel>(
-            mockRound1.getRaceOvevriew(),
+            MOCK_RACE_1.getRaceOvevriew(),
             RaceModel.QualifyingHeader(showQualifying)
         )
         expectedQ3.addAll(expectedQ3Order)
 
         val expectedQ2 = mutableListOf<RaceModel>(
-            mockRound1.getRaceOvevriew(),
+            MOCK_RACE_1.getRaceOvevriew(),
             RaceModel.QualifyingHeader(showQualifying)
         )
         expectedQ2.addAll(expectedQ2Order)
 
         val expectedQ1 = mutableListOf<RaceModel>(
-            mockRound1.getRaceOvevriew(),
+            MOCK_RACE_1.getRaceOvevriew(),
             RaceModel.QualifyingHeader(showQualifying)
         )
         expectedQ1.addAll(expectedQ1Order)
@@ -390,11 +390,11 @@ internal class RaceViewModelTest: BaseTest() {
 
         every { mockRaceController.showQualifyingDelta } returns true
         every { mockRaceController.showGridPenaltiesInQualifying } returns false
-        every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow { emit(mockRound1) }
+        every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow { emit(MOCK_RACE_1) }
 
         val showQualifying = DisplayPrefs(true, true, true, true, false, true)
         val expected = mutableListOf<RaceModel>(
-            mockRound1.getRaceOvevriew(),
+            MOCK_RACE_1.getRaceOvevriew(),
             RaceModel.QualifyingHeader(showQualifying)
         )
         expected.addAll(expectedQ3OrderWithQualifyingDeltas)
@@ -411,11 +411,11 @@ internal class RaceViewModelTest: BaseTest() {
 
         every { mockRaceController.showQualifyingDelta } returns false
         every { mockRaceController.showGridPenaltiesInQualifying } returns false
-        every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow { emit(mockRound1) }
+        every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow { emit(MOCK_RACE_1) }
 
         val showQualifying = DisplayPrefs(true, true, true, true, false, true)
         val expected = mutableListOf<RaceModel>(
-            mockRound1.getRaceOvevriew(),
+            MOCK_RACE_1.getRaceOvevriew(),
             RaceModel.QualifyingHeader(showQualifying)
         )
         expected.addAll(expectedQ3OrderWithQualifyingDeltas)
@@ -441,7 +441,7 @@ internal class RaceViewModelTest: BaseTest() {
             mockRound3.getRaceOvevriew(),
             RaceModel.QualifyingHeader(showQualifying)
         )
-        expected.addAll(expectedQ3Order(round = mockRound3, displayPrefs = showQualifying))
+        expected.addAll(expectedQ3Order(race = mockRound3, displayPrefs = showQualifying))
 
         initSUT(orderBy = QUALIFYING_POS)
 
@@ -480,7 +480,7 @@ internal class RaceViewModelTest: BaseTest() {
         every { mockRaceController.showGridPenaltiesInQualifying } returns false
         every { mockSeasonOverviewRepository.getSeasonRound(any(), any()) } returns flow { emit(mockRound3.copy(
             qSprint = mapOf(
-                MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.id to RoundSprintQualifyingResult(
+                MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.id to RaceSprintQualifyingResult(
                     driver = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(),
                     time = LapTime(),
                     points = 1.0,
@@ -534,29 +534,29 @@ internal class RaceViewModelTest: BaseTest() {
     //region Round 1 expected qualifying orders
 
     private val expectedQ3Order: List<RaceModel> = listOf(
-        convertDriverToSingle(round = mockRound1, roundDriver = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(),
+        convertDriverToSingle(race = MOCK_RACE_1, roundDriver = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(),
             expectedQualified = 1,
             expectedGrid = 1,
             expectedFinish = 4
         ),
-        convertDriverToSingle(round = mockRound1, roundDriver = mockDriver2.toConstructorDriver(),
+        convertDriverToSingle(race = MOCK_RACE_1, roundDriver = mockDriver2.toConstructorDriver(),
             expectedQualified = 2,
             expectedGrid = 2,
             expectedFinish = 3
         ),
-        convertDriverToSingle(round = mockRound1, roundDriver = mockDriver3.toConstructorDriver(),
+        convertDriverToSingle(race = MOCK_RACE_1, roundDriver = mockDriver3.toConstructorDriver(),
             expectedQualified = 3,
             expectedGrid = 4,
             expectedFinish = 2
         ),
-        convertDriverToSingle(round = mockRound1, roundDriver = mockDriver4.toConstructorDriver(),
+        convertDriverToSingle(race = MOCK_RACE_1, roundDriver = mockDriver4.toConstructorDriver(),
             expectedQualified = 4,
             expectedGrid = 3,
             expectedFinish = 1
         )
     )
 
-    private fun expectedQ3Order(round: Round = mockRound1, displayPrefs: DisplayPrefs = DisplayPrefs(
+    private fun expectedQ3Order(race: Race = MOCK_RACE_1, displayPrefs: DisplayPrefs = DisplayPrefs(
         q1 = true,
         q2 = true,
         q3 = true,
@@ -565,25 +565,25 @@ internal class RaceViewModelTest: BaseTest() {
         fadeDNF = true
     )
     ): List<RaceModel> = listOf(
-        convertDriverToSingle(round = round, roundDriver = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(),
+        convertDriverToSingle(race = race, roundDriver = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(),
             expectedQualified = 1,
             expectedGrid = 1,
             expectedFinish = 4,
             displayPrefs = displayPrefs
         ),
-        convertDriverToSingle(round = round, roundDriver = mockDriver2.toConstructorDriver(),
+        convertDriverToSingle(race = race, roundDriver = mockDriver2.toConstructorDriver(),
             expectedQualified = 2,
             expectedGrid = 2,
             expectedFinish = 3,
             displayPrefs = displayPrefs
         ),
-        convertDriverToSingle(round = round, roundDriver = mockDriver3.toConstructorDriver(),
+        convertDriverToSingle(race = race, roundDriver = mockDriver3.toConstructorDriver(),
             expectedQualified = 3,
             expectedGrid = 4,
             expectedFinish = 2,
             displayPrefs = displayPrefs
         ),
-        convertDriverToSingle(round = round, roundDriver = mockDriver4.toConstructorDriver(),
+        convertDriverToSingle(race = race, roundDriver = mockDriver4.toConstructorDriver(),
             expectedQualified = 4,
             expectedGrid = 3,
             expectedFinish = 1,
@@ -592,44 +592,44 @@ internal class RaceViewModelTest: BaseTest() {
     )
 
     private val expectedQ2Order: List<RaceModel> = listOf(
-        convertDriverToSingle(round = mockRound1, roundDriver = mockDriver2.toConstructorDriver(),
+        convertDriverToSingle(race = MOCK_RACE_1, roundDriver = mockDriver2.toConstructorDriver(),
             expectedQualified = 2,
             expectedGrid = 2,
             expectedFinish = 3
         ),
-        convertDriverToSingle(round = mockRound1, roundDriver = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(),
+        convertDriverToSingle(race = MOCK_RACE_1, roundDriver = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(),
             expectedQualified = 1,
             expectedGrid = 1,
             expectedFinish = 4
         ),
-        convertDriverToSingle(round = mockRound1, roundDriver = mockDriver3.toConstructorDriver(),
+        convertDriverToSingle(race = MOCK_RACE_1, roundDriver = mockDriver3.toConstructorDriver(),
             expectedQualified = 3,
             expectedGrid = 4,
             expectedFinish = 2
         ),
-        convertDriverToSingle(round = mockRound1, roundDriver = mockDriver4.toConstructorDriver(),
+        convertDriverToSingle(race = MOCK_RACE_1, roundDriver = mockDriver4.toConstructorDriver(),
             expectedQualified = 4,
             expectedGrid = 3,
             expectedFinish = 1
         )
     )
     private val expectedQ1Order: List<RaceModel> = listOf(
-        convertDriverToSingle(round = mockRound1, roundDriver = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(),
+        convertDriverToSingle(race = MOCK_RACE_1, roundDriver = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(),
             expectedQualified = 1,
             expectedGrid = 1,
             expectedFinish = 4
         ),
-        convertDriverToSingle(round = mockRound1, roundDriver = mockDriver3.toConstructorDriver(),
+        convertDriverToSingle(race = MOCK_RACE_1, roundDriver = mockDriver3.toConstructorDriver(),
             expectedQualified = 3,
             expectedGrid = 4,
             expectedFinish = 2
         ),
-        convertDriverToSingle(round = mockRound1, roundDriver = mockDriver2.toConstructorDriver(),
+        convertDriverToSingle(race = MOCK_RACE_1, roundDriver = mockDriver2.toConstructorDriver(),
             expectedQualified = 2,
             expectedGrid = 2,
             expectedFinish = 3
         ),
-        convertDriverToSingle(round = mockRound1, roundDriver = mockDriver4.toConstructorDriver(),
+        convertDriverToSingle(race = MOCK_RACE_1, roundDriver = mockDriver4.toConstructorDriver(),
             expectedQualified = 4,
             expectedGrid = 3,
             expectedFinish = 1
@@ -642,7 +642,7 @@ internal class RaceViewModelTest: BaseTest() {
     //region Round 1 Qualifying deltas check
 
     private val expectedQ3OrderWithQualifyingDeltas: List<RaceModel> = listOf(
-        convertDriverToSingle(round = mockRound1, roundDriver = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(),
+        convertDriverToSingle(race = MOCK_RACE_1, roundDriver = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(),
             expectedQualified = 1,
             expectedGrid = 1,
             expectedFinish = 4,
@@ -651,7 +651,7 @@ internal class RaceViewModelTest: BaseTest() {
             expectedQ3Delta = null,
             displayPrefs = DisplayPrefs(true, true, true, true, false, true)
         ),
-        convertDriverToSingle(round = mockRound1, roundDriver = mockDriver2.toConstructorDriver(),
+        convertDriverToSingle(race = MOCK_RACE_1, roundDriver = mockDriver2.toConstructorDriver(),
             expectedQualified = 2,
             expectedGrid = 2,
             expectedFinish = 3,
@@ -660,7 +660,7 @@ internal class RaceViewModelTest: BaseTest() {
             expectedQ3Delta = "+1.000",
             displayPrefs = DisplayPrefs(true, true, true, true, false, true)
         ),
-        convertDriverToSingle(round = mockRound1, roundDriver = mockDriver3.toConstructorDriver(),
+        convertDriverToSingle(race = MOCK_RACE_1, roundDriver = mockDriver3.toConstructorDriver(),
             expectedQualified = 3,
             expectedGrid = 4,
             expectedFinish = 2,
@@ -669,7 +669,7 @@ internal class RaceViewModelTest: BaseTest() {
             expectedQ3Delta = null,
             displayPrefs = DisplayPrefs(true, true, true, true, false, true)
         ),
-        convertDriverToSingle(round = mockRound1, roundDriver = mockDriver4.toConstructorDriver(),
+        convertDriverToSingle(race = MOCK_RACE_1, roundDriver = mockDriver4.toConstructorDriver(),
             expectedQualified = 4,
             expectedGrid = 3,
             expectedFinish = 1,
@@ -682,7 +682,7 @@ internal class RaceViewModelTest: BaseTest() {
 
     //endregion
 
-    private fun Round.getRaceOvevriew(
+    private fun Race.getRaceOvevriew(
         date: LocalDate = this.date
     ): RaceModel.Overview {
         return RaceModel.Overview(
@@ -698,7 +698,7 @@ internal class RaceViewModelTest: BaseTest() {
         )
     }
 
-    private fun convertDriverToSingle(round: Round, roundDriver: ConstructorDriver,
+    private fun convertDriverToSingle(race: Race, roundDriver: ConstructorDriver,
                                       expectedGrid: Int,
                                       expectedFinish: Int,
                                       expectedQualified: Int,
@@ -714,10 +714,10 @@ internal class RaceViewModelTest: BaseTest() {
                                           fadeDNF = true
                                       )
     ): RaceModel.Single {
-        val overview = round.driverOverview(roundDriver.id)
+        val overview = race.driverOverview(roundDriver.id)
         return RaceModel.Single(
-            season = round.season,
-            round = round.round,
+            season = race.season,
+            round = race.round,
             driver = roundDriver,
             q1 = overview.q1,
             q2 = overview.q2,

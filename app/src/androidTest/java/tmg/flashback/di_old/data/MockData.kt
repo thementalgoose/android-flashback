@@ -5,6 +5,10 @@ import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
 import tmg.flashback.data.models.stats.*
 import tmg.flashback.formula1.model.*
+import tmg.flashback.formula1.model.Constructor
+import tmg.flashback.formula1.model.ConstructorHistory
+import tmg.flashback.formula1.model.ConstructorHistorySeasonDriver
+import tmg.flashback.formula1.model.ConstructorHistorySeason
 
 /**
  * Mock data used for UI testing:
@@ -162,7 +166,7 @@ internal val mockAllDrivers = listOf(
 
 //region Mock Rounds
 
-internal val mockRound1: Round = mockRound(
+internal val MOCK_RACE_1: Race = mockRound(
         season = 2019,
         round = 1,
         date = LocalDate.of(2019, 3, 4),
@@ -193,7 +197,7 @@ internal val mockRound1: Round = mockRound(
         )
 )
 
-internal val mockRound2: Round = mockRound(
+internal val MOCK_RACE_2: Race = mockRound(
         season = 2019,
         round = 2,
         date = LocalDate.of(2019, 4, 4),
@@ -232,9 +236,9 @@ internal val mockSeason: Season = Season(
         season = 2019,
         driverWithEmbeddedConstructors = listOf(MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_ALEX, MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_BRIAN, MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_CHARLIE, MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_DANIEL),
         constructors = listOf(mockConstructorBlue, mockConstructorGreen),
-        rounds = listOf(
-                mockRound1,
-                mockRound2
+        races = listOf(
+                MOCK_RACE_1,
+                MOCK_RACE_2
         ),
         driverStandings = mapOf(
                 MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_ALEX.id to Pair(MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_ALEX, 24),
@@ -252,20 +256,20 @@ internal val mockSeason: Season = Season(
 
 //region History
 
-internal val MOCK_ROUND_1_OVERVIEW: RoundOverview = mockRound1.toHistory()
-internal val MOCK_ROUND_2_OVERVIEW: RoundOverview = mockRound2.toHistory()
+internal val MOCK_1_OVERVIEW_RACE: OverviewRace = MOCK_RACE_1.toHistory()
+internal val MOCK_2_OVERVIEW_RACE: OverviewRace = MOCK_RACE_2.toHistory()
 
-internal val MOCK_SEASON_OVERVIEW: SeasonOverview =
-        SeasonOverview(
+internal val MOCK_OVERVIEW: Overview =
+        Overview(
             season = 2019,
             winner = WinnerSeason(
                     season = 2019,
                     driver = listOf(WinnerSeasonDriver(MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_CHARLIE.id, MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_CHARLIE.name, MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_CHARLIE.photoUrl, 43)),
                     constructor = listOf(WinnerSeasonConstructor(mockConstructorBlue.id, mockConstructorBlue.name, "#0000ff", 83))
             ),
-            roundOverviews = listOf(
-                    MOCK_ROUND_1_OVERVIEW,
-                    MOCK_ROUND_2_OVERVIEW
+            overviewRaces = listOf(
+                    MOCK_1_OVERVIEW_RACE,
+                    MOCK_2_OVERVIEW_RACE
             )
         )
 
@@ -273,7 +277,7 @@ internal val MOCK_SEASON_OVERVIEW: SeasonOverview =
 
 //region DriverOverview
 
-internal val mockDriverDanielStanding: DriverOverviewStanding = DriverOverviewStanding(
+internal val MOCK_DRIVER_DANIEL_STANDING: DriverHistorySeason = DriverHistorySeason(
         bestFinish = 1,
         bestFinishQuantity = 1,
         bestQualifying = 4,
@@ -287,20 +291,20 @@ internal val mockDriverDanielStanding: DriverOverviewStanding = DriverOverviewSt
         wins = 1,
         constructors = listOf(mockConstructorBlue.toSlim()),
         raceOverview = listOf(
-                DriverOverviewRace(
+                DriverHistorySeasonRace(
                         status = "Finished",
                         finished = 1,
                         points = 25,
                         qualified = 4,
-                        round = mockRound1.round,
-                        season = mockRound1.season,
-                        raceName = mockRound1.name,
-                        date = mockRound1.date,
+                        round = MOCK_RACE_1.round,
+                        season = MOCK_RACE_1.season,
+                        raceName = MOCK_RACE_1.name,
+                        date = MOCK_RACE_1.date,
                         constructor = mockConstructorBlue.toSlim(),
-                        circuitName = mockRound1.circuit.name,
-                        circuitId = mockRound1.circuit.id,
-                        circuitNationality = mockRound1.circuit.country,
-                        circuitNationalityISO = mockRound1.circuit.countryISO
+                        circuitName = MOCK_RACE_1.circuit.name,
+                        circuitId = MOCK_RACE_1.circuit.id,
+                        circuitNationality = MOCK_RACE_1.circuit.country,
+                        circuitNationalityISO = MOCK_RACE_1.circuit.countryISO
                )
         )
 )
@@ -315,14 +319,14 @@ internal val MOCK_DRIVER_DANIEL_HISTORY: DriverHistory = DriverHistory(
         dateOfBirth = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_DANIEL.dateOfBirth,
         nationality = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_DANIEL.nationality,
         nationalityISO = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_DANIEL.nationalityISO,
-        standings = listOf(mockDriverDanielStanding)
+        standings = listOf(MOCK_DRIVER_DANIEL_STANDING)
 )
 
 //endregion
 
 //region ConstructorOverview
 
-internal val mockConstructorBlueOverviewDriverStanding = ConstructorOverviewDriverStanding(
+internal val mockConstructorBlueOverviewDriverStanding = ConstructorHistorySeasonDriver(
         driver = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_DANIEL.forRound().toConstructorDriver(),
         bestFinish = 1,
         bestQualifying = 4,
@@ -339,7 +343,7 @@ internal val mockConstructorBlueOverviewDriverStanding = ConstructorOverviewDriv
         championshipStanding = 1
 )
 
-internal val mockConstructorBlueOverviewStanding = ConstructorOverviewStanding(
+internal val mockConstructorBlueOverviewStanding = ConstructorHistorySeason(
         drivers = mapOf(
                 MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_DANIEL.id to mockConstructorBlueOverviewDriverStanding
         ),
@@ -350,7 +354,7 @@ internal val mockConstructorBlueOverviewStanding = ConstructorOverviewStanding(
         races = 1
 )
 
-internal val mockConstructorBlueOverview = ConstructorOverview(
+internal val mockConstructorBlueOverview = ConstructorHistory(
         id = mockConstructorBlue.id,
         name = mockConstructorBlue.name,
         wikiUrl = mockConstructorBlue.wikiUrl,
@@ -376,7 +380,7 @@ private fun mockRound(
         q2Order: List<DriverWithEmbeddedConstructor>,
         q3Order: List<DriverWithEmbeddedConstructor>,
         finishOrder: List<DriverWithEmbeddedConstructor>
-): Round = Round(
+): Race = Race(
         season = season,
         round = round,
         date = date,
@@ -392,8 +396,8 @@ private fun mockRound(
         race = buildRace(mockAllDrivers.map { it.forRound() }, finishOrder)
 )
 
-private fun Round.toHistory(): RoundOverview {
-    return RoundOverview(
+private fun Race.toHistory(): OverviewRace {
+    return OverviewRace(
             date = this.date,
             season = this.season,
             round = this.round,
@@ -410,14 +414,14 @@ private fun Round.toHistory(): RoundOverview {
 private fun buildQualifying(drivers: List<RoundDriver>, order: List<DriverWithEmbeddedConstructor>) = order
         .mapIndexed { index, driverItem ->
             val driver = drivers.first { it.id == driverItem.id }
-            return@mapIndexed driver.id to RoundQualifyingResult(driver, LapTime(0, 1, index + 1, 0), index + 1)
+            return@mapIndexed driver.id to RaceQualifyingResult(driver, LapTime(0, 1, index + 1, 0), index + 1)
         }
         .toMap()
 
 private fun buildRace(drivers: List<RoundDriver>, order: List<DriverWithEmbeddedConstructor>) = order
         .mapIndexed { index, driverItem ->
             val driver = drivers.first { it.id == driverItem.id }
-            return@mapIndexed driver.id to RoundRaceResult(
+            return@mapIndexed driver.id to RaceRaceResult(
                     driver = driver,
                     time = LapTime(0, 1, index + 1, 0),
                     points = getPoints(index + 1),

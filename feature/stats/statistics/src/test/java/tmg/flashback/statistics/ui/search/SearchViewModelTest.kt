@@ -7,8 +7,8 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
 import tmg.flashback.data.db.stats.SearchRepository
-import tmg.flashback.formula1.model.SeasonOverview
-import tmg.flashback.formula1.model.RoundOverview
+import tmg.flashback.formula1.model.Overview
+import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.formula1.model.Location
 import tmg.flashback.formula1.model.SearchCircuit
 import tmg.flashback.formula1.model.SearchConstructor
@@ -79,11 +79,11 @@ internal class SearchViewModelTest: BaseTest() {
         every { mockSearchRepository.allRaces() } returns flow {
             emit(
                 listOf(
-                    SeasonOverview(
+                    Overview(
                         season = 2020,
                         winner = null,
-                        roundOverviews = listOf(
-                            RoundOverview(
+                        overviewRaces = listOf(
+                            OverviewRace(
                                 date = LocalDate.of(2020, 1, 1),
                                 season = 2020,
                                 round = 1,

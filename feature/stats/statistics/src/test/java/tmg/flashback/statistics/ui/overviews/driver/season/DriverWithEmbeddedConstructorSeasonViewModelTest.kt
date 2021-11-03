@@ -9,7 +9,7 @@ import tmg.core.device.managers.NetworkConnectivityManager
 import tmg.core.ui.controllers.ThemeController
 import tmg.core.ui.model.AnimationSpeed
 import tmg.flashback.statistics.ui.overview.driver.summary.PipeType.*
-import tmg.flashback.formula1.model.DriverOverviewRace
+import tmg.flashback.formula1.model.DriverHistorySeasonRace
 import tmg.flashback.firebase.extensions.pointsDisplay
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.ui.overview.driver.season.DriverSeasonItem
@@ -316,7 +316,7 @@ internal class DriverWithEmbeddedConstructorSeasonViewModelTest: BaseTest() {
     private val expectedSecondRound: DriverSeasonItem.Result
         get() = convertDriverOverviewRace(mockDriverOverviewRaceSecond)
 
-    private fun convertDriverOverviewRace(race: DriverOverviewRace): DriverSeasonItem.Result {
+    private fun convertDriverOverviewRace(race: DriverHistorySeasonRace): DriverSeasonItem.Result {
         return DriverSeasonItem.Result(
                 season = race.season,
                 round = race.round,

@@ -34,7 +34,7 @@ internal class HistoryMapperTest: BaseTest() {
 
         val input = FHistorySeason.model()
         val expected = listOf(
-            tmg.flashback.formula1.model.SeasonOverview(
+            tmg.flashback.formula1.model.Overview(
                 season = 2020,
                 winner = tmg.flashback.formula1.model.WinnerSeason(
                     season = 2020,
@@ -55,8 +55,8 @@ internal class HistoryMapperTest: BaseTest() {
                         )
                     )
                 ),
-                roundOverviews = listOf(
-                    tmg.flashback.formula1.model.RoundOverview(
+                overviewRaces = listOf(
+                    tmg.flashback.formula1.model.OverviewRace(
                         date = LocalDate.of(2020, 1, 1),
                         round = 1,
                         season = 2020,
@@ -99,7 +99,7 @@ internal class HistoryMapperTest: BaseTest() {
             )
         ))
 
-        assertEquals(1, sut.mapHistory(input)[0].roundOverviews.size)
+        assertEquals(1, sut.mapHistory(input)[0].overviewRaces.size)
 
         verify {
             mockCrashController.logException(any())
@@ -111,7 +111,7 @@ internal class HistoryMapperTest: BaseTest() {
         initSUT()
 
         val input = FHistorySeasonRound.model()
-        val expected = tmg.flashback.formula1.model.RoundOverview(
+        val expected = tmg.flashback.formula1.model.OverviewRace(
             date = LocalDate.of(2020, 1, 1),
             round = 1,
             season = 2020,

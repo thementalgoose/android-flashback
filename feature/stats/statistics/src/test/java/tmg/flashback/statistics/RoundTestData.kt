@@ -4,6 +4,7 @@ import android.graphics.Color
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
 import tmg.flashback.formula1.model.*
+import tmg.flashback.formula1.model.Constructor
 import tmg.utilities.extensions.hexColor
 
 
@@ -188,19 +189,19 @@ internal val mockLocalTimeOfRound3: LocalTime = LocalTime.of(14, 10)
 
 //region Round 1
 
-internal val mockRound1Driver1Q1 = RoundQualifyingResult(driver = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(1), time = LapTime(0,1, 1, 0), position = 1)
-internal val mockRound1Driver2Q1 = RoundQualifyingResult(driver = mockDriver2.toConstructorDriver(1), time = LapTime(0,1, 3, 0), position = 3)
-internal val mockRound1Driver3Q1 = RoundQualifyingResult(driver = mockDriver3.toConstructorDriver(1), time = LapTime(0,1, 2, 0), position = 2)
-internal val mockRound1Driver4Q1 = RoundQualifyingResult(driver = mockDriver4.toConstructorDriver(1), time = LapTime(0,1, 4, 0), position = 4)
+internal val mockRound1Driver1Q1 = RaceQualifyingResult(driver = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(1), time = LapTime(0,1, 1, 0), position = 1)
+internal val mockRound1Driver2Q1 = RaceQualifyingResult(driver = mockDriver2.toConstructorDriver(1), time = LapTime(0,1, 3, 0), position = 3)
+internal val mockRound1Driver3Q1 = RaceQualifyingResult(driver = mockDriver3.toConstructorDriver(1), time = LapTime(0,1, 2, 0), position = 2)
+internal val mockRound1Driver4Q1 = RaceQualifyingResult(driver = mockDriver4.toConstructorDriver(1), time = LapTime(0,1, 4, 0), position = 4)
 
-internal val mockRound1Driver1Q2 = RoundQualifyingResult(driver = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(1), time = LapTime(0,1, 2, 0), position = 2)
-internal val mockRound1Driver2Q2 = RoundQualifyingResult(driver = mockDriver2.toConstructorDriver(1), time = LapTime(0,1, 1, 0), position = 1)
-internal val mockRound1Driver3Q2 = RoundQualifyingResult(driver = mockDriver3.toConstructorDriver(1), time = LapTime(0,1, 3, 0), position = 3)
+internal val mockRound1Driver1Q2 = RaceQualifyingResult(driver = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(1), time = LapTime(0,1, 2, 0), position = 2)
+internal val mockRound1Driver2Q2 = RaceQualifyingResult(driver = mockDriver2.toConstructorDriver(1), time = LapTime(0,1, 1, 0), position = 1)
+internal val mockRound1Driver3Q2 = RaceQualifyingResult(driver = mockDriver3.toConstructorDriver(1), time = LapTime(0,1, 3, 0), position = 3)
 
-internal val mockRound1Driver1Q3 = RoundQualifyingResult(driver = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(1), time = LapTime(0,1, 1, 0), position = 1)
-internal val mockRound1Driver2Q3 = RoundQualifyingResult(driver = mockDriver2.toConstructorDriver(1), time = LapTime(0,1, 2, 0), position = 2)
+internal val mockRound1Driver1Q3 = RaceQualifyingResult(driver = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(1), time = LapTime(0,1, 1, 0), position = 1)
+internal val mockRound1Driver2Q3 = RaceQualifyingResult(driver = mockDriver2.toConstructorDriver(1), time = LapTime(0,1, 2, 0), position = 2)
 
-internal val round1RaceResultDriver1 = RoundRaceResult(
+internal val round1RaceResultDriver1 = RaceRaceResult(
     driver = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(1),
     time = LapTime(1,0,0,0),
     points = 5.0,
@@ -210,7 +211,7 @@ internal val round1RaceResultDriver1 = RoundRaceResult(
     status = "Engine",
     fastestLap = null
 )
-internal val round1RaceResultDriver2 = RoundRaceResult(
+internal val round1RaceResultDriver2 = RaceRaceResult(
     driver = mockDriver2.toConstructorDriver(1),
     time = LapTime(1,2,0,0),
     points = 10.0,
@@ -220,7 +221,7 @@ internal val round1RaceResultDriver2 = RoundRaceResult(
     status = "Finished",
     fastestLap = null
 )
-internal val round1RaceResultDriver3 = RoundRaceResult(
+internal val round1RaceResultDriver3 = RaceRaceResult(
     driver = mockDriver3.toConstructorDriver(1),
     time = LapTime(1,1,0,0),
     points = 15.0,
@@ -230,7 +231,7 @@ internal val round1RaceResultDriver3 = RoundRaceResult(
     status = "Finished",
     fastestLap = null
 )
-internal val round1RaceResultDriver4 = RoundRaceResult(
+internal val round1RaceResultDriver4 = RaceRaceResult(
     driver = mockDriver4.toConstructorDriver(1),
     time = LapTime(1,0,0,0),
     points = 20.0,
@@ -251,7 +252,7 @@ internal val round1RaceResultDriver4 = RoundRaceResult(
  *
  * Finish: 4,3,2,1(DNF)
  */
-internal val mockRound1: Round = Round(
+internal val MOCK_RACE_1: Race = Race(
     season = 2019,
     round = 1,
     date = mockLocalDateOfRound1,
@@ -294,19 +295,19 @@ internal val mockRound1: Round = Round(
 
 //region Round 2
 
-internal val mockRound2Driver1Q1 = RoundQualifyingResult(driver = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(2), time = LapTime(0,1, 3, 0), position = 3)
-internal val mockRound2Driver2Q1 = RoundQualifyingResult(driver = mockDriver2.toConstructorDriver(2), time = LapTime(0,1, 4, 0), position = 4)
-internal val mockRound2Driver3Q1 = RoundQualifyingResult(driver = mockDriver3.toConstructorDriver(2), time = LapTime(0,1, 1, 0), position = 1)
-internal val mockRound2Driver4Q1 = RoundQualifyingResult(driver = mockDriver4.toConstructorDriver(2), time = LapTime(0,1, 2, 0), position = 2)
+internal val mockRound2Driver1Q1 = RaceQualifyingResult(driver = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(2), time = LapTime(0,1, 3, 0), position = 3)
+internal val mockRound2Driver2Q1 = RaceQualifyingResult(driver = mockDriver2.toConstructorDriver(2), time = LapTime(0,1, 4, 0), position = 4)
+internal val mockRound2Driver3Q1 = RaceQualifyingResult(driver = mockDriver3.toConstructorDriver(2), time = LapTime(0,1, 1, 0), position = 1)
+internal val mockRound2Driver4Q1 = RaceQualifyingResult(driver = mockDriver4.toConstructorDriver(2), time = LapTime(0,1, 2, 0), position = 2)
 
-internal val mockRound2Driver1Q2 = RoundQualifyingResult(driver = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(2), time = LapTime(0,1, 2, 0), position = 2)
-internal val mockRound2Driver3Q2 = RoundQualifyingResult(driver = mockDriver3.toConstructorDriver(2), time = LapTime(0,1, 3, 0), position = 3)
-internal val mockRound2Driver4Q2 = RoundQualifyingResult(driver = mockDriver4.toConstructorDriver(2), time = LapTime(0,1, 1, 0), position = 1)
+internal val mockRound2Driver1Q2 = RaceQualifyingResult(driver = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(2), time = LapTime(0,1, 2, 0), position = 2)
+internal val mockRound2Driver3Q2 = RaceQualifyingResult(driver = mockDriver3.toConstructorDriver(2), time = LapTime(0,1, 3, 0), position = 3)
+internal val mockRound2Driver4Q2 = RaceQualifyingResult(driver = mockDriver4.toConstructorDriver(2), time = LapTime(0,1, 1, 0), position = 1)
 
-internal val mockRound2Driver1Q3 = RoundQualifyingResult(driver = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(2), time = LapTime(0,1, 2, 0), position = 4)
-internal val mockRound2Driver4Q3 = RoundQualifyingResult(driver = mockDriver4.toConstructorDriver(2), time = LapTime(0,1, 1, 0), position = 1)
+internal val mockRound2Driver1Q3 = RaceQualifyingResult(driver = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(2), time = LapTime(0,1, 2, 0), position = 4)
+internal val mockRound2Driver4Q3 = RaceQualifyingResult(driver = mockDriver4.toConstructorDriver(2), time = LapTime(0,1, 1, 0), position = 1)
 
-internal val round2RaceResultDriver1 = RoundRaceResult(
+internal val round2RaceResultDriver1 = RaceRaceResult(
     driver = MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1.toConstructorDriver(2),
     time = LapTime(1,0,0,0),
     points = 16.0,
@@ -316,7 +317,7 @@ internal val round2RaceResultDriver1 = RoundRaceResult(
     status = "Engine",
     fastestLap = null
 )
-internal val round2RaceResultDriver2 = RoundRaceResult(
+internal val round2RaceResultDriver2 = RaceRaceResult(
     driver = mockDriver2.toConstructorDriver(2),
     time = LapTime(1,2,0,0),
     points = 8.0,
@@ -326,7 +327,7 @@ internal val round2RaceResultDriver2 = RoundRaceResult(
     status = "Finished",
     fastestLap = null
 )
-internal val round2RaceResultDriver3 = RoundRaceResult(
+internal val round2RaceResultDriver3 = RaceRaceResult(
     driver = mockDriver3.toConstructorDriver(2),
     time = LapTime(1,1,0,0),
     points = 12.0,
@@ -336,7 +337,7 @@ internal val round2RaceResultDriver3 = RoundRaceResult(
     status = "Finished",
     fastestLap = null
 )
-internal val round2RaceResultDriver4 = RoundRaceResult(
+internal val round2RaceResultDriver4 = RaceRaceResult(
     driver = mockDriver4.toConstructorDriver(2),
     time = LapTime(1,0,0,0),
     points = 4.0,
@@ -356,7 +357,7 @@ internal val round2RaceResultDriver4 = RoundRaceResult(
  *
  * Finish: 1,3,2,4
  */
-internal val mockRound2: Round = Round(
+internal val MOCK_RACE_2: Race = Race(
     season = 2019,
     round = 2,
     date = mockLocalDateOfRound2,
@@ -399,7 +400,7 @@ internal val mockRound2: Round = Round(
 
 //region Round 3 (Single Qualifying)
 
-internal val mockRound3 = mockRound1.copy(
+internal val mockRound3 = MOCK_RACE_1.copy(
     round = 3,
     name = "Round 3",
     q2 = emptyMap(),
@@ -424,7 +425,7 @@ internal val mockSeason = Season(
     season = 2019,
     driverWithEmbeddedConstructors = listOf(MOCK_DRIVER_WITH_EMBEDDED_CONSTRUCTOR_1, mockDriver2, mockDriver3, mockDriver4),
     constructors = listOf(mockConstructorAlpha, mockConstructorBeta),
-    rounds = listOf(mockRound1, mockRound2),
+    races = listOf(MOCK_RACE_1, MOCK_RACE_2),
     driverStandings = emptyList(),
     constructorStandings = emptyList()
 )
@@ -439,7 +440,7 @@ internal val mockSeason = Season(
 
 //region History
 
-internal val mockHistoryRound1 = RoundOverview(
+internal val mockHistoryRound1 = OverviewRace(
     date = mockLocalDateOfRound1,
     season = 2019,
     round = 1,
@@ -452,7 +453,7 @@ internal val mockHistoryRound1 = RoundOverview(
     hasResults = true
 )
 
-internal val mockHistoryRound2 = RoundOverview(
+internal val mockHistoryRound2 = OverviewRace(
     date = mockLocalDateOfRound2,
     season = 2019,
     round = 2,
@@ -470,7 +471,7 @@ internal val mockHistoryRound3 = mockHistoryRound2.copy(
     raceName = "Round 3"
 )
 
-internal val mockHistory = SeasonOverview(
+internal val mockHistory = Overview(
     2019,
     winner = WinnerSeason(
         season = 2019,
@@ -485,7 +486,7 @@ internal val mockHistory = SeasonOverview(
             WinnerSeasonConstructor(mockConstructorBeta.id, mockConstructorBeta.name, mockConstructorBeta.color.hexColor, 42)
         )
     ),
-    roundOverviews = listOf(
+    overviewRaces = listOf(
         mockHistoryRound1,
         mockHistoryRound2
     )

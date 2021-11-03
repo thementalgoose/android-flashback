@@ -42,7 +42,7 @@ internal class DriverWithEmbeddedConstructorMapperTest: BaseTest() {
             nationality = "nationality",
             nationalityISO = "nationalityISO",
             standings = listOf(
-                tmg.flashback.formula1.model.DriverOverviewStanding(
+                tmg.flashback.formula1.model.DriverHistorySeason(
                     bestFinish = 1,
                     bestFinishQuantity = 4,
                     bestQualifying = 2,
@@ -62,7 +62,7 @@ internal class DriverWithEmbeddedConstructorMapperTest: BaseTest() {
                         )
                     ),
                     raceOverview = listOf(
-                        tmg.flashback.formula1.model.DriverOverviewRace(
+                        tmg.flashback.formula1.model.DriverHistorySeasonRace(
                             status = "1",
                             finished = 1,
                             points = 25.0,
@@ -135,7 +135,7 @@ internal class DriverWithEmbeddedConstructorMapperTest: BaseTest() {
         initSUT()
 
         val input = FDriverOverviewStanding.model()
-        val expected = tmg.flashback.formula1.model.DriverOverviewStanding(
+        val expected = tmg.flashback.formula1.model.DriverHistorySeason(
             bestFinish = 1,
             bestFinishQuantity = 4,
             bestQualifying = 2,
@@ -155,7 +155,7 @@ internal class DriverWithEmbeddedConstructorMapperTest: BaseTest() {
                 )
             ),
             raceOverview = listOf(
-                tmg.flashback.formula1.model.DriverOverviewRace(
+                tmg.flashback.formula1.model.DriverHistorySeasonRace(
                     status = "1",
                     finished = 1,
                     points = 25.0,
@@ -283,7 +283,7 @@ internal class DriverWithEmbeddedConstructorMapperTest: BaseTest() {
                 name = "constructorName2"
             )
         )
-        val expected = tmg.flashback.formula1.model.DriverOverviewRace(
+        val expected = tmg.flashback.formula1.model.DriverHistorySeasonRace(
             status = "1",
             finished = 1,
             points = 25.0,

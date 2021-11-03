@@ -6,8 +6,6 @@ import tmg.crash_reporting.controllers.CrashController
 import tmg.flashback.formula1.model.Circuit
 import tmg.flashback.formula1.model.CircuitHistory
 import tmg.flashback.statistics.network.api.FlashbackApi
-import tmg.flashback.statistics.network.utils.data
-import tmg.flashback.statistics.network.utils.hasData
 import tmg.flashback.statistics.repo.base.BaseRepository
 import tmg.flashback.statistics.repo.mappers.app.CircuitMapper
 import tmg.flashback.statistics.repo.mappers.network.NetworkCircuitDataMapper

@@ -11,11 +11,14 @@ import tmg.flashback.statistics.room.models.drivers.Driver
 @Dao
 interface ConstructorDao {
 
-    @Query("SELECT * FROM constructor WHERE id == :id LIMIT 1")
+    @Query("SELECT * FROM Constructor")
+    fun getConstructors(): Flow<List<Constructor>>
+
+    @Query("SELECT * FROM Constructor WHERE id == :id LIMIT 1")
     fun getConstructor(id: String): Constructor?
 
     @Transaction
-    @Query("SELECT * FROM constructor WHERE id == :id LIMIT 1")
+    @Query("SELECT * FROM Constructor WHERE id == :id LIMIT 1")
     fun getConstructorHistory(id: String): Flow<ConstructorHistory?>
 
     @Transaction

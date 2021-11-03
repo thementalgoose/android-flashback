@@ -3,16 +3,16 @@ package tmg.flashback.statistics.repo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import tmg.crash_reporting.controllers.CrashController
-import tmg.flashback.formula1.model.ConstructorOverview
+import tmg.flashback.formula1.model.ConstructorHistory
 import tmg.flashback.statistics.network.api.FlashbackApi
 import tmg.flashback.statistics.network.models.constructors.Constructor
 import tmg.flashback.statistics.repo.base.BaseRepository
+import tmg.flashback.statistics.repo.mappers.app.ConstructorDataMapper
 import tmg.flashback.statistics.repo.mappers.app.ConstructorMapper
 import tmg.flashback.statistics.repo.mappers.network.NetworkConstructorDataMapper
 import tmg.flashback.statistics.repo.mappers.network.NetworkConstructorMapper
 import tmg.flashback.statistics.repo.mappers.network.NetworkDriverDataMapper
 import tmg.flashback.statistics.room.FlashbackDatabase
-import tmg.flashback.statistics.room.models.constructors.ConstructorHistory
 
 class ConstructorRepository(
     private val api: FlashbackApi,
@@ -22,6 +22,7 @@ class ConstructorRepository(
     private val networkConstructorDataMapper: NetworkConstructorDataMapper,
     private val networkConstructorMapper: NetworkConstructorMapper,
     private val constructorMapper: ConstructorMapper,
+    private val constructorDataMapper: ConstructorDataMapper,
 ): BaseRepository(crashController) {
 
     /**
@@ -66,9 +67,14 @@ class ConstructorRepository(
         return@attempt true
     }
 
-    fun getConstructorOverview(id: String): Flow<ConstructorOverview?> {
+    fun getConstructorOverview(id: String): Flow<ConstructorHistory?> {
         return persistence.constructorDao().getConstructorHistory(id)
             .map { constructorMapper.mapConstructor(it) }
+    }
+
+    fun getConstructors(): Flow<List<tmg.flashback.formula1.model.Constructor>> {
+        return persistence.constructorDao().getConstructors()
+            .map { list -> list.map { constructorDataMapper.mapConstructorData(it) } }
     }
 
     private fun saveDrivers(data: Constructor): Boolean {

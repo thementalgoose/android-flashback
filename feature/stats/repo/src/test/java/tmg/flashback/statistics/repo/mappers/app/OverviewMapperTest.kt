@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.format.DateTimeParseException
-import tmg.flashback.formula1.model.RoundOverview
+import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.formula1.model.model
 import tmg.flashback.statistics.room.models.overview.Overview
 import tmg.flashback.statistics.room.models.overview.model
@@ -21,7 +21,7 @@ internal class OverviewMapperTest {
     @Test
     fun `OverviewMapper mapOverview maps fields correctly`() {
         val input = Overview.model()
-        val expected = RoundOverview.model()
+        val expected = OverviewRace.model()
 
         assertEquals(expected, sut.mapOverview(input))
     }
