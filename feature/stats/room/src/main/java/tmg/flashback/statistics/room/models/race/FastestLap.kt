@@ -7,4 +7,6 @@ data class FastestLap(
     val position: Int,
     @ColumnInfo(name = "time")
     val time: String
-)
+) {
+    companion object
+}

@@ -33,4 +33,6 @@ class DriverSeasonRace(
     val driverSeasonId: String = "${driverId}_${season}",
     @ColumnInfo(name = "season_round_id")
     val seasonRoundId: String = "${season}_${round}"
-)
+) {
+    companion object
+}

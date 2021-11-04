@@ -12,10 +12,10 @@ import tmg.flashback.statistics.room.models.drivers.DriverSeason
 import tmg.flashback.statistics.room.models.drivers.DriverSeasonRace
 import tmg.flashback.statistics.room.models.overview.Overview
 import tmg.flashback.statistics.room.models.race.*
-import tmg.flashback.statistics.room.models.race.standings.ConstructorStanding
-import tmg.flashback.statistics.room.models.race.standings.ConstructorStandingDriver
-import tmg.flashback.statistics.room.models.race.standings.DriverStanding
-import tmg.flashback.statistics.room.models.race.standings.DriverStandingConstructor
+import tmg.flashback.statistics.room.models.standings.ConstructorStanding
+import tmg.flashback.statistics.room.models.standings.ConstructorStandingDriver
+import tmg.flashback.statistics.room.models.standings.DriverStanding
+import tmg.flashback.statistics.room.models.standings.DriverStandingConstructor
 
 @Database(
     version = 1,

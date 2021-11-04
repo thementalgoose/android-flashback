@@ -1,8 +1,8 @@
 package tmg.flashback.statistics.repo.mappers.network
 
 import tmg.flashback.statistics.network.models.races.ConstructorStandings
-import tmg.flashback.statistics.room.models.race.standings.ConstructorStanding
-import tmg.flashback.statistics.room.models.race.standings.ConstructorStandingDriver
+import tmg.flashback.statistics.room.models.standings.ConstructorStanding
+import tmg.flashback.statistics.room.models.standings.ConstructorStandingDriver
 import java.lang.RuntimeException
 import kotlin.jvm.Throws
 

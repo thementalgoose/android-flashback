@@ -3,8 +3,8 @@ package tmg.flashback.statistics.repo.mappers.app
 import tmg.flashback.formula1.model.SeasonDriverStandingSeason
 import tmg.flashback.formula1.model.SeasonDriverStandingSeasonConstructor
 import tmg.flashback.formula1.model.SeasonDriverStandings
-import tmg.flashback.statistics.room.models.race.standings.DriverStandingConstructorWithConstructor
-import tmg.flashback.statistics.room.models.race.standings.DriverStandingWithConstructors
+import tmg.flashback.statistics.room.models.standings.DriverStandingConstructorWithConstructor
+import tmg.flashback.statistics.room.models.standings.DriverStandingWithConstructors
 
 class DriverStandingMapper(
     private val driverDataMapper: DriverDataMapper,

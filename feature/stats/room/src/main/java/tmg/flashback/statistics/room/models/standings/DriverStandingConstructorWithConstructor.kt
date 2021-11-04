@@ -1,9 +1,8 @@
-package tmg.flashback.statistics.room.models.race.standings
+package tmg.flashback.statistics.room.models.standings
 
 import androidx.room.Embedded
 import androidx.room.Relation
 import tmg.flashback.statistics.room.models.constructors.Constructor
-import tmg.flashback.statistics.room.models.drivers.Driver
 
 data class DriverStandingConstructorWithConstructor(
     @Embedded

@@ -23,4 +23,6 @@ data class RaceInfo(
     @PrimaryKey
     @ColumnInfo(name = "id")
     val id: String = "${season}_${round}"
-)
+) {
+    companion object
+}

@@ -13,4 +13,6 @@ data class QualifyingSprintResult(
     val status: String,
     @ColumnInfo(name = "time")
     val time: String
-)
+) {
+    companion object
+}

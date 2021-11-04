@@ -30,5 +30,7 @@ data class QualifyingResult(
     val id: String = "${driverId}_${season}_${round}",
     @ColumnInfo(name = "season_round_id")
     val seasonRoundId: String = "${season}_${round}"
-)
+) {
+    companion object
+}
 
