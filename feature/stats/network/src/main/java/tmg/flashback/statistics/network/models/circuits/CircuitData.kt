@@ -13,4 +13,6 @@ data class CircuitData(
     val city: String,
     val country: String,
     val countryISO: String
-)
+) {
+    companion object
+}
