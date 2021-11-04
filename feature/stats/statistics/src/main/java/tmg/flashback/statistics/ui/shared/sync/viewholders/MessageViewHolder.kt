@@ -2,8 +2,10 @@ package tmg.flashback.statistics.ui.shared.sync.viewholders
 
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
 import androidx.annotation.StringRes
 import androidx.recyclerview.widget.RecyclerView
+import tmg.flashback.statistics.BuildConfig
 import tmg.flashback.statistics.databinding.ViewSharedMessageBinding
 import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.views.getString
@@ -15,6 +17,9 @@ class MessageViewHolder(
     private var messageUrl: String? = null
 
     fun bind(@StringRes msg: Int, list: List<Any>, clickableUrl: String? = null) {
+        if (BuildConfig.DEBUG) {
+            Log.d("Statistics", "Message view holder ${getString(msg, *list.toTypedArray())}")
+        }
         if (list.isNotEmpty()) {
             binding.message.text = getString(msg, *list.toTypedArray()).fromHtml()
         }
@@ -25,6 +30,9 @@ class MessageViewHolder(
     }
 
     fun bind(msg: String, clickableUrl: String? = null) {
+        if (BuildConfig.DEBUG) {
+            Log.d("Statistics", "Message view holder $msg")
+        }
         binding.message.text = msg.fromHtml()
         setupClickable(clickableUrl)
     }
