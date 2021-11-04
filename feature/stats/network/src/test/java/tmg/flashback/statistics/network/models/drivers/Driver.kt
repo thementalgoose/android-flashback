@@ -1,11 +1,25 @@
 package tmg.flashback.statistics.network.models.drivers
 
 fun Driver.Companion.model(
-    driver: DriverData = DriverData.model(),
-    standings: Map<String, DriverStanding> = mapOf(
-        "s2020r1" to DriverStanding.model()
-    )
+    id: String = "driverId",
+    firstName: String = "firstName",
+    lastName: String = "lastName",
+    dob: String = "1995-10-12",
+    nationality: String = "nationality",
+    nationalityISO: String = "nationalityISO",
+    photoUrl: String? = "photoUrl",
+    wikiUrl: String? = "wikiUrl",
+    code: String? = "code",
+    permanentNumber: String? = "permanentNumber"
 ): Driver = Driver(
-    driver = driver,
-    standings = standings
+    id = id,
+    firstName = firstName,
+    lastName = lastName,
+    dob = dob,
+    nationality = nationality,
+    nationalityISO = nationalityISO,
+    photoUrl = photoUrl,
+    wikiUrl = wikiUrl,
+    code = code,
+    permanentNumber = permanentNumber
 )

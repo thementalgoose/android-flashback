@@ -1,7 +1,7 @@
 package tmg.flashback.statistics.network.models.races
 
 import kotlinx.serialization.Serializable
-import tmg.flashback.statistics.network.models.circuits.CircuitData
+import tmg.flashback.statistics.network.models.circuits.Circuit
 
 @Serializable
 data class RaceData(
@@ -10,6 +10,8 @@ data class RaceData(
     val name: String,
     val date: String,
     val time: String?,
-    val circuit: CircuitData,
+    val circuit: Circuit,
     val wikiUrl: String?
-)
+) {
+    companion object
+}

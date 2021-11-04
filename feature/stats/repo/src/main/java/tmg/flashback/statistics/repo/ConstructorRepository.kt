@@ -3,9 +3,7 @@ package tmg.flashback.statistics.repo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import tmg.crash_reporting.controllers.CrashController
-import tmg.flashback.formula1.model.ConstructorHistory
 import tmg.flashback.statistics.network.api.FlashbackApi
-import tmg.flashback.statistics.network.models.constructors.Constructor
 import tmg.flashback.statistics.repo.base.BaseRepository
 import tmg.flashback.statistics.repo.mappers.app.ConstructorDataMapper
 import tmg.flashback.statistics.repo.mappers.app.ConstructorMapper
@@ -77,7 +75,7 @@ class ConstructorRepository(
             .map { list -> list.map { constructorDataMapper.mapConstructorData(it) } }
     }
 
-    private fun saveDrivers(data: Constructor): Boolean {
+    private fun saveDrivers(data: tmg.flashback.statistics.network.models.constructors.ConstructorHistory): Boolean {
         val drivers = data.standings.values
             .map { it.drivers.values.map { it.driver } }
             .flatten()

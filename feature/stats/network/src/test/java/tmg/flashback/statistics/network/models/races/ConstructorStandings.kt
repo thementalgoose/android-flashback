@@ -1,0 +1,19 @@
+package tmg.flashback.statistics.network.models.races
+
+fun ConstructorStandings.Companion.model(
+    constructorId: String = "constructorId",
+    points: Double = 1.0,
+    inProgress: Boolean? = true,
+    races: Int = 1,
+    position: Int? = 1,
+    drivers: Map<String, Double> = mapOf(
+        "driverId" to 1.0
+    )
+): ConstructorStandings = ConstructorStandings(
+    constructorId = constructorId,
+    points = points,
+    inProgress = inProgress,
+    races = races,
+    position = position,
+    drivers = drivers
+)

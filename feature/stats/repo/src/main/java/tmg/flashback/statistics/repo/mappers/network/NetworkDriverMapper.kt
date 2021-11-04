@@ -1,9 +1,7 @@
 package tmg.flashback.statistics.repo.mappers.network
 
-import tmg.flashback.statistics.network.models.drivers.DriverData
-import tmg.flashback.statistics.network.models.drivers.DriverStanding
-import tmg.flashback.statistics.network.models.drivers.DriverStandingRace
-import tmg.flashback.statistics.room.models.drivers.Driver
+import tmg.flashback.statistics.network.models.drivers.DriverHistoryStanding
+import tmg.flashback.statistics.network.models.drivers.DriverHistoryStandingRace
 import tmg.flashback.statistics.room.models.drivers.DriverSeason
 import tmg.flashback.statistics.room.models.drivers.DriverSeasonRace
 import java.lang.RuntimeException
@@ -12,7 +10,7 @@ import kotlin.jvm.Throws
 class NetworkDriverMapper {
 
     @Throws(RuntimeException::class)
-    fun mapDriverSeason(driverId: String, driver: DriverStanding): DriverSeason {
+    fun mapDriverSeason(driverId: String, driver: DriverHistoryStanding): DriverSeason {
         return DriverSeason(
             driverId = driverId,
             season = driver.season,
@@ -23,7 +21,7 @@ class NetworkDriverMapper {
     }
 
     @Throws(RuntimeException::class)
-    fun mapDriverSeasonRace(driverId: String, season: Int, data: DriverStandingRace): DriverSeasonRace {
+    fun mapDriverSeasonRace(driverId: String, season: Int, data: DriverHistoryStandingRace): DriverSeasonRace {
         return DriverSeasonRace(
             driverId = driverId,
             season = season,
