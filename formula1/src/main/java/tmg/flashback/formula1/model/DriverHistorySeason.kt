@@ -87,4 +87,6 @@ data class DriverHistorySeason(
         return raceOverview
             .count { it.qualified == position }
     }
+
+    companion object
 }

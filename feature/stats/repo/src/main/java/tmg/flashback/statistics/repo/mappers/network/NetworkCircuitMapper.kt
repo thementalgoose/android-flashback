@@ -2,8 +2,9 @@ package tmg.flashback.statistics.repo.mappers.network
 
 import tmg.flashback.statistics.network.models.circuits.CircuitResult
 import tmg.flashback.statistics.network.models.circuits.CircuitResultRace
-import tmg.flashback.statistics.network.models.circuits.CircuitHistory
-import tmg.flashback.statistics.room.models.circuit.*
+import tmg.flashback.statistics.room.models.circuit.CircuitHistory
+import tmg.flashback.statistics.room.models.circuit.CircuitRound
+import tmg.flashback.statistics.room.models.circuit.CircuitRoundWithResults
 import java.lang.RuntimeException
 import kotlin.jvm.Throws
 
@@ -12,7 +13,7 @@ class NetworkCircuitMapper(
 ) {
 
     @Throws(RuntimeException::class)
-    fun mapCircuit(circuit: CircuitHistory?): CircuitHistory? {
+    fun mapCircuit(circuit: tmg.flashback.statistics.network.models.circuits.CircuitHistory?): CircuitHistory? {
         if (circuit == null) return null
         return CircuitHistory(
             circuit = networkCircuitDataMapper.mapCircuitData(circuit.data),

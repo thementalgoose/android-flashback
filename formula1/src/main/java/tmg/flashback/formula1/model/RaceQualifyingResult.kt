@@ -4,4 +4,6 @@ data class RaceQualifyingResult(
     val driver: DriverConstructor,
     val time: LapTime?,
     val position: Int
-)
+) {
+    companion object
+}

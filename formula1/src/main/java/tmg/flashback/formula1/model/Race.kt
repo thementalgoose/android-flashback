@@ -1,7 +1,5 @@
 package tmg.flashback.formula1.model
 
-import androidx.annotation.BoolRes
-
 data class Race(
     val raceInfo: RaceInfo,
     val q1: Map<String, RaceQualifyingResult>,
@@ -90,6 +88,8 @@ data class Race(
         .minByOrNull {
             it?.totalMillis ?: Int.MAX_VALUE
         }
+
+    companion object
 }
 
 

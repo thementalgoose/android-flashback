@@ -86,9 +86,9 @@ class DriverViewModel(
                     ))
 
                     if (it.hasChampionshipCurrentlyInProgress) {
-                        val latestRound = it.standings.maxByOrNull { it.season }?.raceOverview?.maxByOrNull { it.round }
+                        val latestRound = it.standings.maxByOrNull { it.season }?.raceOverview?.maxByOrNull { it.raceInfo.round }
                         if (latestRound != null) {
-                            list.add(DriverSummaryItem.ErrorItem(SyncDataItem.MessageRes(R.string.results_accurate_for_year, listOf(latestRound.season, latestRound.raceName, latestRound.round))))
+                            list.add(DriverSummaryItem.ErrorItem(SyncDataItem.MessageRes(R.string.results_accurate_for_year, listOf(latestRound.raceInfo.season, latestRound.raceInfo.name, latestRound.raceInfo.round))))
                         }
                     }
 

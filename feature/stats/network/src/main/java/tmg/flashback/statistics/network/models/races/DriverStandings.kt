@@ -7,6 +7,7 @@ data class DriverStandings(
     val driverId: String,
     val points: Double,
     val inProgress: Boolean? = null,
+    val inProgressInfo: InProgressInfo? = null,
     val races: Int,
     val position: Int? = null,
     val constructors: Map<String, Double>

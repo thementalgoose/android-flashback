@@ -165,8 +165,9 @@ class SeasonViewModel(
                                 results.isEmpty() ->
                                     list.addError(SyncDataItem.Unavailable(DataUnavailable.IN_FUTURE_SEASON))
                                 else -> {
-                                    if (results.any { it.inProgress }) {
-                                        list.addError(SyncDataItem.MessageRes(R.string.results_accurate_for, listOf(results.first().races)))
+                                    val inProgressInfo = results.getDriverInProgressInfo()
+                                    if (inProgressInfo != null) {
+                                        list.addError(SyncDataItem.MessageRes(R.string.results_accurate_for, listOf(inProgressInfo.first, inProgressInfo.second)))
                                     }
                                     list.addAll(standings?.toDriverList() ?: emptyList())
                                 }
@@ -187,8 +188,9 @@ class SeasonViewModel(
                                 results.isEmpty() ->
                                     list.addError(SyncDataItem.Unavailable(DataUnavailable.IN_FUTURE_SEASON))
                                 else -> {
-                                    if (results.any { it.inProgress }) {
-                                        list.addError(SyncDataItem.MessageRes(R.string.results_accurate_for, listOf(results.first().races)))
+                                    val inProgressInfo = results.getConstructorInProgressInfo()
+                                    if (inProgressInfo != null) {
+                                        list.addError(SyncDataItem.MessageRes(R.string.results_accurate_for, listOf(inProgressInfo.first, inProgressInfo.second)))
                                     }
                                     list.addAll(standings?.toConstructorList() ?: emptyList())
                                 }
@@ -278,6 +280,15 @@ class SeasonViewModel(
             list.addError(SyncDataItem.Message(it.message, it.url))
         }
         return list
+    }
+
+    private fun List<SeasonConstructorStandingSeason>.getConstructorInProgressInfo(): Pair<String, Int>? {
+        val result = this.firstOrNull { it.inProgress && it.inProgressName != null && it.inProgressRound != null } ?: return null
+        return Pair(result.inProgressName!!, result.inProgressRound!!)
+    }
+    private fun List<SeasonDriverStandingSeason>.getDriverInProgressInfo(): Pair<String, Int>? {
+        val result = this.firstOrNull { it.inProgress && it.inProgressName != null && it.inProgressRound != null } ?: return null
+        return Pair(result.inProgressName!!, result.inProgressRound!!)
     }
 
     /**

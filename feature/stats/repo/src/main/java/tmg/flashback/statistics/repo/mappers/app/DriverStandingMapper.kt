@@ -27,6 +27,8 @@ class DriverStandingMapper(
             driver = driverDataMapper.mapDriver(data.driver),
             points = data.standing.points,
             inProgress = data.standing.inProgress,
+            inProgressName = data.standing.inProgressName,
+            inProgressRound = data.standing.inProgressRound,
             races = data.standing.races,
             championshipPosition = data.standing.position,
             constructors = data.constructors.map {

@@ -24,6 +24,8 @@ class ConstructorStandingMapper(
             constructor = constructorDataMapper.mapConstructorData(data.constructor),
             points = data.standing.points,
             inProgress = data.standing.inProgress,
+            inProgressName = data.standing.inProgressName,
+            inProgressRound = data.standing.inProgressRound,
             races = data.standing.races,
             championshipPosition = data.standing.position,
             drivers = data.drivers.map {

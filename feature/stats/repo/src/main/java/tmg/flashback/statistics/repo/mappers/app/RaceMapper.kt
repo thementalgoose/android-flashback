@@ -1,9 +1,13 @@
 package tmg.flashback.statistics.repo.mappers.app
 
+import okhttp3.internal.notifyAll
+import org.threeten.bp.LocalDate
+import org.threeten.bp.LocalTime
 import tmg.flashback.formula1.model.*
 import tmg.flashback.formula1.utils.toLapTime
 import tmg.flashback.statistics.room.models.race.QualifyingDriverResult
 import tmg.flashback.statistics.room.models.race.RaceDriverResult
+import tmg.flashback.statistics.room.models.race.RaceInfoWithCircuit
 import tmg.utilities.utils.LocalDateUtils.Companion.requireFromDate
 import tmg.utilities.utils.LocalTimeUtils.Companion.fromTime
 
@@ -16,6 +20,18 @@ class RaceMapper(
     private enum class Qualifying { Q1, Q2, Q3 }
 
     fun mapRaceInfo(data: tmg.flashback.statistics.room.models.race.Race): RaceInfo {
+        return RaceInfo(
+            season = data.raceInfo.season,
+            round = data.raceInfo.round,
+            date = requireFromDate(data.raceInfo.date),
+            time = fromTime(data.raceInfo.time),
+            name = data.raceInfo.name,
+            wikipediaUrl = data.raceInfo.wikiUrl,
+            circuit = circuitMapper.mapCircuit(data.circuit)!!,
+        )
+    }
+
+    fun mapRaceInfoWithCircuit(data: RaceInfoWithCircuit): RaceInfo {
         return RaceInfo(
             season = data.raceInfo.season,
             round = data.raceInfo.round,

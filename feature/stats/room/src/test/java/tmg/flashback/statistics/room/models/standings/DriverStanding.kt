@@ -6,6 +6,8 @@ fun DriverStanding.Companion.model(
     points: Double = 1.0,
     position: Int? = 1,
     inProgress: Boolean = true,
+    inProgressName: String? = "name",
+    inProgressRound: Int? = 1,
     races: Int = 1,
 ): DriverStanding = DriverStanding(
     driverId = driverId,
@@ -13,5 +15,7 @@ fun DriverStanding.Companion.model(
     points = points,
     position = position,
     inProgress = inProgress,
+    inProgressName = inProgressName,
+    inProgressRound = inProgressRound,
     races = races
 )

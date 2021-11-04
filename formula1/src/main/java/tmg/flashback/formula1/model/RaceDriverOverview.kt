@@ -7,4 +7,6 @@ data class RaceDriverOverview(
     val q3: RaceQualifyingResult?,
     val qSprint: RaceSprintQualifyingResult?,
     val race: RaceRaceResult?
-)
+) {
+    companion object
+}

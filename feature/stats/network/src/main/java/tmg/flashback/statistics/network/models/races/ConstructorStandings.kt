@@ -7,6 +7,7 @@ data class ConstructorStandings(
     val constructorId: String,
     val points: Double,
     val inProgress: Boolean? = null,
+    val inProgressInfo: InProgressInfo? = null,
     val races: Int,
     val position: Int? = null,
     val drivers: Map<String, Double>
