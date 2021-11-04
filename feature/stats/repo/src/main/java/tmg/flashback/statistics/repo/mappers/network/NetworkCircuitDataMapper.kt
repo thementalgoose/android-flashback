@@ -1,5 +1,6 @@
 package tmg.flashback.statistics.repo.mappers.network
 
+import tmg.flashback.statistics.room.models.circuit.Circuit
 import java.lang.RuntimeException
 import kotlin.jvm.Throws
 

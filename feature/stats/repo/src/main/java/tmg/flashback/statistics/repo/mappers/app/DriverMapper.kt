@@ -9,7 +9,8 @@ import tmg.utilities.utils.LocalDateUtils.Companion.requireFromDate
 
 class DriverMapper(
     private val driverDataMapper: DriverDataMapper,
-    private val constructorDataMapper: ConstructorDataMapper
+    private val constructorDataMapper: ConstructorDataMapper,
+    private val raceDataMapper: RaceMapper
 ) {
 
     fun mapDriver(history: tmg.flashback.statistics.room.models.drivers.DriverHistory?): DriverHistory? {
@@ -43,17 +44,8 @@ class DriverMapper(
             points = data.race.points,
             qualified = data.race.qualified,
             gridPos = data.race.gridPos,
-            round = data.race.round,
-            season = data.race.season,
-            raceName = data.round.raceInfo.name,
-            date = requireFromDate(data.round.raceInfo.date),
+            raceInfo = raceDataMapper.mapRaceInfoWithCircuit(data.round),
             constructor = constructorDataMapper.mapConstructorData(data.constructor),
-            circuitName = data.round.circuit.name,
-            circuitId = data.round.circuit.id,
-            circuitNationality = data.round.circuit.country,
-            circuitNationalityISO = data.round.circuit.countryISO
         )
     }
-
-
 }

@@ -15,7 +15,7 @@ val repoModule = networkModule + roomModule + module {
     single { ConstructorMapper(get(), get()) }
     single { ConstructorStandingMapper(get(), get()) }
     single { DriverDataMapper() }
-    single { DriverMapper(get(), get()) }
+    single { DriverMapper(get(), get(), get()) }
     single { DriverStandingMapper(get(), get()) }
     single { OverviewMapper() }
     single { RaceMapper(get(), get(), get()) }

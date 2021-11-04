@@ -85,12 +85,12 @@ class DriverSeasonViewModel(
                 else -> {
 
                     if (standing.isInProgress) {
-                        standing.raceOverview.maxByOrNull { it.round }?.let {
+                        standing.raceOverview.maxByOrNull { it.raceInfo.round }?.let {
                             list.add(
                                 DriverSeasonItem.ErrorItem(
                                     SyncDataItem.MessageRes(
                                         R.string.results_accurate_for,
-                                        listOf(it.raceName, it.round)
+                                        listOf(it.raceInfo.name, it.raceInfo.round)
                                     )
                                 )
                             )
@@ -146,21 +146,21 @@ class DriverSeasonViewModel(
                         .raceOverview
                         .map {
                             DriverSeasonItem.Result(
-                                season = it.season,
-                                round = it.round,
-                                raceName = it.raceName,
-                                circuitName = it.circuitName,
-                                circuitId = it.circuitId,
-                                raceCountry = it.circuitNationality,
-                                raceCountryISO = it.circuitNationalityISO,
+                                season = it.raceInfo.season,
+                                round = it.raceInfo.round,
+                                raceName = it.raceInfo.name,
+                                circuitName = it.raceInfo.circuit.name,
+                                circuitId = it.raceInfo.circuit.id,
+                                raceCountry = it.raceInfo.circuit.country,
+                                raceCountryISO = it.raceInfo.circuit.countryISO,
                                 showConstructorLabel = standing.constructors.size > 1,
                                 constructor = it.constructor ?: standing.constructors.last(),
-                                date = it.date,
+                                date = it.raceInfo.date,
                                 qualified = it.qualified,
                                 finished = it.finished,
                                 raceStatus = it.status,
                                 points = it.points,
-                                maxPoints = maxPointsBySeason(it.season),
+                                maxPoints = maxPointsBySeason(it.raceInfo.season),
                                 animationSpeed = themeController.animationSpeed
                             )
                         }

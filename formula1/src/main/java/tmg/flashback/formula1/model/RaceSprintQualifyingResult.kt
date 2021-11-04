@@ -10,4 +10,6 @@ data class RaceSprintQualifyingResult(
     val qualified: Int?,
     val finish: Int,
     val status: RaceStatus,
-)
+) {
+    companion object
+}

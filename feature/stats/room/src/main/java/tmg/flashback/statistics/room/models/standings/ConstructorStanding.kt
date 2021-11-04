@@ -16,6 +16,10 @@ data class ConstructorStanding(
     val position: Int?,
     @ColumnInfo(name = "in_progress")
     val inProgress: Boolean,
+    @ColumnInfo(name = "in_progress_name")
+    val inProgressName: String?,
+    @ColumnInfo(name = "in_progress_round")
+    val inProgressRound: Int?,
     @ColumnInfo(name = "races")
     val races: Int,
     @PrimaryKey

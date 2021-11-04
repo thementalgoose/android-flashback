@@ -11,4 +11,6 @@ data class RaceRaceResult(
     val finish: Int,
     val status: RaceStatus,
     val fastestLap: FastestLap?
-)
+) {
+    companion object
+}

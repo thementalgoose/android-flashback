@@ -3,10 +3,8 @@ package tmg.flashback.statistics.di
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import tmg.flashback.data.db.DataRepository
-import tmg.flashback.data.db.stats.*
 import tmg.flashback.firebase.mappers.AppLockoutMapper
 import tmg.flashback.firebase.repos.*
-import tmg.flashback.formula1.constants.Formula1
 import tmg.flashback.statistics.controllers.RaceController
 import tmg.flashback.statistics.controllers.SearchController
 import tmg.flashback.statistics.controllers.SeasonController
