@@ -1,14 +1,14 @@
 package tmg.flashback.statistics.repo.mappers.network
 
-import tmg.flashback.statistics.network.models.constructors.ConstructorStanding
-import tmg.flashback.statistics.network.models.constructors.ConstructorStandingDriver
+import tmg.flashback.statistics.network.models.constructors.ConstructorHistoryStanding
+import tmg.flashback.statistics.network.models.constructors.ConstructorHistoryStandingDriver
 import tmg.flashback.statistics.room.models.constructors.ConstructorSeason
 import tmg.flashback.statistics.room.models.constructors.ConstructorSeasonDriver
 
 class NetworkConstructorMapper {
 
     @Throws(RuntimeException::class)
-    fun mapConstructorSeason(constructorId: String, constructor: ConstructorStanding): ConstructorSeason {
+    fun mapConstructorSeason(constructorId: String, constructor: ConstructorHistoryStanding): ConstructorSeason {
         return ConstructorSeason(
             constructorId = constructorId,
             season = constructor.season,
@@ -20,7 +20,7 @@ class NetworkConstructorMapper {
     }
 
     @Throws(RuntimeException::class)
-    fun mapConstructorSeasonDriver(constructorId: String, season: Int, data: ConstructorStandingDriver): ConstructorSeasonDriver {
+    fun mapConstructorSeasonDriver(constructorId: String, season: Int, data: ConstructorHistoryStandingDriver): ConstructorSeasonDriver {
         return ConstructorSeasonDriver(
             constructorId = constructorId,
             season = season,

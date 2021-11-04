@@ -5,15 +5,12 @@ import kotlinx.coroutines.flow.map
 import tmg.crash_reporting.controllers.CrashController
 import tmg.flashback.formula1.model.Race
 import tmg.flashback.statistics.network.api.FlashbackApi
-import tmg.flashback.statistics.network.models.constructors.ConstructorData
-import tmg.flashback.statistics.network.models.constructors.ConstructorStanding
-import tmg.flashback.statistics.network.models.drivers.DriverData
+import tmg.flashback.statistics.network.models.constructors.Constructor
+import tmg.flashback.statistics.network.models.drivers.Driver
 import tmg.flashback.statistics.network.models.races.ConstructorStandings
 import tmg.flashback.statistics.network.models.races.DriverStandings
 import tmg.flashback.statistics.repo.base.BaseRepository
 import tmg.flashback.statistics.repo.extensions.valueList
-import tmg.flashback.statistics.repo.mappers.app.ConstructorDataMapper
-import tmg.flashback.statistics.repo.mappers.app.OverviewMapper
 import tmg.flashback.statistics.repo.mappers.app.RaceMapper
 import tmg.flashback.statistics.repo.mappers.network.*
 import tmg.flashback.statistics.room.FlashbackDatabase
@@ -123,14 +120,14 @@ class RaceRepository(
         persistence.seasonStandingDao().insertDriverStandings(standings)
     }
 
-    private fun saveConstructors(constructors: Map<String, ConstructorData>?) {
+    private fun saveConstructors(constructors: Map<String, Constructor>?) {
         if (constructors == null) return
         val items = constructors.values
             .map { networkConstructorDataMapper.mapConstructorData(it) }
         persistence.constructorDao().insertAll(items)
     }
 
-    private fun saveDrivers(drivers: Map<String, DriverData>?) {
+    private fun saveDrivers(drivers: Map<String, Driver>?) {
         val items = (drivers?.values ?: emptyList())
             .map { networkDriverDataMapper.mapDriverData(it) }
         persistence.driverDao().insertAll(items)

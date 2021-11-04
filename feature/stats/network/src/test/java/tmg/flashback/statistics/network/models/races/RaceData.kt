@@ -1,8 +1,7 @@
-package tmg.flashback.statistics.network.models.race
+package tmg.flashback.statistics.network.models.races
 
-import tmg.flashback.statistics.network.models.circuits.CircuitData
+import tmg.flashback.statistics.network.models.circuits.Circuit
 import tmg.flashback.statistics.network.models.circuits.model
-import tmg.flashback.statistics.network.models.races.RaceData
 
 fun RaceData.Companion.model(
     season: Int = 2020,
@@ -10,7 +9,7 @@ fun RaceData.Companion.model(
     name: String = "name",
     date: String = "1995-10-12",
     time: String? = "12:34",
-    circuit: CircuitData = CircuitData.model(),
+    circuit: Circuit = Circuit.model(),
     wikiUrl: String? = "wikiUrl",
 ): RaceData = RaceData(
     season = season,

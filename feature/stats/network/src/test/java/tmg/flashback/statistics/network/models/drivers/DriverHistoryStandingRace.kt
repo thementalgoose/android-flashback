@@ -1,12 +1,12 @@
 package tmg.flashback.statistics.network.models.drivers
 
-import tmg.flashback.statistics.network.models.constructors.ConstructorData
+import tmg.flashback.statistics.network.models.constructors.Constructor
 import tmg.flashback.statistics.network.models.constructors.model
-import tmg.flashback.statistics.network.models.race.model
+import tmg.flashback.statistics.network.models.races.model
 import tmg.flashback.statistics.network.models.races.RaceData
 
-fun DriverStandingRace.Companion.model(
-    construct: ConstructorData = ConstructorData.model(),
+fun DriverHistoryStandingRace.Companion.model(
+    construct: Constructor = Constructor.model(),
     race: RaceData = RaceData.model(),
     sprintQuali: Boolean? = false,
     qualified: Int = 3,
@@ -14,7 +14,7 @@ fun DriverStandingRace.Companion.model(
     finished: Int = 1,
     status: String = "status",
     points: Double = 1.0,
-): DriverStandingRace = DriverStandingRace(
+): DriverHistoryStandingRace = DriverHistoryStandingRace(
     construct = construct,
     race = race,
     sprintQuali = sprintQuali,

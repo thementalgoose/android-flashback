@@ -1,3 +1,17 @@
 package tmg.flashback.statistics.network.models.constructors
 
-fun
+fun Constructor.Companion.model(
+    id: String = "constructorId",
+    colour: String = "colour",
+    name: String = "name",
+    nationality: String = "nationality",
+    nationalityISO: String = "nationalityISO",
+    wikiUrl: String? = "wikiUrl"
+): Constructor = Constructor(
+    id = id,
+    colour = colour,
+    name = name,
+    nationality = nationality,
+    nationalityISO = nationalityISO,
+    wikiUrl = wikiUrl
+)

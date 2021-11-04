@@ -1,10 +1,10 @@
 package tmg.flashback.statistics.network.models.constructors
 
-import tmg.flashback.statistics.network.models.drivers.DriverData
+import tmg.flashback.statistics.network.models.drivers.Driver
 import tmg.flashback.statistics.network.models.drivers.model
 
-fun ConstructorStandingDriver.Companion.model(
-    driver: DriverData = DriverData.model(),
+fun ConstructorHistoryStandingDriver.Companion.model(
+    driver: Driver = Driver.model(),
     points: Double = 1.0,
     wins: Int? = 6,
     races: Int? = 5,
@@ -12,7 +12,7 @@ fun ConstructorStandingDriver.Companion.model(
     pointsFinishes: Int? = 3,
     pole: Int? = 2,
     championshipPosition: Int? = 1,
-): ConstructorStandingDriver = ConstructorStandingDriver(
+): ConstructorHistoryStandingDriver = ConstructorHistoryStandingDriver(
     driver = driver,
     points = points,
     wins = wins,

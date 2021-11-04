@@ -1,32 +1,21 @@
 package tmg.flashback.statistics.network.models.drivers
 
 import kotlinx.serialization.Serializable
-import tmg.flashback.statistics.network.models.constructors.ConstructorData
-import tmg.flashback.statistics.network.models.races.RaceData
+
+typealias AllDrivers = Map<String, Driver>
 
 @Serializable
 data class Driver(
-    val driver: DriverData,
-    val standings: Map<String, DriverStanding>
-)
-
-@Serializable
-data class DriverStanding(
-    val season: Int,
-    val championshipPosition: Int?,
-    val points: Double,
-    val inProgress: Boolean,
-    val races: Map<String, DriverStandingRace>
-)
-
-@Serializable
-data class DriverStandingRace(
-    val construct: ConstructorData,
-    val race: RaceData,
-    val sprintQuali: Boolean?,
-    val qualified: Int?,
-    val gridPos: Int?,
-    val finished: Int,
-    val status: String,
-    val points: Double
-)
+    val id: String,
+    val firstName: String,
+    val lastName: String,
+    val dob: String,
+    val nationality: String,
+    val nationalityISO: String,
+    val photoUrl: String? = null,
+    val wikiUrl: String? = null,
+    val code: String? = null,
+    val permanentNumber: String? = null
+) {
+    companion object
+}

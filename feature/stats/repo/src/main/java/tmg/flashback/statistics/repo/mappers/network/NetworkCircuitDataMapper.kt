@@ -1,14 +1,12 @@
 package tmg.flashback.statistics.repo.mappers.network
 
-import tmg.flashback.statistics.network.models.circuits.CircuitData
-import tmg.flashback.statistics.room.models.circuit.Circuit
 import java.lang.RuntimeException
 import kotlin.jvm.Throws
 
 class NetworkCircuitDataMapper {
 
     @Throws(RuntimeException::class)
-    fun mapCircuitData(data: CircuitData): Circuit {
+    fun mapCircuitData(data: tmg.flashback.statistics.network.models.circuits.Circuit): Circuit {
         return Circuit(
             id = data.id,
             name = data.name,
