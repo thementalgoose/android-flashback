@@ -34,4 +34,6 @@ data class ConstructorHistorySeason(
         return@lazy drivers.values
             .sumOf { it.podiums }
     }
+
+    companion object
 }

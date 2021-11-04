@@ -16,4 +16,6 @@ data class Driver(
 ) {
     val name: String
         get() = "$firstName $lastName"
+
+    companion object
 }

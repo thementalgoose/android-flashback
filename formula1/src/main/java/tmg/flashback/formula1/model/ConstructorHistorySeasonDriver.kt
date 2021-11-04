@@ -11,4 +11,6 @@ data class ConstructorHistorySeasonDriver(
     val finishesInPoints: Int,
     val polePosition: Int,
     val championshipStanding: Int?
-)
+) {
+    companion object
+}

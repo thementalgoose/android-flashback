@@ -12,7 +12,7 @@ internal class TimestampTest {
     fun `is date only returns true date if time is not supplied`() {
         val localDate: LocalDate = LocalDate.of(2020, 1, 1)
 
-        val sut = tmg.flashback.formula1.model.Timestamp(localDate)
+        val sut = Timestamp(localDate)
 
         assertTrue(sut.isDateOnly)
     }
@@ -22,7 +22,7 @@ internal class TimestampTest {
         val localDate: LocalDate = LocalDate.of(2020, 1, 1)
         val localTime: LocalTime = LocalTime.of(12, 1, 1)
 
-        val sut = tmg.flashback.formula1.model.Timestamp(localDate, localTime)
+        val sut = Timestamp(localDate, localTime)
 
         assertFalse(sut.isDateOnly)
     }
@@ -32,7 +32,7 @@ internal class TimestampTest {
         val localDate: LocalDate = LocalDate.of(2020, 1, 1)
         val zone = ZoneId.ofOffset("", ZoneOffset.UTC)
 
-        val sut = tmg.flashback.formula1.model.Timestamp(localDate, null, zone)
+        val sut = Timestamp(localDate, null, zone)
 
         var resultDateOnly: LocalDate? = null
         var resultDateTimeUTC: LocalDateTime? = null
@@ -58,7 +58,7 @@ internal class TimestampTest {
         val localTime: LocalTime = LocalTime.of(12, 0, 0)
         val zone = ZoneId.ofOffset("", ZoneOffset.UTC)
 
-        val sut = tmg.flashback.formula1.model.Timestamp(localDate, localTime, zone)
+        val sut = Timestamp(localDate, localTime, zone)
 
         var resultDateOnly: LocalDate? = null
         var resultDateTimeUTC: LocalDateTime? = null
@@ -105,7 +105,7 @@ internal class TimestampTest {
         val localTime: LocalTime = LocalTime.of(utcHour, 0, 0)
         val zone = ZoneId.ofOffset("", ZoneOffset.ofHours(offset))
 
-        val sut = tmg.flashback.formula1.model.Timestamp(localDate, localTime, zone)
+        val sut = Timestamp(localDate, localTime, zone)
 
         var resultDateOnly: LocalDate? = null
         var resultDateTimeUTC: LocalDateTime? = null
@@ -130,7 +130,7 @@ internal class TimestampTest {
         val localDate: LocalDate = LocalDate.of(2020, 1, 1)
         val zone = ZoneId.ofOffset("", ZoneOffset.UTC)
 
-        val sut = tmg.flashback.formula1.model.Timestamp(localDate, null, zone)
+        val sut = Timestamp(localDate, null, zone)
 
         assertEquals(localDate, sut.deviceDate)
     }
@@ -141,7 +141,7 @@ internal class TimestampTest {
         val localTime: LocalTime = LocalTime.of(12, 0, 0)
         val zone = ZoneId.ofOffset("", ZoneOffset.UTC)
 
-        val sut = tmg.flashback.formula1.model.Timestamp(localDate, localTime, zone)
+        val sut = Timestamp(localDate, localTime, zone)
 
         assertEquals(localDate, sut.deviceDate)
     }
@@ -155,7 +155,7 @@ internal class TimestampTest {
         val localTime: LocalTime = LocalTime.of(1, 0, 0)
         val zone = ZoneId.ofOffset("", ZoneOffset.ofHours(-2))
 
-        val sut = tmg.flashback.formula1.model.Timestamp(localDate, localTime, zone)
+        val sut = Timestamp(localDate, localTime, zone)
 
         assertEquals(expectedDate, sut.deviceDate)
     }
@@ -166,7 +166,7 @@ internal class TimestampTest {
         val localTime: LocalTime = LocalTime.of(12, 0, 0)
         val zone = ZoneId.ofOffset("", ZoneOffset.UTC)
 
-        val sut = tmg.flashback.formula1.model.Timestamp(localDate, localTime, zone)
+        val sut = Timestamp(localDate, localTime, zone)
 
         assertEquals("2020010112:00:00", sut.string())
     }
@@ -176,7 +176,7 @@ internal class TimestampTest {
         val localDate: LocalDate = LocalDate.of(2020, 1, 1)
         val zone = ZoneId.ofOffset("", ZoneOffset.UTC)
 
-        val sut = tmg.flashback.formula1.model.Timestamp(localDate, null, zone)
+        val sut = Timestamp(localDate, null, zone)
 
         assertEquals("2020010100:00:00", sut.string())
     }
@@ -188,7 +188,7 @@ internal class TimestampTest {
         val date = LocalDate.now().minusDays(1L)
         val zone = ZoneId.ofOffset("", ZoneOffset.UTC)
 
-        val sut = tmg.flashback.formula1.model.Timestamp(date, null, zone)
+        val sut = Timestamp(date, null, zone)
 
         assertTrue(sut.isInPast)
     }
@@ -198,7 +198,7 @@ internal class TimestampTest {
         val date = LocalDate.now()
         val zone = ZoneId.ofOffset("", ZoneOffset.UTC)
 
-        val sut = tmg.flashback.formula1.model.Timestamp(date, null, zone)
+        val sut = Timestamp(date, null, zone)
 
         assertFalse(sut.isInPast)
     }
@@ -208,7 +208,7 @@ internal class TimestampTest {
         val date = LocalDate.now().plusDays(1L)
         val zone = ZoneId.ofOffset("", ZoneOffset.UTC)
 
-        val sut = tmg.flashback.formula1.model.Timestamp(date, null, zone)
+        val sut = Timestamp(date, null, zone)
 
         assertFalse(sut.isInPast)
     }
@@ -219,7 +219,7 @@ internal class TimestampTest {
         val time = LocalTime.now().plusMinutes(1L)
         val zone = ZoneId.ofOffset("", ZoneOffset.UTC)
 
-        val sut = tmg.flashback.formula1.model.Timestamp(date, time, zone)
+        val sut = Timestamp(date, time, zone)
 
         assertTrue(sut.isInPast)
     }
@@ -230,7 +230,7 @@ internal class TimestampTest {
         val time = LocalTime.now().minusMinutes(1L)
         val zone = ZoneId.ofOffset("", ZoneOffset.UTC)
 
-        val sut = tmg.flashback.formula1.model.Timestamp(date, time, zone)
+        val sut = Timestamp(date, time, zone)
 
         assertTrue(sut.isInPast)
     }
@@ -241,7 +241,7 @@ internal class TimestampTest {
         val time = LocalTime.now().plusMinutes(1L)
         val zone = ZoneId.ofOffset("", ZoneOffset.UTC)
 
-        val sut = tmg.flashback.formula1.model.Timestamp(date, time, zone)
+        val sut = Timestamp(date, time, zone)
 
         assertFalse(sut.isInPast)
     }
@@ -252,7 +252,7 @@ internal class TimestampTest {
         val time = LocalTime.now().plusMinutes(1L)
         val zone = ZoneId.ofOffset("", ZoneOffset.UTC)
 
-        val sut = tmg.flashback.formula1.model.Timestamp(date, time, zone)
+        val sut = Timestamp(date, time, zone)
 
         assertFalse(sut.isInPast)
     }
@@ -263,7 +263,7 @@ internal class TimestampTest {
         val time = LocalTime.now().minusMinutes(1L)
         val zone = ZoneId.ofOffset("", ZoneOffset.UTC)
 
-        val sut = tmg.flashback.formula1.model.Timestamp(date, time, zone)
+        val sut = Timestamp(date, time, zone)
 
         assertFalse(sut.isInPast)
     }
@@ -277,7 +277,7 @@ internal class TimestampTest {
         val date = LocalDate.now().minusDays(1L)
         val zone = ZoneId.ofOffset("", ZoneOffset.UTC)
 
-        val sut = tmg.flashback.formula1.model.Timestamp(date, null, zone)
+        val sut = Timestamp(date, null, zone)
 
         assertFalse(sut.isToday)
     }
@@ -287,7 +287,7 @@ internal class TimestampTest {
         val date = LocalDate.now()
         val zone = ZoneId.ofOffset("", ZoneOffset.UTC)
 
-        val sut = tmg.flashback.formula1.model.Timestamp(date, null, zone)
+        val sut = Timestamp(date, null, zone)
 
         assertTrue(sut.isToday)
     }
@@ -297,7 +297,7 @@ internal class TimestampTest {
         val date = LocalDate.now().plusDays(1L)
         val zone = ZoneId.ofOffset("", ZoneOffset.UTC)
 
-        val sut = tmg.flashback.formula1.model.Timestamp(date, null, zone)
+        val sut = Timestamp(date, null, zone)
 
         assertFalse(sut.isToday)
     }
@@ -308,7 +308,7 @@ internal class TimestampTest {
         val time = LocalTime.now().plusMinutes(1L)
         val zone = ZoneId.ofOffset("", ZoneOffset.UTC)
 
-        val sut = tmg.flashback.formula1.model.Timestamp(date, time, zone)
+        val sut = Timestamp(date, time, zone)
 
         assertFalse(sut.isToday)
     }
@@ -319,7 +319,7 @@ internal class TimestampTest {
         val time = LocalTime.now().minusMinutes(1L)
         val zone = ZoneId.ofOffset("", ZoneOffset.UTC)
 
-        val sut = tmg.flashback.formula1.model.Timestamp(date, time, zone)
+        val sut = Timestamp(date, time, zone)
 
         assertTrue(sut.isToday)
     }
@@ -330,7 +330,7 @@ internal class TimestampTest {
         val time = LocalTime.now().plusMinutes(1L)
         val zone = ZoneId.ofOffset("", ZoneOffset.UTC)
 
-        val sut = tmg.flashback.formula1.model.Timestamp(date, time, zone)
+        val sut = Timestamp(date, time, zone)
 
         assertTrue(sut.isToday)
     }
@@ -341,7 +341,7 @@ internal class TimestampTest {
         val time = LocalTime.now().plusMinutes(1L)
         val zone = ZoneId.ofOffset("", ZoneOffset.UTC)
 
-        val sut = tmg.flashback.formula1.model.Timestamp(date, time, zone)
+        val sut = Timestamp(date, time, zone)
 
         assertTrue(sut.isToday)
     }
@@ -352,7 +352,7 @@ internal class TimestampTest {
         val time = LocalTime.now().minusMinutes(1L)
         val zone = ZoneId.ofOffset("", ZoneOffset.UTC)
 
-        val sut = tmg.flashback.formula1.model.Timestamp(date, time, zone)
+        val sut = Timestamp(date, time, zone)
 
         assertFalse(sut.isToday)
     }

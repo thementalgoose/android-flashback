@@ -73,6 +73,8 @@ data class LapTime(
     override fun toString(): String {
         return time
     }
+
+    companion object
 }
 
 val noTime: LapTime = LapTime()

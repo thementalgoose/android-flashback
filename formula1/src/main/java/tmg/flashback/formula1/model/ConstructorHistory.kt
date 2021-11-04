@@ -76,6 +76,8 @@ data class ConstructorHistory(
             .filter { it.championshipStanding == 1 }
             .count() > 0
     }
+
+    companion object
 }
 
 

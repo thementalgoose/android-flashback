@@ -10,4 +10,6 @@ data class Constructor(
     val nationality: String,
     val nationalityISO: String,
     val color: Int
-)
+) {
+    companion object
+}

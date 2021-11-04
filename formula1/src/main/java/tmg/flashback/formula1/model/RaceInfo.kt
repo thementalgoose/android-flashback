@@ -11,4 +11,6 @@ data class RaceInfo(
     val name: String,
     val wikipediaUrl: String?,
     val circuit: Circuit,
-)
+) {
+    companion object
+}
