@@ -1,4 +1,4 @@
-package tmg.flashback.statistics.room.models.race.standings
+package tmg.flashback.statistics.room.models.standings
 
 import androidx.room.Embedded
 import androidx.room.Relation

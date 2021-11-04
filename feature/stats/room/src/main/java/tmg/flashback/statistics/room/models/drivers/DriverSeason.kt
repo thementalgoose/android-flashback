@@ -19,4 +19,6 @@ data class DriverSeason(
     @PrimaryKey
     @ColumnInfo(name = "id")
     val id: String = "${driverId}_${season}"
-)
+) {
+    companion object
+}

@@ -27,4 +27,6 @@ data class Driver(
     val number: Int?,
     @ColumnInfo(name = "driver_code")
     val code: String?
-)
+) {
+    companion object
+}

@@ -2,7 +2,7 @@ package tmg.flashback.statistics.room.dao
 
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow
-import tmg.flashback.statistics.room.models.race.standings.*
+import tmg.flashback.statistics.room.models.standings.*
 
 @Dao
 interface SeasonStandingsDao {

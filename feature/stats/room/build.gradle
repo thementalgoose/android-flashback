@@ -18,9 +18,6 @@ android {
 
 dependencies {
 
-    // Modules
-    api project(path: ':formula1')
-
     // Explicit crash reporting link
     implementation project(path: ':core:crash-reporting')
 }

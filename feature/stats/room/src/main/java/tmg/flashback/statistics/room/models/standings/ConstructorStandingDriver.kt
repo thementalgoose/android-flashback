@@ -1,4 +1,4 @@
-package tmg.flashback.statistics.room.models.race.standings
+package tmg.flashback.statistics.room.models.standings
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -19,4 +19,6 @@ data class ConstructorStandingDriver(
     val id: String = "${constructorId}_${season}_${driverId}",
     @ColumnInfo(name = "constructor_season_id")
     val constructorSeasonId: String = "${constructorId}_${season}"
-)
+) {
+    companion object
+}
