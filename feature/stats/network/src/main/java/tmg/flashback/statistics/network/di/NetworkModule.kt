@@ -9,6 +9,7 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 import tmg.flashback.statistics.network.NetworkConfigManager
 import tmg.flashback.statistics.network.api.FlashbackApi
+import java.util.concurrent.TimeUnit
 
 val networkModule = module {
 
@@ -30,6 +31,7 @@ private fun buildRetrofit(baseUrlManager: NetworkConfigManager): Retrofit {
         .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
 
     val client = OkHttpClient.Builder()
+    client.callTimeout(10L, TimeUnit.SECONDS)
     if (baseUrlManager.isDebug) {
         val interceptor = HttpLoggingInterceptor()
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)

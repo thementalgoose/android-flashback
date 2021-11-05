@@ -25,6 +25,8 @@ abstract class BaseRepository(
         } catch (e: RuntimeException) {
             crashController.logException(e, msgIfFailed)
             false
+        } catch (e: Exception) {
+            false
         }
     }
 }

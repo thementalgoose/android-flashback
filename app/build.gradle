@@ -105,6 +105,7 @@ dependencies {
     implementation project(path: ":feature:stats:statistics")
     implementation project(path: ":feature:stats:data-firestore")
     implementation project(path: ':feature:stats:data')
+    implementation project(path: ':feature:stats:repo')
     implementation project(path: ':feature:stats:network')
     implementation project(path: ":formula1")
     implementation project(path: ":feature:upnext")
