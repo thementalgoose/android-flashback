@@ -7,6 +7,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import tmg.core.ui.base.BaseActivity
+import tmg.core.ui.navigation.NavigationProvider
 import tmg.flashback.debug.databinding.ActivityDebugBinding
 import tmg.flashback.statistics.repo.CircuitRepository
 import tmg.flashback.statistics.repo.ConstructorRepository
@@ -23,6 +24,8 @@ class DebugActivity: BaseActivity() {
     private val driverRepository: DriverRepository by inject()
     private val constructorRepository: ConstructorRepository by inject()
 
+    private val navigationProvider: NavigationProvider by inject()
+
     @Suppress("EXPERIMENTAL_API_USAGE")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +40,10 @@ class DebugActivity: BaseActivity() {
                 description = "This is a long description inside the notification"
             )
             sendBroadcast(intent)
+        }
+
+        binding.syncActivity.setOnClickListener {
+            startActivity(navigationProvider.syncActivityIntent(this))
         }
 
         binding.networkOverview.setOnClickListener {

@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.*
-import tmg.flashback.data.utils.extendTo
 import tmg.flashback.formula1.model.*
 import tmg.flashback.statistics.repo.CircuitRepository
 import tmg.flashback.statistics.repo.ConstructorRepository
@@ -14,6 +13,7 @@ import tmg.flashback.statistics.repo.DriverRepository
 import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
+import tmg.utilities.extensions.extend
 import tmg.utilities.lifecycle.DataEvent
 
 //region Inputs
@@ -79,7 +79,7 @@ class SearchViewModel(
                 SearchCategory.RACE -> overviewRepository
                     .getOverview()
                     .map {
-                        it.sortedByDescending { "${it.season}-${it.round.extendTo(2)}" }
+                        it.sortedByDescending { "${it.season}-${it.round.extend(2)}" }
                     }
                     .mapRaces()
             }

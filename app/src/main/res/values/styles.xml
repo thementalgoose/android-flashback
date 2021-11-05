@@ -47,12 +47,22 @@
     <style name="Text.Splash" parent="Text">
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">24sp</item>
-        <item name="android:textColor">@color/white</item>
     </style>
 
     <!--#endregion -->
 
     <!--#region Sync -->
+
+    <style name="Text.Sync.Title" parent="Text">
+        <item name="android:textSize">@dimen/textSizeFeature</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+
+    <style name="Text.Sync.Message" parent="Text">
+        <item name="android:textColor">@color/white</item>
+    </style>
 
     <style name="Text.Sync.Item" parent="Text">
         <item name="android:textSize">@dimen/textSizeLarge</item>

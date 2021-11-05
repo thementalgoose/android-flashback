@@ -2,6 +2,7 @@ package tmg.flashback.ui
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.core.content.ContextCompat
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.common.ui.forceupgrade.ForceUpgradeActivity
 import tmg.core.ui.base.BaseActivity
@@ -11,6 +12,7 @@ import tmg.flashback.databinding.ViewSyncItemBinding
 import tmg.flashback.ui.dashboard.HomeActivity
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
+import tmg.utilities.extensions.setStatusBarColor
 import tmg.utilities.extensions.views.invisible
 import tmg.utilities.extensions.views.show
 import tmg.utilities.extensions.views.visible
@@ -26,6 +28,8 @@ class SyncActivity: BaseActivity() {
 
         binding = ActivitySyncBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        setStatusBarColor(ContextCompat.getColor(this, R.color.splash_screen))
 
         observe(viewModel.outputs.configState) {
             binding.setup.updateTo(it)
@@ -127,5 +131,9 @@ class SyncActivity: BaseActivity() {
                 this.failed.visible()
             }
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
     }
 }

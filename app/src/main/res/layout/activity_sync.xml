@@ -5,12 +5,12 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/logo_background"
+    android:background="@color/splash_screen"
     android:fitsSystemWindows="true">
 
     <TextView
         android:id="@+id/title"
-        style="@style/Text.Splash"
+        style="@style/Text.Sync.Title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/paddingLarge"
@@ -34,6 +34,7 @@
         app:layout_constraintTop_toBottomOf="@id/title">
 
         <TextView
+            style="@style/Text.Sync.Message"
             android:id="@+id/failedToSync"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -41,7 +42,6 @@
             android:gravity="center"
             android:importantForAccessibility="no"
             android:text="@string/splash_sync_required_failed"
-            android:textColor="#fff"
             android:visibility="invisible"
             tools:visibility="visible" />
 
