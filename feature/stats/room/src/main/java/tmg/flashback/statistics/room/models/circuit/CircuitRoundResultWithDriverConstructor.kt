@@ -18,4 +18,6 @@ data class CircuitRoundResultWithDriverConstructor(
         entityColumn = "id"
     )
     val driver: Driver
-)
+) {
+    companion object
+}

@@ -255,7 +255,7 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
         binding.dataList.locked = true
         binding.dataList.alpha = dataListAlpha
 
-        binding.swipeRefresh.isRefreshing = true
+//        binding.swipeRefresh.isRefreshing = true
     }
 
     private fun hideLoading() {

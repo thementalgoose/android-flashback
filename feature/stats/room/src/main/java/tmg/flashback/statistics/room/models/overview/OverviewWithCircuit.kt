@@ -12,4 +12,6 @@ data class OverviewWithCircuit(
         entityColumn = "id"
     )
     val circuit: Circuit
-)
+) {
+    companion object
+}

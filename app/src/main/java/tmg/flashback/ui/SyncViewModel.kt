@@ -80,6 +80,12 @@ class SyncViewModel(
         .asLiveData(viewModelScope.coroutineContext)
 
     override fun startRemoteConfig() {
+
+        if (!configurationController.requireSynchronisation) {
+            configState.value = DONE
+            return
+        }
+
         configState.value = LOADING
         viewModelScope.launch {
             configurationController.ensureCacheReset()
@@ -89,8 +95,7 @@ class SyncViewModel(
             performConfigUpdates()
             if (result) {
                 goToNextScreen()
-            }
-            else {
+            } else {
                 configState.postValue(FAILED)
             }
         }

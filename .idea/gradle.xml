@@ -29,8 +29,6 @@
             <option value="$PROJECT_DIR$/feature/debug" />
             <option value="$PROJECT_DIR$/feature/rss" />
             <option value="$PROJECT_DIR$/feature/stats" />
-            <option value="$PROJECT_DIR$/feature/stats/data" />
-            <option value="$PROJECT_DIR$/feature/stats/data-firestore" />
             <option value="$PROJECT_DIR$/feature/stats/network" />
             <option value="$PROJECT_DIR$/feature/stats/repo" />
             <option value="$PROJECT_DIR$/feature/stats/room" />

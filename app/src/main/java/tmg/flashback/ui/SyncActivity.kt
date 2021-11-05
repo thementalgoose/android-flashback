@@ -54,10 +54,7 @@ class SyncActivity: BaseActivity() {
         }
 
         observe(viewModel.outputs.showContinue) {
-            when (it) {
-                true -> binding.proceed.visible()
-                false -> binding.proceed.invisible()
-            }
+            binding.proceed.isEnabled = it
         }
 
         observeEvent(viewModel.outputs.goToDashboard) {

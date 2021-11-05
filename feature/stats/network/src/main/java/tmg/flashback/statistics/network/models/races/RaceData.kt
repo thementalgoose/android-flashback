@@ -9,9 +9,9 @@ data class RaceData(
     val round: Int,
     val name: String,
     val date: String,
-    val time: String?,
+    val time: String? = null,
     val circuit: Circuit,
-    val wikiUrl: String?
+    val wikiUrl: String? = null
 ) {
     companion object
 }

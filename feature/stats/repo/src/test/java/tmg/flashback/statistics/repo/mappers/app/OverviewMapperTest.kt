@@ -7,6 +7,7 @@ import org.threeten.bp.format.DateTimeParseException
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.formula1.model.model
 import tmg.flashback.statistics.room.models.overview.Overview
+import tmg.flashback.statistics.room.models.overview.OverviewWithCircuit
 import tmg.flashback.statistics.room.models.overview.model
 
 internal class OverviewMapperTest {
@@ -20,7 +21,7 @@ internal class OverviewMapperTest {
 
     @Test
     fun `OverviewMapper mapOverview maps fields correctly`() {
-        val input = Overview.model()
+        val input = OverviewWithCircuit.model()
         val expected = OverviewRace.model()
 
         assertEquals(expected, sut.mapOverview(input))
@@ -28,7 +29,7 @@ internal class OverviewMapperTest {
 
     @Test
     fun `OverviewMapper mapOverview throws error if date is invalid`() {
-        val input = Overview.model(date = "invalid")
+        val input = OverviewWithCircuit.model(overview = Overview.model(date = "invalid"))
 
         assertThrows(DateTimeParseException::class.java) {
             sut.mapOverview(input)
@@ -37,7 +38,7 @@ internal class OverviewMapperTest {
 
     @Test
     fun `OverviewMapper mapOverview returns null time if invalid`() {
-        val input = Overview.model(time = "invalid")
+        val input = OverviewWithCircuit.model(overview = Overview.model(time = "invalid"))
 
         assertNull(sut.mapOverview(input).time)
     }
