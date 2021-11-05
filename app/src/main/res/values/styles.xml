@@ -52,5 +52,15 @@
 
     <!--#endregion -->
 
+    <!--#region Sync -->
+
+    <style name="Text.Sync.Item" parent="Text">
+        <item name="android:textSize">@dimen/textSizeLarge</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <!--#endregion -->
+
 
 </resources>

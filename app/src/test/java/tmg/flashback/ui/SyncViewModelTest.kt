@@ -42,7 +42,7 @@ internal class SyncViewModelTest: BaseTest() {
     @Test
     fun `starting sync shows loading`() = coroutineTest {
         initSUT()
-        sut.inputs.start()
+        sut.inputs.startRemoteConfig()
 
         sut.outputs.showLoading.test {
             assertValue(true)
@@ -52,7 +52,7 @@ internal class SyncViewModelTest: BaseTest() {
     @Test
     fun `starting sync hides resync`() = coroutineTest {
         initSUT()
-        sut.inputs.start()
+        sut.inputs.startRemoteConfig()
 
         sut.outputs.showResync.test {
             assertValue(false)
@@ -62,7 +62,7 @@ internal class SyncViewModelTest: BaseTest() {
     @Test
     fun `starting sync ensures cache is reset`() = coroutineTest {
         initSUT()
-        sut.inputs.start()
+        sut.inputs.startRemoteConfig()
 
         coVerify { mockConfigurationManager.ensureCacheReset() }
     }
@@ -72,7 +72,7 @@ internal class SyncViewModelTest: BaseTest() {
         every { mockRssController.enabled } returns true
 
         initSUT()
-        sut.inputs.start()
+        sut.inputs.startRemoteConfig()
 
         verify { mockUpNextController.scheduleNotifications() }
         verify { mockAppShortcutManager.enable() }
@@ -83,7 +83,7 @@ internal class SyncViewModelTest: BaseTest() {
         every { mockRssController.enabled } returns false
 
         initSUT()
-        sut.inputs.start()
+        sut.inputs.startRemoteConfig()
 
         verify { mockUpNextController.scheduleNotifications() }
         verify { mockAppShortcutManager.disable() }
@@ -95,7 +95,7 @@ internal class SyncViewModelTest: BaseTest() {
         coEvery { mockConfigurationManager.fetchAndApply() } returns false
 
         initSUT()
-        sut.inputs.start()
+        sut.inputs.startRemoteConfig()
 
         sut.outputs.showResync.test {
             assertValue(true)
@@ -112,7 +112,7 @@ internal class SyncViewModelTest: BaseTest() {
         every { mockForceUpgradeController.shouldForceUpgrade } returns true
 
         initSUT()
-        sut.inputs.start()
+        sut.inputs.startRemoteConfig()
 
         advanceUntilIdle()
 
@@ -128,7 +128,7 @@ internal class SyncViewModelTest: BaseTest() {
         every { mockForceUpgradeController.shouldForceUpgrade } returns false
 
         initSUT()
-        sut.inputs.start()
+        sut.inputs.startRemoteConfig()
 
         advanceUntilIdle()
 

@@ -32,7 +32,7 @@ val appModule = module {
     viewModel { DashboardViewModel(get(), get(), get(), get(), get(), get()) }
     viewModel { ListViewModel(get(), get(), get()) }
     viewModel { HomeViewModel(get(), get(), get(), get(), get(), get()) }
-    viewModel { SyncViewModel(get(), get(), get(), get(), get()) }
+    viewModel { SyncViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get()) }
 
     single { FlashbackStartup(get(), get(), get(), get(), get(), get()) }
 
