@@ -73,9 +73,7 @@
             android:layout_marginBottom="@dimen/paddingMedium"
             android:background="@drawable/background_input"
             android:text="@string/splash_continue"
-            android:textAllCaps="false"
-            android:visibility="invisible"
-            tools:visibility="visible" />
+            android:textAllCaps="false" />
 
     </LinearLayout>
 

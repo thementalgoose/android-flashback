@@ -155,6 +155,8 @@
     <string name="shared_unavailable_constructor_not_found">We can\'t find any information on this constructor.</string>
     <string name="shared_unavailable_no_search_results">No search results found for your query</string>
     <string name="shared_unavailable_future_season">This season has not started yet, please check back after the first race to see the results!</string>
+    <string name="shared_unavailable_pull_refresh_driver">Pull to refresh to see the driver standings</string>
+    <string name="shared_unavailable_pull_refresh_constructor">Pull to refresh to see the constructor standings</string>
     <string name="shared_unavailable_early_season">We don\'t have any data on this season or the calendar has not been confirmed yet. We will add this information as soon it\'s available</string>
     <string name="shared_unavailable_future_race">This race has not yet happened, please check back after the race to see the results</string>
     <string name="shared_unavailable_coming_soon_race">We don\'t have this information yet, it should be available after the race (race results usually take between 2 – 6 hours to appear, but can take longer)</string>

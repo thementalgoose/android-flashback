@@ -116,8 +116,6 @@ class SeasonViewModel(
                 "season" to season.toString()
             ))
 
-            val appBannerMessage = seasonController.banner
-
             return@flatMapLatest when (menuItem) {
                 SeasonNavItem.CALENDAR -> {
                     overviewRepository.getOverview(season)
@@ -162,8 +160,9 @@ class SeasonViewModel(
                             when {
                                 results.isEmpty() && !networkConnectivityManager.isConnected ->
                                     list.addError(SyncDataItem.NoNetwork)
-                                results.isEmpty() ->
-                                    list.addError(SyncDataItem.Unavailable(DataUnavailable.IN_FUTURE_SEASON))
+                                results.isEmpty() -> {
+                                    list.addError(SyncDataItem.Unavailable(DataUnavailable.NOT_AVAILABLE_PULL_REFRESH_DRIVER))
+                                }
                                 else -> {
                                     val inProgressInfo = results.getDriverInProgressInfo()
                                     if (inProgressInfo != null) {
@@ -186,7 +185,7 @@ class SeasonViewModel(
                                 results.isEmpty() && !networkConnectivityManager.isConnected ->
                                     list.addError(SyncDataItem.NoNetwork)
                                 results.isEmpty() ->
-                                    list.addError(SyncDataItem.Unavailable(DataUnavailable.IN_FUTURE_SEASON))
+                                    list.addError(SyncDataItem.Unavailable(DataUnavailable.NOT_AVAILABLE_PULL_REFRESH_CONSTRUCTOR))
                                 else -> {
                                     val inProgressInfo = results.getConstructorInProgressInfo()
                                     if (inProgressInfo != null) {

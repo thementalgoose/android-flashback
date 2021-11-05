@@ -12,4 +12,6 @@ data class CircuitRoundWithResults(
         entityColumn = "id"
     )
     val results: List<CircuitRoundResultWithDriverConstructor>
-)
+) {
+    companion object
+}

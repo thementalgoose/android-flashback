@@ -29,7 +29,7 @@ import tmg.notifications.navigation.NotificationNavigationProvider
 val appModule = module {
 
     viewModel { SettingsAllViewModel(get()) }
-    viewModel { DashboardViewModel(get(), get(), get(), get(), get(), get()) }
+    viewModel { DashboardViewModel(get(), get(), get(), get(), get()) }
     viewModel { ListViewModel(get(), get(), get()) }
     viewModel { HomeViewModel(get(), get(), get(), get(), get(), get()) }
     viewModel { SyncViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get()) }

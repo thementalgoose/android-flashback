@@ -12,4 +12,6 @@ data class CircuitHistory(
         entityColumn = "circuit_id"
     )
     val races: List<CircuitRoundWithResults>
-)
+) {
+    companion object
+}

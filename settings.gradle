@@ -4,8 +4,6 @@ include ':app'
 
 include ':feature:common'
 include ':feature:stats:statistics'
-include ':feature:stats:data-firestore' // TODO: Remove
-include ':feature:stats:data' // TODO: Remove
 include ':feature:stats:repo'
 include ':feature:stats:room'
 include ':feature:stats:network'

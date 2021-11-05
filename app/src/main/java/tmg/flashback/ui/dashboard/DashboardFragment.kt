@@ -17,7 +17,6 @@ import tmg.flashback.R
 import tmg.flashback.databinding.FragmentDashboardBinding
 import tmg.flashback.statistics.controllers.SearchController
 import tmg.flashback.statistics.controllers.SeasonController
-import tmg.flashback.statistics.ui.admin.maintenance.MaintenanceActivity
 import tmg.flashback.ui.dashboard.list.ListFragment
 import tmg.flashback.statistics.ui.dashboard.season.SeasonFragment
 import tmg.flashback.statistics.ui.dashboard.season.SeasonFragmentCallback
@@ -92,13 +91,6 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(),
                     true
                 }
                 else -> false
-            }
-        }
-
-        observeEvent(viewModel.outputs.openAppLockout) {
-            activity?.let {
-                startActivity(Intent(it, MaintenanceActivity::class.java))
-                it.finishAffinity()
             }
         }
 
