@@ -12,7 +12,7 @@
     android:paddingTop="@dimen/paddingXSmall"
     android:paddingEnd="@dimen/paddingMedium"
     android:paddingBottom="@dimen/paddingXSmall"
-    tools:background="?attr/colorPrimary">
+    tools:background="@color/splash_screen">
 
     <TextView
         android:id="@+id/label"
@@ -42,6 +42,7 @@
         android:padding="4dp"
         android:importantForAccessibility="no"
         android:visibility="invisible"
+        app:tint="@color/white"
         app:layout_constraintBottom_toBottomOf="@id/loading"
         app:layout_constraintEnd_toEndOf="@id/loading"
         app:layout_constraintStart_toStartOf="@id/loading"
@@ -56,6 +57,7 @@
         android:padding="4dp"
         android:importantForAccessibility="no"
         android:visibility="invisible"
+        app:tint="@color/white"
         app:layout_constraintBottom_toBottomOf="@id/loading"
         app:layout_constraintEnd_toEndOf="@id/loading"
         app:layout_constraintStart_toStartOf="@id/loading"

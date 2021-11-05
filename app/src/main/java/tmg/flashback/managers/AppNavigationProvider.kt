@@ -9,6 +9,7 @@ import tmg.core.device.managers.BuildConfigManager
 import tmg.core.ui.navigation.NavigationProvider
 import tmg.flashback.constants.AboutThisAppConfig
 import tmg.flashback.rss.controllers.RSSController
+import tmg.flashback.ui.SyncActivity
 import tmg.flashback.ui.dashboard.HomeActivity
 import tmg.notifications.navigation.NotificationNavigationProvider
 
@@ -33,5 +34,9 @@ class AppNavigationProvider(
             deviceUdid = deviceController.deviceUdid,
             rssSources = if (rssController.enabled) rssController.sources else emptyList()
         ))
+    }
+
+    override fun syncActivityIntent(context: Context): Intent {
+        return Intent(context, SyncActivity::class.java)
     }
 }

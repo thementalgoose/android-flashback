@@ -16,6 +16,7 @@ import tmg.flashback.formula1.model.CircuitHistoryRace
 import tmg.flashback.formula1.model.Location
 import tmg.flashback.formula1.enums.TrackLayout
 import tmg.flashback.statistics.extensions.circuitIcon
+import tmg.flashback.statistics.repo.CircuitRepository
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertDataEventMatches

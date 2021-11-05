@@ -18,6 +18,25 @@
             android:paddingBottom="@dimen/paddingMedium"
             android:text="@string/debug_title" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/paddingMedium"
+            android:text="@string/debug_sync_title" />
+
+        <Button
+            android:id="@+id/syncActivity"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/debug_sync_activity_launch"
+            android:textAllCaps="false" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/paddingMedium"
+            android:text="@string/debug_notification_title" />
+
         <Button
             android:id="@+id/sendNotification"
             android:layout_width="match_parent"

@@ -149,6 +149,7 @@
     <string name="search_category_ensure_internet">If it\'s taking a while to load, please make sure you are connected to the internet and try again!</string>
 
     <!-- Error states -->
+    <string name="shared_unavailable_no_data">No results found! Please check you have an active internet connection and try again</string>
     <string name="shared_unavailable_circuit_not_found">We can\'t find any information on this circuit.</string>
     <string name="shared_unavailable_driver_not_found">We can\'t find any information on this driver.</string>
     <string name="shared_unavailable_constructor_not_found">We can\'t find any information on this constructor.</string>
