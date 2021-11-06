@@ -30,14 +30,3 @@ dependencies {
     implementation deps.retrofit.okhttp
     implementation deps.retrofit.okhttp_logging
 }
-
-task jarTests(type: Jar) {
-    classifier = 'tests'
-    from "$buildDir/intermediates/classes/test/debug"
-}
-configurations {
-    unitTestArtifact
-}
-artifacts {
-    unitTestArtifact jarTests
-}

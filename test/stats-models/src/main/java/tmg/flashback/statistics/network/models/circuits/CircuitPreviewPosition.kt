@@ -1,6 +1,7 @@
 package tmg.flashback.statistics.network.models.circuits
 
 import tmg.flashback.statistics.network.models.constructors.Constructor
+import tmg.flashback.statistics.network.models.constructors.model
 import tmg.flashback.statistics.network.models.drivers.Driver
 import tmg.flashback.statistics.network.models.drivers.model
 

@@ -18,4 +18,6 @@ data class RaceDriverResult(
         entityColumn = "id"
     )
     val constructor: Constructor
-)
+) {
+    companion object
+}

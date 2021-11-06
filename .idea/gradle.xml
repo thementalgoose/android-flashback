@@ -35,6 +35,8 @@
             <option value="$PROJECT_DIR$/feature/stats/statistics" />
             <option value="$PROJECT_DIR$/feature/upnext" />
             <option value="$PROJECT_DIR$/formula1" />
+            <option value="$PROJECT_DIR$/test" />
+            <option value="$PROJECT_DIR$/test/stats-models" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

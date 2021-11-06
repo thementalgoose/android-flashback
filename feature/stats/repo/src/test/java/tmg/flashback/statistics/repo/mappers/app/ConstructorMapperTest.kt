@@ -5,13 +5,13 @@ import io.mockk.mockk
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import tmg.flashback.RoomConstructorHistory
 import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.ConstructorHistory
 import tmg.flashback.formula1.model.Driver
 import tmg.flashback.formula1.model.model
 import tmg.flashback.statistics.room.models.constructors.model
 
-private typealias RoomConstructorHistory = tmg.flashback.statistics.room.models.constructors.ConstructorHistory
 
 internal class ConstructorMapperTest {
 

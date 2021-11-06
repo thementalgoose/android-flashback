@@ -3,11 +3,10 @@ package tmg.flashback.statistics.repo.mappers.app
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import tmg.flashback.RoomDriver
 import tmg.flashback.formula1.model.Driver
 import tmg.flashback.formula1.model.model
 import tmg.flashback.statistics.room.models.drivers.model
-
-private typealias RoomDriver = tmg.flashback.statistics.room.models.drivers.Driver
 
 internal class DriverDataMapperTest {
 

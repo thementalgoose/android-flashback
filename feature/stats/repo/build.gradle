@@ -31,7 +31,5 @@ dependencies {
     implementation project(path: ':core:preferences')
 
     // Tests
-    testImplementation project(path: ':formula1', configuration: 'unitTestArtifact')
-    testImplementation project(path: ':feature:stats:network', configuration: 'unitTestArtifact')
-    testImplementation project(path: ':feature:stats:room', configuration: 'unitTestArtifact')
+    testImplementation project(':test:stats-models')
 }
