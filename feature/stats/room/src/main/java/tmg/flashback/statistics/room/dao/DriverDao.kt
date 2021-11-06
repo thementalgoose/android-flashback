@@ -2,10 +2,7 @@ package tmg.flashback.statistics.room.dao
 
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow
-import tmg.flashback.statistics.room.models.drivers.Driver
-import tmg.flashback.statistics.room.models.drivers.DriverHistory
-import tmg.flashback.statistics.room.models.drivers.DriverSeason
-import tmg.flashback.statistics.room.models.drivers.DriverSeasonRace
+import tmg.flashback.statistics.room.models.drivers.*
 
 @Dao
 interface DriverDao {
@@ -19,6 +16,9 @@ interface DriverDao {
     @Transaction
     @Query("SELECT * FROM driver WHERE id == :id LIMIT 1")
     fun getDriverHistory(id: String): Flow<DriverHistory?>
+
+    @Query("SELECT COUNT(*) FROM DriverSeason WHERE driver_id == :id")
+    suspend fun getDriverSeasonCount(id: String): Int
 
     @Transaction
     fun insertDriver(driver: Driver, driverSeasons: List<DriverSeason>, driverSeasonRaces: List<DriverSeasonRace>) {

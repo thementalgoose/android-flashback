@@ -1,8 +1,5 @@
 package tmg.flashback.statistics.ui.overview.constructor
 
-import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +12,8 @@ import tmg.flashback.statistics.ui.overview.constructor.summary.ConstructorSumma
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 import tmg.utilities.extensions.viewUrl
+import tmg.utilities.extensions.views.invisible
+import tmg.utilities.extensions.views.visible
 
 class ConstructorFragment: BaseFragment<FragmentConstructorBinding>() {
 
@@ -51,6 +50,7 @@ class ConstructorFragment: BaseFragment<FragmentConstructorBinding>() {
         )
         binding.dataList.adapter = adapter
         binding.dataList.layoutManager = LinearLayoutManager(context)
+        binding.progress.invisible()
 
         binding.back.setOnClickListener {
             activity?.finish()
@@ -58,14 +58,20 @@ class ConstructorFragment: BaseFragment<FragmentConstructorBinding>() {
 
         binding.swipeRefresh.setOnRefreshListener {
             viewModel.inputs.refresh()
+            binding.progress.visible()
         }
 
         observe(viewModel.outputs.list) {
             adapter.list = it
         }
 
-        observe(viewModel.outputs.isLoading) {
-            binding.swipeRefresh.isRefreshing = it
+        observe(viewModel.outputs.showLoading) {
+            if (it) {
+                binding.progress.visible()
+            } else {
+                binding.swipeRefresh.isRefreshing = false
+                binding.progress.invisible()
+            }
         }
 
         observeEvent(viewModel.outputs.openUrl) {

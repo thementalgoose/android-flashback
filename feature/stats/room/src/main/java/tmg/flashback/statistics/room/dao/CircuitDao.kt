@@ -18,6 +18,9 @@ interface CircuitDao {
     @Query("SELECT * FROM circuit WHERE id == :id")
     fun getCircuitHistory(id: String): Flow<CircuitHistory>
 
+    @Query("SELECT COUNT(*) FROM CircuitRound WHERE circuit_id == :id")
+    suspend fun getCircuitRounds(id: String): Int
+
     @Query("SELECT * FROM Circuit")
     fun getCircuits(): Flow<List<Circuit>>
 

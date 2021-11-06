@@ -77,6 +77,10 @@ class DriverRepository(
             .map { list -> list.map { driverDataMapper.mapDriver(it) } }
     }
 
+    suspend fun getDriverSeasonCount(id: String): Int {
+        return persistence.driverDao().getDriverSeasonCount(id)
+    }
+
     private fun saveConstructors(data: tmg.flashback.statistics.network.models.drivers.DriverHistory): Boolean {
         val constructors = data.standings.values
             .map { it.races.values.map { it.construct } }

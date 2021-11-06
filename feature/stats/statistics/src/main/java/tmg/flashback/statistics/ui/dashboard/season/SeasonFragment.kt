@@ -73,6 +73,7 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
         )
         binding.dataList.layoutManager = LinearLayoutManager(context)
         binding.dataList.adapter = adapter
+        binding.progress.invisible()
 
         binding.dataList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -118,7 +119,9 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
         }
 
         observe(viewModel.outputs.showLoading) {
-            if (!it) {
+            if (it) {
+                binding.progress.visible()
+            } else {
                 binding.swipeRefresh.isRefreshing = false
                 binding.progress.invisible()
             }
@@ -160,8 +163,6 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
                 startActivity(intent)
             }
         }
-
-        binding.progress.invisible()
     }
 
     //region Accessible

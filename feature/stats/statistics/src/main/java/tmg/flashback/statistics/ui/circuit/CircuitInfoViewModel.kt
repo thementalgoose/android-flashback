@@ -2,18 +2,15 @@ package tmg.flashback.statistics.ui.circuit
 
 import androidx.lifecycle.*
 import kotlinx.coroutines.Dispatchers
-import java.lang.NullPointerException
-import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import tmg.core.device.managers.NetworkConnectivityManager
 import tmg.crash_reporting.controllers.CrashController
-import tmg.flashback.formula1.model.CircuitHistory
 import tmg.flashback.formula1.model.Location
 import tmg.flashback.statistics.extensions.circuitIcon
 import tmg.flashback.statistics.repo.CircuitRepository
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
-import tmg.utilities.extensions.then
+import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
 import tmg.utilities.lifecycle.DataEvent
 import tmg.utilities.lifecycle.Event
 
@@ -21,8 +18,8 @@ import tmg.utilities.lifecycle.Event
 
 interface CircuitInfoViewModelInputs {
     fun circuitId(circuitId: String)
-    fun clickShowOnMap()
-    fun clickWikipedia()
+    fun clickShowOnMap(location: Location, name: String)
+    fun clickLink(link: String)
 
     fun refresh()
 }
@@ -34,12 +31,11 @@ interface CircuitInfoViewModelInputs {
 interface CircuitInfoViewModelOutputs {
     val list: LiveData<List<CircuitItem>>
     val circuitName: LiveData<String>
-    val isLoading: LiveData<Boolean>
 
-    val showRefreshError: LiveData<Event>
+    val showLoading: LiveData<Boolean>
 
     val goToMap: LiveData<DataEvent<Pair<String, String>>> // Maps URI, lat / lng
-    val goToWikipediaPage: MutableLiveData<DataEvent<String>>
+    val goToLink: MutableLiveData<DataEvent<String>>
 }
 
 //endregion
@@ -47,67 +43,74 @@ interface CircuitInfoViewModelOutputs {
 @Suppress("EXPERIMENTAL_API_USAGE")
 class CircuitInfoViewModel(
     private val circuitRepository: CircuitRepository,
-    private val connectivityManager: NetworkConnectivityManager,
-    private val crashController: CrashController
+    private val networkConnectivityManager: NetworkConnectivityManager
 ) : ViewModel(), CircuitInfoViewModelInputs, CircuitInfoViewModelOutputs {
 
-    private var circuitLocation: Location? = null
-    private var wikipedia: String? = null
-    private var name: String? = null
-
-    private val circuitIdentifier: ConflatedBroadcastChannel<String> = ConflatedBroadcastChannel()
-
-    private val circuit: Flow<CircuitHistory?> = circuitIdentifier
-        .asFlow()
-        .flatMapLatest { circuitRepository.getCircuitHistory(it) }
-
-    override val showRefreshError: MutableLiveData<Event> = MutableLiveData()
-    override val goToMap: MutableLiveData<DataEvent<Pair<String, String>>> = MutableLiveData()
-    override val goToWikipediaPage: MutableLiveData<DataEvent<String>> = MutableLiveData()
-
-    override val isLoading: MutableLiveData<Boolean> = MutableLiveData()
-
-    override val circuitName: LiveData<String> = circuit
-        .map { it?.data?.name }
+    private val circuitId: MutableStateFlow<String?> = MutableStateFlow(null)
+    private val circuitIdWithRequest: Flow<String?> = circuitId
         .filterNotNull()
-        .asLiveData(viewModelScope.coroutineContext)
-
-    override val list: LiveData<List<CircuitItem>> = circuit
-        .map {
-            name = it?.data?.name
-            circuitLocation = it?.data?.location
-            wikipedia = it?.data?.wikiUrl
-            when {
-                it == null && !connectivityManager.isConnected -> {
-                    return@map listOf<CircuitItem>(CircuitItem.ErrorItem(SyncDataItem.NoNetwork))
+        .flatMapLatest { id ->
+            return@flatMapLatest flow {
+                if (circuitRepository.getCircuitRounds(id) == 0) {
+                    showLoading.postValue(true)
+                    emit(null)
+                    val result = circuitRepository.fetchCircuit(id)
+                    showLoading.postValue(false)
+                    emit(id)
                 }
-                it == null -> {
-                    return@map listOf<CircuitItem>(CircuitItem.ErrorItem(SyncDataItem.InternalError))
-                }
-                else -> {
-                    val list = mutableListOf<CircuitItem>()
-                    it.data.circuitIcon?.let {
-                        list.add(CircuitItem.TrackImage(it))
-                    }
-                    list.add(CircuitItem.CircuitInfo(it))
-                    list.addAll(it.results
-                        .map { result ->
-                            CircuitItem.Race(
-                                name = result.name,
-                                season = result.season,
-                                round = result.round,
-                                date = result.date,
-                                time = result.time
-                            )
-                        }
-                        .sortedByDescending { it.season * 1000 + it.round }
-                    )
-                    return@map list
+                else {
+                    emit(id)
                 }
             }
         }
-        .then {
-            isLoading.postValue(false)
+        .flowOn(Dispatchers.IO)
+
+    private val isConnected: Boolean
+        get() = networkConnectivityManager.isConnected
+
+    override val goToMap: MutableLiveData<DataEvent<Pair<String, String>>> = MutableLiveData()
+    override val goToLink: MutableLiveData<DataEvent<String>> = MutableLiveData()
+    override val showLoading: MutableLiveData<Boolean> = MutableLiveData()
+    override val circuitName: MutableLiveData<String> = MutableLiveData()
+
+    override val list: LiveData<List<CircuitItem>> = circuitIdWithRequest
+        .flatMapLatest { id ->
+            if (id == null) {
+                return@flatMapLatest flow {
+                    emit(listOf<CircuitItem>(CircuitItem.ErrorItem(SyncDataItem.Skeleton)))
+                }
+            }
+
+            return@flatMapLatest circuitRepository.getCircuitHistory(id)
+                .map {
+                    val list = mutableListOf<CircuitItem>()
+                    if (it != null) {
+                        circuitName.postValue(it.data.name)
+                    }
+                    when {
+                        (it == null || it.results.isEmpty()) && !isConnected -> list.addError(SyncDataItem.PullRefresh)
+                        (it == null || it.results.isEmpty()) -> list.addError(SyncDataItem.Unavailable(DataUnavailable.CONSTRUCTOR_HISTORY_INTERNAL_ERROR))
+                        else -> {
+                            it.data.circuitIcon?.let {
+                                list.add(CircuitItem.TrackImage(it))
+                            }
+                            list.add(CircuitItem.CircuitInfo(it))
+                            list.addAll(it.results
+                                .map { result ->
+                                    CircuitItem.Race(
+                                        name = result.name,
+                                        season = result.season,
+                                        round = result.round,
+                                        date = result.date,
+                                        time = result.time
+                                    )
+                                }
+                                .sortedByDescending { it.season * 1000 + it.round }
+                            )
+                        }
+                    }
+                    return@map list
+                }
         }
         .asLiveData(viewModelScope.coroutineContext)
 
@@ -115,34 +118,33 @@ class CircuitInfoViewModel(
     var outputs: CircuitInfoViewModelOutputs = this
 
     init {
-        isLoading.postValue(true)
+        showLoading.postValue(true)
     }
 
     //region Inputs
 
     override fun circuitId(circuitId: String) {
-        circuitIdentifier.offer(circuitId)
+        this.circuitId.value = circuitId
     }
 
-    override fun clickShowOnMap() {
-        circuitLocation?.let { location ->
-            val mapsIntent = "geo:0,0?q=${location.lat},${location.lng} ($name)"
-            val mapsLatLng = "${location.lat},${location.lng}"
-            goToMap.postValue(DataEvent(Pair(mapsIntent, mapsLatLng)))
-        } ?: crashController.logException(NullPointerException("Circuit location is null for ${circuitIdentifier.valueOrNull}"))
+    override fun clickShowOnMap(location: Location, name: String) {
+        val mapsIntent = "geo:0,0?q=${location.lat},${location.lng} ($name)"
+        val mapsLatLng = "${location.lat},${location.lng}"
+        goToMap.postValue(DataEvent(Pair(mapsIntent, mapsLatLng)))
     }
 
-    override fun clickWikipedia() {
-        goToWikipediaPage.postValue(DataEvent(wikipedia ?: ""))
+    override fun clickLink(link: String) {
+        goToLink.postValue(DataEvent(link))
     }
 
     override fun refresh() {
-        isLoading.value = true
+        this.refresh(circuitId.value)
+    }
+    private fun refresh(circuitId: String? = this.circuitId.value) {
         viewModelScope.launch(context = Dispatchers.IO) {
-            val result = circuitRepository.fetchCircuit(circuitIdentifier.value)
-            isLoading.postValue(false)
-            if (!result) {
-                showRefreshError.postValue(Event())
+            circuitId?.let {
+                val result = circuitRepository.fetchCircuit(circuitId)
+                showLoading.postValue(false)
             }
         }
     }
