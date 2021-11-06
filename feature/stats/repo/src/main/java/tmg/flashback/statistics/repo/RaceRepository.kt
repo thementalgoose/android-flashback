@@ -2,6 +2,7 @@ package tmg.flashback.statistics.repo
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import tmg.core.prefs.manager.PreferenceManager
 import tmg.crash_reporting.controllers.CrashController
 import tmg.flashback.formula1.model.Race
 import tmg.flashback.statistics.network.api.FlashbackApi
@@ -25,7 +26,8 @@ class RaceRepository(
     private val networkRaceMapper: NetworkRaceMapper,
     private val networkDriverStandingMapper: NetworkDriverStandingMapper,
     private val networkConstructorStandingMapper: NetworkConstructorStandingMapper,
-    private val raceMapper: RaceMapper
+    private val raceMapper: RaceMapper,
+    private val preferenceManager: PreferenceManager
 ): BaseRepository(crashController) {
 
     /**
@@ -55,6 +57,8 @@ class RaceRepository(
             .map { (raceData, race) -> networkRaceMapper.mapRaceResults(raceData.season, raceData.round, race) }
 
         persistence.seasonDao().insertRaces(raceData, qualifyingResults, raceResults)
+
+        addSyncedSeason(season)
 
         return@attempt true
     }
@@ -94,8 +98,11 @@ class RaceRepository(
             }
     }
 
-    suspend fun getRaceCount(season: Int): Int {
-        return persistence.seasonDao().getRaceCount(season)
+    suspend fun shouldSyncRace(season: Int): Boolean {
+        return !syncedSeasons.contains(season)
+    }
+    suspend fun shouldSyncRace(season: Int, round: Int): Boolean {
+        return !syncedSeasons.contains(season)
     }
 
     private fun saveConstructorStandings(season: Int, constructors: Map<String, ConstructorStandings>?) {
@@ -133,5 +140,20 @@ class RaceRepository(
         val items = (drivers?.values ?: emptyList())
             .map { networkDriverDataMapper.mapDriverData(it) }
         persistence.driverDao().insertAll(items)
+    }
+
+    private fun addSyncedSeason(season: Int) {
+        val existing = syncedSeasons.toMutableList()
+        existing.add(season)
+        syncedSeasons = existing.toSet()
+    }
+    private var syncedSeasons: Set<Int>
+        get() = preferenceManager.getSet(keySyncedSeasons, emptySet()).mapNotNull { it.toIntOrNull() }.toSet()
+        set(value) {
+            preferenceManager.save(keySyncedSeasons, value.map { it.toString() }.toSet())
+        }
+
+    companion object {
+        private const val keySyncedSeasons: String = "syncedSeasons"
     }
 }

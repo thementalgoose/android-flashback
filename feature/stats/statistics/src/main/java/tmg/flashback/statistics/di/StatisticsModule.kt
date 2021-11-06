@@ -19,7 +19,7 @@ import tmg.flashback.statistics.ui.settings.statistics.SettingsStatisticsViewMod
 
 val statisticsModule = repoModule + module {
 
-    viewModel { CircuitInfoViewModel(get(), get(), get()) }
+    viewModel { CircuitInfoViewModel(get(), get()) }
     viewModel { SeasonViewModel(get(), get(), get(), get(), get(), get(), get()) }
     viewModel { ConstructorViewModel(get(), get()) }
     viewModel { DriverViewModel(get(), get()) }

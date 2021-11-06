@@ -26,16 +26,17 @@
         android:id="@+id/syncContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintVertical_bias="1.0"
         android:layout_marginStart="@dimen/paddingMedium"
         android:layout_marginEnd="@dimen/paddingMedium"
+        android:layout_marginBottom="@dimen/paddingLarge"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/title">
+        app:layout_constraintTop_toBottomOf="@id/title"
+        app:layout_constraintVertical_bias="1.0">
 
         <TextView
-            style="@style/Text.Sync.Message"
             android:id="@+id/failedToSync"
+            style="@style/Text.Sync.Message"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/paddingMedium"
@@ -65,15 +66,15 @@
             android:id="@+id/constructors"
             layout="@layout/view_sync_item" />
 
-        <Button
-            android:id="@+id/proceed"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/paddingMedium"
-            android:layout_marginBottom="@dimen/paddingMedium"
-            android:background="@drawable/background_input"
-            android:text="@string/splash_continue"
-            android:textAllCaps="false" />
+        <!--        <Button-->
+        <!--            android:id="@+id/proceed"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginTop="@dimen/paddingMedium"-->
+        <!--            android:layout_marginBottom="@dimen/paddingMedium"-->
+        <!--            android:background="@drawable/background_input"-->
+        <!--            android:text="@string/splash_continue"-->
+        <!--            android:textAllCaps="false" />-->
 
     </LinearLayout>
 

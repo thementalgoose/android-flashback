@@ -68,12 +68,14 @@ class CircuitInfoFragment: BaseFragment<FragmentCircuitInfoBinding>() {
         )
         binding.dataList.adapter = adapter
         binding.dataList.layoutManager = LinearLayoutManager(context)
+        binding.progress.invisible()
 
         binding.back.setOnClickListener {
             activity?.finish()
         }
 
         binding.swipeRefresh.setOnRefreshListener {
+            binding.progress.visible()
             viewModel.inputs.refresh()
         }
 

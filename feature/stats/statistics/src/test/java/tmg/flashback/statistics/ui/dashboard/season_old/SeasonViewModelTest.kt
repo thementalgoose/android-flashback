@@ -27,14 +27,8 @@ import tmg.flashback.statistics.ui.dashboard.season.SeasonItem
 import tmg.flashback.statistics.ui.dashboard.season.SeasonNavItem
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
 import tmg.testutils.BaseTest
-import tmg.testutils.livedata.assertDataEventValue
-import tmg.testutils.livedata.assertEventFired
-import tmg.testutils.livedata.assertListContainsItem
 import tmg.testutils.livedata.assertListDoesNotMatchItem
-import tmg.testutils.livedata.assertListExcludesItem
-import tmg.testutils.livedata.assertListHasSublist
 import tmg.testutils.livedata.assertListMatchesItem
-import tmg.testutils.livedata.test
 import tmg.utilities.models.StringHolder
 
 internal class SeasonViewModelTest: BaseTest() {
@@ -289,7 +283,7 @@ internal class SeasonViewModelTest: BaseTest() {
         every { mockHistoryRepository.historyFor(any()) } returns flow { emit(historyListWithEmptyRound) }
 
         val expected = listOf<SeasonItem>(
-            SeasonItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.MISSING_RACE))
+            SeasonItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.RACE_DATA_EMPTY))
         )
 
         initSUT()
@@ -394,7 +388,7 @@ internal class SeasonViewModelTest: BaseTest() {
         every { mockHistoryRepository.historyFor(any()) } returns flow { emit(historyListWithEmptyRound) }
 
         val expected = listOf<SeasonItem>(
-            SeasonItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.MISSING_RACE))
+            SeasonItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.RACE_DATA_EMPTY))
         )
 
         initSUT()

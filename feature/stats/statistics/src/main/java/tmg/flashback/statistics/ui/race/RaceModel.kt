@@ -7,6 +7,7 @@ import tmg.flashback.formula1.enums.RaceStatus
 import tmg.flashback.formula1.model.*
 import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.statistics.R
+import tmg.flashback.statistics.ui.overview.constructor.summary.ConstructorSummaryItem
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 
 sealed class RaceModel(
@@ -80,6 +81,15 @@ sealed class RaceModel(
     ) : RaceModel(item.layoutId)
 
     object Loading : RaceModel(R.layout.skeleton_race)
+}
+
+
+fun MutableList<RaceModel>.addError(syncDataItem: SyncDataItem) {
+    this.add(
+        RaceModel.ErrorItem(
+            syncDataItem
+        )
+    )
 }
 
 data class SingleRace(

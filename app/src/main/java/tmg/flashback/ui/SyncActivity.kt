@@ -53,20 +53,18 @@ class SyncActivity: BaseActivity() {
             binding.races.updateTo(it)
         }
 
-        observe(viewModel.outputs.showContinue) {
-            binding.proceed.isEnabled = it
+        observeEvent(viewModel.outputs.navigate) {
+            when (it) {
+                SyncNavTarget.DASHBOARD -> {
+                    startActivity(Intent(this@SyncActivity, HomeActivity::class.java))
+                    finish()
+                }
+                SyncNavTarget.FORCE_UPGRADE -> {
+                    startActivity(Intent(this@SyncActivity, ForceUpgradeActivity::class.java))
+                    finish()
+                }
+            }
         }
-
-        observeEvent(viewModel.outputs.goToDashboard) {
-            startActivity(Intent(this@SyncActivity, HomeActivity::class.java))
-            finish()
-        }
-
-        observeEvent(viewModel.outputs.goToForceUpgrade) {
-            startActivity(Intent(this@SyncActivity, ForceUpgradeActivity::class.java))
-            finish()
-        }
-
 
         binding.setup.label.text = getString(R.string.splash_sync_config)
         binding.circuits.label.text = getString(R.string.splash_sync_circuits)
@@ -89,11 +87,6 @@ class SyncActivity: BaseActivity() {
         }
         binding.races.container.setOnClickListener {
             viewModel.inputs.startSyncRaces()
-        }
-
-
-        binding.proceed.setOnClickListener {
-            viewModel.inputs.continueClicked()
         }
 
 

@@ -28,6 +28,7 @@ dependencies {
 
     // Retrofit
     implementation deps.retrofit.retrofit
+    implementation project(path: ':core:preferences')
 
     // Tests
     testImplementation project(path: ':formula1', configuration: 'unitTestArtifact')

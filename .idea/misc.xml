@@ -141,6 +141,7 @@
         <entry key="feature/stats/statistics/src/main/res/layout/fragment_driver.xml" value="0.1" />
         <entry key="feature/stats/statistics/src/main/res/layout/fragment_driver_season.xml" value="0.4091680814940577" />
         <entry key="feature/stats/statistics/src/main/res/layout/fragment_race.xml" value="0.22" />
+        <entry key="feature/stats/statistics/src/main/res/layout/fragment_search.xml" value="0.39719202898550726" />
         <entry key="feature/stats/statistics/src/main/res/layout/skeleton_race.xml" value="0.26570415400202635" />
         <entry key="feature/stats/statistics/src/main/res/layout/view_race_overview.xml" value="0.42346014492753625" />
         <entry key="feature/stats/statistics/src/main/res/layout/view_race_qualifying_header.xml" value="0.42346014492753625" />
