@@ -1,6 +1,5 @@
 package tmg.flashback.ui.dashboard
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -95,7 +94,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(),
         }
 
         observe(viewModel.outputs.showUpNext) {
-            seasonFragment?.showUpNext(it)
+//            seasonFragment?.showUpNext(it)
         }
 
         observeEvent(viewModel.outputs.openSearch) {
@@ -106,7 +105,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(),
 
         observeEvent(viewModel.outputs.appConfigSynced) {
             listFragment?.refresh()
-            seasonFragment?.refresh()
+//            seasonFragment?.refresh()
             upNextFragment?.refresh()
         }
 

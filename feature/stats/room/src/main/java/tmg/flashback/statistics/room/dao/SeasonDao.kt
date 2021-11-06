@@ -17,6 +17,9 @@ interface SeasonDao {
     @Query("SELECT * FROM RaceInfo WHERE season == :season AND round == :round LIMIT 1")
     fun getRaceInfo(season: Int, round: Int): RaceInfo?
 
+    @Query("SELECT COUNT(*) FROM RaceInfo WHERE season == :season")
+    suspend fun getRaceCount(season: Int): Int
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertRaceData(list: List<RaceInfo>)
 
