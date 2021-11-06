@@ -6,10 +6,9 @@ import androidx.annotation.StringRes
 import androidx.lifecycle.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
-import kotlinx.coroutines.flow.asFlow
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import tmg.core.device.managers.NetworkConnectivityManager
 import tmg.flashback.statistics.ui.overview.driver.summary.DriverSummaryItem
 import tmg.flashback.statistics.ui.overview.driver.summary.PipeType
 import tmg.flashback.statistics.ui.overview.driver.summary.addError
@@ -17,6 +16,9 @@ import tmg.flashback.formula1.model.DriverHistory
 import tmg.flashback.firebase.extensions.pointsDisplay
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.repo.DriverRepository
+import tmg.flashback.statistics.ui.overview.constructor.summary.ConstructorSummaryItem
+import tmg.flashback.statistics.ui.overview.constructor.summary.addError
+import tmg.flashback.statistics.ui.overview.driver.season.DriverSeasonItem
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
 import tmg.flashback.statistics.ui.util.position
@@ -42,7 +44,7 @@ interface DriverViewModelOutputs {
     val list: LiveData<List<DriverSummaryItem>>
     val openUrl: LiveData<DataEvent<String>>
     val openSeason: LiveData<DataEvent<Pair<String, Int>>>
-    val isLoading: LiveData<Boolean>
+    val showLoading: LiveData<Boolean>
     val showRefreshError: LiveData<Event>
 }
 
@@ -52,66 +54,88 @@ interface DriverViewModelOutputs {
 @Suppress("EXPERIMENTAL_API_USAGE")
 class DriverViewModel(
     private val driverRepository: DriverRepository,
-    private val connectivityManager: tmg.core.device.managers.NetworkConnectivityManager
+    private val networkConnectivityManager: NetworkConnectivityManager
 ): ViewModel(), DriverViewModelInputs, DriverViewModelOutputs {
 
     var inputs: DriverViewModelInputs = this
     var outputs: DriverViewModelOutputs = this
 
-    private val driverId: ConflatedBroadcastChannel<String> = ConflatedBroadcastChannel()
-    override val list: LiveData<List<DriverSummaryItem>> = driverId
-        .asFlow()
-        .flatMapLatest { driverRepository.getDriverOverview(it) }
-        .map {
-            val list: MutableList<DriverSummaryItem> = mutableListOf()
-            when (it) {
-                null -> {
-                    when {
-                        !connectivityManager.isConnected ->
-                            list.addError(SyncDataItem.NoNetwork)
-                        else ->
-                            list.addError(SyncDataItem.Unavailable(DataUnavailable.DRIVER_NOT_EXIST))
-                    }
+    private val isConnected: Boolean
+        get() = networkConnectivityManager.isConnected
+
+    private val driverId: MutableStateFlow<String?> = MutableStateFlow(null)
+    private val driverIdWithRequest: Flow<String?> = driverId
+        .filterNotNull()
+        .flatMapLatest { id ->
+            return@flatMapLatest flow {
+                if (driverRepository.getDriverSeasonCount(id) == 0) {
+                    showLoading.postValue(true)
+                    emit(null)
+                    val result = driverRepository.fetchDriver(id)
+                    showLoading.postValue(false)
+                    emit(id)
                 }
-                else -> {
-                    list.add(
-                        DriverSummaryItem.Header(
-                        driverFirstname = it.driver.firstName,
-                        driverSurname = it.driver.lastName,
-                        driverNumber = it.driver.number ?: 0,
-                        driverImg = it.driver.photoUrl ?: "",
-                        driverBirthday = it.driver.dateOfBirth,
-                        driverWikiUrl = it.driver.wikiUrl ?: "",
-                        driverNationalityISO = it.driver.nationalityISO
-                    ))
+                else {
+                    emit(id)
+                }
+            }
+        }
+        .flowOn(Dispatchers.IO)
 
-                    if (it.hasChampionshipCurrentlyInProgress) {
-                        val latestRound = it.standings.maxByOrNull { it.season }?.raceOverview?.maxByOrNull { it.raceInfo.round }
-                        if (latestRound != null) {
-                            list.add(DriverSummaryItem.ErrorItem(SyncDataItem.MessageRes(R.string.results_accurate_for_year, listOf(latestRound.raceInfo.season, latestRound.raceInfo.name, latestRound.raceInfo.round))))
-                        }
-                    }
+    override val list: LiveData<List<DriverSummaryItem>> = driverIdWithRequest
+        .flatMapLatest { id ->
 
-                    // Add general stats
-                    list.addAll(getAllStats(it))
-
-                    // Add constructor history
-                    list.addStat(
-                        icon = R.drawable.ic_team,
-                        label = R.string.driver_overview_stat_career_team_history,
-                        value = ""
-                    )
-                    list.addAll(getConstructorItemList(it))
+            if (id == null) {
+                return@flatMapLatest flow {
+                    emit(listOf<DriverSummaryItem>(DriverSummaryItem.ErrorItem(SyncDataItem.Skeleton)))
                 }
             }
 
-            return@map list
+            return@flatMapLatest driverRepository.getDriverOverview(id)
+                .map {
+                    val list: MutableList<DriverSummaryItem> = mutableListOf()
+                    when {
+                        (it == null || it.standings.isEmpty()) && !isConnected -> list.addError(SyncDataItem.PullRefresh)
+                        (it == null || it.standings.isEmpty()) -> list.addError(SyncDataItem.Unavailable(DataUnavailable.CONSTRUCTOR_HISTORY_INTERNAL_ERROR))
+                        else -> {
+                            list.add(
+                                DriverSummaryItem.Header(
+                                    driverFirstname = it.driver.firstName,
+                                    driverSurname = it.driver.lastName,
+                                    driverNumber = it.driver.number ?: 0,
+                                    driverImg = it.driver.photoUrl ?: "",
+                                    driverBirthday = it.driver.dateOfBirth,
+                                    driverWikiUrl = it.driver.wikiUrl ?: "",
+                                    driverNationalityISO = it.driver.nationalityISO
+                                ))
+
+                            if (it.hasChampionshipCurrentlyInProgress) {
+                                val latestRound = it.standings.maxByOrNull { it.season }?.raceOverview?.maxByOrNull { it.raceInfo.round }
+                                if (latestRound != null) {
+                                    list.add(DriverSummaryItem.ErrorItem(SyncDataItem.MessageRes(R.string.results_accurate_for_year, listOf(latestRound.raceInfo.season, latestRound.raceInfo.name, latestRound.raceInfo.round))))
+                                }
+                            }
+
+                            // Add general stats
+                            list.addAll(getAllStats(it))
+
+                            // Add constructor history
+                            list.addStat(
+                                icon = R.drawable.ic_team,
+                                label = R.string.driver_overview_stat_career_team_history,
+                                value = ""
+                            )
+                            list.addAll(getConstructorItemList(it))
+                        }
+                    }
+                    return@map list
+                }
         }
         .asLiveData(viewModelScope.coroutineContext)
 
     override val openUrl: MutableLiveData<DataEvent<String>> = MutableLiveData()
     override val openSeason: MutableLiveData<DataEvent<Pair<String, Int>>> = MutableLiveData()
-    override val isLoading: MutableLiveData<Boolean> = MutableLiveData()
+    override val showLoading: MutableLiveData<Boolean> = MutableLiveData()
     override val showRefreshError: MutableLiveData<Event> = MutableLiveData()
 
     init {
@@ -121,9 +145,7 @@ class DriverViewModel(
     //region Inputs
 
     override fun setup(driverId: String) {
-        if (this.driverId.valueOrNull != driverId) {
-            this.driverId.offer(driverId)
-        }
+        this.driverId.value = driverId
     }
 
     override fun openUrl(url: String) {
@@ -131,16 +153,19 @@ class DriverViewModel(
     }
 
     override fun openSeason(season: Int) {
-        openSeason.postValue(DataEvent(Pair(driverId.value, season)))
+        driverId.value?.let {
+            openSeason.postValue(DataEvent(Pair(it, season)))
+        }
     }
 
     override fun refresh() {
-        isLoading.value = true
+        this.refresh(driverId.value)
+    }
+    private fun refresh(driverId: String? = this.driverId.value) {
         viewModelScope.launch(context = Dispatchers.IO) {
-            val result = driverRepository.fetchDriver(driverId.value)
-            isLoading.postValue(false)
-            if (!result) {
-                showRefreshError.postValue(Event())
+            driverId?.let {
+                val result = driverRepository.fetchDriver(driverId)
+                showLoading.postValue(false)
             }
         }
     }

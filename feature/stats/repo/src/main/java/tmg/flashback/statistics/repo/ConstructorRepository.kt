@@ -76,6 +76,10 @@ class ConstructorRepository(
             .map { list -> list.map { constructorDataMapper.mapConstructorData(it) } }
     }
 
+    suspend fun getConstructorSeasonCount(id: String): Int {
+        return persistence.constructorDao().getConstructorSeasonCount(id)
+    }
+
     private fun saveDrivers(data: tmg.flashback.statistics.network.models.constructors.ConstructorHistory): Boolean {
         val drivers = data.standings.values
             .map { it.drivers.values.map { it.driver } }

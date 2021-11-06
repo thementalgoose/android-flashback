@@ -1,9 +1,5 @@
 package tmg.flashback.statistics.ui.circuit
 
-import android.content.ActivityNotFoundException
-import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -19,6 +15,8 @@ import tmg.flashback.statistics.ui.race.RaceData
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 import tmg.utilities.extensions.viewUrl
+import tmg.utilities.extensions.views.invisible
+import tmg.utilities.extensions.views.visible
 import tmg.utilities.utils.ClipboardUtils.Companion.copyToClipboard
 
 class CircuitInfoFragment: BaseFragment<FragmentCircuitInfoBinding>() {
@@ -50,7 +48,7 @@ class CircuitInfoFragment: BaseFragment<FragmentCircuitInfoBinding>() {
 
         adapter = CircuitInfoAdapter(
                 clickShowOnMap = viewModel.inputs::clickShowOnMap,
-                clickWikipedia = viewModel.inputs::clickWikipedia,
+                clickLink = viewModel.inputs::clickLink,
                 clickRace = {
                     context?.let { context ->
                         val raceIntent = RaceActivity.intent(context, RaceData(
@@ -83,8 +81,13 @@ class CircuitInfoFragment: BaseFragment<FragmentCircuitInfoBinding>() {
             adapter.list = it
         }
 
-        observe(viewModel.outputs.isLoading) {
-            binding.swipeRefresh.isRefreshing = it
+        observe(viewModel.outputs.showLoading) {
+            if (it) {
+                binding.progress.visible()
+            } else {
+                binding.swipeRefresh.isRefreshing = false
+                binding.progress.invisible()
+            }
         }
 
         observe(viewModel.outputs.circuitName) {
@@ -101,7 +104,7 @@ class CircuitInfoFragment: BaseFragment<FragmentCircuitInfoBinding>() {
             }
         }
 
-        observeEvent(viewModel.outputs.goToWikipediaPage) {
+        observeEvent(viewModel.outputs.goToLink) {
             if (it.isNotEmpty()) {
                 viewUrl(it)
             }

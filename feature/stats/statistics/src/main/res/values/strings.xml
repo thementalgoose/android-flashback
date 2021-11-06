@@ -156,6 +156,12 @@
     <string name="shared_unavailable_standings_early">The season has not started yet, please check back after the first race to see the results!</string>
     <string name="shared_unavailable_standings_internal_error">An error occurred. Please check you have an internet connection and try again</string>
 
+    <string name="shared_unavailable_constructor_history_internal_error">An error occurred. Please check you have an internet connection and try again</string>
+
+    <string name="shared_unavailable_driver_history_internal_error">An error occurred. Please check you have an internet connection and try again</string>
+
+    <string name="shared_unavailable_circuit_history_internal_error">An error occurred. Please check you have an internet connection and try again</string>
+
     <string name="shared_unavailable_no_data">No results found! Please check you have an active internet connection and try again</string>
     <string name="shared_unavailable_pull_refresh">Please check you have an active internet connection and pull to refresh</string>
 

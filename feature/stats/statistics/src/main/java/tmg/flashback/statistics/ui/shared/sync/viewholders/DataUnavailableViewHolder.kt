@@ -13,6 +13,12 @@ enum class DataUnavailable {
     STANDINGS_EARLY,
     STANDINGS_INTERNAL_ERROR,
 
+    CONSTRUCTOR_HISTORY_INTERNAL_ERROR,
+
+    DRIVER_HISTORY_INTERNAL_ERROR,
+
+    CIRCUIT_HISTORY_INTERNAL_ERROR,
+
     IN_FUTURE_RACE,
     COMING_SOON_RACE,
     MISSING_RACE,
@@ -34,6 +40,12 @@ class DataUnavailableViewHolder(
 
             DataUnavailable.STANDINGS_EARLY -> getString(R.string.shared_unavailable_standings_early)
             DataUnavailable.STANDINGS_INTERNAL_ERROR -> getString(R.string.shared_unavailable_standings_internal_error)
+
+            DataUnavailable.CONSTRUCTOR_HISTORY_INTERNAL_ERROR -> getString(R.string.shared_unavailable_constructor_history_internal_error)
+
+            DataUnavailable.DRIVER_HISTORY_INTERNAL_ERROR -> getString(R.string.shared_unavailable_driver_history_internal_error)
+
+            DataUnavailable.CIRCUIT_HISTORY_INTERNAL_ERROR -> getString(R.string.shared_unavailable_circuit_history_internal_error)
 
             DataUnavailable.IN_FUTURE_RACE -> getString(R.string.shared_unavailable_future_race)
             DataUnavailable.COMING_SOON_RACE -> getString(R.string.shared_unavailable_coming_soon_race)

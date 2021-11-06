@@ -21,6 +21,9 @@ interface ConstructorDao {
     @Query("SELECT * FROM Constructor WHERE id == :id LIMIT 1")
     fun getConstructorHistory(id: String): Flow<ConstructorHistory?>
 
+    @Query("SELECT COUNT(*) FROM ConstructorSeason WHERE constructor_id == :id")
+    fun getConstructorSeasonCount(id: String): Int
+
     @Transaction
     fun insertConstructor(constructor: Constructor, constructorSeasons: List<ConstructorSeason>, constructorSeasonRaces: List<ConstructorSeasonDriver>) {
         insertConstructorSeasonDrivers(constructorSeasonRaces)

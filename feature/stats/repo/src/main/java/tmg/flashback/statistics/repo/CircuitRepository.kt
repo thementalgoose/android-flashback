@@ -66,6 +66,10 @@ class CircuitRepository(
             .map { circuitMapper.mapCircuit(it) }
     }
 
+    suspend fun getCircuitRounds(id: String): Int {
+        return persistence.circuitDao().getCircuitRounds(id)
+    }
+
     fun getCircuitHistory(id: String): Flow<CircuitHistory?> {
         return persistence.circuitDao().getCircuitHistory(id)
             .map { model ->

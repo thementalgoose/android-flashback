@@ -136,6 +136,7 @@
         <entry key="feature/stats/statistics/src/main/res/layout/activity_circuit_info.xml" value="0.2635416666666667" />
         <entry key="feature/stats/statistics/src/main/res/layout/activity_race.xml" value="0.1" />
         <entry key="feature/stats/statistics/src/main/res/layout/fragment_circuit_info.xml" value="0.1281661600810537" />
+        <entry key="feature/stats/statistics/src/main/res/layout/fragment_constructor.xml" value="0.24645390070921985" />
         <entry key="feature/stats/statistics/src/main/res/layout/fragment_dashboard_season.xml" value="0.20209059233449478" />
         <entry key="feature/stats/statistics/src/main/res/layout/fragment_driver.xml" value="0.1" />
         <entry key="feature/stats/statistics/src/main/res/layout/fragment_driver_season.xml" value="0.4091680814940577" />

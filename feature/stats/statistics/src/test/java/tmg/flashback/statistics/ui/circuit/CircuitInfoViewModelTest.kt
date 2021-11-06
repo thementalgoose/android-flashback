@@ -78,7 +78,7 @@ internal class CircuitInfoViewModelTest: BaseTest() {
 
         initSUT()
 
-        sut.outputs.isLoading.test {
+        sut.outputs.showLoading.test {
             assertValue(true)
         }
     }
@@ -182,7 +182,7 @@ internal class CircuitInfoViewModelTest: BaseTest() {
 
         initSUT()
 
-        sut.outputs.isLoading.test {
+        sut.outputs.showLoading.test {
             assertValue(true)
         }
 
@@ -193,7 +193,7 @@ internal class CircuitInfoViewModelTest: BaseTest() {
         sut.outputs.list.test {
             assertListNotEmpty()
         }
-        sut.outputs.isLoading.test {
+        sut.outputs.showLoading.test {
             assertValue(false)
         }
     }
@@ -218,7 +218,7 @@ internal class CircuitInfoViewModelTest: BaseTest() {
 
         sut.inputs.clickWikipedia()
 
-        sut.outputs.goToWikipediaPage.test {
+        sut.outputs.goToLink.test {
             assertEventFired()
         }
     }

@@ -22,7 +22,7 @@ class ConstructorSummaryAdapter(
         private val openSeason: (Int) -> Unit
 ): SyncAdapter<ConstructorSummaryItem>() {
 
-    override var list: List<ConstructorSummaryItem> = listOf(ConstructorSummaryItem.Loading)
+    override var list: List<ConstructorSummaryItem> = emptyList()
         set(value) {
             val result = DiffUtil.calculateDiff(GenericDiffCallback(field, value))
             field = value
