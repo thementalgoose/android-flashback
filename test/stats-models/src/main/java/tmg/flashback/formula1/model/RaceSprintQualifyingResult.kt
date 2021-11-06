@@ -4,7 +4,7 @@ import tmg.flashback.formula1.enums.RaceStatus
 
 fun RaceSprintQualifyingResult.Companion.model(
     driver: DriverConstructor = DriverConstructor.model(),
-    time: LapTime? = LapTime.model(),
+    time: LapTime? = LapTime.model(0,1,2,5),
     points: Double = 1.0,
     grid: Int = 1,
     qualified: Int? = 1,

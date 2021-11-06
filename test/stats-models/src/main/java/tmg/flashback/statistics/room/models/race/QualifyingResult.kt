@@ -6,9 +6,9 @@ fun QualifyingResult.Companion.model(
     round: Int = 1,
     constructorId: String = "constructorId",
     qualified: Int? = 1,
-    q1: String? = "1.02:001",
-    q2: String? = "1.02:002",
-    q3: String? = "1.02:003",
+    q1: String? = "1:02.001",
+    q2: String? = "1:02.002",
+    q3: String? = "1:02.003",
     qSprint: QualifyingSprintResult? = QualifyingSprintResult.model()
 ): QualifyingResult = QualifyingResult(
     driverId = driverId,

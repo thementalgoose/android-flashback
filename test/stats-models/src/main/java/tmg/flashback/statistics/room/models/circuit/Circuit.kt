@@ -2,7 +2,7 @@ package tmg.flashback.statistics.room.models.circuit
 
 fun Circuit.Companion.model(
     id: String = "circuitId",
-    name: String = "name",
+    name: String = "circuitName",
     wikiUrl: String? = "wikiUrl",
     locationLat: Double? = 51.101,
     locationLng: Double? = -1.101,

@@ -16,7 +16,7 @@ fun OverviewRace.Companion.model(
     season = season,
     round = round,
     name = name,
-    circuit = Circuit.model(),
+    circuit = circuit,
     date = date,
     time = time,
     hasQualifying = hasQualifying,

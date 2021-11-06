@@ -26,7 +26,7 @@ internal class SeasonMapperTest {
 
     @Test
     fun `mapSeason maps fields correctly`() {
-        val inputSeason: Int = 1
+        val inputSeason: Int = 2020
         val inputRaces = listOf(RoomRace.model())
         val expected = Season.model()
 

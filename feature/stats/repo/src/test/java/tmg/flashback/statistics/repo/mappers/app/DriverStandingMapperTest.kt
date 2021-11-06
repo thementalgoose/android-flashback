@@ -1,12 +1,11 @@
 package tmg.flashback.statistics.repo.mappers.app
 
+import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.flashback.formula1.model.SeasonDriverStandingSeason
-import tmg.flashback.formula1.model.SeasonDriverStandings
-import tmg.flashback.formula1.model.model
+import tmg.flashback.formula1.model.*
 import tmg.flashback.statistics.room.models.standings.DriverStandingWithConstructors
 import tmg.flashback.statistics.room.models.standings.model
 
@@ -23,6 +22,9 @@ internal class DriverStandingMapperTest {
             mockDriverDataMapper,
             mockConstructorDataMapper
         )
+
+        every { mockDriverDataMapper.mapDriver(any()) } returns Driver.model()
+        every { mockConstructorDataMapper.mapConstructorData(any()) } returns Constructor.model()
     }
 
     @Test

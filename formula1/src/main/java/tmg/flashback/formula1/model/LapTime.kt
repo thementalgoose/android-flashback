@@ -74,7 +74,8 @@ data class LapTime(
         return time
     }
 
-    companion object
+    companion object {
+        val noTime: LapTime = LapTime()
+    }
 }
 
-val noTime: LapTime = LapTime()
