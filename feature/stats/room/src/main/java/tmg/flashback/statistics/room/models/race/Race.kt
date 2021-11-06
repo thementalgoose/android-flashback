@@ -23,5 +23,6 @@ data class Race(
         entityColumn = "season_round_id"
     )
     val race: List<RaceDriverResult>,
-
-)
+) {
+    companion object
+}

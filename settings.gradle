@@ -25,3 +25,5 @@ include ':core:preferences'
 include ':core:tutorial'
 include ':core:ui'
 include ':core:style'
+
+include ':test:stats-models'

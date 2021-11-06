@@ -17,6 +17,8 @@ fun SeasonDriverStandingSeason.Companion.model(
     driver = driver,
     points = points,
     inProgress = inProgress,
+    inProgressName = inProgressName,
+    inProgressRound = inProgressRound,
     races = races,
     championshipPosition = championshipPosition,
     constructors = constructors

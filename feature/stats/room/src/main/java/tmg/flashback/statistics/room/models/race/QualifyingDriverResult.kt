@@ -18,4 +18,6 @@ class QualifyingDriverResult(
         entityColumn = "id"
     )
     val constructor: Constructor
-)
+) {
+    companion object
+}

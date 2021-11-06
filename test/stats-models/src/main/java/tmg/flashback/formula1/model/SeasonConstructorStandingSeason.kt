@@ -5,6 +5,8 @@ fun SeasonConstructorStandingSeason.Companion.model(
     constructor: Constructor = Constructor.model(),
     points: Double = 1.0,
     inProgress: Boolean = true,
+    inProgressName: String? = "name",
+    inProgressRound: Int? = 1,
     races: Int = 1,
     championshipPosition: Int? = 1,
     drivers: List<SeasonConstructorStandingSeasonDriver> = listOf(
@@ -15,6 +17,8 @@ fun SeasonConstructorStandingSeason.Companion.model(
     constructor = constructor,
     points = points,
     inProgress = inProgress,
+    inProgressName = inProgressName,
+    inProgressRound = inProgressRound,
     races = races,
     championshipPosition = championshipPosition,
     drivers = drivers

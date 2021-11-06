@@ -1,8 +1,5 @@
 package tmg.flashback.statistics.room.models.race
 
-import androidx.room.ColumnInfo
-import androidx.room.Embedded
-
 fun RaceResult.Companion.model(
     driverId: String = "driverId",
     season: Int = 2020,
@@ -13,7 +10,7 @@ fun RaceResult.Companion.model(
     gridPos: Int? = 1,
     finished: Int = 1,
     status: String = "status",
-    time: String? = "time",
+    time: String? = "1:02:03:004",
     fastestLap: FastestLap? = FastestLap.model(),
 ): RaceResult = RaceResult(
     driverId = driverId,

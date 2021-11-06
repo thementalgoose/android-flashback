@@ -2,8 +2,6 @@ apply plugin:  'com.android.library'
 apply from: rootDir.absolutePath + "/gradle/config-android.gradle"
 apply from: rootDir.absolutePath + "/gradle/config-util.gradle"
 apply from: rootDir.absolutePath + "/gradle/config-junit5.gradle"
-apply from: rootDir.absolutePath + "/gradle/config-koin.gradle"
-apply from: rootDir.absolutePath + "/gradle/config-room.gradle"
 
 android {
     compileSdkVersion project.ext.compileSdkVersion
@@ -18,6 +16,8 @@ android {
 
 dependencies {
 
-    // Explicit crash reporting link
-    implementation project(path: ':core:crash-reporting')
+    // Preferences library
+    implementation project(path: ':feature:stats:room')
+    implementation project(path: ':formula1')
+    implementation project(path: ':feature:stats:network')
 }

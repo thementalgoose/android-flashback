@@ -44,8 +44,9 @@ internal class ConstructorStandingMapperTest {
     }
 
     @Test
-    fun `mapConstructorStanding list returns empty list`() {
+    fun `mapConstructorStanding list returns null if list is empty`() {
         val input = emptyList<ConstructorStandingWithDrivers>()
+
         assertNull(sut.mapConstructorStanding(input))
     }
 
