@@ -20,4 +20,6 @@ data class DriverSeasonRaceWithConstructor(
         entityColumn = "id"
     )
     val round: RaceInfoWithCircuit
-)
+) {
+    companion object
+}

@@ -12,4 +12,6 @@ data class ConstructorStandingDriverWithDriver(
         entityColumn = "id"
     )
     val driver: Driver
-)
+) {
+    companion object
+}

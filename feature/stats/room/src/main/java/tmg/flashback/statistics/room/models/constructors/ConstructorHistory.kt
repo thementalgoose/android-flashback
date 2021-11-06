@@ -11,4 +11,6 @@ data class ConstructorHistory(
         entityColumn = "constructor_id"
     )
     val seasons: List<ConstructorSeasonWithDrivers>
-)
+) {
+    companion object
+}
