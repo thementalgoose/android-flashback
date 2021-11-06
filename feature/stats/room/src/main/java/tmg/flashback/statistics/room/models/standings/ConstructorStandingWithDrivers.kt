@@ -18,4 +18,6 @@ data class ConstructorStandingWithDrivers(
         entityColumn = "constructor_season_id"
     )
     val drivers: List<ConstructorStandingDriverWithDriver>
-)
+) {
+    companion object
+}

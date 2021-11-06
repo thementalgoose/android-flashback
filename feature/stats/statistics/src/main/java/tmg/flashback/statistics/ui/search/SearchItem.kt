@@ -70,4 +70,6 @@ sealed class SearchItem(
         layoutId = item.layoutId,
         searchBy = null
     )
+
+    companion object
 }

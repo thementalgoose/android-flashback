@@ -19,7 +19,7 @@ internal class CircuitMapperTest {
     }
 
     @Test
-    fun `CircuitMapper mapCircuit maps fields correctly`() {
+    fun `mapCircuit maps fields correctly`() {
         val input = tmg.flashback.statistics.room.models.circuit.Circuit.model()
         val expected = Circuit.model()
 
@@ -27,21 +27,21 @@ internal class CircuitMapperTest {
     }
 
     @Test
-    fun `CircuitMapper mapCircuit maps location to null if lat is null`() {
+    fun `mapCircuit maps location to null if lat is null`() {
         val input = tmg.flashback.statistics.room.models.circuit.Circuit.model(locationLat = null)
 
         assertNull(sut.mapCircuit(input)!!.location)
     }
 
     @Test
-    fun `CircuitMapper mapCircuit maps location to null if lng is null`() {
+    fun `mapCircuit maps location to null if lng is null`() {
         val input = tmg.flashback.statistics.room.models.circuit.Circuit.model(locationLng = null)
 
         assertNull(sut.mapCircuit(input)!!.location)
     }
 
     @Test
-    fun `CircuitMapper mapCircuitHistory maps fields correctly`() {
+    fun `mapCircuitHistory maps fields correctly`() {
         val input = tmg.flashback.statistics.room.models.circuit.CircuitHistory.model()
         val expected = CircuitHistory.model()
 
@@ -49,7 +49,7 @@ internal class CircuitMapperTest {
     }
 
     @Test
-    fun `CircuitMapper mapCircuitHistory returns null when input is null`() {
+    fun `mapCircuitHistory returns null when input is null`() {
         assertNull(sut.mapCircuitHistory(null))
     }
 }

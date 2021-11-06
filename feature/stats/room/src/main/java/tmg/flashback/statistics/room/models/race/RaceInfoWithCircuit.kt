@@ -12,4 +12,6 @@ data class RaceInfoWithCircuit(
         entityColumn = "id"
     )
     val circuit: Circuit
-)
+) {
+    companion object
+}

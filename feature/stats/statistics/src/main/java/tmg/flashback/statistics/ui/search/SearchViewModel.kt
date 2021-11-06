@@ -124,10 +124,7 @@ class SearchViewModel(
     //region Inputs
 
     override fun inputCategory(searchCategory: SearchCategory) {
-        if (category.value != searchCategory) {
-            isLoading.value = true
-            category.value = searchCategory
-        }
+        category.value = searchCategory
     }
 
     override fun inputSearch(search: String) {

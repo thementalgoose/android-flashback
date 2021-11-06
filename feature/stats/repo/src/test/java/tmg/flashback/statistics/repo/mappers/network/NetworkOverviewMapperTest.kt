@@ -18,7 +18,7 @@ internal class NetworkOverviewMapperTest {
     }
 
     @Test
-    fun `NetworkOverviewMapper mapOverview maps fields correctly`() {
+    fun `mapOverview maps fields correctly`() {
         val input = OverviewRace.model()
         val expected = Overview.model()
 
@@ -26,7 +26,7 @@ internal class NetworkOverviewMapperTest {
     }
 
     @Test
-    fun `NetworkOverviewMapper mapOverview null when input is null`() {
+    fun `mapOverview null when input is null`() {
         assertNull(sut.mapOverview(null))
     }
 }

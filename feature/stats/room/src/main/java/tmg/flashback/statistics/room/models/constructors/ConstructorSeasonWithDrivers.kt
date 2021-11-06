@@ -12,4 +12,6 @@ data class ConstructorSeasonWithDrivers(
         entityColumn = "constructor_season_id"
     )
     val drivers: List<ConstructorSeasonDriverWithDriver>
-)
+) {
+    companion object
+}

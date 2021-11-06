@@ -20,7 +20,7 @@ internal class OverviewMapperTest {
     }
 
     @Test
-    fun `OverviewMapper mapOverview maps fields correctly`() {
+    fun `mapOverview maps fields correctly`() {
         val input = OverviewWithCircuit.model()
         val expected = OverviewRace.model()
 
@@ -28,7 +28,7 @@ internal class OverviewMapperTest {
     }
 
     @Test
-    fun `OverviewMapper mapOverview throws error if date is invalid`() {
+    fun `mapOverview throws error if date is invalid`() {
         val input = OverviewWithCircuit.model(overview = Overview.model(date = "invalid"))
 
         assertThrows(DateTimeParseException::class.java) {
@@ -37,7 +37,7 @@ internal class OverviewMapperTest {
     }
 
     @Test
-    fun `OverviewMapper mapOverview returns null time if invalid`() {
+    fun `mapOverview returns null time if invalid`() {
         val input = OverviewWithCircuit.model(overview = Overview.model(time = "invalid"))
 
         assertNull(sut.mapOverview(input).time)
