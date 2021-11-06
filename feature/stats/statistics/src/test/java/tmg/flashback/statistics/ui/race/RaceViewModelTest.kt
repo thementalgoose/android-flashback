@@ -81,7 +81,7 @@ internal class RaceViewModelTest: BaseTest() {
         sut.outputs.raceItems.test {
             assertValue(Triple(
                 RACE,
-                listOf(RaceModel.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.IN_FUTURE_RACE))),
+                listOf(RaceModel.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.RACE_IN_FUTURE))),
                 expectedSeasonRound
             ))
         }
@@ -116,7 +116,7 @@ internal class RaceViewModelTest: BaseTest() {
             assertValue(Triple(RACE, listOf(
                 RaceModel.ErrorItem(
                     SyncDataItem.Unavailable(
-                        DataUnavailable.MISSING_RACE
+                        DataUnavailable.RACE_DATA_EMPTY
                     )
                 )
             ), expectedSeasonRound))
@@ -199,7 +199,7 @@ internal class RaceViewModelTest: BaseTest() {
         }
         val expected = listOf<RaceModel>(
             MOCK_RACE_1.getRaceOvevriew(date = LocalDate.now().plusDays(5L)),
-            RaceModel.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.IN_FUTURE_RACE)),
+            RaceModel.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.RACE_IN_FUTURE)),
         )
 
         initSUT()

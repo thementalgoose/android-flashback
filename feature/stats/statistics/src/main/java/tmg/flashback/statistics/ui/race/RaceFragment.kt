@@ -23,7 +23,9 @@ import tmg.flashback.statistics.ui.overview.driver.DriverActivity
 import tmg.flashback.statistics.ui.shared.pill.PillAdapter
 import tmg.flashback.statistics.ui.shared.pill.PillItem
 import tmg.utilities.extensions.*
+import tmg.utilities.extensions.views.invisible
 import tmg.utilities.extensions.views.show
+import tmg.utilities.extensions.views.visible
 
 class RaceFragment: BaseFragment<FragmentRaceBinding>(), RaceAdapterCallback {
 
@@ -51,12 +53,11 @@ class RaceFragment: BaseFragment<FragmentRaceBinding>(), RaceAdapterCallback {
             "round" to raceData.round.toString()
         ))
 
-        binding.swipeRefresh.isEnabled = false
-
         // Race content
         raceAdapter = RaceAdapter(this)
         binding.dataList.adapter = raceAdapter
         binding.dataList.layoutManager = LinearLayoutManager(context)
+        binding.progress.invisible()
 
         // Initial data
         raceAdapter.list = listOf(
@@ -73,8 +74,13 @@ class RaceFragment: BaseFragment<FragmentRaceBinding>(), RaceAdapterCallback {
             )
         )
 
+        binding.swipeRefresh.setOnRefreshListener {
+            viewModel.inputs.refresh()
+            binding.progress.visible()
+        }
+
         // Menu
-        binding.menu.setOnNavigationItemSelectedListener {
+        binding.menu.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.nav_qualifying -> {
                     viewModel.inputs.orderBy(RaceAdapterType.QUALIFYING_POS)
@@ -105,6 +111,15 @@ class RaceFragment: BaseFragment<FragmentRaceBinding>(), RaceAdapterCallback {
             raceAdapter.update(adapterType, list)
         }
 
+        observe(viewModel.outputs.showLoading) {
+            if (it) {
+                binding.progress.visible()
+            } else {
+                binding.swipeRefresh.isRefreshing = false
+                binding.progress.invisible()
+            }
+        }
+
         observeEvent(viewModel.outputs.goToDriverOverview) { (driverId, driverName) ->
             context?.let {
                 startActivity(DriverActivity.intent(it, driverId, driverName))
@@ -125,15 +140,13 @@ class RaceFragment: BaseFragment<FragmentRaceBinding>(), RaceAdapterCallback {
 
         setupInitialContent()
 
-        viewModel.inputs.initialise(raceData.season, raceData.round, raceData.date)
+        viewModel.inputs.initialise(raceData.season, raceData.round)
     }
 
     @SuppressLint("SetTextI18n")
     private fun setupInitialContent() {
         binding.titleCollapsed.text = "${raceData.season} ${raceData.raceName}"
         binding.titleExpanded.text = "${raceData.raceName}\n${raceData.season}"
-
-
     }
 
     companion object {

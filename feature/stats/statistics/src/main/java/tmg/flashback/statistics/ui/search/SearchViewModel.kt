@@ -5,7 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import tmg.flashback.formula1.model.*
 import tmg.flashback.statistics.repo.CircuitRepository
 import tmg.flashback.statistics.repo.ConstructorRepository
@@ -24,6 +26,8 @@ interface SearchViewModelInputs {
 
     fun inputSearch(search: String)
     fun inputCategory(searchCategory: SearchCategory)
+
+    fun refresh()
 
     fun clickItem(searchItem: SearchItem)
 }
@@ -132,6 +136,26 @@ class SearchViewModel(
 
     override fun openCategory() {
         openCategoryPicker.value = DataEvent(category.value)
+    }
+
+    override fun refresh() {
+        viewModelScope.launch(Dispatchers.IO) {
+            when (category.value) {
+                SearchCategory.DRIVER -> {
+                    val result = driverRepository.fetchDrivers()
+                }
+                SearchCategory.CONSTRUCTOR -> {
+                    val result = constructorRepository.fetchConstructors()
+                }
+                SearchCategory.CIRCUIT -> {
+                    val result = circuitRepository.fetchCircuits()
+                }
+                SearchCategory.RACE -> {
+                    val result = overviewRepository.fetchOverview()
+                }
+            }
+            isLoading.postValue(false)
+        }
     }
 
     override fun clickItem(searchItem: SearchItem) {

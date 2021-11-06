@@ -2,8 +2,7 @@ package tmg.flashback.statistics.network.models.constructors
 
 import kotlinx.serialization.Serializable
 
-@Serializable
-class AllConstructors: HashMap<String, Constructor>()
+typealias AllConstructors = Map<String, Constructor>
 
 @Serializable
 data class Constructor(

@@ -76,7 +76,7 @@ class SeasonViewModel(
     private val seasonWithRequest: Flow<Int?> = season
         .flatMapLatest { season ->
             return@flatMapLatest flow {
-                if (raceRepository.getRaceCount(season) == 0) {
+                if (raceRepository.shouldSyncRace(season)) {
                     showLoading.postValue(true)
                     emit(null)
                     val result = overviewRepository.fetchOverview(season)

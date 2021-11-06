@@ -19,9 +19,10 @@ enum class DataUnavailable {
 
     CIRCUIT_HISTORY_INTERNAL_ERROR,
 
-    IN_FUTURE_RACE,
+    RACE_DATA_EMPTY,
+    RACE_IN_FUTURE,
+
     COMING_SOON_RACE,
-    MISSING_RACE,
     DRIVER_NOT_EXIST,
     CONSTRUCTOR_NOT_EXIST,
     CIRCUIT_NOT_EXIST,
@@ -47,9 +48,10 @@ class DataUnavailableViewHolder(
 
             DataUnavailable.CIRCUIT_HISTORY_INTERNAL_ERROR -> getString(R.string.shared_unavailable_circuit_history_internal_error)
 
-            DataUnavailable.IN_FUTURE_RACE -> getString(R.string.shared_unavailable_future_race)
+            DataUnavailable.RACE_DATA_EMPTY -> getString(R.string.shared_unavailable_missing_race)
+
+            DataUnavailable.RACE_IN_FUTURE -> getString(R.string.shared_unavailable_future_race)
             DataUnavailable.COMING_SOON_RACE -> getString(R.string.shared_unavailable_coming_soon_race)
-            DataUnavailable.MISSING_RACE -> getString(R.string.shared_unavailable_missing_race)
             DataUnavailable.CIRCUIT_NOT_EXIST -> getString(R.string.shared_unavailable_circuit_not_found)
             DataUnavailable.DRIVER_NOT_EXIST -> getString(R.string.shared_unavailable_driver_not_found)
             DataUnavailable.CONSTRUCTOR_NOT_EXIST -> getString(R.string.shared_unavailable_constructor_not_found)
