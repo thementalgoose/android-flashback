@@ -67,7 +67,7 @@ internal class RaceMapperTest {
 
     @Test
     fun `mapRaceInfoWithCircuit throws error if date is invalid`() {
-        val input = RoomRaceInfoWithCircuit.model()
+        val input = RoomRaceInfoWithCircuit.model(raceInfo = RoomRaceInfo.model(date = "invalid"))
 
         assertThrows(DateTimeParseException::class.java) {
             sut.mapRaceInfoWithCircuit(input)

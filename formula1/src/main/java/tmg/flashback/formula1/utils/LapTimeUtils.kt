@@ -2,7 +2,6 @@ package tmg.flashback.formula1.utils
 
 import org.threeten.bp.LocalTime
 import tmg.flashback.formula1.model.LapTime
-import tmg.flashback.formula1.model.noTime
 
 fun LapTime.addDelta(hours: Int = 0, mins: Int = 0, seconds: Int = 0, millis: Int = 0): LapTime {
     val lapMillis: Int = LapTime(
@@ -90,6 +89,6 @@ fun String.toLapTime(): LapTime {
         )
     }
     else {
-        noTime
+        LapTime.noTime
     }
 }

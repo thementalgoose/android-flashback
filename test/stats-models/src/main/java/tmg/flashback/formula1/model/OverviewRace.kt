@@ -10,7 +10,7 @@ fun OverviewRace.Companion.model(
     round: Int = 1,
     raceName: String = "name",
     circuitId: String = "circuitId",
-    circuitName: String = "circuit",
+    circuitName: String = "circuitName",
     country: String = "country",
     countryISO: String = "countryISO",
     hasQualifying: Boolean = true,

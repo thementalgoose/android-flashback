@@ -2,7 +2,7 @@ package tmg.flashback.formula1.model
 
 fun Circuit.Companion.model(
     id: String = "circuitId",
-    name: String = "name",
+    name: String = "circuitName",
     wikiUrl: String? = "wikiUrl",
     city: String = "city",
     country: String = "country",

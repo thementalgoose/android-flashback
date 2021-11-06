@@ -1,9 +1,9 @@
 package tmg.flashback.statistics.network.models.circuits
 
 fun Circuit.Companion.model(
-    id: String = "",
-    name: String = "",
-    wikiUrl: String? = "",
+    id: String = "circuitId",
+    name: String = "circuitName",
+    wikiUrl: String? = "wikiUrl",
     location: Location? = Location.model(),
     city: String = "city",
     country: String = "country",
