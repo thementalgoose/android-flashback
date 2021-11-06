@@ -6,10 +6,13 @@ import tmg.flashback.statistics.databinding.ViewSharedDataUnavailableBinding
 import tmg.utilities.extensions.views.getString
 
 enum class DataUnavailable {
-    IN_FUTURE_SEASON,
-    EARLY_IN_SEASON,
-    NOT_AVAILABLE_PULL_REFRESH_CONSTRUCTOR,
-    NOT_AVAILABLE_PULL_REFRESH_DRIVER,
+    SEASON_IN_FUTURE,
+    SEASON_EARLY,
+    SEASON_INTERNAL_ERROR,
+
+    STANDINGS_EARLY,
+    STANDINGS_INTERNAL_ERROR,
+
     IN_FUTURE_RACE,
     COMING_SOON_RACE,
     MISSING_RACE,
@@ -25,10 +28,13 @@ class DataUnavailableViewHolder(
 
     fun bind(type: DataUnavailable) {
         binding.title.text = when (type) {
-            DataUnavailable.IN_FUTURE_SEASON -> getString(R.string.shared_unavailable_future_season)
-            DataUnavailable.NOT_AVAILABLE_PULL_REFRESH_DRIVER -> getString(R.string.shared_unavailable_pull_refresh_driver)
-            DataUnavailable.NOT_AVAILABLE_PULL_REFRESH_CONSTRUCTOR -> getString(R.string.shared_unavailable_pull_refresh_constructor)
-            DataUnavailable.EARLY_IN_SEASON -> getString(R.string.shared_unavailable_early_season)
+            DataUnavailable.SEASON_IN_FUTURE -> getString(R.string.shared_unavailable_future_season)
+            DataUnavailable.SEASON_EARLY -> getString(R.string.shared_unavailable_early_season)
+            DataUnavailable.SEASON_INTERNAL_ERROR -> getString(R.string.shared_unavailable_season_internal_error)
+
+            DataUnavailable.STANDINGS_EARLY -> getString(R.string.shared_unavailable_standings_early)
+            DataUnavailable.STANDINGS_INTERNAL_ERROR -> getString(R.string.shared_unavailable_standings_internal_error)
+
             DataUnavailable.IN_FUTURE_RACE -> getString(R.string.shared_unavailable_future_race)
             DataUnavailable.COMING_SOON_RACE -> getString(R.string.shared_unavailable_coming_soon_race)
             DataUnavailable.MISSING_RACE -> getString(R.string.shared_unavailable_missing_race)

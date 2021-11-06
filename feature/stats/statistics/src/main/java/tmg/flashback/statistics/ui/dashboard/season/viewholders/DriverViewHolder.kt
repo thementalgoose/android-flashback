@@ -1,10 +1,8 @@
 package tmg.flashback.statistics.ui.dashboard.season.viewholders
 
 import android.view.View
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import kotlin.math.roundToInt
 import tmg.flashback.statistics.R
 import tmg.core.ui.model.AnimationSpeed
 import tmg.flashback.statistics.ui.dashboard.season.SeasonItem
@@ -14,10 +12,11 @@ import tmg.flashback.statistics.databinding.ViewDashboardSeasonDriverBinding
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.utilities.extensions.views.context
 import tmg.utilities.extensions.views.show
+import kotlin.math.roundToInt
 
 class DriverViewHolder(
-        val driverClicked: (driver: SeasonItem.Driver) -> Unit,
-        private val binding: ViewDashboardSeasonDriverBinding
+    val driverClicked: (driver: SeasonItem.Driver) -> Unit,
+    private val binding: ViewDashboardSeasonDriverBinding
 ): RecyclerView.ViewHolder(binding.root), View.OnClickListener {
 
     init {

@@ -94,7 +94,9 @@ class RaceRepository(
             }
     }
 
-
+    suspend fun getRaceCount(season: Int): Int {
+        return persistence.seasonDao().getRaceCount(season)
+    }
 
     private fun saveConstructorStandings(season: Int, constructors: Map<String, ConstructorStandings>?) {
         if (constructors == null) return

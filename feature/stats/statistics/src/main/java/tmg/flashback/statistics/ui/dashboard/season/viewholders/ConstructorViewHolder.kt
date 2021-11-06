@@ -3,7 +3,6 @@ package tmg.flashback.statistics.ui.dashboard.season.viewholders
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlin.math.roundToInt
 import tmg.flashback.statistics.R
 import tmg.core.ui.model.AnimationSpeed
 import tmg.flashback.statistics.ui.dashboard.season.SeasonItem
@@ -14,10 +13,11 @@ import tmg.flashback.statistics.databinding.ViewDashboardSeasonConstructorBindin
 import tmg.utilities.extensions.views.context
 import tmg.utilities.extensions.views.getString
 import tmg.utilities.extensions.views.show
+import kotlin.math.roundToInt
 
 class ConstructorViewHolder(
-        private val constructorClicked: (constructor: SeasonItem.Constructor) -> Unit,
-        private val binding: ViewDashboardSeasonConstructorBinding
+    private val constructorClicked: (constructor: SeasonItem.Constructor) -> Unit,
+    private val binding: ViewDashboardSeasonConstructorBinding
 ): RecyclerView.ViewHolder(binding.root), View.OnClickListener {
 
     init {

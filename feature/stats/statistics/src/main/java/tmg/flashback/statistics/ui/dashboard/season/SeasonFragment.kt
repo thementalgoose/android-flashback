@@ -3,8 +3,6 @@ package tmg.flashback.statistics.ui.dashboard.season
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.IMPORTANT_FOR_ACCESSIBILITY_NO
-import android.view.View.IMPORTANT_FOR_ACCESSIBILITY_YES
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import org.koin.android.ext.android.inject
@@ -21,7 +19,8 @@ import tmg.flashback.statistics.ui.race.RaceActivity
 import tmg.flashback.statistics.ui.race.RaceData
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
-import tmg.utilities.extensions.views.show
+import tmg.utilities.extensions.views.invisible
+import tmg.utilities.extensions.views.visible
 
 class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
 
@@ -55,18 +54,20 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
             constructorClicked = viewModel.inputs::clickConstructor,
             calendarWeekRaceClicked = { week ->
                 week.race?.let {
-                    viewModel.inputs.clickTrack(SeasonItem.Track(
-                        season = it.season,
-                        raceName = it.raceName,
-                        circuitName = it.circuitName,
-                        circuitId = it.circuitId,
-                        raceCountry = it.country,
-                        raceCountryISO = it.countryISO,
-                        date = it.date,
-                        round = it.round,
-                        hasQualifying = it.hasQualifying,
-                        hasResults = it.hasResults,
-                    ))
+                    viewModel.inputs.clickTrack(
+                            SeasonItem.Track(
+                            season = it.season,
+                            raceName = it.raceName,
+                            circuitName = it.circuitName,
+                            circuitId = it.circuitId,
+                            raceCountry = it.country,
+                            raceCountryISO = it.countryISO,
+                            date = it.date,
+                            round = it.round,
+                            hasQualifying = it.hasQualifying,
+                            hasResults = it.hasResults,
+                        )
+                    )
                 }
             }
         )
@@ -88,29 +89,18 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
             viewModel.inputs.clickMenu()
         }
 
-        binding.upNextContainer.setOnClickListener {
-            viewModel.inputs.clickNow()
-        }
-
         binding.swipeRefresh.setOnRefreshListener {
             viewModel.inputs.refresh()
+            binding.progress.visible()
         }
 
         observeEvent(viewModel.outputs.openMenu) {
             seasonFragmentCallback?.openMenu()
         }
 
-        observeEvent(viewModel.outputs.openNow) {
-            seasonFragmentCallback?.openNow()
-        }
-
-        observe(viewModel.outputs.showUpNext) {
-            binding.upNextContainer.show(it)
-        }
-
         observe(viewModel.outputs.label) {
-            binding.titleCollapsed.text = getString(R.string.home_season_arrow, it.msg ?: currentSeasonYear.toString())
-            binding.titleExpanded.text = getString(R.string.home_season_arrow, it.msg ?: currentSeasonYear.toString())
+            binding.titleCollapsed.text = getString(R.string.home_season_arrow, it)
+            binding.titleExpanded.text = getString(R.string.home_season_arrow, it)
         }
 
         observe(viewModel.outputs.list) { list ->
@@ -128,15 +118,10 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
         }
 
         observe(viewModel.outputs.showLoading) {
-            if (it) {
-                showLoading()
-            } else {
-                hideLoading()
+            if (!it) {
+                binding.swipeRefresh.isRefreshing = false
+                binding.progress.invisible()
             }
-        }
-
-        observeEvent(viewModel.outputs.showRefreshError) {
-//            Toast.makeText(context, getString(R.string.))
         }
 
         observeEvent(viewModel.outputs.openRace) { track ->
@@ -176,7 +161,7 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
             }
         }
 
-        showLoading()
+        binding.progress.invisible()
     }
 
     //region Accessible
@@ -231,43 +216,7 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
         viewModel.inputs.clickItem(SeasonNavItem.CONSTRUCTORS)
     }
 
-    /**
-     * Publically accessible method for telling the season to show the up next prompt
-     */
-    fun showUpNext(value: Boolean) {
-        viewModel.inputs.showUpNext(value)
-    }
-
-    /**
-     * Publicaly accessible method for refreshing the season
-     */
-    fun refresh() {
-        viewModel.inputs.appConfigSynced()
-    }
-
     //endregion
-
-    private fun showLoading() {
-        // Sub-optimal workaround for visibility issue in motion layout
-        binding.progress.importantForAccessibility = IMPORTANT_FOR_ACCESSIBILITY_YES
-        binding.progress.alpha = 1.0f
-
-        binding.dataList.locked = true
-        binding.dataList.alpha = dataListAlpha
-
-//        binding.swipeRefresh.isRefreshing = true
-    }
-
-    private fun hideLoading() {
-        // Sub-optimal workaround for visibility issue in motion layout
-        binding.progress.importantForAccessibility = IMPORTANT_FOR_ACCESSIBILITY_NO
-        binding.progress.alpha = 0.0f
-
-        binding.dataList.locked = false
-        binding.dataList.alpha = 1.0f
-
-        binding.swipeRefresh.isRefreshing = false
-    }
 
     companion object {
         private const val dataListAlpha = 0.5f

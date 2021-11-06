@@ -1,4 +1,4 @@
-package tmg.flashback.statistics.ui.dashboard.season
+package tmg.flashback.statistics.ui.dashboard.season_old
 
 import io.mockk.every
 import io.mockk.mockk
@@ -23,6 +23,8 @@ import tmg.flashback.statistics.*
 import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
 import tmg.flashback.statistics.controllers.SeasonController
 import tmg.flashback.statistics.repository.models.Banner
+import tmg.flashback.statistics.ui.dashboard.season.SeasonItem
+import tmg.flashback.statistics.ui.dashboard.season.SeasonNavItem
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertDataEventValue
@@ -269,7 +271,7 @@ internal class SeasonViewModelTest: BaseTest() {
         every { mockHistoryRepository.historyFor(any()) } returns flow { emit(historyItemWithEmptyRound) }
 
         val expected = listOf<SeasonItem>(
-            SeasonItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.EARLY_IN_SEASON))
+            SeasonItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.SEASON_EARLY))
         )
 
         initSUT()
@@ -372,7 +374,7 @@ internal class SeasonViewModelTest: BaseTest() {
         every { mockHistoryRepository.historyFor(any()) } returns flow { emit(historyItemWithEmptyRound) }
 
         val expected = listOf<SeasonItem>(
-            SeasonItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.EARLY_IN_SEASON))
+            SeasonItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.SEASON_EARLY))
         )
 
         initSUT()
@@ -471,7 +473,7 @@ internal class SeasonViewModelTest: BaseTest() {
         every { mockSeasonOverviewRepository.getSeasonOverview(any()) } returns flow { emit(mockSeason.copy(races = emptyList())) }
 
         val expected = listOf<SeasonItem>(
-                SeasonItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.IN_FUTURE_SEASON))
+                SeasonItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.SEASON_IN_FUTURE))
         )
 
         initSUT()
@@ -551,7 +553,7 @@ internal class SeasonViewModelTest: BaseTest() {
         every { mockSeasonOverviewRepository.getSeasonOverview(any()) } returns flow { emit(mockSeason.copy(races = emptyList())) }
 
         val expected = listOf<SeasonItem>(
-                SeasonItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.IN_FUTURE_SEASON))
+                SeasonItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.SEASON_IN_FUTURE))
         )
 
         initSUT()
