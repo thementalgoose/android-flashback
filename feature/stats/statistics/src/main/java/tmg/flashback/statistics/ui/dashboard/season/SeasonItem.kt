@@ -62,6 +62,8 @@ sealed class SeasonItem(
     data class ErrorItem(
             val item: SyncDataItem
     ) : SeasonItem(item.layoutId)
+
+    companion object
 }
 
 fun MutableList<SeasonItem>.addError(item: SyncDataItem) {

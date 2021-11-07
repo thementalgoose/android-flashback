@@ -1,6 +1,7 @@
 package tmg.flashback.statistics.ui.dashboard.season
 
 import androidx.lifecycle.*
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -66,6 +67,7 @@ class SeasonViewModel(
     private val seasonRepository: SeasonRepository,
     private val analyticsManager: AnalyticsManager,
     private val themeController: ThemeController,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), SeasonViewModelInputs, SeasonViewModelOutputs {
 
     var inputs: SeasonViewModelInputs = this
@@ -90,7 +92,7 @@ class SeasonViewModel(
                 }
             }
         }
-        .flowOn(Dispatchers.IO)
+        .flowOn(ioDispatcher)
 
     private val isConnected: Boolean
         get() = networkConnectivityManager.isConnected
@@ -107,6 +109,8 @@ class SeasonViewModel(
     override val list: LiveData<List<SeasonItem>> = combine(seasonWithRequest, menuItem) { season, menuItem -> Pair(season, menuItem) }
         .flatMapLatest { (season, menuItem) ->
 
+            println("GETTING HERE! 1")
+
             analyticsManager.logEvent(menuItem.analyticsLabel, mapOf(
                 "season" to season.toString()
             ))
@@ -116,6 +120,8 @@ class SeasonViewModel(
                     emit(listOf<SeasonItem>(SeasonItem.ErrorItem(SyncDataItem.Skeleton)))
                 }
             }
+
+            println("GETTING HERE! $menuItem")
 
             return@flatMapLatest when (menuItem) {
                 SeasonNavItem.SCHEDULE -> getScheduleView(season, false)
@@ -164,7 +170,7 @@ class SeasonViewModel(
         this.refresh(this.season.value)
     }
     private fun refresh(season: Int) {
-        viewModelScope.launch(context = Dispatchers.IO) {
+        viewModelScope.launch(context = ioDispatcher) {
             val result = overviewRepository.fetchOverview(season)
             val anotherResult = seasonRepository.fetchRaces(season)
             showLoading.postValue(false)

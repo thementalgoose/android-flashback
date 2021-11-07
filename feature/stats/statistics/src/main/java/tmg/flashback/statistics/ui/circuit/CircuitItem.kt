@@ -30,6 +30,8 @@ sealed class CircuitItem(
     data class ErrorItem(
         val item: SyncDataItem
     ): CircuitItem(item.layoutId)
+
+    companion object
 }
 
 fun MutableList<CircuitItem>.addError(syncDataItem: SyncDataItem) {
