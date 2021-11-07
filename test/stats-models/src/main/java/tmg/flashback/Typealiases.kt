@@ -16,6 +16,8 @@ typealias RoomRaceInfo = tmg.flashback.statistics.room.models.race.RaceInfo
 
 typealias RoomRaceInfoWithCircuit = tmg.flashback.statistics.room.models.race.RaceInfoWithCircuit
 
+typealias RoomSchedule = tmg.flashback.statistics.room.models.overview.Schedule
+
 //endregion
 
 //region Network
@@ -35,5 +37,7 @@ typealias NetworkRaceData = tmg.flashback.statistics.network.models.races.RaceDa
 typealias NetworkRaceResult = tmg.flashback.statistics.network.models.races.RaceResult
 
 typealias NetworkQualifyingResult = tmg.flashback.statistics.network.models.races.QualifyingResult
+
+typealias NetworkSchedule = tmg.flashback.statistics.network.models.overview.Schedule
 
 //endregion

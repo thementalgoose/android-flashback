@@ -14,7 +14,8 @@ data class OverviewRace(
     val date: String,
     val time: String? = null,
     val hasQualifying: Boolean,
-    val hasRace: Boolean
+    val hasRace: Boolean,
+    val schedule: List<Schedule>? = null,
 ) {
     companion object
 }

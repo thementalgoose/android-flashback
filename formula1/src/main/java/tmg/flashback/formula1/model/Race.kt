@@ -6,7 +6,8 @@ data class Race(
     val q2: Map<String, RaceQualifyingResult>,
     val q3: Map<String, RaceQualifyingResult>,
     val qSprint: Map<String, RaceSprintQualifyingResult>,
-    val race: Map<String, RaceRaceResult>
+    val race: Map<String, RaceRaceResult>,
+    val schedule: List<Schedule>
 ) {
 
     val drivers: List<DriverConstructor>

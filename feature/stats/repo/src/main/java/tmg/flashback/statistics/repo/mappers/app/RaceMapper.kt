@@ -14,7 +14,8 @@ import tmg.utilities.utils.LocalTimeUtils.Companion.fromTime
 class RaceMapper(
     private val circuitMapper: CircuitMapper,
     private val driverDataMapper: DriverDataMapper,
-    private val constructorDataMapper: ConstructorDataMapper
+    private val constructorDataMapper: ConstructorDataMapper,
+    private val scheduleMapper: ScheduleMapper
 ) {
 
     private enum class Qualifying { Q1, Q2, Q3 }
@@ -65,6 +66,7 @@ class RaceMapper(
             race = mapRace(
                 input = data.race
             ),
+            schedule = data.schedule.mapNotNull { scheduleMapper.mapSchedule(it) }
         )
     }
 

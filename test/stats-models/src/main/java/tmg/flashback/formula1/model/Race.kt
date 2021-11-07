@@ -17,11 +17,15 @@ fun Race.Companion.model(
     race: Map<String, RaceRaceResult> = mapOf(
         "driverId" to RaceRaceResult.model()
     ),
+    schedule: List<Schedule> = listOf(
+        Schedule.model()
+    )
 ): Race = Race(
     raceInfo = raceInfo,
     q1 = q1,
     q2 = q2,
     q3 = q3,
     qSprint = qSprint,
-    race = race
+    race = race,
+    schedule = schedule
 )

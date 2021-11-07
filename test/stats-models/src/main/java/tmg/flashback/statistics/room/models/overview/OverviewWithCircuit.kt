@@ -5,8 +5,12 @@ import tmg.flashback.statistics.room.models.circuit.model
 
 fun OverviewWithCircuit.Companion.model(
     overview: Overview = Overview.model(),
-    circuit: Circuit = Circuit.model()
+    circuit: Circuit = Circuit.model(),
+    schedule: List<Schedule> = listOf(
+        Schedule.model()
+    )
 ): OverviewWithCircuit = OverviewWithCircuit(
     overview = overview,
-    circuit = circuit
+    circuit = circuit,
+    schedule = schedule
 )

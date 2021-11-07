@@ -26,6 +26,7 @@ class RaceRepository(
     private val networkRaceMapper: NetworkRaceMapper,
     private val networkDriverStandingMapper: NetworkDriverStandingMapper,
     private val networkConstructorStandingMapper: NetworkConstructorStandingMapper,
+    private val networkScheduleMapper: NetworkScheduleMapper,
     private val raceMapper: RaceMapper,
     private val preferenceManager: PreferenceManager
 ): BaseRepository(crashController) {
@@ -55,8 +56,12 @@ class RaceRepository(
             .map { race -> race.race.values.map { Pair(race.data, it) } }
             .flatten()
             .map { (raceData, race) -> networkRaceMapper.mapRaceResults(raceData.season, raceData.round, race) }
+        val schedules = data.races.valueList()
+            .map { race -> networkScheduleMapper.mapSchedules(race) }
+            .flatten()
 
         persistence.seasonDao().insertRaces(raceData, qualifyingResults, raceResults)
+        persistence.scheduleDao().replaceAllForSeason(season, schedules)
 
         addSyncedSeason(season)
 
@@ -84,7 +89,10 @@ class RaceRepository(
         val raceResults = data.race
             .valueList()
             .map { networkRaceMapper.mapRaceResults(data.data.season, data.data.round, it) }
+        val schedules = data.schedule
+            ?.map { schedule -> networkScheduleMapper.mapSchedule(data.data.season, data.data.round, schedule) } ?: emptyList()
 
+        persistence.scheduleDao().replaceAllForRace(data.data.season, data.data.round, schedules)
         persistence.seasonDao().insertRace(raceData, qualifyingResults, raceResults)
 
         return@attempt true
