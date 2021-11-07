@@ -14,7 +14,7 @@ import tmg.flashback.formula1.constants.Formula1.maxPointsBySeason
 import tmg.flashback.statistics.ui.overview.driver.summary.PipeType
 import tmg.flashback.formula1.model.DriverHistorySeason
 import tmg.core.ui.controllers.ThemeController
-import tmg.flashback.firebase.extensions.pointsDisplay
+import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.repo.DriverRepository
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem

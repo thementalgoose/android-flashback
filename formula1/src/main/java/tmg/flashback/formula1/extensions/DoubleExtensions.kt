@@ -1,4 +1,4 @@
-package tmg.flashback.firebase.extensions
+package tmg.flashback.formula1.extensions
 
 import java.math.RoundingMode
 import java.text.DecimalFormat

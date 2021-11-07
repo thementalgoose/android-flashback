@@ -12,15 +12,13 @@ import tmg.flashback.statistics.ui.overview.constructor.summary.ConstructorSumma
 import tmg.flashback.statistics.ui.overview.constructor.summary.addError
 import tmg.flashback.statistics.ui.overview.driver.summary.PipeType
 import tmg.flashback.formula1.model.ConstructorHistory
-import tmg.flashback.firebase.extensions.pointsDisplay
+import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.repo.ConstructorRepository
-import tmg.flashback.statistics.ui.dashboard.season.SeasonItem
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
 import tmg.utilities.extensions.ordinalAbbreviation
 import tmg.utilities.lifecycle.DataEvent
-import tmg.utilities.lifecycle.Event
 
 //region Inputs
 

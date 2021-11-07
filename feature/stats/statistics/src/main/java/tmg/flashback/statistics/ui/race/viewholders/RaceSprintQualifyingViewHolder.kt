@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlin.math.abs
 import tmg.core.ui.extensions.getColor
 import tmg.flashback.formula1.enums.isStatusFinished
-import tmg.flashback.firebase.extensions.pointsDisplay
+import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.ViewRaceSprintQualifyingResultBinding

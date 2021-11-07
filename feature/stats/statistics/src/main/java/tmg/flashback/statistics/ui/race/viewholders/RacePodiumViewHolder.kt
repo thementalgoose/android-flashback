@@ -14,7 +14,7 @@ import tmg.utilities.extensions.views.context
 import tmg.utilities.extensions.views.gone
 import tmg.utilities.extensions.views.visible
 import kotlin.math.abs
-import tmg.flashback.firebase.extensions.pointsDisplay
+import tmg.flashback.formula1.extensions.pointsDisplay
 
 class RacePodiumViewHolder(
         val driverClicked: (driverId: String, driverName: String) -> Unit,
