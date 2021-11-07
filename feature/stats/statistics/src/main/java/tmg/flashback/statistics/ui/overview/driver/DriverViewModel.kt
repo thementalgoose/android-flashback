@@ -5,7 +5,6 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.lifecycle.*
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import tmg.core.device.managers.NetworkConnectivityManager
@@ -13,12 +12,9 @@ import tmg.flashback.statistics.ui.overview.driver.summary.DriverSummaryItem
 import tmg.flashback.statistics.ui.overview.driver.summary.PipeType
 import tmg.flashback.statistics.ui.overview.driver.summary.addError
 import tmg.flashback.formula1.model.DriverHistory
-import tmg.flashback.firebase.extensions.pointsDisplay
+import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.repo.DriverRepository
-import tmg.flashback.statistics.ui.overview.constructor.summary.ConstructorSummaryItem
-import tmg.flashback.statistics.ui.overview.constructor.summary.addError
-import tmg.flashback.statistics.ui.overview.driver.season.DriverSeasonItem
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
 import tmg.flashback.statistics.ui.util.position

@@ -7,7 +7,7 @@ import tmg.core.ui.model.AnimationSpeed
 import tmg.flashback.statistics.ui.overview.driver.season.DriverSeasonItem
 import tmg.flashback.formula1.enums.isStatusFinished
 import tmg.core.ui.extensions.getColor
-import tmg.flashback.firebase.extensions.pointsDisplay
+import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.ViewDriverSeasonBinding
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3

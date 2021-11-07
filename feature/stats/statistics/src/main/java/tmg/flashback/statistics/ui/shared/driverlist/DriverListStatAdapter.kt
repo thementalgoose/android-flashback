@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.formula1.model.ConstructorHistorySeasonDriver
-import tmg.flashback.firebase.extensions.pointsDisplay
+import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.LayoutConstructorDriverLabelBinding
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3

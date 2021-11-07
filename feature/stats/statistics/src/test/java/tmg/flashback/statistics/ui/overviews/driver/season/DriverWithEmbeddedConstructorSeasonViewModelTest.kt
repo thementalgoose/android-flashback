@@ -10,7 +10,7 @@ import tmg.core.ui.controllers.ThemeController
 import tmg.core.ui.model.AnimationSpeed
 import tmg.flashback.statistics.ui.overview.driver.summary.PipeType.*
 import tmg.flashback.formula1.model.DriverHistorySeasonRace
-import tmg.flashback.firebase.extensions.pointsDisplay
+import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.ui.overview.driver.season.DriverSeasonItem
 import tmg.flashback.statistics.ui.overview.driver.season.DriverSeasonViewModel
