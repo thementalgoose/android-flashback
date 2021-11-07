@@ -7,7 +7,10 @@ data class Season(
     val constructors: Set<Constructor> = races.map { it.constructors }.flatten().toSet(),
 ) {
     val circuits: List<Circuit>
-        get() = races.map { it.raceInfo.circuit }
+        get() = races
+            .map { it.raceInfo.circuit }
+            .toSet()
+            .toList()
 
     val firstRace: Race?
         get() = races.minByOrNull { it.raceInfo.round }
