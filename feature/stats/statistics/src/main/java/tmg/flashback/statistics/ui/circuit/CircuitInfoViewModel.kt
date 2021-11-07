@@ -1,6 +1,7 @@
 package tmg.flashback.statistics.ui.circuit
 
 import androidx.lifecycle.*
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -44,7 +45,8 @@ interface CircuitInfoViewModelOutputs {
 @Suppress("EXPERIMENTAL_API_USAGE")
 class CircuitInfoViewModel(
     private val circuitRepository: CircuitRepository,
-    private val networkConnectivityManager: NetworkConnectivityManager
+    private val networkConnectivityManager: NetworkConnectivityManager,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : ViewModel(), CircuitInfoViewModelInputs, CircuitInfoViewModelOutputs {
 
     private val circuitId: MutableStateFlow<String?> = MutableStateFlow(null)
@@ -64,7 +66,7 @@ class CircuitInfoViewModel(
                 }
             }
         }
-        .flowOn(Dispatchers.IO)
+        .flowOn(ioDispatcher)
 
     private val isConnected: Boolean
         get() = networkConnectivityManager.isConnected
@@ -138,7 +140,7 @@ class CircuitInfoViewModel(
         this.refresh(circuitId.value)
     }
     private fun refresh(circuitId: String? = this.circuitId.value) {
-        viewModelScope.launch(context = Dispatchers.IO) {
+        viewModelScope.launch(context = ioDispatcher) {
             circuitId?.let {
                 val result = circuitRepository.fetchCircuit(circuitId)
                 showLoading.postValue(false)

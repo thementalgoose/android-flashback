@@ -4,7 +4,7 @@ import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
 
 fun OverviewRace.Companion.model(
-    date: LocalDate = LocalDate.of(1995, 10, 12),
+    date: LocalDate = LocalDate.of(2020, 10, 12),
     time: LocalTime? = LocalTime.of(12, 34, 0),
     season: Int = 2020,
     round: Int = 1,

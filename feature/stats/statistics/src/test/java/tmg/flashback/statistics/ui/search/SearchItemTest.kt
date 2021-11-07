@@ -18,7 +18,7 @@ internal fun SearchItem.Companion.constructorModel(
 
 internal fun SearchItem.Companion.driverModel(
     driverId: String = "driverId",
-    name: String = "name",
+    name: String = "firstName lastName",
     nationality: String = "nationality",
     nationalityISO: String = "nationalityISO",
     imageUrl: String? = "imageUrl"
