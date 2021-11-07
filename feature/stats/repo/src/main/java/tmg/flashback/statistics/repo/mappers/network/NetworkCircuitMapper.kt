@@ -40,7 +40,7 @@ class NetworkCircuitMapper(
     private fun mapCircuitResult(constructorId: String, result: CircuitResult): CircuitRoundWithResults {
         return CircuitRoundWithResults(
             round = mapCircuitResultRace(constructorId, result.race),
-            // TODO: Save this information properly!
+            // TODO: Circuit results preview - Map this properly
             results = emptyList()
         )
     }

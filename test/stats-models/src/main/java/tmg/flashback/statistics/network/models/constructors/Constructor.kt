@@ -2,7 +2,7 @@ package tmg.flashback.statistics.network.models.constructors
 
 fun Constructor.Companion.model(
     id: String = "constructorId",
-    colour: String = "colour",
+    colour: String = "#123456",
     name: String = "name",
     nationality: String = "nationality",
     nationalityISO: String = "nationalityISO",

@@ -8,9 +8,9 @@ import tmg.flashback.statistics.network.models.races.RaceData
 fun DriverHistoryStandingRace.Companion.model(
     construct: Constructor = Constructor.model(),
     race: RaceData = RaceData.model(),
-    sprintQuali: Boolean? = false,
-    qualified: Int = 3,
-    gridPos: Int? = 2,
+    sprintQuali: Boolean? = true,
+    qualified: Int = 1,
+    gridPos: Int? = 1,
     finished: Int = 1,
     status: String = "status",
     points: Double = 1.0,

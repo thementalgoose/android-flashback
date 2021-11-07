@@ -32,4 +32,8 @@ typealias NetworkDriver = tmg.flashback.statistics.network.models.drivers.Driver
 
 typealias NetworkRaceData = tmg.flashback.statistics.network.models.races.RaceData
 
+typealias NetworkRaceResult = tmg.flashback.statistics.network.models.races.RaceResult
+
+typealias NetworkQualifyingResult = tmg.flashback.statistics.network.models.races.QualifyingResult
+
 //endregion

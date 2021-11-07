@@ -6,7 +6,7 @@ fun SprintQualifyingResult.Companion.model(
     gridPos: Int? = 1,
     finished: Int = 1,
     status: String = "status",
-    time: String = "time"
+    time: String = "1:02.005"
 ): SprintQualifyingResult = SprintQualifyingResult(
     points = points,
     qualified = qualified,
