@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import tmg.core.device.managers.NetworkConnectivityManager
 import tmg.crash_reporting.controllers.CrashController
+import tmg.flashback.formula1.model.CircuitHistory
 import tmg.flashback.formula1.model.Location
 import tmg.flashback.statistics.extensions.circuitIcon
 import tmg.flashback.statistics.repo.CircuitRepository
@@ -83,7 +84,7 @@ class CircuitInfoViewModel(
 
             return@flatMapLatest circuitRepository.getCircuitHistory(id)
                 .map {
-                    val list = mutableListOf<CircuitItem>()
+                    val list = it.getHeaderList()
                     if (it != null) {
                         circuitName.postValue(it.data.name)
                     }
@@ -91,10 +92,6 @@ class CircuitInfoViewModel(
                         (it == null || it.results.isEmpty()) && !isConnected -> list.addError(SyncDataItem.PullRefresh)
                         (it == null || it.results.isEmpty()) -> list.addError(SyncDataItem.Unavailable(DataUnavailable.CONSTRUCTOR_HISTORY_INTERNAL_ERROR))
                         else -> {
-                            it.data.circuitIcon?.let {
-                                list.add(CircuitItem.TrackImage(it))
-                            }
-                            list.add(CircuitItem.CircuitInfo(it))
                             list.addAll(it.results
                                 .map { result ->
                                     CircuitItem.Race(
@@ -150,4 +147,16 @@ class CircuitInfoViewModel(
     }
 
     //endregion
+
+    private fun CircuitHistory?.getHeaderList(): MutableList<CircuitItem> {
+        val list = mutableListOf<CircuitItem>()
+        if (this == null) {
+            return list
+        }
+        this.data.circuitIcon?.let {
+            list.add(CircuitItem.TrackImage(it))
+        }
+        list.add(CircuitItem.CircuitInfo(this))
+        return list
+    }
 }

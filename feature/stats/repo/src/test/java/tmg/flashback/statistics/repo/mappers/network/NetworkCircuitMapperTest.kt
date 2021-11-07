@@ -40,7 +40,7 @@ internal class NetworkCircuitMapperTest {
     @Test
     fun `mapCircuit with null results map has empty list of races`() {
         val input = NetworkCircuitHistory.model(results = null)
-        assertEquals(emptyList<CircuitRoundWithResults>(), sut.mapCircuit(input))
+        assertEquals(emptyList<CircuitRoundWithResults>(), sut.mapCircuit(input)!!.races)
     }
 
     @Test

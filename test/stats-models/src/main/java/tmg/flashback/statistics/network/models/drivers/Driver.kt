@@ -10,7 +10,7 @@ fun Driver.Companion.model(
     photoUrl: String? = "photoUrl",
     wikiUrl: String? = "wikiUrl",
     code: String? = "code",
-    permanentNumber: String? = "permanentNumber"
+    permanentNumber: String? = "23"
 ): Driver = Driver(
     id = id,
     firstName = firstName,
