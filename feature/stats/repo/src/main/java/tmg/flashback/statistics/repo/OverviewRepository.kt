@@ -8,8 +8,10 @@ import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.statistics.network.api.FlashbackApi
 import tmg.flashback.statistics.repo.base.BaseRepository
 import tmg.flashback.statistics.repo.mappers.app.OverviewMapper
+import tmg.flashback.statistics.repo.mappers.app.ScheduleMapper
 import tmg.flashback.statistics.repo.mappers.network.NetworkCircuitDataMapper
 import tmg.flashback.statistics.repo.mappers.network.NetworkOverviewMapper
+import tmg.flashback.statistics.repo.mappers.network.NetworkScheduleMapper
 import tmg.flashback.statistics.room.FlashbackDatabase
 
 class OverviewRepository(
@@ -18,7 +20,8 @@ class OverviewRepository(
     crashController: CrashController,
     private val overviewMapper: OverviewMapper,
     private val networkOverviewMapper: NetworkOverviewMapper,
-    private val networkCircuitDataMapper: NetworkCircuitDataMapper
+    private val networkCircuitDataMapper: NetworkCircuitDataMapper,
+    private val networkScheduleMapper: NetworkScheduleMapper
 ): BaseRepository(crashController) {
 
     /**
@@ -32,8 +35,14 @@ class OverviewRepository(
         val allCircuits = data.values.map { networkCircuitDataMapper.mapCircuitData(it.circuit) }
         val allOverview = data.values
             .mapNotNull { networkOverviewMapper.mapOverview(it) }
+        val scheduled = data.values
+            .map { networkScheduleMapper.mapSchedules(it) }
+            .flatten()
+
         persistence.circuitDao().insertCircuit(allCircuits)
         persistence.overviewDao().insertAll(allOverview)
+        persistence.scheduleDao().insertAll(scheduled)
+
         return@attempt true
     }
 
@@ -49,15 +58,20 @@ class OverviewRepository(
         val allCircuits = data.values.map { networkCircuitDataMapper.mapCircuitData(it.circuit) }
         val allOverview = data.values
             .mapNotNull { networkOverviewMapper.mapOverview(it) }
+        val scheduled = data.values
+            .map { networkScheduleMapper.mapSchedules(it) }
+            .flatten()
+
         persistence.circuitDao().insertCircuit(allCircuits)
         persistence.overviewDao().insertAll(allOverview)
+        persistence.scheduleDao().replaceAllForSeason(season, scheduled)
+
         return@attempt true
     }
 
     fun getOverview(): Flow<List<OverviewRace>> {
         return persistence.overviewDao().getOverview()
             .map { list -> list.map { overviewMapper.mapOverview(it) } }
-
     }
 
     fun getOverview(season: Int): Flow<Overview> {

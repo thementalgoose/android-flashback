@@ -5,7 +5,7 @@ fun Overview.Companion.model(
     round: Int = 1,
     name: String = "name",
     circuitId: String = "circuitId",
-    date: String = "1995-10-12",
+    date: String = "2020-10-12",
     time: String? = "12:34",
     hasRace: Boolean = false,
     hasQualifying: Boolean = true,

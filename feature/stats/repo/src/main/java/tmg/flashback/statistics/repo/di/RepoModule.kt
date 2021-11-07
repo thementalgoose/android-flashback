@@ -17,9 +17,10 @@ val repoModule = networkModule + roomModule + module {
     single { DriverDataMapper() }
     single { DriverMapper(get(), get(), get()) }
     single { DriverStandingMapper(get(), get()) }
-    single { OverviewMapper() }
-    single { RaceMapper(get(), get(), get()) }
+    single { OverviewMapper(get()) }
+    single { RaceMapper(get(), get(), get(), get()) }
     single { SeasonMapper(get()) }
+    single { ScheduleMapper() }
 
     // Mappers - Network
     single { NetworkCircuitDataMapper() }
@@ -33,12 +34,13 @@ val repoModule = networkModule + roomModule + module {
     single { NetworkOverviewMapper() }
     single { NetworkRaceDataMapper() }
     single { NetworkRaceMapper() }
+    single { NetworkScheduleMapper() }
 
     // Repositories
     single { CircuitRepository(get(), get(), get(), get(), get(), get()) }
     single { ConstructorRepository(get(), get(), get(), get(), get(), get(), get(), get()) }
     single { DriverRepository(get(), get(), get(), get(), get(), get(), get(), get(), get(), get()) }
-    single { OverviewRepository(get(), get(), get(), get(), get(), get()) }
-    single { RaceRepository(get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get()) }
+    single { OverviewRepository(get(), get(), get(), get(), get(), get(), get()) }
+    single { RaceRepository(get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get()) }
     single { SeasonRepository(get(), get(), get(), get(), get()) }
 }

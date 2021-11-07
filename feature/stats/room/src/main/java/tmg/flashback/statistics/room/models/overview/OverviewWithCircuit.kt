@@ -11,7 +11,12 @@ data class OverviewWithCircuit(
         parentColumn = "circuit_id",
         entityColumn = "id"
     )
-    val circuit: Circuit
+    val circuit: Circuit,
+    @Relation(
+        parentColumn = "id",
+        entityColumn = "season_round_id"
+    )
+    val schedule: List<Schedule>
 ) {
     companion object
 }

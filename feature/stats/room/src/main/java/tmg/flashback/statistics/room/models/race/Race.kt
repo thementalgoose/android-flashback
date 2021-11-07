@@ -2,6 +2,7 @@ package tmg.flashback.statistics.room.models.race
 
 import androidx.room.*
 import tmg.flashback.statistics.room.models.circuit.Circuit
+import tmg.flashback.statistics.room.models.overview.Schedule
 
 data class Race(
     @Embedded
@@ -23,6 +24,11 @@ data class Race(
         entityColumn = "season_round_id"
     )
     val race: List<RaceDriverResult>,
+    @Relation(
+        parentColumn = "id",
+        entityColumn = "season_round_id"
+    )
+    val schedule: List<Schedule>
 ) {
     companion object
 }

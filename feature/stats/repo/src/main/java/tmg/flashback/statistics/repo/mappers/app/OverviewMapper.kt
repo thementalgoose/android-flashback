@@ -8,7 +8,9 @@ import tmg.utilities.utils.LocalTimeUtils.Companion.fromTime
 import java.lang.RuntimeException
 import kotlin.jvm.Throws
 
-class OverviewMapper {
+class OverviewMapper(
+    private val scheduleMapper: ScheduleMapper
+) {
 
     @Throws(RuntimeException::class)
     fun mapOverview(overview: OverviewWithCircuit): OverviewRace {
@@ -23,7 +25,8 @@ class OverviewMapper {
             country = overview.circuit.country,
             countryISO = overview.circuit.countryISO,
             hasQualifying = overview.overview.hasQualifying,
-            hasResults = overview.overview.hasRace
+            hasResults = overview.overview.hasRace,
+            schedule = overview.schedule.mapNotNull { scheduleMapper.mapSchedule(it) }
         )
     }
 }
