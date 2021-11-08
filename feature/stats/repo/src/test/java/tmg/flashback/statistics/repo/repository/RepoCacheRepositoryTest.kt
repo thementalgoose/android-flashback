@@ -36,8 +36,8 @@ internal class RepoCacheRepositoryTest {
     }
 
     @Test
-    fun `should sync current season returns true mins difference is within 30 minutes`() {
-        val time29MinsAgo = LocalDateTime.now().minusMinutes(29L)
+    fun `should sync current season returns true mins difference is within 60 minutes`() {
+        val time29MinsAgo = LocalDateTime.now().minusMinutes(59L)
         every { mockPreferenceManager.getString(keyLastSyncTime, null) } returns time29MinsAgo.format(localDateTimeFormatter)
         initSUT()
 
@@ -45,8 +45,8 @@ internal class RepoCacheRepositoryTest {
     }
 
     @Test
-    fun `should sync current season returns false mins difference is more than 30 minutes`() {
-        val time31MinsAgo = LocalDateTime.now().minusMinutes(31L)
+    fun `should sync current season returns false mins difference is more than 60 minutes`() {
+        val time31MinsAgo = LocalDateTime.now().minusMinutes(61L)
         every { mockPreferenceManager.getString(keyLastSyncTime, null) } returns time31MinsAgo.format(localDateTimeFormatter)
         initSUT()
 

@@ -18,6 +18,7 @@ import tmg.flashback.statistics.controllers.SeasonController
 import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.statistics.repo.RaceRepository
 import tmg.flashback.statistics.repo.SeasonRepository
+import tmg.flashback.statistics.repo.repository.CacheRepository
 import tmg.flashback.statistics.repository.models.Banner
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
@@ -36,6 +37,7 @@ internal class SeasonViewModelTest: BaseTest() {
     private val mockSeasonRepository: SeasonRepository = mockk(relaxed = true)
     private val mockAnalyticsManager: AnalyticsManager = mockk(relaxed = true)
     private val mockThemeController: ThemeController = mockk(relaxed = true)
+    private val mockCacheRepository: CacheRepository = mockk(relaxed = true)
 
     private lateinit var sut: SeasonViewModel
 
@@ -48,15 +50,18 @@ internal class SeasonViewModelTest: BaseTest() {
             mockSeasonRepository,
             mockAnalyticsManager,
             mockThemeController,
+            mockCacheRepository,
             ioDispatcher = coroutineScope.testDispatcher
         )
     }
 
     @BeforeEach
     internal fun setUp() {
+        every { mockCacheRepository.shouldSyncCurrentSeason() } returns false
         every { mockNetworkConnectivityManager.isConnected } returns true
         every { mockSeasonController.banner } returns null
         every { mockSeasonController.defaultSeason } returns Year.now().value
+        every { mockSeasonController.serverDefaultSeason } returns Year.now().value
         every { mockThemeController.animationSpeed } returns AnimationSpeed.QUICK
         coEvery { mockRaceRepository.shouldSyncRace(any()) } returns false
         coEvery { mockOverviewRepository.fetchOverview(any()) } returns true
@@ -81,6 +86,36 @@ internal class SeasonViewModelTest: BaseTest() {
 
         sut.outputs.list.test {
             assertListMatchesItem(atIndex = 0) { it is SeasonItem.ErrorItem && it.item is SyncDataItem.Message }
+        }
+    }
+
+    @Test
+    fun `refresh is called immediately if cache is marked out of date`() = coroutineTest {
+        every { mockCacheRepository.shouldSyncCurrentSeason() } returns true
+        every { mockSeasonController.serverDefaultSeason } returns 2020
+        runBlockingTest {
+            initSUT()
+        }
+
+        val observe = sut.outputs.showLoading.testObserve()
+        coVerify { mockOverviewRepository.fetchOverview(2020) }
+        coVerify { mockSeasonRepository.fetchRaces(2020) }
+        verify {
+            mockCacheRepository.markedCurrentSeasonSynchronised()
+        }
+    }
+
+    @Test
+    fun `refresh is not called immediately if cache is valid`() = coroutineTest {
+        every { mockCacheRepository.shouldSyncCurrentSeason() } returns false
+        every { mockSeasonController.serverDefaultSeason } returns 2020
+        initSUT()
+        coVerify(exactly = 0) {
+            mockOverviewRepository.fetchOverview(2020)
+            mockRaceRepository.fetchRaces(2020)
+        }
+        verify(exactly = 0) {
+            mockCacheRepository.markedCurrentSeasonSynchronised()
         }
     }
 
