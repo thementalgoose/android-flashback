@@ -1,6 +1,7 @@
 package tmg.flashback.statistics.ui.race
 
 import androidx.lifecycle.*
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -51,7 +52,8 @@ class RaceViewModel(
     private val raceRepository: RaceRepository,
     private val raceController: RaceController,
     private val themeController: ThemeController,
-    private val networkConnectivityManager: NetworkConnectivityManager
+    private val networkConnectivityManager: NetworkConnectivityManager,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : ViewModel(), RaceViewModelInputs, RaceViewModelOutputs {
 
     var inputs: RaceViewModelInputs = this
@@ -78,7 +80,7 @@ class RaceViewModel(
                 }
             }
         }
-        .flowOn(Dispatchers.IO)
+        .flowOn(ioDispatcher)
 
     private val isConnected: Boolean
         get() = networkConnectivityManager.isConnected
@@ -226,7 +228,7 @@ class RaceViewModel(
         this.refresh(this.seasonRound.value)
     }
     private fun refresh(seasonRound: SeasonRound? = this.seasonRound.value) {
-        viewModelScope.launch(context = Dispatchers.IO) {
+        viewModelScope.launch(context = ioDispatcher) {
             seasonRound?.let { (season, _) ->
                 val result = raceRepository.fetchRaces(season)
                 showLoading.postValue(false)
@@ -363,5 +365,13 @@ class RaceViewModel(
         val q3 = this.q3[driverId]
 
         return q3?.position ?: q2?.position ?: q1?.position
+    }
+
+    private fun  MutableList<RaceModel>.addError(syncDataItem: SyncDataItem) {
+        this.add(
+            RaceModel.ErrorItem(
+                syncDataItem
+            )
+        )
     }
 }

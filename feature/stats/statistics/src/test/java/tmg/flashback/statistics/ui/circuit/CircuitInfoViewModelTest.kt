@@ -145,7 +145,9 @@ internal class CircuitInfoViewModelTest: BaseTest() {
         coEvery { mockCircuitRepository.getCircuitRounds(any()) } returns 1
 
         initSUT()
-        sut.inputs.circuitId("circuitId")
+        runBlockingTest {
+            sut.inputs.circuitId("circuitId")
+        }
 
         coVerify(exactly = 0) {
             mockCircuitRepository.fetchCircuit(any())

@@ -81,16 +81,10 @@ sealed class RaceModel(
     ) : RaceModel(item.layoutId)
 
     object Loading : RaceModel(R.layout.skeleton_race)
+
+    companion object
 }
 
-
-fun MutableList<RaceModel>.addError(syncDataItem: SyncDataItem) {
-    this.add(
-        RaceModel.ErrorItem(
-            syncDataItem
-        )
-    )
-}
 
 data class SingleRace(
     val points: Double,
