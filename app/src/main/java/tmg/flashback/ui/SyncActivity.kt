@@ -124,6 +124,6 @@ class SyncActivity: BaseActivity() {
     }
 
     override fun onBackPressed() {
-        super.onBackPressed()
+//        super.onBackPressed()
     }
 }

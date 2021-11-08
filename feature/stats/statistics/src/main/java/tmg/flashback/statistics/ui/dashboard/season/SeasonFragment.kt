@@ -86,6 +86,10 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
             }
         })
 
+        binding.upNextContainer.setOnClickListener {
+            seasonFragmentCallback?.openNow()
+        }
+
         binding.menu.setOnClickListener {
             viewModel.inputs.clickMenu()
         }
