@@ -5,21 +5,31 @@ import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
+import kotlinx.coroutines.test.runBlockingTest
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.common.controllers.ForceUpgradeController
 import tmg.configuration.controllers.ConfigController
 import tmg.flashback.managers.appshortcuts.AppShortcutManager
 import tmg.flashback.rss.controllers.RSSController
+import tmg.flashback.statistics.repo.CircuitRepository
+import tmg.flashback.statistics.repo.ConstructorRepository
+import tmg.flashback.statistics.repo.DriverRepository
+import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.upnext.controllers.UpNextController
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertEventFired
 import tmg.testutils.livedata.test
+import tmg.testutils.livedata.testObserve
 
 internal class SyncViewModelTest: BaseTest() {
 
     private var mockAppShortcutManager: AppShortcutManager = mockk(relaxed = true)
     private var mockRssController: RSSController = mockk(relaxed = true)
+    private var mockCircuitRepository: CircuitRepository = mockk(relaxed = true)
+    private var mockConstructorRepository: ConstructorRepository = mockk(relaxed = true)
+    private var mockDriverRepository: DriverRepository = mockk(relaxed = true)
+    private var mockOverviewRepository: OverviewRepository = mockk(relaxed = true)
     private var mockConfigurationManager: ConfigController = mockk(relaxed = true)
     private var mockForceUpgradeController: ForceUpgradeController = mockk(relaxed = true)
     private var mockUpNextController: UpNextController = mockk(relaxed = true)
@@ -33,107 +43,63 @@ internal class SyncViewModelTest: BaseTest() {
         every { mockForceUpgradeController.shouldForceUpgrade } returns false
         every { mockRssController.enabled } returns false
         coEvery { mockConfigurationManager.fetchAndApply() } returns true
+
+        coEvery { mockCircuitRepository.fetchCircuits() } returns true
+        coEvery { mockConstructorRepository.fetchConstructors() } returns true
+        coEvery { mockDriverRepository.fetchDrivers() } returns true
+        coEvery { mockOverviewRepository.fetchOverview() } returns true
     }
 
     private fun initSUT() {
-        sut = SyncViewModel(mockAppShortcutManager, mockRssController, mockConfigurationManager, mockForceUpgradeController, mockUpNextController)
+        sut = SyncViewModel(
+            mockAppShortcutManager,
+            mockRssController,
+            mockCircuitRepository,
+            mockConstructorRepository,
+            mockDriverRepository,
+            mockOverviewRepository,
+            mockConfigurationManager,
+            mockForceUpgradeController,
+            mockUpNextController,
+            ioDispatcher = coroutineScope.testDispatcher
+        )
     }
 
-    @Test
-    fun `starting sync shows loading`() = coroutineTest {
-        initSUT()
-        sut.inputs.startRemoteConfig()
+    //region Races
 
-        sut.outputs.showLoading.test {
-            assertValue(true)
+    @Test
+    fun `sync races sets value to done when fetch succeeds`() = coroutineTest {
+        coEvery { mockOverviewRepository.fetchOverview() } returns true
+
+        initSUT()
+
+        val observe = sut.outputs.racesState.testObserve()
+        runBlockingTest { sut.startSyncRaces() }
+
+        observe.assertValueAt(SyncState.LOADING, 0)
+        observe.assertValueAt(SyncState.LOADING, 1)
+        observe.assertValueAt(SyncState.DONE, 2)
+        coVerify {
+            mockOverviewRepository.fetchOverview()
         }
     }
 
     @Test
-    fun `starting sync hides resync`() = coroutineTest {
-        initSUT()
-        sut.inputs.startRemoteConfig()
+    fun `sync races sets value to failed when fetch fails`() = coroutineTest {
+        coEvery { mockOverviewRepository.fetchOverview() } returns false
 
-        sut.outputs.showResync.test {
-            assertValue(false)
+        initSUT()
+
+        val observe = sut.outputs.racesState.testObserve()
+        runBlockingTest { sut.startSyncRaces() }
+
+        observe.assertValueAt(SyncState.LOADING, 0)
+        observe.assertValueAt(SyncState.LOADING, 1)
+        observe.assertValueAt(SyncState.FAILED, 2)
+        coVerify {
+            mockOverviewRepository.fetchOverview()
         }
     }
 
-    @Test
-    fun `starting sync ensures cache is reset`() = coroutineTest {
-        initSUT()
-        sut.inputs.startRemoteConfig()
-
-        coVerify { mockConfigurationManager.ensureCacheReset() }
-    }
-
-    @Test
-    fun `starting sync with rss enabled shows shortcut manager`() = coroutineTest {
-        every { mockRssController.enabled } returns true
-
-        initSUT()
-        sut.inputs.startRemoteConfig()
-
-        verify { mockUpNextController.scheduleNotifications() }
-        verify { mockAppShortcutManager.enable() }
-    }
-
-    @Test
-    fun `starting sync with rss disabled shows shortcut manager`() = coroutineTest {
-        every { mockRssController.enabled } returns false
-
-        initSUT()
-        sut.inputs.startRemoteConfig()
-
-        verify { mockUpNextController.scheduleNotifications() }
-        verify { mockAppShortcutManager.disable() }
-    }
-
-    @Test
-    fun `starting sync if fetch and apply fails show resync and loading`() = coroutineTest {
-        every { mockRssController.enabled } returns false
-        coEvery { mockConfigurationManager.fetchAndApply() } returns false
-
-        initSUT()
-        sut.inputs.startRemoteConfig()
-
-        sut.outputs.showResync.test {
-            assertValue(true)
-        }
-        sut.outputs.showLoading.test {
-            assertValue(false)
-        }
-    }
-
-    @Test
-    fun `starting sync if fetch and apply success but shows force upgrade`() = coroutineTest {
-        every { mockRssController.enabled } returns false
-        coEvery { mockConfigurationManager.fetchAndApply() } returns true
-        every { mockForceUpgradeController.shouldForceUpgrade } returns true
-
-        initSUT()
-        sut.inputs.startRemoteConfig()
-
-        advanceUntilIdle()
-
-        sut.outputs.goToForceUpgrade.test {
-            assertEventFired()
-        }
-    }
-
-    @Test
-    fun `starting sync if fetch and apply success and no force upgrade then go to dashboard`() = coroutineTest {
-        every { mockRssController.enabled } returns false
-        coEvery { mockConfigurationManager.fetchAndApply() } returns true
-        every { mockForceUpgradeController.shouldForceUpgrade } returns false
-
-        initSUT()
-        sut.inputs.startRemoteConfig()
-
-        advanceUntilIdle()
-
-        sut.outputs.goToDashboard.test {
-            assertEventFired()
-        }
-    }
+    //endregion
 }

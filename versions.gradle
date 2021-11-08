@@ -36,7 +36,7 @@ ext {
     junit = "5.5.2"
     threeten = "1.3.1"
     threetenbp = "1.5.1"
-    android_constraint = "2.1.0"
+    android_constraint = "2.1.1"
     android_material = "1.4.0"
     android_lifecycle = "2.3.0"
     android_splashscreen = "1.0.0-alpha02"
