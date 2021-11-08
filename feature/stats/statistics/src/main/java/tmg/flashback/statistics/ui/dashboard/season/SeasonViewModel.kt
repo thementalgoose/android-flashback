@@ -22,6 +22,7 @@ import tmg.flashback.statistics.extensions.analyticsLabel
 import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.statistics.repo.RaceRepository
 import tmg.flashback.statistics.repo.SeasonRepository
+import tmg.flashback.statistics.repo.repository.CacheRepository
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable.*
 import tmg.utilities.lifecycle.DataEvent
@@ -67,6 +68,7 @@ class SeasonViewModel(
     private val seasonRepository: SeasonRepository,
     private val analyticsManager: AnalyticsManager,
     private val themeController: ThemeController,
+    private val cacheRepository: CacheRepository,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), SeasonViewModelInputs, SeasonViewModelOutputs {
 
@@ -131,7 +133,9 @@ class SeasonViewModel(
     override val showLoading: MutableLiveData<Boolean> = MutableLiveData()
 
     init {
-
+        if (cacheRepository.shouldSyncCurrentSeason()) {
+            refresh(seasonController.serverDefaultSeason)
+        }
     }
 
     //region Inputs
@@ -169,6 +173,10 @@ class SeasonViewModel(
         viewModelScope.launch(context = ioDispatcher) {
             val result = overviewRepository.fetchOverview(season)
             val anotherResult = seasonRepository.fetchRaces(season)
+
+            if (season == seasonController.serverDefaultSeason) {
+                cacheRepository.markedCurrentSeasonSynchronised()
+            }
             showLoading.postValue(false)
         }
     }

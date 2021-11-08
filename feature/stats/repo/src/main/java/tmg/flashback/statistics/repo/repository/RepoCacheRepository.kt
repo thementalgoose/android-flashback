@@ -6,6 +6,7 @@ import org.threeten.bp.format.DateTimeFormatter
 import org.threeten.bp.format.DateTimeParseException
 import org.threeten.bp.temporal.ChronoUnit
 import tmg.core.prefs.manager.PreferenceManager
+import tmg.flashback.statistics.repo.constants.CacheTimeout
 import java.util.*
 
 internal class RepoCacheRepository(
@@ -22,7 +23,7 @@ internal class RepoCacheRepository(
             return true
         }
         val minutesDifference: Long = ChronoUnit.MINUTES.between(time, LocalDateTime.now())
-        if (minutesDifference > 30) {
+        if (minutesDifference > CacheTimeout.timeoutMinutes) {
             return true
         }
         return false
