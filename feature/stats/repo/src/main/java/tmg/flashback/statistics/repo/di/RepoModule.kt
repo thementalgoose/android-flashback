@@ -5,6 +5,8 @@ import tmg.flashback.statistics.network.di.networkModule
 import tmg.flashback.statistics.repo.*
 import tmg.flashback.statistics.repo.mappers.app.*
 import tmg.flashback.statistics.repo.mappers.network.*
+import tmg.flashback.statistics.repo.repository.CacheRepository
+import tmg.flashback.statistics.repo.repository.RepoCacheRepository
 import tmg.flashback.statistics.room.di.roomModule
 
 val repoModule = networkModule + roomModule + module {
@@ -35,6 +37,9 @@ val repoModule = networkModule + roomModule + module {
     single { NetworkRaceDataMapper() }
     single { NetworkRaceMapper() }
     single { NetworkScheduleMapper() }
+
+    // Cache tracking
+    single<CacheRepository> { RepoCacheRepository(get()) }
 
     // Repositories
     single { CircuitRepository(get(), get(), get(), get(), get(), get()) }
