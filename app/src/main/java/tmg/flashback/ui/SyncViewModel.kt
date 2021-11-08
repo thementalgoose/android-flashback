@@ -1,6 +1,7 @@
 package tmg.flashback.ui
 
 import androidx.lifecycle.*
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.combine
@@ -53,7 +54,8 @@ class SyncViewModel(
     private val overviewRepository: OverviewRepository,
     private val configurationController: ConfigController,
     private val forceUpgradeController: ForceUpgradeController,
-    private val upNextController: UpNextController
+    private val upNextController: UpNextController,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), SyncViewModelInputs, SyncViewModelOutputs {
 
     var inputs: SyncViewModelInputs = this
@@ -110,7 +112,7 @@ class SyncViewModel(
 
     override fun startSyncDrivers() {
         driversState.value = LOADING
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(ioDispatcher) {
             delay(500)
             when (driverRepository.fetchDrivers()) {
                 true -> driversState.postValue(DONE)
@@ -121,7 +123,7 @@ class SyncViewModel(
 
     override fun startSyncConstructors() {
         constructorsState.value = LOADING
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(ioDispatcher) {
             delay(500)
             when (constructorRepository.fetchConstructors()) {
                 true -> constructorsState.postValue(DONE)
@@ -132,7 +134,7 @@ class SyncViewModel(
 
     override fun startSyncCircuits() {
         circuitsState.value = LOADING
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(ioDispatcher) {
             delay(500)
             when (circuitRepository.fetchCircuits()) {
                 true -> circuitsState.postValue(DONE)
@@ -143,7 +145,7 @@ class SyncViewModel(
 
     override fun startSyncRaces() {
         racesState.value = LOADING
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(ioDispatcher) {
             delay(500)
             when (overviewRepository.fetchOverview()) {
                 true -> racesState.postValue(DONE)
