@@ -51,12 +51,6 @@ sealed class ConstructorSummaryItem(
     object Loading: ConstructorSummaryItem(R.layout.view_loading_podium)
 
     object ListHeader: ConstructorSummaryItem(R.layout.view_constructor_summary_list_header)
-}
 
-fun MutableList<ConstructorSummaryItem>.addError(syncDataItem: SyncDataItem) {
-    this.add(
-        ConstructorSummaryItem.ErrorItem(
-            syncDataItem
-        )
-    )
+    companion object
 }
