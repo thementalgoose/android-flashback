@@ -4,17 +4,20 @@ import androidx.annotation.AttrRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.lifecycle.*
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import tmg.core.device.managers.NetworkConnectivityManager
 import tmg.flashback.statistics.ui.overview.constructor.summary.ConstructorSummaryItem
-import tmg.flashback.statistics.ui.overview.constructor.summary.addError
 import tmg.flashback.statistics.ui.overview.driver.summary.PipeType
 import tmg.flashback.formula1.model.ConstructorHistory
 import tmg.flashback.formula1.extensions.pointsDisplay
+import tmg.flashback.formula1.model.CircuitHistory
 import tmg.flashback.statistics.R
+import tmg.flashback.statistics.extensions.circuitIcon
 import tmg.flashback.statistics.repo.ConstructorRepository
+import tmg.flashback.statistics.ui.circuit.CircuitItem
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
 import tmg.utilities.extensions.ordinalAbbreviation
@@ -47,7 +50,8 @@ interface ConstructorViewModelOutputs {
 @Suppress("EXPERIMENTAL_API_USAGE")
 class ConstructorViewModel(
     private val constructorRepository: ConstructorRepository,
-    private val networkConnectivityManager: NetworkConnectivityManager
+    private val networkConnectivityManager: NetworkConnectivityManager,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), ConstructorViewModelInputs, ConstructorViewModelOutputs {
 
     var inputs: ConstructorViewModelInputs = this
@@ -70,7 +74,7 @@ class ConstructorViewModel(
                 }
             }
         }
-        .flowOn(Dispatchers.IO)
+        .flowOn(ioDispatcher)
 
     private val isConnected: Boolean
         get() = networkConnectivityManager.isConnected
@@ -87,30 +91,29 @@ class ConstructorViewModel(
             return@flatMapLatest constructorRepository.getConstructorOverview(id)
                 .map {
                     val list: MutableList<ConstructorSummaryItem> = mutableListOf()
+                    if (it != null) {
+                        list.add(
+                            ConstructorSummaryItem.Header(
+                                constructorName = it.constructor.name,
+                                constructorColor = it.constructor.color,
+                                constructorNationality = it.constructor.nationality,
+                                constructorNationalityISO = it.constructor.nationalityISO,
+                                constructorWikiUrl = it.constructor.wikiUrl
+                            )
+                        )
+                    }
                     when {
                         (it == null || it.standings.isEmpty()) && !isConnected -> list.addError(SyncDataItem.PullRefresh)
                         (it == null || it.standings.isEmpty()) -> list.addError(SyncDataItem.Unavailable(DataUnavailable.CONSTRUCTOR_HISTORY_INTERNAL_ERROR))
                         else -> {
-                            list.add(
-                                ConstructorSummaryItem.Header(
-                                    constructorName = it.constructor.name,
-                                    constructorColor = it.constructor.color,
-                                    constructorNationality = it.constructor.nationality,
-                                    constructorNationalityISO = it.constructor.nationalityISO,
-                                    constructorWikiUrl = it.constructor.wikiUrl
-                                ))
-
                             if (it.hasChampionshipCurrentlyInProgress) {
                                 val lastStanding = it.standings.maxByOrNull { it.season }
                                 if (lastStanding != null) {
                                     list.add(ConstructorSummaryItem.ErrorItem(SyncDataItem.MessageRes(R.string.results_accurate_for_round, listOf(lastStanding.season, lastStanding.races))))
                                 }
                             }
-
                             list.addAll(getAllStats(it))
-
                             list.add(ConstructorSummaryItem.ListHeader)
-
                             list.addAll(getHistory(it))
                         }
                     }
@@ -148,7 +151,7 @@ class ConstructorViewModel(
         this.refresh(constructorId.value)
     }
     private fun refresh(constructorId: String? = this.constructorId.value) {
-        viewModelScope.launch(context = Dispatchers.IO) {
+        viewModelScope.launch(context = ioDispatcher) {
             constructorId?.let {
                 val result = constructorRepository.fetchConstructor(it)
                 showLoading.postValue(false)
@@ -247,7 +250,7 @@ class ConstructorViewModel(
                 }
     }
 
-    fun getPipeType(currentItem: Int, newer: Int?, prev: Int?): PipeType {
+    private fun getPipeType(currentItem: Int, newer: Int?, prev: Int?): PipeType {
         if (newer == null && prev == null) {
             return PipeType.SINGLE
         }
@@ -279,4 +282,12 @@ class ConstructorViewModel(
             }
         }
     }
+}
+
+private fun MutableList<ConstructorSummaryItem>.addError(syncDataItem: SyncDataItem) {
+    this.add(
+        ConstructorSummaryItem.ErrorItem(
+            syncDataItem
+        )
+    )
 }

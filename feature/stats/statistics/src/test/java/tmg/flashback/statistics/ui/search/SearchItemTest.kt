@@ -21,7 +21,7 @@ internal fun SearchItem.Companion.driverModel(
     name: String = "firstName lastName",
     nationality: String = "nationality",
     nationalityISO: String = "nationalityISO",
-    imageUrl: String? = "imageUrl"
+    imageUrl: String? = "photoUrl"
 ): SearchItem.Driver = SearchItem.Driver(
     driverId = driverId,
     name = name,
@@ -39,7 +39,7 @@ internal fun SearchItem.Companion.raceModel(
     countryISO: String = "countryISO",
     circuitId: String = "circuitId",
     circuitName: String = "circuitName",
-    date: LocalDate = LocalDate.of(1995, 10, 12)
+    date: LocalDate = LocalDate.of(2020, 10, 12)
 ): SearchItem.Race = SearchItem.Race(
     raceId = raceId,
     season = season,
@@ -54,10 +54,10 @@ internal fun SearchItem.Companion.raceModel(
 
 internal fun SearchItem.Companion.circuitModel(
     circuitId: String = "circuitId",
-    name: String = "name",
-    nationality: String = "nationality",
-    nationalityISO: String = "nationalityISO",
-    location: String = "location"
+    name: String = "circuitName",
+    nationality: String = "country",
+    nationalityISO: String = "countryISO",
+    location: String = "city"
 ): SearchItem.Circuit = SearchItem.Circuit(
     circuitId = circuitId,
     name = name,

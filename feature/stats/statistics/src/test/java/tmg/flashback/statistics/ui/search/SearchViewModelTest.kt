@@ -5,6 +5,7 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.test.runBlockingTest
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
@@ -83,9 +84,11 @@ internal class SearchViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `search category circuits returns circuits models`() {
+    fun `search category circuits returns circuits models`() = coroutineTest {
         initSUT()
-        sut.inputs.inputCategory(SearchCategory.CIRCUIT)
+        runBlockingTest {
+            sut.inputs.inputCategory(SearchCategory.CIRCUIT)
+        }
         sut.outputs.results.test {
             assertValue(listOf(SearchItem.circuitModel()))
         }
@@ -111,14 +114,20 @@ internal class SearchViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `search refines items down`() {
+    fun `search refines items down`() = coroutineTest {
 
-        val model1 = SearchItem.constructorModel()
-        val model2 = SearchItem.constructorModel(name = "z")
-        every { mockDriversRepository.getDrivers() } returns flow { listOf(model1, model2) }
+        val input1 = Driver.model()
+        val input2 = Driver.model(id = "driverId2", firstName = "z", lastName = "fish")
+        every { mockDriversRepository.getDrivers() } returns flow { emit(listOf(input1, input2)) }
+
+        val model1 = SearchItem.driverModel()
+        val model2 = SearchItem.driverModel(name = "z fish", driverId = "driverId2")
 
         initSUT()
-        sut.inputs.inputCategory(SearchCategory.DRIVER)
+        runBlockingTest {
+            sut.inputs.inputCategory(SearchCategory.DRIVER)
+            sut.inputs.inputSearch("")
+        }
         sut.outputs.results.test {
             assertValue(listOf(model1, model2))
         }
@@ -131,6 +140,11 @@ internal class SearchViewModelTest: BaseTest() {
         sut.inputs.inputSearch("zz")
         sut.outputs.results.test {
             assertValue(listOf(SearchItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.NO_SEARCH_RESULTS))))
+        }
+
+        sut.inputs.inputSearch("last")
+        sut.outputs.results.test {
+            assertValue(listOf(model1))
         }
     }
 

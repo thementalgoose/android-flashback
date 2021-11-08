@@ -1,18 +1,15 @@
 package tmg.flashback.statistics.room.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Transaction
+import androidx.room.*
 import tmg.flashback.statistics.room.models.overview.Schedule
 
 @Dao
 interface ScheduleDao {
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(schedule: Schedule)
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(schedule: List<Schedule>)
 
     @Transaction
