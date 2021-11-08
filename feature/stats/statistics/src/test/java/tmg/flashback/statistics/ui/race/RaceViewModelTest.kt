@@ -1,25 +1,452 @@
 package tmg.flashback.statistics.ui.race
 
+import androidx.lifecycle.map
+import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.test.runBlockingTest
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.fail
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
-import tmg.flashback.statistics.controllers.RaceController
-import tmg.core.ui.model.AnimationSpeed
-import tmg.flashback.formula1.model.LapTime
-import tmg.flashback.formula1.model.Race
 import tmg.core.ui.controllers.ThemeController
-import tmg.flashback.formula1.model.RaceSprintQualifyingResult
-import tmg.flashback.statistics.ui.overviews.*
+import tmg.core.ui.model.AnimationSpeed
+import tmg.flashback.formula1.model.Race
+import tmg.flashback.formula1.model.RaceInfo
+import tmg.flashback.formula1.model.model
+import tmg.flashback.statistics.controllers.RaceController
+import tmg.flashback.statistics.repo.RaceRepository
 import tmg.flashback.statistics.ui.race.RaceAdapterType.*
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
-import tmg.flashback.statistics.ui.util.SeasonRound
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertDataEventValue
+import tmg.testutils.livedata.assertListMatchesItem
 import tmg.testutils.livedata.test
+
+internal class RaceViewModelTest: BaseTest() {
+
+    private val mockRaceRepository: RaceRepository = mockk(relaxed = true)
+    private val mockRaceController: RaceController = mockk(relaxed = true)
+    private val mockThemeController: ThemeController = mockk(relaxed = true)
+    private val mockConnectivityManager: tmg.core.device.managers.NetworkConnectivityManager = mockk(relaxed = true)
+
+    private lateinit var sut: RaceViewModel
+
+    private fun initSUT() {
+        sut = RaceViewModel(
+            mockRaceRepository,
+            mockRaceController,
+            mockThemeController,
+            mockConnectivityManager,
+            ioDispatcher = coroutineScope.testDispatcher
+        )
+    }
+
+    @BeforeEach
+    internal fun setUp() {
+        every { mockConnectivityManager.isConnected } returns true
+        coEvery { mockRaceRepository.shouldSyncRace(any(), any()) } returns false
+        coEvery { mockRaceRepository.getRace(any(), any()) } returns flow { emit(raceModel) }
+        coEvery { mockRaceRepository.fetchRaces(any()) } returns true
+        every { mockThemeController.animationSpeed } returns AnimationSpeed.QUICK
+    }
+
+    //region Race loading states
+
+    @Test
+    fun `race data with null value and no internet shows pull to refresh`() = coroutineTest {
+        every { mockRaceRepository.getRace(any(), any()) } returns flow { emit(null) }
+        every { mockConnectivityManager.isConnected } returns false
+
+        initSUT()
+        runBlockingTest {
+            sut.inputs.initialise(2020, 1)
+            sut.inputs.orderBy(RACE)
+        }
+        sut.outputs.raceItems.test {
+            assertValue(Pair(RACE, listOf(
+                RaceModel.errorItemModel(SyncDataItem.PullRefresh)
+            )))
+        }
+    }
+
+    @Test
+    fun `race data with null value and internet shows race data empty`() = coroutineTest {
+        every { mockRaceRepository.getRace(any(), any()) } returns flow { emit(null) }
+        every { mockConnectivityManager.isConnected } returns true
+
+        initSUT()
+        sut.inputs.initialise(2020, 1)
+        sut.outputs.raceItems.test {
+            assertValue(Pair(RACE, listOf(
+                RaceModel.errorItemModel(SyncDataItem.Unavailable(DataUnavailable.RACE_DATA_EMPTY))
+            )))
+        }
+    }
+
+    @Test
+    fun `race data with no data and date in the future shows race in future`() = coroutineTest {
+        every { mockRaceRepository.getRace(any(), any()) } returns flow { emit(
+            Race.model(
+                raceInfo = RaceInfo.model(
+                    date = LocalDate.now().plusDays(1)
+                ),
+                q1 = emptyMap(),
+                q2 = emptyMap(),
+                q3 = emptyMap(),
+                qSprint = emptyMap(),
+                race = emptyMap()
+            )
+        ) }
+        every { mockConnectivityManager.isConnected } returns true
+
+        initSUT()
+        sut.inputs.initialise(2020, 1)
+        sut.outputs.raceItems.test {
+            assertValue(Pair(RACE, listOf(
+                RaceModel.errorItemModel(SyncDataItem.Unavailable(DataUnavailable.RACE_IN_FUTURE))
+            )))
+        }
+    }
+
+    @Test
+    fun `race data with no data and date today shows coming soon`() = coroutineTest {
+        every { mockRaceRepository.getRace(any(), any()) } returns flow { emit(
+            Race.model(
+                raceInfo = RaceInfo.model(
+                    date = LocalDate.now()
+                ),
+                q1 = emptyMap(),
+                q2 = emptyMap(),
+                q3 = emptyMap(),
+                qSprint = emptyMap(),
+                race = emptyMap()
+            )
+        ) }
+        every { mockConnectivityManager.isConnected } returns true
+
+        initSUT()
+        sut.inputs.initialise(2020, 1)
+        sut.outputs.raceItems.test {
+            assertValue(Pair(RACE, listOf(
+                RaceModel.errorItemModel(SyncDataItem.Unavailable(DataUnavailable.COMING_SOON_RACE))
+            )))
+        }
+    }
+
+    @Test
+    fun `race data with no data and date within 10 days shows coming soon`() = coroutineTest {
+        every { mockRaceRepository.getRace(any(), any()) } returns flow { emit(
+            Race.model(
+                raceInfo = RaceInfo.model(
+                    date = LocalDate.now().minusDays(1L)
+                ),
+                q1 = emptyMap(),
+                q2 = emptyMap(),
+                q3 = emptyMap(),
+                qSprint = emptyMap(),
+                race = emptyMap()
+            )
+        ) }
+        every { mockConnectivityManager.isConnected } returns true
+
+        initSUT()
+        sut.inputs.initialise(2020, 1)
+        sut.outputs.raceItems.test {
+            assertValue(Pair(RACE, listOf(
+                RaceModel.errorItemModel(SyncDataItem.Unavailable(DataUnavailable.COMING_SOON_RACE))
+            )))
+        }
+    }
+
+    @Test
+    fun `race data with no data and date more than 10 days shows race data empty`() = coroutineTest {
+        every { mockRaceRepository.getRace(any(), any()) } returns flow { emit(
+            Race.model(
+                raceInfo = RaceInfo.model(
+                    date = LocalDate.now().minusDays(11L)
+                ),
+                q1 = emptyMap(),
+                q2 = emptyMap(),
+                q3 = emptyMap(),
+                qSprint = emptyMap(),
+                race = emptyMap()
+            )
+        ) }
+        every { mockConnectivityManager.isConnected } returns true
+
+        initSUT()
+        sut.inputs.initialise(2020, 1)
+        sut.outputs.raceItems.test {
+            assertValue(Pair(RACE, listOf(
+                RaceModel.errorItemModel(SyncDataItem.Unavailable(DataUnavailable.RACE_DATA_EMPTY))
+            )))
+        }
+    }
+
+    //endregion
+
+    //region Race display types
+
+    @Test
+    fun `race type displays race item`() = coroutineTest {
+        initSUT()
+        runBlockingTest {
+            sut.inputs.initialise(2020, 1)
+        }
+
+        sut.outputs.raceItems
+            .map { it.second }
+            .test {
+                latestValue!!.forEachIndexed { index, model ->
+                    when (model) {
+                        is RaceModel.Overview -> assertEquals(0, index)
+                        is RaceModel.Podium -> {
+                            assertEquals(1, index)
+                            assertEquals(driver1, model.driverFirst.driver)
+                            assertEquals(driver2, model.driverSecond.driver)
+                            assertEquals(driver4, model.driverThird.driver)
+                        }
+                        is RaceModel.RaceHeader -> assertEquals(2, index)
+                        is RaceModel.Single -> {
+                            assertEquals(3, index)
+                            assertEquals(driver3, model.driver)
+                        }
+                        else -> fail("Unexpected value")
+                    }
+                }
+            }
+    }
+
+    @Test
+    fun `qualifying type displays race item`() = coroutineTest {
+        initSUT()
+        runBlockingTest {
+            sut.inputs.initialise(2020, 1)
+            sut.inputs.orderBy(QUALIFYING_POS)
+        }
+
+        sut.outputs.raceItems
+            .map { it.second }
+            .test {
+                latestValue!!.forEachIndexed { index, model ->
+                    when (model) {
+                        is RaceModel.Overview -> assertEquals(0, index)
+                        is RaceModel.QualifyingHeader -> assertEquals(1, index)
+                        is RaceModel.Single -> {
+                            when (index) {
+                                2 -> assertEquals(driver2, model.driver)
+                                3 -> assertEquals(driver1, model.driver)
+                                4 -> assertEquals(driver3, model.driver)
+                                5 -> assertEquals(driver4, model.driver)
+                                else -> fail("Unexpected value")
+                            }
+                        }
+                        else -> fail("Unexpected value")
+                    }
+                }
+            }
+
+        runBlockingTest {
+            sut.inputs.orderBy(QUALIFYING_POS_1)
+        }
+
+        sut.outputs.raceItems
+            .map { it.second }
+            .test {
+                println(latestValue)
+                latestValue!!.forEachIndexed { index, model ->
+                    when (model) {
+                        is RaceModel.Overview -> assertEquals(0, index)
+                        is RaceModel.QualifyingHeader -> assertEquals(1, index)
+                        is RaceModel.Single -> {
+                            when (index) {
+                                2 -> assertEquals(driver2, model.driver)
+                                3 -> assertEquals(driver1, model.driver)
+                                4 -> assertEquals(driver3, model.driver)
+                                5 -> assertEquals(driver4, model.driver)
+                                else -> fail("Unexpected value")
+                            }
+                        }
+                        else -> fail("Unexpected value")
+                    }
+                }
+            }
+
+        runBlockingTest {
+            sut.inputs.orderBy(QUALIFYING_POS_2)
+        }
+
+        sut.outputs.raceItems
+            .map { it.second }
+            .test {
+                latestValue!!.forEachIndexed { index, model ->
+                    when (model) {
+                        is RaceModel.Overview -> assertEquals(0, index)
+                        is RaceModel.QualifyingHeader -> assertEquals(1, index)
+                        is RaceModel.Single -> {
+                            when (index) {
+                                2 -> assertEquals(driver2, model.driver)
+                                3 -> assertEquals(driver1, model.driver)
+                                4 -> assertEquals(driver3, model.driver)
+                                5 -> assertEquals(driver4, model.driver)
+                                else -> fail("Unexpected value")
+                            }
+                        }
+                        else -> fail("Unexpected value")
+                    }
+                }
+            }
+
+    }
+
+    @Test
+    fun `constructors type displays race item`() = coroutineTest {
+        initSUT()
+
+        runBlockingTest {
+            sut.inputs.initialise(2020, 1)
+            sut.inputs.orderBy(CONSTRUCTOR_STANDINGS)
+        }
+
+        sut.outputs.raceItems.test {
+            assertValue(Pair(CONSTRUCTOR_STANDINGS, listOf(
+                RaceModel.overviewModel(),
+                RaceModel.constructorStandingsModel(
+                    points = 25.0 + 18.0 + 15.0 + 12.0,
+                    driver = listOf(
+                        driver1.driver to 25.0,
+                        driver2.driver to 18.0,
+                        driver4.driver to 15.0,
+                        driver3.driver to 12.0,
+                    )
+                )
+            )))
+        }
+    }
+
+    //endregion
+
+    //region Request
+
+    @Test
+    fun `race requests is not made when should sync is false`() = coroutineTest {
+        coEvery { mockRaceRepository.shouldSyncRace(any(), any()) } returns false
+
+        initSUT()
+        runBlockingTest {
+            sut.inputs.initialise(2020, 1)
+            sut.inputs.orderBy(RACE)
+        }
+
+        coVerify(exactly = 0) {
+            mockRaceRepository.fetchRaces(any())
+        }
+    }
+
+    @Test
+    fun `race requests is made when should sync is true`() = coroutineTest {
+        coEvery { mockRaceRepository.shouldSyncRace(any(), any()) } returns true
+
+        initSUT()
+        sut.inputs.initialise(2020, 1)
+
+        sut.outputs.raceItems
+            .map { it.second }
+            .test {
+                assertListMatchesItem { it is RaceModel.RaceHeader }
+            }
+        coVerify {
+            mockRaceRepository.fetchRaces(any())
+        }
+    }
+
+    //endregion
+
+    //region Go to driver
+
+    @Test
+    fun `go to driver fires go to driver event`() = coroutineTest {
+        val id: String = "driverId"
+        val name: String = "name"
+
+        initSUT()
+        sut.inputs.goToDriver(id, name)
+        sut.outputs.goToDriverOverview.test {
+            assertDataEventValue(Pair(id, name))
+        }
+    }
+
+    //endregion
+
+    //region Go to constructor
+
+    @Test
+    fun `go to constructor fires go to constructor event`() = coroutineTest {
+    val id: String = "constructorId"
+        val name: String = "name"
+
+        initSUT()
+        sut.inputs.goToConstructor(id, name)
+        sut.outputs.goToConstructorOverview.test {
+            assertDataEventValue(Pair(id, name))
+        }
+    }
+
+    //endregion
+
+    //region Qualifying delta toggle
+
+    @Test
+    fun `toggle qualifying delta`() = coroutineTest {
+        initSUT()
+        runBlockingTest {
+            sut.initialise(2020, 1)
+            sut.inputs.orderBy(QUALIFYING_POS)
+        }
+
+        sut.outputs.raceItems
+            .map { it.second }
+            .test {
+                assertListMatchesItem { it is RaceModel.QualifyingHeader && !it.displayPrefs.deltas }
+            }
+
+        sut.inputs.toggleQualifyingDelta(true)
+
+        sut.outputs.raceItems
+            .map { it.second }
+            .test {
+                assertListMatchesItem { it is RaceModel.QualifyingHeader && it.displayPrefs.deltas }
+            }
+    }
+
+    //endregion
+
+    //region Refresh
+
+    @Test
+    fun `refresh calls overview and race repos and show loading false when done`() = coroutineTest {
+        initSUT()
+        sut.inputs.initialise(2020, 1)
+
+        runBlockingTest {
+            sut.inputs.refresh()
+        }
+
+        coVerify {
+            mockRaceRepository.fetchRaces(any())
+        }
+        sut.outputs.showLoading.test {
+            assertValue(false)
+        }
+    }
+
+    //endregion
+}
 
 //internal class RaceViewModelTest: BaseTest() {
 //

@@ -109,8 +109,6 @@ class SeasonViewModel(
     override val list: LiveData<List<SeasonItem>> = combine(seasonWithRequest, menuItem) { season, menuItem -> Pair(season, menuItem) }
         .flatMapLatest { (season, menuItem) ->
 
-            println("GETTING HERE! 1")
-
             analyticsManager.logEvent(menuItem.analyticsLabel, mapOf(
                 "season" to season.toString()
             ))
@@ -120,8 +118,6 @@ class SeasonViewModel(
                     emit(listOf<SeasonItem>(SeasonItem.ErrorItem(SyncDataItem.Skeleton)))
                 }
             }
-
-            println("GETTING HERE! $menuItem")
 
             return@flatMapLatest when (menuItem) {
                 SeasonNavItem.SCHEDULE -> getScheduleView(season, false)
