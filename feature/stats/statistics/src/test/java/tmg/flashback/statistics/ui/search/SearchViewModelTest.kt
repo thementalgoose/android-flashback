@@ -198,7 +198,9 @@ internal class SearchViewModelTest: BaseTest() {
     fun `refresh when category is overview fetches overview`() = coroutineTest {
         initSUT()
         sut.inputs.inputCategory(SearchCategory.RACE)
-        sut.inputs.refresh()
+        runBlockingTest {
+            sut.inputs.refresh()
+        }
 
         coVerify {
             mockOverviewRepository.fetchOverview()

@@ -4,13 +4,13 @@ import androidx.annotation.AttrRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.lifecycle.*
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import tmg.core.device.managers.NetworkConnectivityManager
 import tmg.flashback.statistics.ui.overview.driver.summary.DriverSummaryItem
 import tmg.flashback.statistics.ui.overview.driver.summary.PipeType
-import tmg.flashback.statistics.ui.overview.driver.summary.addError
 import tmg.flashback.formula1.model.DriverHistory
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.statistics.R
@@ -50,7 +50,8 @@ interface DriverViewModelOutputs {
 @Suppress("EXPERIMENTAL_API_USAGE")
 class DriverViewModel(
     private val driverRepository: DriverRepository,
-    private val networkConnectivityManager: NetworkConnectivityManager
+    private val networkConnectivityManager: NetworkConnectivityManager,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), DriverViewModelInputs, DriverViewModelOutputs {
 
     var inputs: DriverViewModelInputs = this
@@ -76,7 +77,7 @@ class DriverViewModel(
                 }
             }
         }
-        .flowOn(Dispatchers.IO)
+        .flowOn(ioDispatcher)
 
     override val list: LiveData<List<DriverSummaryItem>> = driverIdWithRequest
         .flatMapLatest { id ->
@@ -90,21 +91,23 @@ class DriverViewModel(
             return@flatMapLatest driverRepository.getDriverOverview(id)
                 .map {
                     val list: MutableList<DriverSummaryItem> = mutableListOf()
+                    if (it != null) {
+                        list.add(
+                            DriverSummaryItem.Header(
+                                driverFirstname = it.driver.firstName,
+                                driverSurname = it.driver.lastName,
+                                driverNumber = it.driver.number ?: 0,
+                                driverImg = it.driver.photoUrl ?: "",
+                                driverBirthday = it.driver.dateOfBirth,
+                                driverWikiUrl = it.driver.wikiUrl ?: "",
+                                driverNationalityISO = it.driver.nationalityISO
+                            )
+                        )
+                    }
                     when {
                         (it == null || it.standings.isEmpty()) && !isConnected -> list.addError(SyncDataItem.PullRefresh)
                         (it == null || it.standings.isEmpty()) -> list.addError(SyncDataItem.Unavailable(DataUnavailable.CONSTRUCTOR_HISTORY_INTERNAL_ERROR))
                         else -> {
-                            list.add(
-                                DriverSummaryItem.Header(
-                                    driverFirstname = it.driver.firstName,
-                                    driverSurname = it.driver.lastName,
-                                    driverNumber = it.driver.number ?: 0,
-                                    driverImg = it.driver.photoUrl ?: "",
-                                    driverBirthday = it.driver.dateOfBirth,
-                                    driverWikiUrl = it.driver.wikiUrl ?: "",
-                                    driverNationalityISO = it.driver.nationalityISO
-                                ))
-
                             if (it.hasChampionshipCurrentlyInProgress) {
                                 val latestRound = it.standings.maxByOrNull { it.season }?.raceOverview?.maxByOrNull { it.raceInfo.round }
                                 if (latestRound != null) {
@@ -158,7 +161,7 @@ class DriverViewModel(
         this.refresh(driverId.value)
     }
     private fun refresh(driverId: String? = this.driverId.value) {
-        viewModelScope.launch(context = Dispatchers.IO) {
+        viewModelScope.launch(context = ioDispatcher) {
             driverId?.let {
                 val result = driverRepository.fetchDriver(driverId)
                 showLoading.postValue(false)
@@ -290,7 +293,7 @@ class DriverViewModel(
             }
     }
 
-    fun getPipeType(current: Int, newer: Int?, prev: Int?): PipeType {
+    private fun getPipeType(current: Int, newer: Int?, prev: Int?): PipeType {
         if (newer == null && prev == null) {
             return PipeType.SINGLE
         }
@@ -321,5 +324,13 @@ class DriverViewModel(
                 }
             }
         }
+    }
+
+    private fun MutableList<DriverSummaryItem>.addError(syncDataItem: SyncDataItem) {
+        this.add(
+            DriverSummaryItem.ErrorItem(
+                syncDataItem
+            )
+        )
     }
 }

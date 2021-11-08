@@ -50,16 +50,10 @@ sealed class DriverSummaryItem(
     ): DriverSummaryItem(item.layoutId)
 
     object Loading: DriverSummaryItem(R.layout.view_loading_podium)
+
+    companion object
 }
 
-
-fun MutableList<DriverSummaryItem>.addError(syncDataItem: SyncDataItem) {
-    this.add(
-        DriverSummaryItem.ErrorItem(
-            syncDataItem
-        )
-    )
-}
 
 enum class PipeType {
     SINGLE,
