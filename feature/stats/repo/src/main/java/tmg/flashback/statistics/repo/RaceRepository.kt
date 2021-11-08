@@ -14,6 +14,7 @@ import tmg.flashback.statistics.repo.base.BaseRepository
 import tmg.flashback.statistics.repo.extensions.valueList
 import tmg.flashback.statistics.repo.mappers.app.RaceMapper
 import tmg.flashback.statistics.repo.mappers.network.*
+import tmg.flashback.statistics.repo.repository.CacheRepository
 import tmg.flashback.statistics.room.FlashbackDatabase
 
 class RaceRepository(
@@ -28,7 +29,7 @@ class RaceRepository(
     private val networkConstructorStandingMapper: NetworkConstructorStandingMapper,
     private val networkScheduleMapper: NetworkScheduleMapper,
     private val raceMapper: RaceMapper,
-    private val preferenceManager: PreferenceManager
+    private val cacheRepository: CacheRepository
 ): BaseRepository(crashController) {
 
     /**
@@ -63,7 +64,9 @@ class RaceRepository(
         persistence.seasonDao().insertRaces(raceData, qualifyingResults, raceResults)
         persistence.scheduleDao().replaceAllForSeason(season, schedules)
 
-        addSyncedSeason(season)
+        val set = cacheRepository.seasonsSyncAtLeastOnce.toMutableSet()
+        set.add(season)
+        cacheRepository.seasonsSyncAtLeastOnce = set
 
         return@attempt true
     }
@@ -107,10 +110,10 @@ class RaceRepository(
     }
 
     suspend fun shouldSyncRace(season: Int): Boolean {
-        return !syncedSeasons.contains(season)
+        return !cacheRepository.seasonsSyncAtLeastOnce.contains(season)
     }
     suspend fun shouldSyncRace(season: Int, round: Int): Boolean {
-        return !syncedSeasons.contains(season)
+        return shouldSyncRace(season)
     }
 
     private fun saveConstructorStandings(season: Int, constructors: Map<String, ConstructorStandings>?) {
@@ -148,20 +151,5 @@ class RaceRepository(
         val items = (drivers?.values ?: emptyList())
             .map { networkDriverDataMapper.mapDriverData(it) }
         persistence.driverDao().insertAll(items)
-    }
-
-    private fun addSyncedSeason(season: Int) {
-        val existing = syncedSeasons.toMutableList()
-        existing.add(season)
-        syncedSeasons = existing.toSet()
-    }
-    private var syncedSeasons: Set<Int>
-        get() = preferenceManager.getSet(keySyncedSeasons, emptySet()).mapNotNull { it.toIntOrNull() }.toSet()
-        set(value) {
-            preferenceManager.save(keySyncedSeasons, value.map { it.toString() }.toSet())
-        }
-
-    companion object {
-        private const val keySyncedSeasons: String = "syncedSeasons"
     }
 }
