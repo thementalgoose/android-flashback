@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -53,7 +54,8 @@ class SearchViewModel(
     private val driverRepository: DriverRepository,
     private val constructorRepository: ConstructorRepository,
     private val circuitRepository: CircuitRepository,
-    private val overviewRepository: OverviewRepository
+    private val overviewRepository: OverviewRepository,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), SearchViewModelInputs, SearchViewModelOutputs {
 
     var inputs: SearchViewModelInputs = this
@@ -136,7 +138,7 @@ class SearchViewModel(
     }
 
     override fun refresh() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(ioDispatcher) {
             when (category.value) {
                 SearchCategory.DRIVER -> {
                     val result = driverRepository.fetchDrivers()
