@@ -35,7 +35,8 @@ internal class SearchViewModelTest: BaseTest() {
             mockDriversRepository,
             mockConstructorsRepository,
             mockCircuitRepository,
-            mockOverviewRepository
+            mockOverviewRepository,
+            ioDispatcher = coroutineScope.testDispatcher
         )
     }
 
@@ -199,8 +200,8 @@ internal class SearchViewModelTest: BaseTest() {
     @Test
     fun `refresh when category is overview fetches overview`() = coroutineTest {
         initSUT()
-        sut.inputs.inputCategory(SearchCategory.RACE)
         runBlockingTest {
+            sut.inputs.inputCategory(SearchCategory.RACE)
             sut.inputs.refresh()
         }
 
