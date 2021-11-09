@@ -155,8 +155,10 @@ internal class SearchViewModelTest: BaseTest() {
     @Test
     fun `refresh when category is drivers fetches drivers`() = coroutineTest {
         initSUT()
-        sut.inputs.inputCategory(SearchCategory.DRIVER)
-        sut.inputs.refresh()
+        runBlockingTest {
+            sut.inputs.inputCategory(SearchCategory.DRIVER)
+            sut.inputs.refresh()
+        }
 
         coVerify {
             mockDriversRepository.fetchDrivers()
