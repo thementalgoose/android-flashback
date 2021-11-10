@@ -2,7 +2,8 @@
     <!-- Splash -->
     <string name="splash_continue">Continue</string>
     <string name="splash_sync_info">Synchronising…</string>
-    <string name="splash_sync_required_failed">We need to sync some information to continue. Please make sure you have an active internet connection and try any failed items again by clicking on them (you\'ll only need to do this once)</string>
+    <string name="splash_sync_try_again">Try again</string>
+    <string name="splash_sync_required_failed">We need to sync some information to continue. Please make sure you have an active internet connection and try again (you\'ll only need to do this once)</string>
 
     <string name="splash_sync_config">Configuration…</string>
 

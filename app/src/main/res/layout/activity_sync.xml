@@ -22,38 +22,44 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/syncContainer"
+    <TextView
+        app:layout_constraintBottom_toTopOf="@id/tryAgain"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="@dimen/paddingLarge"
+        android:layout_marginEnd="@dimen/paddingLarge"
+        android:id="@+id/failedToSync"
+        style="@style/Text.Sync.Message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/paddingMedium"
-        android:layout_marginEnd="@dimen/paddingMedium"
+        android:layout_marginBottom="@dimen/paddingMedium"
+        android:gravity="center"
+        android:importantForAccessibility="no"
+        android:text="@string/splash_sync_required_failed"
+        android:visibility="invisible"
+        tools:visibility="visible" />
+
+    <Button
+        android:id="@+id/tryAgain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/paddingLarge"
-        android:orientation="vertical"
+        android:text="@string/splash_sync_try_again"
+        android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/title"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <TextView
-            android:id="@+id/failedToSync"
-            style="@style/Text.Sync.Message"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/paddingMedium"
-            android:gravity="center"
-            android:importantForAccessibility="no"
-            android:text="@string/splash_sync_required_failed"
-            android:visibility="invisible"
-            tools:visibility="visible" />
-
-        <ProgressBar
-            android:id="@+id/progress"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="match_parent"
-            android:layout_height="32dp"
-            android:indeterminate="true"
-            android:indeterminateTint="@color/white" />
-
-    </LinearLayout>
+    <ProgressBar
+        android:id="@+id/progress"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/white"
+        app:layout_constraintBottom_toBottomOf="@id/tryAgain"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tryAgain" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

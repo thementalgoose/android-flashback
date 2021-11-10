@@ -13,6 +13,7 @@ import tmg.flashback.ui.dashboard.HomeActivity
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 import tmg.utilities.extensions.setStatusBarColor
+import tmg.utilities.extensions.views.gone
 import tmg.utilities.extensions.views.invisible
 import tmg.utilities.extensions.views.show
 import tmg.utilities.extensions.views.visible
@@ -31,16 +32,35 @@ class SyncActivity: BaseActivity() {
 
         setStatusBarColor(ContextCompat.getColor(this, R.color.splash_screen))
 
+        binding.tryAgain.setOnClickListener {
+            viewModel.inputs.startLoading()
+        }
+
         observe(viewModel.outputs.loadingState) {
             when (it) {
-                SyncState.LOADING -> binding.progress.visible()
+                SyncState.LOADING -> {
+                    binding.progress.visible()
+                    binding.tryAgain.invisible()
+                }
                 SyncState.DONE -> binding.progress.visible()
-                SyncState.FAILED -> binding.progress.invisible()
+                SyncState.FAILED -> {
+                    binding.progress.invisible()
+                    binding.tryAgain.visible()
+                }
             }
         }
 
         observe(viewModel.outputs.showRetry) {
-            binding.failedToSync.show(it)
+            when (it) {
+                true -> {
+                    binding.failedToSync.visible()
+                    binding.tryAgain.visible()
+                }
+                false -> {
+                    binding.failedToSync.gone()
+                    binding.tryAgain.invisible()
+                }
+            }
         }
 
         observeEvent(viewModel.outputs.navigate) {
