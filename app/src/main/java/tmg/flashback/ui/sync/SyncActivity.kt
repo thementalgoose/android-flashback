@@ -1,4 +1,4 @@
-package tmg.flashback.ui
+package tmg.flashback.ui.sync
 
 import android.content.Intent
 import android.os.Bundle
@@ -31,26 +31,16 @@ class SyncActivity: BaseActivity() {
 
         setStatusBarColor(ContextCompat.getColor(this, R.color.splash_screen))
 
-        observe(viewModel.outputs.configState) {
-            binding.setup.updateTo(it)
+        observe(viewModel.outputs.loadingState) {
             when (it) {
-                SyncState.FAILED -> binding.failedToSync.visible()
-                SyncState.LOADING -> { }
-                SyncState.DONE -> { }
+                SyncState.LOADING -> binding.progress.visible()
+                SyncState.DONE -> binding.progress.visible()
+                SyncState.FAILED -> binding.progress.invisible()
             }
         }
 
-        observe(viewModel.outputs.circuitsState) {
-            binding.circuits.updateTo(it)
-        }
-        observe(viewModel.outputs.constructorsState) {
-            binding.constructors.updateTo(it)
-        }
-        observe(viewModel.outputs.driversState) {
-            binding.drivers.updateTo(it)
-        }
-        observe(viewModel.outputs.racesState) {
-            binding.races.updateTo(it)
+        observe(viewModel.outputs.showRetry) {
+            binding.failedToSync.show(it)
         }
 
         observeEvent(viewModel.outputs.navigate) {
@@ -66,35 +56,7 @@ class SyncActivity: BaseActivity() {
             }
         }
 
-        binding.setup.label.text = getString(R.string.splash_sync_config)
-        binding.circuits.label.text = getString(R.string.splash_sync_circuits)
-        binding.constructors.label.text = getString(R.string.splash_sync_constructors)
-        binding.drivers.label.text = getString(R.string.splash_sync_drivers)
-        binding.races.label.text = getString(R.string.splash_sync_races)
-
-
-        binding.setup.container.setOnClickListener {
-            viewModel.inputs.startRemoteConfig()
-        }
-        binding.circuits.container.setOnClickListener {
-            viewModel.inputs.startSyncCircuits()
-        }
-        binding.constructors.container.setOnClickListener {
-            viewModel.inputs.startSyncConstructors()
-        }
-        binding.drivers.container.setOnClickListener {
-            viewModel.inputs.startSyncDrivers()
-        }
-        binding.races.container.setOnClickListener {
-            viewModel.inputs.startSyncRaces()
-        }
-
-
-        viewModel.inputs.startRemoteConfig()
-        viewModel.inputs.startSyncCircuits()
-        viewModel.inputs.startSyncConstructors()
-        viewModel.inputs.startSyncDrivers()
-        viewModel.inputs.startSyncRaces()
+        viewModel.inputs.startLoading()
     }
 
     private fun ViewSyncItemBinding.updateTo(state: SyncState) {

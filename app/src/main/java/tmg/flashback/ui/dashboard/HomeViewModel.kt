@@ -11,6 +11,7 @@ import tmg.crash_reporting.controllers.CrashController
 import tmg.flashback.BuildConfig
 import tmg.flashback.managers.appshortcuts.AppShortcutManager
 import tmg.flashback.rss.controllers.RSSController
+import tmg.flashback.statistics.repo.repository.CacheRepository
 import tmg.flashback.upnext.controllers.UpNextController
 
 //region Inputs
@@ -39,6 +40,7 @@ class HomeViewModel(
     private val crashController: CrashController,
     private val forceUpgradeController: ForceUpgradeController,
     private val shortcutManager: AppShortcutManager,
+    private val cacheRepository: CacheRepository,
     private val upNextController: UpNextController
 ): ViewModel(), HomeViewModelInputs, HomeViewModelOutputs {
 
@@ -50,7 +52,7 @@ class HomeViewModel(
 
     override fun initialise() {
         when {
-            configurationController.requireSynchronisation -> {
+            configurationController.requireSynchronisation || !cacheRepository.initialSync -> {
                 requiresSync = true
             }
             forceUpgradeController.shouldForceUpgrade -> {

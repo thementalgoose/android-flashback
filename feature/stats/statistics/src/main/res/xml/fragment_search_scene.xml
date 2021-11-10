@@ -10,6 +10,12 @@
             android:orientation="horizontal"
             app:layout_constraintGuide_begin="@dimen/toolbarHeight" />
         <Constraint
+            android:id="@id/progress">
+            <PropertySet
+                app:applyMotionScene="false"
+                app:visibilityMode="ignore" />
+        </Constraint>
+        <Constraint
             android:id="@+id/swipeRefresh"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -19,6 +25,12 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/titleExpanded"
             app:layout_constraintVertical_bias="0.0" />
+        <Constraint
+            android:id="@id/progress">
+            <PropertySet
+                app:applyMotionScene="false"
+                app:visibilityMode="ignore" />
+        </Constraint>
 
     </ConstraintSet>
 

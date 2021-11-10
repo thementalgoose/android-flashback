@@ -4,6 +4,7 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
@@ -16,8 +17,32 @@ internal class RepoCacheRepositoryTest {
 
     private lateinit var sut: RepoCacheRepository
 
+    @BeforeEach
+    internal fun setUp() {
+        every { mockPreferenceManager.getBoolean(keyInitialSync, false) } returns false
+    }
+
     private fun initSUT() {
         sut = RepoCacheRepository(mockPreferenceManager)
+    }
+
+    @Test
+    fun `initial sync reads value from preference manager`() {
+        every { mockPreferenceManager.getBoolean(keyInitialSync, false) } returns true
+        initSUT()
+        assertTrue(sut.initialSync)
+        verify {
+            mockPreferenceManager.getBoolean(keyInitialSync, false)
+        }
+    }
+
+    @Test
+    fun `initial sync value saves to preference manager`() {
+        initSUT()
+        sut.initialSync = true
+        verify {
+            mockPreferenceManager.save(keyInitialSync, true)
+        }
     }
 
     @Test
@@ -90,6 +115,7 @@ internal class RepoCacheRepositoryTest {
         private val localDateTimeFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm", Locale.ENGLISH)
 
         private const val keyLastSyncTime: String = "REPO_SEASON_LAST_SYNCED"
+        private const val keyInitialSync: String = "REPO_INITIAL_SYNC"
         private const val keyPreviouslyDownloaded: String = "REPO_HAS_DOWNLOADED_AT_LEAST_ONCE"
     }
 }
