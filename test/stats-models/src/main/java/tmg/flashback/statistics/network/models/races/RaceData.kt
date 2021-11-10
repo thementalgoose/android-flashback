@@ -7,7 +7,7 @@ fun RaceData.Companion.model(
     season: Int = 2020,
     round: Int = 1,
     name: String = "name",
-    date: String = "1995-10-12",
+    date: String = "2020-10-12",
     time: String? = "12:34",
     circuit: Circuit = Circuit.model(),
     wikiUrl: String? = "wikiUrl",

@@ -9,9 +9,13 @@ import tmg.core.prefs.manager.PreferenceManager
 import tmg.flashback.statistics.repo.constants.CacheTimeout
 import java.util.*
 
-internal class RepoCacheRepository(
+class RepoCacheRepository(
     private val preferenceManager: PreferenceManager
 ): CacheRepository {
+
+    override var initialSync: Boolean
+        get() = preferenceManager.getBoolean(keyInitialSync, false)
+        set(value) { preferenceManager.save(keyInitialSync, value) }
 
     override fun shouldSyncCurrentSeason(): Boolean {
         val result = preferenceManager.getString(keyLastSyncTime, null) ?: return true
@@ -43,6 +47,7 @@ internal class RepoCacheRepository(
         private val localDateTimeFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm", Locale.ENGLISH)
 
         private const val keyLastSyncTime: String = "REPO_SEASON_LAST_SYNCED"
+        private const val keyInitialSync: String = "REPO_INITIAL_SYNC"
         private const val keyPreviouslyDownloaded: String = "REPO_HAS_DOWNLOADED_AT_LEAST_ONCE"
     }
 }

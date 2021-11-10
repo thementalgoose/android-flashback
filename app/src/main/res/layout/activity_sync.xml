@@ -46,35 +46,13 @@
             android:visibility="invisible"
             tools:visibility="visible" />
 
-        <include
-            android:id="@+id/setup"
-            layout="@layout/view_sync_item" />
-
-        <include
-            android:id="@+id/races"
-            layout="@layout/view_sync_item" />
-
-        <include
-            android:id="@+id/circuits"
-            layout="@layout/view_sync_item" />
-
-        <include
-            android:id="@+id/drivers"
-            layout="@layout/view_sync_item" />
-
-        <include
-            android:id="@+id/constructors"
-            layout="@layout/view_sync_item" />
-
-        <!--        <Button-->
-        <!--            android:id="@+id/proceed"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_marginTop="@dimen/paddingMedium"-->
-        <!--            android:layout_marginBottom="@dimen/paddingMedium"-->
-        <!--            android:background="@drawable/background_input"-->
-        <!--            android:text="@string/splash_continue"-->
-        <!--            android:textAllCaps="false" />-->
+        <ProgressBar
+            android:id="@+id/progress"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/white" />
 
     </LinearLayout>
 

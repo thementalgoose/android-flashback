@@ -6,4 +6,6 @@ interface CacheRepository {
     fun markedCurrentSeasonSynchronised()
 
     var seasonsSyncAtLeastOnce: Set<Int>
+
+    var initialSync: Boolean
 }
