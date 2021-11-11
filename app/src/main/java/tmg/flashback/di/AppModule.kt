@@ -2,10 +2,10 @@ package tmg.flashback.di
 
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
-import tmg.core.device.managers.BuildConfigManager
-import tmg.core.prefs.manager.PreferenceManager
-import tmg.core.ui.managers.StyleManager
-import tmg.core.ui.navigation.NavigationProvider
+import tmg.flashback.device.managers.BuildConfigManager
+import tmg.flashback.prefs.manager.PreferenceManager
+import tmg.flashback.ui.managers.StyleManager
+import tmg.flashback.ui.navigation.NavigationProvider
 import tmg.flashback.DebugController
 import tmg.flashback.FlashbackStartup
 import tmg.flashback.managers.appshortcuts.AndroidAppShortcutManager
@@ -24,7 +24,7 @@ import tmg.flashback.ui.dashboard.DashboardViewModel
 import tmg.flashback.ui.dashboard.HomeViewModel
 import tmg.flashback.ui.dashboard.list.ListViewModel
 import tmg.flashback.ui.settings.SettingsAllViewModel
-import tmg.notifications.navigation.NotificationNavigationProvider
+import tmg.flashback.notifications.navigation.NotificationNavigationProvider
 
 val appModule = module {
 

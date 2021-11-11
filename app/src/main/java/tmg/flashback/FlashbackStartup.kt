@@ -8,16 +8,16 @@ import com.github.stkent.bugshaker.flow.dialog.AlertDialogType
 import com.jakewharton.threetenabp.AndroidThreeTen
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import tmg.crash_reporting.controllers.CrashController
-import tmg.core.device.controllers.DeviceController
-import tmg.core.analytics.UserProperty.*
-import tmg.core.analytics.manager.AnalyticsManager
+import tmg.flashback.crash_reporting.controllers.CrashController
+import tmg.flashback.device.controllers.DeviceController
+import tmg.flashback.analytics.UserProperty.*
+import tmg.flashback.analytics.manager.AnalyticsManager
 import tmg.flashback.managers.widgets.WidgetManager
-import tmg.core.ui.controllers.ThemeController
-import tmg.core.ui.model.NightMode
+import tmg.flashback.ui.controllers.ThemeController
+import tmg.flashback.ui.model.NightMode
 import tmg.flashback.upnext.extensions.updateAllWidgets
 import tmg.flashback.upnext.model.NotificationChannel
-import tmg.notifications.controllers.NotificationController
+import tmg.flashback.notifications.controllers.NotificationController
 import tmg.utilities.extensions.isInDayMode
 
 /**

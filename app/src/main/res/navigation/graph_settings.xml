@@ -54,7 +54,7 @@
 
     <fragment
         android:id="@+id/settingsAppearanceFragment"
-        android:name="tmg.common.ui.settings.appearance.SettingsAppearanceFragment"
+        android:name="tmg.flashback.common.ui.settings.appearance.SettingsAppearanceFragment"
         android:label="SettingsDeviceFragment" />
     <fragment
         android:id="@+id/settingsStatisticsFragment"
@@ -67,10 +67,10 @@
         android:label="SettingsNotificationFragment" />
     <fragment
         android:id="@+id/settingsSupportFragment"
-        android:name="tmg.common.ui.settings.support.SettingsSupportFragment"
+        android:name="tmg.flashback.common.ui.settings.support.SettingsSupportFragment"
         android:label="SettingsNotificationFragment" />
     <fragment
         android:id="@+id/settingsAboutFragment"
-        android:name="tmg.common.ui.settings.about.SettingsAboutFragment"
+        android:name="tmg.flashback.common.ui.settings.about.SettingsAboutFragment"
         android:label="SettingsAboutFragment" />
 </navigation>

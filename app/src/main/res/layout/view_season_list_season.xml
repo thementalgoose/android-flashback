@@ -80,7 +80,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@drawable/ic_star_filled" />
 
-    <tmg.core.ui.views.CircleView
+    <tmg.flashback.ui.views.CircleView
         android:id="@+id/cardview"
         android:layout_width="@dimen/seasonListCircleSize"
         android:layout_height="@dimen/seasonListCircleSize"
@@ -93,7 +93,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:background="?attr/colorPrimary" />
 
-    <tmg.core.ui.views.CircleView
+    <tmg.flashback.ui.views.CircleView
         android:id="@+id/highlight"
         android:layout_width="@dimen/seasonListCircleSelectedSize"
         android:layout_height="@dimen/seasonListCircleSelectedSize"

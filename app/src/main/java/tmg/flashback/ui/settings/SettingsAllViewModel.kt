@@ -2,8 +2,6 @@ package tmg.flashback.ui.settings
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import tmg.core.ui.settings.SettingsModel
-import tmg.core.ui.settings.SettingsViewModel
 import tmg.flashback.R
 import tmg.flashback.rss.controllers.RSSController
 import tmg.utilities.lifecycle.Event

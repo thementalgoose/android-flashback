@@ -4,8 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.core.content.ContextCompat
 import org.koin.android.viewmodel.ext.android.viewModel
-import tmg.common.ui.forceupgrade.ForceUpgradeActivity
-import tmg.core.ui.base.BaseActivity
+import tmg.flashback.common.ui.forceupgrade.ForceUpgradeActivity
+import tmg.flashback.ui.base.BaseActivity
 import tmg.flashback.R
 import tmg.flashback.databinding.ActivitySyncBinding
 import tmg.flashback.databinding.ViewSyncItemBinding
@@ -15,7 +15,6 @@ import tmg.utilities.extensions.observeEvent
 import tmg.utilities.extensions.setStatusBarColor
 import tmg.utilities.extensions.views.gone
 import tmg.utilities.extensions.views.invisible
-import tmg.utilities.extensions.views.show
 import tmg.utilities.extensions.views.visible
 
 class SyncActivity: BaseActivity() {

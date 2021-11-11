@@ -8,9 +8,9 @@ import io.mockk.verify
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.common.controllers.ForceUpgradeController
-import tmg.configuration.controllers.ConfigController
-import tmg.crash_reporting.controllers.CrashController
+import tmg.flashback.common.controllers.ForceUpgradeController
+import tmg.flashback.configuration.controllers.ConfigController
+import tmg.flashback.crash_reporting.controllers.CrashController
 import tmg.flashback.managers.appshortcuts.AppShortcutManager
 import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.statistics.repo.repository.CacheRepository

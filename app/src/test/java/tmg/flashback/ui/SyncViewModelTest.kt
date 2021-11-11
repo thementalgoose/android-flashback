@@ -1,12 +1,10 @@
 package tmg.flashback.ui
 
 import io.mockk.*
-import kotlinx.coroutines.test.runBlockingTest
-import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.common.controllers.ForceUpgradeController
-import tmg.configuration.controllers.ConfigController
+import tmg.flashback.common.controllers.ForceUpgradeController
+import tmg.flashback.configuration.controllers.ConfigController
 import tmg.flashback.managers.appshortcuts.AppShortcutManager
 import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.statistics.repo.CircuitRepository
@@ -14,8 +12,6 @@ import tmg.flashback.statistics.repo.ConstructorRepository
 import tmg.flashback.statistics.repo.DriverRepository
 import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.statistics.repo.repository.CacheRepository
-import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
-import tmg.flashback.ui.sync.SyncNavTarget
 import tmg.flashback.ui.sync.SyncNavTarget.DASHBOARD
 import tmg.flashback.ui.sync.SyncNavTarget.FORCE_UPGRADE
 import tmg.flashback.ui.sync.SyncState

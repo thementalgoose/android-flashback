@@ -6,7 +6,7 @@ import io.mockk.verify
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.configuration.manager.ConfigManager
+import tmg.flashback.configuration.manager.ConfigManager
 import tmg.flashback.BuildConfig
 
 internal class NetworkConfigRepositoryTest {
