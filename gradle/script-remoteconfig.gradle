@@ -80,6 +80,10 @@ task generateRemoteConfigDefaults {
                 key('material_you')
                 value('false')
             }
+            entry {
+                key('config_url')
+                value(project.ext.baseUrl)
+            }
         }
     }
 

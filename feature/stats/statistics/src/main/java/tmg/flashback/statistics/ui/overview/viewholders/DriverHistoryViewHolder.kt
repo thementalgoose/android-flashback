@@ -7,7 +7,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import tmg.flashback.data.models.stats.SlimConstructor
+import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.ViewDriverSummaryHistoryBinding
 import tmg.flashback.statistics.ui.overview.driver.season.DriverSeasonItem
@@ -66,7 +66,7 @@ open class DriverHistoryViewHolder(
 
     open fun bind(
         season: Int?,
-        constructors: List<SlimConstructor>,
+        constructors: List<Constructor>,
         type: PipeType,
         isChampionship: Boolean
     ) {

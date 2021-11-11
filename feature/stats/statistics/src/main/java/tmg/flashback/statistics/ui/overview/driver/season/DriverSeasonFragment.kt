@@ -50,7 +50,6 @@ class DriverSeasonFragment: BaseFragment<FragmentDriverSeasonBinding>() {
         binding.titleExpanded.text = "$driverName\n$season"
         binding.titleCollapsed.text = "$driverName $season"
 
-        binding.swipeRefresh.isEnabled = false
         seasonAdapter = DriverSeasonAdapter(
                 itemClicked = viewModel.inputs::clickSeasonRound
         )
@@ -61,8 +60,16 @@ class DriverSeasonFragment: BaseFragment<FragmentDriverSeasonBinding>() {
             activity?.onBackPressed()
         }
 
+        binding.swipeRefresh.setOnRefreshListener {
+            viewModel.inputs.refresh()
+        }
+
         observe(viewModel.outputs.list) {
             seasonAdapter.list = it
+        }
+
+        observe(viewModel.outputs.isLoading) {
+            binding.swipeRefresh.isRefreshing = it
         }
 
         observeEvent(viewModel.outputs.openSeasonRound) { result ->

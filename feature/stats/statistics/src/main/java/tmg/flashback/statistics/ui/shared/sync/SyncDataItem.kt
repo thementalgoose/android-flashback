@@ -8,6 +8,8 @@ import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
 sealed class SyncDataItem(
     @LayoutRes val layoutId: Int
 ) {
+    object PullRefresh: SyncDataItem(R.layout.view_shared_no_network)
+
     object NoNetwork: SyncDataItem(R.layout.view_shared_no_network)
 
     object ConstructorsChampionshipNotAwarded: SyncDataItem(R.layout.view_shared_constructor_championship_not_awarded)
@@ -33,4 +35,6 @@ sealed class SyncDataItem(
     data class ProvidedBy(
         val uuid: String = "provided_by"
     ): SyncDataItem(R.layout.view_shared_provided)
+
+    object Skeleton : SyncDataItem(R.layout.view_shared_skeleton)
 }

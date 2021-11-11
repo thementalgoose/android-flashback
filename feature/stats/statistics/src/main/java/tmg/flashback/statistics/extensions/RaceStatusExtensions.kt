@@ -1,7 +1,7 @@
 package tmg.flashback.statistics.extensions
 
-import tmg.flashback.data.enums.RaceStatus
-import tmg.flashback.data.enums.raceStatusUnknown
+import tmg.flashback.formula1.enums.RaceStatus
+import tmg.flashback.formula1.enums.raceStatusUnknown
 import tmg.flashback.statistics.R
 
 val RaceStatus.iconRes: Int

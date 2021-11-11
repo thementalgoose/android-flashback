@@ -5,14 +5,11 @@ import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import kotlinx.coroutines.flow.flow
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.common.controllers.ReleaseNotesController
 import tmg.configuration.controllers.ConfigController
 import tmg.core.device.managers.BuildConfigManager
-import tmg.flashback.data.db.DataRepository
-import tmg.flashback.data.models.AppLockout
 import tmg.flashback.upnext.controllers.UpNextController
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertEventFired
@@ -24,7 +21,6 @@ internal class DashboardViewModelTest: BaseTest() {
     lateinit var sut: DashboardViewModel
 
     private val mockContext: Context = mockk(relaxed = true)
-    private val mockDataRepository: DataRepository = mockk(relaxed = true)
     private val mockUpNextController: UpNextController = mockk(relaxed = true)
     private val mockBuildConfigManager: BuildConfigManager = mockk(relaxed = true)
     private val mockConfigurationController: ConfigController = mockk(relaxed = true)
@@ -41,7 +37,6 @@ internal class DashboardViewModelTest: BaseTest() {
     private fun initSUT() {
         sut = DashboardViewModel(
             mockContext,
-            mockDataRepository,
             mockUpNextController,
             mockBuildConfigManager,
             mockConfigurationController,
@@ -82,66 +77,6 @@ internal class DashboardViewModelTest: BaseTest() {
 
         sut.outputs.showUpNext.test {
             assertValue(false)
-        }
-    }
-
-    //endregion
-
-    //region App Lockout
-
-    @Test
-    fun `app lockout event is fired if show is true and build config provider says version is should lockout`() = coroutineTest {
-
-        every { mockDataRepository.appLockout() } returns flow { emit(expectedAppLockout) }
-        every { mockBuildConfigManager.versionCode } returns expectedAppLockout.version!! - 1
-
-        initSUT()
-        advanceUntilIdle()
-
-        sut.outputs.openAppLockout.test {
-            assertEventFired()
-        }
-    }
-
-    @Test
-    fun `app lockout event is not fired if show is false and build config provider says version is should lockout`() = coroutineTest {
-
-        every { mockDataRepository.appLockout() } returns flow { emit(expectedAppLockout.copy(show = false)) }
-        every { mockBuildConfigManager.versionCode } returns expectedAppLockout.version!! - 1
-
-        initSUT()
-        advanceUntilIdle()
-
-        sut.outputs.openAppLockout.test {
-            assertEventNotFired()
-        }
-    }
-
-    @Test
-    fun `app lockout event is not fired if show is true and build config provider says version is should not lockout`() = coroutineTest {
-
-        every { mockDataRepository.appLockout() } returns flow { emit(expectedAppLockout.copy()) }
-        every { mockBuildConfigManager.versionCode } returns expectedAppLockout.version!! + 1
-
-        initSUT()
-        advanceUntilIdle()
-
-        sut.outputs.openAppLockout.test {
-            assertEventNotFired()
-        }
-    }
-
-    @Test
-    fun `app lockout event is not fired if app lockout value is null`() = coroutineTest {
-
-        every { mockDataRepository.appLockout() } returns flow { emit(null) }
-        every { mockBuildConfigManager.versionCode } returns expectedAppLockout.version!! - 1
-
-        initSUT()
-        advanceUntilIdle()
-
-        sut.outputs.openAppLockout.test {
-            assertEventNotFired()
         }
     }
 
@@ -224,19 +159,6 @@ internal class DashboardViewModelTest: BaseTest() {
             assertEventNotFired()
         }
     }
-
-    //endregion
-
-    //region Mock Data - App lockout
-
-    private val expectedAppLockout = AppLockout(
-        show = true,
-        title = "msg",
-        message = "Another msg",
-        linkText = null,
-        link = null,
-        version = 10
-    )
 
     //endregion
 }

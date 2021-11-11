@@ -31,7 +31,8 @@
 
         </activity>
 
-        <activity android:name=".ui.SyncActivity"
+        <activity android:name=".ui.sync.SyncActivity"
+            android:theme="@style/FlashbackAppTheme.Sync"
             android:exported="false"
             android:label="" />
 

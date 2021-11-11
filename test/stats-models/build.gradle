@@ -1,0 +1,23 @@
+apply plugin:  'com.android.library'
+apply from: rootDir.absolutePath + "/gradle/config-android.gradle"
+apply from: rootDir.absolutePath + "/gradle/config-util.gradle"
+apply from: rootDir.absolutePath + "/gradle/config-junit5.gradle"
+
+android {
+    compileSdkVersion project.ext.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion project.ext.minSdkVersion
+        targetSdkVersion project.ext.targetSdkVersion
+        versionCode project.ext.versionCode
+        versionName project.ext.versionName
+    }
+}
+
+dependencies {
+
+    // Preferences library
+    implementation project(path: ':feature:stats:room')
+    implementation project(path: ':formula1')
+    implementation project(path: ':feature:stats:network')
+}

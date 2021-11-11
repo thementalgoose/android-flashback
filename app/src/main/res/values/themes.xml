@@ -5,6 +5,10 @@
 
     <style name="FlashbackAppTheme.MaterialYou" parent="FlashbackAppTheme" />
 
+    <style name="FlashbackAppTheme.Sync" parent="FlashbackAppTheme">
+        <item name="android:statusBarColor">@color/splash_screen</item>
+    </style>
+
     <!-- DAY -->
 
     <style name="FlashbackAppTheme" parent="AppTheme">

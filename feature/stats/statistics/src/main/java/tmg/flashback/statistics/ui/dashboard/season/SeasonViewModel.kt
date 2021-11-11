@@ -1,46 +1,41 @@
 package tmg.flashback.statistics.ui.dashboard.season
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.channels.ConflatedBroadcastChannel
+import androidx.lifecycle.*
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import org.threeten.bp.DayOfWeek
 import org.threeten.bp.LocalDate
 import org.threeten.bp.Month
-import org.threeten.bp.temporal.ChronoUnit
 import org.threeten.bp.temporal.TemporalAdjusters
 import tmg.core.analytics.manager.AnalyticsManager
-import tmg.flashback.formula1.constants.Formula1.constructorChampionshipStarts
-import androidx.lifecycle.ViewModel
-import tmg.core.device.controllers.DeviceController
 import tmg.core.device.managers.NetworkConnectivityManager
-import tmg.flashback.data.db.stats.HistoryRepository
-import tmg.flashback.data.db.stats.SeasonOverviewRepository
-import tmg.flashback.data.models.stats.*
 import tmg.core.ui.controllers.ThemeController
-import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
-import tmg.flashback.statistics.R
 import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
+import tmg.flashback.formula1.extensions.getConstructorInProgressInfo
+import tmg.flashback.formula1.extensions.getDriverInProgressInfo
+import tmg.flashback.formula1.model.*
+import tmg.flashback.statistics.R
 import tmg.flashback.statistics.controllers.SeasonController
-import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
-import tmg.utilities.extensions.combinePair
-import tmg.utilities.extensions.then
+import tmg.flashback.statistics.extensions.analyticsLabel
+import tmg.flashback.statistics.repo.OverviewRepository
+import tmg.flashback.statistics.repo.RaceRepository
+import tmg.flashback.statistics.repo.SeasonRepository
+import tmg.flashback.statistics.repo.repository.CacheRepository
+import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
+import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable.*
 import tmg.utilities.lifecycle.DataEvent
 import tmg.utilities.lifecycle.Event
-import tmg.utilities.models.StringHolder
 
 //region Inputs
 
 interface SeasonViewModelInputs {
     fun clickMenu()
-    fun clickNow()
     fun clickItem(item: SeasonNavItem)
 
-    fun showUpNext(value: Boolean = true)
-    fun refresh()
     fun selectSeason(season: Int)
+    fun refresh()
 
     fun clickTrack(track: SeasonItem.Track)
     fun clickDriver(driver: SeasonItem.Driver)
@@ -53,185 +48,94 @@ interface SeasonViewModelInputs {
 
 interface SeasonViewModelOutputs {
     val openMenu: LiveData<Event>
-    val openNow: LiveData<Event>
-    val showUpNext: LiveData<Boolean>
+    val label: LiveData<String>
+
+    val list: LiveData<List<SeasonItem>>
+    val showLoading: LiveData<Boolean>
 
     val openRace: LiveData<DataEvent<SeasonItem.Track>>
     val openDriver: LiveData<DataEvent<SeasonItem.Driver>>
     val openConstructor: LiveData<DataEvent<SeasonItem.Constructor>>
-
-    val showLoading: LiveData<Boolean>
-    val label: LiveData<StringHolder>
-    val list: LiveData<List<SeasonItem>>
 }
 
 //endregion
 
 class SeasonViewModel(
-        private val themeController: ThemeController,
-        private val historyRepository: HistoryRepository,
-        private val seasonOverviewRepository: SeasonOverviewRepository,
-        private val seasonController: SeasonController,
-        private val networkConnectivityManager: NetworkConnectivityManager,
-        private val analyticsManager: AnalyticsManager
+    private val seasonController: SeasonController,
+    private val raceRepository: RaceRepository,
+    private val networkConnectivityManager: NetworkConnectivityManager,
+    private val overviewRepository: OverviewRepository,
+    private val seasonRepository: SeasonRepository,
+    private val analyticsManager: AnalyticsManager,
+    private val themeController: ThemeController,
+    private val cacheRepository: CacheRepository,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), SeasonViewModelInputs, SeasonViewModelOutputs {
 
-    private val currentTab: ConflatedBroadcastChannel<SeasonNavItem> =
-        ConflatedBroadcastChannel(SeasonNavItem.SCHEDULE)
-    private val currentTabFlow: Flow<SeasonNavItem> = currentTab.asFlow()
-    private val season: ConflatedBroadcastChannel<Int> = ConflatedBroadcastChannel(seasonController.defaultSeason)
-    private val currentHistory: Flow<History?> = season.asFlow()
-        .flatMapLatest { historyRepository.historyFor(it) }
+    var inputs: SeasonViewModelInputs = this
+    var outputs: SeasonViewModelOutputs = this
+
+    private val menuItem: MutableStateFlow<SeasonNavItem> = MutableStateFlow(SeasonNavItem.SCHEDULE)
+    private val season: MutableStateFlow<Int> = MutableStateFlow(seasonController.defaultSeason)
+    private val seasonWithRequest: Flow<Int?> = season
+        .flatMapLatest { season ->
+            return@flatMapLatest flow {
+                if (raceRepository.shouldSyncRace(season)) {
+                    showLoading.postValue(true)
+                    emit(null)
+                    val result = overviewRepository.fetchOverview(season)
+                    val anotherResult = seasonRepository.fetchRaces(season)
+                    showLoading.postValue(false)
+
+                    emit(season)
+                }
+                else {
+                    emit(season)
+                }
+            }
+        }
+        .flowOn(ioDispatcher)
+
+    private val isConnected: Boolean
+        get() = networkConnectivityManager.isConnected
+
+    override val label: LiveData<String> = season
+        .map { it.toString() }
+        .asLiveData(viewModelScope.coroutineContext)
 
     override val openRace: MutableLiveData<DataEvent<SeasonItem.Track>> = MutableLiveData()
     override val openDriver: MutableLiveData<DataEvent<SeasonItem.Driver>> = MutableLiveData()
     override val openConstructor: MutableLiveData<DataEvent<SeasonItem.Constructor>> = MutableLiveData()
 
-    override val showLoading: MutableLiveData<Boolean> = MutableLiveData(true)
     override val openMenu: MutableLiveData<Event> = MutableLiveData()
-    override val openNow: MutableLiveData<Event> = MutableLiveData()
-    override val showUpNext: MutableLiveData<Boolean> = MutableLiveData(false)
+    override val list: LiveData<List<SeasonItem>> = combine(seasonWithRequest, menuItem) { season, menuItem -> Pair(season, menuItem) }
+        .flatMapLatest { (season, menuItem) ->
 
-    /**
-     * Label to be shown at the top of the screen to indicate what year it is
-     */
-    override val label: LiveData<StringHolder> = season.asFlow()
-        .map { season ->
-            StringHolder(msg = season.toString())
+            analyticsManager.logEvent(menuItem.analyticsLabel, mapOf(
+                "season" to season.toString()
+            ))
+
+            if (season == null) {
+                return@flatMapLatest flow {
+                    emit(listOf<SeasonItem>(SeasonItem.ErrorItem(SyncDataItem.Skeleton)))
+                }
+            }
+
+            return@flatMapLatest when (menuItem) {
+                SeasonNavItem.SCHEDULE -> getScheduleView(season, false)
+                SeasonNavItem.CALENDAR -> getScheduleView(season, true)
+                SeasonNavItem.DRIVERS -> getDriverStandings(season)
+                SeasonNavItem.CONSTRUCTORS -> getConstructorStandings(season)
+            }
         }
         .asLiveData(viewModelScope.coroutineContext)
 
-    /**
-     * List to handle season data
-     * - CALENDAR
-     * - DRIVERS
-     * - CONSTRUCTORS
-     */
-    private val seasonList: Flow<List<SeasonItem>> = season
-        .asFlow()
-        .flatMapLatest {
-            seasonOverviewRepository.getSeasonOverview(it).combinePair(currentHistory)
-        }
-        .combinePair(
-            currentTabFlow,
-        )
-        .map { (seasonAndHistory, menuItemType) ->
-            val (season, history) = seasonAndHistory
-
-            when (menuItemType) {
-                SeasonNavItem.CALENDAR -> analyticsManager.logEvent("select_dashboard_calendar", mapOf(
-                    "season" to season.season.toString()
-                ))
-                SeasonNavItem.SCHEDULE -> analyticsManager.logEvent("select_dashboard_schedule", mapOf(
-                    "season" to season.season.toString()
-                ))
-                SeasonNavItem.DRIVERS -> analyticsManager.logEvent("select_dashboard_driver", mapOf(
-                    "season" to season.season.toString()
-                ))
-                SeasonNavItem.CONSTRUCTORS -> analyticsManager.logEvent("select_dashboard_constructor", mapOf(
-                    "season" to season.season.toString()
-                ))
-            }
-
-            val appBannerMessage = seasonController.banner
-            val list: MutableList<SeasonItem> = mutableListOf()
-            val historyRounds = history?.rounds ?: emptyList()
-            val rounds = season.rounds
-
-            appBannerMessage?.let {
-                list.addError(SyncDataItem.Message(it.message, it.url))
-            }
-
-            when (menuItemType) {
-                SeasonNavItem.CALENDAR -> {
-                    when {
-                        historyRounds.isEmpty() && !networkConnectivityManager.isConnected ->
-                            list.addError(SyncDataItem.NoNetwork)
-                        historyRounds.isEmpty() && season.season == currentSeasonYear ->
-                            list.addError(SyncDataItem.Unavailable(DataUnavailable.EARLY_IN_SEASON))
-                        historyRounds.isEmpty() ->
-                            list.addError(SyncDataItem.Unavailable(DataUnavailable.MISSING_RACE))
-                        else ->
-                            list.addAll(historyRounds.toCalendar(season.season))
-                    }
-                }
-                SeasonNavItem.SCHEDULE -> {
-                    when {
-                        historyRounds.isEmpty() && !networkConnectivityManager.isConnected ->
-                            list.addError(SyncDataItem.NoNetwork)
-                        historyRounds.isEmpty() && season.season == currentSeasonYear ->
-                            list.addError(SyncDataItem.Unavailable(DataUnavailable.EARLY_IN_SEASON))
-                        historyRounds.isEmpty() ->
-                            list.addError(SyncDataItem.Unavailable(DataUnavailable.MISSING_RACE))
-                        else ->
-                            list.addAll(historyRounds.toScheduleList())
-                    }
-                }
-                SeasonNavItem.DRIVERS -> {
-                    when {
-                        rounds.isEmpty() && !networkConnectivityManager.isConnected ->
-                            list.addError(SyncDataItem.NoNetwork)
-                        rounds.isEmpty() ->
-                            list.addError(SyncDataItem.Unavailable(DataUnavailable.IN_FUTURE_SEASON))
-                        else -> {
-                            val maxRound = rounds
-                                .filter { it.race.isNotEmpty() }
-                                .maxByOrNull { it.round }
-                            if (maxRound != null && historyRounds.size != rounds.size) {
-                                list.addError(SyncDataItem.MessageRes(R.string.results_accurate_for, listOf(maxRound.name, maxRound.round)))
-                            }
-                            when {
-                                season.driverStandings.isEmpty() -> {
-                                    val driverStandings = rounds.driverStandings()
-                                    list.addAll(driverStandings.toDriverList(rounds))
-                                }
-                                else -> {
-                                    list.addAll(season.driverStandings.toDriverList(rounds))
-                                }
-                            }
-                        }
-                    }
-                }
-                SeasonNavItem.CONSTRUCTORS -> {
-                    when {
-                        season.season < constructorChampionshipStarts ->
-                            list.addError(SyncDataItem.ConstructorsChampionshipNotAwarded)
-                        rounds.isEmpty() && !networkConnectivityManager.isConnected ->
-                            list.addError(SyncDataItem.NoNetwork)
-                        rounds.isEmpty() ->
-                            list.addError(SyncDataItem.Unavailable(DataUnavailable.IN_FUTURE_SEASON))
-                        else -> {
-                            val maxRound = rounds
-                                .filter { it.race.isNotEmpty() }
-                                .maxByOrNull { it.round }
-                            if (maxRound != null && historyRounds.size != rounds.size) {
-                                list.addError(SyncDataItem.MessageRes(R.string.results_accurate_for, listOf(maxRound.name, maxRound.round)))
-                            }
-                            val constructorStandings = season.constructorStandings()
-                            list.addAll(constructorStandings.toConstructorList(season))
-                        }
-                    }
-                }
-            }
-
-            return@map list
-        }
-        .onStart { emitAll(flow { emptyList<SeasonItem>() }) }
-
-    /**
-     * Overview list that gets returned to the Activity
-     */
-    override val list: LiveData<List<SeasonItem>> = seasonList
-        .then {
-            showLoading.value = false
-        }
-        .asLiveData(viewModelScope.coroutineContext)
-
-    var inputs: SeasonViewModelInputs = this
-    var outputs: SeasonViewModelOutputs = this
+    override val showLoading: MutableLiveData<Boolean> = MutableLiveData()
 
     init {
-
+        if (cacheRepository.shouldSyncCurrentSeason()) {
+            refresh(seasonController.serverDefaultSeason)
+        }
     }
 
     //region Inputs
@@ -240,30 +144,12 @@ class SeasonViewModel(
         openMenu.value = Event()
     }
 
-    override fun showUpNext(value: Boolean) {
-        showUpNext.value = value
-    }
-
-    override fun clickNow() {
-        openNow.value = Event()
-    }
-
     override fun clickItem(item: SeasonNavItem) {
-        if (item != currentTab.valueOrNull) {
-            showLoading.value = true
-            currentTab.offer(item)
-        }
-    }
-
-    override fun refresh() {
-        this.season.valueOrNull?.let {
-            this.season.offer(it)
-        }
+        menuItem.value = item
     }
 
     override fun selectSeason(season: Int) {
-        showLoading.value = true
-        this.season.offer(season)
+        this.season.value = season
     }
 
     override fun clickTrack(track: SeasonItem.Track) {
@@ -280,16 +166,113 @@ class SeasonViewModel(
 
     //endregion
 
+    override fun refresh() {
+        this.refresh(this.season.value)
+    }
+    private fun refresh(season: Int) {
+        viewModelScope.launch(context = ioDispatcher) {
+            val result = overviewRepository.fetchOverview(season)
+            val anotherResult = seasonRepository.fetchRaces(season)
+
+            if (season == seasonController.serverDefaultSeason) {
+                cacheRepository.markedCurrentSeasonSynchronised()
+            }
+            showLoading.postValue(false)
+        }
+    }
+
+    private fun getScheduleView(season: Int, isCalendarView: Boolean): Flow<List<SeasonItem>> {
+        return overviewRepository.getOverview(season)
+            .map {
+                val list = getBannerList()
+                when {
+                    it.overviewRaces.isEmpty() && !isConnected -> list.addError(SyncDataItem.PullRefresh)
+                    it.overviewRaces.isEmpty() && season == currentSeasonYear -> list.addError(SyncDataItem.Unavailable(SEASON_EARLY))
+                    it.overviewRaces.isEmpty() && season > currentSeasonYear -> list.addError(SyncDataItem.Unavailable(SEASON_IN_FUTURE))
+                    it.overviewRaces.isEmpty() -> list.addError(SyncDataItem.Unavailable(SEASON_INTERNAL_ERROR))
+                    isCalendarView -> list.addAll(it.overviewRaces.toCalendar(season))
+                    else -> list.addAll(it.overviewRaces.toScheduleList())
+                }
+
+                return@map list
+            }
+    }
+
+    private fun getDriverStandings(season: Int): Flow<List<SeasonItem>> {
+        return seasonRepository.getDriverStandings(season)
+            .map {
+                val list = getBannerList()
+                when {
+                    (it == null || it.standings.isEmpty()) && !isConnected -> list.addError(SyncDataItem.PullRefresh)
+                    (it == null || it.standings.isEmpty()) && season >= currentSeasonYear -> list.addError(SyncDataItem.Unavailable(STANDINGS_EARLY))
+                    (it == null || it.standings.isEmpty()) -> list.addError(SyncDataItem.Unavailable(STANDINGS_INTERNAL_ERROR))
+                    else -> {
+                        val inProgressInfo = it.standings.getDriverInProgressInfo()
+                        if (inProgressInfo != null) {
+                            list.addError(SyncDataItem.MessageRes(R.string.results_accurate_for, listOf(inProgressInfo.first, inProgressInfo.second)))
+                        }
+                        list.addAll(it.toDriverList())
+                    }
+                }
+
+                return@map list
+            }
+    }
+
+    private fun getConstructorStandings(season: Int): Flow<List<SeasonItem>> {
+        return seasonRepository.getConstructorStandings(season)
+            .map {
+                val list = getBannerList()
+                when {
+                    (it == null || it.standings.isEmpty()) && !isConnected -> list.addError(SyncDataItem.PullRefresh)
+                    (it == null || it.standings.isEmpty()) && season >= currentSeasonYear -> list.addError(SyncDataItem.Unavailable(STANDINGS_EARLY))
+                    (it == null || it.standings.isEmpty()) -> list.addError(SyncDataItem.Unavailable(STANDINGS_INTERNAL_ERROR))
+                    else -> {
+                        val inProgressInfo = it.standings.getConstructorInProgressInfo()
+                        if (inProgressInfo != null) {
+                            list.addError(SyncDataItem.MessageRes(R.string.results_accurate_for, listOf(inProgressInfo.first, inProgressInfo.second)))
+                        }
+                        list.addAll(it.toConstructorList())
+                    }
+                }
+
+                return@map list
+            }
+    }
+
+
+
     /**
-     * Extract the calendar of events out into a formatted display list
+     * Convert OverviewRace to a list of season items
      */
-    private fun List<HistoryRound>.toCalendar(season: Int): List<SeasonItem> {
+    private fun List<OverviewRace>.toScheduleList(): List<SeasonItem> {
+        return this
+            .sortedBy { it.round }
+            .map {
+                SeasonItem.Track(
+                    season = it.season,
+                    round = it.round,
+                    raceName = it.raceName,
+                    circuitId = it.circuitId,
+                    circuitName = it.circuitName,
+                    raceCountry = it.country,
+                    raceCountryISO = it.countryISO,
+                    date = it.date,
+                    hasQualifying = it.hasQualifying,
+                    hasResults = it.hasResults
+                )
+            }
+    }
+    /**
+     * Convert OverviewRace to a list of calendar items
+     */
+    private fun List<OverviewRace>.toCalendar(season: Int): List<SeasonItem> {
         val list = mutableListOf<SeasonItem>()
         list.add(SeasonItem.CalendarHeader)
         Month.values().forEach { month ->
             var start = LocalDate.of(season, month.value, 1)
-            var end = when {
-                start.dayOfWeek == DayOfWeek.SUNDAY -> {
+            var end = when (start.dayOfWeek) {
+                DayOfWeek.SUNDAY -> {
                     LocalDate.of(season, month.value, 1)
                 }
                 else -> {
@@ -315,88 +298,20 @@ class SeasonViewModel(
     }
 
     /**
-     * Extract the schedule of tracks out into a list of home items to display on the home screen
-     */
-    private fun List<HistoryRound>.toScheduleList(): List<SeasonItem> {
-        return this
-            .sortedBy { it.round }
-            .map {
-                SeasonItem.Track(
-                    season = it.season,
-                    round = it.round,
-                    raceName = it.raceName,
-                    circuitId = it.circuitId,
-                    circuitName = it.circuitName,
-                    raceCountry = it.country,
-                    raceCountryISO = it.countryISO,
-                    date = it.date,
-                    hasQualifying = it.hasQualifying,
-                    hasResults = it.hasResults
-                )
-            }
-    }
-
-    /**
-     * Convert the driver standings construct into a list of home items to display on the home page
-     */
-    private fun List<SeasonStanding<Driver>>.toDriverList(rounds: List<Round>): List<SeasonItem> {
-        return this
-            .sortedBy { it.position }
-            .toList()
-            .mapIndexed { index: Int, standing: SeasonStanding<Driver> ->
-                SeasonItem.Driver(
-                    season = season.value,
-                    driver = standing.item,
-                    points = standing.points,
-                    position = index + 1,
-                    bestQualifying = rounds.bestQualifyingResultFor(standing.item.id),
-                    bestFinish = rounds.bestRaceResultFor(standing.item.id),
-                    maxPointsInSeason = this.maxByOrNull { it.points }?.points ?: 0.0,
-                    animationSpeed = themeController.animationSpeed
-                )
-            }
-    }
-    /**
      * Convert the driver standings construct into a list of home items to display on the home page
      * Compatibility function
      */
-    @Deprecated("Should not be required if the standings model is available. Data migration in progress", replaceWith = ReplaceWith("List<SeasonStanding<Driver>>.toDriverList(rounds: List<Round>)"))
-    private fun DriverStandingsRound.toDriverList(rounds: List<Round>): List<SeasonItem> {
+    private fun SeasonDriverStandings.toDriverList(): List<SeasonItem> {
         return this
-            .values
-            .sortedByDescending { it.second }
-            .toList()
-            .mapIndexed { index: Int, pair: Pair<ConstructorDriver, Double> ->
-                val (roundDriver, points) = pair
-
-                // TODO: This should be refactored out!
-                val rebuildDriver = Driver(
-                    id = roundDriver.id,
-                    firstName = roundDriver.firstName,
-                    lastName = roundDriver.lastName,
-                    code = roundDriver.code,
-                    number = roundDriver.number,
-                    wikiUrl = roundDriver.wikiUrl,
-                    photoUrl = roundDriver.photoUrl,
-                    dateOfBirth = roundDriver.dateOfBirth,
-                    nationality = roundDriver.nationality,
-                    nationalityISO = roundDriver.nationalityISO,
-                    constructors = rounds
-                        .map { round ->
-                            round.round to round.drivers.first { driv -> driv.id == roundDriver.id }.constructor
-                        }
-                        .toMap(),
-                    startingConstructor = roundDriver.constructor,
-                )
-
+            .standings
+            .mapIndexed { index: Int, standing: SeasonDriverStandingSeason ->
                 SeasonItem.Driver(
-                    season = season.value,
-                    driver = rebuildDriver,
-                    points = points,
+                    season = standing.season,
+                    driver = standing.driver,
+                    constructors = standing.constructors.map { it.constructor },
+                    points = standing.points,
                     position = index + 1,
-                    bestQualifying = rounds.bestQualifyingResultFor(roundDriver.id),
-                    bestFinish = rounds.bestRaceResultFor(roundDriver.id),
-                    maxPointsInSeason = this.values.maxByOrNull { it.second }?.second ?: 0.0,
+                    maxPointsInSeason = this.standings.maxByOrNull { it.points }?.points ?: 1000.0,
                     animationSpeed = themeController.animationSpeed
                 )
             }
@@ -405,22 +320,35 @@ class SeasonViewModel(
     /**
      * Convert the constructor standings construct into a list of home items to display on the home page
      */
-    private fun ConstructorStandingsRound.toConstructorList(season: Season): List<SeasonItem> {
+    private fun SeasonConstructorStandings.toConstructorList(): List<SeasonItem> {
+
         return this
-            .values
-            .toList()
-            .mapIndexed { index: Int, triple: Triple<Constructor, Map<String, Pair<ConstructorDriver, Double>>, Double> ->
-                val (constructor, driverPoints, constructorPoints) = triple
+            .standings
+            .mapIndexed { index: Int, item: SeasonConstructorStandingSeason ->
                 SeasonItem.Constructor(
-                    season = season.season,
+                    season = item.season,
                     position = index + 1,
-                    constructor = constructor,
-                    driver = driverPoints.values.sortedByDescending { it.second },
-                    points = season.constructorStandings.firstOrNull { it.item.id == constructor.id }?.points ?: constructorPoints,
-                    maxPointsInSeason = this.maxConstructorPointsInSeason(),
+                    constructor = item.constructor,
+                    driver = item.drivers
+                        .map { Pair(it.driver, it.points) }
+                        .sortedByDescending { it.second },
+                    points = item.points,
+                    maxPointsInSeason = this.standings.maxByOrNull { it.points }?.points ?: 1000.0,
                     barAnimation = themeController.animationSpeed
                 )
             }
             .sortedByDescending { it.points }
     }
+
+    //region Helpers
+
+    private fun getBannerList(): MutableList<SeasonItem> {
+        val list = mutableListOf<SeasonItem>()
+        seasonController.banner?.let {
+            list.addError(SyncDataItem.Message(it.message, it.url))
+        }
+        return list
+    }
+
+    //endregion
 }
