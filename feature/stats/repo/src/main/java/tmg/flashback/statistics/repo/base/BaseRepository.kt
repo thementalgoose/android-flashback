@@ -1,11 +1,15 @@
 package tmg.flashback.statistics.repo.base
 
+import android.util.Log
+import retrofit2.HttpException
 import retrofit2.Response
 import tmg.crash_reporting.controllers.CrashController
 import tmg.flashback.statistics.network.models.MetadataWrapper
 import tmg.flashback.statistics.network.utils.data
 import tmg.flashback.statistics.network.utils.hasData
+import tmg.flashback.statistics.repo.BuildConfig
 import java.lang.RuntimeException
+import java.net.UnknownHostException
 
 abstract class BaseRepository(
     protected val crashController: CrashController
@@ -22,10 +26,26 @@ abstract class BaseRepository(
 
             val data = result.data() ?: return false
             return closure.invoke(data)
+        } catch (e: UnknownHostException) {
+            if (BuildConfig.DEBUG) {
+                Log.d("CrashController", "NOT SENT: Unknown host exception ${e.message}")
+                e.printStackTrace()
+            }
+            false
+        } catch (e: HttpException) {
+            if (BuildConfig.DEBUG) {
+                Log.d("CrashController", "NOT SENT: HTTP Exception thrown ${e.code()} - ${e.message()}")
+                e.printStackTrace()
+            }
+            false
         } catch (e: RuntimeException) {
             crashController.logException(e, msgIfFailed)
             false
         } catch (e: Exception) {
+            if (BuildConfig.DEBUG) {
+                Log.d("CrashController", "NOT SENT: Other exception thrown ${e.message}")
+                e.printStackTrace()
+            }
             false
         }
     }
