@@ -289,9 +289,11 @@ class RaceViewModel(
                     return@sortedBy when (viewType) {
                         RaceAdapterType.QUALIFYING_POS_1 -> driverOverview.q1?.position
                             ?: driverOverview.q2?.position
+                            ?: driverOverview.qSprint?.grid
                             ?: driverOverview.race?.qualified
                             ?: driverOverview.race?.grid ?: Int.MAX_VALUE
                         RaceAdapterType.QUALIFYING_POS_2 -> driverOverview.q2?.position
+                            ?: driverOverview.qSprint?.grid
                             ?: driverOverview.race?.qualified
                             ?: driverOverview.race?.grid ?: Int.MAX_VALUE
                         RaceAdapterType.QUALIFYING_POS -> driverOverview.qSprint?.grid
