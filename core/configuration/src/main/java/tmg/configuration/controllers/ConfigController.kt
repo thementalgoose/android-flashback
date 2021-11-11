@@ -69,6 +69,10 @@ class ConfigController(
      * - If no update is found, this step just returns false
      */
     suspend fun applyPending(): Boolean {
-        return configService.activate()
+        val result = configService.activate()
+        if (result) {
+            configRepository.remoteConfigSync = Migrations.configurationSyncCount
+        }
+        return result
     }
 }

@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import org.threeten.bp.LocalDate
 import tmg.flashback.statistics.R
 import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
+import tmg.flashback.formula1.model.Location
 import tmg.flashback.statistics.databinding.ViewCircuitInfoHeaderBinding
 import tmg.flashback.statistics.ui.circuit.CircuitItem
 import tmg.flashback.statistics.ui.shared.pill.PillAdapter
@@ -16,20 +17,30 @@ import tmg.utilities.extensions.views.context
 import tmg.utilities.extensions.views.getString
 
 class HeaderViewHolder(
-    private val clickShowOnMap: () -> Unit,
-    private val clickWikipedia: () -> Unit,
+    private val clickShowOnMap: (location: Location, name: String) -> Unit,
+    private val clickLink: (link: String) -> Unit,
     private val binding: ViewCircuitInfoHeaderBinding
 ): RecyclerView.ViewHolder(binding.root) {
 
     private var linkAdapter = PillAdapter(
             pillClicked = {
                 when (it) {
-                    is PillItem.Wikipedia -> clickWikipedia()
-                    is PillItem.ShowOnMap -> clickShowOnMap()
+                    is PillItem.Wikipedia -> {
+                        model.circuit.data.wikiUrl?.let {
+                            clickLink(it)
+                        }
+                    }
+                    is PillItem.ShowOnMap -> {
+                        model.circuit.data.location?.let {
+                            clickShowOnMap(it, model.circuit.data.name)
+                        }
+                    }
                     else -> {} /* Do nothing */
                 }
             }
     )
+
+    private lateinit var model: CircuitItem.CircuitInfo
 
     init {
         binding.links.adapter = linkAdapter
@@ -39,8 +50,9 @@ class HeaderViewHolder(
     }
 
     fun bind(item: CircuitItem.CircuitInfo) {
-        binding.imgCountry.setImageResource(context.getFlagResourceAlpha3(item.circuit.countryISO))
-        binding.country.text = item.circuit.country
+        this.model = item
+        binding.imgCountry.setImageResource(context.getFlagResourceAlpha3(item.circuit.data.countryISO))
+        binding.country.text = item.circuit.data.country
         val previouslyHosted = item.circuit.results.count { it.date <= LocalDate.now() }
         val minYear = item.circuit.results.minByOrNull { it.season }?.season
         val maxYear = item.circuit.results.maxByOrNull { it.season }?.season
@@ -72,7 +84,7 @@ class HeaderViewHolder(
         binding.status.text = subtitle.fromHtml()
 
         linkAdapter.list = mutableListOf<PillItem>().apply {
-            item.circuit.wikiUrl?.let { add(PillItem.Wikipedia(it)) }
+            item.circuit.data.wikiUrl?.let { add(PillItem.Wikipedia(it)) }
             add(PillItem.ShowOnMap())
         }
 

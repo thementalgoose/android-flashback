@@ -20,7 +20,6 @@
       <module name="android-flashback.shared.test" target="11" />
       <module name="android-flashback.shared.ui" target="1.8" />
       <module name="android-flashback.statistics" target="11" />
-      <module name="android-flashback.test" target="1.8" />
       <module name="android-flashback.ui" target="11" />
       <module name="android-flashback.widgets" target="1.8" />
       <module name="app" target="1.8" />

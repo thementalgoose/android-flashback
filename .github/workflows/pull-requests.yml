@@ -40,8 +40,9 @@ jobs:
           echo "::set-output name=feature_formula1::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                   | grep -E '^feature/formula1/' -c)"
           echo "::set-output name=feature_rss::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                        | grep -E '^feature/rss/' -c)"
           echo "::set-output name=feature_statistics::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                 | grep -E '^feature/stats/statistics/' -c)"
-          echo "::set-output name=feature_statistics_data::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}            | grep -E '^feature/stats/data/' -c)"
-          echo "::set-output name=feature_statistics_data_firebase::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}   | grep -E '^feature/stats/data-firestore/' -c)"
+          echo "::set-output name=feature_statistics_room::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}            | grep -E '^feature/stats/room/' -c)"
+          echo "::set-output name=feature_statistics_repo::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}            | grep -E '^feature/stats/repo/' -c)"
+          echo "::set-output name=feature_statistics_network::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}         | grep -E '^feature/stats/network/' -c)"
           echo "::set-output name=feature_upnext::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                     | grep -E '^feature/upnext/' -c)"
           echo "::set-output name=core_ads::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                           | grep -E '^core/ads/' -c)"
           echo "::set-output name=core_analytics::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                     | grep -E '^core/analytics/' -c)"
@@ -51,7 +52,7 @@ jobs:
           echo "::set-output name=core_device::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                        | grep -E '^core/device/' -c)"
           echo "::set-output name=core_notifications::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                 | grep -E '^core/notifications/' -c)"
           echo "::set-output name=core_preferences::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                   | grep -E '^core/preferences/' -c)"
-          echo "::set-output name=core_style::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                   | grep -E '^core/style/' -c)"
+          echo "::set-output name=core_style::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                         | grep -E '^core/style/' -c)"
           echo "::set-output name=core_tutorial::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                      | grep -E '^core/tutorial/' -c)"
           echo "::set-output name=core_ui::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                            | grep -E '^core/ui/' -c)"
 
@@ -61,8 +62,9 @@ jobs:
       feature_formula1: ${{ steps.change.outputs.feature_formula1 != 0 }}
       feature_rss: ${{ steps.change.outputs.feature_rss != 0 }}
       feature_statistics: ${{ steps.change.outputs.feature_statistics != 0 }}
-      feature_statistics_data: ${{ steps.change.outputs.feature_statistics_data != 0 }}
-      feature_statistics_data_firebase: ${{ steps.change.outputs.feature_statistics_data_firebase != 0 }}
+      feature_statistics_room: ${{ steps.change.outputs.feature_statistics_room != 0 }}
+      feature_statistics_repo: ${{ steps.change.outputs.feature_statistics_repo != 0 }}
+      feature_statistics_network: ${{ steps.change.outputs.feature_statistics_network != 0 }}
       feature_upnext: ${{ steps.change.outputs.feature_upnext != 0 }}
       core_ads: ${{ steps.change.outputs.core_ads != 0 }}
       core_analytics: ${{ steps.change.outputs.core_analytics != 0 }}
@@ -104,8 +106,8 @@ jobs:
         run: ./gradlew :feature:common:testDebugUnitTest
         if: ${{ needs.unit_test_diff_check.outputs.feature_common == 'true' }}
 
-      - name: :feature:formula1
-        run: ./gradlew :feature:formula1:testDebugUnitTest
+      - name: :formula1
+        run: ./gradlew :formula1:testDebugUnitTest
         if: ${{ needs.unit_test_diff_check.outputs.feature_formula1 == 'true' }}
 
       - name: :feature:rss
@@ -116,13 +118,17 @@ jobs:
         run: ./gradlew :feature:stats:statistics:testDebugUnitTest
         if: ${{ needs.unit_test_diff_check.outputs.feature_statistics == 'true' }}
 
-      - name: :feature:stats:data
-        run: ./gradlew :feature:stats:data:testDebugUnitTest
-        if: ${{ needs.unit_test_diff_check.outputs.feature_statistics_data == 'true' }}
+      - name: :feature:stats:repo
+        run: ./gradlew :feature:stats:repo:testDebugUnitTest
+        if: ${{ needs.unit_test_diff_check.outputs.feature_statistics_repo == 'true' }}
 
-      - name: :feature:stats:data-firestore
-        run: ./gradlew :feature:stats:data-firestore:testDebugUnitTest
-        if: ${{ needs.unit_test_diff_check.outputs.feature_statistics_data_firebase == 'true' }}
+      - name: :feature:stats:network
+        run: ./gradlew :feature:stats:network:testDebugUnitTest
+        if: ${{ needs.unit_test_diff_check.outputs.feature_statistics_network == 'true' }}
+
+      - name: :feature:stats:room
+        run: ./gradlew :feature:stats:room:testDebugUnitTest
+        if: ${{ needs.unit_test_diff_check.outputs.feature_statistics_room == 'true' }}
 
       - name: :feature:upnext
         run: ./gradlew :feature:upnext:testDebugUnitTest

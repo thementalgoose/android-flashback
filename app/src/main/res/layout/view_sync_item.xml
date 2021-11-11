@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/container"
+    android:foreground="@drawable/ripple_rounded_small"
+    android:clickable="true"
+    android:focusable="true"
+    android:paddingStart="@dimen/paddingMedium"
+    android:paddingTop="@dimen/paddingXSmall"
+    android:paddingEnd="@dimen/paddingMedium"
+    android:paddingBottom="@dimen/paddingXSmall"
+    tools:background="@color/splash_screen">
+
+    <TextView
+        android:id="@+id/label"
+        style="@style/Text.Sync.Item"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center|start"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/loading"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Drivers..." />
+
+    <ProgressBar
+        android:indeterminateTint="@color/white"
+        android:id="@+id/loading"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/done"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:padding="4dp"
+        android:importantForAccessibility="no"
+        android:visibility="invisible"
+        app:tint="@color/white"
+        app:layout_constraintBottom_toBottomOf="@id/loading"
+        app:layout_constraintEnd_toEndOf="@id/loading"
+        app:layout_constraintStart_toStartOf="@id/loading"
+        app:layout_constraintTop_toTopOf="@id/loading"
+        app:srcCompat="@drawable/sync_done"
+        tools:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/failed"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:padding="4dp"
+        android:importantForAccessibility="no"
+        android:visibility="invisible"
+        app:tint="@color/white"
+        app:layout_constraintBottom_toBottomOf="@id/loading"
+        app:layout_constraintEnd_toEndOf="@id/loading"
+        app:layout_constraintStart_toStartOf="@id/loading"
+        app:layout_constraintTop_toTopOf="@id/loading"
+        app:srcCompat="@drawable/sync_failed"
+        tools:visibility="visible" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

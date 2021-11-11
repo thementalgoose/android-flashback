@@ -16,7 +16,7 @@ class DeviceRepository(
         private const val keyAppVersion: String = "RELEASE_NOTES" // Used to be release notes
     }
 
-    private val dateFormat: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd", Locale.UK)
+    private val dateFormat: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd", Locale.ENGLISH)
 
     /**
      * How many times the application onCreate has been called

@@ -81,14 +81,14 @@ internal class UpNextRepositoryTest {
     //region Notification preferences - Race
 
     @Test
-    fun `is notification race reads value from preferences repository with default to true`() {
+    fun `is notification race reads value from preferences repository with default to false`() {
         every { mockPreferenceManager.getBoolean(any(), any()) } returns true
 
         initSUT()
 
         Assertions.assertTrue(sut.notificationRace)
         verify {
-            mockPreferenceManager.getBoolean(keyNotificationRace, true)
+            mockPreferenceManager.getBoolean(keyNotificationRace, false)
         }
     }
 
@@ -117,14 +117,14 @@ internal class UpNextRepositoryTest {
     //region Notification preferences - Qualifying
 
     @Test
-    fun `is notification qualifying reads value from preferences repository with default to true`() {
+    fun `is notification qualifying reads value from preferences repository with default to false`() {
         every { mockPreferenceManager.getBoolean(any(), any()) } returns true
 
         initSUT()
 
         Assertions.assertTrue(sut.notificationQualifying)
         verify {
-            mockPreferenceManager.getBoolean(keyNotificationQualifying, true)
+            mockPreferenceManager.getBoolean(keyNotificationQualifying, false)
         }
     }
 
