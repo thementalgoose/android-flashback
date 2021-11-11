@@ -10,8 +10,8 @@ import com.discord.panels.OverlappingPanelsLayout
 import com.discord.panels.PanelState
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
-import tmg.common.ui.releasenotes.ReleaseBottomSheetFragment
-import tmg.core.ui.base.BaseFragment
+import tmg.flashback.common.ui.releasenotes.ReleaseBottomSheetFragment
+import tmg.flashback.ui.base.BaseFragment
 import tmg.flashback.R
 import tmg.flashback.databinding.FragmentDashboardBinding
 import tmg.flashback.statistics.controllers.SearchController
@@ -21,7 +21,6 @@ import tmg.flashback.statistics.ui.dashboard.season.SeasonFragment
 import tmg.flashback.statistics.ui.dashboard.season.SeasonFragmentCallback
 import tmg.flashback.statistics.ui.search.SearchActivity
 import tmg.flashback.upnext.ui.dashboard.UpNextFragment
-import tmg.flashback.upnext.ui.onboarding.OnboardingNotificationBottomSheetFragment
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 

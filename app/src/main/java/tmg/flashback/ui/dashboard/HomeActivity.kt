@@ -5,9 +5,9 @@ import android.os.Build
 import android.os.Bundle
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import org.koin.android.viewmodel.ext.android.viewModel
-import tmg.common.ui.forceupgrade.ForceUpgradeActivity
-import tmg.core.ui.base.BaseActivity
-import tmg.core.ui.model.DisplayType
+import tmg.flashback.common.ui.forceupgrade.ForceUpgradeActivity
+import tmg.flashback.ui.base.BaseActivity
+import tmg.flashback.ui.model.DisplayType
 import tmg.flashback.databinding.ActivityDashboardBinding
 import tmg.flashback.ui.sync.SyncActivity
 

@@ -3,8 +3,8 @@ package tmg.flashback.managers
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
-import tmg.core.ui.model.NightMode
-import tmg.core.ui.model.Theme
+import tmg.flashback.ui.model.NightMode
+import tmg.flashback.ui.model.Theme
 import tmg.flashback.R
 
 internal class AppStyleManagerTest {

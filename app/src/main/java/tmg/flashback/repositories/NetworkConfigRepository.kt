@@ -1,6 +1,6 @@
 package tmg.flashback.repositories
 
-import tmg.configuration.manager.ConfigManager
+import tmg.flashback.configuration.manager.ConfigManager
 import tmg.flashback.BuildConfig
 
 class NetworkConfigRepository(

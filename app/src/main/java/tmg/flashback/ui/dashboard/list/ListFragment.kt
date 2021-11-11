@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
-import tmg.core.ui.base.BaseFragment
-import tmg.core.ui.navigation.NavigationProvider
+import tmg.flashback.ui.base.BaseFragment
+import tmg.flashback.ui.navigation.NavigationProvider
 import tmg.flashback.DebugController
 import tmg.flashback.databinding.FragmentDashboardListBinding
 import tmg.flashback.rss.ui.RSSActivity
