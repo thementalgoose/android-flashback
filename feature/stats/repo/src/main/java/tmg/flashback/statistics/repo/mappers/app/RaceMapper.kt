@@ -137,7 +137,7 @@ class RaceMapper(
             .map { (driver, qualified, sprintQualifying) ->
                 driver.driver.id to RaceSprintQualifyingResult(
                     driver = driver,
-                    time = sprintQualifying.time.toLapTime(),
+                    time = sprintQualifying.time?.toLapTime(),
                     points = sprintQualifying.points,
                     grid = sprintQualifying.gridPos ?: 0,
                     qualified = qualified,
