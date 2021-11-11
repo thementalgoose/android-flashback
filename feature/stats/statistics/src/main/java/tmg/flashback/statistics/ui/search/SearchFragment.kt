@@ -48,8 +48,6 @@ class SearchFragment: BaseFragment<FragmentSearchBinding>(), FragmentResultListe
 
         logScreenViewed("Search")
 
-        binding.swipeRefresh.isEnabled = false
-
         adapter = SearchAdapter(
             itemClicked = {
                 stopInputFocus()
@@ -58,38 +56,6 @@ class SearchFragment: BaseFragment<FragmentSearchBinding>(), FragmentResultListe
         )
         binding.dataList.adapter = adapter
         binding.dataList.layoutManager = LinearLayoutManager(context)
-
-        // Fast indicator
-//        binding.fastscroller.setupWithRecyclerView(binding.dataList, { position ->
-//            val item = adapter.list.getOrNull(position) ?: return@setupWithRecyclerView null
-//            when (item) {
-//                is SearchItem.Circuit -> {
-//                    val char = item.name.getOrNull(0)
-//                    if (char != null) {
-//                        return@setupWithRecyclerView FastScrollItemIndicator.Text(char.toString())
-//                    }
-//                }
-//                is SearchItem.Constructor -> {
-//                    val char = item.name.getOrNull(0)
-//                    if (char != null) {
-//                        return@setupWithRecyclerView FastScrollItemIndicator.Text(char.toString())
-//                    }
-//                }
-//                is SearchItem.Driver -> {
-//                    val char = item.name.getOrNull(0)
-//                    if (char != null) {
-//                        return@setupWithRecyclerView FastScrollItemIndicator.Text(char.toString())
-//                    }
-//                }
-//                is SearchItem.Race -> {
-//                    return@setupWithRecyclerView null
-//                }
-//                is SearchItem.ErrorItem -> FastScrollItemIndicator.Icon(R.drawable.ic_search_scroll_icon_error)
-//                SearchItem.Placeholder -> FastScrollItemIndicator.Icon(R.drawable.ic_search_scroll_icon_search)
-//            }
-//            return@setupWithRecyclerView null
-//        })
-//        binding.fastscrollerThumb.setupWithFastScroller(binding.fastscroller)
 
         // Buttons / Inputs
         binding.back.setOnClickListener {
@@ -106,6 +72,9 @@ class SearchFragment: BaseFragment<FragmentSearchBinding>(), FragmentResultListe
         binding.textClear.setOnClickListener {
             binding.textInput.setText("")
             stopInputFocus()
+        }
+        binding.swipeRefresh.setOnRefreshListener {
+            viewModel.inputs.refresh()
         }
 
         // Clear input

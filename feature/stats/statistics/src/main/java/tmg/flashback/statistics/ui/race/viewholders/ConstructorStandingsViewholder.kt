@@ -7,8 +7,8 @@ import kotlin.math.roundToInt
 import tmg.flashback.ui.model.AnimationSpeed
 import tmg.flashback.statistics.ui.race.RaceModel
 import tmg.flashback.ui.extensions.getColor
-import tmg.flashback.data.models.stats.ConstructorDriver
-import tmg.flashback.firebase.extensions.pointsDisplay
+import tmg.flashback.formula1.extensions.pointsDisplay
+import tmg.flashback.formula1.model.Driver
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.LayoutConstructorDriverBinding
 import tmg.flashback.statistics.databinding.ViewRaceConstructorBinding
@@ -78,7 +78,7 @@ class ConstructorStandingsViewholder(
         }
     }
 
-    private fun setDriver(layout: LayoutConstructorDriverBinding, driver: ConstructorDriver, points: Double, @ColorInt constructorColor: Int) {
+    private fun setDriver(layout: LayoutConstructorDriverBinding, driver: Driver, points: Double, @ColorInt constructorColor: Int) {
         layout.tvName.text = driver.name
         layout.tvNumber.text = context.resources.getQuantityString(R.plurals.race_points, points.toInt(), points.pointsDisplay())
         layout.imgFlag.setImageResource(context.getFlagResourceAlpha3(driver.nationalityISO))

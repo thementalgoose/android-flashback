@@ -3,9 +3,11 @@ package tmg.flashback.statistics.ui.race
 import androidx.annotation.LayoutRes
 import org.threeten.bp.LocalDate
 import tmg.flashback.ui.model.AnimationSpeed
-import tmg.flashback.data.enums.RaceStatus
-import tmg.flashback.data.models.stats.*
+import tmg.flashback.formula1.enums.RaceStatus
+import tmg.flashback.formula1.model.*
+import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.statistics.R
+import tmg.flashback.statistics.ui.overview.constructor.summary.ConstructorSummaryItem
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 
 sealed class RaceModel(
@@ -32,11 +34,11 @@ sealed class RaceModel(
     data class Single(
         val season: Int,
         val round: Int,
-        val driver: ConstructorDriver,
-        val q1: RoundQualifyingResult?,
-        val q2: RoundQualifyingResult?,
-        val q3: RoundQualifyingResult?,
-        val qSprint: RoundSprintQualifyingResult?,
+        val driver: DriverConstructor,
+        val q1: RaceQualifyingResult?,
+        val q2: RaceQualifyingResult?,
+        val q3: RaceQualifyingResult?,
+        val qSprint: RaceSprintQualifyingResult?,
         val race: SingleRace?,
         val qualified: Int?,
         val q1Delta: String?,
@@ -70,7 +72,7 @@ sealed class RaceModel(
     data class ConstructorStandings(
         val constructor: Constructor,
         val points: Double,
-        val driver: List<Pair<ConstructorDriver, Double>>,
+        val driver: List<Pair<Driver, Double>>,
         val animationSpeed: AnimationSpeed
     ) : RaceModel(R.layout.view_race_constructor)
 
@@ -79,7 +81,10 @@ sealed class RaceModel(
     ) : RaceModel(item.layoutId)
 
     object Loading : RaceModel(R.layout.skeleton_race)
+
+    companion object
 }
+
 
 data class SingleRace(
     val points: Double,

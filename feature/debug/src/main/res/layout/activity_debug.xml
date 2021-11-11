@@ -9,25 +9,76 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingStart="@dimen/paddingMedium"
+        android:paddingEnd="@dimen/paddingMedium">
 
         <TextView
             style="@style/Text.Toolbar.Expanded"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="@dimen/paddingMedium"
             android:paddingTop="@dimen/paddingXLarge"
-            android:paddingEnd="@dimen/paddingMedium"
             android:paddingBottom="@dimen/paddingMedium"
             android:text="@string/debug_title" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/paddingMedium"
+            android:text="@string/debug_sync_title" />
+
+        <Button
+            android:id="@+id/syncActivity"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/debug_sync_activity_launch"
+            android:textAllCaps="false" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/paddingMedium"
+            android:text="@string/debug_notification_title" />
 
         <Button
             android:id="@+id/sendNotification"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/paddingMedium"
-            android:layout_marginEnd="@dimen/paddingMedium"
             android:text="@string/debug_notification_send_local"
+            android:textAllCaps="false" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/paddingMedium"
+            android:text="@string/debug_network_title" />
+
+        <Button
+            android:id="@+id/networkOverview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/debug_network_overview"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/networkDrivers"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/debug_network_drivers"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/networkConstructors"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/debug_network_constructors"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/networkCircuits"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/debug_network_circuits"
             android:textAllCaps="false" />
 
         <tmg.flashback.ads.views.NativeBanner

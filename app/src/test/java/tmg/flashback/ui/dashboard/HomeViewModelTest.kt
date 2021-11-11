@@ -10,8 +10,10 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.common.controllers.ForceUpgradeController
 import tmg.configuration.controllers.ConfigController
+import tmg.crash_reporting.controllers.CrashController
 import tmg.flashback.managers.appshortcuts.AppShortcutManager
 import tmg.flashback.rss.controllers.RSSController
+import tmg.flashback.statistics.repo.repository.CacheRepository
 import tmg.flashback.upnext.controllers.UpNextController
 import tmg.testutils.BaseTest
 
@@ -20,7 +22,9 @@ internal class HomeViewModelTest: BaseTest() {
     private var mockAppShortcutManager: AppShortcutManager = mockk(relaxed = true)
     private var mockRssController: RSSController = mockk(relaxed = true)
     private var mockConfigurationManager: ConfigController = mockk(relaxed = true)
+    private var mockCrashController: CrashController = mockk(relaxed = true)
     private var mockForceUpgradeController: ForceUpgradeController = mockk(relaxed = true)
+    private var mockCacheRepository: CacheRepository = mockk(relaxed = true)
     private var mockUpNextController: UpNextController = mockk(relaxed = true)
 
     private lateinit var sut: HomeViewModel
@@ -32,15 +36,24 @@ internal class HomeViewModelTest: BaseTest() {
         coEvery { mockConfigurationManager.applyPending() } returns true
         every { mockConfigurationManager.requireSynchronisation } returns false
         every { mockForceUpgradeController.shouldForceUpgrade } returns false
+        every { mockCacheRepository.initialSync } returns true
         every { mockRssController.enabled } returns false
     }
 
     private fun initSUT() {
-        sut = HomeViewModel(mockConfigurationManager, mockRssController, mockForceUpgradeController, mockAppShortcutManager, mockUpNextController)
+        sut = HomeViewModel(
+            mockConfigurationManager,
+            mockRssController,
+            mockCrashController,
+            mockForceUpgradeController,
+            mockAppShortcutManager,
+            mockCacheRepository,
+            mockUpNextController
+        )
     }
 
     @Test
-    fun `initialise with config requiring sync notifies require sync`() = coroutineTest {
+    fun `initialise with config requiring sync notifies requires sync`() = coroutineTest {
         every { mockConfigurationManager.requireSynchronisation } returns true
 
         initSUT()
@@ -48,7 +61,19 @@ internal class HomeViewModelTest: BaseTest() {
 
         assertTrue(sut.requiresSync)
         assertFalse(sut.forceUpgrade)
-        assertFalse(sut.appliedChanges)
+        assertTrue(sut.appliedChanges)
+    }
+
+    @Test
+    fun `initialise with config requiring cache repo requires sync`() = coroutineTest {
+        every { mockCacheRepository.initialSync } returns false
+
+        initSUT()
+        sut.initialise()
+
+        assertTrue(sut.requiresSync)
+        assertFalse(sut.forceUpgrade)
+        assertTrue(sut.appliedChanges)
     }
 
     @Test
@@ -60,7 +85,7 @@ internal class HomeViewModelTest: BaseTest() {
 
         assertFalse(sut.requiresSync)
         assertTrue(sut.forceUpgrade)
-        assertFalse(sut.appliedChanges)
+        assertTrue(sut.appliedChanges)
     }
 
     @Test
@@ -76,7 +101,7 @@ internal class HomeViewModelTest: BaseTest() {
 
         assertFalse(sut.requiresSync)
         assertFalse(sut.forceUpgrade)
-        assertTrue(sut.appliedChanges)
+        assertFalse(sut.appliedChanges)
     }
 
     @Test
@@ -92,6 +117,6 @@ internal class HomeViewModelTest: BaseTest() {
 
         assertFalse(sut.requiresSync)
         assertFalse(sut.forceUpgrade)
-        assertTrue(sut.appliedChanges)
+        assertFalse(sut.appliedChanges)
     }
 }

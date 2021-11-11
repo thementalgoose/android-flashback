@@ -2,7 +2,7 @@ package tmg.flashback.statistics.ui.overview.constructor.summary.viewholders
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import tmg.flashback.firebase.extensions.pointsDisplay
+import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.statistics.databinding.ViewConstructorSummaryHistoryBinding
 import tmg.flashback.statistics.ui.overview.constructor.summary.ConstructorSummaryItem
 import tmg.flashback.statistics.ui.overview.driver.summary.PipeType
@@ -28,7 +28,7 @@ class ConstructorHistoryViewHolder(
 
             year.text = item.season.toString()
             points.text = item.points.pointsDisplay()
-            standing.text = item.championshipPosition.ordinalAbbreviation
+            standing.text = item.championshipPosition?.ordinalAbbreviation ?: "N/A"
 
             inProgress.show(item.isInProgress)
 

@@ -16,6 +16,7 @@ import tmg.flashback.rss.ui.RSSActivity
 import tmg.flashback.statistics.R
 import tmg.flashback.ui.dashboard.DashboardNavigationCallback
 import tmg.flashback.ui.settings.SettingsAllActivity
+import tmg.flashback.upnext.ui.onboarding.OnboardingNotificationBottomSheetFragment
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 
@@ -53,6 +54,14 @@ class ListFragment: BaseFragment<FragmentDashboardListBinding>() {
                              context?.let { debugController.goToDebugActivity(it) }
                          }
                      }
+                },
+                featureBannerClicked = {
+                    when (it) {
+                        ListItem.FeatureBanner.EnrolNotifications -> {
+                            OnboardingNotificationBottomSheetFragment()
+                                .show(parentFragmentManager, "UP_NEXT_ONBOARDING")
+                        }
+                    }
                 }
         )
         binding.list.layoutManager = LinearLayoutManager(context)

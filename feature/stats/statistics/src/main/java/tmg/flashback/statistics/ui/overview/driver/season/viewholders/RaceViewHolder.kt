@@ -5,9 +5,9 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlin.math.roundToInt
 import tmg.flashback.ui.model.AnimationSpeed
 import tmg.flashback.statistics.ui.overview.driver.season.DriverSeasonItem
-import tmg.flashback.data.enums.isStatusFinished
+import tmg.flashback.formula1.enums.isStatusFinished
 import tmg.flashback.ui.extensions.getColor
-import tmg.flashback.firebase.extensions.pointsDisplay
+import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.ViewDriverSeasonBinding
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
@@ -35,7 +35,7 @@ class RaceViewHolder(
         binding.country.setImageResource(context.getFlagResourceAlpha3(item.raceCountryISO))
         binding.circuitName.text = item.circuitName
 
-        if (item.qualified == 0) {
+        if (item.qualified == null || item.qualified == 0) {
             binding.qualified.text = getString(R.string.qualifying_no)
         } else {
             binding.qualified.text = item.qualified.ordinalAbbreviation

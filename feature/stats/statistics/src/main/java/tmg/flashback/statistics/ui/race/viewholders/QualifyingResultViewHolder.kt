@@ -2,7 +2,7 @@ package tmg.flashback.statistics.ui.race.viewholders
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import tmg.flashback.data.models.stats.RoundQualifyingResult
+import tmg.flashback.formula1.model.RaceQualifyingResult
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.LayoutQualifyingTimeBinding
 import tmg.flashback.statistics.databinding.ViewRaceQualifyingResultBinding
@@ -48,12 +48,12 @@ class QualifyingResultViewHolder(
                 0 -> tvPosition.text = "P"
                 else -> tvPosition.text = model.qualified.toString()
             }
-            layoutDriver.tvName.text = model.driver.name
-            layoutDriver.tvNumber.text = model.driver.number.toString()
+            layoutDriver.tvName.text = model.driver.driver.name
+            layoutDriver.tvNumber.text = model.driver.driver.number?.toString() ?: "-"
             layoutDriver.tvNumber.colorHighlight = darken(model.driver.constructor.color)
             layoutDriver.imgFlag.setImageResource(R.drawable.gb)
             tvConstructor.text = model.driver.constructor.name
-            layoutDriver.tvNumber.text = model.driver.number.toString()
+            layoutDriver.tvNumber.text = model.driver.driver.number?.toString() ?: "-"
             layoutDriver.tvNumber.colorHighlight = model.driver.constructor.color
 
             constructorColor.setBackgroundColor(model.driver.constructor.color)
@@ -66,7 +66,7 @@ class QualifyingResultViewHolder(
                 penalty.show(false)
             }
 
-            layoutDriver.imgFlag.setImageResource(context.getFlagResourceAlpha3(model.driver.nationalityISO))
+            layoutDriver.imgFlag.setImageResource(context.getFlagResourceAlpha3(model.driver.driver.nationalityISO))
 
             applyTo(model.displayPrefs, type) { q1, q2, q3 ->
                 bind(model.q1, q1, model.q1Delta, model.displayPrefs)
@@ -80,7 +80,7 @@ class QualifyingResultViewHolder(
         }
     }
 
-    private fun bind(qualifying: RoundQualifyingResult?, layout: LayoutQualifyingTimeBinding?, delta: String?, displayPrefs: DisplayPrefs): Boolean {
+    private fun bind(qualifying: RaceQualifyingResult?, layout: LayoutQualifyingTimeBinding?, delta: String?, displayPrefs: DisplayPrefs): Boolean {
         if (layout == null) return false
         val label = qualifying?.time?.toString() ?: ""
         layout.tvQualifyingTime.text = label

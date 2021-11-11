@@ -3,33 +3,36 @@ package tmg.flashback.statistics.ui.overview.driver.season
 import androidx.annotation.AttrRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
+import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.formula1.constants.Formula1.maxPointsBySeason
-import androidx.lifecycle.ViewModel
 import tmg.flashback.statistics.ui.overview.driver.summary.PipeType
-import tmg.flashback.data.db.stats.DriverRepository
-import tmg.flashback.data.models.stats.DriverOverviewStanding
+import tmg.flashback.formula1.model.DriverHistorySeason
 import tmg.flashback.ui.controllers.ThemeController
-import tmg.flashback.firebase.extensions.pointsDisplay
+import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.statistics.R
+import tmg.flashback.statistics.repo.DriverRepository
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
 import tmg.flashback.statistics.ui.util.position
 import tmg.utilities.extensions.ordinalAbbreviation
 import tmg.utilities.lifecycle.DataEvent
+import tmg.utilities.lifecycle.Event
 
 //region Inputs
 
 interface DriverSeasonViewModelInputs {
     fun setup(driverId: String, season: Int)
+
     fun clickSeasonRound(result: DriverSeasonItem.Result)
+
+    fun refresh()
 }
 
 //endregion
@@ -39,6 +42,9 @@ interface DriverSeasonViewModelInputs {
 interface DriverSeasonViewModelOutputs {
     val openSeasonRound: LiveData<DataEvent<DriverSeasonItem.Result>>
     val list: LiveData<List<DriverSeasonItem>>
+
+    val isLoading: LiveData<Boolean>
+    val showRefreshError: LiveData<Event>
 }
 
 //endregion
@@ -46,7 +52,7 @@ interface DriverSeasonViewModelOutputs {
 @Suppress("EXPERIMENTAL_API_USAGE")
 class DriverSeasonViewModel(
     private val driverRepository: DriverRepository,
-    private val connectivityManager: tmg.flashback.device.managers.NetworkConnectivityManager,
+    private val connectivityManager: NetworkConnectivityManager,
     private val themeController: ThemeController
 ) : ViewModel(),
     DriverSeasonViewModelInputs,
@@ -55,8 +61,9 @@ class DriverSeasonViewModel(
     var inputs: DriverSeasonViewModelInputs = this
     var outputs: DriverSeasonViewModelOutputs = this
 
-    override val openSeasonRound: MutableLiveData<DataEvent<DriverSeasonItem.Result>> =
-        MutableLiveData()
+    override val openSeasonRound: MutableLiveData<DataEvent<DriverSeasonItem.Result>> = MutableLiveData()
+    override val isLoading: MutableLiveData<Boolean> = MutableLiveData()
+    override val showRefreshError: MutableLiveData<Event> = MutableLiveData()
 
     private var driverId: ConflatedBroadcastChannel<String> = ConflatedBroadcastChannel()
     private var season: Int = -1
@@ -79,12 +86,12 @@ class DriverSeasonViewModel(
                 else -> {
 
                     if (standing.isInProgress) {
-                        standing.raceOverview.maxByOrNull { it.round }?.let {
+                        standing.raceOverview.maxByOrNull { it.raceInfo.round }?.let {
                             list.add(
                                 DriverSeasonItem.ErrorItem(
                                     SyncDataItem.MessageRes(
                                         R.string.results_accurate_for,
-                                        listOf(it.raceName, it.round)
+                                        listOf(it.raceInfo.name, it.raceInfo.round)
                                     )
                                 )
                             )
@@ -140,21 +147,21 @@ class DriverSeasonViewModel(
                         .raceOverview
                         .map {
                             DriverSeasonItem.Result(
-                                season = it.season,
-                                round = it.round,
-                                raceName = it.raceName,
-                                circuitName = it.circuitName,
-                                circuitId = it.circuitId,
-                                raceCountry = it.circuitNationality,
-                                raceCountryISO = it.circuitNationalityISO,
+                                season = it.raceInfo.season,
+                                round = it.raceInfo.round,
+                                raceName = it.raceInfo.name,
+                                circuitName = it.raceInfo.circuit.name,
+                                circuitId = it.raceInfo.circuit.id,
+                                raceCountry = it.raceInfo.circuit.country,
+                                raceCountryISO = it.raceInfo.circuit.countryISO,
                                 showConstructorLabel = standing.constructors.size > 1,
                                 constructor = it.constructor ?: standing.constructors.last(),
-                                date = it.date,
+                                date = it.raceInfo.date,
                                 qualified = it.qualified,
                                 finished = it.finished,
                                 raceStatus = it.status,
                                 points = it.points,
-                                maxPoints = maxPointsBySeason(it.season),
+                                maxPoints = maxPointsBySeason(it.raceInfo.season),
                                 animationSpeed = themeController.animationSpeed
                             )
                         }
@@ -183,20 +190,31 @@ class DriverSeasonViewModel(
         openSeasonRound.value = DataEvent(result)
     }
 
+    override fun refresh() {
+        isLoading.value = true
+        viewModelScope.launch(context = Dispatchers.IO) {
+            val result = driverRepository.fetchDriver(driverId.value)
+            isLoading.postValue(false)
+            if (!result) {
+                showRefreshError.postValue(Event())
+            }
+        }
+    }
+
     //endregion
 
 
     /**
      * Add career stats for the driver across their career
      */
-    private fun getAllStats(overview: DriverOverviewStanding): List<DriverSeasonItem> {
+    private fun getAllStats(overview: DriverHistorySeason): List<DriverSeasonItem> {
         val list: MutableList<DriverSeasonItem> = mutableListOf()
 
         list.addStat(
             tint = if (!overview.isInProgress && overview.championshipStanding == 1) R.attr.f1Championship else R.attr.contentSecondary,
             icon = if (!overview.isInProgress && overview.championshipStanding == 1) R.drawable.ic_star_filled_coloured else R.drawable.ic_championship_order,
             label = if (overview.isInProgress) R.string.driver_overview_stat_career_championship_standing_so_far else R.string.driver_overview_stat_career_championship_standing,
-            value = overview.championshipStanding.ordinalAbbreviation
+            value = overview.championshipStanding?.ordinalAbbreviation ?: "N/A"
         )
         list.addStat(
             icon = R.drawable.ic_standings,
@@ -226,7 +244,7 @@ class DriverSeasonViewModel(
         list.addStat(
             icon = R.drawable.ic_best_finish,
             label = R.string.driver_overview_stat_career_best_finish,
-            value = overview.bestFinish.position()
+            value = overview.bestFinish?.position() ?: "N/A"
         )
         list.addStat(
             icon = R.drawable.ic_finishes_in_points,

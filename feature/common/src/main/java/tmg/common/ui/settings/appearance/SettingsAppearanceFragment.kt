@@ -12,12 +12,9 @@ import tmg.flashback.ui.navigation.NavigationProvider
 import tmg.flashback.ui.settings.SettingsFragment
 import tmg.utilities.extensions.observeEvent
 
-class SettingsAppearanceFragment: SettingsFragment<SettingsAppearanceViewModel>(),
-    FragmentResultListener {
+class SettingsAppearanceFragment: SettingsFragment<SettingsAppearanceViewModel>() {
 
     override val viewModel: SettingsAppearanceViewModel by viewModel()
-
-    private val navigationProvider: NavigationProvider by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,13 +24,6 @@ class SettingsAppearanceFragment: SettingsFragment<SettingsAppearanceViewModel>(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        // Listen for category callback
-        parentFragmentManager.setFragmentResultListener(
-            requestKey,
-            viewLifecycleOwner,
-            this
-        )
 
         observeEvent(viewModel.outputs.openNightMode) {
             val themeBottomSheetFragment = NightModeBottomSheetFragment()
@@ -54,18 +44,5 @@ class SettingsAppearanceFragment: SettingsFragment<SettingsAppearanceViewModel>(
     companion object {
         val requestKey: String = "themeKey"
         val bundleKey: String = "resetApp"
-    }
-
-    override fun onFragmentResult(requestKey: String, result: Bundle) {
-        activity?.let { activity ->
-            when (requestKey) {
-                requestKey -> {
-                    if (result.getBoolean(bundleKey)) {
-                        activity.finishAffinity()
-                        startActivity(navigationProvider.relaunchAppIntent(activity))
-                    }
-                }
-            }
-        }
     }
 }

@@ -81,8 +81,8 @@ task generateRemoteConfigDefaults {
                 value('false')
             }
             entry {
-                key('adverts')
-                value('false')
+                key('config_url')
+                value(project.ext.baseUrl)
             }
         }
     }

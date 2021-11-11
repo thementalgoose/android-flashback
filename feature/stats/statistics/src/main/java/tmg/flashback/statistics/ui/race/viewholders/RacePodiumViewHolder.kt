@@ -14,7 +14,7 @@ import tmg.utilities.extensions.views.context
 import tmg.utilities.extensions.views.gone
 import tmg.utilities.extensions.views.visible
 import kotlin.math.abs
-import tmg.flashback.firebase.extensions.pointsDisplay
+import tmg.flashback.formula1.extensions.pointsDisplay
 
 class RacePodiumViewHolder(
         val driverClicked: (driverId: String, driverName: String) -> Unit,
@@ -31,21 +31,21 @@ class RacePodiumViewHolder(
         layout.apply {
 
             pointsLayout.text = itemView.context.getString(R.string.round_podium_points, model.race?.points?.pointsDisplay() ?: "")
-            tvDriver.text = model.driver.name
-            tvNumber.text = model.driver.number.toString()
+            tvDriver.text = model.driver.driver.name
+            tvNumber.text = model.driver.driver.number.toString()
             tvNumber.colorHighlight = model.driver.constructor.color
             tvConstructor.text = model.driver.constructor.name
 
             constructorColor.setBackgroundColor(model.driver.constructor.color)
 
-            model.driver.photoUrl?.let {
+            model.driver.driver.photoUrl?.let {
                 Glide.with(imgDriver)
                     .load(it)
                     .into(imgDriver)
             }
 
             imgDriver.setOnClickListener {
-                driverClicked(model.driver.id, model.driver.name)
+                driverClicked(model.driver.driver.id, model.driver.driver.name)
             }
 
             // Starting Position
@@ -71,7 +71,7 @@ class RacePodiumViewHolder(
             }
 
             // Nationality
-            imgNationality.setImageResource(context.getFlagResourceAlpha3(model.driver.nationalityISO))
+            imgNationality.setImageResource(context.getFlagResourceAlpha3(model.driver.driver.nationalityISO))
 
             // Time
             if (model.race?.pos == 1) {

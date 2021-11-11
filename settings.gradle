@@ -4,13 +4,15 @@ include ':app'
 
 include ':feature:common'
 include ':feature:stats:statistics'
-include ':feature:stats:data-firestore'
-include ':feature:stats:data'
+include ':feature:stats:repo'
+include ':feature:stats:room'
+include ':feature:stats:network'
 include ':feature:upnext'
-include ':feature:formula1'
 include ':feature:rss'
 
 include ':feature:debug'
+
+include ':formula1'
 
 include ':core:ads'
 include ':core:analytics'
@@ -23,3 +25,5 @@ include ':core:preferences'
 include ':core:tutorial'
 include ':core:ui'
 include ':core:style'
+
+include ':test:stats-models'

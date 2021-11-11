@@ -18,7 +18,7 @@ android {
 dependencies {
 
     // Formula 1 base data
-    implementation project(path: ':feature:formula1')
+    implementation project(path: ':formula1')
 
     // Core modules
     implementation project(path: ':core:analytics')

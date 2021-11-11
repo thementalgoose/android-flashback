@@ -9,7 +9,7 @@ import tmg.common.ui.forceupgrade.ForceUpgradeActivity
 import tmg.flashback.ui.base.BaseActivity
 import tmg.flashback.ui.model.DisplayType
 import tmg.flashback.databinding.ActivityDashboardBinding
-import tmg.flashback.ui.SyncActivity
+import tmg.flashback.ui.sync.SyncActivity
 
 class HomeActivity: BaseActivity() {
 

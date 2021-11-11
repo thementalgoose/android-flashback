@@ -32,11 +32,11 @@ class UpNextRepository(
                 ?: emptyList()
 
     var notificationRace: Boolean
-        get() = preferenceManager.getBoolean(keyNotificationRace, true)
+        get() = preferenceManager.getBoolean(keyNotificationRace, false)
         set(value) = preferenceManager.save(keyNotificationRace, value)
 
     var notificationQualifying: Boolean
-        get() = preferenceManager.getBoolean(keyNotificationQualifying, true)
+        get() = preferenceManager.getBoolean(keyNotificationQualifying, false)
         set(value) = preferenceManager.save(keyNotificationQualifying, value)
 
     var notificationFreePractice: Boolean

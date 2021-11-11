@@ -4,7 +4,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.statistics.ui.race.RaceModel
-import tmg.flashback.data.enums.isStatusFinished
+import tmg.flashback.formula1.enums.isStatusFinished
 import tmg.flashback.ui.extensions.getColor
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.ViewRaceRaceResultBinding
@@ -13,7 +13,7 @@ import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.statistics.ui.util.position
 import tmg.utilities.extensions.views.*
 import kotlin.math.abs
-import tmg.flashback.firebase.extensions.pointsDisplay
+import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.utilities.utils.ColorUtils.Companion.darken
 
 class RaceResultViewHolder(
@@ -32,17 +32,17 @@ class RaceResultViewHolder(
 
     fun bind(model: RaceModel.Single) {
 
-        driverId = model.driver.id
-        driverName = model.driver.name
+        driverId = model.driver.driver.id
+        driverName = model.driver.driver.name
 
         binding.apply {
             tvPosition.text = model.race?.pos.toString()
-            layoutDriver.tvName.text = model.driver.name
+            layoutDriver.tvName.text = model.driver.driver.name
             layoutDriver.tvNumber.gone()
             layoutDriver.imgFlag.gone()
-            tvDriverNumber.text = model.driver.number.toString()
+            tvDriverNumber.text = model.driver.driver.number.toString()
             tvDriverNumber.colorHighlight = darken(model.driver.constructor.color)
-            imgDriverFlag.setImageResource(context.getFlagResourceAlpha3(model.driver.nationalityISO))
+            imgDriverFlag.setImageResource(context.getFlagResourceAlpha3(model.driver.driver.nationalityISO))
             tvConstructor.text = model.driver.constructor.name
 
             constructorColor.setBackgroundColor(model.driver.constructor.color)

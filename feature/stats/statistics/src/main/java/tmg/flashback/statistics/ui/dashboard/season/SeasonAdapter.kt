@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import org.koin.core.component.KoinApiExtension
 import org.koin.core.component.inject
 import tmg.flashback.ui.controllers.ThemeController
 import tmg.flashback.statistics.R
@@ -13,7 +12,7 @@ import tmg.flashback.statistics.ui.dashboard.season.viewholders.*
 import tmg.flashback.statistics.ui.shared.sync.SyncAdapter
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 
-@KoinApiExtension
+@Suppress("EXPERIMENTAL_API_USAGE", "EXPERIMENTAL_OVERRIDE")
 class SeasonAdapter(
     private val trackClicked: (track: SeasonItem.Track) -> Unit,
     private val calendarWeekRaceClicked: (track: SeasonItem.CalendarWeek) -> Unit,
