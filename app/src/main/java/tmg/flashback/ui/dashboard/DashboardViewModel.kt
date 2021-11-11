@@ -23,7 +23,6 @@ interface DashboardViewModelInputs {
 //region Outputs
 
 interface DashboardViewModelOutputs {
-    val openUpNextNotificationOnboarding: LiveData<Event>
     val openReleaseNotes: LiveData<Event>
     val openSearch: LiveData<Event>
 
@@ -43,7 +42,6 @@ class DashboardViewModel(
 ): ViewModel(), DashboardViewModelInputs, DashboardViewModelOutputs {
 
     override val openReleaseNotes: MutableLiveData<Event> = MutableLiveData()
-    override val openUpNextNotificationOnboarding: MutableLiveData<Event> = MutableLiveData()
     override val appConfigSynced: MutableLiveData<Event> = MutableLiveData()
     override val showUpNext: MutableLiveData<Boolean> = MutableLiveData()
     override val openSearch: MutableLiveData<Event> = MutableLiveData()
@@ -67,9 +65,7 @@ class DashboardViewModel(
 
         showUpNext.value = upNextController.getNextEvent() != null
 
-        if (upNextController.shouldShowNotificationOnboarding) {
-            openUpNextNotificationOnboarding.value = Event()
-        } else if (releaseNotesController.pendingReleaseNotes) {
+        if (releaseNotesController.pendingReleaseNotes) {
             openReleaseNotes.value = Event()
         }
     }

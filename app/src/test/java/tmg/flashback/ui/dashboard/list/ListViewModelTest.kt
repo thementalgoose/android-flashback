@@ -26,6 +26,7 @@ internal class ListViewModelTest: BaseTest() {
     private val mockSeasonController: SeasonController = mockk(relaxed = true)
     private val mockRssController: RSSController = mockk(relaxed = true)
     private val mockDebugController: DebugController = mockk(relaxed = true)
+    private val mockUpNextController: UpNextController = mockk(relaxed = true)
 
     @BeforeEach
     internal fun setUp() {
@@ -45,7 +46,8 @@ internal class ListViewModelTest: BaseTest() {
         sut = ListViewModel(
             mockSeasonController,
             mockRssController,
-            mockDebugController
+            mockDebugController,
+            mockUpNextController
         )
     }
 
@@ -348,6 +350,20 @@ internal class ListViewModelTest: BaseTest() {
 
         sut.outputs.showSeasonEvent.test {
             assertDataEventValue(2020)
+        }
+    }
+
+    //endregion
+
+    //region Show notification banner
+
+    @Test
+    fun `show notification banner if should show is true`() {
+        every { mockUpNextController.shouldShowNotificationOnboarding } returns true
+
+        initSUT()
+        sut.outputs.list.test {
+            assertListMatchesItem { it is ListItem.FeatureBanner.EnrolNotifications }
         }
     }
 

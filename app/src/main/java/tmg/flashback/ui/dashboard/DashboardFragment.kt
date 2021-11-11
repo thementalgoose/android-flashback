@@ -113,11 +113,6 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(),
             ReleaseBottomSheetFragment()
                 .show(parentFragmentManager, "RELEASE_NOTES")
         }
-
-        observeEvent(viewModel.outputs.openUpNextNotificationOnboarding) {
-            OnboardingNotificationBottomSheetFragment()
-                .show(parentFragmentManager, "UP_NEXT_ONBOARDING")
-        }
     }
 
     private fun loadFragment(frag: Fragment, @IdRes layoutRes: Int, tag: String?) {
