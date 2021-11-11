@@ -25,11 +25,11 @@
     <string name="dashboard_season_list_up_next_moved">Find out what\'s coming up!</string>
     <string name="dashboard_season_list_extra_settings_title">Settings</string>
     <string name="dashboard_season_list_extra_contact_title">Contact</string>
-    <string name="dashboard_season_list_default_banner_automatic">No default season set, so Flashback will use the currently active season</string>
+    <string name="dashboard_season_list_default_banner_automatic">No default season set, so Flashback will manage the currently active season</string>
     <string name="dashboard_season_list_default_banner_user">Default season set to %d</string>
     <string name="dashboard_season_list_default_banner_revert">Undo</string>
     <string name="dashboard_season_list_option_set_default">Set as default</string>
-    <string name="dashboard_season_list_option_clear_default">Clear default</string>
+    <string name="dashboard_season_list_option_clear_default">Clear default and </string>
     <string name="dashboard_season_list_up_next_race">Next race</string>
 
     <!-- Loading -->
@@ -124,8 +124,8 @@
     <string name="settings_customisation_fade_dnf_title">Fade race DNFs</string>
     <string name="settings_customisation_fade_dnf_description">Fade out the drivers who fail to finish a race when looking at race results</string>
     <string name="settings_default_season_title">Reset default season</string>
-    <string name="settings_default_season_description">Reset your default season selection and let the app follow the Formula 1 seasons</string>
-    <string name="settings_default_season_updated">Default season cleared</string>
+    <string name="settings_default_season_description">Reset your default season selection let flashback manage the currently active season</string>
+    <string name="settings_default_season_updated">Flashback is now managing the currently active season</string>
     <string name="settings_customisation_season_all_expanded_title">All section</string>
     <string name="settings_customisation_season_all_expanded_description">Expand the all section in the menu by default</string>
     <string name="settings_customisation_season_favourited_expanded_title">Favourites section</string>
