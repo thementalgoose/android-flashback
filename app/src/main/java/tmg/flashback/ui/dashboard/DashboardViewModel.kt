@@ -4,9 +4,9 @@ import android.content.Context
 import android.util.Log
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
-import tmg.configuration.controllers.ConfigController
-import tmg.common.controllers.ReleaseNotesController
-import tmg.core.device.managers.BuildConfigManager
+import tmg.flashback.configuration.controllers.ConfigController
+import tmg.flashback.common.controllers.ReleaseNotesController
+import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.statistics.BuildConfig
 import tmg.flashback.upnext.controllers.UpNextController
 import tmg.flashback.upnext.extensions.updateAllWidgets

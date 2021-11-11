@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <!-- Linear Layout parent required because of DiscordOverlappingPanels Weirdness -->
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
+
+    <tmg.flashback.ui.views.SwipeRefreshMotionLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?attr/backgroundPrimary"
+        app:layoutDescription="@xml/fragment_constructor_scene"
+        tools:showPaths="true">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/toolbarGuideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="@dimen/toolbarHeight" />
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/paddingSmall"
+            android:clickable="true"
+            android:contentDescription="@string/ab_back"
+            android:focusable="true"
+            android:foreground="@drawable/ripple_rounded_small"
+            android:padding="@dimen/paddingSmall"
+            app:layout_constraintBottom_toBottomOf="@id/toolbarGuideline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_back"
+            app:tint="?attr/contentPrimary" />
+
+        <TextView
+            android:id="@+id/titleCollapsed"
+            style="@style/Text.Toolbar.Collapsed"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/paddingSmall"
+            android:layout_marginEnd="@dimen/paddingMedium"
+            android:alpha="0.0"
+            app:layout_constraintBottom_toBottomOf="@id/toolbarGuideline"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/back"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="2021" />
+
+        <TextView
+            android:id="@+id/titleExpanded"
+            style="@style/Text.Toolbar.Expanded"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/toolbarExpandedSpacer"
+            android:paddingStart="@dimen/paddingMedium"
+            android:paddingTop="@dimen/paddingSmall"
+            android:paddingEnd="@dimen/paddingMedium"
+            android:paddingBottom="@dimen/paddingMedium"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/toolbarGuideline"
+            tools:text="2021" />
+
+        <ProgressBar
+            android:id="@+id/progress"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            app:layout_constraintBottom_toBottomOf="@id/titleExpanded"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:id="@+id/swipeRefresh"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/titleExpanded">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/dataList"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:clipToPadding="false"
+                android:overScrollMode="@integer/overScrollMode"
+                android:paddingBottom="@dimen/paddingXLarge"
+                tools:listitem="@layout/view_constructor_summary_history" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    </tmg.flashback.ui.views.SwipeRefreshMotionLayout>
+
+</LinearLayout>

@@ -1,0 +1,35 @@
+apply plugin: 'com.android.library'
+apply from: rootDir.absolutePath + "/gradle/config-android.gradle"
+apply from: rootDir.absolutePath + "/gradle/config-util.gradle"
+apply from: rootDir.absolutePath + "/gradle/config-junit5.gradle"
+apply from: rootDir.absolutePath + "/gradle/config-koin.gradle"
+apply from: rootDir.absolutePath + "/gradle/config-room.gradle"
+
+android {
+    compileSdkVersion project.ext.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion project.ext.minSdkVersion
+        targetSdkVersion project.ext.targetSdkVersion
+        versionCode project.ext.versionCode
+        versionName project.ext.versionName
+    }
+}
+
+dependencies {
+
+    // Modules
+    implementation project(path: ':data:room')
+    implementation project(path: ':data:network')
+    implementation project(path: ':formula1')
+
+    // Explicit crash reporting link
+    implementation project(path: ':core:crash-reporting')
+
+    // Retrofit
+    implementation deps.retrofit.retrofit
+    implementation project(path: ':core:preferences')
+
+    // Tests
+    testImplementation project(':test:stats-models')
+}
