@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Assertions.fail
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
+import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.ui.controllers.ThemeController
 import tmg.flashback.ui.model.AnimationSpeed
 import tmg.flashback.formula1.model.Race
@@ -32,7 +33,7 @@ internal class RaceViewModelTest: BaseTest() {
     private val mockRaceRepository: RaceRepository = mockk(relaxed = true)
     private val mockRaceController: RaceController = mockk(relaxed = true)
     private val mockThemeController: ThemeController = mockk(relaxed = true)
-    private val mockConnectivityManager: tmg.core.device.managers.NetworkConnectivityManager = mockk(relaxed = true)
+    private val mockConnectivityManager: NetworkConnectivityManager = mockk(relaxed = true)
 
     private lateinit var sut: RaceViewModel
 

@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 import org.threeten.bp.Year
-import tmg.core.analytics.manager.AnalyticsManager
+import tmg.flashback.analytics.manager.AnalyticsManager
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.ui.controllers.ThemeController
 import tmg.flashback.ui.model.AnimationSpeed
