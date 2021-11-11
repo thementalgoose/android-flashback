@@ -29,7 +29,7 @@
     <string name="dashboard_season_list_default_banner_user">Default season set to %d</string>
     <string name="dashboard_season_list_default_banner_revert">Undo</string>
     <string name="dashboard_season_list_option_set_default">Set as default</string>
-    <string name="dashboard_season_list_option_clear_default">Clear default and </string>
+    <string name="dashboard_season_list_option_clear_default">Clear default</string>
     <string name="dashboard_season_list_up_next_race">Next race</string>
 
     <!-- Loading -->
@@ -149,12 +149,28 @@
     <string name="search_category_ensure_internet">If it\'s taking a while to load, please make sure you are connected to the internet and try again!</string>
 
     <!-- Error states -->
+    <string name="shared_unavailable_early_season">We don\'t have any data on this season or the calendar has not been confirmed yet. We will add this information as soon the season gets underway</string>
+    <string name="shared_unavailable_future_season">This season has not started yet, please check back after the first race to see the results!</string>
+    <string name="shared_unavailable_season_internal_error">An error occurred. Please check you have an internet connection and try again</string>
+
+    <string name="shared_unavailable_standings_early">The season has not started yet, please check back after the first race to see the results!</string>
+    <string name="shared_unavailable_standings_internal_error">An error occurred. Please check you have an internet connection and try again</string>
+
+    <string name="shared_unavailable_constructor_history_internal_error">An error occurred. Please check you have an internet connection and try again</string>
+
+    <string name="shared_unavailable_driver_history_internal_error">An error occurred. Please check you have an internet connection and try again</string>
+
+    <string name="shared_unavailable_circuit_history_internal_error">An error occurred. Please check you have an internet connection and try again</string>
+
+    <string name="shared_unavailable_no_data">No results found! Please check you have an active internet connection and try again</string>
+    <string name="shared_unavailable_pull_refresh">Please check you have an active internet connection and pull to refresh</string>
+
     <string name="shared_unavailable_circuit_not_found">We can\'t find any information on this circuit.</string>
     <string name="shared_unavailable_driver_not_found">We can\'t find any information on this driver.</string>
     <string name="shared_unavailable_constructor_not_found">We can\'t find any information on this constructor.</string>
     <string name="shared_unavailable_no_search_results">No search results found for your query</string>
-    <string name="shared_unavailable_future_season">This season has not started yet, please check back after the first race to see the results!</string>
-    <string name="shared_unavailable_early_season">We don\'t have any data on this season or the calendar has not been confirmed yet. We will add this information as soon it\'s available</string>
+    <string name="shared_unavailable_pull_refresh_driver">Please check you have an active internet connection and pull to refresh</string>
+    <string name="shared_unavailable_pull_refresh_constructor">Please check you have an active internet connection and pull to refresh</string>
     <string name="shared_unavailable_future_race">This race has not yet happened, please check back after the race to see the results</string>
     <string name="shared_unavailable_coming_soon_race">We don\'t have this information yet, it should be available after the race (race results usually take between 2 – 6 hours to appear, but can take longer)</string>
     <string name="shared_unavailable_missing_race">Unfortunately we don\'t have any information for this yet, please check you have an internet connection and try again</string>

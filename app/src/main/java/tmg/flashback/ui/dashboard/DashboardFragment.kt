@@ -1,6 +1,5 @@
 package tmg.flashback.ui.dashboard
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,7 +16,6 @@ import tmg.flashback.R
 import tmg.flashback.databinding.FragmentDashboardBinding
 import tmg.flashback.statistics.controllers.SearchController
 import tmg.flashback.statistics.controllers.SeasonController
-import tmg.flashback.statistics.ui.admin.maintenance.MaintenanceActivity
 import tmg.flashback.ui.dashboard.list.ListFragment
 import tmg.flashback.statistics.ui.dashboard.season.SeasonFragment
 import tmg.flashback.statistics.ui.dashboard.season.SeasonFragmentCallback
@@ -95,17 +93,6 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(),
             }
         }
 
-        observeEvent(viewModel.outputs.openAppLockout) {
-            activity?.let {
-                startActivity(Intent(it, MaintenanceActivity::class.java))
-                it.finishAffinity()
-            }
-        }
-
-        observe(viewModel.outputs.showUpNext) {
-            seasonFragment?.showUpNext(it)
-        }
-
         observeEvent(viewModel.outputs.openSearch) {
             context?.let {
                 startActivity(SearchActivity.intent(it))
@@ -114,18 +101,12 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(),
 
         observeEvent(viewModel.outputs.appConfigSynced) {
             listFragment?.refresh()
-            seasonFragment?.refresh()
             upNextFragment?.refresh()
         }
 
         observeEvent(viewModel.outputs.openReleaseNotes) {
             ReleaseBottomSheetFragment()
                 .show(parentFragmentManager, "RELEASE_NOTES")
-        }
-
-        observeEvent(viewModel.outputs.openUpNextNotificationOnboarding) {
-            OnboardingNotificationBottomSheetFragment()
-                .show(parentFragmentManager, "UP_NEXT_ONBOARDING")
         }
     }
 

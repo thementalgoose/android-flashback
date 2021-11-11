@@ -3,20 +3,20 @@ package tmg.flashback.statistics.ui.dashboard.season.viewholders
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import kotlin.math.roundToInt
 import tmg.flashback.statistics.R
 import tmg.core.ui.model.AnimationSpeed
 import tmg.flashback.statistics.ui.dashboard.season.SeasonItem
 import tmg.core.ui.extensions.getColor
-import tmg.flashback.firebase.extensions.pointsDisplay
+import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.statistics.databinding.ViewDashboardSeasonDriverBinding
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.utilities.extensions.views.context
 import tmg.utilities.extensions.views.show
+import kotlin.math.roundToInt
 
 class DriverViewHolder(
-        val driverClicked: (driver: SeasonItem.Driver) -> Unit,
-        private val binding: ViewDashboardSeasonDriverBinding
+    val driverClicked: (driver: SeasonItem.Driver) -> Unit,
+    private val binding: ViewDashboardSeasonDriverBinding
 ): RecyclerView.ViewHolder(binding.root), View.OnClickListener {
 
     init {
@@ -47,10 +47,11 @@ class DriverViewHolder(
         binding.imgDriverFlag.setImageResource(itemView.context.getFlagResourceAlpha3(item.driver.nationalityISO))
 
         binding.tvDriverNumber.text = item.driver.number.toString()
-        binding.tvConstructor.text = item.driver.startingConstructor.name
+        binding.tvConstructor.text = item.constructors.joinToString(separator = ", ") { it.name }
 
         binding.lpvProgress.backgroundColour = itemView.context.theme.getColor(R.attr.backgroundPrimary)
-        binding.lpvProgress.progressColour = item.driver.startingConstructor.color
+        // TODO: Look at a way of representing multiple constructors on the driver overview board
+        binding.lpvProgress.progressColour = item.constructors.firstOrNull()?.color ?: context.theme.getColor(R.attr.colorPrimary)
         binding.lpvProgress.textBackgroundColour = context.theme.getColor(R.attr.contentSecondary)
 
         var maxProgress = item.points.toFloat() / item.maxPointsInSeason.toFloat()

@@ -3,6 +3,7 @@ package tmg.flashback.statistics.ui.circuit
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import tmg.flashback.formula1.model.Location
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.ViewCircuitInfoHeaderBinding
 import tmg.flashback.statistics.databinding.ViewCircuitInfoRaceBinding
@@ -16,8 +17,8 @@ import tmg.utilities.difflist.calculateDiff
 
 @Suppress("EXPERIMENTAL_API_USAGE", "EXPERIMENTAL_OVERRIDE")
 class CircuitInfoAdapter(
-    val clickShowOnMap: () -> Unit,
-    val clickWikipedia: () -> Unit,
+    val clickShowOnMap: (location: Location, name: String) -> Unit,
+    val clickLink: (link: String) -> Unit,
     val clickRace: (race: CircuitItem.Race) -> Unit
 ): SyncAdapter<CircuitItem>() {
 
@@ -38,7 +39,7 @@ class CircuitInfoAdapter(
         return when (viewType) {
             R.layout.view_circuit_info_header -> HeaderViewHolder(
                 clickShowOnMap,
-                clickWikipedia,
+                clickLink,
                 ViewCircuitInfoHeaderBinding.inflate(layoutInflater, parent, false)
             )
             R.layout.view_circuit_info_race -> RaceViewHolder(

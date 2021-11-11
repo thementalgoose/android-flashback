@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp" />
 
-    <androidx.constraintlayout.motion.widget.MotionLayout
+    <tmg.core.ui.views.SwipeRefreshMotionLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -52,6 +52,7 @@
             android:focusable="true"
             android:foreground="@drawable/ripple_rounded_small"
             android:paddingStart="@dimen/paddingSmall"
+            android:paddingEnd="0dp"
             android:paddingTop="@dimen/paddingSmall"
             android:paddingBottom="@dimen/paddingSmall"
             app:layout_constraintBottom_toBottomOf="@id/toolbarGuideline"
@@ -123,20 +124,31 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <tmg.core.ui.views.LockableRecyclerView
-            android:id="@+id/dataList"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginBottom="@dimen/paddingLarge"
-            android:clipToPadding="false"
-            android:overScrollMode="@integer/overScrollMode"
-            android:paddingBottom="@dimen/paddingXXLarge"
+            android:id="@+id/swipeRefresh"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/titleExpanded"
-            tools:listitem="@layout/view_dashboard_season_track" />
+            app:layout_constraintTop_toBottomOf="@id/titleExpanded">
 
-    </androidx.constraintlayout.motion.widget.MotionLayout>
+            <tmg.core.ui.views.LockableRecyclerView
+                android:id="@+id/dataList"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginBottom="@dimen/paddingLarge"
+                android:clipToPadding="false"
+                android:overScrollMode="@integer/overScrollMode"
+                android:paddingBottom="@dimen/paddingXXLarge"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/titleExpanded"
+                tools:listitem="@layout/view_dashboard_season_track" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    </tmg.core.ui.views.SwipeRefreshMotionLayout>
 
 </LinearLayout>

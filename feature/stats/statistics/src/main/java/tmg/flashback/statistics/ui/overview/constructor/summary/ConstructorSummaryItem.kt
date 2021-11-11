@@ -2,7 +2,7 @@ package tmg.flashback.statistics.ui.overview.constructor.summary
 
 import androidx.annotation.*
 import tmg.flashback.statistics.ui.overview.driver.summary.PipeType
-import tmg.flashback.data.models.stats.ConstructorOverviewDriverStanding
+import tmg.flashback.formula1.model.ConstructorHistorySeasonDriver
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 
@@ -14,7 +14,7 @@ sealed class ConstructorSummaryItem(
             val constructorColor: Int,
             val constructorNationality: String,
             val constructorNationalityISO: String,
-            val constructorWikiUrl: String
+            val constructorWikiUrl: String?
     ): ConstructorSummaryItem(
             R.layout.view_constructor_summary_header
     )
@@ -35,11 +35,11 @@ sealed class ConstructorSummaryItem(
         val pipe: PipeType,
         val season: Int,
         val isInProgress: Boolean,
-        val championshipPosition: Int,
+        val championshipPosition: Int?,
         val points: Double,
         @ColorInt
         val colour: Int,
-        val drivers: List<ConstructorOverviewDriverStanding>
+        val drivers: List<ConstructorHistorySeasonDriver>
     ): ConstructorSummaryItem(
             R.layout.view_constructor_summary_history
     )
@@ -51,12 +51,6 @@ sealed class ConstructorSummaryItem(
     object Loading: ConstructorSummaryItem(R.layout.view_loading_podium)
 
     object ListHeader: ConstructorSummaryItem(R.layout.view_constructor_summary_list_header)
-}
 
-fun MutableList<ConstructorSummaryItem>.addError(syncDataItem: SyncDataItem) {
-    this.add(
-        ConstructorSummaryItem.ErrorItem(
-            syncDataItem
-        )
-    )
+    companion object
 }

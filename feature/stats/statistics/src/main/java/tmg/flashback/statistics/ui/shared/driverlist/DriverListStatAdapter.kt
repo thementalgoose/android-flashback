@@ -3,8 +3,8 @@ package tmg.flashback.statistics.ui.shared.driverlist
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import tmg.flashback.data.models.stats.ConstructorOverviewDriverStanding
-import tmg.flashback.firebase.extensions.pointsDisplay
+import tmg.flashback.formula1.model.ConstructorHistorySeasonDriver
+import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.LayoutConstructorDriverLabelBinding
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
@@ -12,7 +12,7 @@ import tmg.utilities.extensions.ordinalAbbreviation
 
 class DriverListStatAdapter: RecyclerView.Adapter<DriverListStatAdapter.ViewHolder>() {
 
-    var list: List<ConstructorOverviewDriverStanding> = emptyList()
+    var list: List<ConstructorHistorySeasonDriver> = emptyList()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -34,12 +34,12 @@ class DriverListStatAdapter: RecyclerView.Adapter<DriverListStatAdapter.ViewHold
     inner class ViewHolder(
         private val binding: LayoutConstructorDriverLabelBinding
     ): RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: ConstructorOverviewDriverStanding) {
-            binding.tvName.text = item.driver.name
-            binding.imgFlag.setImageResource(itemView.context.getFlagResourceAlpha3(item.driver.nationalityISO))
+        fun bind(item: ConstructorHistorySeasonDriver) {
+            binding.tvName.text = item.driver.driver.name
+            binding.imgFlag.setImageResource(itemView.context.getFlagResourceAlpha3(item.driver.driver.nationalityISO))
             binding.tvNumber.text = itemView.context.resources.getQuantityString(R.plurals.race_points, item.points.toInt(), item.points.pointsDisplay())
 
-            binding.standing.text = item.championshipStanding.ordinalAbbreviation
+            binding.standing.text = item.championshipStanding?.ordinalAbbreviation ?: "N/A"
         }
     }
 }

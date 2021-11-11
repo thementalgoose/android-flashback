@@ -1,730 +1,495 @@
 package tmg.flashback.statistics.ui.dashboard.season
 
-import io.mockk.every
-import io.mockk.mockk
-import io.mockk.verify
+import io.mockk.*
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.test.runBlockingTest
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.ValueSource
-import org.threeten.bp.DayOfWeek
-import org.threeten.bp.LocalDate
-import org.threeten.bp.Month
-import org.threeten.bp.temporal.TemporalAdjusters
+import org.junit.jupiter.params.provider.CsvSource
+import org.threeten.bp.Year
 import tmg.core.analytics.manager.AnalyticsManager
-import tmg.core.device.controllers.DeviceController
 import tmg.core.device.managers.NetworkConnectivityManager
 import tmg.core.ui.controllers.ThemeController
 import tmg.core.ui.model.AnimationSpeed
-import tmg.flashback.data.db.stats.HistoryRepository
-import tmg.flashback.data.db.stats.SeasonOverviewRepository
-import tmg.flashback.data.models.stats.History
-import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
-import tmg.flashback.statistics.*
-import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
+import tmg.flashback.formula1.model.*
+import tmg.flashback.statistics.R
 import tmg.flashback.statistics.controllers.SeasonController
+import tmg.flashback.statistics.repo.OverviewRepository
+import tmg.flashback.statistics.repo.RaceRepository
+import tmg.flashback.statistics.repo.SeasonRepository
+import tmg.flashback.statistics.repo.repository.CacheRepository
 import tmg.flashback.statistics.repository.models.Banner
+import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertDataEventValue
-import tmg.testutils.livedata.assertEventFired
-import tmg.testutils.livedata.assertListContainsItem
-import tmg.testutils.livedata.assertListDoesNotMatchItem
-import tmg.testutils.livedata.assertListExcludesItem
-import tmg.testutils.livedata.assertListHasFirstItem
-import tmg.testutils.livedata.assertListHasLastItem
-import tmg.testutils.livedata.assertListHasSublist
 import tmg.testutils.livedata.assertListMatchesItem
 import tmg.testutils.livedata.test
-import tmg.utilities.models.StringHolder
+import tmg.testutils.livedata.testObserve
 
 internal class SeasonViewModelTest: BaseTest() {
 
-    lateinit var sut: SeasonViewModel
-
-    private val mockThemeController: ThemeController = mockk(relaxed = true)
-    private val mockHistoryRepository: HistoryRepository = mockk(relaxed = true)
-    private val mockSeasonOverviewRepository: SeasonOverviewRepository = mockk(relaxed = true)
     private val mockSeasonController: SeasonController = mockk(relaxed = true)
+    private val mockRaceRepository: RaceRepository = mockk(relaxed = true)
     private val mockNetworkConnectivityManager: NetworkConnectivityManager = mockk(relaxed = true)
-    private val mockAnalyticsController: AnalyticsManager = mockk(relaxed = true)
+    private val mockOverviewRepository: OverviewRepository = mockk(relaxed = true)
+    private val mockSeasonRepository: SeasonRepository = mockk(relaxed = true)
+    private val mockAnalyticsManager: AnalyticsManager = mockk(relaxed = true)
+    private val mockThemeController: ThemeController = mockk(relaxed = true)
+    private val mockCacheRepository: CacheRepository = mockk(relaxed = true)
 
-    @BeforeEach
-    internal fun setUp() {
-        every { mockSeasonController.banner } returns null
-
-        every { mockNetworkConnectivityManager.isConnected } returns true
-
-        every { mockThemeController.animationSpeed } returns AnimationSpeed.NONE
-        every { mockSeasonOverviewRepository.getSeasonOverview(any()) } returns flow { emit(mockSeason) }
-        every { mockHistoryRepository.historyFor(any()) } returns flow { emit(mockHistory) }
-    }
+    private lateinit var sut: SeasonViewModel
 
     private fun initSUT() {
         sut = SeasonViewModel(
-            mockThemeController,
-            mockHistoryRepository,
-            mockSeasonOverviewRepository,
             mockSeasonController,
+            mockRaceRepository,
             mockNetworkConnectivityManager,
-            mockAnalyticsController
+            mockOverviewRepository,
+            mockSeasonRepository,
+            mockAnalyticsManager,
+            mockThemeController,
+            mockCacheRepository,
+            ioDispatcher = coroutineScope.testDispatcher
         )
     }
 
-    //region Showing up next
-
-    @Test
-    fun `showUpNext defaults to false`() {
-
-        initSUT()
-
-        sut.outputs.showUpNext.test {
-            assertValue(false)
-        }
+    @BeforeEach
+    internal fun setUp() {
+        every { mockCacheRepository.shouldSyncCurrentSeason() } returns false
+        every { mockNetworkConnectivityManager.isConnected } returns true
+        every { mockSeasonController.banner } returns null
+        every { mockSeasonController.defaultSeason } returns Year.now().value
+        every { mockSeasonController.serverDefaultSeason } returns Year.now().value
+        every { mockThemeController.animationSpeed } returns AnimationSpeed.QUICK
+        coEvery { mockRaceRepository.shouldSyncRace(any()) } returns false
+        coEvery { mockOverviewRepository.fetchOverview(any()) } returns true
+        coEvery { mockSeasonRepository.fetchRaces(any()) } returns true
+        coEvery { mockSeasonRepository.getDriverStandings(any()) } returns flow { emit(
+            SeasonDriverStandings.model()
+        ) }
+        coEvery { mockSeasonRepository.getConstructorStandings(any()) } returns flow { emit(
+            SeasonConstructorStandings.model()
+        ) }
+        coEvery { mockOverviewRepository.getOverview(any()) } returns flow { emit(
+            Overview.model()
+        ) }
     }
 
     @Test
-    fun `showUpNext changes to true when input with true`() {
+    fun `banner is displayed at top of list`() = coroutineTest {
+        every { mockSeasonController.banner } returns Banner("msg", "url")
 
         initSUT()
-
-        sut.inputs.showUpNext()
-
-        sut.outputs.showUpNext.test {
-            assertValue(true)
-        }
-    }
-
-    //endregion
-
-    //region Navigation
-
-    @Test
-    fun `clickMenu fires open menu event`() {
-
-        initSUT()
-
-        sut.inputs.clickMenu()
-
-        sut.outputs.openMenu.test {
-            assertEventFired()
-        }
-    }
-
-    @Test
-    fun `clickNow fires open now event`() {
-
-        initSUT()
-
-        sut.inputs.clickNow()
-
-        sut.outputs.openNow.test {
-            assertEventFired()
-        }
-    }
-
-    @Test
-    fun `clickTrack fires show race event`() {
-
-        val mock: SeasonItem.Track = mockk(relaxed = true)
-        initSUT()
-
-        sut.inputs.clickTrack(mock)
-
-        sut.outputs.openRace.test {
-            assertDataEventValue(mock)
-        }
-    }
-
-    @Test
-    fun `clickDriver fires show driver event`() {
-
-        val mock: SeasonItem.Driver = mockk(relaxed = true)
-        initSUT()
-
-        sut.inputs.clickDriver(mock)
-
-        sut.outputs.openDriver.test {
-            assertDataEventValue(mock)
-        }
-    }
-
-    @Test
-    fun `clickConstructor fires show constructor event`() {
-
-        val mock: SeasonItem.Constructor = mockk(relaxed = true)
-        initSUT()
-
-        sut.inputs.clickConstructor(mock)
-
-        sut.outputs.openConstructor.test {
-            assertDataEventValue(mock)
-        }
-    }
-
-    //endregion
-
-    //region Defaults
-
-    @Test
-    fun `defaults to schedule type by default`() = coroutineTest {
-
-        initSUT()
-
-        // Track items should be calendar items
-        sut.outputs.list.test {
-            assertListMatchesItem { it is SeasonItem.Track }
-        }
-    }
-
-    @Test
-    fun `show loading is set to true initially`() = coroutineTest {
-
-        initSUT()
-
-        sut.outputs.showLoading.test {
-            assertValue(true)
-        }
-    }
-
-    @Test
-    fun `defaults to value in remote config and not current year`() = coroutineTest {
-
-        every { mockSeasonController.defaultSeason } returns 2018
-
-        initSUT()
-
-        sut.outputs.label.test {
-            assertValue(StringHolder( "2018"))
-        }
-    }
-
-    //endregion
-
-    //region App Banner
-
-    @Test
-    fun `when app banner model exists and show is true then it's added to the data`() = coroutineTest {
-
-        val expectedMessage = "Testing the custom app banner!"
-        every { mockSeasonController.banner } returns Banner(expectedMessage)
-
-        initSUT()
+        sut.inputs.selectSeason(2020)
 
         sut.outputs.list.test {
-            assertListMatchesItem { it is SeasonItem.ErrorItem && (it.item as? SyncDataItem.Message)?.msg == expectedMessage }
+            assertListMatchesItem(atIndex = 0) { it is SeasonItem.ErrorItem && it.item is SyncDataItem.Message }
         }
     }
 
     @Test
-    fun `when app banner model is null then it's not available in the list`() = coroutineTest {
+    fun `refresh is called immediately if cache is marked out of date`() = coroutineTest {
+        every { mockCacheRepository.shouldSyncCurrentSeason() } returns true
+        every { mockSeasonController.serverDefaultSeason } returns 2020
+        runBlockingTest {
+            initSUT()
+        }
 
+        val observe = sut.outputs.showLoading.testObserve()
+        coVerify { mockOverviewRepository.fetchOverview(2020) }
+        coVerify { mockSeasonRepository.fetchRaces(2020) }
+        verify {
+            mockCacheRepository.markedCurrentSeasonSynchronised()
+        }
+    }
+
+    @Test
+    fun `refresh is not called immediately if cache is valid`() = coroutineTest {
+        every { mockCacheRepository.shouldSyncCurrentSeason() } returns false
+        every { mockSeasonController.serverDefaultSeason } returns 2020
         initSUT()
-
-        sut.outputs.list.test {
-            assertListDoesNotMatchItem { it is SeasonItem.ErrorItem && it.item is SyncDataItem.Message }
+        coVerify(exactly = 0) {
+            mockOverviewRepository.fetchOverview(2020)
+            mockRaceRepository.fetchRaces(2020)
+        }
+        verify(exactly = 0) {
+            mockCacheRepository.markedCurrentSeasonSynchronised()
         }
     }
 
-    //endregion
+    //region List - Schedule / Calendar
 
-    //region Schedule
-
-    @Test
-    fun `when home type is schedule and history rounds is empty and network not connected, show no network error`() = coroutineTest {
-
-        val historyListWithEmptyRound = History(2019, null, emptyList())
-
+    @ParameterizedTest(name = "{0} list empty with network eonnected false shows pull refresh")
+    @CsvSource("SCHEDULE","CALENDAR")
+    fun `schedule list empty with network connected false shows pull refresh`(navItem: SeasonNavItem) = coroutineTest {
+        every { mockOverviewRepository.getOverview(any()) } returns flow {
+            emit(Overview.model(season = Year.now().value, overviewRaces = emptyList()))
+        }
         every { mockNetworkConnectivityManager.isConnected } returns false
-        every { mockHistoryRepository.historyFor(any()) } returns flow { emit(historyListWithEmptyRound) }
-
-        val expected = listOf<SeasonItem>(
-            SeasonItem.ErrorItem(SyncDataItem.NoNetwork)
-        )
 
         initSUT()
-
-        sut.outputs.list.test {
-            assertValue(expected)
-        }
-    }
-
-    @Test
-    fun `when home type is schedule and history rounds is empty and network is connected and year is current year, show early in season error`() = coroutineTest {
-
-        val historyItemWithEmptyRound = History(currentSeasonYear, null, emptyList())
-
-        every { mockSeasonOverviewRepository.getSeasonOverview(any()) } returns flow { emit(mockSeason.copy(season = currentSeasonYear)) }
-        every { mockHistoryRepository.historyFor(any()) } returns flow { emit(historyItemWithEmptyRound) }
-
-        val expected = listOf<SeasonItem>(
-            SeasonItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.EARLY_IN_SEASON))
-        )
-
-        initSUT()
-
-        sut.outputs.list.test {
-            assertValue(expected)
-        }
-    }
-
-    @Test
-    fun `when home type is schedule and history rounds is empty and network is connected and year is in the past, show missing race data message`() = coroutineTest {
-
-        val historyListWithEmptyRound = History(2019, null, emptyList())
-
-        every { mockHistoryRepository.historyFor(any()) } returns flow { emit(historyListWithEmptyRound) }
-
-        val expected = listOf<SeasonItem>(
-            SeasonItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.MISSING_RACE))
-        )
-
-        initSUT()
-
-        sut.outputs.list.test {
-            assertValue(expected)
-        }
-    }
-
-    @Test
-    fun `when home type is schedule show calendar history list`() = coroutineTest {
-
-        val expected = listOf<SeasonItem>(
-            SeasonItem.Track(
-                season = mockHistoryRound1.season,
-                round = mockHistoryRound1.round,
-                raceName = mockHistoryRound1.raceName,
-                circuitId = mockHistoryRound1.circuitId,
-                circuitName = mockHistoryRound1.circuitName,
-                raceCountry = mockHistoryRound1.country,
-                raceCountryISO = mockHistoryRound1.countryISO,
-                date = mockHistoryRound1.date,
-                hasQualifying = mockHistoryRound1.hasQualifying,
-                hasResults = mockHistoryRound1.hasResults
-            ),
-            SeasonItem.Track(
-                season = mockHistoryRound2.season,
-                round = mockHistoryRound2.round,
-                raceName = mockHistoryRound2.raceName,
-                circuitId = mockHistoryRound2.circuitId,
-                circuitName = mockHistoryRound2.circuitName,
-                raceCountry = mockHistoryRound2.country,
-                raceCountryISO = mockHistoryRound2.countryISO,
-                date = mockHistoryRound2.date,
-                hasQualifying = mockHistoryRound2.hasQualifying,
-                hasResults = mockHistoryRound2.hasResults
-            )
-        )
-
-        initSUT()
-
-        sut.outputs.list.test {
-            assertListHasSublist(expected)
-        }
-
-        verify {
-            mockAnalyticsController.logEvent("select_dashboard_schedule", any())
-        }
-    }
-
-    //endregion
-
-    //region Calendar
-
-    @Test
-    fun `when home type is calendar and history rounds is empty and network not connected, show no network error`() = coroutineTest {
-
-        val historyListWithEmptyRound = History(2019, null, emptyList())
-
-        every { mockNetworkConnectivityManager.isConnected } returns false
-        every { mockHistoryRepository.historyFor(any()) } returns flow { emit(historyListWithEmptyRound) }
-
-        val expected = listOf<SeasonItem>(
-            SeasonItem.ErrorItem(SyncDataItem.NoNetwork)
-        )
-
-        initSUT()
-        sut.inputs.clickItem(SeasonNavItem.CALENDAR)
-        advanceUntilIdle()
-
-        sut.outputs.list.test {
-            assertValue(expected)
-        }
-    }
-
-    @Test
-    fun `when home type is calendar and history rounds is empty and network is connected and year is current year, show early in season error`() = coroutineTest {
-
-        val historyItemWithEmptyRound = History(currentSeasonYear, null, emptyList())
-
-        every { mockSeasonOverviewRepository.getSeasonOverview(any()) } returns flow { emit(mockSeason.copy(season = currentSeasonYear)) }
-        every { mockHistoryRepository.historyFor(any()) } returns flow { emit(historyItemWithEmptyRound) }
-
-        val expected = listOf<SeasonItem>(
-            SeasonItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.EARLY_IN_SEASON))
-        )
-
-        initSUT()
-        sut.inputs.clickItem(SeasonNavItem.CALENDAR)
-        advanceUntilIdle()
-
-        sut.outputs.list.test {
-            assertValue(expected)
-        }
-    }
-
-    @Test
-    fun `when home type is calendar and history rounds is empty and network is connected and year is in the past, show missing race data message`() = coroutineTest {
-
-        val historyListWithEmptyRound = History(2019, null, emptyList())
-
-        every { mockHistoryRepository.historyFor(any()) } returns flow { emit(historyListWithEmptyRound) }
-
-        val expected = listOf<SeasonItem>(
-            SeasonItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.MISSING_RACE))
-        )
-
-        initSUT()
-        sut.inputs.clickItem(SeasonNavItem.CALENDAR)
-        advanceUntilIdle()
-
-        sut.outputs.list.test {
-            assertValue(expected)
-        }
-    }
-
-    @Test
-    fun `when home type is calendar show calendar history list`() = coroutineTest {
-
-        val expected = expectedFullCalendar(2019)
-
-        initSUT()
-        sut.inputs.clickItem(SeasonNavItem.CALENDAR)
-        advanceUntilIdle()
-
-        sut.outputs.list.test {
-        }
-
-        verify {
-            mockAnalyticsController.logEvent("select_dashboard_calendar", any())
-        }
-    }
-
-    @Test
-    fun `when home type is calendar show race in expected calendar entry`() = coroutineTest {
-
-        val historyRound1 = mockHistoryRound1.copy(date = LocalDate.of(2019, 7, 7))
-        val historyRound2 = mockHistoryRound2.copy(date = LocalDate.of(2019, 10, 13))
-        every { mockHistoryRepository.historyFor(any()) } returns flow { emit(mockHistory.copy(rounds = listOf(historyRound1, historyRound2))) }
-
-        initSUT()
-        sut.inputs.clickItem(SeasonNavItem.CALENDAR)
-        advanceUntilIdle()
-
-        sut.outputs.list.test {
-            assertListMatchesItem { it is SeasonItem.CalendarWeek && it.race == historyRound1 && it.forMonth == Month.JULY }
-            assertListMatchesItem { it is SeasonItem.CalendarWeek && it.race == historyRound2 && it.forMonth == Month.OCTOBER }
-        }
-
-        verify {
-            mockAnalyticsController.logEvent("select_dashboard_calendar", any())
-        }
-    }
-
-    //endregion
-
-    //region Drivers
-
-    @Test
-    fun `when home type is drivers and history rounds is empty and network not connected, show no network error`() = coroutineTest {
-
-        every { mockNetworkConnectivityManager.isConnected } returns false
-        every { mockSeasonOverviewRepository.getSeasonOverview(any()) } returns flow { emit(mockSeason.copy(rounds = emptyList())) }
-
-        val expected = listOf<SeasonItem>(
-                SeasonItem.ErrorItem(SyncDataItem.NoNetwork)
-        )
-
-        initSUT()
-        sut.inputs.clickItem(SeasonNavItem.DRIVERS)
-        advanceUntilIdle()
-
-        sut.outputs.list.test {
-            assertValue(expected)
-        }
-    }
-
-    @Test
-    fun `when home type is drivers and history rounds is empty, show in future season`() = coroutineTest {
-
-        every { mockSeasonOverviewRepository.getSeasonOverview(any()) } returns flow { emit(mockSeason.copy(rounds = emptyList())) }
-
-        val expected = listOf<SeasonItem>(
-                SeasonItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.IN_FUTURE_SEASON))
-        )
-
-        initSUT()
-        sut.inputs.clickItem(SeasonNavItem.DRIVERS)
-        advanceUntilIdle()
-
-        sut.outputs.list.test {
-            assertValue(expected)
-        }
-    }
-
-    @Test
-    fun `when home type is drivers list driver standings in order`() = coroutineTest {
-
-        val expected = listOf<SeasonItem>(
-            expectedDriver3,
-            expectedDriver4,
-            expectedDriver1,
-            expectedDriver2
-        )
-
-        initSUT()
-        sut.inputs.clickItem(SeasonNavItem.DRIVERS)
-        sut.inputs.selectSeason(2019)
-        advanceUntilIdle()
-
-        sut.outputs.list.test {
-            assertValue(expected)
-        }
-
-        verify {
-            mockAnalyticsController.logEvent("select_dashboard_driver", any())
-        }
-    }
-
-    @Test
-    fun `when home type is drivers and history rounds size doesnt match rounds available, show results as of header box in response`() = coroutineTest {
-
-        every { mockHistoryRepository.historyFor(any()) } returns flow { emit(History(2019, null, listOf(mockHistoryRound1, mockHistoryRound2, mockHistoryRound3))) }
-
-        initSUT()
-        sut.inputs.clickItem(SeasonNavItem.DRIVERS)
-        sut.inputs.selectSeason(2019)
-        advanceUntilIdle()
-
-        sut.outputs.list.test {
-            assertListContainsItem(SeasonItem.ErrorItem(SyncDataItem.MessageRes(R.string.results_accurate_for, listOf(mockRound2.name, mockRound2.round))))
-        }
-    }
-
-    //endregion
-
-    //region Constructors
-
-    @Test
-    fun `when home type is constructors and history rounds is empty and network not connected, show no network error`() = coroutineTest {
-
-        every { mockNetworkConnectivityManager.isConnected } returns false
-        every { mockSeasonOverviewRepository.getSeasonOverview(any()) } returns flow { emit(mockSeason.copy(rounds = emptyList())) }
-
-        val expected = listOf<SeasonItem>(
-                SeasonItem.ErrorItem(SyncDataItem.NoNetwork)
-        )
-
-        initSUT()
-        sut.inputs.clickItem(SeasonNavItem.CONSTRUCTORS)
-        advanceUntilIdle()
-
-        sut.outputs.list.test {
-            assertValue(expected)
-        }
-    }
-
-    @Test
-    fun `when home type is constructors and history rounds is empty, show in future season`() = coroutineTest {
-
-        every { mockSeasonOverviewRepository.getSeasonOverview(any()) } returns flow { emit(mockSeason.copy(rounds = emptyList())) }
-
-        val expected = listOf<SeasonItem>(
-                SeasonItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.IN_FUTURE_SEASON))
-        )
-
-        initSUT()
-        sut.inputs.clickItem(SeasonNavItem.CONSTRUCTORS)
-        advanceUntilIdle()
-
-        sut.outputs.list.test {
-            assertValue(expected)
-        }
-    }
-
-    @Test
-    fun `when home type is constructors list driver standings in order`() = coroutineTest {
-
-        val expected = listOf<SeasonItem>(
-            expectedConstructorAlpha,
-            expectedConstructorBeta
-        )
-
-        initSUT()
-        sut.inputs.clickItem(SeasonNavItem.CONSTRUCTORS)
-        sut.inputs.selectSeason(2019)
-        advanceUntilIdle()
-
-        sut.outputs.list.test {
-            assertValue(expected)
-        }
-
-        verify {
-            mockAnalyticsController.logEvent("select_dashboard_constructor", any())
-        }
-    }
-
-    @Test
-    fun `when home type is constructors and history rounds size doesnt match rounds available, show results as of header box in response`() = coroutineTest {
-
-        every { mockHistoryRepository.historyFor(any()) } returns flow { emit(History(2019, null, listOf(mockHistoryRound1, mockHistoryRound2, mockHistoryRound3))) }
-
-        initSUT()
-        sut.inputs.clickItem(SeasonNavItem.CONSTRUCTORS)
-        sut.inputs.selectSeason(2019)
-        advanceUntilIdle()
-
-        sut.outputs.list.test {
-            assertListContainsItem(SeasonItem.ErrorItem(SyncDataItem.MessageRes(R.string.results_accurate_for, listOf(mockRound2.name, mockRound2.round))))
-        }
-    }
-
-    @ParameterizedTest
-    @ValueSource(ints = [1950, 1951, 1952, 1953, 1954, 1955, 1956, 1957])
-    fun `when season is before constructor standing season the championship did not start message is displayed`(season: Int) = coroutineTest {
-
-        every { mockSeasonOverviewRepository.getSeasonOverview(any()) } returns flow { emit(mockSeason.copy(season = season)) }
-
-        initSUT()
-        sut.inputs.clickItem(SeasonNavItem.CONSTRUCTORS)
-        sut.inputs.selectSeason(season)
+        sut.inputs.selectSeason(Year.now().value)
+        sut.inputs.clickItem(navItem)
 
         sut.outputs.list.test {
             assertValue(listOf(
-                    SeasonItem.ErrorItem(SyncDataItem.ConstructorsChampionshipNotAwarded)
+                SeasonItem.errorModel(SyncDataItem.PullRefresh)
+            ))
+        }
+    }
+
+    @ParameterizedTest(name = "{0} list empty with season being current year shows early in season")
+    @CsvSource("SCHEDULE","CALENDAR")
+    fun `schedule list empty with season being current year shows early in season`(navItem: SeasonNavItem) = coroutineTest {
+        every { mockOverviewRepository.getOverview(any()) } returns flow {
+            emit(Overview.model(season = Year.now().value, overviewRaces = emptyList()))
+        }
+
+        initSUT()
+        sut.inputs.selectSeason(Year.now().value)
+        sut.inputs.clickItem(navItem)
+
+        sut.outputs.list.test {
+            assertValue(listOf(
+                SeasonItem.errorModel(SyncDataItem.Unavailable(DataUnavailable.SEASON_EARLY))
+            ))
+        }
+    }
+
+    @ParameterizedTest(name = "{0} list empty with season being next year shows in future season")
+    @CsvSource("SCHEDULE","CALENDAR")
+    fun `schedule list empty with season being next year shows in future season`(navItem: SeasonNavItem) = coroutineTest {
+        every { mockOverviewRepository.getOverview(any()) } returns flow {
+            emit(Overview.model(season = Year.now().value + 1, overviewRaces = emptyList()))
+        }
+
+        initSUT()
+        sut.inputs.selectSeason(Year.now().value + 1)
+        sut.inputs.clickItem(navItem)
+
+        sut.outputs.list.test {
+            assertValue(listOf(
+                SeasonItem.errorModel(SyncDataItem.Unavailable(DataUnavailable.SEASON_IN_FUTURE))
+            ))
+        }
+    }
+
+    @ParameterizedTest(name = "{0} list empty with season in past shows internal error")
+    @CsvSource("SCHEDULE","CALENDAR")
+    fun `schedule list empty with season in past shows internal error`(navItem: SeasonNavItem) = coroutineTest {
+        every { mockOverviewRepository.getOverview(any()) } returns flow {
+            emit(Overview.model(season = Year.now().value - 1, overviewRaces = emptyList()))
+        }
+
+        initSUT()
+        sut.inputs.selectSeason(Year.now().value - 1)
+        sut.inputs.clickItem(navItem)
+
+        sut.outputs.list.test {
+            assertValue(listOf(
+                SeasonItem.errorModel(SyncDataItem.Unavailable(DataUnavailable.SEASON_INTERNAL_ERROR))
+            ))
+        }
+    }
+
+    //endregion
+
+    //region List - Schedule
+
+    @Test
+    fun `schedule list displayed properly`() = coroutineTest {
+        every { mockOverviewRepository.getOverview(any()) } returns flow { emit(Overview.model()) }
+
+        initSUT()
+        sut.inputs.selectSeason(2020)
+        sut.inputs.clickItem(SeasonNavItem.SCHEDULE)
+
+        sut.outputs.list.test {
+            assertValue(listOf(
+                SeasonItem.trackModel()
+            ))
+        }
+        verify {
+            mockAnalyticsManager.logEvent("select_dashboard_schedule", any())
+        }
+    }
+
+    //endregion
+
+    //region List - Calendar
+
+    @Test
+    fun `calendar list displayed properly`() = coroutineTest {
+        every { mockOverviewRepository.getOverview(any()) } returns flow { emit(Overview.model()) }
+
+        initSUT()
+        sut.inputs.selectSeason(2020)
+        sut.inputs.clickItem(SeasonNavItem.CALENDAR)
+
+        sut.outputs.list.test {
+            for (x in 1..12)
+            assertListMatchesItem { it is SeasonItem.CalendarMonth && it.month.value == x }
+            assertListMatchesItem { it is SeasonItem.CalendarWeek && it.race == OverviewRace.model() }
+        }
+        verify {
+            mockAnalyticsManager.logEvent("select_dashboard_calendar", any())
+        }
+    }
+
+    //endregion
+
+    //region List - Driver
+
+    @Test
+    fun `driver list displayed properly`() = coroutineTest {
+        initSUT()
+        sut.inputs.selectSeason(Year.now().value)
+        sut.inputs.clickItem(SeasonNavItem.DRIVERS)
+
+        sut.outputs.list.test {
+            assertValue(listOf(
+                SeasonItem.errorModel(SyncDataItem.MessageRes(R.string.results_accurate_for, listOf("name", 1))),
+                SeasonItem.driverModel()
+            ))
+        }
+        verify {
+            mockAnalyticsManager.logEvent("select_dashboard_driver", any())
+        }
+    }
+
+    @Test
+    fun `driver list empty with network connected false shows pull refresh`() = coroutineTest {
+        every { mockSeasonRepository.getDriverStandings(any()) } returns flow {
+            emit(SeasonDriverStandings.model(standings = emptyList()))
+        }
+        every { mockNetworkConnectivityManager.isConnected } returns false
+
+        initSUT()
+        sut.inputs.selectSeason(Year.now().value)
+        sut.inputs.clickItem(SeasonNavItem.DRIVERS)
+
+        sut.outputs.list.test {
+            assertValue(listOf(
+                SeasonItem.errorModel(SyncDataItem.PullRefresh)
             ))
         }
     }
 
     @Test
-    fun `when season is on border of constructor standing season the championship did not start message is not displayed`() = coroutineTest {
-
-        val season = 1958
-        every { mockSeasonOverviewRepository.getSeasonOverview(any()) } returns flow { emit(mockSeason.copy(season = season)) }
+    fun `driver list empty with season being current or next year shows in future season`() = coroutineTest {
+        every { mockSeasonRepository.getDriverStandings(any()) } returns flow {
+            emit(SeasonDriverStandings.model(standings = emptyList()))
+        }
 
         initSUT()
-        sut.inputs.clickItem(SeasonNavItem.CONSTRUCTORS)
-        sut.inputs.selectSeason(season)
+        sut.inputs.selectSeason(Year.now().value)
+        sut.inputs.clickItem(SeasonNavItem.DRIVERS)
 
         sut.outputs.list.test {
-            assertListExcludesItem(SeasonItem.ErrorItem(SyncDataItem.ConstructorsChampionshipNotAwarded))
+            assertValue(listOf(
+                SeasonItem.errorModel(SyncDataItem.Unavailable(DataUnavailable.STANDINGS_EARLY))
+            ))
+        }
+    }
+
+    @Test
+    fun `driver list empty with season in past shows internal error`() = coroutineTest {
+        every { mockSeasonRepository.getDriverStandings(any()) } returns flow {
+            emit(SeasonDriverStandings.model(standings = emptyList()))
+        }
+
+        initSUT()
+        sut.inputs.selectSeason(Year.now().value - 1)
+        sut.inputs.clickItem(SeasonNavItem.DRIVERS)
+
+        sut.outputs.list.test {
+            assertValue(listOf(
+                SeasonItem.errorModel(SyncDataItem.Unavailable(DataUnavailable.STANDINGS_INTERNAL_ERROR))
+            ))
         }
     }
 
     //endregion
 
-    //region Mock Data - Calendar
+    //region List - Constructor
 
-    private fun expectedFullCalendar(season: Int = 2019): List<SeasonItem> {
-        // Build up date
-        return listOf(SeasonItem.CalendarHeader) + Month
-            .values()
-            .map { month ->
-                val list = mutableListOf<SeasonItem>()
-                list.add(SeasonItem.CalendarMonth(month, season))
-                list.add(SeasonItem.CalendarWeek(month, LocalDate.of(season, month.value, 1), null))
-                val nextMonday = LocalDate.of(season, month.value, 1).with(TemporalAdjusters.next(DayOfWeek.MONDAY))
-                for (x in 0 until LocalDate.of(season, month.value, 1).with(TemporalAdjusters.lastDayOfMonth()).dayOfMonth step 7) {
-                    val date = nextMonday.plusDays(x.toLong())
-                    if (date.month == month) {
-                        list.add(SeasonItem.CalendarWeek(month, date, null))
-                    }
-                }
-                return@map list
-            }
-            .flatten()
+    @Test
+    fun `constructor list displayed properly`() = coroutineTest {
+        initSUT()
+
+        runBlockingTest {
+            sut.inputs.selectSeason(Year.now().value)
+            sut.inputs.clickItem(SeasonNavItem.CONSTRUCTORS)
+        }
+
+        sut.outputs.list.test {
+            assertValue(listOf(
+                SeasonItem.errorModel(SyncDataItem.MessageRes(R.string.results_accurate_for, listOf("name", 1))),
+                SeasonItem.constructorModel()
+            ))
+        }
+        verify {
+            mockAnalyticsManager.logEvent("select_dashboard_constructor", any())
+        }
+    }
+
+    @Test
+    fun `constructor list empty with network connected false shows pull refresh`() = coroutineTest {
+        every { mockSeasonRepository.getConstructorStandings(any()) } returns flow {
+            emit(SeasonConstructorStandings.model(standings = emptyList()))
+        }
+        every { mockNetworkConnectivityManager.isConnected } returns false
+
+        initSUT()
+        sut.inputs.selectSeason(Year.now().value)
+        sut.inputs.clickItem(SeasonNavItem.CONSTRUCTORS)
+
+        sut.outputs.list.test {
+            assertValue(listOf(
+                SeasonItem.errorModel(SyncDataItem.PullRefresh)
+            ))
+        }
+    }
+
+    @Test
+    fun `constructor list empty with season being current or next year shows in future season`() = coroutineTest {
+        every { mockSeasonRepository.getConstructorStandings(any()) } returns flow {
+            emit(SeasonConstructorStandings.model(standings = emptyList()))
+        }
+
+        initSUT()
+        sut.inputs.selectSeason(Year.now().value)
+        sut.inputs.clickItem(SeasonNavItem.CONSTRUCTORS)
+
+        sut.outputs.list.test {
+            assertValue(listOf(
+                SeasonItem.errorModel(SyncDataItem.Unavailable(DataUnavailable.STANDINGS_EARLY))
+            ))
+        }
+    }
+
+    @Test
+    fun `constructor list empty with season in past shows internal error`() = coroutineTest {
+        every { mockSeasonRepository.getConstructorStandings(any()) } returns flow {
+            emit(SeasonConstructorStandings.model(standings = emptyList()))
+        }
+
+        initSUT()
+        sut.inputs.selectSeason(Year.now().value - 1)
+        sut.inputs.clickItem(SeasonNavItem.CONSTRUCTORS)
+
+        sut.outputs.list.test {
+            assertValue(listOf(
+                SeasonItem.errorModel(SyncDataItem.Unavailable(DataUnavailable.STANDINGS_INTERNAL_ERROR))
+            ))
+        }
     }
 
     //endregion
 
-    //region Mock Data - Drivers
+    //region Request
 
-    private val expectedDriver1 = SeasonItem.Driver(
-            season = 2019,
-            points = 21.0,
-            driver = mockDriver1,
-            driverId = mockDriver1.id,
-            position = 3,
-            bestQualifying = Pair(1, listOf(mockRound1)),
-            bestFinish = Pair(1, listOf(mockRound2)),
-            maxPointsInSeason = 27.0,
-            animationSpeed = AnimationSpeed.NONE
-    )
-    private val expectedDriver2 = SeasonItem.Driver(
-            season = 2019,
-            points = 18.0,
-            driver = mockDriver2,
-            driverId = mockDriver2.id,
-            position = 4,
-            bestQualifying = Pair(2, listOf(mockRound1)),
-            bestFinish = Pair(3, listOf(mockRound1, mockRound2)),
-            maxPointsInSeason = 27.0,
-            animationSpeed = AnimationSpeed.NONE
-    )
-    private val expectedDriver3 = SeasonItem.Driver(
-            season = 2019,
-            points = 27.0,
-            driver = mockDriver3,
-            driverId = mockDriver3.id,
-            position = 1,
-            bestQualifying = Pair(3, listOf(mockRound1, mockRound2)),
-            bestFinish = Pair(2, listOf(mockRound1, mockRound2)),
-            maxPointsInSeason = 27.0,
-            animationSpeed = AnimationSpeed.NONE
-    )
-    private val expectedDriver4 = SeasonItem.Driver(
-            season = 2019,
-            points = 24.0,
-            driver = mockDriver4,
-            driverId = mockDriver4.id,
-            position = 2,
-            bestQualifying = Pair(1, listOf(mockRound2)),
-            bestFinish = Pair(1, listOf(mockRound1)),
-            maxPointsInSeason = 27.0,
-            animationSpeed = AnimationSpeed.NONE
-    )
+    @Test
+    fun `season and overview request is not made when should refresh is false`() = coroutineTest {
+        coEvery { mockRaceRepository.shouldSyncRace(any()) } returns false
+
+        initSUT()
+        runBlockingTest {
+            sut.inputs.selectSeason(2020)
+        }
+
+        val observe = sut.outputs.list.testObserve()
+        coVerify(exactly = 0) {
+            mockOverviewRepository.fetchOverview(any())
+            mockSeasonRepository.fetchRaces(any())
+        }
+    }
+
+    @Test
+    fun `season and overview request is made when should refresh is true`() = coroutineTest {
+        coEvery { mockRaceRepository.shouldSyncRace(any()) } returns true
+
+        initSUT()
+        runBlockingTest {
+            sut.inputs.selectSeason(2020)
+        }
+
+        val observe = sut.outputs.list.testObserve()
+        coVerify {
+            mockOverviewRepository.fetchOverview(any())
+            mockSeasonRepository.fetchRaces(any())
+        }
+    }
 
     //endregion
 
-    //region Mock Data - Constructors
+    //region Track select
 
-    private val expectedConstructorAlpha = SeasonItem.Constructor(
-            season = 2019,
-            position = 1,
-            constructor = mockConstructorAlpha,
-            constructorId = mockConstructorAlpha.id,
-            driver = listOf(
-                    Pair(mockDriver3.toConstructorDriver(), 27.0),
-                    Pair(mockDriver1.toConstructorDriver(), 21.0)
-            ),
-            points = 48.0,
-            maxPointsInSeason = 48.0,
-            barAnimation = AnimationSpeed.NONE
-    )
-    private val expectedConstructorBeta = SeasonItem.Constructor(
-            season = 2019,
-            position = 2,
-            constructor = mockConstructorBeta,
-            constructorId = mockConstructorBeta.id,
-            driver = listOf(
-                    Pair(mockDriver4.toConstructorDriver(), 24.0),
-                    Pair(mockDriver2.toConstructorDriver(), 18.0)
-            ),
-            points = 42.0,
-            maxPointsInSeason = 48.0,
-            barAnimation = AnimationSpeed.NONE
-    )
+    @Test
+    fun `click track fires open race event`() {
+        val input = SeasonItem.trackModel()
+        initSUT()
+        sut.inputs.clickTrack(input)
+
+        sut.outputs.openRace.test {
+            assertDataEventValue(input)
+        }
+    }
 
     //endregion
+
+    //region Driver select
+
+    @Test
+    fun `click driver fires open driver event`() {
+        val input = SeasonItem.driverModel()
+        initSUT()
+        sut.inputs.clickDriver(input)
+
+        sut.outputs.openDriver.test {
+            assertDataEventValue(input)
+        }
+    }
+
+    //endregion
+
+    //region Constructor select
+
+    @Test
+    fun `click constructor fires open constructor event`() {
+        val input = SeasonItem.constructorModel()
+        initSUT()
+        sut.inputs.clickConstructor(input)
+
+        sut.outputs.openConstructor.test {
+            assertDataEventValue(input)
+        }
+    }
+
+    //endregion
+
+    //region Refresh
+
+    @Test
+    fun `refresh alls overview and season repository and shows loading false when done`() = coroutineTest {
+        initSUT()
+        sut.inputs.selectSeason(2020)
+
+        runBlockingTest {
+            sut.inputs.refresh()
+        }
+
+        coVerify {
+            mockOverviewRepository.fetchOverview(any())
+            mockSeasonRepository.fetchRaces(any())
+        }
+        sut.outputs.showLoading.test {
+            assertValue(false)
+        }
+    }
+
+    //endregion
+
 }

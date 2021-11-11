@@ -6,6 +6,7 @@ import androidx.annotation.StringRes
 import tmg.flashback.R
 import tmg.flashback.upnext.repository.model.TimeListDisplayType
 import tmg.flashback.upnext.repository.model.UpNextSchedule
+import tmg.utilities.models.StringHolder
 
 sealed class ListItem(
     @LayoutRes val layoutId: Int
@@ -35,6 +36,19 @@ sealed class ListItem(
         val type: HeaderType,
         val expanded: Boolean? // null = hide option
     ): ListItem(R.layout.view_season_list_header)
+
+    sealed class FeatureBanner(
+        val key: String,
+        val text: StringHolder,
+        @DrawableRes
+        val icon: Int? = null
+    ): ListItem(R.layout.view_season_list_feature_banner) {
+
+        object EnrolNotifications: FeatureBanner(
+            key = "notifications",
+            text = StringHolder(R.string.feature_banner_notifications)
+        )
+    }
 }
 
 enum class HeaderType(

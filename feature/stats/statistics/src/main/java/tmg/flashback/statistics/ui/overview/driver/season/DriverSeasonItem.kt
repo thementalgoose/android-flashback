@@ -4,8 +4,8 @@ import androidx.annotation.*
 import org.threeten.bp.LocalDate
 import tmg.core.ui.model.AnimationSpeed
 import tmg.flashback.statistics.ui.overview.driver.summary.PipeType
-import tmg.flashback.data.enums.RaceStatus
-import tmg.flashback.data.models.stats.SlimConstructor
+import tmg.flashback.formula1.enums.RaceStatus
+import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 
@@ -26,7 +26,7 @@ sealed class DriverSeasonItem(
 
     data class RacedFor(
         val season: Int?, // Null = hide season
-        val constructors: SlimConstructor,
+        val constructors: Constructor,
         val type: PipeType,
         val isChampionship: Boolean
     ): DriverSeasonItem(
@@ -34,22 +34,22 @@ sealed class DriverSeasonItem(
     )
 
     data class Result(
-            val season: Int,
-            val round: Int,
-            val raceName: String,
-            val circuitName: String,
-            val circuitId: String,
-            val raceCountry: String,
-            val raceCountryISO: String,
-            val date: LocalDate,
-            val showConstructorLabel: Boolean,
-            val constructor: SlimConstructor,
-            val qualified: Int,
-            val finished: Int?,
-            val raceStatus: RaceStatus,
-            val points: Double,
-            val maxPoints: Int,
-            val animationSpeed: AnimationSpeed
+        val season: Int,
+        val round: Int,
+        val raceName: String,
+        val circuitName: String,
+        val circuitId: String,
+        val raceCountry: String,
+        val raceCountryISO: String,
+        val date: LocalDate,
+        val showConstructorLabel: Boolean,
+        val constructor: Constructor,
+        val qualified: Int?,
+        val finished: Int?,
+        val raceStatus: RaceStatus,
+        val points: Double,
+        val maxPoints: Int,
+        val animationSpeed: AnimationSpeed
     ): DriverSeasonItem(R.layout.view_driver_season)
 
     object ResultHeader: DriverSeasonItem(R.layout.view_driver_season_header)
