@@ -53,34 +53,6 @@ internal class DashboardViewModelTest: BaseTest() {
         }
     }
 
-    //region Showing up next
-
-    @Test
-    fun `showing up next returns true if next event is not null`() {
-
-        every { mockUpNextController.getNextEvent() } returns mockk()
-
-        initSUT()
-
-        sut.outputs.showUpNext.test {
-            assertValue(true)
-        }
-    }
-
-    @Test
-    fun `showing up next returns false if next event is null`() {
-
-        every { mockUpNextController.getNextEvent() } returns null
-
-        initSUT()
-
-        sut.outputs.showUpNext.test {
-            assertValue(false)
-        }
-    }
-
-    //endregion
-
     //region Remote config fetch and sync
 
     @Test
