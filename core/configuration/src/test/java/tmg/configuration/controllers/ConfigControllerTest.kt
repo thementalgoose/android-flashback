@@ -3,13 +3,14 @@ package tmg.configuration.controllers
 import io.mockk.*
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.configuration.constants.Migrations
 import tmg.configuration.services.RemoteConfigService
 import tmg.configuration.repository.ConfigRepository
 import tmg.testutils.BaseTest
 
-internal class ConfigControllerTest {
+internal class ConfigControllerTest: BaseTest() {
 
     private val mockConfigService: RemoteConfigService = mockk(relaxed = true)
     private val mockConfigRepository: ConfigRepository = mockk(relaxed = true)
@@ -18,6 +19,11 @@ internal class ConfigControllerTest {
 
     private fun initSUT() {
         sut = ConfigController(mockConfigRepository, mockConfigService)
+    }
+
+    @BeforeEach
+    internal fun setUp() {
+        coEvery { mockConfigService.activate() } returns true
     }
 
     @Test
@@ -134,7 +140,7 @@ internal class ConfigControllerTest {
     }
 
     @Test
-    fun `apply pending calls manager`() {
+    fun `apply pending calls manager`() = coroutineTest {
         initSUT()
         runBlockingTest {
             sut.applyPending()

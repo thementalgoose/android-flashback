@@ -1,6 +1,6 @@
 dependencies {
-    implementation "io.insert-koin:koin-android:$koin_version"
-    implementation "io.insert-koin:koin-android-scope:$koin_version"
-    implementation "io.insert-koin:koin-android-viewmodel:$koin_version"
-    implementation "io.insert-koin:koin-android-ext:$koin_version"
+    implementation deps.koin.koin
+    implementation deps.koin.koin_scope
+    implementation deps.koin.koin_viewmodel
+    implementation deps.koin.koin_ext
 }

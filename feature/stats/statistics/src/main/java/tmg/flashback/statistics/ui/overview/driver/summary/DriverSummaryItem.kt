@@ -5,7 +5,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
 import org.threeten.bp.LocalDate
-import tmg.flashback.data.models.stats.SlimConstructor
+import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 
@@ -38,7 +38,7 @@ sealed class DriverSummaryItem(
 
     data class RacedFor(
         val season: Int,
-        val constructors: List<SlimConstructor>,
+        val constructors: List<Constructor>,
         val type: PipeType,
         val isChampionship: Boolean
     ): DriverSummaryItem(
@@ -50,16 +50,10 @@ sealed class DriverSummaryItem(
     ): DriverSummaryItem(item.layoutId)
 
     object Loading: DriverSummaryItem(R.layout.view_loading_podium)
+
+    companion object
 }
 
-
-fun MutableList<DriverSummaryItem>.addError(syncDataItem: SyncDataItem) {
-    this.add(
-        DriverSummaryItem.ErrorItem(
-            syncDataItem
-        )
-    )
-}
 
 enum class PipeType {
     SINGLE,

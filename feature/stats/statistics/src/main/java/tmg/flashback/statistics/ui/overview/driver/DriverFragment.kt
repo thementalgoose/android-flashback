@@ -1,7 +1,5 @@
 package tmg.flashback.statistics.ui.overview.driver
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +13,8 @@ import tmg.flashback.statistics.ui.overview.driver.summary.DriverSummaryAdapter
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 import tmg.utilities.extensions.viewUrl
+import tmg.utilities.extensions.views.invisible
+import tmg.utilities.extensions.views.visible
 
 class DriverFragment: BaseFragment<FragmentDriverBinding>() {
 
@@ -47,16 +47,29 @@ class DriverFragment: BaseFragment<FragmentDriverBinding>() {
         binding.titleExpanded.text = driverName
         binding.titleCollapsed.text = driverName
 
-        binding.swipeRefresh.isEnabled = false
         adapter = DriverSummaryAdapter(
                 openUrl = viewModel.inputs::openUrl,
                 seasonClicked = viewModel.inputs::openSeason
         )
         binding.dataList.adapter = adapter
         binding.dataList.layoutManager = LinearLayoutManager(context)
+        binding.progress.invisible()
 
         binding.back.setOnClickListener {
             activity?.finish()
+        }
+
+        binding.swipeRefresh.setOnRefreshListener {
+            viewModel.inputs.refresh()
+        }
+
+        observe(viewModel.outputs.showLoading) {
+            if (it) {
+                binding.progress.visible()
+            } else {
+                binding.swipeRefresh.isRefreshing = false
+                binding.progress.invisible()
+            }
         }
 
         observe(viewModel.outputs.list) {

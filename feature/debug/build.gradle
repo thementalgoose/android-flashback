@@ -25,4 +25,7 @@ dependencies {
     implementation project(path: ':core:notifications')
     implementation project(path: ':core:preferences')
     implementation project(path: ':core:ui')
+
+    // Feature
+    implementation project(path: ':feature:stats:repo')
 }

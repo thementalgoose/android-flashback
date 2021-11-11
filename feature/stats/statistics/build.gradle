@@ -18,10 +18,8 @@ android {
 dependencies {
 
     // Formula 1 base data
-    implementation project(path: ':feature:formula1')
-
-    // Firebase module
-    implementation project(path: ':feature:stats:data-firestore')
+    implementation project(path: ':formula1')
+    implementation project(path: ':feature:stats:repo')
 
     // Core modules
     implementation project(path: ':core:ads')
@@ -54,4 +52,7 @@ dependencies {
 
     // Reddit fast indicator
     implementation deps.reddit.indicator
+
+    // Tests
+    testImplementation project(':test:stats-models')
 }

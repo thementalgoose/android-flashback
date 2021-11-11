@@ -11,6 +11,7 @@ import tmg.flashback.upnext.controllers.UpNextController
 import tmg.flashback.upnext.repository.model.TimeListDisplayType
 import tmg.utilities.lifecycle.DataEvent
 import tmg.utilities.lifecycle.Event
+import tmg.utilities.models.StringHolder
 
 //region Inputs
 
@@ -49,7 +50,8 @@ interface ListViewModelOutputs {
 class ListViewModel(
         private val seasonController: SeasonController,
         private val rssController: RSSController,
-        private val debugController: DebugController
+        private val debugController: DebugController,
+        private val upNextController: UpNextController
 ) : ViewModel(), ListViewModelInputs, ListViewModelOutputs {
 
     private var selectionHeaderFavouited: MutableLiveData<Boolean> =
@@ -98,10 +100,16 @@ class ListViewModel(
                 add(it)
             }
         }
+
         if (buttonsList.isNotEmpty()) {
             list.add(ListItem.Divider)
             list.add(ListItem.Header(type = HeaderType.LINKS, expanded = null))
             list.addAll(buttonsList)
+        }
+
+        // Notifications
+        if (upNextController.shouldShowNotificationOnboarding) {
+            list.add(ListItem.FeatureBanner.EnrolNotifications)
         }
 
         // Season breakdown

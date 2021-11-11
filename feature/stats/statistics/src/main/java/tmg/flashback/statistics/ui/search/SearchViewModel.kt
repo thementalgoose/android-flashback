@@ -5,32 +5,19 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.channels.ConflatedBroadcastChannel
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onStart
-import kotlinx.coroutines.flow.startWith
-import tmg.flashback.data.db.stats.SearchRepository
-import tmg.flashback.data.models.stats.History
-import tmg.flashback.data.models.stats.HistoryRound
-import tmg.flashback.data.models.stats.SearchCircuit
-import tmg.flashback.data.models.stats.SearchConstructor
-import tmg.flashback.data.models.stats.SearchDriver
-import tmg.flashback.data.utils.extendTo
-import tmg.flashback.statistics.ui.search.viewholder.SearchDriverViewHolder
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
+import tmg.flashback.formula1.model.*
+import tmg.flashback.statistics.repo.CircuitRepository
+import tmg.flashback.statistics.repo.ConstructorRepository
+import tmg.flashback.statistics.repo.DriverRepository
+import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
+import tmg.utilities.extensions.extend
 import tmg.utilities.lifecycle.DataEvent
-import tmg.utilities.lifecycle.Event
 
 //region Inputs
 
@@ -40,6 +27,8 @@ interface SearchViewModelInputs {
 
     fun inputSearch(search: String)
     fun inputCategory(searchCategory: SearchCategory)
+
+    fun refresh()
 
     fun clickItem(searchItem: SearchItem)
 }
@@ -62,7 +51,11 @@ interface SearchViewModelOutputs {
 //endregion
 
 class SearchViewModel(
-    private val searchRepository: SearchRepository
+    private val driverRepository: DriverRepository,
+    private val constructorRepository: ConstructorRepository,
+    private val circuitRepository: CircuitRepository,
+    private val overviewRepository: OverviewRepository,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), SearchViewModelInputs, SearchViewModelOutputs {
 
     var inputs: SearchViewModelInputs = this
@@ -77,22 +70,23 @@ class SearchViewModel(
         .filterNotNull()
         .flatMapLatest { category ->
             when (category) {
-                SearchCategory.DRIVER -> searchRepository
-                    .allDrivers()
+                SearchCategory.DRIVER -> driverRepository
+                    .getDrivers()
                     .map { it.sortedBy { "${it.firstName} ${it.lastName}" }}
                     .mapDrivers()
-                SearchCategory.CONSTRUCTOR -> searchRepository
-                    .allConstructors()
+                SearchCategory.CONSTRUCTOR -> constructorRepository
+                    .getConstructors()
                     .map { it.sortedBy { it.name }}
                     .mapConstructors()
-                SearchCategory.CIRCUIT -> searchRepository
-                    .allCircuits()
+                SearchCategory.CIRCUIT -> circuitRepository
+                    .getCircuits()
                     .map { it.sortedBy { it.name }}
                     .mapCircuits()
-                SearchCategory.RACE -> searchRepository
-                    .allRaces()
-                    .mapListItem { it.rounds }
-                    .map { it.flatten().sortedByDescending { "${it.season}-${it.round.extendTo(2)}" } }
+                SearchCategory.RACE -> overviewRepository
+                    .getOverview()
+                    .map {
+                        it.sortedByDescending { "${it.season}-${it.round.extend(2)}" }
+                    }
                     .mapRaces()
             }
         }
@@ -132,10 +126,7 @@ class SearchViewModel(
     //region Inputs
 
     override fun inputCategory(searchCategory: SearchCategory) {
-        if (category.value != searchCategory) {
-            isLoading.value = true
-            category.value = searchCategory
-        }
+        category.value = searchCategory
     }
 
     override fun inputSearch(search: String) {
@@ -146,52 +137,72 @@ class SearchViewModel(
         openCategoryPicker.value = DataEvent(category.value)
     }
 
+    override fun refresh() {
+        viewModelScope.launch(ioDispatcher) {
+            when (category.value) {
+                SearchCategory.DRIVER -> {
+                    val result = driverRepository.fetchDrivers()
+                }
+                SearchCategory.CONSTRUCTOR -> {
+                    val result = constructorRepository.fetchConstructors()
+                }
+                SearchCategory.CIRCUIT -> {
+                    val result = circuitRepository.fetchCircuits()
+                }
+                SearchCategory.RACE -> {
+                    val result = overviewRepository.fetchOverview()
+                }
+            }
+            isLoading.postValue(false)
+        }
+    }
+
     override fun clickItem(searchItem: SearchItem) {
         openLink.value = DataEvent(searchItem)
     }
 
     //endregion
 
-    private fun Flow<List<SearchDriver>>.mapDrivers(): Flow<List<SearchItem>> {
+    private fun Flow<List<Driver>>.mapDrivers(): Flow<List<SearchItem>> {
         return this.mapListItem {
             SearchItem.Driver(
                 driverId = it.id,
                 name = "${it.firstName} ${it.lastName}",
                 nationality = it.nationality,
                 nationalityISO = it.nationalityISO,
-                imageUrl = it.image
+                imageUrl = it.photoUrl
             )
         }
     }
 
 
-    private fun Flow<List<SearchConstructor>>.mapConstructors(): Flow<List<SearchItem>> {
+    private fun Flow<List<Constructor>>.mapConstructors(): Flow<List<SearchItem>> {
         return this.mapListItem {
             SearchItem.Constructor(
                 constructorId = it.id,
                 name = it.name,
                 nationality = it.nationality,
                 nationalityISO = it.nationalityISO,
-                colour = it.colour
+                colour = it.color
             )
         }
     }
 
 
-    private fun Flow<List<SearchCircuit>>.mapCircuits(): Flow<List<SearchItem>> {
+    private fun Flow<List<Circuit>>.mapCircuits(): Flow<List<SearchItem>> {
         return this.mapListItem {
             SearchItem.Circuit(
                 circuitId = it.id,
                 name = it.name,
                 nationality = it.country,
                 nationalityISO = it.countryISO,
-                location = it.locationName
+                location = it.city
             )
         }
     }
 
 
-    private fun Flow<List<HistoryRound>>.mapRaces(): Flow<List<SearchItem>> {
+    private fun Flow<List<OverviewRace>>.mapRaces(): Flow<List<SearchItem>> {
         return this
             .mapListItem {
                 SearchItem.Race(

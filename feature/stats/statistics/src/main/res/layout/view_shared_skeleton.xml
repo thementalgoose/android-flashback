@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.faltenreich.skeletonlayout.SkeletonLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/skeletonLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:maskColor="?attr/backgroundSecondary"
+    app:shimmerColor="?attr/backgroundTertiary"
+    tools:background="?attr/backgroundPrimary">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:paddingStart="@dimen/paddingSmall"
+        android:paddingEnd="@dimen/paddingSmall"
+        android:paddingBottom="@dimen/paddingMedium">
+
+        <ImageView
+            android:id="@+id/r1"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="@dimen/paddingSmall"
+            android:layout_marginTop="@dimen/paddingMedium"
+            android:layout_marginEnd="@dimen/paddingSmall"
+            android:background="?attr/backgroundTertiary"
+            android:importantForAccessibility="no"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/r2"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="@dimen/paddingSmall"
+            android:layout_marginTop="@dimen/paddingMedium"
+            android:layout_marginEnd="@dimen/paddingSmall"
+            android:background="?attr/backgroundTertiary"
+            android:importantForAccessibility="no"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/r1" />
+
+        <ImageView
+            android:id="@+id/r3"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="@dimen/paddingSmall"
+            android:layout_marginTop="@dimen/paddingMedium"
+            android:layout_marginEnd="@dimen/paddingSmall"
+            android:background="?attr/backgroundTertiary"
+            android:importantForAccessibility="no"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/r2" />
+
+        <ImageView
+            android:id="@+id/r4"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="@dimen/paddingSmall"
+            android:layout_marginTop="@dimen/paddingMedium"
+            android:layout_marginEnd="@dimen/paddingSmall"
+            android:background="?attr/backgroundTertiary"
+            android:importantForAccessibility="no"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/r3" />
+
+        <ImageView
+            android:id="@+id/r5"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="@dimen/paddingSmall"
+            android:layout_marginTop="@dimen/paddingMedium"
+            android:layout_marginEnd="@dimen/paddingSmall"
+            android:background="?attr/backgroundTertiary"
+            android:importantForAccessibility="no"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/r4" />
+
+        <ImageView
+            android:id="@+id/r6"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="@dimen/paddingSmall"
+            android:layout_marginTop="@dimen/paddingMedium"
+            android:layout_marginEnd="@dimen/paddingSmall"
+            android:background="?attr/backgroundTertiary"
+            android:importantForAccessibility="no"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/r5" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.faltenreich.skeletonlayout.SkeletonLayout>
