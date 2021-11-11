@@ -5,7 +5,6 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class SprintQualifyingResult(
     val points: Double,
-    val qualified: Int,
     val gridPos: Int?,
     val finished: Int,
     val status: String,
