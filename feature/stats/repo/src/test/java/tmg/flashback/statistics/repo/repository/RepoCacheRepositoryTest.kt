@@ -8,7 +8,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
-import tmg.core.prefs.manager.PreferenceManager
+import tmg.flashback.prefs.manager.PreferenceManager
 import java.util.*
 
 internal class RepoCacheRepositoryTest {
