@@ -131,6 +131,8 @@ class RaceViewModel(
                                     fadeDNF = raceController.fadeDNF
                                 )
 
+                                showSprintQualifying.postValue(race.hasSprintQualifying)
+
                                 when (viewType) {
                                     RaceAdapterType.CONSTRUCTOR_STANDINGS -> {
                                         list.addAll(race
@@ -292,7 +294,8 @@ class RaceViewModel(
                         RaceAdapterType.QUALIFYING_POS_2 -> driverOverview.q2?.position
                             ?: driverOverview.race?.qualified
                             ?: driverOverview.race?.grid ?: Int.MAX_VALUE
-                        RaceAdapterType.QUALIFYING_POS -> driverOverview.race?.qualified
+                        RaceAdapterType.QUALIFYING_POS -> driverOverview.qSprint?.grid
+                            ?: driverOverview.race?.qualified
                             ?: driverOverview.race?.grid ?: Int.MAX_VALUE
                         RaceAdapterType.QUALIFYING_SPRINT -> driverOverview.qSprint?.finish
                         else -> it.finish
