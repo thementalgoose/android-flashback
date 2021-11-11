@@ -9,7 +9,7 @@ data class SprintQualifyingResult(
     val gridPos: Int?,
     val finished: Int,
     val status: String,
-    val time: String
+    val time: String?
 ) {
     companion object
 }

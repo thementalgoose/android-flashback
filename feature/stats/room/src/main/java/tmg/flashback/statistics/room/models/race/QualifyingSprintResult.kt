@@ -12,7 +12,7 @@ data class QualifyingSprintResult(
     @ColumnInfo(name = "status")
     val status: String,
     @ColumnInfo(name = "time")
-    val time: String
+    val time: String?
 ) {
     companion object
 }
