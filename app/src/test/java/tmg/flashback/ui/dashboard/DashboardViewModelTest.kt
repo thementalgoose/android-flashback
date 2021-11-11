@@ -7,9 +7,9 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.common.controllers.ReleaseNotesController
-import tmg.configuration.controllers.ConfigController
-import tmg.core.device.managers.BuildConfigManager
+import tmg.flashback.common.controllers.ReleaseNotesController
+import tmg.flashback.configuration.controllers.ConfigController
+import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.upnext.controllers.UpNextController
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertEventFired

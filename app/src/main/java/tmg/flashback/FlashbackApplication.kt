@@ -4,18 +4,17 @@ import android.app.Application
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
-import tmg.common.di.commonModule
-import tmg.configuration.di.configModule
-import tmg.core.analytics.di.analyticsModule
-import tmg.core.device.di.deviceModule
-import tmg.core.ui.di.uiModule
-import tmg.crash_reporting.di.crashReportingModule
+import tmg.flashback.common.di.commonModule
+import tmg.flashback.configuration.di.configModule
+import tmg.flashback.analytics.di.analyticsModule
+import tmg.flashback.device.di.deviceModule
+import tmg.flashback.ui.di.uiModule
+import tmg.flashback.crash_reporting.di.crashReportingModule
 import tmg.flashback.di.appModule
 import tmg.flashback.rss.di.rssModule
 import tmg.flashback.statistics.di.statisticsModule
-import tmg.flashback.statistics.network.di.networkModule
 import tmg.flashback.upnext.di.upNextModule
-import tmg.notifications.di.notificationModule
+import tmg.flashback.notifications.di.notificationModule
 
 class FlashbackApplication: Application() {
 

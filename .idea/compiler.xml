@@ -3,7 +3,6 @@
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="11">
       <module name="android-flashback.base" target="1.8" />
-      <module name="android-flashback.common" target="11" />
       <module name="android-flashback.configuration" target="11" />
       <module name="android-flashback.data-firebase" target="11" />
       <module name="android-flashback.feature.rss.rss" target="1.8" />
@@ -15,7 +14,6 @@
       <module name="android-flashback.feature.upnext.widgets" target="1.8" />
       <module name="android-flashback.notifications" target="11" />
       <module name="android-flashback.prefs" target="1.8" />
-      <module name="android-flashback.rss" target="11" />
       <module name="android-flashback.shared.device" target="1.8" />
       <module name="android-flashback.shared.test" target="11" />
       <module name="android-flashback.shared.ui" target="1.8" />

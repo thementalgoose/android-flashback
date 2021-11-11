@@ -2,17 +2,17 @@ rootProject.name = "android-flashback"
 
 include ':app'
 
-include ':feature:common'
-include ':feature:stats:statistics'
-include ':feature:stats:repo'
-include ':feature:stats:room'
-include ':feature:stats:network'
-include ':feature:upnext'
-include ':feature:rss'
+include ':stats:statistics'
+include ':stats:upnext'
 
-include ':feature:debug'
-
+include ':data:repo'
+include ':data:room'
+include ':data:network'
 include ':formula1'
+
+include ':rss'
+
+include ':common'
 
 include ':core:ads'
 include ':core:analytics'
@@ -25,5 +25,7 @@ include ':core:preferences'
 include ':core:tutorial'
 include ':core:ui'
 include ':core:style'
+
+include ':debug'
 
 include ':test:stats-models'

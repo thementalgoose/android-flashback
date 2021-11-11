@@ -17,7 +17,7 @@ android {
 dependencies {
 
     // Preferences library
-    implementation project(path: ':feature:stats:room')
+    implementation project(path: ':data:room')
     implementation project(path: ':formula1')
-    implementation project(path: ':feature:stats:network')
+    implementation project(path: ':data:network')
 }
