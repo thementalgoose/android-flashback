@@ -31,7 +31,6 @@ internal class DashboardViewModelTest: BaseTest() {
         coEvery { mockConfigurationController.applyPending() } returns false
         every { mockReleaseNotesController.pendingReleaseNotes } returns false
         every { mockUpNextController.getNextEvent() } returns mockk()
-        every { mockUpNextController.shouldShowNotificationOnboarding } returns true
     }
 
     private fun initSUT() {
@@ -134,28 +133,6 @@ internal class DashboardViewModelTest: BaseTest() {
         every { mockReleaseNotesController.pendingReleaseNotes } returns false
         initSUT()
         sut.outputs.openReleaseNotes.test {
-            assertEventNotFired()
-        }
-    }
-
-    //endregion
-
-    //region Release notes
-
-    @Test
-    fun `init if up next onboarding are pending then open up next onboarding is fired`() {
-        every { mockUpNextController.shouldShowNotificationOnboarding } returns true
-        initSUT()
-        sut.outputs.openUpNextNotificationOnboarding.test {
-            assertEventFired()
-        }
-    }
-
-    @Test
-    fun `init if up next onboarding are not pending then open up next onboarding not fired`() {
-        every { mockUpNextController.shouldShowNotificationOnboarding } returns false
-        initSUT()
-        sut.outputs.openUpNextNotificationOnboarding.test {
             assertEventNotFired()
         }
     }

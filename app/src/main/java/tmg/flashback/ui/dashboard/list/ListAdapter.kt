@@ -5,21 +5,18 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.R
-import tmg.flashback.databinding.ViewSeasonListButtonBinding
-import tmg.flashback.databinding.ViewSeasonListDividerBinding
-import tmg.flashback.databinding.ViewSeasonListHeaderBinding
-import tmg.flashback.databinding.ViewSeasonListHeroBinding
-import tmg.flashback.databinding.ViewSeasonListSeasonBinding
+import tmg.flashback.databinding.*
 import tmg.flashback.ui.dashboard.list.viewholders.*
 import tmg.flashback.upnext.repository.model.TimeListDisplayType
 
 class ListAdapter(
-    var featureToggled: (type: HeaderType) -> Unit,
-    var favouriteToggled: (season: Int) -> Unit,
-    var seasonClicked: (season: Int) -> Unit,
-    var setDefaultClicked: (season: Int) -> Unit,
-    var clearDefaultClicked: () -> Unit,
-    val buttonClicked: (String) -> Unit
+    private val featureToggled: (type: HeaderType) -> Unit,
+    private val favouriteToggled: (season: Int) -> Unit,
+    private val seasonClicked: (season: Int) -> Unit,
+    private val setDefaultClicked: (season: Int) -> Unit,
+    private val clearDefaultClicked: () -> Unit,
+    private val buttonClicked: (String) -> Unit,
+    private val featureBannerClicked: (ListItem.FeatureBanner) -> Unit
 ): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var list: List<ListItem> = emptyList()
@@ -53,6 +50,10 @@ class ListAdapter(
                 buttonClicked,
                 ViewSeasonListButtonBinding.inflate(layoutInflater, parent, false)
             )
+            R.layout.view_season_list_feature_banner -> FeatureBannerViewHolder(
+                ViewSeasonListFeatureBannerBinding.inflate(layoutInflater, parent, false),
+                featureBannerClicked
+            )
             else -> throw Exception("View type not implemented")
         }
     }
@@ -70,6 +71,7 @@ class ListAdapter(
             }
             is ListItem.Header -> (holder as HeaderViewHolder).bind(item)
             is ListItem.Button -> (holder as ButtonViewHolder).bind(item)
+            is ListItem.FeatureBanner -> (holder as FeatureBannerViewHolder).bind(item)
         }
     }
 
