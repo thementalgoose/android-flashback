@@ -304,6 +304,7 @@ class SeasonViewModel(
     private fun SeasonDriverStandings.toDriverList(): List<SeasonItem> {
         return this
             .standings
+            .sortedBy { it.championshipPosition }
             .mapIndexed { index: Int, standing: SeasonDriverStandingSeason ->
                 SeasonItem.Driver(
                     season = standing.season,
@@ -324,6 +325,7 @@ class SeasonViewModel(
 
         return this
             .standings
+            .sortedBy { it.championshipPosition }
             .mapIndexed { index: Int, item: SeasonConstructorStandingSeason ->
                 SeasonItem.Constructor(
                     season = item.season,
