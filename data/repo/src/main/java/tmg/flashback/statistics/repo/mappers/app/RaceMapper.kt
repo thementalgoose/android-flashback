@@ -1,8 +1,5 @@
 package tmg.flashback.statistics.repo.mappers.app
 
-import okhttp3.internal.notifyAll
-import org.threeten.bp.LocalDate
-import org.threeten.bp.LocalTime
 import tmg.flashback.formula1.model.*
 import tmg.flashback.formula1.utils.toLapTime
 import tmg.flashback.statistics.room.models.race.QualifyingDriverResult
@@ -63,11 +60,93 @@ class RaceMapper(
             qSprint = mapSprintQualifying(
                 input = data.qualifying
             ),
+            qualifying = mapQualifying(data.qualifying),
             race = mapRace(
                 input = data.race
             ),
             schedule = data.schedule.mapNotNull { scheduleMapper.mapSchedule(it) }
         )
+    }
+
+
+    private fun mapQualifying(input: List<QualifyingDriverResult>): List<RaceQualifyingRound> {
+        val qualifyingData: MutableList<RaceQualifyingRound> = mutableListOf()
+
+        // Q1
+        if (input.any { it.qualifyingResult.q1 != null }) {
+            val lapTimeOrder = input
+                .filter { it.qualifyingResult.q1 != null }
+                .sortedBy { it.qualifyingResult.q1!!.toLapTime().totalMillis }
+                .mapIndexed { index, item -> Pair(item.driver.id, index + 1) }
+            println(lapTimeOrder)
+            val driverListForRound = input.map {
+                RaceQualifyingRoundDriver.Qualifying(
+                    driver = DriverConstructor(driverDataMapper.mapDriver(it.driver), constructorDataMapper.mapConstructorData(it.constructor)),
+                    lapTime = it.qualifyingResult.q1?.toLapTime(),
+                    position = lapTimeOrder.firstOrNull { (id, _) -> id == it.driver.id }?.second
+                        ?: it.qualifyingResult.qualified
+                        ?: -1
+                )
+            }
+            qualifyingData.add(RaceQualifyingRound("Q1", 1,driverListForRound.sortedBy { it.position }))
+        }
+        // Q2
+        if (input.any { it.qualifyingResult.q2 != null }) {
+            val lapTimeOrder = input
+                .filter { it.qualifyingResult.q2 != null }
+                .sortedBy { it.qualifyingResult.q2!!.toLapTime().totalMillis }
+                .mapIndexed { index, item -> Pair(item.driver.id, index + 1) }
+            val driverListForRound = input.map {
+                RaceQualifyingRoundDriver.Qualifying(
+                    driver = DriverConstructor(driverDataMapper.mapDriver(it.driver), constructorDataMapper.mapConstructorData(it.constructor)),
+                    lapTime = it.qualifyingResult.q2?.toLapTime(),
+                    position = lapTimeOrder.firstOrNull { (id, _) -> id == it.driver.id }?.second
+                        ?: qualifyingData.firstOrNull { it.order == 1 }?.results?.firstOrNull { model -> model.driver.driver.id == it.driver.id }?.position
+                        ?: it.qualifyingResult.qualified
+                        ?: -1
+                )
+            }
+            qualifyingData.add(RaceQualifyingRound("Q2", 2, driverListForRound.sortedBy { it.position }))
+        }
+        // Q3
+        if (input.any { it.qualifyingResult.q3 != null }) {
+            val lapTimeOrder = input
+                .filter { it.qualifyingResult.q3 != null }
+                .sortedBy { it.qualifyingResult.q3!!.toLapTime().totalMillis }
+                .mapIndexed { index, item -> Pair(item.driver.id, index + 1) }
+            val driverListForRound = input.map {
+                RaceQualifyingRoundDriver.Qualifying(
+                    driver = DriverConstructor(driverDataMapper.mapDriver(it.driver), constructorDataMapper.mapConstructorData(it.constructor)),
+                    lapTime = it.qualifyingResult.q3?.toLapTime(),
+                    position = lapTimeOrder.firstOrNull { (id, _) -> id == it.driver.id }?.second
+                        ?: qualifyingData.firstOrNull { it.order == 2 }?.results?.firstOrNull { model -> model.driver.driver.id == it.driver.id }?.position
+                        ?: qualifyingData.firstOrNull { it.order == 1 }?.results?.firstOrNull { model -> model.driver.driver.id == it.driver.id }?.position
+                        ?: it.qualifyingResult.qualified
+                        ?: -1
+                )
+            }
+            qualifyingData.add(RaceQualifyingRound("Q3", 3, driverListForRound.sortedBy { it.position }))
+        }
+
+        // Sprint Qualifying
+        if (input.any { it.qualifyingResult.qSprint != null }) {
+            val driverListForRound = input
+                .sortedBy { it.qualifyingResult.qSprint?.finished }
+                .map {
+                    RaceQualifyingRoundDriver.SprintQualifying(
+                        driver = DriverConstructor(driverDataMapper.mapDriver(it.driver), constructorDataMapper.mapConstructorData(it.constructor)),
+                        lapTime = it.qualifyingResult.qSprint?.time?.toLapTime(),
+                        position = it.qualifyingResult.qSprint?.finished ?: -1,
+                        finished = it.qualifyingResult.qSprint?.finished ?: -1,
+                        gridPos = it.qualifyingResult.qSprint?.gridPos ?: -1,
+                        points = it.qualifyingResult.qSprint?.points ?: 0.0,
+                        status = it.qualifyingResult.qSprint?.status ?: "Unknown"
+                    )
+                }
+            qualifyingData.add(RaceQualifyingRound("Sprint", 4, driverListForRound.sortedBy { it.position }))
+        }
+
+        return qualifyingData
     }
 
     /**
@@ -76,7 +155,7 @@ class RaceMapper(
      * @param fieldToBaseFilteringOn Q1, Q2 or Q3
      * @param input Map of driver id -> qualifying result (pos,q1,q2,q3)
      */
-    private fun mapQualifying(fieldToBaseFilteringOn: Qualifying, input: List<QualifyingDriverResult>): Map<String, RaceQualifyingResult> {
+    private fun mapQualifying(fieldToBaseFilteringOn: Qualifying, input: List<QualifyingDriverResult>): Map<String, RaceQualifyingResult_Legacy> {
         val allDrivers = input.map {
             DriverConstructor(
                 driver = driverDataMapper.mapDriver(it.driver),
@@ -103,7 +182,7 @@ class RaceMapper(
                 return@sortedBy lapTime.totalMillis
             }
             .mapIndexed { index, (driver, qualifyingResult, lapTime) ->
-                driver.driver.id to RaceQualifyingResult(
+                driver.driver.id to RaceQualifyingResult_Legacy(
                     driver = driver,
                     time = lapTime,
                     position = (if (lapTime == null) qualifyingResult.qualifyingResult.qualified else null) ?: (index + 1)
@@ -119,7 +198,7 @@ class RaceMapper(
      *
      * @param input Map of driver id -> sprint quali result
      */
-    fun mapSprintQualifying(input: List<QualifyingDriverResult>?): Map<String, RaceSprintQualifyingResult> {
+    fun mapSprintQualifying(input: List<QualifyingDriverResult>?): Map<String, RaceSprintQualifyingResult_Legacy> {
         if (input == null || input.isEmpty()) return emptyMap()
         val allDrivers = input.map {
             DriverConstructor(
@@ -135,7 +214,7 @@ class RaceMapper(
                     .let { Triple(it, qualifying.qualifyingResult.qualified, qualifying.qualifyingResult.qSprint!!) }
             }
             .map { (driver, qualified, sprintQualifying) ->
-                driver.driver.id to RaceSprintQualifyingResult(
+                driver.driver.id to RaceSprintQualifyingResult_Legacy(
                     driver = driver,
                     time = sprintQualifying.time?.toLapTime(),
                     points = sprintQualifying.points,
@@ -153,7 +232,7 @@ class RaceMapper(
      *
      * @param input Map of driver id -> sprint quali result
      */
-    fun mapRace(input: List<RaceDriverResult>?): Map<String, RaceRaceResult> {
+    private fun mapRace(input: List<RaceDriverResult>?): Map<String, RaceRaceResult> {
         if (input == null || input.isEmpty()) return emptyMap()
         val allDrivers = input.map { result ->
             DriverConstructor(

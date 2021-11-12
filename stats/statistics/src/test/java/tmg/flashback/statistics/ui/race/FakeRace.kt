@@ -18,51 +18,51 @@ internal val driver4 = DriverConstructor.model(driver = Driver.model("driverId4"
 
 internal val raceModel: Race = Race.model(
     q1 = mapOf(
-        "driverId1" to RaceQualifyingResult.model(
+        "driverId1" to RaceQualifyingResult_Legacy.model(
             driver = driver1,
             time = LapTime.model(0, 1, 1, 0),
             position = 2
         ),
-        "driverId2" to RaceQualifyingResult.model(
+        "driverId2" to RaceQualifyingResult_Legacy.model(
             driver = driver2,
             time = LapTime.model(0, 1, 3, 0),
             position = 1
         ),
-        "driverId3" to RaceQualifyingResult.model(
+        "driverId3" to RaceQualifyingResult_Legacy.model(
             driver = driver3,
             time = LapTime.model(0, 1, 2, 0),
             position = 3
         ),
-        "driverId4" to RaceQualifyingResult.model(
+        "driverId4" to RaceQualifyingResult_Legacy.model(
             driver = driver4,
             time = LapTime.model(0, 1, 4, 0),
             position = 4
         )
     ),
     q2 = mapOf(
-        "driverId1" to RaceQualifyingResult.model(
+        "driverId1" to RaceQualifyingResult_Legacy.model(
             driver = driver1,
             time = LapTime.model(0, 1, 1, 0),
             position = 2
         ),
-        "driverId2" to RaceQualifyingResult.model(
+        "driverId2" to RaceQualifyingResult_Legacy.model(
             driver = driver2,
             time = LapTime.model(0, 1, 2, 0),
             position = 1
         ),
-        "driverId3" to RaceQualifyingResult.model(
+        "driverId3" to RaceQualifyingResult_Legacy.model(
             driver = driver3,
             time = LapTime.model(0, 1, 3, 0),
             position = 3
         )
     ),
     q3 = mapOf(
-        "driverId1" to RaceQualifyingResult.model(
+        "driverId1" to RaceQualifyingResult_Legacy.model(
             driver = driver1,
             time = LapTime.model(0, 1, 1, 0),
             position = 2
         ),
-        "driverId2" to RaceQualifyingResult.model(
+        "driverId2" to RaceQualifyingResult_Legacy.model(
             driver = driver2,
             time = LapTime.model(0, 1, 1, 0),
             position = 1
