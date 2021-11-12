@@ -14,7 +14,9 @@ sealed class RaceQualifyingRoundDriver(
         driver = driver,
         lapTime = lapTime,
         position = position
-    )
+    ) {
+        companion object
+    }
 
     class SprintQualifying(
         driver: DriverConstructor,
@@ -28,5 +30,7 @@ sealed class RaceQualifyingRoundDriver(
         driver = driver,
         lapTime = lapTime,
         position = position
-    )
+    ) {
+        companion object
+    }
 }
