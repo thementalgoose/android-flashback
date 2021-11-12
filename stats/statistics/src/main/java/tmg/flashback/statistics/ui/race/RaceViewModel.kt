@@ -106,6 +106,16 @@ class RaceViewModel(
                 val (season, round) = seasonRound
                 return@flatMapLatest raceRepository.getRace(season, round)
                     .map { race ->
+
+                        // TODO: Remove
+                        race?.qualifying?.forEach {
+                            println("Round ${it.label}")
+                            it.results
+                                .forEach {
+                                    println(" -- ${it.position}  ----  ${it.driver.driver.id}  ----  ${it.lapTime}")
+                                }
+                        }
+
                         val list = mutableListOf<RaceModel>()
                         when {
                             race == null && !isConnected ->

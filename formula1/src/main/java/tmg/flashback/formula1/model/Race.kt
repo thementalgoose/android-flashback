@@ -2,10 +2,14 @@ package tmg.flashback.formula1.model
 
 data class Race(
     val raceInfo: RaceInfo,
-    val q1: Map<String, RaceQualifyingResult>,
-    val q2: Map<String, RaceQualifyingResult>,
-    val q3: Map<String, RaceQualifyingResult>,
-    val qSprint: Map<String, RaceSprintQualifyingResult>,
+    val q1: Map<String, RaceQualifyingResult_Legacy>,
+    val q2: Map<String, RaceQualifyingResult_Legacy>,
+    val q3: Map<String, RaceQualifyingResult_Legacy>,
+    val qSprint: Map<String, RaceSprintQualifyingResult_Legacy>,
+
+    // TODO: This is the field moving forward to use!
+    val qualifying: List<RaceQualifyingRound>,
+
     val race: Map<String, RaceRaceResult>,
     val schedule: List<Schedule>
 ) {
@@ -83,7 +87,7 @@ data class Race(
             }
         }
 
-    private fun Map<String, RaceQualifyingResult>.fastest(): LapTime? = this
+    private fun Map<String, RaceQualifyingResult_Legacy>.fastest(): LapTime? = this
         .map { it.value.time }
         .filter { it != null && !it.noTime && it.totalMillis != 0 }
         .minByOrNull {

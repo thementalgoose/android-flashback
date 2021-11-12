@@ -2,7 +2,7 @@ package tmg.flashback.statistics.ui.race.viewholders
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import tmg.flashback.formula1.model.RaceQualifyingResult
+import tmg.flashback.formula1.model.RaceQualifyingResult_Legacy
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.LayoutQualifyingTimeBinding
 import tmg.flashback.statistics.databinding.ViewRaceQualifyingResultBinding
@@ -80,7 +80,7 @@ class QualifyingResultViewHolder(
         }
     }
 
-    private fun bind(qualifying: RaceQualifyingResult?, layout: LayoutQualifyingTimeBinding?, delta: String?, displayPrefs: DisplayPrefs): Boolean {
+    private fun bind(qualifying: RaceQualifyingResult_Legacy?, layout: LayoutQualifyingTimeBinding?, delta: String?, displayPrefs: DisplayPrefs): Boolean {
         if (layout == null) return false
         val label = qualifying?.time?.toString() ?: ""
         layout.tvQualifyingTime.text = label

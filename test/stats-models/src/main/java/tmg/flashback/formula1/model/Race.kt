@@ -2,17 +2,17 @@ package tmg.flashback.formula1.model
 
 fun Race.Companion.model(
     raceInfo: RaceInfo = RaceInfo.model(),
-    q1: Map<String, RaceQualifyingResult> = mapOf(
-        "driverId" to RaceQualifyingResult.model(time = LapTime.model(0, 1, 2, 1))
+    q1: Map<String, RaceQualifyingResult_Legacy> = mapOf(
+        "driverId" to RaceQualifyingResult_Legacy.model(time = LapTime.model(0, 1, 2, 1))
     ),
-    q2: Map<String, RaceQualifyingResult> = mapOf(
-        "driverId" to RaceQualifyingResult.model(time = LapTime.model(0, 1, 2, 2))
+    q2: Map<String, RaceQualifyingResult_Legacy> = mapOf(
+        "driverId" to RaceQualifyingResult_Legacy.model(time = LapTime.model(0, 1, 2, 2))
     ),
-    q3: Map<String, RaceQualifyingResult> = mapOf(
-        "driverId" to RaceQualifyingResult.model(time = LapTime.model(0, 1, 2, 3))
+    q3: Map<String, RaceQualifyingResult_Legacy> = mapOf(
+        "driverId" to RaceQualifyingResult_Legacy.model(time = LapTime.model(0, 1, 2, 3))
     ),
-    qSprint: Map<String, RaceSprintQualifyingResult> = mapOf(
-        "driverId" to RaceSprintQualifyingResult.model()
+    qSprint: Map<String, RaceSprintQualifyingResult_Legacy> = mapOf(
+        "driverId" to RaceSprintQualifyingResult_Legacy.model()
     ),
     race: Map<String, RaceRaceResult> = mapOf(
         "driverId" to RaceRaceResult.model()

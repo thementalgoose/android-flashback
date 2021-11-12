@@ -2,10 +2,10 @@ package tmg.flashback.formula1.model
 
 data class RaceDriverOverview(
     val driver: DriverConstructor,
-    val q1: RaceQualifyingResult?,
-    val q2: RaceQualifyingResult?,
-    val q3: RaceQualifyingResult?,
-    val qSprint: RaceSprintQualifyingResult?,
+    val q1: RaceQualifyingResult_Legacy?,
+    val q2: RaceQualifyingResult_Legacy?,
+    val q3: RaceQualifyingResult_Legacy?,
+    val qSprint: RaceSprintQualifyingResult_Legacy?,
     val race: RaceRaceResult?
 ) {
     companion object
