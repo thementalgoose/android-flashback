@@ -1,31 +1,32 @@
 package tmg.flashback.formula1.model
 
+import tmg.flashback.formula1.model.RaceQualifyingType.*
+
 fun Race.Companion.model(
     raceInfo: RaceInfo = RaceInfo.model(),
-    q1: Map<String, RaceQualifyingResult_Legacy> = mapOf(
-        "driverId" to RaceQualifyingResult_Legacy.model(time = LapTime.model(0, 1, 2, 1))
+    qualifying: List<RaceQualifyingRound> = listOf(
+        RaceQualifyingRound.model(label = Q1, order = 1, results = listOf(
+            RaceQualifyingRoundDriver.Qualifying.model(lapTime = LapTime.model(0, 1, 2, 1))
+        )),
+        RaceQualifyingRound.model(label = Q2, order = 2, results = listOf(
+            RaceQualifyingRoundDriver.Qualifying.model(lapTime = LapTime.model(0, 1, 2, 2))
+        )),
+        RaceQualifyingRound.model(label = Q3, order = 3, results = listOf(
+            RaceQualifyingRoundDriver.Qualifying.model(lapTime = LapTime.model(0, 1, 2, 3))
+        )),
+        RaceQualifyingRound.model(label = SPRINT, order = 4, results = listOf(
+            RaceQualifyingRoundDriver.SprintQualifying.model(lapTime = LapTime.model(0, 1, 2, 5))
+        ))
     ),
-    q2: Map<String, RaceQualifyingResult_Legacy> = mapOf(
-        "driverId" to RaceQualifyingResult_Legacy.model(time = LapTime.model(0, 1, 2, 2))
-    ),
-    q3: Map<String, RaceQualifyingResult_Legacy> = mapOf(
-        "driverId" to RaceQualifyingResult_Legacy.model(time = LapTime.model(0, 1, 2, 3))
-    ),
-    qSprint: Map<String, RaceSprintQualifyingResult_Legacy> = mapOf(
-        "driverId" to RaceSprintQualifyingResult_Legacy.model()
-    ),
-    race: Map<String, RaceRaceResult> = mapOf(
-        "driverId" to RaceRaceResult.model()
+    race: List<RaceRaceResult> = listOf(
+        RaceRaceResult.model()
     ),
     schedule: List<Schedule> = listOf(
         Schedule.model()
     )
 ): Race = Race(
     raceInfo = raceInfo,
-    q1 = q1,
-    q2 = q2,
-    q3 = q3,
-    qSprint = qSprint,
+    qualifying = qualifying,
     race = race,
     schedule = schedule
 )

@@ -61,15 +61,14 @@ class RaceMapper(
         // Q1
         if (input.any { it.qualifyingResult.q1 != null }) {
             val lapTimeOrder = input
-                .filter { it.qualifyingResult.q1 != null }
-                .sortedBy { it.qualifyingResult.q1!!.toLapTime().totalMillis }
+                .sortedBy { it.qualifyingResult.q1?.toLapTime()?.totalMillis ?: Int.MAX_VALUE }
                 .mapIndexed { index, item -> Pair(item.driver.id, index + 1) }
             println(lapTimeOrder)
             val driverListForRound = input.map {
                 RaceQualifyingRoundDriver.Qualifying(
-                    driver = DriverConstructor(driverDataMapper.mapDriver(it.driver), constructorDataMapper.mapConstructorData(it.constructor)),
-                    lapTime = it.qualifyingResult.q1?.toLapTime(),
-                    position = lapTimeOrder.firstOrNull { (id, _) -> id == it.driver.id }?.second
+                    _driver = DriverConstructor(driverDataMapper.mapDriver(it.driver), constructorDataMapper.mapConstructorData(it.constructor)),
+                    _lapTime = it.qualifyingResult.q1?.toLapTime(),
+                    _position = lapTimeOrder.firstOrNull { (id, _) -> id == it.driver.id }?.second
                         ?: it.qualifyingResult.qualified
                         ?: -1
                 )
@@ -79,14 +78,13 @@ class RaceMapper(
         // Q2
         if (input.any { it.qualifyingResult.q2 != null }) {
             val lapTimeOrder = input
-                .filter { it.qualifyingResult.q2 != null }
-                .sortedBy { it.qualifyingResult.q2!!.toLapTime().totalMillis }
+                .sortedBy { it.qualifyingResult.q2?.toLapTime()?.totalMillis ?: Int.MAX_VALUE }
                 .mapIndexed { index, item -> Pair(item.driver.id, index + 1) }
             val driverListForRound = input.map {
                 RaceQualifyingRoundDriver.Qualifying(
-                    driver = DriverConstructor(driverDataMapper.mapDriver(it.driver), constructorDataMapper.mapConstructorData(it.constructor)),
-                    lapTime = it.qualifyingResult.q2?.toLapTime(),
-                    position = lapTimeOrder.firstOrNull { (id, _) -> id == it.driver.id }?.second
+                    _driver = DriverConstructor(driverDataMapper.mapDriver(it.driver), constructorDataMapper.mapConstructorData(it.constructor)),
+                    _lapTime = it.qualifyingResult.q2?.toLapTime(),
+                    _position = lapTimeOrder.firstOrNull { (id, _) -> id == it.driver.id }?.second
                         ?: qualifyingData.firstOrNull { it.order == 1 }?.results?.firstOrNull { model -> model.driver.driver.id == it.driver.id }?.position
                         ?: it.qualifyingResult.qualified
                         ?: -1
@@ -97,14 +95,13 @@ class RaceMapper(
         // Q3
         if (input.any { it.qualifyingResult.q3 != null }) {
             val lapTimeOrder = input
-                .filter { it.qualifyingResult.q3 != null }
-                .sortedBy { it.qualifyingResult.q3!!.toLapTime().totalMillis }
+                .sortedBy { it.qualifyingResult.q3?.toLapTime()?.totalMillis ?: Int.MAX_VALUE }
                 .mapIndexed { index, item -> Pair(item.driver.id, index + 1) }
             val driverListForRound = input.map {
                 RaceQualifyingRoundDriver.Qualifying(
-                    driver = DriverConstructor(driverDataMapper.mapDriver(it.driver), constructorDataMapper.mapConstructorData(it.constructor)),
-                    lapTime = it.qualifyingResult.q3?.toLapTime(),
-                    position = lapTimeOrder.firstOrNull { (id, _) -> id == it.driver.id }?.second
+                    _driver = DriverConstructor(driverDataMapper.mapDriver(it.driver), constructorDataMapper.mapConstructorData(it.constructor)),
+                    _lapTime = it.qualifyingResult.q3?.toLapTime(),
+                    _position = lapTimeOrder.firstOrNull { (id, _) -> id == it.driver.id }?.second
                         ?: qualifyingData.firstOrNull { it.order == 2 }?.results?.firstOrNull { model -> model.driver.driver.id == it.driver.id }?.position
                         ?: qualifyingData.firstOrNull { it.order == 1 }?.results?.firstOrNull { model -> model.driver.driver.id == it.driver.id }?.position
                         ?: it.qualifyingResult.qualified
@@ -120,9 +117,9 @@ class RaceMapper(
                 .sortedBy { it.qualifyingResult.qSprint?.finished }
                 .map {
                     RaceQualifyingRoundDriver.SprintQualifying(
-                        driver = DriverConstructor(driverDataMapper.mapDriver(it.driver), constructorDataMapper.mapConstructorData(it.constructor)),
-                        lapTime = it.qualifyingResult.qSprint?.time?.toLapTime(),
-                        position = it.qualifyingResult.qSprint?.finished ?: -1,
+                        _driver = DriverConstructor(driverDataMapper.mapDriver(it.driver), constructorDataMapper.mapConstructorData(it.constructor)),
+                        _lapTime = it.qualifyingResult.qSprint?.time?.toLapTime(),
+                        _position = it.qualifyingResult.qSprint?.finished ?: -1,
                         finished = it.qualifyingResult.qSprint?.finished ?: -1,
                         gridPos = it.qualifyingResult.qSprint?.gridPos ?: -1,
                         points = it.qualifyingResult.qSprint?.points ?: 0.0,

@@ -11,7 +11,3 @@ data class RaceQualifyingRound(
 
     companion object
 }
-
-fun List<RaceQualifyingRound>.finalOrder(): List<RaceQualifyingRoundDriver> {
-    return this.maxByOrNull { it.order }?.results ?: emptyList()
-}

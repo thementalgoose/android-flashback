@@ -117,6 +117,13 @@ class RaceViewModel(
                             list.addError(SyncDataItem.Unavailable(DataUnavailable.RACE_DATA_EMPTY))
                         else -> {
 
+                            race.qualifying.forEach {
+                                println(":: ${it.label}")
+                                it.results.forEach {
+                                    println("  (${it.position}) --> ${it.driver.driver.id} ${it.lapTime}")
+                                }
+                            }
+
                             when (viewType) {
                                 RaceDisplayType.CONSTRUCTOR -> {
                                     list.addAll(race
@@ -131,17 +138,20 @@ class RaceViewModel(
                                 }
                                 RaceDisplayType.RACE -> {
                                     if (race.race.isNotEmpty()) {
+
+                                        val results = race.race.sortedBy { it.finish }
+
                                         var startIndex = 0
-                                        if (race.race.size >= 3) {
+                                        if (results.size >= 3) {
                                             list.add(RaceItem.Podium(
-                                                driverFirst = race.race[0],
-                                                driverSecond = race.race[1],
-                                                driverThird = race.race[2]
+                                                driverFirst = results[0],
+                                                driverSecond = results[1],
+                                                driverThird = results[2]
                                             ))
                                             startIndex = 3
                                         }
                                         list.add(RaceItem.RaceHeader)
-                                        list.addAll(race.race
+                                        list.addAll(results
                                             .filterIndexed { index, model -> index >= startIndex }
                                             .map { RaceItem.RaceResult(it) }
                                         )

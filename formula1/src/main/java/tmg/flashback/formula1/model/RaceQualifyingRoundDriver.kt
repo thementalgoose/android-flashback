@@ -6,30 +6,30 @@ sealed class RaceQualifyingRoundDriver(
     val position: Int
 ) {
 
-    class Qualifying(
-        driver: DriverConstructor,
-        lapTime: LapTime?,
-        position: Int
+    data class Qualifying(
+        private val _driver: DriverConstructor,
+        private val _lapTime: LapTime?,
+        private val _position: Int
     ): RaceQualifyingRoundDriver(
-        driver = driver,
-        lapTime = lapTime,
-        position = position
+        driver = _driver,
+        lapTime = _lapTime,
+        position = _position
     ) {
         companion object
     }
 
-    class SprintQualifying(
-        driver: DriverConstructor,
-        lapTime: LapTime?,
-        position: Int,
+    data class SprintQualifying(
+        private val _driver: DriverConstructor,
+        private val _lapTime: LapTime?,
+        private val _position: Int,
         val finished: Int,
         val gridPos: Int?,
         val points: Double,
         val status: String
     ): RaceQualifyingRoundDriver(
-        driver = driver,
-        lapTime = lapTime,
-        position = position
+        driver = _driver,
+        lapTime = _lapTime,
+        position = _position
     ) {
         companion object
     }
