@@ -10,7 +10,6 @@ import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.ViewRaceOverviewBinding
 import tmg.flashback.statistics.ui.race.RaceItem
-import tmg.flashback.statistics.ui.race_old.RaceModel
 import tmg.flashback.statistics.ui.shared.pill.PillAdapter
 import tmg.flashback.statistics.ui.shared.pill.PillItem
 import tmg.utilities.extensions.views.context
@@ -58,5 +57,4 @@ class OverviewViewHolder(
     override fun onClick(p0: View?) {
         pillItemClicked(PillItem.Circuit(model.circuitId, model.circuitName))
     }
-
 }

@@ -3,7 +3,6 @@ package tmg.flashback.statistics.ui.race.viewholders
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import tmg.flashback.statistics.ui.race_old.RaceModel
 import tmg.flashback.ui.extensions.getColor
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.LayoutPodiumBinding
@@ -34,7 +33,7 @@ class RacePodiumViewHolder(
 
             pointsLayout.text = itemView.context.getString(R.string.round_podium_points, model.points.pointsDisplay())
             tvDriver.text = model.driver.driver.name
-            tvNumber.text = model.driver.driver.number.toString()
+            tvNumber.text = model.driver.driver.number?.toString() ?: ""
             tvNumber.colorHighlight = model.driver.constructor.color
             tvConstructor.text = model.driver.constructor.name
 

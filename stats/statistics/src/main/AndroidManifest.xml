@@ -4,7 +4,7 @@
     <application>
 
         <activity
-            android:name=".ui.race_old.RaceActivity"
+            android:name=".ui.race.RaceActivity"
             android:label=""
             android:exported="false"
             android:theme="@style/Translucent" />

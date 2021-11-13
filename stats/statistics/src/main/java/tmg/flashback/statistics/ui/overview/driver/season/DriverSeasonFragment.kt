@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.ui.base.BaseFragment
 import tmg.flashback.statistics.databinding.FragmentDriverSeasonBinding
-import tmg.flashback.statistics.ui.race_old.RaceActivity
+import tmg.flashback.statistics.ui.race.RaceActivity
 import tmg.flashback.statistics.ui.race.RaceData
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent

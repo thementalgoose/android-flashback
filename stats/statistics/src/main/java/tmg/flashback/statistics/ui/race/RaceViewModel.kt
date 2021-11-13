@@ -12,7 +12,6 @@ import tmg.flashback.formula1.model.*
 import tmg.flashback.formula1.model.RaceQualifyingType.*
 import tmg.flashback.statistics.controllers.RaceController
 import tmg.flashback.statistics.repo.RaceRepository
-import tmg.flashback.statistics.ui.race_old.RaceModel
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
 import tmg.flashback.statistics.ui.util.SeasonRound
@@ -169,33 +168,25 @@ class RaceViewModel(
                                         }
                                     }
                                 }
-                                RaceDisplayType.QUALIFYING_Q1 -> {
-                                    if (race.has(Q1)) {
-                                        list.addAll(race.getQualifyingList(Q1))
-                                    } else {
-                                        when {
-                                            race.raceInfo.date > LocalDate.now() -> list.add(RaceItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.RACE_IN_FUTURE)))
-                                            else -> list.add(RaceItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.COMING_SOON_RACE)))
+                                RaceDisplayType.QUALIFYING -> {
+                                    when {
+                                        race.has(Q3) -> {
+                                            list.add(RaceItem.QualifyingHeader(true, true, true))
+                                            list.addAll(race.getQ1Q2Q3QualifyingList(Q3))
                                         }
-                                    }
-                                }
-                                RaceDisplayType.QUALIFYING_Q2 -> {
-                                    if (race.has(Q1)) {
-                                        list.addAll(race.getQualifyingList(Q2))
-                                    } else {
-                                        when {
-                                            race.raceInfo.date > LocalDate.now() -> list.add(RaceItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.RACE_IN_FUTURE)))
-                                            else -> list.add(RaceItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.COMING_SOON_RACE)))
+                                        race.has(Q2) -> {
+                                            list.add(RaceItem.QualifyingHeader(true, true, false))
+                                            list.addAll(race.getQ1Q2QualifyingList())
                                         }
-                                    }
-                                }
-                                RaceDisplayType.QUALIFYING_Q3 -> {
-                                    if (race.has(Q1)) {
-                                        list.addAll(race.getQualifyingList(Q3))
-                                    } else {
-                                        when {
-                                            race.raceInfo.date > LocalDate.now() -> list.add(RaceItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.RACE_IN_FUTURE)))
-                                            else -> list.add(RaceItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.COMING_SOON_RACE)))
+                                        race.has(Q1) -> {
+                                            list.add(RaceItem.QualifyingHeader(true, false, false))
+                                            list.addAll(race.getQ1QualifyingList())
+                                        }
+                                        else -> {
+                                            when {
+                                                race.raceInfo.date > LocalDate.now() -> list.add(RaceItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.RACE_IN_FUTURE)))
+                                                else -> list.add(RaceItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.COMING_SOON_RACE)))
+                                            }
                                         }
                                     }
                                 }
@@ -257,7 +248,7 @@ class RaceViewModel(
         )
     }
 
-    private fun Race.getQualifyingList(forType: RaceQualifyingType): List<RaceItem.QualifyingResult> {
+    private fun Race.getQ1Q2Q3QualifyingList(forType: RaceQualifyingType): List<RaceItem.QualifyingResultQ1Q2Q3> {
         val list = when (forType) {
             Q1, Q2, Q3 -> this.qualifying.firstOrNull { it.label == forType } ?: return emptyList()
             else -> return emptyList()
@@ -265,7 +256,7 @@ class RaceViewModel(
 
         return list.results.map {
             val overview = driverOverview(it.driver.driver.id)
-            return@map RaceItem.QualifyingResult(
+            return@map RaceItem.QualifyingResultQ1Q2Q3(
                 driver = it.driver,
                 finalQualifyingPosition = overview?.qualified,
                 q1 = overview?.q1,
@@ -276,6 +267,40 @@ class RaceViewModel(
                 q3Delta = if (raceController.showQualifyingDelta) q3FastestLap?.deltaTo(overview?.q3?.lapTime) else null,
             )
         }
+    }
+
+    private fun Race.getQ1Q2QualifyingList(): List<RaceItem.QualifyingResultQ1Q2> {
+        return qualifying.firstOrNull()
+            ?.results
+            ?.map {
+                val overview = driverOverview(it.driver.driver.id)
+                return@map RaceItem.QualifyingResultQ1Q2(
+                    driver = it.driver,
+                    finalQualifyingPosition = overview?.qualified,
+                    q1 = overview?.q1,
+                    q2 = overview?.q2,
+                    q1Delta = if (raceController.showQualifyingDelta) q1FastestLap?.deltaTo(overview?.q1?.lapTime) else null,
+                    q2Delta = if (raceController.showQualifyingDelta) q2FastestLap?.deltaTo(overview?.q2?.lapTime) else null,
+                )
+            }
+            ?.sortedBy { it.qualified }
+            ?: emptyList()
+    }
+
+    private fun Race.getQ1QualifyingList(): List<RaceItem.QualifyingResultQ1> {
+        return qualifying.firstOrNull()
+            ?.results
+            ?.map {
+                val overview = driverOverview(it.driver.driver.id)
+                return@map RaceItem.QualifyingResultQ1(
+                    driver = it.driver,
+                    finalQualifyingPosition = overview?.qualified,
+                    q1 = overview?.q1,
+                    q1Delta = if (raceController.showQualifyingDelta) q1FastestLap?.deltaTo(overview?.q1?.lapTime) else null,
+                )
+            }
+            ?.sortedBy { it.qualified }
+            ?: emptyList()
     }
 
     private fun getDriverFromConstructor(race: Race, constructorId: String): List<Pair<Driver, Double>> {

@@ -3,7 +3,6 @@ package tmg.flashback.statistics.ui.race.viewholders
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import tmg.flashback.statistics.ui.race_old.RaceModel
 import tmg.flashback.formula1.enums.isStatusFinished
 import tmg.flashback.ui.extensions.getColor
 import tmg.flashback.statistics.R
