@@ -60,7 +60,7 @@ sealed class RaceItem(
         val q1Delta: String?,
         val q2Delta: String?,
         val q3Delta: String?,
-        val qualified: Int? = q3?.position ?: q2?.position ?: q1?.position ?: finalQualifyingPosition
+        val qualified: Int? = /* q3?.position ?: q2?.position ?: q1?.position ?: */ finalQualifyingPosition
     ): RaceItem(
         id = driver.driver.id,
         layoutId = R.layout.view_race_qualifying_q1q2q3_result
@@ -126,4 +126,6 @@ sealed class RaceItem(
         id = "PODIUM_LOADING",
         layoutId = R.layout.skeleton_race
     )
+
+    companion object
 }

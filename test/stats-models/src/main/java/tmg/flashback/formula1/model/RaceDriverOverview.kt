@@ -2,11 +2,11 @@ package tmg.flashback.formula1.model
 
 fun RaceDriverOverview.Companion.model(
     driver: DriverConstructor = DriverConstructor.model(),
-    q1: RaceQualifyingResult_Legacy? = RaceQualifyingResult_Legacy.model(),
-    q2: RaceQualifyingResult_Legacy? = RaceQualifyingResult_Legacy.model(),
-    q3: RaceQualifyingResult_Legacy? = RaceQualifyingResult_Legacy.model(),
-    qSprint: RaceSprintQualifyingResult_Legacy? = RaceSprintQualifyingResult_Legacy.model(),
-    race: RaceRaceResult? = RaceRaceResult.model()
+    q1: RaceQualifyingRoundDriver.Qualifying? = RaceQualifyingRoundDriver.Qualifying.model(),
+    q2: RaceQualifyingRoundDriver.Qualifying? = RaceQualifyingRoundDriver.Qualifying.model(),
+    q3: RaceQualifyingRoundDriver.Qualifying? = RaceQualifyingRoundDriver.Qualifying.model(),
+    qSprint: RaceQualifyingRoundDriver.SprintQualifying? = RaceQualifyingRoundDriver.SprintQualifying.model(),
+    race: RaceRaceResult? = RaceRaceResult.model(),
 ): RaceDriverOverview = RaceDriverOverview(
     driver = driver,
     q1 = q1,

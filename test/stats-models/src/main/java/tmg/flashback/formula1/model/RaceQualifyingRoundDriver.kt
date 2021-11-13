@@ -5,9 +5,9 @@ fun RaceQualifyingRoundDriver.Qualifying.Companion.model(
     lapTime: LapTime? = LapTime.model(),
     position: Int = 1,
 ): RaceQualifyingRoundDriver.Qualifying = RaceQualifyingRoundDriver.Qualifying(
-    driver = driver,
-    lapTime = lapTime,
-    position = position
+    _driver = driver,
+    _lapTime = lapTime,
+    _position = position
 )
 
 fun RaceQualifyingRoundDriver.SprintQualifying.Companion.model(
@@ -17,11 +17,11 @@ fun RaceQualifyingRoundDriver.SprintQualifying.Companion.model(
     finished: Int = 1,
     gridPos: Int = 1,
     points: Double = 1.0,
-    status: String = "Finished"
+    status: String = "status"
 ): RaceQualifyingRoundDriver.SprintQualifying = RaceQualifyingRoundDriver.SprintQualifying(
-    driver = driver,
-    lapTime = lapTime,
-    position = position,
+    _driver = driver,
+    _lapTime = lapTime,
+    _position = position,
     finished = finished,
     gridPos = gridPos,
     points = points,

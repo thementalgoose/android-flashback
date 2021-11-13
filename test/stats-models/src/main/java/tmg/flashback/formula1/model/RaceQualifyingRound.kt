@@ -1,10 +1,10 @@
 package tmg.flashback.formula1.model
 
 fun RaceQualifyingRound.Companion.model(
-    label: String = "Q1",
+    label: RaceQualifyingType = RaceQualifyingType.Q1,
     order: Int = 1,
     results: List<RaceQualifyingRoundDriver> = listOf(
-
+        RaceQualifyingRoundDriver.Qualifying.model()
     )
 ): RaceQualifyingRound = RaceQualifyingRound(
     label = label,
