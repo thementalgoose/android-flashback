@@ -3,14 +3,17 @@ package tmg.flashback.statistics.ui.race.viewholders
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.formula1.model.RaceQualifyingResult_Legacy
+import tmg.flashback.formula1.model.RaceQualifyingRoundDriver
+import tmg.flashback.formula1.model.RaceQualifyingType
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.LayoutQualifyingTimeBinding
 import tmg.flashback.statistics.databinding.ViewRaceQualifyingResultBinding
-import tmg.flashback.statistics.ui.race.RaceAdapterCallback
-import tmg.flashback.statistics.ui.race.RaceAdapterType
-import tmg.flashback.statistics.ui.race.RaceModel
-import tmg.flashback.statistics.ui.race.DisplayPrefs
+import tmg.flashback.statistics.ui.race_old.RaceAdapterCallback
+import tmg.flashback.statistics.ui.race_old.RaceAdapterType
+import tmg.flashback.statistics.ui.race_old.RaceModel
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
+import tmg.flashback.statistics.ui.race.DisplayPrefs
+import tmg.flashback.statistics.ui.race.RaceItem
 import tmg.utilities.extensions.ordinalAbbreviation
 import tmg.utilities.extensions.views.context
 import tmg.utilities.extensions.views.getString
@@ -19,8 +22,8 @@ import tmg.utilities.extensions.views.show
 import tmg.utilities.utils.ColorUtils.Companion.darken
 
 class QualifyingResultViewHolder(
+    private val orderBy: (raceQualifyingType: RaceQualifyingType) -> Unit,
     private val binding: ViewRaceQualifyingResultBinding,
-    private val updateAdapterType: RaceAdapterCallback
 ) : RecyclerView.ViewHolder(binding.root), View.OnClickListener, View.OnLongClickListener {
 
     init {
@@ -37,7 +40,7 @@ class QualifyingResultViewHolder(
 
     private lateinit var displayPrefs: DisplayPrefs
 
-    fun bind(model: RaceModel.Single, type: RaceAdapterType) {
+    fun bind(model: RaceItem.QualifyingResult, type: RaceAdapterType) {
         this.displayPrefs = model.displayPrefs
 
         binding.apply {
@@ -58,17 +61,17 @@ class QualifyingResultViewHolder(
 
             constructorColor.setBackgroundColor(model.driver.constructor.color)
 
-            if (model.race != null && displayPrefs.penalties && (model.qualified != null && model.qualified != model.race.gridPos && model.race.gridPos > model.qualified)) {
-                penalty.show(true)
-                penalty.text = getString(R.string.qualifying_grid_penalty, model.race.gridPos - model.qualified, model.race.gridPos.ordinalAbbreviation)
-            }
-            else {
-                penalty.show(false)
-            }
+//            if (model.race != null && displayPrefs.penalties && (model.qualified != null && model.qualified != model.race.gridPos && model.race.gridPos > model.qualified)) {
+//                penalty.show(true)
+//                penalty.text = getString(R.string.qualifying_grid_penalty, model.race.gridPos - model.qualified, model.race.gridPos.ordinalAbbreviation)
+//            }
+//            else {
+//                penalty.show(false)
+//            }
 
             layoutDriver.imgFlag.setImageResource(context.getFlagResourceAlpha3(model.driver.driver.nationalityISO))
 
-            applyTo(model.displayPrefs, type) { q1, q2, q3 ->
+            applyTo(displayPrefs, type) { q1, q2, q3 ->
                 bind(model.q1, q1, model.q1Delta, model.displayPrefs)
                 bind(model.q2, q2, model.q2Delta, model.displayPrefs)
                 bind(model.q3, q3, model.q3Delta, model.displayPrefs)
@@ -80,9 +83,9 @@ class QualifyingResultViewHolder(
         }
     }
 
-    private fun bind(qualifying: RaceQualifyingResult_Legacy?, layout: LayoutQualifyingTimeBinding?, delta: String?, displayPrefs: DisplayPrefs): Boolean {
+    private fun bind(result: RaceQualifyingRoundDriver.Qualifying?, layout: LayoutQualifyingTimeBinding?, delta: String?, displayPrefs: DisplayPrefs): Boolean {
         if (layout == null) return false
-        val label = qualifying?.time?.toString() ?: ""
+        val label = result?.lapTime?.toString() ?: ""
         layout.tvQualifyingTime.text = label
 
         if (displayPrefs.deltas) {
@@ -92,7 +95,7 @@ class QualifyingResultViewHolder(
             layout.tvQualifyingDelta.gone()
         }
         layout.tvQualifyingDelta.text = ""
-        if (delta != null && qualifying?.time?.totalMillis != 0) {
+        if (delta != null && result?.lapTime?.totalMillis != 0 && displayPrefs.deltas) {
             layout.tvQualifyingDelta.text = delta
         }
         return label.isNotEmpty()
@@ -132,25 +135,25 @@ class QualifyingResultViewHolder(
     //region View.OnClickListener
 
     override fun onClick(p0: View?) {
-        if (displayPrefs.q1 && displayPrefs.q2 && !displayPrefs.q3) {
-            when (p0) {
-                binding.layoutQ2.root -> updateAdapterType.orderBy(RaceAdapterType.QUALIFYING_POS_1)
-                binding.layoutQ3.root -> updateAdapterType.orderBy(RaceAdapterType.QUALIFYING_POS_2)
-                binding.filterQuali -> updateAdapterType.orderBy(RaceAdapterType.QUALIFYING_POS)
-            }
-        }
-        else {
-            when (p0) {
-                binding.layoutQ1.root -> updateAdapterType.orderBy(RaceAdapterType.QUALIFYING_POS_1)
-                binding.layoutQ2.root -> updateAdapterType.orderBy(RaceAdapterType.QUALIFYING_POS_2)
-                binding.layoutQ3.root -> updateAdapterType.orderBy(RaceAdapterType.QUALIFYING_POS)
-                binding.filterQuali -> updateAdapterType.orderBy(RaceAdapterType.QUALIFYING_POS)
-            }
-        }
+//        if (displayPrefs.q1 && displayPrefs.q2 && !displayPrefs.q3) {
+//            when (p0) {
+//                binding.layoutQ2.root -> updateAdapterType.orderBy(RaceAdapterType.QUALIFYING_POS_1)
+//                binding.layoutQ3.root -> updateAdapterType.orderBy(RaceAdapterType.QUALIFYING_POS_2)
+//                binding.filterQuali -> updateAdapterType.orderBy(RaceAdapterType.QUALIFYING_POS)
+//            }
+//        }
+//        else {
+//            when (p0) {
+//                binding.layoutQ1.root -> updateAdapterType.orderBy(RaceAdapterType.QUALIFYING_POS_1)
+//                binding.layoutQ2.root -> updateAdapterType.orderBy(RaceAdapterType.QUALIFYING_POS_2)
+//                binding.layoutQ3.root -> updateAdapterType.orderBy(RaceAdapterType.QUALIFYING_POS)
+//                binding.filterQuali -> updateAdapterType.orderBy(RaceAdapterType.QUALIFYING_POS)
+//            }
+//        }
     }
 
     override fun onLongClick(p0: View?): Boolean {
-        updateAdapterType.toggleQualifyingDeltas(!displayPrefs.deltas)
+//        updateAdapterType.toggleQualifyingDeltas(!displayPrefs.deltas)
         return true
     }
 

@@ -3,6 +3,9 @@ package tmg.flashback.statistics.ui.race
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 import org.threeten.bp.LocalDate
+import org.threeten.bp.LocalTime
+import tmg.flashback.formula1.model.Circuit
+import tmg.flashback.formula1.model.RaceInfo
 
 @Parcelize
 data class RaceData(
@@ -14,5 +17,5 @@ data class RaceData(
     val raceName: String,
     val trackName: String,
     val countryISO: String,
-    val date: LocalDate? = null
+    val date: LocalDate
 ): Parcelable

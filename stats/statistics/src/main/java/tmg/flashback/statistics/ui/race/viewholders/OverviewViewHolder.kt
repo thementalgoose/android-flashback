@@ -9,7 +9,8 @@ import tmg.flashback.formula1.enums.TrackLayout
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.ViewRaceOverviewBinding
-import tmg.flashback.statistics.ui.race.RaceModel
+import tmg.flashback.statistics.ui.race.RaceItem
+import tmg.flashback.statistics.ui.race_old.RaceModel
 import tmg.flashback.statistics.ui.shared.pill.PillAdapter
 import tmg.flashback.statistics.ui.shared.pill.PillItem
 import tmg.utilities.extensions.views.context
@@ -23,14 +24,14 @@ class OverviewViewHolder(
 
     private var linkAdapter: PillAdapter = PillAdapter(pillItemClicked)
 
-    private lateinit var model: RaceModel.Overview
+    private lateinit var model: RaceItem.Overview
 
     init {
         binding.links.adapter = linkAdapter
         binding.links.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
     }
 
-    fun bind(item: RaceModel.Overview) {
+    fun bind(item: RaceItem.Overview) {
 
         this.model = item
 

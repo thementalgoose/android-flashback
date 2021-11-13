@@ -1,4 +1,4 @@
-package tmg.flashback.statistics.ui.race
+package tmg.flashback.statistics.ui.race_old
 
 import org.threeten.bp.LocalDate
 import tmg.flashback.ui.model.AnimationSpeed

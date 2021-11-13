@@ -1,4 +1,4 @@
-package tmg.flashback.statistics.ui.race
+package tmg.flashback.statistics.ui.race_old
 
 import tmg.flashback.formula1.model.*
 

@@ -1,33 +1,20 @@
 package tmg.flashback.statistics.ui.race
 
-import android.annotation.SuppressLint
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.android.ext.android.inject
-import org.threeten.bp.LocalDate
-import org.threeten.bp.format.DateTimeFormatter
-import tmg.flashback.ui.base.BaseFragment
-import tmg.flashback.formula1.enums.TrackLayout
-import tmg.flashback.formula1.utils.getFlagResourceAlpha3
-import tmg.flashback.statistics.R
+import org.threeten.bp.LocalTime
+import tmg.flashback.formula1.model.Circuit
+import tmg.flashback.formula1.model.RaceInfo
 import tmg.flashback.statistics.databinding.FragmentRaceBinding
-import tmg.flashback.statistics.ui.circuit.CircuitInfoActivity
-import tmg.flashback.statistics.ui.overview.constructor.ConstructorActivity
-import tmg.flashback.statistics.ui.overview.driver.DriverActivity
-import tmg.flashback.statistics.ui.shared.pill.PillAdapter
-import tmg.flashback.statistics.ui.shared.pill.PillItem
-import tmg.utilities.extensions.*
+import tmg.flashback.statistics.ui.race_old.RaceModel
+import tmg.flashback.ui.base.BaseFragment
 import tmg.utilities.extensions.views.invisible
-import tmg.utilities.extensions.views.show
-import tmg.utilities.extensions.views.visible
 
-class RaceFragment: BaseFragment<FragmentRaceBinding>(), RaceAdapterCallback {
+class RaceFragment: BaseFragment<FragmentRaceBinding>() {
 
     private val viewModel: RaceViewModel by inject()
 
@@ -53,15 +40,13 @@ class RaceFragment: BaseFragment<FragmentRaceBinding>(), RaceAdapterCallback {
             "round" to raceData.round.toString()
         ))
 
-        // Race content
-        raceAdapter = RaceAdapter(this)
+        raceAdapter = RaceAdapter()
         binding.dataList.adapter = raceAdapter
         binding.dataList.layoutManager = LinearLayoutManager(context)
         binding.progress.invisible()
 
-        // Initial data
         raceAdapter.list = listOf(
-            RaceModel.Overview(
+            RaceItem.Overview(
                 raceName = raceData.raceName,
                 country = raceData.country,
                 countryISO = raceData.countryISO,
@@ -73,80 +58,6 @@ class RaceFragment: BaseFragment<FragmentRaceBinding>(), RaceAdapterCallback {
                 wikipedia = null
             )
         )
-
-        binding.swipeRefresh.setOnRefreshListener {
-            viewModel.inputs.refresh()
-            binding.progress.visible()
-        }
-
-        // Menu
-        binding.menu.setOnItemSelectedListener {
-            when (it.itemId) {
-                R.id.nav_qualifying -> {
-                    viewModel.inputs.orderBy(RaceAdapterType.QUALIFYING_POS)
-                    true
-                }
-                R.id.nav_sprint_qualifying -> {
-                    viewModel.inputs.orderBy(RaceAdapterType.QUALIFYING_SPRINT)
-                    true
-                }
-                R.id.nav_race -> {
-                    viewModel.inputs.orderBy(RaceAdapterType.RACE)
-                    true
-                }
-                R.id.nav_constructor -> {
-                    viewModel.inputs.orderBy(RaceAdapterType.CONSTRUCTOR_STANDINGS)
-                    true
-                }
-                else -> false
-            }
-        }
-        binding.back.setOnClickListener { activity?.finish() }
-
-        observe(viewModel.outputs.showSprintQualifying) {
-            binding.menu.menu.findItem(R.id.nav_sprint_qualifying).isVisible = it
-        }
-
-        observe(viewModel.outputs.raceItems) { (adapterType, list) ->
-            raceAdapter.update(adapterType, list)
-        }
-
-        observe(viewModel.outputs.showLoading) {
-            if (it) {
-                binding.progress.visible()
-            } else {
-                binding.swipeRefresh.isRefreshing = false
-                binding.progress.invisible()
-            }
-        }
-
-        observeEvent(viewModel.outputs.goToDriverOverview) { (driverId, driverName) ->
-            context?.let {
-                startActivity(DriverActivity.intent(it, driverId, driverName))
-            } ?: crashManager.logError(RuntimeException("Context not available (race go to driver overview)"), "RaceFragment, goToDriverOverview")
-        }
-
-        observeEvent(viewModel.outputs.goToConstructorOverview) { (constructorId, constructorName) ->
-            context?.let {
-                startActivity(ConstructorActivity.intent(it, constructorId, constructorName))
-            } ?: crashManager.logError(RuntimeException("Context not available (race go to constructor overview)"), "RaceFragment, goToConstructorOverview")
-        }
-
-        if (raceData.defaultToRace) {
-            binding.menu.selectedItemId = R.id.nav_race
-        } else {
-            binding.menu.selectedItemId = R.id.nav_qualifying
-        }
-
-        setupInitialContent()
-
-        viewModel.inputs.initialise(raceData.season, raceData.round)
-    }
-
-    @SuppressLint("SetTextI18n")
-    private fun setupInitialContent() {
-        binding.titleCollapsed.text = "${raceData.season} ${raceData.raceName}"
-        binding.titleExpanded.text = "${raceData.raceName}\n${raceData.season}"
     }
 
     companion object {
@@ -161,38 +72,4 @@ class RaceFragment: BaseFragment<FragmentRaceBinding>(), RaceAdapterCallback {
             }
         }
     }
-
-    //region RaceAdapterCallback
-
-    override fun orderBy(adapterType: RaceAdapterType) {
-        viewModel.inputs.orderBy(adapterType)
-    }
-
-    override fun driverClicked(driverId: String, driverName: String) {
-        viewModel.inputs.goToDriver(driverId, driverName)
-    }
-
-    override fun constructorClicked(constructorId: String, constructorName: String) {
-        viewModel.inputs.goToConstructor(constructorId, constructorName)
-    }
-
-    override fun toggleQualifyingDeltas(toNewState: Boolean) {
-        viewModel.inputs.toggleQualifyingDelta(toNewState)
-    }
-
-    override fun pillClicked(pillItem: PillItem) {
-        when (pillItem) {
-            is PillItem.Circuit -> {
-                context?.let {
-                    startActivity(CircuitInfoActivity.intent(it, pillItem.circuitId, pillItem.circuitName))
-                }
-            }
-            is PillItem.Wikipedia -> {
-                viewWebpage(pillItem.link)
-            }
-            else -> { /* Do nothing */ }
-        }
-    }
-
-    //endregion
 }

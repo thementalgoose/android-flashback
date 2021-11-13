@@ -2,16 +2,18 @@ package tmg.flashback.statistics.ui.race.viewholders
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import tmg.flashback.formula1.model.RaceQualifyingType
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.ViewRaceQualifyingHeaderBinding
-import tmg.flashback.statistics.ui.race.RaceAdapterCallback
-import tmg.flashback.statistics.ui.race.RaceAdapterType
 import tmg.flashback.statistics.ui.race.DisplayPrefs
+import tmg.flashback.statistics.ui.race_old.RaceAdapterCallback
+import tmg.flashback.statistics.ui.race_old.RaceAdapterType
+import tmg.flashback.statistics.ui.race_old.DisplayPrefs
 import tmg.utilities.extensions.views.show
 
 class QualifyingHeaderViewHolder(
-    private val binding: ViewRaceQualifyingHeaderBinding,
-    private val updateAdapterType: RaceAdapterCallback
+    private val orderBy: (raceQualifyingType: RaceQualifyingType) -> Unit,
+    private val binding: ViewRaceQualifyingHeaderBinding
 ) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
     init {
         binding.vOther.setOnClickListener(this)
@@ -61,17 +63,17 @@ class QualifyingHeaderViewHolder(
     override fun onClick(p0: View?) {
         if (displayPrefs.q1 && displayPrefs.q2 && !displayPrefs.q3) {
             when (p0) {
-                binding.vOther -> updateAdapterType.orderBy(RaceAdapterType.QUALIFYING_POS)
-                binding.tvQ2 -> updateAdapterType.orderBy(RaceAdapterType.QUALIFYING_POS_1)
-                binding.tvQ3 -> updateAdapterType.orderBy(RaceAdapterType.QUALIFYING_POS_2)
+                binding.vOther -> orderBy(RaceQualifyingType.Q3)
+                binding.tvQ2 -> orderBy(RaceQualifyingType.Q2)
+                binding.tvQ3 -> orderBy(RaceQualifyingType.Q1)
             }
         }
         else {
             when (p0) {
-                binding.vOther -> updateAdapterType.orderBy(RaceAdapterType.QUALIFYING_POS)
-                binding.tvQ1 -> updateAdapterType.orderBy(RaceAdapterType.QUALIFYING_POS_1)
-                binding.tvQ2 -> updateAdapterType.orderBy(RaceAdapterType.QUALIFYING_POS_2)
-                binding.tvQ3 -> updateAdapterType.orderBy(RaceAdapterType.QUALIFYING_POS)
+                binding.vOther -> orderBy(RaceQualifyingType.Q3)
+                binding.tvQ1 -> orderBy(RaceQualifyingType.Q1)
+                binding.tvQ2 -> orderBy(RaceQualifyingType.Q2)
+                binding.tvQ3 -> orderBy(RaceQualifyingType.Q3)
             }
         }
     }

@@ -1,4 +1,4 @@
-package tmg.flashback.statistics.ui.race
+package tmg.flashback.statistics.ui.race_old
 
 import androidx.annotation.LayoutRes
 import org.threeten.bp.LocalDate
@@ -7,6 +7,7 @@ import tmg.flashback.formula1.enums.RaceStatus
 import tmg.flashback.formula1.model.*
 import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.statistics.R
+import tmg.flashback.statistics.ui.race.DisplayPrefs
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 
 sealed class RaceModel(
@@ -93,16 +94,4 @@ data class SingleRace(
     val status: RaceStatus,
     val fastestLap: Boolean
 )
-
-data class DisplayPrefs(
-    val q1: Boolean,
-    val q2: Boolean,
-    val q3: Boolean,
-    val deltas: Boolean,
-    val penalties: Boolean,
-    val fadeDNF: Boolean
-) {
-    val none: Boolean
-        get() = !q1 && !q2 && !q3
-}
 
