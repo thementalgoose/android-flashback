@@ -10,7 +10,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.ui.base.BaseFragment
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.FragmentCircuitInfoBinding
-import tmg.flashback.statistics.ui.race.RaceActivity
+import tmg.flashback.statistics.ui.race_old.RaceActivity
 import tmg.flashback.statistics.ui.race.RaceData
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
@@ -61,7 +61,8 @@ class CircuitInfoFragment: BaseFragment<FragmentCircuitInfoBinding>() {
                             trackName = circuitName,
                             countryISO = "",
                             date = it.date
-                        ))
+                        )
+                        )
                         startActivity(raceIntent)
                     }
                 }

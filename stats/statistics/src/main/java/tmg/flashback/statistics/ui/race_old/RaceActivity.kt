@@ -1,13 +1,13 @@
-package tmg.flashback.statistics.ui.race
+package tmg.flashback.statistics.ui.race_old
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import tmg.flashback.ui.base.BaseActivity
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.ActivityRaceBinding
-import tmg.flashback.statistics.ui.race_old.RaceFragment
-import tmg.flashback.ui.base.BaseActivity
-import tmg.utilities.extensions.loadFragment
+import tmg.flashback.statistics.ui.race.RaceData
+import tmg.utilities.extensions.*
 
 class RaceActivity : BaseActivity() {
 

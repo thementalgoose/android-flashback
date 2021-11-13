@@ -186,6 +186,10 @@
         <entry key="stats/statistics/src/main/res/drawable-xxhdpi/ic_search_scroll_icon_search.xml" value="0.2785" />
         <entry key="stats/statistics/src/main/res/layout/fragment_dashboard_season.xml" value="0.31979166666666664" />
         <entry key="stats/statistics/src/main/res/layout/fragment_search.xml" value="0.46875" />
+        <entry key="stats/statistics/src/main/res/layout/view_race_qualifying_header.xml" value="0.29483695652173914" />
+        <entry key="stats/statistics/src/main/res/layout/view_race_qualifying_result.xml" value="0.5677083333333334" />
+        <entry key="stats/statistics/src/main/res/layout/view_race_race_header.xml" value="0.1831306990881459" />
+        <entry key="stats/statistics/src/main/res/layout/view_race_sprint_qualifying_result.xml" value="0.27608915906788245" />
       </map>
     </option>
   </component>

@@ -1,6 +1,7 @@
 package tmg.flashback.statistics.repo.mappers.app
 
 import tmg.flashback.formula1.model.*
+import tmg.flashback.formula1.model.RaceQualifyingType.*
 import tmg.flashback.formula1.utils.toLapTime
 import tmg.flashback.statistics.room.models.race.QualifyingDriverResult
 import tmg.flashback.statistics.room.models.race.RaceDriverResult
@@ -88,7 +89,7 @@ class RaceMapper(
                         ?: -1
                 )
             }
-            qualifyingData.add(RaceQualifyingRound("Q1", 1,driverListForRound.sortedBy { it.position }))
+            qualifyingData.add(RaceQualifyingRound(Q1, 1,driverListForRound.sortedBy { it.position }))
         }
         // Q2
         if (input.any { it.qualifyingResult.q2 != null }) {
@@ -106,7 +107,7 @@ class RaceMapper(
                         ?: -1
                 )
             }
-            qualifyingData.add(RaceQualifyingRound("Q2", 2, driverListForRound.sortedBy { it.position }))
+            qualifyingData.add(RaceQualifyingRound(Q2, 2, driverListForRound.sortedBy { it.position }))
         }
         // Q3
         if (input.any { it.qualifyingResult.q3 != null }) {
@@ -125,7 +126,7 @@ class RaceMapper(
                         ?: -1
                 )
             }
-            qualifyingData.add(RaceQualifyingRound("Q3", 3, driverListForRound.sortedBy { it.position }))
+            qualifyingData.add(RaceQualifyingRound(Q3, 3, driverListForRound.sortedBy { it.position }))
         }
 
         // Sprint Qualifying
@@ -143,7 +144,7 @@ class RaceMapper(
                         status = it.qualifyingResult.qSprint?.status ?: "Unknown"
                     )
                 }
-            qualifyingData.add(RaceQualifyingRound("Sprint", 4, driverListForRound.sortedBy { it.position }))
+            qualifyingData.add(RaceQualifyingRound(SPRINT, 4, driverListForRound.sortedBy { it.position }))
         }
 
         return qualifyingData
@@ -232,8 +233,8 @@ class RaceMapper(
      *
      * @param input Map of driver id -> sprint quali result
      */
-    private fun mapRace(input: List<RaceDriverResult>?): Map<String, RaceRaceResult> {
-        if (input == null || input.isEmpty()) return emptyMap()
+    private fun mapRace(input: List<RaceDriverResult>?): List<RaceRaceResult> {
+        if (input == null || input.isEmpty()) return emptyList()
         val allDrivers = input.map { result ->
             DriverConstructor(
                 driver = driverDataMapper.mapDriver(result.driver),
@@ -247,7 +248,7 @@ class RaceMapper(
                     .let { Pair(it, race.raceResult) }
             }
             .map { (driver, raceResult) ->
-                driver.driver.id to RaceRaceResult(
+                RaceRaceResult(
                     driver = driver,
                     time = raceResult.time?.toLapTime(),
                     points = raceResult.points,
@@ -258,7 +259,7 @@ class RaceMapper(
                     fastestLap = raceResult.fastestLap?.let { mapFastestLap(it) }
                 )
             }
-            .toMap()
+            .sortedBy { it.finish }
     }
 
     private fun mapFastestLap(fastestLap: tmg.flashback.statistics.room.models.race.FastestLap?): FastestLap? {

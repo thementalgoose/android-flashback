@@ -23,7 +23,7 @@ sealed class RaceQualifyingRoundDriver(
         lapTime: LapTime?,
         position: Int,
         val finished: Int,
-        val gridPos: Int,
+        val gridPos: Int?,
         val points: Double,
         val status: String
     ): RaceQualifyingRoundDriver(
