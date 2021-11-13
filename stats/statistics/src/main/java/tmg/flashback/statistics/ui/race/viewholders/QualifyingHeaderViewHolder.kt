@@ -6,9 +6,8 @@ import tmg.flashback.formula1.model.RaceQualifyingType
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.ViewRaceQualifyingHeaderBinding
 import tmg.flashback.statistics.ui.race.DisplayPrefs
-import tmg.flashback.statistics.ui.race_old.RaceAdapterCallback
-import tmg.flashback.statistics.ui.race_old.RaceAdapterType
-import tmg.flashback.statistics.ui.race_old.DisplayPrefs
+import tmg.flashback.statistics.ui.race.RaceDisplayType
+import tmg.flashback.statistics.ui.race.RaceItem
 import tmg.utilities.extensions.views.show
 
 class QualifyingHeaderViewHolder(
@@ -22,27 +21,24 @@ class QualifyingHeaderViewHolder(
         binding.tvQ3.setOnClickListener(this)
     }
 
-    private lateinit var displayPrefs: DisplayPrefs
-
-    fun bind(displayPrefs: DisplayPrefs, type: RaceAdapterType) {
-        this.displayPrefs = displayPrefs
+    fun bind(model: RaceItem.QualifyingHeader) {
         when {
-            !displayPrefs.q2 && !displayPrefs.q3 -> {
+            model.showQ1 && !model.showQ2 && !model.showQ3 -> {
                 binding.tvQ1.show(false, isGone = false)
                 binding.tvQ2.show(false, isGone = false)
                 binding.tvQ3.show(true, isGone = false)
                 binding.tvQ1.setBackgroundResource(0)
                 binding.tvQ2.setBackgroundResource(0)
-                binding.tvQ3.setBackgroundResource(R.drawable.background_qualifying_header)
+                binding.tvQ3.setBackgroundResource(0)
                 binding.tvQ3.text = itemView.context.getString(R.string.qualifying_q1)
             }
-            displayPrefs.q1 && displayPrefs.q2 && !displayPrefs.q3 -> {
+            model.showQ1 && model.showQ2 && !model.showQ3 -> {
                 binding.tvQ1.show(false, isGone = false)
                 binding.tvQ2.show(true, isGone = false)
                 binding.tvQ3.show(true, isGone = false)
                 binding.tvQ1.setBackgroundResource(0)
-                binding.tvQ2.setBackgroundResource(if (type == RaceAdapterType.QUALIFYING_POS_1) R.drawable.background_qualifying_header else 0)
-                binding.tvQ3.setBackgroundResource(if (type == RaceAdapterType.QUALIFYING_POS_2) R.drawable.background_qualifying_header else 0)
+                binding.tvQ2.setBackgroundResource(0)
+                binding.tvQ3.setBackgroundResource(0)
                 binding.tvQ2.text = itemView.context.getString(R.string.qualifying_q1)
                 binding.tvQ3.text = itemView.context.getString(R.string.qualifying_q2)
             }
@@ -50,9 +46,9 @@ class QualifyingHeaderViewHolder(
                 binding.tvQ1.show(true, isGone = false)
                 binding.tvQ2.show(true, isGone = false)
                 binding.tvQ3.show(true, isGone = false)
-                binding.tvQ1.setBackgroundResource(if (type == RaceAdapterType.QUALIFYING_POS_1) R.drawable.background_qualifying_header else 0)
-                binding.tvQ2.setBackgroundResource(if (type == RaceAdapterType.QUALIFYING_POS_2) R.drawable.background_qualifying_header else 0)
-                binding.tvQ3.setBackgroundResource(if (type == RaceAdapterType.QUALIFYING_POS) R.drawable.background_qualifying_header else 0)
+                binding.tvQ1.setBackgroundResource(0)
+                binding.tvQ2.setBackgroundResource(0)
+                binding.tvQ3.setBackgroundResource(0)
                 binding.tvQ1.text = itemView.context.getString(R.string.qualifying_q1)
                 binding.tvQ2.text = itemView.context.getString(R.string.qualifying_q2)
                 binding.tvQ3.text = itemView.context.getString(R.string.qualifying_q3)
@@ -61,20 +57,6 @@ class QualifyingHeaderViewHolder(
     }
 
     override fun onClick(p0: View?) {
-        if (displayPrefs.q1 && displayPrefs.q2 && !displayPrefs.q3) {
-            when (p0) {
-                binding.vOther -> orderBy(RaceQualifyingType.Q3)
-                binding.tvQ2 -> orderBy(RaceQualifyingType.Q2)
-                binding.tvQ3 -> orderBy(RaceQualifyingType.Q1)
-            }
-        }
-        else {
-            when (p0) {
-                binding.vOther -> orderBy(RaceQualifyingType.Q3)
-                binding.tvQ1 -> orderBy(RaceQualifyingType.Q1)
-                binding.tvQ2 -> orderBy(RaceQualifyingType.Q2)
-                binding.tvQ3 -> orderBy(RaceQualifyingType.Q3)
-            }
-        }
+
     }
 }

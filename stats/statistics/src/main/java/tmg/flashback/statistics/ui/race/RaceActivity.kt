@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.ActivityRaceBinding
-import tmg.flashback.statistics.ui.race_old.RaceFragment
 import tmg.flashback.ui.base.BaseActivity
 import tmg.utilities.extensions.loadFragment
 

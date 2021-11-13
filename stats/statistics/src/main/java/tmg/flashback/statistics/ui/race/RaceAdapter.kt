@@ -4,15 +4,15 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import org.koin.core.component.KoinApiExtension
 import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.Driver
 import tmg.flashback.formula1.model.RaceQualifyingType
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.*
 import tmg.flashback.statistics.ui.race.viewholders.*
-import tmg.flashback.statistics.ui.race_old.RaceAdapterType
-import tmg.flashback.statistics.ui.race_old.RaceModel
+import tmg.flashback.statistics.ui.race.viewholders.qualifying.QualifyingResultQ1Q2Q3ViewHolder
+import tmg.flashback.statistics.ui.race.viewholders.qualifying.QualifyingResultQ1Q2ViewHolder
+import tmg.flashback.statistics.ui.race.viewholders.qualifying.QualifyingResultQ1ViewHolder
 import tmg.flashback.statistics.ui.shared.pill.PillItem
 import tmg.flashback.statistics.ui.shared.sync.SyncAdapter
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
@@ -59,9 +59,16 @@ class RaceAdapter(
                 driverClicked,
                 ViewRaceSprintQualifyingResultBinding.inflate(layoutInflater, parent, false)
             )
-            R.layout.view_race_qualifying_result -> QualifyingResultViewHolder(
+            R.layout.view_race_qualifying_q1q2q3_result -> QualifyingResultQ1Q2Q3ViewHolder(
                 orderBy,
-                ViewRaceQualifyingResultBinding.inflate(layoutInflater, parent, false)
+                ViewRaceQualifyingQ1q2q3ResultBinding.inflate(layoutInflater, parent, false)
+            )
+            R.layout.view_race_qualifying_q1q2_result -> QualifyingResultQ1Q2ViewHolder(
+                orderBy,
+                ViewRaceQualifyingQ1q2ResultBinding.inflate(layoutInflater, parent, false)
+            )
+            R.layout.view_race_qualifying_q1_result -> QualifyingResultQ1ViewHolder(
+                ViewRaceQualifyingQ1ResultBinding.inflate(layoutInflater, parent, false)
             )
             R.layout.view_race_race_header -> RaceResultHeaderViewHolder(
                 ViewRaceRaceHeaderBinding.inflate(layoutInflater, parent, false)
@@ -91,7 +98,9 @@ class RaceAdapter(
             is RaceItem.RaceResult -> (holder as RaceResultViewHolder).bind(item)
 
             is RaceItem.QualifyingHeader -> (holder as QualifyingHeaderViewHolder).bind(item)
-            is RaceItem.QualifyingResult -> (holder as QualifyingResultViewHolder).bind(item)
+            is RaceItem.QualifyingResultQ1Q2Q3 -> (holder as QualifyingResultQ1Q2Q3ViewHolder).bind(item)
+            is RaceItem.QualifyingResultQ1Q2 -> (holder as QualifyingResultQ1Q2ViewHolder).bind(item)
+            is RaceItem.QualifyingResultQ1 -> (holder as QualifyingResultQ1ViewHolder).bind(item)
             is RaceItem.SprintQualifyingResult -> (holder as RaceSprintQualifyingViewHolder).bind(item)
 
             is RaceItem.ErrorItem -> super.bindErrors(holder, item.item)
@@ -105,13 +114,13 @@ class RaceAdapter(
         private val newList: List<RaceItem>
     ) : DiffUtil.Callback() {
 
-        override fun areItemsTheSame(old: Int, new: Int): Boolean = oldList[old] == newList[new] || isOverview(oldList[old], newList[new])
+        override fun areItemsTheSame(old: Int, new: Int): Boolean = oldList[old].id == newList[new].id || isOverview(oldList[old], newList[new])
 
         override fun getOldListSize(): Int = oldList.size
 
         override fun getNewListSize(): Int = newList.size
 
-        override fun areContentsTheSame(o: Int, n: Int): Boolean = areItemsTheSame(o, n) && !isOverview(oldList[o], newList[n])
+        override fun areContentsTheSame(o: Int, n: Int): Boolean = oldList[o] == newList[n] && !isOverview(oldList[o], newList[n])
 
         private fun isOverview(old: RaceItem, new: RaceItem) = old is RaceItem.Overview && new is RaceItem.Overview
     }

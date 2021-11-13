@@ -4,7 +4,6 @@ import androidx.annotation.LayoutRes
 import org.threeten.bp.LocalDate
 import tmg.flashback.formula1.model.*
 import tmg.flashback.statistics.R
-import tmg.flashback.statistics.ui.race_old.RaceModel
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.ui.model.AnimationSpeed
 
@@ -52,9 +51,8 @@ sealed class RaceItem(
         layoutId = R.layout.view_race_sprint_qualifying_result
     )
 
-    data class QualifyingResult(
+    data class QualifyingResultQ1Q2Q3(
         val driver: DriverConstructor,
-        val displayPrefs: DisplayPrefs,
         private val finalQualifyingPosition: Int?,
         val q1: RaceQualifyingRoundDriver.Qualifying?,
         val q2: RaceQualifyingRoundDriver.Qualifying?,
@@ -65,7 +63,31 @@ sealed class RaceItem(
         val qualified: Int? = q3?.position ?: q2?.position ?: q1?.position ?: finalQualifyingPosition
     ): RaceItem(
         id = driver.driver.id,
-        layoutId = R.layout.view_race_qualifying_result
+        layoutId = R.layout.view_race_qualifying_q1q2q3_result
+    )
+
+    data class QualifyingResultQ1Q2(
+        val driver: DriverConstructor,
+        private val finalQualifyingPosition: Int?,
+        val q1: RaceQualifyingRoundDriver.Qualifying?,
+        val q2: RaceQualifyingRoundDriver.Qualifying?,
+        val q1Delta: String?,
+        val q2Delta: String?,
+        val qualified: Int? = finalQualifyingPosition
+    ): RaceItem(
+        id = driver.driver.id,
+        layoutId = R.layout.view_race_qualifying_q1q2_result
+    )
+
+    data class QualifyingResultQ1(
+        val driver: DriverConstructor,
+        private val finalQualifyingPosition: Int?,
+        val q1: RaceQualifyingRoundDriver.Qualifying?,
+        val q1Delta: String?,
+        val qualified: Int? = q1?.position ?: finalQualifyingPosition
+    ): RaceItem(
+        id = driver.driver.id,
+        layoutId = R.layout.view_race_qualifying_q1_result
     )
 
     object RaceHeader: RaceItem(
@@ -76,8 +98,7 @@ sealed class RaceItem(
     data class QualifyingHeader(
         val showQ1: Boolean,
         val showQ2: Boolean,
-        val showQ3: Boolean,
-        val selected: Boolean
+        val showQ3: Boolean
     ): RaceItem(
         id = "QUALIFYING_HEADER",
         layoutId = R.layout.view_race_qualifying_header

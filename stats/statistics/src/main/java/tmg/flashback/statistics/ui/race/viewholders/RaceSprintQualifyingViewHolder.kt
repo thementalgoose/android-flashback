@@ -13,7 +13,6 @@ import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.ViewRaceSprintQualifyingResultBinding
 import tmg.flashback.statistics.extensions.iconRes
 import tmg.flashback.statistics.ui.race.RaceItem
-import tmg.flashback.statistics.ui.race_old.RaceModel
 import tmg.flashback.statistics.ui.util.position
 import tmg.utilities.extensions.views.context
 import tmg.utilities.extensions.views.getString

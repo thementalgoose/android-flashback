@@ -15,7 +15,7 @@ import tmg.flashback.statistics.controllers.SeasonController
 import tmg.flashback.statistics.databinding.FragmentDashboardSeasonBinding
 import tmg.flashback.statistics.ui.overview.constructor.ConstructorActivity
 import tmg.flashback.statistics.ui.overview.driver.DriverActivity
-import tmg.flashback.statistics.ui.race_old.RaceActivity
+import tmg.flashback.statistics.ui.race.RaceActivity
 import tmg.flashback.statistics.ui.race.RaceData
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent

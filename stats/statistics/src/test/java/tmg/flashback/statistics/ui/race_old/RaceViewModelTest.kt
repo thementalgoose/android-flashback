@@ -20,7 +20,7 @@ import tmg.flashback.formula1.model.RaceInfo
 import tmg.flashback.formula1.model.model
 import tmg.flashback.statistics.controllers.RaceController
 import tmg.flashback.statistics.repo.RaceRepository
-import tmg.flashback.statistics.ui.race_old.RaceAdapterType.*
+import tmg.flashback.statistics.ui.race.RaceAdapterType.*
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
 import tmg.testutils.BaseTest

@@ -14,7 +14,7 @@ import tmg.flashback.statistics.databinding.FragmentSearchBinding
 import tmg.flashback.statistics.ui.circuit.CircuitInfoActivity
 import tmg.flashback.statistics.ui.overview.constructor.ConstructorActivity
 import tmg.flashback.statistics.ui.overview.driver.DriverActivity
-import tmg.flashback.statistics.ui.race_old.RaceActivity
+import tmg.flashback.statistics.ui.race.RaceActivity
 import tmg.flashback.statistics.ui.race.RaceData
 import tmg.flashback.statistics.ui.search.category.CategoryBottomSheetFragment
 import tmg.utilities.extensions.observe
