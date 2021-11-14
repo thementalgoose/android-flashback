@@ -10,6 +10,7 @@ import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.formula1.constants.Formula1
 import tmg.flashback.formula1.model.*
 import tmg.flashback.formula1.model.RaceQualifyingType.*
+import tmg.flashback.statistics.R
 import tmg.flashback.statistics.controllers.RaceController
 import tmg.flashback.statistics.repo.RaceRepository
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
@@ -179,6 +180,9 @@ class RaceViewModel(
                                     }
                                 }
                                 RaceDisplayType.QUALIFYING -> {
+                                    if (race.hasSprintQualifying) {
+                                        list.add(RaceItem.ErrorItem(SyncDataItem.MessageRes(R.string.race_sprint_qualifying_message)))
+                                    }
                                     when {
                                         race.has(Q3) -> {
                                             list.add(RaceItem.QualifyingHeader(true, true, true))
@@ -317,7 +321,8 @@ class RaceViewModel(
         return race.race
             .mapNotNull { raceResult ->
                 if (raceResult.driver.constructor.id != constructorId) return@mapNotNull null
-                return@mapNotNull Pair(raceResult.driver.driver, raceResult.points)
+                val sprintQualifying = race.qualifying.firstOrNull { it.isSprintQualifying }?.results?.firstOrNull { it.driver.driver.id == raceResult.driver.driver.id } as? RaceQualifyingRoundDriver.SprintQualifying
+                return@mapNotNull Pair(raceResult.driver.driver, raceResult.points + (sprintQualifying?.points ?: 0.0))
             }
             .sortedByDescending { it.second }
     }
