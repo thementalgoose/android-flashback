@@ -70,7 +70,6 @@ data class Race(
         qualifying.isNotEmpty() || race.isNotEmpty()
     }
 
-
     val constructorStandings: List<RaceConstructorStandings>
         get() {
             val standings: MutableMap<String, Double> = mutableMapOf()
@@ -78,6 +77,16 @@ data class Race(
                 var previousPoints = standings.getOrPut(raceResult.driver.constructor.id) { 0.0 }
                 previousPoints += raceResult.points
                 standings[raceResult.driver.constructor.id] = previousPoints
+            }
+            if (hasSprintQualifying) {
+                val list = qualifying.firstOrNull { it.isSprintQualifying }?.results ?: emptyList()
+                list.forEach {
+                    if (it is RaceQualifyingRoundDriver.SprintQualifying) {
+                        var previousPoints = standings.getOrPut(it.driver.constructor.id) { 0.0 }
+                        previousPoints += it.points
+                        standings[it.driver.constructor.id] = previousPoints
+                    }
+                }
             }
             return constructors.map {
                 RaceConstructorStandings(
