@@ -9,13 +9,10 @@ import tmg.flashback.upnext.repository.model.UpNextSchedule
 import tmg.utilities.extensions.toEnum
 
 class UpNextRepository(
-    private val configManager: ConfigManager,
     private val preferenceManager: PreferenceManager
 ) {
 
     companion object {
-        private const val keyUpNext: String = "up_next"
-
         private const val keyNotificationRace: String = "UP_NEXT_NOTIFICATION_RACE"
         private const val keyNotificationQualifying: String = "UP_NEXT_NOTIFICATION_QUALIFYING"
         private const val keyNotificationFreePractice: String = "UP_NEXT_NOTIFICATION_FREE_PRACTICE"
@@ -24,12 +21,6 @@ class UpNextRepository(
 
         private const val keyNotificationOnboarding: String = "UP_NEXT_NOTIFICATION_ONBOARDING"
     }
-
-    val upNext: List<UpNextSchedule>
-        get() = configManager
-                .getJson<UpNextJson>(keyUpNext)
-                ?.convert()
-                ?: emptyList()
 
     var notificationRace: Boolean
         get() = preferenceManager.getBoolean(keyNotificationRace, false)

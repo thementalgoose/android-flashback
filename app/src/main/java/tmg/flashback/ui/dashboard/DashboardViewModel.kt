@@ -63,7 +63,9 @@ class DashboardViewModel(
             }
         }
 
-        showUpNext.value = upNextController.getNextEvent() != null
+        viewModelScope.launch {
+            showUpNext.value = upNextController.getNextEvent() != null
+        }
 
         if (releaseNotesController.pendingReleaseNotes) {
             openReleaseNotes.value = Event()

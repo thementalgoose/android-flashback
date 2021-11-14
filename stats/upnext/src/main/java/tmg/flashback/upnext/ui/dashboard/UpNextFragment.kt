@@ -56,17 +56,17 @@ class UpNextFragment: BaseFragment<FragmentUpNextBinding>() {
         }
 
         observe(viewModel.outputs.data) { schedule ->
-            val trackLayout = TrackLayout.getTrack(schedule.circuitId, schedule.season, schedule.title)
+            val trackLayout = TrackLayout.getTrack(schedule.circuitId, schedule.season, schedule.raceName)
             binding.track.setImageResource(trackLayout?.icon ?: R.drawable.circuit_unknown)
-            if (context != null && schedule.flag != null) {
-                binding.flag.setImageResource(requireContext().getFlagResourceAlpha3(schedule.flag))
+            if (context != null) {
+                binding.flag.setImageResource(requireContext().getFlagResourceAlpha3(schedule.countryISO))
             }
             if (schedule.season == 0) {
-                binding.title.text = schedule.title
-                binding.subtitle.text = schedule.subtitle
+                binding.title.text = schedule.raceName
+                binding.subtitle.text = schedule.circuitName
             } else {
-                binding.title.text = "${schedule.season} ${schedule.title}"
-                binding.subtitle.text = schedule.subtitle
+                binding.title.text = "${schedule.season} ${schedule.raceName}"
+                binding.subtitle.text = schedule.circuitName
             }
         }
 
