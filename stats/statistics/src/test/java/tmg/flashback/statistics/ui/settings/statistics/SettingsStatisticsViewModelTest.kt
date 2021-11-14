@@ -3,7 +3,9 @@ package tmg.flashback.statistics.ui.settings.statistics
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
+import org.junit.Ignore
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.controllers.RaceController
@@ -41,10 +43,10 @@ internal class SettingsStatisticsViewModelTest: BaseTest() {
         initSUT()
 
         val expected = listOf(
-                Pair(R.string.settings_statistics, null),
-                Pair(R.string.settings_customisation_qualifying_delta_title, R.string.settings_customisation_qualifying_delta_description),
-                Pair(R.string.settings_customisation_qualifying_grid_penalties_title, R.string.settings_customisation_qualifying_grid_penalties_description),
-                Pair(R.string.settings_customisation_fade_dnf_title, R.string.settings_customisation_fade_dnf_description),
+//                Pair(R.string.settings_statistics, null),
+//                Pair(R.string.settings_customisation_qualifying_delta_title, R.string.settings_customisation_qualifying_delta_description),
+//                Pair(R.string.settings_customisation_qualifying_grid_penalties_title, R.string.settings_customisation_qualifying_grid_penalties_description),
+//                Pair(R.string.settings_customisation_fade_dnf_title, R.string.settings_customisation_fade_dnf_description),
                 Pair(R.string.settings_home, null),
                 Pair(R.string.settings_customisation_season_all_expanded_title, R.string.settings_customisation_season_all_expanded_description),
                 Pair(R.string.settings_customisation_season_favourited_expanded_title, R.string.settings_customisation_season_favourited_expanded_description),
@@ -61,10 +63,10 @@ internal class SettingsStatisticsViewModelTest: BaseTest() {
 
         initSUT()
         val expected = listOf(
-                Pair(R.string.settings_statistics, null),
-                Pair(R.string.settings_customisation_qualifying_delta_title, R.string.settings_customisation_qualifying_delta_description),
-                Pair(R.string.settings_customisation_qualifying_grid_penalties_title, R.string.settings_customisation_qualifying_grid_penalties_description),
-                Pair(R.string.settings_customisation_fade_dnf_title, R.string.settings_customisation_fade_dnf_description),
+//                Pair(R.string.settings_statistics, null),
+//                Pair(R.string.settings_customisation_qualifying_delta_title, R.string.settings_customisation_qualifying_delta_description),
+//                Pair(R.string.settings_customisation_qualifying_grid_penalties_title, R.string.settings_customisation_qualifying_grid_penalties_description),
+//                Pair(R.string.settings_customisation_fade_dnf_title, R.string.settings_customisation_fade_dnf_description),
                 Pair(R.string.settings_home, null),
                 Pair(R.string.settings_default_season_title, R.string.settings_default_season_description),
                 Pair(R.string.settings_customisation_season_all_expanded_title, R.string.settings_customisation_season_all_expanded_description),
@@ -77,6 +79,7 @@ internal class SettingsStatisticsViewModelTest: BaseTest() {
     }
 
     @Test
+    @Disabled(value = "Toggles temporarily disabled")
     fun `clicking toggle for qualifying delta updates toggle`() {
         initSUT()
         sut.clickSwitchPreference(sut.models.findSwitch(R.string.settings_customisation_qualifying_delta_title), true)
@@ -86,6 +89,7 @@ internal class SettingsStatisticsViewModelTest: BaseTest() {
     }
 
     @Test
+    @Disabled(value = "Toggles temporarily disabled")
     fun `clicking toggle for qualifying grid penalties updates toggle`() {
         initSUT()
         sut.clickSwitchPreference(sut.models.findSwitch(R.string.settings_customisation_qualifying_grid_penalties_title), true)
@@ -95,6 +99,7 @@ internal class SettingsStatisticsViewModelTest: BaseTest() {
     }
 
     @Test
+    @Disabled(value = "Toggles temporarily disabled")
     fun `clicking toggle for fade dnf updates toggle`() {
         initSUT()
         sut.clickSwitchPreference(sut.models.findSwitch(R.string.settings_customisation_fade_dnf_title), true)

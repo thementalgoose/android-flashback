@@ -5,33 +5,32 @@ import androidx.annotation.ColorInt
 import androidx.recyclerview.widget.RecyclerView
 import kotlin.math.roundToInt
 import tmg.flashback.ui.model.AnimationSpeed
-import tmg.flashback.statistics.ui.race.RaceModel
 import tmg.flashback.ui.extensions.getColor
 import tmg.flashback.formula1.extensions.pointsDisplay
+import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.Driver
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.LayoutConstructorDriverBinding
 import tmg.flashback.statistics.databinding.ViewRaceConstructorBinding
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
+import tmg.flashback.statistics.ui.race.RaceItem
 import tmg.utilities.extensions.views.context
 import tmg.utilities.extensions.views.show
 
 class ConstructorStandingsViewholder(
-        val constructorClicked: (constructorId: String, constructorName: String) -> Unit,
+        private val constructorClicked: (constructor: Constructor) -> Unit,
         private val binding: ViewRaceConstructorBinding
 ) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
 
-    lateinit var constructorId: String
-    lateinit var constructorName: String
+    private lateinit var constructor: Constructor
 
     init {
         binding.container.setOnClickListener(this)
     }
 
-    fun bind(model: RaceModel.ConstructorStandings, maxPointsByAnyTeam: Double) {
+    fun bind(model: RaceItem.Constructor) {
 
-        constructorId = model.constructor.id
-        constructorName = model.constructor.name
+        this.constructor = model.constructor
 
         binding.apply {
             tvTitle.text = model.constructor.name
@@ -52,7 +51,7 @@ class ConstructorStandingsViewholder(
 
             lpvProgress.progressColour = model.constructor.color
             lpvProgress.textBackgroundColour = context.theme.getColor(R.attr.contentSecondary)
-            var maxPercentage = model.points.toFloat() / maxPointsByAnyTeam.toFloat()
+            var maxPercentage = model.points.toFloat() / model.maxTeamPoints.toFloat()
             if (maxPercentage.isNaN()) {
                 maxPercentage = 0.05f
             }
@@ -67,7 +66,7 @@ class ConstructorStandingsViewholder(
                         when (it) {
                             maxPercentage -> model.points.pointsDisplay()
                             0.0f -> "0"
-                            else -> (it * maxPointsByAnyTeam.toFloat())
+                            else -> (it * model.maxTeamPoints.toFloat())
                                 .coerceIn(0.0f, model.points.toFloat())
                                 .roundToInt()
                                 .toString()
@@ -85,6 +84,6 @@ class ConstructorStandingsViewholder(
     }
 
     override fun onClick(p0: View?) {
-        constructorClicked(constructorId, constructorName)
+        constructorClicked(constructor)
     }
 }

@@ -143,7 +143,8 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
                     countryISO = track.raceCountryISO,
                     date = track.date,
                     defaultToRace = track.hasResults || !track.hasQualifying
-                ))
+                )
+                )
                 startActivity(intent)
             }
         }
