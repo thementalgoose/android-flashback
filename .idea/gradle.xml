@@ -39,6 +39,7 @@
             <option value="$PROJECT_DIR$/test/stats-models" />
           </set>
         </option>
+        <option name="resolveModulePerSourceSet" value="false" />
       </GradleProjectSettings>
     </option>
   </component>

@@ -61,7 +61,8 @@ class CircuitInfoFragment: BaseFragment<FragmentCircuitInfoBinding>() {
                             trackName = circuitName,
                             countryISO = "",
                             date = it.date
-                        ))
+                        )
+                        )
                         startActivity(raceIntent)
                     }
                 }
