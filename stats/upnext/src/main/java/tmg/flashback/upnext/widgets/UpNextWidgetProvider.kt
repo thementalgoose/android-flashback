@@ -15,7 +15,9 @@ import androidx.annotation.DrawableRes
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import org.koin.core.component.KoinApiExtension
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -26,6 +28,7 @@ import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.ui.navigation.NavigationProvider
 import tmg.flashback.formula1.enums.TrackLayout
 import tmg.flashback.crash_reporting.controllers.CrashController
+import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.upnext.R
 import tmg.flashback.upnext.controllers.UpNextController
@@ -33,6 +36,7 @@ import tmg.flashback.upnext.repository.model.UpNextSchedule
 import tmg.utilities.extensions.toEnum
 import java.lang.Exception
 import tmg.utilities.utils.LocalDateUtils.Companion.daysBetween
+import kotlin.coroutines.suspendCoroutine
 
 @KoinApiExtension
 class UpNextWidgetProvider : AppWidgetProvider(), KoinComponent {
@@ -58,7 +62,7 @@ class UpNextWidgetProvider : AppWidgetProvider(), KoinComponent {
         }
 
         // Pre app checks
-        val nextEvent: UpNextSchedule? = upNextController.getNextEvent()
+        val nextEvent: OverviewRace? = runBlocking { upNextController.getNextEvent() }
         if (context == null) {
             return
         }
@@ -73,7 +77,7 @@ class UpNextWidgetProvider : AppWidgetProvider(), KoinComponent {
         // Given we have valid app widget ids and an up next item
         var tintedIcon: Bitmap? = null
         try {
-            val icon: Int? = nextEvent.circuitId?.toEnum<TrackLayout> { it.circuitId }?.icon
+            val icon: Int? = nextEvent.circuitId.toEnum<TrackLayout> { it.circuitId }?.icon
             if (icon != null) {
                 tintedIcon = tintDrawable(context, icon)
             }
@@ -90,8 +94,8 @@ class UpNextWidgetProvider : AppWidgetProvider(), KoinComponent {
             val remoteView = RemoteViews(buildConfigManager.applicationId, R.layout.widget_up_next)
 
             try {
-                remoteView.setTextViewText(R.id.name, nextEvent.title)
-                remoteView.setTextViewText(R.id.subtitle, nextEvent.subtitle ?: "")
+                remoteView.setTextViewText(R.id.name, nextEvent.raceName)
+                remoteView.setTextViewText(R.id.subtitle, nextEvent.circuitName ?: "")
 
                 if (tintedIcon != null) {
                     remoteView.setImageViewBitmap(R.id.circuit, tintedIcon)
@@ -100,19 +104,14 @@ class UpNextWidgetProvider : AppWidgetProvider(), KoinComponent {
                     remoteView.setImageViewResource(R.id.circuit, R.drawable.widget_circuit_unknown)
                 }
 
-                if (nextEvent.flag != null) {
-                    remoteView.setViewVisibility(R.id.flag, View.VISIBLE)
-                    remoteView.setImageViewResource(R.id.flag, context.getFlagResourceAlpha3(nextEvent.flag ?: ""))
-                }
-                else {
-                    remoteView.setViewVisibility(R.id.flag, View.GONE)
-                }
+                remoteView.setViewVisibility(R.id.flag, View.VISIBLE)
+                remoteView.setImageViewResource(R.id.flag, context.getFlagResourceAlpha3(nextEvent.countryISO ?: ""))
 
-                val eventsToday = nextEvent.values
+                val eventsToday = nextEvent.schedule
                     .filter { it.timestamp.originalDate == LocalDate.now() }
                     .sortedBy { it.timestamp.string() }
 
-                val eventsInFuture = nextEvent.values
+                val eventsInFuture = nextEvent.schedule
                     .filter { it.timestamp.originalDate > LocalDate.now() }
                     .sortedBy { it.timestamp.string() }
 
@@ -137,7 +136,7 @@ class UpNextWidgetProvider : AppWidgetProvider(), KoinComponent {
                 }
                 if (eventsToday.isEmpty() && eventsInFuture.isNotEmpty()) {
                     val next = nextEvent
-                        .values
+                        .schedule
                         .sortedBy { it.timestamp.string() }
                         .filter {
                             it.timestamp.originalDate == eventsInFuture.first().timestamp.originalDate

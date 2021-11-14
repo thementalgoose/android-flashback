@@ -4,6 +4,8 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.util.Log
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import org.koin.core.component.KoinApiExtension
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -18,6 +20,6 @@ class UpNextNotificationBootReceiver: BroadcastReceiver(), KoinComponent {
 
         // Reschedule notifications
         Log.i("Flashback", "Rescheduling notifications for upcoming events")
-        upNextController.scheduleNotifications(true)
+        GlobalScope.launch { upNextController.scheduleNotifications(true) }
     }
 }

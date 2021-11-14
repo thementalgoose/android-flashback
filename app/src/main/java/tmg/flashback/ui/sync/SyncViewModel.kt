@@ -176,7 +176,7 @@ class SyncViewModel(
         configState.postValue(DONE)
     }
 
-    private fun performConfigUpdates() {
+    private suspend fun performConfigUpdates() {
 
         // Shortcuts for RSS
         when (rssController.enabled) {
