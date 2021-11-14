@@ -587,12 +587,12 @@
     ]
   },
   {
-    "versionCode": 111,
-    "versionName": "7.0.0",
+    "versionCode": 112,
+    "versionName": "7.0.1",
     "isMajor": false,
     "title": "Rewrite",
     "notes": [
-      "Rewrites process of caching and updating race data",
+      "Rewrites process of caching and updating race data to be persistent and auto updating",
       "Adds more animations around content loading",
       "Adds pull to refresh everywhere",
       "Adds new notification banner"
