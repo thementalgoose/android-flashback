@@ -16,67 +16,13 @@ import tmg.flashback.upnext.repository.model.UpNextSchedule
 
 internal class UpNextRepositoryTest {
 
-    private val mockConfigManager: ConfigManager = mockk(relaxed = true)
     private val mockPreferenceManager: PreferenceManager = mockk(relaxed = true)
 
     private lateinit var sut: UpNextRepository
 
     private fun initSUT() {
-        sut = UpNextRepository(mockConfigManager, mockPreferenceManager)
+        sut = UpNextRepository(mockPreferenceManager)
     }
-
-    //region Up next list
-
-    @Test
-    fun `getting up next list returns empty list if manager returns null`() {
-        every { mockConfigManager.getJson<UpNextJson>(keyUpNext) } returns null
-        initSUT()
-        assertEquals(emptyList<UpNextSchedule>(), sut.upNext)
-        verify {
-            mockConfigManager.getJson<UpNextJson>(keyUpNext)
-        }
-    }
-
-    @Test
-    fun `getting up next list returns empty list if model schedule is null`() {
-        every { mockConfigManager.getJson<UpNextJson>(keyUpNext) } returns UpNextJson(schedule = null)
-        initSUT()
-        assertEquals(emptyList<UpNextSchedule>(), sut.upNext)
-        verify {
-            mockConfigManager.getJson<UpNextJson>(keyUpNext)
-        }
-    }
-
-    @Test
-    fun `getting up next list returns empty list if model schedule is empty`() {
-        every { mockConfigManager.getJson<UpNextJson>(keyUpNext) } returns UpNextJson(schedule = emptyList())
-        initSUT()
-        assertEquals(emptyList<UpNextSchedule>(), sut.upNext)
-        verify {
-            mockConfigManager.getJson<UpNextJson>(keyUpNext)
-        }
-    }
-
-    @Test
-    fun `getting up next list returns valid list when json content`() {
-        every { mockConfigManager.getJson<UpNextJson>(keyUpNext) } returns UpNextJson(schedule = listOf(UpNextScheduleJson(
-                s = 1,
-                r = 2,
-                title = "3",
-                subtitle = "4",
-                dates = listOf(UpNextItemJson(type = "FP1", d = "2020-01-01", t = "13:00:00"))
-        )))
-        initSUT()
-        assertEquals(1, sut.upNext.first().season)
-        assertEquals(2, sut.upNext.first().round)
-        assertEquals("3", sut.upNext.first().title)
-        assertEquals("4", sut.upNext.first().subtitle)
-        verify {
-            mockConfigManager.getJson<UpNextJson>(keyUpNext)
-        }
-    }
-
-    //endregion
 
     //region Notification preferences - Race
 

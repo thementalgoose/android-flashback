@@ -3,10 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="?attr/backgroundPrimary"
-    android:paddingStart="0dp"
-    android:paddingEnd="0dp">
+    android:layout_height="wrap_content">
+
 
     <TextView
         android:id="@+id/tvPosition"
@@ -23,10 +21,11 @@
     <include
         android:id="@+id/layoutDriver"
         layout="@layout/layout_driver"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/paddingSmall"
         android:layout_marginTop="@dimen/paddingXSmall"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/tvPosition"
         app:layout_constraintTop_toTopOf="@id/tvPosition" />
 
@@ -42,10 +41,11 @@
     <TextView
         android:id="@+id/tvConstructor"
         style="@style/Text.QualifyingTime.Constructor"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
         android:layout_marginBottom="@dimen/paddingXSmall"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/constructorColor"
         app:layout_constraintStart_toStartOf="@id/layoutDriver"
         app:layout_constraintTop_toBottomOf="@id/layoutDriver"
@@ -54,63 +54,14 @@
     <TextView
         android:id="@+id/penalty"
         style="@style/Text.QualifyingTime.Delta"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
         android:layout_marginBottom="@dimen/paddingXSmall"
         android:text="@string/qualifying_grid_penalty"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/layoutDriver"
         app:layout_constraintTop_toBottomOf="@id/tvConstructor" />
-
-    <View
-        android:id="@+id/filterQuali"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/guideline"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5" />
-
-    <include
-        android:id="@+id/layoutQ3"
-        layout="@layout/layout_qualifying_time"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="@dimen/paddingSmall"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_chainStyle="spread"
-        app:layout_constraintStart_toEndOf="@id/layoutQ2"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <include
-        android:id="@+id/layoutQ2"
-        layout="@layout/layout_qualifying_time"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/layoutQ3"
-        app:layout_constraintHorizontal_chainStyle="spread"
-        app:layout_constraintStart_toEndOf="@id/layoutQ1"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <include
-        android:id="@+id/layoutQ1"
-        layout="@layout/layout_qualifying_time"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/layoutQ2"
-        app:layout_constraintHorizontal_chainStyle="spread"
-        app:layout_constraintStart_toStartOf="@id/guideline"
-        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

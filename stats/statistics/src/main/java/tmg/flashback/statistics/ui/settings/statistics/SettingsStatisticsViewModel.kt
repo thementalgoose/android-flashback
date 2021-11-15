@@ -31,25 +31,25 @@ class SettingsStatisticsViewModel(
 ): SettingsViewModel(), SettingsStatisticsViewModelInputs, SettingsStatisticsViewModelOutputs {
 
     override val models: List<SettingsModel> get() = mutableListOf<SettingsModel>().apply {
-        add(SettingsModel.Header(R.string.settings_statistics))
-        add(SettingsModel.SwitchPref(
-                title = R.string.settings_customisation_qualifying_delta_title,
-                description = R.string.settings_customisation_qualifying_delta_description,
-                getState = { raceController.showQualifyingDelta },
-                saveState = { raceController.showQualifyingDelta = it }
-        ))
-        add(SettingsModel.SwitchPref(
-                title = R.string.settings_customisation_qualifying_grid_penalties_title,
-                description = R.string.settings_customisation_qualifying_grid_penalties_description,
-                getState = { raceController.showGridPenaltiesInQualifying },
-                saveState = { raceController.showGridPenaltiesInQualifying = it }
-        ))
-        add(SettingsModel.SwitchPref(
-                title = R.string.settings_customisation_fade_dnf_title,
-                description = R.string.settings_customisation_fade_dnf_description,
-                getState = { raceController.fadeDNF },
-                saveState = { raceController.fadeDNF = it }
-        ))
+//        add(SettingsModel.Header(R.string.settings_statistics))
+//        add(SettingsModel.SwitchPref(
+//                title = R.string.settings_customisation_qualifying_delta_title,
+//                description = R.string.settings_customisation_qualifying_delta_description,
+//                getState = { raceController.showQualifyingDelta },
+//                saveState = { raceController.showQualifyingDelta = it }
+//        ))
+//        add(SettingsModel.SwitchPref(
+//                title = R.string.settings_customisation_qualifying_grid_penalties_title,
+//                description = R.string.settings_customisation_qualifying_grid_penalties_description,
+//                getState = { raceController.showGridPenaltiesInQualifying },
+//                saveState = { raceController.showGridPenaltiesInQualifying = it }
+//        ))
+//        add(SettingsModel.SwitchPref(
+//                title = R.string.settings_customisation_fade_dnf_title,
+//                description = R.string.settings_customisation_fade_dnf_description,
+//                getState = { raceController.fadeDNF },
+//                saveState = { raceController.fadeDNF = it }
+//        ))
         add(SettingsModel.Header(R.string.settings_home))
         if (seasonController.isUserDefinedValueSet) {
             add(SettingsModel.Pref(

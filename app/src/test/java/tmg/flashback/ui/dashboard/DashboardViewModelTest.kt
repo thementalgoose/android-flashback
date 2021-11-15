@@ -1,10 +1,7 @@
 package tmg.flashback.ui.dashboard
 
 import android.content.Context
-import io.mockk.coEvery
-import io.mockk.every
-import io.mockk.mockk
-import io.mockk.verify
+import io.mockk.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.common.controllers.ReleaseNotesController
@@ -30,7 +27,7 @@ internal class DashboardViewModelTest: BaseTest() {
     internal fun setUp() {
         coEvery { mockConfigurationController.applyPending() } returns false
         every { mockReleaseNotesController.pendingReleaseNotes } returns false
-        every { mockUpNextController.getNextEvent() } returns mockk()
+        coEvery { mockUpNextController.getNextEvent() } returns mockk()
     }
 
     private fun initSUT() {
@@ -79,7 +76,7 @@ internal class DashboardViewModelTest: BaseTest() {
         sut.outputs.appConfigSynced.test {
             assertEventFired()
         }
-        verify {
+        coVerify {
             mockUpNextController.scheduleNotifications()
         }
     }

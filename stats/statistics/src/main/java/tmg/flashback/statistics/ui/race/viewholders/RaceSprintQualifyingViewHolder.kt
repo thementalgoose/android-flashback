@@ -7,11 +7,12 @@ import kotlin.math.abs
 import tmg.flashback.ui.extensions.getColor
 import tmg.flashback.formula1.enums.isStatusFinished
 import tmg.flashback.formula1.extensions.pointsDisplay
+import tmg.flashback.formula1.model.Driver
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.ViewRaceSprintQualifyingResultBinding
 import tmg.flashback.statistics.extensions.iconRes
-import tmg.flashback.statistics.ui.race.RaceModel
+import tmg.flashback.statistics.ui.race.RaceItem
 import tmg.flashback.statistics.ui.util.position
 import tmg.utilities.extensions.views.context
 import tmg.utilities.extensions.views.getString
@@ -20,7 +21,7 @@ import tmg.utilities.extensions.views.visible
 import tmg.utilities.utils.ColorUtils.Companion.darken
 
 class RaceSprintQualifyingViewHolder(
-    val driverClicked: (driverId: String, driverName: String) -> Unit,
+    private val driverClicked: (driver: Driver) -> Unit,
     private val binding: ViewRaceSprintQualifyingResultBinding
 ) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
 
@@ -29,33 +30,32 @@ class RaceSprintQualifyingViewHolder(
         binding.clickTarget.setOnClickListener(this)
     }
 
-    private lateinit var driverId: String
-    private lateinit var driverName: String
+    private lateinit var driver: Driver
     private var status: String = ""
 
-    fun bind(model: RaceModel.Single) {
+    fun bind(model: RaceItem.SprintQualifyingResult) {
 
-        driverId = model.driver.driver.id
-        driverName = model.driver.driver.name
+        this.driver = model.qSprint.driver.driver
+        this.status = model.qSprint.status
 
         binding.apply {
-            tvPosition.text = model.qSprint?.finish.toString()
-            layoutDriver.tvName.text = model.driver.driver.name
+            tvPosition.text = model.qSprint.finished.toString()
+            layoutDriver.tvName.text = driver.name
             layoutDriver.tvNumber.gone()
             layoutDriver.imgFlag.gone()
-            tvDriverNumber.text = model.driver.driver.number.toString()
-            tvDriverNumber.colorHighlight = darken(model.driver.constructor.color)
-            imgDriverFlag.setImageResource(context.getFlagResourceAlpha3(model.driver.driver.nationalityISO))
-            tvConstructor.text = model.driver.constructor.name
+            tvDriverNumber.text = driver.number?.toString() ?: ""
+            tvDriverNumber.colorHighlight = darken(model.qSprint.driver.constructor.color)
+            imgDriverFlag.setImageResource(context.getFlagResourceAlpha3(model.qSprint.driver.driver.nationalityISO))
+            tvConstructor.text = model.qSprint.driver.constructor.name
 
-            constructorColor.setBackgroundColor(model.driver.constructor.color)
+            constructorColor.setBackgroundColor(model.qSprint.driver.constructor.color)
 
-            tvPoints.text = model.qSprint?.points?.pointsDisplay().let {
-                if (it == null || it == "0") "" else it
+            tvPoints.text = model.qSprint.points.pointsDisplay().let {
+                if (it == "0") "" else it
             }
 
-            tvStartedAbsolute.text = model.qSprint?.grid?.position() ?: ""
-            val diff = (model.qSprint?.grid ?: 0) - (model.qSprint?.finish ?: 0)
+            tvStartedAbsolute.text = model.qSprint.gridPos?.position() ?: ""
+            val diff = (model.qSprint.gridPos ?: 0) - (model.qSprint.finished)
             tvStartedRelative.text = abs(diff).toString()
             when {
                 diff == 0 -> { // Equal
@@ -75,31 +75,31 @@ class RaceSprintQualifyingViewHolder(
                 }
             }
 
-            tvTime.text = model.qSprint?.time.toString()
-            status = model.qSprint?.status ?: ""
+            tvTime.text = model.qSprint.lapTime?.toString() ?: model.qSprint.status
+            status = model.qSprint.status
             when {
-                model.qSprint?.time?.noTime == false -> {
-                    tvTime.text = context.getString(R.string.race_time_delta, model.qSprint.time)
+                model.qSprint.lapTime?.noTime == false -> {
+                    tvTime.text = context.getString(R.string.race_time_delta, model.qSprint.lapTime)
                 }
-                model.qSprint?.status?.isStatusFinished() == true -> {
+                model.qSprint.status.isStatusFinished() -> {
                     tvTime.text = model.qSprint.status
                 }
                 else -> {
                     tvTime.text = context.getString(R.string.race_status_retired)
-                    model.qSprint?.status?.let {
+                    model.qSprint.status.let {
                         imgStatus.setImageResource(it.iconRes)
                     }
                 }
             }
 
-            if (model.qSprint?.status?.isStatusFinished() == true) {
+            if (model.qSprint.status.isStatusFinished()) {
                 imgStatus.gone()
             } else {
                 imgStatus.visible()
             }
 
             // Alpha for DNFs
-            if (status.isNotEmpty() && !status.isStatusFinished() && model.displayPrefs.fadeDNF) {
+            if (status.isNotEmpty() && !status.isStatusFinished()) {
                 setAlphaToAllViews(0.55f)
             }
             else {
@@ -116,7 +116,7 @@ class RaceSprintQualifyingViewHolder(
                 }
             }
             binding.clickTarget -> {
-                driverClicked(driverId, driverName)
+                driverClicked(driver)
             }
         }
     }

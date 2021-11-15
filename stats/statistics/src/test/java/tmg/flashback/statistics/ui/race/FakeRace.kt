@@ -1,4 +1,4 @@
-package tmg.flashback.statistics.ui.race
+package tmg.flashback.statistics.ui.race_old
 
 import tmg.flashback.formula1.model.*
 
@@ -17,60 +17,88 @@ internal val driver3 = DriverConstructor.model(driver = Driver.model("driverId3"
 internal val driver4 = DriverConstructor.model(driver = Driver.model("driverId4"))
 
 internal val raceModel: Race = Race.model(
-    q1 = mapOf(
-        "driverId1" to RaceQualifyingResult.model(
-            driver = driver1,
-            time = LapTime.model(0, 1, 1, 0),
-            position = 2
+    qualifying = listOf(
+        RaceQualifyingRound.model(
+            label = RaceQualifyingType.Q1,
+            order = 1,
+            results = listOf(
+                RaceQualifyingRoundDriver.Qualifying.model(
+                    driver = driver1,
+                    lapTime = LapTime.model(0, 1, 1, 0),
+                    position = 2
+                ),
+                RaceQualifyingRoundDriver.Qualifying.model(
+                    driver = driver2,
+                    lapTime = LapTime.model(0, 1, 3, 0),
+                    position = 1
+                ),
+                RaceQualifyingRoundDriver.Qualifying.model(
+                    driver = driver3,
+                    lapTime = LapTime.model(0, 1, 2, 0),
+                    position = 3
+                ),
+                RaceQualifyingRoundDriver.Qualifying.model(
+                    driver = driver4,
+                    lapTime = LapTime.model(0, 1, 4, 0),
+                    position = 4
+                )
+            )
         ),
-        "driverId2" to RaceQualifyingResult.model(
-            driver = driver2,
-            time = LapTime.model(0, 1, 3, 0),
-            position = 1
+        RaceQualifyingRound.model(
+            label = RaceQualifyingType.Q2,
+            order = 2,
+            results = listOf(
+                RaceQualifyingRoundDriver.Qualifying.model(
+                    driver = driver1,
+                    lapTime = LapTime.model(0, 1, 1, 0),
+                    position = 2
+                ),
+                RaceQualifyingRoundDriver.Qualifying.model(
+                    driver = driver2,
+                    lapTime = LapTime.model(0, 1, 2, 0),
+                    position = 1
+                ),
+                RaceQualifyingRoundDriver.Qualifying.model(
+                    driver = driver3,
+                    lapTime = LapTime.model(0, 1, 3, 0),
+                    position = 3
+                ),
+                RaceQualifyingRoundDriver.Qualifying.model(
+                    driver = driver4,
+                    lapTime = null,
+                    position = 4
+                )
+            )
         ),
-        "driverId3" to RaceQualifyingResult.model(
-            driver = driver3,
-            time = LapTime.model(0, 1, 2, 0),
-            position = 3
-        ),
-        "driverId4" to RaceQualifyingResult.model(
-            driver = driver4,
-            time = LapTime.model(0, 1, 4, 0),
-            position = 4
+        RaceQualifyingRound.model(
+            label = RaceQualifyingType.Q3,
+            order = 3,
+            results = listOf(
+                RaceQualifyingRoundDriver.Qualifying.model(
+                    driver = driver1,
+                    lapTime = LapTime.model(0, 1, 1, 0),
+                    position = 2
+                ),
+                RaceQualifyingRoundDriver.Qualifying.model(
+                    driver = driver2,
+                    lapTime = LapTime.model(0, 1, 1, 0),
+                    position = 1
+                ),
+                RaceQualifyingRoundDriver.Qualifying.model(
+                    driver = driver3,
+                    lapTime = null,
+                    position = 3
+                ),
+                RaceQualifyingRoundDriver.Qualifying.model(
+                    driver = driver4,
+                    lapTime = null,
+                    position = 4
+                )
+            )
         )
     ),
-    q2 = mapOf(
-        "driverId1" to RaceQualifyingResult.model(
-            driver = driver1,
-            time = LapTime.model(0, 1, 1, 0),
-            position = 2
-        ),
-        "driverId2" to RaceQualifyingResult.model(
-            driver = driver2,
-            time = LapTime.model(0, 1, 2, 0),
-            position = 1
-        ),
-        "driverId3" to RaceQualifyingResult.model(
-            driver = driver3,
-            time = LapTime.model(0, 1, 3, 0),
-            position = 3
-        )
-    ),
-    q3 = mapOf(
-        "driverId1" to RaceQualifyingResult.model(
-            driver = driver1,
-            time = LapTime.model(0, 1, 1, 0),
-            position = 2
-        ),
-        "driverId2" to RaceQualifyingResult.model(
-            driver = driver2,
-            time = LapTime.model(0, 1, 1, 0),
-            position = 1
-        )
-    ),
-    qSprint = emptyMap(),
-    race = mapOf(
-        "driverId1" to RaceRaceResult.model(
+    race = listOf(
+        RaceRaceResult.model(
             driver = driver1,
             time = LapTime.model(0, 1, 1, 0),
             qualified = 2,
@@ -78,7 +106,7 @@ internal val raceModel: Race = Race.model(
             finish = 1,
             points = 25.0
         ),
-        "driverId2" to RaceRaceResult.model(
+        RaceRaceResult.model(
             driver = driver2,
             time = LapTime.model(0, 1, 2, 0),
             qualified = 1,
@@ -86,7 +114,7 @@ internal val raceModel: Race = Race.model(
             finish = 2,
             points = 18.0
         ),
-        "driverId3" to RaceRaceResult.model(
+        RaceRaceResult.model(
             driver = driver3,
             time = LapTime.model(0, 1, 4, 0),
             qualified = 3,
@@ -94,7 +122,7 @@ internal val raceModel: Race = Race.model(
             finish = 4,
             points = 12.0
         ),
-        "driverId4" to RaceRaceResult.model(
+        RaceRaceResult.model(
             driver = driver4,
             time = LapTime.model(0, 1, 3, 0),
             qualified = 4,

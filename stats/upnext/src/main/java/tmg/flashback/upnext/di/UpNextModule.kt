@@ -16,6 +16,6 @@ val upNextModule = module {
     viewModel { OnboardingNotificationViewModel(get()) }
     viewModel { UpNextReminderViewModel(get()) }
 
-    single { UpNextController(get(), get(), get()) }
-    single { UpNextRepository(get(), get()) }
+    single { UpNextController(get(), get(), get(), get()) }
+    single { UpNextRepository(get()) }
 }

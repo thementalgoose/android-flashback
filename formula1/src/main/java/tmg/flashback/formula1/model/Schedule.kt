@@ -8,5 +8,9 @@ data class Schedule(
     val date: LocalDate,
     val time: LocalTime
 ) {
+    val timestamp: Timestamp by lazy {
+        Timestamp(date, time)
+    }
+
     companion object
 }

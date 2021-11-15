@@ -110,6 +110,7 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
 
         observe(viewModel.outputs.list) { list ->
             adapter.list = list
+            seasonFragmentCallback?.refresh()
             if (list.any { it is SeasonItem.CalendarMonth && it.year == currentSeasonYear }) {
                 val currentMonth = LocalDate.now().month
                 val positionToScrollTo = list
@@ -143,7 +144,8 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
                     countryISO = track.raceCountryISO,
                     date = track.date,
                     defaultToRace = track.hasResults || !track.hasQualifying
-                ))
+                )
+                )
                 startActivity(intent)
             }
         }
