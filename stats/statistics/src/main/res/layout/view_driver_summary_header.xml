@@ -27,7 +27,7 @@
             android:scaleType="centerCrop" />
 
         <TextView
-            style="@style/Text.Podium.Position"
+            style="@style/Text.Body.1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
@@ -42,7 +42,7 @@
 
         <tmg.flashback.statistics.ui.views.RaceNumberView
             android:id="@+id/tvNumber"
-            style="@style/Text.Podium.Number"
+            style="@style/Text.Body.1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|start"
@@ -64,7 +64,7 @@
 
     <TextView
         android:id="@+id/driverBirthday"
-        style="@style/Text.DriverOverview.Birthday"
+        style="@style/Text.Body.1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/paddingMedium"

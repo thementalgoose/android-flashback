@@ -9,7 +9,7 @@
 
     <TextView
         android:id="@+id/year"
-        style="@style/Text.ConstructorOverview.History.Year"
+        style="@style/Text.Title.Strong"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/paddingNSmall"
@@ -23,7 +23,7 @@
 
     <TextView
         android:id="@+id/points"
-        style="@style/Text.ConstructorOverview.Stats.Value"
+        style="@style/Text.Body.1"
         android:layout_width="@dimen/constructorOverviewItem"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -34,7 +34,7 @@
 
     <TextView
         android:id="@+id/standing"
-        style="@style/Text.ConstructorOverview.Stats.Value"
+        style="@style/Text.Body.1"
         android:layout_width="@dimen/constructorOverviewItem"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -44,7 +44,7 @@
         tools:text="1st" />
 
     <TextView
-        style="@style/Text.ConstructorOverview.Stats.InProgress"
+        style="@style/Text.Caption"
         app:layout_constraintStart_toStartOf="@id/year"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/year"

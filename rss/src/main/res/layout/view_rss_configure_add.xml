@@ -5,12 +5,13 @@
     android:layout_height="wrap_content"
     android:paddingStart="@dimen/paddingMedium"
     android:paddingTop="10dp"
+    android:background="?attr/backgroundPrimary"
     android:paddingEnd="@dimen/paddingMedium"
     android:paddingBottom="10dp">
 
     <EditText
         android:id="@+id/input"
-        style="@style/RSS.Input.Text"
+        style="@style/Style.Input"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/paddingMedium"

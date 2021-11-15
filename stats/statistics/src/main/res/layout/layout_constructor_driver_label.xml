@@ -11,7 +11,7 @@
         android:id="@+id/tvName"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintHorizontal_chainStyle="packed"
-        style="@style/Text.ConstructorStandings.Driver.Name"
+        style="@style/Text.Body.1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toStartOf="@id/imgFlag"
@@ -31,7 +31,7 @@
 
     <TextView
         android:id="@+id/tvNumber"
-        style="@style/Text.ConstructorStandings.Driver.Summary"
+        style="@style/Text.Body.2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/paddingSmall"
@@ -42,7 +42,7 @@
 
     <TextView
         android:id="@+id/standing"
-        style="@style/Text.ConstructorStandings.Driver.Summary"
+        style="@style/Text.Body.2"
         android:layout_width="@dimen/constructorOverviewItem"
         android:layout_height="match_parent"
         android:gravity="center"

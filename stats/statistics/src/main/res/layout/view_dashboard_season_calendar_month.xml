@@ -6,7 +6,7 @@
 
     <TextView
         android:id="@+id/month"
-        style="@style/Text.Dashboard.Calendar.Month"
+        style="@style/Text.Body.1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center|start"

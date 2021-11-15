@@ -26,7 +26,7 @@
 
     <TextView
         android:id="@+id/tvQ1"
-        style="@style/Text.QualifyingTime.Header"
+        style="@style/Text.Title.Strong"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -41,7 +41,7 @@
 
     <TextView
         android:id="@+id/tvQ2"
-        style="@style/Text.QualifyingTime.Header"
+        style="@style/Text.Title.Strong"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -56,7 +56,7 @@
 
     <TextView
         android:id="@+id/tvQ3"
-        style="@style/Text.QualifyingTime.Header"
+        style="@style/Text.Title.Strong"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center"

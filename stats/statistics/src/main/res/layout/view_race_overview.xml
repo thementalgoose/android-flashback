@@ -7,6 +7,7 @@
     android:paddingBottom="@dimen/paddingMedium">
 
     <ImageView
+        android:importantForAccessibility="no"
         android:id="@+id/imgCountry"
         android:layout_width="@dimen/raceImageSize"
         android:layout_height="@dimen/raceImageSize"
@@ -19,7 +20,7 @@
     <TextView
         android:layout_marginTop="@dimen/paddingMedium"
         android:id="@+id/tvCircuitName"
-        style="@style/Text.Race.Header"
+        style="@style/Text.Body.1"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_marginStart="@dimen/paddingMedium"
@@ -45,7 +46,7 @@
 
     <TextView
         android:id="@+id/tvRoundInfo"
-        style="@style/Text.Race.Round"
+        style="@style/Text.Body.2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/paddingXSmall"
@@ -56,7 +57,7 @@
 
     <TextView
         android:id="@+id/tvDate"
-        style="@style/Text.Race.Date"
+        style="@style/Text.Body.2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="@id/tvRoundInfo"
