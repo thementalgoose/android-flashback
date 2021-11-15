@@ -1,16 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!--#region Home -->
-
-    <style name="RSS.Toolbar" parent="RSS.Text">
-        <item name="android:fontFamily">@font/montserrat</item>
-        <item name="android:textSize">@dimen/textSizeXLarge</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <!--#endregion -->
-
     <style name="RSS" />
     <style name="RSS.Text">
         <item name="android:textColor">?attr/contentPrimary</item>

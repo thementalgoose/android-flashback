@@ -40,14 +40,18 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+    <style name="Text.Title.Strong" parent="Text.Title">
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="Text.Title.Brand" parent="Text.Title">
         <item name="android:textColor">?attr/colorPrimary</item>
     </style>
 
     <style name="Text.Section" parent="Text">
         <item name="android:textColor">?attr/contentSecondary</item>
-        <item name="android:fontFamily">@font/montserrat</item>
-        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/montserrat_semibold</item>
+        <item name="android:textSize">13sp</item>
         <item name="android:textStyle">bold</item>
     </style>
 
