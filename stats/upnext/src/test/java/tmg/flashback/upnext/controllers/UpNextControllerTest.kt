@@ -1,9 +1,11 @@
 package tmg.flashback.upnext.controllers
 
 import android.content.Context
+import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
+import kotlinx.coroutines.test.runBlockingTest
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -14,6 +16,8 @@ import org.threeten.bp.LocalTime
 import org.threeten.bp.ZoneId
 import org.threeten.bp.format.DateTimeFormatter
 import org.threeten.bp.format.TextStyle
+import tmg.flashback.formula1.model.OverviewRace
+import tmg.flashback.formula1.model.Schedule
 import tmg.flashback.formula1.model.Timestamp
 import tmg.flashback.upnext.model.NotificationReminder
 import tmg.flashback.upnext.repository.UpNextRepository
@@ -23,6 +27,7 @@ import tmg.flashback.upnext.utils.NotificationUtils
 import tmg.flashback.upnext.utils.NotificationUtils.getCategoryBasedOnLabel
 import tmg.flashback.upnext.utils.NotificationUtils.getRequestCode
 import tmg.flashback.notifications.controllers.NotificationController
+import tmg.flashback.statistics.repo.ScheduleRepository
 import tmg.testutils.BaseTest
 
 internal class UpNextControllerTest : BaseTest() {
@@ -30,6 +35,7 @@ internal class UpNextControllerTest : BaseTest() {
     private var mockNotificationController: NotificationController = mockk(relaxed = true)
     private var mockUpNextRepository: UpNextRepository = mockk(relaxed = true)
     private var mockApplicationContext: Context = mockk(relaxed = true)
+    private var mockScheduleRepository: ScheduleRepository = mockk(relaxed = true)
 
     private lateinit var sut: UpNextController
 
@@ -44,111 +50,115 @@ internal class UpNextControllerTest : BaseTest() {
     }
 
     private fun initSUT() {
-        sut = UpNextController(mockApplicationContext, mockNotificationController, mockUpNextRepository)
+        sut = UpNextController(mockApplicationContext, mockNotificationController, mockUpNextRepository, mockScheduleRepository)
     }
 
     @Test
-    fun `no next race if remote config is empty`() {
-        every { mockUpNextRepository.upNext } returns emptyList()
+    fun `no next race if remote config is empty`() = coroutineTest {
+        coEvery { mockScheduleRepository.getUpcomingEvents(any()) } returns emptyList()
         initSUT()
 
-        assertNull(sut.getNextEvent())
+        runBlockingTest {
+            assertNull(sut.getNextEvent())
+        }
     }
 
     @Test
-    fun `no next up next if all timestamps are in the past`() {
-        val list = listOf(
-            generateUpNextItem(-1 to "12:00", -1 to "10:00"),
-            generateUpNextItem(-2 to "12:00", -1 to "10:00")
-        )
+    fun `no next up next if all timestamps are in the past`() = coroutineTest {
+        val list = listOf<OverviewRace>()
 
-        every { mockUpNextRepository.upNext } returns list
+        coEvery { mockScheduleRepository.getUpcomingEvents(any()) } returns list
         initSUT()
 
-        assertNull(sut.getNextEvent())
+        runBlockingTest {
+            assertNull(sut.getNextEvent())
+        }
     }
 
     @Test
-    fun `last event shown when last timestamp is available`() {
+    fun `last event shown when last timestamp is available`() = coroutineTest {
         val expected = generateUpNextItem(0 to "12:00", -1 to "12:00")
         val list = listOf(
             expected,
             generateUpNextItem(3 to "10:00")
         )
-        every { mockUpNextRepository.upNext } returns list
+        coEvery { mockScheduleRepository.getUpcomingEvents(any()) } returns list
         initSUT()
 
-        assertEquals(expected, sut.getNextEvent())
+        runBlockingTest {
+            assertEquals(expected, sut.getNextEvent())
+        }
     }
 
     @Test
-    fun `last event shown when first last timestamp is available`() {
+    fun `last event shown when first last timestamp is available`() = coroutineTest {
         val expected = generateUpNextItem(0 to "01:00", 2 to "12:00")
         val list = listOf(
             expected,
             generateUpNextItem(-1 to "10:00")
         )
-        every { mockUpNextRepository.upNext } returns list
+        coEvery { mockScheduleRepository.getUpcomingEvents(any()) } returns list
         initSUT()
 
-        assertEquals(expected, sut.getNextEvent())
+        runBlockingTest {
+            assertEquals(expected, sut.getNextEvent())
+        }
     }
 
     @Test
-    fun `last event shown when date is between between two last view timestamps`() {
+    fun `last event shown when date is between between two last view timestamps`() = coroutineTest {
         val expected = generateUpNextItem(1 to "01:00", 2 to "12:00")
         val list = listOf(
             expected,
             generateUpNextItem(-1 to "10:00")
         )
-        every { mockUpNextRepository.upNext } returns list
+        coEvery { mockScheduleRepository.getUpcomingEvents(any()) } returns list
         initSUT()
 
-        assertEquals(expected, sut.getNextEvent())
+        runBlockingTest {
+            assertEquals(expected, sut.getNextEvent())
+        }
     }
 
     @Test
-    fun `second last event shown when last of second item is shown with last all in future`() {
+    fun `second last event shown when last of second item is shown with last all in future`() = coroutineTest {
         val expected = generateUpNextItem(-1 to "01:00", 0 to "12:00")
         val list = listOf(
-            generateUpNextItem(-3 to "10:00"),
+//            generateUpNextItem(-3 to "10:00"),
             expected
         )
-        every { mockUpNextRepository.upNext } returns list
+        coEvery { mockScheduleRepository.getUpcomingEvents(any()) } returns list
         initSUT()
 
-        assertEquals(expected, sut.getNextEvent())
+        runBlockingTest {
+            assertEquals(expected, sut.getNextEvent())
+        }
     }
 
     @Test
-    fun `list item correct item in middle list of all`() {
+    fun `list item correct item in middle list of all`() = coroutineTest {
         val expected = generateUpNextItem(0 to "12:00")
         val list = listOf(
-            generateUpNextItem(-4 to "12:00"),
-            generateUpNextItem(-2 to "11:00"),
+//            generateUpNextItem(-4 to "12:00"),
+//            generateUpNextItem(-2 to "11:00"),
             expected,
             generateUpNextItem(1 to "11:00"),
             generateUpNextItem(2 to "11:00")
         )
 
-        every { mockUpNextRepository.upNext } returns list
+        coEvery { mockScheduleRepository.getUpcomingEvents(any()) } returns list
         initSUT()
 
-        assertEquals(expected, sut.getNextEvent())
+        runBlockingTest {
+            assertEquals(expected, sut.getNextEvent())
+        }
     }
 
     //region Race simulations
 
     @Test
-    fun `list item is correct when simulating race weekend on race day`() {
+    fun `list item is correct when simulating race weekend on race day`() = coroutineTest {
         val list = listOf(
-            generateUpNextItem(
-                -9 to "11:00",
-                -9 to "15:00",
-                -8 to "12:00",
-                -8 to "15:00",
-                -7 to "15:00"
-            ),
             generateUpNextItem(
                 -2 to "11:00",
                 -2 to "15:00",
@@ -165,21 +175,16 @@ internal class UpNextControllerTest : BaseTest() {
             )
         )
         initSUT()
-        every { mockUpNextRepository.upNext } returns list
+        coEvery { mockScheduleRepository.getUpcomingEvents(any()) } returns list
 
-        assertEquals(list[1], sut.getNextEvent())
+        runBlockingTest {
+            assertEquals(list[0], sut.getNextEvent())
+        }
     }
 
     @Test
-    fun `list item is correct when simulating race weekend on saturday (qualifying + fp3)`() {
+    fun `list item is correct when simulating race weekend on saturday (qualifying + fp3)`() = coroutineTest {
         val list = listOf(
-            generateUpNextItem(
-                -9 to "11:00",
-                -9 to "15:00",
-                -8 to "12:00",
-                -8 to "15:00",
-                -7 to "15:00"
-            ),
             generateUpNextItem(
                 -1 to "11:00",
                 -1 to "15:00",
@@ -196,21 +201,16 @@ internal class UpNextControllerTest : BaseTest() {
             )
         )
         initSUT()
-        every { mockUpNextRepository.upNext } returns list
+        coEvery { mockScheduleRepository.getUpcomingEvents(any()) } returns list
 
-        assertEquals(list[1], sut.getNextEvent())
+        runBlockingTest {
+            assertEquals(list[0], sut.getNextEvent())
+        }
     }
 
     @Test
-    fun `list item is correct when simulating race weekend on friday (fp1 + fp2)`() {
+    fun `list item is correct when simulating race weekend on friday (fp1 + fp2)`() = coroutineTest {
         val list = listOf(
-            generateUpNextItem(
-                -9 to "11:00",
-                -9 to "15:00",
-                -8 to "12:00",
-                -8 to "15:00",
-                -7 to "15:00"
-            ),
             generateUpNextItem(
                 0 to "11:00",
                 0 to "15:00",
@@ -227,21 +227,16 @@ internal class UpNextControllerTest : BaseTest() {
             )
         )
         initSUT()
-        every { mockUpNextRepository.upNext } returns list
+        coEvery { mockScheduleRepository.getUpcomingEvents(any()) } returns list
 
-        assertEquals(list[1], sut.getNextEvent())
+        runBlockingTest {
+            assertEquals(list[0], sut.getNextEvent())
+        }
     }
 
     @Test
-    fun `list item is correct when simulating race weekend on thursday (coming up)`() {
+    fun `list item is correct when simulating race weekend on thursday (coming up)`() = coroutineTest {
         val list = listOf(
-            generateUpNextItem(
-                -9 to "11:00",
-                -9 to "15:00",
-                -8 to "12:00",
-                -8 to "15:00",
-                -7 to "15:00"
-            ),
             generateUpNextItem(
                 1 to "11:00",
                 1 to "15:00",
@@ -258,28 +253,16 @@ internal class UpNextControllerTest : BaseTest() {
             )
         )
         initSUT()
-        every { mockUpNextRepository.upNext } returns list
+        coEvery { mockScheduleRepository.getUpcomingEvents(any()) } returns list
 
-        assertEquals(list[1], sut.getNextEvent())
+        runBlockingTest {
+            assertEquals(list[0], sut.getNextEvent())
+        }
     }
 
     @Test
-    fun `list item is correct when simulating race weekend on monday (coming up)`() {
+    fun `list item is correct when simulating race weekend on monday (coming up)`() = coroutineTest {
         val list = listOf(
-            generateUpNextItem(
-                -9 to "11:00",
-                -9 to "15:00",
-                -8 to "12:00",
-                -8 to "15:00",
-                -7 to "15:00"
-            ),
-            generateUpNextItem(
-                -3 to "11:00",
-                -3 to "15:00",
-                -2 to "12:00",
-                -2 to "15:00",
-                -1 to "15:00"
-            ),
             generateUpNextItem(
                 5 to "11:00",
                 5 to "15:00",
@@ -289,9 +272,11 @@ internal class UpNextControllerTest : BaseTest() {
             )
         )
         initSUT()
-        every { mockUpNextRepository.upNext } returns list
+        coEvery { mockScheduleRepository.getUpcomingEvents(any()) } returns list
 
-        assertEquals(list[2], sut.getNextEvent())
+        runBlockingTest {
+            assertEquals(list[0], sut.getNextEvent())
+        }
     }
 
     //endregion
@@ -300,7 +285,7 @@ internal class UpNextControllerTest : BaseTest() {
     //region Notification preferences - Race
 
     @Test
-    fun `is notification race reads value from preferences repository with default to true`() {
+    fun `is notification race reads value from preferences repository with default to true`() = coroutineTest {
         every { mockUpNextRepository.notificationRace } returns true
 
         initSUT()
@@ -312,7 +297,7 @@ internal class UpNextControllerTest : BaseTest() {
     }
 
     @Test
-    fun `setting notification race enabled saves value from preferences repository`() {
+    fun `setting notification race enabled saves value from preferences repository`() = coroutineTest {
         initSUT()
 
         sut.notificationRace = true
@@ -327,7 +312,7 @@ internal class UpNextControllerTest : BaseTest() {
     //region Notification preferences - Qualifying
 
     @Test
-    fun `is notification qualifying reads value from preferences repository with default to true`() {
+    fun `is notification qualifying reads value from preferences repository with default to true`() = coroutineTest {
         every { mockUpNextRepository.notificationQualifying } returns true
 
         initSUT()
@@ -339,7 +324,7 @@ internal class UpNextControllerTest : BaseTest() {
     }
 
     @Test
-    fun `setting notification qualifying enabled saves value from preferences repository`() {
+    fun `setting notification qualifying enabled saves value from preferences repository`() = coroutineTest {
         initSUT()
 
         sut.notificationQualifying = true
@@ -354,7 +339,7 @@ internal class UpNextControllerTest : BaseTest() {
     //region Notification preferences - Free Practice
 
     @Test
-    fun `is notification free practice reads value from preferences repository with default to true`() {
+    fun `is notification free practice reads value from preferences repository with default to true`() = coroutineTest {
         every { mockUpNextRepository.notificationFreePractice } returns true
 
         initSUT()
@@ -366,7 +351,7 @@ internal class UpNextControllerTest : BaseTest() {
     }
 
     @Test
-    fun `setting notification free practice enabled saves value from preferences repository`() {
+    fun `setting notification free practice enabled saves value from preferences repository`() = coroutineTest {
         initSUT()
 
         sut.notificationFreePractice = true
@@ -381,7 +366,7 @@ internal class UpNextControllerTest : BaseTest() {
     //region Notification preferences - Other
 
     @Test
-    fun `is notification other reads value from preferences repository with default to true`() {
+    fun `is notification other reads value from preferences repository with default to true`() = coroutineTest {
         every { mockUpNextRepository.notificationOther } returns true
 
         initSUT()
@@ -393,7 +378,7 @@ internal class UpNextControllerTest : BaseTest() {
     }
 
     @Test
-    fun `setting notification other enabled saves value from preferences repository`() {
+    fun `setting notification other enabled saves value from preferences repository`() = coroutineTest {
         initSUT()
 
         sut.notificationSeasonInfo = true
@@ -408,7 +393,7 @@ internal class UpNextControllerTest : BaseTest() {
     //region Notification reminder
 
     @Test
-    fun `is notification reminder period reads value from preferences repository`() {
+    fun `is notification reminder period reads value from preferences repository`() = coroutineTest {
         every { mockUpNextRepository.notificationReminderPeriod } returns NotificationReminder.MINUTES_30
 
         initSUT()
@@ -420,7 +405,7 @@ internal class UpNextControllerTest : BaseTest() {
     }
 
     @Test
-    fun `is notification reminder period writes value from preferences repository`() {
+    fun `is notification reminder period writes value from preferences repository`() = coroutineTest {
         initSUT()
 
         sut.notificationReminder = NotificationReminder.MINUTES_60
@@ -434,7 +419,7 @@ internal class UpNextControllerTest : BaseTest() {
     //region Notification onboarding
 
     @Test
-    fun `notification onboarding reads value from repository`() {
+    fun `notification onboarding reads value from repository`() = coroutineTest {
         every { mockUpNextRepository.seenNotificationOnboarding } returns true
 
         initSUT()
@@ -446,7 +431,7 @@ internal class UpNextControllerTest : BaseTest() {
     }
 
     @Test
-    fun `marking notifications seen marks onboarding seen in repository`() {
+    fun `marking notifications seen marks onboarding seen in repository`() = coroutineTest {
         every { mockUpNextRepository.seenNotificationOnboarding } returns false
 
         initSUT()
@@ -462,31 +447,33 @@ internal class UpNextControllerTest : BaseTest() {
     //region Schedule notification filtering
 
     @Test
-    fun `when finding notifications to schedule it scheduled accurately the local notifications with the manager`() {
+    fun `when finding notifications to schedule it scheduled accurately the local notifications with the manager`() = coroutineTest {
 
-        every { mockUpNextRepository.upNext } returns exampleUpNextList
+        coEvery { mockScheduleRepository.getUpcomingEvents(any()) } returns exampleUpNextList
 
         initSUT()
-        sut.scheduleNotifications()
+        runBlockingTest {
+            sut.scheduleNotifications()
+        }
 
         verify {
             mockNotificationController.cancelAllNotifications()
         }
 
-        verifyScheduleLocal(times = 0, past, 0, past.values[0])
-        verifyScheduleLocal(times = 0, past, 1, past.values[1])
-        verifyScheduleLocal(times = 0, present, 0, present.values[0])
+        verifyScheduleLocal(times = 0, past, 0, past.schedule[0])
+        verifyScheduleLocal(times = 0, past, 1, past.schedule[1])
+        verifyScheduleLocal(times = 0, present, 0, present.schedule[0])
 
         // Qualifying while in the future is ahead of 30 minute notice period!
-        verifyScheduleLocal(times = 0, present, 1, present.values[1])
+        verifyScheduleLocal(times = 0, present, 1, present.schedule[1])
 
-        verifyScheduleLocal(times = 1, present, 2, present.values[2])
-        verifyScheduleLocal(times = 1, future, 0, future.values[0])
+        verifyScheduleLocal(times = 1, present, 2, present.schedule[2])
+        verifyScheduleLocal(times = 1, future, 0, future.schedule[0])
     }
 
     //endregion
 
-    private fun verifyScheduleLocal(times: Int = 1, upNextSchedule: UpNextSchedule, index: Int, item: UpNextScheduleTimestamp) {
+    private fun verifyScheduleLocal(times: Int = 1, upNextSchedule: OverviewRace, index: Int, item: Schedule) {
         val channelId = getCategoryBasedOnLabel(item.label).channelId
         var timestampUtc: LocalDateTime? = null
         item.timestamp.on(
@@ -508,25 +495,25 @@ internal class UpNextControllerTest : BaseTest() {
         }
     }
 
-    private val past: UpNextSchedule = generateUpNextItem(
+    private val past: OverviewRace = generateUpNextItem(
         season = 2020,
         round = 2,
             "qualifying" to LocalDateTime.now(Clock.systemUTC()).minusDays(2L),
             "race" to LocalDateTime.now(Clock.systemUTC()).minusDays(1L)
     )
-    private val present: UpNextSchedule = generateUpNextItem(
+    private val present: OverviewRace = generateUpNextItem(
         season = 2020,
         round = 3,
             "fp3" to LocalDateTime.now(Clock.systemUTC()).minusHours(1L),
             "qualifying" to LocalDateTime.now(Clock.systemUTC()).plusMinutes(5L),
             "race" to LocalDateTime.now(Clock.systemUTC()).plusHours(8L)
     )
-    private val future: UpNextSchedule = generateUpNextItem(
+    private val future: OverviewRace = generateUpNextItem(
         season = 2020,
         round = 4,
             "fp3" to LocalDateTime.now(Clock.systemUTC()).plusDays(1L)
     )
-    private val exampleUpNextList: List<UpNextSchedule> = listOf(
+    private val exampleUpNextList: List<OverviewRace> = listOf(
         past, present, future
     )
 
@@ -535,43 +522,49 @@ internal class UpNextControllerTest : BaseTest() {
         season: Int,
         round: Int,
         vararg delta: Pair<String, LocalDateTime>
-    ): UpNextSchedule {
-        return UpNextSchedule(
+    ): OverviewRace {
+        return OverviewRace(
+            date = LocalDate.now(),
+            time = LocalTime.of(0, 12, 0),
             season = season,
             round = round,
-            title = "Grand Prix $season $round",
-            subtitle = null,
-            values = delta.map { (label, datetime) ->
-                UpNextScheduleTimestamp(
+            raceName = "Grand Prix $season $round",
+            circuitId = "circuitId",
+            circuitName = "circuitName",
+            country = "country",
+            countryISO = "countryISO",
+            hasQualifying = true,
+            hasResults = true,
+            schedule = delta.map { (label, datetime) ->
+                Schedule(
                     label = label,
-                    timestamp = Timestamp(
-                        datetime.toLocalDate(),
-                        datetime.toLocalTime()
-                    )
+                    date = datetime.toLocalDate(),
+                    time = datetime.toLocalTime()
                 )
-            },
-            flag = null,
-            circuitId = null
+            }
         )
     }
 
-    private fun generateUpNextItem(vararg delta: Pair<Int, String>): UpNextSchedule {
-        return UpNextSchedule(
-            season = 1,
-            round = 3,
-            title = "Up next item $delta",
-            subtitle = null,
-            values = delta.map {
-                UpNextScheduleTimestamp(
+    private fun generateUpNextItem(vararg delta: Pair<Int, String>): OverviewRace {
+        return OverviewRace(
+            date = LocalDate.now(),
+            time = LocalTime.of(0, 12, 0),
+            season = 2020,
+            round = 1,
+            raceName = "Grand Prix 2020 1",
+            circuitId = "circuitId",
+            circuitName = "circuitName",
+            country = "country",
+            countryISO = "countryISO",
+            hasQualifying = true,
+            hasResults = true,
+            schedule = delta.map {
+                Schedule(
                     label = "Example ${it.second} ${it.first}",
-                    timestamp = Timestamp(
-                        LocalDate.now().plusDays(it.first.toLong()),
-                        LocalTime.parse(it.second, DateTimeFormatter.ofPattern("HH:mm"))
-                    )
+                    date = LocalDate.now().plusDays(it.first.toLong()),
+                    time = LocalTime.parse(it.second, DateTimeFormatter.ofPattern("HH:mm"))
                 )
-            },
-            flag = null,
-            circuitId = null
+            }
         )
     }
 
