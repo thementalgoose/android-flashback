@@ -1,17 +1,19 @@
 package tmg.flashback.upnext.ui.dashboard
 
+import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDateTime
+import org.threeten.bp.LocalTime
 import org.threeten.bp.ZoneId
+import tmg.flashback.formula1.model.OverviewRace
+import tmg.flashback.formula1.model.Schedule
 import tmg.flashback.formula1.model.Timestamp
 import tmg.flashback.upnext.R
 import tmg.flashback.upnext.controllers.UpNextController
-import tmg.flashback.upnext.repository.model.UpNextSchedule
-import tmg.flashback.upnext.repository.model.UpNextScheduleTimestamp
 import tmg.flashback.upnext.ui.timezone.TimezoneItem
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.test
@@ -23,7 +25,10 @@ internal class UpNextViewModelTest: BaseTest() {
     private lateinit var sut: UpNextViewModel
 
     private fun initSUT() {
-        sut = UpNextViewModel(mockUpNextController)
+        sut = UpNextViewModel(
+            mockUpNextController,
+            ioDispatcher = coroutineScope.testDispatcher
+        )
     }
 
     @BeforeEach
@@ -32,13 +37,13 @@ internal class UpNextViewModelTest: BaseTest() {
         every { mockUpNextController.notificationQualifying } returns true
         every { mockUpNextController.notificationFreePractice } returns false
         every { mockUpNextController.notificationSeasonInfo } returns false
-        every { mockUpNextController.getNextEvent() } returns mockUpNext
+        coEvery { mockUpNextController.getNextEvent() } returns mockUpNext
     }
 
     //region Up Next item
 
     @Test
-    fun `data output returns full next item event`() {
+    fun `data output returns full next item event`() = coroutineTest {
         initSUT()
 
         sut.outputs.data.test {
@@ -47,7 +52,7 @@ internal class UpNextViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `content returns ordered list based on values with individual items on each day`() {
+    fun `content returns ordered list based on values with individual items on each day`() = coroutineTest {
         val practice: LocalDateTime = LocalDateTime.of(2020, 1, 1, 1, 0, 0)
         val practiceTimestamp = Timestamp(
             originalDate = practice.toLocalDate(),
@@ -66,10 +71,10 @@ internal class UpNextViewModelTest: BaseTest() {
             originalTime = race.toLocalTime(),
             zone = ZoneId.systemDefault()
         )
-        every { mockUpNextController.getNextEvent() } returns mockUpNext.copy(values = listOf(
-            UpNextScheduleTimestamp("qualifying", qualifyingTimestamp),
-            UpNextScheduleTimestamp("race", raceTimestamp),
-            UpNextScheduleTimestamp("practice", practiceTimestamp)
+        coEvery { mockUpNextController.getNextEvent() } returns mockUpNext.copy(schedule = listOf(
+            Schedule("qualifying", qualifyingTimestamp.originalDate, qualifyingTimestamp.originalTime!!),
+            Schedule("race", raceTimestamp.originalDate, raceTimestamp.originalTime!!),
+            Schedule("practice", practiceTimestamp.originalDate, practiceTimestamp.originalTime!!)
         ))
 
         initSUT()
@@ -91,7 +96,7 @@ internal class UpNextViewModelTest: BaseTest() {
 
 
     @Test
-    fun `content returns ordered list based on values with two items on one day`() {
+    fun `content returns ordered list based on values with two items on one day`() = coroutineTest {
         val practice: LocalDateTime = LocalDateTime.of(2020, 1, 1, 1, 0, 0)
         val practiceTimestamp = Timestamp(
             originalDate = practice.toLocalDate(),
@@ -110,10 +115,10 @@ internal class UpNextViewModelTest: BaseTest() {
             originalTime = race.toLocalTime(),
             zone = ZoneId.systemDefault()
         )
-        every { mockUpNextController.getNextEvent() } returns mockUpNext.copy(values = listOf(
-            UpNextScheduleTimestamp("qualifying", qualifyingTimestamp),
-            UpNextScheduleTimestamp("race", raceTimestamp),
-            UpNextScheduleTimestamp("practice", practiceTimestamp)
+        coEvery { mockUpNextController.getNextEvent() } returns mockUpNext.copy(schedule = listOf(
+            Schedule("qualifying", qualifyingTimestamp.originalDate, qualifyingTimestamp.originalTime!!),
+            Schedule("race", raceTimestamp.originalDate, raceTimestamp.originalTime!!),
+            Schedule("practice", practiceTimestamp.originalDate, practiceTimestamp.originalTime!!)
         ))
 
         initSUT()
@@ -133,7 +138,7 @@ internal class UpNextViewModelTest: BaseTest() {
 
 
     @Test
-    fun `content returns ordered list based on values with all items on one day`() {
+    fun `content returns ordered list based on values with all items on one day`() = coroutineTest {
         val practice: LocalDateTime = LocalDateTime.of(2023, 1, 9, 1, 0, 0)
         val practiceTimestamp = Timestamp(
             originalDate = practice.toLocalDate(),
@@ -152,10 +157,10 @@ internal class UpNextViewModelTest: BaseTest() {
             originalTime = race.toLocalTime(),
             zone = ZoneId.systemDefault()
         )
-        every { mockUpNextController.getNextEvent() } returns mockUpNext.copy(values = listOf(
-            UpNextScheduleTimestamp("qualifying", qualifyingTimestamp),
-            UpNextScheduleTimestamp("race", raceTimestamp),
-            UpNextScheduleTimestamp("practice", practiceTimestamp)
+        coEvery { mockUpNextController.getNextEvent() } returns mockUpNext.copy(schedule = listOf(
+            Schedule("qualifying", qualifyingTimestamp.originalDate, qualifyingTimestamp.originalTime!!),
+            Schedule("race", raceTimestamp.originalDate, raceTimestamp.originalTime!!),
+            Schedule("practice", practiceTimestamp.originalDate, practiceTimestamp.originalTime!!)
         ))
 
         initSUT()
@@ -172,7 +177,7 @@ internal class UpNextViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `timezones output returns single timezone`() {
+    fun `timezones output returns single timezone`() = coroutineTest {
         initSUT()
 
         sut.outputs.timezones.test {
@@ -185,7 +190,7 @@ internal class UpNextViewModelTest: BaseTest() {
     //region Remaining days
 
     @Test
-    fun `remaining days is taken of minimum event time`() {
+    fun `remaining days is taken of minimum event time`() = coroutineTest {
         val practice: LocalDateTime = LocalDateTime.now().plusDays(7L)
         val practiceTimestamp = Timestamp(
             originalDate = practice.toLocalDate(),
@@ -199,9 +204,9 @@ internal class UpNextViewModelTest: BaseTest() {
             zone = ZoneId.systemDefault()
         )
 
-        every { mockUpNextController.getNextEvent() } returns mockUpNext.copy(values = listOf(
-            UpNextScheduleTimestamp("practice", practiceTimestamp),
-            UpNextScheduleTimestamp("qualifying", qualifyingTimestamp),
+        coEvery { mockUpNextController.getNextEvent() } returns mockUpNext.copy(schedule = listOf(
+            Schedule("practice", practiceTimestamp.originalDate, practiceTimestamp.originalTime!!),
+            Schedule("qualifying", qualifyingTimestamp.originalDate, qualifyingTimestamp.originalTime!!),
         ))
 
         initSUT()
@@ -212,7 +217,7 @@ internal class UpNextViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `remaining days is capped at 0 if minimum event time has already passed`() {
+    fun `remaining days is capped at 0 if minimum event time has already passed`() = coroutineTest {
         val practice: LocalDateTime = LocalDateTime.now().minusDays(1L)
         val practiceTimestamp = Timestamp(
             originalDate = practice.toLocalDate(),
@@ -226,9 +231,9 @@ internal class UpNextViewModelTest: BaseTest() {
             zone = ZoneId.systemDefault()
         )
 
-        every { mockUpNextController.getNextEvent() } returns mockUpNext.copy(values = listOf(
-            UpNextScheduleTimestamp("practice", practiceTimestamp),
-            UpNextScheduleTimestamp("qualifying", qualifyingTimestamp),
+        coEvery { mockUpNextController.getNextEvent() } returns mockUpNext.copy(schedule = listOf(
+            Schedule("practice", practiceTimestamp.originalDate, practiceTimestamp.originalTime!!),
+            Schedule("qualifying", qualifyingTimestamp.originalDate, qualifyingTimestamp.originalTime!!),
         ))
 
         initSUT()
@@ -239,7 +244,7 @@ internal class UpNextViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `remaining days is set to 0 is minumim is today`() {
+    fun `remaining days is set to 0 is minumim is today`() = coroutineTest {
         val practice: LocalDateTime = LocalDateTime.now()
         val practiceTimestamp = Timestamp(
             originalDate = practice.toLocalDate(),
@@ -253,9 +258,9 @@ internal class UpNextViewModelTest: BaseTest() {
             zone = ZoneId.systemDefault()
         )
 
-        every { mockUpNextController.getNextEvent() } returns mockUpNext.copy(values = listOf(
-            UpNextScheduleTimestamp("practice", practiceTimestamp),
-            UpNextScheduleTimestamp("qualifying", qualifyingTimestamp),
+        coEvery { mockUpNextController.getNextEvent() } returns mockUpNext.copy(schedule = listOf(
+            Schedule("practice", practiceTimestamp.originalDate, practiceTimestamp.originalTime!!),
+            Schedule("qualifying", qualifyingTimestamp.originalDate, qualifyingTimestamp.originalTime!!),
         ))
 
         initSUT()
@@ -270,25 +275,30 @@ internal class UpNextViewModelTest: BaseTest() {
     //region Empty Up Next
 
     @Test
-    fun `data value is placeholder schedule model when next event is null`() {
-        every { mockUpNextController.getNextEvent() } returns null
+    fun `data value is placeholder schedule model when next event is null`() = coroutineTest {
+        coEvery { mockUpNextController.getNextEvent() } returns null
         initSUT()
         sut.outputs.data.test {
-            assertValue(UpNextSchedule(
-                title = "Nothing here yet!",
-                subtitle = "Please check back later when we know more",
-                values = emptyList(),
-                flag = null,
-                circuitId = null,
+            assertValue(OverviewRace(
+                date = LocalDate.now(),
+                time = null,
                 season = 0,
-                round = 0
+                round = 0,
+                raceName = "Nothing here yet",
+                circuitId = "",
+                circuitName = "",
+                country = "",
+                countryISO = "",
+                hasQualifying = false,
+                hasResults = false,
+                schedule = emptyList(),
             ))
         }
     }
 
     @Test
-    fun `content value is empty list when next event is null`() {
-        every { mockUpNextController.getNextEvent() } returns null
+    fun `content value is empty list when next event is null`() = coroutineTest {
+        coEvery { mockUpNextController.getNextEvent() } returns null
         initSUT()
         sut.outputs.content.test {
             assertValue(emptyList())
@@ -296,8 +306,8 @@ internal class UpNextViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `timezone value is empty list when next event is null`() {
-        every { mockUpNextController.getNextEvent() } returns null
+    fun `timezone value is empty list when next event is null`() = coroutineTest {
+        coEvery { mockUpNextController.getNextEvent() } returns null
         initSUT()
         sut.outputs.timezones.test {
             assertValue(emptyList())
@@ -305,8 +315,8 @@ internal class UpNextViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `remaining days is 0 when next event is null`() {
-        every { mockUpNextController.getNextEvent() } returns null
+    fun `remaining days is 0 when next event is null`() = coroutineTest {
+        coEvery { mockUpNextController.getNextEvent() } returns null
         initSUT()
         sut.outputs.remainingDays.test {
             assertValue(0)
@@ -315,13 +325,18 @@ internal class UpNextViewModelTest: BaseTest() {
 
     //endregion
 
-    private val mockUpNext: UpNextSchedule = UpNextSchedule(
-        season = 1,
-        round = 2,
-        title = "3",
-        subtitle = "4",
-        values = emptyList(),
-        flag = "6",
-        circuitId = "7"
+    private val mockUpNext: OverviewRace = OverviewRace(
+        date = LocalDate.now(),
+        time = LocalTime.of(0, 12, 0),
+        season = 2020,
+        round = 1,
+        raceName = "Grand Prix 2020 1",
+        circuitId = "circuitId",
+        circuitName = "circuitName",
+        country = "country",
+        countryISO = "countryISO",
+        hasQualifying = true,
+        hasResults = true,
+        schedule = emptyList()
     )
 }

@@ -1,10 +1,24 @@
 package tmg.flashback.statistics.room.dao
 
 import androidx.room.*
+import org.threeten.bp.LocalDate
+import org.threeten.bp.format.DateTimeFormatter
+import tmg.flashback.statistics.room.models.overview.OverviewWithCircuit
 import tmg.flashback.statistics.room.models.overview.Schedule
+import tmg.utilities.extensions.format
 
 @Dao
 interface ScheduleDao {
+
+    @Transaction
+    @Query("SELECT * FROM Overview WHERE date >= :fromDate")
+    suspend fun getUpcomingEvents(fromDate: String): List<OverviewWithCircuit>
+
+    @Transaction
+    suspend fun getUpcomingEvents(fromDate: LocalDate): List<OverviewWithCircuit> {
+        val fromDateString = fromDate.format("yyyy-MM-dd") ?: return emptyList()
+        return getUpcomingEvents(fromDateString)
+    }
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(schedule: Schedule)

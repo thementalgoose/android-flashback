@@ -20,6 +20,9 @@ dependencies {
     // Formula 1 base data
     implementation project(path: ':formula1')
 
+    // Repo
+    implementation project(path: ':data:repo')
+
     // Core modules
     implementation project(path: ':core:ads')
     implementation project(path: ':core:analytics')
