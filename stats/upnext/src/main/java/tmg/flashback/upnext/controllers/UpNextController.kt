@@ -2,14 +2,17 @@ package tmg.flashback.upnext.controllers
 
 import android.content.Context
 import android.util.Log
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.LocalTime
 import org.threeten.bp.format.DateTimeFormatter
+import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.formula1.model.Timestamp
 import tmg.flashback.notifications.controllers.NotificationController
+import tmg.flashback.statistics.repo.ScheduleRepository
 import tmg.flashback.upnext.BuildConfig
 import tmg.flashback.upnext.model.NotificationChannel
 import tmg.flashback.upnext.model.NotificationReminder
@@ -25,7 +28,8 @@ import tmg.flashback.upnext.utils.NotificationUtils.getNotificationTitleText
 class UpNextController(
     private val applicationContext: Context,
     private val notificationController: NotificationController,
-    private val upNextRepository: UpNextRepository
+    private val upNextRepository: UpNextRepository,
+    private val scheduleRepository: ScheduleRepository
 ) {
 
     /**
@@ -35,19 +39,10 @@ class UpNextController(
     // item 0 :yesterday
     // item 1 :today, today2
     // item 2: tomorrow
-    fun getNextEvent(): UpNextSchedule? {
-        return upNextRepository
-            .upNext
-            .filter { schedule ->
-                schedule.values.any { it.timestamp.originalDate >= LocalDate.now() }
-            }
-            .filter { schedule ->
-                schedule.values.minByOrNull { it.timestamp.originalDate.atTime(it.timestamp.originalTime ?: LocalTime.parse("10:00", DateTimeFormatter.ofPattern("HH:mm"))) } != null
-            }
-            .minByOrNull { schedule ->
-                val minDateInEvent = schedule.values.minByOrNull { it.timestamp.originalDate.atTime(it.timestamp.originalTime ?: LocalTime.parse("10:00", DateTimeFormatter.ofPattern("HH:mm"))) }!!
-                return@minByOrNull minDateInEvent.timestamp.string()
-            }
+    suspend fun getNextEvent(): OverviewRace? {
+        return scheduleRepository
+            .getUpcomingEvents()
+            .minByOrNull { it.date }
     }
 
     //region Notification preferences
@@ -69,56 +64,53 @@ class UpNextController(
         get() = upNextRepository.notificationRace
         set(value) {
             upNextRepository.notificationRace = value
-            GlobalScope.launch { scheduleNotifications(force = true) }
+            GlobalScope.launch(context = Dispatchers.IO) { scheduleNotifications(force = true) }
         }
 
     var notificationQualifying: Boolean
         get() = upNextRepository.notificationQualifying
         set(value) {
             upNextRepository.notificationQualifying = value
-            GlobalScope.launch { scheduleNotifications(force = true) }
+            GlobalScope.launch(context = Dispatchers.IO) { scheduleNotifications(force = true) }
         }
 
     var notificationFreePractice: Boolean
         get() = upNextRepository.notificationFreePractice
         set(value) {
             upNextRepository.notificationFreePractice = value
-            GlobalScope.launch { scheduleNotifications(force = true) }
+            GlobalScope.launch(context = Dispatchers.IO) { scheduleNotifications(force = true) }
         }
 
     var notificationSeasonInfo: Boolean
         get() = upNextRepository.notificationOther
         set(value) {
             upNextRepository.notificationOther = value
-            GlobalScope.launch { scheduleNotifications(force = true) }
+            GlobalScope.launch(context = Dispatchers.IO) { scheduleNotifications(force = true) }
         }
 
     var notificationReminder: NotificationReminder
         get() = upNextRepository.notificationReminderPeriod
         set(value) {
             upNextRepository.notificationReminderPeriod = value
-            GlobalScope.launch { scheduleNotifications(force = true) }
+            GlobalScope.launch(context = Dispatchers.IO) { scheduleNotifications(force = true) }
         }
 
     /**
      * Schedule notifications
      */
-    fun scheduleNotifications(force: Boolean = false) {
-        val upNextItemsToSchedule = upNextRepository
-            .upNext
-            .filter { schedule ->
-                schedule.values.any { it.timestamp.originalDate >= LocalDate.now() }
-            }
-            .map { schedule ->
-                schedule.values.mapIndexed { index, timestamp ->
+    suspend fun scheduleNotifications(force: Boolean = false) {
+        val upNextItemsToSchedule = scheduleRepository
+            .getUpcomingEvents()
+            .map { event ->
+                event.schedule.mapIndexed { index, item ->
                     NotificationModel(
-                        season = schedule.season,
-                        round = schedule.round,
+                        season = event.season,
+                        round = event.round,
                         value = index,
-                        title = schedule.title,
-                        label = timestamp.label,
-                        timestamp = timestamp.timestamp,
-                        channel = getCategoryBasedOnLabel(timestamp.label)
+                        title = event.raceName,
+                        label = item.label,
+                        timestamp = item.timestamp,
+                        channel = getCategoryBasedOnLabel(item.label)
                     )
                 }
             }

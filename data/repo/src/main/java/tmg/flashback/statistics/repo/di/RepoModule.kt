@@ -48,4 +48,5 @@ val repoModule = networkModule + roomModule + module {
     single { OverviewRepository(get(), get(), get(), get(), get(), get(), get()) }
     single { RaceRepository(get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get()) }
     single { SeasonRepository(get(), get(), get(), get(), get()) }
+    single { ScheduleRepository(get(), get(), get(), get()) }
 }
