@@ -11,7 +11,7 @@
         android:id="@+id/tvName"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintHorizontal_chainStyle="packed"
-        style="@style/Text.Body.1"
+        style="@style/Text.Body.2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toStartOf="@id/imgFlag"
