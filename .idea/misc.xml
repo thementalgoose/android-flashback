@@ -26,6 +26,8 @@
         <entry key="app/src/main/res/layout/view_starting_lights.xml" value="0.38632246376811596" />
         <entry key="app/src/main/res/layout/view_sync_item.xml" value="0.22" />
         <entry key="common/src/main/res/layout/activity_release_notes.xml" value="0.22864583333333333" />
+        <entry key="common/src/main/res/layout/fragment_bottom_sheet_release_notes.xml" value="0.3765625" />
+        <entry key="common/src/main/res/layout/fragment_bottom_sheet_theme.xml" value="0.1831306990881459" />
         <entry key="core/ui/src/main/res/drawable/background_bottom_sheet_selected.xml" value="0.49907407407407406" />
         <entry key="core/ui/src/main/res/drawable/background_input.xml" value="0.5625" />
         <entry key="core/ui/src/main/res/drawable/ic_bar_animation_none.xml" value="0.49907407407407406" />
@@ -38,6 +40,7 @@
         <entry key="core/ui/src/main/res/layout/view_bottom_sheet_item.xml" value="0.4311594202898551" />
         <entry key="core/ui/src/main/res/layout/view_settings_category.xml" value="0.4311594202898551" />
         <entry key="core/ui/src/main/res/layout/view_settings_preference.xml" value="0.35507246376811596" />
+        <entry key="debug/src/main/res/layout/activity_style_guide.xml" value="0.16666666666666666" />
         <entry key="feature/common/src/main/res/layout/activity_release_notes.xml" value="0.2890625" />
         <entry key="feature/common/src/main/res/layout/fragment_bottom_sheet_animation_speed.xml" value="0.4311594202898551" />
         <entry key="feature/common/src/main/res/layout/fragment_bottom_sheet_release_notes.xml" value="0.4311594202898551" />
@@ -175,6 +178,7 @@
         <entry key="feature/upnext/src/main/res/layout/view_timezone.xml" value="0.3848958333333333" />
         <entry key="feature/upnext/src/main/res/layout/view_up_next_time_list.xml" value="0.3026041666666667" />
         <entry key="feature/upnext/src/main/res/layout/widget_up_next.xml" value="0.2" />
+        <entry key="rss/src/main/res/layout/fragment_rss.xml" value="0.1831306990881459" />
         <entry key="stats/search/src/main/res/drawable/ic_search_circuits.xml" value="0.2785" />
         <entry key="stats/search/src/main/res/drawable/ic_search_constructor.xml" value="0.2785" />
         <entry key="stats/search/src/main/res/drawable/ic_search_driver.xml" value="0.2785" />
@@ -184,10 +188,15 @@
         <entry key="stats/search/src/main/res/layout/activity_search.xml" value="0.542572463768116" />
         <entry key="stats/search/src/main/res/layout/fragment_search.xml" value="0.542572463768116" />
         <entry key="stats/statistics/src/main/res/drawable-xxhdpi/ic_search_scroll_icon_search.xml" value="0.2785" />
+        <entry key="stats/statistics/src/main/res/layout/fragment_constructor.xml" value="0.1831306990881459" />
         <entry key="stats/statistics/src/main/res/layout/fragment_dashboard_season.xml" value="0.31979166666666664" />
+        <entry key="stats/statistics/src/main/res/layout/fragment_driver.xml" value="0.2128623188405797" />
         <entry key="stats/statistics/src/main/res/layout/fragment_search.xml" value="0.46875" />
         <entry key="stats/statistics/src/main/res/layout/layout_podium.xml" value="0.41458333333333336" />
         <entry key="stats/statistics/src/main/res/layout/layout_qualifying_time.xml" value="0.41458333333333336" />
+        <entry key="stats/statistics/src/main/res/layout/view_driver_constructors.xml" value="0.3765625" />
+        <entry key="stats/statistics/src/main/res/layout/view_driver_season.xml" value="0.3765625" />
+        <entry key="stats/statistics/src/main/res/layout/view_driver_summary_header.xml" value="0.3765625" />
         <entry key="stats/statistics/src/main/res/layout/view_race_qualifying_driver.xml" value="0.3677536231884058" />
         <entry key="stats/statistics/src/main/res/layout/view_race_qualifying_header.xml" value="0.29483695652173914" />
         <entry key="stats/statistics/src/main/res/layout/view_race_qualifying_q1q2_result.xml" value="0.3677536231884058" />
@@ -196,6 +205,7 @@
         <entry key="stats/statistics/src/main/res/layout/view_race_qualifying_single_result.xml" value="0.3677536231884058" />
         <entry key="stats/statistics/src/main/res/layout/view_race_race_header.xml" value="0.1831306990881459" />
         <entry key="stats/statistics/src/main/res/layout/view_race_sprint_qualifying_result.xml" value="0.27608915906788245" />
+        <entry key="stats/upnext/src/main/res/layout/fragment_up_next.xml" value="0.1580547112462006" />
       </map>
     </option>
   </component>
