@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import androidx.core.os.bundleOf
-import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.ui.base.BaseFragment
@@ -83,7 +82,8 @@ class DriverSeasonFragment: BaseFragment<FragmentDriverSeasonBinding>() {
                         trackName = result.circuitName,
                         countryISO = result.raceCountryISO,
                         date = result.date
-                ))
+                )
+                )
                 startActivity(intent)
             }
         }

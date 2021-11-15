@@ -97,7 +97,7 @@ internal class HomeViewModelTest: BaseTest() {
 
         coVerify { mockConfigurationManager.applyPending() }
         verify { mockAppShortcutManager.disable() }
-        verify { mockUpNextController.scheduleNotifications() }
+        coVerify { mockUpNextController.scheduleNotifications() }
 
         assertFalse(sut.requiresSync)
         assertFalse(sut.forceUpgrade)
@@ -113,7 +113,7 @@ internal class HomeViewModelTest: BaseTest() {
 
         coVerify { mockConfigurationManager.applyPending() }
         verify { mockAppShortcutManager.enable() }
-        verify { mockUpNextController.scheduleNotifications() }
+        coVerify { mockUpNextController.scheduleNotifications() }
 
         assertFalse(sut.requiresSync)
         assertFalse(sut.forceUpgrade)

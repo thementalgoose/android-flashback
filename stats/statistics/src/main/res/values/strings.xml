@@ -110,6 +110,8 @@
     <string name="race_dnf">DNF</string>
     <string name="race_cause">%s</string>
 
+    <string name="race_sprint_qualifying_message">The positions listed here are the official qualifying result, which due to the sprint qualifying may be different than their Q1 Q2 Q3 finishing order</string>
+
     <!-- Race Status -->
     <string name="race_status_retired">DNF</string>
     <string name="qualifying_grid_penalty" formatted="false">%d place grid penalty, starts %s</string>

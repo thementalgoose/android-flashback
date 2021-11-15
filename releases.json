@@ -585,5 +585,17 @@
       "Fixes some crashes that happen on non-english devices",
       "Usual assortment of bug fixes and preparations for new features"
     ]
+  },
+  {
+    "versionCode": 113,
+    "versionName": "7.0.2",
+    "isMajor": false,
+    "title": "Rewrite",
+    "notes": [
+      "Rewrites process of caching and updating race data to be persistent and auto updating",
+      "Adds more animations around content loading",
+      "Adds pull to refresh everywhere",
+      "Adds new notification banner"
+    ]
   }
 ]

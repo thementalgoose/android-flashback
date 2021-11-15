@@ -12,19 +12,19 @@ class RaceController(
 ) {
 
     var showQualifyingDelta: Boolean
-        get() = statisticsRepository.showQualifyingDelta
+        get() = false /* statisticsRepository.showQualifyingDelta */
         set(value) {
             statisticsRepository.showQualifyingDelta = value
         }
 
     var fadeDNF: Boolean
-        get() = statisticsRepository.fadeDNF
+        get() = true /* statisticsRepository.fadeDNF */
         set(value) {
             statisticsRepository.fadeDNF = value
         }
 
     var showGridPenaltiesInQualifying: Boolean
-        get() = statisticsRepository.showGridPenaltiesInQualifying
+        get() = false /* statisticsRepository.showGridPenaltiesInQualifying */
         set(value) {
             statisticsRepository.showGridPenaltiesInQualifying = value
         }

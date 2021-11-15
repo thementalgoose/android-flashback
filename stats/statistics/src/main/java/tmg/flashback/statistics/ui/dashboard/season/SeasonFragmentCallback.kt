@@ -5,4 +5,5 @@ interface SeasonFragmentCallback {
      fun openNow()
      fun scrollUp()
      fun scrollDown()
+     fun refresh()
 }
