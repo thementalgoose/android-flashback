@@ -74,7 +74,7 @@
 
             <TextView
                 android:id="@+id/upnextLabel"
-                style="@style/Text.Dashboard.Calendar.Month"
+                style="@style/Text.Body.1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/dashboard_season_list_up_next_race"

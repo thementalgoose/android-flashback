@@ -1,44 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-
-    <!--#region Dashboard Up Next -->
-
-    <style name="Text.Dashboard.UpNext.Hero" parent="Text">
-        <item name="android:fontFamily">@font/montserrat</item>
-        <item name="android:textSize">@dimen/textSizeXLarge</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="Text.Dashboard.UpNext.Title" parent="Text">
-        <item name="android:textSize">26sp</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="Text.Dashboard.UpNext.Subtitle" parent="Text">
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="Text.Dashboard.UpNext.Info" parent="Text">
-        <item name="android:textColor">?attr/contentSecondary</item>
-        <item name="android:textStyle">italic</item>
-        <item name="android:textSize">@dimen/textSizeSmall</item>
-    </style>
-
-    <style name="Text.Dashboard.UpNext.Item.Label" parent="Text">
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="Text.Dashboard.UpNext.Item.Time" parent="Text">
-        <item name="android:textSize">@dimen/textSizeLarge</item>
-    </style>
-
-    <style name="Text.Dashboard.UpNext.Day.Label" parent="Text">
-        <item name="android:textSize">@dimen/textSizeMedium</item>
-    </style>
-
-    <!--#endregion -->
-
     <!--#region Widgets -->
 
     <style name="Text.Widget.Title" parent="Text">
@@ -62,43 +24,6 @@
         <item name="android:fontFamily">@font/montserrat</item>
         <item name="android:textSize">@dimen/textSizeMedium</item>
         <item name="android:textColor">#fcfcfc</item>
-    </style>
-
-    <!--#endregion -->
-
-    <style name="Text.UpNext.Title" parent="Text.Title" />
-
-    <style name="Text.UpNext.RaceName" parent="Text">
-        <item name="android:textColor">?attr/contentSecondary</item>
-        <item name="android:textSize">@dimen/textSizeMedium</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="Text.UpNext.Circuit" parent="Text">
-        <item name="android:textColor">?attr/contentTertiary</item>
-        <item name="android:textSize">@dimen/textSizeSmall</item>
-    </style>
-
-    <style name="Text.UpNext.Round" parent="Text">
-        <item name="android:textSize">@dimen/textSizeSmall</item>
-        <item name="android:textColor">?attr/contentTertiary</item>
-    </style>
-
-    <style name="Text.UpNext.Countdown" parent="Text">
-        <item name="android:fontFamily">@font/montserrat</item>
-        <item name="android:textSize">28sp</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="Text.UpNext.CountdownLabel" parent="Text">
-        <item name="android:fontFamily">@font/montserrat</item>
-        <item name="android:textColor">?attr/contentSecondary</item>
-        <item name="android:textSize">@dimen/textSizeMedium</item>
-    </style>
-
-    <style name="Text.UpNext.Date" parent="Text">
-        <item name="android:textSize">@dimen/textSizeSmall</item>
-        <item name="android:textColor">?attr/contentTertiary</item>
     </style>
 
     <!--#endregion -->

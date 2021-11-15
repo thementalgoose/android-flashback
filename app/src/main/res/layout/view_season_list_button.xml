@@ -24,7 +24,7 @@
 
     <TextView
         android:id="@+id/label"
-        style="@style/Text.Dashboard.List.Item"
+        style="@style/Text.Body.1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:paddingStart="@dimen/paddingMedium"

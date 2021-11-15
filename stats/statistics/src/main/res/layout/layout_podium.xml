@@ -23,7 +23,7 @@
             android:scaleType="centerCrop" />
 
         <TextView
-            style="@style/Text.Podium.Position"
+            style="@style/Text.Body.1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
@@ -38,7 +38,7 @@
 
         <tmg.flashback.statistics.ui.views.RaceNumberView
             android:id="@+id/tvNumber"
-            style="@style/Text.Podium.Number"
+            style="@style/Text.Body.1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|start"
@@ -60,7 +60,7 @@
 
     <TextView
         android:id="@+id/tvDriver"
-        style="@style/Text.Podium.Driver"
+        style="@style/Text.Title.Strong"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/paddingXSmall"
@@ -74,7 +74,7 @@
 
     <TextView
         android:id="@+id/tvConstructor"
-        style="@style/Text.Podium.Constructor"
+        style="@style/Text.Body.1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingStart="2dp"
@@ -97,7 +97,7 @@
 
     <TextView
         android:id="@+id/tvStartedAbsolute"
-        style="@style/Text.Podium.Position.Absolute"
+        style="@style/Text.Body.2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/paddingSmall"
@@ -121,7 +121,7 @@
 
     <TextView
         android:id="@+id/tvStartedRelative"
-        style="@style/Text.Podium.Position.Relative"
+        style="@style/Text.Caption"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="1dp"
@@ -134,7 +134,7 @@
 
     <TextView
         android:id="@+id/tvTime"
-        style="@style/Text.Podium.Time"
+        style="@style/Text.Caption"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"

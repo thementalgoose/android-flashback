@@ -10,7 +10,6 @@
 
     <style name="Text">
         <item name="android:textColor">?attr/contentPrimary</item>
-        <item name="android:fontFamily">@font/opensans</item>
     </style>
 
     <style name="Text.Headline.1" parent="Text">
@@ -71,7 +70,7 @@
 
     <style name="Text.Caption" parent="Text">
         <item name="android:textColor">?attr/contentTertiary</item>
-        <item name="android:textSize">10sp</item>
+        <item name="android:textSize">11sp</item>
         <item name="android:textStyle">bold</item>
     </style>
 

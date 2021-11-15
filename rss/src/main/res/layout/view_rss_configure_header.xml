@@ -8,7 +8,7 @@
 
     <TextView
         android:id="@+id/header"
-        style="@style/RSS.Configure.Header"
+        style="@style/Text.Title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:paddingStart="@dimen/paddingMedium"
@@ -22,7 +22,7 @@
 
     <TextView
         android:id="@+id/subtitle"
-        style="@style/RSS.Configure.Subtitle"
+        style="@style/Text.Body.1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:paddingStart="@dimen/paddingMedium"

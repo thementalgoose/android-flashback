@@ -31,7 +31,7 @@
 
         <TextView
             android:id="@+id/label"
-            style="@style/RSS.Items.SourceThumb"
+            style="@style/Text.Body.2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
@@ -43,7 +43,7 @@
 
     <TextView
         android:id="@+id/title"
-        style="@style/RSS.Items.Title"
+        style="@style/Text.Title.Strong"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/paddingNSmall"
@@ -55,7 +55,7 @@
 
     <TextView
         android:id="@+id/description"
-        style="@style/RSS.Items.Description"
+        style="@style/Text.Body.1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:maxLines="6"
@@ -67,7 +67,7 @@
 
     <TextView
         android:id="@+id/source"
-        style="@style/RSS.Items.Source"
+        style="@style/Text.Body.2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
@@ -79,7 +79,7 @@
 
     <TextView
         android:id="@+id/date"
-        style="@style/RSS.Items.Date"
+        style="@style/Text.Body.2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"

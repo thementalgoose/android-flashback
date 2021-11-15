@@ -17,7 +17,7 @@
 
         <TextView
             android:id="@+id/cell1"
-            style="@style/Text.Dashboard.Calendar.DayHeader"
+            style="@style/Text.Body.1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -25,7 +25,7 @@
 
         <TextView
             android:id="@+id/cell2"
-            style="@style/Text.Dashboard.Calendar.DayHeader"
+            style="@style/Text.Body.1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -33,7 +33,7 @@
 
         <TextView
             android:id="@+id/cell3"
-            style="@style/Text.Dashboard.Calendar.DayHeader"
+            style="@style/Text.Body.1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -41,7 +41,7 @@
 
         <TextView
             android:id="@+id/cell4"
-            style="@style/Text.Dashboard.Calendar.DayHeader"
+            style="@style/Text.Body.1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -49,7 +49,7 @@
 
         <TextView
             android:id="@+id/cell5"
-            style="@style/Text.Dashboard.Calendar.DayHeader"
+            style="@style/Text.Body.1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -57,7 +57,7 @@
 
         <TextView
             android:id="@+id/cell6"
-            style="@style/Text.Dashboard.Calendar.DayHeader"
+            style="@style/Text.Body.1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -65,7 +65,7 @@
 
         <TextView
             android:id="@+id/cell7"
-            style="@style/Text.Dashboard.Calendar.DayHeader"
+            style="@style/Text.Body.1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

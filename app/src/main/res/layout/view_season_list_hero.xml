@@ -7,7 +7,7 @@
 
     <TextView
         android:id="@+id/hero"
-        style="@style/Text.Hero"
+        style="@style/Text.Headline.2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:paddingStart="@dimen/paddingMedium"
