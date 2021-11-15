@@ -206,5 +206,9 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(),
         }
     }
 
+    override fun refresh() {
+        upNextFragment?.refresh()
+    }
+
     //endregion
 }
