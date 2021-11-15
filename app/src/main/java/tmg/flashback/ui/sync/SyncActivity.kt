@@ -8,7 +8,6 @@ import tmg.flashback.common.ui.forceupgrade.ForceUpgradeActivity
 import tmg.flashback.ui.base.BaseActivity
 import tmg.flashback.R
 import tmg.flashback.databinding.ActivitySyncBinding
-import tmg.flashback.databinding.ViewSyncItemBinding
 import tmg.flashback.ui.dashboard.HomeActivity
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
@@ -76,32 +75,6 @@ class SyncActivity: BaseActivity() {
         }
 
         viewModel.inputs.startLoading()
-    }
-
-    private fun ViewSyncItemBinding.updateTo(state: SyncState) {
-        when (state) {
-            SyncState.LOADING -> {
-                this.container.isClickable = false
-                this.container.isEnabled = false
-                this.loading.visible()
-                this.done.invisible()
-                this.failed.invisible()
-            }
-            SyncState.DONE -> {
-                this.container.isClickable = false
-                this.container.isEnabled = false
-                this.loading.invisible()
-                this.done.visible()
-                this.failed.invisible()
-            }
-            SyncState.FAILED -> {
-                this.container.isClickable = true
-                this.container.isEnabled = true
-                this.loading.invisible()
-                this.done.invisible()
-                this.failed.visible()
-            }
-        }
     }
 
     override fun onBackPressed() {
