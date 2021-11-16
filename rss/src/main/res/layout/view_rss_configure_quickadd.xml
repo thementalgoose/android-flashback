@@ -88,7 +88,7 @@
         android:clickable="true"
         android:drawablePadding="@dimen/paddingXSmall"
         android:focusable="true"
-        android:foreground="@drawable/ripple_circle"
+        android:foreground="@drawable/ripple_rounded_small"
         android:gravity="start|center"
         android:paddingStart="@dimen/paddingSmall"
         android:paddingTop="@dimen/paddingXSmall"
