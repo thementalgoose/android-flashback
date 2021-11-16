@@ -38,6 +38,7 @@
         app:layout_constraintStart_toStartOf="@id/imgBronze" />
 
     <ImageView
+        tools:background="#d3bc4d"
         android:importantForAccessibility="no"
         android:id="@+id/imgGold"
         android:layout_width="0dp"
@@ -54,6 +55,7 @@
     <TextView
         android:id="@+id/tvPodium1"
         style="@style/Text.Title.Strong"
+        android:textColor="#181818"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/paddingXSmall"
@@ -66,6 +68,7 @@
     <TextView
         android:id="@+id/tvPoint1"
         style="@style/Text.Body.2"
+        android:textColor="#181818"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="2dp"
@@ -77,6 +80,7 @@
         tools:text="26 points" />
 
     <ImageView
+        tools:background="#c2c2c2"
         android:importantForAccessibility="no"
         android:id="@+id/imgSilver"
         android:layout_width="0dp"
@@ -92,6 +96,7 @@
         android:id="@+id/tvPodium2"
         style="@style/Text.Title.Strong"
         android:layout_width="0dp"
+        android:textColor="#181818"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/paddingXSmall"
         android:gravity="center"
@@ -103,6 +108,7 @@
     <TextView
         android:id="@+id/tvPoints2"
         style="@style/Text.Body.2"
+        android:textColor="#181818"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="2dp"
@@ -114,6 +120,7 @@
         tools:text="18 points" />
 
     <ImageView
+        tools:background="#d29342"
         android:importantForAccessibility="no"
         android:id="@+id/imgBronze"
         android:layout_width="0dp"
@@ -129,6 +136,7 @@
         android:id="@+id/tvPodium3"
         style="@style/Text.Title.Strong"
         android:layout_width="0dp"
+        android:textColor="#181818"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/paddingXSmall"
         android:gravity="center"
@@ -140,6 +148,7 @@
     <TextView
         android:id="@+id/tvPoints3"
         style="@style/Text.Body.2"
+        android:textColor="#181818"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="2dp"
