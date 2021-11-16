@@ -92,10 +92,6 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(),
             }
         }
 
-        observe(viewModel.outputs.showUpNext) {
-//            seasonFragment?.showUpNext(it)
-        }
-
         observeEvent(viewModel.outputs.openSearch) {
             context?.let {
                 startActivity(SearchActivity.intent(it))
@@ -104,7 +100,6 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(),
 
         observeEvent(viewModel.outputs.appConfigSynced) {
             listFragment?.refresh()
-//            seasonFragment?.refresh()
             upNextFragment?.refresh()
         }
 

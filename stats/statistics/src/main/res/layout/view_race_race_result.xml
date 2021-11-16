@@ -11,7 +11,7 @@
 
     <TextView
         android:id="@+id/tvPosition"
-        style="@style/Text.RaceResult.Position"
+        style="@style/Text.Title.Strong"
         android:layout_width="@dimen/qualifyingListPositionWidth"
         android:layout_height="0dp"
         android:layout_marginStart="@dimen/paddingSmall"
@@ -45,7 +45,8 @@
 
     <tmg.flashback.statistics.ui.views.RaceNumberView
         android:id="@+id/tvDriverNumber"
-        style="@style/Text.Driver.Number"
+        style="@style/Text.Body.2"
+        android:maxLines="1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/paddingXSmall"
@@ -66,10 +67,12 @@
 
     <TextView
         android:id="@+id/tvConstructor"
-        style="@style/Text.RaceResult.Constructor"
+        style="@style/Text.Body.2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/paddingNSmall"
+        android:maxLines="1"
+        android:ellipsize="end"
         app:layout_constraintBottom_toBottomOf="@id/tvDriverNumber"
         app:layout_constraintStart_toEndOf="@id/tvDriverNumber"
         app:layout_constraintTop_toBottomOf="@id/layoutDriver"
@@ -84,10 +87,11 @@
 
     <TextView
         android:id="@+id/tvPoints"
-        style="@style/Text.RaceResult.Points"
+        style="@style/Text.Title"
         android:layout_width="@dimen/raceResultPointsWidth"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:maxLines="1"
         android:layout_marginStart="@dimen/paddingMedium"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/llPosition"
@@ -117,9 +121,10 @@
 
         <TextView
             android:id="@+id/tvStartedAbsolute"
-            style="@style/Text.RaceResult.Position.Absolute"
+            style="@style/Text.Body.1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:maxLines="1"
             android:gravity="end"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/posGuideline"
@@ -128,6 +133,7 @@
             tools:text="12th" />
 
         <ImageView
+            android:importantForAccessibility="no"
             android:id="@+id/imgStarted"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -139,8 +145,9 @@
 
         <TextView
             android:id="@+id/tvStartedRelative"
-            style="@style/Text.RaceResult.Position.Relative"
+            style="@style/Text.Body.2"
             android:layout_width="wrap_content"
+            android:maxLines="1"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/imgStarted"
@@ -177,7 +184,8 @@
 
             <TextView
                 android:id="@+id/tvTime"
-                style="@style/Text.RaceResult.Time"
+                style="@style/Text.Body.2"
+                android:maxLines="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="3dp"

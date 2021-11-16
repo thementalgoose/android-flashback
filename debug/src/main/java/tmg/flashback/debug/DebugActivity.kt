@@ -1,5 +1,6 @@
 package tmg.flashback.debug
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -9,6 +10,7 @@ import org.koin.android.ext.android.inject
 import tmg.flashback.ui.base.BaseActivity
 import tmg.flashback.ui.navigation.NavigationProvider
 import tmg.flashback.debug.databinding.ActivityDebugBinding
+import tmg.flashback.debug.styleguide.StyleGuideActivity
 import tmg.flashback.statistics.repo.CircuitRepository
 import tmg.flashback.statistics.repo.ConstructorRepository
 import tmg.flashback.statistics.repo.DriverRepository
@@ -44,6 +46,10 @@ class DebugActivity: BaseActivity() {
 
         binding.syncActivity.setOnClickListener {
             startActivity(navigationProvider.syncActivityIntent(this))
+        }
+
+        binding.styleGuide.setOnClickListener {
+            startActivity(Intent(this, StyleGuideActivity::class.java))
         }
 
         binding.networkOverview.setOnClickListener {

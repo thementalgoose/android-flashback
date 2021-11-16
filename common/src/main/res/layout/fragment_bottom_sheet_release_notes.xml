@@ -24,7 +24,7 @@
 
         <TextView
             android:id="@+id/bottomSheetTitle"
-            style="@style/Settings.BottomSheet.Title"
+            style="@style/Text.Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -37,7 +37,7 @@
 
         <TextView
             android:id="@+id/subtitle"
-            style="@style/Settings.BottomSheet.Subtitle"
+            style="@style/Text.Body.1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -60,7 +60,7 @@
 
     <TextView
         android:id="@+id/tvReleaseNotesDescription"
-        style="@style/Settings.BottomSheet.Content"
+        style="@style/Text.Body.2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingStart="@dimen/paddingMedium"

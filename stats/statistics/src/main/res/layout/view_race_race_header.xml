@@ -18,6 +18,7 @@
         app:layout_constraintGuide_percent="0.5" />
 
     <ImageView
+        android:importantForAccessibility="no"
         android:id="@+id/tvPoints"
         android:layout_width="@dimen/raceResultPointsWidth"
         android:layout_height="wrap_content"
@@ -43,6 +44,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
+            android:importantForAccessibility="no"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_race_grid"
@@ -67,8 +69,8 @@
         tools:ignore="UseCompoundDrawables">
 
         <ImageView
+            android:importantForAccessibility="no"
             android:id="@+id/tvTime"
-            style="@style/Text.RaceResult.Header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_race_status"

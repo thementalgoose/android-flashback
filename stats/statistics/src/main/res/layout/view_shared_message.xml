@@ -7,7 +7,7 @@
 
     <TextView
         android:id="@+id/message"
-        style="@style/Text.Home.Message"
+        style="@style/Text.Caption"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:foreground="@drawable/ripple_rectangle"

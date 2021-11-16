@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     android:paddingStart="@dimen/paddingMedium"
     android:paddingTop="10dp"
+    tools:background="?attr/backgroundPrimary"
     android:paddingEnd="@dimen/paddingMedium"
     android:paddingBottom="10dp">
 
@@ -26,7 +27,7 @@
 
         <TextView
             android:id="@+id/label"
-            style="@style/RSS.Items.SourceThumb"
+            style="@style/Text.Body.2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
@@ -38,7 +39,7 @@
 
     <TextView
         android:id="@+id/title"
-        style="@style/RSS.Configure.Item.Url"
+        style="@style/Text.Body.1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/paddingNSmall"
@@ -51,7 +52,7 @@
 
     <TextView
         android:id="@+id/description"
-        style="@style/RSS.Configure.Item.RssFeed"
+        style="@style/Text.Body.2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/paddingXSmall"
@@ -77,7 +78,7 @@
 
     <TextView
         android:id="@+id/visit_website"
-        style="@style/RSS.Configure.Item.VisitWebsite"
+        style="@style/Text.Caption"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/paddingXSmall"

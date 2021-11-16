@@ -7,7 +7,7 @@
 
     <TextView
         android:id="@+id/hero"
-        style="@style/Text.Dashboard.UpNext.Hero"
+        style="@style/Text.Headline.2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/paddingSmall"
@@ -65,7 +65,7 @@
 
     <TextView
         android:id="@+id/title"
-        style="@style/Text.Dashboard.UpNext.Title"
+        style="@style/Text.Headline.1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/paddingSmall"
@@ -80,7 +80,7 @@
 
     <TextView
         android:id="@+id/subtitle"
-        style="@style/Text.Dashboard.UpNext.Subtitle"
+        style="@style/Text.Body.1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="start"
@@ -96,7 +96,7 @@
 
     <TextView
         android:id="@+id/shown_helper"
-        style="@style/Text.Dashboard.UpNext.Info"
+        style="@style/Text.Body.2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="start"
@@ -111,7 +111,7 @@
 
     <TextView
         android:id="@+id/startsIn"
-        style="@style/Text.Dashboard.UpNext.Info"
+        style="@style/Text.Body.2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="start"
@@ -122,23 +122,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:text="The first event starts in 1 day"/>
-
-    <!-- Gone temporarily while we only support device time -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:visibility="gone"
-        android:id="@+id/timezone"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:clipToPadding="false"
-        android:paddingStart="@dimen/paddingMedium"
-        android:paddingTop="@dimen/paddingSmall"
-        android:paddingEnd="@dimen/paddingMedium"
-        android:paddingBottom="@dimen/paddingSmall"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/divider"
-        tools:itemCount="1"
-        tools:listitem="@layout/view_timezone" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/content"

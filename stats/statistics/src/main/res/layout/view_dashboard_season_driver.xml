@@ -30,11 +30,11 @@
 
         <TextView
             android:id="@+id/tvPosition"
-            style="@style/Text.RaceResult.Position"
+            style="@style/Text.Title.Strong"
             android:layout_width="@dimen/qualifyingListPositionWidth"
             android:layout_height="0dp"
             android:gravity="center"
-            android:maxLength="2"
+            android:maxLength="1"
             app:layout_constraintBottom_toBottomOf="@id/tvConstructor"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -78,7 +78,7 @@
 
         <tmg.flashback.statistics.ui.views.RaceNumberView
             android:id="@+id/tvDriverNumber"
-            style="@style/Text.Driver.Number"
+            style="@style/Text.Body.2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/paddingXSmall"
@@ -88,7 +88,7 @@
 
         <TextView
             android:id="@+id/tvConstructor"
-            style="@style/Text.RaceResult.Constructor"
+            style="@style/Text.Body.2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/paddingSmall"

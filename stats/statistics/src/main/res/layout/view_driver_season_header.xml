@@ -24,8 +24,9 @@
         app:layout_constraintGuide_percent="@fraction/driverSeason" />
 
     <ImageView
+        android:importantForAccessibility="no"
         android:id="@+id/points"
-        style="@style/Text.DriverSeason.Track.Qualified"
+        style="@style/Text.Title.Strong"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:gravity="center"
@@ -37,7 +38,7 @@
 
     <TextView
         android:id="@+id/qualified"
-        style="@style/Text.DriverSeason.Track.Finish"
+        style="@style/Text.Title.Strong"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -47,8 +48,9 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
+        android:importantForAccessibility="no"
         android:id="@+id/finished"
-        style="@style/Text.DriverSeason.Track.Finish"
+        style="@style/Text.Title.Strong"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center"

@@ -11,7 +11,7 @@
         android:paddingEnd="@dimen/paddingMedium">
 
         <TextView
-            style="@style/Text.Toolbar.Expanded"
+            style="@style/Text.Headline.1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/paddingXLarge"
@@ -19,6 +19,7 @@
             android:text="@string/debug_title" />
 
         <TextView
+            style="@style/Text.Section"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/paddingMedium"
@@ -32,6 +33,21 @@
             android:textAllCaps="false" />
 
         <TextView
+            style="@style/Text.Section"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/paddingMedium"
+            android:text="@string/debug_style_guide_title" />
+
+        <Button
+            android:id="@+id/styleGuide"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/debug_style_guide"
+            android:textAllCaps="false" />
+
+        <TextView
+            style="@style/Text.Section"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/paddingMedium"
@@ -45,6 +61,7 @@
             android:textAllCaps="false" />
 
         <TextView
+            style="@style/Text.Section"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/paddingMedium"

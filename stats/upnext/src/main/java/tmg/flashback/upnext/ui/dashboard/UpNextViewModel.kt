@@ -35,7 +35,6 @@ interface UpNextViewModelInputs {
 interface UpNextViewModelOutputs {
     val data: LiveData<OverviewRace>
     val content: LiveData<List<UpNextBreakdownModel>>
-    val timezones: LiveData<List<TimezoneItem>>
     val remainingDays: LiveData<Int>
 }
 
@@ -49,7 +48,6 @@ class UpNextViewModel(
 
     override val data: MutableLiveData<OverviewRace> = MutableLiveData()
     override val content: MutableLiveData<List<UpNextBreakdownModel>> = MutableLiveData()
-    override val timezones: MutableLiveData<List<TimezoneItem>> = MutableLiveData()
     override val remainingDays: MutableLiveData<Int> = MutableLiveData()
 
     var inputs: UpNextViewModelInputs = this
@@ -80,7 +78,6 @@ class UpNextViewModel(
                         schedule = emptyList(),
                     ))
                     content.postValue(emptyList())
-                    timezones.postValue(emptyList())
                     remainingDays.postValue(0)
                 }
                 else -> {
@@ -110,9 +107,6 @@ class UpNextViewModel(
                         .flatten()
                         .toList()
                     )
-                    timezones.postValue(listOf(
-                        TimezoneItem(R.string.dashboard_up_next_your_time)
-                    ))
                     remainingDays.postValue(getRemainingDays(schedule.schedule))
                 }
             }

@@ -12,7 +12,7 @@
 
     <TextView
         android:id="@+id/title"
-        style="@style/Text.Dashboard.UpNext.Item.Label"
+        style="@style/Text.Body.1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/paddingXSmall"
@@ -36,7 +36,7 @@
 
     <TextView
         android:id="@+id/time"
-        style="@style/Text.Dashboard.UpNext.Item.Time"
+        style="@style/Text.Body.1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingEnd="@dimen/paddingXSmall"
