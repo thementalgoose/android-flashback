@@ -39,6 +39,12 @@ class ConstructorViewHolder(
 
         val maxPoints = item.maxPointsInSeason
 
+        if (item.position > 0) {
+            binding.tvPosition.text = item.position.toString()
+        } else {
+            binding.tvPosition.text = ""
+        }
+
         binding.tvTitle.text = item.constructor.name
 
         binding.lpvProgress.backgroundColour = context.theme.getColor(R.attr.backgroundPrimary)
