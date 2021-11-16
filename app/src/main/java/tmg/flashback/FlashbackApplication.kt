@@ -32,6 +32,8 @@ class FlashbackApplication: Application() {
                 rssModule,
                 upNextModule,
                 commonModule,
+                // Debug
+                debugModule,
                 // Core
                 analyticsModule,
                 configModule,
