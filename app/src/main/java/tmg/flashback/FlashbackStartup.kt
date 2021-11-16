@@ -31,7 +31,8 @@ class FlashbackStartup(
     private val widgetManager: WidgetManager,
     private val themeController: ThemeController,
     private val analyticsManager: AnalyticsManager,
-    private val notificationController: NotificationController
+    private val notificationController: NotificationController,
+    // private val adsController: AdsController
 ) {
     fun startup(application: FlashbackApplication) {
 
@@ -67,6 +68,9 @@ class FlashbackStartup(
             appOpenedCount = deviceController.appOpenedCount,
             appFirstOpened = deviceController.appFirstBoot
         )
+
+        // Adverts
+//        adsController.initialise(application)
 
         // Channels
         GlobalScope.launch {
