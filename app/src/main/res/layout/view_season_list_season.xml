@@ -34,7 +34,7 @@
 
     <TextView
         android:id="@+id/label"
-        style="@style/Text.Body.1"
+        style="@style/Text.Body.1.Strong"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/paddingMedium"

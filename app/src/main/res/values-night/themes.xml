@@ -33,7 +33,7 @@
         <item name="f1FastestSector">#673ab7</item>
         <item name="f1FavouriteSeason">#e6ca4f</item>
         <item name="f1Championship">#e6ca4f</item>
-        <item name="f1PipeColor">?attr/backgroundSecondary</item>
+        <item name="f1PipeColor">?attr/contentTertiary</item>
 
         <!-- =============================================================================== -->
 
