@@ -8,8 +8,8 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
-        android:layout_width="@dimen/podiumDriverImage"
-        android:layout_height="@dimen/podiumDriverImage"
+        android:layout_width="@dimen/overviewDriverImage"
+        android:layout_height="@dimen/overviewDriverImage"
         android:layout_marginStart="@dimen/paddingMedium"
         android:layout_marginTop="@dimen/paddingMedium"
         android:layout_marginEnd="@dimen/paddingMedium"
