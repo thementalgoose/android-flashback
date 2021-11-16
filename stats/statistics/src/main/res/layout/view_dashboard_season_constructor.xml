@@ -18,15 +18,29 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.6" />
+        app:layout_constraintGuide_percent="0.66" />
 
     <TextView
+        android:id="@+id/tvPosition"
+        style="@style/Text.Title.Strong"
+        android:layout_width="@dimen/qualifyingListPositionWidth"
+        android:layout_height="0dp"
+        android:paddingTop="@dimen/paddingXSmall"
+        android:gravity="center|top"
+        android:maxLength="2"
+        app:layout_constraintBottom_toBottomOf="@id/driverList"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="88" />
+
+    <TextView
+        android:layout_marginStart="@dimen/radiusSmall"
         android:id="@+id/tvTitle"
         style="@style/Text.Title.Strong"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="@id/guideline"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tvPosition"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Ferrari" />
 
@@ -36,8 +50,9 @@
         android:layout_height="wrap_content"
         android:clickable="false"
         android:overScrollMode="@integer/overScrollMode"
+        tools:layout_height="90dp"
         app:layout_constraintEnd_toStartOf="@id/guideline"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@id/tvTitle"
         app:layout_constraintTop_toBottomOf="@id/tvTitle"
         tools:itemCount="4"
         tools:listitem="@layout/layout_constructor_driver" />
@@ -52,7 +67,7 @@
         android:text="@string/home_constructor_penalty"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/tvTitle"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@id/tvTitle"
         app:layout_constraintTop_toBottomOf="@id/driverList" />
 
     <tmg.labelledprogressbar.LabelledProgressBar
