@@ -41,7 +41,7 @@
 
     <TextView
         android:id="@+id/qualified"
-        style="@style/Text.DriverSeason.Track.Qualified"
+        style="@style/Text.Title"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:gravity="center"
@@ -53,7 +53,7 @@
 
     <TextView
         android:id="@+id/finished"
-        style="@style/Text.DriverSeason.Track.Finish"
+        style="@style/Text.Title.Strong"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:gravity="center"
@@ -65,7 +65,7 @@
 
     <TextView
         android:id="@+id/raceStatus"
-        style="@style/Text.DriverSeason.Track.Status"
+        style="@style/Text.Caption"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -76,6 +76,7 @@
         app:layout_constraintTop_toBottomOf="@id/finished" />
 
     <ImageView
+        android:importantForAccessibility="no"
         android:id="@+id/country"
         android:layout_width="@dimen/countryImageSize"
         android:layout_height="@dimen/countryImageSize"
@@ -86,7 +87,7 @@
 
     <TextView
         android:id="@+id/raceName"
-        style="@style/Text.DriverSeason.Track.Title"
+        style="@style/Text.Title.Strong"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/paddingMedium"
@@ -99,7 +100,7 @@
 
     <TextView
         android:id="@+id/circuitName"
-        style="@style/Text.DriverSeason.Track.TrackName"
+        style="@style/Text.Body.2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="@id/raceName"
@@ -109,7 +110,7 @@
 
     <TextView
         android:id="@+id/constructorLabel"
-        style="@style/Text.DriverSeason.Track.Status"
+        style="@style/Text.Caption"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
@@ -120,7 +121,7 @@
 
     <TextView
         android:id="@+id/penalty"
-        style="@style/Text.QualifyingTime.Delta"
+        style="@style/Text.Caption"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"

@@ -75,7 +75,7 @@
 
         <TextView
             android:id="@+id/titleCollapsed"
-            style="@style/Text.Toolbar.Collapsed"
+            style="@style/Text.Headline.2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/paddingSmall"
@@ -89,7 +89,7 @@
 
         <TextView
             android:id="@+id/titleExpanded"
-            style="@style/Text.Toolbar.Expanded"
+            style="@style/Text.Headline.1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/toolbarExpandedSpacer"
@@ -124,6 +124,8 @@
 
             <tmg.flashback.ui.views.LockableRecyclerView
                 android:id="@+id/dataList"
+                tools:itemCount="5"
+                tools:listitem="@layout/view_rss_item"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="@dimen/paddingXLarge"

@@ -16,7 +16,7 @@
 
     <TextView
         android:id="@+id/title"
-        style="@style/Text.Search.Race.Name"
+        style="@style/Text.Title.Strong"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:paddingEnd="@dimen/paddingSmall"
@@ -27,7 +27,7 @@
 
     <TextView
         android:id="@+id/circuit"
-        style="@style/Text.Search.Race.Nationality"
+        style="@style/Text.Body.1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
@@ -38,7 +38,7 @@
 
     <TextView
         android:id="@+id/round"
-        style="@style/Text.Search.Race.Round"
+        style="@style/Text.Section"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/paddingSmall"
@@ -50,10 +50,11 @@
 
     <TextView
         android:id="@+id/country"
-        style="@style/Text.Search.Race.Nationality"
+        style="@style/Text.Body.1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
+        android:paddingStart="0dp"
         android:paddingEnd="@dimen/paddingSmall"
         app:layout_constraintStart_toStartOf="@id/title"
         app:layout_constraintTop_toBottomOf="@id/circuit"

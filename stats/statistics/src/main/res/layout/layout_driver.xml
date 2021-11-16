@@ -9,7 +9,7 @@
 
     <TextView
         android:id="@+id/tvName"
-        style="@style/Text.Driver.Name"
+        style="@style/Text.Body.1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -19,7 +19,7 @@
 
     <tmg.flashback.statistics.ui.views.RaceNumberView
         android:id="@+id/tvNumber"
-        style="@style/Text.Driver.Number"
+        style="@style/Text.Body.2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/paddingXSmall"
@@ -29,6 +29,7 @@
         tools:text="44" />
 
     <ImageView
+        android:importantForAccessibility="no"
         android:id="@+id/imgFlag"
         android:layout_width="@dimen/driverFlagSize"
         android:layout_height="@dimen/driverFlagSize"

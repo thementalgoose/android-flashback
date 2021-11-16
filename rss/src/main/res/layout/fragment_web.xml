@@ -15,6 +15,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageButton
+            android:contentDescription="@string/ab_rss_back"
             android:id="@+id/back"
             android:layout_width="@dimen/toolbarIconSize"
             android:layout_height="@dimen/toolbarIconSize"
@@ -31,6 +32,7 @@
             android:layout_width="@dimen/toolbarIconSize"
             android:layout_height="@dimen/toolbarIconSize"
             android:layout_marginEnd="@dimen/paddingSmall"
+            android:contentDescription="@string/ab_rss_open_in_browser"
             android:background="@null"
             android:foreground="?attr/selectableItemBackground"
             android:src="@drawable/ic_rss_open_in_browser"
@@ -44,6 +46,7 @@
             android:layout_height="@dimen/toolbarIconSize"
             android:layout_marginStart="@dimen/paddingSmall"
             android:layout_marginEnd="@dimen/paddingSmall"
+            android:contentDescription="@string/ab_rss_share"
             android:background="@null"
             android:foreground="?attr/selectableItemBackground"
             android:src="@drawable/ic_rss_share"
@@ -53,7 +56,7 @@
 
         <TextView
             android:id="@+id/title"
-            style="@style/Text.Web.Title"
+            style="@style/Text.Body.1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/paddingSmall"
@@ -70,7 +73,7 @@
 
         <TextView
             android:id="@+id/domain"
-            style="@style/Text.Web.Domain"
+            style="@style/Text.Body.2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/paddingSmall"

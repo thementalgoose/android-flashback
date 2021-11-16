@@ -16,7 +16,6 @@ import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.upnext.BuildConfig
 import tmg.flashback.upnext.R
 import tmg.flashback.upnext.databinding.FragmentUpNextBinding
-import tmg.flashback.upnext.ui.timezone.TimezoneAdapter
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.views.show
 
@@ -25,7 +24,6 @@ class UpNextFragment: BaseFragment<FragmentUpNextBinding>() {
     private val viewModel: UpNextViewModel by viewModel()
 
     private var upNextAdapter: UpNextBreakdownAdapter? = null
-    private lateinit var timezoneAdapter: TimezoneAdapter
 
     @Suppress("RedundantNullableReturnType")
     private val tickReceiver: BroadcastReceiver? = object : BroadcastReceiver() {
@@ -46,10 +44,6 @@ class UpNextFragment: BaseFragment<FragmentUpNextBinding>() {
         upNextAdapter = UpNextBreakdownAdapter()
         binding.content.layoutManager = LinearLayoutManager(context)
         binding.content.adapter = upNextAdapter
-
-        timezoneAdapter = TimezoneAdapter()
-        binding.timezone.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        binding.timezone.adapter = timezoneAdapter
 
         observe(viewModel.outputs.content) {
             upNextAdapter?.list = it
@@ -73,10 +67,6 @@ class UpNextFragment: BaseFragment<FragmentUpNextBinding>() {
         observe(viewModel.outputs.remainingDays) {
             binding.startsIn.show(it != 0)
             binding.startsIn.text = resources.getQuantityString(R.plurals.dashboard_up_next_starts_in, it, it)
-        }
-
-        observe(viewModel.outputs.timezones) {
-            timezoneAdapter.list = it
         }
     }
 

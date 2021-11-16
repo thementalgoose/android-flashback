@@ -44,7 +44,7 @@
 
         <TextView
             android:id="@+id/titleCollapsed"
-            style="@style/Text.Toolbar.Collapsed"
+            style="@style/Text.Headline.2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/paddingSmall"
@@ -58,7 +58,7 @@
 
         <TextView
             android:id="@+id/titleExpanded"
-            style="@style/Text.Toolbar.Expanded"
+            style="@style/Text.Headline.1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/toolbarExpandedSpacer"
@@ -83,7 +83,7 @@
 
             <TextView
                 android:id="@+id/tvPolicy"
-                style="@style/Text.PrivacyPolicy.Description"
+                style="@style/Text.Body.1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingStart="@dimen/paddingMedium"

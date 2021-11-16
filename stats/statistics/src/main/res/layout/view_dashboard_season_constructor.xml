@@ -22,7 +22,7 @@
 
     <TextView
         android:id="@+id/tvTitle"
-        style="@style/Text.ConstructorStandings.Title"
+        style="@style/Text.Title.Strong"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="@id/guideline"
@@ -44,7 +44,7 @@
 
     <TextView
         android:id="@+id/penalty"
-        style="@style/Text.ConstructorStandings.Penalty"
+        style="@style/Text.Caption"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"

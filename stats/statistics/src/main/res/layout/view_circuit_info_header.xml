@@ -18,7 +18,7 @@
 
     <TextView
         android:id="@+id/country"
-        style="@style/Text.CircuitInfo.Name"
+        style="@style/Text.Title.Strong"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/paddingMedium"
@@ -30,7 +30,7 @@
 
     <TextView
         android:id="@+id/status"
-        style="@style/Text.CircuitInfo.Status"
+        style="@style/Text.Body.1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/paddingMedium"

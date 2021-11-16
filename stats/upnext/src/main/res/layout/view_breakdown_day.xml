@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingTop="@dimen/paddingXSmall"
+    android:paddingStart="0dp"
     android:paddingEnd="@dimen/paddingMedium"
     android:paddingBottom="@dimen/paddingXSmall">
 
@@ -25,7 +26,7 @@
 
     <TextView
         android:id="@+id/title"
-        style="@style/Text.Dashboard.UpNext.Day.Label"
+        style="@style/Text.Section"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/paddingMedium"

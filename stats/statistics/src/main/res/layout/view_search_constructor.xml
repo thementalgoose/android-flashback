@@ -35,7 +35,7 @@
 
     <TextView
         android:id="@+id/constructorName"
-        style="@style/Text.Search.Constructor.Name"
+        style="@style/Text.Title.Strong"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_marginStart="@dimen/paddingNSmall"
@@ -48,7 +48,7 @@
         android:id="@+id/constructorNationality"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        style="@style/Text.Search.Constructor.Nationality"
+        style="@style/Text.Body.1"
         android:layout_marginTop="2dp"
         android:paddingEnd="@dimen/paddingSmall"
         app:layout_constraintStart_toStartOf="@id/constructorName"

@@ -8,7 +8,7 @@
 
     <TextView
         android:id="@+id/day"
-        style="@style/Text.Dashboard.Calendar.Day"
+        style="@style/Text.Body.1"
         android:layout_width="28dp"
         android:layout_height="28dp"
         android:layout_marginStart="2dp"

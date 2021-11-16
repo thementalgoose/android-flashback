@@ -10,14 +10,14 @@
 
     <TextView
         android:id="@+id/tvQualifyingTime"
-        style="@style/Text.QualifyingTime.Time"
+        style="@style/Text.Body.2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="9:99.999" />
 
     <TextView
         android:id="@+id/tvQualifyingDelta"
-        style="@style/Text.QualifyingTime.Delta"
+        style="@style/Text.Caption"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="+23:234" />

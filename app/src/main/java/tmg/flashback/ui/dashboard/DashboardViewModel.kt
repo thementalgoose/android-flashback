@@ -26,8 +26,6 @@ interface DashboardViewModelOutputs {
     val openReleaseNotes: LiveData<Event>
     val openSearch: LiveData<Event>
 
-    val showUpNext: LiveData<Boolean>
-
     val appConfigSynced: LiveData<Event>
 }
 
@@ -43,7 +41,6 @@ class DashboardViewModel(
 
     override val openReleaseNotes: MutableLiveData<Event> = MutableLiveData()
     override val appConfigSynced: MutableLiveData<Event> = MutableLiveData()
-    override val showUpNext: MutableLiveData<Boolean> = MutableLiveData()
     override val openSearch: MutableLiveData<Event> = MutableLiveData()
 
     var inputs: DashboardViewModelInputs = this
@@ -61,10 +58,6 @@ class DashboardViewModel(
                 upNextController.scheduleNotifications()
                 applicationContext.updateAllWidgets()
             }
-        }
-
-        viewModelScope.launch {
-            showUpNext.value = upNextController.getNextEvent() != null
         }
 
         if (releaseNotesController.pendingReleaseNotes) {

@@ -16,7 +16,7 @@
         app:lottie_rawRes="@raw/cloud_error" />
 
     <TextView
-        style="@style/Text.Network.Error"
+        style="@style/Text.Body.2"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:gravity="center|start"

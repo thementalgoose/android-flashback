@@ -8,7 +8,7 @@
 
     <TextView
         android:id="@+id/title"
-        style="@style/Text.Search.GetStarted"
+        style="@style/Text.Body.2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
@@ -39,7 +39,7 @@
 
     <TextView
         android:id="@+id/footnote"
-        style="@style/Text.Search.GetStarted"
+        style="@style/Text.Body.2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"

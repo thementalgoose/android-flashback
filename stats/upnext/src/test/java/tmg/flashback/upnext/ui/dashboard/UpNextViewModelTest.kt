@@ -14,7 +14,6 @@ import tmg.flashback.formula1.model.Schedule
 import tmg.flashback.formula1.model.Timestamp
 import tmg.flashback.upnext.R
 import tmg.flashback.upnext.controllers.UpNextController
-import tmg.flashback.upnext.ui.timezone.TimezoneItem
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.test
 
@@ -176,15 +175,6 @@ internal class UpNextViewModelTest: BaseTest() {
         }
     }
 
-    @Test
-    fun `timezones output returns single timezone`() = coroutineTest {
-        initSUT()
-
-        sut.outputs.timezones.test {
-            assertValue(listOf(TimezoneItem(R.string.dashboard_up_next_your_time)))
-        }
-    }
-
     //endregion
 
     //region Remaining days
@@ -301,15 +291,6 @@ internal class UpNextViewModelTest: BaseTest() {
         coEvery { mockUpNextController.getNextEvent() } returns null
         initSUT()
         sut.outputs.content.test {
-            assertValue(emptyList())
-        }
-    }
-
-    @Test
-    fun `timezone value is empty list when next event is null`() = coroutineTest {
-        coEvery { mockUpNextController.getNextEvent() } returns null
-        initSUT()
-        sut.outputs.timezones.test {
             assertValue(emptyList())
         }
     }
