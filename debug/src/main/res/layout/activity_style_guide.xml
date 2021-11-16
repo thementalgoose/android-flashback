@@ -37,21 +37,27 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/paddingMedium" />
 
-        <TextView
-            style="@style/Text.Title"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Title Bold" />
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/paddingMedium" />
+            <TextView
+                style="@style/Text.Title"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Title" />
 
-        <TextView
-            style="@style/Text.Title.Strong"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Title" />
+            <TextView
+                android:layout_weight="1"
+                style="@style/Text.Title.Strong"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Title Strong" />
+
+        </LinearLayout>
+
 
         <Space
             android:layout_width="match_parent"
@@ -67,11 +73,26 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/paddingMedium" />
 
-        <TextView
-            style="@style/Text.Body.1"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Body 1" />
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+
+            <TextView
+                style="@style/Text.Body.1"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Body 1" />
+
+            <TextView
+                style="@style/Text.Body.1.Strong"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Body 1 Strong" />
+
+        </LinearLayout>
 
         <Space
             android:layout_width="match_parent"
