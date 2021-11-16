@@ -15,7 +15,8 @@ allprojects {
                         navigation_ui                           : "androidx.navigation:navigation-ui-ktx:$navigation",
                         preference                              : "androidx.preference:preference-ktx:1.1.1",
                         splashscreen                            : "androidx.core:core-splashscreen:$android_splashscreen",
-                        swiperefreshlayout                      : "androidx.swiperefreshlayout:swiperefreshlayout:$swipe_refresh"
+                        swiperefreshlayout                      : "androidx.swiperefreshlayout:swiperefreshlayout:$swipe_refresh",
+                        workmanager                             : "androidx.work:work-runtime:$android_workmanager"
                 ],
                 bugshaker                                       : "com.github.stkent:bugshaker:2.0.0",
                 circleimageview                                 : "de.hdodenhof:circleimageview:$circleimageview",
@@ -53,6 +54,9 @@ allprojects {
                         koin_ext                                : "io.insert-koin:koin-android-ext:$koin_version"
                 ],
                 lottie                                          : "com.airbnb.android:lottie:$lottie",
+                play : [
+                        ads                                     : "com.google.android.gms:play-services-ads:$play_ads"
+                ],
                 reddit : [
                         indicator                               : "com.reddit:indicator-fast-scroll:$reddit_indicator"
                 ],

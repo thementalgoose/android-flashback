@@ -95,6 +95,12 @@
             android:text="@string/debug_network_circuits"
             android:textAllCaps="false" />
 
+        <tmg.flashback.ads.views.NativeBanner
+            android:id="@+id/advert"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/paddingMedium" />
+
     </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>
