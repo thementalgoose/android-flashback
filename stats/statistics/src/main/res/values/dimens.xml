@@ -73,7 +73,8 @@
     <dimen name="podium1">140dp</dimen>
     <dimen name="podium2">95dp</dimen>
     <dimen name="podium3">60dp</dimen>
-    <dimen name="podiumDriverImage">160dp</dimen>
+    <dimen name="podiumDriverImage">86dp</dimen>
+    <dimen name="overviewDriverImage">160dp</dimen>
 
     <dimen name="qualifyingListPositionWidth">24dp</dimen>
     <dimen name="raceResultPointsWidth">36dp</dimen>
