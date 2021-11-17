@@ -259,7 +259,8 @@ class SeasonViewModel(
                     raceCountryISO = it.countryISO,
                     date = it.date,
                     hasQualifying = it.hasQualifying,
-                    hasResults = it.hasResults
+                    hasResults = it.hasResults,
+                    schedule = it.schedule
                 )
             }
     }

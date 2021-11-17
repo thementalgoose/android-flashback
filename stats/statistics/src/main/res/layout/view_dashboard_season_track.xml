@@ -119,7 +119,8 @@
 
         <tmg.flashback.ui.views.LockableRecyclerView
             android:layout_width="0dp"
-            android:layout_height="200dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/scheduleList"
             android:layout_marginStart="@dimen/paddingMedium"
             android:layout_marginEnd="@dimen/paddingMedium"
             android:nestedScrollingEnabled="false"
