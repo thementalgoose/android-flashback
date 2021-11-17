@@ -6,6 +6,7 @@ import org.threeten.bp.Month
 import tmg.flashback.statistics.R
 import tmg.flashback.ui.model.AnimationSpeed
 import tmg.flashback.formula1.model.*
+import tmg.flashback.statistics.ui.dashboard.schedule.InlineSchedule
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 
 sealed class SeasonItem(
@@ -34,7 +35,8 @@ sealed class SeasonItem(
         val date: LocalDate,
         val round: Int,
         val hasQualifying: Boolean,
-        val hasResults: Boolean
+        val hasResults: Boolean,
+        val schedule: List<Schedule>
     ) : SeasonItem(R.layout.view_dashboard_season_track)
 
     data class Driver(

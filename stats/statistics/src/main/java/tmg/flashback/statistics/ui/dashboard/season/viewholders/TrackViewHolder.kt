@@ -2,6 +2,7 @@ package tmg.flashback.statistics.ui.dashboard.season.viewholders
 
 import android.annotation.SuppressLint
 import android.view.View
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
@@ -10,6 +11,8 @@ import tmg.flashback.statistics.ui.dashboard.season.SeasonItem
 import tmg.flashback.ui.extensions.getColor
 import tmg.flashback.statistics.databinding.ViewDashboardSeasonTrackBinding
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
+import tmg.flashback.statistics.ui.dashboard.schedule.InlineSchedule
+import tmg.flashback.statistics.ui.dashboard.schedule.InlineScheduleAdapter
 import tmg.utilities.extensions.ordinalAbbreviation
 import tmg.utilities.extensions.views.context
 import tmg.utilities.extensions.views.getString
@@ -21,8 +24,14 @@ class TrackViewHolder(
 
     private lateinit var data: SeasonItem.Track
 
+    private val inlineScheduleAdapter: InlineScheduleAdapter
+
     init {
         binding.container.setOnClickListener(this)
+
+        inlineScheduleAdapter = InlineScheduleAdapter()
+        binding.scheduleList.adapter = inlineScheduleAdapter
+        binding.scheduleList.layoutManager = LinearLayoutManager(context)
     }
 
     fun bind(item: SeasonItem.Track) {
@@ -55,6 +64,23 @@ class TrackViewHolder(
             circuitName.text = item.circuitName
             raceCountry.text = item.raceCountry
             round.text = context.getString(R.string.race_round, item.round)
+
+            inlineScheduleAdapter.list = item.schedule
+                .sortedBy { it.date.atTime(it.time) }
+                .groupBy { it.date }
+                .map { (date, items) ->
+                    val list = mutableListOf<InlineSchedule>()
+                    list.add(InlineSchedule.Day(date))
+                    list.addAll(items.map {
+                        InlineSchedule.Item(
+                            label = it.label,
+                            time = it.time,
+                            showBell = true
+                        )
+                    })
+                    return@map list
+                }
+                .flatten()
 
             @SuppressLint("SetTextI18n")
             date.text = "${item.date.dayOfMonth.ordinalAbbreviation} ${item.date.format(DateTimeFormatter.ofPattern("MMM yy"))}"
