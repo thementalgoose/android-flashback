@@ -12,6 +12,7 @@ import tmg.flashback.statistics.databinding.ViewDashboardSeasonTrackBinding
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.utilities.extensions.ordinalAbbreviation
 import tmg.utilities.extensions.views.context
+import tmg.utilities.extensions.views.getString
 
 class TrackViewHolder(
     val trackClicked: (SeasonItem.Track) -> Unit,
@@ -31,18 +32,22 @@ class TrackViewHolder(
             when {
                 data.hasResults -> {
                     status.setColorFilter(context.theme.getColor(R.attr.f1ResultsFull))
+                    status.contentDescription = getString(R.string.ab_season_status_has_results)
                     status.setImageResource(R.drawable.race_status_hasdata)
                 }
                 data.hasQualifying -> {
                     status.setColorFilter(context.theme.getColor(R.attr.f1ResultsPartial))
+                    status.contentDescription = getString(R.string.ab_season_status_has_qualifying)
                     status.setImageResource(R.drawable.race_status_hasqualifying)
                 }
                 data.date > LocalDate.now() -> {
                     status.setColorFilter(context.theme.getColor(R.attr.f1ResultsNeutral))
+                    status.contentDescription = getString(R.string.ab_season_status_in_future)
                     status.setImageResource(R.drawable.race_status_nothappened)
                 }
                 else -> {
                     status.setColorFilter(context.theme.getColor(R.attr.f1ResultsNeutral))
+                    status.contentDescription = getString(R.string.ab_season_status_waiting_for_results)
                     status.setImageResource(R.drawable.race_status_waitingfor)
                 }
             }

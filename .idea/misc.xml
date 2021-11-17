@@ -210,6 +210,8 @@
         <entry key="stats/statistics/src/main/res/layout/view_driver_season_header.xml" value="0.26458333333333334" />
         <entry key="stats/statistics/src/main/res/layout/view_driver_summary_header.xml" value="0.3765625" />
         <entry key="stats/statistics/src/main/res/layout/view_driver_summary_history.xml" value="0.33" />
+        <entry key="stats/statistics/src/main/res/layout/view_inline_schedule_day.xml" value="0.325" />
+        <entry key="stats/statistics/src/main/res/layout/view_inline_schedule_item.xml" value="0.325" />
         <entry key="stats/statistics/src/main/res/layout/view_race_qualifying_driver.xml" value="0.3677536231884058" />
         <entry key="stats/statistics/src/main/res/layout/view_race_qualifying_header.xml" value="0.29483695652173914" />
         <entry key="stats/statistics/src/main/res/layout/view_race_qualifying_q1q2_result.xml" value="0.3677536231884058" />
