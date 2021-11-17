@@ -2,93 +2,132 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:clickable="true"
-    android:focusable="true"
-    android:foreground="@drawable/ripple_rectangle"
-    android:paddingStart="@dimen/paddingMedium"
-    android:paddingTop="@dimen/paddingSmall"
-    android:paddingEnd="@dimen/paddingMedium"
-    android:paddingBottom="@dimen/paddingSmall">
+    android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/country"
-        android:layout_width="@dimen/dashboardTrackImageSize"
-        android:layout_height="@dimen/dashboardTrackImageSize"
-        app:layout_constraintBottom_toBottomOf="@id/raceCountry"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="@drawable/ripple_rectangle"
+        android:paddingStart="@dimen/paddingMedium"
+        android:paddingTop="@dimen/paddingSmall"
+        android:paddingEnd="@dimen/paddingMedium"
+        android:paddingBottom="@dimen/paddingSmall"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/raceName"
-        tools:src="@drawable/au" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <ImageView
-        android:id="@+id/status"
-        android:layout_width="@dimen/dashboardTrackStatusSize"
-        android:layout_height="@dimen/dashboardTrackStatusSize"
-        android:alpha="0.7"
-        app:layout_constraintBottom_toTopOf="@id/country"
-        app:layout_constraintEnd_toEndOf="@id/country"
-        app:layout_constraintStart_toEndOf="@id/country"
-        app:layout_constraintTop_toTopOf="@id/country" />
+        <ImageView
+            android:id="@+id/country"
+            android:layout_width="@dimen/dashboardTrackImageSize"
+            android:layout_height="@dimen/dashboardTrackImageSize"
+            app:layout_constraintBottom_toBottomOf="@id/raceCountry"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/raceName"
+            tools:src="@drawable/au" />
 
-    <TextView
-        android:id="@+id/raceName"
-        style="@style/Text.Title.Strong"
+        <ImageView
+            android:id="@+id/status"
+            android:layout_width="@dimen/dashboardTrackStatusSize"
+            android:layout_height="@dimen/dashboardTrackStatusSize"
+            android:alpha="0.7"
+            app:layout_constraintBottom_toTopOf="@id/country"
+            app:layout_constraintEnd_toEndOf="@id/country"
+            app:layout_constraintStart_toEndOf="@id/country"
+            app:layout_constraintTop_toTopOf="@id/country" />
+
+        <TextView
+            android:id="@+id/raceName"
+            style="@style/Text.Title.Strong"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/paddingMedium"
+            android:layout_marginEnd="@dimen/paddingSmall"
+            android:gravity="center|start"
+            app:layout_constraintEnd_toStartOf="@id/barrier"
+            app:layout_constraintStart_toEndOf="@id/country"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Australian Grand Prix" />
+
+        <TextView
+            android:id="@+id/circuitName"
+            style="@style/Text.Body.1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@id/raceName"
+            app:layout_constraintStart_toStartOf="@id/raceName"
+            app:layout_constraintTop_toBottomOf="@id/raceName"
+            tools:text="Albert Park Circuit" />
+
+        <TextView
+            android:id="@+id/raceCountry"
+            style="@style/Text.Body.2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/raceName"
+            app:layout_constraintStart_toStartOf="@id/raceName"
+            app:layout_constraintTop_toBottomOf="@id/circuitName"
+            tools:text="Australia" />
+
+        <TextView
+            android:id="@+id/round"
+            style="@style/Text.Section"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Round 12" />
+
+        <TextView
+            android:id="@+id/date"
+            style="@style/Text.Body.2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/round"
+            tools:text="21st Jan" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="start"
+            app:constraint_referenced_ids="round,date" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/schedule"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/paddingMedium"
-        android:layout_marginEnd="@dimen/paddingSmall"
-        android:gravity="center|start"
-        app:layout_constraintEnd_toStartOf="@id/barrier"
-        app:layout_constraintStart_toEndOf="@id/country"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Australian Grand Prix" />
-
-    <TextView
-        android:id="@+id/circuitName"
-        style="@style/Text.Body.1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="@id/raceName"
-        app:layout_constraintStart_toStartOf="@id/raceName"
-        app:layout_constraintTop_toBottomOf="@id/raceName"
-        tools:text="Albert Park Circuit" />
-
-    <TextView
-        android:id="@+id/raceCountry"
-        style="@style/Text.Body.2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/raceName"
-        app:layout_constraintStart_toStartOf="@id/raceName"
-        app:layout_constraintTop_toBottomOf="@id/circuitName"
-        tools:text="Australia" />
-
-    <TextView
-        android:id="@+id/round"
-        style="@style/Text.Section"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Round 12" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/container">
 
-    <TextView
-        android:id="@+id/date"
-        style="@style/Text.Body.2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/round"
-        tools:text="21st Jan" />
+        <ImageView
+            android:id="@+id/holder"
+            android:layout_width="@dimen/dashboardTrackImageSize"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/paddingMedium"
+            android:importantForAccessibility="no"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/barrier"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:barrierDirection="start"
-        app:constraint_referenced_ids="round,date" />
+        <tmg.flashback.ui.views.LockableRecyclerView
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:layout_marginStart="@dimen/paddingMedium"
+            android:layout_marginEnd="@dimen/paddingMedium"
+            android:nestedScrollingEnabled="false"
+            android:overScrollMode="never"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/holder"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
