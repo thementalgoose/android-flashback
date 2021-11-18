@@ -66,6 +66,7 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
                             round = it.round,
                             hasQualifying = it.hasQualifying,
                             hasResults = it.hasResults,
+                            defaultExpanded = true,
                             schedule = it.schedule
                         )
                     )

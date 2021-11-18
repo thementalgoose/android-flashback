@@ -260,10 +260,18 @@ class SeasonViewModel(
                     date = it.date,
                     hasQualifying = it.hasQualifying,
                     hasResults = it.hasResults,
+                    defaultExpanded = it.round == this.getDefaultExpandedRound(),
                     schedule = it.schedule
                 )
             }
     }
+    private fun List<OverviewRace>.getDefaultExpandedRound(): Int? {
+        return this
+            .filter { it.date >= LocalDate.now() }
+            .minByOrNull { it.date }
+            ?.round
+    }
+
     /**
      * Convert OverviewRace to a list of calendar items
      */

@@ -13,6 +13,6 @@ class ItemViewHolder(
     fun bind(item: InlineSchedule.Item) {
         binding.title.text = item.label
         binding.time.text = item.time.format("HH:mm")
-        binding.icon.show()
+        binding.icon.show(item.showBell, isGone = false)
     }
 }
