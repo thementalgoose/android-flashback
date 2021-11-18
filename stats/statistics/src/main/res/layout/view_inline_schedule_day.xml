@@ -4,11 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:paddingTop="@dimen/paddingSmall"
+    android:paddingBottom="2dp"
     tools:background="?attr/backgroundPrimary">
 
     <TextView
         android:id="@+id/title"
-        style="@style/Text.Section"
+        style="@style/Text.Caption"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
