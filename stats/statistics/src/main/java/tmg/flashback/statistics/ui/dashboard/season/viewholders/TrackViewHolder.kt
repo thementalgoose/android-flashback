@@ -1,18 +1,22 @@
 package tmg.flashback.statistics.ui.dashboard.season.viewholders
 
 import android.annotation.SuppressLint
+import android.app.NotificationChannel
 import android.view.View
 import android.widget.ImageView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
+import tmg.flashback.formula1.enums.RaceWeekend
 import tmg.flashback.formula1.enums.TrackLayout
+import tmg.flashback.formula1.utils.NotificationUtils
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.ui.dashboard.season.SeasonItem
 import tmg.flashback.ui.extensions.getColor
 import tmg.flashback.statistics.databinding.ViewDashboardSeasonTrackBinding
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
+import tmg.flashback.statistics.controllers.UpNextControllerDelegate
 import tmg.flashback.statistics.ui.dashboard.schedule.InlineSchedule
 import tmg.flashback.statistics.ui.dashboard.schedule.InlineScheduleAdapter
 import tmg.utilities.extensions.ordinalAbbreviation
@@ -22,6 +26,7 @@ import tmg.utilities.extensions.views.show
 
 class TrackViewHolder(
     val trackClicked: (SeasonItem.Track) -> Unit,
+    private val upNextControllerDelegate: UpNextControllerDelegate,
     private val binding: ViewDashboardSeasonTrackBinding
 ): RecyclerView.ViewHolder(binding.root), View.OnClickListener {
 
@@ -29,8 +34,17 @@ class TrackViewHolder(
 
     private val inlineScheduleAdapter: InlineScheduleAdapter
 
+    private var clickShowExpanded: Boolean = false
+    private var showExpanded: Boolean = false
+        set(value) {
+            binding.container.show(!value)
+            binding.schedule.show(value)
+            field = value
+        }
+
     init {
         binding.container.setOnClickListener(this)
+        binding.schedule.setOnClickListener(this)
 
         inlineScheduleAdapter = InlineScheduleAdapter()
         binding.enlargedSchedule.adapter = inlineScheduleAdapter
@@ -76,10 +90,16 @@ class TrackViewHolder(
                     val list = mutableListOf<InlineSchedule>()
                     list.add(InlineSchedule.Day(date))
                     list.addAll(items.map {
+                        val showBellIndicator = when (NotificationUtils.getCategoryBasedOnLabel(it.label)) {
+                            RaceWeekend.FREE_PRACTICE -> upNextControllerDelegate.notificationsFreePracticeEnabled
+                            RaceWeekend.QUALIFYING -> upNextControllerDelegate.notificationsQualifyingEnabled
+                            RaceWeekend.RACE -> upNextControllerDelegate.notificationsRaceEnabled
+                            null -> false
+                        }
                         InlineSchedule.Item(
                             label = it.label,
                             time = it.time,
-                            showBell = true
+                            showBell = showBellIndicator
                         )
                     })
                     return@map list
@@ -92,12 +112,17 @@ class TrackViewHolder(
 
         fade(!data.hasQualifying && !data.hasResults)
 
-        binding.container.show(data.hasQualifying && data.hasResults)
-        binding.schedule.show(!(data.hasQualifying && data.hasResults))
+        showExpanded = (!data.hasQualifying || !data.hasResults) && item.defaultExpanded
+        clickShowExpanded = data.date >= LocalDate.now()
     }
 
     override fun onClick(p0: View?) {
-        trackClicked(data)
+        if (clickShowExpanded && !showExpanded) {
+            showExpanded = true
+        }
+        else {
+            trackClicked(data)
+        }
     }
 
     private fun setStatus(data: SeasonItem.Track, status: ImageView) {

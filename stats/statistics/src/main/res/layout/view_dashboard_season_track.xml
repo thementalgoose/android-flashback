@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:animateLayoutChanges="true"
     android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -104,13 +105,13 @@
         android:id="@+id/schedule"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/paddingMedium"
         android:layout_marginBottom="@dimen/paddingMedium"
         android:background="?attr/backgroundSecondary"
         android:clickable="true"
         android:focusable="true"
         android:foreground="@drawable/ripple_rectangle"
         android:paddingStart="@dimen/paddingMedium"
+        android:layout_marginTop="@dimen/paddingNSmall"
         android:paddingTop="@dimen/paddingMedium"
         android:paddingEnd="@dimen/paddingMedium"
         android:paddingBottom="@dimen/paddingMedium"
@@ -182,7 +183,8 @@
         <tmg.flashback.ui.views.PassThroughRecyclerView
             android:id="@+id/enlargedSchedule"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            app:layout_constraintVertical_bias="0.0"
+            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/paddingMedium"
             android:nestedScrollingEnabled="true"
             android:overScrollMode="never"

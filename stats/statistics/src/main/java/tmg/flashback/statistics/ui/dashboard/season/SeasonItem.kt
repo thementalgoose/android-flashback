@@ -36,6 +36,7 @@ sealed class SeasonItem(
         val round: Int,
         val hasQualifying: Boolean,
         val hasResults: Boolean,
+        val defaultExpanded: Boolean,
         val schedule: List<Schedule>
     ) : SeasonItem(R.layout.view_dashboard_season_track)
 
