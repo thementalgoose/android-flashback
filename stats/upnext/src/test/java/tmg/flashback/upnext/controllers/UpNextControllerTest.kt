@@ -19,12 +19,9 @@ import org.threeten.bp.format.TextStyle
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.formula1.model.Schedule
 import tmg.flashback.formula1.model.Timestamp
+import tmg.flashback.formula1.utils.NotificationUtils.getCategoryBasedOnLabel
 import tmg.flashback.upnext.model.NotificationReminder
 import tmg.flashback.upnext.repository.UpNextRepository
-import tmg.flashback.upnext.repository.model.UpNextSchedule
-import tmg.flashback.upnext.repository.model.UpNextScheduleTimestamp
-import tmg.flashback.upnext.utils.NotificationUtils
-import tmg.flashback.upnext.utils.NotificationUtils.getCategoryBasedOnLabel
 import tmg.flashback.upnext.utils.NotificationUtils.getRequestCode
 import tmg.flashback.notifications.controllers.NotificationController
 import tmg.flashback.statistics.repo.ScheduleRepository
@@ -460,21 +457,20 @@ internal class UpNextControllerTest : BaseTest() {
             mockNotificationController.cancelAllNotifications()
         }
 
-        verifyScheduleLocal(times = 0, past, 0, past.schedule[0])
-        verifyScheduleLocal(times = 0, past, 1, past.schedule[1])
-        verifyScheduleLocal(times = 0, present, 0, present.schedule[0])
+        verifyScheduleLocal(times = 0, past, 0, past.schedule[0], "flashback_qualifying")
+        verifyScheduleLocal(times = 0, past, 1, past.schedule[1], "flashback_race")
+        verifyScheduleLocal(times = 0, present, 0, present.schedule[0], "flashback_free_practice")
 
         // Qualifying while in the future is ahead of 30 minute notice period!
-        verifyScheduleLocal(times = 0, present, 1, present.schedule[1])
+        verifyScheduleLocal(times = 0, present, 1, present.schedule[1], "flashback_qualifying")
 
-        verifyScheduleLocal(times = 1, present, 2, present.schedule[2])
-        verifyScheduleLocal(times = 1, future, 0, future.schedule[0])
+        verifyScheduleLocal(times = 1, present, 2, present.schedule[2], "flashback_race")
+        verifyScheduleLocal(times = 1, future, 0, future.schedule[0], "flashback_free_practice")
     }
 
     //endregion
 
-    private fun verifyScheduleLocal(times: Int = 1, upNextSchedule: OverviewRace, index: Int, item: Schedule) {
-        val channelId = getCategoryBasedOnLabel(item.label).channelId
+    private fun verifyScheduleLocal(times: Int = 1, upNextSchedule: OverviewRace, index: Int, item: Schedule, channelId: String) {
         var timestampUtc: LocalDateTime? = null
         item.timestamp.on(
             dateAndTime = { utc, local ->
