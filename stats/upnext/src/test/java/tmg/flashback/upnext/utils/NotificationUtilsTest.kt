@@ -18,7 +18,6 @@ import tmg.flashback.formula1.model.Timestamp
 import tmg.flashback.upnext.R
 import tmg.flashback.upnext.model.NotificationChannel
 import tmg.flashback.upnext.model.NotificationReminder
-import tmg.flashback.upnext.utils.NotificationUtils.getCategoryBasedOnLabel
 import tmg.flashback.upnext.utils.NotificationUtils.getNotificationTitleText
 import tmg.flashback.upnext.utils.NotificationUtils.getRequestCode
 
@@ -32,36 +31,6 @@ internal class NotificationUtilsTest {
     fun `get request code for season round and value returns unique request code`(localDateTimeString: String, expected: Int) {
         val localDateTime = LocalDateTime.parse(localDateTimeString, DateTimeFormatter.ofPattern("dd-MM-yyyy-HH:mm"))
         assertEquals(expected, getRequestCode(localDateTime))
-    }
-
-    @ParameterizedTest(name = "label of {0} returns channel {1}")
-    @CsvSource(
-        "Grand Prix,RACE",
-        "raCe,RACE",
-        "race,RACE",
-
-        "quali,QUALIFYING",
-        "sprint quali,QUALIFYING",
-        "sprinting,QUALIFYING",
-        "sprint qualifying,QUALIFYING",
-        "quali,QUALIFYING",
-        "qualifying,QUALIFYING",
-        "sprinter,QUALIFYING",
-
-        "fp,FREE_PRACTICE",
-        "FP2,FREE_PRACTICE",
-        "FP4,FREE_PRACTICE",
-        "Fp1,FREE_PRACTICE",
-        "free practice,FREE_PRACTICE",
-        "practice,FREE_PRACTICE",
-
-        "free,SEASON_INFO",
-        "day,SEASON_INFO",
-        "winter test day 3,SEASON_INFO",
-        "unveil 3,SEASON_INFO",
-    )
-    fun `get category based on label returns expected`(label: String, expectedNotificationChannel: NotificationChannel) {
-        assertEquals(expectedNotificationChannel, getCategoryBasedOnLabel(label))
     }
 
     @Test

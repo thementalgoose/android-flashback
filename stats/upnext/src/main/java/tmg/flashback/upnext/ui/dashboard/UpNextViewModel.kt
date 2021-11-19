@@ -10,15 +10,13 @@ import kotlinx.coroutines.launch
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
 import org.threeten.bp.format.DateTimeFormatter
+import tmg.flashback.formula1.enums.RaceWeekend
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.formula1.model.Schedule
+import tmg.flashback.formula1.utils.NotificationUtils
 import tmg.flashback.upnext.R
 import tmg.flashback.upnext.controllers.UpNextController
 import tmg.flashback.upnext.model.NotificationChannel
-import tmg.flashback.upnext.repository.model.UpNextSchedule
-import tmg.flashback.upnext.repository.model.UpNextScheduleTimestamp
-import tmg.flashback.upnext.ui.timezone.TimezoneItem
-import tmg.flashback.upnext.utils.NotificationUtils
 import tmg.utilities.extensions.ordinalAbbreviation
 import tmg.utilities.utils.LocalDateUtils.Companion.daysBetween
 
@@ -93,10 +91,10 @@ class UpNextViewModel(
                                     .sortedBy { it.timestamp.string() }
                                     .map {
                                         val showBellIndicator = when (NotificationUtils.getCategoryBasedOnLabel(it.label)) {
-                                            NotificationChannel.RACE -> upNextController.notificationRace
-                                            NotificationChannel.QUALIFYING -> upNextController.notificationQualifying
-                                            NotificationChannel.FREE_PRACTICE -> upNextController.notificationFreePractice
-                                            NotificationChannel.SEASON_INFO -> upNextController.notificationSeasonInfo
+                                            RaceWeekend.FREE_PRACTICE -> upNextController.notificationFreePractice
+                                            RaceWeekend.QUALIFYING -> upNextController.notificationQualifying
+                                            RaceWeekend.RACE -> upNextController.notificationRace
+                                            null -> upNextController.notificationSeasonInfo
                                         }
                                         UpNextBreakdownModel.Item(it.label, it.timestamp, showBellIndicator)
                                     })

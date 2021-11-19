@@ -2,11 +2,8 @@ package tmg.flashback.statistics.ui.dashboard.season
 
 import org.threeten.bp.LocalDate
 import org.threeten.bp.Month
+import tmg.flashback.formula1.model.*
 import tmg.flashback.ui.model.AnimationSpeed
-import tmg.flashback.formula1.model.Constructor
-import tmg.flashback.formula1.model.Driver
-import tmg.flashback.formula1.model.OverviewRace
-import tmg.flashback.formula1.model.model
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 
 fun SeasonItem.Companion.calendarMonthModel(
@@ -37,7 +34,9 @@ fun SeasonItem.Companion.trackModel(
     date: LocalDate = LocalDate.of(2020, 10, 12),
     round: Int = 1,
     hasQualifying: Boolean = true,
-    hasResults: Boolean = false
+    hasResults: Boolean = false,
+    defaultExpanded: Boolean = false,
+    schedule: List<Schedule> = listOf(Schedule.model())
 ): SeasonItem.Track = SeasonItem.Track(
     season = season,
     raceName = raceName,
@@ -48,7 +47,9 @@ fun SeasonItem.Companion.trackModel(
     date = date,
     round = round,
     hasQualifying = hasQualifying,
-    hasResults = hasResults
+    hasResults = hasResults,
+    defaultExpanded = defaultExpanded,
+    schedule = schedule
 )
 
 fun SeasonItem.Companion.driverModel(
