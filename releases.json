@@ -587,12 +587,13 @@
     ]
   },
   {
-    "versionCode": 117,
-    "versionName": "7.0.6",
+    "versionCode": 118,
+    "versionName": "7.0.7",
     "isMajor": false,
     "title": "Rewrite",
     "notes": [
       "Rewrites process of caching and updating race data to be persistent and auto updating",
+      "Adds schedule preview to upcoming races in home screen",
       "Adds more animations around content loading",
       "Adds pull to refresh everywhere",
       "Adds new notification banner"
