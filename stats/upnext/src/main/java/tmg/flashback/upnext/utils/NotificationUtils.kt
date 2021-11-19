@@ -25,31 +25,6 @@ object NotificationUtils {
     }
 
     /**
-     * Get which category the notification should be grouped in to based on the label of the event
-     */
-    fun getCategoryBasedOnLabel(label: String): NotificationChannel {
-        return when {
-            label.includes(
-                "race",
-                "grand prix"
-            ) -> NotificationChannel.RACE
-            label.includes(
-                "qualifying",
-                "sprint qualifying",
-                "sprint quali",
-                "sprint",
-                "quali"
-            ) -> NotificationChannel.QUALIFYING
-            label.includes(
-                "fp",
-                "free practice",
-                "practice"
-            ) -> NotificationChannel.FREE_PRACTICE
-            else -> NotificationChannel.SEASON_INFO
-        }
-    }
-
-    /**
      * Get the content of the notification
      * - Race starts in 30 minutes
      * - Russian Grand Prix Race starts in 30 minutes at 12:30 Europe/London (device time)
@@ -74,11 +49,5 @@ object NotificationUtils {
         val notificationText = context.getString(R.string.notification_content_text, title, label, reminderString, deviceTimeString)
 
         return Pair(notificationTitle, notificationText)
-    }
-
-    private fun String.includes(vararg partials: String): Boolean {
-        return partials.any { label ->
-            this.lowercase().contains(label.lowercase())
-        }
     }
 }

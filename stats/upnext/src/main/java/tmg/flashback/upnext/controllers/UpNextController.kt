@@ -9,18 +9,20 @@ import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.LocalTime
 import org.threeten.bp.format.DateTimeFormatter
+import tmg.flashback.formula1.enums.RaceWeekend
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.formula1.model.Timestamp
+import tmg.flashback.formula1.utils.NotificationUtils
+import tmg.flashback.formula1.utils.NotificationUtils.getCategoryBasedOnLabel
 import tmg.flashback.notifications.controllers.NotificationController
 import tmg.flashback.statistics.repo.ScheduleRepository
 import tmg.flashback.upnext.BuildConfig
 import tmg.flashback.upnext.model.NotificationChannel
 import tmg.flashback.upnext.model.NotificationReminder
 import tmg.flashback.upnext.repository.UpNextRepository
-import tmg.flashback.upnext.repository.model.UpNextSchedule
-import tmg.flashback.upnext.utils.NotificationUtils
-import tmg.flashback.upnext.utils.NotificationUtils.getCategoryBasedOnLabel
 import tmg.flashback.upnext.utils.NotificationUtils.getNotificationTitleText
+
+private typealias UpNextNotificationUtils = tmg.flashback.upnext.utils.NotificationUtils
 
 /**
  * Up Next functionality on the home screen
@@ -31,7 +33,6 @@ class UpNextController(
     private val upNextRepository: UpNextRepository,
     private val scheduleRepository: ScheduleRepository
 ) {
-
     /**
      * Get the next race to display in the up next schedule
      *  Up to and including today
@@ -110,7 +111,7 @@ class UpNextController(
                         title = event.raceName,
                         label = item.label,
                         timestamp = item.timestamp,
-                        channel = getCategoryBasedOnLabel(item.label)
+                        channel = item.label.toChannel()
                     )
                 }
             }
@@ -127,7 +128,7 @@ class UpNextController(
                     )
 
                     this.utcDateTime = utcDateTime
-                    this.requestCode = NotificationUtils.getRequestCode(utcDateTime)
+                    this.requestCode = tmg.flashback.upnext.utils.NotificationUtils.getRequestCode(utcDateTime)
                 }
             }
             .filter {
@@ -159,11 +160,20 @@ class UpNextController(
 
             notificationController.scheduleLocalNotification(
                 requestCode = it.requestCode,
-                channelId = getCategoryBasedOnLabel(it.label).channelId,
+                channelId = it.label.toChannel().channelId,
                 title = title,
                 text = text,
                 timestamp = scheduleTime
             )
+        }
+    }
+
+    private fun String.toChannel(): NotificationChannel {
+        return when (getCategoryBasedOnLabel(this)) {
+            RaceWeekend.FREE_PRACTICE -> NotificationChannel.FREE_PRACTICE
+            RaceWeekend.QUALIFYING -> NotificationChannel.QUALIFYING
+            RaceWeekend.RACE -> NotificationChannel.RACE
+            null -> NotificationChannel.SEASON_INFO
         }
     }
 

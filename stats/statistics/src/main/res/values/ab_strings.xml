@@ -11,4 +11,9 @@
 
     <string name="ab_back">Back</string>
     <string name="ab_input_clear">Clear input</string>
+
+    <string name="ab_season_status_has_results">Results available</string>
+    <string name="ab_season_status_has_qualifying">Qualifying data available only</string>
+    <string name="ab_season_status_in_future">Data unavailable</string>
+    <string name="ab_season_status_waiting_for_results">Data is unavailable and should be available shortly</string>
 </resources>
