@@ -471,14 +471,9 @@ internal class UpNextControllerTest : BaseTest() {
     //endregion
 
     private fun verifyScheduleLocal(times: Int = 1, upNextSchedule: OverviewRace, index: Int, item: Schedule, channelId: String) {
-        var timestampUtc: LocalDateTime? = null
-        item.timestamp.on(
-            dateAndTime = { utc, local ->
-                timestampUtc = utc
-            }
-        )
-        val requestCode = getRequestCode(timestampUtc!!)
-        timestampUtc = timestampUtc?.minusMinutes(30)
+        var timestampUtc: LocalDateTime = item.timestamp.utcLocalDateTime
+        val requestCode = getRequestCode(timestampUtc)
+        timestampUtc = timestampUtc.minusMinutes(30)
 
         verify(exactly = times) {
             mockNotificationController.scheduleLocalNotification(
@@ -486,7 +481,7 @@ internal class UpNextControllerTest : BaseTest() {
                 channelId = channelId,
                 title = "" /* TODO: Inject the NotificationUtils properly - This is handled there! */,
                 text = "" /* TODO: Inject the NotificationUtils properly - This is handled there! */,
-                timestamp = timestampUtc!!
+                timestamp = timestampUtc
             )
         }
     }
