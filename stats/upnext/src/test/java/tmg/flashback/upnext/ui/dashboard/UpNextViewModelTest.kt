@@ -56,19 +56,19 @@ internal class UpNextViewModelTest: BaseTest() {
         val practiceTimestamp = Timestamp(
             originalDate = practice.toLocalDate(),
             originalTime = practice.toLocalTime(),
-            zone = ZoneId.systemDefault()
+            currentTimeZone = ZoneId.systemDefault()
         )
         val qualifying: LocalDateTime = LocalDateTime.of(2020, 1, 2, 1, 0, 0)
         val qualifyingTimestamp = Timestamp(
             originalDate = qualifying.toLocalDate(),
             originalTime = qualifying.toLocalTime(),
-            zone = ZoneId.systemDefault()
+            currentTimeZone = ZoneId.systemDefault()
         )
         val race: LocalDateTime = LocalDateTime.of(2020, 1, 3, 1, 0, 0)
         val raceTimestamp = Timestamp(
             originalDate = race.toLocalDate(),
             originalTime = race.toLocalTime(),
-            zone = ZoneId.systemDefault()
+            currentTimeZone = ZoneId.systemDefault()
         )
         coEvery { mockUpNextController.getNextEvent() } returns mockUpNext.copy(schedule = listOf(
             Schedule("qualifying", qualifyingTimestamp.originalDate, qualifyingTimestamp.originalTime!!),
@@ -100,19 +100,19 @@ internal class UpNextViewModelTest: BaseTest() {
         val practiceTimestamp = Timestamp(
             originalDate = practice.toLocalDate(),
             originalTime = practice.toLocalTime(),
-            zone = ZoneId.systemDefault()
+            currentTimeZone = ZoneId.systemDefault()
         )
         val qualifying: LocalDateTime = LocalDateTime.of(2020, 1, 2, 1, 0, 0)
         val qualifyingTimestamp = Timestamp(
             originalDate = qualifying.toLocalDate(),
             originalTime = qualifying.toLocalTime(),
-            zone = ZoneId.systemDefault()
+            currentTimeZone = ZoneId.systemDefault()
         )
         val race: LocalDateTime = LocalDateTime.of(2020, 1, 2, 1, 0, 0)
         val raceTimestamp = Timestamp(
             originalDate = race.toLocalDate(),
             originalTime = race.toLocalTime(),
-            zone = ZoneId.systemDefault()
+            currentTimeZone = ZoneId.systemDefault()
         )
         coEvery { mockUpNextController.getNextEvent() } returns mockUpNext.copy(schedule = listOf(
             Schedule("qualifying", qualifyingTimestamp.originalDate, qualifyingTimestamp.originalTime!!),
@@ -142,19 +142,19 @@ internal class UpNextViewModelTest: BaseTest() {
         val practiceTimestamp = Timestamp(
             originalDate = practice.toLocalDate(),
             originalTime = practice.toLocalTime(),
-            zone = ZoneId.systemDefault()
+            currentTimeZone = ZoneId.systemDefault()
         )
         val qualifying: LocalDateTime = LocalDateTime.of(2023, 1, 9, 2, 0, 0)
         val qualifyingTimestamp = Timestamp(
             originalDate = qualifying.toLocalDate(),
             originalTime = qualifying.toLocalTime(),
-            zone = ZoneId.systemDefault()
+            currentTimeZone = ZoneId.systemDefault()
         )
         val race: LocalDateTime = LocalDateTime.of(2023, 1, 9, 3, 0, 0)
         val raceTimestamp = Timestamp(
             originalDate = race.toLocalDate(),
             originalTime = race.toLocalTime(),
-            zone = ZoneId.systemDefault()
+            currentTimeZone = ZoneId.systemDefault()
         )
         coEvery { mockUpNextController.getNextEvent() } returns mockUpNext.copy(schedule = listOf(
             Schedule("qualifying", qualifyingTimestamp.originalDate, qualifyingTimestamp.originalTime!!),
@@ -185,13 +185,13 @@ internal class UpNextViewModelTest: BaseTest() {
         val practiceTimestamp = Timestamp(
             originalDate = practice.toLocalDate(),
             originalTime = practice.toLocalTime(),
-            zone = ZoneId.systemDefault()
+            currentTimeZone = ZoneId.systemDefault()
         )
         val qualifying: LocalDateTime = LocalDateTime.now().plusDays(9L)
         val qualifyingTimestamp = Timestamp(
             originalDate = qualifying.toLocalDate(),
             originalTime = qualifying.toLocalTime(),
-            zone = ZoneId.systemDefault()
+            currentTimeZone = ZoneId.systemDefault()
         )
 
         coEvery { mockUpNextController.getNextEvent() } returns mockUpNext.copy(schedule = listOf(
@@ -212,13 +212,13 @@ internal class UpNextViewModelTest: BaseTest() {
         val practiceTimestamp = Timestamp(
             originalDate = practice.toLocalDate(),
             originalTime = practice.toLocalTime(),
-            zone = ZoneId.systemDefault()
+            currentTimeZone = ZoneId.systemDefault()
         )
         val qualifying: LocalDateTime = LocalDateTime.now().plusDays(9L)
         val qualifyingTimestamp = Timestamp(
             originalDate = qualifying.toLocalDate(),
             originalTime = qualifying.toLocalTime(),
-            zone = ZoneId.systemDefault()
+            currentTimeZone = ZoneId.systemDefault()
         )
 
         coEvery { mockUpNextController.getNextEvent() } returns mockUpNext.copy(schedule = listOf(
@@ -239,13 +239,13 @@ internal class UpNextViewModelTest: BaseTest() {
         val practiceTimestamp = Timestamp(
             originalDate = practice.toLocalDate(),
             originalTime = practice.toLocalTime(),
-            zone = ZoneId.systemDefault()
+            currentTimeZone = ZoneId.systemDefault()
         )
         val qualifying: LocalDateTime = LocalDateTime.now().plusDays(9L)
         val qualifyingTimestamp = Timestamp(
             originalDate = qualifying.toLocalDate(),
             originalTime = qualifying.toLocalTime(),
-            zone = ZoneId.systemDefault()
+            currentTimeZone = ZoneId.systemDefault()
         )
 
         coEvery { mockUpNextController.getNextEvent() } returns mockUpNext.copy(schedule = listOf(

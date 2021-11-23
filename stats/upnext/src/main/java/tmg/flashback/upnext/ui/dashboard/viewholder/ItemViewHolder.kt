@@ -27,14 +27,7 @@ class ItemViewHolder(
         }
 
         binding.title.text = item.label
-        item.item.on(
-            dateAndTime = { utc, local ->
-                binding.time.text = local.format(DateTimeFormatter.ofPattern("HH:mm"))
-            },
-            dateOnly = {
-                binding.time.text = context.getString(R.string.dashboard_up_next_all_day)
-            }
-        )
+        binding.time.text = item.item.deviceLocalDateTime.format(DateTimeFormatter.ofPattern("HH:mm"))
 
         binding.bellIndicator.show(item.showBellIndicator, isGone = false)
     }

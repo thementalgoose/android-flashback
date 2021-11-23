@@ -119,18 +119,8 @@ class UpNextWidgetProvider : AppWidgetProvider(), KoinComponent {
 
                     remoteView.setTextViewText(R.id.days, context.getString(R.string.dashboard_up_next_date_today))
                     remoteView.setTextViewText(R.id.daystogo, eventsToday.joinToString(separator = ", ") {
-                        var result: String? = null
-                        it.timestamp.on(
-                            dateAndTime = { utc, local ->
-                                result = local.toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm"))
-                            }
-                        )
-                        if (result == null) {
-                            return@joinToString it.label
-                        }
-                        else {
-                            return@joinToString "${it.label} ($result)"
-                        }
+                        val result: String = it.timestamp.deviceLocalDateTime.toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm"))
+                        return@joinToString "${it.label} ($result)"
                     })
                     remoteView.setViewVisibility(R.id.daystogo, View.VISIBLE)
                 }
@@ -145,18 +135,8 @@ class UpNextWidgetProvider : AppWidgetProvider(), KoinComponent {
 
                     remoteView.setTextViewText(R.id.days, context.resources.getQuantityString(R.plurals.dashboard_up_next_suffix_days, days, days))
                     remoteView.setTextViewText(R.id.daystogo, next.joinToString(separator = ", ") {
-                        var result: String? = null
-                        it.timestamp.on(
-                            dateAndTime = { utc, local ->
-                                result = local.toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm"))
-                            }
-                        )
-                        if (result == null) {
-                            return@joinToString it.label
-                        }
-                        else {
-                            return@joinToString "${it.label} ($result)"
-                        }
+                        val result: String = it.timestamp.deviceLocalDateTime.toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm"))
+                        return@joinToString "${it.label} ($result)"
                     })
                     remoteView.setViewVisibility(R.id.daystogo, View.VISIBLE)
                 }

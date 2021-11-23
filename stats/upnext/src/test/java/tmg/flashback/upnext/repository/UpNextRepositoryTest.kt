@@ -6,13 +6,8 @@ import io.mockk.verify
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import tmg.flashback.configuration.manager.ConfigManager
 import tmg.flashback.prefs.manager.PreferenceManager
 import tmg.flashback.upnext.model.NotificationReminder
-import tmg.flashback.upnext.repository.json.UpNextItemJson
-import tmg.flashback.upnext.repository.json.UpNextJson
-import tmg.flashback.upnext.repository.json.UpNextScheduleJson
-import tmg.flashback.upnext.repository.model.UpNextSchedule
 
 internal class UpNextRepositoryTest {
 
