@@ -116,10 +116,6 @@ class CircuitInfoViewModel(
     var inputs: CircuitInfoViewModelInputs = this
     var outputs: CircuitInfoViewModelOutputs = this
 
-    init {
-        showLoading.postValue(true)
-    }
-
     //region Inputs
 
     override fun circuitId(circuitId: String) {
