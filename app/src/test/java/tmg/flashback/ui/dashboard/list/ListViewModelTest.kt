@@ -9,10 +9,8 @@ import org.threeten.bp.Year
 import tmg.flashback.DebugController
 import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.R
-import tmg.flashback.statistics.controllers.SeasonController
+import tmg.flashback.statistics.controllers.HomeController
 import tmg.flashback.upnext.controllers.UpNextController
-import tmg.flashback.upnext.repository.model.TimeListDisplayType
-import tmg.flashback.upnext.repository.model.UpNextSchedule
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.*
 
@@ -23,7 +21,7 @@ internal class ListViewModelTest: BaseTest() {
     private var currentYear: Int = Year.now().value
     private var minYear: Int = 1950
 
-    private val mockSeasonController: SeasonController = mockk(relaxed = true)
+    private val mockHomeController: HomeController = mockk(relaxed = true)
     private val mockRssController: RSSController = mockk(relaxed = true)
     private val mockDebugController: DebugController = mockk(relaxed = true)
     private val mockUpNextController: UpNextController = mockk(relaxed = true)
@@ -31,11 +29,11 @@ internal class ListViewModelTest: BaseTest() {
     @BeforeEach
     internal fun setUp() {
 
-        every { mockSeasonController.favouriteSeasons } returns setOf()
-        every { mockSeasonController.favouritesExpanded } returns true
-        every { mockSeasonController.allExpanded } returns true
-        every { mockSeasonController.defaultSeason } returns 2018
-        every { mockSeasonController.supportedSeasons } returns List(currentYear - 1949) { it + 1950 }.toSet()
+        every { mockHomeController.favouriteSeasons } returns setOf()
+        every { mockHomeController.favouritesExpanded } returns true
+        every { mockHomeController.allExpanded } returns true
+        every { mockHomeController.defaultSeason } returns 2018
+        every { mockHomeController.supportedSeasons } returns List(currentYear - 1949) { it + 1950 }.toSet()
 
         every { mockRssController.enabled } returns false
 
@@ -44,7 +42,7 @@ internal class ListViewModelTest: BaseTest() {
 
     private fun initSUT() {
         sut = ListViewModel(
-            mockSeasonController,
+            mockHomeController,
             mockRssController,
             mockDebugController,
             mockUpNextController
@@ -74,7 +72,7 @@ internal class ListViewModelTest: BaseTest() {
 
         sut.inputs.clickSetDefaultSeason(2020)
         verify {
-            mockSeasonController.setUserDefaultSeason(2020)
+            mockHomeController.setUserDefaultSeason(2020)
         }
         sut.outputs.defaultSeasonUpdated.test {
             assertDataEventValue(2020)
@@ -88,7 +86,7 @@ internal class ListViewModelTest: BaseTest() {
 
         sut.inputs.clickClearDefaultSeason()
         verify {
-            mockSeasonController.clearDefault()
+            mockHomeController.clearDefault()
         }
         sut.outputs.defaultSeasonUpdated.test {
             assertDataEventValue(null)
@@ -98,7 +96,7 @@ internal class ListViewModelTest: BaseTest() {
     @Test
     fun `with no user defined default set the option to show clear is false`() {
 
-        every { mockSeasonController.isUserDefinedValueSet } returns true
+        every { mockHomeController.isUserDefinedValueSet } returns true
 
         initSUT()
         sut.outputs.list.test {
@@ -111,7 +109,7 @@ internal class ListViewModelTest: BaseTest() {
     @Test
     fun `with no user defined default set the option to show clear is true`() {
 
-        every { mockSeasonController.isUserDefinedValueSet } returns false
+        every { mockHomeController.isUserDefinedValueSet } returns false
 
         initSUT()
         sut.outputs.list.test {
@@ -188,8 +186,8 @@ internal class ListViewModelTest: BaseTest() {
     @Test
     fun `header section favourited and all are false when prefs are false on initial load`() {
 
-        every { mockSeasonController.favouritesExpanded } returns false
-        every { mockSeasonController.allExpanded } returns false
+        every { mockHomeController.favouritesExpanded } returns false
+        every { mockHomeController.allExpanded } returns false
 
         initSUT()
 
@@ -202,8 +200,8 @@ internal class ListViewModelTest: BaseTest() {
     @Test
     fun `header section favourited and all are true when prefs are true on initial load`() {
 
-        every { mockSeasonController.favouritesExpanded } returns true
-        every { mockSeasonController.allExpanded } returns true
+        every { mockHomeController.favouritesExpanded } returns true
+        every { mockHomeController.allExpanded } returns true
 
         initSUT()
 
@@ -233,7 +231,7 @@ internal class ListViewModelTest: BaseTest() {
         val expected = expectedList(favourites)
 
 
-        every { mockSeasonController.favouriteSeasons } returns favourites
+        every { mockHomeController.favouriteSeasons } returns favourites
 
         initSUT()
 
@@ -248,9 +246,9 @@ internal class ListViewModelTest: BaseTest() {
         val favourites: Set<Int> = setOf(2012, 2018, 2014)
         val expected = expectedList(favourites, showFavourites = false, showAll = false)
 
-        every { mockSeasonController.favouriteSeasons } returns favourites
-        every { mockSeasonController.favouritesExpanded } returns false
-        every { mockSeasonController.allExpanded } returns false
+        every { mockHomeController.favouriteSeasons } returns favourites
+        every { mockHomeController.favouritesExpanded } returns false
+        every { mockHomeController.allExpanded } returns false
 
         initSUT()
 
@@ -264,7 +262,7 @@ internal class ListViewModelTest: BaseTest() {
 
         val favourites = setOf(2017, 2012, 2010)
 
-        every { mockSeasonController.favouriteSeasons } returns favourites
+        every { mockHomeController.favouriteSeasons } returns favourites
 
         initSUT()
 
@@ -290,48 +288,48 @@ internal class ListViewModelTest: BaseTest() {
     @Test
     fun `toggling a favourite season that is already favourited removes it`() {
         val favourites = mutableSetOf(2020, 2018)
-        every { mockSeasonController.favouriteSeasons } returns favourites
-        every { mockSeasonController.isFavourite(2018) } returns true
+        every { mockHomeController.favouriteSeasons } returns favourites
+        every { mockHomeController.isFavourite(2018) } returns true
 
         initSUT()
 
         sut.inputs.toggleFavourite(2018)
 
         verify {
-            mockSeasonController.removeFavourite(2018)
+            mockHomeController.removeFavourite(2018)
         }
     }
 
     @Test
     fun `toggling a favourite season that is not favourited yet adds it to the controller`() {
         val favourites = mutableSetOf(2020)
-        every { mockSeasonController.favouriteSeasons } returns favourites
-        every { mockSeasonController.isFavourite(2018) } returns false
+        every { mockHomeController.favouriteSeasons } returns favourites
+        every { mockHomeController.isFavourite(2018) } returns false
 
         initSUT()
 
         sut.inputs.toggleFavourite(2018)
 
         verify {
-            mockSeasonController.addFavourite(2018)
+            mockHomeController.addFavourite(2018)
         }
     }
 
     @Test
     fun `toggling a favourite calls refresh`() {
         val favourites = mutableSetOf(2020)
-        every { mockSeasonController.favouriteSeasons } returns favourites
-        every { mockSeasonController.isFavourite(2018) } returns false
+        every { mockHomeController.favouriteSeasons } returns favourites
+        every { mockHomeController.isFavourite(2018) } returns false
 
         initSUT()
 
         val observer = sut.outputs.list.testObserve()
         observer.assertListMatchesItem { it is ListItem.Season && it.season == 2018 && !it.isFavourited }
         // Mock the favourite seasons update
-        every { mockSeasonController.favouriteSeasons } returns mutableSetOf(2020, 2018)
+        every { mockHomeController.favouriteSeasons } returns mutableSetOf(2020, 2018)
         sut.inputs.toggleFavourite(2018)
         verify {
-            mockSeasonController.addFavourite(2018)
+            mockHomeController.addFavourite(2018)
         }
 
         observer.assertListMatchesItem(atIndex = 1) { it is ListItem.Season && it.season == 2018 && it.isFavourited }

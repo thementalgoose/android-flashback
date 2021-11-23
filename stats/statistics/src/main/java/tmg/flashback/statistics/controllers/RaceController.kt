@@ -1,6 +1,6 @@
 package tmg.flashback.statistics.controllers
 
-import tmg.flashback.statistics.repository.StatisticsRepository
+import tmg.flashback.statistics.repository.HomeRepository
 
 
 /**
@@ -8,24 +8,24 @@ import tmg.flashback.statistics.repository.StatisticsRepository
  *   settings of the app relating to the race overview
  */
 class RaceController(
-        private val statisticsRepository: StatisticsRepository
+        private val homeRepository: HomeRepository
 ) {
 
     var showQualifyingDelta: Boolean
         get() = false /* statisticsRepository.showQualifyingDelta */
         set(value) {
-            statisticsRepository.showQualifyingDelta = value
+            homeRepository.showQualifyingDelta = value
         }
 
     var fadeDNF: Boolean
         get() = true /* statisticsRepository.fadeDNF */
         set(value) {
-            statisticsRepository.fadeDNF = value
+            homeRepository.fadeDNF = value
         }
 
     var showGridPenaltiesInQualifying: Boolean
         get() = false /* statisticsRepository.showGridPenaltiesInQualifying */
         set(value) {
-            statisticsRepository.showGridPenaltiesInQualifying = value
+            homeRepository.showGridPenaltiesInQualifying = value
         }
 }

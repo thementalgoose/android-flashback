@@ -15,13 +15,12 @@ import tmg.flashback.ui.base.BaseFragment
 import tmg.flashback.R
 import tmg.flashback.databinding.FragmentDashboardBinding
 import tmg.flashback.statistics.controllers.SearchController
-import tmg.flashback.statistics.controllers.SeasonController
+import tmg.flashback.statistics.controllers.HomeController
 import tmg.flashback.ui.dashboard.list.ListFragment
 import tmg.flashback.statistics.ui.dashboard.season.SeasonFragment
 import tmg.flashback.statistics.ui.dashboard.season.SeasonFragmentCallback
 import tmg.flashback.statistics.ui.search.SearchActivity
 import tmg.flashback.upnext.ui.dashboard.UpNextFragment
-import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 
 class DashboardFragment : BaseFragment<FragmentDashboardBinding>(),
@@ -31,7 +30,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(),
     private val viewModel: DashboardViewModel by viewModel()
 
     private val searchController: SearchController by inject()
-    private val seasonController: SeasonController by inject()
+    private val homeController: HomeController by inject()
 
     private val seasonTag: String = "season"
     private val seasonFragment: SeasonFragment?
@@ -56,7 +55,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(),
         binding.panels.registerStartPanelStateListeners(this)
         binding.panels.registerEndPanelStateListeners(this)
 
-        if (!seasonController.dashboardCalendar) {
+        if (!homeController.dashboardCalendar) {
             binding.navigation.menu.removeItem(R.id.nav_calendar)
         }
         if (searchController.enabled) {
@@ -73,7 +72,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(),
                     true
                 }
                 R.id.nav_calendar -> {
-                    if (seasonController.dashboardCalendar) {
+                    if (homeController.dashboardCalendar) {
                         seasonFragment?.selectCalendar()
                         true
                     } else {

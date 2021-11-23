@@ -8,7 +8,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import tmg.flashback.ui.navigation.NavigationProvider
 import tmg.flashback.statistics.R
-import tmg.flashback.statistics.controllers.SeasonController
+import tmg.flashback.statistics.controllers.HomeController
 import tmg.flashback.statistics.databinding.*
 import tmg.flashback.statistics.ui.shared.sync.viewholders.*
 
@@ -16,14 +16,14 @@ import tmg.flashback.statistics.ui.shared.sync.viewholders.*
 abstract class SyncAdapter<T> : RecyclerView.Adapter<RecyclerView.ViewHolder>(), KoinComponent {
 
     private val navigationProvider: NavigationProvider by inject()
-    private val seasonController: SeasonController by inject()
+    private val homeController: HomeController by inject()
 
     open val providedByAtTopIndex: Int = 0
 
     protected fun List<T>.addDataProvidedByItem(): List<T> {
         val item = dataProvidedItem(SyncDataItem.ProvidedBy()) ?: return this
 
-        return if (seasonController.dataProvidedByAtTop) {
+        return if (homeController.dataProvidedByAtTop) {
             if (providedByAtTopIndex < this.size) {
                 // Valid to be added at that position
                 this.toMutableList()
@@ -81,7 +81,7 @@ abstract class SyncAdapter<T> : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
             is SyncDataItem.Unavailable -> (holder as DataUnavailableViewHolder).bind(item.type)
             is SyncDataItem.Message -> (holder as MessageViewHolder).bind(item.msg, item.clickUrl)
             is SyncDataItem.MessageRes -> (holder as MessageViewHolder).bind(item.msg, item.values, item.clickUrl)
-            is SyncDataItem.ProvidedBy -> (holder as ProvidedByViewHolder).bind(seasonController.dataProvidedBy)
+            is SyncDataItem.ProvidedBy -> (holder as ProvidedByViewHolder).bind(homeController.dataProvidedBy)
             else -> {
             }
         }
