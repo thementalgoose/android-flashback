@@ -598,5 +598,15 @@
       "Adds pull to refresh everywhere",
       "Adds new notification banner"
     ]
+  },
+  {
+    "versionCode": 120,
+    "versionName": "7.1.0",
+    "isMajor": false,
+    "title": "",
+    "notes": [
+      "Adds autoscrolling to the current race when you open the app",
+      "Minor theming updates for Android 12 Material you"
+    ]
   }
 ]
