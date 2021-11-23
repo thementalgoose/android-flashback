@@ -8,7 +8,7 @@ import tmg.flashback.statistics.repository.converters.convert
 import tmg.flashback.statistics.repository.json.BannerJson
 import tmg.flashback.statistics.repository.models.Banner
 
-class StatisticsRepository(
+class HomeRepository(
         private val preferenceManager: PreferenceManager,
         private val configManager: ConfigManager
 ) {
@@ -29,6 +29,7 @@ class StatisticsRepository(
         private const val keyShowListFavourited: String = "BOTTOM_SHEET_FAVOURITED"
         private const val keyShowListAll: String = "BOTTOM_SHEET_ALL"
         private const val keyShowGridPenaltiesInQualifying: String = "SHOW_GRID_PENALTIES_IN_QUALIFYING"
+        private const val keyDashboardAutoscroll: String = "DASHBOARD_AUTOSCROLL"
         private const val keyFavouriteSeasons: String = "FAVOURITE_SEASONS"
         private const val keyDefaultSeason: String = "DEFAULT_SEASON"
         private const val keyProvidedByAtTop: String = "PROVIDED_BY_AT_TOP"
@@ -111,6 +112,13 @@ class StatisticsRepository(
     var showGridPenaltiesInQualifying: Boolean
         get() = preferenceManager.getBoolean(keyShowGridPenaltiesInQualifying, true)
         set(value) = preferenceManager.save(keyShowGridPenaltiesInQualifying, value)
+
+    /**
+     * When loading the dashboard, should the app autoscroll to the current season if it's applicable
+     */
+    var dashboardAutoscroll: Boolean
+        get() = preferenceManager.getBoolean(keyDashboardAutoscroll, true)
+        set(value) = preferenceManager.save(keyDashboardAutoscroll, value)
 
     /**
      * Favourited seasons in the list

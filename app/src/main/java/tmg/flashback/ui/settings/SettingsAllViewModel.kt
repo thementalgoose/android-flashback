@@ -18,7 +18,7 @@ interface SettingsAllViewModelInputs {
 
 interface SettingsAllViewModelOutputs {
     val openAppearance: LiveData<Event>
-    val openStatistics: LiveData<Event>
+    val openHome: LiveData<Event>
     val openRss: LiveData<Event>
     val openNotifications: LiveData<Event>
     val openSupport: LiveData<Event>
@@ -43,10 +43,10 @@ class SettingsAllViewModel(
                 }
         ))
         add(SettingsModel.Pref(
-                title = R.string.settings_all_statistics,
-                description = R.string.settings_all_statistics_subtitle,
+                title = R.string.settings_all_home,
+                description = R.string.settings_all_home_subtitle,
                 onClick = {
-                    openStatistics.value = Event()
+                    openHome.value = Event()
                 }
         ))
         if (rssController.enabled) {
@@ -83,7 +83,7 @@ class SettingsAllViewModel(
 
     override val openAbout: MutableLiveData<Event> = MutableLiveData()
     override val openAppearance: MutableLiveData<Event> = MutableLiveData()
-    override val openStatistics: MutableLiveData<Event> = MutableLiveData()
+    override val openHome: MutableLiveData<Event> = MutableLiveData()
     override val openRss: MutableLiveData<Event> = MutableLiveData()
     override val openNotifications: MutableLiveData<Event> = MutableLiveData()
     override val openSupport: MutableLiveData<Event> = MutableLiveData()

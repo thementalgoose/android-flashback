@@ -23,8 +23,8 @@ class SettingsAllFragment: SettingsFragment<SettingsAllViewModel>() {
         observeEvent(viewModel.outputs.openAppearance) {
             findNavController().navigate(R.id.graph_action_appearance)
         }
-        observeEvent(viewModel.outputs.openStatistics) {
-            findNavController().navigate(R.id.graph_action_statistics)
+        observeEvent(viewModel.outputs.openHome) {
+            findNavController().navigate(R.id.graph_action_home)
         }
         observeEvent(viewModel.outputs.openRss) {
             findNavController().navigate(R.id.graph_action_rss)

@@ -6,12 +6,10 @@ import androidx.lifecycle.ViewModel
 import tmg.flashback.DebugController
 import tmg.flashback.R
 import tmg.flashback.rss.controllers.RSSController
-import tmg.flashback.statistics.controllers.SeasonController
+import tmg.flashback.statistics.controllers.HomeController
 import tmg.flashback.upnext.controllers.UpNextController
-import tmg.flashback.upnext.repository.model.TimeListDisplayType
 import tmg.utilities.lifecycle.DataEvent
 import tmg.utilities.lifecycle.Event
-import tmg.utilities.models.StringHolder
 
 //region Inputs
 
@@ -48,18 +46,18 @@ interface ListViewModelOutputs {
 //endregion
 
 class ListViewModel(
-        private val seasonController: SeasonController,
-        private val rssController: RSSController,
-        private val debugController: DebugController,
-        private val upNextController: UpNextController
+    private val homeController: HomeController,
+    private val rssController: RSSController,
+    private val debugController: DebugController,
+    private val upNextController: UpNextController
 ) : ViewModel(), ListViewModelInputs, ListViewModelOutputs {
 
     private var selectionHeaderFavouited: MutableLiveData<Boolean> =
-        MutableLiveData(seasonController.favouritesExpanded)
+        MutableLiveData(homeController.favouritesExpanded)
     private var selectionHeaderAll: MutableLiveData<Boolean> =
-        MutableLiveData(seasonController.allExpanded)
+        MutableLiveData(homeController.allExpanded)
     private var currentSeason: MutableLiveData<Int> =
-        MutableLiveData(seasonController.defaultSeason)
+        MutableLiveData(homeController.defaultSeason)
     private val refreshList: MutableLiveData<Event> = MutableLiveData(Event())
 
     override val list: LiveData<List<ListItem>> = combine(
@@ -113,10 +111,10 @@ class ListViewModel(
         }
 
         // Season breakdown
-        val supportedSeasons = seasonController.supportedSeasons
-        val defaultSeason = seasonController.defaultSeason
-        val isUserDefinedValueSet = seasonController.isUserDefinedValueSet
-        val favouritedSeasons = seasonController.favouriteSeasons
+        val supportedSeasons = homeController.supportedSeasons
+        val defaultSeason = homeController.defaultSeason
+        val isUserDefinedValueSet = homeController.isUserDefinedValueSet
+        val favouritedSeasons = homeController.favouriteSeasons
 
         // Favourites
         list.add(ListItem.Divider)
@@ -198,10 +196,10 @@ class ListViewModel(
     }
 
     override fun toggleFavourite(season: Int) {
-        if (seasonController.isFavourite(season)) {
-            seasonController.removeFavourite(season)
+        if (homeController.isFavourite(season)) {
+            homeController.removeFavourite(season)
         } else {
-            seasonController.addFavourite(season)
+            homeController.addFavourite(season)
         }
         refreshList.postValue(Event())
     }
@@ -212,13 +210,13 @@ class ListViewModel(
     }
 
     override fun clickSetDefaultSeason(season: Int) {
-        seasonController.setUserDefaultSeason(season)
+        homeController.setUserDefaultSeason(season)
         defaultSeasonUpdated.value = DataEvent(season)
         refreshList.postValue(Event())
     }
 
     override fun clickClearDefaultSeason() {
-        seasonController.clearDefault()
+        homeController.clearDefault()
         defaultSeasonUpdated.value = DataEvent(null)
         refreshList.postValue(Event())
     }

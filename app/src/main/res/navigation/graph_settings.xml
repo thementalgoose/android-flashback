@@ -16,8 +16,8 @@
             app:popEnterAnim="@anim/settings_pop_enter"
             app:popExitAnim="@anim/settings_pop_exit" />
         <action
-            android:id="@+id/graph_action_statistics"
-            app:destination="@id/settingsStatisticsFragment"
+            android:id="@+id/graph_action_home"
+            app:destination="@id/settingsHomeFragment"
             app:enterAnim="@anim/settings_enter"
             app:exitAnim="@anim/settings_exit"
             app:popEnterAnim="@anim/settings_pop_enter"
@@ -57,8 +57,8 @@
         android:name="tmg.flashback.common.ui.settings.appearance.SettingsAppearanceFragment"
         android:label="SettingsDeviceFragment" />
     <fragment
-        android:id="@+id/settingsStatisticsFragment"
-        android:name="tmg.flashback.statistics.ui.settings.statistics.SettingsStatisticsFragment"
+        android:id="@+id/settingsHomeFragment"
+        android:name="tmg.flashback.statistics.ui.settings.home.SettingsHomeFragment"
         android:label="SettingsCustomisationFragment" />
     <include app:graph="@navigation/graph_rss_settings" />
     <fragment

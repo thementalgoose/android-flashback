@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import androidx.constraintlayout.motion.widget.MotionLayout
+import androidx.core.view.children
 import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -35,22 +36,25 @@ class SwipeRefreshMotionLayout : MotionLayout {
             return super.onNestedPreScroll(target, dx, dy, consumed, type)
         }
 
-        when (val directChild = target.getChildAt(0)) {
-            is RecyclerView -> {
-                val canScrollVertically = directChild.canScrollVertically(-1)
-                if (dy < 0 && canScrollVertically) {
-                    // don't start motionLayout transition
-                    return
-                }
-            }
-            is NestedScrollView -> {
-                val canScrollVertically = directChild.canScrollVertically(-1)
-                if (dy < 0 && canScrollVertically) {
-                    // don't start motionLayout transition
-                    return
-                }
+        val directChild = target.getChildAt(0)
+        if (directChild is RecyclerView) {
+            val canScrollVertically = directChild.canScrollVertically(-1)
+            if (dy < 0 && canScrollVertically) {
+                // don't start motionLayout transition
+                return
             }
         }
+
+        /**
+         * Workaround for initial scroll block.
+         * When scroll programatically happens the target is not the lockable recyclerview,
+         * for some reason it's an internal CircleImageView.
+         * If this is the case, just block scrolling. Animation is not critical anyway
+         */
+        if (directChild::class.simpleName == "CircleImageView") {
+            return
+        }
+
         return super.onNestedPreScroll(target, dx, dy, consumed, type)
     }
 }
