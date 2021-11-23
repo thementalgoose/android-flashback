@@ -76,7 +76,6 @@ class CircuitInfoFragment: BaseFragment<FragmentCircuitInfoBinding>() {
         }
 
         binding.swipeRefresh.setOnRefreshListener {
-            binding.progress.visible()
             viewModel.inputs.refresh()
         }
 
