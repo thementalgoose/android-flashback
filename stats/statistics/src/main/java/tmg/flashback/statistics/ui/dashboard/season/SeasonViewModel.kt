@@ -268,6 +268,7 @@ class SeasonViewModel(
     private fun List<OverviewRace>.getDefaultExpandedRound(): Int? {
         return this
             .filter { it.date >= LocalDate.now() }
+            .filter { it.date.year == LocalDate.now().year }
             .minByOrNull { it.date }
             ?.round
     }
