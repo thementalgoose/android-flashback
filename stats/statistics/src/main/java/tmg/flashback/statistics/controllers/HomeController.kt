@@ -1,44 +1,47 @@
 package tmg.flashback.statistics.controllers
 
-import tmg.flashback.configuration.controllers.ConfigController
 import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
-import tmg.flashback.statistics.repository.StatisticsRepository
+import tmg.flashback.statistics.repository.HomeRepository
 import tmg.flashback.statistics.repository.models.Banner
 
 /**
  * All the preferences surrounding the season, list of all seasons
  */
-class SeasonController(
-    private val statisticsRepository: StatisticsRepository
+class HomeController(
+    private val homeRepository: HomeRepository
 ) {
 
     //region Dashboard calendar
 
     val dashboardCalendar: Boolean
-        get() = statisticsRepository.dashboardCalendar
+        get() = homeRepository.dashboardCalendar
+
+    var dashboardAutoscroll: Boolean
+        get() = homeRepository.dashboardAutoscroll
+        set(value) { homeRepository.dashboardAutoscroll = value }
 
     //endregion
 
     //region Banner
 
     val banner: Banner?
-        get() = statisticsRepository.banner
+        get() = homeRepository.banner
 
     //endregion
 
     //region Data provided by
 
     val dataProvidedBy: String?
-        get() = statisticsRepository.dataProvidedBy
+        get() = homeRepository.dataProvidedBy
 
     //endregion
 
     //region Provided by location
 
     var dataProvidedByAtTop: Boolean
-        get() = statisticsRepository.dataProvidedByAtTop
+        get() = homeRepository.dataProvidedByAtTop
         set(value) {
-            statisticsRepository.dataProvidedByAtTop = value
+            homeRepository.dataProvidedByAtTop = value
         }
 
     //endregion
@@ -46,7 +49,7 @@ class SeasonController(
     //region Default season shown
 
     fun clearDefault() {
-        statisticsRepository.defaultSeason = null
+        homeRepository.defaultSeason = null
     }
 
     fun setUserDefaultSeason(season: Int) {
@@ -55,9 +58,9 @@ class SeasonController(
 
     var defaultSeason: Int
         get() {
-            val supportedSeasons = statisticsRepository.supportedSeasons
-            val userPrefSeason = statisticsRepository.defaultSeason
-            val serverSeason = statisticsRepository.serverDefaultYear
+            val supportedSeasons = homeRepository.supportedSeasons
+            val userPrefSeason = homeRepository.defaultSeason
+            val serverSeason = homeRepository.serverDefaultYear
 
             if (supportedSeasons.isEmpty()) {
                 return currentSeasonYear
@@ -77,36 +80,36 @@ class SeasonController(
             }
         }
         private set(value) {
-            statisticsRepository.defaultSeason = value
+            homeRepository.defaultSeason = value
         }
 
     val serverDefaultSeason: Int
-        get() = statisticsRepository.serverDefaultYear
+        get() = homeRepository.serverDefaultYear
 
     val isUserDefinedValueSet: Boolean
-        get() = statisticsRepository.defaultSeason != null
+        get() = homeRepository.defaultSeason != null
 
     //endregion
 
     //region All Seasons
 
     val supportedSeasons: Set<Int>
-        get() = statisticsRepository.supportedSeasons
+        get() = homeRepository.supportedSeasons
 
     //endregion
 
     //region Showing favourites / all
 
     var favouritesExpanded: Boolean
-        get() = statisticsRepository.showListFavourited
+        get() = homeRepository.showListFavourited
         set(value) {
-            statisticsRepository.showListFavourited = value
+            homeRepository.showListFavourited = value
         }
 
     var allExpanded: Boolean
-        get() = statisticsRepository.showListAll
+        get() = homeRepository.showListAll
         set(value) {
-            statisticsRepository.showListAll = value
+            homeRepository.showListAll = value
         }
 
     //endregion
@@ -114,9 +117,9 @@ class SeasonController(
     //region Favourites
 
     var favouriteSeasons: Set<Int>
-        get() = statisticsRepository.favouriteSeasons
+        get() = homeRepository.favouriteSeasons
         private set(value) {
-            statisticsRepository.favouriteSeasons = value
+            homeRepository.favouriteSeasons = value
         }
 
     fun isFavourite(season: Int): Boolean {

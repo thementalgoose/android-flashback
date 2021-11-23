@@ -17,7 +17,7 @@ import tmg.flashback.formula1.extensions.getConstructorInProgressInfo
 import tmg.flashback.formula1.extensions.getDriverInProgressInfo
 import tmg.flashback.formula1.model.*
 import tmg.flashback.statistics.R
-import tmg.flashback.statistics.controllers.SeasonController
+import tmg.flashback.statistics.controllers.HomeController
 import tmg.flashback.statistics.extensions.analyticsLabel
 import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.statistics.repo.RaceRepository
@@ -61,7 +61,7 @@ interface SeasonViewModelOutputs {
 //endregion
 
 class SeasonViewModel(
-    private val seasonController: SeasonController,
+    private val homeController: HomeController,
     private val raceRepository: RaceRepository,
     private val networkConnectivityManager: NetworkConnectivityManager,
     private val overviewRepository: OverviewRepository,
@@ -76,7 +76,7 @@ class SeasonViewModel(
     var outputs: SeasonViewModelOutputs = this
 
     private val menuItem: MutableStateFlow<SeasonNavItem> = MutableStateFlow(SeasonNavItem.SCHEDULE)
-    private val season: MutableStateFlow<Int> = MutableStateFlow(seasonController.defaultSeason)
+    private val season: MutableStateFlow<Int> = MutableStateFlow(homeController.defaultSeason)
     private val seasonWithRequest: Flow<Int?> = season
         .flatMapLatest { season ->
             return@flatMapLatest flow {
@@ -134,7 +134,7 @@ class SeasonViewModel(
 
     init {
         if (cacheRepository.shouldSyncCurrentSeason()) {
-            refresh(seasonController.serverDefaultSeason)
+            refresh(homeController.serverDefaultSeason)
         }
     }
 
@@ -174,7 +174,7 @@ class SeasonViewModel(
             val result = overviewRepository.fetchOverview(season)
             val anotherResult = seasonRepository.fetchRaces(season)
 
-            if (season == seasonController.serverDefaultSeason) {
+            if (season == homeController.serverDefaultSeason) {
                 cacheRepository.markedCurrentSeasonSynchronised()
             }
             showLoading.postValue(false)
@@ -355,7 +355,7 @@ class SeasonViewModel(
 
     private fun getBannerList(): MutableList<SeasonItem> {
         val list = mutableListOf<SeasonItem>()
-        seasonController.banner?.let {
+        homeController.banner?.let {
             list.addError(SyncDataItem.Message(it.message, it.url))
         }
         return list

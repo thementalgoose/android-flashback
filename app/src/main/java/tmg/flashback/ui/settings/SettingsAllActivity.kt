@@ -46,7 +46,7 @@ class SettingsAllActivity: BaseActivity(), NavController.OnDestinationChangedLis
         when (destination.id) {
             R.id.settingsFragment -> updateTitle(R.string.settings_title)
             R.id.settingsAppearanceFragment -> updateTitle(R.string.settings_all_appearance)
-            R.id.settingsStatisticsFragment -> updateTitle(R.string.settings_all_statistics)
+            R.id.settingsHomeFragment -> updateTitle(R.string.settings_all_home)
             R.id.rssSettingsFragment -> updateTitle(R.string.settings_rss_title)
             R.id.rssSettingsConfigureFragment -> updateTitle(R.string.settings_rss_configure)
             R.id.settingsUpNextNotificationsFragment -> updateTitle(R.string.settings_all_notifications)

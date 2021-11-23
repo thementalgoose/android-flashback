@@ -11,7 +11,7 @@ import org.threeten.bp.LocalDate
 import tmg.flashback.ui.base.BaseFragment
 import tmg.flashback.statistics.R
 import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
-import tmg.flashback.statistics.controllers.SeasonController
+import tmg.flashback.statistics.controllers.HomeController
 import tmg.flashback.statistics.databinding.FragmentDashboardSeasonBinding
 import tmg.flashback.statistics.ui.overview.constructor.ConstructorActivity
 import tmg.flashback.statistics.ui.overview.driver.DriverActivity
@@ -26,9 +26,9 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
 
     private val viewModel: SeasonViewModel by viewModel()
 
-    private val seasonController: SeasonController by inject()
+    private val homeController: HomeController by inject()
     private val analyticsData: MutableMap<String, String> = mutableMapOf(
-        "extra_season_id" to seasonController.defaultSeason.toString(),
+        "extra_season_id" to homeController.defaultSeason.toString(),
         "extra_view_type" to SeasonNavItem.SCHEDULE.name
     )
 
@@ -113,15 +113,30 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
         observe(viewModel.outputs.list) { list ->
             adapter.list = list
             seasonFragmentCallback?.refresh()
-            if (list.any { it is SeasonItem.CalendarMonth && it.year == currentSeasonYear }) {
-                val currentMonth = LocalDate.now().month
-                val positionToScrollTo = list
-                    .indexOfFirst { it is SeasonItem.CalendarMonth && it.month == currentMonth }
-
-                (binding.dataList.layoutManager as? LinearLayoutManager)?.scrollToPositionWithOffset(positionToScrollTo.coerceAtLeast(0), 0)
+            val positionToScrollTo = if (homeController.dashboardAutoscroll) {
+                when {
+                    list.any { it is SeasonItem.Track && it.defaultExpanded } -> {
+                        val positionToScrollTo = list
+                            .indexOfFirst { it is SeasonItem.Track && it.defaultExpanded }
+                        positionToScrollTo
+                    }
+                    list.any { it is SeasonItem.CalendarMonth && it.year == currentSeasonYear } -> {
+                        val currentMonth = LocalDate.now().month
+                        val positionToScrollTo = list.indexOfFirst { it is SeasonItem.CalendarMonth && it.month == currentMonth }
+                        positionToScrollTo
+                    }
+                    else -> 0
+                }
             }
             else {
+                0
+            }
+
+            if (positionToScrollTo == 0) {
                 binding.dataList.smoothScrollToPosition(0)
+            } else {
+                binding.container.transitionToEnd()
+                (binding.dataList.layoutManager as? LinearLayoutManager)?.scrollToPositionWithOffset(positionToScrollTo.coerceAtLeast(0), 0)
             }
         }
 
