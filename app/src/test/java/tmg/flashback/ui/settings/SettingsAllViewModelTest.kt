@@ -33,7 +33,7 @@ internal class SettingsAllViewModelTest: BaseTest() {
         val expected = listOf(
                 Pair(R.string.settings_title, null),
                 Pair(R.string.settings_all_appearance, R.string.settings_all_appearance_subtitle),
-                Pair(R.string.settings_all_statistics, R.string.settings_all_statistics_subtitle),
+                Pair(R.string.settings_all_home, R.string.settings_all_home_subtitle),
                 Pair(R.string.settings_all_rss, R.string.settings_all_rss_subtitle),
                 Pair(R.string.settings_all_notifications, R.string.settings_all_notifications_subtitle),
                 Pair(R.string.settings_all_support, R.string.settings_all_support_subtitle),
@@ -50,7 +50,7 @@ internal class SettingsAllViewModelTest: BaseTest() {
         val expected = listOf(
                 Pair(R.string.settings_title, null),
                 Pair(R.string.settings_all_appearance, R.string.settings_all_appearance_subtitle),
-                Pair(R.string.settings_all_statistics, R.string.settings_all_statistics_subtitle),
+                Pair(R.string.settings_all_home, R.string.settings_all_home_subtitle),
                 Pair(R.string.settings_all_notifications, R.string.settings_all_notifications_subtitle),
                 Pair(R.string.settings_all_support, R.string.settings_all_support_subtitle),
                 Pair(R.string.settings_all_about, R.string.settings_all_about_subtitle)
@@ -71,8 +71,8 @@ internal class SettingsAllViewModelTest: BaseTest() {
     @Test
     fun `clicking statistics fires open statistics event`() {
         initSUT()
-        sut.clickPreference(sut.models.findPref(R.string.settings_all_statistics))
-        sut.outputs.openStatistics.test {
+        sut.clickPreference(sut.models.findPref(R.string.settings_all_home))
+        sut.outputs.openHome.test {
             assertEventFired()
         }
     }

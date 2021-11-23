@@ -1,15 +1,15 @@
 package tmg.flashback.statistics.controllers
 
-import tmg.flashback.statistics.repository.StatisticsRepository
+import tmg.flashback.statistics.repository.HomeRepository
 
 class SearchController(
-    private val statisticsRepository: StatisticsRepository
+    private val homeRepository: HomeRepository
 ) {
 
     /**
      * Is the search functionality enabled
      */
     val enabled: Boolean by lazy {
-        statisticsRepository.searchEnabled
+        homeRepository.searchEnabled
     }
 }

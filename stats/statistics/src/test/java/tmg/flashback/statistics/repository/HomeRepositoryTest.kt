@@ -12,15 +12,15 @@ import java.time.Year
 import tmg.flashback.statistics.repository.json.BannerJson
 import tmg.flashback.statistics.repository.models.Banner
 
-internal class StatisticsRepositoryTest {
+internal class HomeRepositoryTest {
 
     private val mockPreferenceManager: PreferenceManager = mockk(relaxed = true)
     private val mockConfigManager: ConfigManager = mockk(relaxed = true)
 
-    private lateinit var sut: StatisticsRepository
+    private lateinit var sut: HomeRepository
 
     private fun initSUT() {
-        sut = StatisticsRepository(mockPreferenceManager, mockConfigManager)
+        sut = HomeRepository(mockPreferenceManager, mockConfigManager)
     }
 
     //region Server default year
@@ -307,6 +307,31 @@ internal class StatisticsRepositoryTest {
 
     //endregion
 
+    //region Dashboard Autoscroll
+
+    @Test
+    fun `dashboard autoscroll reads value from preferences repository`() {
+        every { mockPreferenceManager.getBoolean(keyDashboardAutoscroll, true) } returns true
+        initSUT()
+
+        assertTrue(sut.dashboardAutoscroll)
+        verify {
+            mockPreferenceManager.getBoolean(keyDashboardAutoscroll, true)
+        }
+    }
+
+    @Test
+    fun `dashboard autoscroll saves value to shared prefs repository`() {
+        initSUT()
+
+        sut.dashboardAutoscroll = true
+        verify {
+            mockPreferenceManager.save(keyDashboardAutoscroll, true)
+        }
+    }
+
+    //endregion
+
     //region Favourite Seasons
 
     @Test
@@ -414,6 +439,7 @@ internal class StatisticsRepositoryTest {
         private const val keyShowListFavourited: String = "BOTTOM_SHEET_FAVOURITED"
         private const val keyShowListAll: String = "BOTTOM_SHEET_ALL"
         private const val keyShowGridPenaltiesInQualifying: String = "SHOW_GRID_PENALTIES_IN_QUALIFYING"
+        private const val keyDashboardAutoscroll: String = "DASHBOARD_AUTOSCROLL"
         private const val keyFavouriteSeasons: String = "FAVOURITE_SEASONS"
         private const val keyDefaultSeason: String = "DEFAULT_SEASON"
         private const val keyProvidedByAtTop: String = "PROVIDED_BY_AT_TOP"
