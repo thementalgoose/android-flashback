@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:animateLayoutChanges="true"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:animateLayoutChanges="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/container"
@@ -105,13 +105,13 @@
         android:id="@+id/schedule"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/paddingNSmall"
         android:layout_marginBottom="@dimen/paddingMedium"
         android:background="?attr/backgroundSecondary"
         android:clickable="true"
         android:focusable="true"
         android:foreground="@drawable/ripple_rectangle"
         android:paddingStart="@dimen/paddingMedium"
-        android:layout_marginTop="@dimen/paddingNSmall"
         android:paddingTop="@dimen/paddingMedium"
         android:paddingEnd="@dimen/paddingMedium"
         android:paddingBottom="@dimen/paddingMedium"
@@ -183,16 +183,17 @@
         <tmg.flashback.ui.views.PassThroughRecyclerView
             android:id="@+id/enlargedSchedule"
             android:layout_width="0dp"
-            app:layout_constraintVertical_bias="0.0"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/paddingMedium"
+            android:layout_marginStart="@dimen/paddingXSmall"
             android:nestedScrollingEnabled="true"
             android:overScrollMode="never"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/enlargedGuide"
             app:layout_constraintTop_toTopOf="@id/enlargedTrackIcon"
+            app:layout_constraintVertical_bias="0.0"
             tools:itemCount="8"
+            tools:layout_height="100dp"
             tools:listitem="@layout/view_inline_schedule_item" />
 
         <TextView

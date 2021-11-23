@@ -33,19 +33,10 @@ object NotificationUtils {
         val reminderString = context.getString(notificationReminder.label)
         val notificationTitle = context.getString(R.string.notification_content_title, label, reminderString)
 
-        var deviceDateTime: LocalDateTime? = null
-        timestamp.on(
-            dateAndTime = { utc, local ->
-                deviceDateTime = local
-            }
-        )
+        val deviceDateTime: LocalDateTime = timestamp.deviceLocalDateTime
 
-        val deviceTimeString = if (deviceDateTime != null) {
-            val timeString = deviceDateTime!!.format(DateTimeFormatter.ofPattern("HH:mm"))
-            context.getString(R.string.notification_content_text_device_time, timeString, ZoneId.systemDefault().id)
-        } else {
-            ""
-        }
+        val timeString = deviceDateTime.format(DateTimeFormatter.ofPattern("HH:mm"))
+        val deviceTimeString = context.getString(R.string.notification_content_text_device_time, timeString, ZoneId.systemDefault().id)
         val notificationText = context.getString(R.string.notification_content_text, title, label, reminderString, deviceTimeString)
 
         return Pair(notificationTitle, notificationText)

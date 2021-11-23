@@ -116,18 +116,10 @@ class UpNextController(
                 }
             }
             .flatten()
-            .filter { it.timestamp.originalTime != null }
             .filter { !it.timestamp.isInPastRelativeToo(upNextRepository.notificationReminderPeriod.seconds.toLong()) }
             .map {
                 it.apply {
-                    var utcDateTime: LocalDateTime = it.timestamp.originalDate.atTime(it.timestamp.originalTime)
-                    it.timestamp.on(
-                        dateAndTime = { utc, _ ->
-                            utcDateTime = utc
-                        }
-                    )
-
-                    this.utcDateTime = utcDateTime
+                    this.utcDateTime = it.timestamp.utcLocalDateTime
                     this.requestCode = tmg.flashback.upnext.utils.NotificationUtils.getRequestCode(utcDateTime)
                 }
             }
