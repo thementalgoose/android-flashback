@@ -49,7 +49,6 @@ class ListFragment: BaseFragment<FragmentDashboardListBinding>() {
                          "rss" -> viewModel.inputs.clickRss()
                          "settings" -> viewModel.inputs.clickSettings()
                          "contact" -> viewModel.inputs.clickContact()
-                         "up_next_moved" -> dashboardNavigationCallback?.openNow()
                          "debug_list_item" -> {
                              context?.let { debugController.goToDebugActivity(it) }
                          }
