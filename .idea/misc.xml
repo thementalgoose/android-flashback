@@ -8,6 +8,7 @@
         <entry key="app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.36822916666666666" />
         <entry key="app/src/main/res/drawable/ic_moved.xml" value="0.4114583333333333" />
         <entry key="app/src/main/res/drawable/launch_screen.xml" value="0.36822916666666666" />
+        <entry key="app/src/main/res/drawable/logo_background.xml" value="0.2765" />
         <entry key="app/src/main/res/drawable/logo_foreground.xml" value="0.453125" />
         <entry key="app/src/main/res/drawable/logo_foreground_no_lines.xml" value="0.36822916666666666" />
         <entry key="app/src/main/res/drawable/sync_done.xml" value="0.224" />
@@ -27,6 +28,7 @@
         <entry key="app/src/main/res/layout/view_season_list_up_next.xml" value="0.26646403242147926" />
         <entry key="app/src/main/res/layout/view_starting_lights.xml" value="0.38632246376811596" />
         <entry key="app/src/main/res/layout/view_sync_item.xml" value="0.22" />
+        <entry key="app/src/sand/res/drawable/logo_background.xml" value="0.2765" />
         <entry key="common/src/main/res/layout/activity_release_notes.xml" value="0.22864583333333333" />
         <entry key="common/src/main/res/layout/fragment_bottom_sheet_release_notes.xml" value="0.3765625" />
         <entry key="common/src/main/res/layout/fragment_bottom_sheet_theme.xml" value="0.1831306990881459" />
@@ -205,6 +207,8 @@
         <entry key="stats/statistics/src/main/res/drawable/ic_current_day_indicator.xml" value="0.3645" />
         <entry key="stats/statistics/src/main/res/drawable/ic_map.xml" value="0.2635" />
         <entry key="stats/statistics/src/main/res/drawable/ic_notification_bell.xml" value="0.3" />
+        <entry key="stats/statistics/src/main/res/drawable/ic_status_lap_1.xml" value="0.2295" />
+        <entry key="stats/statistics/src/main/res/drawable/ic_status_lap_7.xml" value="0.2295" />
         <entry key="stats/statistics/src/main/res/layout/fragment_circuit_info.xml" value="0.15092592592592594" />
         <entry key="stats/statistics/src/main/res/layout/fragment_constructor.xml" value="0.1831306990881459" />
         <entry key="stats/statistics/src/main/res/layout/fragment_dashboard_season.xml" value="0.31979166666666664" />
@@ -235,6 +239,7 @@
         <entry key="stats/statistics/src/main/res/layout/view_race_race_podium.xml" value="0.5" />
         <entry key="stats/statistics/src/main/res/layout/view_race_sprint_qualifying_result.xml" value="0.27608915906788245" />
         <entry key="stats/statistics/src/main/res/layout/view_search_placeholder.xml" value="0.26458333333333334" />
+        <entry key="stats/statistics/src/main/res/layout/widget_up_next.xml" value="0.3927083333333333" />
         <entry key="stats/upnext/src/main/res/drawable/ic_current_day_indicator.xml" value="0.3" />
         <entry key="stats/upnext/src/main/res/drawable/ic_notification_indicator_bell.xml" value="0.3" />
         <entry key="stats/upnext/src/main/res/drawable/widget_up_next_preview.xml" value="0.134" />

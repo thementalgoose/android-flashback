@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test
 import tmg.flashback.common.controllers.ReleaseNotesController
 import tmg.flashback.configuration.controllers.ConfigController
 import tmg.flashback.device.managers.BuildConfigManager
-import tmg.flashback.upnext.controllers.UpNextController
+import tmg.flashback.statistics.controllers.UpNextController
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertEventFired
 import tmg.testutils.livedata.assertEventNotFired

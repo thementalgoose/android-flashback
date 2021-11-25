@@ -16,7 +16,7 @@ import tmg.flashback.ui.sync.SyncNavTarget.DASHBOARD
 import tmg.flashback.ui.sync.SyncNavTarget.FORCE_UPGRADE
 import tmg.flashback.ui.sync.SyncState
 import tmg.flashback.ui.sync.SyncViewModel
-import tmg.flashback.upnext.controllers.UpNextController
+import tmg.flashback.statistics.controllers.UpNextController
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.*
 

@@ -10,7 +10,7 @@ import tmg.flashback.DebugController
 import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.R
 import tmg.flashback.statistics.controllers.HomeController
-import tmg.flashback.upnext.controllers.UpNextController
+import tmg.flashback.statistics.controllers.UpNextController
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.*
 
