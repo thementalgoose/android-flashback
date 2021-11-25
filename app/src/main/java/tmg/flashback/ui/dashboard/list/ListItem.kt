@@ -4,8 +4,6 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
 import tmg.flashback.R
-import tmg.flashback.upnext.repository.model.TimeListDisplayType
-import tmg.flashback.upnext.repository.model.UpNextSchedule
 import tmg.utilities.models.StringHolder
 
 sealed class ListItem(

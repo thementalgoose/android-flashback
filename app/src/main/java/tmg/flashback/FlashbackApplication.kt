@@ -13,7 +13,6 @@ import tmg.flashback.crash_reporting.di.crashReportingModule
 import tmg.flashback.di.appModule
 import tmg.flashback.rss.di.rssModule
 import tmg.flashback.statistics.di.statisticsModule
-import tmg.flashback.upnext.di.upNextModule
 import tmg.flashback.notifications.di.notificationModule
 
 class FlashbackApplication: Application() {
@@ -30,7 +29,6 @@ class FlashbackApplication: Application() {
                 appModule,
                 // Features
                 rssModule,
-                upNextModule,
                 commonModule,
                 // Debug
                 debugModule,

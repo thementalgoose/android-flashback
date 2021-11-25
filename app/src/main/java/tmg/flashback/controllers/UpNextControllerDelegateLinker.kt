@@ -1,7 +1,7 @@
 package tmg.flashback.controllers
 
+import tmg.flashback.statistics.controllers.UpNextController
 import tmg.flashback.statistics.controllers.UpNextControllerDelegate
-import tmg.flashback.upnext.controllers.UpNextController
 
 // Temporary class while up next and stats modules are separate
 class UpNextControllerDelegateLinker(

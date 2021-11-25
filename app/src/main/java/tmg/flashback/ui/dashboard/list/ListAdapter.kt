@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.R
 import tmg.flashback.databinding.*
 import tmg.flashback.ui.dashboard.list.viewholders.*
-import tmg.flashback.upnext.repository.model.TimeListDisplayType
 
 class ListAdapter(
     private val featureToggled: (type: HeaderType) -> Unit,
@@ -27,7 +26,7 @@ class ListAdapter(
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val layoutInflater = LayoutInflater.from(parent.context)
+        val layoutInflater = LayoutInflater.from(parent.context )
         return when (viewType) {
             R.layout.view_season_list_divider -> DividerViewHolder(
                 ViewSeasonListDividerBinding.inflate(layoutInflater, parent, false)
