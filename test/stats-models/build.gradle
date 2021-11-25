@@ -16,8 +16,12 @@ android {
 
 dependencies {
 
+    implementation depsTest.junit5.api
+
     // Preferences library
     implementation project(path: ':data:room')
     implementation project(path: ':formula1')
     implementation project(path: ':data:network')
+
+    implementation project(path: ':core:ui')
 }

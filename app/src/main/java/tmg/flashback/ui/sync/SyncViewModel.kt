@@ -14,7 +14,7 @@ import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.statistics.repo.*
 import tmg.flashback.statistics.repo.repository.CacheRepository
 import tmg.flashback.ui.sync.SyncState.*
-import tmg.flashback.upnext.controllers.UpNextController
+import tmg.flashback.statistics.controllers.UpNextController
 import tmg.utilities.lifecycle.DataEvent
 
 //region Inputs

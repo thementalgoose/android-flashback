@@ -8,7 +8,7 @@ import tmg.flashback.configuration.controllers.ConfigController
 import tmg.flashback.common.controllers.ReleaseNotesController
 import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.statistics.BuildConfig
-import tmg.flashback.upnext.controllers.UpNextController
+import tmg.flashback.statistics.controllers.UpNextController
 import tmg.flashback.upnext.extensions.updateAllWidgets
 import tmg.utilities.lifecycle.Event
 

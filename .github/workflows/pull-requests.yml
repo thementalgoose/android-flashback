@@ -39,11 +39,10 @@ jobs:
           echo "::set-output name=common::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                             | grep -E '^common/' -c)"
           echo "::set-output name=formula1::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                           | grep -E '^formula1/' -c)"
           echo "::set-output name=rss::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                                | grep -E '^rss/' -c)"
-          echo "::set-output name=stats_statistics::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                   | grep -E '^stats/statistics/' -c)"
+          echo "::set-output name=statistics::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                   | grep -E '^stats/statistics/' -c)"
           echo "::set-output name=data_room::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                          | grep -E '^data/room/' -c)"
           echo "::set-output name=data_repo::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                          | grep -E '^data/repo/' -c)"
           echo "::set-output name=data_network::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                       | grep -E '^data/network/' -c)"
-          echo "::set-output name=stats_upnext::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                       | grep -E '^stats/upnext/' -c)"
           echo "::set-output name=core_ads::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                           | grep -E '^core/ads/' -c)"
           echo "::set-output name=core_analytics::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                     | grep -E '^core/analytics/' -c)"
           echo "::set-output name=core_appshortcuts::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                  | grep -E '^core/appshortcuts/' -c)"
@@ -61,11 +60,10 @@ jobs:
       common: ${{ steps.change.outputs.common != 0 }}
       formula1: ${{ steps.change.outputs.formula1 != 0 }}
       rss: ${{ steps.change.outputs.rss != 0 }}
-      stats_statistics: ${{ steps.change.outputs.stats_statistics != 0 }}
+      statistics: ${{ steps.change.outputs.statistics != 0 }}
       data_room: ${{ steps.change.outputs.data_room != 0 }}
       data_repo: ${{ steps.change.outputs.data_repo != 0 }}
       data_network: ${{ steps.change.outputs.data_network != 0 }}
-      stats_upnext: ${{ steps.change.outputs.stats_upnext != 0 }}
       core_ads: ${{ steps.change.outputs.core_ads != 0 }}
       core_analytics: ${{ steps.change.outputs.core_analytics != 0 }}
       core_appshortcuts: ${{ steps.change.outputs.core_appshortcuts != 0 }}
@@ -114,9 +112,9 @@ jobs:
         run: ./gradlew :rss:testDebugUnitTest
         if: ${{ needs.unit_test_diff_check.outputs.rss == 'true' }}
 
-      - name: :stats:statistics
-        run: ./gradlew :stats:statistics:testDebugUnitTest
-        if: ${{ needs.unit_test_diff_check.outputs.stats_statistics == 'true' }}
+      - name: :statistics
+        run: ./gradlew :statistics:testDebugUnitTest
+        if: ${{ needs.unit_test_diff_check.outputs.statistics == 'true' }}
 
       - name: :data:repo
         run: ./gradlew :data:repo:testDebugUnitTest
@@ -129,10 +127,6 @@ jobs:
       - name: :data:room
         run: ./gradlew :data:room:testDebugUnitTest
         if: ${{ needs.unit_test_diff_check.outputs.data_room == 'true' }}
-
-      - name: :stats:upnext
-        run: ./gradlew :stats:upnext:testDebugUnitTest
-        if: ${{ needs.unit_test_diff_check.outputs.stats_upnext == 'true' }}
 
       - name: :core:ads
         run: ./gradlew :core:ads:testDebugUnitTest
