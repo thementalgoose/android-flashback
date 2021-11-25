@@ -182,6 +182,9 @@ dependencies {
     implementation deps.firebase.firestore_ktx
     implementation deps.firebase.messaging
     implementation deps.kotlin.playservices
+
+    // Test Utils
+    testImplementation project(':test:stats-models')
 }
 
 apply plugin: 'com.google.gms.google-services'

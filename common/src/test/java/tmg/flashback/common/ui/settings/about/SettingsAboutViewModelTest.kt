@@ -2,8 +2,8 @@ package tmg.flashback.common.ui.settings.about
 
 import org.junit.jupiter.api.Test
 import tmg.flashback.common.R
-import tmg.flashback.common.testutils.assertExpectedOrder
-import tmg.flashback.common.testutils.findPref
+import tmg.flashback.testutils.assertExpectedOrder
+import tmg.flashback.testutils.findPref
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertEventFired
 import tmg.testutils.livedata.test
