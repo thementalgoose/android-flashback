@@ -32,9 +32,7 @@
             <option value="$PROJECT_DIR$/debug" />
             <option value="$PROJECT_DIR$/formula1" />
             <option value="$PROJECT_DIR$/rss" />
-            <option value="$PROJECT_DIR$/stats" />
-            <option value="$PROJECT_DIR$/stats/statistics" />
-            <option value="$PROJECT_DIR$/stats/upnext" />
+            <option value="$PROJECT_DIR$/statistics" />
             <option value="$PROJECT_DIR$/test" />
             <option value="$PROJECT_DIR$/test/stats-models" />
           </set>

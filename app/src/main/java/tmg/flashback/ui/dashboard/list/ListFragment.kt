@@ -16,7 +16,7 @@ import tmg.flashback.rss.ui.RSSActivity
 import tmg.flashback.statistics.R
 import tmg.flashback.ui.dashboard.DashboardNavigationCallback
 import tmg.flashback.ui.settings.SettingsAllActivity
-import tmg.flashback.upnext.ui.onboarding.OnboardingNotificationBottomSheetFragment
+import tmg.flashback.statistics.ui.dashboard.onboarding.OnboardingNotificationBottomSheetFragment
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 

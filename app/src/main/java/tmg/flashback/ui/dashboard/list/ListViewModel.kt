@@ -7,7 +7,7 @@ import tmg.flashback.DebugController
 import tmg.flashback.R
 import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.statistics.controllers.HomeController
-import tmg.flashback.upnext.controllers.UpNextController
+import tmg.flashback.statistics.controllers.UpNextController
 import tmg.utilities.lifecycle.DataEvent
 import tmg.utilities.lifecycle.Event
 
