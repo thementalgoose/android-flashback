@@ -4,10 +4,10 @@ import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.flashback.common.testutils.assertExpectedOrder
-import tmg.flashback.common.testutils.findPref
 import tmg.flashback.notifications.R
 import tmg.flashback.notifications.controllers.NotificationController
+import tmg.flashback.testutils.assertExpectedOrder
+import tmg.flashback.testutils.findPref
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertDataEventValue
 import tmg.testutils.livedata.assertEventFired
