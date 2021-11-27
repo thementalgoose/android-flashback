@@ -600,12 +600,13 @@
     ]
   },
   {
-    "versionCode": 122,
-    "versionName": "7.1.2",
+    "versionCode": 123,
+    "versionName": "7.1.3",
     "isMajor": false,
     "title": "",
     "notes": [
       "Adds autoscrolling to the current race when you open the app",
+      "Adds practice, qualifying and race times to the race views for supported races",
       "Minor theming updates for Android 12 Material you"
     ]
   }
