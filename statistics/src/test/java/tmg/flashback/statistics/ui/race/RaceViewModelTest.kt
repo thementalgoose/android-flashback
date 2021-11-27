@@ -109,6 +109,7 @@ internal class RaceViewModelTest: BaseTest() {
         sut.outputs.list.test {
             assertValue(listOf(
                 RaceItem.overviewModel(raceDate = LocalDate.now().plusDays(1)),
+                RaceItem.scheduleMaxModel(),
                 RaceItem.errorItemModel(SyncDataItem.Unavailable(DataUnavailable.RACE_IN_FUTURE))
             ))
         }
@@ -132,6 +133,7 @@ internal class RaceViewModelTest: BaseTest() {
         sut.outputs.list.test {
             assertValue(listOf(
                 RaceItem.overviewModel(raceDate = LocalDate.now()),
+                RaceItem.scheduleMaxModel(),
                 RaceItem.errorItemModel(SyncDataItem.Unavailable(DataUnavailable.COMING_SOON_RACE))
             ))
         }
