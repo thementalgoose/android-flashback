@@ -37,10 +37,6 @@ task generateRemoteConfigDefaults {
                 value(year)
             }
             entry {
-                key('up_next')
-                value()
-            }
-            entry {
                 key('banner')
                 value()
             }
