@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.Driver
+import tmg.flashback.formula1.model.Overview
 import tmg.flashback.formula1.model.RaceQualifyingType
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.*
@@ -81,6 +82,9 @@ class RaceAdapter(
                 constructorClicked,
                 ViewRaceConstructorBinding.inflate(layoutInflater, parent, false)
             )
+            R.layout.view_race_schedule_list -> ScheduleItemViewHolder(
+                ViewRaceScheduleListBinding.inflate(layoutInflater, parent, false)
+            )
             R.layout.skeleton_race -> SkeletonLoadingViewHolder(
                 SkeletonRaceBinding.inflate(layoutInflater, parent, false)
             )
@@ -91,6 +95,8 @@ class RaceAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (val item = list[position]) {
             is RaceItem.Overview -> (holder as OverviewViewHolder).bind(item)
+
+            is RaceItem.ScheduleMax -> (holder as ScheduleItemViewHolder).bind(item)
 
             is RaceItem.Constructor -> (holder as ConstructorStandingsViewholder).bind(item)
 
@@ -120,9 +126,10 @@ class RaceAdapter(
 
         override fun getNewListSize(): Int = newList.size
 
-        override fun areContentsTheSame(o: Int, n: Int): Boolean = oldList[o] == newList[n] && !isOverview(oldList[o], newList[n])
+        override fun areContentsTheSame(o: Int, n: Int): Boolean = oldList[o] == newList[n] || isOverviewContents(oldList[o], newList[n])
 
         private fun isOverview(old: RaceItem, new: RaceItem) = old is RaceItem.Overview && new is RaceItem.Overview
+        private fun isOverviewContents(old: RaceItem, new: RaceItem) = old is RaceItem.Overview && new is RaceItem.Overview && old.wikipedia == new.wikipedia
     }
 
 }

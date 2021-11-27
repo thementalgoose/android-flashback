@@ -102,7 +102,7 @@ class RaceViewModel(
                 .map { race ->
                     val list = mutableListOf<RaceItem>()
                     if (race != null) {
-                        list.add(race.raceInfo.toOverview())
+                        list.addAll(race.toOverview())
                     }
                     showSprintQualifying.postValue(race?.hasSprintQualifying == true)
                     when {
@@ -248,18 +248,26 @@ class RaceViewModel(
 
     //endregion
 
-    private fun RaceInfo.toOverview(): RaceItem.Overview {
-        return RaceItem.Overview(
-            raceName = this.name,
-            country = this.circuit.country,
-            countryISO = this.circuit.countryISO,
-            circuitId = this.circuit.id,
-            circuitName = this.circuit.name,
-            round = this.round,
-            season = this.season,
-            raceDate = this.date,
-            wikipedia = this.wikipediaUrl,
-        )
+    private fun Race.toOverview(): List<RaceItem> {
+        return mutableListOf<RaceItem>().apply {
+            add(RaceItem.Overview(
+                raceName = raceInfo.name,
+                country = raceInfo.circuit.country,
+                countryISO = raceInfo.circuit.countryISO,
+                circuitId = raceInfo.circuit.id,
+                circuitName = raceInfo.circuit.name,
+                round = raceInfo.round,
+                season = raceInfo.season,
+                raceDate = raceInfo.date,
+                wikipedia = raceInfo.wikipediaUrl,
+                schedule = schedule
+            ))
+            if (raceInfo.date >= LocalDate.now() && schedule.isNotEmpty()) {
+                add(RaceItem.ScheduleMax(
+                    schedule = schedule
+                ))
+            }
+        }
     }
 
     private fun Race.getQ1Q2Q3QualifyingList(forType: RaceQualifyingType): List<RaceItem.QualifyingResultQ1Q2Q3> {

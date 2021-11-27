@@ -8,7 +8,6 @@ import tmg.flashback.ui.managers.StyleManager
 import tmg.flashback.ui.navigation.NavigationProvider
 import tmg.flashback.DebugController
 import tmg.flashback.FlashbackStartup
-import tmg.flashback.controllers.UpNextControllerDelegateLinker
 import tmg.flashback.managers.appshortcuts.AndroidAppShortcutManager
 import tmg.flashback.managers.appshortcuts.AppShortcutManager
 import tmg.flashback.managers.buildconfig.AppBuildConfigManager
@@ -26,7 +25,6 @@ import tmg.flashback.ui.dashboard.HomeViewModel
 import tmg.flashback.ui.dashboard.list.ListViewModel
 import tmg.flashback.ui.settings.SettingsAllViewModel
 import tmg.flashback.notifications.navigation.NotificationNavigationProvider
-import tmg.flashback.statistics.controllers.UpNextControllerDelegate
 
 val appModule = module {
 
@@ -39,9 +37,6 @@ val appModule = module {
     single { FlashbackStartup(get(), get(), get(), get(), get(), get()) }
 
     single { DebugController() }
-
-    // Temporary module links
-    single<UpNextControllerDelegate> { UpNextControllerDelegateLinker(get()) }
 
     single<PreferenceManager> { AppPreferencesManager(get()) }
     single<StyleManager> { AppStyleManager() }

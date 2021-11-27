@@ -5,10 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import org.koin.core.component.inject
-import tmg.flashback.notifications.controllers.NotificationController
 import tmg.flashback.ui.controllers.ThemeController
 import tmg.flashback.statistics.R
-import tmg.flashback.statistics.controllers.UpNextControllerDelegate
+import tmg.flashback.statistics.controllers.ScheduleController
 import tmg.flashback.statistics.databinding.*
 import tmg.flashback.statistics.ui.dashboard.season.viewholders.*
 import tmg.flashback.statistics.ui.shared.sync.SyncAdapter
@@ -24,7 +23,7 @@ class SeasonAdapter(
 
     private val themeController: ThemeController by inject()
 
-    private val notificationController: UpNextControllerDelegate by inject()
+    private val scheduleController: ScheduleController by inject()
 
     override var list: List<SeasonItem> = emptyList()
         set(initialValue) {
@@ -41,7 +40,6 @@ class SeasonAdapter(
         return when (viewType) {
             R.layout.view_dashboard_season_track -> TrackViewHolder(
                 trackClicked,
-                notificationController,
                 ViewDashboardSeasonTrackBinding.inflate(layoutInflater, parent, false)
             )
             R.layout.view_dashboard_season_driver -> DriverViewHolder(

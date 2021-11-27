@@ -14,7 +14,7 @@ import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.statistics.repo.*
 import tmg.flashback.statistics.repo.repository.CacheRepository
 import tmg.flashback.ui.sync.SyncState.*
-import tmg.flashback.statistics.controllers.UpNextController
+import tmg.flashback.statistics.controllers.ScheduleController
 import tmg.utilities.lifecycle.DataEvent
 
 //region Inputs
@@ -47,7 +47,7 @@ class SyncViewModel(
     private val configurationController: ConfigController,
     private val forceUpgradeController: ForceUpgradeController,
     private val cacheRepository: CacheRepository,
-    private val upNextController: UpNextController,
+    private val scheduleController: ScheduleController,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), SyncViewModelInputs, SyncViewModelOutputs {
 
@@ -185,6 +185,6 @@ class SyncViewModel(
         }
 
         // Schedule notifications
-        upNextController.scheduleNotifications()
+        scheduleController.scheduleNotifications()
     }
 }

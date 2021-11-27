@@ -10,7 +10,7 @@ import tmg.flashback.DebugController
 import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.R
 import tmg.flashback.statistics.controllers.HomeController
-import tmg.flashback.statistics.controllers.UpNextController
+import tmg.flashback.statistics.controllers.ScheduleController
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.*
 
@@ -24,7 +24,7 @@ internal class ListViewModelTest: BaseTest() {
     private val mockHomeController: HomeController = mockk(relaxed = true)
     private val mockRssController: RSSController = mockk(relaxed = true)
     private val mockDebugController: DebugController = mockk(relaxed = true)
-    private val mockUpNextController: UpNextController = mockk(relaxed = true)
+    private val mockScheduleController: ScheduleController = mockk(relaxed = true)
 
     @BeforeEach
     internal fun setUp() {
@@ -45,7 +45,7 @@ internal class ListViewModelTest: BaseTest() {
             mockHomeController,
             mockRssController,
             mockDebugController,
-            mockUpNextController
+            mockScheduleController
         )
     }
 
@@ -357,7 +357,7 @@ internal class ListViewModelTest: BaseTest() {
 
     @Test
     fun `show notification banner if should show is true`() {
-        every { mockUpNextController.shouldShowNotificationOnboarding } returns true
+        every { mockScheduleController.shouldShowNotificationOnboarding } returns true
 
         initSUT()
         sut.outputs.list.test {

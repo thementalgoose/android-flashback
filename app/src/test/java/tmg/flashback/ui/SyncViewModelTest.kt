@@ -16,7 +16,7 @@ import tmg.flashback.ui.sync.SyncNavTarget.DASHBOARD
 import tmg.flashback.ui.sync.SyncNavTarget.FORCE_UPGRADE
 import tmg.flashback.ui.sync.SyncState
 import tmg.flashback.ui.sync.SyncViewModel
-import tmg.flashback.statistics.controllers.UpNextController
+import tmg.flashback.statistics.controllers.ScheduleController
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.*
 
@@ -31,7 +31,7 @@ internal class SyncViewModelTest: BaseTest() {
     private var mockConfigurationManager: ConfigController = mockk(relaxed = true)
     private var mockCacheRepository: CacheRepository = mockk(relaxed = true)
     private var mockForceUpgradeController: ForceUpgradeController = mockk(relaxed = true)
-    private var mockUpNextController: UpNextController = mockk(relaxed = true)
+    private var mockScheduleController: ScheduleController = mockk(relaxed = true)
 
     private lateinit var sut: SyncViewModel
 
@@ -60,7 +60,7 @@ internal class SyncViewModelTest: BaseTest() {
             mockConfigurationManager,
             mockForceUpgradeController,
             mockCacheRepository,
-            mockUpNextController,
+            mockScheduleController,
             ioDispatcher = coroutineScope.testDispatcher
         )
     }

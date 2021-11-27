@@ -6,7 +6,6 @@ import org.threeten.bp.Month
 import tmg.flashback.statistics.R
 import tmg.flashback.ui.model.AnimationSpeed
 import tmg.flashback.formula1.model.*
-import tmg.flashback.statistics.ui.dashboard.schedule.InlineSchedule
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 
 sealed class SeasonItem(

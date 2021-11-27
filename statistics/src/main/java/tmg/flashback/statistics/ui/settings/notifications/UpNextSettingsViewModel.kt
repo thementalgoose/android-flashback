@@ -3,7 +3,7 @@ package tmg.flashback.statistics.ui.settings.notifications
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import tmg.flashback.statistics.R
-import tmg.flashback.statistics.controllers.UpNextController
+import tmg.flashback.statistics.controllers.ScheduleController
 import tmg.flashback.ui.settings.SettingsModel
 import tmg.flashback.ui.settings.SettingsViewModel
 import tmg.utilities.lifecycle.Event
@@ -25,7 +25,7 @@ interface UpNextSettingsViewModelOutputs {
 //endregion
 
 class UpNextSettingsViewModel(
-    private val upNextController: UpNextController
+    private val scheduleController: ScheduleController
 ): SettingsViewModel(), UpNextSettingsViewModelInputs, UpNextSettingsViewModelOutputs {
 
     var inputs: UpNextSettingsViewModelInputs = this
@@ -36,33 +36,33 @@ class UpNextSettingsViewModel(
         add(SettingsModel.SwitchPref(
             title = R.string.settings_up_next_category_race_title,
             description = R.string.settings_up_next_category_race_descrition,
-            getState = { upNextController.notificationRace },
+            getState = { scheduleController.notificationRace },
             saveState = {
-                upNextController.notificationRace = it
+                scheduleController.notificationRace = it
             }
         ))
         add(SettingsModel.SwitchPref(
             title = R.string.settings_up_next_category_qualifying_title,
             description = R.string.settings_up_next_category_qualifying_descrition,
-            getState = { upNextController.notificationQualifying },
+            getState = { scheduleController.notificationQualifying },
             saveState = {
-                upNextController.notificationQualifying = it
+                scheduleController.notificationQualifying = it
             }
         ))
         add(SettingsModel.SwitchPref(
             title = R.string.settings_up_next_category_free_practice_title,
             description = R.string.settings_up_next_category_free_practice_descrition,
-            getState = { upNextController.notificationFreePractice },
+            getState = { scheduleController.notificationFreePractice },
             saveState = {
-                upNextController.notificationFreePractice = it
+                scheduleController.notificationFreePractice = it
             }
         ))
         add(SettingsModel.SwitchPref(
             title = R.string.settings_up_next_category_other_title,
             description = R.string.settings_up_next_category_other_descrition,
-            getState = { upNextController.notificationSeasonInfo },
+            getState = { scheduleController.notificationSeasonInfo },
             saveState = {
-                upNextController.notificationSeasonInfo = it
+                scheduleController.notificationSeasonInfo = it
             }
         ))
         add(SettingsModel.Header(R.string.settings_up_next_title))
