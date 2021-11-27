@@ -15,7 +15,8 @@ fun RaceItem.Companion.overviewModel(
     round: Int = 1,
     season: Int = 2020,
     raceDate: LocalDate? = LocalDate.of(2020, 10, 12),
-    wikipedia: String = "wikiUrl"
+    wikipedia: String = "wikiUrl",
+    schedule: List<Schedule> = listOf(Schedule.model())
 ): RaceItem.Overview = RaceItem.Overview(
     raceName = raceName,
     country = country,
@@ -25,7 +26,14 @@ fun RaceItem.Companion.overviewModel(
     round = round,
     season = season,
     raceDate = raceDate,
-    wikipedia = wikipedia
+    wikipedia = wikipedia,
+    schedule = schedule
+)
+
+fun RaceItem.Companion.scheduleMaxModel(
+    schedule: List<Schedule> = listOf(Schedule.model())
+): RaceItem.ScheduleMax = RaceItem.ScheduleMax(
+    schedule = schedule
 )
 
 fun RaceItem.Companion.podiumModel(

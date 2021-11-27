@@ -15,11 +15,11 @@
 
         <!-- Material theme colours -->
 
-        <item name="colorPrimary">#0274D1</item>
-        <item name="colorPrimaryDark">#0274D1</item>
-        <item name="colorAccent">#00E2E4</item>
+        <item name="colorPrimary">#0297d1</item>
+        <item name="colorPrimaryDark">#0297d1</item>
+        <item name="colorAccent">#00BCDA</item>
 
-        <item name="android:statusBarColor">#0274D1</item>
+        <item name="android:statusBarColor">#0297d1</item>
 
         <!-- =============================================================================== -->
 
