@@ -15,12 +15,10 @@ import tmg.flashback.statistics.BuildConfig
 import tmg.flashback.statistics.repo.ScheduleRepository
 import tmg.flashback.statistics.utils.NotificationUtils.getNotificationTitleText
 
-private typealias UpNextNotificationUtils = tmg.flashback.statistics.utils.NotificationUtils
-
 /**
- * Up Next functionality on the home screen
+ * Information around scheduling notificatoins functionality on the home screen
  */
-class UpNextController(
+class ScheduleController(
     private val applicationContext: Context,
     private val notificationController: NotificationController,
     private val upNextRepository: tmg.flashback.statistics.repository.UpNextRepository,
@@ -33,6 +31,7 @@ class UpNextController(
     // item 0 :yesterday
     // item 1 :today, today2
     // item 2: tomorrow
+    // TODO: Move this to a different controller
     suspend fun getNextEvent(): OverviewRace? {
         return scheduleRepository
             .getUpcomingEvents()
@@ -161,6 +160,7 @@ class UpNextController(
             null -> tmg.flashback.statistics.repository.models.NotificationChannel.SEASON_INFO
         }
     }
+
 
     //endregion
 

@@ -9,17 +9,17 @@ import kotlinx.coroutines.launch
 import org.koin.core.component.KoinApiExtension
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import tmg.flashback.statistics.controllers.UpNextController
+import tmg.flashback.statistics.controllers.ScheduleController
 
 @KoinApiExtension
 class UpNextNotificationBootReceiver: BroadcastReceiver(), KoinComponent {
 
-    private val upNextController: UpNextController by inject()
+    private val scheduleController: ScheduleController by inject()
 
     override fun onReceive(context: Context?, intent: Intent?) {
 
         // Reschedule notifications
         Log.i("Flashback", "Rescheduling notifications for upcoming events")
-        GlobalScope.launch { upNextController.scheduleNotifications(true) }
+        GlobalScope.launch { scheduleController.scheduleNotifications(true) }
     }
 }

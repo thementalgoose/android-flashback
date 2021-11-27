@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.formula1.enums.TrackLayout
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
@@ -50,6 +51,32 @@ class OverviewViewHolder(
             add(PillItem.Circuit(item.circuitId, item.circuitName))
             if (item.wikipedia != null) {
                 add(PillItem.Wikipedia(item.wikipedia))
+            }
+
+            val date = item.raceDate ?: return@apply
+            if (date < LocalDate.now() && item.schedule.isNotEmpty()) {
+                addAll(item.schedule.sortedBy { it.date.atTime(it.time) }
+                    .groupBy { it.date }
+                    .map { (_, items) -> items.map {
+                        val icon = when (it.date.dayOfWeek.value) {
+                            1 -> R.drawable.ic_cal_mon
+                            2 -> R.drawable.ic_cal_tue
+                            3 -> R.drawable.ic_cal_wed
+                            4 -> R.drawable.ic_cal_thu
+                            5 -> R.drawable.ic_cal_fri
+                            6 -> R.drawable.ic_cal_sat
+                            7 -> R.drawable.ic_cal_sun
+                            else -> null
+                        }
+                        if (icon != null) {
+                            PillItem.LabelIcon(_icon = icon, string = "${it.label} ${it.time}", highlight = false)
+                        }
+                        else {
+                            PillItem.Label(string = "${it.label} ${it.time}", highlight = false)
+                        }
+                    }}
+                    .flatten()
+                )
             }
         }
     }

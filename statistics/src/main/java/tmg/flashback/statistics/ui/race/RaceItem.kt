@@ -22,7 +22,8 @@ sealed class RaceItem(
         val round: Int,
         val season: Int,
         val raceDate: LocalDate?,
-        val wikipedia: String?
+        val wikipedia: String?,
+        val schedule: List<Schedule>
     ): RaceItem(
         id = "OVERVIEW",
         layoutId = R.layout.view_race_overview
@@ -120,6 +121,13 @@ sealed class RaceItem(
     ): RaceItem(
         id = constructor.id,
         layoutId = R.layout.view_race_constructor
+    )
+
+    data class ScheduleMax(
+        val schedule: List<Schedule>
+    ): RaceItem(
+        id = "SCHEDULE_MAX",
+        layoutId = R.layout.view_race_schedule_list
     )
 
     object PodiumLoading : RaceItem(
