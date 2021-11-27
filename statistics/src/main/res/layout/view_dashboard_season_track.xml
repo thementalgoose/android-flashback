@@ -166,6 +166,8 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="@dimen/paddingSmall"
+            android:layout_marginStart="@dimen/paddingSmall"
+            android:layout_marginEnd="0dp"
             android:importantForAccessibility="no"
             android:minHeight="@dimen/dashboardEnlargedTrackHeight"
             app:layout_constraintBottom_toBottomOf="parent"
