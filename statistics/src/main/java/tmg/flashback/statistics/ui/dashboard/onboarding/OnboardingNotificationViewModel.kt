@@ -3,7 +3,7 @@ package tmg.flashback.statistics.ui.dashboard.onboarding
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import tmg.flashback.statistics.controllers.UpNextController
+import tmg.flashback.statistics.controllers.ScheduleController
 import tmg.flashback.statistics.repository.models.NotificationChannel
 import tmg.flashback.ui.bottomsheet.BottomSheetItem
 import tmg.utilities.models.Selected
@@ -27,7 +27,7 @@ interface OnboardingNotificationViewModelOutputs {
 
 
 class OnboardingNotificationViewModel(
-    private val upNextController: UpNextController
+    private val scheduleController: ScheduleController
 ): ViewModel(), OnboardingNotificationViewModelInputs, OnboardingNotificationViewModelOutputs {
 
     var inputs: OnboardingNotificationViewModelInputs = this
@@ -36,7 +36,7 @@ class OnboardingNotificationViewModel(
     override val notificationPreferences: MutableLiveData<List<Selected<BottomSheetItem>>> = MutableLiveData()
 
     init {
-        upNextController.seenOnboarding()
+        scheduleController.seenOnboarding()
         updateList()
     }
 
@@ -44,10 +44,10 @@ class OnboardingNotificationViewModel(
 
     override fun selectNotificationChannel(notificationChannel: NotificationChannel) {
         when (notificationChannel) {
-            NotificationChannel.RACE -> upNextController.notificationRace = !upNextController.notificationRace
-            NotificationChannel.QUALIFYING -> upNextController.notificationQualifying = !upNextController.notificationQualifying
-            NotificationChannel.FREE_PRACTICE -> upNextController.notificationFreePractice = !upNextController.notificationFreePractice
-            NotificationChannel.SEASON_INFO -> upNextController.notificationSeasonInfo = !upNextController.notificationSeasonInfo
+            NotificationChannel.RACE -> scheduleController.notificationRace = !scheduleController.notificationRace
+            NotificationChannel.QUALIFYING -> scheduleController.notificationQualifying = !scheduleController.notificationQualifying
+            NotificationChannel.FREE_PRACTICE -> scheduleController.notificationFreePractice = !scheduleController.notificationFreePractice
+            NotificationChannel.SEASON_INFO -> scheduleController.notificationSeasonInfo = !scheduleController.notificationSeasonInfo
         }
         updateList()
     }
@@ -63,10 +63,10 @@ class OnboardingNotificationViewModel(
                     text = StringHolder(it.label)
                 ),
                 when (it) {
-                    NotificationChannel.RACE -> upNextController.notificationRace
-                    NotificationChannel.QUALIFYING -> upNextController.notificationQualifying
-                    NotificationChannel.FREE_PRACTICE -> upNextController.notificationFreePractice
-                    NotificationChannel.SEASON_INFO -> upNextController.notificationSeasonInfo
+                    NotificationChannel.RACE -> scheduleController.notificationRace
+                    NotificationChannel.QUALIFYING -> scheduleController.notificationQualifying
+                    NotificationChannel.FREE_PRACTICE -> scheduleController.notificationFreePractice
+                    NotificationChannel.SEASON_INFO -> scheduleController.notificationSeasonInfo
                 })
             }
     }

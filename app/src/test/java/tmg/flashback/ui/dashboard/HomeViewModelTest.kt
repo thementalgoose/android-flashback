@@ -14,7 +14,7 @@ import tmg.flashback.crash_reporting.controllers.CrashController
 import tmg.flashback.managers.appshortcuts.AppShortcutManager
 import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.statistics.repo.repository.CacheRepository
-import tmg.flashback.statistics.controllers.UpNextController
+import tmg.flashback.statistics.controllers.ScheduleController
 import tmg.testutils.BaseTest
 
 internal class HomeViewModelTest: BaseTest() {
@@ -25,7 +25,7 @@ internal class HomeViewModelTest: BaseTest() {
     private var mockCrashController: CrashController = mockk(relaxed = true)
     private var mockForceUpgradeController: ForceUpgradeController = mockk(relaxed = true)
     private var mockCacheRepository: CacheRepository = mockk(relaxed = true)
-    private var mockUpNextController: UpNextController = mockk(relaxed = true)
+    private var mockScheduleController: ScheduleController = mockk(relaxed = true)
 
     private lateinit var sut: HomeViewModel
 
@@ -48,7 +48,7 @@ internal class HomeViewModelTest: BaseTest() {
             mockForceUpgradeController,
             mockAppShortcutManager,
             mockCacheRepository,
-            mockUpNextController
+            mockScheduleController
         )
     }
 
@@ -97,7 +97,7 @@ internal class HomeViewModelTest: BaseTest() {
 
         coVerify { mockConfigurationManager.applyPending() }
         verify { mockAppShortcutManager.disable() }
-        coVerify { mockUpNextController.scheduleNotifications() }
+        coVerify { mockScheduleController.scheduleNotifications() }
 
         assertFalse(sut.requiresSync)
         assertFalse(sut.forceUpgrade)
@@ -113,7 +113,7 @@ internal class HomeViewModelTest: BaseTest() {
 
         coVerify { mockConfigurationManager.applyPending() }
         verify { mockAppShortcutManager.enable() }
-        coVerify { mockUpNextController.scheduleNotifications() }
+        coVerify { mockScheduleController.scheduleNotifications() }
 
         assertFalse(sut.requiresSync)
         assertFalse(sut.forceUpgrade)

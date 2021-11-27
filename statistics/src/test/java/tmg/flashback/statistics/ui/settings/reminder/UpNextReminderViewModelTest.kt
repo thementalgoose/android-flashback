@@ -5,7 +5,7 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.flashback.statistics.controllers.UpNextController
+import tmg.flashback.statistics.controllers.ScheduleController
 import tmg.flashback.statistics.ui.settings.notifications.reminder.UpNextReminderViewModel
 import tmg.flashback.ui.bottomsheet.BottomSheetItem
 import tmg.testutils.BaseTest
@@ -16,17 +16,17 @@ import tmg.utilities.models.StringHolder
 
 internal class UpNextReminderViewModelTest: BaseTest() {
 
-    private val mockUpNextController: UpNextController = mockk(relaxed = true)
+    private val mockScheduleController: ScheduleController = mockk(relaxed = true)
 
     private lateinit var sut: UpNextReminderViewModel
 
     private fun initSUT() {
-        sut = UpNextReminderViewModel(mockUpNextController)
+        sut = UpNextReminderViewModel(mockScheduleController)
     }
 
     @BeforeEach
     internal fun setUp() {
-        every { mockUpNextController.notificationReminder } returns tmg.flashback.statistics.repository.models.NotificationReminder.MINUTES_30
+        every { mockScheduleController.notificationReminder } returns tmg.flashback.statistics.repository.models.NotificationReminder.MINUTES_30
     }
 
     @Test
@@ -47,7 +47,7 @@ internal class UpNextReminderViewModelTest: BaseTest() {
         initSUT()
         sut.inputs.selectNotificationReminder(tmg.flashback.statistics.repository.models.NotificationReminder.MINUTES_60)
         verify {
-            mockUpNextController.notificationReminder = tmg.flashback.statistics.repository.models.NotificationReminder.MINUTES_60
+            mockScheduleController.notificationReminder = tmg.flashback.statistics.repository.models.NotificationReminder.MINUTES_60
         }
     }
 

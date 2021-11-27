@@ -5,7 +5,7 @@ import org.koin.dsl.module
 import tmg.flashback.statistics.controllers.RaceController
 import tmg.flashback.statistics.controllers.SearchController
 import tmg.flashback.statistics.controllers.HomeController
-import tmg.flashback.statistics.controllers.UpNextController
+import tmg.flashback.statistics.controllers.ScheduleController
 import tmg.flashback.statistics.repo.di.repoModule
 import tmg.flashback.statistics.repository.HomeRepository
 import tmg.flashback.statistics.repository.UpNextRepository
@@ -48,6 +48,6 @@ val statisticsModule = repoModule + module {
     viewModel { OnboardingNotificationViewModel(get()) }
     viewModel { UpNextReminderViewModel(get()) }
 
-    single { UpNextController(get(), get(), get(), get()) }
+    single { ScheduleController(get(), get(), get(), get()) }
     single { UpNextRepository(get()) }
 }

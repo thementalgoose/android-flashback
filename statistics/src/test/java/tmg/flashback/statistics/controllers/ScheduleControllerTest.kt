@@ -23,14 +23,14 @@ import tmg.flashback.statistics.repository.UpNextRepository
 import tmg.flashback.statistics.repository.models.NotificationReminder
 import tmg.testutils.BaseTest
 
-internal class UpNextControllerTest : BaseTest() {
+internal class ScheduleControllerTest : BaseTest() {
 
     private var mockNotificationController: NotificationController = mockk(relaxed = true)
     private var mockUpNextRepository: UpNextRepository = mockk(relaxed = true)
     private var mockApplicationContext: Context = mockk(relaxed = true)
     private var mockScheduleRepository: ScheduleRepository = mockk(relaxed = true)
 
-    private lateinit var sut: UpNextController
+    private lateinit var sut: ScheduleController
 
     @BeforeEach
     internal fun setUp() {
@@ -43,7 +43,7 @@ internal class UpNextControllerTest : BaseTest() {
     }
 
     private fun initSUT() {
-        sut = UpNextController(mockApplicationContext, mockNotificationController, mockUpNextRepository, mockScheduleRepository)
+        sut = ScheduleController(mockApplicationContext, mockNotificationController, mockUpNextRepository, mockScheduleRepository)
     }
 
     @Test

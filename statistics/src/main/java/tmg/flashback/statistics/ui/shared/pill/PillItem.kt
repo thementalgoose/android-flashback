@@ -40,4 +40,15 @@ sealed class PillItem(
         label = StringHolder(string),
         highlighted = highlight
     )
+
+    data class LabelIcon(
+        @DrawableRes
+        private val _icon: Int,
+        private val string: String,
+        private val highlight: Boolean = false
+    ): PillItem(
+        icon = _icon,
+        label = StringHolder(string),
+        highlighted = highlight
+    )
 }
