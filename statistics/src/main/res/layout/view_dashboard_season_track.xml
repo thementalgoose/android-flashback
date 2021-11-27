@@ -164,11 +164,13 @@
         <ImageView
             android:id="@+id/enlargedTrackIcon"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginTop="@dimen/paddingSmall"
+            android:importantForAccessibility="no"
             android:minHeight="@dimen/dashboardEnlargedTrackHeight"
-            app:layout_constraintEnd_toEndOf="@id/enlargedGuide"
-            app:layout_constraintStart_toStartOf="@id/enlargedName"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/enlargedGuide"
             app:layout_constraintTop_toBottomOf="@id/enlargedName"
             app:tint="?attr/contentSecondary"
             tools:src="@drawable/circuit_albert_park" />
@@ -178,19 +180,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.5" />
+            app:layout_constraintGuide_percent="0.65" />
 
         <tmg.flashback.ui.views.PassThroughRecyclerView
             android:id="@+id/enlargedSchedule"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/paddingXSmall"
+            android:layout_marginTop="@dimen/paddingXSmall"
             android:nestedScrollingEnabled="true"
             android:overScrollMode="never"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/enlargedGuide"
-            app:layout_constraintTop_toTopOf="@id/enlargedTrackIcon"
+            app:layout_constraintEnd_toEndOf="@id/enlargedGuide"
+            app:layout_constraintStart_toEndOf="@id/enlargedCountry"
+            app:layout_constraintTop_toBottomOf="@id/enlargedRaceCountry"
             app:layout_constraintVertical_bias="0.0"
             tools:itemCount="8"
             tools:layout_height="100dp"
@@ -201,10 +203,9 @@
             style="@style/Text.Body.1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/paddingSmall"
-            app:layout_constraintEnd_toEndOf="@id/enlargedTrackIcon"
-            app:layout_constraintStart_toStartOf="@id/enlargedTrackIcon"
-            app:layout_constraintTop_toBottomOf="@id/enlargedTrackIcon"
+            app:layout_constraintEnd_toEndOf="@id/enlargedGuide"
+            app:layout_constraintStart_toStartOf="@id/enlargedName"
+            app:layout_constraintTop_toBottomOf="@id/enlargedName"
             tools:text="Albert Park Circuit" />
 
         <TextView
@@ -212,9 +213,8 @@
             style="@style/Text.Body.2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/enlargedTrackIcon"
-            app:layout_constraintStart_toStartOf="@id/enlargedTrackIcon"
+            app:layout_constraintEnd_toEndOf="@id/enlargedGuide"
+            app:layout_constraintStart_toStartOf="@id/enlargedCircuitName"
             app:layout_constraintTop_toBottomOf="@id/enlargedCircuitName"
             tools:text="Australia" />
 
