@@ -30,7 +30,7 @@ import tmg.flashback.crash_reporting.controllers.CrashController
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.statistics.R
-import tmg.flashback.statistics.controllers.UpNextController
+import tmg.flashback.statistics.controllers.ScheduleController
 import tmg.utilities.extensions.toEnum
 import java.lang.Exception
 import tmg.utilities.utils.LocalDateUtils.Companion.daysBetween
@@ -39,7 +39,7 @@ import tmg.utilities.utils.LocalDateUtils.Companion.daysBetween
 class UpNextWidgetProvider : AppWidgetProvider(), KoinComponent {
 
     private val crashController: CrashController by inject()
-    private val upNextController: UpNextController by inject()
+    private val scheduleController: ScheduleController by inject()
     private val buildConfigManager: BuildConfigManager by inject()
     private val navigationProvider: NavigationProvider by inject()
 
@@ -59,7 +59,7 @@ class UpNextWidgetProvider : AppWidgetProvider(), KoinComponent {
         }
 
         // Pre app checks
-        val nextEvent: OverviewRace? = runBlocking { upNextController.getNextEvent() }
+        val nextEvent: OverviewRace? = runBlocking { scheduleController.getNextEvent() }
         if (context == null) {
             return
         }

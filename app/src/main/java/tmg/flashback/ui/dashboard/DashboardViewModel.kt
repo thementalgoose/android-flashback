@@ -8,7 +8,7 @@ import tmg.flashback.configuration.controllers.ConfigController
 import tmg.flashback.common.controllers.ReleaseNotesController
 import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.statistics.BuildConfig
-import tmg.flashback.statistics.controllers.UpNextController
+import tmg.flashback.statistics.controllers.ScheduleController
 import tmg.flashback.upnext.extensions.updateAllWidgets
 import tmg.utilities.lifecycle.Event
 
@@ -33,7 +33,7 @@ interface DashboardViewModelOutputs {
 
 class DashboardViewModel(
     private val applicationContext: Context,
-    private val upNextController: UpNextController,
+    private val scheduleController: ScheduleController,
     private val buildConfigManager: BuildConfigManager,
     private val configurationController: ConfigController,
     private val releaseNotesController: ReleaseNotesController,
@@ -55,7 +55,7 @@ class DashboardViewModel(
             }
             if (activate) {
                 appConfigSynced.value = Event()
-                upNextController.scheduleNotifications()
+                scheduleController.scheduleNotifications()
                 applicationContext.updateAllWidgets()
             }
         }

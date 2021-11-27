@@ -5,7 +5,7 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.flashback.statistics.controllers.UpNextController
+import tmg.flashback.statistics.controllers.ScheduleController
 import tmg.flashback.ui.bottomsheet.BottomSheetItem
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.test
@@ -14,28 +14,28 @@ import tmg.utilities.models.StringHolder
 
 internal class OnboardingNotificationViewModelTest: BaseTest() {
 
-    private val mockUpNextController: UpNextController = mockk(relaxed = true)
+    private val mockScheduleController: ScheduleController = mockk(relaxed = true)
 
     private lateinit var sut: OnboardingNotificationViewModel
 
     @BeforeEach
     internal fun setUp() {
-        every { mockUpNextController.seenOnboarding() } returns Unit
-        every { mockUpNextController.notificationRace } returns true
-        every { mockUpNextController.notificationQualifying } returns true
-        every { mockUpNextController.notificationFreePractice } returns true
-        every { mockUpNextController.notificationSeasonInfo } returns true
+        every { mockScheduleController.seenOnboarding() } returns Unit
+        every { mockScheduleController.notificationRace } returns true
+        every { mockScheduleController.notificationQualifying } returns true
+        every { mockScheduleController.notificationFreePractice } returns true
+        every { mockScheduleController.notificationSeasonInfo } returns true
     }
 
     private fun initSUT() {
-        sut = OnboardingNotificationViewModel(mockUpNextController)
+        sut = OnboardingNotificationViewModel(mockScheduleController)
     }
 
     @Test
     fun `init marks that we now seen onboarding prompt`() {
         initSUT()
         verify {
-            mockUpNextController.seenOnboarding()
+            mockScheduleController.seenOnboarding()
         }
     }
 
@@ -57,7 +57,7 @@ internal class OnboardingNotificationViewModelTest: BaseTest() {
         initSUT()
         sut.inputs.selectNotificationChannel(tmg.flashback.statistics.repository.models.NotificationChannel.RACE)
         verify {
-            mockUpNextController.notificationRace = false
+            mockScheduleController.notificationRace = false
         }
     }
 
@@ -66,7 +66,7 @@ internal class OnboardingNotificationViewModelTest: BaseTest() {
         initSUT()
         sut.inputs.selectNotificationChannel(tmg.flashback.statistics.repository.models.NotificationChannel.QUALIFYING)
         verify {
-            mockUpNextController.notificationQualifying = false
+            mockScheduleController.notificationQualifying = false
         }
     }
 
@@ -75,7 +75,7 @@ internal class OnboardingNotificationViewModelTest: BaseTest() {
         initSUT()
         sut.inputs.selectNotificationChannel(tmg.flashback.statistics.repository.models.NotificationChannel.FREE_PRACTICE)
         verify {
-            mockUpNextController.notificationFreePractice = false
+            mockScheduleController.notificationFreePractice = false
         }
     }
 
@@ -84,7 +84,7 @@ internal class OnboardingNotificationViewModelTest: BaseTest() {
         initSUT()
         sut.inputs.selectNotificationChannel(tmg.flashback.statistics.repository.models.NotificationChannel.SEASON_INFO)
         verify {
-            mockUpNextController.notificationSeasonInfo = false
+            mockScheduleController.notificationSeasonInfo = false
         }
     }
 
@@ -101,7 +101,7 @@ internal class OnboardingNotificationViewModelTest: BaseTest() {
         }
 
         // Assumes selecting channel works
-        every { mockUpNextController.notificationRace } returns false
+        every { mockScheduleController.notificationRace } returns false
         sut.inputs.selectNotificationChannel(tmg.flashback.statistics.repository.models.NotificationChannel.RACE)
 
         sut.notificationPreferences.test {

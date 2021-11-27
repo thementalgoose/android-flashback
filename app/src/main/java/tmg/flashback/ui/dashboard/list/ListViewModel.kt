@@ -7,7 +7,7 @@ import tmg.flashback.DebugController
 import tmg.flashback.R
 import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.statistics.controllers.HomeController
-import tmg.flashback.statistics.controllers.UpNextController
+import tmg.flashback.statistics.controllers.ScheduleController
 import tmg.utilities.lifecycle.DataEvent
 import tmg.utilities.lifecycle.Event
 
@@ -49,7 +49,7 @@ class ListViewModel(
     private val homeController: HomeController,
     private val rssController: RSSController,
     private val debugController: DebugController,
-    private val upNextController: UpNextController
+    private val scheduleController: ScheduleController
 ) : ViewModel(), ListViewModelInputs, ListViewModelOutputs {
 
     private var selectionHeaderFavouited: MutableLiveData<Boolean> =
@@ -106,7 +106,7 @@ class ListViewModel(
         }
 
         // Notifications
-        if (upNextController.shouldShowNotificationOnboarding) {
+        if (scheduleController.shouldShowNotificationOnboarding) {
             list.add(ListItem.FeatureBanner.EnrolNotifications)
         }
 

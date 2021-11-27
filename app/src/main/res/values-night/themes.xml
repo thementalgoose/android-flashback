@@ -11,9 +11,9 @@
 
         <!-- Material theme colours -->
 
-        <item name="colorPrimary">#00E2E4</item>
-        <item name="colorPrimaryDark">#00E2E4</item>
-        <item name="colorAccent">#0274D1</item>
+        <item name="colorPrimary">#00BCDA</item>
+        <item name="colorPrimaryDark">#0297d1</item>
+        <item name="colorAccent">#0297d1</item>
 
         <item name="android:statusBarColor">?attr/backgroundPrimary</item>
 

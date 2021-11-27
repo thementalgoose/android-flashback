@@ -89,7 +89,8 @@ class RaceFragment: BaseFragment<FragmentRaceBinding>() {
                 round = raceData.round,
                 season = raceData.season,
                 raceDate = raceData.date,
-                wikipedia = null
+                wikipedia = null,
+                schedule = emptyList()
             )
         )
         // Menu

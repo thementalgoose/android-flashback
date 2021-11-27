@@ -5,6 +5,8 @@
     android:id="@+id/container"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:paddingStart="@dimen/paddingXSmall"
+    android:paddingEnd="0dp"
     android:layout_marginEnd="@dimen/paddingSmall"
     android:background="@drawable/background_link_pill"
     android:clickable="true"
@@ -20,7 +22,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/ic_wikipedia" />
+        tools:src="@drawable/ic_cal_sat" />
 
     <TextView
         android:id="@+id/text"
@@ -28,7 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:paddingStart="@dimen/paddingMedium"
+        android:paddingStart="12dp"
         android:paddingTop="@dimen/paddingXSmall"
         android:paddingEnd="@dimen/paddingMedium"
         android:paddingBottom="@dimen/paddingXSmall"
