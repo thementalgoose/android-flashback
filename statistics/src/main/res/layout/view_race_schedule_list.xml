@@ -9,6 +9,8 @@
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/paddingMedium"
+        android:layout_marginStart="0dp"
         android:nestedScrollingEnabled="false"
         android:overScrollMode="never"
         app:layout_constraintBottom_toBottomOf="parent"
