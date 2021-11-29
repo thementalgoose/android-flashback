@@ -24,11 +24,11 @@ internal class AdsRepositoryTest {
 
     @Test
     fun `advert user pref reads from preferences`() {
-        every { mockPreferenceManager.getBoolean(keyUserPreferences, false) } returns true
+        every { mockPreferenceManager.getBoolean(keyUserPreferences, true) } returns true
         initSUT()
         assertTrue(sut.userPrefEnabled)
         verify {
-            mockPreferenceManager.getBoolean(keyUserPreferences, false)
+            mockPreferenceManager.getBoolean(keyUserPreferences, true)
         }
     }
 

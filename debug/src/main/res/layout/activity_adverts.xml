@@ -4,6 +4,7 @@
     android:layout_height="match_parent">
 
     <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/container"
         android:name="tmg.flashback.ads.ui.settings.adverts.SettingsAdvertFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

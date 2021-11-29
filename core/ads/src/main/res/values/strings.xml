@@ -3,6 +3,6 @@
     <string name="admob_advertisement">Advertisement</string>
 
     <string name="settings_help_adverts_title">Adverts</string>
-    <string name="settings_help_adverts_description">Customise how adverts are displayed throughout the app</string>
+    <string name="settings_help_adverts_description">Do you want ads to be displayed! Every developer appreciates your support leaving adverts enabled</string>
     <string name="settings_help_adverts_long_description">Customise how adverts are displayed throughout the app</string>
 </resources>
