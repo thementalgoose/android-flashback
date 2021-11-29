@@ -11,5 +11,5 @@ val configModule = module {
     single<RemoteConfigService> { FirebaseRemoteConfigService() }
     single { ConfigRepository(get()) }
     single { ConfigController(get(), get()) }
-    single { ConfigManager(get()) }
+    single { ConfigManager(get(), get()) }
 }

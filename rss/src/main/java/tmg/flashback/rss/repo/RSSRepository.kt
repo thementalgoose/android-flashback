@@ -44,7 +44,7 @@ class RSSRepository(
      */
     val supportedSources: List<SupportedSource> by lazy {
         configManager
-                .getJson<SupportedSourcesJson>(keyRssSupportedSources)
+                .getJson(keyRssSupportedSources, SupportedSourcesJson.serializer())
                 ?.convert()
                 ?: emptyList()
     }

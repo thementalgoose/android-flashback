@@ -3,7 +3,6 @@ apply from: rootDir.absolutePath + "/gradle/config-android.gradle"
 apply from: rootDir.absolutePath + "/gradle/config-util.gradle"
 apply from: rootDir.absolutePath + "/gradle/config-junit5.gradle"
 apply from: rootDir.absolutePath + "/gradle/config-koin.gradle"
-apply plugin: 'kotlinx-serialization'
 
 android {
     compileSdkVersion project.ext.compileSdkVersion
@@ -20,9 +19,6 @@ dependencies {
 
     // Explicit crash reporting link
     implementation project(path: ':core:crash-reporting')
-
-    // Kotlinx serialization
-    implementation deps.kotlinx.serialization
 
     // Retrofit
     implementation deps.retrofit.retrofit

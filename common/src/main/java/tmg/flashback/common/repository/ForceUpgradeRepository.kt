@@ -23,6 +23,6 @@ class ForceUpgradeRepository(
      */
     val forceUpgrade: ForceUpgrade?
         get() = configManager
-                .getJson<ForceUpgradeJson>(keyForceUpgrade)
+                .getJson(keyForceUpgrade, ForceUpgradeJson.serializer())
                 ?.convert()
 }
