@@ -76,21 +76,21 @@ internal class HomeRepositoryTest {
 
     @Test
     fun `banner is returned from config repository`() {
-        every { mockConfigManager.getJson<BannerJson>(keyDefaultBanner) } returns BannerJson("hey", "sup")
+        every { mockConfigManager.getJson(keyDefaultBanner, BannerJson.serializer()) } returns BannerJson("hey", "sup")
         initSUT()
         assertEquals(Banner("hey", "sup"), sut.banner)
         verify {
-            mockConfigManager.getJson<BannerJson>(keyDefaultBanner)
+            mockConfigManager.getJson(keyDefaultBanner, BannerJson.serializer())
         }
     }
 
     @Test
     fun `banner returned as null results null value`() {
-        every { mockConfigManager.getJson<BannerJson>(keyDefaultBanner) } returns null
+        every { mockConfigManager.getJson(keyDefaultBanner, BannerJson.serializer()) } returns null
         initSUT()
         assertNull(sut.banner)
         verify {
-            mockConfigManager.getJson<BannerJson>(keyDefaultBanner)
+            mockConfigManager.getJson(keyDefaultBanner, BannerJson.serializer())
         }
     }
 
@@ -157,21 +157,21 @@ internal class HomeRepositoryTest {
 
     @Test
     fun `supported seasons is returned from config repository`() {
-        every { mockConfigManager.getJson<AllSeasonsJson>(keySupportedSeasons) } returns AllSeasonsJson(seasons = emptyList())
+        every { mockConfigManager.getJson(keySupportedSeasons, AllSeasonsJson.serializer()) } returns AllSeasonsJson(seasons = emptyList())
         initSUT()
         assertEquals(emptySet<Int>(), sut.supportedSeasons)
         verify {
-            mockConfigManager.getJson<AllSeasonsJson>(keySupportedSeasons)
+            mockConfigManager.getJson(keySupportedSeasons, AllSeasonsJson.serializer())
         }
     }
 
     @Test
     fun `supported seasons returned as null results in empty set`() {
-        every { mockConfigManager.getJson<AllSeasonsJson>(keySupportedSeasons) } returns null
+        every { mockConfigManager.getJson(keySupportedSeasons, AllSeasonsJson.serializer()) } returns null
         initSUT()
         assertEquals(emptySet<Int>(), sut.supportedSeasons)
         verify {
-            mockConfigManager.getJson<AllSeasonsJson>(keySupportedSeasons)
+            mockConfigManager.getJson(keySupportedSeasons, AllSeasonsJson.serializer())
         }
     }
 

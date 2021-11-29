@@ -30,7 +30,6 @@ interface ThemeViewModelOutputs {
 
 //endregion
 
-
 class ThemeViewModel(
     private val themeController: ThemeController
 ): ViewModel(), ThemeViewModelInputs, ThemeViewModelOutputs {

@@ -47,7 +47,7 @@ class HomeRepository(
      */
     val banner: Banner?
         get() = configManager
-            .getJson<BannerJson>(keyDefaultBanner)
+            .getJson(keyDefaultBanner, BannerJson.serializer())
             ?.convert()
 
     /**
@@ -68,7 +68,7 @@ class HomeRepository(
      */
     val supportedSeasons: Set<Int>
         get() = configManager
-                .getJson<AllSeasonsJson>(keySupportedSeasons)
+                .getJson(keySupportedSeasons, AllSeasonsJson.serializer())
                 ?.convert()
                 ?: emptySet()
 

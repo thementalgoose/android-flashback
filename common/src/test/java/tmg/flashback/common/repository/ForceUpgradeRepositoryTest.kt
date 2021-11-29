@@ -22,23 +22,23 @@ internal class ForceUpgradeRepositoryTest {
 
     @Test
     fun `force upgrade is null if config returns null`() {
-        every { mockConfigManager.getJson<ForceUpgradeJson>(keyForceUpgrade) } returns null
+        every { mockConfigManager.getJson(keyForceUpgrade, ForceUpgradeJson.serializer()) } returns null
         initSUT()
         assertNull(sut.forceUpgrade)
         verify {
-            mockConfigManager.getJson<ForceUpgradeJson>(keyForceUpgrade)
+            mockConfigManager.getJson(keyForceUpgrade, ForceUpgradeJson.serializer())
         }
     }
 
     @Test
     fun `force upgrade is successful if config returns model`() {
-        every { mockConfigManager.getJson<ForceUpgradeJson>(keyForceUpgrade) } returns ForceUpgradeJson(title = "hey", message = "hey")
+        every { mockConfigManager.getJson(keyForceUpgrade, ForceUpgradeJson.serializer()) } returns ForceUpgradeJson(title = "hey", message = "hey")
         initSUT()
         val model = sut.forceUpgrade!!
         assertEquals("hey", model.title)
         assertEquals("hey", model.message)
         verify {
-            mockConfigManager.getJson<ForceUpgradeJson>(keyForceUpgrade)
+            mockConfigManager.getJson(keyForceUpgrade, ForceUpgradeJson.serializer())
         }
     }
 
