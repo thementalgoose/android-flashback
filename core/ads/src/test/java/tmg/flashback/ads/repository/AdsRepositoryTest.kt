@@ -61,7 +61,7 @@ internal class AdsRepositoryTest {
             onSearch = true,
             allowUserConfig = true
         )
-        every { mockConfigManager.getJson<AdvertConfigJson>(keyAdverts) } returns input
+        every { mockConfigManager.getJson(keyAdverts, AdvertConfigJson.serializer()) } returns input
         initSUT()
 
         assertEquals(sut.advertConfig, expected)
@@ -69,7 +69,7 @@ internal class AdsRepositoryTest {
         assertTrue(sut.allowUserConfig)
 
         verify {
-            mockConfigManager.getJson<AdvertConfigJson>(keyAdverts)
+            mockConfigManager.getJson(keyAdverts, AdvertConfigJson.serializer())
         }
     }
 
@@ -93,7 +93,7 @@ internal class AdsRepositoryTest {
             onSearch = false,
             allowUserConfig = false
         )
-        every { mockConfigManager.getJson<AdvertConfigJson>(keyAdverts) } returns input
+        every { mockConfigManager.getJson(keyAdverts, AdvertConfigJson.serializer()) } returns input
         initSUT()
 
         assertEquals(sut.advertConfig, expected)
@@ -101,7 +101,7 @@ internal class AdsRepositoryTest {
         assertFalse(sut.allowUserConfig)
 
         verify {
-            mockConfigManager.getJson<AdvertConfigJson>(keyAdverts)
+            mockConfigManager.getJson(keyAdverts, AdvertConfigJson.serializer())
         }
     }
 
