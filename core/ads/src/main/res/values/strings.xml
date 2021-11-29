@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="admob_advertisement">Advertisement</string>
+
+    <string name="settings_help_adverts_title">Adverts</string>
+    <string name="settings_help_adverts_description">Customise how adverts are displayed throughout the app</string>
+    <string name="settings_help_adverts_long_description">Customise how adverts are displayed throughout the app</string>
 </resources>

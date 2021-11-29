@@ -8,6 +8,6 @@ import tmg.flashback.ads.repository.AdsRepository
 val adsModule = module {
 
     single { AdsManager(get()) }
-    single { AdsRepository(get()) }
+    single { AdsRepository(get(), get()) }
     single { AdsController(get(), get()) }
 }
