@@ -59,4 +59,44 @@ internal class ConfigManagerTest {
             mockConfigService.getString("key")
         }
     }
+
+    @Test
+    fun `get json calls service with misaligned keys`() {
+        every { mockConfigService.getString(any()) } returns "{'tester':'hey'}"
+        initSUT()
+        assertNull(sut.getJson("key", TestModel::class.java))
+        verify {
+            mockConfigService.getString("key")
+        }
+    }
+
+    @Test
+    fun `get json calls service with misaligned values`() {
+        every { mockConfigService.getString(any()) } returns "{'test':3}"
+        initSUT()
+        assertNull(sut.getJson("key", TestModel::class.java))
+        verify {
+            mockConfigService.getString("key")
+        }
+    }
+
+    @Test
+    fun `get json calls service with invalid json`() {
+        every { mockConfigService.getString(any()) } returns "true"
+        initSUT()
+        assertNull(sut.getJson("key", TestModel::class.java))
+        verify {
+            mockConfigService.getString("key")
+        }
+    }
+
+    @Test
+    fun `get json calls service with null`() {
+        every { mockConfigService.getString(any()) } returns ""
+        initSUT()
+        assertNull(sut.getJson("key", TestModel::class.java))
+        verify {
+            mockConfigService.getString("key")
+        }
+    }
 }

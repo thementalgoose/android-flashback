@@ -30,6 +30,7 @@
         <entry key="app/src/main/res/layout/view_sync_item.xml" value="0.22" />
         <entry key="app/src/sand/res/drawable/logo_background.xml" value="0.2765" />
         <entry key="common/src/main/res/layout/activity_release_notes.xml" value="0.22864583333333333" />
+        <entry key="common/src/main/res/layout/fragment_bottom_sheet_adverts.xml" value="0.14" />
         <entry key="common/src/main/res/layout/fragment_bottom_sheet_release_notes.xml" value="0.3765625" />
         <entry key="common/src/main/res/layout/fragment_bottom_sheet_theme.xml" value="0.1831306990881459" />
         <entry key="core/ads/src/main/res/drawable/advertisement_badge.xml" value="0.1895" />
@@ -49,6 +50,7 @@
         <entry key="core/ui/src/main/res/layout/view_settings_category.xml" value="0.4311594202898551" />
         <entry key="core/ui/src/main/res/layout/view_settings_preference.xml" value="0.35507246376811596" />
         <entry key="core/ui/src/main/res/xml/activity_collapsing_header_scene.xml" value="0.3546875" />
+        <entry key="debug/src/main/res/layout/activity_adverts.xml" value="0.1794871794871795" />
         <entry key="debug/src/main/res/layout/activity_debug.xml" value="0.36354166666666665" />
         <entry key="debug/src/main/res/layout/activity_style_guide.xml" value="0.33" />
         <entry key="debug/src/main/res/layout/fragment_style_guide.xml" value="0.5677083333333334" />

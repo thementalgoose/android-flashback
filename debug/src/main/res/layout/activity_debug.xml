@@ -95,6 +95,20 @@
             android:text="@string/debug_network_circuits"
             android:textAllCaps="false" />
 
+        <TextView
+            style="@style/Text.Section"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/paddingMedium"
+            android:text="@string/debug_ads_title" />
+
+        <Button
+            android:id="@+id/advertSettings"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/debug_ads_title"
+            android:textAllCaps="false" />
+
         <tmg.flashback.ads.views.NativeBanner
             android:id="@+id/advert"
             android:layout_width="match_parent"

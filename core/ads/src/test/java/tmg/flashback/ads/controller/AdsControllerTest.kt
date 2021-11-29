@@ -31,6 +31,35 @@ internal class AdsControllerTest: BaseTest() {
     }
 
     @Test
+    fun `user config adverts enabled reads value from repo`() {
+        every { mockRepository.userPrefEnabled } returns true
+        initSUT()
+        assertTrue(sut.userConfigAdvertsEnabled)
+        verify {
+            mockRepository.userPrefEnabled
+        }
+    }
+
+    @Test
+    fun `user config adverts enabled writes value to repo`() {
+        initSUT()
+        sut.userConfigAdvertsEnabled = true
+        verify {
+            mockRepository.userPrefEnabled = true
+        }
+    }
+
+    @Test
+    fun `allow user config reads value from repo`() {
+        every { mockRepository.allowUserConfig } returns true
+        initSUT()
+        assertTrue(sut.allowUserConfig)
+        verify {
+            mockRepository.allowUserConfig
+        }
+    }
+
+    @Test
     fun `are adverts enabled reads value from repository`() {
         every { mockRepository.isEnabled } returns true
         initSUT()

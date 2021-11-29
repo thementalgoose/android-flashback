@@ -15,6 +15,22 @@ class AdsController(
     private var listOfAds: List<NativeAd> = emptyList()
 
     /**
+     * What is the users preference for enabling adverts
+     */
+    var userConfigAdvertsEnabled: Boolean
+        get() = repository.userPrefEnabled
+        set(value) {
+            repository.userPrefEnabled = value
+        }
+
+    /**
+     * Allow the user to adjust their advert configuration
+     */
+    val allowUserConfig: Boolean by lazy {
+        repository.allowUserConfig
+    }
+
+    /**
      * Are adverts enabled or not based off the configuration
      */
     val areAdvertsEnabled: Boolean by lazy { repository.isEnabled }
