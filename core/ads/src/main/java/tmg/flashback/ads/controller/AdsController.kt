@@ -17,7 +17,31 @@ class AdsController(
     /**
      * Are adverts enabled or not based off the configuration
      */
-    val areAdvertsEnabled: Boolean by lazy { repository.isEnabled }
+    val areAdvertsEnabled: Boolean by lazy {
+        if (repository.isEnabled) {
+            if (repository.allowUserConfig) {
+                return@lazy repository.userPrefEnabled
+            }
+            return@lazy true
+        }
+        return@lazy false
+    }
+
+    /**
+     * What is the users preference for enabling adverts
+     */
+    var userConfigAdvertsEnabled: Boolean
+        get() = repository.userPrefEnabled
+        set(value) {
+            repository.userPrefEnabled = value
+        }
+
+    /**
+     * Allow the user to adjust their advert configuration
+     */
+    val allowUserConfig: Boolean by lazy {
+        repository.allowUserConfig
+    }
 
     /**
      * Initialise the ad manager and any test device ids for debug mode

@@ -85,37 +85,37 @@ internal class RSSRepositoryTest {
 
     @Test
     fun `getting supported sources returns empty list if manager sources null`() {
-        every { mockConfigManager.getJson<SupportedSourcesJson>(keyRssSupportedSources) } returns null
+        every { mockConfigManager.getJson(keyRssSupportedSources, SupportedSourcesJson.serializer()) } returns null
         initSUT()
         assertEquals(emptyList<SupportedSource>(), sut.supportedSources)
         verify {
-            mockConfigManager.getJson<SupportedSourcesJson>(keyRssSupportedSources)
+            mockConfigManager.getJson(keyRssSupportedSources, SupportedSourcesJson.serializer())
         }
     }
 
     @Test
     fun `getting supported sources returns empty list if model sources is null`() {
-        every { mockConfigManager.getJson<SupportedSourcesJson>(keyRssSupportedSources) } returns SupportedSourcesJson(sources = null)
+        every { mockConfigManager.getJson(keyRssSupportedSources, SupportedSourcesJson.serializer()) } returns SupportedSourcesJson(sources = null)
         initSUT()
         assertEquals(emptyList<SupportedSource>(), sut.supportedSources)
         verify {
-            mockConfigManager.getJson<SupportedSourcesJson>(keyRssSupportedSources)
+            mockConfigManager.getJson(keyRssSupportedSources, SupportedSourcesJson.serializer())
         }
     }
 
     @Test
     fun `getting supported sources returns empty list if model sources is empty`() {
-        every { mockConfigManager.getJson<SupportedSourcesJson>(keyRssSupportedSources) } returns SupportedSourcesJson(sources = emptyList())
+        every { mockConfigManager.getJson(keyRssSupportedSources, SupportedSourcesJson.serializer()) } returns SupportedSourcesJson(sources = emptyList())
         initSUT()
         assertEquals(emptyList<SupportedSource>(), sut.supportedSources)
         verify {
-            mockConfigManager.getJson<SupportedSourcesJson>(keyRssSupportedSources)
+            mockConfigManager.getJson(keyRssSupportedSources, SupportedSourcesJson.serializer())
         }
     }
 
     @Test
     fun `getting supported sources returns valid list when json content`() {
-        every { mockConfigManager.getJson<SupportedSourcesJson>(keyRssSupportedSources) } returns SupportedSourcesJson(sources = listOf(SupportedSourceJson(
+        every { mockConfigManager.getJson(keyRssSupportedSources, SupportedSourcesJson.serializer()) } returns SupportedSourcesJson(sources = listOf(SupportedSourceJson(
                 rssLink = "rssLink",
                 source = "source",
                 sourceShort = "sourceShort",
@@ -127,7 +127,7 @@ internal class RSSRepositoryTest {
         initSUT()
         assertEquals("rssLink", sut.supportedSources.first().rssLink)
         verify {
-            mockConfigManager.getJson<SupportedSourcesJson>(keyRssSupportedSources)
+            mockConfigManager.getJson(keyRssSupportedSources, SupportedSourcesJson.serializer())
         }
     }
 

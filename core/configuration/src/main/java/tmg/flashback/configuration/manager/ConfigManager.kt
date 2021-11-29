@@ -1,10 +1,14 @@
 package tmg.flashback.configuration.manager
 
-import tmg.flashback.configuration.extensions.toJson
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.SerializationException
+import kotlinx.serialization.json.Json
 import tmg.flashback.configuration.services.RemoteConfigService
+import tmg.flashback.crash_reporting.controllers.CrashController
 
 class ConfigManager(
-    private val configService: RemoteConfigService
+    private val configService: RemoteConfigService,
+    private val crashController: CrashController
 ) {
 
     /**
@@ -29,11 +33,14 @@ class ConfigManager(
     /**
      * Get a JSON object from the config service
      */
-    fun <T> getJson(key: String, clazz: Class<T>): T? {
-        return configService.getString(key)
-            .toJson(clazz)
-    }
-    inline fun <reified T> getJson(key: String): T? {
-        return getJson(key, T::class.java)
+    fun <T> getJson(key: String, serializer: KSerializer<T>): T? {
+        val string = configService.getString(key)
+        val obj = try {
+            Json.decodeFromString(serializer, string)
+        } catch (e: SerializationException) {
+            crashController.logException(e, "Failed to deserialize remote config value $key - $string")
+            null
+        }
+        return obj
     }
 }

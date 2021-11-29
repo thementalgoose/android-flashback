@@ -7,6 +7,7 @@ import android.widget.Toast
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
+import tmg.flashback.debug.adverts.AdvertsActivity
 import tmg.flashback.ui.base.BaseActivity
 import tmg.flashback.ui.navigation.NavigationProvider
 import tmg.flashback.debug.databinding.ActivityDebugBinding
@@ -94,6 +95,10 @@ class DebugActivity: BaseActivity() {
                     Toast.makeText(applicationContext, "Result $result", Toast.LENGTH_LONG).show()
                 }
             }
+        }
+
+        binding.advertSettings.setOnClickListener {
+            startActivity(Intent(this, AdvertsActivity::class.java))
         }
     }
 
