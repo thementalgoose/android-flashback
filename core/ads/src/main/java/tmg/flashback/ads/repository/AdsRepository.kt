@@ -17,7 +17,7 @@ class AdsRepository(
     }
 
     var userPrefEnabled: Boolean
-        get() = preferenceManager.getBoolean(keyUserPreferences, false)
+        get() = preferenceManager.getBoolean(keyUserPreferences, true)
         set(value) {
             preferenceManager.save(keyUserPreferences, value)
         }
