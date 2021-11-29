@@ -24,7 +24,7 @@ class AdsRepository(
 
     val advertConfig: AdvertConfig by lazy {
         return@lazy configManager
-            .getJson<AdvertConfigJson>(keyAdverts)
+            .getJson(keyAdverts, AdvertConfigJson.serializer())
             .convert()
     }
 

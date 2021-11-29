@@ -1,10 +1,14 @@
 package tmg.flashback.ads.repository.json
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class AdvertConfigJson(
     val locations: AdvertLocationJson? = null,
     val allowUserConfig: Boolean? = null
 )
 
+@Serializable
 data class AdvertLocationJson(
     val home: Boolean? = null,
     val race: Boolean? = null,

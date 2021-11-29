@@ -19,6 +19,7 @@ dependencies {
 
     // Preferences library
     implementation project(path: ':core:preferences')
+    implementation project(path: ':core:crash-reporting')
 
     // Firebase Remote Config
     implementation platform(deps.firebase.bom)
@@ -29,7 +30,4 @@ dependencies {
     implementation deps.kotlin.playservices
     implementation deps.kotlin.core
     implementation deps.kotlin.android
-
-    // Gson
-    implementation deps.gson
 }

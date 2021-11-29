@@ -3,17 +3,13 @@ package tmg.flashback.ads.ui.settings.adverts
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.ads.R
 import tmg.flashback.ads.controller.AdsController
 import tmg.flashback.testutils.assertExpectedOrder
-import tmg.flashback.testutils.findPref
 import tmg.flashback.testutils.findSwitch
 import tmg.testutils.BaseTest
-import tmg.testutils.livedata.assertEventFired
-import tmg.testutils.livedata.test
 
 internal class SettingsAdvertViewModelTest: BaseTest() {
 
