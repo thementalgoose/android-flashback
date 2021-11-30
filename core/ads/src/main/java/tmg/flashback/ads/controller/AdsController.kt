@@ -6,6 +6,7 @@ import com.google.android.gms.ads.nativead.NativeAd
 import tmg.flashback.ads.BuildConfig
 import tmg.flashback.ads.manager.AdsManager
 import tmg.flashback.ads.repository.AdsRepository
+import tmg.flashback.ads.repository.model.AdvertConfig
 
 class AdsController(
     private val repository: AdsRepository,
@@ -25,6 +26,10 @@ class AdsController(
             return@lazy true
         }
         return@lazy false
+    }
+
+    val advertConfig: AdvertConfig by lazy {
+        return@lazy repository.advertConfig
     }
 
     /**

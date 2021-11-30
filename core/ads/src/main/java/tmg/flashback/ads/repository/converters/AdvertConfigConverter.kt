@@ -10,6 +10,7 @@ fun AdvertConfigJson?.convert(): AdvertConfig {
         onDriverOverview = this?.locations?.driverOverview ?: false,
         onConstructorOverview = this?.locations?.constructorOverview ?: false,
         onSearch = this?.locations?.search ?: false,
+        onRss = this?.locations?.rss ?: false,
         allowUserConfig = this?.allowUserConfig ?: false,
     )
 }

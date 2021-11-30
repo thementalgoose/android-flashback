@@ -6,6 +6,8 @@ import kotlinx.coroutines.flow.flow
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDateTime
+import tmg.flashback.ads.controller.AdsController
+import tmg.flashback.ads.repository.model.AdvertConfig
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.rss.repo.RSSRepository
@@ -25,6 +27,7 @@ class RSSViewModelTest: BaseTest() {
 
     private val mockRSSDB: RssAPI = mockk(relaxed = true)
     private val mockRssRepository: RSSRepository = mockk(relaxed = true)
+    private val mockAdsController: AdsController = mockk(relaxed = true)
     private val mockConnectivityManager: NetworkConnectivityManager = mockk(relaxed = true)
 
     private val mockLocalDate: LocalDateTime = LocalDateTime.of(2020, 1, 1, 1, 2, 3, 0)
@@ -46,8 +49,8 @@ class RSSViewModelTest: BaseTest() {
     )
 
     private val mockResponse200 = flow { emit(Response(listOf(mockArticle))) }
-    private val mockResponse500 = flow { emit(Response<List<Article>>(null)) }
-    private val mockResponseNoNetwork = flow { emit(Response<List<Article>>(null, -1)) }
+    private val mockResponse500 = flow { emit(Response(null)) }
+    private val mockResponseNoNetwork = flow { emit(Response(null, -1)) }
 
     @BeforeEach
     internal fun setUp() {
@@ -56,6 +59,15 @@ class RSSViewModelTest: BaseTest() {
         every { mockRssRepository.rssUrls } returns setOf("https://www.mock.rss.url.com")
         every { mockRssRepository.rssShowDescription } returns true
         every { mockRSSDB.getNews() } returns mockResponse200
+        every { mockAdsController.advertConfig } returns AdvertConfig(
+            onHomeScreen = false,
+            onRaceScreen = false,
+            onDriverOverview = false,
+            onConstructorOverview = false,
+            onSearch = false,
+            onRss = true,
+            allowUserConfig = false,
+        )
     }
 
     private fun initSUT() {
@@ -63,6 +75,7 @@ class RSSViewModelTest: BaseTest() {
         sut = RSSViewModel(
             mockRSSDB,
             mockRssRepository,
+            mockAdsController,
             mockConnectivityManager
         )
         sut.refresh()
@@ -78,6 +91,7 @@ class RSSViewModelTest: BaseTest() {
 
         sut.outputs.list.test {
             assertListContainsItem(RSSItem.RSS(mockArticle))
+            assertListContainsItem(RSSItem.Advert)
             assertListMatchesItem { it is RSSItem.Message }
         }
 
@@ -98,6 +112,7 @@ class RSSViewModelTest: BaseTest() {
 
         sut.outputs.list.test {
             assertListContainsItem(RSSItem.RSS(mockArticle))
+            assertListContainsItem(RSSItem.Advert)
             assertListMatchesItem { it is RSSItem.Message && it.msg.split(":").size == 3 }
         }
     }

@@ -15,6 +15,7 @@ internal class AdvertConfigConverterTest: BaseTest() {
         onDriverOverview = false,
         onConstructorOverview = false,
         onSearch = false,
+        onRss = false,
         allowUserConfig = false
     )
 
@@ -26,7 +27,8 @@ internal class AdvertConfigConverterTest: BaseTest() {
                 race = true,
                 driverOverview = true,
                 constructorOverview = true,
-                search = true
+                search = true,
+                rss = true
             ),
             allowUserConfig = true
         )
@@ -36,6 +38,7 @@ internal class AdvertConfigConverterTest: BaseTest() {
             onDriverOverview = true,
             onConstructorOverview = true,
             onSearch = true,
+            onRss = true,
             allowUserConfig = true
         )
 

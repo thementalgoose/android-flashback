@@ -11,7 +11,7 @@ val adsModule = module {
 
     viewModel { SettingsAdvertViewModel(get()) }
 
-    single { AdsManager(get()) }
+    single { AdsManager() }
     single { AdsRepository(get(), get()) }
     single { AdsController(get(), get()) }
 }

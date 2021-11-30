@@ -34,7 +34,7 @@ task generateRemoteConfigDefaults {
         xmlBuilder.defaultsMap {
             entry {
                 key('adverts')
-                value('{"locations":{"home":true,"race":true,"driverOverview":true,"constructorOverview":true,"search":true},"allowUserConfig":false}')
+                value('{"locations":{"home":true,"race":false,"driverOverview":true,"constructorOverview":true,"search":true,"rss":true},"allowUserConfig":false}')
             }
             entry {
                 key('default_year')
