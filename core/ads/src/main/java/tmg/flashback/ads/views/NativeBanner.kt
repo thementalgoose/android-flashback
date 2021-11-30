@@ -51,10 +51,12 @@ class NativeBanner: FrameLayout, KoinComponent {
             binding = AdmobNativeBannerBinding.inflate(layoutInflater, this, false)
             binding?.let { binding ->
                 addView(binding.root)
-                binding.root.mediaView = binding.adMedia
-                binding.root.headlineView = binding.adHeadline
-                binding.root.iconView = binding.adAppIcon
-                binding.root.bodyView = binding.adBody
+                binding.skeleton.alpha = 0.1f
+                binding.skeleton.showSkeleton()
+                binding.adView.mediaView = binding.adMedia
+                binding.adView.headlineView = binding.adHeadline
+                binding.adView.iconView = binding.adAppIcon
+                binding.adView.bodyView = binding.adBody
 
                 binding.adMedia.setImageScaleType(ImageView.ScaleType.CENTER_CROP)
             }
@@ -69,7 +71,9 @@ class NativeBanner: FrameLayout, KoinComponent {
                 val ad = adsController.getAd(context)
                 if (ad != null) {
                     binding?.let { binding ->
-                        binding.root.setNativeAd(ad)
+                        binding.skeleton.alpha = 1.0f
+                        binding.skeleton.showOriginal()
+                        binding.adView.setNativeAd(ad)
                         binding.adHeadline.text = ad.headline
                         binding.adBody.text = ad.body
                         binding.adAppIcon.setImageDrawable(ad.icon?.drawable)

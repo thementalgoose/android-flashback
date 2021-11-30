@@ -13,6 +13,8 @@
     <string name="settings_all_notifications_subtitle">Customise what notifications you receive</string>
     <string name="settings_all_support">Support</string>
     <string name="settings_all_support_subtitle">General app settings for crash reporting, analytics, etc.</string>
+    <string name="settings_all_ads">Adverts</string>
+    <string name="settings_all_ads_subtitle">Configure how ads are displayed to you</string>
     <string name="settings_all_about">About</string>
     <string name="settings_all_about_subtitle">About Flashback</string>
 

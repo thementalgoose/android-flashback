@@ -49,7 +49,8 @@ internal class AdsRepositoryTest {
                 race = true,
                 driverOverview = true,
                 constructorOverview = true,
-                search = true
+                search = true,
+                rss = true
             ),
             allowUserConfig = true
         )
@@ -59,6 +60,7 @@ internal class AdsRepositoryTest {
             onDriverOverview = true,
             onConstructorOverview = true,
             onSearch = true,
+            onRss = true,
             allowUserConfig = true
         )
         every { mockConfigManager.getJson(keyAdverts, AdvertConfigJson.serializer()) } returns input
@@ -81,7 +83,8 @@ internal class AdsRepositoryTest {
                 race = false,
                 driverOverview = false,
                 constructorOverview = false,
-                search = false
+                search = false,
+                rss = false
             ),
             allowUserConfig = false
         )
@@ -91,6 +94,7 @@ internal class AdsRepositoryTest {
             onDriverOverview = false,
             onConstructorOverview = false,
             onSearch = false,
+            onRss = false,
             allowUserConfig = false
         )
         every { mockConfigManager.getJson(keyAdverts, AdvertConfigJson.serializer()) } returns input

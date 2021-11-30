@@ -6,9 +6,10 @@ data class AdvertConfig(
     val onDriverOverview: Boolean,
     val onConstructorOverview: Boolean,
     val onSearch: Boolean,
+    val onRss: Boolean,
     val allowUserConfig: Boolean,
 ) {
     val isEnabled: Boolean by lazy {
-        return@lazy onHomeScreen || onRaceScreen || onDriverOverview || onConstructorOverview || onSearch
+        return@lazy onHomeScreen || onRaceScreen || onDriverOverview || onConstructorOverview || onSearch || onRss
     }
 }
