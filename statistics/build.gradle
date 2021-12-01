@@ -29,6 +29,7 @@ dependencies {
     implementation project(path: ':core:notifications')
     implementation project(path: ':core:preferences')
     implementation project(path: ':core:ui')
+    implementation project(path: ':core:ads')
 
     // Swipe refresh
     implementation deps.androidx.swiperefreshlayout

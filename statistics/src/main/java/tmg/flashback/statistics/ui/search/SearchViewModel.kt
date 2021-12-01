@@ -9,6 +9,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import tmg.flashback.ads.controller.AdsController
 import tmg.flashback.formula1.model.*
 import tmg.flashback.statistics.repo.CircuitRepository
 import tmg.flashback.statistics.repo.ConstructorRepository
@@ -55,6 +56,7 @@ class SearchViewModel(
     private val constructorRepository: ConstructorRepository,
     private val circuitRepository: CircuitRepository,
     private val overviewRepository: OverviewRepository,
+    private val adsController: AdsController,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), SearchViewModelInputs, SearchViewModelOutputs {
 
@@ -102,7 +104,7 @@ class SearchViewModel(
             }
         }
         .map { list ->
-            if (list.isEmpty()) {
+            if (list.none { it !is SearchItem.Advert }) {
                 return@map listOf(SearchItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.NO_SEARCH_RESULTS)))
             }
             else {
@@ -110,7 +112,12 @@ class SearchViewModel(
             }
         }
         .onStart {
-            emit(listOf(SearchItem.Placeholder))
+            emit(mutableListOf<SearchItem>().apply {
+                if (adsController.advertConfig.onSearch) {
+                    add(SearchItem.Advert)
+                }
+                add(SearchItem.Placeholder)
+            })
         }
         .also {
             isLoading.value = false
@@ -164,59 +171,86 @@ class SearchViewModel(
     //endregion
 
     private fun Flow<List<Driver>>.mapDrivers(): Flow<List<SearchItem>> {
-        return this.mapListItem {
-            SearchItem.Driver(
-                driverId = it.id,
-                name = "${it.firstName} ${it.lastName}",
-                nationality = it.nationality,
-                nationalityISO = it.nationalityISO,
-                imageUrl = it.photoUrl
-            )
+        return this.map {
+            mutableListOf<SearchItem>().apply {
+                if (adsController.advertConfig.onSearch) {
+                    add(SearchItem.Advert)
+                }
+                addAll(it.map {
+                    SearchItem.Driver(
+                        driverId = it.id,
+                        name = "${it.firstName} ${it.lastName}",
+                        nationality = it.nationality,
+                        nationalityISO = it.nationalityISO,
+                        imageUrl = it.photoUrl
+                    )
+                })
+            }
         }
     }
 
 
     private fun Flow<List<Constructor>>.mapConstructors(): Flow<List<SearchItem>> {
-        return this.mapListItem {
-            SearchItem.Constructor(
-                constructorId = it.id,
-                name = it.name,
-                nationality = it.nationality,
-                nationalityISO = it.nationalityISO,
-                colour = it.color
-            )
+        return this.map {
+            mutableListOf<SearchItem>().apply {
+                if (adsController.advertConfig.onSearch) {
+                    add(SearchItem.Advert)
+                }
+                addAll(it.map {
+                    SearchItem.Constructor(
+                        constructorId = it.id,
+                        name = it.name,
+                        nationality = it.nationality,
+                        nationalityISO = it.nationalityISO,
+                        colour = it.color
+                    )
+                })
+            }
         }
     }
 
 
     private fun Flow<List<Circuit>>.mapCircuits(): Flow<List<SearchItem>> {
-        return this.mapListItem {
-            SearchItem.Circuit(
-                circuitId = it.id,
-                name = it.name,
-                nationality = it.country,
-                nationalityISO = it.countryISO,
-                location = it.city
-            )
+        return this.map {
+            mutableListOf<SearchItem>().apply {
+                if (adsController.advertConfig.onSearch) {
+                    add(SearchItem.Advert)
+                }
+                addAll(it.map {
+                    SearchItem.Circuit(
+                        circuitId = it.id,
+                        name = it.name,
+                        nationality = it.country,
+                        nationalityISO = it.countryISO,
+                        location = it.city
+                    )
+                })
+            }
         }
     }
 
 
     private fun Flow<List<OverviewRace>>.mapRaces(): Flow<List<SearchItem>> {
-        return this
-            .mapListItem {
-                SearchItem.Race(
-                    raceId = "${it.season}-${it.round}",
-                    season = it.season,
-                    round = it.round,
-                    raceName = it.raceName,
-                    country = it.country,
-                    circuitId = it.circuitId,
-                    countryISO = it.countryISO,
-                    circuitName = it.circuitName,
-                    date = it.date
-                )
+        return this.map {
+            mutableListOf<SearchItem>().apply {
+                if (adsController.advertConfig.onSearch) {
+                    add(SearchItem.Advert)
+                }
+                addAll(it.map {
+                    SearchItem.Race(
+                        raceId = "${it.season}-${it.round}",
+                        season = it.season,
+                        round = it.round,
+                        raceName = it.raceName,
+                        country = it.country,
+                        circuitId = it.circuitId,
+                        countryISO = it.countryISO,
+                        circuitName = it.circuitName,
+                        date = it.date
+                    )
+                })
             }
+        }
     }
 
     // TODO: Move this to utilities!

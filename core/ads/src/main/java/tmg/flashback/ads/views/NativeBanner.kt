@@ -12,39 +12,45 @@ import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.koin.experimental.property.inject
+import tmg.flashback.ads.R
 import tmg.flashback.ads.controller.AdsController
 import tmg.flashback.ads.databinding.AdmobNativeBannerBinding
 import tmg.flashback.ads.utils.viewScope
+import tmg.utilities.extensions.views.gone
 
 class NativeBanner: FrameLayout, KoinComponent {
 
     private val adsController: AdsController by inject()
+
     private var binding: AdmobNativeBannerBinding? = null
 
+    private var showIcon: Boolean = true
+
     constructor(context: Context) : super(context) {
-        initView()
+        initView(null, null)
     }
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
-        initView()
+        initView(attrs, null)
     }
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
         context,
         attrs,
         defStyleAttr
     ) {
-        initView()
+        initView(attrs, defStyleAttr)
     }
 
-    constructor(
-        context: Context,
-        attrs: AttributeSet?,
-        defStyleAttr: Int,
-        defStyleRes: Int
-    ) : super(context, attrs, defStyleAttr, defStyleRes) {
-        initView()
-    }
+    private fun initView(attributeSet: AttributeSet?, defStyleAttr: Int? = -1) {
 
-    private fun initView() {
+        context.theme
+            .obtainStyledAttributes(attributeSet, R.styleable.NativeBanner, defStyleAttr ?: -1, 0)
+            .apply {
+                try {
+                    showIcon = getBoolean(R.styleable.NativeBanner_showIcon, showIcon)
+                } finally {
+                    recycle()
+                }
+            }
 
         if (adsController.areAdvertsEnabled) {
             val layoutInflater = LayoutInflater.from(context)
@@ -55,10 +61,17 @@ class NativeBanner: FrameLayout, KoinComponent {
                 binding.skeleton.showSkeleton()
                 binding.adView.mediaView = binding.adMedia
                 binding.adView.headlineView = binding.adHeadline
-                binding.adView.iconView = binding.adAppIcon
-                binding.adView.bodyView = binding.adBody
 
+                binding.adView.bodyView = binding.adBody
                 binding.adMedia.setImageScaleType(ImageView.ScaleType.CENTER_CROP)
+
+                if (showIcon) {
+                    binding.adView.iconView = binding.adAppIcon
+                }
+                else {
+                    binding.spacer.gone()
+                    binding.adAppIcon.gone()
+                }
             }
         }
     }

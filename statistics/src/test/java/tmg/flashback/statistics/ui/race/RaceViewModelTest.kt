@@ -10,6 +10,8 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
+import tmg.flashback.ads.controller.AdsController
+import tmg.flashback.ads.repository.model.AdvertConfig
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.formula1.model.*
 import tmg.flashback.statistics.controllers.RaceController
@@ -35,6 +37,7 @@ internal class RaceViewModelTest: BaseTest() {
     private val mockRaceRepository: RaceRepository = mockk(relaxed = true)
     private val mockRaceController: RaceController = mockk(relaxed = true)
     private val mockThemeController: ThemeController = mockk(relaxed = true)
+    private val mockAdsController: AdsController = mockk(relaxed = true)
     private val mockConnectivityManager: NetworkConnectivityManager = mockk(relaxed = true)
 
     private lateinit var sut: RaceViewModel
@@ -45,6 +48,7 @@ internal class RaceViewModelTest: BaseTest() {
             mockRaceController,
             mockThemeController,
             mockConnectivityManager,
+            mockAdsController,
             ioDispatcher = coroutineScope.testDispatcher
         )
     }
@@ -56,6 +60,7 @@ internal class RaceViewModelTest: BaseTest() {
         coEvery { mockRaceRepository.getRace(any(), any()) } returns flow { emit(raceModel) }
         coEvery { mockRaceRepository.fetchRaces(any()) } returns true
         every { mockThemeController.animationSpeed } returns AnimationSpeed.QUICK
+        every { mockAdsController.advertConfig } returns AdvertConfig(onRaceScreen = false)
     }
 
     //region Race loading states
@@ -190,6 +195,18 @@ internal class RaceViewModelTest: BaseTest() {
     //region Race display types
 
     @Test
+    fun `race type with ads enabled shows ad`() = coroutineTest {
+        every { mockAdsController.advertConfig } returns AdvertConfig(onRaceScreen = true)
+        initSUT()
+        runBlockingTest {
+            sut.inputs.initialise(2020, 1)
+        }
+        sut.outputs.list.test {
+            assertListMatchesItem { it is RaceItem.Advert }
+        }
+    }
+
+    @Test
     fun `race type displays race item`() = coroutineTest {
         initSUT()
         runBlockingTest {
@@ -216,6 +233,19 @@ internal class RaceViewModelTest: BaseTest() {
                     }
                 }
             }
+    }
+
+    @Test
+    fun `qualifying type with ads enabled shows ad`() = coroutineTest {
+        every { mockAdsController.advertConfig } returns AdvertConfig(onRaceScreen = true)
+        initSUT()
+        runBlockingTest {
+            sut.inputs.initialise(2020, 1)
+            sut.inputs.displayType(QUALIFYING)
+        }
+        sut.outputs.list.test {
+            assertListMatchesItem { it is RaceItem.Advert }
+        }
     }
 
     @Test
@@ -246,6 +276,19 @@ internal class RaceViewModelTest: BaseTest() {
                 }
             }
 
+    }
+
+    @Test
+    fun `constructors type with ads enabled shows ad`() = coroutineTest {
+        every { mockAdsController.advertConfig } returns AdvertConfig(onRaceScreen = true)
+        initSUT()
+        runBlockingTest {
+            sut.inputs.initialise(2020, 1)
+            sut.inputs.displayType(CONSTRUCTOR)
+        }
+        sut.outputs.list.test {
+            assertListMatchesItem { it is RaceItem.Advert }
+        }
     }
 
     @Test

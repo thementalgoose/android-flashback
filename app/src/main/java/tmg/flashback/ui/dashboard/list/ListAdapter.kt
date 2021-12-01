@@ -26,7 +26,7 @@ class ListAdapter(
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val layoutInflater = LayoutInflater.from(parent.context )
+        val layoutInflater = LayoutInflater.from(parent.context)
         return when (viewType) {
             R.layout.view_season_list_divider -> DividerViewHolder(
                 ViewSeasonListDividerBinding.inflate(layoutInflater, parent, false)
