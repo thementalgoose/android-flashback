@@ -9,6 +9,8 @@ import kotlinx.coroutines.test.runBlockingTest
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
+import tmg.flashback.ads.controller.AdsController
+import tmg.flashback.ads.repository.model.AdvertConfig
 import tmg.flashback.formula1.model.*
 import tmg.flashback.statistics.repo.CircuitRepository
 import tmg.flashback.statistics.repo.ConstructorRepository
@@ -17,9 +19,7 @@ import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
 import tmg.testutils.BaseTest
-import tmg.testutils.livedata.assertDataEventValue
-import tmg.testutils.livedata.assertEventFired
-import tmg.testutils.livedata.test
+import tmg.testutils.livedata.*
 
 internal class SearchViewModelTest: BaseTest() {
 
@@ -27,6 +27,7 @@ internal class SearchViewModelTest: BaseTest() {
     private val mockConstructorsRepository: ConstructorRepository = mockk(relaxed = true)
     private val mockDriversRepository: DriverRepository = mockk(relaxed = true)
     private val mockOverviewRepository: OverviewRepository = mockk(relaxed = true)
+    private val mockAdsController: AdsController = mockk(relaxed = true)
 
     private lateinit var sut: SearchViewModel
 
@@ -36,12 +37,14 @@ internal class SearchViewModelTest: BaseTest() {
             mockConstructorsRepository,
             mockCircuitRepository,
             mockOverviewRepository,
+            mockAdsController,
             ioDispatcher = coroutineScope.testDispatcher
         )
     }
 
     @BeforeEach
     internal fun setUp() {
+        every { mockAdsController.advertConfig } returns AdvertConfig(onSearch = true)
         every { mockCircuitRepository.getCircuits() } returns flow {
             emit(listOf(Circuit.model()))
         }
@@ -59,10 +62,22 @@ internal class SearchViewModelTest: BaseTest() {
     //region Content
 
     @Test
+    fun `search hides adverts if toggle is off`() {
+        every { mockAdsController.advertConfig } returns AdvertConfig(onSearch = false)
+        initSUT()
+        sut.outputs.results.test {
+            assertListDoesNotMatchItem { it is SearchItem.Advert }
+        }
+    }
+
+    @Test
     fun `search defaults to placeholder`() {
         initSUT()
         sut.outputs.results.test {
-            assertValue(listOf(SearchItem.Placeholder))
+            assertValue(listOf(
+                SearchItem.Advert,
+                SearchItem.Placeholder
+            ))
         }
     }
 
@@ -71,7 +86,10 @@ internal class SearchViewModelTest: BaseTest() {
         initSUT()
         sut.inputs.inputCategory(SearchCategory.DRIVER)
         sut.outputs.results.test {
-            assertValue(listOf(SearchItem.driverModel()))
+            assertValue(listOf(
+                SearchItem.Advert,
+                SearchItem.driverModel()
+            ))
         }
     }
 
@@ -80,7 +98,10 @@ internal class SearchViewModelTest: BaseTest() {
         initSUT()
         sut.inputs.inputCategory(SearchCategory.CONSTRUCTOR)
         sut.outputs.results.test {
-            assertValue(listOf(SearchItem.constructorModel()))
+            assertValue(listOf(
+                SearchItem.Advert,
+                SearchItem.constructorModel()
+            ))
         }
     }
 
@@ -91,7 +112,10 @@ internal class SearchViewModelTest: BaseTest() {
             sut.inputs.inputCategory(SearchCategory.CIRCUIT)
         }
         sut.outputs.results.test {
-            assertValue(listOf(SearchItem.circuitModel()))
+            assertValue(listOf(
+                SearchItem.Advert,
+                SearchItem.circuitModel()
+            ))
         }
     }
 
@@ -100,7 +124,10 @@ internal class SearchViewModelTest: BaseTest() {
         initSUT()
         sut.inputs.inputCategory(SearchCategory.RACE)
         sut.outputs.results.test {
-            assertValue(listOf(SearchItem.raceModel()))
+            assertValue(listOf(
+                SearchItem.Advert,
+                SearchItem.raceModel()
+            ))
         }
     }
 
@@ -110,7 +137,9 @@ internal class SearchViewModelTest: BaseTest() {
         sut.inputs.inputCategory(SearchCategory.DRIVER)
         sut.inputs.inputSearch("zzzzzz")
         sut.outputs.results.test {
-            assertValue(listOf(SearchItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.NO_SEARCH_RESULTS))))
+            assertValue(listOf(
+                SearchItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.NO_SEARCH_RESULTS))
+            ))
         }
     }
 
@@ -130,22 +159,34 @@ internal class SearchViewModelTest: BaseTest() {
             sut.inputs.inputSearch("")
         }
         sut.outputs.results.test {
-            assertValue(listOf(model1, model2))
+            assertValue(listOf(
+                SearchItem.Advert,
+                model1,
+                model2
+            ))
         }
 
         sut.inputs.inputSearch("z")
         sut.outputs.results.test {
-            assertValue(listOf(model2))
+            assertValue(listOf(
+                SearchItem.Advert,
+                model2
+            ))
         }
 
         sut.inputs.inputSearch("zz")
         sut.outputs.results.test {
-            assertValue(listOf(SearchItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.NO_SEARCH_RESULTS))))
+            assertValue(listOf(
+                SearchItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.NO_SEARCH_RESULTS))
+            ))
         }
 
         sut.inputs.inputSearch("last")
         sut.outputs.results.test {
-            assertValue(listOf(model1))
+            assertValue(listOf(
+                SearchItem.Advert,
+                model1
+            ))
         }
     }
 
