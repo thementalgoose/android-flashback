@@ -170,22 +170,22 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <com.reddit.indicatorfastscroll.FastScrollerView
-            android:id="@+id/fastscroller"
-            android:layout_width="32dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/input" />
+<!--        <com.reddit.indicatorfastscroll.FastScrollerView-->
+<!--            android:id="@+id/fastscroller"-->
+<!--            android:layout_width="32dp"-->
+<!--            android:layout_height="0dp"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/input" />-->
 
-        <com.reddit.indicatorfastscroll.FastScrollerThumbView
-            android:id="@+id/fastscroller_thumb"
-            android:layout_width="40dp"
-            android:layout_height="0dp"
-            android:layout_marginEnd="16dp"
-            app:layout_constraintBottom_toBottomOf="@id/fastscroller"
-            app:layout_constraintEnd_toStartOf="@id/fastscroller"
-            app:layout_constraintTop_toTopOf="@id/fastscroller" />
+<!--        <com.reddit.indicatorfastscroll.FastScrollerThumbView-->
+<!--            android:id="@+id/fastscroller_thumb"-->
+<!--            android:layout_width="40dp"-->
+<!--            android:layout_height="0dp"-->
+<!--            android:layout_marginEnd="16dp"-->
+<!--            app:layout_constraintBottom_toBottomOf="@id/fastscroller"-->
+<!--            app:layout_constraintEnd_toStartOf="@id/fastscroller"-->
+<!--            app:layout_constraintTop_toTopOf="@id/fastscroller" />-->
 
     </tmg.flashback.ui.views.SwipeRefreshMotionLayout>
 

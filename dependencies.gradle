@@ -56,9 +56,6 @@ allprojects {
                 play : [
                         ads                                     : "com.google.android.gms:play-services-ads:$play_ads"
                 ],
-                reddit : [
-                        indicator                               : "com.reddit:indicator-fast-scroll:$reddit_indicator"
-                ],
                 retrofit : [
                         retrofit                                : "com.squareup.retrofit2:retrofit:$retrofit",
                         retrofit_simplexml                      : "com.squareup.retrofit2:converter-simplexml:$retrofit",

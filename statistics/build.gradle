@@ -49,9 +49,6 @@ dependencies {
     // Skeleton Layout
     implementation deps.skeletonlayout
 
-    // Reddit fast indicator
-    implementation deps.reddit.indicator
-
     // Tests
     testImplementation project(':test:stats-models')
 }
