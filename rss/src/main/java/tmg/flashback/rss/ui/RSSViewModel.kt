@@ -16,6 +16,7 @@ import tmg.flashback.rss.repo.RSSRepository
 import tmg.flashback.rss.repo.RssAPI
 import tmg.utilities.extensions.then
 import tmg.utilities.lifecycle.Event
+import java.util.*
 
 //region Inputs
 
@@ -44,14 +45,20 @@ class RSSViewModel(
     RSSViewModelOutputs {
 
     override val isRefreshing: MutableLiveData<Boolean> = MutableLiveData()
-    private val refreshNews: ConflatedBroadcastChannel<Event> = ConflatedBroadcastChannel()
+
+    private var refreshingUUID: String? = null
+
+    private val refreshNews: MutableStateFlow<String> = MutableStateFlow(UUID.randomUUID().toString())
     private val newsList: Flow<List<RSSItem>> = refreshNews
-        .asFlow()
-        .filter { it.processEvent }
+        .asStateFlow()
+        .filter {
+            it != refreshingUUID
+        }
         .then {
             isRefreshing.value = true
         }
         .flatMapLatest {
+            refreshingUUID = it
             RSSDB.getNews()
         }
         .map { response ->
@@ -82,6 +89,7 @@ class RSSViewModel(
         }
 
     override val list: LiveData<List<RSSItem>> = newsList
+        .shareIn(viewModelScope, SharingStarted.Lazily)
         .asLiveData(viewModelScope.coroutineContext)
 
     var inputs: RSSViewModelInputs = this
@@ -90,7 +98,7 @@ class RSSViewModel(
     //region Inputs
 
     override fun refresh() {
-        refreshNews.offer(Event())
+        refreshNews.value = UUID.randomUUID().toString()
     }
 
     //endregion

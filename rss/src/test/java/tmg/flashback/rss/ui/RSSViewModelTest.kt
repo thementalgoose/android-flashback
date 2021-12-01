@@ -16,10 +16,7 @@ import tmg.flashback.rss.repo.model.Article
 import tmg.flashback.rss.repo.model.ArticleSource
 import tmg.flashback.rss.repo.model.Response
 import tmg.testutils.BaseTest
-import tmg.testutils.livedata.assertListContainsItem
-import tmg.testutils.livedata.assertListMatchesItem
-import tmg.testutils.livedata.test
-import tmg.testutils.livedata.testObserve
+import tmg.testutils.livedata.*
 
 class RSSViewModelTest: BaseTest() {
 
@@ -48,9 +45,9 @@ class RSSViewModelTest: BaseTest() {
         source = mockArticleSource
     )
 
-    private val mockResponse200 = flow { emit(Response(listOf(mockArticle))) }
-    private val mockResponse500 = flow { emit(Response(null)) }
-    private val mockResponseNoNetwork = flow { emit(Response(null, -1)) }
+    private val mockResponse200 = flow { emit(Response<List<Article>>(listOf(mockArticle))) }
+    private val mockResponse500 = flow { emit(Response<List<Article>>(null)) }
+    private val mockResponseNoNetwork = flow { emit(Response<List<Article>>(null, -1)) }
 
     @BeforeEach
     internal fun setUp() {
@@ -102,6 +99,20 @@ class RSSViewModelTest: BaseTest() {
         advanceUntilIdle()
 
         observer.assertEmittedItems(true, false, true, false)
+    }
+
+    @Test
+    fun `init with ads disabled doesnt show advert item`() = coroutineTest {
+        every { mockAdsController.advertConfig } returns AdvertConfig(onRss = false)
+
+        initSUT()
+
+        advanceUntilIdle()
+
+        sut.outputs.list.test {
+            assertListContainsItem(RSSItem.RSS(mockArticle))
+            assertListDoesNotMatchItem { it is RSSItem.Advert }
+        }
     }
 
     @Test
