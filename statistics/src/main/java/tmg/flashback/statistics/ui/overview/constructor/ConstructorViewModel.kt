@@ -81,7 +81,7 @@ class ConstructorViewModel(
 
             if (id == null) {
                 return@flatMapLatest flow {
-                    emit(listOf<ConstructorSummaryItem>(ConstructorSummaryItem.ErrorItem(SyncDataItem.Skeleton)))
+                    emit(mutableListOf<ConstructorSummaryItem>(ConstructorSummaryItem.ErrorItem(SyncDataItem.Skeleton)))
                 }
             }
 

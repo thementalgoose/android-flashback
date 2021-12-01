@@ -95,7 +95,7 @@ class RaceViewModel(
         .flatMapLatest { (seasonRound, viewType) ->
             if (seasonRound == null) {
                 return@flatMapLatest flow {
-                    emit(listOf<RaceItem>(RaceItem.ErrorItem(SyncDataItem.Skeleton)))
+                    emit(mutableListOf<RaceItem>(RaceItem.ErrorItem(SyncDataItem.Skeleton)))
                 }
             }
 

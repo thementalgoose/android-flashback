@@ -84,7 +84,7 @@ class DriverViewModel(
 
             if (id == null) {
                 return@flatMapLatest flow {
-                    emit(listOf<DriverSummaryItem>(DriverSummaryItem.ErrorItem(SyncDataItem.Skeleton)))
+                    emit(mutableListOf<DriverSummaryItem>(DriverSummaryItem.ErrorItem(SyncDataItem.Skeleton)))
                 }
             }
 
