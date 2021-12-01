@@ -80,7 +80,7 @@ class CircuitInfoViewModel(
         .flatMapLatest { id ->
             if (id == null) {
                 return@flatMapLatest flow {
-                    emit(listOf<CircuitItem>(CircuitItem.ErrorItem(SyncDataItem.Skeleton)))
+                    emit(mutableListOf<CircuitItem>(CircuitItem.ErrorItem(SyncDataItem.Skeleton)))
                 }
             }
 
