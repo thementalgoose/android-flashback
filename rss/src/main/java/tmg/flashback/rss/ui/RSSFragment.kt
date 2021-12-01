@@ -1,19 +1,18 @@
 package tmg.flashback.rss.ui
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
-import tmg.flashback.ui.base.BaseFragment
 import tmg.flashback.rss.databinding.FragmentRssBinding
 import tmg.flashback.rss.repo.RSSRepository
 import tmg.flashback.rss.ui.settings.InitialScreen
 import tmg.flashback.rss.ui.settings.RSSSettingsActivity
+import tmg.flashback.ui.base.BaseFragment
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.viewUrl
 
@@ -27,6 +26,11 @@ class RSSFragment: BaseFragment<FragmentRssBinding>() {
 
     override fun inflateView(inflater: LayoutInflater) = FragmentRssBinding
         .inflate(inflater)
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.inputs.refresh()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -92,8 +96,6 @@ class RSSFragment: BaseFragment<FragmentRssBinding>() {
                 binding.dataList.smoothScrollToPosition(0)
             }
         }
-
-        viewModel.inputs.refresh()
     }
 
     private fun openConfigure(screen: InitialScreen) {

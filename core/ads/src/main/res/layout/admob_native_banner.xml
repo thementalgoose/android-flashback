@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
+    tools:background="?attr/backgroundPrimary"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -69,11 +70,13 @@
                     android:layout_height="@dimen/admobBannerHeight"
                     android:layout_marginTop="@dimen/paddingXSmall"
                     app:cardCornerRadius="@dimen/radiusSmall"
+                    android:background="?attr/backgroundSecondary"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@id/ad_headline"
                     app:layout_constraintTop_toBottomOf="@id/ad_body">
 
                     <com.google.android.gms.ads.nativead.MediaView
+                        android:background="?attr/backgroundSecondary"
                         android:foreground="@drawable/ripple_rectangle"
                         android:id="@+id/ad_media"
                         android:layout_width="match_parent"
