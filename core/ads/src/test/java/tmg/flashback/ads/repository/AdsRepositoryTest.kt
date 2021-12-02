@@ -47,8 +47,6 @@ internal class AdsRepositoryTest {
             locations = AdvertLocationJson(
                 home = true,
                 race = true,
-                driverOverview = true,
-                constructorOverview = true,
                 search = true,
                 rss = true
             ),
@@ -57,8 +55,6 @@ internal class AdsRepositoryTest {
         val expected = AdvertConfig(
             onHomeScreen = true,
             onRaceScreen = true,
-            onDriverOverview = true,
-            onConstructorOverview = true,
             onSearch = true,
             onRss = true,
             allowUserConfig = true
@@ -81,8 +77,6 @@ internal class AdsRepositoryTest {
             locations = AdvertLocationJson(
                 home = false,
                 race = false,
-                driverOverview = false,
-                constructorOverview = false,
                 search = false,
                 rss = false
             ),
@@ -91,8 +85,6 @@ internal class AdsRepositoryTest {
         val expected = AdvertConfig(
             onHomeScreen = false,
             onRaceScreen = false,
-            onDriverOverview = false,
-            onConstructorOverview = false,
             onSearch = false,
             onRss = false,
             allowUserConfig = false
