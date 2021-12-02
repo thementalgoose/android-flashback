@@ -70,13 +70,13 @@ internal class AdsControllerTest: BaseTest() {
     }
 
     @Test
-    fun `are adverts enabled doesnt change if repository value does`() {
+    fun `are adverts enabled changes if repository value does`() {
         every { mockRepository.isEnabled } returns true
         initSUT()
         assertTrue(sut.areAdvertsEnabled)
 
         every { mockRepository.isEnabled } returns false
-        assertTrue(sut.areAdvertsEnabled)
+        assertFalse(sut.areAdvertsEnabled)
     }
 
     @Test
