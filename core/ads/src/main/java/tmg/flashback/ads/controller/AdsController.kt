@@ -18,19 +18,25 @@ class AdsController(
     /**
      * Are adverts enabled or not based off the configuration
      */
-    val areAdvertsEnabled: Boolean by lazy {
-        if (repository.isEnabled) {
-            if (repository.allowUserConfig) {
-                return@lazy repository.userPrefEnabled
-            }
-            return@lazy true
+    val areAdvertsEnabled: Boolean
+        get() = when {
+            repository.isEnabled && repository.allowUserConfig -> repository.userPrefEnabled
+            repository.isEnabled -> true
+            else -> false
         }
-        return@lazy false
-    }
 
-    val advertConfig: AdvertConfig by lazy {
-        return@lazy repository.advertConfig
-    }
+    val advertConfig: AdvertConfig
+        get() = if (areAdvertsEnabled) {
+            repository.advertConfig
+        } else {
+            AdvertConfig(
+                onHomeScreen = false,
+                onRaceScreen = false,
+                onSearch = false,
+                onRss = false,
+                allowUserConfig = false,
+            )
+        }
 
     /**
      * What is the users preference for enabling adverts
