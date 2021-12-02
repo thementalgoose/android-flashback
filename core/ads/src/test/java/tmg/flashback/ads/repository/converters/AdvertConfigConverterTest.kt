@@ -12,8 +12,6 @@ internal class AdvertConfigConverterTest: BaseTest() {
     private val allFalseModel = AdvertConfig(
         onHomeScreen = false,
         onRaceScreen = false,
-        onDriverOverview = false,
-        onConstructorOverview = false,
         onSearch = false,
         onRss = false,
         allowUserConfig = false
@@ -25,8 +23,6 @@ internal class AdvertConfigConverterTest: BaseTest() {
             locations = AdvertLocationJson(
                 home = true,
                 race = true,
-                driverOverview = true,
-                constructorOverview = true,
                 search = true,
                 rss = true
             ),
@@ -35,8 +31,6 @@ internal class AdvertConfigConverterTest: BaseTest() {
         val expected = AdvertConfig(
             onHomeScreen = true,
             onRaceScreen = true,
-            onDriverOverview = true,
-            onConstructorOverview = true,
             onSearch = true,
             onRss = true,
             allowUserConfig = true
