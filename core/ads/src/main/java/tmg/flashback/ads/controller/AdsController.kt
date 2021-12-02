@@ -58,7 +58,9 @@ class AdsController(
      * Initialise the ad manager and any test device ids for debug mode
      */
     fun initialise(context: Context) {
-        manager.initialize(context)
+        if (repository.isEnabled) {
+            manager.initialize(context)
+        }
     }
 
     /**

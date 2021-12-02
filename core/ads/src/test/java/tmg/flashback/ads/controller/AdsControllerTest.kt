@@ -81,9 +81,20 @@ internal class AdsControllerTest: BaseTest() {
 
     @Test
     fun `initialize the manager`() {
+        every { mockRepository.isEnabled } returns true
         initSUT()
         sut.initialise(mockk())
         verify {
+            mockManager.initialize(any())
+        }
+    }
+
+    @Test
+    fun `initialize the manager not enabled does not initialise`() {
+        every { mockRepository.isEnabled } returns false
+        initSUT()
+        sut.initialise(mockk())
+        verify(exactly = 0) {
             mockManager.initialize(any())
         }
     }
