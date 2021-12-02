@@ -77,7 +77,10 @@ class AdsController(
             return null
         }
         if (listOfAds.isNotEmpty()) {
-            Log.d("Adverts", "Requesting display of advert ${index}. Ads list size is ${listOfAds.size} (${index % listOfAds.size})")
+            Log.d(
+                "Adverts",
+                "Requesting display of advert ${index}. Ads list size is ${listOfAds.size} (${index % listOfAds.size})"
+            )
             return listOfAds
                 .filterIndexed { i, _ ->
                     (index % listOfAds.size) == i
@@ -94,6 +97,8 @@ class AdsController(
                 Log.e("Adverts", "Failed to load native ads, ${e.message}")
             }
         }
+
+        if (listOfAds.isEmpty()) return null
 
         Log.d("Adverts", "Initial data ${index}. Ads list size is ${listOfAds.size} (${index % listOfAds.size})")
         return listOfAds
