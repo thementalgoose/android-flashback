@@ -35,6 +35,7 @@ class ConfigManager(
      */
     fun <T> getJson(key: String, serializer: KSerializer<T>): T? {
         val string = configService.getString(key)
+        if (string.isEmpty()) return null
         val obj = try {
             Json.decodeFromString(serializer, string)
         } catch (e: SerializationException) {

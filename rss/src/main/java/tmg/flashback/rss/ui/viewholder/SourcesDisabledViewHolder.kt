@@ -4,7 +4,7 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.rss.databinding.ViewRssSourcesDisabledBinding
 
-internal class SourcesDisabledViewHolder(
+class SourcesDisabledViewHolder(
     private val configure: () -> Unit,
     private val binding: ViewRssSourcesDisabledBinding
 ): RecyclerView.ViewHolder(binding.root),
