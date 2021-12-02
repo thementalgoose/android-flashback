@@ -57,13 +57,7 @@ class RSSViewModelTest: BaseTest() {
         every { mockRssRepository.rssShowDescription } returns true
         every { mockRSSDB.getNews() } returns mockResponse200
         every { mockAdsController.advertConfig } returns AdvertConfig(
-            onHomeScreen = false,
-            onRaceScreen = false,
-            onDriverOverview = false,
-            onConstructorOverview = false,
-            onSearch = false,
-            onRss = true,
-            allowUserConfig = false,
+            onRss = true
         )
     }
 
