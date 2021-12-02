@@ -35,6 +35,8 @@ sealed class ListItem(
         val expanded: Boolean? // null = hide option
     ): ListItem(R.layout.view_season_list_header)
 
+    object Advert : ListItem(R.layout.view_season_list_advert)
+
     sealed class FeatureBanner(
         val key: String,
         val text: StringHolder,
