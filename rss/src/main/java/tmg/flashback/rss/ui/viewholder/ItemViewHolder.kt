@@ -11,7 +11,7 @@ import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.views.show
 import java.net.URL
 
-internal class ItemViewHolder(
+class ItemViewHolder(
         val articleClicked: (link: Article, itemId: Long) -> Unit,
         private val binding: ViewRssItemBinding
 ) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {

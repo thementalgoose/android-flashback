@@ -4,6 +4,6 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.rss.databinding.ViewRssNoNetworkBinding
 
-internal class NoNetworkViewHolder(
+class NoNetworkViewHolder(
     private val binding: ViewRssNoNetworkBinding
 ): RecyclerView.ViewHolder(binding.root)
