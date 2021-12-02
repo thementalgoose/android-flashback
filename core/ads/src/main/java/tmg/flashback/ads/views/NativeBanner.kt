@@ -24,7 +24,8 @@ class NativeBanner: FrameLayout, KoinComponent {
 
     private var binding: AdmobNativeBannerBinding? = null
 
-    private var showIcon: Boolean = true
+    private var alignIcon: Boolean = true
+    private var adIndex: Int = 0
 
     constructor(context: Context) : super(context) {
         initView(null, null)
@@ -40,13 +41,24 @@ class NativeBanner: FrameLayout, KoinComponent {
         initView(attrs, defStyleAttr)
     }
 
+    constructor(
+        context: Context,
+        attrs: AttributeSet?,
+        defStyleAttr: Int,
+        defStyleRes: Int
+    ) : super(context, attrs, defStyleAttr, defStyleRes) {
+        initView(attrs, defStyleAttr)
+    }
+
+
     private fun initView(attributeSet: AttributeSet?, defStyleAttr: Int? = -1) {
 
         context.theme
             .obtainStyledAttributes(attributeSet, R.styleable.NativeBanner, defStyleAttr ?: -1, 0)
             .apply {
                 try {
-                    showIcon = getBoolean(R.styleable.NativeBanner_showIcon, showIcon)
+                    alignIcon = getBoolean(R.styleable.NativeBanner_alignIcon, alignIcon)
+                    adIndex = getInt(R.styleable.NativeBanner_adIndex, adIndex)
                 } finally {
                     recycle()
                 }
@@ -62,15 +74,13 @@ class NativeBanner: FrameLayout, KoinComponent {
                 binding.adView.mediaView = binding.adMedia
                 binding.adView.headlineView = binding.adHeadline
 
+                binding.adView.iconView = binding.adAppIcon
                 binding.adView.bodyView = binding.adBody
                 binding.adMedia.setImageScaleType(ImageView.ScaleType.CENTER_CROP)
 
-                if (showIcon) {
-                    binding.adView.iconView = binding.adAppIcon
-                }
-                else {
+                if (!alignIcon) {
                     binding.spacer.gone()
-                    binding.adAppIcon.gone()
+                    binding.adSpacer.gone()
                 }
             }
         }
@@ -81,7 +91,7 @@ class NativeBanner: FrameLayout, KoinComponent {
 
         if (adsController.areAdvertsEnabled) {
             viewScope.launch {
-                val ad = adsController.getAd(context)
+                val ad = adsController.getAd(context, adIndex)
                 if (ad != null) {
                     binding?.let { binding ->
                         binding.skeleton.alpha = 1.0f

@@ -9,6 +9,8 @@ import org.threeten.bp.Year
 import tmg.flashback.DebugController
 import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.R
+import tmg.flashback.ads.controller.AdsController
+import tmg.flashback.ads.repository.model.AdvertConfig
 import tmg.flashback.statistics.controllers.HomeController
 import tmg.flashback.statistics.controllers.ScheduleController
 import tmg.testutils.BaseTest
@@ -24,6 +26,7 @@ internal class ListViewModelTest: BaseTest() {
     private val mockHomeController: HomeController = mockk(relaxed = true)
     private val mockRssController: RSSController = mockk(relaxed = true)
     private val mockDebugController: DebugController = mockk(relaxed = true)
+    private val mockAdsController: AdsController = mockk(relaxed = true)
     private val mockScheduleController: ScheduleController = mockk(relaxed = true)
 
     @BeforeEach
@@ -35,6 +38,8 @@ internal class ListViewModelTest: BaseTest() {
         every { mockHomeController.defaultSeason } returns 2018
         every { mockHomeController.supportedSeasons } returns List(currentYear - 1949) { it + 1950 }.toSet()
 
+        every { mockAdsController.advertConfig } returns AdvertConfig(onHomeScreen = false)
+
         every { mockRssController.enabled } returns false
 
         every { mockDebugController.listItem } returns null
@@ -45,6 +50,7 @@ internal class ListViewModelTest: BaseTest() {
             mockHomeController,
             mockRssController,
             mockDebugController,
+            mockAdsController,
             mockScheduleController
         )
     }
@@ -362,6 +368,20 @@ internal class ListViewModelTest: BaseTest() {
         initSUT()
         sut.outputs.list.test {
             assertListMatchesItem { it is ListItem.FeatureBanner.EnrolNotifications }
+        }
+    }
+
+    //endregion
+
+    //region Show Adverts
+
+    @Test
+    fun `show ads banner if should show is true`() {
+        every { mockAdsController.advertConfig } returns AdvertConfig(onHomeScreen = true)
+
+        initSUT()
+        sut.outputs.list.test {
+            assertListMatchesItem { it is ListItem.Advert }
         }
     }
 

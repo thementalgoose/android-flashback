@@ -30,7 +30,7 @@ val appModule = module {
 
     viewModel { SettingsAllViewModel(get(), get()) }
     viewModel { DashboardViewModel(get(), get(), get(), get(), get()) }
-    viewModel { ListViewModel(get(), get(), get(), get()) }
+    viewModel { ListViewModel(get(), get(), get(), get(), get()) }
     viewModel { HomeViewModel(get(), get(), get(), get(), get(), get(), get()) }
     viewModel { SyncViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get(), get()) }
 

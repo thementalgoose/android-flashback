@@ -53,6 +53,9 @@ class ListAdapter(
                 ViewSeasonListFeatureBannerBinding.inflate(layoutInflater, parent, false),
                 featureBannerClicked
             )
+            R.layout.view_season_list_advert -> AdvertViewHolder(
+                ViewSeasonListAdvertBinding.inflate(layoutInflater, parent, false)
+            )
             else -> throw Exception("View type not implemented")
         }
     }

@@ -13,9 +13,9 @@ import tmg.flashback.ads.R
 import tmg.utilities.extensions.md5
 import kotlin.coroutines.suspendCoroutine
 
-class AdsManager() {
+class AdsManager {
     companion object {
-        private const val numberOfAdsToLoad = 1
+        private const val numberOfAdsToLoad = 4
     }
 
     fun initialize(context: Context) {

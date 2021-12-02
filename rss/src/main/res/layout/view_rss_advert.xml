@@ -5,8 +5,10 @@
     android:layout_height="wrap_content">
 
     <tmg.flashback.ads.views.NativeBanner
+        android:id="@+id/banner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:adIndex="1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

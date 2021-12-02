@@ -64,12 +64,17 @@ class AdsController(
         }
     }
 
-    suspend fun getAd(context: Context): NativeAd? {
+    suspend fun getAd(context: Context, index: Int = 0): NativeAd? {
         if (!repository.isEnabled) {
             return null
         }
         if (listOfAds.isNotEmpty()) {
-            return listOfAds.firstOrNull()
+            Log.d("Adverts", "Requesting display of advert ${index}. Ads list size is ${listOfAds.size} (${index % listOfAds.size})")
+            return listOfAds
+                .filterIndexed { i, _ ->
+                    (index % listOfAds.size) == i
+                }
+                .firstOrNull()
         }
 
         try {
@@ -81,6 +86,12 @@ class AdsController(
                 Log.e("Adverts", "Failed to load native ads, ${e.message}")
             }
         }
-        return listOfAds.firstOrNull()
+
+        Log.d("Adverts", "Initial data ${index}. Ads list size is ${listOfAds.size} (${index % listOfAds.size})")
+        return listOfAds
+            .filterIndexed { i, _ ->
+                (index % listOfAds.size) == i
+            }
+            .firstOrNull()
     }
 }
