@@ -5,7 +5,7 @@ import tmg.flashback.statistics.databinding.ViewSharedSkeletonBinding
 
 class SkeletonViewHolder(
     private val binding: ViewSharedSkeletonBinding
-): RecyclerView.ViewHolder(binding.root) {
+): RecyclerView.ViewHolder(binding.skeletonLayout) {
     init {
         binding.skeletonLayout.alpha = 0.1f
         binding.skeletonLayout.showSkeleton()

@@ -3,6 +3,7 @@ package tmg.flashback.ui.settings
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import tmg.flashback.R
+import tmg.flashback.ads.controller.AdsController
 import tmg.flashback.rss.controllers.RSSController
 import tmg.utilities.lifecycle.Event
 
@@ -23,14 +24,15 @@ interface SettingsAllViewModelOutputs {
     val openNotifications: LiveData<Event>
     val openSupport: LiveData<Event>
     val openAbout: LiveData<Event>
-
+    val openAds: LiveData<Event>
 }
 
 //endregion
 
 
 class SettingsAllViewModel(
-        private val rssController: RSSController
+        private val rssController: RSSController,
+        private val adsController: AdsController
 ): SettingsViewModel(), SettingsAllViewModelInputs, SettingsAllViewModelOutputs {
 
     override val models: List<SettingsModel> = mutableListOf<SettingsModel>().apply {
@@ -72,6 +74,15 @@ class SettingsAllViewModel(
                     openSupport.value = Event()
                 }
         ))
+        if (adsController.allowUserConfig) {
+            add(SettingsModel.Pref(
+                title = R.string.settings_all_ads,
+                description = R.string.settings_all_ads_subtitle,
+                onClick = {
+                    openAds.value = Event()
+                }
+            ))
+        }
         add(SettingsModel.Pref(
                 title = R.string.settings_all_about,
                 description = R.string.settings_all_about_subtitle,
@@ -87,6 +98,7 @@ class SettingsAllViewModel(
     override val openRss: MutableLiveData<Event> = MutableLiveData()
     override val openNotifications: MutableLiveData<Event> = MutableLiveData()
     override val openSupport: MutableLiveData<Event> = MutableLiveData()
+    override val openAds: MutableLiveData<Event> = MutableLiveData()
 
     var inputs: SettingsAllViewModelInputs = this
     var outputs: SettingsAllViewModelOutputs = this

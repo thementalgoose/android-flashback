@@ -38,5 +38,8 @@ class SettingsAllFragment: SettingsFragment<SettingsAllViewModel>() {
         observeEvent(viewModel.outputs.openAbout) {
             findNavController().navigate(R.id.graph_action_about)
         }
+        observeEvent(viewModel.outputs.openAds) {
+            findNavController().navigate(R.id.graph_action_ads)
+        }
     }
 }

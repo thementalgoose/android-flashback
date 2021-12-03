@@ -6,6 +6,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import org.threeten.bp.LocalDate
+import tmg.flashback.ads.controller.AdsController
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.formula1.constants.Formula1
 import tmg.flashback.formula1.model.*
@@ -53,6 +54,7 @@ class RaceViewModel(
     private val raceController: RaceController,
     private val themeController: ThemeController,
     private val networkConnectivityManager: NetworkConnectivityManager,
+    private val adsController: AdsController,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), RaceViewModelInputs, RaceViewModelOutputs {
 
@@ -117,14 +119,6 @@ class RaceViewModel(
                         !race.hasData ->
                             list.addError(SyncDataItem.Unavailable(DataUnavailable.RACE_DATA_EMPTY))
                         else -> {
-
-                            race.qualifying.forEach {
-                                println(":: ${it.label}")
-                                it.results.forEach {
-                                    println("  (${it.position}) --> ${it.driver.driver.id} ${it.lapTime}")
-                                }
-                            }
-
                             when (viewType) {
                                 RaceDisplayType.CONSTRUCTOR -> {
                                     list.addAll(race
@@ -266,6 +260,9 @@ class RaceViewModel(
                 add(RaceItem.ScheduleMax(
                     schedule = schedule
                 ))
+            }
+            else if (adsController.advertConfig.onRaceScreen) {
+                add(RaceItem.Advert)
             }
         }
     }

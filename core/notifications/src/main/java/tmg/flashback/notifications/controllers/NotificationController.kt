@@ -86,7 +86,6 @@ class NotificationController(
     /**
      * Subscribe to receive notifications from these topics
      */
-    // TODO: To be removed / trimmed down to only default
     suspend fun subscribeToRemoteNotifications(): Boolean {
 
         // Legacy

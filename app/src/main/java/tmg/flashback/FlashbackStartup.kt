@@ -8,6 +8,7 @@ import com.github.stkent.bugshaker.flow.dialog.AlertDialogType
 import com.jakewharton.threetenabp.AndroidThreeTen
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import tmg.flashback.ads.controller.AdsController
 import tmg.flashback.crash_reporting.controllers.CrashController
 import tmg.flashback.device.controllers.DeviceController
 import tmg.flashback.analytics.UserProperty.*
@@ -32,7 +33,7 @@ class FlashbackStartup(
     private val themeController: ThemeController,
     private val analyticsManager: AnalyticsManager,
     private val notificationController: NotificationController,
-    // private val adsController: AdsController
+    private val adsController: AdsController
 ) {
     fun startup(application: FlashbackApplication) {
 
@@ -70,7 +71,9 @@ class FlashbackStartup(
         )
 
         // Adverts
-//        adsController.initialise(application)
+        if (adsController.areAdvertsEnabled) {
+            adsController.initialise(application)
+        }
 
         // Channels
         GlobalScope.launch {

@@ -85,6 +85,9 @@ class RaceAdapter(
             R.layout.view_race_schedule_list -> ScheduleItemViewHolder(
                 ViewRaceScheduleListBinding.inflate(layoutInflater, parent, false)
             )
+            R.layout.view_race_advert -> AdvertViewHolder(
+                ViewRaceAdvertBinding.inflate(layoutInflater, parent, false)
+            )
             R.layout.skeleton_race -> SkeletonLoadingViewHolder(
                 SkeletonRaceBinding.inflate(layoutInflater, parent, false)
             )

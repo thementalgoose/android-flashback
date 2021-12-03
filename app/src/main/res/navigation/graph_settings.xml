@@ -50,6 +50,13 @@
             app:exitAnim="@anim/settings_exit"
             app:popEnterAnim="@anim/settings_pop_enter"
             app:popExitAnim="@anim/settings_pop_exit" />
+        <action
+            android:id="@+id/graph_action_ads"
+            app:destination="@id/settingsAdsFragment"
+            app:enterAnim="@anim/settings_enter"
+            app:exitAnim="@anim/settings_exit"
+            app:popEnterAnim="@anim/settings_pop_enter"
+            app:popExitAnim="@anim/settings_pop_exit" />
     </fragment>
 
     <fragment
@@ -73,4 +80,8 @@
         android:id="@+id/settingsAboutFragment"
         android:name="tmg.flashback.common.ui.settings.about.SettingsAboutFragment"
         android:label="SettingsAboutFragment" />
+    <fragment
+        android:id="@+id/settingsAdsFragment"
+        android:name="tmg.flashback.ads.ui.settings.adverts.SettingsAdvertFragment"
+        android:label="SettingsAdsFragment" />
 </navigation>

@@ -25,5 +25,8 @@ dependencies {
     implementation deps.play.ads
     implementation deps.androidx.workmanager
 
+    // Skeleton Layout
+    implementation deps.skeletonlayout
+
     testImplementation project(path: ':test:stats-models')
 }

@@ -11,7 +11,7 @@ import tmg.flashback.rss.repo.model.Article
 import tmg.flashback.rss.ui.viewholder.*
 import java.lang.RuntimeException
 
-class RSSAdapter(
+internal class RSSAdapter(
         private val articleClicked: (item: Article, itemId: Long) -> Unit,
         private val openConfigure: () -> Unit
 ): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -42,6 +42,9 @@ class RSSAdapter(
             )
             R.layout.view_rss_no_network -> NoNetworkViewHolder(
                 ViewRssNoNetworkBinding.inflate(layoutInflater, parent, false)
+            )
+            R.layout.view_rss_advert -> AdvertViewHolder(
+                ViewRssAdvertBinding.inflate(layoutInflater, parent, false)
             )
             else -> throw RuntimeException("View not supported in RSS feed")
         }

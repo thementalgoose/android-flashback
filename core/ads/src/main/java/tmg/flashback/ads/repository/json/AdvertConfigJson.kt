@@ -12,7 +12,6 @@ data class AdvertConfigJson(
 data class AdvertLocationJson(
     val home: Boolean? = null,
     val race: Boolean? = null,
-    val driverOverview: Boolean? = null,
-    val constructorOverview: Boolean? = null,
+    val rss: Boolean? = null,
     val search: Boolean? = null
 )

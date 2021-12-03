@@ -64,6 +64,11 @@ sealed class SearchItem(
         searchBy = null
     )
 
+    object Advert: SearchItem(
+        layoutId = R.layout.view_search_advert,
+        searchBy = null
+    )
+
     data class ErrorItem(
         val item: SyncDataItem
     ): SearchItem(

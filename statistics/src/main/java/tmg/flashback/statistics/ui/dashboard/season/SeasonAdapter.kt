@@ -23,8 +23,6 @@ class SeasonAdapter(
 
     private val themeController: ThemeController by inject()
 
-    private val scheduleController: ScheduleController by inject()
-
     override var list: List<SeasonItem> = emptyList()
         set(initialValue) {
             val value = initialValue.addDataProvidedByItem()

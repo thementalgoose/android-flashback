@@ -1,76 +1,142 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.gms.ads.nativead.NativeAdView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:clipToPadding="false"
-    android:foreground="@drawable/ripple_rectangle"
-    android:paddingStart="@dimen/paddingMedium"
-    android:paddingTop="@dimen/paddingSmall"
-    android:paddingEnd="@dimen/paddingMedium"
-    android:paddingBottom="@dimen/paddingSmall">
+    tools:background="?attr/backgroundPrimary">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.faltenreich.skeletonlayout.SkeletonLayout
+        android:id="@+id/skeleton"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/ad_app_icon"
-            android:layout_width="@dimen/admobIconImageSize"
-            android:layout_height="@dimen/admobIconImageSize"
-            android:layout_marginTop="@dimen/paddingSmall"
-            android:importantForAccessibility="no"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/ad_headline"
-            style="@style/Text.Body.1"
-            android:layout_width="0dp"
+        <com.google.android.gms.ads.nativead.NativeAdView
+            android:id="@+id/adView"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/paddingMedium"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/ad_app_icon"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Heyu" />
-
-        <TextView
-            android:id="@+id/ad_body"
-            style="@style/Text.Body.2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/paddingMedium"
-            android:layout_marginTop="2dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/ad_app_icon"
-            app:layout_constraintTop_toBottomOf="@id/ad_headline"
-            tools:text="Heyu" />
-
-        <com.google.android.gms.ads.nativead.MediaView
-            android:id="@+id/ad_media"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/admobBannerHeight"
-            android:layout_marginTop="2dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/ad_headline"
-            app:layout_constraintTop_toBottomOf="@id/ad_body" />
-
-        <TextView
-            style="@style/Text.Caption"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:background="@drawable/advertisement_badge"
-            android:paddingStart="@dimen/paddingSmall"
-            android:paddingTop="@dimen/paddingXSmall"
-            android:paddingEnd="@dimen/paddingSmall"
+            android:clipToPadding="false"
+            android:foreground="@drawable/ripple_rectangle"
+            android:paddingTop="@dimen/paddingSmall"
             android:paddingBottom="@dimen/paddingXSmall"
-            android:text="@string/admob_advertisement"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@id/ad_media"
-            app:layout_constraintTop_toBottomOf="@id/ad_media" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-</com.google.android.gms.ads.nativead.NativeAdView>
+                <FrameLayout
+                    android:alpha="0.0"
+                    android:id="@+id/adSpacer"
+                    android:layout_width="@dimen/admobAdvertisementLabelOffset"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="@id/card_view"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/card_view" />
+
+                <ImageView
+                    android:id="@+id/ad_app_icon"
+                    android:layout_width="@dimen/admobIconImageSize"
+                    android:layout_height="@dimen/admobIconImageSize"
+                    android:layout_marginStart="@dimen/paddingMedium"
+                    android:layout_marginTop="@dimen/paddingSmall"
+                    android:layout_marginEnd="0dp"
+                    android:importantForAccessibility="no"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/ad_headline"
+                    style="@style/Text.Body.1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/paddingMedium"
+                    android:layout_marginEnd="@dimen/paddingMedium"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/ad_app_icon"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Heyu" />
+
+                <androidx.constraintlayout.widget.Barrier
+                    android:id="@+id/barrier"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:barrierDirection="bottom"
+                    app:constraint_referenced_ids="ad_body,ad_app_icon" />
+
+                <TextView
+                    android:id="@+id/ad_body"
+                    style="@style/Text.Body.2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/paddingMedium"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="@dimen/paddingMedium"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/ad_app_icon"
+                    app:layout_constraintTop_toBottomOf="@id/ad_headline"
+                    tools:text="Hey" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card_view"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/admobBannerHeight"
+                    android:layout_marginStart="@dimen/paddingMedium"
+                    android:layout_marginTop="@dimen/paddingSmall"
+                    android:layout_marginEnd="@dimen/paddingMedium"
+                    app:cardBackgroundColor="?attr/backgroundSecondary"
+                    app:cardCornerRadius="@dimen/radiusSmall"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/adSpacer"
+                    app:layout_constraintTop_toBottomOf="@id/barrier">
+
+                    <com.google.android.gms.ads.nativead.MediaView
+                        android:id="@+id/ad_media"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="?attr/backgroundSecondary"
+                        android:foreground="@drawable/ripple_rectangle" />
+
+                </androidx.cardview.widget.CardView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.gms.ads.nativead.NativeAdView>
+
+    </com.faltenreich.skeletonlayout.SkeletonLayout>
+
+    <View
+        android:id="@+id/spacer"
+        android:layout_width="@dimen/admobAdvertisementLabelOffset"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/caption"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/caption" />
+
+    <TextView
+        android:id="@+id/caption"
+        style="@style/Text.Caption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/paddingMedium"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
+        android:background="@drawable/advertisement_badge"
+        android:paddingStart="@dimen/paddingSmall"
+        android:paddingTop="@dimen/paddingXSmall"
+        android:paddingEnd="@dimen/paddingSmall"
+        android:paddingBottom="@dimen/paddingXSmall"
+        android:text="@string/admob_advertisement"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/spacer"
+        app:layout_constraintTop_toBottomOf="@id/skeleton" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
