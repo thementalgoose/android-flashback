@@ -26,7 +26,7 @@ class ListAdapter(
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val layoutInflater = LayoutInflater.from(parent.context )
+        val layoutInflater = LayoutInflater.from(parent.context)
         return when (viewType) {
             R.layout.view_season_list_divider -> DividerViewHolder(
                 ViewSeasonListDividerBinding.inflate(layoutInflater, parent, false)
@@ -52,6 +52,9 @@ class ListAdapter(
             R.layout.view_season_list_feature_banner -> FeatureBannerViewHolder(
                 ViewSeasonListFeatureBannerBinding.inflate(layoutInflater, parent, false),
                 featureBannerClicked
+            )
+            R.layout.view_season_list_advert -> AdvertViewHolder(
+                ViewSeasonListAdvertBinding.inflate(layoutInflater, parent, false)
             )
             else -> throw Exception("View type not implemented")
         }

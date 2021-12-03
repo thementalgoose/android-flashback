@@ -6,6 +6,7 @@ import com.google.android.gms.ads.nativead.NativeAd
 import tmg.flashback.ads.BuildConfig
 import tmg.flashback.ads.manager.AdsManager
 import tmg.flashback.ads.repository.AdsRepository
+import tmg.flashback.ads.repository.model.AdvertConfig
 
 class AdsController(
     private val repository: AdsRepository,
@@ -17,15 +18,25 @@ class AdsController(
     /**
      * Are adverts enabled or not based off the configuration
      */
-    val areAdvertsEnabled: Boolean by lazy {
-        if (repository.isEnabled) {
-            if (repository.allowUserConfig) {
-                return@lazy repository.userPrefEnabled
-            }
-            return@lazy true
+    val areAdvertsEnabled: Boolean
+        get() = when {
+            repository.isEnabled && repository.allowUserConfig -> repository.userPrefEnabled
+            repository.isEnabled -> true
+            else -> false
         }
-        return@lazy false
-    }
+
+    val advertConfig: AdvertConfig
+        get() = if (areAdvertsEnabled) {
+            repository.advertConfig
+        } else {
+            AdvertConfig(
+                onHomeScreen = false,
+                onRaceScreen = false,
+                onSearch = false,
+                onRss = false,
+                allowUserConfig = false,
+            )
+        }
 
     /**
      * What is the users preference for enabling adverts
@@ -47,7 +58,9 @@ class AdsController(
      * Initialise the ad manager and any test device ids for debug mode
      */
     fun initialise(context: Context) {
-        manager.initialize(context)
+        if (repository.isEnabled) {
+            manager.initialize(context)
+        }
     }
 
     /**
@@ -59,12 +72,20 @@ class AdsController(
         }
     }
 
-    suspend fun getAd(context: Context): NativeAd? {
+    suspend fun getAd(context: Context, index: Int = 0): NativeAd? {
         if (!repository.isEnabled) {
             return null
         }
         if (listOfAds.isNotEmpty()) {
-            return listOfAds.firstOrNull()
+            Log.d(
+                "Adverts",
+                "Requesting display of advert ${index}. Ads list size is ${listOfAds.size} (${index % listOfAds.size})"
+            )
+            return listOfAds
+                .filterIndexed { i, _ ->
+                    (index % listOfAds.size) == i
+                }
+                .firstOrNull()
         }
 
         try {
@@ -76,6 +97,14 @@ class AdsController(
                 Log.e("Adverts", "Failed to load native ads, ${e.message}")
             }
         }
-        return listOfAds.firstOrNull()
+
+        if (listOfAds.isEmpty()) return null
+
+        Log.d("Adverts", "Initial data ${index}. Ads list size is ${listOfAds.size} (${index % listOfAds.size})")
+        return listOfAds
+            .filterIndexed { i, _ ->
+                (index % listOfAds.size) == i
+            }
+            .firstOrNull()
     }
 }

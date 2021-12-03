@@ -15,6 +15,8 @@ sealed class RSSItem(
         val msg: String
     ): RSSItem(R.layout.view_rss_message)
 
+    object Advert: RSSItem(R.layout.view_rss_advert)
+
     object NoNetwork: RSSItem(R.layout.view_rss_no_network)
 
     object InternalError: RSSItem(R.layout.view_rss_internal_error)

@@ -10,11 +10,8 @@ import tmg.flashback.statistics.databinding.ViewSearchConstructorBinding
 import tmg.flashback.statistics.databinding.ViewSearchDriverBinding
 import tmg.flashback.statistics.databinding.ViewSearchPlaceholderBinding
 import tmg.flashback.statistics.databinding.ViewSearchRaceBinding
-import tmg.flashback.statistics.ui.search.viewholder.SearchCircuitViewHolder
-import tmg.flashback.statistics.ui.search.viewholder.SearchConstructorViewHolder
-import tmg.flashback.statistics.ui.search.viewholder.SearchDriverViewHolder
-import tmg.flashback.statistics.ui.search.viewholder.SearchPlaceholderViewHolder
-import tmg.flashback.statistics.ui.search.viewholder.SearchRaceViewHolder
+import tmg.flashback.statistics.databinding.ViewSearchAdvertBinding
+import tmg.flashback.statistics.ui.search.viewholder.*
 import tmg.flashback.statistics.ui.shared.sync.SyncAdapter
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.utilities.difflist.GenericDiffCallback
@@ -57,6 +54,9 @@ class SearchAdapter(
             )
             R.layout.view_search_placeholder -> SearchPlaceholderViewHolder(
                 ViewSearchPlaceholderBinding.inflate(layoutInflater, parent, false)
+            )
+            R.layout.view_search_advert -> SearchAdvertViewHolder(
+                ViewSearchAdvertBinding.inflate(layoutInflater, parent, false)
             )
             else -> super.onCreateViewHolder(parent, viewType)
         }

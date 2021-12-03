@@ -130,6 +130,11 @@ sealed class RaceItem(
         layoutId = R.layout.view_race_schedule_list
     )
 
+    object Advert : RaceItem(
+        id = "ADVERT",
+        layoutId = R.layout.view_race_advert
+    )
+
     object PodiumLoading : RaceItem(
         id = "PODIUM_LOADING",
         layoutId = R.layout.skeleton_race

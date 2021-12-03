@@ -1,32 +1,21 @@
 package tmg.flashback.ads.manager
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.provider.Settings
 import android.util.Log
 import com.google.android.gms.ads.*
-import com.google.android.gms.ads.admanager.AdManagerAdView
 import com.google.android.gms.ads.formats.NativeAdOptions.NATIVE_MEDIA_ASPECT_RATIO_LANDSCAPE
-import com.google.android.gms.ads.formats.OnAdManagerAdViewLoadedListener
 import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdOptions
 import tmg.flashback.ads.BuildConfig
 import tmg.flashback.ads.R
 import tmg.utilities.extensions.md5
-import java.util.*
 import kotlin.coroutines.suspendCoroutine
 
-class AdsManager(
-    context: Context
-) {
-
+class AdsManager {
     companion object {
-        private const val numberOfAdsToLoad = 1
-    }
-
-    // TODO: Remove this from here and move it to FlashbackApplication
-    init {
-        Log.d("Adverts", "Initializing mobile ads SDK")
-        initialize(context)
+        private const val numberOfAdsToLoad = 4
     }
 
     fun initialize(context: Context) {
@@ -102,6 +91,7 @@ class AdsManager(
      */
     private fun getCurrentDeviceId(context: Context): String? {
         if (BuildConfig.DEBUG) {
+            @SuppressLint("HardwareIds")
             val androidId = Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
             val deviceId = androidId.md5.uppercase()
             log( "Current Device Id found to be $deviceId")

@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.combine
 import androidx.lifecycle.ViewModel
 import tmg.flashback.DebugController
 import tmg.flashback.R
+import tmg.flashback.ads.controller.AdsController
 import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.statistics.controllers.HomeController
 import tmg.flashback.statistics.controllers.ScheduleController
@@ -49,15 +50,13 @@ class ListViewModel(
     private val homeController: HomeController,
     private val rssController: RSSController,
     private val debugController: DebugController,
+    private val adsController: AdsController,
     private val scheduleController: ScheduleController
 ) : ViewModel(), ListViewModelInputs, ListViewModelOutputs {
 
-    private var selectionHeaderFavouited: MutableLiveData<Boolean> =
-        MutableLiveData(homeController.favouritesExpanded)
-    private var selectionHeaderAll: MutableLiveData<Boolean> =
-        MutableLiveData(homeController.allExpanded)
-    private var currentSeason: MutableLiveData<Int> =
-        MutableLiveData(homeController.defaultSeason)
+    private var selectionHeaderFavouited: MutableLiveData<Boolean> = MutableLiveData(homeController.favouritesExpanded)
+    private var selectionHeaderAll: MutableLiveData<Boolean> = MutableLiveData(homeController.allExpanded)
+    private var currentSeason: MutableLiveData<Int> = MutableLiveData(homeController.defaultSeason)
     private val refreshList: MutableLiveData<Event> = MutableLiveData(Event())
 
     override val list: LiveData<List<ListItem>> = combine(
@@ -108,6 +107,11 @@ class ListViewModel(
         // Notifications
         if (scheduleController.shouldShowNotificationOnboarding) {
             list.add(ListItem.FeatureBanner.EnrolNotifications)
+        }
+
+        // Adverts
+        if (adsController.advertConfig.onHomeScreen) {
+            list.add(ListItem.Advert)
         }
 
         // Season breakdown

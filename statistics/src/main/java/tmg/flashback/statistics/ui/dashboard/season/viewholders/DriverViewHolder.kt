@@ -25,11 +25,7 @@ class DriverViewHolder(
 
     private lateinit var driver: SeasonItem.Driver
 
-    private var qualiList: String? = null
-    private var finishList: String? = null
-
     fun bind(item: SeasonItem.Driver) {
-
         driver = item
 
         binding.tvPosition.text = item.position.toString()
