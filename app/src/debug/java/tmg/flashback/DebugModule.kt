@@ -1,5 +1,8 @@
 package tmg.flashback
 
-import tmg.flashback.ads.di.adsModule
+import org.koin.dsl.module
 
-val debugModule = adsModule
+//import tmg.flashback.ads.di.adsModule
+
+val debugModule = module {
+}
