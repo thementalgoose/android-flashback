@@ -3,6 +3,9 @@ name: Pull Request
   pull_request:
     branches:
       - main
+    paths-ignore:
+      - '**.md'
+      - 'releases.json'
 jobs:
 
   json_checker:
