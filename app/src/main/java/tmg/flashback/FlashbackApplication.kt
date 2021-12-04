@@ -4,6 +4,7 @@ import android.app.Application
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
+import tmg.flashback.ads.di.adsModule
 import tmg.flashback.common.di.commonModule
 import tmg.flashback.configuration.di.configModule
 import tmg.flashback.analytics.di.analyticsModule
@@ -33,6 +34,7 @@ class FlashbackApplication: Application() {
                 // Debug
                 debugModule,
                 // Core
+                adsModule,
                 analyticsModule,
                 configModule,
                 crashReportingModule,
