@@ -6,6 +6,7 @@ name: Main
     paths-ignore:
       - '**.md'
       - '**.yml'
+      - 'releases.json'
 jobs:
 
   json_checker:
