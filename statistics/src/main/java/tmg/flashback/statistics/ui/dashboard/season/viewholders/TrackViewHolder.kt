@@ -83,8 +83,6 @@ class TrackViewHolder(
 
             // Schedule adapter
             inlineScheduleAdapter.setSchedule(item.schedule)
-            val zoneId = LocalDateTime.now().atZone(ZoneId.systemDefault()).format(DateTimeFormatter.ofPattern("z"))
-            enlargedDeviceTime.text = getString(R.string.dashboard_season_track_notification_time, zoneId)
 
             @SuppressLint("SetTextI18n")
             date.text = "${item.date.dayOfMonth.ordinalAbbreviation} ${item.date.format(DateTimeFormatter.ofPattern("MMM yy"))}"
