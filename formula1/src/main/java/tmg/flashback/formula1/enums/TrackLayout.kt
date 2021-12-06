@@ -68,7 +68,21 @@ enum class TrackLayout(
     VALENCIA("valencia", R.drawable.circuit_valencia),
     VILLENEUVE("villeneuve", R.drawable.circuit_villeneuve),
     WATKINS_GLEN("watkins_glen", R.drawable.circuit_watkins_glen),
-    YAS_MARINA("yas_marina", R.drawable.circuit_yas_marina),
+    YAS_MARINA_2("yas_marina", R.drawable.circuit_yas_marina_2),
+    YAS_MARINA_1("yas_marina", R.drawable.circuit_yas_marina_1, listOf(
+        "2009 Abu Dhabi Grand Prix",
+        "2010 Abu Dhabi Grand Prix",
+        "2011 Abu Dhabi Grand Prix",
+        "2012 Abu Dhabi Grand Prix",
+        "2013 Abu Dhabi Grand Prix",
+        "2014 Abu Dhabi Grand Prix",
+        "2015 Abu Dhabi Grand Prix",
+        "2016 Abu Dhabi Grand Prix",
+        "2017 Abu Dhabi Grand Prix",
+        "2018 Abu Dhabi Grand Prix",
+        "2019 Abu Dhabi Grand Prix",
+        "2020 Abu Dhabi Grand Prix"
+    )),
     YEONGAM("yeongam", R.drawable.circuit_yeongam),
     ZANDVOORT("zandvoort", R.drawable.circuit_zandvoort),
     ZOLDER("zolder", R.drawable.circuit_zolder);
