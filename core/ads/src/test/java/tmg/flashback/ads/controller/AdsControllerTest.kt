@@ -121,7 +121,7 @@ internal class AdsControllerTest: BaseTest() {
     @Test
     fun `advert config returns repository value when adverts are enabled`() {
         val expected: AdvertConfig = mockk()
-        every { mockRepository.isEnabled } returns false
+        every { mockRepository.isEnabled } returns true
         every { mockRepository.advertConfig } returns expected
         initSUT()
         assertEquals(expected, sut.advertConfig)
