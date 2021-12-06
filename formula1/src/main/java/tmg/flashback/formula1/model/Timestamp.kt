@@ -4,8 +4,8 @@ import org.threeten.bp.*
 import org.threeten.bp.format.DateTimeFormatter
 
 data class Timestamp(
-    val originalDate: LocalDate,
-    val originalTime: LocalTime,
+    private val originalDate: LocalDate,
+    private val originalTime: LocalTime,
     private val currentTimeZone: ZoneId = ZoneId.systemDefault(),
     private val utcInstant: Instant = originalDate.atTime(originalTime).toInstant(ZoneOffset.UTC)
 ) {
