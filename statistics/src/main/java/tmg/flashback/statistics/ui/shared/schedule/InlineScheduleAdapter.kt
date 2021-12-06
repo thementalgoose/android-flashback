@@ -40,8 +40,8 @@ class InlineScheduleAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>(), Ko
                     }
                     InlineSchedule.Item(
                         label = it.label,
-                        date = it.date,
-                        time = it.time,
+                        date = it.timestamp.deviceLocalDateTime.toLocalDate(),
+                        time = it.timestamp.deviceLocalDateTime.toLocalTime(),
                         showBell = showBellIndicator
                     )
                 })

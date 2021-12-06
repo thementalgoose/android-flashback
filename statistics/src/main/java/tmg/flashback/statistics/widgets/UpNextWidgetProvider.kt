@@ -105,11 +105,11 @@ class UpNextWidgetProvider : AppWidgetProvider(), KoinComponent {
                 remoteView.setImageViewResource(R.id.flag, context.getFlagResourceAlpha3(nextEvent.countryISO ?: ""))
 
                 val eventsToday = nextEvent.schedule
-                    .filter { it.timestamp.originalDate == LocalDate.now() }
+                    .filter { it.timestamp.utcLocalDateTime.toLocalDate() == LocalDate.now() }
                     .sortedBy { it.timestamp.string() }
 
                 val eventsInFuture = nextEvent.schedule
-                    .filter { it.timestamp.originalDate > LocalDate.now() }
+                    .filter { it.timestamp.utcLocalDateTime.toLocalDate() > LocalDate.now() }
                     .sortedBy { it.timestamp.string() }
 
                 if (eventsToday.isNotEmpty()) {
@@ -126,9 +126,9 @@ class UpNextWidgetProvider : AppWidgetProvider(), KoinComponent {
                         .schedule
                         .sortedBy { it.timestamp.string() }
                         .filter {
-                            it.timestamp.originalDate == eventsInFuture.first().timestamp.originalDate
+                            it.timestamp.utcLocalDateTime.toLocalDate() == eventsInFuture.first().timestamp.utcLocalDateTime.toLocalDate()
                         }
-                    val days = daysBetween(LocalDate.now(), eventsInFuture.first().timestamp.originalDate)
+                    val days = daysBetween(LocalDate.now(), eventsInFuture.first().timestamp.utcLocalDateTime.toLocalDate())
 
                     remoteView.setTextViewText(R.id.days, context.resources.getQuantityString(R.plurals.dashboard_up_next_suffix_days, days, days))
                     remoteView.setTextViewText(R.id.daystogo, next.joinToString(separator = ", ") {
