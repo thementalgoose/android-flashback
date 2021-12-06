@@ -194,6 +194,8 @@
         <entry key="feature/upnext/src/main/res/layout/widget_up_next.xml" value="0.2" />
         <entry key="formula1/src/main/res/drawable/circuit_jeddah.xml" value="0.2635" />
         <entry key="formula1/src/main/res/drawable/circuit_losail.xml" value="0.2635" />
+        <entry key="formula1/src/main/res/drawable/circuit_yas_marina_1.xml" value="0.27" />
+        <entry key="formula1/src/main/res/drawable/circuit_yas_marina_2.xml" value="0.27" />
         <entry key="formula1/src/main/res/drawable/ic_cal_fri.xml" value="0.3645" />
         <entry key="formula1/src/main/res/drawable/ic_cal_mon.xml" value="0.3645" />
         <entry key="formula1/src/main/res/drawable/ic_cal_sat.xml" value="0.3645" />
@@ -211,7 +213,8 @@
         <entry key="statistics/src/main/res/drawable/ic_wikipedia.xml" value="0.3645" />
         <entry key="statistics/src/main/res/layout/fragment_search.xml" value="0.1671541997492687" />
         <entry key="statistics/src/main/res/layout/skeleton_race.xml" value="0.1368106028217187" />
-        <entry key="statistics/src/main/res/layout/view_dashboard_season_track.xml" value="0.10924750679963735" />
+        <entry key="statistics/src/main/res/layout/view_dashboard_season_track.xml" value="0.4389312977099237" />
+        <entry key="statistics/src/main/res/layout/view_inline_schedule_device_time.xml" value="0.42592592592592593" />
         <entry key="statistics/src/main/res/layout/view_inline_schedule_item.xml" value="0.3927083333333333" />
         <entry key="statistics/src/main/res/layout/view_link_pill.xml" value="0.9" />
         <entry key="statistics/src/main/res/layout/view_race_advert.xml" value="0.33561351004702866" />

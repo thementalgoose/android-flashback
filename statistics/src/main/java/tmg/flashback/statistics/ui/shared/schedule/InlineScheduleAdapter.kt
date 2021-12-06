@@ -13,8 +13,10 @@ import tmg.flashback.formula1.utils.NotificationUtils
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.controllers.ScheduleController
 import tmg.flashback.statistics.databinding.ViewInlineScheduleDayBinding
+import tmg.flashback.statistics.databinding.ViewInlineScheduleDeviceTimeBinding
 import tmg.flashback.statistics.databinding.ViewInlineScheduleItemBinding
 import tmg.flashback.statistics.ui.shared.schedule.viewholders.DayViewHolder
+import tmg.flashback.statistics.ui.shared.schedule.viewholders.DeviceTimeViewHolder
 import tmg.flashback.statistics.ui.shared.schedule.viewholders.ItemViewHolder
 import tmg.utilities.difflist.GenericDiffCallback
 import java.lang.RuntimeException
@@ -40,14 +42,14 @@ class InlineScheduleAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>(), Ko
                     }
                     InlineSchedule.Item(
                         label = it.label,
-                        date = it.date,
-                        time = it.time,
+                        date = it.timestamp.deviceLocalDateTime.toLocalDate(),
+                        time = it.timestamp.deviceLocalDateTime.toLocalTime(),
                         showBell = showBellIndicator
                     )
                 })
                 return@map list
             }
-            .flatten()
+            .flatten() + listOf<InlineSchedule>(InlineSchedule.Timezone)
     }
 
     var list: List<InlineSchedule> = emptyList()
@@ -65,6 +67,9 @@ class InlineScheduleAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>(), Ko
             )
             R.layout.view_inline_schedule_item -> ItemViewHolder(
                 ViewInlineScheduleItemBinding.inflate(layoutInflater, parent, false)
+            )
+            R.layout.view_inline_schedule_device_time -> DeviceTimeViewHolder(
+                ViewInlineScheduleDeviceTimeBinding.inflate(layoutInflater, parent, false)
             )
             else -> throw RuntimeException("View holder item type not supported")
         }
