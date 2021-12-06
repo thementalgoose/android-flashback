@@ -26,4 +26,8 @@ sealed class InlineSchedule(
     ): InlineSchedule(
         layoutId = R.layout.view_inline_schedule_item
     )
+
+    object Timezone: InlineSchedule(
+        layoutId = R.layout.view_inline_schedule_device_time
+    )
 }

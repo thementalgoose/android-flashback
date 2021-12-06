@@ -121,6 +121,7 @@
         app:layout_constraintTop_toBottomOf="@id/container">
 
         <ImageView
+            android:importantForAccessibility="no"
             android:id="@+id/enlargedCountry"
             android:layout_width="@dimen/dashboardTrackImageSize"
             android:layout_height="@dimen/dashboardTrackImageSize"
@@ -130,6 +131,7 @@
             tools:src="@drawable/au" />
 
         <ImageView
+            android:importantForAccessibility="no"
             android:id="@+id/enlargedStatus"
             android:layout_width="@dimen/dashboardTrackStatusSize"
             android:layout_height="@dimen/dashboardTrackStatusSize"
