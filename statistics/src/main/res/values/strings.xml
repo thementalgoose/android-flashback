@@ -19,6 +19,7 @@
     <string name="home_constructor_penalty">%s point penalty</string>
     <string name="home_season_arrow">%s</string>
 
+    <string name="dashboard_season_track_notification_time">Times displayed in %s\n(device time)</string>
 
     <string name="dashboard_season_list_extra_title">Links</string>
     <string name="dashboard_season_list_extra_rss_title">RSS feed</string>
