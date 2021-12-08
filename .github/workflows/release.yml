@@ -47,6 +47,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     needs: [unit_test,json_checker]
     steps:
       # Checkout
