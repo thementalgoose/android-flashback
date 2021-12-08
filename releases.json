@@ -600,13 +600,14 @@
     ]
   },
   {
-    "versionCode": 130,
-    "versionName": "7.2.0",
+    "versionCode": 131,
+    "versionName": "7.2.1",
     "isMajor": false,
     "title": "",
     "notes": [
       "Adds autoscrolling to the current race when you open the app",
       "Adds practice, qualifying and race times to the race views for supported races",
+      "Fixes issues with timezones not displaying correct race times in details view",
       "Minor theming updates for Android 12 Material you"
     ]
   }
