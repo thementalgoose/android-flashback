@@ -47,7 +47,7 @@ enum class ReleaseNotes(
         def json = new File(releaseNotes)
         def parsedJson = new JsonSlurper().parseText(json.text)
 
-        for (noteObj in parsedJson) {
+        for (noteObj in parsedJson.notes) {
             def notesString = ""
             def count = 0
             for (note in noteObj.notes) {
