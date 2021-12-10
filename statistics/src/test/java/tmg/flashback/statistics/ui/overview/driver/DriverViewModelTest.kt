@@ -14,6 +14,7 @@ import tmg.flashback.formula1.model.DriverHistorySeason
 import tmg.flashback.formula1.model.model
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.repo.DriverRepository
+import tmg.flashback.statistics.ui.overview.driver.stats.DriverViewModel
 import tmg.flashback.statistics.ui.overview.driver.summary.DriverSummaryItem
 import tmg.flashback.statistics.ui.overview.driver.summary.errorItemModel
 import tmg.flashback.statistics.ui.overview.driver.summary.headerModel
