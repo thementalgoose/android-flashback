@@ -14,6 +14,7 @@ import tmg.flashback.formula1.model.ConstructorHistorySeason
 import tmg.flashback.formula1.model.model
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.repo.ConstructorRepository
+import tmg.flashback.statistics.ui.overview.constructor.stats.ConstructorViewModel
 import tmg.flashback.statistics.ui.overview.constructor.summary.ConstructorSummaryItem
 import tmg.flashback.statistics.ui.overview.constructor.summary.errorItemModel
 import tmg.flashback.statistics.ui.overview.constructor.summary.headerModel

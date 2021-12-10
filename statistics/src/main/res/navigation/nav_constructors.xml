@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_constructors"
+    app:startDestination="@id/constructorFragment">
+
+    <fragment
+        android:id="@+id/constructorFragment"
+        android:name="tmg.flashback.statistics.ui.overview.constructor.stats.ConstructorFragment"
+        android:label="ConstructorFragment" />
+</navigation>
