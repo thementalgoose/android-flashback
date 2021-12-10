@@ -53,19 +53,6 @@ class DriverActivity : BaseActivity(), NavController.OnDestinationChangedListene
         }
     }
 
-    companion object {
-
-        private const val keyDriverId: String = "keyDriverId"
-        private const val keyDriverName: String = "keyDriverName"
-
-        fun intent(context: Context, driverId: String, driverName: String): Intent {
-            val intent = Intent(context, DriverActivity::class.java)
-            intent.putExtra(keyDriverId, driverId)
-            intent.putExtra(keyDriverName, driverName)
-            return intent
-        }
-    }
-
     override fun onDestinationChanged(controller: NavController, destination: NavDestination, arguments: Bundle?) {
         when (destination.id) {
             R.id.driverFragment -> {
@@ -79,5 +66,18 @@ class DriverActivity : BaseActivity(), NavController.OnDestinationChangedListene
             }
         }
         binding.container.transitionToEnd()
+    }
+
+    companion object {
+
+        private const val keyDriverId: String = "keyDriverId"
+        private const val keyDriverName: String = "keyDriverName"
+
+        fun intent(context: Context, driverId: String, driverName: String): Intent {
+            val intent = Intent(context, DriverActivity::class.java)
+            intent.putExtra(keyDriverId, driverId)
+            intent.putExtra(keyDriverName, driverName)
+            return intent
+        }
     }
 }

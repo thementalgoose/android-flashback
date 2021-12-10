@@ -12,7 +12,7 @@ import tmg.flashback.statistics.repository.UpNextRepository
 import tmg.flashback.statistics.ui.circuit.CircuitInfoViewModel
 import tmg.flashback.statistics.ui.dashboard.onboarding.OnboardingNotificationViewModel
 import tmg.flashback.statistics.ui.dashboard.season.SeasonViewModel
-import tmg.flashback.statistics.ui.overview.constructor.ConstructorViewModel
+import tmg.flashback.statistics.ui.overview.constructor.stats.ConstructorViewModel
 import tmg.flashback.statistics.ui.overview.driver.stats.DriverViewModel
 import tmg.flashback.statistics.ui.overview.driver.season.DriverSeasonViewModel
 import tmg.flashback.statistics.ui.race.RaceViewModel

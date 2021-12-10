@@ -214,10 +214,12 @@
         <entry key="statistics/src/main/res/drawable/ic_wikipedia.xml" value="0.3645" />
         <entry key="statistics/src/main/res/drawable/nav_driver.xml" value="0.196" />
         <entry key="statistics/src/main/res/drawable/nav_rss.xml" value="0.196" />
+        <entry key="statistics/src/main/res/layout/activity_constructor.xml" value="0.4592445328031809" />
         <entry key="statistics/src/main/res/layout/activity_driver.xml" value="0.29775280898876405" />
         <entry key="statistics/src/main/res/layout/activity_driver_comparison.xml" value="0.34159897392047883" />
         <entry key="statistics/src/main/res/layout/activity_driver_season.xml" value="0.46601111586147925" />
         <entry key="statistics/src/main/res/layout/activity_search.xml" value="0.46601111586147925" />
+        <entry key="statistics/src/main/res/layout/fragment_constructor.xml" value="0.2277475971583786" />
         <entry key="statistics/src/main/res/layout/fragment_driver.xml" value="0.36381709741550694" />
         <entry key="statistics/src/main/res/layout/fragment_driver_season.xml" value="0.2882703777335984" />
         <entry key="statistics/src/main/res/layout/fragment_search.xml" value="0.1671541997492687" />
@@ -236,6 +238,7 @@
         <entry key="statistics/src/main/res/layout/view_shared_pull_refresh.xml" value="0.36944696282864914" />
         <entry key="statistics/src/main/res/layout/view_shared_refresh_indicator.xml" value="0.46601111586147925" />
         <entry key="statistics/src/main/res/layout/view_shared_skeleton.xml" value="0.150856665273715" />
+        <entry key="statistics/src/main/res/xml/activity_constructor_scene.xml" value="0.46601111586147925" />
         <entry key="statistics/src/main/res/xml/activity_driver_scene.xml" value="0.2277475971583786" />
         <entry key="stats/search/src/main/res/drawable/ic_search_circuits.xml" value="0.2785" />
         <entry key="stats/search/src/main/res/drawable/ic_search_constructor.xml" value="0.2785" />
