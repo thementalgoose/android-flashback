@@ -1,18 +1,18 @@
 import groovy.json.JsonSlurper
 
-private static def getLastNote() {
+private static def getCurrent() {
     def releaseNotes = "releases.json"
     def json = new File(releaseNotes)
     def parsedJson = new JsonSlurper().parseText(json.text)
-    return parsedJson[parsedJson.size - 1]
+    return parsedJson.current
 }
 
 private static def getVersionName() {
-    return getLastNote().versionName as String
+    return getCurrent().versionName as String
 }
 
 private static def getVersionCode() {
-    return getLastNote().versionCode as Integer
+    return getCurrent().versionCode as Integer
 }
 
 ext {
