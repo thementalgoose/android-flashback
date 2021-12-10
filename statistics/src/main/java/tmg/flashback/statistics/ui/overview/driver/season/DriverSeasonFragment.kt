@@ -46,18 +46,11 @@ class DriverSeasonFragment: BaseFragment<FragmentDriverSeasonBinding>() {
                 "season" to season.toString()
         ))
 
-        binding.titleExpanded.text = "$driverName\n$season"
-        binding.titleCollapsed.text = "$driverName $season"
-
         seasonAdapter = DriverSeasonAdapter(
                 itemClicked = viewModel.inputs::clickSeasonRound
         )
         binding.dataList.adapter = seasonAdapter
         binding.dataList.layoutManager = LinearLayoutManager(context)
-
-        binding.back.setOnClickListener {
-            activity?.onBackPressed()
-        }
 
         binding.swipeRefresh.setOnRefreshListener {
             viewModel.inputs.refresh()
@@ -82,8 +75,7 @@ class DriverSeasonFragment: BaseFragment<FragmentDriverSeasonBinding>() {
                         trackName = result.circuitName,
                         countryISO = result.raceCountryISO,
                         date = result.date
-                )
-                )
+                ))
                 startActivity(intent)
             }
         }
@@ -91,10 +83,19 @@ class DriverSeasonFragment: BaseFragment<FragmentDriverSeasonBinding>() {
 
     companion object {
 
-        private const val keySeason: String = "keySeason"
-        private const val keyDriverId: String = "keyDriverId"
+        private const val keySeason: String = "season"
+        private const val keyDriverId: String = "driverId"
         private const val keyDriverName: String = "driverName"
 
+        fun bundle(season: Int, driverId: String, driverName: String): Bundle {
+            return bundleOf(
+                keySeason to season,
+                keyDriverId to driverId,
+                keyDriverName to driverName
+            )
+        }
+
+        @Deprecated("Should be accessed via. a NavGraph")
         fun instance(season: Int, driverId: String, driverName: String): DriverSeasonFragment {
             return DriverSeasonFragment().apply {
                 arguments = bundleOf(

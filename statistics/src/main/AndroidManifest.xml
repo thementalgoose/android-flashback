@@ -36,12 +36,6 @@
             android:exported="false"
             android:theme="@style/Translucent" />
 
-        <activity
-            android:name=".ui.overview.driver.season.DriverSeasonActivity"
-            android:label=""
-            android:exported="false"
-            android:theme="@style/Translucent" />
-
         <!-- Boot Receiver -->
 
         <receiver android:name=".receivers.UpNextNotificationBootReceiver"
