@@ -9,25 +9,25 @@ internal class TrackLayoutTest {
 
     @ParameterizedTest(name = "For the {0} {1} the {2} track layout will be used")
     @CsvSource(
-            "2020,Sakhir Grand Prix,SAKHIR",
-            ",Sakhir Grand Prix,BAHRAIN",
-            "2009,Abu Dhabi Grand Prix,YAS_MARINA_1",
-            "2010,Abu Dhabi Grand Prix,YAS_MARINA_1",
-            "2011,Abu Dhabi Grand Prix,YAS_MARINA_1",
-            "2012,Abu Dhabi Grand Prix,YAS_MARINA_1",
-            "2013,Abu Dhabi Grand Prix,YAS_MARINA_1",
-            "2014,Abu Dhabi Grand Prix,YAS_MARINA_1",
-            "2015,Abu Dhabi Grand Prix,YAS_MARINA_1",
-            "2016,Abu Dhabi Grand Prix,YAS_MARINA_1",
-            "2017,Abu Dhabi Grand Prix,YAS_MARINA_1",
-            "2018,Abu Dhabi Grand Prix,YAS_MARINA_1",
-            "2019,Abu Dhabi Grand Prix,YAS_MARINA_1",
-            "2020,Abu Dhabi Grand Prix,YAS_MARINA_1",
-            ",Abu Dhabi Grand Prix,YAS_MARINA_2"
+            "bahrain,2020,Sakhir Grand Prix,SAKHIR",
+            "bahrain,,Bahrain Grand Prix,BAHRAIN",
+            "yas_marina,2009,Abu Dhabi Grand Prix,YAS_MARINA_1",
+            "yas_marina,2010,Abu Dhabi Grand Prix,YAS_MARINA_1",
+            "yas_marina,2011,Abu Dhabi Grand Prix,YAS_MARINA_1",
+            "yas_marina,2012,Abu Dhabi Grand Prix,YAS_MARINA_1",
+            "yas_marina,2013,Abu Dhabi Grand Prix,YAS_MARINA_1",
+            "yas_marina,2014,Abu Dhabi Grand Prix,YAS_MARINA_1",
+            "yas_marina,2015,Abu Dhabi Grand Prix,YAS_MARINA_1",
+            "yas_marina,2016,Abu Dhabi Grand Prix,YAS_MARINA_1",
+            "yas_marina,2017,Abu Dhabi Grand Prix,YAS_MARINA_1",
+            "yas_marina,2018,Abu Dhabi Grand Prix,YAS_MARINA_1",
+            "yas_marina,2019,Abu Dhabi Grand Prix,YAS_MARINA_1",
+            "yas_marina,2020,Abu Dhabi Grand Prix,YAS_MARINA_1",
+            "yas_marina,,Abu Dhabi Grand Prix,YAS_MARINA_2"
     )
-    fun `testing override values pull overriden enum`(year: Int?, raceName: String, expected: TrackLayout) {
+    fun `testing override values pull overriden enum`(circuitId: String, year: Int?, raceName: String, expected: TrackLayout) {
 
-        val actual = TrackLayout.getTrack(SAKHIR.circuitId, year, raceName)
+        val actual = TrackLayout.getTrack(circuitId, year, raceName)
         assertEquals(expected, actual)
     }
 }
