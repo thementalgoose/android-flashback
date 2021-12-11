@@ -101,7 +101,10 @@ class CircuitInfoViewModel(
                                         season = result.season,
                                         round = result.round,
                                         date = result.date,
-                                        time = result.time
+                                        time = result.time,
+                                        circuitName = it.data.name,
+                                        country = it.data.country,
+                                        countryISO = it.data.countryISO
                                     )
                                 }
                                 .sortedByDescending { it.season * 1000 + it.round }

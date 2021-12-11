@@ -20,7 +20,10 @@ sealed class CircuitItem(
         val date: LocalDate,
         val time: LocalTime?,
         val season: Int,
-        val round: Int
+        val round: Int,
+        val circuitName: String,
+        val country: String,
+        val countryISO: String
     ): CircuitItem(R.layout.view_circuit_info_race)
 
     data class TrackImage(

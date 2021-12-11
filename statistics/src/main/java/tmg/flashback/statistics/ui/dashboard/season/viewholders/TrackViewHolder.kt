@@ -19,9 +19,7 @@ import tmg.flashback.statistics.databinding.ViewDashboardSeasonTrackBinding
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.statistics.ui.shared.schedule.InlineScheduleAdapter
 import tmg.utilities.extensions.ordinalAbbreviation
-import tmg.utilities.extensions.views.context
-import tmg.utilities.extensions.views.getString
-import tmg.utilities.extensions.views.show
+import tmg.utilities.extensions.views.*
 
 @Suppress("EXPERIMENTAL_API_USAGE")
 class TrackViewHolder(
@@ -80,9 +78,22 @@ class TrackViewHolder(
             // Track
             val trackLayout = TrackLayout.getTrack(data.circuitId, data.season, data.raceName)
             enlargedTrackIcon.setImageResource(trackLayout?.icon ?: R.drawable.circuit_unknown)
+            enlargedTrackIconPlaceholder.setImageResource(trackLayout?.icon ?: R.drawable.circuit_unknown)
 
             // Schedule adapter
-            inlineScheduleAdapter.setSchedule(item.schedule)
+            val doesContainResults = inlineScheduleAdapter.setSchedule(item.schedule)
+            when (doesContainResults) {
+                true -> {
+                    binding.enlargedSchedule.visible()
+                    binding.enlargedTrackIconPlaceholder.gone()
+                    binding.enlargedTrackIcon.visible()
+                }
+                false -> {
+                    binding.enlargedSchedule.invisible()
+                    binding.enlargedTrackIconPlaceholder.visible()
+                    binding.enlargedTrackIcon.gone()
+                }
+            }
 
             @SuppressLint("SetTextI18n")
             date.text = "${item.date.dayOfMonth.ordinalAbbreviation} ${item.date.format(DateTimeFormatter.ofPattern("MMM yy"))}"

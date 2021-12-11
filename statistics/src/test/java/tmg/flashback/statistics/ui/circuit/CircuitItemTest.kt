@@ -19,13 +19,19 @@ fun CircuitItem.Companion.raceModel(
     date: LocalDate = LocalDate.of(1995, 10, 12),
     time: LocalTime? = LocalTime.of(12, 34),
     season: Int = 2020,
-    round: Int = 1
+    round: Int = 1,
+    circuitName: String = "circuitName",
+    country: String = "country",
+    countryISO: String = "countryISO"
 ): CircuitItem.Race = CircuitItem.Race(
     name = name,
     date = date,
     time = time,
     season = season,
-    round = round
+    round = round,
+    circuitName = circuitName,
+    country = country,
+    countryISO = countryISO
 )
 
 fun CircuitItem.Companion.trackImageModel(

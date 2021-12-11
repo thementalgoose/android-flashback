@@ -121,21 +121,21 @@
         app:layout_constraintTop_toBottomOf="@id/container">
 
         <ImageView
-            android:importantForAccessibility="no"
             android:id="@+id/enlargedCountry"
             android:layout_width="@dimen/dashboardTrackImageSize"
             android:layout_height="@dimen/dashboardTrackImageSize"
             android:layout_marginTop="@dimen/paddingSmall"
+            android:importantForAccessibility="no"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/enlargedName"
             tools:src="@drawable/au" />
 
         <ImageView
-            android:importantForAccessibility="no"
             android:id="@+id/enlargedStatus"
             android:layout_width="@dimen/dashboardTrackStatusSize"
             android:layout_height="@dimen/dashboardTrackStatusSize"
             android:alpha="0.7"
+            android:importantForAccessibility="no"
             app:layout_constraintBottom_toTopOf="@id/enlargedCountry"
             app:layout_constraintEnd_toEndOf="@id/enlargedCountry"
             app:layout_constraintStart_toEndOf="@id/enlargedCountry"
@@ -167,11 +167,12 @@
             android:id="@+id/enlargedTrackIcon"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="@dimen/paddingSmall"
             android:layout_marginStart="@dimen/paddingSmall"
+            android:layout_marginTop="@dimen/paddingSmall"
             android:layout_marginEnd="0dp"
             android:importantForAccessibility="no"
             android:minHeight="@dimen/dashboardEnlargedTrackHeight"
+            android:scaleType="fitCenter"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/enlargedGuide"
@@ -191,6 +192,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/paddingXSmall"
+            android:minHeight="100dp"
             android:nestedScrollingEnabled="true"
             android:overScrollMode="never"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -201,6 +203,20 @@
             tools:itemCount="8"
             tools:layout_height="100dp"
             tools:listitem="@layout/view_inline_schedule_item" />
+
+        <ImageView
+            android:id="@+id/enlargedTrackIconPlaceholder"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:importantForAccessibility="no"
+            android:scaleType="fitCenter"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/enlargedSchedule"
+            app:layout_constraintEnd_toEndOf="@id/enlargedSchedule"
+            app:layout_constraintStart_toStartOf="@id/enlargedSchedule"
+            app:layout_constraintTop_toTopOf="@id/enlargedSchedule"
+            app:tint="?attr/contentSecondary"
+            tools:src="@drawable/circuit_albert_park" />
 
         <TextView
             android:id="@+id/enlargedCircuitName"
