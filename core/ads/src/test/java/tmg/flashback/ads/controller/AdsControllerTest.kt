@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.ads.manager.AdsManager
 import tmg.flashback.ads.repository.AdsRepository
+import tmg.flashback.ads.repository.model.AdvertConfig
 import tmg.testutils.BaseTest
 
 internal class AdsControllerTest: BaseTest() {
@@ -28,6 +29,8 @@ internal class AdsControllerTest: BaseTest() {
     internal fun setUp() {
         every { mockRepository.isEnabled } returns true
         coEvery { mockManager.getNativeAd(any()) } returns mockNativeAds
+        every { mockRepository.allowUserConfig } returns false
+        every { mockRepository.userPrefEnabled } returns false
     }
 
     @Test
@@ -59,13 +62,31 @@ internal class AdsControllerTest: BaseTest() {
         }
     }
 
+    //region Are Adverts Enabled
+
     @Test
-    fun `are adverts enabled reads value from repository`() {
+    fun `are adverts enabled returns user pref if user config is allowed`() {
         every { mockRepository.isEnabled } returns true
+        every { mockRepository.allowUserConfig } returns true
+        every { mockRepository.userPrefEnabled } returns true
         initSUT()
         assertTrue(sut.areAdvertsEnabled)
         verify {
             mockRepository.isEnabled
+            mockRepository.allowUserConfig
+            mockRepository.userPrefEnabled
+        }
+    }
+
+    @Test
+    fun `are adverts enabled reads value from repository`() {
+        every { mockRepository.isEnabled } returns true
+        every { mockRepository.allowUserConfig } returns false
+        initSUT()
+        assertTrue(sut.areAdvertsEnabled)
+        verify {
+            mockRepository.isEnabled
+            mockRepository.allowUserConfig
         }
     }
 
@@ -78,6 +99,35 @@ internal class AdsControllerTest: BaseTest() {
         every { mockRepository.isEnabled } returns false
         assertFalse(sut.areAdvertsEnabled)
     }
+
+    //endregion
+
+    //region Advert config
+
+    @Test
+    fun `advert config returns all false when adverts are not enabled`() {
+        val expected = AdvertConfig(
+            onHomeScreen = false,
+            onRaceScreen = false,
+            onSearch = false,
+            onRss = false,
+            allowUserConfig = false
+        )
+        every { mockRepository.isEnabled } returns false
+        initSUT()
+        assertEquals(expected, sut.advertConfig)
+    }
+
+    @Test
+    fun `advert config returns repository value when adverts are enabled`() {
+        val expected: AdvertConfig = mockk()
+        every { mockRepository.isEnabled } returns true
+        every { mockRepository.advertConfig } returns expected
+        initSUT()
+        assertEquals(expected, sut.advertConfig)
+    }
+
+    //endregion
 
     @Test
     fun `initialize the manager`() {
