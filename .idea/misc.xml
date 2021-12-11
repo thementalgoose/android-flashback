@@ -192,8 +192,31 @@
         <entry key="feature/upnext/src/main/res/layout/view_timezone.xml" value="0.3848958333333333" />
         <entry key="feature/upnext/src/main/res/layout/view_up_next_time_list.xml" value="0.3026041666666667" />
         <entry key="feature/upnext/src/main/res/layout/widget_up_next.xml" value="0.2" />
+        <entry key="formula1/src/main/res/drawable/circuit_adelaide.xml" value="0.303" />
+        <entry key="formula1/src/main/res/drawable/circuit_aintree.xml" value="0.303" />
+        <entry key="formula1/src/main/res/drawable/circuit_albert_park.xml" value="0.303" />
+        <entry key="formula1/src/main/res/drawable/circuit_boavista.xml" value="0.303" />
+        <entry key="formula1/src/main/res/drawable/circuit_brands_hatch.xml" value="0.303" />
+        <entry key="formula1/src/main/res/drawable/circuit_bremgarten.xml" value="0.303" />
+        <entry key="formula1/src/main/res/drawable/circuit_catalunya.xml" value="0.303" />
+        <entry key="formula1/src/main/res/drawable/circuit_charade.xml" value="0.303" />
+        <entry key="formula1/src/main/res/drawable/circuit_dallas.xml" value="0.303" />
+        <entry key="formula1/src/main/res/drawable/circuit_detroit.xml" value="0.303" />
+        <entry key="formula1/src/main/res/drawable/circuit_dijon.xml" value="0.303" />
+        <entry key="formula1/src/main/res/drawable/circuit_estoril.xml" value="0.303" />
+        <entry key="formula1/src/main/res/drawable/circuit_fuji.xml" value="0.303" />
+        <entry key="formula1/src/main/res/drawable/circuit_george.xml" value="0.303" />
         <entry key="formula1/src/main/res/drawable/circuit_jeddah.xml" value="0.2635" />
+        <entry key="formula1/src/main/res/drawable/circuit_jerez.xml" value="0.303" />
+        <entry key="formula1/src/main/res/drawable/circuit_long_beach.xml" value="0.303" />
         <entry key="formula1/src/main/res/drawable/circuit_losail.xml" value="0.2635" />
+        <entry key="formula1/src/main/res/drawable/circuit_miami.xml" value="0.303" />
+        <entry key="formula1/src/main/res/drawable/circuit_mosport.xml" value="0.303" />
+        <entry key="formula1/src/main/res/drawable/circuit_pescara.xml" value="0.303" />
+        <entry key="formula1/src/main/res/drawable/circuit_phoenix.xml" value="0.303" />
+        <entry key="formula1/src/main/res/drawable/circuit_port_imperial.xml" value="0.303" />
+        <entry key="formula1/src/main/res/drawable/circuit_riverside.xml" value="0.303" />
+        <entry key="formula1/src/main/res/drawable/circuit_sebring.xml" value="0.303" />
         <entry key="formula1/src/main/res/drawable/circuit_yas_marina_1.xml" value="0.27" />
         <entry key="formula1/src/main/res/drawable/circuit_yas_marina_2.xml" value="0.27" />
         <entry key="formula1/src/main/res/drawable/ic_cal_fri.xml" value="0.3645" />
@@ -214,11 +237,13 @@
         <entry key="statistics/src/main/res/drawable/ic_wikipedia.xml" value="0.3645" />
         <entry key="statistics/src/main/res/drawable/nav_driver.xml" value="0.196" />
         <entry key="statistics/src/main/res/drawable/nav_rss.xml" value="0.196" />
+        <entry key="statistics/src/main/res/layout/activity_circuit_info.xml" value="0.2569474134245404" />
         <entry key="statistics/src/main/res/layout/activity_constructor.xml" value="0.4592445328031809" />
         <entry key="statistics/src/main/res/layout/activity_driver.xml" value="0.29775280898876405" />
         <entry key="statistics/src/main/res/layout/activity_driver_comparison.xml" value="0.34159897392047883" />
         <entry key="statistics/src/main/res/layout/activity_driver_season.xml" value="0.46601111586147925" />
         <entry key="statistics/src/main/res/layout/activity_search.xml" value="0.46601111586147925" />
+        <entry key="statistics/src/main/res/layout/fragment_circuit_info.xml" value="0.1255745925616381" />
         <entry key="statistics/src/main/res/layout/fragment_constructor.xml" value="0.2277475971583786" />
         <entry key="statistics/src/main/res/layout/fragment_driver.xml" value="0.36381709741550694" />
         <entry key="statistics/src/main/res/layout/fragment_driver_season.xml" value="0.2882703777335984" />
@@ -238,6 +263,7 @@
         <entry key="statistics/src/main/res/layout/view_shared_pull_refresh.xml" value="0.36944696282864914" />
         <entry key="statistics/src/main/res/layout/view_shared_refresh_indicator.xml" value="0.46601111586147925" />
         <entry key="statistics/src/main/res/layout/view_shared_skeleton.xml" value="0.150856665273715" />
+        <entry key="statistics/src/main/res/xml/activity_circuit_scene.xml" value="0.2569474134245404" />
         <entry key="statistics/src/main/res/xml/activity_constructor_scene.xml" value="0.46601111586147925" />
         <entry key="statistics/src/main/res/xml/activity_driver_scene.xml" value="0.2277475971583786" />
         <entry key="stats/search/src/main/res/drawable/ic_search_circuits.xml" value="0.2785" />

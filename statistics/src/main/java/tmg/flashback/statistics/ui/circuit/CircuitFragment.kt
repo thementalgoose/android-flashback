@@ -15,17 +15,15 @@ import tmg.flashback.statistics.ui.race.RaceData
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 import tmg.utilities.extensions.viewUrl
-import tmg.utilities.extensions.views.invisible
-import tmg.utilities.extensions.views.visible
 import tmg.utilities.utils.ClipboardUtils.Companion.copyToClipboard
 
-class CircuitInfoFragment: BaseFragment<FragmentCircuitInfoBinding>() {
+class CircuitFragment: BaseFragment<FragmentCircuitInfoBinding>() {
 
-    private val viewModel: CircuitInfoViewModel by viewModel()
+    private val viewModel: CircuitViewModel by viewModel()
 
     private lateinit var circuitId: String
     private lateinit var circuitName: String
-    private lateinit var adapter: CircuitInfoAdapter
+    private lateinit var adapter: CircuitAdapter
 
     override fun inflateView(inflater: LayoutInflater) =
             FragmentCircuitInfoBinding.inflate(inflater)
@@ -43,10 +41,7 @@ class CircuitInfoFragment: BaseFragment<FragmentCircuitInfoBinding>() {
                 "circuit_name" to circuitName
         ))
 
-        binding.titleExpanded.text = circuitName
-        binding.titleCollapsed.text = circuitName
-
-        adapter = CircuitInfoAdapter(
+        adapter = CircuitAdapter(
                 clickShowOnMap = viewModel.inputs::clickShowOnMap,
                 clickLink = viewModel.inputs::clickLink,
                 clickRace = {
@@ -69,11 +64,7 @@ class CircuitInfoFragment: BaseFragment<FragmentCircuitInfoBinding>() {
         )
         binding.dataList.adapter = adapter
         binding.dataList.layoutManager = LinearLayoutManager(context)
-        binding.progress.invisible()
-
-        binding.back.setOnClickListener {
-            activity?.finish()
-        }
+//        binding.progress.invisible()
 
         binding.swipeRefresh.setOnRefreshListener {
             viewModel.inputs.refresh()
@@ -85,16 +76,11 @@ class CircuitInfoFragment: BaseFragment<FragmentCircuitInfoBinding>() {
 
         observe(viewModel.outputs.showLoading) {
             if (it) {
-                binding.progress.visible()
+//                binding.progress.visible()
             } else {
                 binding.swipeRefresh.isRefreshing = false
-                binding.progress.invisible()
+//                binding.progress.invisible()
             }
-        }
-
-        observe(viewModel.outputs.circuitName) {
-            binding.titleExpanded.text = it
-            binding.titleCollapsed.text = it
         }
 
         observeEvent(viewModel.outputs.goToMap) { (mapUri, coordinates) ->
@@ -120,8 +106,16 @@ class CircuitInfoFragment: BaseFragment<FragmentCircuitInfoBinding>() {
         private const val keyCircuit: String = "circuit"
         private const val keyCircuitName: String = "circuitName"
 
-        fun instance(circuitId: String, circuitName: String): CircuitInfoFragment {
-            return CircuitInfoFragment().apply {
+        fun bundle(circuitId: String, circuitName: String): Bundle {
+            return bundleOf(
+                keyCircuit to circuitId,
+                keyCircuitName to circuitName
+            )
+        }
+
+        @Deprecated("Should be accessed via. a NavGraph")
+        fun instance(circuitId: String, circuitName: String): CircuitFragment {
+            return CircuitFragment().apply {
                 arguments = bundleOf(
                         keyCircuit to circuitId,
                         keyCircuitName to circuitName

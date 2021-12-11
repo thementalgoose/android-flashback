@@ -11,7 +11,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.ui.base.BaseFragment
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.FragmentSearchBinding
-import tmg.flashback.statistics.ui.circuit.CircuitInfoActivity
+import tmg.flashback.statistics.ui.circuit.CircuitActivity
 import tmg.flashback.statistics.ui.overview.constructor.ConstructorActivity
 import tmg.flashback.statistics.ui.overview.driver.DriverActivity
 import tmg.flashback.statistics.ui.race.RaceActivity
@@ -113,7 +113,7 @@ class SearchFragment: BaseFragment<FragmentSearchBinding>(), FragmentResultListe
             context?.let { context ->
                 val intent: Intent? = when (searchItem) {
                     is SearchItem.Circuit -> {
-                        CircuitInfoActivity.intent(
+                        CircuitActivity.intent(
                             context = context,
                             circuitId = searchItem.circuitId,
                             circuitName = searchItem.name
