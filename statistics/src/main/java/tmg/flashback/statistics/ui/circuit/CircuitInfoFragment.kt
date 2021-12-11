@@ -56,10 +56,10 @@ class CircuitInfoFragment: BaseFragment<FragmentCircuitInfoBinding>() {
                             round = it.round,
                             circuitId = circuitId,
                             defaultToRace = true,
-                            country = "",
+                            country = it.country,
                             raceName = it.name,
                             trackName = circuitName,
-                            countryISO = "",
+                            countryISO = it.countryISO,
                             date = it.date
                         )
                         )
