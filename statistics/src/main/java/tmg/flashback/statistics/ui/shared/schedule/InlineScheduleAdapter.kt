@@ -26,8 +26,8 @@ class InlineScheduleAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>(), Ko
 
     private val notificationController: ScheduleController by inject()
 
-    fun setSchedule(schedule: List<Schedule>) {
-        this.list = schedule
+    fun setSchedule(schedule: List<Schedule>): Boolean {
+        val list = schedule
             .sortedBy { it.date.atTime(it.time) }
             .groupBy { it.date }
             .map { (date, items) ->
@@ -49,7 +49,9 @@ class InlineScheduleAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>(), Ko
                 })
                 return@map list
             }
-            .flatten() + listOf<InlineSchedule>(InlineSchedule.Timezone)
+            .flatten()
+        this.list = list + if (list.isNotEmpty()) listOf<InlineSchedule>(InlineSchedule.Timezone) else listOf()
+        return list.isNotEmpty()
     }
 
     var list: List<InlineSchedule> = emptyList()

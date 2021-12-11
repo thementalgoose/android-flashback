@@ -12,6 +12,7 @@ enum class TrackLayout(
         val icon: Int,
         val override: List<String> = emptyList() // "2020 Sakhir Grand Prix" - Should be "${year} ${raceName}". Update unit tests!
 ) {
+    AINTREE("aintree", R.drawable.circuit_aintree),
     ADELAIDE("adelaide", R.drawable.circuit_adelaide),
     ALBERT_PARK("albert_park", R.drawable.circuit_albert_park),
     ALGARVE("algarve", R.drawable.circuit_algarve),
@@ -20,8 +21,13 @@ enum class TrackLayout(
     BUDDH("buddh", R.drawable.circuit_buddh),
     BAHRAIN("bahrain", R.drawable.circuit_bahrain),
     BAK("BAK", R.drawable.circuit_bak),
+    BREMGARTEN("bremgarten", R.drawable.circuit_bremgarten),
     BRANDS_HATCH("brands_hatch", R.drawable.circuit_brands_hatch),
+    BOAVISTA("boavista", R.drawable.circuit_boavista),
     CATALUNYA("catalunya", R.drawable.circuit_catalunya),
+    CHARADE("charade", R.drawable.circuit_charade),
+    DALLAS("dallas", R.drawable.circuit_dallas),
+    DETROIT("detroit", R.drawable.circuit_detroit),
     DIJON("dijon", R.drawable.circuit_dijon),
     DONINGTON("donington", R.drawable.circuit_donington),
     ESTORIL("estoril", R.drawable.circuit_estoril),
@@ -50,9 +56,12 @@ enum class TrackLayout(
     MUGELLO("mugello", R.drawable.circuit_mugello),
     NURBURGRING("nurburgring", R.drawable.circuit_nurburgring),
     OSTERREICHRING("osterreichring", R.drawable.circuit_osterreichring),
+    PESCARA("pescara", R.drawable.circuit_pescara),
     PHOENIX("phoenix", R.drawable.circuit_phoenix),
+    PORT_IMPERIAL("port_imperial", R.drawable.circuit_port_imperial),
     RED_BULL_RING("red_bull_ring", R.drawable.circuit_red_bull_ring),
     RICARD("ricard", R.drawable.circuit_ricard),
+    RIVERSIDE("riverside", R.drawable.circuit_riverside),
     RODRIGUEZ("rodriguez", R.drawable.circuit_rodriguez),
     SAKHIR("sakhir", R.drawable.circuit_sakhir, listOf(
             "2020 Sakhir Grand Prix"
