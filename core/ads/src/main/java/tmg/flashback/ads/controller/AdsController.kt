@@ -25,6 +25,9 @@ class AdsController(
             else -> false
         }
 
+    /**
+     * Advert config
+     */
     val advertConfig: AdvertConfig
         get() = if (areAdvertsEnabled) {
             repository.advertConfig
