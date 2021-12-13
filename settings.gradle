@@ -4,6 +4,8 @@ include ':app'
 
 include ':statistics'
 
+include ':learning'
+
 include ':data:repo'
 include ':data:room'
 include ':data:network'
