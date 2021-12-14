@@ -18,4 +18,6 @@
     <string name="ab_season_status_has_qualifying">Qualifying data available only</string>
     <string name="ab_season_status_in_future">Data unavailable</string>
     <string name="ab_season_status_waiting_for_results">Data is unavailable and should be available shortly</string>
+
+    <string name="ab_championship">Championship winners</string>
 </resources>

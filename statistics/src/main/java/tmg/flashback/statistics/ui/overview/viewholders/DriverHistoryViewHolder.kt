@@ -16,6 +16,7 @@ import tmg.flashback.statistics.ui.overview.driver.summary.PipeType
 import tmg.flashback.statistics.ui.overview.driver.summary.PipeType.*
 import tmg.flashback.statistics.ui.shared.constructorlist.ConstructorListAdapter
 import tmg.utilities.extensions.views.context
+import tmg.utilities.extensions.views.gone
 import tmg.utilities.extensions.views.invisible
 import tmg.utilities.extensions.views.visible
 
@@ -70,16 +71,15 @@ open class DriverHistoryViewHolder(
         type: PipeType,
         isChampionship: Boolean
     ) {
-        year.isVisible = type != PipeType.SINGLE_PIPE && season != null
+        year.isVisible = type != SINGLE_PIPE && season != null
         year.text = season.toString()
 
         adapter.list = constructors
 
         if (isChampionship) {
-            pipeCircle.setImageResource(R.drawable.ic_star_filled_coloured)
-        }
-        else {
-            pipeCircle.setImageResource(0)
+            binding.star.visible()
+        } else {
+            binding.star.gone()
         }
 
         when (type) {

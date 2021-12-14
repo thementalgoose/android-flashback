@@ -12,7 +12,7 @@
         style="@style/Text.Title.Strong"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/paddingNSmall"
+        android:layout_marginStart="@dimen/paddingMedium"
         android:layout_marginTop="@dimen/paddingXSmall"
         android:paddingStart="0dp"
         android:paddingEnd="@dimen/paddingSmall"
@@ -44,14 +44,14 @@
         tools:text="1st" />
 
     <TextView
-        style="@style/Text.Caption"
-        app:layout_constraintStart_toStartOf="@id/year"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/year"
-        android:text="@string/constructor_overview_in_progress"
-        android:layout_width="0dp"
         android:id="@+id/inProgress"
-        android:layout_height="wrap_content" />
+        style="@style/Text.Caption"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/constructor_overview_in_progress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/year"
+        app:layout_constraintTop_toBottomOf="@id/year" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/drivers"
@@ -72,6 +72,7 @@
         android:id="@+id/pipe"
         android:layout_width="@dimen/driverOverviewCircleSize"
         android:layout_height="0dp"
+        android:importantForAccessibility="no"
         android:layout_marginStart="@dimen/driverOverviewPipeIndent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -100,25 +101,27 @@
             app:layout_constraintTop_toTopOf="@id/pipeCircle" />
 
         <ImageView
+            android:importantForAccessibility="no"
             android:id="@+id/pipeCircle"
             android:layout_width="@dimen/driverOverviewCircleSize"
             android:layout_height="@dimen/driverOverviewCircleSize"
-            android:layout_marginTop="@dimen/paddingSmall"
+            android:layout_marginTop="7dp"
             android:background="@drawable/pipe_indicator"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/championship"
-            app:srcCompat="@drawable/ic_star_filled_coloured"
-            app:layout_constraintTop_toTopOf="@id/pipeCircle"
-            app:layout_constraintStart_toStartOf="@id/pipeCircle"
-            app:layout_constraintEnd_toEndOf="@id/pipeCircle"
-            app:layout_constraintBottom_toBottomOf="@id/pipeCircle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/championship"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:layout_marginStart="2dp"
+        android:contentDescription="@string/ab_championship"
+        app:layout_constraintBottom_toBottomOf="@id/year"
+        app:layout_constraintStart_toEndOf="@id/pipe"
+        app:layout_constraintTop_toTopOf="@id/year"
+        app:srcCompat="@drawable/ic_star_filled_coloured" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
