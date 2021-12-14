@@ -108,7 +108,7 @@ class UpNextWidgetProvider : AppWidgetProvider(), KoinComponent {
                 remoteView.setViewVisibility(R.id.flag, View.VISIBLE)
                 remoteView.setImageViewResource(R.id.flag, context.getFlagResourceAlpha3(nextEvent.countryISO ?: ""))
 
-                remoteView.setTextViewText(R.id.days, nextEvent.date.format(DateTimeFormatter.ofPattern("d MMM yyyy")))
+                remoteView.setTextViewText(R.id.days, nextEvent.date.format(DateTimeFormatter.ofPattern("d MMMM yyyy")))
                 remoteView.setTextViewText(R.id.daystogo, "")
 
                 val eventsToday = nextEvent.schedule
