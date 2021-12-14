@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="tmg.flashback.learning">
+
+    <application>
+
+        <activity android:name=".ui.LearningActivity"
+            android:label=""
+            android:exported="false"
+            android:theme="@style/Translucent" />
+
+    </application>
+
+</manifest>
