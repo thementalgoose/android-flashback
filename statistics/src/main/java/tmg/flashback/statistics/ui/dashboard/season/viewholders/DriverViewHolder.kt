@@ -42,7 +42,7 @@ class DriverViewHolder(
         binding.image.setBackgroundColor(context.theme.getColor(R.attr.contentTertiary))
         binding.imgDriverFlag.setImageResource(itemView.context.getFlagResourceAlpha3(item.driver.nationalityISO))
 
-        binding.tvDriverNumber.text = item.driver.number.toString()
+        binding.tvDriverNumber.text = item.driver.number?.toString() ?: ""
         binding.tvConstructor.text = item.constructors.joinToString(separator = ", ") { it.name }
 
         binding.lpvProgress.backgroundColour = itemView.context.theme.getColor(R.attr.backgroundPrimary)

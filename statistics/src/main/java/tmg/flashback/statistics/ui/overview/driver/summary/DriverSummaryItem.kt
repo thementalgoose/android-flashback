@@ -15,7 +15,7 @@ sealed class DriverSummaryItem(
     data class Header(
             val driverFirstname: String,
             val driverSurname: String,
-            val driverNumber: Int,
+            val driverNumber: Int?,
             val driverImg: String,
             val driverBirthday: LocalDate,
             val driverWikiUrl: String,

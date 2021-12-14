@@ -96,7 +96,7 @@ class DriverViewModel(
                             DriverSummaryItem.Header(
                                 driverFirstname = it.driver.firstName,
                                 driverSurname = it.driver.lastName,
-                                driverNumber = it.driver.number ?: 0,
+                                driverNumber = it.driver.number,
                                 driverImg = it.driver.photoUrl ?: "",
                                 driverBirthday = it.driver.dateOfBirth,
                                 driverWikiUrl = it.driver.wikiUrl ?: "",
