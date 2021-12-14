@@ -33,7 +33,7 @@ class HeaderViewHolder(
                 .load(item.driverImg)
                 .into(binding.imgDriver)
 
-        binding.tvNumber.text = item.driverNumber.toString()
+        binding.tvNumber.text = item.driverNumber?.toString() ?: ""
         binding.tvNumber.colorHighlight = context.theme.getColor(R.attr.colorPrimary)
         binding.driverBirthday.text = itemView.context.getString(R.string.driver_overview_stat_birthday, item.driverBirthday.format(DateTimeFormatter.ofPattern("dd MMMM yyyy")))
 
