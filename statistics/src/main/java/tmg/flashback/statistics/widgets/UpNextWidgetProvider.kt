@@ -29,6 +29,7 @@ import tmg.flashback.formula1.enums.TrackLayout
 import tmg.flashback.crash_reporting.controllers.CrashController
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
+import tmg.flashback.statistics.BuildConfig
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.controllers.ScheduleController
 import tmg.utilities.extensions.toEnum
@@ -50,7 +51,7 @@ class UpNextWidgetProvider : AppWidgetProvider(), KoinComponent {
     }
 
     override fun onUpdate(context: Context?, appWidgetManager: AppWidgetManager?, appWidgetIds: IntArray?) {
-        Log.i("Flashback", "Updating up next widgets ${appWidgetIds.contentToString()}")
+        Log.i("Widgets", "Updating up next widgets ${if (BuildConfig.DEBUG) appWidgetIds.contentToString() else ""}")
 
         // Fire and forget remote config sync
         GlobalScope.launch {
@@ -60,6 +61,9 @@ class UpNextWidgetProvider : AppWidgetProvider(), KoinComponent {
 
         // Pre app checks
         val nextEvent: OverviewRace? = runBlocking { scheduleController.getNextEvent() }
+        if (BuildConfig.DEBUG) {
+            Log.i("Widgets", "Next event found to be $nextEvent")
+        }
         if (context == null) {
             return
         }
@@ -80,7 +84,7 @@ class UpNextWidgetProvider : AppWidgetProvider(), KoinComponent {
             }
         }
         catch (e: Exception) {
-            Log.i("Flashback", "Failed to tint icon ${e.message}")
+            Log.i("Widgets", "Failed to tint icon ${e.message}")
             e.printStackTrace()
             crashController.logError(e, "Widget Up Next provider couldn't tint bitmap")
         }
@@ -103,6 +107,9 @@ class UpNextWidgetProvider : AppWidgetProvider(), KoinComponent {
 
                 remoteView.setViewVisibility(R.id.flag, View.VISIBLE)
                 remoteView.setImageViewResource(R.id.flag, context.getFlagResourceAlpha3(nextEvent.countryISO ?: ""))
+
+                remoteView.setTextViewText(R.id.days, nextEvent.date.format(DateTimeFormatter.ofPattern("d MMM yyyy")))
+                remoteView.setTextViewText(R.id.daystogo, "")
 
                 val eventsToday = nextEvent.schedule
                     .filter { it.timestamp.utcLocalDateTime.toLocalDate() == LocalDate.now() }
