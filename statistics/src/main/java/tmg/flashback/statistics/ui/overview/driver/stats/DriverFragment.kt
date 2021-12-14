@@ -1,20 +1,21 @@
-package tmg.flashback.statistics.ui.overview.driver
+package tmg.flashback.statistics.ui.overview.driver.stats
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import androidx.core.os.bundleOf
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.android.viewmodel.ext.android.viewModel
+import tmg.flashback.statistics.R
 import tmg.flashback.ui.base.BaseFragment
 import tmg.flashback.statistics.databinding.FragmentDriverBinding
-import tmg.flashback.statistics.ui.overview.driver.season.DriverSeasonActivity
+import tmg.flashback.statistics.databinding.ViewSharedRefreshIndicatorBinding
+import tmg.flashback.statistics.ui.overview.driver.season.DriverSeasonFragment
 import tmg.flashback.statistics.ui.overview.driver.summary.DriverSummaryAdapter
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 import tmg.utilities.extensions.viewUrl
-import tmg.utilities.extensions.views.invisible
-import tmg.utilities.extensions.views.visible
 
 class DriverFragment: BaseFragment<FragmentDriverBinding>() {
 
@@ -44,20 +45,16 @@ class DriverFragment: BaseFragment<FragmentDriverBinding>() {
                 "driver_name" to driverName,
         ))
 
-        binding.titleExpanded.text = driverName
-        binding.titleCollapsed.text = driverName
-
         adapter = DriverSummaryAdapter(
                 openUrl = viewModel.inputs::openUrl,
                 seasonClicked = viewModel.inputs::openSeason
         )
         binding.dataList.adapter = adapter
         binding.dataList.layoutManager = LinearLayoutManager(context)
-        binding.progress.invisible()
+//        binding.progress.invisible()
 
-        binding.back.setOnClickListener {
-            activity?.finish()
-        }
+        val x = ViewSharedRefreshIndicatorBinding.inflate(layoutInflater)
+        binding.swipeRefresh.addView(x.root)
 
         binding.swipeRefresh.setOnRefreshListener {
             viewModel.inputs.refresh()
@@ -65,10 +62,11 @@ class DriverFragment: BaseFragment<FragmentDriverBinding>() {
 
         observe(viewModel.outputs.showLoading) {
             if (it) {
-                binding.progress.visible()
+//                binding.progress.visible()
+                binding.swipeRefresh.isRefreshing = false
             } else {
                 binding.swipeRefresh.isRefreshing = false
-                binding.progress.invisible()
+//                binding.progress.invisible()
             }
         }
 
@@ -77,10 +75,8 @@ class DriverFragment: BaseFragment<FragmentDriverBinding>() {
         }
 
         observeEvent(viewModel.outputs.openSeason) { (driverId, season) ->
-            context?.let { context ->
-                val intent = DriverSeasonActivity.intent(context, driverId, driverName, season)
-                startActivity(intent)
-            }
+            val bundle = DriverSeasonFragment.bundle(season, driverId, driverName)
+            findNavController().navigate(R.id.goToDriverSeason, bundle)
         }
 
         observeEvent(viewModel.outputs.openUrl) {
@@ -90,9 +86,17 @@ class DriverFragment: BaseFragment<FragmentDriverBinding>() {
 
     companion object {
 
-        private const val keyDriverId: String = "keyDriverId"
-        private const val keyDriverName: String = "keyDriverName"
+        private const val keyDriverId: String = "driverId"
+        private const val keyDriverName: String = "driverName"
 
+        fun bundle(driverId: String, driverName: String): Bundle {
+            return bundleOf(
+                keyDriverId to driverId,
+                keyDriverName to driverName
+            )
+        }
+
+        @Deprecated("Should be accessed via. a NavGraph")
         fun instance(driverId: String, driverName: String): DriverFragment {
             return DriverFragment().apply {
                 arguments = bundleOf(

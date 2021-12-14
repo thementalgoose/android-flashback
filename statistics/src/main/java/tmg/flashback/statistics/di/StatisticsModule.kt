@@ -9,11 +9,11 @@ import tmg.flashback.statistics.controllers.ScheduleController
 import tmg.flashback.statistics.repo.di.repoModule
 import tmg.flashback.statistics.repository.HomeRepository
 import tmg.flashback.statistics.repository.UpNextRepository
-import tmg.flashback.statistics.ui.circuit.CircuitInfoViewModel
+import tmg.flashback.statistics.ui.circuit.CircuitViewModel
 import tmg.flashback.statistics.ui.dashboard.onboarding.OnboardingNotificationViewModel
 import tmg.flashback.statistics.ui.dashboard.season.SeasonViewModel
-import tmg.flashback.statistics.ui.overview.constructor.ConstructorViewModel
-import tmg.flashback.statistics.ui.overview.driver.DriverViewModel
+import tmg.flashback.statistics.ui.overview.constructor.stats.ConstructorViewModel
+import tmg.flashback.statistics.ui.overview.driver.stats.DriverViewModel
 import tmg.flashback.statistics.ui.overview.driver.season.DriverSeasonViewModel
 import tmg.flashback.statistics.ui.race.RaceViewModel
 import tmg.flashback.statistics.ui.search.SearchViewModel
@@ -25,7 +25,7 @@ import tmg.flashback.statistics.ui.settings.notifications.reminder.UpNextReminde
 
 val statisticsModule = repoModule + module {
 
-    viewModel { CircuitInfoViewModel(get(), get()) }
+    viewModel { CircuitViewModel(get(), get()) }
     viewModel { SeasonViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
     viewModel { ConstructorViewModel(get(), get()) }
     viewModel { DriverViewModel(get(), get()) }

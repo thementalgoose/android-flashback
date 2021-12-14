@@ -1,4 +1,4 @@
-package tmg.flashback.statistics.ui.overview.constructor
+package tmg.flashback.statistics.ui.overview.constructor.stats
 
 import androidx.annotation.AttrRes
 import androidx.annotation.DrawableRes

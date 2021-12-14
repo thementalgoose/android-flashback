@@ -7,12 +7,9 @@ import android.view.View
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.android.ext.android.inject
-import org.threeten.bp.LocalTime
-import tmg.flashback.formula1.model.Circuit
-import tmg.flashback.formula1.model.RaceInfo
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.FragmentRaceBinding
-import tmg.flashback.statistics.ui.circuit.CircuitInfoActivity
+import tmg.flashback.statistics.ui.circuit.CircuitActivity
 import tmg.flashback.statistics.ui.overview.constructor.ConstructorActivity
 import tmg.flashback.statistics.ui.overview.driver.DriverActivity
 import tmg.flashback.statistics.ui.race.RaceDisplayType.*
@@ -55,7 +52,7 @@ class RaceFragment: BaseFragment<FragmentRaceBinding>() {
                 when (pillItem) {
                     is PillItem.Circuit -> {
                         context?.let {
-                            startActivity(CircuitInfoActivity.intent(it, pillItem.circuitId, pillItem.circuitName))
+                            startActivity(CircuitActivity.intent(it, pillItem.circuitId, pillItem.circuitName))
                         }
                     }
                     is PillItem.Wikipedia -> {

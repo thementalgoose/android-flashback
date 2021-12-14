@@ -19,7 +19,7 @@
             android:theme="@style/Translucent" />
 
         <activity
-            android:name=".ui.circuit.CircuitInfoActivity"
+            android:name=".ui.circuit.CircuitActivity"
             android:label=""
             android:exported="false"
             android:theme="@style/Translucent" />
@@ -32,12 +32,6 @@
 
         <activity
             android:name=".ui.overview.driver.DriverActivity"
-            android:label=""
-            android:exported="false"
-            android:theme="@style/Translucent" />
-
-        <activity
-            android:name=".ui.overview.driver.season.DriverSeasonActivity"
             android:label=""
             android:exported="false"
             android:theme="@style/Translucent" />

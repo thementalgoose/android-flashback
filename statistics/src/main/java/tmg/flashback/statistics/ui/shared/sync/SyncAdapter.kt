@@ -72,6 +72,9 @@ abstract class SyncAdapter<T> : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
             R.layout.view_shared_skeleton -> SkeletonViewHolder(
                     ViewSharedSkeletonBinding.inflate(layoutInflater, parent, false)
             )
+            R.layout.view_shared_refresh_indicator -> PullRefreshViewHolder(
+                    ViewSharedRefreshIndicatorBinding.inflate(layoutInflater, parent, false)
+            )
             else -> throw Error("${this.javaClass.simpleName} Does not have a supported layout id to create a viewholder by")
         }
     }

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_circuits"
+    app:startDestination="@id/circuitInfoFragment">
+
+    <fragment
+        android:id="@+id/circuitInfoFragment"
+        android:name="tmg.flashback.statistics.ui.circuit.CircuitFragment"
+        android:label="CircuitInfoFragment" />
+</navigation>
