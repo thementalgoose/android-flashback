@@ -5,8 +5,8 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:background="?attr/backgroundPrimary"
-    android:foreground="?attr/selectableItemBackground">
+    android:foreground="?attr/selectableItemBackground"
+    tools:background="?attr/backgroundPrimary">
 
     <TextView
         android:id="@+id/year"
@@ -40,6 +40,7 @@
         android:layout_width="@dimen/driverOverviewCircleSize"
         android:layout_height="0dp"
         android:layout_marginStart="@dimen/driverOverviewPipeIndent"
+        android:importantForAccessibility="no"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -70,8 +71,9 @@
             android:id="@+id/pipeCircle"
             android:layout_width="@dimen/driverOverviewCircleSize"
             android:layout_height="@dimen/driverOverviewCircleSize"
-            android:layout_marginTop="@dimen/paddingNSmall"
+            android:layout_marginTop="10dp"
             android:background="@drawable/pipe_indicator"
+            android:importantForAccessibility="no"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -79,5 +81,16 @@
             app:layout_constraintVertical_bias="0.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/star"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:layout_marginStart="4dp"
+        android:contentDescription="@string/ab_championship"
+        android:src="@drawable/ic_star_filled_coloured"
+        app:layout_constraintBottom_toBottomOf="@id/year"
+        app:layout_constraintStart_toEndOf="@id/pipe"
+        app:layout_constraintTop_toTopOf="@id/year" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
