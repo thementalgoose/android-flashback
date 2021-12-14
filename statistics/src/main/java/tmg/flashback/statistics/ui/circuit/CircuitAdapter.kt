@@ -16,7 +16,7 @@ import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.utilities.difflist.calculateDiff
 
 @Suppress("EXPERIMENTAL_API_USAGE", "EXPERIMENTAL_OVERRIDE")
-class CircuitInfoAdapter(
+class CircuitAdapter(
     val clickShowOnMap: (location: Location, name: String) -> Unit,
     val clickLink: (link: String) -> Unit,
     val clickRace: (race: CircuitItem.Race) -> Unit

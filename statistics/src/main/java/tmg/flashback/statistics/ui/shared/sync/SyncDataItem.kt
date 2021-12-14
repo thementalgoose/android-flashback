@@ -14,6 +14,8 @@ sealed class SyncDataItem(
 
     object ConstructorsChampionshipNotAwarded: SyncDataItem(R.layout.view_shared_constructor_championship_not_awarded)
 
+    object RefreshIndicator: SyncDataItem(R.layout.view_shared_refresh_indicator)
+
     object InternalError: SyncDataItem(R.layout.view_shared_internal_error)
 
     data class Message(

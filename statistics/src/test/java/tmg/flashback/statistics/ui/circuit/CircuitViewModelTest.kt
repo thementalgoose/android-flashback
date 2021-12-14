@@ -20,9 +20,9 @@ import tmg.testutils.livedata.assertDataEventValue
 import tmg.testutils.livedata.test
 import tmg.testutils.livedata.testObserve
 
-internal class CircuitInfoViewModelTest: BaseTest() {
+internal class CircuitViewModelTest: BaseTest() {
 
-    lateinit var sut: CircuitInfoViewModel
+    lateinit var sut: CircuitViewModel
 
     private val mockCircuitRepository: CircuitRepository = mockk(relaxed = true)
     private val mockConnectivityManager: NetworkConnectivityManager = mockk(relaxed = true)
@@ -36,7 +36,7 @@ internal class CircuitInfoViewModelTest: BaseTest() {
     }
 
     private fun initSUT() {
-        sut = CircuitInfoViewModel(
+        sut = CircuitViewModel(
             mockCircuitRepository,
             mockConnectivityManager,
             ioDispatcher = coroutineScope.testDispatcher

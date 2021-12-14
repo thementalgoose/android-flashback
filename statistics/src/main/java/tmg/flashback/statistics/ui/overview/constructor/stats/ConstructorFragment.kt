@@ -1,4 +1,4 @@
-package tmg.flashback.statistics.ui.overview.constructor
+package tmg.flashback.statistics.ui.overview.constructor.stats
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -41,24 +41,17 @@ class ConstructorFragment: BaseFragment<FragmentConstructorBinding>() {
                 "constructor_name" to constructorName
         ))
 
-        binding.titleExpanded.text = constructorName
-        binding.titleCollapsed.text = constructorName
-
         adapter = ConstructorSummaryAdapter(
                 openUrl = viewModel.inputs::openUrl,
                 openSeason = viewModel.inputs::openSeason
         )
         binding.dataList.adapter = adapter
         binding.dataList.layoutManager = LinearLayoutManager(context)
-        binding.progress.invisible()
-
-        binding.back.setOnClickListener {
-            activity?.finish()
-        }
+//        binding.progress.invisible()
 
         binding.swipeRefresh.setOnRefreshListener {
             viewModel.inputs.refresh()
-            binding.progress.visible()
+//            binding.progress.visible()
         }
 
         observe(viewModel.outputs.list) {
@@ -67,10 +60,10 @@ class ConstructorFragment: BaseFragment<FragmentConstructorBinding>() {
 
         observe(viewModel.outputs.showLoading) {
             if (it) {
-                binding.progress.visible()
+//                binding.progress.visible()
             } else {
                 binding.swipeRefresh.isRefreshing = false
-                binding.progress.invisible()
+//                binding.progress.invisible()
             }
         }
 
@@ -87,6 +80,14 @@ class ConstructorFragment: BaseFragment<FragmentConstructorBinding>() {
         private const val keyConstructorId: String = "constructorId"
         private const val keyConstructorName: String = "constructorName"
 
+        fun bundle(constructorId: String, constructorName: String): Bundle {
+            return bundleOf(
+                keyConstructorId to constructorId,
+                keyConstructorName to constructorName
+            )
+        }
+
+        @Deprecated("Should be accessed via. a NavGraph")
         fun instance(constructorId: String, constructorName: String): ConstructorFragment {
             return ConstructorFragment().apply {
                 arguments = bundleOf(

@@ -18,7 +18,7 @@ import tmg.utilities.lifecycle.Event
 
 //region Inputs
 
-interface CircuitInfoViewModelInputs {
+interface CircuitViewModelInputs {
     fun circuitId(circuitId: String)
     fun clickShowOnMap(location: Location, name: String)
     fun clickLink(link: String)
@@ -30,7 +30,7 @@ interface CircuitInfoViewModelInputs {
 
 //region Outputs
 
-interface CircuitInfoViewModelOutputs {
+interface CircuitViewModelOutputs {
     val list: LiveData<List<CircuitItem>>
     val circuitName: LiveData<String>
 
@@ -43,11 +43,11 @@ interface CircuitInfoViewModelOutputs {
 //endregion
 
 @Suppress("EXPERIMENTAL_API_USAGE")
-class CircuitInfoViewModel(
+class CircuitViewModel(
     private val circuitRepository: CircuitRepository,
     private val networkConnectivityManager: NetworkConnectivityManager,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
-) : ViewModel(), CircuitInfoViewModelInputs, CircuitInfoViewModelOutputs {
+) : ViewModel(), CircuitViewModelInputs, CircuitViewModelOutputs {
 
     private val circuitId: MutableStateFlow<String?> = MutableStateFlow(null)
     private val circuitIdWithRequest: Flow<String?> = circuitId
@@ -116,8 +116,8 @@ class CircuitInfoViewModel(
         }
         .asLiveData(viewModelScope.coroutineContext)
 
-    var inputs: CircuitInfoViewModelInputs = this
-    var outputs: CircuitInfoViewModelOutputs = this
+    var inputs: CircuitViewModelInputs = this
+    var outputs: CircuitViewModelOutputs = this
 
     //region Inputs
 

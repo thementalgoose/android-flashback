@@ -1,4 +1,4 @@
-package tmg.flashback.statistics.ui.overview.driver
+package tmg.flashback.statistics.ui.overview.driver.stats
 
 import androidx.annotation.AttrRes
 import androidx.annotation.DrawableRes
