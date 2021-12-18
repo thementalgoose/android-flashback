@@ -23,6 +23,7 @@ sealed class RaceItem(
         val season: Int,
         val raceDate: LocalDate?,
         val wikipedia: String?,
+        val youtube: String?,
         val schedule: List<Schedule>
     ): RaceItem(
         id = "OVERVIEW",

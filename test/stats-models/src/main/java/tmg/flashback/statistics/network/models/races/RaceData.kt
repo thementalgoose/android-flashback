@@ -11,6 +11,7 @@ fun RaceData.Companion.model(
     time: String? = "12:34",
     circuit: Circuit = Circuit.model(),
     wikiUrl: String? = "wikiUrl",
+    youtubeUrl: String? = "youtube"
 ): RaceData = RaceData(
     season = season,
     round = round,
@@ -19,4 +20,5 @@ fun RaceData.Companion.model(
     time = time,
     circuit = circuit,
     wikiUrl = wikiUrl,
+    youtubeUrl = youtubeUrl
 )

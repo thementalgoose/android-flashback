@@ -52,6 +52,9 @@ class OverviewViewHolder(
             if (item.wikipedia != null) {
                 add(PillItem.Wikipedia(item.wikipedia))
             }
+            if (item.youtube != null) {
+                add(PillItem.Youtube(item.youtube))
+            }
 
             val date = item.raceDate ?: return@apply
             if (date < LocalDate.now() && item.schedule.isNotEmpty()) {

@@ -10,6 +10,7 @@ fun RaceInfo.Companion.model(
     time: LocalTime? = LocalTime.of(12, 34),
     name: String = "name",
     wikipediaUrl: String? = "wikiUrl",
+    youtube: String? = "youtube",
     circuit: Circuit = Circuit.model(),
 ): RaceInfo = RaceInfo(
     season = season,
@@ -18,5 +19,6 @@ fun RaceInfo.Companion.model(
     time = time,
     name = name,
     wikipediaUrl = wikipediaUrl,
+    youtube = youtube,
     circuit = circuit,
 )
