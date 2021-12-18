@@ -20,6 +20,8 @@ data class RaceInfo(
     val time: String?,
     @ColumnInfo(name = "wikiUrl")
     val wikiUrl: String?,
+    @ColumnInfo(name = "youtube")
+    val youtube: String?,
     @PrimaryKey
     @ColumnInfo(name = "id")
     val id: String = "${season}_${round}"

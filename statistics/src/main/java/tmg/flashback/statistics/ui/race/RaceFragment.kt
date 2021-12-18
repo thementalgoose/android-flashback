@@ -58,6 +58,9 @@ class RaceFragment: BaseFragment<FragmentRaceBinding>() {
                     is PillItem.Wikipedia -> {
                         viewWebpage(pillItem.link)
                     }
+                    is PillItem.Youtube -> {
+                        viewWebpage(pillItem.link)
+                    }
                     else -> { /* Do nothing */ }
                 }
             },
@@ -87,6 +90,7 @@ class RaceFragment: BaseFragment<FragmentRaceBinding>() {
                 season = raceData.season,
                 raceDate = raceData.date,
                 wikipedia = null,
+                youtube = null,
                 schedule = emptyList()
             )
         )

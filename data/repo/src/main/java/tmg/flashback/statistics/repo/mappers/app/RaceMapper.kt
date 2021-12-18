@@ -26,6 +26,7 @@ class RaceMapper(
             time = fromTime(data.raceInfo.time),
             name = data.raceInfo.name,
             wikipediaUrl = data.raceInfo.wikiUrl,
+            youtube = data.raceInfo.youtube,
             circuit = circuitMapper.mapCircuit(data.circuit)!!,
         )
     }
@@ -38,6 +39,7 @@ class RaceMapper(
             time = fromTime(data.raceInfo.time),
             name = data.raceInfo.name,
             wikipediaUrl = data.raceInfo.wikiUrl,
+            youtube = data.raceInfo.youtube,
             circuit = circuitMapper.mapCircuit(data.circuit)!!,
         )
     }

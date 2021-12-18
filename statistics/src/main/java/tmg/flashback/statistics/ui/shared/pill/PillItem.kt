@@ -10,32 +10,39 @@ sealed class PillItem(
     val highlighted: Boolean = false
 ) {
     data class Wikipedia(
-            val link: String
-    ): PillItem(
-            icon = R.drawable.ic_wikipedia,
-            label = StringHolder(R.string.circuit_info_wikipedia)
+        val link: String
+    ) : PillItem(
+        icon = R.drawable.ic_wikipedia,
+        label = StringHolder(R.string.circuit_info_wikipedia)
+    )
+
+    data class Youtube(
+        val link: String
+    ) : PillItem(
+        icon = R.drawable.ic_youtube,
+        label = StringHolder(R.string.circuit_info_youtube)
     )
 
     data class Circuit(
-            val circuitId: String,
-            val circuitName: String
-    ): PillItem(
-            icon = R.drawable.ic_track_icon,
-            label = StringHolder(R.string.circuit_info_circuit)
+        val circuitId: String,
+        val circuitName: String
+    ) : PillItem(
+        icon = R.drawable.ic_track_icon,
+        label = StringHolder(R.string.circuit_info_circuit)
     )
 
     data class ShowOnMap(
-            val lat: Double? = null,
-            val lng: Double? = null
-    ): PillItem(
-            icon = R.drawable.ic_map,
-            label = StringHolder(R.string.circuit_info_maps)
+        val lat: Double? = null,
+        val lng: Double? = null
+    ) : PillItem(
+        icon = R.drawable.ic_map,
+        label = StringHolder(R.string.circuit_info_maps)
     )
 
     data class Label(
         private val string: String,
         private val highlight: Boolean = false
-    ): PillItem(
+    ) : PillItem(
         icon = null,
         label = StringHolder(string),
         highlighted = highlight
@@ -46,7 +53,7 @@ sealed class PillItem(
         private val _icon: Int,
         private val string: String,
         private val highlight: Boolean = false
-    ): PillItem(
+    ) : PillItem(
         icon = _icon,
         label = StringHolder(string),
         highlighted = highlight
