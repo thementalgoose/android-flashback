@@ -254,6 +254,7 @@ class RaceViewModel(
                 season = raceInfo.season,
                 raceDate = raceInfo.date,
                 wikipedia = raceInfo.wikipediaUrl,
+                youtube = raceInfo.youtube,
                 schedule = schedule
             ))
             if (raceInfo.date >= LocalDate.now() && schedule.isNotEmpty()) {

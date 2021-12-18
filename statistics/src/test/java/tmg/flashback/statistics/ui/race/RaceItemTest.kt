@@ -16,6 +16,7 @@ fun RaceItem.Companion.overviewModel(
     season: Int = 2020,
     raceDate: LocalDate? = LocalDate.of(2020, 10, 12),
     wikipedia: String = "wikiUrl",
+    youtube: String = "youtube",
     schedule: List<Schedule> = listOf(Schedule.model())
 ): RaceItem.Overview = RaceItem.Overview(
     raceName = raceName,
@@ -27,6 +28,7 @@ fun RaceItem.Companion.overviewModel(
     season = season,
     raceDate = raceDate,
     wikipedia = wikipedia,
+    youtube = youtube,
     schedule = schedule
 )
 
