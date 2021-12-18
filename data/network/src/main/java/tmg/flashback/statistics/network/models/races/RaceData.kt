@@ -11,7 +11,8 @@ data class RaceData(
     val date: String,
     val time: String? = null,
     val circuit: Circuit,
-    val wikiUrl: String? = null
+    val wikiUrl: String? = null,
+    val youtubeUrl: String? = null
 ) {
     companion object
 }

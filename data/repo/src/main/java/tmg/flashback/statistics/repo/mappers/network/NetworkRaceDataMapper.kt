@@ -17,6 +17,7 @@ class NetworkRaceDataMapper {
             circuitId = raceData.circuit.id,
             time = raceData.time,
             wikiUrl = raceData.wikiUrl,
+            youtube = raceData.youtubeUrl
         )
     }
 }
