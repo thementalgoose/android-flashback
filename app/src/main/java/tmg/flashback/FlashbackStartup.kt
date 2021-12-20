@@ -16,7 +16,7 @@ import tmg.flashback.analytics.manager.AnalyticsManager
 import tmg.flashback.managers.widgets.WidgetManager
 import tmg.flashback.ui.controllers.ThemeController
 import tmg.flashback.ui.model.NightMode
-import tmg.flashback.upnext.extensions.updateAllWidgets
+import tmg.flashback.statistics.extensions.updateAllWidgets
 import tmg.flashback.statistics.repository.models.NotificationChannel
 import tmg.flashback.notifications.controllers.NotificationController
 import tmg.utilities.extensions.isInDayMode

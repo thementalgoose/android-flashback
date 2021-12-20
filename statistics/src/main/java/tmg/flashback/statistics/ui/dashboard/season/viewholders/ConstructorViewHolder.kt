@@ -1,6 +1,7 @@
 package tmg.flashback.statistics.ui.dashboard.season.viewholders
 
 import android.view.View
+import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.statistics.R
@@ -10,6 +11,7 @@ import tmg.flashback.statistics.ui.shared.driverlist.DriverListAdapter
 import tmg.flashback.ui.extensions.getColor
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.statistics.databinding.ViewDashboardSeasonConstructorBinding
+import tmg.flashback.statistics.ui.util.accessibility.TapToViewConstructorInfoAccessibilityDelegate
 import tmg.utilities.extensions.views.context
 import tmg.utilities.extensions.views.getString
 import tmg.utilities.extensions.views.show
@@ -80,6 +82,14 @@ class ConstructorViewHolder(
         }
 
         adapter.list = item.driver
+
+        // Accessibility
+        var contentDescrition = getString(R.string.ab_race_constructor, item.constructor.name, item.points.pointsDisplay())
+        for ((driver, points) in item.driver) {
+            contentDescrition += getString(R.string.ab_race_constructor_driver, driver.name, points.pointsDisplay())
+        }
+        binding.container.contentDescription = contentDescrition
+        ViewCompat.setAccessibilityDelegate(binding.container, TapToViewConstructorInfoAccessibilityDelegate(item.constructor.name))
     }
 
     override fun onClick(p0: View?) {

@@ -19,6 +19,7 @@
         android:id="@+id/vOther"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:importantForAccessibility="no"
         app:layout_constraintBottom_toBottomOf="@id/tvQ1"
         app:layout_constraintEnd_toStartOf="@id/tvQ1"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,6 +28,7 @@
     <TextView
         android:id="@+id/tvQ1"
         style="@style/Text.Title.Strong"
+        android:importantForAccessibility="no"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -42,6 +44,7 @@
     <TextView
         android:id="@+id/tvQ2"
         style="@style/Text.Title.Strong"
+        android:importantForAccessibility="no"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -57,6 +60,7 @@
     <TextView
         android:id="@+id/tvQ3"
         style="@style/Text.Title.Strong"
+        android:importantForAccessibility="no"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center"
