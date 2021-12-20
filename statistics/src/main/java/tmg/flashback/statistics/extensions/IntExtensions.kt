@@ -1,4 +1,4 @@
-package tmg.flashback.upnext.extensions
+package tmg.flashback.statistics.extensions
 
 import kotlin.math.floor
 

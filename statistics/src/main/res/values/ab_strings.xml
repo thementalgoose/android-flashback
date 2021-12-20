@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="ab_season_list_header_toggle_expanded">Collapse %s section</string>
-    <string name="ab_season_list_header_toggle_collapsed">Expand %s section</string>
+    <string name="ab_season_list_header_toggle_expanded">Collapsible %s section, expanded</string>
+    <string name="ab_season_list_header_toggle_collapsed">Collapsible %s section, collapsed</string>
     <string name="ab_season_list_favourite">Mark %d as favourite</string>
     <string name="ab_season_list_unfavourite">Unmark %d as favourite</string>
     <string name="ab_season_list_more">More options for %d season</string>
@@ -13,6 +13,20 @@
 
     <string name="ab_back">Back</string>
     <string name="ab_input_clear">Clear input</string>
+
+    <string name="ab_tap_to_expand">Expand</string>
+    <string name="ab_tap_to_collapse">Collapse</string>
+    <string name="ab_tap_to_add_to_favourite">Add to favourites section</string>
+    <string name="ab_tap_to_view_driver_info">View driver profile for %s</string>
+    <string name="ab_tap_to_view_constructor_info">View constructor profile for %s</string>
+
+    <string name="ab_race_podium" formatted="false">%s, driving for %s, finished %s and scored %s points.</string>
+    <string name="ab_race_podium_started" formatted="false">%s, driving for %s, finished %s and scored %s points after starting in %s place.</string>
+    <string name="ab_race_podium_fastest_lap" formatted="false"> They had the fastest lap of the race</string>
+    <string name="ab_race_podium_dnf" formatted="false"> They retired from the race due to %s</string>
+
+    <string name="ab_race_constructor" formatted="false">%s scored %s points, with</string>
+    <string name="ab_race_constructor_driver" formatted="false">%s scoring %s points,</string>
 
     <string name="ab_season_status_has_results">Results available</string>
     <string name="ab_season_status_has_qualifying">Qualifying data available only</string>
