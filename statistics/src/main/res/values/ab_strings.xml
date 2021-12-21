@@ -23,6 +23,8 @@
     <string name="ab_qualifying_time">%s qualifying time of %s</string>
     <string name="ab_qualifying_overview">%s, driving for %s, qualified P %s</string>
 
+    <string name="ab_season_driver">%s, driving for %s, is P %s in the standings with %s points</string>
+
     <string name="ab_race_podium" formatted="false">%s, driving for %s, finished %s and scored %s points.</string>
     <string name="ab_race_podium_started" formatted="false">%s, driving for %s, finished %s and scored %s points after starting in %s place.</string>
     <string name="ab_race_podium_fastest_lap" formatted="false"> They had the fastest lap of the race</string>
