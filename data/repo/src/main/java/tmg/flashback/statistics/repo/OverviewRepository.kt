@@ -13,6 +13,7 @@ import tmg.flashback.statistics.repo.mappers.network.NetworkCircuitDataMapper
 import tmg.flashback.statistics.repo.mappers.network.NetworkOverviewMapper
 import tmg.flashback.statistics.repo.mappers.network.NetworkScheduleMapper
 import tmg.flashback.statistics.room.FlashbackDatabase
+import java.lang.RuntimeException
 
 class OverviewRepository(
     private val api: FlashbackApi,
@@ -72,6 +73,18 @@ class OverviewRepository(
     fun getOverview(): Flow<List<OverviewRace>> {
         return persistence.overviewDao().getOverview()
             .map { list -> list.map { overviewMapper.mapOverview(it) } }
+    }
+
+    fun getOverview(season: Int, round: Int): Flow<OverviewRace?> {
+        return persistence.overviewDao().getOverview(season, round)
+            .map {
+                if (it == null) return@map null
+                try {
+                    overviewMapper.mapOverview(it)
+                } catch (e: RuntimeException) {
+                    null
+                }
+            }
     }
 
     fun getOverview(season: Int): Flow<Overview> {

@@ -3,6 +3,8 @@ package tmg.flashback.statistics.ui.dashboard.season
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.Toast
+import androidx.fragment.app.setFragmentResultListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import org.koin.android.ext.android.inject
@@ -11,8 +13,10 @@ import org.threeten.bp.LocalDate
 import tmg.flashback.ui.base.BaseFragment
 import tmg.flashback.statistics.R
 import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
+import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.statistics.controllers.HomeController
 import tmg.flashback.statistics.databinding.FragmentDashboardSeasonBinding
+import tmg.flashback.statistics.ui.dashboard.racepreview.RacePreviewBottomSheetFragment
 import tmg.flashback.statistics.ui.overview.constructor.ConstructorActivity
 import tmg.flashback.statistics.ui.overview.driver.DriverActivity
 import tmg.flashback.statistics.ui.race.RaceActivity
@@ -36,6 +40,8 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
     private val seasonFragmentCallback: SeasonFragmentCallback?
         get() = parentFragment as? SeasonFragmentCallback
 
+    private var cachedOverviewRace: OverviewRace? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -54,28 +60,27 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
             constructorClicked = viewModel.inputs::clickConstructor,
             calendarWeekRaceClicked = { week ->
                 week.race?.let {
-                    viewModel.inputs.clickTrack(
-                            SeasonItem.Track(
-                            season = it.season,
-                            raceName = it.raceName,
-                            circuitName = it.circuitName,
-                            circuitId = it.circuitId,
-                            raceCountry = it.country,
-                            raceCountryISO = it.countryISO,
-                            date = it.date,
-                            round = it.round,
-                            hasQualifying = it.hasQualifying,
-                            hasResults = it.hasResults,
-                            defaultExpanded = true,
-                            schedule = it.schedule
-                        )
-                    )
+                    if (it.date > LocalDate.now()) {
+                        cachedOverviewRace = it
+                        RacePreviewBottomSheetFragment
+                            .instance(it.season, it.round)
+                            .show(parentFragmentManager, "RACE_PREVIEW_${it.season}_${it.round}")
+                    } else {
+                        clickTrack(it)
+                    }
                 }
             }
         )
         binding.dataList.layoutManager = LinearLayoutManager(context)
         binding.dataList.adapter = adapter
         binding.progress.invisible()
+
+        setFragmentResultListener(RacePreviewBottomSheetFragment.fragmentResultKey) { _, bundle ->
+            val shouldLoadRace = RacePreviewBottomSheetFragment.shouldLoadRace(bundle)
+            if (shouldLoadRace && cachedOverviewRace != null) {
+                clickTrack(cachedOverviewRace!!)
+            }
+        }
 
         binding.dataList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -182,6 +187,26 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
                 startActivity(intent)
             }
         }
+    }
+
+    private fun clickTrack(it: OverviewRace) {
+        viewModel.inputs.clickTrack(
+            SeasonItem.Track(
+                season = it.season,
+                raceName = it.raceName,
+                circuitName = it.circuitName,
+                circuitId = it.circuitId,
+                raceCountry = it.country,
+                raceCountryISO = it.countryISO,
+                date = it.date,
+                round = it.round,
+                hasQualifying = it.hasQualifying,
+                hasResults = it.hasResults,
+                defaultExpanded = true,
+                schedule = it.schedule
+            )
+        )
+        cachedOverviewRace = null
     }
 
     //region Accessible
