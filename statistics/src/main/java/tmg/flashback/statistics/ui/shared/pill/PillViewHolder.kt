@@ -27,6 +27,8 @@ class PillViewHolder(
 
         binding.image.show(item.icon != null)
         binding.image.setImageResource(item.icon ?: 0)
+
+        binding.container.contentDescription = item.label.resolve(context)
     }
 
     override fun onClick(p0: View?) {

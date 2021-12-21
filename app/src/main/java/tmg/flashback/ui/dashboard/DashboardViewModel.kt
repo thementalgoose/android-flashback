@@ -9,7 +9,7 @@ import tmg.flashback.common.controllers.ReleaseNotesController
 import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.statistics.BuildConfig
 import tmg.flashback.statistics.controllers.ScheduleController
-import tmg.flashback.upnext.extensions.updateAllWidgets
+import tmg.flashback.statistics.extensions.updateAllWidgets
 import tmg.utilities.lifecycle.Event
 
 //region Inputs

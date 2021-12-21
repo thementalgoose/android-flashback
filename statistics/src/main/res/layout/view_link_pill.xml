@@ -31,6 +31,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:paddingStart="12dp"
+        android:importantForAccessibility="no"
         android:paddingTop="@dimen/paddingXSmall"
         android:paddingEnd="@dimen/paddingMedium"
         android:paddingBottom="@dimen/paddingXSmall"

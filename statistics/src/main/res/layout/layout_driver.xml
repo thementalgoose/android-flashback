@@ -2,9 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:gravity="start|center"
+    android:id="@+id/driverContainer"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:gravity="start|center"
     android:orientation="horizontal">
 
     <TextView
@@ -12,6 +13,7 @@
         style="@style/Text.Body.1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:importantForAccessibility="no"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -23,20 +25,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/paddingXSmall"
+        android:importantForAccessibility="no"
         app:layout_constraintBottom_toBottomOf="@id/tvName"
         app:layout_constraintStart_toEndOf="@id/tvName"
         app:layout_constraintTop_toTopOf="@id/tvName"
         tools:text="44" />
 
     <ImageView
-        android:importantForAccessibility="no"
         android:id="@+id/imgFlag"
         android:layout_width="@dimen/driverFlagSize"
         android:layout_height="@dimen/driverFlagSize"
         android:layout_marginStart="@dimen/paddingXSmall"
+        android:importantForAccessibility="no"
         app:layout_constraintBottom_toBottomOf="@id/tvNumber"
         app:layout_constraintStart_toEndOf="@id/tvNumber"
         app:layout_constraintTop_toTopOf="@id/tvNumber"
-        tools:src="@drawable/gb"/>
+        tools:src="@drawable/gb" />
 
 </LinearLayout>

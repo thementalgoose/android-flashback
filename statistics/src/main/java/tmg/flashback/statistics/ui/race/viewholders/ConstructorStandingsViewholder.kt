@@ -2,6 +2,7 @@ package tmg.flashback.statistics.ui.race.viewholders
 
 import android.view.View
 import androidx.annotation.ColorInt
+import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import kotlin.math.roundToInt
 import tmg.flashback.ui.model.AnimationSpeed
@@ -14,7 +15,9 @@ import tmg.flashback.statistics.databinding.LayoutConstructorDriverBinding
 import tmg.flashback.statistics.databinding.ViewRaceConstructorBinding
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.statistics.ui.race.RaceItem
+import tmg.flashback.statistics.ui.util.accessibility.TapToViewConstructorInfoAccessibilityDelegate
 import tmg.utilities.extensions.views.context
+import tmg.utilities.extensions.views.getString
 import tmg.utilities.extensions.views.show
 
 class ConstructorStandingsViewholder(
@@ -75,6 +78,14 @@ class ConstructorStandingsViewholder(
                 }
             }
         }
+
+        // Accessibility
+        var contentDescrition = getString(R.string.ab_race_constructor, model.constructor.name, model.points.pointsDisplay())
+        for ((driver, points) in model.driver) {
+            contentDescrition += getString(R.string.ab_race_constructor_driver, driver.name, points.pointsDisplay())
+        }
+        binding.container.contentDescription = contentDescrition
+        ViewCompat.setAccessibilityDelegate(binding.container, TapToViewConstructorInfoAccessibilityDelegate(model.constructor.name))
     }
 
     private fun setDriver(layout: LayoutConstructorDriverBinding, driver: Driver, points: Double, @ColorInt constructorColor: Int) {
