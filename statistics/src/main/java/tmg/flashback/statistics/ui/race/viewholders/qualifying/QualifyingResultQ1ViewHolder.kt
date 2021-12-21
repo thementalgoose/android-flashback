@@ -2,9 +2,12 @@ package tmg.flashback.statistics.ui.race.viewholders.qualifying
 
 import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.formula1.model.RaceQualifyingRoundDriver
+import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.LayoutQualifyingTimeBinding
 import tmg.flashback.statistics.databinding.ViewRaceQualifyingQ1ResultBinding
+import tmg.flashback.statistics.extensions.bindDriver
 import tmg.flashback.statistics.ui.race.RaceItem
+import tmg.utilities.extensions.views.getString
 import tmg.utilities.extensions.views.gone
 import tmg.utilities.extensions.views.show
 
@@ -39,6 +42,12 @@ class QualifyingResultQ1ViewHolder(
         if (delta != null && result?.lapTime?.totalMillis != 0 && showDelta) {
             layout.tvQualifyingDelta.text = delta
         }
+
+        // Accessibility
+        result?.lapTime?.contentDescription?.let {
+            layout.qualiTimeContainer.contentDescription = getString(R.string.ab_qualifying_time, "Q1", it)
+        }
+
         return label.isNotEmpty()
     }
 }

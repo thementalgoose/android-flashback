@@ -7,23 +7,23 @@
     android:paddingBottom="@dimen/paddingMedium">
 
     <ImageView
-        android:importantForAccessibility="no"
         android:id="@+id/imgCountry"
         android:layout_width="@dimen/raceImageSize"
         android:layout_height="@dimen/raceImageSize"
         android:layout_marginStart="@dimen/paddingMedium"
+        android:importantForAccessibility="no"
         app:layout_constraintBottom_toBottomOf="@id/tvDate"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@drawable/au" />
 
     <TextView
-        android:layout_marginTop="@dimen/paddingMedium"
         android:id="@+id/tvCircuitName"
         style="@style/Text.Body.1"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_marginStart="@dimen/paddingMedium"
+        android:layout_marginTop="@dimen/paddingMedium"
         android:layout_marginEnd="@dimen/paddingMedium"
         android:lines="2"
         android:minLines="2"
@@ -37,6 +37,7 @@
         android:layout_width="100dp"
         android:layout_height="0dp"
         android:layout_marginEnd="@dimen/paddingMedium"
+        android:importantForAccessibility="no"
         app:layout_constraintBottom_toBottomOf="@id/tvDate"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"

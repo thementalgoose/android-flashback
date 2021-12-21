@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/background_home_static_header"
+    android:nextFocusDown="@id/layoutFirst"
     android:paddingBottom="@dimen/paddingSmall">
 
     <include
@@ -23,6 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/paddingXSmall"
+        android:nextFocusDown="@id/layoutThird"
         app:layout_constraintBottom_toTopOf="@id/imgSilver"
         app:layout_constraintEnd_toEndOf="@id/imgSilver"
         app:layout_constraintStart_toStartOf="@id/imgSilver" />
@@ -38,8 +40,6 @@
         app:layout_constraintStart_toStartOf="@id/imgBronze" />
 
     <ImageView
-        tools:background="#d3bc4d"
-        android:importantForAccessibility="no"
         android:id="@+id/imgGold"
         android:layout_width="0dp"
         android:layout_height="@dimen/podium1"
@@ -47,20 +47,23 @@
         android:layout_marginTop="@dimen/paddingXSmall"
         android:layout_marginEnd="@dimen/paddingSmall"
         android:background="@drawable/background_podium_1"
+        android:importantForAccessibility="no"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/imgBronze"
         app:layout_constraintStart_toEndOf="@id/imgSilver"
-        app:layout_constraintTop_toBottomOf="@id/layoutFirst" />
+        app:layout_constraintTop_toBottomOf="@id/layoutFirst"
+        tools:background="#d3bc4d" />
 
     <TextView
         android:id="@+id/tvPodium1"
         style="@style/Text.Title.Strong"
-        android:textColor="#181818"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/paddingXSmall"
         android:gravity="center"
+        android:importantForAccessibility="no"
         android:text="@string/round_podium_first"
+        android:textColor="#181818"
         app:layout_constraintEnd_toEndOf="@id/imgGold"
         app:layout_constraintStart_toStartOf="@id/imgGold"
         app:layout_constraintTop_toTopOf="@id/imgGold" />
@@ -68,11 +71,12 @@
     <TextView
         android:id="@+id/tvPoint1"
         style="@style/Text.Body.2"
-        android:textColor="#181818"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="2dp"
         android:gravity="center|top"
+        android:importantForAccessibility="no"
+        android:textColor="#181818"
         app:layout_constraintBottom_toBottomOf="@id/imgGold"
         app:layout_constraintEnd_toEndOf="@id/imgGold"
         app:layout_constraintStart_toStartOf="@id/imgGold"
@@ -80,27 +84,28 @@
         tools:text="26 points" />
 
     <ImageView
-        tools:background="#c2c2c2"
-        android:importantForAccessibility="no"
         android:id="@+id/imgSilver"
         android:layout_width="0dp"
         android:layout_height="@dimen/podium2"
         android:layout_marginStart="@dimen/paddingMedium"
         android:layout_marginEnd="@dimen/paddingSmall"
         android:background="@drawable/background_podium_2"
+        android:importantForAccessibility="no"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/imgGold"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:background="#c2c2c2" />
 
     <TextView
         android:id="@+id/tvPodium2"
         style="@style/Text.Title.Strong"
         android:layout_width="0dp"
-        android:textColor="#181818"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/paddingXSmall"
         android:gravity="center"
+        android:importantForAccessibility="no"
         android:text="@string/round_podium_second"
+        android:textColor="#181818"
         app:layout_constraintEnd_toEndOf="@id/imgSilver"
         app:layout_constraintStart_toStartOf="@id/imgSilver"
         app:layout_constraintTop_toTopOf="@id/imgSilver" />
@@ -108,11 +113,12 @@
     <TextView
         android:id="@+id/tvPoints2"
         style="@style/Text.Body.2"
-        android:textColor="#181818"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="2dp"
         android:gravity="center|top"
+        android:importantForAccessibility="no"
+        android:textColor="#181818"
         app:layout_constraintBottom_toBottomOf="@id/imgSilver"
         app:layout_constraintEnd_toEndOf="@id/imgSilver"
         app:layout_constraintStart_toStartOf="@id/imgSilver"
@@ -120,27 +126,28 @@
         tools:text="18 points" />
 
     <ImageView
-        tools:background="#d29342"
-        android:importantForAccessibility="no"
         android:id="@+id/imgBronze"
         android:layout_width="0dp"
         android:layout_height="@dimen/podium3"
         android:layout_marginStart="@dimen/paddingSmall"
         android:layout_marginEnd="@dimen/paddingMedium"
         android:background="@drawable/background_podium_3"
+        android:importantForAccessibility="no"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/imgGold" />
+        app:layout_constraintStart_toEndOf="@id/imgGold"
+        tools:background="#d29342" />
 
     <TextView
         android:id="@+id/tvPodium3"
         style="@style/Text.Title.Strong"
         android:layout_width="0dp"
-        android:textColor="#181818"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/paddingXSmall"
         android:gravity="center"
+        android:importantForAccessibility="no"
         android:text="@string/round_podium_third"
+        android:textColor="#181818"
         app:layout_constraintEnd_toEndOf="@id/imgBronze"
         app:layout_constraintStart_toStartOf="@id/imgBronze"
         app:layout_constraintTop_toTopOf="@id/imgBronze" />
@@ -148,11 +155,12 @@
     <TextView
         android:id="@+id/tvPoints3"
         style="@style/Text.Body.2"
-        android:textColor="#181818"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="2dp"
         android:gravity="center|top"
+        android:importantForAccessibility="no"
+        android:textColor="#181818"
         app:layout_constraintBottom_toBottomOf="@id/imgBronze"
         app:layout_constraintEnd_toEndOf="@id/imgBronze"
         app:layout_constraintStart_toStartOf="@id/imgBronze"

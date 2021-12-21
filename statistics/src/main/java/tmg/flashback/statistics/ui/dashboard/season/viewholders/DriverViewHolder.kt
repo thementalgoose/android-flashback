@@ -11,6 +11,7 @@ import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.statistics.databinding.ViewDashboardSeasonDriverBinding
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.utilities.extensions.views.context
+import tmg.utilities.extensions.views.getString
 import tmg.utilities.extensions.views.show
 import kotlin.math.roundToInt
 
@@ -73,6 +74,18 @@ class DriverViewHolder(
                 }
             }
         }
+
+        // Accessibility
+        val constructors = item.constructors
+            .joinToString(separator = " and ") { it.name }
+        val contentDescription = getString(
+            R.string.ab_season_driver,
+            item.driver.name,
+            constructors,
+            item.position,
+            item.points
+        )
+        binding.container.contentDescription = contentDescription
     }
 
     override fun onClick(v: View?) {

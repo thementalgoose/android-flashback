@@ -1,9 +1,12 @@
 package tmg.flashback.statistics.ui.race.viewholders
 
 import android.view.View
+import android.view.View.IMPORTANT_FOR_ACCESSIBILITY_NO
 import android.widget.Toast
+import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.formula1.enums.isStatusFinished
+import tmg.flashback.formula1.enums.raceStatusUnknown
 import tmg.flashback.ui.extensions.getColor
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.ViewRaceRaceResultBinding
@@ -14,7 +17,10 @@ import tmg.utilities.extensions.views.*
 import kotlin.math.abs
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.Driver
+import tmg.flashback.statistics.extensions.bindDriver
 import tmg.flashback.statistics.ui.race.RaceItem
+import tmg.flashback.statistics.ui.util.accessibility.TapToViewDriverInfoAccessibilityDelegate
+import tmg.utilities.extensions.ordinalAbbreviation
 import tmg.utilities.utils.ColorUtils.Companion.darken
 
 class RaceResultViewHolder(
@@ -24,7 +30,7 @@ class RaceResultViewHolder(
 
     init {
         binding.layoutTime.setOnClickListener(this)
-        binding.clickTarget.setOnClickListener(this)
+        binding.cell.setOnClickListener(this)
     }
 
     private lateinit var driver: Driver
@@ -35,8 +41,12 @@ class RaceResultViewHolder(
         this.driver = model.race.driver.driver
         this.status = model.race.status
 
+        val points = model.race.points.pointsDisplay()
+        val position = model.race.finish
+
         binding.apply {
-            tvPosition.text = model.race.finish.toString()
+            tvPosition.text = position.toString()
+
             layoutDriver.tvName.text = driver.name
             layoutDriver.tvNumber.gone()
             layoutDriver.imgFlag.gone()
@@ -47,7 +57,7 @@ class RaceResultViewHolder(
 
             constructorColor.setBackgroundColor(model.race.driver.constructor.color)
 
-            tvPoints.text = model.race.points.pointsDisplay().let {
+            tvPoints.text = points.let {
                 if (it == "0") "" else it
             }
 
@@ -108,6 +118,32 @@ class RaceResultViewHolder(
             else {
                 setAlphaToAllViews(1.0f)
             }
+
+            // Accessibility
+            var contentDescription = when {
+                model.race.grid != null -> context.getString(R.string.ab_race_podium_started,
+                    model.race.driver.driver.name,
+                    model.race.driver.constructor.name,
+                    position.ordinalAbbreviation,
+                    points,
+                    model.race.grid?.ordinalAbbreviation ?: "unknown"
+                )
+                else -> context.getString(R.string.ab_race_podium,
+                    model.race.driver.driver.name,
+                    model.race.driver.constructor.name,
+                    position.ordinalAbbreviation,
+                    points
+                )
+            }
+            if (!model.race.status.isStatusFinished()) {
+                contentDescription += context.getString(R.string.ab_race_podium_dnf, model.race.status)
+            }
+            else if (model.race.fastestLap?.rank == 1) {
+                contentDescription += context.getString(R.string.ab_race_podium_fastest_lap)
+            }
+            binding.cell.contentDescription = contentDescription
+            binding.layoutDriver.root.importantForAccessibility = IMPORTANT_FOR_ACCESSIBILITY_NO
+            ViewCompat.setAccessibilityDelegate(binding.cell, TapToViewDriverInfoAccessibilityDelegate(model.race.driver.driver.name))
         }
     }
 
@@ -118,7 +154,7 @@ class RaceResultViewHolder(
                     Toast.makeText(itemView.context, getString(R.string.race_dnf_cause, status), Toast.LENGTH_SHORT).show()
                 }
             }
-            binding.clickTarget -> {
+            binding.cell -> {
                 driverClicked(driver)
             }
         }
