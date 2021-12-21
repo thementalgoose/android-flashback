@@ -138,7 +138,7 @@ class RaceResultViewHolder(
             if (!model.race.status.isStatusFinished()) {
                 contentDescription += context.getString(R.string.ab_race_podium_dnf, model.race.status)
             }
-            else if (model.race.fastestLap != null) {
+            else if (model.race.fastestLap?.rank == 1) {
                 contentDescription += context.getString(R.string.ab_race_podium_fastest_lap)
             }
             binding.cell.contentDescription = contentDescription
@@ -154,7 +154,7 @@ class RaceResultViewHolder(
                     Toast.makeText(itemView.context, getString(R.string.race_dnf_cause, status), Toast.LENGTH_SHORT).show()
                 }
             }
-            binding.clickTarget -> {
+            binding.cell -> {
                 driverClicked(driver)
             }
         }
