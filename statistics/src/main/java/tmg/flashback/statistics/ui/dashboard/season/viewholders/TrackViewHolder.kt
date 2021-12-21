@@ -81,8 +81,7 @@ class TrackViewHolder(
             enlargedTrackIconPlaceholder.setImageResource(trackLayout?.icon ?: R.drawable.circuit_unknown)
 
             // Schedule adapter
-            val doesContainResults = inlineScheduleAdapter.setSchedule(item.schedule)
-            when (doesContainResults) {
+            when (inlineScheduleAdapter.setSchedule(item.schedule)) {
                 true -> {
                     binding.enlargedSchedule.visible()
                     binding.enlargedTrackIconPlaceholder.gone()
