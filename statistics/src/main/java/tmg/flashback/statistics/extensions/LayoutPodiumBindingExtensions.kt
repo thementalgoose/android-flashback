@@ -9,12 +9,17 @@ import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.LayoutPodiumBinding
 import tmg.flashback.statistics.ui.util.positionStarted
 import tmg.flashback.ui.extensions.getColor
+import tmg.utilities.extensions.ordinalAbbreviation
 import tmg.utilities.extensions.views.gone
 import tmg.utilities.extensions.views.visible
 import kotlin.math.abs
 
 fun LayoutPodiumBinding.bindRaceModel(model: RaceRaceResult, position: Int, pointsLayout: TextView) {
     val context = pointsLayout.context
+
+    val points = model.points.pointsDisplay() ?: ""
+    val started = model.grid?.positionStarted(context)
+
     pointsLayout.text = context.getString(R.string.round_podium_points, model.points.pointsDisplay())
     tvDriver.text = model.driver.driver.name
     tvNumber.text = model.driver.driver.number?.toString() ?: ""
@@ -72,4 +77,25 @@ fun LayoutPodiumBinding.bindRaceModel(model: RaceRaceResult, position: Int, poin
     } else {
         imgFastestLap.gone()
     }
+
+    // Accessibility
+    var contentDescription = when {
+        model.grid != null -> context.getString(R.string.ab_race_podium_started,
+            model.driver.driver.name,
+            model.driver.constructor.name,
+            position.ordinalAbbreviation,
+            points,
+            model.grid?.ordinalAbbreviation ?: "unknown"
+        )
+        else -> context.getString(R.string.ab_race_podium,
+            model.driver.driver.name,
+            model.driver.constructor.name,
+            position.ordinalAbbreviation,
+            points
+        )
+    }
+    if (model.fastestLap?.rank == 1) {
+        contentDescription += context.getString(R.string.ab_race_podium_fastest_lap)
+    }
+    container.contentDescription = contentDescription
 }

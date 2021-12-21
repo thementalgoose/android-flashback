@@ -74,6 +74,22 @@ data class LapTime(
         return time
     }
 
+    val contentDescription: String
+        get() = when {
+            noTime -> {
+                "No time"
+            }
+            hours != 0 -> {
+                "$hours hours, $mins minutes, ${seconds.extend(2)} seconds and ${millis.extend(3)} milliseconds"
+            }
+            mins != 0 -> {
+                "$mins minutes, ${seconds.extend(2)} seconds and ${millis.extend(3)} milliseconds"
+            }
+            else -> {
+                "$seconds seconds and ${millis.extend(3)} milliseconds"
+            }
+        }
+
     companion object {
         val noTime: LapTime = LapTime()
     }
