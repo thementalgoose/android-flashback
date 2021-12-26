@@ -17,6 +17,7 @@ import tmg.flashback.statistics.repo.ConstructorRepository
 import tmg.flashback.statistics.repo.DriverRepository
 import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.notifications.receiver.LocalNotificationBroadcastReceiver
+import tmg.flashback.statistics.network.manager.BaseUrlLocalOverrideManager
 
 class DebugActivity: BaseActivity() {
 
@@ -26,6 +27,8 @@ class DebugActivity: BaseActivity() {
     private val circuitRepository: CircuitRepository by inject()
     private val driverRepository: DriverRepository by inject()
     private val constructorRepository: ConstructorRepository by inject()
+
+    private val baseUrlLocalOverrideManager: BaseUrlLocalOverrideManager by inject()
 
     private val navigationProvider: NavigationProvider by inject()
 
@@ -47,6 +50,18 @@ class DebugActivity: BaseActivity() {
 
         binding.syncActivity.setOnClickListener {
             startActivity(navigationProvider.syncActivityIntent(this))
+        }
+
+        binding.configUrl.setText(baseUrlLocalOverrideManager.localBaseUrl ?: "")
+        binding.configUrlSave.setOnClickListener {
+            val url = binding.configUrl.text.toString()
+            baseUrlLocalOverrideManager.localBaseUrl = url
+            Toast.makeText(this, "Set '${url}' to local override url", Toast.LENGTH_LONG).show()
+        }
+        binding.configUrlClear.setOnClickListener {
+            baseUrlLocalOverrideManager.localBaseUrl = null
+            binding.configUrl.setText("")
+            Toast.makeText(this, "Cleared local override url", Toast.LENGTH_LONG).show()
         }
 
         binding.styleGuide.setOnClickListener {
