@@ -49,5 +49,5 @@ val appModule = module {
     single<WidgetManager> { AppWidgetManager(get()) }
 
     single { NetworkConfigRepository(get()) }
-    single<NetworkConfigManager> { AppNetworkConfigManager(get()) }
+    single<NetworkConfigManager> { AppNetworkConfigManager() }
 }

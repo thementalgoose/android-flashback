@@ -9,19 +9,21 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 import tmg.flashback.statistics.network.NetworkConfigManager
 import tmg.flashback.statistics.network.api.FlashbackApi
+import tmg.flashback.statistics.network.interceptor.ConfigUrlInterceptor
 import java.util.concurrent.TimeUnit
 
 val networkModule = module {
 
     factory { buildFlashbackApi(get()) }
-    single { buildRetrofit(get()) }
+    single { buildRetrofit(get(), get()) }
+    single { ConfigUrlInterceptor(get(), get()) }
 }
 
 private fun buildFlashbackApi(retrofit: Retrofit): FlashbackApi {
     return retrofit.create(FlashbackApi::class.java)
 }
 
-private fun buildRetrofit(baseUrlManager: NetworkConfigManager): Retrofit {
+private fun buildRetrofit(baseUrlManager: NetworkConfigManager, configUrlInterceptor: ConfigUrlInterceptor): Retrofit {
     val json = Json {
         ignoreUnknownKeys = true
     }
@@ -32,12 +34,17 @@ private fun buildRetrofit(baseUrlManager: NetworkConfigManager): Retrofit {
 
     val client = OkHttpClient.Builder()
     client.callTimeout(10L, TimeUnit.SECONDS)
+
+    // Debug
     if (baseUrlManager.isDebug) {
         val interceptor = HttpLoggingInterceptor()
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
         client.addInterceptor(interceptor)
     }
-    builder.client(client.build())
 
+    // Config URL Intercept
+    client.addInterceptor(configUrlInterceptor)
+
+    builder.client(client.build())
     return builder.build()
 }
