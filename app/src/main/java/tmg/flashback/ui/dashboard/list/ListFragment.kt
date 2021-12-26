@@ -55,12 +55,7 @@ class ListFragment: BaseFragment<FragmentDashboardListBinding>() {
                      }
                 },
                 featureBannerClicked = {
-                    when (it) {
-                        ListItem.FeatureBanner.EnrolNotifications -> {
-                            OnboardingNotificationBottomSheetFragment()
-                                .show(parentFragmentManager, "UP_NEXT_ONBOARDING")
-                        }
-                    }
+                    viewModel.inputs.clickFeatureBanner(it)
                 }
         )
         binding.list.layoutManager = LinearLayoutManager(context)
@@ -93,6 +88,11 @@ class ListFragment: BaseFragment<FragmentDashboardListBinding>() {
             context?.let {
                 startActivity(navigationProvider.aboutAppIntent(it))
             }
+        }
+
+        observeEvent(viewModel.outputs.openNotificationsOnboarding) {
+            OnboardingNotificationBottomSheetFragment()
+                .show(parentFragmentManager, "UP_NEXT_ONBOARDING")
         }
 
         observeEvent(viewModel.outputs.defaultSeasonUpdated) {

@@ -371,6 +371,25 @@ internal class ListViewModelTest: BaseTest() {
         }
     }
 
+    @Test
+    fun `click feature banner enrol notifications marks onboarding seen and refreshes list`() {
+        every { mockScheduleController.shouldShowNotificationOnboarding } returns true
+
+        initSUT()
+        val observer = sut.outputs.list.testObserve()
+        observer.assertEmittedCount(1)
+
+        sut.inputs.clickFeatureBanner(ListItem.FeatureBanner.EnrolNotifications)
+
+        verify {
+            mockScheduleController.seenOnboarding()
+        }
+        sut.outputs.openNotificationsOnboarding.test {
+            assertEventFired()
+        }
+        observer.assertEmittedCount(2)
+    }
+
     //endregion
 
     //region Show Adverts
