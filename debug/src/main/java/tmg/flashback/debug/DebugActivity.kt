@@ -58,6 +58,11 @@ class DebugActivity: BaseActivity() {
             baseUrlLocalOverrideManager.localBaseUrl = url
             Toast.makeText(this, "Set '${url}' to local override url", Toast.LENGTH_LONG).show()
         }
+        binding.configUrlClear.setOnClickListener {
+            baseUrlLocalOverrideManager.localBaseUrl = null
+            binding.configUrl.setText("")
+            Toast.makeText(this, "Cleared local override url", Toast.LENGTH_LONG).show()
+        }
 
         binding.styleGuide.setOnClickListener {
             startActivity(Intent(this, StyleGuideActivity::class.java))

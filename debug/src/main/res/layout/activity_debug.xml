@@ -49,12 +49,33 @@
             android:textAllCaps="false"
             tools:ignore="HardcodedText" />
 
-        <Button
-            android:id="@+id/configUrlSave"
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/debug_config_url_save"
-            android:textAllCaps="false" />
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/configUrlSave"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/debug_config_url_save"
+                android:textAllCaps="false" />
+
+            <Space
+                android:layout_width="@dimen/paddingMedium"
+                android:layout_height="match_parent" />
+
+            <Button
+                android:id="@+id/configUrlClear"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/debug_config_url_clear"
+                android:textAllCaps="false" />
+
+        </LinearLayout>
+
 
         <TextView
             style="@style/Text.Section"

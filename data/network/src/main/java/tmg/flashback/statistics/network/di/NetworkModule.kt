@@ -29,7 +29,7 @@ private fun buildRetrofit(baseUrlManager: NetworkConfigManager, configUrlInterce
     }
 
     val builder = Retrofit.Builder()
-        .baseUrl(baseUrlManager.baseUrl)
+        .baseUrl(baseUrlManager.defaultBaseUrl)
         .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
 
     val client = OkHttpClient.Builder()

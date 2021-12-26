@@ -5,7 +5,7 @@ import tmg.flashback.statistics.network.manager.BaseUrlLocalOverrideManager
 
 class DebugBaseUrlLocalOverrideManager(
     private val preferenceManager: PreferenceManager
-): BaseUrlLocalOverrideManager {
+) : BaseUrlLocalOverrideManager {
 
     companion object {
         private const val keyOverrideBaseUrl: String = "debug_override_url"
@@ -14,7 +14,9 @@ class DebugBaseUrlLocalOverrideManager(
     override var localBaseUrl: String?
         get() {
             val result = preferenceManager.getString(keyOverrideBaseUrl, "")
-            if (result.isNullOrEmpty ()) { return null }
+            if (result.isNullOrBlank()) {
+                return null
+            }
             return result
         }
         set(value) {
