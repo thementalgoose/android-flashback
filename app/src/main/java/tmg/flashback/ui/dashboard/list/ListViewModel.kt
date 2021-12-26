@@ -27,6 +27,8 @@ interface ListViewModelInputs {
 
     fun clickSettings()
     fun clickContact()
+
+    fun clickFeatureBanner(banner: ListItem.FeatureBanner)
 }
 
 //endregion
@@ -42,6 +44,8 @@ interface ListViewModelOutputs {
     val openSettings: LiveData<Event>
     val openRss: LiveData<Event>
     val openContact: LiveData<Event>
+
+    val openNotificationsOnboarding: LiveData<Event>
 }
 
 //endregion
@@ -174,6 +178,8 @@ class ListViewModel(
     override val openContact: MutableLiveData<Event> = MutableLiveData()
     override val defaultSeasonUpdated: MutableLiveData<DataEvent<Int?>> = MutableLiveData()
 
+    override val openNotificationsOnboarding: MutableLiveData<Event> = MutableLiveData()
+
     var inputs: ListViewModelInputs = this
     var outputs: ListViewModelOutputs = this
 
@@ -231,6 +237,16 @@ class ListViewModel(
 
     override fun clickContact() {
         openContact.value = Event()
+    }
+
+    override fun clickFeatureBanner(banner: ListItem.FeatureBanner) {
+        when (banner) {
+            ListItem.FeatureBanner.EnrolNotifications -> {
+                openNotificationsOnboarding.value = Event()
+                scheduleController.seenOnboarding()
+                refresh()
+            }
+        }
     }
 
     //endregion
