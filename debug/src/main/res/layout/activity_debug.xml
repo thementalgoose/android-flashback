@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -31,6 +32,50 @@
             android:layout_height="match_parent"
             android:text="@string/debug_sync_activity_launch"
             android:textAllCaps="false" />
+
+        <TextView
+            style="@style/Text.Section"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/paddingMedium"
+            android:text="@string/debug_config_url_title" />
+
+        <EditText
+            android:id="@+id/configUrl"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="https://flashback.pages.dev"
+            android:importantForAutofill="no"
+            android:textAllCaps="false"
+            tools:ignore="HardcodedText" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/configUrlSave"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/debug_config_url_save"
+                android:textAllCaps="false" />
+
+            <Space
+                android:layout_width="@dimen/paddingMedium"
+                android:layout_height="match_parent" />
+
+            <Button
+                android:id="@+id/configUrlClear"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/debug_config_url_clear"
+                android:textAllCaps="false" />
+
+        </LinearLayout>
+
 
         <TextView
             style="@style/Text.Section"

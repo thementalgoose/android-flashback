@@ -2,13 +2,11 @@ package tmg.flashback.constants
 
 import android.content.Context
 import android.graphics.Color
-import androidx.core.content.ContextCompat
 import androidx.core.graphics.toColorInt
 import tmg.aboutthisapp.AboutThisAppConfiguration
 import tmg.aboutthisapp.AboutThisAppDependency
 import tmg.flashback.R
 import tmg.flashback.rss.repo.model.SupportedArticleSource
-import tmg.flashback.rss.repo.model.SupportedSource
 
 /**
  * About This App Configuration and data

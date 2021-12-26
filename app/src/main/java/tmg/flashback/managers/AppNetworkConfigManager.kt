@@ -17,4 +17,6 @@ class AppNetworkConfigManager(
     override val isDebug: Boolean
         get() = BuildConfig.DEBUG
 
+    override val defaultBaseUrl: String
+        get() = BuildConfig.BASE_URL
 }

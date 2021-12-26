@@ -27,5 +27,6 @@ dependencies {
     implementation project(path: ':core:ui')
 
     // Feature
+    implementation project(path: ':data:network')
     implementation project(path: ':data:repo')
 }
