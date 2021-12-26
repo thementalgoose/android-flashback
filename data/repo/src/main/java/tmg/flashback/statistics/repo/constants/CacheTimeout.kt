@@ -9,5 +9,5 @@ internal object CacheTimeout {
      * If the request has not been made for the following amount of minutes then
      *  the request will next be made when the home screen is updated
      */
-    const val timeoutMinutes: Int = 60
+    const val timeoutMinutes: Int = 15
 }
