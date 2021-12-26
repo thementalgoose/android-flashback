@@ -7,6 +7,7 @@
     <string name="debug_sync_title">Sync</string>
     <string name="debug_config_url_title">Override config URL</string>
     <string name="debug_config_url_save">Save</string>
+    <string name="debug_config_url_clear">Clear</string>
     <string name="debug_sync_activity_launch">Sync Activity</string>
 
     <string name="debug_notification_title">Notifications</string>
