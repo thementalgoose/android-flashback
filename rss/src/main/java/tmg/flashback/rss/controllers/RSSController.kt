@@ -131,7 +131,7 @@ class RSSController(
             id = "rss",
             shortLabel = R.string.app_shortcut_rss_shorttitle,
             longLabel = R.string.app_shortcut_rss_longtitle,
-            icon = R.drawable.ic_rss,
+            icon = R.drawable.app_shortcut_rss,
             unavailableMessage = R.string.app_shortcut_rss_disabled,
             activity = RSSActivity::class,
         )

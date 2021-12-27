@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/app_shortcut_rss.xml" value="0.2222222222222222" />
+        <entry key="app/src/main/res/drawable/app_shortcut_search.xml" value="0.2222222222222222" />
         <entry key="app/src/main/res/drawable/ic_search.xml" value="0.18802083333333333" />
         <entry key="common/src/main/res/drawable/ic_close.xml" value="0.2171875" />
         <entry key="common/src/main/res/layout/fragment_bottom_sheet_release_notes.xml" value="0.335" />

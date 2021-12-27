@@ -28,7 +28,7 @@ class SearchController(
             id = "search",
             shortLabel = R.string.app_shortcut_search_shorttitle,
             longLabel = R.string.app_shortcut_search_longtitle,
-            icon = R.drawable.nav_search,
+            icon = R.drawable.app_shortcut_search,
             unavailableMessage = R.string.app_shortcut_search_disabled,
             activity = SearchActivity::class,
         )
