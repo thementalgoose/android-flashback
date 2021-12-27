@@ -41,7 +41,7 @@ val statisticsModule = repoModule + module {
 
     single { RaceController(get()) }
     single { HomeController(get()) }
-    single { SearchController(get()) }
+    single { SearchController(get(), get()) }
 
     // App
     single { HomeRepository(get(), get()) }
