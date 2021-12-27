@@ -1,5 +1,7 @@
 package tmg.flashback.statistics.controllers
 
+import android.content.Intent
+import android.net.Uri
 import tmg.flashback.appshortcuts.manager.AppShortcutManager
 import tmg.flashback.appshortcuts.models.ShortcutInfo
 import tmg.flashback.statistics.R
@@ -24,13 +26,12 @@ class SearchController(
     }
 
     companion object {
-        private val searchShortcutInfo: ShortcutInfo<SearchActivity> = ShortcutInfo(
+        private val searchShortcutInfo: ShortcutInfo = ShortcutInfo(
             id = "search",
             shortLabel = R.string.app_shortcut_search_shorttitle,
             longLabel = R.string.app_shortcut_search_longtitle,
             icon = R.drawable.app_shortcut_search,
-            unavailableMessage = R.string.app_shortcut_search_disabled,
-            activity = SearchActivity::class,
-        )
+            unavailableMessage = R.string.app_shortcut_search_disabled
+        ) { context -> Intent(Intent.ACTION_MAIN, Uri.EMPTY, context, SearchActivity::class.java) }
     }
 }

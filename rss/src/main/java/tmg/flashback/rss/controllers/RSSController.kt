@@ -1,5 +1,7 @@
 package tmg.flashback.rss.controllers
 
+import android.content.Intent
+import android.net.Uri
 import tmg.flashback.appshortcuts.manager.AppShortcutManager
 import tmg.flashback.appshortcuts.models.ShortcutInfo
 import tmg.flashback.rss.R
@@ -127,13 +129,12 @@ class RSSController(
     }
 
     companion object {
-        private val rssShortcutInfo: ShortcutInfo<RSSActivity> = ShortcutInfo(
+        private val rssShortcutInfo: ShortcutInfo = ShortcutInfo(
             id = "rss",
             shortLabel = R.string.app_shortcut_rss_shorttitle,
             longLabel = R.string.app_shortcut_rss_longtitle,
             icon = R.drawable.app_shortcut_rss,
-            unavailableMessage = R.string.app_shortcut_rss_disabled,
-            activity = RSSActivity::class,
-        )
+            unavailableMessage = R.string.app_shortcut_rss_disabled
+        ) { context -> Intent(Intent.ACTION_MAIN, Uri.EMPTY, context, RSSActivity::class.java) }
     }
 }

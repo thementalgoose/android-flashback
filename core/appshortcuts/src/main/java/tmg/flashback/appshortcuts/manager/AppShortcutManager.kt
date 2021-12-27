@@ -21,13 +21,13 @@ class AppShortcutManager(
         }
     }
 
-    fun setDynamicShortcuts(shortcuts: List<ShortcutInfo<*>>) {
+    fun setDynamicShortcuts(shortcuts: List<ShortcutInfo>) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
             shortcutManager?.dynamicShortcuts = shortcuts.mapNotNull { buildShortcutModel(it) }
         }
     }
 
-    fun <T: AppCompatActivity> addDynamicShortcut(shortcut: ShortcutInfo<T>) {
+    fun addDynamicShortcut(shortcut: ShortcutInfo) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
             val shortcutModel = buildShortcutModel(shortcut) ?: return
             val list = shortcutManager?.dynamicShortcuts?.toMutableList() ?: mutableListOf()
@@ -48,14 +48,14 @@ class AppShortcutManager(
         }
     }
 
-    private fun <T: AppCompatActivity> buildShortcutModel(model: ShortcutInfo<T>): android.content.pm.ShortcutInfo? {
+    private fun buildShortcutModel(model: ShortcutInfo): android.content.pm.ShortcutInfo? {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
             android.content.pm.ShortcutInfo.Builder(applicationContext, model.id)
                 .setShortLabel(applicationContext.getString(model.shortLabel))
                 .setLongLabel(applicationContext.getString(model.longLabel))
                 .setIcon(Icon.createWithResource(applicationContext, model.icon))
                 .setDisabledMessage(applicationContext.getString(model.unavailableMessage))
-                .setIntent(Intent(Intent.ACTION_MAIN, Uri.EMPTY, applicationContext, model.activity::class.java))
+                .setIntent(model.intentResolver(applicationContext))
                 .build()
         } else {
             null
