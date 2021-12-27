@@ -1,12 +1,13 @@
 package tmg.flashback.appshortcuts.models
 
+import android.content.Context
 import android.content.Intent
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import kotlin.reflect.KClass
 
-data class ShortcutInfo<T: AppCompatActivity>(
+data class ShortcutInfo(
     val id: String,
     @StringRes
     val shortLabel: Int,
@@ -16,5 +17,5 @@ data class ShortcutInfo<T: AppCompatActivity>(
     val icon: Int,
     @StringRes
     val unavailableMessage: Int,
-    val activity: KClass<T>
+    val intentResolver: (Context) -> Intent
 )
