@@ -1,12 +1,17 @@
 package tmg.flashback.rss.controllers
 
+import tmg.flashback.appshortcuts.manager.AppShortcutManager
+import tmg.flashback.appshortcuts.models.ShortcutInfo
+import tmg.flashback.rss.R
 import tmg.flashback.rss.repo.RSSRepository
 import tmg.flashback.rss.repo.model.SupportedArticleSource
+import tmg.flashback.rss.ui.RSSActivity
 import java.net.MalformedURLException
 import java.net.URL
 
 class RSSController(
-        private val rssRepository: RSSRepository
+        private val rssRepository: RSSRepository,
+        private val appShortcutManager: AppShortcutManager
 ) {
 
     /**
@@ -38,6 +43,20 @@ class RSSController(
      */
     val showAddCustomFeeds: Boolean
         get() = rssRepository.addCustom
+
+
+    //region App Shortcuts
+
+    fun addAppShortcut() {
+        appShortcutManager.addDynamicShortcut(rssShortcutInfo)
+    }
+
+    fun removeAppShortcut() {
+        appShortcutManager.removeDynamicShortcut(rssShortcutInfo.id)
+    }
+
+    //endregion
+
 
     private val fallbackUrls: Map<String, String> = mapOf(
             "bbc.co.uk" to "https://www.bbc.co.uk",
@@ -105,5 +124,16 @@ class RSSController(
             true -> this.substring(4, this.length)
             false -> this
         }
+    }
+
+    companion object {
+        private val rssShortcutInfo: ShortcutInfo<RSSActivity> = ShortcutInfo(
+            id = "rss",
+            shortLabel = R.string.app_shortcut_rss_shorttitle,
+            longLabel = R.string.app_shortcut_rss_longtitle,
+            icon = R.drawable.ic_rss,
+            unavailableMessage = R.string.app_shortcut_rss_disabled,
+            activity = RSSActivity::class,
+        )
     }
 }
