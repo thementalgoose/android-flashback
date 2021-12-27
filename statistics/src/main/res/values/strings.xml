@@ -225,7 +225,12 @@
     <string name="settings_up_next_title">Notification Settings</string>
     <string name="settings_up_next_time_before_title">Notice</string>
     <string name="settings_up_next_time_before_description">How far before an event do you want a notification?</string>
-
     <string name="settings_up_next_reminder_title">Reminder</string>
     <string name="settings_up_next_reminder_description">How long before an event do you want Flashback to notify you?</string>
+
+    <!-- App Shortcuts -->
+    <string name="app_shortcut_search_shorttitle">Search</string>
+    <string name="app_shortcut_search_longtitle">Search Formula 1 Drivers, Constructors and Circuits</string>
+    <string name="app_shortcut_search_disabled">Search (Unavailable)</string>
+
 </resources>

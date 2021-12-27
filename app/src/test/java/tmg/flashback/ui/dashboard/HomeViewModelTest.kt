@@ -14,6 +14,7 @@ import tmg.flashback.crash_reporting.controllers.CrashController
 import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.statistics.repo.repository.CacheRepository
 import tmg.flashback.statistics.controllers.ScheduleController
+import tmg.flashback.statistics.controllers.SearchController
 import tmg.testutils.BaseTest
 
 internal class HomeViewModelTest: BaseTest() {
@@ -24,6 +25,7 @@ internal class HomeViewModelTest: BaseTest() {
     private var mockForceUpgradeController: ForceUpgradeController = mockk(relaxed = true)
     private var mockCacheRepository: CacheRepository = mockk(relaxed = true)
     private var mockScheduleController: ScheduleController = mockk(relaxed = true)
+    private var mockSearchController: SearchController = mockk(relaxed = true)
 
     private lateinit var sut: HomeViewModel
 
@@ -34,6 +36,7 @@ internal class HomeViewModelTest: BaseTest() {
         every { mockForceUpgradeController.shouldForceUpgrade } returns false
         every { mockCacheRepository.initialSync } returns true
         every { mockRssController.enabled } returns false
+        every { mockSearchController.enabled } returns false
     }
 
     private fun initSUT() {
@@ -43,7 +46,8 @@ internal class HomeViewModelTest: BaseTest() {
             mockCrashController,
             mockForceUpgradeController,
             mockCacheRepository,
-            mockScheduleController
+            mockSearchController,
+            mockScheduleController,
         )
     }
 
@@ -84,14 +88,16 @@ internal class HomeViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `initialise with no force upgrade or sync with rss disabled notifies applied changes`() = coroutineTest {
+    fun `initialise with no force upgrade or sync with rss disabled and search disabled notifies applied changes`() = coroutineTest {
         every { mockRssController.enabled } returns false
+        every { mockSearchController.enabled } returns false
 
         initSUT()
         sut.initialise()
 
         coVerify { mockConfigurationManager.applyPending() }
         verify { mockRssController.removeAppShortcut() }
+        verify { mockSearchController.removeAppShortcut() }
         coVerify { mockScheduleController.scheduleNotifications() }
 
         assertFalse(sut.requiresSync)
@@ -100,14 +106,16 @@ internal class HomeViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `initialise with no force upgrade or sync with rss enabled notifies applied changes`() = coroutineTest {
+    fun `initialise with no force upgrade or sync with rss enabled and search enabled notifies applied changes`() = coroutineTest {
         every { mockRssController.enabled } returns true
+        every { mockSearchController.enabled } returns true
 
         initSUT()
         sut.initialise()
 
         coVerify { mockConfigurationManager.applyPending() }
         verify { mockRssController.addAppShortcut() }
+        verify { mockSearchController.removeAppShortcut() }
         coVerify { mockScheduleController.scheduleNotifications() }
 
         assertFalse(sut.requiresSync)

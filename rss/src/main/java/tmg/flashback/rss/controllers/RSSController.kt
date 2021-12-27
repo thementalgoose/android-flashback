@@ -10,8 +10,8 @@ import java.net.MalformedURLException
 import java.net.URL
 
 class RSSController(
-        private val rssRepository: RSSRepository,
-        private val appShortcutManager: AppShortcutManager
+    private val rssRepository: RSSRepository,
+    private val appShortcutManager: AppShortcutManager
 ) {
 
     /**
@@ -25,18 +25,18 @@ class RSSController(
      */
     private val supportedSources: List<SupportedArticleSource>
         get() = rssRepository
-                .supportedSources
-                .map {
-                    SupportedArticleSource(
-                            rssLink = it.rssLink,
-                            sourceShort = it.sourceShort,
-                            source = it.source,
-                            colour = it.colour,
-                            textColour = it.textColour,
-                            title = it.title,
-                            contactLink = it.contactLink,
-                    )
-                }
+            .supportedSources
+            .map {
+                SupportedArticleSource(
+                    rssLink = it.rssLink,
+                    sourceShort = it.sourceShort,
+                    source = it.source,
+                    colour = it.colour,
+                    textColour = it.textColour,
+                    title = it.title,
+                    contactLink = it.contactLink,
+                )
+            }
 
     /**
      * Determine if we should show adding custom rss feeds functionality
@@ -59,13 +59,13 @@ class RSSController(
 
 
     private val fallbackUrls: Map<String, String> = mapOf(
-            "bbc.co.uk" to "https://www.bbc.co.uk",
-            "f1i.com" to "https://en.f1i.com"
+        "bbc.co.uk" to "https://www.bbc.co.uk",
+        "f1i.com" to "https://en.f1i.com"
     )
 
     val sources: List<SupportedArticleSource> by lazy {
         supportedSources
-                .sortedBy { it.rssLink.stripHTTP() }
+            .sortedBy { it.rssLink.stripHTTP() }
     }
 
     fun getSupportedSourceByRssUrl(rssLink: String): SupportedArticleSource? {
@@ -77,11 +77,11 @@ class RSSController(
             val url = URL(link)
 
             supportedSources
-                    .firstOrNull {
-                        val supportUrl = URL(it.rssLink)
+                .firstOrNull {
+                    val supportUrl = URL(it.rssLink)
 
-                        url.host.stripWWW() == supportUrl.host.stripWWW()
-                    } ?: getSupportedSourceByFallbackDomain(url)
+                    url.host.stripWWW() == supportUrl.host.stripWWW()
+                } ?: getSupportedSourceByFallbackDomain(url)
         } catch (exception: MalformedURLException) {
             null
         }
@@ -94,28 +94,28 @@ class RSSController(
     private fun getSupportedSourceByFallbackDomain(url: URL): SupportedArticleSource? {
         val host = url.host.stripWWW()
         val newHostToCheck = fallbackUrls
-                .toList()
-                .firstOrNull { (override, _) ->
-                    override == host
-                }
-                ?.second
+            .toList()
+            .firstOrNull { (override, _) ->
+                override == host
+            }
+            ?.second
 
         if (newHostToCheck != null) {
             return supportedSources
-                    .firstOrNull {
-                        it.source == newHostToCheck
-                    }
+                .firstOrNull {
+                    it.source == newHostToCheck
+                }
         }
         return null
     }
 
     private fun String.stripHTTP(): String {
         return this
-                .replace("https://www.", "")
-                .replace("http://www.", "")
-                .replace("https://", "")
-                .replace("http://", "")
-                .stripWWW()
+            .replace("https://www.", "")
+            .replace("http://www.", "")
+            .replace("https://", "")
+            .replace("http://", "")
+            .stripWWW()
 
     }
 
