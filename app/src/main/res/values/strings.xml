@@ -24,9 +24,4 @@
     <!-- Feature banners -->
     <string name="feature_banner_notifications">Get notifications for practice, qualifying and race events for upcoming race weekends!</string>
 
-    <!-- App Shortcut -->
-    <string name="app_shortcut_rss_shorttitle">RSS</string>
-    <string name="app_shortcut_rss_longtitle">Formula 1 RSS feed</string>
-    <string name="app_shortcut_rss_disabled">RSS (Unavailable)</string>
-
 </resources>

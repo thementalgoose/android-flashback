@@ -17,4 +17,6 @@ android {
 
 dependencies {
 
+    // Dependencies
+    implementation project(":core:device")
 }

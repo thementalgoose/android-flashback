@@ -2,11 +2,14 @@ package tmg.flashback.rss.controllers
 
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.slot
 import io.mockk.verify
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
+import tmg.flashback.appshortcuts.manager.AppShortcutManager
+import tmg.flashback.appshortcuts.models.ShortcutInfo
 import tmg.flashback.rss.repo.RSSRepository
 import tmg.flashback.rss.repo.model.SupportedSource
 import tmg.flashback.rss.repo.model.SupportedArticleSource
@@ -15,11 +18,34 @@ import tmg.testutils.BaseTest
 internal class RSSControllerTest: BaseTest() {
 
     private val mockRssRepository: RSSRepository = mockk(relaxed = true)
+    private val mockAppShortcutManager: AppShortcutManager = mockk(relaxed = true)
 
     private lateinit var sut: RSSController
 
     private fun initSUT() {
-        sut = RSSController(mockRssRepository,)
+        sut = RSSController(mockRssRepository, mockAppShortcutManager)
+    }
+
+    @Test
+    fun `add app shortcuts adds shortcut to manager`() {
+
+        val slot = slot<ShortcutInfo<*>>()
+
+        initSUT()
+        sut.addAppShortcut()
+        verify {
+            mockAppShortcutManager.addDynamicShortcut(capture(slot))
+        }
+        assertEquals("rss", slot.captured.id)
+    }
+
+    @Test
+    fun `remove app shortcuts removes shortcut to manager`() {
+        initSUT()
+        sut.removeAppShortcut()
+        verify {
+            mockAppShortcutManager.removeDynamicShortcut("rss")
+        }
     }
 
     @Test

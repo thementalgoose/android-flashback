@@ -9,7 +9,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import tmg.flashback.common.controllers.ForceUpgradeController
 import tmg.flashback.configuration.controllers.ConfigController
-import tmg.flashback.managers.appshortcuts.AppShortcutManager
 import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.statistics.repo.*
 import tmg.flashback.statistics.repo.repository.CacheRepository
@@ -38,7 +37,6 @@ interface SyncViewModelOutputs {
 //endregion
 
 class SyncViewModel(
-    private val shortcutManager: AppShortcutManager,
     private val rssController: RSSController,
     private val circuitRepository: CircuitRepository,
     private val constructorRepository: ConstructorRepository,
@@ -180,8 +178,8 @@ class SyncViewModel(
 
         // Shortcuts for RSS
         when (rssController.enabled) {
-            true -> shortcutManager.enable()
-            false -> shortcutManager.disable()
+            true -> rssController.addAppShortcut()
+            false -> rssController.removeAppShortcut()
         }
 
         // Schedule notifications
