@@ -11,6 +11,7 @@ import tmg.flashback.BuildConfig
 import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.statistics.repo.repository.CacheRepository
 import tmg.flashback.statistics.controllers.ScheduleController
+import tmg.flashback.statistics.controllers.SearchController
 
 //region Inputs
 
@@ -38,6 +39,7 @@ class HomeViewModel(
     private val crashController: CrashController,
     private val forceUpgradeController: ForceUpgradeController,
     private val cacheRepository: CacheRepository,
+    private val searchController: SearchController,
     private val scheduleController: ScheduleController
 ): ViewModel(), HomeViewModelInputs, HomeViewModelOutputs {
 
@@ -78,6 +80,12 @@ class HomeViewModel(
         when (rssController.enabled) {
             true -> rssController.addAppShortcut()
             false -> rssController.removeAppShortcut()
+        }
+
+        // Shortcuts for Search
+        when (searchController.enabled) {
+            true -> searchController.addAppShortcut()
+            false -> searchController.removeAppShortcut()
         }
 
         // Schedule notifications

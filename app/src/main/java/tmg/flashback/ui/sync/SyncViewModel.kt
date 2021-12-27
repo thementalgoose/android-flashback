@@ -14,6 +14,7 @@ import tmg.flashback.statistics.repo.*
 import tmg.flashback.statistics.repo.repository.CacheRepository
 import tmg.flashback.ui.sync.SyncState.*
 import tmg.flashback.statistics.controllers.ScheduleController
+import tmg.flashback.statistics.controllers.SearchController
 import tmg.utilities.lifecycle.DataEvent
 
 //region Inputs
@@ -46,6 +47,7 @@ class SyncViewModel(
     private val forceUpgradeController: ForceUpgradeController,
     private val cacheRepository: CacheRepository,
     private val scheduleController: ScheduleController,
+    private val searchController: SearchController,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), SyncViewModelInputs, SyncViewModelOutputs {
 
@@ -180,6 +182,12 @@ class SyncViewModel(
         when (rssController.enabled) {
             true -> rssController.addAppShortcut()
             false -> rssController.removeAppShortcut()
+        }
+
+        // Shortcuts for Search
+        when (searchController.enabled) {
+            true -> searchController.addAppShortcut()
+            false -> searchController.removeAppShortcut()
         }
 
         // Schedule notifications
