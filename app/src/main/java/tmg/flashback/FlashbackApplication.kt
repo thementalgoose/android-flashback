@@ -8,6 +8,7 @@ import tmg.flashback.ads.di.adsModule
 import tmg.flashback.common.di.commonModule
 import tmg.flashback.configuration.di.configModule
 import tmg.flashback.analytics.di.analyticsModule
+import tmg.flashback.appshortcuts.di.appShortcutModule
 import tmg.flashback.device.di.deviceModule
 import tmg.flashback.ui.di.uiModule
 import tmg.flashback.crash_reporting.di.crashReportingModule
@@ -36,6 +37,7 @@ class FlashbackApplication: Application() {
                 // Core
                 adsModule,
                 analyticsModule,
+                appShortcutModule,
                 configModule,
                 crashReportingModule,
                 deviceModule,

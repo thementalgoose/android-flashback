@@ -8,8 +8,6 @@ import tmg.flashback.ui.managers.StyleManager
 import tmg.flashback.ui.navigation.NavigationProvider
 import tmg.flashback.DebugController
 import tmg.flashback.FlashbackStartup
-import tmg.flashback.managers.appshortcuts.AndroidAppShortcutManager
-import tmg.flashback.managers.appshortcuts.AppShortcutManager
 import tmg.flashback.managers.buildconfig.AppBuildConfigManager
 import tmg.flashback.managers.widgets.AppWidgetManager
 import tmg.flashback.managers.widgets.WidgetManager
@@ -31,8 +29,8 @@ val appModule = module {
     viewModel { SettingsAllViewModel(get(), get()) }
     viewModel { DashboardViewModel(get(), get(), get(), get(), get()) }
     viewModel { ListViewModel(get(), get(), get(), get(), get()) }
-    viewModel { HomeViewModel(get(), get(), get(), get(), get(), get(), get()) }
-    viewModel { SyncViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get(), get()) }
+    viewModel { HomeViewModel(get(), get(), get(), get(), get(), get()) }
+    viewModel { SyncViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get()) }
 
     single { FlashbackStartup(get(), get(), get(), get(), get(), get(), get()) }
 
@@ -44,7 +42,6 @@ val appModule = module {
     single<NavigationProvider> { AppNavigationProvider(get(), get(), get(), get()) }
     single<NotificationNavigationProvider> { AppNavigationProvider(get(), get(), get(), get()) }
 
-    single<AppShortcutManager> { AndroidAppShortcutManager(get(), get()) }
     single<BuildConfigManager> { AppBuildConfigManager() }
     single<WidgetManager> { AppWidgetManager(get()) }
 

@@ -23,7 +23,7 @@ val rssModule = module {
     // Managers
 
     // Controllers
-    single { RSSController(get()) }
+    single { RSSController(get(), get()) }
 
     // Repositories
     single { RSSRepository(get(), get()) }

@@ -5,7 +5,6 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.common.controllers.ForceUpgradeController
 import tmg.flashback.configuration.controllers.ConfigController
-import tmg.flashback.managers.appshortcuts.AppShortcutManager
 import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.statistics.repo.CircuitRepository
 import tmg.flashback.statistics.repo.ConstructorRepository
@@ -22,7 +21,6 @@ import tmg.testutils.livedata.*
 
 internal class SyncViewModelTest: BaseTest() {
 
-    private var mockAppShortcutManager: AppShortcutManager = mockk(relaxed = true)
     private var mockRssController: RSSController = mockk(relaxed = true)
     private var mockCircuitRepository: CircuitRepository = mockk(relaxed = true)
     private var mockConstructorRepository: ConstructorRepository = mockk(relaxed = true)
@@ -37,8 +35,6 @@ internal class SyncViewModelTest: BaseTest() {
 
     @BeforeEach
     internal fun setUp() {
-        every { mockAppShortcutManager.enable() } returns true
-        every { mockAppShortcutManager.disable() } returns true
         every { mockForceUpgradeController.shouldForceUpgrade } returns false
         every { mockRssController.enabled } returns false
         coEvery { mockConfigurationManager.fetchAndApply() } returns true
@@ -51,7 +47,6 @@ internal class SyncViewModelTest: BaseTest() {
 
     private fun initSUT() {
         sut = SyncViewModel(
-            mockAppShortcutManager,
             mockRssController,
             mockCircuitRepository,
             mockConstructorRepository,

@@ -23,7 +23,6 @@ include ':core:crash-reporting'
 include ':core:device'
 include ':core:notifications'
 include ':core:preferences'
-include ':core:tutorial'
 include ':core:ui'
 include ':core:style'
 
