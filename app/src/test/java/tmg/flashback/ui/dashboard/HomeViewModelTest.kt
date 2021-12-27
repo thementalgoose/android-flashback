@@ -115,7 +115,7 @@ internal class HomeViewModelTest: BaseTest() {
 
         coVerify { mockConfigurationManager.applyPending() }
         verify { mockRssController.addAppShortcut() }
-        verify { mockSearchController.removeAppShortcut() }
+        verify { mockSearchController.addAppShortcut() }
         coVerify { mockScheduleController.scheduleNotifications() }
 
         assertFalse(sut.requiresSync)
