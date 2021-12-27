@@ -34,7 +34,7 @@ internal class SearchControllerTest: BaseTest() {
 
     @Test
     fun `add app shortcut adds shortcut to manager`() {
-        val slot = slot<ShortcutInfo<*>>()
+        val slot = slot<ShortcutInfo>()
 
         initSUT()
         sut.addAppShortcut()

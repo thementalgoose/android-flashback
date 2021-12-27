@@ -29,7 +29,7 @@ internal class RSSControllerTest: BaseTest() {
     @Test
     fun `add app shortcuts adds shortcut to manager`() {
 
-        val slot = slot<ShortcutInfo<*>>()
+        val slot = slot<ShortcutInfo>()
 
         initSUT()
         sut.addAppShortcut()
