@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test
 import tmg.flashback.common.controllers.ForceUpgradeController
 import tmg.flashback.configuration.controllers.ConfigController
 import tmg.flashback.crash_reporting.controllers.CrashController
-import tmg.flashback.managers.appshortcuts.AppShortcutManager
 import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.statistics.repo.repository.CacheRepository
 import tmg.flashback.statistics.controllers.ScheduleController
@@ -19,7 +18,6 @@ import tmg.testutils.BaseTest
 
 internal class HomeViewModelTest: BaseTest() {
 
-    private var mockAppShortcutManager: AppShortcutManager = mockk(relaxed = true)
     private var mockRssController: RSSController = mockk(relaxed = true)
     private var mockConfigurationManager: ConfigController = mockk(relaxed = true)
     private var mockCrashController: CrashController = mockk(relaxed = true)
@@ -31,8 +29,6 @@ internal class HomeViewModelTest: BaseTest() {
 
     @BeforeEach
     internal fun setUp() {
-        every { mockAppShortcutManager.enable() } returns true
-        every { mockAppShortcutManager.disable() } returns true
         coEvery { mockConfigurationManager.applyPending() } returns true
         every { mockConfigurationManager.requireSynchronisation } returns false
         every { mockForceUpgradeController.shouldForceUpgrade } returns false
@@ -46,7 +42,6 @@ internal class HomeViewModelTest: BaseTest() {
             mockRssController,
             mockCrashController,
             mockForceUpgradeController,
-            mockAppShortcutManager,
             mockCacheRepository,
             mockScheduleController
         )
@@ -96,7 +91,7 @@ internal class HomeViewModelTest: BaseTest() {
         sut.initialise()
 
         coVerify { mockConfigurationManager.applyPending() }
-        verify { mockAppShortcutManager.disable() }
+        verify { mockRssController.removeAppShortcut() }
         coVerify { mockScheduleController.scheduleNotifications() }
 
         assertFalse(sut.requiresSync)
@@ -112,7 +107,7 @@ internal class HomeViewModelTest: BaseTest() {
         sut.initialise()
 
         coVerify { mockConfigurationManager.applyPending() }
-        verify { mockAppShortcutManager.enable() }
+        verify { mockRssController.addAppShortcut() }
         coVerify { mockScheduleController.scheduleNotifications() }
 
         assertFalse(sut.requiresSync)

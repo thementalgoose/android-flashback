@@ -45,4 +45,10 @@
     <string name="rss_configure_cannot_open_page">Cannot open website</string>
     <string name="rss_configure_cannot_open_page_action">Copy URL to clipboard</string>
 
+    <!-- App Shortcut -->
+
+    <string name="app_shortcut_rss_shorttitle">RSS</string>
+    <string name="app_shortcut_rss_longtitle">Formula 1 RSS feed</string>
+    <string name="app_shortcut_rss_disabled">RSS (Unavailable)</string>
+
 </resources>

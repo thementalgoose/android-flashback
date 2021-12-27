@@ -38,26 +38,25 @@ jobs:
       - name: Calculate change
         id: change
         run: |
-          echo "::set-output name=app::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                                | grep -E '^app/' -c)"
-          echo "::set-output name=common::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                             | grep -E '^common/' -c)"
-          echo "::set-output name=formula1::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                           | grep -E '^formula1/' -c)"
-          echo "::set-output name=rss::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                                | grep -E '^rss/' -c)"
-          echo "::set-output name=statistics::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                         | grep -E '^statistics/' -c)"
-          echo "::set-output name=learning::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                           | grep -E '^learning/' -c)"
-          echo "::set-output name=data_room::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                          | grep -E '^data/room/' -c)"
-          echo "::set-output name=data_repo::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                          | grep -E '^data/repo/' -c)"
-          echo "::set-output name=data_network::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                       | grep -E '^data/network/' -c)"
-          echo "::set-output name=core_ads::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                           | grep -E '^core/ads/' -c)"
-          echo "::set-output name=core_analytics::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                     | grep -E '^core/analytics/' -c)"
-          echo "::set-output name=core_appshortcuts::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                  | grep -E '^core/appshortcuts/' -c)"
-          echo "::set-output name=core_configuration::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                 | grep -E '^core/configuration/' -c)"
-          echo "::set-output name=core_crash_reporting::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}               | grep -E '^core/crash-reporting/' -c)"
-          echo "::set-output name=core_device::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                        | grep -E '^core/device/' -c)"
-          echo "::set-output name=core_notifications::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                 | grep -E '^core/notifications/' -c)"
-          echo "::set-output name=core_preferences::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                   | grep -E '^core/preferences/' -c)"
-          echo "::set-output name=core_style::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                         | grep -E '^core/style/' -c)"
-          echo "::set-output name=core_tutorial::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                      | grep -E '^core/tutorial/' -c)"
-          echo "::set-output name=core_ui::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                            | grep -E '^core/ui/' -c)"
+          echo "::set-output name=app::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                   | grep -E '^app/' -c)"
+          echo "::set-output name=common::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                | grep -E '^common/' -c)"
+          echo "::set-output name=formula1::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}              | grep -E '^formula1/' -c)"
+          echo "::set-output name=rss::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                   | grep -E '^rss/' -c)"
+          echo "::set-output name=statistics::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}            | grep -E '^statistics/' -c)"
+          echo "::set-output name=learning::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}              | grep -E '^learning/' -c)"
+          echo "::set-output name=data_room::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}             | grep -E '^data/room/' -c)"
+          echo "::set-output name=data_repo::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}             | grep -E '^data/repo/' -c)"
+          echo "::set-output name=data_network::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}          | grep -E '^data/network/' -c)"
+          echo "::set-output name=core_ads::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}              | grep -E '^core/ads/' -c)"
+          echo "::set-output name=core_analytics::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}        | grep -E '^core/analytics/' -c)"
+          echo "::set-output name=core_appshortcuts::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}     | grep -E '^core/appshortcuts/' -c)"
+          echo "::set-output name=core_configuration::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}    | grep -E '^core/configuration/' -c)"
+          echo "::set-output name=core_crash_reporting::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}  | grep -E '^core/crash-reporting/' -c)"
+          echo "::set-output name=core_device::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}           | grep -E '^core/device/' -c)"
+          echo "::set-output name=core_notifications::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}    | grep -E '^core/notifications/' -c)"
+          echo "::set-output name=core_preferences::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}      | grep -E '^core/preferences/' -c)"
+          echo "::set-output name=core_style::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}            | grep -E '^core/style/' -c)"
+          echo "::set-output name=core_ui::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}               | grep -E '^core/ui/' -c)"
 
     outputs:
       app: ${{ steps.change.outputs.app != 0 }}
@@ -78,7 +77,6 @@ jobs:
       core_notifications: ${{ steps.change.outputs.core_notifications != 0 }}
       core_preferences: ${{ steps.change.outputs.core_preferences != 0 }}
       core_style: ${{ steps.change.outputs.core_style != 0 }}
-      core_tutorial: ${{ steps.change.outputs.core_tutorial != 0 }}
       core_ui: ${{ steps.change.outputs.core_ui != 0 }}
 
   unit_tests:
@@ -172,10 +170,6 @@ jobs:
       - name: :core:style
         run: ./gradlew :core:style:testDebugUnitTest
         if: ${{ needs.unit_test_diff_check.outputs.core_style == 'true' }}
-
-      - name: :core:tutorial
-        run: ./gradlew :core:tutorial:testDebugUnitTest
-        if: ${{ needs.unit_test_diff_check.outputs.core_tutorial == 'true' }}
 
       - name: :core:ui
         run: ./gradlew :core:ui:testDebugUnitTest
