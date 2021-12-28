@@ -4,10 +4,10 @@ private static def getVersionName() {
     def value = System.getenv("VERSION_NAME") as String
     if (value == null || value == "") {
         def file = "version-name.txt"
-        def localValue = new File(file).text as String
+        def localValue = new File(file).text.trim() as String
         value = localValue
     }
-    print("getVersionName = $value")
+    println("getVersionName = '$value'")
     return value
 }
 
@@ -15,10 +15,10 @@ private static def getVersionCode() {
     def value = System.getenv("VERSION_CODE") as Integer
     if (value == null || value == "") {
         def file = "version-code.txt"
-        def localValue = new File(file).text as Integer
+        def localValue = new File(file).text.trim() as Integer
         value = localValue
     }
-    print("getVersionCode = $value")
+    println("getVersionCode = '$value'")
     return value
 }
 
