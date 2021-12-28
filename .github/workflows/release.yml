@@ -42,8 +42,8 @@ jobs:
           echo ${{ secrets.ENCODED_DEPLOYMENT_KEY }} | base64 --decode >> deployment_private_key.json
 
       # Running unit tests
-      - name: Unit tests
-        run: ./gradlew testModules
+#      - name: Unit tests
+#        run: ./gradlew testModules
 
   deploy:
     runs-on: ubuntu-latest
@@ -72,14 +72,41 @@ jobs:
           echo ${{ secrets.ENCODED_KEYSTORE }} | base64 --decode >> flashback.keystore
           echo ${{ secrets.ENCODED_DEPLOYMENT_KEY }} | base64 --decode >> deployment_private_key.json
 
+      # Version tag
+      - name: Version Name
+        id: get_version_name
+        run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
+
+      # Version code
+      - name: Version Code
+        id: get_version_code
+        run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d . -f 3)
+
       # Release
-      - name: Release to internal test track
-        env:
-          KEYSTORE: ${{ github.workspace }}/flashback.keystore
-          PRIVATE_KEY: ${{ github.workspace }}/deployment_private_key.json
-          KEYSTORE_ALIAS: ${{ secrets.KEYSTORE_ALIAS }}
-          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
-        run: ./gradlew publishLiveReleaseBundle
+#      - name: Release to internal test track
+#        env:
+#          KEYSTORE: ${{ github.workspace }}/flashback.keystore
+#          PRIVATE_KEY: ${{ github.workspace }}/deployment_private_key.json
+#          KEYSTORE_ALIAS: ${{ secrets.KEYSTORE_ALIAS }}
+#          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+#          VERSION_CODE: ${{ steps.get_version_code.outputs.VERSION }}
+#          VERSION_NAME: ${{ steps.get_version_name.outputs.VERSION }}
+#        run: ./gradlew publishLiveReleaseBundle
+
+      # Update REPO latest version
+      - name: Updates latest version in README
+        run: |
+          sed 's/\!\[latest-version\].*/![latest-version](https:\/\/shields.io\/badge\/Latest%20Version-${{ steps.get_version_name.outputs.VERSION }}-blue)/' README.md > README.md
+          sed 's/private static def latestVersionName.*/private static def latestVersionName() { return "${{ steps.get_version_name.outputs.VERSION }}" }
+          sed 's/private static def latestVersionCode.*/private static def latestVersionCode() { return ${{ steps.get_version_code.outputs.VERSION }} }
+
+      # Commits changes to README
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Updates version to ${{ steps.get_version_name.outputs.VERSION }} (${{ steps.get_version_code.outputs.VERSION }})
+          branch: test
+          commit_options: '--no-verify --signoff'
+          file_pattern: *.gradle *.md
 
   discord_notify:
     runs-on: ubuntu-latest
@@ -110,7 +137,7 @@ jobs:
 
       - name: Notify discord of success
         uses: sarisia/actions-status-discord@v1
-        if: success() && needs.deploy.result != 'failure'
+        if: success() || needs.deploy.result != 'failure'
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         with:
