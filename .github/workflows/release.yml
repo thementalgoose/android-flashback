@@ -72,6 +72,16 @@ jobs:
           echo ${{ secrets.ENCODED_KEYSTORE }} | base64 --decode >> flashback.keystore
           echo ${{ secrets.ENCODED_DEPLOYMENT_KEY }} | base64 --decode >> deployment_private_key.json
 
+      # Version tag
+      - name: Version Name
+        id: get_version_name
+        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+
+      # Version code
+      - name: Version Code
+        id: get_version_code
+        run: echo ::set-output name=VERSION::$((${GITHUB_RUN_NUMBER} + 100))
+
       # Release
       - name: Release to internal test track
         env:
@@ -79,6 +89,8 @@ jobs:
           PRIVATE_KEY: ${{ github.workspace }}/deployment_private_key.json
           KEYSTORE_ALIAS: ${{ secrets.KEYSTORE_ALIAS }}
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          VERSION_CODE: ${{ steps.get_version_code.outputs.VERSION }}
+          VERSION_NAME: ${{ steps.get_version_name.outputs.VERSION }}
         run: ./gradlew publishLiveReleaseBundle
 
   discord_notify:
