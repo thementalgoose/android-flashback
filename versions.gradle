@@ -1,18 +1,21 @@
 import groovy.json.JsonSlurper
 
-private static def getCurrent() {
-    def releaseNotes = "releases.json"
-    def json = new File(releaseNotes)
-    def parsedJson = new JsonSlurper().parseText(json.text)
-    return parsedJson.current
-}
-
 private static def getVersionName() {
-    return getCurrent().versionName as String
+    def value = System.getenv("VERSION_NAME") as String
+    if (value == null || value == "") {
+        value = "8.0.0"
+    }
+    print("getVersionName = $value")
+    return value
 }
 
 private static def getVersionCode() {
-    return getCurrent().versionCode as Integer
+    def value = System.getenv("VERSION_CODE") as Integer
+    if (value == null || value == "") {
+        value = 1
+    }
+    print("getVersionCode = $value")
+    return value
 }
 
 ext {
