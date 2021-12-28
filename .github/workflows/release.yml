@@ -108,27 +108,15 @@ jobs:
       - name: Version Name
         id: get_version_name
         run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
+      - name: Output version name
+        run: echo ${{ steps.get_version_name.outputs.VERSION }} > version-name.txt
 
       # Version code
       - name: Version Code
         id: get_version_code
         run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d . -f 3)
-
-      # Update REPO latest version
-      - name: Updates latest version in README
-        run: |
-          sed 's/\!\[latest-version\].*/![latest-version]\(https:\/\/shields.io\/badge\/Latest%20Version-${{ steps.get_version_name.outputs.VERSION }}-blue\)/' README.md > README.md
-
-      - name: Output version files
-        run:
-          echo ${{ steps.get_version_name.outputs.VERSION }} > version-name.txt
-          echo ${{ steps.get_version_code.outputs.VERSION }} > version-code.txt
-
-      - name: Test
-        run: cat version-name.txt
-
-      - name: Test
-        run: cat README.md
+      - name: Output version code
+        run: echo ${{ steps.get_version_code.outputs.VERSION }} > version-code.txt
 
       # Commits changes to README
       - name: Commit and push changes
