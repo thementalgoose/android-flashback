@@ -61,7 +61,7 @@ jobs:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          key: ${{ runner.os }}-gradle-${{ ha\shFiles('**/*.gradle*') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
 
@@ -97,14 +97,11 @@ jobs:
       - name: Updates latest version in README
         run: |
           sed 's/\!\[latest-version\].*/![latest-version]\(https:\/\/shields.io\/badge\/Latest%20Version-${{ steps.get_version_name.outputs.VERSION }}-blue\)/' README.md > README.md
-          sed 's/private static def latestVersionName.*/private static def latestVersionName() { return "${{ steps.get_version_name.outputs.VERSION }}" } versions.gradle > versions.gradle
-          sed 's/private static def latestVersionCode.*/private static def latestVersionCode() { return ${{ steps.get_version_code.outputs.VERSION }} } versions.gradle > versions.gradle
 
-      - name: Test
-        run: cat README.md
-
-      - name: Test
-        run: cat versions.gradle.md
+      - name: Output version files
+        run:
+          echo ${{ steps.get_version_name.outputs.VERSION }} > version-name.txt
+          echo ${{ steps.get_version_code.outputs.VERSION }} > version-code.txt
 
       # Commits changes to README
       - uses: stefanzweifel/git-auto-commit-action@v4
@@ -112,7 +109,7 @@ jobs:
           commit_message: Updates version to ${{ steps.get_version_name.outputs.VERSION }} (${{ steps.get_version_code.outputs.VERSION }})
           branch: test
           commit_options: '--no-verify --signoff'
-          file_pattern: versions.gradle README.md
+          file_pattern: version-*.txt README.md
 
   discord_notify:
     runs-on: ubuntu-latest
@@ -124,11 +121,16 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-          
-      - name: Release information
-        run: |
-          echo "versionCode=$(echo `sh ./scripts/getVersionCode.sh`)" >> $GITHUB_ENV
-          echo "versionName=$(echo `sh ./scripts/getVersionName.sh`)" >> $GITHUB_ENV
+
+      # Version tag
+      - name: Version Name
+        id: get_version_name
+        run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
+
+      # Version code
+      - name: Version Code
+        id: get_version_code
+        run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d . -f 3)
 
       - name: Notify discord of failure
         uses: sarisia/actions-status-discord@v1
@@ -137,7 +139,7 @@ jobs:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         with:
           nodetail: true
-          title: "Release ${{ env.versionName }} (${{ env.versionCode }}) deployment to internal test track failed"
+          title: "Release ${{ steps.get_version_name.outputs.VERSION }} (${{ steps.get_version_code.outputs.VERSION }}) deployment to internal test track failed"
           description: "Run number ${{ github.run_number }}\n[Action run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})"
           color: 0xff91a4
 
@@ -148,7 +150,7 @@ jobs:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         with:
           nodetail: true
-          title: "Release ${{ env.versionName }} (${{ env.versionCode }}) deployment to internal test track successful"
+          title: "Release ${{ steps.get_version_name.outputs.VERSION }} (${{ steps.get_version_code.outputs.VERSION }}) deployment to internal test track successful"
           description: "Run number ${{ github.run_number }}\n[Action run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})"
           color: 0x35a55f
 
