@@ -130,13 +130,12 @@ jobs:
       - name: Test
         run: cat README.md
 
-
       # Commits changes to README
-      - uses: stefanzweifel/git-auto-commit-action@v4.12.0
+      - name: Commit and push changes
+        uses: actions-js/push@master
         with:
-          commit_message: Updates version to ${{ steps.get_version_name.outputs.VERSION }} (${{ steps.get_version_code.outputs.VERSION }})
-          branch: test2
-          file_pattern: version-*.txt *.md
+          message: Updates version to ${{ steps.get_version_name.outputs.VERSION }} (${{ steps.get_version_code.outputs.VERSION }})
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
   discord_notify:
     runs-on: ubuntu-latest
