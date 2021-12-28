@@ -106,7 +106,7 @@ jobs:
           commit_message: Updates version to ${{ steps.get_version_name.outputs.VERSION }} (${{ steps.get_version_code.outputs.VERSION }})
           branch: test
           commit_options: '--no-verify --signoff'
-          file_pattern: *.gradle *.md
+          file_pattern: versions.gradle README.md
 
   discord_notify:
     runs-on: ubuntu-latest
