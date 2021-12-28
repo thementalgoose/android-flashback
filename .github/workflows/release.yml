@@ -124,12 +124,19 @@ jobs:
           echo ${{ steps.get_version_name.outputs.VERSION }} > version-name.txt
           echo ${{ steps.get_version_code.outputs.VERSION }} > version-code.txt
 
+      - name: Test
+        run: cat version-name.txt
+
+      - name: Test
+        run: cat README.md
+
+
       # Commits changes to README
       - uses: stefanzweifel/git-auto-commit-action@v4.12.0
         with:
           commit_message: Updates version to ${{ steps.get_version_name.outputs.VERSION }} (${{ steps.get_version_code.outputs.VERSION }})
           branch: test2
-          file_pattern: version-*.txt README.md
+          file_pattern: version-*.txt *.md
 
   discord_notify:
     runs-on: ubuntu-latest
@@ -142,35 +149,35 @@ jobs:
         with:
           fetch-depth: 0
 
-      # Version tag
-      - name: Version Name
-        id: get_version_name
-        run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
-
-      # Version code
-      - name: Version Code
-        id: get_version_code
-        run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d . -f 3)
-
-      - name: Notify discord of failure
-        uses: sarisia/actions-status-discord@v1
-        if: failure() || needs.deploy.result == 'failure'
-        env:
-          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-        with:
-          nodetail: true
-          title: "Release ${{ steps.get_version_name.outputs.VERSION }} (${{ steps.get_version_code.outputs.VERSION }}) deployment to internal test track failed"
-          description: "Run number ${{ github.run_number }}\n[Action run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})"
-          color: 0xff91a4
-
-      - name: Notify discord of success
-        uses: sarisia/actions-status-discord@v1
-        if: success() && needs.deploy.result != 'failure'
-        env:
-          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-        with:
-          nodetail: true
-          title: "Release ${{ steps.get_version_name.outputs.VERSION }} (${{ steps.get_version_code.outputs.VERSION }}) deployment to internal test track successful"
-          description: "Run number ${{ github.run_number }}\n[Action run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})"
-          color: 0x35a55f
+#      # Version tag
+#      - name: Version Name
+#        id: get_version_name
+#        run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
+#
+#      # Version code
+#      - name: Version Code
+#        id: get_version_code
+#        run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d . -f 3)
+#
+#      - name: Notify discord of failure
+#        uses: sarisia/actions-status-discord@v1
+#        if: failure() || needs.deploy.result == 'failure'
+#        env:
+#          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+#        with:
+#          nodetail: true
+#          title: "Release ${{ steps.get_version_name.outputs.VERSION }} (${{ steps.get_version_code.outputs.VERSION }}) deployment to internal test track failed"
+#          description: "Run number ${{ github.run_number }}\n[Action run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})"
+#          color: 0xff91a4
+#
+#      - name: Notify discord of success
+#        uses: sarisia/actions-status-discord@v1
+#        if: success() && needs.deploy.result != 'failure'
+#        env:
+#          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+#        with:
+#          nodetail: true
+#          title: "Release ${{ steps.get_version_name.outputs.VERSION }} (${{ steps.get_version_code.outputs.VERSION }}) deployment to internal test track successful"
+#          description: "Run number ${{ github.run_number }}\n[Action run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})"
+#          color: 0x35a55f
 
