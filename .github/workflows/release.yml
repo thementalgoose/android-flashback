@@ -75,12 +75,12 @@ jobs:
       # Version tag
       - name: Version Name
         id: get_version_name
-        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+        run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
 
       # Version code
       - name: Version Code
         id: get_version_code
-        run: echo ::set-output name=VERSION::$((${GITHUB_RUN_NUMBER} + 100))
+        run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d . -f 3)
 
       # Release
       - name: Release to internal test track
