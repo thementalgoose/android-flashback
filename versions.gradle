@@ -1,12 +1,11 @@
 import groovy.json.JsonSlurper
 
-private static def latestVersionName() { return "" }
-private static def latestVersionCode() { return 1 }
-
 private static def getVersionName() {
     def value = System.getenv("VERSION_NAME") as String
     if (value == null || value == "") {
-        value = latestVersionName()
+        def file = "version-name.txt"
+        def localValue = new File(file).text as String
+        value = localValue
     }
     print("getVersionName = $value")
     return value
@@ -15,7 +14,9 @@ private static def getVersionName() {
 private static def getVersionCode() {
     def value = System.getenv("VERSION_CODE") as Integer
     if (value == null || value == "") {
-        value = latestVersionCode()
+        def file = "version-code.txt"
+        def localValue = new File(file).text as Integer
+        value = localValue
     }
     print("getVersionCode = $value")
     return value
