@@ -11,10 +11,10 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: json-syntax-check
-        uses: limitusus/json-syntax-check@v1
-        with:
-          pattern: "\\.json$"
+#      - name: json-syntax-check
+#        uses: limitusus/json-syntax-check@v1
+#        with:
+#          pattern: "\\.json$"
 
   unit_test:
     runs-on: ubuntu-latest
@@ -24,24 +24,24 @@ jobs:
         with:
           fetch-depth: 0
 
-      # Caching gradle
-      - uses: actions/cache@v2
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
-
-      # Environment
-      - name: Environment variables
-        run: |
-          echo ${{ secrets.ENCODED_GOOGLE_SERVICES_LIVE }} | base64 --decode >> app/src/live/google-services.json
-          echo ${{ secrets.ENCODED_KEYSTORE }} | base64 --decode >> flashback.keystore
-          echo ${{ secrets.ENCODED_DEPLOYMENT_KEY }} | base64 --decode >> deployment_private_key.json
-
-      # Running unit tests
+#      # Caching gradle
+#      - uses: actions/cache@v2
+#        with:
+#          path: |
+#            ~/.gradle/caches
+#            ~/.gradle/wrapper
+#          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+#          restore-keys: |
+#            ${{ runner.os }}-gradle-
+#
+#      # Environment
+#      - name: Environment variables
+#        run: |
+#          echo ${{ secrets.ENCODED_GOOGLE_SERVICES_LIVE }} | base64 --decode >> app/src/live/google-services.json
+#          echo ${{ secrets.ENCODED_KEYSTORE }} | base64 --decode >> flashback.keystore
+#          echo ${{ secrets.ENCODED_DEPLOYMENT_KEY }} | base64 --decode >> deployment_private_key.json
+#
+#      # Running unit tests
 #      - name: Unit tests
 #        run: ./gradlew testModules
 
@@ -96,9 +96,15 @@ jobs:
       # Update REPO latest version
       - name: Updates latest version in README
         run: |
-          sed 's/\!\[latest-version\].*/![latest-version](https:\/\/shields.io\/badge\/Latest%20Version-${{ steps.get_version_name.outputs.VERSION }}-blue)/' README.md > README.md
-          sed 's/private static def latestVersionName.*/private static def latestVersionName() { return "${{ steps.get_version_name.outputs.VERSION }}" }
-          sed 's/private static def latestVersionCode.*/private static def latestVersionCode() { return ${{ steps.get_version_code.outputs.VERSION }} }
+          sed 's/\!\[latest-version\].*/![latest-version]\(https:\/\/shields.io\/badge\/Latest%20Version-${{ steps.get_version_name.outputs.VERSION }}-blue\)/' README.md > README.md
+          sed 's/private static def latestVersionName.*/private static def latestVersionName() { return "${{ steps.get_version_name.outputs.VERSION }}" } versions.gradle > versions.gradle
+          sed 's/private static def latestVersionCode.*/private static def latestVersionCode() { return ${{ steps.get_version_code.outputs.VERSION }} } versions.gradle > versions.gradle
+
+      - name: Test
+        run: cat README.md
+
+      - name: Test
+        run: cat versions.gradle.md
 
       # Commits changes to README
       - uses: stefanzweifel/git-auto-commit-action@v4
