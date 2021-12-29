@@ -10,6 +10,7 @@ internal class Formula1Test {
 
     @ParameterizedTest(name = "Max points in {0} season is {1}")
     @CsvSource(
+        "2021,28",
         "2020,25",
         "2010,25",
         "2009,10",
@@ -31,6 +32,6 @@ internal class Formula1Test {
     @Test
     fun `maxPoints by current year returns correct amounts of points`() {
 
-        assertEquals(25, Formula1.maxPointsBySeason(Year.now().value))
+        assertEquals(28, Formula1.maxPointsBySeason(Year.now().value))
     }
 }
