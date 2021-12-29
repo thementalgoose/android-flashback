@@ -31,7 +31,8 @@ object Formula1 {
     const val showComingSoonMessageForNextDays = 10
 
     /**
-     * Maximum points awarded to a driver in a given season
+     * Maximum points awarded to a driver in a single race based on the
+     * season
      */
     fun maxPointsBySeason(season: Int): Int {
         return when {
