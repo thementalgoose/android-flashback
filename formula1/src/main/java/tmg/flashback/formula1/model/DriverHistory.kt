@@ -69,25 +69,12 @@ data class DriverHistory(
     val careerBestFinish: Int by lazy {
         return@lazy standings.minByOrNull { it.bestFinish ?: Int.MAX_VALUE }?.bestFinish ?: -1
     }
-    val careerBestQualifying: Int by lazy {
-        return@lazy standings.minByOrNull { it.bestQualifying ?: Int.MAX_VALUE }?.bestQualifying ?: -1
-    }
-
-    val careerConstructorStanding: Int by lazy {
-        return@lazy standings.minByOrNull { it.championshipStanding ?: Int.MAX_VALUE }?.championshipStanding ?: -1
-    }
 
     val careerQualifyingPoles: Int by lazy {
         return@lazy totalQualifyingIn(1)
     }
-    val careerQualifyingFrontRow: Int by lazy {
-        return@lazy totalQualifyingIn(1) + totalQualifyingIn(2)
-    }
     val careerQualifyingTop3: Int by lazy {
         return@lazy totalFinishesAbove(3)
-    }
-    val careerQualifyingSecondRow: Int by lazy {
-        return@lazy totalQualifyingIn(3) + totalQualifyingIn(4)
     }
     val careerQualifyingTop10: Int by lazy {
         return@lazy totalFinishesAbove(10)
