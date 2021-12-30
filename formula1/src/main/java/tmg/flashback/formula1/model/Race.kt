@@ -88,13 +88,15 @@ data class Race(
                     }
                 }
             }
-            return constructors.map {
-                RaceConstructorStandings(
-                    standings.getOrElse(
-                        it.id
-                    ) { 0.0 }, it
-                )
-            }
+            return constructors
+                .map {
+                    RaceConstructorStandings(
+                        standings.getOrElse(
+                            it.id
+                        ) { 0.0 }, it
+                    )
+                }
+                .sortedByDescending { it.points }
         }
 
     companion object
