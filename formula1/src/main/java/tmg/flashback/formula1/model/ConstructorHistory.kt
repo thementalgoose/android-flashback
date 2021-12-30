@@ -28,15 +28,15 @@ data class ConstructorHistory(
             .sumOf { it.races }
     }
 
-    val raceEntries: Int by lazy {
-        return@lazy standings
-            .sumOf { standing ->
-                standing.drivers
-                    .values
-                    .filter { it.races >= 0 }
-                    .sumOf { it.races }
-            }
-    }
+//    val raceEntries: Int by lazy {
+//        return@lazy standings
+//            .sumOf { standing ->
+//                standing.drivers
+//                    .values
+//                    .filter { it.races >= 0 }
+//                    .sumOf { it.races }
+//            }
+//    }
 
     val totalWins: Int by lazy {
         return@lazy standings
