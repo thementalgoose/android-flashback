@@ -115,18 +115,12 @@ internal class DriverHistoryTest {
     @Test
     fun `career points counts all points from standings`() {
         val model = DriverHistory.model(standings = listOf(
-            DriverHistorySeason.model(raceOverview = listOf(
-                DriverHistorySeasonRace.model(points = 1.0)
-            )),
-            DriverHistorySeason.model(raceOverview = listOf(
-                DriverHistorySeasonRace.model(points = 24.0)
-            )),
-            DriverHistorySeason.model(raceOverview = listOf(
-                DriverHistorySeasonRace.model(points = 102.0)
-            ))
+            DriverHistorySeason.model(points = 3.0),
+            DriverHistorySeason.model(points = 24.0),
+            DriverHistorySeason.model(points = 102.0)
         ))
 
-        assertEquals(127.0, model.careerPoints)
+        assertEquals(129.0, model.careerPoints)
     }
 
     @Test
@@ -163,7 +157,7 @@ internal class DriverHistoryTest {
                 constructor2,
                 constructor3
             )),
-            DriverHistorySeason.model(season = 2020, constructors = listOf(
+            DriverHistorySeason.model(season = 2021, constructors = listOf(
                 constructor3
             ))
         ))
