@@ -26,7 +26,7 @@ data class LapTime(
     )
 
     val noTime: Boolean
-        get() = hours == -1 && mins == -1 && seconds == -1 && millis == -1
+        get() = hours == -1 || mins == -1 || seconds == -1 || millis == -1
 
     val totalMillis: Int
         get() = if (noTime) 0 else (hours * 1000 * 60 * 60) +
@@ -56,7 +56,7 @@ data class LapTime(
         }
         val diff = lapTime.totalMillis - this.totalMillis
         if (diff == 0) {
-            return null
+            return "0.000"
         }
         val newTime = LapTime(abs(diff))
         return "${if (diff < 0) "-" else "+"}$newTime"

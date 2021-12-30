@@ -11,19 +11,21 @@ data class DriverHistorySeason(
     val raceOverview: List<DriverHistorySeasonRace>
 ) {
     val bestFinish: Int? by lazy {
-        return@lazy raceOverview.minByOrNull { it.finished }?.finished
+        return@lazy raceOverview
+            .filter { it.finished > 0 }
+            .minByOrNull { it.finished }
+            ?.finished
     }
-    val bestFinishQuantity: Int by lazy {
-        return@lazy raceOverview.count { it.finished == bestFinish }
-    }
+
     val bestQualifying: Int? by lazy {
-        return@lazy raceOverview.minByOrNull { it.qualified ?: Int.MAX_VALUE }?.qualified
+        return@lazy raceOverview
+            .filter { (it.qualified ?: 0) > 0 }
+            .minByOrNull { it.qualified ?: Int.MAX_VALUE }
+            ?.qualified
     }
-    val bestQualifyingQuantity: Int by lazy {
-        return@lazy raceOverview.count { it.finished == bestQualifying }
-    }
+
     val podiums: Int by lazy {
-        return@lazy raceOverview.count { it.finished <= 3 }
+        return@lazy raceOverview.count { it.finished in 1..3 }
     }
     val races: Int by lazy {
         return@lazy raceOverview.size
@@ -38,19 +40,10 @@ data class DriverHistorySeason(
     val qualifyingTop3: Int by lazy {
         return@lazy totalQualifyingAbove(3)
     }
-    val qualifyingFrontRow: Int by lazy {
-        return@lazy totalQualifyingIn(1) + totalQualifyingIn(2)
-    }
-    val qualifyingSecondRow: Int by lazy {
-        return@lazy totalQualifyingIn(3) + totalQualifyingIn(4)
-    }
 
     val finishesInPoints: Int by lazy {
         return@lazy raceOverview
             .count { it.points > 0 }
-    }
-    val finishesInTop5: Int by lazy {
-        return@lazy totalFinishesAbove(5)
     }
 
     val raceStarts: Int by lazy {
@@ -63,18 +56,6 @@ data class DriverHistorySeason(
         return@lazy raceOverview.filter { !it.status.isStatusFinished() }.size
     }
 
-    fun totalFinishesIn(position: Int): Int {
-        return raceOverview
-            .count { it.finished == position }
-    }
-
-    fun totalFinishesAbove(position: Int): Int {
-        return raceOverview
-            .count {
-                @Suppress("ConvertTwoComparisonsToRangeCheck")
-                it.finished >= 1 && it.finished <= position
-            }
-    }
     fun totalQualifyingAbove(position: Int): Int {
         return raceOverview
             .count {
@@ -83,7 +64,7 @@ data class DriverHistorySeason(
             }
     }
 
-    fun totalQualifyingIn(position: Int): Int {
+    private fun totalQualifyingIn(position: Int): Int {
         return raceOverview
             .count { it.qualified == position }
     }
