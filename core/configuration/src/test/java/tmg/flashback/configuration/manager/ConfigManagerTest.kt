@@ -63,6 +63,9 @@ internal class ConfigManagerTest {
         verify {
             mockConfigService.getString("key")
         }
+        verify(exactly = 0) {
+            mockCrashController.logException(any(), any())
+        }
     }
 
     @Test
@@ -72,6 +75,7 @@ internal class ConfigManagerTest {
         assertNull(sut.getJson("key", TestModel.serializer()))
         verify {
             mockConfigService.getString("key")
+            mockCrashController.logException(any(), any())
         }
     }
 
@@ -82,6 +86,7 @@ internal class ConfigManagerTest {
         assertNull(sut.getJson("key", TestModel.serializer()))
         verify {
             mockConfigService.getString("key")
+            mockCrashController.logException(any(), any())
         }
     }
 
