@@ -36,12 +36,13 @@ class ConfigManager(
     fun <T> getJson(key: String, serializer: KSerializer<T>): T? {
         val string = configService.getString(key)
         if (string.isEmpty()) return null
-        val obj = try {
+        if (string == "false") return null
+        if (string == "true") return null
+        return try {
             Json.decodeFromString(serializer, string)
         } catch (e: SerializationException) {
             crashController.logException(e, "Failed to deserialize remote config value $key - $string")
             null
         }
-        return obj
     }
 }
