@@ -37,6 +37,10 @@ task generateRemoteConfigDefaults {
                 value('{"locations":{"home":false,"race":false,"search":false,"rss":false},"allowUserConfig":false}')
             }
             entry {
+                key('advert_config')
+                value('{"locations":{"home":false,"race":false,"search":false,"rss":false},"allowUserConfig":false}')
+            }
+            entry {
                 key('default_year')
                 value(year)
             }
