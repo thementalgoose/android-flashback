@@ -11,7 +11,7 @@ class AdsRepository(
     private val preferenceManager: PreferenceManager
 ) {
     companion object {
-        private const val keyAdverts: String = "adverts"
+        private const val keyAdverts: String = "advert_config"
 
         private const val keyUserPreferences: String = "ADVERT_PREF"
     }
