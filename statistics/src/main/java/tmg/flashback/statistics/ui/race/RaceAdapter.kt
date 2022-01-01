@@ -22,8 +22,7 @@ import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 class RaceAdapter(
     private val pillItemClicked: (PillItem) -> Unit,
     private val driverClicked: (driver: Driver) -> Unit,
-    private val constructorClicked: (constructor: Constructor) -> Unit,
-    private val orderBy: (raceQualifyingType: RaceQualifyingType) -> Unit,
+    private val constructorClicked: (constructor: Constructor) -> Unit
 ): SyncAdapter<RaceItem>() {
 
     override var list: List<RaceItem> = listOf(RaceItem.PodiumLoading)
@@ -61,21 +60,21 @@ class RaceAdapter(
                 ViewRaceSprintQualifyingResultBinding.inflate(layoutInflater, parent, false)
             )
             R.layout.view_race_qualifying_q1q2q3_result -> QualifyingResultQ1Q2Q3ViewHolder(
-                orderBy,
+                driverClicked,
                 ViewRaceQualifyingQ1q2q3ResultBinding.inflate(layoutInflater, parent, false)
             )
             R.layout.view_race_qualifying_q1q2_result -> QualifyingResultQ1Q2ViewHolder(
-                orderBy,
+                driverClicked,
                 ViewRaceQualifyingQ1q2ResultBinding.inflate(layoutInflater, parent, false)
             )
             R.layout.view_race_qualifying_q1_result -> QualifyingResultQ1ViewHolder(
+                driverClicked,
                 ViewRaceQualifyingQ1ResultBinding.inflate(layoutInflater, parent, false)
             )
             R.layout.view_race_race_header -> RaceResultHeaderViewHolder(
                 ViewRaceRaceHeaderBinding.inflate(layoutInflater, parent, false)
             )
             R.layout.view_race_qualifying_header -> QualifyingHeaderViewHolder(
-                orderBy,
                 ViewRaceQualifyingHeaderBinding.inflate(layoutInflater, parent, false)
             )
             R.layout.view_race_constructor -> ConstructorStandingsViewholder(

@@ -1,6 +1,9 @@
 package tmg.flashback.statistics.ui.race.viewholders.qualifying
 
+import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import tmg.flashback.formula1.model.Driver
+import tmg.flashback.formula1.model.DriverConstructor
 import tmg.flashback.formula1.model.RaceQualifyingRoundDriver
 import tmg.flashback.formula1.model.RaceQualifyingType
 import tmg.flashback.statistics.R
@@ -12,15 +15,18 @@ import tmg.utilities.extensions.views.gone
 import tmg.utilities.extensions.views.show
 
 class QualifyingResultQ1Q2ViewHolder(
-    private val orderBy: (raceQualifyingType: RaceQualifyingType) -> Unit,
+    private val driverClicked: (driver: Driver) -> Unit,
     private val binding: ViewRaceQualifyingQ1q2ResultBinding,
-): RecyclerView.ViewHolder(binding.root) {
+): RecyclerView.ViewHolder(binding.root), View.OnClickListener {
+
+    private lateinit var driver: DriverConstructor
 
     init {
-
+        binding.driver.qualiOverviewContainer.setOnClickListener(this)
     }
 
     fun bind(model: RaceItem.QualifyingResultQ1Q2) {
+        this.driver = model.driver
         binding.apply {
             this.driver.bind(model.driver, model.qualified)
 
@@ -56,5 +62,9 @@ class QualifyingResultQ1Q2ViewHolder(
         }
 
         return label.isNotEmpty()
+    }
+
+    override fun onClick(v: View?) {
+        driverClicked(driver.driver)
     }
 }

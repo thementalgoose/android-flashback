@@ -11,7 +11,6 @@ import tmg.flashback.statistics.ui.race.RaceItem
 import tmg.utilities.extensions.views.show
 
 class QualifyingHeaderViewHolder(
-    private val orderBy: (raceQualifyingType: RaceQualifyingType) -> Unit,
     private val binding: ViewRaceQualifyingHeaderBinding
 ) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
     init {
