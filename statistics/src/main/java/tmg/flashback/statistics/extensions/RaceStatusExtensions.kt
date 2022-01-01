@@ -60,6 +60,7 @@ val RaceStatus.iconRes: Int
             "Front wing" -> R.drawable.ic_status_front_wing
             "Water pressure" -> R.drawable.ic_status_water_pressure
             "Seat" -> R.drawable.ic_status_seat
+            "Radiator" -> R.drawable.ic_status_radiator
             "Battery" -> R.drawable.ic_status_battery
             "Out of fuel" -> R.drawable.ic_status_fuel_system
             "Overheating" -> R.drawable.ic_status_fire
