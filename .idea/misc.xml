@@ -6,10 +6,17 @@
         <entry key="app/src/main/res/drawable/app_shortcut_rss.xml" value="0.2222222222222222" />
         <entry key="app/src/main/res/drawable/app_shortcut_search.xml" value="0.2222222222222222" />
         <entry key="app/src/main/res/drawable/ic_search.xml" value="0.18802083333333333" />
+        <entry key="app/src/main/res/xml/filepaths.xml" value="0.11354166666666667" />
         <entry key="common/src/main/res/drawable/ic_close.xml" value="0.2171875" />
         <entry key="common/src/main/res/layout/fragment_bottom_sheet_release_notes.xml" value="0.335" />
         <entry key="core/ui/src/main/res/layout/view_bottom_sheet_item.xml" value="0.20104166666666667" />
+        <entry key="debug/src/main/res/layout/activity_debug.xml" value="0.12760416666666666" />
+        <entry key="formula1/src/main/res/drawable/ic_status_puncture.xml" value="0.14375" />
+        <entry key="formula1/src/main/res/drawable/ic_status_radiator.xml" value="0.14375" />
+        <entry key="formula1/src/main/res/drawable/ic_status_seat.xml" value="0.14375" />
         <entry key="rss/src/main/res/drawable/ic_rss.xml" value="0.18802083333333333" />
+        <entry key="statistics/src/main/res/drawable/ic_star_outline.xml" value="0.14375" />
+        <entry key="statistics/src/main/res/drawable/ic_status_radiator.xml" value="0.14375" />
         <entry key="statistics/src/main/res/drawable/nav_search.xml" value="0.18802083333333333" />
         <entry key="statistics/src/main/res/layout/fragment_bottom_sheet_race_preview.xml" value="0.3532608695652174" />
         <entry key="statistics/src/main/res/layout/layout_dashboard_season_calendar_week.xml" value="0.20104166666666667" />
