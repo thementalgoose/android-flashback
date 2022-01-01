@@ -13,9 +13,11 @@ enum class TrackLayout(
         val override: List<String> = emptyList() // "2020 Sakhir Grand Prix" - Should be "${year} ${raceName}". Update unit tests!
 ) {
     AINTREE("aintree", R.drawable.circuit_aintree),
+    AIN_DIAB("ain-diab", R.drawable.circuit_ain_diab),
     ADELAIDE("adelaide", R.drawable.circuit_adelaide),
     ALBERT_PARK("albert_park", R.drawable.circuit_albert_park),
     ALGARVE("algarve", R.drawable.circuit_algarve),
+    AVUS("avus", R.drawable.circuit_avus),
     PORTIMAO("portimao", R.drawable.circuit_algarve),
     AMERICAS("americas", R.drawable.circuit_americas),
     BUDDH("buddh", R.drawable.circuit_buddh),
