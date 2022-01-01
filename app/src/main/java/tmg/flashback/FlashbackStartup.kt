@@ -54,15 +54,8 @@ class FlashbackStartup(
 
             Shaky.with(application, object : EmailShakeDelegate("thementalgoose@gmail.com") {
                 override fun getTheme() = super.getTheme()
-                override fun getPopupTheme() = R.style.ShakyPopupTheme
+                override fun getPopupTheme() = super.getPopupTheme()
             })
-//            BugShaker.get(application)
-//                    .setEmailAddresses("thementalgoose@gmail.com")
-//                    .setEmailSubjectLine("${application.getString(R.string.app_name)} - App Feedback")
-//                    .setAlertDialogType(AlertDialogType.APP_COMPAT)
-//                    .setLoggingEnabled(BuildConfig.DEBUG)
-//                    .assemble()
-//                    .start()
         }
 
         // App startup
