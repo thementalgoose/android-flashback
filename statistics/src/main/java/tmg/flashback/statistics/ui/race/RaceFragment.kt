@@ -65,10 +65,7 @@ class RaceFragment: BaseFragment<FragmentRaceBinding>() {
                 }
             },
             driverClicked = viewModel.inputs::clickDriver,
-            constructorClicked = viewModel.inputs::clickConstructor,
-            orderBy = {
-
-            }
+            constructorClicked = viewModel.inputs::clickConstructor
         )
         binding.dataList.adapter = raceAdapter
         binding.dataList.layoutManager = LinearLayoutManager(context)
