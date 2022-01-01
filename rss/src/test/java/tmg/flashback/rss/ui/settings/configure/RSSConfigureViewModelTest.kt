@@ -187,8 +187,6 @@ class RSSConfigureViewModelTest: BaseTest() {
                 }
             )
         }
-        list.add(RSSConfigureItem.Header(R.string.rss_configure_header_add, R.string.rss_configure_header_add_subtitle))
-        list.add(RSSConfigureItem.Add)
         list.add(RSSConfigureItem.Header(R.string.rss_configure_header_quick_add, R.string.rss_configure_header_quick_add_subtitle))
         list.addAll(quick
             .sortedBy { it.rssLink
@@ -201,6 +199,8 @@ class RSSConfigureViewModelTest: BaseTest() {
                 RSSConfigureItem.QuickAdd(it)
             }
         )
+        list.add(RSSConfigureItem.Header(R.string.rss_configure_header_add, R.string.rss_configure_header_add_subtitle))
+        list.add(RSSConfigureItem.Add)
         return list
     }
 }

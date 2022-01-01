@@ -106,15 +106,6 @@ class RSSConfigureViewModel(
         else {
             itemList.add(RSSConfigureItem.NoItems)
         }
-
-        if (rssFeedController.showAddCustomFeeds) {
-            itemList.add(
-                RSSConfigureItem.Header(
-                    text = R.string.rss_configure_header_add,
-                    subtitle = R.string.rss_configure_header_add_subtitle
-            ))
-            itemList.add(RSSConfigureItem.Add)
-        }
         itemList.add(
             RSSConfigureItem.Header(
             text = R.string.rss_configure_header_quick_add,
@@ -133,6 +124,15 @@ class RSSConfigureViewModel(
                 RSSConfigureItem.QuickAdd(it)
             }
         )
+
+        if (rssFeedController.showAddCustomFeeds) {
+            itemList.add(
+                RSSConfigureItem.Header(
+                    text = R.string.rss_configure_header_add,
+                    subtitle = R.string.rss_configure_header_add_subtitle
+                ))
+            itemList.add(RSSConfigureItem.Add)
+        }
         list.value = itemList
     }
 }
