@@ -18,7 +18,8 @@ allprojects {
                         swiperefreshlayout                      : "androidx.swiperefreshlayout:swiperefreshlayout:$swipe_refresh",
                         workmanager                             : "androidx.work:work-runtime:$android_workmanager"
                 ],
-                bugshaker                                       : "com.github.stkent:bugshaker:2.0.0",
+                shakey                                          : "com.linkedin.shaky:shaky:3.0.4",
+                falcon                                          : 'com.jraska:falcon:2.2.0',
                 circleimageview                                 : "de.hdodenhof:circleimageview:$circleimageview",
                 kotlin : [
                         stdlib                                  : "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version",
