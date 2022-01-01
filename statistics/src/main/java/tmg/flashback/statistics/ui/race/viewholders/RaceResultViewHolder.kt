@@ -5,6 +5,7 @@ import android.view.View.IMPORTANT_FOR_ACCESSIBILITY_NO
 import android.widget.Toast
 import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import tmg.flashback.formula1.enums.isStatusFinished
 import tmg.flashback.formula1.enums.raceStatusUnknown
 import tmg.flashback.ui.extensions.getColor
@@ -151,7 +152,7 @@ class RaceResultViewHolder(
         when (p0) {
             binding.layoutTime -> {
                 if (status.isNotEmpty() && !status.isStatusFinished()) {
-                    Toast.makeText(itemView.context, getString(R.string.race_dnf_cause, status), Toast.LENGTH_SHORT).show()
+                    Snackbar.make(itemView, getString(R.string.race_dnf_cause, driver.name, status), Snackbar.LENGTH_LONG).show()
                 }
             }
             binding.cell -> {
