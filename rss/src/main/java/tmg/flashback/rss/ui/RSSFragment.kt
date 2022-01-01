@@ -15,6 +15,8 @@ import tmg.flashback.rss.ui.settings.RSSSettingsActivity
 import tmg.flashback.ui.base.BaseFragment
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.viewUrl
+import tmg.utilities.extensions.views.gone
+import tmg.utilities.extensions.views.visible
 
 class RSSFragment: BaseFragment<FragmentRssBinding>() {
 
@@ -79,16 +81,14 @@ class RSSFragment: BaseFragment<FragmentRssBinding>() {
 
         observe(viewModel.outputs.isRefreshing) {
             if (it) {
-                // Sub-optimal workaround for visibility issue in motion layout
                 binding.progress.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_YES
-                binding.progress.alpha = 1.0f
+                binding.progress.visible()
 
                 binding.dataList.alpha = dataListAlpha
                 binding.dataList.locked = true
             } else {
-                // Sub-optimal workaround for visibility issue in motion layout
                 binding.progress.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
-                binding.progress.alpha = 0.0f
+                binding.progress.gone()
 
                 binding.dataList.alpha = 1.0f
                 binding.dataList.locked = false
