@@ -11,6 +11,14 @@
         <entry key="common/src/main/res/layout/fragment_bottom_sheet_release_notes.xml" value="0.335" />
         <entry key="core/ui/src/main/res/layout/view_bottom_sheet_item.xml" value="0.20104166666666667" />
         <entry key="debug/src/main/res/layout/activity_debug.xml" value="0.12760416666666666" />
+        <entry key="formula1/src/main/res/drawable/circuit_adelaide.xml" value="0.14375" />
+        <entry key="formula1/src/main/res/drawable/circuit_ain_diab.xml" value="0.14375" />
+        <entry key="formula1/src/main/res/drawable/circuit_aintree.xml" value="0.14375" />
+        <entry key="formula1/src/main/res/drawable/circuit_albert_park.xml" value="0.14375" />
+        <entry key="formula1/src/main/res/drawable/circuit_avus.xml" value="0.5" />
+        <entry key="formula1/src/main/res/drawable/ic_status_puncture.xml" value="0.14375" />
+        <entry key="formula1/src/main/res/drawable/ic_status_radiator.xml" value="0.14375" />
+        <entry key="formula1/src/main/res/drawable/ic_status_seat.xml" value="0.14375" />
         <entry key="rss/src/main/res/drawable/ic_rss.xml" value="0.18802083333333333" />
         <entry key="rss/src/main/res/layout/view_rss_sources_disabled.xml" value="0.36041666666666666" />
         <entry key="statistics/src/main/res/drawable/ic_star_outline.xml" value="0.14375" />
