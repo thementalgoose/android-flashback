@@ -119,11 +119,11 @@ object AboutThisAppConfig {
                 ),
                 AboutThisAppDependency(
                         order = 6,
-                        dependencyName = "BugShaker Android",
-                        author = "Stuart Kent",
-                        url = "https://github.com/stkent/bugshaker-android",
+                        dependencyName = "Shakey",
+                        author = "LinkedIn",
+                        url = "https://github.com/linkedin/shaky-android",
                         backgroundColor = Color.TRANSPARENT,
-                        imageUrl = "https://avatars0.githubusercontent.com/u/6463980"
+                        imageUrl = "https://avatars.githubusercontent.com/u/357098?s=200"
                 ),
                 AboutThisAppDependency(
                         order = 7,

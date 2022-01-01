@@ -3,9 +3,10 @@ package tmg.flashback
 import android.os.Build
 import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
-import com.github.stkent.bugshaker.BugShaker
-import com.github.stkent.bugshaker.flow.dialog.AlertDialogType
 import com.jakewharton.threetenabp.AndroidThreeTen
+import com.linkedin.android.shaky.EmailShakeDelegate
+import com.linkedin.android.shaky.ShakeDelegate
+import com.linkedin.android.shaky.Shaky
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import tmg.flashback.ads.controller.AdsController
@@ -50,13 +51,11 @@ class FlashbackStartup(
         // Shake to report a bug
         if (crashController.shakeToReport) {
             Log.i("Flashback", "Enabling shake to report")
-            BugShaker.get(application)
-                    .setEmailAddresses("thementalgoose@gmail.com")
-                    .setEmailSubjectLine("${application.getString(R.string.app_name)} - App Feedback")
-                    .setAlertDialogType(AlertDialogType.APP_COMPAT)
-                    .setLoggingEnabled(BuildConfig.DEBUG)
-                    .assemble()
-                    .start()
+
+            Shaky.with(application, object : EmailShakeDelegate("thementalgoose@gmail.com") {
+                override fun getTheme() = super.getTheme()
+                override fun getPopupTheme() = super.getPopupTheme()
+            })
         }
 
         // App startup

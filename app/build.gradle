@@ -161,7 +161,8 @@ dependencies {
     kapt deps.glide.kapt
 
     // BugShaker
-    implementation deps.bugshaker
+    implementation deps.falcon
+    implementation deps.shakey
 
     // Lottie
     implementation deps.lottie
