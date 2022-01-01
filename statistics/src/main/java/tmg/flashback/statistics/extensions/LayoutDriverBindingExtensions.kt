@@ -7,7 +7,7 @@ import tmg.utilities.utils.ColorUtils.Companion.darken
 
 fun LayoutDriverBinding.bindDriver(driver: DriverConstructor) {
     this.tvName.text = driver.driver.name
-    this.tvNumber.text = driver.driver.number.toString()
+    this.tvNumber.text = driver.driver.number?.toString() ?: ""
     this.tvNumber.colorHighlight = darken(driver.constructor.color)
     this.imgFlag.setImageResource(this.root.context.getFlagResourceAlpha3(driver.driver.nationalityISO))
 
