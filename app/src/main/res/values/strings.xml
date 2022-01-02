@@ -23,5 +23,6 @@
 
     <!-- Feature banners -->
     <string name="feature_banner_notifications">Get notifications for practice, qualifying and race events for upcoming race weekends!</string>
+    <string name="feature_banner_notifications_finished">You can change this in the settings at any time</string>
 
 </resources>
