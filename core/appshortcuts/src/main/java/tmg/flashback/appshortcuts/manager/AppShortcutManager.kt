@@ -7,55 +7,48 @@ import android.graphics.drawable.Icon
 import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.pm.ShortcutInfoCompat
+import androidx.core.content.pm.ShortcutManagerCompat
+import androidx.core.graphics.drawable.IconCompat
 import tmg.flashback.appshortcuts.models.ShortcutInfo
 
 class AppShortcutManager(
     private val applicationContext: Context
 ) {
 
-    private val shortcutManager: ShortcutManager? by lazy {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
-            applicationContext.getSystemService(Context.SHORTCUT_SERVICE) as? ShortcutManager
-        } else {
-            null
-        }
-    }
-
     fun setDynamicShortcuts(shortcuts: List<ShortcutInfo>) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
-            shortcutManager?.dynamicShortcuts = shortcuts.mapNotNull { buildShortcutModel(it) }
+            ShortcutManagerCompat.setDynamicShortcuts(applicationContext, shortcuts.mapNotNull { buildShortcutModel(it) })
         }
     }
 
     fun addDynamicShortcut(shortcut: ShortcutInfo) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
             val shortcutModel = buildShortcutModel(shortcut) ?: return
-            val list = shortcutManager?.dynamicShortcuts?.toMutableList() ?: mutableListOf()
-            list.add(shortcutModel)
-            shortcutManager?.dynamicShortcuts = list
+            ShortcutManagerCompat.pushDynamicShortcut(applicationContext, shortcutModel)
         }
     }
 
     fun removeDynamicShortcut(shortcutId: String) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
-            shortcutManager?.removeDynamicShortcuts(listOf(shortcutId))
+            ShortcutManagerCompat.removeDynamicShortcuts(applicationContext, listOf(shortcutId))
         }
     }
 
     fun clearDynamicShortcuts() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
-            shortcutManager?.dynamicShortcuts = emptyList()
+            ShortcutManagerCompat.removeAllDynamicShortcuts(applicationContext)
         }
     }
 
-    private fun buildShortcutModel(model: ShortcutInfo): android.content.pm.ShortcutInfo? {
+    private fun buildShortcutModel(model: ShortcutInfo): ShortcutInfoCompat? {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
-            android.content.pm.ShortcutInfo.Builder(applicationContext, model.id)
+            ShortcutInfoCompat.Builder(applicationContext, model.id)
                 .setShortLabel(applicationContext.getString(model.shortLabel))
                 .setLongLabel(applicationContext.getString(model.longLabel))
-                .setIcon(Icon.createWithResource(applicationContext, model.icon))
+                .setIcon(IconCompat.createWithResource(applicationContext, model.icon))
                 .setDisabledMessage(applicationContext.getString(model.unavailableMessage))
-                .setIntent(model.intentResolver(applicationContext))
+                .setIntent(model.intentResolver(applicationContext.applicationContext))
                 .build()
         } else {
             null
