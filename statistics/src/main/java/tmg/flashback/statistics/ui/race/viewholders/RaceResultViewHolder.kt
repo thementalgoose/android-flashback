@@ -152,7 +152,7 @@ class RaceResultViewHolder(
         when (p0) {
             binding.layoutTime -> {
                 if (status.isNotEmpty() && !status.isStatusFinished()) {
-                    Snackbar.make(itemView, getString(R.string.race_dnf_cause, driver.name, status), Snackbar.LENGTH_LONG).show()
+                    Snackbar.make(itemView, getString(R.string.race_dnf_cause, driver.name, status), 4000).show()
                 }
             }
             binding.cell -> {

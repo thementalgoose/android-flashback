@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import androidx.fragment.app.setFragmentResultListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import org.koin.android.ext.android.inject
@@ -13,7 +14,7 @@ import tmg.flashback.ui.navigation.NavigationProvider
 import tmg.flashback.DebugController
 import tmg.flashback.databinding.FragmentDashboardListBinding
 import tmg.flashback.rss.ui.RSSActivity
-import tmg.flashback.statistics.R
+import tmg.flashback.R
 import tmg.flashback.ui.dashboard.DashboardNavigationCallback
 import tmg.flashback.ui.settings.SettingsAllActivity
 import tmg.flashback.statistics.ui.dashboard.onboarding.OnboardingNotificationBottomSheetFragment
@@ -92,16 +93,20 @@ class ListFragment: BaseFragment<FragmentDashboardListBinding>() {
 
         observeEvent(viewModel.outputs.openNotificationsOnboarding) {
             OnboardingNotificationBottomSheetFragment()
-                .show(parentFragmentManager, "UP_NEXT_ONBOARDING")
+                .show(parentFragmentManager, "FEATURE_BANNER_ONBOARDING")
+        }
+
+        setFragmentResultListener("FEATURE_BANNER_ONBOARDING") { key, bundle ->
+            Snackbar.make(binding.root, getString(R.string.feature_banner_notifications_finished), 4000).show()
         }
 
         observeEvent(viewModel.outputs.defaultSeasonUpdated) {
             when (it) {
                 null -> Snackbar
-                        .make(binding.list, getString(R.string.dashboard_season_list_default_banner_automatic), Snackbar.LENGTH_LONG)
+                        .make(binding.list, getString(R.string.dashboard_season_list_default_banner_automatic), 4000)
                         .show()
                 else -> Snackbar
-                        .make(binding.list, getString(R.string.dashboard_season_list_default_banner_user, it), Snackbar.LENGTH_LONG)
+                        .make(binding.list, getString(R.string.dashboard_season_list_default_banner_user, it), 4000)
                         .setAction(R.string.dashboard_season_list_default_banner_revert) {
                             viewModel.inputs.clickClearDefaultSeason()
                         }

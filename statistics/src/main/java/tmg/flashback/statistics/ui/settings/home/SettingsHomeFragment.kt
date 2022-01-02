@@ -23,7 +23,7 @@ class SettingsHomeFragment: SettingsFragment<SettingsHomeViewModel>() {
         super.onViewCreated(view, savedInstanceState)
 
         observeEvent(viewModel.outputs.defaultSeasonChanged) {
-            Snackbar.make(view, R.string.settings_default_season_updated, Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(view, R.string.settings_default_season_updated, 4000).show()
         }
     }
 }
