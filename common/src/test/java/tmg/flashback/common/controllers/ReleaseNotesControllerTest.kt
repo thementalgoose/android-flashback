@@ -40,32 +40,20 @@ internal class ReleaseNotesControllerTest {
 
     @Test
     fun `major release version found when major found between last and now`() {
-        every { mockBuildConfigManager.versionCode } returns 30
-        every { mockReleaseNotesRepository.releaseNotesSeenAppVersion } returns 27
+        every { mockBuildConfigManager.versionCode } returns 5
+        every { mockReleaseNotesRepository.releaseNotesSeenAppVersion } returns 3
         initSUT()
 
-        assertEquals(listOf(ReleaseNotes.VERSION_28), sut.majorReleaseNotes)
+        assertEquals(listOf(ReleaseNotes.VERSION_4), sut.majorReleaseNotes)
     }
 
     @Test
     fun `major release version doesn't include last version`() {
-        every { mockBuildConfigManager.versionCode } returns 31
-        every { mockReleaseNotesRepository.releaseNotesSeenAppVersion } returns 28
+        every { mockBuildConfigManager.versionCode } returns 4
+        every { mockReleaseNotesRepository.releaseNotesSeenAppVersion } returns 2
         initSUT()
 
-        assertEquals(listOf(ReleaseNotes.VERSION_31), sut.majorReleaseNotes)
-    }
-
-    @Test
-    fun `major release version only takes 3 latest items when multiple found`() {
-        every { mockBuildConfigManager.versionCode } returns 40
-        every { mockReleaseNotesRepository.releaseNotesSeenAppVersion } returns 27
-        initSUT()
-
-        assertEquals(
-            listOf(ReleaseNotes.VERSION_40, ReleaseNotes.VERSION_32, ReleaseNotes.VERSION_31),
-            sut.majorReleaseNotes
-        )
+        assertEquals(listOf(ReleaseNotes.VERSION_4), sut.majorReleaseNotes)
     }
 
     @Test

@@ -33,7 +33,7 @@ class ReleaseNotesController(
                         .sortedByDescending { it.version }
                         .filter { it.version in (lastVersion + 1)..currentVersion }
                         .filter { it.isMajor }
-                        .take(3)
+                        .take(1)
             } else {
                 emptyList()
             }

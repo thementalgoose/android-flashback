@@ -237,8 +237,6 @@ internal class UpNextRepositoryTest {
     //endregion
 
     companion object {
-        private const val keyUpNext: String = "up_next"
-
         private const val keyNotificationRace: String = "UP_NEXT_NOTIFICATION_RACE"
         private const val keyNotificationQualifying: String = "UP_NEXT_NOTIFICATION_QUALIFYING"
         private const val keyNotificationFreePractice: String = "UP_NEXT_NOTIFICATION_FREE_PRACTICE"
