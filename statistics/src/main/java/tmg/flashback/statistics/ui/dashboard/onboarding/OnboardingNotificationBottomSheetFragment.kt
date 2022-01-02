@@ -3,6 +3,8 @@ package tmg.flashback.statistics.ui.dashboard.onboarding
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import androidx.core.os.bundleOf
+import androidx.fragment.app.setFragmentResult
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.android.viewmodel.ext.android.viewModel
 import tmg.flashback.statistics.databinding.FragmentBottomSheetNotificationsOnboardingBinding
@@ -34,5 +36,7 @@ class OnboardingNotificationBottomSheetFragment: BaseBottomSheetFragment<Fragmen
         observe(viewModel.outputs.notificationPreferences) {
             adapter.list = it
         }
+
+        setFragmentResult("FEATURE_BANNER_ONBOARDING", bundleOf())
     }
 }
