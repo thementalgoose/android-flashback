@@ -1,619 +1,183 @@
 {
   "notes": [
     {
-      "versionCode": 1,
-      "versionName": "1.0.0",
+      "versionCode": 2,
+      "versionName": "1.x.x",
       "isMajor": true,
       "title": "",
       "notes": [
         "View a season overview",
         "See the results for all F1 races from 2019 dating back to 2000",
         "See the qualifying results for Q1, Q2 and Q3 for all races",
-        "As of May 2020 it is unclear what the 2020 season will look like, so I cannot guarantee that new races will be updated live"
-      ]
-    },
-    {
-      "versionCode": 2,
-      "versionName": "1.0.2",
-      "isMajor": false,
-      "title": "",
-      "notes": [
+        "As of May 2020 it is unclear what the 2020 season will look like, so I cannot guarantee that new races will be updated live",
         "Changed app flow to default to the season overview screens rather than the 2019 season",
         "Changed theme throughout so it can be more customisable down the road"
       ]
     },
     {
       "versionCode": 4,
-      "versionName": "2.0.0",
+      "versionName": "2.x.x",
       "isMajor": true,
       "title": "",
       "notes": [
+        "All F1 races! Look back to the start of the championship in 1950",
         "Overhauled UI for viewing the history of F1",
-        "Flashback now supports all races from 1950 to 2019",
-        "See a breakdown of the constructor standings per race",
-        "Fixed some blank spaces in 2017 race data",
-        "Updated components to 2.0.1"
-      ]
-    },
-    {
-      "versionCode": 6,
-      "versionName": "3.0.0",
-      "isMajor": true,
-      "title": "",
-      "notes": [
         "Added championship standings options to all seasons",
-        "Added daily sync for current",
-        "Updated firebase dependencies"
-      ]
-    },
-    {
-      "versionCode": 7,
-      "versionName": "4.0.0",
-      "isMajor": true,
-      "title": "",
-      "notes": [
-        "Shifted app design over to a Material Design 2 inspired UI",
-        "Improved network state management",
-        "The usual disclaimer of general data patching and bug fixes"
-      ]
-    },
-    {
-      "versionCode": 8,
-      "versionName": "4.1.0",
-      "isMajor": true,
-      "title": "",
-      "notes": [
-        "Added dark mode toggle to settings",
-        "Added grid penalty indicator to race qualifying view"
-      ]
-    },
-    {
-      "versionCode": 10,
-      "versionName": "4.3.0",
-      "isMajor": true,
-      "title": "",
-      "notes": [
-        "Added news feed to the app",
-        "Added ability to toggle preferred news sources",
-        "Added status for race data being synchronised"
-      ]
-    },
-    {
-      "versionCode": 13,
-      "versionName": "4.3.5",
-      "isMajor": true,
-      "title": "",
-      "notes": [
-        "Moved news to its own screen",
-        "Fixed race status oversight in prep for 2020 season start",
-        "Changed loading stack to only show spinner and not skeleton views on initial load",
-        "Tidied up network logging",
-        "Fixed pit lane starts not being filtered properly in qualifying view"
-      ]
-    },
-    {
-      "versionCode": 14,
-      "versionName": "4.4.1",
-      "isMajor": false,
-      "title": "",
-      "notes": [
-        "Addressed some bugs that have risen due to season starting",
-        "Fixed issue with partial qualifying data not displaying when race data is unavailable",
-        "Added setting to expand season list to full height by default",
-        "Fixed some wording oversights with races being scheduled in the future or past",
-        "Fixed optional message being displayed",
-        "Moved app banner position to pinned position at the top of the display"
-      ]
-    },
-    {
-      "versionCode": 15,
-      "versionName": "4.4.3",
-      "isMajor": true,
-      "title": "",
-      "notes": [
-        "Added track layout images to some of the modern tracks",
-        "Added qualifying and race data distinction with data availability",
-        "Added constructor colour bar to qualifying and race details to make drivers constructor more obvious",
-        "Fixed DNF label showing when driver finishes normally",
-        "Fixed message label appearing in top of screen properly"
-      ]
-    },
-    {
-      "versionCode": 16,
-      "versionName": "4.4.6",
-      "isMajor": true,
-      "title": "",
-      "notes": [
-        "Updated layout for driver season status to be less confusing",
-        "Fixed theming bugs on maps links",
-        "Fixed incorrect round being used as reference message for driver stats"
-      ]
-    },
-    {
-      "versionCode": 18,
-      "versionName": "4.5.0",
-      "isMajor": false,
-      "title": "",
-      "notes": [
-        "Backend fixes to data management",
-        "Added notification for when results are being pulled",
-        "Fix for Perez qualifying data showing up in Round 4 2020 data",
-        "Fix for closing driver season dropdown collapsing again",
-        "Moved constructor color bars to edge"
-      ]
-    },
-    {
-      "versionCode": 20,
-      "versionName": "4.6.1",
-      "isMajor": false,
-      "title": "",
-      "notes": [
-        "Added RaceFans.net as a supported news site in the news tab",
-        "Bringing project dependencies up to date",
-        "Backend prep for driver career breakdown",
-        "Fixed some race data format errors from races in 1962",
-        "Improved in-app experience during a sync event after a race"
-      ]
-    },
-    {
-      "versionCode": 21,
-      "versionName": "4.7.0",
-      "isMajor": true,
-      "title": "",
-      "notes": [
-        "Adds driver overview. See a history of any drivers performance in F1!",
-        "Fixed edge case crash in driver season data updating whilst app is open",
-        "Usual assortment of bugfixes and improvements"
-      ]
-    },
-    {
-      "versionCode": 22,
-      "versionName": "4.7.2",
-      "isMajor": false,
-      "title": "",
-      "notes": [
-        "Fixes issue with 2020 Racing Point penalty not being shown in the preview",
-        "Fixed position delta always being 0 for podium sitters",
-        "Fixed DNF label showing up for not finished status"
-      ]
-    },
-    {
-      "versionCode": 23,
-      "versionName": "4.7.3",
-      "isMajor": false,
-      "title": "",
-      "notes": [
-        "Fixes issue with driver stats qualifying data taking into account DNS",
-        "Adds ability to customise bar animations throughout the app",
-        "Fixes typos throughout error messages"
-      ]
-    },
-    {
-      "versionCode": 24,
-      "versionName": "4.7.4",
-      "isMajor": false,
-      "title": "",
-      "notes": [
-        "Fixes issue with track layout displayed in 2020 Sakhir Grand Prix race",
-        "Migrates to Firebase crashlytics",
-        "Usual assortment of bugfixes and improvements"
-      ]
-    },
-    {
-      "versionCode": 25,
-      "versionName": "4.7.5",
-      "isMajor": false,
-      "title": "",
-      "notes": [
-        "Adds setting option to open news articles in external browser by default",
-        "Fixes crash in certain seasons in the 1980s",
-        "Fixes theming issue with circuit icons that are not fully supported"
-      ]
-    },
-    {
-      "versionCode": 26,
-      "versionName": "4.7.8",
-      "isMajor": false,
-      "title": "",
-      "notes": [
-        "Adds wikipedia links to driver overview, race and circuit information screens",
-        "Fixes some constructor penalties not being applied to disqualified teams throughout F1"
+        "See a breakdown of the constructor standings per race",
+        "Fixed some blank spaces in 2017 race data"
       ]
     },
     {
       "versionCode": 27,
-      "versionName": "4.8.0",
+      "versionName": "4.x.x",
       "isMajor": false,
       "title": "",
       "notes": [
+        "Material Design 2 inspired UI! ",
+        "Dark mode!",
+        "RSS feed! Pick and choose your favourite Formula 1 RSS feeds, or add your own!",
+        "Driver Overview! See a history of any drivers performance in F1!",
+        "Added track layout images to some of the modern tracks",
+        "Adds setting option to open news articles in external browser by default",
+        "Adds wikipedia links to driver overview, race and circuit information screens",
+        "Adds support for one off track layouts for certain races",
+        "Added grid penalty indicator to race qualifying view",
+        "Moved app banner position to pinned position at the top of the display",
+        "Adds ability to customise bar animations throughout the app",
+        "Adds constructor colour bars around the app where constructor is shown",
+        "Added setting to expand season list to full height by default",
         "Handles constructors championship starting in 1958 properly",
-        "Tweaked layout of Driver Overview season navigation"
-      ]
-    },
-    {
-      "versionCode": 28,
-      "versionName": "5.0.0",
-      "isMajor": true,
-      "title": "",
-      "notes": [
-        "Constructor overview! View a simplistic history of a constructor in F1",
-        "Fixes more than 5 drivers under constructor not stacking properly"
-      ]
-    },
-    {
-      "versionCode": 30,
-      "versionName": "5.1.0",
-      "isMajor": false,
-      "title": "",
-      "notes": [
-        "Migrated news away to RSS feed - Configure predefined or your own RSS feeds for formula 1 news",
-        "Fixed typos in settings panel",
-        "Fixed edge case crash in 1990s qualifying data"
-      ]
-    },
-    {
-      "versionCode": 31,
-      "versionName": "5.2.1",
-      "isMajor": true,
-      "title": "",
-      "notes": [
-        "Increases minimum support to Android 6.0 Marshmellow (API 23)",
-        "Adds initial landscape support and a custom view for the home screen",
-        "Changes RSS news animation and close animation to reduce crash rates",
-        "Fixes crash when Show on map is pressed on certain devices",
-        "Fixes some theming issues for new RSS feed section of the app",
-        "Updated firebase analytics to 18.0.0",
-        "Updated firebase auth to 20.0.1",
-        "Updated firebase firestore to 22.0.0",
-        "Updated firebase crashlytics to 17.3.0"
-      ]
-    },
-    {
-      "versionCode": 32,
-      "versionName": "5.3.0",
-      "isMajor": true,
-      "title": "",
-      "notes": [
-        "Added notification support! Get notified for races and qualifying sessions 30 minutes before",
-        "Fixed theming gaps in Android 6.0 and 6.1"
-      ]
-    },
-    {
-      "versionCode": 33,
-      "versionName": "5.3.1",
-      "isMajor": false,
-      "title": "",
-      "notes": [
-        "Adds copy of privacy policy in app",
-        "Adds auto enrolment into notification support"
-      ]
-    },
-    {
-      "versionCode": 34,
-      "versionName": "5.3.4",
-      "isMajor": false,
-      "title": "",
-      "notes": [
-        "Fixes driver overview where drivers swap teams mid season",
-        "Fixes typos in notification channels",
-        "Fixes some crashes in RSS configure screen",
-        "Tweaked layout for driver overview constructor tab to make progression clearer"
-      ]
-    },
-    {
-      "versionCode": 36,
-      "versionName": "5.3.6",
-      "isMajor": false,
-      "title": "",
-      "notes": [
-        "Adds window for default season being shown to be previous year until calendar is confirmed",
-        "Usual assortment dependency updates, bug fixes and small typos"
-      ]
-    },
-    {
-      "versionCode": 38,
-      "versionName": "5.3.8",
-      "isMajor": false,
-      "title": "",
-      "notes": [
-        "App preparations for 2021! Will default to 2020 until 2021 calendar is confirmed",
-        "Moves season switcher from navigation bar to toolbar in preparation for search",
-        "Adds circuit diagrams for Buddh and Fuji circuits",
-        "Adds option to fade drivers who retire from a Grand Prix in race overview",
-        "Bug fixes to address initial load issues with images"
-      ]
-    },
-    {
-      "versionCode": 40,
-      "versionName": "5.5.0",
-      "isMajor": true,
-      "title": "",
-      "notes": [
-        "Adds a new dashboard homescreen with sliding panes for season list",
-        "Adds a new Up Next section to the season list so you can see how long it is until the next race",
-        "Adds ability to show qualifying delta by long clicking qualifying results",
-        "Fix for progress bar values sometimes being fractionally incorrect after animation",
-        "Other minor bug fixes and performance improvements"
-      ]
-    },
-    {
-      "versionCode": 45,
-      "versionName": "5.6.1",
-      "isMajor": false,
-      "title": "",
-      "notes": [
-        "Adds swipe to dismiss gesture throughout the app",
-        "Adds ability to set a default season to load the app into",
-        "Adds 6 more track layouts to races and circuit screens",
-        "Adds ability to view website link for RSS sources",
-        "Fixes back behavior through the app",
-        "Other minor bug fixes and crash fixes"
-      ]
-    },
-    {
-      "versionCode": 47,
-      "versionName": "5.6.7",
-      "isMajor": true,
-      "title": "",
-      "notes": [
-        "Adds an up next widget for your home screen!",
-        "Fixes over-animation throughout menu list when nothing seems to change",
-        "Minor optimisations for tablet layout sizing",
-        "Fixes some rare crashes with certain older seasons dates being misaligned",
-        "App will now handle errors much more gracefully and notify the flashback team of inconsistent data"
-      ]
-    },
-    {
-      "versionCode": 48,
-      "versionName": "5.6.8",
-      "isMajor": false,
-      "title": "",
-      "notes": [
-        "Up next section now supports event start times!",
-        "Changed default season settings management",
-        "Bug fixes and backend updates"
-      ]
-    },
-    {
-      "versionCode": 50,
-      "versionName": "5.7.0",
-      "isMajor": false,
-      "title": "",
-      "notes": [
-        "Added categories to the settings screens",
-        "Fixed bug in theme preference not being applied immediately",
-        "Updated android material to 1.3.0",
-        "Updated android lifecycle to 2.3.0",
-        "Updated firebase crashlytics to 2.5.0"
-      ]
-    },
-    {
-      "versionCode": 53,
-      "versionName": "5.7.3",
-      "isMajor": false,
-      "title": "",
-      "notes": [
-        "Adds 2 more track layouts to races and circuits screens",
-        "Minor updates in prep for 2021 season",
-        "Batch of tech debt and dependency updates"
-      ]
-    },
-    {
-      "versionCode": 54,
-      "versionName": "5.7.5",
-      "isMajor": false,
-      "title": "",
-      "notes": [
-        "Adds FP1, FP2, FP3, Qualifying and Race times for up next section",
-        "Adds Saudi Arabia track layout",
-        "Fixed bugs in up next highlighting"
+        "Changed loading stack to only show spinner and not skeleton views on initial load",
+        "Fixed race status oversight in prep for 2020 season start",
+        "Fixed pit lane starts not being filtered properly in qualifying view",
+        "Fixes issue with driver stats qualifying data taking into account DNS",
+        "Fixes crash in certain seasons in the 1980s",
+        "Fixed some wording oversights with races being scheduled in the future or past",
+        "Fixed issue with partial qualifying data not displaying when race data is unavailable",
+        "Fixed DNF label showing up for not finished status",
+        "Fix for closing driver season dropdown collapsing again",
+        "Fixed DNF label showing when driver finishes normally",
+        "Fixed message label appearing in top of screen properly",
+        "Fixed position delta always being 0 for podium sitters",
+        "Fixed some race data format errors from races in 1962",
+        "Fixes theming issue with circuit icons that are not fully supported",
+        "Fixes some constructor penalties not being applied to disqualified teams throughout F1"
       ]
     },
     {
       "versionCode": 57,
-      "versionName": "5.9.1",
+      "versionName": "5.x.x",
       "isMajor": false,
       "title": "",
       "notes": [
-        "Updates layout of schedule view on the home screen! Added more subtle animations throughout",
-        "Reduced time taken to load RSS feed",
-        "Adds a new calendar view to the dashboard",
+        "Constructor overview! View a simplistic history of a constructor in F1",
+        "Widgets! Add an up next widget to your home screen",
+        "Adds FP1, FP2, FP3, Qualifying and Race times for races that are up next",
+        "Notification support! Get notified when a race or qualifying session 30 minutes before it starts",
+        "Increases minimum support to Android 6.0 Marshemllow (API 23)",
+        "Adds more track layouts, including upcoming Saudi Arabia and Miami",
+        "Adds ability to set a default season to load the app into",
+        "Moves season switcher from navigation bar to toolbar in preparation for search",
+        "Added more subtle animations throughout",
+        "Modernises layout of schedule view on the home screen!",
         "Made it clearer when data is currently unavailable in the app",
-        "Bug fixes and backend improvements, mainly around loading feedback"
-      ]
-    },
-    {
-      "versionCode": 70,
-      "versionName": "6.1.1",
-      "isMajor": true,
-      "title": "",
-      "notes": [
-        "Changes colour scheme from purple to blue",
-        "Fixed bug in season list showing glitched indicator when certain defaults are selected",
-        "Adds pull to refresh support for RSS feed",
-        "Fixed a bug with the calendar view where single digit days get squashed"
-      ]
-    },
-    {
-      "versionCode": 75,
-      "versionName": "6.1.5",
-      "isMajor": false,
-      "title": "",
-      "notes": [
-        "Updated layout for the rest of the apps to adopt Android 12 style collapsible headers"
-      ]
-    },
-    {
-      "versionCode": 77,
-      "versionName": "6.1.9",
-      "isMajor": false,
-      "title": "",
-      "notes": [
-        "Moved up next section to dedicated screen on the right hand side of the dashboard",
-        "Bug fixes in animation delay for dashboard navigation bar",
-        "Bug fixes in data management to fix points counting for pre 1980 seasons"
-      ]
-    },
-    {
-      "versionCode": 80,
-      "versionName": "6.2.0",
-      "isMajor": false,
-      "title": "Sprint Qualifying",
-      "notes": [
-        "Sprint qualifying support! Now supports grand prix sprint qualifying data",
-        "Layout tweaks throughout in order to make UI look more consistent"
-      ]
-    },
-    {
-      "versionCode": 82,
-      "versionName": "6.2.3",
-      "isMajor": false,
-      "title": "",
-      "notes": [
-        "Adds next race titlebar header",
-        "Tweaked settings wording to make animation and theming preferences clearer",
-        "Adds day countdown for next race events",
-        "Fixes bug in negative penalties being shown for constructor due to sprint qualifying"
-      ]
-    },
-    {
-      "versionCode": 86,
-      "versionName": "6.2.6",
-      "isMajor": false,
-      "title": "",
-      "notes": [
-        "Adds new horizontal animation for calendar view tracks!",
-        "Usual assortment of bug fixes"
-      ]
-    },
-    {
-      "versionCode": 91,
-      "versionName": "6.3.2",
-      "isMajor": true,
-      "title": "Android 12 support",
-      "notes": [
-        "Adds initial support for android 12",
-        "Adds android 12 splash screen support",
-        "Adds support for half points throughout season in light of 2021 Belgium Grand Prix result",
-        "More minor fixes in preparation for last half of 2021 season"
-      ]
-    },
-    {
-      "versionCode": 93,
-      "versionName": "6.3.4",
-      "isMajor": false,
-      "title": "",
-      "notes": [
-        "Adds sprint qualifying fixes",
-        "Minor bugs for android 12 compatibility with widgets and notifications"
-      ]
-    },
-    {
-      "versionCode": 94,
-      "versionName": "6.3.5",
-      "isMajor": false,
-      "title": "",
-      "notes": [
-        "Accessibility bug fixes throughout all screen",
-        "Minor bug fixes, general dependency updates and refactoring"
-      ]
-    },
-    {
-      "versionCode": 96,
-      "versionName": "6.4.1",
-      "isMajor": true,
-      "title": "Local notifications",
-      "notes": [
-        "Adds notification support for free practice",
-        "Improves experience of enroling in notifications"
-      ]
-    },
-    {
-      "versionCode": 100,
-      "versionName": "6.4.5",
-      "isMajor": false,
-      "title": "",
-      "notes": [
-        "Adds more track layouts for older F1 races",
-        "Minor theming updates in Up next section",
-        "Minor bug fixes to new notification support"
-      ]
-    },
-    {
-      "versionCode": 101,
-      "versionName": "6.4.6",
-      "isMajor": false,
-      "title": "",
-      "notes": [
-        "Content bug fixes throughout the app in older seasons",
-        "Improved error handling when data is missing"
-      ]
-    },
-    {
-      "versionCode": 105,
-      "versionName": "6.5.3",
-      "isMajor": true,
-      "title": "Search",
-      "notes": [
-        "Flashback now supports search! Search for any driver, constructor, circuit or race from the entire history of F1",
-        "Updates notification banners to be more descriptive",
-        "Minor updates to settings ordering and wording"
-      ]
-    },
-    {
-      "versionCode": 108,
-      "versionName": "6.5.6",
-      "isMajor": false,
-      "title": "",
-      "notes": [
-        "Adds sound and priority to notifications",
-        "Minor behind the scenes refactoring"
+        "Adds copy of privacy policy in app",
+        "Updates layout for driver overview constructor tab to make progression clearer",
+        "Reduced time taken to load RSS feed",
+        "Fixed edge case crash in 1990s qualifying data",
+        "Minor optimisations for tablet layout sizing",
+        "Fixed theming gaps in Android 6.0 and 6.1",
+        "Fixes typos in notification channels",
+        "Fixes more than 5 drivers under constructor not stacking properly",
+        "Fixes crash when Show on map is pressed on certain devices",
+        "Fixes some theming issues for new RSS feed section of the app",
+        "Fixes some rare crashes in RSS configure screen",
+        "Fixes error handling to automaticallu notify the Flashback Team of inconsistent data",
+        "Fixes driver overview where drivers swap teams mid season",
+        "Fixes for progress bar values sometimes being fractionally incorrect after animation",
+        "Fixes some rare crashes with certain older seasons dates being misaligned",
+        "Fixed bugs in up next highlighting",
+        "Fixed bug in theme preference not being applied immediately",
+        "More minor bug fixes and accessibility improvements"
       ]
     },
     {
       "versionCode": 110,
-      "versionName": "6.5.8",
+      "versionName": "6.x.x",
       "isMajor": false,
       "title": "",
       "notes": [
+        "Search! Search for any driver, constructor, circuit or race from the entire history of F1",
+        "Sprint qualifying! Now supports grand prix sprint qualifying data",
+        "Calendar view! See all F1 seasons in the calendar view",
+        "Android 12! Including the new splash screen, collapsible style headers and material you colour themes",
+        "Purple becomes blue! Flashbacks primary colour is now blue",
+        "Moves up next section to be integrated into the rest of the app!",
+        "Adds notification support for free practice",
+        "Adds more track layouts for older F1 circuits",
+        "Adds sound and priority to notifications",
+        "Adds pull to refresh support for RSS feed",
+        "Accessibility bug fixes throughout all screens",
+        "Updates notification banners to be more descriptive",
+        "Minor theming updates in Up next section",
+        "Minor bug fixes to new notification support",
+        "More minor fixes in preparation for last half of 2021 season",
+        "Minor updates to settings ordering and wording",
+        "Improved error handling when data is missing",
+        "Improves experience of enrolling in notifications",
         "Simplifies wording for default season management",
-        "Fixes some padding issues for Widgets in Android 12",
-        "Fixes some crashes that happen on non-english devices",
+        "Content bug fixes throughout the app in older seasons",
+        "Bug fixes in data management to fix points counting for pre 1980 seasons",
+        "Fixed bug in animation delay for dashboard navigation bar",
+        "Fixed bug in season list showing glitched indicator when certain defaults are selected",
+        "Fixed bug in negative penalties being shown for constructor due to sprint qualifying",
+        "Fixed bugs with rendering half points throughout season in light of 2021 Belgium Grand Prix result",
+        "Fixed bug with the calendar view where single digit days get squashed",
+        "Fixed some padding issues for Widgets in Android 12",
+        "Fixed some crashes that happen on non-english devices",
         "Usual assortment of bug fixes and preparations for new features"
       ]
     },
     {
-      "versionCode": 119,
-      "versionName": "7.0.8",
+      "versionCode": 131,
+      "versionName": "7.x.x",
       "isMajor": false,
-      "title": "Rewrite",
+      "title": "",
       "notes": [
         "Rewrites process of caching and updating race data to be persistent and auto updating",
         "Adds schedule preview to upcoming races in home screen",
         "Adds more animations around content loading",
         "Adds pull to refresh everywhere",
-        "Adds new notification banner"
-      ]
-    },
-    {
-      "versionCode": 131,
-      "versionName": "7.2.1",
-      "isMajor": false,
-      "title": "",
-      "notes": [
+        "Adds new notification banner",
         "Adds autoscrolling to the current race when you open the app",
         "Adds practice, qualifying and race times to the race views for supported races",
         "Fixes issues with timezones not displaying correct race times in details view",
-        "Minor theming updates for Android 12 Material you"
+        "Minor theming updates for Android 12 Material you",
+        "Usual assortment of bug fixes and accessibility improvements"
       ]
     },
     {
-      "versionCode": 188,
-      "versionName": "8.0.0",
+      "versionCode": 154,
+      "versionName": "8.0.154",
       "isMajor": false,
       "title": "",
       "notes": [
-        "Bug fixes and improvements"
+        "2022! More content and feature preparations for the 2022 season, including provisional calendar with driver and constructor lineup",
+        "Adds race highlights from F1 youtube channel to recent races"
+      ]
+    },
+    {
+      "versionCode": 160,
+      "versionName": "8.1.160",
+      "isMajor": false,
+      "title": "",
+      "notes": [
+        "Adds all track layouts for all circuits in the history of the F1 championship",
+        "Fixes old qualifying data showing some drivers numbers as null",
+        "Fixes drivers being clickable in qualifying view to go to their overview",
+        "Fixes accessibility navigation on race view, now navigates in podium order",
+        "Fixes shake to report functionality by migrating to Shaky",
+        "Fixes RSS loading indicator appearing when no sources are selected"
       ]
     }
   ]
