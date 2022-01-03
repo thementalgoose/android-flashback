@@ -6,6 +6,10 @@
     <string name="notification_channel_free_practice">Free Practice starts</string>
     <string name="notification_channel_info">Season information</string>
 
+    <!-- Notifications Remote -->
+    <string name="notification_channel_race_notify">Race results available</string>
+    <string name="notification_channel_qualifying_notify">Qualifying results available</string>
+
     <!-- Settings -->
     <string name="settings_notifications_title">Notifications</string>
     <string name="settings_notifications_channel_qualifying_title">Qualifying</string>

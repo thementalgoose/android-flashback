@@ -28,7 +28,6 @@ internal class NotificationControllerTest: BaseTest() {
     @Test
     fun `subscribe method subscribes to topics if all are set to default`() = coroutineTest {
         coEvery { mockRemoteNotificationManager.subscribeToTopic(any()) } returns true
-        every { mockNotificationRepository.enabledSeasonInfo } returns NotificationRegistration.DEFAULT
 
         initSUT()
         runBlockingTest {
@@ -41,16 +40,11 @@ internal class NotificationControllerTest: BaseTest() {
             mockRemoteNotificationManager.unsubscribeToTopic("race")
             mockRemoteNotificationManager.unsubscribeToTopic("qualifying")
         }
-        verify {
-            mockNotificationRepository.enabledSeasonInfo
-            mockNotificationRepository.enabledSeasonInfo = NotificationRegistration.OPT_IN
-        }
     }
 
     @Test
     fun `subscribe method doesnt update repository if subscription fails`() {
         coEvery { mockRemoteNotificationManager.subscribeToTopic(any()) } returns false
-        every { mockNotificationRepository.enabledSeasonInfo } returns NotificationRegistration.DEFAULT
 
         initSUT()
         runBlockingTest {
@@ -60,18 +54,10 @@ internal class NotificationControllerTest: BaseTest() {
         coVerify {
             mockRemoteNotificationManager.subscribeToTopic(keyTopicSeasonInfo)
         }
-        verify {
-            mockNotificationRepository.enabledSeasonInfo
-        }
-        verify(exactly = 0) {
-            mockNotificationRepository.enabledSeasonInfo = NotificationRegistration.OPT_IN
-        }
     }
 
     @Test
     fun `subscribe method does nothing if topics if already subscribed`() {
-        every { mockNotificationRepository.enabledSeasonInfo } returns NotificationRegistration.OPT_IN
-
         initSUT()
         runBlockingTest {
             sut.subscribeToRemoteNotifications()
@@ -79,9 +65,6 @@ internal class NotificationControllerTest: BaseTest() {
 
         coVerify(exactly = 0) {
             mockRemoteNotificationManager.subscribeToTopic(any())
-        }
-        verify(exactly = 0) {
-            mockNotificationRepository.enabledSeasonInfo = NotificationRegistration.OPT_IN
         }
     }
 
