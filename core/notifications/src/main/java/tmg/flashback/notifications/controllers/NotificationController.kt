@@ -91,13 +91,7 @@ class NotificationController(
         // Legacy
         remoteNotificationManager.unsubscribeToTopic("race")
         remoteNotificationManager.unsubscribeToTopic("qualifying")
-
-        if (notificationRepository.enabledSeasonInfo == NotificationRegistration.DEFAULT) {
-            val result = remoteNotificationManager.subscribeToTopic(channelIdOther)
-            if (result) {
-                notificationRepository.enabledSeasonInfo = NotificationRegistration.OPT_IN
-            }
-        }
+        remoteNotificationManager.unsubscribeToTopic("seasonInfo")
 
         return true
     }

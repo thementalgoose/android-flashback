@@ -9,7 +9,8 @@ enum class NotificationChannel(
     @StringRes
     val label: Int,
     @DrawableRes
-    val icon: Int
+    val icon: Int,
+    val local: Boolean = true
 ) {
     RACE("flashback_race", R.string.notification_channel_race, R.drawable.ic_notification_race),
     QUALIFYING("flashback_qualifying", R.string.notification_channel_qualifying, R.drawable.ic_notification_qualifying),
