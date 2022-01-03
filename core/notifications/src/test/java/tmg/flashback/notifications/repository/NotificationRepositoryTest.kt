@@ -20,33 +20,27 @@ internal class NotificationRepositoryTest {
         sut = NotificationRepository(mockPreferenceManager)
     }
 
-    //region Season info enabled
+    //region Notification Remote Topics
 
     @Test
-    fun `season info notifications update saves value in shared prefs repository`() {
-
+    fun `settings notification remote topics saves to preference manager`() {
         initSUT()
 
-        sut.enabledSeasonInfo = NotificationRegistration.OPT_IN
+        sut.remoteNotificationTopics = setOf("test", "test2")
         verify {
-            mockPreferenceManager.save(SEASON_INFO_KEY, NotificationRegistration.OPT_IN.key)
+            mockPreferenceManager.save(keyNotificationIds, setOf("test", "test2"))
         }
     }
 
-    @ParameterizedTest
-    @CsvSource(
-        ",DEFAULT",
-        "OPT_IN,OPT_IN",
-        "OPT_OUT,OPT_OUT"
-    )
-    fun `season info notifications read unrecognised resolves to default`(key: String?, expected: NotificationRegistration) {
-        every { mockPreferenceManager.getString(any(), any()) } returns key
-
+    @Test
+    fun `settings notification remote topics retreives to preference manager ignoring invalid`() {
+        val expected = setOf("test", "test2")
+        every { mockPreferenceManager.getSet(keyNotificationIds, any()) } returns mutableSetOf("test", "test", "test2")
         initSUT()
 
-        assertEquals(expected, sut.enabledSeasonInfo)
+        assertEquals(expected, sut.notificationIds)
         verify {
-            mockPreferenceManager.getString(SEASON_INFO_KEY, "")
+            mockPreferenceManager.getSet(keyNotificationIds, emptySet())
         }
     }
 
@@ -79,10 +73,8 @@ internal class NotificationRepositoryTest {
     //endregion
 
     companion object {
-        private const val RACE_KEY = "NOTIFICATION_RACE"
-        private const val QUALIFYING_KEY = "NOTIFICATION_QUALIFYING"
-        private const val SEASON_INFO_KEY = "NOTIFICATION_SEASON_INFO"
 
+        private const val keyNotificationRemoteTopics: String = "NOTIFICATION_REMOTE_TOPICS"
         private const val keyNotificationIds = "NOTIFICATION_IDS"
     }
 }
