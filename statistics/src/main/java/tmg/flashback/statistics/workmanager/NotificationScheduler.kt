@@ -30,7 +30,7 @@ class NotificationScheduler(
 
     override suspend fun doWork(): Result {
 
-        val force: Boolean = inputData.getBoolean("force", true)
+        val force: Boolean = inputData.getBoolean("force", false)
 
         if (BuildConfig.DEBUG) {
             Log.i("WorkManager", "Scheduling notifications")
@@ -67,6 +67,9 @@ class NotificationScheduler(
                     NotificationChannel.SEASON_INFO -> upNextRepository.notificationOther
                 }
             }
+
+        println(notificationController.notificationsCurrentlyScheduled)
+        println(upNextItemsToSchedule)
 
         if (upNextItemsToSchedule.map { it.requestCode }.toSet() == notificationController.notificationsCurrentlyScheduled && !force) {
             if (BuildConfig.DEBUG) {
