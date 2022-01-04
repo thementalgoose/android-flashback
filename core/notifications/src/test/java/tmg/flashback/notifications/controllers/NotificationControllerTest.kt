@@ -35,6 +35,7 @@ internal class NotificationControllerTest: BaseTest() {
 
         coVerify {
             mockRemoteNotificationManager.subscribeToTopic("test")
+            mockNotificationRepository.remoteNotificationTopics = setOf("test")
         }
     }
 
@@ -47,6 +48,7 @@ internal class NotificationControllerTest: BaseTest() {
 
         coVerify {
             mockRemoteNotificationManager.unsubscribeToTopic("test")
+            mockNotificationRepository.remoteNotificationTopics = emptySet()
         }
     }
 

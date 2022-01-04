@@ -25,19 +25,19 @@ internal class NotificationRepositoryTest {
 
         sut.remoteNotificationTopics = setOf("test", "test2")
         verify {
-            mockPreferenceManager.save(keyNotificationIds, setOf("test", "test2"))
+            mockPreferenceManager.save(keyNotificationRemoteTopics, setOf("test", "test2"))
         }
     }
 
     @Test
     fun `settings notification remote topics retreives to preference manager ignoring invalid`() {
         val expected = setOf("test", "test2")
-        every { mockPreferenceManager.getSet(keyNotificationIds, any()) } returns mutableSetOf("test", "test", "test2")
+        every { mockPreferenceManager.getSet(keyNotificationRemoteTopics, any()) } returns mutableSetOf("test", "test", "test2")
         initSUT()
 
-        assertEquals(expected, sut.notificationIds)
+        assertEquals(expected, sut.remoteNotificationTopics)
         verify {
-            mockPreferenceManager.getSet(keyNotificationIds, emptySet())
+            mockPreferenceManager.getSet(keyNotificationRemoteTopics, emptySet())
         }
     }
 
