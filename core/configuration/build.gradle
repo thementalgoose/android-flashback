@@ -19,6 +19,7 @@ dependencies {
 
     // Preferences library
     implementation project(path: ':core:preferences')
+    implementation project(path: ':core:device')
     implementation project(path: ':core:crash-reporting')
 
     // Firebase Remote Config

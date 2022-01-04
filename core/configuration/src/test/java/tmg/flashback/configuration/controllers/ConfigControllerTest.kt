@@ -152,4 +152,21 @@ internal class ConfigControllerTest: BaseTest() {
     }
 
     //endregion
+
+    //region Reset
+
+    @Test
+    fun `resetting config sets require sync to 0 and calls reset`() = coroutineTest {
+        initSUT()
+        runBlockingTest {
+            sut.reset()
+        }
+
+        coVerify {
+            mockConfigService.reset()
+            mockConfigRepository.resetAtMigrationVersion = 0
+        }
+    }
+
+    //endregion
 }

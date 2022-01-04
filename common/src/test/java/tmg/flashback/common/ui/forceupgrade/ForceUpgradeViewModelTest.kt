@@ -31,7 +31,7 @@ internal class ForceUpgradeViewModelTest: BaseTest() {
 
         initSUT()
         coVerify {
-            mockConfigurationController.fetchAndApply()
+            mockConfigurationController.reset()
         }
     }
 
@@ -69,6 +69,9 @@ internal class ForceUpgradeViewModelTest: BaseTest() {
         verify {
             mockForceUpgradeController.forceUpgrade
         }
+        coVerify {
+            mockConfigurationController.reset()
+        }
     }
 
     @Test
@@ -91,36 +94,8 @@ internal class ForceUpgradeViewModelTest: BaseTest() {
         verify {
             mockForceUpgradeController.forceUpgrade
         }
-    }
-
-    @Test
-    fun `click link does nothing if force upgrade doesnt exist`() {
-        every { mockForceUpgradeController.forceUpgrade } returns ForceUpgrade(
-            title = "title",
-            message = "message",
-            link = null
-        )
-        initSUT()
-        sut.inputs.clickLink()
-
-        sut.outputs.openLinkEvent.test {
-            assertEventNotFired()
+        coVerify {
+            mockConfigurationController.reset()
         }
     }
-
-    @Test
-    fun `click link fires open link event if force upgrade message populated`() {
-        every { mockForceUpgradeController.forceUpgrade } returns ForceUpgrade(
-            title = "title",
-            message = "message",
-            link = Pair("Title", "https://www.google.com")
-        )
-        initSUT()
-        sut.inputs.clickLink()
-
-        sut.outputs.openLinkEvent.test {
-            assertDataEventValue("https://www.google.com")
-        }
-    }
-
 }
