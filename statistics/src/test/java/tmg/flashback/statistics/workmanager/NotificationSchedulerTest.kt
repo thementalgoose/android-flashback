@@ -1,12 +1,16 @@
 package tmg.flashback.statistics.workmanager
 
 import android.content.Context
+import androidx.work.Data
+import androidx.work.ListenableWorker
 import androidx.work.WorkerParameters
 import io.mockk.coEvery
+import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.Clock
 import org.threeten.bp.LocalDate
@@ -17,6 +21,7 @@ import tmg.flashback.formula1.model.Schedule
 import tmg.flashback.notifications.controllers.NotificationController
 import tmg.flashback.statistics.repo.ScheduleRepository
 import tmg.flashback.statistics.repository.UpNextRepository
+import tmg.flashback.statistics.repository.models.NotificationReminder
 import tmg.flashback.statistics.utils.NotificationUtils
 import tmg.testutils.BaseTest
 
@@ -40,16 +45,28 @@ internal class NotificationSchedulerTest: BaseTest() {
         )
     }
 
+    @BeforeEach
+    internal fun setUp() {
+        every { mockUpNextRepository.notificationReminderPeriod } returns NotificationReminder.MINUTES_30
+
+        every { mockUpNextRepository.notificationRace } returns true
+        every { mockUpNextRepository.notificationQualifying } returns true
+        every { mockUpNextRepository.notificationFreePractice } returns true
+        every { mockUpNextRepository.notificationOther } returns true
+    }
+
     //region Schedule notification filtering
 
     @Test
     fun `when finding notifications to schedule it scheduled accurately the local notifications with the manager`() = coroutineTest {
 
         coEvery { mockScheduleRepository.getUpcomingEvents(any()) } returns exampleUpNextList
+        coEvery { mockNotificationController.notificationsCurrentlyScheduled } returns emptySet()
 
         initSUT()
         runBlockingTest {
-            sut.doWork()
+            val result = sut.doWork()
+            assertTrue(result is ListenableWorker.Result.Success)
         }
 
         verify {
