@@ -1,8 +1,11 @@
 package tmg.flashback.configuration.controllers
 
+import tmg.flashback.configuration.BuildConfig
 import tmg.flashback.configuration.constants.Migrations
 import tmg.flashback.configuration.services.RemoteConfigService
 import tmg.flashback.configuration.repository.ConfigRepository
+import tmg.flashback.device.managers.BuildConfigManager
+import tmg.flashback.device.repository.DeviceRepository
 
 /**
  * Remote config variables and storage data
@@ -59,6 +62,7 @@ class ConfigController(
      * Reset the local cache
      */
     suspend fun reset(): Boolean {
+        configRepository.remoteConfigSync = 0
         return configService.reset()
     }
 
