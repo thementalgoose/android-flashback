@@ -164,7 +164,7 @@ internal class ConfigControllerTest: BaseTest() {
 
         coVerify {
             mockConfigService.reset()
-            mockConfigRepository.resetAtMigrationVersion = 0
+            mockConfigRepository.remoteConfigSync = 0
         }
     }
 
