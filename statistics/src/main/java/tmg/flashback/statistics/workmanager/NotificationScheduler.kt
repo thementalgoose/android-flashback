@@ -132,18 +132,4 @@ class NotificationScheduler(
             null -> NotificationChannel.SEASON_INFO
         }
     }
-
-    companion object {
-
-        fun schedule(context: Context) {
-            val request = OneTimeWorkRequestBuilder<NotificationScheduler>()
-                .apply {
-                    addTag("NOTIFICATIONS")
-                    setInputData(Data.Builder().putBoolean("force", true).build())
-                }
-                .build()
-
-            WorkManager.getInstance(context).enqueueUniqueWork("NOTIFICATIONS", ExistingWorkPolicy.REPLACE, request)
-        }
-    }
 }

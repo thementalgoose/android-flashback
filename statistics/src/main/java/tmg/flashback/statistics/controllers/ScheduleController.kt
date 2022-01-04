@@ -22,6 +22,7 @@ import tmg.flashback.statistics.repository.UpNextRepository
 import tmg.flashback.statistics.repository.models.NotificationReminder
 import tmg.flashback.statistics.utils.NotificationUtils.getNotificationTitleText
 import tmg.flashback.statistics.workmanager.NotificationScheduler
+import tmg.flashback.statistics.workmanager.NotificationSchedulerProvider
 import java.util.*
 
 /**
@@ -31,7 +32,8 @@ class ScheduleController(
     private val applicationContext: Context,
     private val notificationController: NotificationController,
     private val upNextRepository: UpNextRepository,
-    private val scheduleRepository: ScheduleRepository
+    private val scheduleRepository: ScheduleRepository,
+    private val notificationSchedulerProvider: NotificationSchedulerProvider
 ) {
     /**
      * Get the next race to display in the up next schedule
@@ -126,6 +128,6 @@ class ScheduleController(
         if (BuildConfig.DEBUG) {
             Log.i("Notifications", "WorkManager performing notification scheduling")
         }
-        NotificationScheduler.schedule(applicationContext)
+        notificationSchedulerProvider.schedule()
     }
 }

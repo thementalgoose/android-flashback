@@ -26,6 +26,7 @@ import tmg.flashback.statistics.ui.settings.statistics.SettingsStatisticsViewMod
 import tmg.flashback.statistics.ui.settings.notifications.UpNextSettingsViewModel
 import tmg.flashback.statistics.ui.settings.notifications.reminder.UpNextReminderViewModel
 import tmg.flashback.statistics.workmanager.NotificationScheduler
+import tmg.flashback.statistics.workmanager.NotificationSchedulerProvider
 
 val statisticsModule = repoModule + module {
 
@@ -53,9 +54,10 @@ val statisticsModule = repoModule + module {
     viewModel { OnboardingNotificationViewModel(get()) }
     viewModel { UpNextReminderViewModel(get()) }
 
-    single { ScheduleController(androidContext(), get(), get(), get()) }
+    single { ScheduleController(androidContext(), get(), get(), get(), get()) }
     single { UpNextRepository(get()) }
 
     // Worker
     worker { NotificationScheduler(get(), get(), get(), androidContext(), get()) }
+    single { NotificationSchedulerProvider(androidContext()) }
 }
