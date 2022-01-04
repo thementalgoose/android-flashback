@@ -5,10 +5,7 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.CsvSource
 import tmg.flashback.prefs.manager.PreferenceManager
-import tmg.flashback.notifications.NotificationRegistration
 
 internal class NotificationRepositoryTest {
 

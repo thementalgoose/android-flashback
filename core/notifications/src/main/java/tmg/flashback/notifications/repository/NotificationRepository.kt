@@ -1,8 +1,6 @@
 package tmg.flashback.notifications.repository
 
 import tmg.flashback.prefs.manager.PreferenceManager
-import tmg.flashback.notifications.NotificationRegistration
-import tmg.utilities.extensions.toEnum
 
 class NotificationRepository(
     private val preferenceManager: PreferenceManager

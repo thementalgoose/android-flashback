@@ -20,6 +20,7 @@ import tmg.flashback.ui.model.NightMode
 import tmg.flashback.statistics.extensions.updateAllWidgets
 import tmg.flashback.statistics.repository.models.NotificationChannel
 import tmg.flashback.notifications.controllers.NotificationController
+import tmg.flashback.statistics.controllers.ScheduleController
 import tmg.utilities.extensions.isInDayMode
 
 /**
@@ -31,6 +32,7 @@ class FlashbackStartup(
     private val deviceController: DeviceController,
     private val crashController: CrashController,
     private val widgetManager: WidgetManager,
+    private val scheduleController: ScheduleController,
     private val themeController: ThemeController,
     private val analyticsManager: AnalyticsManager,
     private val notificationController: NotificationController,
@@ -74,17 +76,31 @@ class FlashbackStartup(
             adsController.initialise(application)
         }
 
-        // Channels
-        GlobalScope.launch {
 
-            // Legacy: Remove these existing channels which were previously used for remote notifications
-            notificationController.deleteNotificationChannel("race")
-            notificationController.deleteNotificationChannel("qualifying")
+        //region Notifications Legacy: Remove these existing channels which were previously used for remote notifications
+        notificationController.deleteNotificationChannel("race")
+        notificationController.deleteNotificationChannel("qualifying")
+        //endregion
 
-            NotificationChannel.values().forEach {
-                notificationController.createNotificationChannel(it.channelId, it.label)
+        // Notifications
+        NotificationChannel.values().forEach {
+            notificationController.createNotificationChannel(it.channelId, it.label)
+        }
+
+        // TODO: Results available notifications - Remove
+        if (BuildConfig.DEBUG) {
+            notificationController.createNotificationChannel("notify_race", R.string.notification_channel_race_notify)
+            notificationController.createNotificationChannel("notify_qualifying", R.string.notification_channel_qualifying_notify)
+            GlobalScope.launch {
+                when (scheduleController.notificationQualifyingNotify) {
+                    true -> notificationController.subscribeToRemoteNotification("notify_qualifying")
+                    false -> notificationController.unsubscribeToRemoteNotification("notify_qualifying")
+                }
+                when (scheduleController.notificationRaceNotify) {
+                    true -> notificationController.subscribeToRemoteNotification("notify_race")
+                    false -> notificationController.unsubscribeToRemoteNotification("notify_race")
+                }
             }
-            notificationController.subscribeToRemoteNotifications()
         }
 
         // Initialise user properties

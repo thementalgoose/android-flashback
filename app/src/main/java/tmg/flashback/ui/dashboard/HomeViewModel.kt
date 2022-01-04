@@ -12,6 +12,7 @@ import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.statistics.repo.repository.CacheRepository
 import tmg.flashback.statistics.controllers.ScheduleController
 import tmg.flashback.statistics.controllers.SearchController
+import tmg.flashback.statistics.workmanager.NotificationScheduler
 
 //region Inputs
 
@@ -74,7 +75,7 @@ class HomeViewModel(
         }
     }
 
-    private suspend fun performConfigUpdates() {
+    private fun performConfigUpdates() {
 
         // Shortcuts for RSS
         when (rssController.enabled) {

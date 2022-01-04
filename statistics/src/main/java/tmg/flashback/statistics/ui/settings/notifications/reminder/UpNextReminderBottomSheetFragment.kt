@@ -1,4 +1,4 @@
-package tmg.flashback.upnext.ui.settings.reminder
+package tmg.flashback.statistics.ui.settings.notifications.reminder
 
 import android.os.Bundle
 import android.view.LayoutInflater

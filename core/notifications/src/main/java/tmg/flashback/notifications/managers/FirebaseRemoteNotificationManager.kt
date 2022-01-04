@@ -1,29 +1,22 @@
 package tmg.flashback.notifications.managers
 
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.content.Context
-import android.os.Build
-import androidx.annotation.StringRes
+import android.util.Log
 import com.google.firebase.messaging.FirebaseMessaging
+import tmg.flashback.notifications.BuildConfig
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
-internal class FirebaseRemoteNotificationManager(
-    private val applicationContext: Context
-): RemoteNotificationManager {
-
-    companion object {
-        const val topicRace: String = "race"
-        const val topicQualifying: String = "qualifying"
-        const val topicSeasonInfo: String = "seasonInfo"
-    }
+internal class FirebaseRemoteNotificationManager: RemoteNotificationManager {
 
     override suspend fun subscribeToTopic(topic: String): Boolean {
         return suspendCoroutine { continuation ->
             FirebaseMessaging.getInstance()
                 .subscribeToTopic(topic)
                 .addOnCompleteListener {
+                    if (BuildConfig.DEBUG) {
+                        Log.i("Notifications", "Remote Topic $topic successfully subscribed ${it.isSuccessful} ${it.exception?.message}")
+                        it.exception?.printStackTrace()
+                    }
                     continuation.resume(it.isSuccessful)
                 }
         }
@@ -34,21 +27,12 @@ internal class FirebaseRemoteNotificationManager(
             FirebaseMessaging.getInstance()
                 .unsubscribeFromTopic(topic)
                 .addOnCompleteListener {
+                    if (BuildConfig.DEBUG) {
+                        Log.i("Notifications", "Remote Topic $topic successfully unsubscribed ${it.isSuccessful} ${it.exception?.message}")
+                        it.exception?.printStackTrace()
+                    }
                     continuation.resume(it.isSuccessful)
                 }
-        }
-    }
-
-    // TODO: Move this to SystemNotificationManager
-    override fun createChannel(channelId: String, @StringRes channelName: Int) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(
-                channelId,
-                applicationContext.getString(channelName),
-                NotificationManager.IMPORTANCE_DEFAULT
-            )
-            val notificationManager = applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChannel(channel)
         }
     }
 }
