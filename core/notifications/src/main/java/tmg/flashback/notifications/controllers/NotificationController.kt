@@ -82,6 +82,10 @@ class NotificationController(
      */
     suspend fun subscribeToRemoteNotification(topic: String): Boolean {
         remoteNotificationManager.subscribeToTopic(topic)
+        val topics = notificationRepository.remoteNotificationTopics.toMutableSet().apply {
+            add(topic)
+        }
+        notificationRepository.remoteNotificationTopics = topics
         return true
     }
 
@@ -90,6 +94,10 @@ class NotificationController(
      */
     suspend fun unsubscribeToRemoteNotification(topic: String): Boolean {
         remoteNotificationManager.unsubscribeToTopic(topic)
+        val topics = notificationRepository.remoteNotificationTopics.toMutableSet().apply {
+            remove(topic)
+        }
+        notificationRepository.remoteNotificationTopics = topics
         return true
     }
 
