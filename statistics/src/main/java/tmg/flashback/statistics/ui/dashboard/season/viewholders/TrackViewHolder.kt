@@ -83,11 +83,13 @@ class TrackViewHolder(
             // Schedule adapter
             when (inlineScheduleAdapter.setSchedule(item.schedule)) {
                 true -> {
+                    binding.enlargedDate.gone()
                     binding.enlargedSchedule.visible()
                     binding.enlargedTrackIconPlaceholder.gone()
                     binding.enlargedTrackIcon.visible()
                 }
                 false -> {
+                    binding.enlargedDate.visible()
                     binding.enlargedSchedule.invisible()
                     binding.enlargedTrackIconPlaceholder.visible()
                     binding.enlargedTrackIcon.gone()
@@ -96,6 +98,8 @@ class TrackViewHolder(
 
             @SuppressLint("SetTextI18n")
             date.text = "${item.date.dayOfMonth.ordinalAbbreviation} ${item.date.format(DateTimeFormatter.ofPattern("MMM yy"))}"
+            @SuppressLint("SetTextI18n")
+            binding.enlargedDate.text = "${item.date.dayOfMonth.ordinalAbbreviation} ${item.date.format(DateTimeFormatter.ofPattern("MMM yy"))}"
         }
 
         fade(!data.hasQualifying && !data.hasResults)
