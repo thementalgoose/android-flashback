@@ -29,7 +29,11 @@ class ForceUpgradeFragment: BaseFragment<FragmentLockoutBinding>() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.btnLink.setOnClickListener {
-            viewModel.inputs.clickLink()
+            (binding.btnLink.tag as? String)?.let {
+                viewUrl(it)
+            } ?: let {
+                activity?.finish()
+            }
         }
 
         observe(viewModel.outputs.data) { (title, message) ->
@@ -39,13 +43,10 @@ class ForceUpgradeFragment: BaseFragment<FragmentLockoutBinding>() {
 
         observe(viewModel.outputs.showLink) { link ->
             binding.btnLink.show(link != null)
-            link?.let { (linkText, _) ->
+            link?.let { (linkText, url) ->
                 binding.btnLink.text = linkText
+                binding.btnLink.tag = url
             }
-        }
-
-        observeEvent(viewModel.outputs.openLinkEvent) { link ->
-            viewUrl(link)
         }
     }
 }

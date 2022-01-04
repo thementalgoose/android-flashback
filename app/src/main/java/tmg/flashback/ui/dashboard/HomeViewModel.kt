@@ -8,6 +8,7 @@ import tmg.flashback.common.controllers.ForceUpgradeController
 import tmg.flashback.configuration.controllers.ConfigController
 import tmg.flashback.crash_reporting.controllers.CrashController
 import tmg.flashback.BuildConfig
+import tmg.flashback.device.controllers.DeviceController
 import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.statistics.repo.repository.CacheRepository
 import tmg.flashback.statistics.controllers.ScheduleController
