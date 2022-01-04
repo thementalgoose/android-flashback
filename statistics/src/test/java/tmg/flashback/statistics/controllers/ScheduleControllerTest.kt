@@ -21,6 +21,7 @@ import tmg.flashback.notifications.controllers.NotificationController
 import tmg.flashback.statistics.repo.ScheduleRepository
 import tmg.flashback.statistics.repository.UpNextRepository
 import tmg.flashback.statistics.repository.models.NotificationReminder
+import tmg.flashback.statistics.workmanager.NotificationSchedulerProvider
 import tmg.testutils.BaseTest
 
 internal class ScheduleControllerTest : BaseTest() {
@@ -29,6 +30,7 @@ internal class ScheduleControllerTest : BaseTest() {
     private var mockUpNextRepository: UpNextRepository = mockk(relaxed = true)
     private var mockApplicationContext: Context = mockk(relaxed = true)
     private var mockScheduleRepository: ScheduleRepository = mockk(relaxed = true)
+    private var mockNotificationSchedulerProvider: NotificationSchedulerProvider = mockk(relaxed = true)
 
     private lateinit var sut: ScheduleController
 
@@ -43,7 +45,7 @@ internal class ScheduleControllerTest : BaseTest() {
     }
 
     private fun initSUT() {
-        sut = ScheduleController(mockApplicationContext, mockNotificationController, mockUpNextRepository, mockScheduleRepository)
+        sut = ScheduleController(mockApplicationContext, mockNotificationController, mockUpNextRepository, mockScheduleRepository, mockNotificationSchedulerProvider)
     }
 
     @Test
@@ -432,6 +434,20 @@ internal class ScheduleControllerTest : BaseTest() {
         sut.seenOnboarding()
         verify {
             mockUpNextRepository.seenNotificationOnboarding = true
+        }
+    }
+
+    //endregion
+
+    //region Schedule notifications
+
+    @Test
+    fun `scheduling notification schedules notification`() = coroutineTest {
+        initSUT()
+        sut.scheduleNotifications()
+
+        verify {
+            mockNotificationSchedulerProvider.schedule()
         }
     }
 

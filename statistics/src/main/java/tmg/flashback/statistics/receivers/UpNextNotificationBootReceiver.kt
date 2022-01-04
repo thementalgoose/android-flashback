@@ -17,18 +17,30 @@ import tmg.flashback.crash_reporting.repository.CrashRepository
 import tmg.flashback.prefs.manager.PreferenceManager
 import tmg.flashback.statistics.controllers.ScheduleController
 import tmg.flashback.statistics.workmanager.NotificationScheduler
+import tmg.flashback.statistics.workmanager.NotificationSchedulerProvider
 
-@KoinApiExtension
-class UpNextNotificationBootReceiver: BroadcastReceiver(), KoinComponent {
+class UpNextNotificationBootReceiver: BroadcastReceiver() {
 
-
+    private val upNextNotificationBootReceiver: UpNextNotification by lazy { UpNextNotification() }
 
     override fun onReceive(context: Context?, intent: Intent?) {
 
         // Reschedule notifications
         Log.i("Notifications", "Scheduling upcoming notifications")
-        if (context != null) {
-            NotificationScheduler.schedule(context)
+        if (context != null && intent != null) {
+            upNextNotificationBootReceiver.onReceive(context, intent)
         }
+    }
+}
+
+@KoinApiExtension
+class UpNextNotification: KoinComponent {
+    private val notificationSchedulerProvider: NotificationSchedulerProvider by inject()
+
+    fun onReceive(context: Context, intent: Intent) {
+
+        // Reschedule notifications
+        Log.i("Notifications", "Scheduling upcoming notifications")
+        notificationSchedulerProvider.schedule()
     }
 }
