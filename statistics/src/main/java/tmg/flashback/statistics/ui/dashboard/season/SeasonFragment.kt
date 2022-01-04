@@ -100,6 +100,7 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
         binding.swipeRefresh.setOnRefreshListener {
             viewModel.inputs.refresh()
             binding.progress.visible()
+            seasonFragmentCallback?.refresh()
         }
 
         observeEvent(viewModel.outputs.openMenu) {
