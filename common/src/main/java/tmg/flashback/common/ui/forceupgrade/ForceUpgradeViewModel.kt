@@ -14,7 +14,6 @@ import tmg.utilities.lifecycle.DataEvent
 //region Inputs
 
 interface ForceUpgradeViewModelInputs {
-    fun clickLink()
 }
 
 //endregion
@@ -24,8 +23,6 @@ interface ForceUpgradeViewModelInputs {
 interface ForceUpgradeViewModelOutputs {
     val data: LiveData<Pair<String, String>> // title, message
     val showLink: LiveData<Pair<String, String>?> // linkText, link
-
-    val openLinkEvent: LiveData<DataEvent<String>>
 }
 
 //endregion
@@ -41,8 +38,6 @@ class ForceUpgradeViewModel(
     override val data: MutableLiveData<Pair<String, String>> = MutableLiveData()
     override val showLink: MutableLiveData<Pair<String, String>?> = MutableLiveData()
 
-    override val openLinkEvent: MutableLiveData<DataEvent<String>> = MutableLiveData()
-
     init {
         forceUpgradeController.forceUpgrade?.let {
             data.value = Pair(it.title, it.message)
@@ -54,24 +49,10 @@ class ForceUpgradeViewModel(
         }
 
         viewModelScope.launch {
-            val result = configController.fetchAndApply()
+            configController.reset()
             if (BuildConfig.DEBUG) {
-                Log.i("Flashback", "Force Upgrade fetch and apply $result")
+                Log.i("Flashback", "Force Upgrade reset")
             }
         }
     }
-
-    //region Inputs
-
-    override fun clickLink() {
-        forceUpgradeController.forceUpgrade?.link?.let { (_, link) ->
-            openLinkEvent.value = DataEvent(link)
-        }
-    }
-
-    //endregion
-
-    //region Outputs
-
-    //endregion
 }
