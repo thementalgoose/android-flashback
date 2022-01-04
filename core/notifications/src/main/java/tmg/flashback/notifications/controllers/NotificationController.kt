@@ -6,7 +6,6 @@ import android.util.Log
 import androidx.annotation.StringRes
 import org.threeten.bp.LocalDateTime
 import tmg.flashback.notifications.BuildConfig
-import tmg.flashback.notifications.NotificationRegistration
 import tmg.flashback.notifications.managers.RemoteNotificationManager
 import tmg.flashback.notifications.managers.SystemAlarmManager
 import tmg.flashback.notifications.managers.SystemNotificationManager
@@ -18,11 +17,6 @@ class NotificationController(
     private val remoteNotificationManager: RemoteNotificationManager,
     private val alarmManager: SystemAlarmManager
 ) {
-
-    companion object {
-        const val channelIdOther: String = "seasonInfo"
-    }
-
     /**
      * Notifications channels supported
      */
@@ -86,13 +80,16 @@ class NotificationController(
     /**
      * Subscribe to receive notifications from these topics
      */
-    suspend fun subscribeToRemoteNotifications(): Boolean {
+    suspend fun subscribeToRemoteNotification(topic: String): Boolean {
+        remoteNotificationManager.subscribeToTopic(topic)
+        return true
+    }
 
-        // Legacy
-        remoteNotificationManager.unsubscribeToTopic("race")
-        remoteNotificationManager.unsubscribeToTopic("qualifying")
-        remoteNotificationManager.unsubscribeToTopic("seasonInfo")
-
+    /**
+     * Subscribe to receive notifications from these topics
+     */
+    suspend fun unsubscribeToRemoteNotification(topic: String): Boolean {
+        remoteNotificationManager.unsubscribeToTopic(topic)
         return true
     }
 

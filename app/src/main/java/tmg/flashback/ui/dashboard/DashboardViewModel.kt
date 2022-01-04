@@ -10,6 +10,7 @@ import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.statistics.BuildConfig
 import tmg.flashback.statistics.controllers.ScheduleController
 import tmg.flashback.statistics.extensions.updateAllWidgets
+import tmg.flashback.statistics.workmanager.NotificationScheduler
 import tmg.utilities.lifecycle.Event
 
 //region Inputs
@@ -32,7 +33,7 @@ interface DashboardViewModelOutputs {
 //endregion
 
 class DashboardViewModel(
-    private val applicationContext: Context,
+    applicationContext: Context,
     private val scheduleController: ScheduleController,
     private val buildConfigManager: BuildConfigManager,
     private val configurationController: ConfigController,
@@ -55,7 +56,7 @@ class DashboardViewModel(
             }
             if (activate) {
                 appConfigSynced.value = Event()
-                scheduleController.scheduleNotifications()
+                NotificationScheduler.schedule(applicationContext)
                 applicationContext.updateAllWidgets()
             }
         }

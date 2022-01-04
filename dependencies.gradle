@@ -16,7 +16,8 @@ allprojects {
                         preference                              : "androidx.preference:preference-ktx:1.1.1",
                         splashscreen                            : "androidx.core:core-splashscreen:$android_splashscreen",
                         swiperefreshlayout                      : "androidx.swiperefreshlayout:swiperefreshlayout:$swipe_refresh",
-                        workmanager                             : "androidx.work:work-runtime:$android_workmanager"
+                        workmanager                             : "androidx.work:work-runtime:$android_workmanager",
+                        workmanager_ktx                         : "androidx.work:work-runtime-ktx:$android_workmanager"
                 ],
                 shakey                                          : "com.linkedin.shaky:shaky:3.0.4",
                 falcon                                          : 'com.jraska:falcon:2.2.0',
@@ -51,7 +52,8 @@ allprojects {
                         koin                                    : "io.insert-koin:koin-android:$koin_version",
                         koin_scope                              : "io.insert-koin:koin-android-scope:$koin_version",
                         koin_viewmodel                          : "io.insert-koin:koin-android-viewmodel:$koin_version",
-                        koin_ext                                : "io.insert-koin:koin-android-ext:$koin_version"
+                        koin_ext                                : "io.insert-koin:koin-android-ext:$koin_version",
+                        koin_workmanager                        : "io.insert-koin:koin-androidx-workmanager:$koin_version"
                 ],
                 lottie                                          : "com.airbnb.android:lottie:$lottie",
                 play : [

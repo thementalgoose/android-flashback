@@ -1,11 +1,10 @@
-package tmg.flashback.upnext.ui.settings
+package tmg.flashback.statistics.ui.settings.notifications
 
 import android.os.Bundle
 import android.view.View
 import org.koin.android.viewmodel.ext.android.viewModel
-import tmg.flashback.statistics.ui.settings.notifications.UpNextSettingsViewModel
 import tmg.flashback.ui.settings.SettingsFragment
-import tmg.flashback.upnext.ui.settings.reminder.UpNextReminderBottomSheetFragment
+import tmg.flashback.statistics.ui.settings.notifications.reminder.UpNextReminderBottomSheetFragment
 import tmg.utilities.extensions.observeEvent
 
 class UpNextSettingsFragment: SettingsFragment<UpNextSettingsViewModel>() {

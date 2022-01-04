@@ -44,7 +44,10 @@ internal class UpNextSettingsViewModelTest: BaseTest() {
             Pair(R.string.settings_up_next_category_free_practice_title, R.string.settings_up_next_category_free_practice_descrition),
             Pair(R.string.settings_up_next_category_other_title, R.string.settings_up_next_category_other_descrition),
             Pair(R.string.settings_up_next_title, null),
-            Pair(R.string.settings_up_next_time_before_title, R.string.settings_up_next_time_before_description)
+            Pair(R.string.settings_up_next_time_before_title, R.string.settings_up_next_time_before_description),
+            Pair(R.string.settings_up_next_results_available_title, null),
+            Pair(R.string.settings_up_next_results_race_title, R.string.settings_up_next_results_race_descrition),
+            Pair(R.string.settings_up_next_results_qualifying_title, R.string.settings_up_next_results_qualifying_descrition)
         )
 
         sut.models.assertExpectedOrder(expected)
@@ -83,6 +86,24 @@ internal class UpNextSettingsViewModelTest: BaseTest() {
         sut.clickSwitchPreference(sut.models.findSwitch(R.string.settings_up_next_category_other_title), true)
         verify {
             mockScheduleController.notificationSeasonInfo = true
+        }
+    }
+
+    @Test
+    fun `clicking toggle for race notify updates toggle`() {
+        initSUT()
+        sut.clickSwitchPreference(sut.models.findSwitch(R.string.settings_up_next_results_qualifying_title), true)
+        verify {
+            mockScheduleController.notificationQualifyingNotify = true
+        }
+    }
+
+    @Test
+    fun `clicking toggle for qualifying notify updates toggle`() {
+        initSUT()
+        sut.clickSwitchPreference(sut.models.findSwitch(R.string.settings_up_next_results_race_title), true)
+        verify {
+            mockScheduleController.notificationRaceNotify = true
         }
     }
 

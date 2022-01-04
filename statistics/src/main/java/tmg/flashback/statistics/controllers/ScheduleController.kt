@@ -2,6 +2,11 @@ package tmg.flashback.statistics.controllers
 
 import android.content.Context
 import android.util.Log
+import androidx.work.Data
+import androidx.work.ExistingWorkPolicy
+import androidx.work.ExistingWorkPolicy.REPLACE
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -13,7 +18,11 @@ import tmg.flashback.formula1.utils.NotificationUtils.getCategoryBasedOnLabel
 import tmg.flashback.notifications.controllers.NotificationController
 import tmg.flashback.statistics.BuildConfig
 import tmg.flashback.statistics.repo.ScheduleRepository
+import tmg.flashback.statistics.repository.UpNextRepository
+import tmg.flashback.statistics.repository.models.NotificationReminder
 import tmg.flashback.statistics.utils.NotificationUtils.getNotificationTitleText
+import tmg.flashback.statistics.workmanager.NotificationScheduler
+import java.util.*
 
 /**
  * Information around scheduling notificatoins functionality on the home screen
@@ -21,16 +30,13 @@ import tmg.flashback.statistics.utils.NotificationUtils.getNotificationTitleText
 class ScheduleController(
     private val applicationContext: Context,
     private val notificationController: NotificationController,
-    private val upNextRepository: tmg.flashback.statistics.repository.UpNextRepository,
+    private val upNextRepository: UpNextRepository,
     private val scheduleRepository: ScheduleRepository
 ) {
     /**
      * Get the next race to display in the up next schedule
      *  Up to and including today
      */
-    // item 0 :yesterday
-    // item 1 :today, today2
-    // item 2: tomorrow
     // TODO: Move this to a different controller
     suspend fun getNextEvent(): OverviewRace? {
         return scheduleRepository
@@ -57,123 +63,69 @@ class ScheduleController(
         get() = upNextRepository.notificationRace
         set(value) {
             upNextRepository.notificationRace = value
-            GlobalScope.launch(context = Dispatchers.IO) { scheduleNotifications(force = true) }
+            scheduleNotifications()
         }
 
     var notificationQualifying: Boolean
         get() = upNextRepository.notificationQualifying
         set(value) {
             upNextRepository.notificationQualifying = value
-            GlobalScope.launch(context = Dispatchers.IO) { scheduleNotifications(force = true) }
+            scheduleNotifications()
         }
 
     var notificationFreePractice: Boolean
         get() = upNextRepository.notificationFreePractice
         set(value) {
             upNextRepository.notificationFreePractice = value
-            GlobalScope.launch(context = Dispatchers.IO) { scheduleNotifications(force = true) }
+            scheduleNotifications()
         }
 
     var notificationSeasonInfo: Boolean
         get() = upNextRepository.notificationOther
         set(value) {
             upNextRepository.notificationOther = value
-            GlobalScope.launch(context = Dispatchers.IO) { scheduleNotifications(force = true) }
+            scheduleNotifications()
         }
 
-    var notificationReminder: tmg.flashback.statistics.repository.models.NotificationReminder
+    var notificationReminder: NotificationReminder
         get() = upNextRepository.notificationReminderPeriod
         set(value) {
             upNextRepository.notificationReminderPeriod = value
-            GlobalScope.launch(context = Dispatchers.IO) { scheduleNotifications(force = true) }
+            scheduleNotifications()
         }
 
-    /**
-     * Schedule notifications
-     */
-    suspend fun scheduleNotifications(force: Boolean = false) {
-        val upNextItemsToSchedule = scheduleRepository
-            .getUpcomingEvents()
-            .map { event ->
-                event.schedule.mapIndexed { index, item ->
-                    NotificationModel(
-                        season = event.season,
-                        round = event.round,
-                        value = index,
-                        title = event.raceName,
-                        label = item.label,
-                        timestamp = item.timestamp,
-                        channel = item.label.toChannel()
-                    )
+
+
+    var notificationRaceNotify: Boolean
+        get() = upNextRepository.notificationNotifyRace
+        set(value) {
+            upNextRepository.notificationNotifyRace = value
+            GlobalScope.launch {
+                when (value) {
+                    true -> notificationController.subscribeToRemoteNotification("notify_race")
+                    false -> notificationController.unsubscribeToRemoteNotification("notify_race")
                 }
             }
-            .flatten()
-            .filter { !it.timestamp.isInPastRelativeToo(upNextRepository.notificationReminderPeriod.seconds.toLong()) }
-            .map {
-                it.apply {
-                    this.utcDateTime = it.timestamp.utcLocalDateTime
-                    this.requestCode = tmg.flashback.statistics.utils.NotificationUtils.getRequestCode(utcDateTime)
+        }
+
+    var notificationQualifyingNotify: Boolean
+        get() = upNextRepository.notificationNotifyQualifying
+        set(value) {
+            upNextRepository.notificationNotifyQualifying = value
+            GlobalScope.launch {
+                when (value) {
+                    true -> notificationController.subscribeToRemoteNotification("notify_qualifying")
+                    false -> notificationController.unsubscribeToRemoteNotification("notify_qualifying")
                 }
             }
-            .filter {
-                when (it.channel) {
-                    tmg.flashback.statistics.repository.models.NotificationChannel.RACE -> notificationRace
-                    tmg.flashback.statistics.repository.models.NotificationChannel.QUALIFYING -> notificationQualifying
-                    tmg.flashback.statistics.repository.models.NotificationChannel.FREE_PRACTICE -> notificationFreePractice
-                    tmg.flashback.statistics.repository.models.NotificationChannel.SEASON_INFO -> notificationSeasonInfo
-                }
-            }
-
-        if (upNextItemsToSchedule.map { it.requestCode }.toSet() == notificationController.notificationsCurrentlyScheduled && !force) {
-            if (BuildConfig.DEBUG) {
-                Log.d("Flashback", "Up Next items have remained unchanged since last sync - Skipping scheduling")
-            }
-            return
         }
 
-        notificationController.cancelAllNotifications()
 
-        val reminderPeriod = upNextRepository.notificationReminderPeriod
 
-        upNextItemsToSchedule.forEach {
-
-            // Remove the notification reminder period
-            val scheduleTime = it.utcDateTime.minusSeconds(reminderPeriod.seconds.toLong())
-
-            val (title, text) = getNotificationTitleText(applicationContext, it.title, it.label, it.timestamp, reminderPeriod)
-
-            notificationController.scheduleLocalNotification(
-                requestCode = it.requestCode,
-                channelId = it.label.toChannel().channelId,
-                title = title,
-                text = text,
-                timestamp = scheduleTime
-            )
+    fun scheduleNotifications() {
+        if (BuildConfig.DEBUG) {
+            Log.i("Notifications", "WorkManager performing notification scheduling")
         }
-    }
-
-    private fun String.toChannel(): tmg.flashback.statistics.repository.models.NotificationChannel {
-        return when (getCategoryBasedOnLabel(this)) {
-            RaceWeekend.FREE_PRACTICE -> tmg.flashback.statistics.repository.models.NotificationChannel.FREE_PRACTICE
-            RaceWeekend.QUALIFYING -> tmg.flashback.statistics.repository.models.NotificationChannel.QUALIFYING
-            RaceWeekend.RACE -> tmg.flashback.statistics.repository.models.NotificationChannel.RACE
-            null -> tmg.flashback.statistics.repository.models.NotificationChannel.SEASON_INFO
-        }
-    }
-
-
-    //endregion
-
-    inner class NotificationModel(
-        val season: Int,
-        val round: Int,
-        val value: Int,
-        val title: String,
-        val label: String,
-        val timestamp: Timestamp,
-        val channel: tmg.flashback.statistics.repository.models.NotificationChannel
-    ) {
-        var requestCode: Int = -1
-        lateinit var utcDateTime: LocalDateTime
+        NotificationScheduler.schedule(applicationContext)
     }
 }
