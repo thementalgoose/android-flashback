@@ -9,11 +9,15 @@ import com.linkedin.android.shaky.ShakeDelegate
 import com.linkedin.android.shaky.Shaky
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import tmg.flashback.ads.controller.AdsController
 import tmg.flashback.crash_reporting.controllers.CrashController
 import tmg.flashback.device.controllers.DeviceController
 import tmg.flashback.analytics.UserProperty.*
 import tmg.flashback.analytics.manager.AnalyticsManager
+import tmg.flashback.common.controllers.ForceUpgradeController
+import tmg.flashback.configuration.controllers.ConfigController
+import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.managers.widgets.WidgetManager
 import tmg.flashback.ui.controllers.ThemeController
 import tmg.flashback.ui.model.NightMode
@@ -62,7 +66,6 @@ class FlashbackStartup(
 
         // App startup
         deviceController.appFirstBoot
-        deviceController.appOpened()
 
         // Crash Reporting
         crashController.initialise(
