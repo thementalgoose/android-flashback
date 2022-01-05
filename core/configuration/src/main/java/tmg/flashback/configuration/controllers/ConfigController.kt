@@ -59,6 +59,7 @@ class ConfigController(
      * Reset the local cache
      */
     suspend fun reset(): Boolean {
+        configRepository.remoteConfigSync = 0
         return configService.reset()
     }
 

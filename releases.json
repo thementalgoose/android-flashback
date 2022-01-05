@@ -67,7 +67,7 @@
     {
       "versionCode": 57,
       "versionName": "5.x.x",
-      "isMajor": true,
+      "isMajor": false,
       "title": "",
       "notes": [
         "Constructor overview! View a simplistic history of a constructor in F1",
@@ -104,7 +104,7 @@
     {
       "versionCode": 110,
       "versionName": "6.x.x",
-      "isMajor": true,
+      "isMajor": false,
       "title": "",
       "notes": [
         "Search! Search for any driver, constructor, circuit or race from the entire history of F1",
