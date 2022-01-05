@@ -1,10 +1,8 @@
 package tmg.flashback.statistics.workmanager
 
 import android.content.Context
-import androidx.work.Data
-import androidx.work.ExistingWorkPolicy
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkManager
+import androidx.work.*
+import androidx.work.OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST
 
 class NotificationSchedulerProvider(
     private val applicationContext: Context
@@ -14,9 +12,9 @@ class NotificationSchedulerProvider(
             .apply {
                 addTag("NOTIFICATIONS")
                 setInputData(Data.Builder().putBoolean("force", true).build())
+                setExpedited(RUN_AS_NON_EXPEDITED_WORK_REQUEST)
             }
             .build()
-
         WorkManager.getInstance(applicationContext).enqueueUniqueWork("NOTIFICATIONS", ExistingWorkPolicy.REPLACE, request)
     }
 }
