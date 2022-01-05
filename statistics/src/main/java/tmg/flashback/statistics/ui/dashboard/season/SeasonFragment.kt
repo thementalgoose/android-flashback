@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.threeten.bp.LocalDate
+import org.threeten.bp.Month
 import tmg.flashback.ui.base.BaseFragment
 import tmg.flashback.statistics.R
 import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
@@ -117,12 +118,12 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
             seasonFragmentCallback?.refresh()
             val positionToScrollTo = if (homeController.dashboardAutoscroll) {
                 when {
-                    list.any { it is SeasonItem.Track && it.defaultExpanded } -> {
+                    list.any { it is SeasonItem.Track && it.defaultExpanded && it.round > 1 } -> {
                         val positionToScrollTo = list
                             .indexOfFirst { it is SeasonItem.Track && it.defaultExpanded }
                         positionToScrollTo
                     }
-                    list.any { it is SeasonItem.CalendarMonth && it.year == currentSeasonYear } -> {
+                    list.any { it is SeasonItem.CalendarMonth && it.year == currentSeasonYear && it.month != Month.JANUARY } -> {
                         val currentMonth = LocalDate.now().month
                         val positionToScrollTo = list.indexOfFirst { it is SeasonItem.CalendarMonth && it.month == currentMonth }
                         positionToScrollTo
