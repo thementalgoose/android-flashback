@@ -84,7 +84,7 @@ class FirebaseRemoteConfigService: RemoteConfigService {
 
     override suspend fun reset(): Boolean {
         if (BuildConfig.DEBUG) {
-            Log.i("Flashback", "Config service reset called")
+            Log.i("Config", "Config service reset called")
         }
         remoteConfig.reset().await()
         return true

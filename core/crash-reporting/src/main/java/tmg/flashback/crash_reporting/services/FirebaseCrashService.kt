@@ -78,14 +78,14 @@ internal class FirebaseCrashService: CrashService {
     override fun logError(msg: String) {
         FirebaseCrashlytics.getInstance().log(msg)
         if (BuildConfig.DEBUG) {
-            Log.e("Flashback", "Crashlytics: Log error $msg")
+            Log.e("Crashlytics", "Log error $msg")
         }
     }
 
     override fun logInfo(msg: String) {
         FirebaseCrashlytics.getInstance().log(msg)
         if (BuildConfig.DEBUG) {
-            Log.i("Flashback", "Crashlytics: Log info $msg")
+            Log.i("Crashlytics", "Log info $msg")
         }
     }
 
@@ -93,7 +93,7 @@ internal class FirebaseCrashService: CrashService {
         FirebaseCrashlytics.getInstance().log(error.message ?: "Exception error $error")
         FirebaseCrashlytics.getInstance().recordException(error)
         if (BuildConfig.DEBUG) {
-            Log.i("Flashback", "Crashlytics: Log Exception ${error.message}")
+            Log.i("Crashlytics", "Log Exception ${error.message}")
             error.printStackTrace()
         }
     }

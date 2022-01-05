@@ -63,7 +63,7 @@ class HomeViewModel(
                     try {
                         val result = configurationController.applyPending()
                         if (BuildConfig.DEBUG) {
-                            Log.i("Flashback", "Pending configuration applied $result")
+                            Log.i("Home", "Pending configuration applied $result")
                         }
                         performConfigUpdates()
                     } catch (e: Exception) {

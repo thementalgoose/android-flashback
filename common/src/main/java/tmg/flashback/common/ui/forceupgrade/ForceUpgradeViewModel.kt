@@ -56,7 +56,7 @@ class ForceUpgradeViewModel(
         viewModelScope.launch {
             val result = configController.fetchAndApply()
             if (BuildConfig.DEBUG) {
-                Log.i("Flashback", "Force Upgrade fetch and apply $result")
+                Log.i("Force Upgrade", "Force Upgrade fetch and apply $result")
             }
         }
     }
