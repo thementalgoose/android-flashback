@@ -6,7 +6,6 @@ import android.util.Log
 import androidx.annotation.StringRes
 import org.threeten.bp.LocalDateTime
 import tmg.flashback.notifications.BuildConfig
-import tmg.flashback.notifications.NotificationRegistration
 import tmg.flashback.notifications.managers.RemoteNotificationManager
 import tmg.flashback.notifications.managers.SystemAlarmManager
 import tmg.flashback.notifications.managers.SystemNotificationManager
@@ -18,11 +17,6 @@ class NotificationController(
     private val remoteNotificationManager: RemoteNotificationManager,
     private val alarmManager: SystemAlarmManager
 ) {
-
-    companion object {
-        const val channelIdOther: String = "seasonInfo"
-    }
-
     /**
      * Notifications channels supported
      */
@@ -46,7 +40,7 @@ class NotificationController(
             .apply { add(requestCode) }
 
         if (BuildConfig.DEBUG) {
-            Log.d("Flashback", "Scheduled notification $title / $text - $requestCode")
+            Log.d("Notification", "Scheduled notification $title / $text - $requestCode")
         }
     }
 
@@ -62,7 +56,7 @@ class NotificationController(
             }
 
         if (BuildConfig.DEBUG) {
-            Log.d("Flashback", "Notification - Cancelled $requestCode, leaving ${notificationRepository.notificationIds}")
+            Log.d("Notification", "Cancelled $requestCode, leaving ${notificationRepository.notificationIds}")
         }
     }
 
@@ -71,7 +65,7 @@ class NotificationController(
      */
     fun cancelAllNotifications() {
         if (BuildConfig.DEBUG) {
-            Log.d("Flashback", "Notification - Cancelling all (all = ${notificationRepository.notificationIds}")
+            Log.d("Notifications", "Cancelling all (all = ${notificationRepository.notificationIds})")
         }
         notificationRepository.notificationIds
             .forEach { requestCode ->
@@ -86,19 +80,24 @@ class NotificationController(
     /**
      * Subscribe to receive notifications from these topics
      */
-    suspend fun subscribeToRemoteNotifications(): Boolean {
-
-        // Legacy
-        remoteNotificationManager.unsubscribeToTopic("race")
-        remoteNotificationManager.unsubscribeToTopic("qualifying")
-
-        if (notificationRepository.enabledSeasonInfo == NotificationRegistration.DEFAULT) {
-            val result = remoteNotificationManager.subscribeToTopic(channelIdOther)
-            if (result) {
-                notificationRepository.enabledSeasonInfo = NotificationRegistration.OPT_IN
-            }
+    suspend fun subscribeToRemoteNotification(topic: String): Boolean {
+        remoteNotificationManager.subscribeToTopic(topic)
+        val topics = notificationRepository.remoteNotificationTopics.toMutableSet().apply {
+            add(topic)
         }
+        notificationRepository.remoteNotificationTopics = topics
+        return true
+    }
 
+    /**
+     * Subscribe to receive notifications from these topics
+     */
+    suspend fun unsubscribeToRemoteNotification(topic: String): Boolean {
+        remoteNotificationManager.unsubscribeToTopic(topic)
+        val topics = notificationRepository.remoteNotificationTopics.toMutableSet().apply {
+            remove(topic)
+        }
+        notificationRepository.remoteNotificationTopics = topics
         return true
     }
 

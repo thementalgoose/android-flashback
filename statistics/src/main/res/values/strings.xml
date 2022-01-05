@@ -222,6 +222,11 @@
     <string name="settings_up_next_category_free_practice_descrition">Get notified before free practice starts</string>
     <string name="settings_up_next_category_other_title">Other</string>
     <string name="settings_up_next_category_other_descrition">Get notified before other F1 events starts (ie. Winter testing)</string>
+    <string name="settings_up_next_results_available_title">Results available</string>
+    <string name="settings_up_next_results_qualifying_title">Qualifying</string>
+    <string name="settings_up_next_results_qualifying_descrition">Get notified when qualifying results are available</string>
+    <string name="settings_up_next_results_race_title">Race</string>
+    <string name="settings_up_next_results_race_descrition">Get notified when race results are available</string>
     <string name="settings_up_next_title">Notification Settings</string>
     <string name="settings_up_next_time_before_title">Notice</string>
     <string name="settings_up_next_time_before_description">How far before an event do you want a notification?</string>

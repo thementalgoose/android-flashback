@@ -1,5 +1,6 @@
 package tmg.flashback.di
 
+import org.koin.android.ext.koin.androidContext
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import tmg.flashback.device.managers.BuildConfigManager
@@ -27,12 +28,12 @@ import tmg.flashback.notifications.navigation.NotificationNavigationProvider
 val appModule = module {
 
     viewModel { SettingsAllViewModel(get(), get()) }
-    viewModel { DashboardViewModel(get(), get(), get(), get(), get()) }
+    viewModel { DashboardViewModel(androidContext(), get(), get(), get()) }
     viewModel { ListViewModel(get(), get(), get(), get(), get()) }
     viewModel { HomeViewModel(get(), get(), get(), get(), get(), get(), get()) }
     viewModel { SyncViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get(), get()) }
 
-    single { FlashbackStartup(get(), get(), get(), get(), get(), get(), get()) }
+    single { FlashbackStartup(get(), get(), get(), get(), get(), get(), get(), get()) }
 
     single { DebugController() }
 

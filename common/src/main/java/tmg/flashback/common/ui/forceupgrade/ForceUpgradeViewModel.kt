@@ -51,7 +51,7 @@ class ForceUpgradeViewModel(
         viewModelScope.launch {
             configController.reset()
             if (BuildConfig.DEBUG) {
-                Log.i("Flashback", "Force Upgrade reset")
+                Log.i("Force Upgrade", "Force Upgrade reset")
             }
         }
     }

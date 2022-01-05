@@ -198,6 +198,84 @@ internal class UpNextRepositoryTest {
 
     //endregion
 
+
+
+
+
+    //region Notification preferences - Race Notify
+
+    @Test
+    fun `is notification race notify reads value from preferences repository with default to false`() {
+        every { mockPreferenceManager.getBoolean(any(), any()) } returns true
+
+        initSUT()
+
+        Assertions.assertTrue(sut.notificationNotifyRace)
+        verify {
+            mockPreferenceManager.getBoolean(keyNotificationRaceNotify, false)
+        }
+    }
+
+    @Test
+    fun `setting notification race notify enabled saves value from preferences repository`() {
+        initSUT()
+
+        sut.notificationNotifyRace = true
+        verify {
+            mockPreferenceManager.save(keyNotificationRaceNotify, true)
+        }
+    }
+
+    @Test
+    fun `setting notification race notify disabled saves value from preferences repository`() {
+        initSUT()
+
+        sut.notificationNotifyRace = false
+        verify {
+            mockPreferenceManager.save(keyNotificationRaceNotify, false)
+        }
+    }
+
+    //endregion
+
+    //region Notification preferences - Qualifying Notify
+
+    @Test
+    fun `is notification qualifying notify reads value from preferences repository with default to false`() {
+        every { mockPreferenceManager.getBoolean(any(), any()) } returns true
+
+        initSUT()
+
+        Assertions.assertTrue(sut.notificationNotifyQualifying)
+        verify {
+            mockPreferenceManager.getBoolean(keyNotificationQualifyingNotify, false)
+        }
+    }
+
+    @Test
+    fun `setting notification qualifying notify enabled saves value from preferences repository`() {
+        initSUT()
+
+        sut.notificationNotifyQualifying = true
+        verify {
+            mockPreferenceManager.save(keyNotificationQualifyingNotify, true)
+        }
+    }
+
+    @Test
+    fun `setting notification qualifying notify disabled saves value from preferences repository`() {
+        initSUT()
+
+        sut.notificationNotifyQualifying = false
+        verify {
+            mockPreferenceManager.save(keyNotificationQualifyingNotify, false)
+        }
+    }
+
+    //endregion
+
+
+
     //region Notification preferences - Reminder
 
     @Test
@@ -242,6 +320,9 @@ internal class UpNextRepositoryTest {
         private const val keyNotificationFreePractice: String = "UP_NEXT_NOTIFICATION_FREE_PRACTICE"
         private const val keyNotificationOther: String = "UP_NEXT_NOTIFICATION_OTHER"
         private const val keyNotificationReminder: String = "UP_NEXT_NOTIFICATION_REMINDER"
+
+        private const val keyNotificationRaceNotify: String = "UP_NEXT_NOTIFICATION_RACE_NOTIFY"
+        private const val keyNotificationQualifyingNotify: String = "UP_NEXT_NOTIFICATION_QUALIFYING_NOTIFY"
 
         private const val keyNotificationOnboarding: String = "UP_NEXT_NOTIFICATION_ONBOARDING"
     }

@@ -16,12 +16,12 @@ private const val dateFormat = "EEE, d MMM yyyy HH:mm:ss Z"
 fun RssXMLModel.convert(rssFeedController: RSSController, fromSource: String, showDescription: Boolean): List<Article> {
 
     if (this.channel == null) {
-        Log.e("Flashback", "Failed to parse RSS model from channel $fromSource")
+        Log.e("RSS", "Failed to parse RSS model from channel $fromSource")
         return emptyList()
     }
 
     if (this.channel.title == null) {
-        Log.e("Flashback", "Failed to parse RSS model from title $fromSource")
+        Log.e("RSS", "Failed to parse RSS model from title $fromSource")
         return emptyList()
     }
 
@@ -29,7 +29,7 @@ fun RssXMLModel.convert(rssFeedController: RSSController, fromSource: String, sh
     if (this.channel.link == null) {
         url = extractLinkSource(this.channel?.item) ?: ""
         if (url.isEmpty()) {
-            Log.e("Flashback", "Failed to parse RSS model from link $fromSource")
+            Log.e("RSS", "Failed to parse RSS model from link $fromSource")
             return emptyList()
         }
     }

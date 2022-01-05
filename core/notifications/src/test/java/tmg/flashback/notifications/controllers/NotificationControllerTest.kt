@@ -5,7 +5,6 @@ import kotlinx.coroutines.test.runBlockingTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDateTime
-import tmg.flashback.notifications.NotificationRegistration
 import tmg.flashback.notifications.managers.RemoteNotificationManager
 import tmg.flashback.notifications.managers.SystemAlarmManager
 import tmg.flashback.notifications.managers.SystemNotificationManager
@@ -28,60 +27,28 @@ internal class NotificationControllerTest: BaseTest() {
     @Test
     fun `subscribe method subscribes to topics if all are set to default`() = coroutineTest {
         coEvery { mockRemoteNotificationManager.subscribeToTopic(any()) } returns true
-        every { mockNotificationRepository.enabledSeasonInfo } returns NotificationRegistration.DEFAULT
 
         initSUT()
         runBlockingTest {
-            sut.subscribeToRemoteNotifications()
+            sut.subscribeToRemoteNotification("test")
         }
 
         coVerify {
-            mockRemoteNotificationManager.subscribeToTopic(keyTopicSeasonInfo)
-            // Legacy
-            mockRemoteNotificationManager.unsubscribeToTopic("race")
-            mockRemoteNotificationManager.unsubscribeToTopic("qualifying")
-        }
-        verify {
-            mockNotificationRepository.enabledSeasonInfo
-            mockNotificationRepository.enabledSeasonInfo = NotificationRegistration.OPT_IN
+            mockRemoteNotificationManager.subscribeToTopic("test")
+            mockNotificationRepository.remoteNotificationTopics = setOf("test")
         }
     }
 
     @Test
-    fun `subscribe method doesnt update repository if subscription fails`() {
-        coEvery { mockRemoteNotificationManager.subscribeToTopic(any()) } returns false
-        every { mockNotificationRepository.enabledSeasonInfo } returns NotificationRegistration.DEFAULT
-
+    fun `unsubscribe method calls notification manager`() {
         initSUT()
         runBlockingTest {
-            sut.subscribeToRemoteNotifications()
+            sut.unsubscribeToRemoteNotification("test")
         }
 
         coVerify {
-            mockRemoteNotificationManager.subscribeToTopic(keyTopicSeasonInfo)
-        }
-        verify {
-            mockNotificationRepository.enabledSeasonInfo
-        }
-        verify(exactly = 0) {
-            mockNotificationRepository.enabledSeasonInfo = NotificationRegistration.OPT_IN
-        }
-    }
-
-    @Test
-    fun `subscribe method does nothing if topics if already subscribed`() {
-        every { mockNotificationRepository.enabledSeasonInfo } returns NotificationRegistration.OPT_IN
-
-        initSUT()
-        runBlockingTest {
-            sut.subscribeToRemoteNotifications()
-        }
-
-        coVerify(exactly = 0) {
-            mockRemoteNotificationManager.subscribeToTopic(any())
-        }
-        verify(exactly = 0) {
-            mockNotificationRepository.enabledSeasonInfo = NotificationRegistration.OPT_IN
+            mockRemoteNotificationManager.unsubscribeToTopic("test")
+            mockNotificationRepository.remoteNotificationTopics = emptySet()
         }
     }
 
@@ -173,8 +140,4 @@ internal class NotificationControllerTest: BaseTest() {
     }
 
     //endregion
-
-    companion object {
-        private const val keyTopicSeasonInfo: String = "seasonInfo"
-    }
 }

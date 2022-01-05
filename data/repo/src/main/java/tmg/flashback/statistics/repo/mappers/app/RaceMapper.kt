@@ -65,7 +65,6 @@ class RaceMapper(
             val lapTimeOrder = input
                 .sortedBy { it.qualifyingResult.q1?.toLapTime()?.totalMillis ?: Int.MAX_VALUE }
                 .mapIndexed { index, item -> Pair(item.driver.id, index + 1) }
-            println(lapTimeOrder)
             val driverListForRound = input.map {
                 RaceQualifyingRoundDriver.Qualifying(
                     _driver = DriverConstructor(driverDataMapper.mapDriver(it.driver), constructorDataMapper.mapConstructorData(it.constructor)),

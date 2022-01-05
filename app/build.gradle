@@ -142,6 +142,10 @@ dependencies {
 //        exclude group: 'org.jetbrains.kotlin' // Only if you already use Kotlin in your project
 //    }
 
+    // Work Manager
+    implementation deps.androidx.workmanager
+    implementation deps.androidx.workmanager_ktx
+
     // Splash screen
     implementation deps.androidx.splashscreen
 

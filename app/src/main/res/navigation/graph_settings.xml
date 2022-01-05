@@ -70,7 +70,7 @@
     <include app:graph="@navigation/graph_rss_settings" />
     <fragment
         android:id="@+id/settingsUpNextNotificationsFragment"
-        android:name="tmg.flashback.upnext.ui.settings.UpNextSettingsFragment"
+        android:name="tmg.flashback.statistics.ui.settings.notifications.UpNextSettingsFragment"
         android:label="SettingsNotificationFragment" />
     <fragment
         android:id="@+id/settingsSupportFragment"

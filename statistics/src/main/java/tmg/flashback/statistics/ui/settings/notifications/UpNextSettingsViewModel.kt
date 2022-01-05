@@ -2,6 +2,7 @@ package tmg.flashback.statistics.ui.settings.notifications
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import tmg.flashback.statistics.BuildConfig
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.controllers.ScheduleController
 import tmg.flashback.ui.settings.SettingsModel
@@ -73,6 +74,27 @@ class UpNextSettingsViewModel(
                 openTimePicker.value = Event()
             }
         ))
+
+        // TODO: Results available notifications - Remove
+        if (BuildConfig.DEBUG) {
+            add(SettingsModel.Header(R.string.settings_up_next_results_available_title))
+            add(SettingsModel.SwitchPref(
+                title = R.string.settings_up_next_results_race_title,
+                description = R.string.settings_up_next_results_race_descrition,
+                getState = { scheduleController.notificationRaceNotify },
+                saveState = {
+                    scheduleController.notificationRaceNotify = it
+                }
+            ))
+            add(SettingsModel.SwitchPref(
+                title = R.string.settings_up_next_results_qualifying_title,
+                description = R.string.settings_up_next_results_qualifying_descrition,
+                getState = { scheduleController.notificationQualifyingNotify },
+                saveState = {
+                    scheduleController.notificationQualifyingNotify = it
+                }
+            ))
+        }
     }
 
     override val openTimePicker: MutableLiveData<Event> = MutableLiveData()

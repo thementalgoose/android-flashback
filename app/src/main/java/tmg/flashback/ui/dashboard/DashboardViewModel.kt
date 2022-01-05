@@ -10,6 +10,8 @@ import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.statistics.BuildConfig
 import tmg.flashback.statistics.controllers.ScheduleController
 import tmg.flashback.statistics.extensions.updateAllWidgets
+import tmg.flashback.statistics.workmanager.NotificationScheduler
+import tmg.flashback.statistics.workmanager.NotificationSchedulerProvider
 import tmg.utilities.lifecycle.Event
 
 //region Inputs
@@ -32,9 +34,8 @@ interface DashboardViewModelOutputs {
 //endregion
 
 class DashboardViewModel(
-    private val applicationContext: Context,
-    private val scheduleController: ScheduleController,
-    private val buildConfigManager: BuildConfigManager,
+    applicationContext: Context,
+    private val notificationSchedulerProvider: NotificationSchedulerProvider,
     private val configurationController: ConfigController,
     private val releaseNotesController: ReleaseNotesController,
 ): ViewModel(), DashboardViewModelInputs, DashboardViewModelOutputs {
@@ -51,11 +52,11 @@ class DashboardViewModel(
             configurationController.fetch()
             val activate = configurationController.applyPending()
             if (BuildConfig.DEBUG) {
-                Log.i("Flashback", "Remote config change detected $activate")
+                Log.i("Dashboard", "Remote config change detected $activate")
             }
             if (activate) {
                 appConfigSynced.value = Event()
-                scheduleController.scheduleNotifications()
+                notificationSchedulerProvider.schedule()
                 applicationContext.updateAllWidgets()
             }
         }
