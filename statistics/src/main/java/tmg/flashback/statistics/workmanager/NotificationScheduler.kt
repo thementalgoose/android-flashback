@@ -69,12 +69,9 @@ class NotificationScheduler(
                 }
             }
 
-        println(notificationController.notificationsCurrentlyScheduled)
-        println(upNextItemsToSchedule)
-
         if (upNextItemsToSchedule.map { it.requestCode }.toSet() == notificationController.notificationsCurrentlyScheduled && !force) {
             if (BuildConfig.DEBUG) {
-                Log.d("WorkManager", "Up Next items have remained unchanged since last sync - Skipping scheduling")
+                Log.d("WorkManager", "Up Next items have remained unchanged since last sync - Skipping scheduling of notifications")
             }
             return Result.success()
         }

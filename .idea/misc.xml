@@ -16,7 +16,7 @@
         <entry key="common/src/main/res/layout/fragment_bottom_sheet_release_notes.xml" value="0.335" />
         <entry key="common/src/main/res/layout/view_release_note.xml" value="0.360054347826087" />
         <entry key="core/ui/src/main/res/layout/view_bottom_sheet_item.xml" value="0.20104166666666667" />
-        <entry key="debug/src/main/res/layout/activity_debug.xml" value="0.12760416666666666" />
+        <entry key="debug/src/main/res/layout/activity_debug.xml" value="0.1" />
         <entry key="formula1/src/main/res/drawable/circuit_adelaide.xml" value="0.5" />
         <entry key="formula1/src/main/res/drawable/circuit_ain_diab.xml" value="0.14375" />
         <entry key="formula1/src/main/res/drawable/circuit_aintree.xml" value="0.14375" />
