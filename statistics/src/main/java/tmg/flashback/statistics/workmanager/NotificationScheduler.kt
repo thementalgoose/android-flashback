@@ -35,7 +35,6 @@ class NotificationScheduler(
 
         if (BuildConfig.DEBUG) {
             Log.i("WorkManager", "Scheduling notifications")
-            Toast.makeText(applicationContext, "Scheduling notifications", Toast.LENGTH_LONG).show()
         }
 
         val upNextItemsToSchedule = scheduleRepository
