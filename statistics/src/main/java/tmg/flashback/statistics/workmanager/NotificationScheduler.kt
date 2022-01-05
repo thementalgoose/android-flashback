@@ -34,7 +34,7 @@ class NotificationScheduler(
         val force: Boolean = inputData.getBoolean("force", false)
 
         if (BuildConfig.DEBUG) {
-            Log.i("WorkManager", "Scheduling notifications")
+            Log.i("Notification", "WorkManager - Scheduling notifications")
         }
 
         val upNextItemsToSchedule = scheduleRepository
@@ -69,9 +69,15 @@ class NotificationScheduler(
                 }
             }
 
+
+        if (BuildConfig.DEBUG) {
+            Log.i("Notification", "WorkManager notificationsScheduled ${notificationController.notificationsCurrentlyScheduled}")
+            Log.i("Notification", "WorkManager upNextItems to schedule ${upNextItemsToSchedule.size}")
+            Log.i("Notification", "WorkManager upNextItems to schedule $upNextItemsToSchedule")
+        }
         if (upNextItemsToSchedule.map { it.requestCode }.toSet() == notificationController.notificationsCurrentlyScheduled && !force) {
             if (BuildConfig.DEBUG) {
-                Log.d("WorkManager", "Up Next items have remained unchanged since last sync - Skipping scheduling of notifications")
+                Log.d("Notification", "WorkManager - Up Next items have remained unchanged since last sync - Skipping scheduling of notifications")
             }
             return Result.success()
         }
@@ -101,12 +107,12 @@ class NotificationScheduler(
                 timestamp = scheduleTime
             )
             if (BuildConfig.DEBUG) {
-                Log.i("WorkManager", "Notification at $scheduleTime - $title scheduled")
+                Log.i("Notification", "WorkManager - Notification at $scheduleTime - $title scheduled")
             }
         }
 
         if (BuildConfig.DEBUG) {
-            Log.i("WorkManager", "Finished scheduling notifications")
+            Log.i("Notification", "WorkManager - Finished scheduling notifications")
         }
 
         return Result.success()

@@ -52,7 +52,7 @@ class FlashbackStartup(
 
         // Shake to report a bug
         if (crashController.shakeToReport) {
-            Log.i("Flashback", "Enabling shake to report")
+            Log.i("Startup", "Enabling shake to report")
 
             Shaky.with(application, object : EmailShakeDelegate("thementalgoose@gmail.com") {
                 override fun getTheme() = super.getTheme()

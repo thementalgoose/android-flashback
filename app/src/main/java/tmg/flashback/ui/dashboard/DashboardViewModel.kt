@@ -52,7 +52,7 @@ class DashboardViewModel(
             configurationController.fetch()
             val activate = configurationController.applyPending()
             if (BuildConfig.DEBUG) {
-                Log.i("Flashback", "Remote config change detected $activate")
+                Log.i("Dashboard", "Remote config change detected $activate")
             }
             if (activate) {
                 appConfigSynced.value = Event()

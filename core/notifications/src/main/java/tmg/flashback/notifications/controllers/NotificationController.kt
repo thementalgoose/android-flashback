@@ -40,7 +40,7 @@ class NotificationController(
             .apply { add(requestCode) }
 
         if (BuildConfig.DEBUG) {
-            Log.d("Flashback", "Scheduled notification $title / $text - $requestCode")
+            Log.d("Notification", "Scheduled notification $title / $text - $requestCode")
         }
     }
 
@@ -56,7 +56,7 @@ class NotificationController(
             }
 
         if (BuildConfig.DEBUG) {
-            Log.d("Flashback", "Notification - Cancelled $requestCode, leaving ${notificationRepository.notificationIds}")
+            Log.d("Notification", "Cancelled $requestCode, leaving ${notificationRepository.notificationIds}")
         }
     }
 
@@ -65,7 +65,7 @@ class NotificationController(
      */
     fun cancelAllNotifications() {
         if (BuildConfig.DEBUG) {
-            Log.d("Flashback", "Notification - Cancelling all (all = ${notificationRepository.notificationIds}")
+            Log.d("Notifications", "Cancelling all (all = ${notificationRepository.notificationIds})")
         }
         notificationRepository.notificationIds
             .forEach { requestCode ->
