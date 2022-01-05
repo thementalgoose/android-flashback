@@ -1,5 +1,6 @@
 package tmg.flashback.debug
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -7,18 +8,24 @@ import android.widget.Toast
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
+import tmg.flashback.ads.manager.AdsManager
+import tmg.flashback.ads.repository.AdsRepository
 import tmg.flashback.debug.adverts.AdvertsActivity
 import tmg.flashback.ui.base.BaseActivity
 import tmg.flashback.ui.navigation.NavigationProvider
 import tmg.flashback.debug.databinding.ActivityDebugBinding
 import tmg.flashback.debug.styleguide.StyleGuideActivity
+import tmg.flashback.device.controllers.DeviceController
 import tmg.flashback.statistics.repo.CircuitRepository
 import tmg.flashback.statistics.repo.ConstructorRepository
 import tmg.flashback.statistics.repo.DriverRepository
 import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.notifications.receiver.LocalNotificationBroadcastReceiver
+import tmg.flashback.notifications.repository.NotificationRepository
 import tmg.flashback.statistics.network.manager.BaseUrlLocalOverrideManager
+import tmg.utilities.extensions.copyToClipboard
 
+@SuppressLint("SetTextI18n")
 class DebugActivity: BaseActivity() {
 
     private lateinit var binding: ActivityDebugBinding
@@ -29,6 +36,10 @@ class DebugActivity: BaseActivity() {
     private val constructorRepository: ConstructorRepository by inject()
 
     private val baseUrlLocalOverrideManager: BaseUrlLocalOverrideManager by inject()
+
+    private val deviceController: DeviceController by inject()
+    private val adsManager: AdsManager by inject()
+    private val notificationRepository: NotificationRepository by inject()
 
     private val navigationProvider: NavigationProvider by inject()
 
@@ -50,6 +61,27 @@ class DebugActivity: BaseActivity() {
 
         binding.syncActivity.setOnClickListener {
             startActivity(navigationProvider.syncActivityIntent(this))
+        }
+
+        val adId: String = adsManager.getCurrentDeviceId(applicationContext) ?: ""
+        binding.adId.text = "Ads ID:\n$adId"
+        Log.i("Debug", "Ads ID: $adId")
+        binding.adId.setOnClickListener {
+            copyToClipboard(adId, adId)
+        }
+
+        val fcmId: String = notificationRepository.remoteNotificationToken ?: ""
+        binding.fcmId.text = "FCM ID:\n${fcmId}"
+        Log.i("Debug", "FCM ID: $fcmId")
+        binding.fcmId.setOnClickListener {
+            copyToClipboard(fcmId, fcmId)
+        }
+
+        val deviceUdid: String = deviceController.deviceUdid
+        binding.deviceUdid.text = "Device ID:\n${deviceUdid}"
+        Log.i("Debug", "Device ID: $deviceUdid")
+        binding.deviceUdid.setOnClickListener {
+            copyToClipboard(deviceUdid, deviceUdid)
         }
 
         binding.configUrl.setText(baseUrlLocalOverrideManager.localBaseUrl ?: "")

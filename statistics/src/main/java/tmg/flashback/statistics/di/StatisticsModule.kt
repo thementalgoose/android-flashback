@@ -1,6 +1,8 @@
 package tmg.flashback.statistics.di
 
+import org.koin.android.ext.koin.androidContext
 import org.koin.android.viewmodel.dsl.viewModel
+import org.koin.androidx.workmanager.dsl.worker
 import org.koin.dsl.module
 import tmg.flashback.statistics.controllers.RaceController
 import tmg.flashback.statistics.controllers.SearchController
@@ -23,6 +25,8 @@ import tmg.flashback.statistics.ui.settings.home.SettingsHomeViewModel
 import tmg.flashback.statistics.ui.settings.statistics.SettingsStatisticsViewModel
 import tmg.flashback.statistics.ui.settings.notifications.UpNextSettingsViewModel
 import tmg.flashback.statistics.ui.settings.notifications.reminder.UpNextReminderViewModel
+import tmg.flashback.statistics.workmanager.NotificationScheduler
+import tmg.flashback.statistics.workmanager.NotificationSchedulerProvider
 
 val statisticsModule = repoModule + module {
 
@@ -50,6 +54,10 @@ val statisticsModule = repoModule + module {
     viewModel { OnboardingNotificationViewModel(get()) }
     viewModel { UpNextReminderViewModel(get()) }
 
-    single { ScheduleController(get(), get(), get(), get()) }
+    single { ScheduleController(androidContext(), get(), get(), get(), get()) }
     single { UpNextRepository(get()) }
+
+    // Worker
+    worker { NotificationScheduler(get(), get(), get(), androidContext(), get()) }
+    single { NotificationSchedulerProvider(androidContext()) }
 }

@@ -20,10 +20,8 @@ class LocalNotificationBroadcastReceiver: BroadcastReceiver(), KoinComponent {
     private val crashController: CrashController by inject()
 
     override fun onReceive(context: Context?, intent: Intent?) {
-        println("RECEIVED!")
-
         if (BuildConfig.DEBUG) {
-            Log.d("Flashback", "Local notification broadcast receiver fired")
+            Log.d("Notification", "Local notification broadcast receiver fired")
         }
 
         val title = intent?.extras?.getString(keyTitle) ?: run {
@@ -39,10 +37,8 @@ class LocalNotificationBroadcastReceiver: BroadcastReceiver(), KoinComponent {
             return
         }
         if (BuildConfig.DEBUG) {
-            Log.d("Flashback", "Scheduling notification for Title $title Description $description")
+            Log.d("Notification", "Scheduling notification for Title $title Description $description")
         }
-
-        println("Notification controller $notificationManager")
 
         val notification = notificationManager.buildNotification(
             context = context,
@@ -51,7 +47,7 @@ class LocalNotificationBroadcastReceiver: BroadcastReceiver(), KoinComponent {
             text = description
         )
 
-        Log.i("Flashback", "Displaying notification for $title")
+        Log.i("Notification", "Displaying notification for $title")
 
         notificationManager.notify("flashback", 1001, notification)
     }

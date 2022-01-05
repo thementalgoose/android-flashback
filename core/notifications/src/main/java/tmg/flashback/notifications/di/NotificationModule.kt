@@ -10,7 +10,7 @@ import tmg.flashback.notifications.repository.NotificationRepository
 
 val notificationModule = module {
 
-    single<RemoteNotificationManager> { FirebaseRemoteNotificationManager(get()) }
+    single<RemoteNotificationManager> { FirebaseRemoteNotificationManager() }
     single { NotificationController(get(), get(), get(), get()) }
     single { NotificationRepository(get()) }
 

@@ -8,6 +8,7 @@ import tmg.flashback.common.controllers.ReleaseNotesController
 import tmg.flashback.configuration.controllers.ConfigController
 import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.statistics.controllers.ScheduleController
+import tmg.flashback.statistics.workmanager.NotificationSchedulerProvider
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertEventFired
 import tmg.testutils.livedata.assertEventNotFired
@@ -18,8 +19,7 @@ internal class DashboardViewModelTest: BaseTest() {
     lateinit var sut: DashboardViewModel
 
     private val mockContext: Context = mockk(relaxed = true)
-    private val mockScheduleController: ScheduleController = mockk(relaxed = true)
-    private val mockBuildConfigManager: BuildConfigManager = mockk(relaxed = true)
+    private val mockNotificationSchedulerProvider: NotificationSchedulerProvider = mockk(relaxed = true)
     private val mockConfigurationController: ConfigController = mockk(relaxed = true)
     private val mockReleaseNotesController: ReleaseNotesController = mockk(relaxed = true)
 
@@ -27,14 +27,12 @@ internal class DashboardViewModelTest: BaseTest() {
     internal fun setUp() {
         coEvery { mockConfigurationController.applyPending() } returns false
         every { mockReleaseNotesController.pendingReleaseNotes } returns false
-        coEvery { mockScheduleController.getNextEvent() } returns mockk()
     }
 
     private fun initSUT() {
         sut = DashboardViewModel(
             mockContext,
-            mockScheduleController,
-            mockBuildConfigManager,
+            mockNotificationSchedulerProvider,
             mockConfigurationController,
             mockReleaseNotesController
         )
@@ -77,7 +75,7 @@ internal class DashboardViewModelTest: BaseTest() {
             assertEventFired()
         }
         coVerify {
-            mockScheduleController.scheduleNotifications()
+            mockNotificationSchedulerProvider.schedule()
         }
     }
 
@@ -88,7 +86,6 @@ internal class DashboardViewModelTest: BaseTest() {
     @Test
     fun `init if release notes are pending then open release notes is fired`() {
         // Because notification onboarding takes priority over release notes
-        every { mockScheduleController.shouldShowNotificationOnboarding } returns false
         every { mockReleaseNotesController.pendingReleaseNotes } returns true
         initSUT()
         sut.outputs.openReleaseNotes.test {
@@ -98,7 +95,6 @@ internal class DashboardViewModelTest: BaseTest() {
 
     @Test
     fun `init if release notes are not pending then open release notes not fired`() {
-        every { mockScheduleController.shouldShowNotificationOnboarding } returns false
         every { mockReleaseNotesController.pendingReleaseNotes } returns false
         initSUT()
         sut.outputs.openReleaseNotes.test {

@@ -1,29 +1,24 @@
 package tmg.flashback.notifications.repository
 
 import tmg.flashback.prefs.manager.PreferenceManager
-import tmg.flashback.notifications.NotificationRegistration
-import tmg.utilities.extensions.toEnum
 
 class NotificationRepository(
     private val preferenceManager: PreferenceManager
 ) {
 
     companion object {
-        private const val keyNotificationSeasonInfo: String = "NOTIFICATION_SEASON_INFO"
-
+        private const val keyNotificationRemoteTopics: String = "NOTIFICATION_REMOTE_TOPICS"
         private const val keyNotificationIds: String = "NOTIFICATION_IDS"
+        private const val keyNotificationRemoteToken: String = "NOTIFICATION_REMOTE_TOKEN"
     }
 
-    // TODO: To be removed
-    var enabledSeasonInfo: NotificationRegistration
-        set(value) = preferenceManager.save(keyNotificationSeasonInfo, value.key)
-        get() = preferenceManager
-            .getString(keyNotificationSeasonInfo, "")
-            ?.toEnum<NotificationRegistration> {
-                it.key
-            }
-            ?: NotificationRegistration.DEFAULT
+    var remoteNotificationToken: String?
+        get() = preferenceManager.getString(keyNotificationRemoteToken, null)
+        set(value) = preferenceManager.save(keyNotificationRemoteToken, value ?: "")
 
+    var remoteNotificationTopics: Set<String>
+        get() = preferenceManager.getSet(keyNotificationRemoteTopics, emptySet())
+        set(value) = preferenceManager.save(keyNotificationRemoteTopics, value)
 
     var notificationIds: Set<Int>
         get() = preferenceManager.getSet(keyNotificationIds, setOf())

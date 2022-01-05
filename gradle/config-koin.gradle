@@ -3,4 +3,5 @@ dependencies {
     implementation deps.koin.koin_scope
     implementation deps.koin.koin_viewmodel
     implementation deps.koin.koin_ext
+    implementation deps.koin.koin_workmanager
 }

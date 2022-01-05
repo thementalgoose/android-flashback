@@ -4,6 +4,8 @@
 
     <string name="debug_title">Debug</string>
 
+    <string name="debug_constant">Constants</string>
+
     <string name="debug_sync_title">Sync</string>
     <string name="debug_config_url_title">Override config URL</string>
     <string name="debug_config_url_save">Save</string>
