@@ -2,6 +2,7 @@ package tmg.flashback.statistics.workmanager
 
 import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import androidx.work.*
 import org.koin.core.component.KoinApiExtension
 import org.koin.core.component.KoinComponent
@@ -34,6 +35,7 @@ class NotificationScheduler(
 
         if (BuildConfig.DEBUG) {
             Log.i("WorkManager", "Scheduling notifications")
+            Toast.makeText(applicationContext, "Scheduling notifications", Toast.LENGTH_LONG).show()
         }
 
         val upNextItemsToSchedule = scheduleRepository
