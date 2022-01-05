@@ -43,6 +43,31 @@ internal class NotificationRepositoryTest {
 
     //endregion
 
+    //region Notification Remote token
+
+    @Test
+    fun `settings notification remote token saves to preference manager`() {
+        initSUT()
+
+        sut.remoteNotificationToken = "token"
+        verify {
+            mockPreferenceManager.save(keyNotificationRemoteToken, "token")
+        }
+    }
+
+    @Test
+    fun `settings notification remote token retreives to preference manager ignoring invalid`() {
+        every { mockPreferenceManager.getString(keyNotificationRemoteToken, any()) } returns "token"
+        initSUT()
+
+        assertEquals("token", sut.remoteNotificationToken)
+        verify {
+            mockPreferenceManager.getString(keyNotificationRemoteToken, null)
+        }
+    }
+
+    //endregion
+
     //region Notification Ids
 
     @Test
@@ -73,5 +98,6 @@ internal class NotificationRepositoryTest {
 
         private const val keyNotificationRemoteTopics: String = "NOTIFICATION_REMOTE_TOPICS"
         private const val keyNotificationIds = "NOTIFICATION_IDS"
+        private const val keyNotificationRemoteToken: String = "NOTIFICATION_REMOTE_TOKEN"
     }
 }

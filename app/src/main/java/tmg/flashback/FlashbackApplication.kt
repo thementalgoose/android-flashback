@@ -3,6 +3,7 @@ package tmg.flashback
 import android.app.Application
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
+import org.koin.androidx.workmanager.koin.workManagerFactory
 import org.koin.core.context.startKoin
 import tmg.flashback.ads.di.adsModule
 import tmg.flashback.common.di.commonModule
@@ -27,6 +28,7 @@ class FlashbackApplication: Application() {
         // Start Koin
         startKoin {
             androidContext(this@FlashbackApplication)
+            workManagerFactory()
             modules(
                 appModule,
                 // Features

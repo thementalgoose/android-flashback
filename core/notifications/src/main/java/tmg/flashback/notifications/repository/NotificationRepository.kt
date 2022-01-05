@@ -9,7 +9,12 @@ class NotificationRepository(
     companion object {
         private const val keyNotificationRemoteTopics: String = "NOTIFICATION_REMOTE_TOPICS"
         private const val keyNotificationIds: String = "NOTIFICATION_IDS"
+        private const val keyNotificationRemoteToken: String = "NOTIFICATION_REMOTE_TOKEN"
     }
+
+    var remoteNotificationToken: String?
+        get() = preferenceManager.getString(keyNotificationRemoteToken, null)
+        set(value) = preferenceManager.save(keyNotificationRemoteToken, value ?: "")
 
     var remoteNotificationTopics: Set<String>
         get() = preferenceManager.getSet(keyNotificationRemoteTopics, emptySet())

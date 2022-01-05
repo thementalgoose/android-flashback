@@ -8,39 +8,40 @@
 
         <activity
             android:name=".ui.race.RaceActivity"
-            android:label=""
             android:exported="false"
+            android:label=""
             android:theme="@style/Translucent" />
 
         <activity
             android:name=".ui.search.SearchActivity"
-            android:label=""
             android:exported="false"
+            android:label=""
             android:theme="@style/Translucent" />
 
         <activity
             android:name=".ui.circuit.CircuitActivity"
-            android:label=""
             android:exported="false"
+            android:label=""
             android:theme="@style/Translucent" />
 
         <activity
             android:name=".ui.overview.constructor.ConstructorActivity"
-            android:label=""
             android:exported="false"
+            android:label=""
             android:theme="@style/Translucent" />
 
         <activity
             android:name=".ui.overview.driver.DriverActivity"
-            android:label=""
             android:exported="false"
+            android:label=""
             android:theme="@style/Translucent" />
 
         <!-- Boot Receiver -->
 
-        <receiver android:name=".receivers.UpNextNotificationBootReceiver"
-            android:exported="true"
-            android:enabled="true">
+        <receiver
+            android:name=".receivers.UpNextNotificationBootReceiver"
+            android:enabled="true"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
@@ -50,8 +51,8 @@
 
         <receiver
             android:name=".widgets.UpNextWidgetProvider"
-            android:label="@string/widget_up_next_title"
-            android:exported="true">
+            android:exported="true"
+            android:label="@string/widget_up_next_title">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
