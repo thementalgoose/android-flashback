@@ -60,7 +60,21 @@ val statisticsModule = repoModule + module {
     single { UpNextRepository(get()) }
 
     // Worker
-    worker { (worker: WorkerParameters) -> NotificationScheduleWorker(get(), get(), get(), androidContext(), worker) }
-    worker { (worker: WorkerParameters) -> ContentSyncWorker(get(), get(), get(), get(), androidContext(), worker) }
+    //  https://github.com/InsertKoinIO/koin/issues/992
+    worker { (worker: WorkerParameters) -> NotificationScheduleWorker(
+        scheduleRepository = get(),
+        notificationController = get(),
+        upNextRepository = get(),
+        context = androidContext(),
+        parameters = worker)
+    }
+    worker { (worker: WorkerParameters) -> ContentSyncWorker(
+        configController = get(),
+        homeController = get(),
+        overviewRepository = get(),
+        workerProvider = get(),
+        context = androidContext(),
+        parameters = worker)
+    }
     single { WorkerProvider(androidContext()) }
 }
