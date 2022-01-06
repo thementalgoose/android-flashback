@@ -1,5 +1,6 @@
 package tmg.flashback.statistics.di
 
+import androidx.work.WorkerParameters
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.androidx.workmanager.dsl.worker
@@ -58,6 +59,6 @@ val statisticsModule = repoModule + module {
     single { UpNextRepository(get()) }
 
     // Worker
-    worker { NotificationScheduler(get(), get(), get(), androidContext(), get()) }
+    worker { (worker: WorkerParameters) -> NotificationScheduler(get(), get(), get(), androidContext(), worker) }
     single { NotificationSchedulerProvider(androidContext()) }
 }
