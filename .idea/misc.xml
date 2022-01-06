@@ -8,6 +8,7 @@
         <entry key="app/src/main/res/drawable/ic_close.xml" value="0.3765625" />
         <entry key="app/src/main/res/drawable/ic_done.xml" value="0.3765625" />
         <entry key="app/src/main/res/drawable/ic_search.xml" value="0.18802083333333333" />
+        <entry key="app/src/main/res/layout/view_season_list_advert.xml" value="0.1984375" />
         <entry key="app/src/main/res/layout/view_season_list_feature_banner.xml" value="0.625" />
         <entry key="app/src/main/res/xml/filepaths.xml" value="0.11354166666666667" />
         <entry key="common/src/main/res/drawable/ic_close.xml" value="0.2171875" />
