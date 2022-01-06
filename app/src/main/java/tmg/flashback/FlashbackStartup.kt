@@ -25,6 +25,7 @@ import tmg.flashback.statistics.extensions.updateAllWidgets
 import tmg.flashback.statistics.repository.models.NotificationChannel
 import tmg.flashback.notifications.controllers.NotificationController
 import tmg.flashback.statistics.controllers.ScheduleController
+import tmg.flashback.statistics.workmanager.WorkerProvider
 import tmg.utilities.extensions.isInDayMode
 
 /**
@@ -40,6 +41,7 @@ class FlashbackStartup(
     private val themeController: ThemeController,
     private val analyticsManager: AnalyticsManager,
     private val notificationController: NotificationController,
+    private val workerProvider: WorkerProvider,
     private val adsController: AdsController
 ) {
     fun startup(application: FlashbackApplication) {
@@ -117,6 +119,9 @@ class FlashbackStartup(
             NightMode.NIGHT -> "night"
             NightMode.DEFAULT -> if (application.isInDayMode()) "day (default)" else "night (default)"
         })
+
+        // Content sync
+        workerProvider.contentSync()
 
         // Update Widgets
         application.updateAllWidgets()

@@ -9,19 +9,16 @@ import kotlinx.coroutines.test.runBlockingTest
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.threeten.bp.Clock
 import org.threeten.bp.LocalDate
-import org.threeten.bp.LocalDateTime
 import org.threeten.bp.LocalTime
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.formula1.model.Schedule
-import tmg.flashback.statistics.utils.NotificationUtils.getRequestCode
 import tmg.flashback.notifications.controllers.NotificationController
 import tmg.flashback.statistics.repo.ScheduleRepository
 import tmg.flashback.statistics.repository.UpNextRepository
 import tmg.flashback.statistics.repository.models.NotificationReminder
-import tmg.flashback.statistics.workmanager.NotificationSchedulerProvider
+import tmg.flashback.statistics.workmanager.WorkerProvider
 import tmg.testutils.BaseTest
 
 internal class ScheduleControllerTest : BaseTest() {
@@ -30,7 +27,7 @@ internal class ScheduleControllerTest : BaseTest() {
     private var mockUpNextRepository: UpNextRepository = mockk(relaxed = true)
     private var mockApplicationContext: Context = mockk(relaxed = true)
     private var mockScheduleRepository: ScheduleRepository = mockk(relaxed = true)
-    private var mockNotificationSchedulerProvider: NotificationSchedulerProvider = mockk(relaxed = true)
+    private var mockWorkerProvider: WorkerProvider = mockk(relaxed = true)
 
     private lateinit var sut: ScheduleController
 
@@ -45,7 +42,7 @@ internal class ScheduleControllerTest : BaseTest() {
     }
 
     private fun initSUT() {
-        sut = ScheduleController(mockApplicationContext, mockNotificationController, mockUpNextRepository, mockScheduleRepository, mockNotificationSchedulerProvider)
+        sut = ScheduleController(mockApplicationContext, mockNotificationController, mockUpNextRepository, mockScheduleRepository, mockWorkerProvider)
     }
 
     @Test
@@ -447,7 +444,7 @@ internal class ScheduleControllerTest : BaseTest() {
         sut.scheduleNotifications()
 
         verify {
-            mockNotificationSchedulerProvider.schedule()
+            mockWorkerProvider.schedule()
         }
     }
 
