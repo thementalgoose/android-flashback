@@ -6,12 +6,9 @@ import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 import tmg.flashback.configuration.controllers.ConfigController
 import tmg.flashback.common.controllers.ReleaseNotesController
-import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.statistics.BuildConfig
-import tmg.flashback.statistics.controllers.ScheduleController
 import tmg.flashback.statistics.extensions.updateAllWidgets
-import tmg.flashback.statistics.workmanager.NotificationScheduler
-import tmg.flashback.statistics.workmanager.NotificationSchedulerProvider
+import tmg.flashback.statistics.workmanager.WorkerProvider
 import tmg.utilities.lifecycle.Event
 
 //region Inputs
@@ -35,7 +32,7 @@ interface DashboardViewModelOutputs {
 
 class DashboardViewModel(
     applicationContext: Context,
-    private val notificationSchedulerProvider: NotificationSchedulerProvider,
+    private val workerProvider: WorkerProvider,
     private val configurationController: ConfigController,
     private val releaseNotesController: ReleaseNotesController,
 ): ViewModel(), DashboardViewModelInputs, DashboardViewModelOutputs {
@@ -56,7 +53,7 @@ class DashboardViewModel(
             }
             if (activate) {
                 appConfigSynced.value = Event()
-                notificationSchedulerProvider.schedule()
+                workerProvider.schedule()
                 applicationContext.updateAllWidgets()
             }
         }

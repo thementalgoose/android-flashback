@@ -18,7 +18,7 @@ import tmg.flashback.statistics.repository.models.NotificationChannel
 import tmg.flashback.statistics.utils.NotificationUtils
 
 @Suppress("EXPERIMENTAL_API_USAGE")
-class NotificationScheduler(
+class NotificationScheduleWorker(
     private val scheduleRepository: ScheduleRepository,
     private val notificationController: NotificationController,
     private val upNextRepository: UpNextRepository,

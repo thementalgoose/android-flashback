@@ -1,7 +1,6 @@
 package tmg.flashback.statistics.workmanager
 
 import android.content.Context
-import androidx.work.Data
 import androidx.work.ListenableWorker
 import androidx.work.WorkerParameters
 import io.mockk.coEvery
@@ -25,7 +24,7 @@ import tmg.flashback.statistics.repository.models.NotificationReminder
 import tmg.flashback.statistics.utils.NotificationUtils
 import tmg.testutils.BaseTest
 
-internal class NotificationSchedulerTest: BaseTest() {
+internal class NotificationScheduleWorkerTest: BaseTest() {
 
     private val mockScheduleRepository: ScheduleRepository = mockk(relaxed = true)
     private val mockNotificationController: NotificationController = mockk(relaxed = true)
@@ -33,10 +32,10 @@ internal class NotificationSchedulerTest: BaseTest() {
     private val mockContext: Context = mockk(relaxed = true)
     private val mockParameters: WorkerParameters = mockk(relaxed = true)
 
-    private lateinit var sut: NotificationScheduler
+    private lateinit var sut: NotificationScheduleWorker
 
     private fun initSUT() {
-        sut = NotificationScheduler(
+        sut = NotificationScheduleWorker(
             mockScheduleRepository,
             mockNotificationController,
             mockUpNextRepository,
