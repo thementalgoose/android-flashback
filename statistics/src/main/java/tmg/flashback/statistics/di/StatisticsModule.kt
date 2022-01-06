@@ -26,8 +26,9 @@ import tmg.flashback.statistics.ui.settings.home.SettingsHomeViewModel
 import tmg.flashback.statistics.ui.settings.statistics.SettingsStatisticsViewModel
 import tmg.flashback.statistics.ui.settings.notifications.UpNextSettingsViewModel
 import tmg.flashback.statistics.ui.settings.notifications.reminder.UpNextReminderViewModel
-import tmg.flashback.statistics.workmanager.NotificationScheduler
-import tmg.flashback.statistics.workmanager.NotificationSchedulerProvider
+import tmg.flashback.statistics.workmanager.ContentSyncWorker
+import tmg.flashback.statistics.workmanager.NotificationScheduleWorker
+import tmg.flashback.statistics.workmanager.WorkerProvider
 
 val statisticsModule = repoModule + module {
 
@@ -59,6 +60,7 @@ val statisticsModule = repoModule + module {
     single { UpNextRepository(get()) }
 
     // Worker
-    worker { (worker: WorkerParameters) -> NotificationScheduler(get(), get(), get(), androidContext(), worker) }
-    single { NotificationSchedulerProvider(androidContext()) }
+    worker { (worker: WorkerParameters) -> NotificationScheduleWorker(get(), get(), get(), androidContext(), worker) }
+    worker { (worker: WorkerParameters) -> ContentSyncWorker(get(), get(), get(), get(), androidContext(), worker) }
+    single { WorkerProvider(androidContext()) }
 }

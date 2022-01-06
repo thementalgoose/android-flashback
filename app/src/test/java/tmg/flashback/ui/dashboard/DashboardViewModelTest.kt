@@ -6,9 +6,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.common.controllers.ReleaseNotesController
 import tmg.flashback.configuration.controllers.ConfigController
-import tmg.flashback.device.managers.BuildConfigManager
-import tmg.flashback.statistics.controllers.ScheduleController
-import tmg.flashback.statistics.workmanager.NotificationSchedulerProvider
+import tmg.flashback.statistics.workmanager.WorkerProvider
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertEventFired
 import tmg.testutils.livedata.assertEventNotFired
@@ -19,7 +17,7 @@ internal class DashboardViewModelTest: BaseTest() {
     lateinit var sut: DashboardViewModel
 
     private val mockContext: Context = mockk(relaxed = true)
-    private val mockNotificationSchedulerProvider: NotificationSchedulerProvider = mockk(relaxed = true)
+    private val mockWorkerProvider: WorkerProvider = mockk(relaxed = true)
     private val mockConfigurationController: ConfigController = mockk(relaxed = true)
     private val mockReleaseNotesController: ReleaseNotesController = mockk(relaxed = true)
 
@@ -32,7 +30,7 @@ internal class DashboardViewModelTest: BaseTest() {
     private fun initSUT() {
         sut = DashboardViewModel(
             mockContext,
-            mockNotificationSchedulerProvider,
+            mockWorkerProvider,
             mockConfigurationController,
             mockReleaseNotesController
         )
@@ -75,7 +73,7 @@ internal class DashboardViewModelTest: BaseTest() {
             assertEventFired()
         }
         coVerify {
-            mockNotificationSchedulerProvider.schedule()
+            mockWorkerProvider.schedule()
         }
     }
 

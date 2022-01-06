@@ -2,28 +2,15 @@ package tmg.flashback.statistics.controllers
 
 import android.content.Context
 import android.util.Log
-import androidx.work.Data
-import androidx.work.ExistingWorkPolicy
-import androidx.work.ExistingWorkPolicy.REPLACE
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkManager
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import org.threeten.bp.LocalDateTime
-import tmg.flashback.formula1.enums.RaceWeekend
 import tmg.flashback.formula1.model.OverviewRace
-import tmg.flashback.formula1.model.Timestamp
-import tmg.flashback.formula1.utils.NotificationUtils.getCategoryBasedOnLabel
 import tmg.flashback.notifications.controllers.NotificationController
 import tmg.flashback.statistics.BuildConfig
 import tmg.flashback.statistics.repo.ScheduleRepository
 import tmg.flashback.statistics.repository.UpNextRepository
 import tmg.flashback.statistics.repository.models.NotificationReminder
-import tmg.flashback.statistics.utils.NotificationUtils.getNotificationTitleText
-import tmg.flashback.statistics.workmanager.NotificationScheduler
-import tmg.flashback.statistics.workmanager.NotificationSchedulerProvider
-import java.util.*
+import tmg.flashback.statistics.workmanager.WorkerProvider
 
 /**
  * Information around scheduling notificatoins functionality on the home screen
@@ -33,7 +20,7 @@ class ScheduleController(
     private val notificationController: NotificationController,
     private val upNextRepository: UpNextRepository,
     private val scheduleRepository: ScheduleRepository,
-    private val notificationSchedulerProvider: NotificationSchedulerProvider
+    private val workerProvider: WorkerProvider
 ) {
     /**
      * Get the next race to display in the up next schedule
@@ -128,6 +115,6 @@ class ScheduleController(
         if (BuildConfig.DEBUG) {
             Log.i("Notifications", "WorkManager performing notification scheduling")
         }
-        notificationSchedulerProvider.schedule()
+        workerProvider.schedule()
     }
 }
