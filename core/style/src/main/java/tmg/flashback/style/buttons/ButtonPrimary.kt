@@ -22,12 +22,7 @@ fun ButtonPrimary(
     return Button(
         modifier = modifier
             .focusable(true)
-            .padding(
-                start = AppTheme.dimensions.paddingMedium,
-                top = AppTheme.dimensions.paddingSmall,
-                end = AppTheme.dimensions.paddingMedium,
-                bottom = AppTheme.dimensions.paddingSmall
-            ),
+            .fillMaxWidth(),
         colors = ButtonDefaults.textButtonColors(
             backgroundColor = FlashbackTheme.colors.primary,
             contentColor = FlashbackTheme.colors.contentPrimaryInverse
@@ -36,7 +31,14 @@ fun ButtonPrimary(
         onClick = onClick
     ) {
         Text(
-            text
+            text,
+            modifier = Modifier
+                .padding(
+                    start = AppTheme.dimensions.paddingMedium,
+                    top = AppTheme.dimensions.paddingSmall,
+                    end = AppTheme.dimensions.paddingMedium,
+                    bottom = AppTheme.dimensions.paddingSmall
+                )
         )
     }
 }
