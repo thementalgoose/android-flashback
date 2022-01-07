@@ -31,11 +31,7 @@ class ContentSyncWorker(
 
         // Schedule notification updating
         workerProvider.schedule()
-
-        return if (remoteConfigResult && currentOverviewResult) {
-            Result.success()
-        } else {
-            Result.retry()
-        }
+        
+        return Result.success()
     }
 }
