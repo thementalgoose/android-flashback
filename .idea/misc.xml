@@ -3,6 +3,27 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../layout/compose-model-1641576247370.xml" value="1.0" />
+        <entry key="../../../../layout/compose-model-1641578620624.xml" value="0.15549036043587594" />
+        <entry key="../../../../layout/compose-model-1641578629645.xml" value="1.0" />
+        <entry key="../../../../layout/compose-model-1641584761238.xml" value="0.5013110862368553" />
+        <entry key="../../../../layout/compose-model-1641585769291.xml" value="0.5" />
+        <entry key="../../../../layout/compose-model-1641585846645.xml" value="0.5" />
+        <entry key="../../../../layout/compose-model-1641586263817.xml" value="0.5" />
+        <entry key="../../../../layout/compose-model-1641589197884.xml" value="0.48232848232848236" />
+        <entry key="../../../../layout/compose-model-1641589404610.xml" value="0.5" />
+        <entry key="../../../../layout/compose-model-1641589586862.xml" value="0.5" />
+        <entry key="../../../../layout/compose-model-1641589610340.xml" value="0.5" />
+        <entry key="../../../../layout/compose-model-1641590049558.xml" value="0.75" />
+        <entry key="../../../../layout/compose-model-1641590476699.xml" value="0.15549036043587594" />
+        <entry key="../../../../layout/compose-model-1641590491240.xml" value="0.1" />
+        <entry key="../../../../layout/compose-model-1641591299744.xml" value="0.5" />
+        <entry key="../../../../layout/compose-model-1641592650727.xml" value="0.1" />
+        <entry key="../../../../layout/compose-model-1641592655779.xml" value="1.0" />
+        <entry key="../../../../layout/compose-model-1641592655817.xml" value="0.1" />
+        <entry key="../../../../layout/compose-model-1641592701744.xml" value="0.7467018469656992" />
+        <entry key="../../../../layout/compose-model-1641592790966.xml" value="1.0" />
+        <entry key="../../../../layout/compose-model-1641592790968.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/app_shortcut_rss.xml" value="0.2222222222222222" />
         <entry key="app/src/main/res/drawable/app_shortcut_search.xml" value="0.2222222222222222" />
         <entry key="app/src/main/res/drawable/ic_close.xml" value="0.3765625" />
@@ -18,6 +39,7 @@
         <entry key="common/src/main/res/layout/view_release_note.xml" value="0.360054347826087" />
         <entry key="core/ui/src/main/res/layout/view_bottom_sheet_item.xml" value="0.20104166666666667" />
         <entry key="debug/src/main/res/layout/activity_debug.xml" value="0.1" />
+        <entry key="debug/src/main/res/layout/activity_style_guide.xml" value="0.464321608040201" />
         <entry key="formula1/src/main/res/drawable/circuit_adelaide.xml" value="0.5" />
         <entry key="formula1/src/main/res/drawable/circuit_ain_diab.xml" value="0.14375" />
         <entry key="formula1/src/main/res/drawable/circuit_aintree.xml" value="0.14375" />

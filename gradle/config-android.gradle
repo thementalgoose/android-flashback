@@ -19,7 +19,6 @@ android {
 
     buildFeatures {
         viewBinding true
-        compose true
     }
 
     buildTypes {
@@ -38,10 +37,6 @@ android {
         jvmTarget = '1.8'
         freeCompilerArgs += kotlinCompilerArgs
     }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion '1.0.5'
-    }
 }
 
 dependencies {
@@ -55,14 +50,6 @@ dependencies {
     testImplementation depsTest.kotlin.reflect
     testImplementation depsTest.kotlin.core
     testImplementation depsTest.kotlin.test
-
-    // Compose
-    implementation deps.compose.activity
-    implementation deps.compose.material
-    implementation deps.compose.animation
-    implementation deps.compose.tooling
-    implementation deps.compose.viewmodel
-    implementation deps.compose.theme_adapter
 
     // Coroutines
     implementation deps.kotlin.core
