@@ -1,0 +1,20 @@
+android {
+
+    buildFeatures {
+        compose true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion "$android_compose"
+    }
+}
+
+dependencies {
+    // Compose
+    implementation deps.compose.activity
+    implementation deps.compose.material
+    implementation deps.compose.animation
+    implementation deps.compose.tooling
+    implementation deps.compose.viewmodel
+    implementation deps.compose.theme_adapter
+}
