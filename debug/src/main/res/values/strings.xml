@@ -24,4 +24,5 @@
     <string name="debug_ads_title">Adverts</string>
     <string name="debug_style_guide_title">Style guide</string>
     <string name="debug_style_guide">Style guide</string>
+    <string name="debug_style_guide_compose">Compose guide</string>
 </resources>

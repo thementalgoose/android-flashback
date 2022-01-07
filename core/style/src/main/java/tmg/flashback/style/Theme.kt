@@ -32,7 +32,7 @@ object AppTheme {
 
 @Composable
 fun AppTheme(
-    isLight: Boolean = true,
+    isLight: Boolean = !isSystemInDarkTheme(),
     theme: SupportedTheme = DEFAULT,
     typography: AppTypography = AppTheme.typography,
     dimensions: AppDimensions = AppTheme.dimensions,
@@ -45,12 +45,15 @@ fun AppTheme(
         LocalDimensions provides dimensions,
         LocalTypography provides typography
     ) {
-        content()
+        MaterialTheme(
+            colors = colors.materialColours,
+            content = content
+        )
     }
 }
 
 @Composable
-internal fun AppThemePreview(
+fun AppThemePreview(
     isLight: Boolean = true,
     content: @Composable () -> Unit
 ) {

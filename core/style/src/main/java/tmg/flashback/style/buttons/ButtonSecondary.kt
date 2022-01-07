@@ -23,13 +23,7 @@ fun ButtonSecondary(
 ) {
     return Button(
         modifier = modifier
-            .focusable(true)
-            .padding(
-                start = AppTheme.dimensions.paddingSmall,
-                top = AppTheme.dimensions.paddingXSmall,
-                end = AppTheme.dimensions.paddingSmall,
-                bottom = AppTheme.dimensions.paddingXSmall
-            ),
+            .focusable(true),
         colors = ButtonDefaults.textButtonColors(
             backgroundColor = FlashbackTheme.colors.accent,
             contentColor = FlashbackTheme.colors.contentPrimary
@@ -38,7 +32,14 @@ fun ButtonSecondary(
         onClick = onClick
     ) {
         Text(
-            text
+            text,
+            modifier = Modifier
+                .padding(
+                    start = AppTheme.dimensions.paddingSmall,
+                    top = AppTheme.dimensions.paddingXSmall,
+                    end = AppTheme.dimensions.paddingSmall,
+                    bottom = AppTheme.dimensions.paddingXSmall
+                )
         )
     }
 }

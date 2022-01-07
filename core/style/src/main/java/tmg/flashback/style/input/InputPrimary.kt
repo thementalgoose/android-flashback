@@ -2,9 +2,11 @@ package tmg.flashback.style.input
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.*
@@ -22,6 +24,7 @@ import tmg.flashback.style.AppThemePreview
 @Composable
 fun InputPrimary(
     text: MutableState<TextFieldValue>,
+    placeholder: String,
     keyboardType: KeyboardType = KeyboardType.Text,
     imeAction: ImeAction = ImeAction.Default,
     maxLines: Int = 1,
@@ -29,12 +32,7 @@ fun InputPrimary(
 ) {
     TextField(
         modifier = modifier
-            .padding(
-                start = AppTheme.dimensions.paddingMedium,
-                top = AppTheme.dimensions.paddingSmall,
-                bottom = AppTheme.dimensions.paddingSmall,
-                end = AppTheme.dimensions.paddingMedium
-            )
+            .fillMaxWidth()
             .clip(RoundedCornerShape(AppTheme.dimensions.radiusSmall)),
         colors = TextFieldDefaults.textFieldColors(
             textColor = AppTheme.colors.contentPrimary,
@@ -47,6 +45,9 @@ fun InputPrimary(
         value = text.value,
         onValueChange = { text.value = it },
         maxLines = maxLines,
+        placeholder = {
+            Text(placeholder)
+        },
         textStyle = AppTheme.typography.body1,
         keyboardOptions = KeyboardOptions.Default.copy(
             keyboardType = keyboardType,
@@ -66,7 +67,26 @@ private fun PreviewLight() {
         ) {
             val textState = remember { mutableStateOf(TextFieldValue("Input Field")) }
             InputPrimary(
-                text = textState
+                text = textState,
+                placeholder = "https://flashback.pages.dev"
+            )
+        }
+    }
+}
+
+@Preview
+@Composable
+private fun PreviewEmpty() {
+    AppThemePreview(isLight = true) {
+        Box(
+            modifier = Modifier
+                .padding(32.dp)
+                .background(Color.White)
+        ) {
+            val textState = remember { mutableStateOf(TextFieldValue("")) }
+            InputPrimary(
+                text = textState,
+                placeholder = "https://flashback.pages.dev"
             )
         }
     }
@@ -83,7 +103,8 @@ private fun PreviewDark() {
         ) {
             val textState = remember { mutableStateOf(TextFieldValue("Input Field")) }
             InputPrimary(
-                text = textState
+                text = textState,
+                placeholder = "https://flashback.pages.dev"
             )
         }
     }
