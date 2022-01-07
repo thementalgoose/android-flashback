@@ -78,7 +78,7 @@ fun StyleGuideComposeLayout(
         ButtonTertiary(text = "Tertiary")
         Spacer(modifier = Modifier.height(16.dp))
         val state = remember { mutableStateOf(TextFieldValue("Primary Input")) }
-        InputPrimary(text = state)
+        InputPrimary(text = state, placeholder = "input_placeholder")
     }
 }
 
