@@ -99,7 +99,7 @@ fun DebugLayout(
         }
         Spacer(modifier = Modifier.height(16.dp))
         TextSection(text = "Config URL")
-        InputPrimary(text = configUrl)
+        InputPrimary(text = configUrl, placeholder = "https://flashback.pages.dev")
         Spacer(modifier = Modifier.height(4.dp))
         Row(
             horizontalArrangement = Arrangement.SpaceEvenly,
