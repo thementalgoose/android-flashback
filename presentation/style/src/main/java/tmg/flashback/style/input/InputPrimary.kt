@@ -25,10 +25,10 @@ import tmg.flashback.style.AppThemePreview
 fun InputPrimary(
     text: MutableState<TextFieldValue>,
     placeholder: String,
+    modifier: Modifier = Modifier,
     keyboardType: KeyboardType = KeyboardType.Text,
     imeAction: ImeAction = ImeAction.Default,
     maxLines: Int = 1,
-    modifier: Modifier = Modifier
 ) {
     TextField(
         modifier = modifier
