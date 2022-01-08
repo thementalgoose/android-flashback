@@ -74,7 +74,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_rss_configure_remove" />
+        app:srcCompat="@drawable/ic_rss_configure_remove"
+        app:tint="?attr/rssRemove" />
 
     <TextView
         android:id="@+id/visit_website"
