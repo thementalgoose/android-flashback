@@ -12,6 +12,9 @@
         <activity android:name=".styleguide.StyleGuideComposeActivity"
             android:exported="false" />
 
+        <activity android:name=".compose.ComposeActivity"
+            android:exported="false" />
+
         <activity android:name=".adverts.AdvertsActivity"
             android:exported="false" />
 
