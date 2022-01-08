@@ -3,6 +3,7 @@ package tmg.flashback.style
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -11,6 +12,7 @@ import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import tmg.flashback.style.SupportedTheme.DEFAULT
 
 object AppTheme {
@@ -45,10 +47,7 @@ fun AppTheme(
         LocalDimensions provides dimensions,
         LocalTypography provides typography
     ) {
-        MaterialTheme(
-            colors = colors.materialColours,
-            content = content
-        )
+        content()
     }
 }
 
@@ -63,12 +62,7 @@ fun AppThemePreview(
             Box(
                 modifier = Modifier
                     .background(if (isLight) Color.White else Color.Black)
-                    .padding(
-                        start = AppTheme.dimensions.paddingMedium,
-                        top = AppTheme.dimensions.paddingMedium,
-                        bottom = AppTheme.dimensions.paddingMedium,
-                        end = AppTheme.dimensions.paddingMedium
-                    )
+                    .defaultMinSize(0.dp, 0.dp)
             ) {
                 content()
             }
