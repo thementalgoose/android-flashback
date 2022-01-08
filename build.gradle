@@ -69,7 +69,7 @@ task testModules {
             ':data:repo:testDebugUnitTest',
             ':data:room:testDebugUnitTest',
             ':data:network:testDebugUnitTest',
-            ':core:ads:testDebugUnitTest',
+            ':ads:testDebugUnitTest',
             ':core:analytics:testDebugUnitTest',
             ':core:appshortcuts:testDebugUnitTest',
             ':core:configuration:testDebugUnitTest',
@@ -77,8 +77,8 @@ task testModules {
             ':core:device:testDebugUnitTest',
             ':core:notifications:testDebugUnitTest',
             ':core:preferences:testDebugUnitTest',
-            ':core:style:testDebugUnitTest',
-            ':core:ui:testDebugUnitTest',
+            ':presentation:style:testDebugUnitTest',
+            ':presentation:ui:testDebugUnitTest',
             'clean'
     print "Tests passed successfully!"
 }

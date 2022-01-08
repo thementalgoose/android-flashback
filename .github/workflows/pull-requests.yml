@@ -135,8 +135,8 @@ jobs:
         run: ./gradlew :data:room:testDebugUnitTest
         if: ${{ needs.unit_test_diff_check.outputs.data_room == 'true' }}
 
-      - name: :core:ads
-        run: ./gradlew :core:ads:testDebugUnitTest
+      - name: :ads
+        run: ./gradlew :ads:testDebugUnitTest
         if: ${{ needs.unit_test_diff_check.outputs.core_ads == 'true' }}
 
       - name: :core:analytics
@@ -167,12 +167,12 @@ jobs:
         run: ./gradlew :core:preferences:testDebugUnitTest
         if: ${{ needs.unit_test_diff_check.outputs.core_preferences == 'true' }}
 
-      - name: :core:style
-        run: ./gradlew :core:style:testDebugUnitTest
+      - name: :presentation:style
+        run: ./gradlew :presentation:style:testDebugUnitTest
         if: ${{ needs.unit_test_diff_check.outputs.core_style == 'true' }}
 
-      - name: :core:ui
-        run: ./gradlew :core:ui:testDebugUnitTest
+      - name: :presentation:ui
+        run: ./gradlew :presentation:ui:testDebugUnitTest
         if: ${{ needs.unit_test_diff_check.outputs.core_ui == 'true' }}
 
       # Publish test report
