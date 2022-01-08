@@ -12,8 +12,6 @@ include ':rss'
 
 include ':ads'
 
-include ':learning'
-
 include ':common'
 
 include ':core:analytics'

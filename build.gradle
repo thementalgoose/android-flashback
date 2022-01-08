@@ -65,7 +65,6 @@ task testModules {
             ':formula1:testDebugUnitTest',
             ':rss:testDebugUnitTest',
             ':statistics:testDebugUnitTest',
-            ':learning:testDebugUnitTest',
             ':data:repo:testDebugUnitTest',
             ':data:room:testDebugUnitTest',
             ':data:network:testDebugUnitTest',
