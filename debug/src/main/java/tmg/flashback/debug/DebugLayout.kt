@@ -39,6 +39,7 @@ fun DebugLayout(
     syncClicked: () -> Unit,
     styleGuideLegacyClicked: () -> Unit,
     styleGuideComposeClicked: () -> Unit,
+    composeTestClicked: () -> Unit,
     sendNotificationClicked: () -> Unit,
     networkRequestClicked: (String) -> Unit,
     advertConfigClicked: () -> Unit,
@@ -122,6 +123,9 @@ fun DebugLayout(
         TextSection(text = "Notifications")
         ButtonPrimary(text = "Send notification", onClick = sendNotificationClicked)
         Spacer(modifier = Modifier.height(16.dp))
+        TextSection(text = "Compose test")
+        ButtonPrimary(text = "Compose test activity", onClick = composeTestClicked)
+        Spacer(modifier = Modifier.height(16.dp))
         TextSection(text = "Network Requests")
         ButtonPrimary(text = "overview.json", onClick = { networkRequestClicked("overview.json") })
         Spacer(modifier = Modifier.height(4.dp))
@@ -155,6 +159,7 @@ private fun PreviewLight() {
             syncClicked = { },
             styleGuideLegacyClicked = { },
             styleGuideComposeClicked = { },
+            composeTestClicked = { },
             sendNotificationClicked = { },
             networkRequestClicked = { },
             advertConfigClicked = { },
@@ -181,6 +186,7 @@ private fun PreviewDark() {
             syncClicked = { },
             styleGuideLegacyClicked = { },
             styleGuideComposeClicked = { },
+            composeTestClicked = { },
             sendNotificationClicked = { },
             networkRequestClicked = { },
             advertConfigClicked = { },

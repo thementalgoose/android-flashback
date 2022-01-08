@@ -16,6 +16,7 @@ import org.koin.android.ext.android.inject
 import tmg.flashback.ads.manager.AdsManager
 import tmg.flashback.ads.views.NativeBanner
 import tmg.flashback.debug.adverts.AdvertsActivity
+import tmg.flashback.debug.compose.ComposeActivity
 import tmg.flashback.debug.styleguide.StyleGuideActivity
 import tmg.flashback.debug.styleguide.StyleGuideComposeActivity
 import tmg.flashback.device.controllers.DeviceController
@@ -85,6 +86,9 @@ class DebugActivity: BaseActivity() {
                     },
                     styleGuideComposeClicked = {
                         startActivity(Intent(this, StyleGuideComposeActivity::class.java))
+                    },
+                    composeTestClicked = {
+                        startActivity(Intent(this, ComposeActivity::class.java))
                     },
                     sendNotificationClicked = {
                         val intent = LocalNotificationBroadcastReceiver.intent(
