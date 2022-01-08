@@ -37,6 +37,27 @@
         <entry key="../../../../layout/compose-model-1641597563406.xml" value="0.524074074074074" />
         <entry key="../../../../layout/compose-model-1641663513407.xml" value="0.13585351447135263" />
         <entry key="../../../../layout/compose-model-1641663869254.xml" value="0.21865803413772808" />
+        <entry key="../../../../layout/compose-model-1641665375210.xml" value="0.5" />
+        <entry key="../../../../layout/compose-model-1641666075680.xml" value="0.625" />
+        <entry key="../../../../layout/compose-model-1641666452041.xml" value="0.6875" />
+        <entry key="../../../../layout/compose-model-1641667313302.xml" value="1.0" />
+        <entry key="../../../../layout/compose-model-1641667313319.xml" value="0.1" />
+        <entry key="../../../../layout/compose-model-1641673043121.xml" value="0.1" />
+        <entry key="../../../../layout/compose-model-1641676142651.xml" value="0.1" />
+        <entry key="../../../../layout/compose-model-1641676144237.xml" value="0.5851851851851851" />
+        <entry key="../../../../layout/compose-model-1641676148494.xml" value="0.5851851851851851" />
+        <entry key="../../../../layout/compose-model-1641676166889.xml" value="0.1" />
+        <entry key="../../../../layout/compose-model-1641676174417.xml" value="1.0" />
+        <entry key="../../../../layout/compose-model-1641676174419.xml" value="0.1" />
+        <entry key="../../../../layout/compose-model-1641676176102.xml" value="0.5851851851851851" />
+        <entry key="../../../../layout/compose-model-1641676177555.xml" value="1.0" />
+        <entry key="../../../../layout/compose-model-1641676177557.xml" value="0.1" />
+        <entry key="../../../../layout/compose-model-1641676195604.xml" value="0.5851851851851851" />
+        <entry key="../../../../layout/compose-model-1641676195621.xml" value="0.1" />
+        <entry key="../../../../layout/compose-model-1641676278592.xml" value="0.5509259259259259" />
+        <entry key="../../../../layout/compose-model-1641676356561.xml" value="0.5" />
+        <entry key="../../../../layout/compose-model-1641676370844.xml" value="0.4794871794871795" />
+        <entry key="../../../../layout/compose-model-1641676992803.xml" value="0.5" />
         <entry key="../../../../layout/custom_preview.xml" value="0.2989583333333333" />
         <entry key="app/src/main/res/drawable/app_shortcut_rss.xml" value="0.2222222222222222" />
         <entry key="app/src/main/res/drawable/app_shortcut_search.xml" value="0.2222222222222222" />
@@ -80,6 +101,12 @@
         <entry key="rss/src/main/res/drawable-anydpi/app_shortcut_rss_png.xml" value="0.3765625" />
         <entry key="rss/src/main/res/drawable/app_shortcut_rss.xml" value="0.5" />
         <entry key="rss/src/main/res/drawable/ic_rss.xml" value="0.18802083333333333" />
+        <entry key="rss/src/main/res/drawable/ic_rss_configure_add.xml" value="0.272" />
+        <entry key="rss/src/main/res/drawable/ic_rss_configure_remove.xml" value="0.1665" />
+        <entry key="rss/src/main/res/layout/view_rss_configure_header.xml" value="0.3242753623188406" />
+        <entry key="rss/src/main/res/layout/view_rss_configure_item.xml" value="0.2671875" />
+        <entry key="rss/src/main/res/layout/view_rss_configure_no_items.xml" value="0.2671875" />
+        <entry key="rss/src/main/res/layout/view_rss_configure_quickadd.xml" value="0.266304347826087" />
         <entry key="rss/src/main/res/layout/view_rss_sources_disabled.xml" value="0.36041666666666666" />
         <entry key="statistics/src/main/res/drawable/app_shortcut_search.xml" value="0.5" />
         <entry key="statistics/src/main/res/drawable/ic_star_outline.xml" value="0.14375" />

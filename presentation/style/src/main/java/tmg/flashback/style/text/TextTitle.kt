@@ -11,8 +11,8 @@ import tmg.flashback.style.AppThemePreview
 @Composable
 fun TextTitle(
     text: String,
-    bold: Boolean = false,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    bold: Boolean = false
 ) {
     Text(
         text,
