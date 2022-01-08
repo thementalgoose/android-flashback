@@ -23,5 +23,5 @@ dependencies {
     implementation project(path: ':formula1')
     implementation project(path: ':data:network')
 
-    implementation project(path: ':core:ui')
+    implementation project(path: ':presentation:ui')
 }

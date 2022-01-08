@@ -113,14 +113,14 @@ dependencies {
     debugImplementation project(path: ":debug")
 
     // Core modules
-    implementation project(path: ":core:ads")
+    implementation project(path: ":ads")
     implementation project(path: ":core:analytics")
     implementation project(path: ":core:appshortcuts")
     implementation project(path: ":core:configuration")
     implementation project(path: ":core:crash-reporting")
     implementation project(path: ":core:device")
     implementation project(path: ":core:notifications")
-    implementation project(path: ":core:ui")
+    implementation project(path: ":presentation:ui")
     implementation project(path: ":core:preferences")
 
     // Android Test

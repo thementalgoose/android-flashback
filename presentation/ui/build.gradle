@@ -21,7 +21,7 @@ dependencies {
     implementation project(path: ':core:analytics')
     implementation project(path: ':core:configuration')
     implementation project(path: ':core:crash-reporting')
-    api project(path: ':core:style')
+    api project(path: ':presentation:style')
 
     // Android stuff
     implementation deps.kotlin.stdlib
