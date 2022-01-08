@@ -43,11 +43,10 @@ jobs:
           echo "::set-output name=formula1::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}              | grep -E '^formula1/' -c)"
           echo "::set-output name=rss::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                   | grep -E '^rss/' -c)"
           echo "::set-output name=statistics::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}            | grep -E '^statistics/' -c)"
-          echo "::set-output name=learning::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}              | grep -E '^learning/' -c)"
           echo "::set-output name=data_room::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}             | grep -E '^data/room/' -c)"
           echo "::set-output name=data_repo::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}             | grep -E '^data/repo/' -c)"
           echo "::set-output name=data_network::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}          | grep -E '^data/network/' -c)"
-          echo "::set-output name=core_ads::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}              | grep -E '^core/ads/' -c)"
+          echo "::set-output name=ads::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}              | grep -E '^core/ads/' -c)"
           echo "::set-output name=core_analytics::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}        | grep -E '^core/analytics/' -c)"
           echo "::set-output name=core_appshortcuts::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}     | grep -E '^core/appshortcuts/' -c)"
           echo "::set-output name=core_configuration::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}    | grep -E '^core/configuration/' -c)"
@@ -55,8 +54,8 @@ jobs:
           echo "::set-output name=core_device::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}           | grep -E '^core/device/' -c)"
           echo "::set-output name=core_notifications::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}    | grep -E '^core/notifications/' -c)"
           echo "::set-output name=core_preferences::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}      | grep -E '^core/preferences/' -c)"
-          echo "::set-output name=core_style::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}            | grep -E '^core/style/' -c)"
-          echo "::set-output name=core_ui::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}               | grep -E '^core/ui/' -c)"
+          echo "::set-output name=presentation_style::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}            | grep -E '^core/style/' -c)"
+          echo "::set-output name=presentation_ui::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}               | grep -E '^core/ui/' -c)"
 
     outputs:
       app: ${{ steps.change.outputs.app != 0 }}
@@ -68,7 +67,7 @@ jobs:
       data_room: ${{ steps.change.outputs.data_room != 0 }}
       data_repo: ${{ steps.change.outputs.data_repo != 0 }}
       data_network: ${{ steps.change.outputs.data_network != 0 }}
-      core_ads: ${{ steps.change.outputs.core_ads != 0 }}
+      ads: ${{ steps.change.outputs.ads != 0 }}
       core_analytics: ${{ steps.change.outputs.core_analytics != 0 }}
       core_appshortcuts: ${{ steps.change.outputs.core_appshortcuts != 0 }}
       core_configuration: ${{ steps.change.outputs.core_configuration != 0 }}
@@ -76,8 +75,8 @@ jobs:
       core_device: ${{ steps.change.outputs.core_device != 0 }}
       core_notifications: ${{ steps.change.outputs.core_notifications != 0 }}
       core_preferences: ${{ steps.change.outputs.core_preferences != 0 }}
-      core_style: ${{ steps.change.outputs.core_style != 0 }}
-      core_ui: ${{ steps.change.outputs.core_ui != 0 }}
+      presentation_style: ${{ steps.change.outputs.presentation_style != 0 }}
+      presentation_ui: ${{ steps.change.outputs.presentation_ui != 0 }}
 
   unit_tests:
     runs-on: ubuntu-latest
@@ -119,10 +118,6 @@ jobs:
         run: ./gradlew :statistics:testDebugUnitTest
         if: ${{ needs.unit_test_diff_check.outputs.statistics == 'true' }}
 
-      - name: :learning
-        run: ./gradlew :learning:testDebugUnitTest
-        if: ${{ needs.unit_test_diff_check.outputs.learning == 'true' }}
-
       - name: :data:repo
         run: ./gradlew :data:repo:testDebugUnitTest
         if: ${{ needs.unit_test_diff_check.outputs.data_repo == 'true' }}
@@ -137,7 +132,7 @@ jobs:
 
       - name: :ads
         run: ./gradlew :ads:testDebugUnitTest
-        if: ${{ needs.unit_test_diff_check.outputs.core_ads == 'true' }}
+        if: ${{ needs.unit_test_diff_check.outputs.ads == 'true' }}
 
       - name: :core:analytics
         run: ./gradlew :core:analytics:testDebugUnitTest
@@ -169,11 +164,11 @@ jobs:
 
       - name: :presentation:style
         run: ./gradlew :presentation:style:testDebugUnitTest
-        if: ${{ needs.unit_test_diff_check.outputs.core_style == 'true' }}
+        if: ${{ needs.unit_test_diff_check.outputs.presentation_style == 'true' }}
 
       - name: :presentation:ui
         run: ./gradlew :presentation:ui:testDebugUnitTest
-        if: ${{ needs.unit_test_diff_check.outputs.core_ui == 'true' }}
+        if: ${{ needs.unit_test_diff_check.outputs.presentation_ui == 'true' }}
 
       # Publish test report
       - name: Publish Test Report
