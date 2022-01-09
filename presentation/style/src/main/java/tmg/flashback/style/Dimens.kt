@@ -16,7 +16,9 @@ data class AppDimensions(
     val paddingMedium: Dp = 16.dp,
     val paddingNSmall: Dp = 12.dp,
     val paddingSmall: Dp = 8.dp,
-    val paddingXSmall: Dp = 4.dp
+    val paddingXSmall: Dp = 4.dp,
+    val toolbarHeight: Dp = 54.dp,
+    val toolbarHeightExpanded: Dp = 110.dp
 )
 
 internal val LocalDimensions = staticCompositionLocalOf { AppDimensions() }
