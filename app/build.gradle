@@ -55,7 +55,7 @@ android {
         exclude "META-INF/LGPL2.1"
         exclude "META-INF/AL2.0"
         exclude "META-INF/licenses/ASM"
-        pickFirst "META-INF/*"
+        exclude "META-INF/*"
     }
 
     flavorDimensions 'version'
@@ -75,10 +75,6 @@ android {
             buildConfigField "int", "ENVIRONMENT", '0'
             buildConfigField "String", "BASE_URL", '"' + project.ext.baseUrl + '"'
         }
-    }
-
-    packagingOptions {
-        exclude "META-INF/LICENSE*"
     }
 }
 
