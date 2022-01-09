@@ -17,4 +17,5 @@ dependencies {
     implementation deps.compose.tooling
     implementation deps.compose.viewmodel
     implementation deps.compose.theme_adapter
+    implementation deps.compose.livedata
 }

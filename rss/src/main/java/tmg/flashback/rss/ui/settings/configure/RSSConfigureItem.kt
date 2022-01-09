@@ -12,7 +12,7 @@ sealed class RSSConfigureItem(
             @StringRes
             val text: Int,
             @StringRes
-            val subtitle: Int? = null
+            val subtitle: Int
     ) : RSSConfigureItem(R.layout.view_rss_configure_header)
 
     object NoItems : RSSConfigureItem(R.layout.view_rss_configure_no_items)

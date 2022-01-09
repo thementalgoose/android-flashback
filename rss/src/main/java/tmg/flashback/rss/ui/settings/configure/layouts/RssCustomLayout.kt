@@ -21,10 +21,10 @@ import tmg.flashback.style.input.InputPrimary
 
 @Composable
 internal fun RssCustomLayout(
-    text: MutableState<TextFieldValue>,
     modifier: Modifier = Modifier,
     addClicked: (String) -> Unit
 ) {
+    val state = remember { mutableStateOf(TextFieldValue("")) }
     Row(
         verticalAlignment = Alignment.Top,
         modifier = modifier
@@ -39,7 +39,7 @@ internal fun RssCustomLayout(
             .fillMaxWidth()
     ) {
         InputPrimary(
-            text = text,
+            text = state,
             placeholder = "https://formula1.com/link/to/rss",
             modifier = Modifier.weight(1f)
         )
@@ -49,7 +49,7 @@ internal fun RssCustomLayout(
                 .fillMaxHeight()
                 .clickable(
                     onClick = {
-                        addClicked(text.value.text)
+                        addClicked(state.value.text)
                     }
                 ),
             painter = painterResource(R.drawable.ic_rss_configure_add),
@@ -63,9 +63,7 @@ internal fun RssCustomLayout(
 @Composable
 private fun PreviewLight() {
     AppThemePreview(isLight = true) {
-        val textState = remember { mutableStateOf(TextFieldValue("")) }
         RssCustomLayout(
-            text = textState,
             addClicked = { }
         )
     }
@@ -75,9 +73,7 @@ private fun PreviewLight() {
 @Composable
 private fun PreviewDark() {
     AppThemePreview(isLight = false) {
-        val textState = remember { mutableStateOf(TextFieldValue("")) }
         RssCustomLayout(
-            text = textState,
             addClicked = { }
         )
     }

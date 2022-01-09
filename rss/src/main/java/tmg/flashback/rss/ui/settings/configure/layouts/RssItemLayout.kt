@@ -25,11 +25,10 @@ import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 
 @Composable
-internal fun RssQuickLinksLayout(
-    model: RSSConfigureItem.QuickAdd,
+internal fun RssItemLayout(
+    model: RSSConfigureItem.Item,
     websiteClicked: (supportedArticle: SupportedArticleSource) -> Unit,
-    specialClicked: (supportedArticle: SupportedArticleSource) -> Unit,
-    isAdd: Boolean = true,
+    specialClicked: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -55,11 +54,19 @@ internal fun RssQuickLinksLayout(
                     .requiredWidth(32.dp)
                     .requiredHeight(32.dp)
                     .clip(CircleShape)
-                    .background(Color(model.supportedArticleSource.colour.toColorInt()))
+                    .background(if (model.supportedArticleSource == null) {
+                        AppTheme.colors.primary
+                    } else {
+                        Color(model.supportedArticleSource.colour.toColorInt())
+                    })
             ) {
                 TextBody1(
-                    text = model.supportedArticleSource.sourceShort,
-                    textColor = Color.White
+                    text = model.supportedArticleSource?.sourceShort ?: "...",
+                    textColor = if (model.supportedArticleSource == null) {
+                        Color.White
+                    } else {
+                        Color(model.supportedArticleSource.textColour.toColorInt())
+                    }
                 )
             }
         }
@@ -71,33 +78,35 @@ internal fun RssQuickLinksLayout(
             .weight(1f)
         ) {
             TextBody1(
-                text = model.supportedArticleSource.source,
+                text = model.url,
                 maxLines = 1,
                 modifier = Modifier.fillMaxWidth()
             )
             TextBody2(
-                text = model.supportedArticleSource.rssLink,
+                text = model.supportedArticleSource?.rssLink ?: model.url,
                 modifier = Modifier.fillMaxWidth()
             )
         }
-        ButtonTertiary(
-            modifier = Modifier.align(Alignment.CenterVertically),
-            text = stringResource(id = R.string.rss_configure_visit_website),
-            onClick = {
-                websiteClicked(model.supportedArticleSource)
-            }
-        )
+        if (model.supportedArticleSource != null) {
+            ButtonTertiary(
+                modifier = Modifier.align(Alignment.CenterVertically),
+                text = stringResource(id = R.string.rss_configure_visit_website),
+                onClick = {
+                    websiteClicked(model.supportedArticleSource)
+                }
+            )
+        }
         Spacer(modifier = Modifier.width(AppTheme.dimensions.paddingSmall))
         Icon(
             modifier = Modifier
                 .fillMaxHeight()
                 .clickable(
                     onClick = {
-                        specialClicked(model.supportedArticleSource)
+                        specialClicked(model.url)
                     }
                 ),
-            painter = painterResource(if (isAdd) R.drawable.ic_rss_configure_add else R.drawable.ic_rss_configure_remove),
-            tint = if (isAdd) AppTheme.colors.rssAdd else AppTheme.colors.rssRemove,
+            painter = painterResource(R.drawable.ic_rss_configure_remove),
+            tint = AppTheme.colors.rssRemove,
             contentDescription = stringResource(id = R.string.ab_rss_configure_add)
         )
     }
@@ -107,8 +116,9 @@ internal fun RssQuickLinksLayout(
 @Composable
 private fun PreviewLight() {
     AppThemePreview(isLight = true) {
-        RssQuickLinksLayout(
-            model = RSSConfigureItem.QuickAdd(
+        RssItemLayout(
+            model = RSSConfigureItem.Item(
+                url = "https://source.com/rss/feed/content.xml",
                 supportedArticleSource = SupportedArticleSource(
                     rssLink = "https://source.com/rss/feed/content.xml",
                     sourceShort = "RS",
@@ -129,21 +139,13 @@ private fun PreviewLight() {
 @Composable
 private fun PreviewDark() {
     AppThemePreview(isLight = false) {
-        RssQuickLinksLayout(
-            model = RSSConfigureItem.QuickAdd(
-                supportedArticleSource = SupportedArticleSource(
-                    rssLink = "https://source.com/rss/feed/content.xml",
-                    sourceShort = "RS",
-                    source = "https://source.com",
-                    colour = "#984332",
-                    textColour = "#F8F8F8",
-                    title = "Title",
-                    contactLink = "https://contact.link"
-                )
+        RssItemLayout(
+            model = RSSConfigureItem.Item(
+                url = "https://www.google.com/rss.xml",
+                supportedArticleSource = null
             ),
             websiteClicked = { },
-            specialClicked = { },
-            isAdd = false
+            specialClicked = { }
         )
     }
 }

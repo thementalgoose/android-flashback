@@ -12,31 +12,11 @@ import org.koin.android.ext.android.inject
 import tmg.flashback.analytics.manager.AnalyticsManager
 import tmg.flashback.crash_reporting.controllers.CrashController
 
-abstract class BaseFragment<T: ViewBinding>: Fragment() {
-
-    private var _binding: T? = null
-    protected val binding: T
-        get() = _binding!!
+abstract class BaseComposeFragment: Fragment() {
 
     protected val analyticsManager: AnalyticsManager by inject()
 
     protected val crashManager: CrashController by inject()
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding = inflateView(inflater)
-        return binding.root
-    }
-
-    abstract fun inflateView(inflater: LayoutInflater): T
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
 
     /**
      * Logging screen analytics
