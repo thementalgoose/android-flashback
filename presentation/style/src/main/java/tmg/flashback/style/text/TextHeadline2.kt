@@ -12,12 +12,14 @@ import tmg.flashback.style.AppThemePreview
 fun TextHeadline2(
     text: String,
     modifier: Modifier = Modifier,
+    maxLines: Int = Int.MAX_VALUE,
     brand: Boolean = false
 ) {
     Text(
         text,
         modifier = modifier
             .fillMaxWidth(),
+        maxLines = maxLines,
         style = AppTheme.typography.h2.copy(
             color = when (brand) {
                 true -> AppTheme.colors.primary
