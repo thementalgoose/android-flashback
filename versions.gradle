@@ -50,7 +50,7 @@ ext {
     android_splashscreen = "1.0.0-alpha02"
     android_corektx = "1.7.0"
     android_appcompat = "1.4.0"
-    android_workmanager = "2.7.0"
+    android_workmanager = "2.7.1"
     play_ads = "20.5.0"
     swipe_refresh = "1.1.0"
     circleimageview = "3.1.0"
