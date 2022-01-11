@@ -14,41 +14,36 @@ import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.FlashbackTheme
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ButtonTertiary(
     text: String,
     modifier: Modifier = Modifier,
     onClick: () -> Unit = { }
 ) {
-    CompositionLocalProvider(
-        LocalMinimumTouchTargetEnforcement provides false,
+    Button(
+        modifier = modifier
+            .focusable(true)
+            .wrapContentHeight(Alignment.CenterVertically)
+            .padding(0.dp)
+            .defaultMinSize(1.dp, 1.dp),
+        colors = ButtonDefaults.textButtonColors(
+            backgroundColor = AppTheme.colors.backgroundTertiary,
+            contentColor = AppTheme.colors.contentPrimary
+        ),
+        contentPadding = PaddingValues(),
+        shape = RoundedCornerShape(6.dp),
+        onClick = onClick
     ) {
-        Button(
-            modifier = modifier
-                .focusable(true)
-                .wrapContentHeight(Alignment.CenterVertically)
-                .padding(0.dp)
-                .defaultMinSize(1.dp, 1.dp),
-            colors = ButtonDefaults.textButtonColors(
-                backgroundColor = FlashbackTheme.colors.backgroundTertiary,
-                contentColor = FlashbackTheme.colors.contentPrimary
-            ),
-            contentPadding = PaddingValues(),
-            shape = RoundedCornerShape(6.dp),
-            onClick = onClick
-        ) {
-            Text(text,
-                style = AppTheme.typography.caption,
-                modifier = Modifier
-                    .padding(
-                        start = AppTheme.dimensions.paddingSmall,
-                        top = AppTheme.dimensions.paddingXSmall,
-                        end = AppTheme.dimensions.paddingSmall,
-                        bottom = AppTheme.dimensions.paddingXSmall
-                    )
-            )
-        }
+        Text(text,
+            style = AppTheme.typography.caption,
+            modifier = Modifier
+                .padding(
+                    start = AppTheme.dimensions.paddingSmall,
+                    top = AppTheme.dimensions.paddingXSmall,
+                    end = AppTheme.dimensions.paddingSmall,
+                    bottom = AppTheme.dimensions.paddingXSmall
+                )
+        )
     }
 }
 
