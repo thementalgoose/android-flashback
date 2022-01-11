@@ -80,7 +80,6 @@ internal fun RssQuickLinksLayout(
             )
         }
         ButtonTertiary(
-            modifier = Modifier.align(Alignment.CenterVertically),
             text = stringResource(id = R.string.rss_configure_visit_website),
             onClick = {
                 websiteClicked(model.supportedArticleSource)

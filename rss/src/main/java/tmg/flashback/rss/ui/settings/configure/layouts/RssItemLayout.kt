@@ -89,7 +89,6 @@ internal fun RssItemLayout(
         }
         if (model.supportedArticleSource != null) {
             ButtonTertiary(
-                modifier = Modifier.align(Alignment.CenterVertically),
                 text = stringResource(id = R.string.rss_configure_visit_website),
                 onClick = {
                     websiteClicked(model.supportedArticleSource)
