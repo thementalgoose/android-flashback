@@ -21,31 +21,35 @@ object AppTheme {
         @ReadOnlyComposable
         get() = LocalColors.current
 
-    val typography: AppTypography
-        @Composable
-        @ReadOnlyComposable
-        get() = LocalTypography.current
+    var appTheme: SupportedTheme = DEFAULT
 
-    val dimensions: AppDimensions
-        @Composable
-        @ReadOnlyComposable
-        get() = LocalDimensions.current
+    var isLight: Boolean = true
+        set(value) {
+            if (field != value) {
+                LocalColors.provides(when (value) {
+                    true -> appTheme.lightColors
+                    false -> appTheme.darkColors
+                })
+            }
+            field = value
+        }
+
+    val typography: AppTypography = AppTypography()
+
+    val dimensions: AppDimensions = AppDimensions()
 }
 
 @Composable
 fun AppTheme(
     isLight: Boolean = !isSystemInDarkTheme(),
     theme: SupportedTheme = DEFAULT,
-    typography: AppTypography = AppTheme.typography,
-    dimensions: AppDimensions = AppTheme.dimensions,
     content: @Composable () -> Unit
 ) {
+    AppTheme.appTheme = theme
+    AppTheme.isLight = isLight
     val colors = if (isLight) theme.lightColors else theme.darkColors
-    val rememberedColors = remember { colors.copy() }.apply { updateFrom(colors) }
     CompositionLocalProvider(
-        LocalColors provides rememberedColors,
-        LocalDimensions provides dimensions,
-        LocalTypography provides typography
+        LocalColors provides colors
     ) {
         content()
     }
