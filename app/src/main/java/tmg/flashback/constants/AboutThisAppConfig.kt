@@ -184,7 +184,7 @@ object AboutThisAppConfig {
                     author = supportedSource.title,
                     url = supportedSource.contactLink,
                     imageUrl = "",
-                    backgroundColor = (supportedSource.colour and 0x00FFFFFF) or 0x79000000,
+                    backgroundColor = (supportedSource.colour.toColorInt() and 0x00FFFFFF) or 0x79000000,
                     imageRes = R.drawable.about_this_app_dependency_rss
             )
         }
