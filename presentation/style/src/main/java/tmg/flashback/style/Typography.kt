@@ -43,5 +43,3 @@ data class AppTypography(
         fontSize = 11.sp
     )
 )
-
-internal val LocalTypography = staticCompositionLocalOf { AppTypography() }
