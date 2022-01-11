@@ -20,5 +20,3 @@ data class AppDimensions(
     val toolbarHeight: Dp = 54.dp,
     val toolbarHeightExpanded: Dp = 110.dp
 )
-
-internal val LocalDimensions = staticCompositionLocalOf { AppDimensions() }
