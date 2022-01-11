@@ -29,7 +29,6 @@ internal fun RssQuickLinksLayout(
     model: RSSConfigureItem.QuickAdd,
     websiteClicked: (supportedArticle: SupportedArticleSource) -> Unit,
     specialClicked: (supportedArticle: SupportedArticleSource) -> Unit,
-    isAdd: Boolean = true,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -55,7 +54,7 @@ internal fun RssQuickLinksLayout(
                     .requiredWidth(32.dp)
                     .requiredHeight(32.dp)
                     .clip(CircleShape)
-                    .background(Color(model.supportedArticleSource.colour.toColorInt()))
+                    .background(model.sourceColor)
             ) {
                 TextBody1(
                     text = model.supportedArticleSource.sourceShort,
@@ -96,8 +95,8 @@ internal fun RssQuickLinksLayout(
                         specialClicked(model.supportedArticleSource)
                     }
                 ),
-            painter = painterResource(if (isAdd) R.drawable.ic_rss_configure_add else R.drawable.ic_rss_configure_remove),
-            tint = if (isAdd) AppTheme.colors.rssAdd else AppTheme.colors.rssRemove,
+            painter = painterResource(R.drawable.ic_rss_configure_add),
+            tint = AppTheme.colors.rssAdd,
             contentDescription = stringResource(id = R.string.ab_rss_configure_add)
         )
     }
@@ -113,7 +112,7 @@ private fun PreviewLight() {
                     rssLink = "https://source.com/rss/feed/content.xml",
                     sourceShort = "RS",
                     source = "https://source.com",
-                    colour = "#984332",
+                    colour = "#984332".toColorInt(),
                     textColour = "#F8F8F8",
                     title = "Title",
                     contactLink = "https://contact.link"
@@ -135,15 +134,14 @@ private fun PreviewDark() {
                     rssLink = "https://source.com/rss/feed/content.xml",
                     sourceShort = "RS",
                     source = "https://source.com",
-                    colour = "#984332",
+                    colour = "#984332".toColorInt(),
                     textColour = "#F8F8F8",
                     title = "Title",
                     contactLink = "https://contact.link"
                 )
             ),
             websiteClicked = { },
-            specialClicked = { },
-            isAdd = false
+            specialClicked = { }
         )
     }
 }

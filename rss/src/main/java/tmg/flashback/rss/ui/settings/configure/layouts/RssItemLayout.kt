@@ -57,7 +57,7 @@ internal fun RssItemLayout(
                     .background(if (model.supportedArticleSource == null) {
                         AppTheme.colors.primary
                     } else {
-                        Color(model.supportedArticleSource.colour.toColorInt())
+                        Color(model.supportedArticleSource.colour)
                     })
             ) {
                 TextBody1(
@@ -123,7 +123,7 @@ private fun PreviewLight() {
                     rssLink = "https://source.com/rss/feed/content.xml",
                     sourceShort = "RS",
                     source = "https://source.com",
-                    colour = "#984332",
+                    colour = "#984332".toColorInt(),
                     textColour = "#F8F8F8",
                     title = "Title",
                     contactLink = "https://contact.link"

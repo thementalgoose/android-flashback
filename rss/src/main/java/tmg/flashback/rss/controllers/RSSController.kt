@@ -2,12 +2,16 @@ package tmg.flashback.rss.controllers
 
 import android.content.Intent
 import android.net.Uri
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
+import androidx.core.graphics.toColorInt
 import tmg.flashback.appshortcuts.manager.AppShortcutManager
 import tmg.flashback.appshortcuts.models.ShortcutInfo
 import tmg.flashback.rss.R
 import tmg.flashback.rss.repo.RSSRepository
 import tmg.flashback.rss.repo.model.SupportedArticleSource
 import tmg.flashback.rss.ui.RSSActivity
+import java.lang.RuntimeException
 import java.net.MalformedURLException
 import java.net.URL
 
@@ -33,7 +37,7 @@ class RSSController(
                     rssLink = it.rssLink,
                     sourceShort = it.sourceShort,
                     source = it.source,
-                    colour = it.colour,
+                    colour = try { it.colour.toColorInt() } catch (e: RuntimeException) { Color.Cyan.toArgb() },
                     textColour = it.textColour,
                     title = it.title,
                     contactLink = it.contactLink,

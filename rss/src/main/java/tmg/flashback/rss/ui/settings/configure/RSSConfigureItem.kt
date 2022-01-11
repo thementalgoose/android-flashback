@@ -1,30 +1,29 @@
 package tmg.flashback.rss.ui.settings.configure
 
-import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
-import tmg.flashback.rss.R
+import androidx.compose.ui.graphics.Color
 import tmg.flashback.rss.repo.model.SupportedArticleSource
 
-sealed class RSSConfigureItem(
-    @LayoutRes val layoutId: Int
-) {
+sealed class RSSConfigureItem {
     data class Header(
             @StringRes
             val text: Int,
             @StringRes
             val subtitle: Int
-    ) : RSSConfigureItem(R.layout.view_rss_configure_header)
+    ) : RSSConfigureItem()
 
-    object NoItems : RSSConfigureItem(R.layout.view_rss_configure_no_items)
+    object NoItems : RSSConfigureItem()
 
     data class Item(
             val url: String,
             val supportedArticleSource: SupportedArticleSource?
-    ) : RSSConfigureItem(R.layout.view_rss_configure_item)
+    ) : RSSConfigureItem()
 
     data class QuickAdd(
             val supportedArticleSource: SupportedArticleSource
-    ) : RSSConfigureItem(R.layout.view_rss_configure_quickadd)
+    ) : RSSConfigureItem() {
+        val sourceColor: Color by lazy { Color(supportedArticleSource.colour) }
+    }
 
-    object Add : RSSConfigureItem(R.layout.view_rss_configure_add)
+    object Add : RSSConfigureItem()
 }

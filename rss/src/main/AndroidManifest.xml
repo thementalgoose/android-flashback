@@ -15,5 +15,13 @@
             android:label=""
             android:theme="@style/Translucent" />
 
+        <activity
+            android:name=".ui.settings.configure.RSSConfigureActivity"
+            android:exported="false"
+            android:label=""
+            android:theme="@style/Translucent" />
+
+
+
     </application>
 </manifest>

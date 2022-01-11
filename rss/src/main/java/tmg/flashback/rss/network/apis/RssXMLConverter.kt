@@ -1,6 +1,7 @@
 package tmg.flashback.rss.network.apis
 
 import android.util.Log
+import androidx.core.graphics.toColorInt
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.rss.controllers.RSSController
@@ -36,7 +37,7 @@ fun RssXMLModel.convert(rssFeedController: RSSController, fromSource: String, sh
 
     val source = rssFeedController.getSupportedSourceByLink(url)?.article ?: ArticleSource(
         title = channel!!.title!!,
-        colour = "#4A34B6",
+        colour = "#4A34B6".toColorInt(),
         textColor = "#FFFFFF",
         source = url,
         shortSource = null,

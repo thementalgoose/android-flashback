@@ -13,6 +13,7 @@ import tmg.flashback.rss.R
 import tmg.flashback.rss.databinding.ActivityRssSettingsBinding
 import tmg.flashback.rss.ui.settings.InitialScreen.CONFIGURE
 import tmg.flashback.rss.ui.settings.InitialScreen.SETTINGS
+import tmg.flashback.rss.ui.settings.configure.RSSConfigureActivity
 import tmg.flashback.ui.base.BaseActivity
 import tmg.utilities.extensions.toEnum
 
@@ -63,7 +64,10 @@ class RSSSettingsActivity : BaseActivity(), NavController.OnDestinationChangedLi
     ) {
         when (destination.id) {
             R.id.rssSettingsFragment -> updateTitle(R.string.settings_rss_title)
-            R.id.rssSettingsConfigureFragment -> updateTitle(R.string.settings_rss_configure)
+            R.id.rssSettingsConfigureFragment -> {
+                startActivity(Intent(this, RSSConfigureActivity::class.java))
+//                updateTitle(R.string.settings_rss_configure)
+            }
         }
         swipeDismissLock = when (initialScreen) {
             SETTINGS -> destination.id == R.id.rssSettingsConfigureFragment

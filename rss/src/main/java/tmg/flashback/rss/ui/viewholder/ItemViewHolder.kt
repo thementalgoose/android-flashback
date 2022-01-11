@@ -27,7 +27,7 @@ class ItemViewHolder(
         this.item = item.item
         this.expandableItemId = itemId
 
-        val colour = item.item.source.colour.toColorInt()
+        val colour = item.item.source.colour
         binding.label.text = item.item.source.shortSource ?: item.item.source.title.substring(0, 2)
         binding.label.setTextColor(item.item.source.textColor.toColorInt())
         binding.imageBackground.setBackgroundColor(colour)
