@@ -1,7 +1,8 @@
 dependencies {
     implementation deps.koin.koin
-    implementation deps.koin.koin_scope
-    implementation deps.koin.koin_viewmodel
-    implementation deps.koin.koin_ext
     implementation deps.koin.koin_workmanager
+    implementation deps.koin.koin_navigation
+    implementation deps.koin.koin_compose
+
+    testImplementation depsTest.koin
 }
