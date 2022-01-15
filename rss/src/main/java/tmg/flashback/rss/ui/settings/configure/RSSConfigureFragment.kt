@@ -9,7 +9,8 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import tmg.flashback.ui.base.BaseFragment
 import tmg.flashback.rss.R
 import tmg.flashback.rss.databinding.FragmentRssSettingsConfigureBinding

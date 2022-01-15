@@ -5,7 +5,8 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import org.koin.android.ext.android.inject
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import tmg.flashback.common.ui.privacypolicy.PrivacyPolicyActivity
 import tmg.flashback.common.ui.releasenotes.ReleaseActivity
 import tmg.flashback.device.managers.BuildConfigManager

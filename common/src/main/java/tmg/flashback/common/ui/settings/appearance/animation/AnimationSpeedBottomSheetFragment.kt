@@ -4,7 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import tmg.flashback.common.databinding.FragmentBottomSheetAnimationSpeedBinding
 import tmg.flashback.ui.model.AnimationSpeed
 import tmg.flashback.ui.base.BaseBottomSheetFragment

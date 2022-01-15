@@ -4,7 +4,8 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import tmg.flashback.common.ui.forceupgrade.ForceUpgradeActivity
 import tmg.flashback.ui.base.BaseActivity
 import tmg.flashback.ui.model.DisplayType

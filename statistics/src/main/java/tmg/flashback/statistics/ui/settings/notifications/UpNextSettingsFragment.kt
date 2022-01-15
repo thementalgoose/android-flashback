@@ -2,7 +2,8 @@ package tmg.flashback.statistics.ui.settings.notifications
 
 import android.os.Bundle
 import android.view.View
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import tmg.flashback.ui.settings.SettingsFragment
 import tmg.flashback.statistics.ui.settings.notifications.reminder.UpNextReminderBottomSheetFragment
 import tmg.utilities.extensions.observeEvent

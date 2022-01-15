@@ -17,7 +17,7 @@ import androidx.core.graphics.drawable.toBitmap
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import org.koin.core.component.KoinApiExtension
+
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.threeten.bp.LocalDate
@@ -36,7 +36,7 @@ import tmg.utilities.extensions.toEnum
 import java.lang.Exception
 import tmg.utilities.utils.LocalDateUtils.Companion.daysBetween
 
-@KoinApiExtension
+
 class UpNextWidgetProvider : AppWidgetProvider(), KoinComponent {
 
     private val crashController: CrashController by inject()

@@ -1,7 +1,7 @@
 package tmg.flashback.di
 
 import org.koin.android.ext.koin.androidContext
-import org.koin.android.viewmodel.dsl.viewModel
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.prefs.manager.PreferenceManager
