@@ -1,21 +1,14 @@
 package tmg.flashback.rss.ui
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.channels.ConflatedBroadcastChannel
+import androidx.lifecycle.*
 import kotlinx.coroutines.flow.*
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
-import tmg.flashback.device.managers.NetworkConnectivityManager
-import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.channels.BroadcastChannel
 import tmg.flashback.ads.controller.AdsController
+import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.rss.repo.RSSRepository
 import tmg.flashback.rss.repo.RssAPI
 import tmg.utilities.extensions.then
-import tmg.utilities.lifecycle.Event
 import java.util.*
 
 //region Inputs

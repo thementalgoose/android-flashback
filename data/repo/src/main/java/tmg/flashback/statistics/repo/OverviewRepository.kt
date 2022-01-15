@@ -8,12 +8,10 @@ import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.statistics.network.api.FlashbackApi
 import tmg.flashback.statistics.repo.base.BaseRepository
 import tmg.flashback.statistics.repo.mappers.app.OverviewMapper
-import tmg.flashback.statistics.repo.mappers.app.ScheduleMapper
 import tmg.flashback.statistics.repo.mappers.network.NetworkCircuitDataMapper
 import tmg.flashback.statistics.repo.mappers.network.NetworkOverviewMapper
 import tmg.flashback.statistics.repo.mappers.network.NetworkScheduleMapper
 import tmg.flashback.statistics.room.FlashbackDatabase
-import java.lang.RuntimeException
 
 class OverviewRepository(
     private val api: FlashbackApi,

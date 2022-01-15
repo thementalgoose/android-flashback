@@ -9,12 +9,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import tmg.flashback.device.managers.NetworkConnectivityManager
-import tmg.flashback.statistics.ui.overview.driver.summary.DriverSummaryItem
-import tmg.flashback.statistics.ui.overview.driver.summary.PipeType
-import tmg.flashback.formula1.model.DriverHistory
 import tmg.flashback.formula1.extensions.pointsDisplay
+import tmg.flashback.formula1.model.DriverHistory
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.repo.DriverRepository
+import tmg.flashback.statistics.ui.overview.driver.summary.DriverSummaryItem
+import tmg.flashback.statistics.ui.overview.driver.summary.PipeType
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
 import tmg.flashback.statistics.ui.util.position
@@ -68,7 +68,7 @@ class DriverViewModel(
                 if (driverRepository.getDriverSeasonCount(id) == 0) {
                     showLoading.postValue(true)
                     emit(null)
-                    val result = driverRepository.fetchDriver(id)
+                    driverRepository.fetchDriver(id)
                     showLoading.postValue(false)
                     emit(id)
                 }
@@ -163,7 +163,7 @@ class DriverViewModel(
     private fun refresh(driverId: String? = this.driverId.value) {
         viewModelScope.launch(context = ioDispatcher) {
             driverId?.let {
-                val result = driverRepository.fetchDriver(driverId)
+                driverRepository.fetchDriver(driverId)
                 showLoading.postValue(false)
             }
         }

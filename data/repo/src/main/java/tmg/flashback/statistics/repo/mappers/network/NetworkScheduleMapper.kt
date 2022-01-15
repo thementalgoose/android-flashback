@@ -3,7 +3,6 @@ package tmg.flashback.statistics.repo.mappers.network
 import tmg.flashback.statistics.network.models.overview.OverviewRace
 import tmg.flashback.statistics.network.models.races.Race
 import tmg.flashback.statistics.room.models.overview.Schedule
-import kotlin.jvm.Throws
 
 class NetworkScheduleMapper {
 

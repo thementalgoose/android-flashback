@@ -1,8 +1,8 @@
 package tmg.flashback.managers.buildconfig
 
 import android.os.Build
-import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.BuildConfig
+import tmg.flashback.device.managers.BuildConfigManager
 
 class AppBuildConfigManager : BuildConfigManager {
 

@@ -2,11 +2,11 @@ package tmg.flashback.statistics.repo.mappers.network
 
 import io.mockk.every
 import io.mockk.mockk
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.NetworkCircuitHistory
-import tmg.flashback.formula1.model.model
 import tmg.flashback.statistics.network.models.circuits.CircuitResult
 import tmg.flashback.statistics.network.models.circuits.model
 import tmg.flashback.statistics.room.models.circuit.*

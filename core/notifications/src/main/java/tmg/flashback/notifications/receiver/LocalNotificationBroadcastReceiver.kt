@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.util.Log
-import java.lang.NullPointerException
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import tmg.flashback.crash_reporting.controllers.CrashController

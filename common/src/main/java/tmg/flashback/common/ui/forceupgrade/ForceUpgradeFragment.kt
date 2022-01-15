@@ -8,7 +8,6 @@ import tmg.flashback.common.databinding.FragmentLockoutBinding
 import tmg.flashback.ui.base.BaseFragment
 import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.observe
-import tmg.utilities.extensions.observeEvent
 import tmg.utilities.extensions.viewUrl
 import tmg.utilities.extensions.views.show
 

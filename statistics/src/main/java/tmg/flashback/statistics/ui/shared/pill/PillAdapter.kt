@@ -3,7 +3,6 @@ package tmg.flashback.statistics.ui.shared.pill
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.ViewLinkPillBinding
 
 class PillAdapter(

@@ -5,16 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
-import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import tmg.flashback.ui.base.BaseFragment
 import tmg.flashback.statistics.databinding.FragmentConstructorBinding
 import tmg.flashback.statistics.ui.overview.constructor.summary.ConstructorSummaryAdapter
+import tmg.flashback.ui.base.BaseFragment
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 import tmg.utilities.extensions.viewUrl
-import tmg.utilities.extensions.views.invisible
-import tmg.utilities.extensions.views.visible
 
 class ConstructorFragment: BaseFragment<FragmentConstructorBinding>() {
 

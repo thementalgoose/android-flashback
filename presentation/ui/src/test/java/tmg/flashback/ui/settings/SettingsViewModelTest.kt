@@ -1,6 +1,6 @@
 package tmg.flashback.ui.settings
 
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.test

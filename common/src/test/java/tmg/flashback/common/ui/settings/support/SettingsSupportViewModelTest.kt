@@ -5,8 +5,8 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.flashback.common.R
 import tmg.flashback.analytics.manager.AnalyticsManager
+import tmg.flashback.common.R
 import tmg.flashback.crash_reporting.controllers.CrashController
 import tmg.flashback.testutils.assertExpectedOrder
 import tmg.flashback.testutils.findSwitch

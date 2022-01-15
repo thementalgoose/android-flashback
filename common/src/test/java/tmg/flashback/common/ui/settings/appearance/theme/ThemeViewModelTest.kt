@@ -3,10 +3,8 @@ package tmg.flashback.common.ui.settings.appearance.theme
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.flashback.common.ui.settings.appearance.nightmode.NightMoveViewModel
 import tmg.flashback.ui.bottomsheet.BottomSheetItem
 import tmg.flashback.ui.controllers.ThemeController
 import tmg.flashback.ui.extensions.icon

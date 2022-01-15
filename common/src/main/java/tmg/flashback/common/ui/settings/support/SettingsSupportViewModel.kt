@@ -1,7 +1,7 @@
 package tmg.flashback.common.ui.settings.support
 
-import tmg.flashback.common.R
 import tmg.flashback.analytics.manager.AnalyticsManager
+import tmg.flashback.common.R
 import tmg.flashback.crash_reporting.controllers.CrashController
 import tmg.flashback.ui.settings.SettingsModel
 import tmg.flashback.ui.settings.SettingsViewModel

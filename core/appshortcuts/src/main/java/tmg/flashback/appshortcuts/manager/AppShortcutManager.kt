@@ -1,17 +1,11 @@
 package tmg.flashback.appshortcuts.manager
 
 import android.content.Context
-import android.content.Intent
-import android.content.pm.ShortcutManager
-import android.graphics.drawable.Icon
-import android.net.Uri
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
 import tmg.flashback.appshortcuts.models.ShortcutInfo
-import java.lang.RuntimeException
 
 class AppShortcutManager(
     private val applicationContext: Context

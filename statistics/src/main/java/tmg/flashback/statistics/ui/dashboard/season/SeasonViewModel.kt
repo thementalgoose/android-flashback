@@ -11,7 +11,6 @@ import org.threeten.bp.Month
 import org.threeten.bp.temporal.TemporalAdjusters
 import tmg.flashback.analytics.manager.AnalyticsManager
 import tmg.flashback.device.managers.NetworkConnectivityManager
-import tmg.flashback.ui.controllers.ThemeController
 import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
 import tmg.flashback.formula1.extensions.getConstructorInProgressInfo
 import tmg.flashback.formula1.extensions.getDriverInProgressInfo
@@ -25,6 +24,7 @@ import tmg.flashback.statistics.repo.SeasonRepository
 import tmg.flashback.statistics.repo.repository.CacheRepository
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable.*
+import tmg.flashback.ui.controllers.ThemeController
 import tmg.utilities.lifecycle.DataEvent
 import tmg.utilities.lifecycle.Event
 
@@ -83,8 +83,8 @@ class SeasonViewModel(
                 if (raceRepository.shouldSyncRace(season)) {
                     showLoading.postValue(true)
                     emit(null)
-                    val result = overviewRepository.fetchOverview(season)
-                    val anotherResult = seasonRepository.fetchRaces(season)
+                    overviewRepository.fetchOverview(season)
+                    seasonRepository.fetchRaces(season)
                     showLoading.postValue(false)
 
                     emit(season)
@@ -171,8 +171,8 @@ class SeasonViewModel(
     }
     private fun refresh(season: Int) {
         viewModelScope.launch(context = ioDispatcher) {
-            val result = overviewRepository.fetchOverview(season)
-            val anotherResult = seasonRepository.fetchRaces(season)
+            overviewRepository.fetchOverview(season)
+            seasonRepository.fetchRaces(season)
 
             if (season == homeController.serverDefaultSeason) {
                 cacheRepository.markedCurrentSeasonSynchronised()

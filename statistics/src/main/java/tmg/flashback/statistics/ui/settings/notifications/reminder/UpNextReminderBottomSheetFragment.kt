@@ -4,12 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
-import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import tmg.flashback.statistics.databinding.FragmentBottomSheetNotificationsReminderBinding
 import tmg.flashback.ui.base.BaseBottomSheetFragment
 import tmg.flashback.ui.bottomsheet.BottomSheetAdapter
-import tmg.flashback.statistics.ui.settings.notifications.reminder.UpNextReminderViewModel
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 

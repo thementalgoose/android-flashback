@@ -8,7 +8,6 @@ import tmg.flashback.rss.R
 import tmg.flashback.rss.databinding.*
 import tmg.flashback.rss.repo.model.SupportedArticleSource
 import tmg.flashback.rss.ui.settings.configure.viewholders.*
-import java.lang.RuntimeException
 
 class RSSConfigureAdapter(
     private val customAddItem: (String) -> Unit,
@@ -56,6 +55,7 @@ class RSSConfigureAdapter(
             is RSSConfigureItem.Header -> (holder as HeaderViewHolder).bind(item)
             is RSSConfigureItem.Item -> (holder as ItemViewHolder).bind(item)
             is RSSConfigureItem.QuickAdd -> (holder as QuickAddViewHolder).bind(item)
+            else -> { }
         }
     }
 

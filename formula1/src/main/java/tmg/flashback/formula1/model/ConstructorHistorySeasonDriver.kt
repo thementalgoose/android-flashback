@@ -1,7 +1,5 @@
 package tmg.flashback.formula1.model
 
-import tmg.flashback.formula1.model.DriverConstructor
-
 data class ConstructorHistorySeasonDriver(
     val driver: DriverConstructor,
     val points: Double,

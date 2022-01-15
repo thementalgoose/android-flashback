@@ -10,8 +10,6 @@ import org.junit.jupiter.params.provider.CsvSource
 import org.threeten.bp.Year
 import tmg.flashback.analytics.manager.AnalyticsManager
 import tmg.flashback.device.managers.NetworkConnectivityManager
-import tmg.flashback.ui.controllers.ThemeController
-import tmg.flashback.ui.model.AnimationSpeed
 import tmg.flashback.formula1.model.*
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.controllers.HomeController
@@ -22,6 +20,8 @@ import tmg.flashback.statistics.repo.repository.CacheRepository
 import tmg.flashback.statistics.repository.models.Banner
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
+import tmg.flashback.ui.controllers.ThemeController
+import tmg.flashback.ui.model.AnimationSpeed
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertDataEventValue
 import tmg.testutils.livedata.assertListMatchesItem

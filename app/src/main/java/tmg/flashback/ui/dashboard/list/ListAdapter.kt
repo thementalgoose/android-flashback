@@ -74,6 +74,7 @@ class ListAdapter(
             is ListItem.Header -> (holder as HeaderViewHolder).bind(item)
             is ListItem.Button -> (holder as ButtonViewHolder).bind(item)
             is ListItem.FeatureBanner -> (holder as FeatureBannerViewHolder).bind(item)
+            else -> { }
         }
     }
 

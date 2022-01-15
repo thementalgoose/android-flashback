@@ -4,8 +4,6 @@ import tmg.flashback.statistics.network.models.drivers.DriverHistoryStanding
 import tmg.flashback.statistics.network.models.drivers.DriverHistoryStandingRace
 import tmg.flashback.statistics.room.models.drivers.DriverSeason
 import tmg.flashback.statistics.room.models.drivers.DriverSeasonRace
-import java.lang.RuntimeException
-import kotlin.jvm.Throws
 
 class NetworkDriverMapper {
 

@@ -3,7 +3,7 @@ package tmg.flashback.common.repository
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import tmg.flashback.prefs.manager.PreferenceManager
 

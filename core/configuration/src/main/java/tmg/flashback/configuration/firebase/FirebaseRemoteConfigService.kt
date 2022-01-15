@@ -9,7 +9,6 @@ import kotlinx.coroutines.tasks.await
 import tmg.flashback.configuration.BuildConfig
 import tmg.flashback.configuration.R
 import tmg.flashback.configuration.services.RemoteConfigService
-import java.lang.Exception
 
 class FirebaseRemoteConfigService: RemoteConfigService {
 

@@ -1,6 +1,5 @@
 package tmg.flashback.ui.layout
 
-import android.view.RoundedCorner
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background

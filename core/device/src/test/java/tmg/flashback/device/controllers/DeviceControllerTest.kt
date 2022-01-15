@@ -3,11 +3,11 @@ package tmg.flashback.device.controllers
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
-import tmg.flashback.device.repository.DeviceRepository
 import tmg.flashback.device.managers.BuildConfigManager
+import tmg.flashback.device.repository.DeviceRepository
 
 internal class DeviceControllerTest {
 

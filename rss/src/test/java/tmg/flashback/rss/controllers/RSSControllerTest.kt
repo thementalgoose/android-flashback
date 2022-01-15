@@ -11,8 +11,8 @@ import org.junit.jupiter.params.provider.CsvSource
 import tmg.flashback.appshortcuts.manager.AppShortcutManager
 import tmg.flashback.appshortcuts.models.ShortcutInfo
 import tmg.flashback.rss.repo.RSSRepository
-import tmg.flashback.rss.repo.model.SupportedSource
 import tmg.flashback.rss.repo.model.SupportedArticleSource
+import tmg.flashback.rss.repo.model.SupportedSource
 import tmg.testutils.BaseTest
 
 internal class RSSControllerTest: BaseTest() {

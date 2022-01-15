@@ -2,8 +2,8 @@ package tmg.flashback.analytics.manager
 
 import android.os.Bundle
 import tmg.flashback.analytics.UserProperty
-import tmg.flashback.analytics.services.AnalyticsService
 import tmg.flashback.analytics.repository.AnalyticsRepository
+import tmg.flashback.analytics.services.AnalyticsService
 
 class AnalyticsManager(
     private val analyticsRepository: AnalyticsRepository,

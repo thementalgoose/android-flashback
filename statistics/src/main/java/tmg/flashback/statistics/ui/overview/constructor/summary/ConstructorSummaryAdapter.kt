@@ -6,9 +6,9 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.*
+import tmg.flashback.statistics.ui.overview.constructor.summary.viewholders.ConstructorHistoryViewHolder
 import tmg.flashback.statistics.ui.overview.constructor.summary.viewholders.ConstructorListHeaderViewHolder
 import tmg.flashback.statistics.ui.overview.constructor.summary.viewholders.HeaderViewHolder
-import tmg.flashback.statistics.ui.overview.constructor.summary.viewholders.ConstructorHistoryViewHolder
 import tmg.flashback.statistics.ui.overview.viewholders.StatsViewHolder
 import tmg.flashback.statistics.ui.race.viewholders.SkeletonLoadingViewHolder
 import tmg.flashback.statistics.ui.shared.pill.PillItem
@@ -65,6 +65,7 @@ class ConstructorSummaryAdapter(
             is ConstructorSummaryItem.Stat -> (holder as StatsViewHolder).bind(item)
             is ConstructorSummaryItem.History -> (holder as ConstructorHistoryViewHolder).bind(item)
             is ConstructorSummaryItem.ErrorItem -> bindErrors(holder, item.item)
+            else -> { }
         }
     }
 

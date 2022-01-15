@@ -3,11 +3,11 @@ package tmg.flashback.ui.bottomsheet
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.ui.R
-import tmg.utilities.models.Selected
 import tmg.flashback.ui.databinding.ViewBottomSheetItemBinding
 import tmg.utilities.extensions.views.context
 import tmg.utilities.extensions.views.gone
 import tmg.utilities.extensions.views.show
+import tmg.utilities.models.Selected
 
 class BottomSheetViewHolder(
     private val binding: ViewBottomSheetItemBinding,

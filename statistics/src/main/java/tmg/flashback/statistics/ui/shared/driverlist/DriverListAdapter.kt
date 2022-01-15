@@ -5,9 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.Driver
+import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.LayoutConstructorDriverBinding
-import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 
 class DriverListAdapter: RecyclerView.Adapter<DriverListAdapter.ViewHolder>() {
 

@@ -4,7 +4,6 @@ import androidx.annotation.Nullable;
 
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
-import org.simpleframework.xml.Text;
 
 @Root(name = "item", strict = false)
 public class RssXMLModelItem {

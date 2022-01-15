@@ -3,9 +3,6 @@ package tmg.flashback.statistics.ui.shared.schedule
 import androidx.annotation.LayoutRes
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
-import tmg.flashback.formula1.enums.RaceWeekend
-import tmg.flashback.formula1.model.Schedule
-import tmg.flashback.formula1.utils.NotificationUtils
 import tmg.flashback.statistics.R
 
 sealed class InlineSchedule(

@@ -7,9 +7,8 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
-import tmg.flashback.crash_reporting.services.CrashService
 import tmg.flashback.crash_reporting.repository.CrashRepository
-import java.lang.RuntimeException
+import tmg.flashback.crash_reporting.services.CrashService
 
 internal class CrashControllerTest {
 
