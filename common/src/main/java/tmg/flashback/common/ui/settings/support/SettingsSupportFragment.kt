@@ -2,7 +2,8 @@ package tmg.flashback.common.ui.settings.support
 
 import android.os.Bundle
 import android.view.View
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import tmg.flashback.ui.settings.SettingsFragment
 
 class SettingsSupportFragment: SettingsFragment<SettingsSupportViewModel>() {

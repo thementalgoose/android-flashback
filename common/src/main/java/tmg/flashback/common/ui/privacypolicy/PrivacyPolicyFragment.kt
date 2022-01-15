@@ -4,7 +4,8 @@ import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import tmg.flashback.common.R
 import tmg.flashback.common.databinding.FragmentPrivacyPolicyBinding
 import tmg.flashback.ui.base.BaseFragment

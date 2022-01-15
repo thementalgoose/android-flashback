@@ -3,7 +3,8 @@ package tmg.flashback.rss.ui.settings.settings
 import android.os.Bundle
 import android.view.View
 import androidx.navigation.fragment.findNavController
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import tmg.flashback.ui.settings.SettingsFragment
 import tmg.flashback.rss.R
 import tmg.utilities.extensions.observeEvent

@@ -5,14 +5,12 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import java.lang.NullPointerException
-import org.koin.core.component.KoinApiExtension
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import tmg.flashback.crash_reporting.controllers.CrashController
 import tmg.flashback.notifications.BuildConfig
 import tmg.flashback.notifications.managers.SystemNotificationManager
 
-@KoinApiExtension
 class LocalNotificationBroadcastReceiver: BroadcastReceiver(), KoinComponent {
 
     private val notificationManager: SystemNotificationManager by inject()

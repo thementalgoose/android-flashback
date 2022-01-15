@@ -5,7 +5,8 @@ import android.view.View
 import androidx.fragment.app.FragmentResultListener
 import androidx.fragment.app.setFragmentResultListener
 import org.koin.android.ext.android.inject
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import tmg.flashback.common.ui.settings.appearance.animation.AnimationSpeedBottomSheetFragment
 import tmg.flashback.common.ui.settings.appearance.nightmode.NightModeBottomSheetFragment
 import tmg.flashback.common.ui.settings.appearance.theme.ThemeBottomSheetFragment

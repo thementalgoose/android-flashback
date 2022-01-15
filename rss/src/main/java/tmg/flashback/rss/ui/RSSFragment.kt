@@ -7,7 +7,8 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.android.ext.android.inject
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import tmg.flashback.rss.databinding.FragmentRssBinding
 import tmg.flashback.rss.repo.RSSRepository
 import tmg.flashback.rss.ui.settings.InitialScreen

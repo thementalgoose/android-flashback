@@ -9,7 +9,8 @@ import androidx.fragment.app.FragmentTransaction
 import com.discord.panels.OverlappingPanelsLayout
 import com.discord.panels.PanelState
 import org.koin.android.ext.android.inject
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import tmg.flashback.common.ui.releasenotes.ReleaseBottomSheetFragment
 import tmg.flashback.ui.base.BaseFragment
 import tmg.flashback.R

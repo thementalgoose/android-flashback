@@ -7,7 +7,8 @@ import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
 import androidx.recyclerview.widget.LinearLayoutManager
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import tmg.flashback.ui.base.BaseBottomSheetFragment
 import tmg.flashback.ui.bottomsheet.BottomSheetAdapter
 import tmg.flashback.statistics.databinding.FragmentBottomSheetCategoryBinding
