@@ -3,10 +3,10 @@ package tmg.flashback.common.ui.settings.appearance
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import tmg.flashback.device.managers.BuildConfigManager
-import tmg.flashback.ui.settings.SettingsModel
-import tmg.flashback.ui.settings.SettingsViewModel
 import tmg.flashback.ui.R
 import tmg.flashback.ui.controllers.ThemeController
+import tmg.flashback.ui.settings.SettingsModel
+import tmg.flashback.ui.settings.SettingsViewModel
 import tmg.utilities.lifecycle.Event
 
 //region Inputs

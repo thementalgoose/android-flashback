@@ -5,8 +5,6 @@ import tmg.flashback.statistics.room.models.race.FastestLap
 import tmg.flashback.statistics.room.models.race.QualifyingResult
 import tmg.flashback.statistics.room.models.race.QualifyingSprintResult
 import tmg.flashback.statistics.room.models.race.RaceResult
-import kotlin.RuntimeException
-import kotlin.jvm.Throws
 
 class NetworkRaceMapper {
 

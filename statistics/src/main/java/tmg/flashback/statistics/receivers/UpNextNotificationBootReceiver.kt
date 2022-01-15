@@ -4,7 +4,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.util.Log
-import org.koin.core.component.KoinApiExtension
+
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import tmg.flashback.statistics.workmanager.WorkerProvider
@@ -23,7 +23,7 @@ class UpNextNotificationBootReceiver: BroadcastReceiver() {
     }
 }
 
-@KoinApiExtension
+
 class UpNextNotification: KoinComponent {
     private val workerProvider: WorkerProvider by inject()
 

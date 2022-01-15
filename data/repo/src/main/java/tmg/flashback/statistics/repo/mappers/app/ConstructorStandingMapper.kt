@@ -1,7 +1,10 @@
 package tmg.flashback.statistics.repo.mappers.app
 
-import tmg.flashback.formula1.model.*
-import tmg.flashback.statistics.room.models.standings.*
+import tmg.flashback.formula1.model.SeasonConstructorStandingSeason
+import tmg.flashback.formula1.model.SeasonConstructorStandingSeasonDriver
+import tmg.flashback.formula1.model.SeasonConstructorStandings
+import tmg.flashback.statistics.room.models.standings.ConstructorStandingDriverWithDriver
+import tmg.flashback.statistics.room.models.standings.ConstructorStandingWithDrivers
 
 class ConstructorStandingMapper(
     private val driverDataMapper: DriverDataMapper,

@@ -2,8 +2,6 @@ package tmg.flashback.statistics.repo.mappers.network
 
 import tmg.flashback.statistics.network.models.overview.OverviewRace
 import tmg.flashback.statistics.room.models.overview.Overview
-import java.lang.RuntimeException
-import kotlin.jvm.Throws
 
 class NetworkOverviewMapper {
     @Throws(RuntimeException::class)

@@ -6,12 +6,10 @@ import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
-import tmg.flashback.ui.base.BaseActivity
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.ActivityConstructorBinding
 import tmg.flashback.statistics.ui.overview.constructor.stats.ConstructorFragment
-import tmg.flashback.statistics.ui.overview.driver.stats.DriverFragment
-import tmg.utilities.extensions.loadFragment
+import tmg.flashback.ui.base.BaseActivity
 
 class ConstructorActivity: BaseActivity(), NavController.OnDestinationChangedListener {
 

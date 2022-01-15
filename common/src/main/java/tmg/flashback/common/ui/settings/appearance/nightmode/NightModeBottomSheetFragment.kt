@@ -7,9 +7,8 @@ import androidx.appcompat.app.AppCompatDelegate.*
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
 import androidx.recyclerview.widget.LinearLayoutManager
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import tmg.flashback.common.databinding.FragmentBottomSheetNightModeBinding
-import tmg.flashback.common.databinding.FragmentBottomSheetThemeBinding
 import tmg.flashback.common.ui.settings.appearance.SettingsAppearanceFragment
 import tmg.flashback.ui.base.BaseBottomSheetFragment
 import tmg.flashback.ui.bottomsheet.BottomSheetAdapter

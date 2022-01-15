@@ -3,8 +3,6 @@ package tmg.flashback.statistics.repo.mappers.network
 import tmg.flashback.statistics.network.models.races.DriverStandings
 import tmg.flashback.statistics.room.models.standings.DriverStanding
 import tmg.flashback.statistics.room.models.standings.DriverStandingConstructor
-import java.lang.RuntimeException
-import kotlin.jvm.Throws
 
 class NetworkDriverStandingMapper {
 
@@ -18,7 +16,7 @@ class NetworkDriverStandingMapper {
             inProgress = data.inProgress ?: false,
             inProgressName = data.inProgressInfo?.name,
             inProgressRound = data.inProgressInfo?.round,
-            races = data.races ?: 0
+            races = data.races
         )
     }
 

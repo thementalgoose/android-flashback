@@ -1,20 +1,17 @@
 package tmg.flashback.ui.dashboard
 
-import io.mockk.coEvery
-import io.mockk.coVerify
-import io.mockk.every
-import io.mockk.mockk
-import io.mockk.verify
-import org.junit.jupiter.api.Assertions.*
+import io.mockk.*
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.common.controllers.ForceUpgradeController
 import tmg.flashback.configuration.controllers.ConfigController
 import tmg.flashback.crash_reporting.controllers.CrashController
 import tmg.flashback.rss.controllers.RSSController
-import tmg.flashback.statistics.repo.repository.CacheRepository
 import tmg.flashback.statistics.controllers.ScheduleController
 import tmg.flashback.statistics.controllers.SearchController
+import tmg.flashback.statistics.repo.repository.CacheRepository
 import tmg.testutils.BaseTest
 
 internal class HomeViewModelTest: BaseTest() {

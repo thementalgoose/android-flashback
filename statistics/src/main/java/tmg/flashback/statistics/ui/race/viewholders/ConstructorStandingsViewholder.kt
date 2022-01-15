@@ -4,21 +4,21 @@ import android.view.View
 import androidx.annotation.ColorInt
 import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
-import kotlin.math.roundToInt
-import tmg.flashback.ui.model.AnimationSpeed
-import tmg.flashback.ui.extensions.getColor
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.Driver
+import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.LayoutConstructorDriverBinding
 import tmg.flashback.statistics.databinding.ViewRaceConstructorBinding
-import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.statistics.ui.race.RaceItem
 import tmg.flashback.statistics.ui.util.accessibility.TapToViewConstructorInfoAccessibilityDelegate
+import tmg.flashback.ui.extensions.getColor
+import tmg.flashback.ui.model.AnimationSpeed
 import tmg.utilities.extensions.views.context
 import tmg.utilities.extensions.views.getString
 import tmg.utilities.extensions.views.show
+import kotlin.math.roundToInt
 
 class ConstructorStandingsViewholder(
         private val constructorClicked: (constructor: Constructor) -> Unit,
@@ -91,6 +91,7 @@ class ConstructorStandingsViewholder(
     private fun setDriver(layout: LayoutConstructorDriverBinding, driver: Driver, points: Double, @ColorInt constructorColor: Int) {
         layout.tvName.text = driver.name
         layout.tvNumber.text = context.resources.getQuantityString(R.plurals.race_points, points.toInt(), points.pointsDisplay())
+        layout.tvNumber.colorHighlight = constructorColor
         layout.imgFlag.setImageResource(context.getFlagResourceAlpha3(driver.nationalityISO))
     }
 

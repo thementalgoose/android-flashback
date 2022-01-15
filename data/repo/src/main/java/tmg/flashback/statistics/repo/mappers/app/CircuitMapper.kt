@@ -7,8 +7,6 @@ import tmg.flashback.formula1.model.Location
 import tmg.flashback.statistics.room.models.circuit.CircuitRoundWithResults
 import tmg.utilities.utils.LocalDateUtils.Companion.requireFromDate
 import tmg.utilities.utils.LocalTimeUtils.Companion.fromTime
-import java.lang.NullPointerException
-import kotlin.jvm.Throws
 
 class CircuitMapper {
 

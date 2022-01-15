@@ -17,26 +17,24 @@ import androidx.core.graphics.drawable.toBitmap
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import org.koin.core.component.KoinApiExtension
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.configuration.controllers.ConfigController
-import tmg.flashback.device.managers.BuildConfigManager
-import tmg.flashback.ui.navigation.NavigationProvider
-import tmg.flashback.formula1.enums.TrackLayout
 import tmg.flashback.crash_reporting.controllers.CrashController
+import tmg.flashback.device.managers.BuildConfigManager
+import tmg.flashback.formula1.enums.TrackLayout
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.statistics.BuildConfig
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.controllers.ScheduleController
+import tmg.flashback.ui.navigation.NavigationProvider
 import tmg.utilities.extensions.toEnum
-import java.lang.Exception
 import tmg.utilities.utils.LocalDateUtils.Companion.daysBetween
 
-@KoinApiExtension
+
 class UpNextWidgetProvider : AppWidgetProvider(), KoinComponent {
 
     private val crashController: CrashController by inject()
@@ -96,7 +94,7 @@ class UpNextWidgetProvider : AppWidgetProvider(), KoinComponent {
 
             try {
                 remoteView.setTextViewText(R.id.name, nextEvent.raceName)
-                remoteView.setTextViewText(R.id.subtitle, nextEvent.circuitName ?: "")
+                remoteView.setTextViewText(R.id.subtitle, nextEvent.circuitName)
 
                 if (tintedIcon != null) {
                     remoteView.setImageViewBitmap(R.id.circuit, tintedIcon)
@@ -106,7 +104,7 @@ class UpNextWidgetProvider : AppWidgetProvider(), KoinComponent {
                 }
 
                 remoteView.setViewVisibility(R.id.flag, View.VISIBLE)
-                remoteView.setImageViewResource(R.id.flag, context.getFlagResourceAlpha3(nextEvent.countryISO ?: ""))
+                remoteView.setImageViewResource(R.id.flag, context.getFlagResourceAlpha3(nextEvent.countryISO))
 
                 remoteView.setTextViewText(R.id.days, nextEvent.date.format(DateTimeFormatter.ofPattern("d MMMM yyyy")))
                 remoteView.setTextViewText(R.id.daystogo, "")

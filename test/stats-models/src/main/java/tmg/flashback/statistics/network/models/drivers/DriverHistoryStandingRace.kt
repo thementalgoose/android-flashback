@@ -2,8 +2,8 @@ package tmg.flashback.statistics.network.models.drivers
 
 import tmg.flashback.statistics.network.models.constructors.Constructor
 import tmg.flashback.statistics.network.models.constructors.model
-import tmg.flashback.statistics.network.models.races.model
 import tmg.flashback.statistics.network.models.races.RaceData
+import tmg.flashback.statistics.network.models.races.model
 
 fun DriverHistoryStandingRace.Companion.model(
     construct: Constructor = Constructor.model(),

@@ -8,7 +8,6 @@ import tmg.flashback.ui.R
 import tmg.flashback.ui.databinding.ViewSettingsCategoryBinding
 import tmg.flashback.ui.databinding.ViewSettingsPreferenceBinding
 import tmg.flashback.ui.databinding.ViewSettingsPreferenceSwitchBinding
-import java.lang.RuntimeException
 
 class SettingsAdapter(
     private val clickSwitch: (model: SettingsModel.SwitchPref, toNewState: Boolean) -> Unit,

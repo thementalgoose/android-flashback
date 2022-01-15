@@ -5,12 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.statistics.R
-import tmg.flashback.statistics.databinding.ViewSearchCircuitBinding
-import tmg.flashback.statistics.databinding.ViewSearchConstructorBinding
-import tmg.flashback.statistics.databinding.ViewSearchDriverBinding
-import tmg.flashback.statistics.databinding.ViewSearchPlaceholderBinding
-import tmg.flashback.statistics.databinding.ViewSearchRaceBinding
-import tmg.flashback.statistics.databinding.ViewSearchAdvertBinding
+import tmg.flashback.statistics.databinding.*
 import tmg.flashback.statistics.ui.search.viewholder.*
 import tmg.flashback.statistics.ui.shared.sync.SyncAdapter
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
@@ -69,6 +64,7 @@ class SearchAdapter(
             is SearchItem.Driver -> (holder as SearchDriverViewHolder).bind(item)
             is SearchItem.Race -> (holder as SearchRaceViewHolder).bind(item)
             is SearchItem.ErrorItem -> bindErrors(holder, item.item)
+            else -> { }
         }
     }
 }

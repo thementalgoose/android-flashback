@@ -3,11 +3,11 @@ package tmg.flashback.ui.sync
 import android.content.Intent
 import android.os.Bundle
 import androidx.core.content.ContextCompat
-import org.koin.android.viewmodel.ext.android.viewModel
-import tmg.flashback.common.ui.forceupgrade.ForceUpgradeActivity
-import tmg.flashback.ui.base.BaseActivity
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import tmg.flashback.R
+import tmg.flashback.common.ui.forceupgrade.ForceUpgradeActivity
 import tmg.flashback.databinding.ActivitySyncBinding
+import tmg.flashback.ui.base.BaseActivity
 import tmg.flashback.ui.dashboard.HomeActivity
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent

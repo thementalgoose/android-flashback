@@ -2,11 +2,8 @@ package tmg.flashback.statistics.ui.race.viewholders
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import tmg.flashback.formula1.model.RaceQualifyingType
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.ViewRaceQualifyingHeaderBinding
-import tmg.flashback.statistics.ui.race.DisplayPrefs
-import tmg.flashback.statistics.ui.race.RaceDisplayType
 import tmg.flashback.statistics.ui.race.RaceItem
 import tmg.utilities.extensions.views.show
 

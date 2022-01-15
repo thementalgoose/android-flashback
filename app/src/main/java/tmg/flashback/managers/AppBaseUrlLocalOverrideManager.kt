@@ -1,3 +1,5 @@
+@file:Suppress("UNUSED_PARAMETER")
+
 package tmg.flashback.managers
 
 import tmg.flashback.statistics.network.manager.BaseUrlLocalOverrideManager

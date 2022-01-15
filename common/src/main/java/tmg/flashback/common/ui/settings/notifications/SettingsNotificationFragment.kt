@@ -5,7 +5,7 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.view.View
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import tmg.flashback.ui.settings.SettingsFragment
 import tmg.utilities.extensions.observeEvent
 

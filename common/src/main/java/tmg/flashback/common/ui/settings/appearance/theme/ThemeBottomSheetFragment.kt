@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import tmg.flashback.common.R
 import tmg.flashback.common.databinding.FragmentBottomSheetThemeBinding
 import tmg.flashback.ui.base.BaseBottomSheetFragment
@@ -45,7 +45,7 @@ class ThemeBottomSheetFragment: BaseBottomSheetFragment<FragmentBottomSheetTheme
             adapter.list = it
         }
 
-        observeEvent(viewModel.outputs.themeUpdated) { (value, isSameSelection) ->
+        observeEvent(viewModel.outputs.themeUpdated) { (_, isSameSelection) ->
             if (!isSameSelection) {
                 Toast.makeText(context, R.string.settings_theme_theme_applied_later, Toast.LENGTH_LONG).show()
             }

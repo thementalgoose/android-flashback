@@ -4,9 +4,8 @@ import android.util.Log
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.crash_reporting.BuildConfig
-import tmg.flashback.crash_reporting.services.CrashService
 import tmg.flashback.crash_reporting.repository.CrashRepository
-import java.lang.Exception
+import tmg.flashback.crash_reporting.services.CrashService
 import java.util.*
 
 class CrashController(

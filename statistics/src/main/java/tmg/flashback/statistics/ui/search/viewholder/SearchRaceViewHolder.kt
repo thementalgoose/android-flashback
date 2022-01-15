@@ -1,14 +1,10 @@
 package tmg.flashback.statistics.ui.search.viewholder
 
 import android.view.View
-import androidx.core.graphics.toColorInt
 import androidx.recyclerview.widget.RecyclerView
-import tmg.flashback.formula1.constants.Formula1
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
-import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.ViewSearchRaceBinding
 import tmg.flashback.statistics.ui.search.SearchItem
-import tmg.utilities.extensions.getColor
 import tmg.utilities.extensions.views.context
 
 class SearchRaceViewHolder(

@@ -1,8 +1,8 @@
 package tmg.flashback.configuration.controllers
 
 import tmg.flashback.configuration.constants.Migrations
-import tmg.flashback.configuration.services.RemoteConfigService
 import tmg.flashback.configuration.repository.ConfigRepository
+import tmg.flashback.configuration.services.RemoteConfigService
 
 /**
  * Remote config variables and storage data

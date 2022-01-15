@@ -3,7 +3,6 @@ package tmg.flashback.statistics.network.models.races
 import kotlinx.serialization.Serializable
 import tmg.flashback.statistics.network.models.constructors.Constructor
 import tmg.flashback.statistics.network.models.drivers.Driver
-import tmg.flashback.statistics.network.models.overview.Schedule
 
 @Serializable
 data class Season(

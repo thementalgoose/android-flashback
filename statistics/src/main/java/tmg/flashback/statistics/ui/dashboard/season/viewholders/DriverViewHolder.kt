@@ -3,13 +3,13 @@ package tmg.flashback.statistics.ui.dashboard.season.viewholders
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import tmg.flashback.formula1.extensions.pointsDisplay
+import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.statistics.R
-import tmg.flashback.ui.model.AnimationSpeed
+import tmg.flashback.statistics.databinding.ViewDashboardSeasonDriverBinding
 import tmg.flashback.statistics.ui.dashboard.season.SeasonItem
 import tmg.flashback.ui.extensions.getColor
-import tmg.flashback.formula1.extensions.pointsDisplay
-import tmg.flashback.statistics.databinding.ViewDashboardSeasonDriverBinding
-import tmg.flashback.formula1.utils.getFlagResourceAlpha3
+import tmg.flashback.ui.model.AnimationSpeed
 import tmg.utilities.extensions.views.context
 import tmg.utilities.extensions.views.getString
 import tmg.utilities.extensions.views.show

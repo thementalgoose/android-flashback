@@ -58,10 +58,9 @@ allprojects {
                 ],
                 koin : [
                         koin                                    : "io.insert-koin:koin-android:$koin_version",
-                        koin_scope                              : "io.insert-koin:koin-android-scope:$koin_version",
-                        koin_viewmodel                          : "io.insert-koin:koin-android-viewmodel:$koin_version",
-                        koin_ext                                : "io.insert-koin:koin-android-ext:$koin_version",
-                        koin_workmanager                        : "io.insert-koin:koin-androidx-workmanager:$koin_version"
+                        koin_workmanager                        : "io.insert-koin:koin-androidx-workmanager:$koin_version",
+                        koin_navigation                         : "io.insert-koin:koin-androidx-navigation:$koin_version",
+                        koin_compose                            : "io.insert-koin:koin-androidx-compose:$koin_version",
                 ],
                 lottie                                          : "com.airbnb.android:lottie:$lottie",
                 play : [
@@ -100,6 +99,7 @@ allprojects {
                         core_testing                            : 'androidx.arch.core:core-testing:2.1.0',
                         lifecycle                               : "androidx.lifecycle:lifecycle-compiler:$android_lifecycle"
                 ],
+                koin                                            : "io.insert-koin:koin-test-junit5:$koin_version",
                 kotlin : [
                         reflect                                 : "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version",
                         core                                    : "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines",

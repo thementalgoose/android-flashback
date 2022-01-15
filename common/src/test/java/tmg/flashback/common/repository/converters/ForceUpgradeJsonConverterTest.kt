@@ -1,6 +1,7 @@
 package tmg.flashback.common.repository.converters
 
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
 import tmg.flashback.common.repository.json.ForceUpgradeJson
 import tmg.flashback.common.repository.model.ForceUpgrade

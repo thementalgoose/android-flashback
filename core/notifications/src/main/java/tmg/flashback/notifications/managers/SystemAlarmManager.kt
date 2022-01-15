@@ -6,8 +6,6 @@ import android.content.Context
 import android.os.Build
 import android.util.Log
 import androidx.core.app.AlarmManagerCompat
-import java.lang.NullPointerException
-import org.koin.core.component.KoinApiExtension
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.ZoneOffset
 import tmg.flashback.crash_reporting.controllers.CrashController
@@ -25,7 +23,6 @@ class SystemAlarmManager(
     /**
      * Schedule a pending intent with a title and description
      */
-    @KoinApiExtension
     fun schedule(
         requestCode: Int,
         channelId: String,

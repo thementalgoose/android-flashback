@@ -26,7 +26,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@drawable/gb" />
 
-    <TextView
+    <tmg.flashback.statistics.ui.views.RaceNumberView
         android:id="@+id/tvNumber"
         style="@style/Text.Body.2"
         android:layout_width="wrap_content"

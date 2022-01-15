@@ -9,7 +9,6 @@ import kotlinx.coroutines.launch
 import tmg.flashback.common.BuildConfig
 import tmg.flashback.common.controllers.ForceUpgradeController
 import tmg.flashback.configuration.controllers.ConfigController
-import tmg.utilities.lifecycle.DataEvent
 
 //region Inputs
 

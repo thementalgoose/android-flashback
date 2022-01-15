@@ -3,8 +3,6 @@ package tmg.flashback.statistics.ui.race.viewholders
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import kotlin.math.abs
-import tmg.flashback.ui.extensions.getColor
 import tmg.flashback.formula1.enums.isStatusFinished
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.Driver
@@ -14,11 +12,13 @@ import tmg.flashback.statistics.databinding.ViewRaceSprintQualifyingResultBindin
 import tmg.flashback.statistics.extensions.iconRes
 import tmg.flashback.statistics.ui.race.RaceItem
 import tmg.flashback.statistics.ui.util.position
+import tmg.flashback.ui.extensions.getColor
 import tmg.utilities.extensions.views.context
 import tmg.utilities.extensions.views.getString
 import tmg.utilities.extensions.views.gone
 import tmg.utilities.extensions.views.visible
 import tmg.utilities.utils.ColorUtils.Companion.darken
+import kotlin.math.abs
 
 class RaceSprintQualifyingViewHolder(
     private val driverClicked: (driver: Driver) -> Unit,

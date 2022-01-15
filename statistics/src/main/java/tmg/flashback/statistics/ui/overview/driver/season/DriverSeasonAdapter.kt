@@ -9,10 +9,10 @@ import tmg.flashback.statistics.databinding.ViewDriverSeasonBinding
 import tmg.flashback.statistics.databinding.ViewDriverSeasonHeaderBinding
 import tmg.flashback.statistics.databinding.ViewDriverSummaryHistoryBinding
 import tmg.flashback.statistics.databinding.ViewOverviewStatBinding
-import tmg.flashback.statistics.ui.overview.viewholders.StatsViewHolder
 import tmg.flashback.statistics.ui.overview.driver.season.viewholders.RaceHeaderViewHolder
 import tmg.flashback.statistics.ui.overview.driver.season.viewholders.RaceViewHolder
 import tmg.flashback.statistics.ui.overview.viewholders.DriverHistoryViewHolder
+import tmg.flashback.statistics.ui.overview.viewholders.StatsViewHolder
 import tmg.flashback.statistics.ui.shared.sync.SyncAdapter
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.utilities.difflist.GenericDiffCallback
@@ -58,6 +58,7 @@ class DriverSeasonAdapter(
             is DriverSeasonItem.Result -> (holder as RaceViewHolder).bind(item)
             is DriverSeasonItem.ErrorItem -> bindErrors(holder, item.item)
             is DriverSeasonItem.RacedFor -> (holder as DriverHistoryViewHolder).bind(item)
+            else -> { }
         }
     }
 

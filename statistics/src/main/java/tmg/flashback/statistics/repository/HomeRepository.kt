@@ -2,9 +2,9 @@ package tmg.flashback.statistics.repository
 
 import org.threeten.bp.Year
 import tmg.flashback.configuration.manager.ConfigManager
-import tmg.flashback.statistics.repository.json.AllSeasonsJson
 import tmg.flashback.prefs.manager.PreferenceManager
 import tmg.flashback.statistics.repository.converters.convert
+import tmg.flashback.statistics.repository.json.AllSeasonsJson
 import tmg.flashback.statistics.repository.json.BannerJson
 import tmg.flashback.statistics.repository.models.Banner
 

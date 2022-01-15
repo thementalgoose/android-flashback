@@ -2,12 +2,13 @@ package tmg.flashback.configuration.controllers
 
 import io.mockk.*
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.configuration.constants.Migrations
-import tmg.flashback.configuration.services.RemoteConfigService
 import tmg.flashback.configuration.repository.ConfigRepository
+import tmg.flashback.configuration.services.RemoteConfigService
 import tmg.testutils.BaseTest
 
 internal class ConfigControllerTest: BaseTest() {

@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.provider.Settings
 import android.util.Log
-import androidx.annotation.VisibleForTesting
 import com.google.android.gms.ads.*
 import com.google.android.gms.ads.formats.NativeAdOptions.NATIVE_MEDIA_ASPECT_RATIO_LANDSCAPE
 import com.google.android.gms.ads.nativead.NativeAd

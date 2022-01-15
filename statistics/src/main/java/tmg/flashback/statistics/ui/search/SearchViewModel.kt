@@ -1,16 +1,15 @@
 package tmg.flashback.statistics.ui.search
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import tmg.flashback.ads.controller.AdsController
-import tmg.flashback.formula1.model.*
+import tmg.flashback.formula1.model.Circuit
+import tmg.flashback.formula1.model.Constructor
+import tmg.flashback.formula1.model.Driver
+import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.statistics.repo.CircuitRepository
 import tmg.flashback.statistics.repo.ConstructorRepository
 import tmg.flashback.statistics.repo.DriverRepository
@@ -148,17 +147,18 @@ class SearchViewModel(
         viewModelScope.launch(ioDispatcher) {
             when (category.value) {
                 SearchCategory.DRIVER -> {
-                    val result = driverRepository.fetchDrivers()
+                    driverRepository.fetchDrivers()
                 }
                 SearchCategory.CONSTRUCTOR -> {
-                    val result = constructorRepository.fetchConstructors()
+                    constructorRepository.fetchConstructors()
                 }
                 SearchCategory.CIRCUIT -> {
-                    val result = circuitRepository.fetchCircuits()
+                    circuitRepository.fetchCircuits()
                 }
                 SearchCategory.RACE -> {
-                    val result = overviewRepository.fetchOverview()
+                    overviewRepository.fetchOverview()
                 }
+                null -> { }
             }
             isLoading.postValue(false)
         }

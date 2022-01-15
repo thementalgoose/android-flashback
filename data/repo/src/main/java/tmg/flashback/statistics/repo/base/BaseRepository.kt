@@ -8,7 +8,6 @@ import tmg.flashback.statistics.network.models.MetadataWrapper
 import tmg.flashback.statistics.network.utils.data
 import tmg.flashback.statistics.network.utils.hasData
 import tmg.flashback.statistics.repo.BuildConfig
-import java.lang.RuntimeException
 import java.net.UnknownHostException
 
 abstract class BaseRepository(

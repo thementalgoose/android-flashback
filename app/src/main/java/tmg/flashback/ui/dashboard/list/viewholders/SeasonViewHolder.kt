@@ -3,15 +3,12 @@ package tmg.flashback.ui.dashboard.list.viewholders
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.widget.PopupMenu
-import androidx.core.content.ContextCompat
 import androidx.core.graphics.toColorInt
 import androidx.recyclerview.widget.RecyclerView
-import tmg.flashback.*
 import tmg.flashback.databinding.ViewSeasonListSeasonBinding
 import tmg.flashback.formula1.constants.Formula1
 import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
 import tmg.flashback.statistics.R
-import tmg.flashback.ui.dashboard.list.HeaderType
 import tmg.flashback.ui.dashboard.list.ListItem
 import tmg.utilities.extensions.getColor
 import tmg.utilities.extensions.views.*

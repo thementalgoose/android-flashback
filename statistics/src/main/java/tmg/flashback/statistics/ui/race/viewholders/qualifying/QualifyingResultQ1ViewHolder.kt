@@ -8,7 +8,6 @@ import tmg.flashback.formula1.model.RaceQualifyingRoundDriver
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.LayoutQualifyingTimeBinding
 import tmg.flashback.statistics.databinding.ViewRaceQualifyingQ1ResultBinding
-import tmg.flashback.statistics.extensions.bindDriver
 import tmg.flashback.statistics.ui.race.RaceItem
 import tmg.utilities.extensions.views.getString
 import tmg.utilities.extensions.views.gone

@@ -5,11 +5,9 @@ import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.formula1.model.Driver
 import tmg.flashback.formula1.model.DriverConstructor
 import tmg.flashback.formula1.model.RaceQualifyingRoundDriver
-import tmg.flashback.formula1.model.RaceQualifyingType
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.LayoutQualifyingTimeBinding
 import tmg.flashback.statistics.databinding.ViewRaceQualifyingQ1q2q3ResultBinding
-import tmg.flashback.statistics.ui.race.DisplayPrefs
 import tmg.flashback.statistics.ui.race.RaceItem
 import tmg.utilities.extensions.views.getString
 import tmg.utilities.extensions.views.gone
