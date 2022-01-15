@@ -5,20 +5,20 @@ import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.device.managers.NetworkConnectivityManager
-import tmg.flashback.formula1.model.*
+import tmg.flashback.formula1.model.CircuitHistory
+import tmg.flashback.formula1.model.CircuitHistoryRace
+import tmg.flashback.formula1.model.Location
+import tmg.flashback.formula1.model.model
 import tmg.flashback.statistics.repo.CircuitRepository
-import tmg.flashback.statistics.ui.search.SearchItem
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertDataEventValue
 import tmg.testutils.livedata.test
-import tmg.testutils.livedata.testObserve
 
 internal class CircuitViewModelTest: BaseTest() {
 

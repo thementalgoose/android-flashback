@@ -6,7 +6,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import tmg.flashback.device.managers.NetworkConnectivityManager
-import tmg.flashback.crash_reporting.controllers.CrashController
 import tmg.flashback.formula1.model.CircuitHistory
 import tmg.flashback.formula1.model.Location
 import tmg.flashback.statistics.extensions.circuitIcon
@@ -14,7 +13,6 @@ import tmg.flashback.statistics.repo.CircuitRepository
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
 import tmg.utilities.lifecycle.DataEvent
-import tmg.utilities.lifecycle.Event
 
 //region Inputs
 
@@ -57,7 +55,7 @@ class CircuitViewModel(
                 if (circuitRepository.getCircuitRounds(id) == 0) {
                     showLoading.postValue(true)
                     emit(null)
-                    val result = circuitRepository.fetchCircuit(id)
+                    circuitRepository.fetchCircuit(id)
                     showLoading.postValue(false)
                     emit(id)
                 }
@@ -141,7 +139,7 @@ class CircuitViewModel(
     private fun refresh(circuitId: String? = this.circuitId.value) {
         viewModelScope.launch(context = ioDispatcher) {
             circuitId?.let {
-                val result = circuitRepository.fetchCircuit(circuitId)
+                circuitRepository.fetchCircuit(circuitId)
                 showLoading.postValue(false)
             }
         }

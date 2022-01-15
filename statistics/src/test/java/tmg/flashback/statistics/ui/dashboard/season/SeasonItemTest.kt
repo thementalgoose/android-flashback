@@ -3,8 +3,8 @@ package tmg.flashback.statistics.ui.dashboard.season
 import org.threeten.bp.LocalDate
 import org.threeten.bp.Month
 import tmg.flashback.formula1.model.*
-import tmg.flashback.ui.model.AnimationSpeed
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
+import tmg.flashback.ui.model.AnimationSpeed
 
 fun SeasonItem.Companion.calendarMonthModel(
     month: Month = Month.OCTOBER,

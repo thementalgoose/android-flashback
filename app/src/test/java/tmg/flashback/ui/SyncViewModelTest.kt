@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test
 import tmg.flashback.common.controllers.ForceUpgradeController
 import tmg.flashback.configuration.controllers.ConfigController
 import tmg.flashback.rss.controllers.RSSController
+import tmg.flashback.statistics.controllers.ScheduleController
+import tmg.flashback.statistics.controllers.SearchController
 import tmg.flashback.statistics.repo.CircuitRepository
 import tmg.flashback.statistics.repo.ConstructorRepository
 import tmg.flashback.statistics.repo.DriverRepository
@@ -15,10 +17,10 @@ import tmg.flashback.ui.sync.SyncNavTarget.DASHBOARD
 import tmg.flashback.ui.sync.SyncNavTarget.FORCE_UPGRADE
 import tmg.flashback.ui.sync.SyncState
 import tmg.flashback.ui.sync.SyncViewModel
-import tmg.flashback.statistics.controllers.ScheduleController
-import tmg.flashback.statistics.controllers.SearchController
 import tmg.testutils.BaseTest
-import tmg.testutils.livedata.*
+import tmg.testutils.livedata.assertDataEventValue
+import tmg.testutils.livedata.assertEventNotFired
+import tmg.testutils.livedata.test
 
 internal class SyncViewModelTest: BaseTest() {
 

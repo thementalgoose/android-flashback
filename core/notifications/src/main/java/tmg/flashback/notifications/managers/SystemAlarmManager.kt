@@ -6,7 +6,6 @@ import android.content.Context
 import android.os.Build
 import android.util.Log
 import androidx.core.app.AlarmManagerCompat
-import java.lang.NullPointerException
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.ZoneOffset
 import tmg.flashback.crash_reporting.controllers.CrashController

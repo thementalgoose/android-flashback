@@ -8,7 +8,6 @@ import android.widget.ImageView
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
 import androidx.recyclerview.widget.LinearLayoutManager
-import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.threeten.bp.LocalDate
 import tmg.flashback.formula1.enums.TrackLayout
@@ -19,7 +18,9 @@ import tmg.flashback.statistics.ui.shared.schedule.InlineScheduleAdapter
 import tmg.flashback.ui.base.BaseBottomSheetFragment
 import tmg.flashback.ui.extensions.getColor
 import tmg.utilities.extensions.observe
-import tmg.utilities.extensions.views.*
+import tmg.utilities.extensions.views.gone
+import tmg.utilities.extensions.views.invisible
+import tmg.utilities.extensions.views.visible
 
 class RacePreviewBottomSheetFragment : BaseBottomSheetFragment<FragmentBottomSheetRacePreviewBinding>() {
 

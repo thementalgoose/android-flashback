@@ -5,7 +5,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.statistics.databinding.ViewSearchDriverBinding
-import tmg.flashback.statistics.databinding.ViewSearchRaceBinding
 import tmg.flashback.statistics.ui.search.SearchItem
 import tmg.utilities.extensions.views.context
 

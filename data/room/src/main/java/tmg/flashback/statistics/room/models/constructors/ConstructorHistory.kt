@@ -1,6 +1,7 @@
 package tmg.flashback.statistics.room.models.constructors
 
-import androidx.room.*
+import androidx.room.Embedded
+import androidx.room.Relation
 
 data class ConstructorHistory(
     @Embedded

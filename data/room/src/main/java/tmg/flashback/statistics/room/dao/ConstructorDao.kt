@@ -6,7 +6,6 @@ import tmg.flashback.statistics.room.models.constructors.Constructor
 import tmg.flashback.statistics.room.models.constructors.ConstructorHistory
 import tmg.flashback.statistics.room.models.constructors.ConstructorSeason
 import tmg.flashback.statistics.room.models.constructors.ConstructorSeasonDriver
-import tmg.flashback.statistics.room.models.drivers.Driver
 
 @Dao
 interface ConstructorDao {

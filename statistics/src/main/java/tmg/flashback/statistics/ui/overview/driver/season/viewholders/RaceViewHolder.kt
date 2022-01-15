@@ -2,19 +2,19 @@ package tmg.flashback.statistics.ui.overview.driver.season.viewholders
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import kotlin.math.roundToInt
-import tmg.flashback.ui.model.AnimationSpeed
-import tmg.flashback.statistics.ui.overview.driver.season.DriverSeasonItem
 import tmg.flashback.formula1.enums.isStatusFinished
-import tmg.flashback.ui.extensions.getColor
 import tmg.flashback.formula1.extensions.pointsDisplay
+import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.ViewDriverSeasonBinding
-import tmg.flashback.formula1.utils.getFlagResourceAlpha3
+import tmg.flashback.statistics.ui.overview.driver.season.DriverSeasonItem
+import tmg.flashback.ui.extensions.getColor
+import tmg.flashback.ui.model.AnimationSpeed
 import tmg.utilities.extensions.ordinalAbbreviation
 import tmg.utilities.extensions.views.context
 import tmg.utilities.extensions.views.getString
 import tmg.utilities.extensions.views.show
+import kotlin.math.roundToInt
 
 class RaceViewHolder(
     private val itemClicked: (result: DriverSeasonItem.Result) -> Unit,

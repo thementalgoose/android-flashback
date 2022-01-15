@@ -5,8 +5,6 @@ import tmg.flashback.statistics.network.models.circuits.CircuitResultRace
 import tmg.flashback.statistics.room.models.circuit.CircuitHistory
 import tmg.flashback.statistics.room.models.circuit.CircuitRound
 import tmg.flashback.statistics.room.models.circuit.CircuitRoundWithResults
-import java.lang.RuntimeException
-import kotlin.jvm.Throws
 
 class NetworkCircuitMapper(
     private val networkCircuitDataMapper: NetworkCircuitDataMapper

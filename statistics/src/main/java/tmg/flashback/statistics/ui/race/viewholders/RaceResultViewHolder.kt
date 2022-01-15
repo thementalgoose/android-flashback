@@ -2,27 +2,27 @@ package tmg.flashback.statistics.ui.race.viewholders
 
 import android.view.View
 import android.view.View.IMPORTANT_FOR_ACCESSIBILITY_NO
-import android.widget.Toast
 import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import tmg.flashback.formula1.enums.isStatusFinished
-import tmg.flashback.formula1.enums.raceStatusUnknown
-import tmg.flashback.ui.extensions.getColor
+import tmg.flashback.formula1.extensions.pointsDisplay
+import tmg.flashback.formula1.model.Driver
+import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.ViewRaceRaceResultBinding
 import tmg.flashback.statistics.extensions.iconRes
-import tmg.flashback.formula1.utils.getFlagResourceAlpha3
-import tmg.flashback.statistics.ui.util.position
-import tmg.utilities.extensions.views.*
-import kotlin.math.abs
-import tmg.flashback.formula1.extensions.pointsDisplay
-import tmg.flashback.formula1.model.Driver
-import tmg.flashback.statistics.extensions.bindDriver
 import tmg.flashback.statistics.ui.race.RaceItem
 import tmg.flashback.statistics.ui.util.accessibility.TapToViewDriverInfoAccessibilityDelegate
+import tmg.flashback.statistics.ui.util.position
+import tmg.flashback.ui.extensions.getColor
 import tmg.utilities.extensions.ordinalAbbreviation
+import tmg.utilities.extensions.views.context
+import tmg.utilities.extensions.views.getString
+import tmg.utilities.extensions.views.gone
+import tmg.utilities.extensions.views.visible
 import tmg.utilities.utils.ColorUtils.Companion.darken
+import kotlin.math.abs
 
 class RaceResultViewHolder(
         private val driverClicked: (driver: Driver) -> Unit,

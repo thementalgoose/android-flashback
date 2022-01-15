@@ -2,9 +2,9 @@ package tmg.flashback.device.repository
 
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
+import org.threeten.bp.format.DateTimeParseException
 import tmg.flashback.prefs.manager.PreferenceManager
 import java.util.*
-import org.threeten.bp.format.DateTimeParseException
 
 class DeviceRepository(
     private val preferenceManager: PreferenceManager

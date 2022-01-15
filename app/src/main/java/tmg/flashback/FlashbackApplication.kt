@@ -6,17 +6,17 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.workmanager.koin.workManagerFactory
 import org.koin.core.context.startKoin
 import tmg.flashback.ads.di.adsModule
-import tmg.flashback.common.di.commonModule
-import tmg.flashback.configuration.di.configModule
 import tmg.flashback.analytics.di.analyticsModule
 import tmg.flashback.appshortcuts.di.appShortcutModule
-import tmg.flashback.device.di.deviceModule
-import tmg.flashback.ui.di.uiModule
+import tmg.flashback.common.di.commonModule
+import tmg.flashback.configuration.di.configModule
 import tmg.flashback.crash_reporting.di.crashReportingModule
+import tmg.flashback.device.di.deviceModule
 import tmg.flashback.di.appModule
+import tmg.flashback.notifications.di.notificationModule
 import tmg.flashback.rss.di.rssModule
 import tmg.flashback.statistics.di.statisticsModule
-import tmg.flashback.notifications.di.notificationModule
+import tmg.flashback.ui.di.uiModule
 
 class FlashbackApplication: Application() {
 

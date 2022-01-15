@@ -2,20 +2,10 @@ package tmg.flashback.statistics.ui.race.viewholders
 
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import tmg.flashback.ui.extensions.getColor
-import tmg.flashback.statistics.R
-import tmg.flashback.statistics.databinding.LayoutPodiumBinding
-import tmg.flashback.statistics.databinding.ViewRaceRacePodiumBinding
-import tmg.flashback.formula1.utils.getFlagResourceAlpha3
-import tmg.flashback.statistics.ui.util.positionStarted
-import tmg.utilities.extensions.views.context
-import tmg.utilities.extensions.views.gone
-import tmg.utilities.extensions.views.visible
-import kotlin.math.abs
-import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.Driver
 import tmg.flashback.formula1.model.RaceRaceResult
+import tmg.flashback.statistics.databinding.LayoutPodiumBinding
+import tmg.flashback.statistics.databinding.ViewRaceRacePodiumBinding
 import tmg.flashback.statistics.extensions.bindRaceModel
 
 class RacePodiumViewHolder(

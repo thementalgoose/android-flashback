@@ -3,12 +3,10 @@ package tmg.flashback.statistics.ui.search
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.verify
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.threeten.bp.LocalDate
 import tmg.flashback.ads.controller.AdsController
 import tmg.flashback.ads.repository.model.AdvertConfig
 import tmg.flashback.formula1.model.*
@@ -19,7 +17,10 @@ import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
 import tmg.testutils.BaseTest
-import tmg.testutils.livedata.*
+import tmg.testutils.livedata.assertDataEventValue
+import tmg.testutils.livedata.assertEventFired
+import tmg.testutils.livedata.assertListDoesNotMatchItem
+import tmg.testutils.livedata.test
 
 internal class SearchViewModelTest: BaseTest() {
 

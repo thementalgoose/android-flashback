@@ -3,10 +3,8 @@ package tmg.flashback.statistics.ui.settings.home
 import android.os.Bundle
 import android.view.View
 import com.google.android.material.snackbar.Snackbar
-import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import tmg.flashback.statistics.R
-import tmg.flashback.statistics.ui.settings.statistics.SettingsStatisticsViewModel
 import tmg.flashback.ui.settings.SettingsFragment
 import tmg.utilities.extensions.observeEvent
 

@@ -8,17 +8,16 @@ import androidx.fragment.app.setFragmentResultListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import tmg.flashback.ui.base.BaseFragment
-import tmg.flashback.ui.navigation.NavigationProvider
 import tmg.flashback.DebugController
+import tmg.flashback.R
 import tmg.flashback.databinding.FragmentDashboardListBinding
 import tmg.flashback.rss.ui.RSSActivity
-import tmg.flashback.R
-import tmg.flashback.ui.dashboard.DashboardNavigationCallback
-import tmg.flashback.ui.settings.SettingsAllActivity
 import tmg.flashback.statistics.ui.dashboard.onboarding.OnboardingNotificationBottomSheetFragment
+import tmg.flashback.ui.base.BaseFragment
+import tmg.flashback.ui.dashboard.DashboardNavigationCallback
+import tmg.flashback.ui.navigation.NavigationProvider
+import tmg.flashback.ui.settings.SettingsAllActivity
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 
@@ -97,7 +96,7 @@ class ListFragment: BaseFragment<FragmentDashboardListBinding>() {
                 .show(parentFragmentManager, "FEATURE_BANNER_ONBOARDING")
         }
 
-        setFragmentResultListener("FEATURE_BANNER_ONBOARDING") { key, bundle ->
+        setFragmentResultListener("FEATURE_BANNER_ONBOARDING") { _, _ ->
             Snackbar.make(binding.root, getString(R.string.feature_banner_notifications_finished), 4000).show()
         }
 

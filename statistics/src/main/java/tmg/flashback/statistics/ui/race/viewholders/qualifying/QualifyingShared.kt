@@ -1,12 +1,9 @@
 package tmg.flashback.statistics.ui.race.viewholders.qualifying
 
 import tmg.flashback.formula1.model.DriverConstructor
-import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.ViewRaceQualifyingDriverBinding
 import tmg.flashback.statistics.extensions.bindDriver
-import tmg.utilities.extensions.ordinalAbbreviation
-import tmg.utilities.extensions.views.context
 import tmg.utilities.extensions.views.gone
 
 fun ViewRaceQualifyingDriverBinding.bind(

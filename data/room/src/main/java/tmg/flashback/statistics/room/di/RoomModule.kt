@@ -2,7 +2,6 @@ package tmg.flashback.statistics.room.di
 
 import android.util.Log
 import androidx.room.Room
-import androidx.room.migration.AutoMigrationSpec
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import org.koin.dsl.module

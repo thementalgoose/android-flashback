@@ -1,7 +1,6 @@
 package tmg.flashback.statistics.repo.repository
 
 import org.threeten.bp.LocalDateTime
-import org.threeten.bp.Period
 import org.threeten.bp.format.DateTimeFormatter
 import org.threeten.bp.format.DateTimeParseException
 import org.threeten.bp.temporal.ChronoUnit

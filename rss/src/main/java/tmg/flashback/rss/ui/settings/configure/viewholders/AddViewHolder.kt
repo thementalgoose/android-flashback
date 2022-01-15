@@ -6,8 +6,6 @@ import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.rss.R
 import tmg.flashback.rss.databinding.ViewRssConfigureAddBinding
 import tmg.utilities.extensions.views.getString
-import java.lang.NullPointerException
-import java.lang.RuntimeException
 import java.net.MalformedURLException
 import java.net.URL
 
@@ -39,6 +37,7 @@ class AddViewHolder(
             text = "https://$text"
         }
         try {
+            @Suppress("UNUSED_VARIABLE")
             val url = URL(text)
             addCustomItem(text)
             binding.input.setText("")

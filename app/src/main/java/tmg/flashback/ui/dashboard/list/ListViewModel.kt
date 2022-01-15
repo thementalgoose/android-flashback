@@ -2,7 +2,6 @@ package tmg.flashback.ui.dashboard.list
 
 import androidx.lifecycle.*
 import kotlinx.coroutines.flow.combine
-import androidx.lifecycle.ViewModel
 import tmg.flashback.DebugController
 import tmg.flashback.R
 import tmg.flashback.ads.controller.AdsController

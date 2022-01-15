@@ -9,7 +9,6 @@ import tmg.flashback.rss.R
 import tmg.flashback.rss.databinding.*
 import tmg.flashback.rss.repo.model.Article
 import tmg.flashback.rss.ui.viewholder.*
-import java.lang.RuntimeException
 
 internal class RSSAdapter(
         private val articleClicked: (item: Article, itemId: Long) -> Unit,
@@ -55,6 +54,7 @@ internal class RSSAdapter(
             is RSSItem.RSS -> (holder as ItemViewHolder).bind(item, getItemId(position))
             is RSSItem.Message -> (holder as MessageViewHolder).bind(holder.itemView.context.getString(
                 R.string.home_last_updated, item.msg))
+            else -> { }
         }
     }
 

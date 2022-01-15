@@ -9,18 +9,17 @@ import androidx.fragment.app.FragmentTransaction
 import com.discord.panels.OverlappingPanelsLayout
 import com.discord.panels.PanelState
 import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import tmg.flashback.common.ui.releasenotes.ReleaseBottomSheetFragment
-import tmg.flashback.ui.base.BaseFragment
 import tmg.flashback.R
+import tmg.flashback.common.ui.releasenotes.ReleaseBottomSheetFragment
 import tmg.flashback.databinding.FragmentDashboardBinding
-import tmg.flashback.statistics.controllers.SearchController
 import tmg.flashback.statistics.controllers.HomeController
-import tmg.flashback.ui.dashboard.list.ListFragment
+import tmg.flashback.statistics.controllers.SearchController
 import tmg.flashback.statistics.ui.dashboard.season.SeasonFragment
 import tmg.flashback.statistics.ui.dashboard.season.SeasonFragmentCallback
 import tmg.flashback.statistics.ui.search.SearchActivity
+import tmg.flashback.ui.base.BaseFragment
+import tmg.flashback.ui.dashboard.list.ListFragment
 import tmg.utilities.extensions.observeEvent
 
 class DashboardFragment : BaseFragment<FragmentDashboardBinding>(),
@@ -63,8 +62,8 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(),
             }
         }
 
-        binding.navigation.setOnNavigationItemSelectedListener {
-            return@setOnNavigationItemSelectedListener when (it.itemId) {
+        binding.navigation.setOnItemSelectedListener {
+            return@setOnItemSelectedListener when (it.itemId) {
                 R.id.nav_schedule -> {
                     seasonFragment?.selectSchedule()
                     true

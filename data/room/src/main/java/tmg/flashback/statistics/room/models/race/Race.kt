@@ -1,6 +1,7 @@
 package tmg.flashback.statistics.room.models.race
 
-import androidx.room.*
+import androidx.room.Embedded
+import androidx.room.Relation
 import tmg.flashback.statistics.room.models.circuit.Circuit
 import tmg.flashback.statistics.room.models.overview.Schedule
 

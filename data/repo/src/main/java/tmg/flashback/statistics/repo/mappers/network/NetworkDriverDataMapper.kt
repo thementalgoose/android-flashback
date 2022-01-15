@@ -1,8 +1,6 @@
 package tmg.flashback.statistics.repo.mappers.network
 
 import tmg.flashback.statistics.room.models.drivers.Driver
-import java.lang.RuntimeException
-import kotlin.jvm.Throws
 
 class NetworkDriverDataMapper {
 

@@ -4,7 +4,6 @@ import org.threeten.bp.LocalDate
 import tmg.flashback.formula1.model.*
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.ui.model.AnimationSpeed
-import kotlin.math.max
 
 fun RaceItem.Companion.overviewModel(
     raceName: String = "name",

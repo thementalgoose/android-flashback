@@ -2,11 +2,9 @@ package tmg.flashback.statistics.workmanager
 
 import android.content.Context
 import android.util.Log
-import android.widget.Toast
-import androidx.work.*
-
+import androidx.work.CoroutineWorker
+import androidx.work.WorkerParameters
 import org.koin.core.component.KoinComponent
-import org.koin.core.parameter.parametersOf
 import org.threeten.bp.LocalDateTime
 import tmg.flashback.formula1.enums.RaceWeekend
 import tmg.flashback.formula1.model.Timestamp

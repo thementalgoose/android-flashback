@@ -1,7 +1,7 @@
 package tmg.flashback.repositories
 
-import tmg.flashback.configuration.manager.ConfigManager
 import tmg.flashback.BuildConfig
+import tmg.flashback.configuration.manager.ConfigManager
 
 class NetworkConfigRepository(
     private val configManager: ConfigManager

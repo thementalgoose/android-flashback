@@ -1,13 +1,16 @@
 package tmg.flashback.statistics.ui.overview.driver.season
 
-import androidx.annotation.*
+import androidx.annotation.AttrRes
+import androidx.annotation.DrawableRes
+import androidx.annotation.LayoutRes
+import androidx.annotation.StringRes
 import org.threeten.bp.LocalDate
-import tmg.flashback.ui.model.AnimationSpeed
-import tmg.flashback.statistics.ui.overview.driver.summary.PipeType
 import tmg.flashback.formula1.enums.RaceStatus
 import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.statistics.R
+import tmg.flashback.statistics.ui.overview.driver.summary.PipeType
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
+import tmg.flashback.ui.model.AnimationSpeed
 
 sealed class DriverSeasonItem(
         @LayoutRes val layoutId: Int

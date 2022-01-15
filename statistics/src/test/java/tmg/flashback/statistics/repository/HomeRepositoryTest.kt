@@ -8,9 +8,9 @@ import org.junit.jupiter.api.Test
 import tmg.flashback.configuration.manager.ConfigManager
 import tmg.flashback.prefs.manager.PreferenceManager
 import tmg.flashback.statistics.repository.json.AllSeasonsJson
-import java.time.Year
 import tmg.flashback.statistics.repository.json.BannerJson
 import tmg.flashback.statistics.repository.models.Banner
+import java.time.Year
 
 internal class HomeRepositoryTest {
 

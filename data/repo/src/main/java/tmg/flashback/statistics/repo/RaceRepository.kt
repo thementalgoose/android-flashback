@@ -2,7 +2,6 @@ package tmg.flashback.statistics.repo
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import tmg.flashback.prefs.manager.PreferenceManager
 import tmg.flashback.crash_reporting.controllers.CrashController
 import tmg.flashback.formula1.model.Race
 import tmg.flashback.statistics.network.api.FlashbackApi
@@ -112,7 +111,7 @@ class RaceRepository(
     suspend fun shouldSyncRace(season: Int): Boolean {
         return !cacheRepository.seasonsSyncAtLeastOnce.contains(season)
     }
-    suspend fun shouldSyncRace(season: Int, round: Int): Boolean {
+    suspend fun shouldSyncRace(season: Int, @Suppress("UNUSED_PARAMETER") round: Int): Boolean {
         return shouldSyncRace(season)
     }
 

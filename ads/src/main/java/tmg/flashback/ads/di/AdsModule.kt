@@ -1,7 +1,6 @@
 package tmg.flashback.ads.di
 
 import org.koin.androidx.viewmodel.dsl.viewModel
-import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import tmg.flashback.ads.controller.AdsController
 import tmg.flashback.ads.manager.AdsManager

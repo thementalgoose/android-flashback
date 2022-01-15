@@ -1,6 +1,5 @@
 package tmg.flashback.statistics.ui.circuit
 
-import org.junit.jupiter.api.Assertions.*
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
 import tmg.flashback.formula1.enums.TrackLayout

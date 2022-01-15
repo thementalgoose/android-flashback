@@ -3,11 +3,11 @@ package tmg.flashback.common.ui.settings.appearance.animation
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import tmg.flashback.ui.model.AnimationSpeed
 import tmg.flashback.ui.bottomsheet.BottomSheetItem
 import tmg.flashback.ui.controllers.ThemeController
 import tmg.flashback.ui.extensions.icon
 import tmg.flashback.ui.extensions.label
+import tmg.flashback.ui.model.AnimationSpeed
 import tmg.utilities.lifecycle.Event
 import tmg.utilities.models.Selected
 import tmg.utilities.models.StringHolder

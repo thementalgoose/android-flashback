@@ -3,11 +3,9 @@ package tmg.flashback.rss.ui
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import tmg.flashback.rss.databinding.FragmentRssBinding
 import tmg.flashback.rss.repo.RSSRepository

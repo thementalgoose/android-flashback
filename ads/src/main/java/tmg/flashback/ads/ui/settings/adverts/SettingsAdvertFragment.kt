@@ -1,7 +1,6 @@
 package tmg.flashback.ads.ui.settings.adverts
 
 import android.os.Bundle
-import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import tmg.flashback.ui.settings.SettingsFragment
 

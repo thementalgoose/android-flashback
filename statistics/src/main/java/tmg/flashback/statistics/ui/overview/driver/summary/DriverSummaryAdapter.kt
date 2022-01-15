@@ -10,8 +10,8 @@ import tmg.flashback.statistics.databinding.ViewDriverSummaryHeaderBinding
 import tmg.flashback.statistics.databinding.ViewDriverSummaryHistoryBinding
 import tmg.flashback.statistics.databinding.ViewOverviewStatBinding
 import tmg.flashback.statistics.ui.overview.driver.summary.viewholders.HeaderViewHolder
-import tmg.flashback.statistics.ui.overview.viewholders.OverviewDriverHistoryViewHolder
 import tmg.flashback.statistics.ui.overview.viewholders.DriverHistoryViewHolder
+import tmg.flashback.statistics.ui.overview.viewholders.OverviewDriverHistoryViewHolder
 import tmg.flashback.statistics.ui.overview.viewholders.StatsViewHolder
 import tmg.flashback.statistics.ui.race.viewholders.SkeletonLoadingViewHolder
 import tmg.flashback.statistics.ui.shared.pill.PillItem
@@ -74,6 +74,7 @@ class DriverSummaryAdapter(
             is DriverSummaryItem.Stat -> (holder as StatsViewHolder).bind(item)
             is DriverSummaryItem.RacedFor -> (holder as OverviewDriverHistoryViewHolder).bind(item)
             is DriverSummaryItem.ErrorItem -> bindErrors(holder, item.item)
+            else -> { }
         }
     }
 

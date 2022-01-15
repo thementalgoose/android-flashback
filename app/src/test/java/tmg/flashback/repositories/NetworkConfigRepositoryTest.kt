@@ -3,11 +3,11 @@ package tmg.flashback.repositories
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.flashback.configuration.manager.ConfigManager
 import tmg.flashback.BuildConfig
+import tmg.flashback.configuration.manager.ConfigManager
 
 internal class NetworkConfigRepositoryTest {
 

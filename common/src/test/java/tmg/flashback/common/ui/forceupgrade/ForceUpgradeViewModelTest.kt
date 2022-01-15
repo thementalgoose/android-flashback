@@ -4,15 +4,11 @@ import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import tmg.flashback.common.controllers.ForceUpgradeController
-import tmg.flashback.configuration.controllers.ConfigController
 import tmg.flashback.common.repository.model.ForceUpgrade
-import tmg.flashback.common.ui.forceupgrade.ForceUpgradeViewModel
+import tmg.flashback.configuration.controllers.ConfigController
 import tmg.testutils.BaseTest
-import tmg.testutils.livedata.assertDataEventValue
-import tmg.testutils.livedata.assertEventNotFired
 import tmg.testutils.livedata.test
 
 internal class ForceUpgradeViewModelTest: BaseTest() {
