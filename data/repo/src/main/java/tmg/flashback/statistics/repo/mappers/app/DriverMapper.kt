@@ -1,11 +1,10 @@
 package tmg.flashback.statistics.repo.mappers.app
 
 import tmg.flashback.formula1.model.DriverHistory
-import tmg.flashback.formula1.model.DriverHistorySeasonRace
 import tmg.flashback.formula1.model.DriverHistorySeason
+import tmg.flashback.formula1.model.DriverHistorySeasonRace
 import tmg.flashback.statistics.room.models.drivers.DriverSeasonRaceWithConstructor
 import tmg.flashback.statistics.room.models.drivers.DriverSeasonWithRaces
-import tmg.utilities.utils.LocalDateUtils.Companion.requireFromDate
 
 class DriverMapper(
     private val driverDataMapper: DriverDataMapper,

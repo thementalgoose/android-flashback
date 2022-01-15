@@ -3,7 +3,8 @@ package tmg.flashback.statistics.controllers
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import tmg.flashback.statistics.repository.HomeRepository
 import tmg.testutils.BaseTest

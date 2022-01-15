@@ -1,9 +1,5 @@
 package tmg.flashback.rss.repo.model
 
-import tmg.flashback.rss.repo.model.ArticleSource
-import java.net.MalformedURLException
-import java.net.URL
-
 data class SupportedArticleSource(
     val rssLink: String,
     val sourceShort: String,

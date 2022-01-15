@@ -5,7 +5,6 @@ apply from: rootDir.absolutePath + "/gradle/config-android.gradle"
 apply from: rootDir.absolutePath + "/gradle/config-util.gradle"
 apply from: rootDir.absolutePath + "/gradle/config-junit5.gradle"
 
-apply plugin: 'koin'
 apply from: rootDir.absolutePath + "/gradle/config-koin.gradle"
 
 apply plugin: 'com.google.firebase.crashlytics'

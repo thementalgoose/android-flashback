@@ -6,12 +6,12 @@ import android.view.View
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
-import org.koin.android.viewmodel.ext.android.viewModel
-import tmg.flashback.ui.base.BaseFragment
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.FragmentCircuitInfoBinding
 import tmg.flashback.statistics.ui.race.RaceActivity
 import tmg.flashback.statistics.ui.race.RaceData
+import tmg.flashback.ui.base.BaseFragment
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 import tmg.utilities.extensions.viewUrl

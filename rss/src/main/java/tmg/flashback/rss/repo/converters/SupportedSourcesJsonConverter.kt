@@ -1,8 +1,8 @@
 package tmg.flashback.rss.repo.converters
 
-import tmg.flashback.rss.repo.model.SupportedSource
 import tmg.flashback.rss.repo.json.SupportedSourceJson
 import tmg.flashback.rss.repo.json.SupportedSourcesJson
+import tmg.flashback.rss.repo.model.SupportedSource
 
 fun SupportedSourcesJson.convert(): List<SupportedSource> {
     return this.sources?.mapNotNull { it.convert() } ?: emptyList()

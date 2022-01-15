@@ -4,8 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import tmg.flashback.ui.settings.SettingsModel
 import tmg.flashback.ui.settings.SettingsViewModel
-import tmg.flashback.statistics.controllers.RaceController
-import tmg.flashback.statistics.controllers.HomeController
 import tmg.utilities.lifecycle.Event
 
 //region Inputs

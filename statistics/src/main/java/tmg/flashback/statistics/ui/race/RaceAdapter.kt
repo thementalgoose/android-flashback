@@ -6,8 +6,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.Driver
-import tmg.flashback.formula1.model.Overview
-import tmg.flashback.formula1.model.RaceQualifyingType
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.*
 import tmg.flashback.statistics.ui.race.viewholders.*
@@ -112,6 +110,8 @@ class RaceAdapter(
             is RaceItem.SprintQualifyingResult -> (holder as RaceSprintQualifyingViewHolder).bind(item)
 
             is RaceItem.ErrorItem -> super.bindErrors(holder, item.item)
+
+            else -> { }
         }
     }
 

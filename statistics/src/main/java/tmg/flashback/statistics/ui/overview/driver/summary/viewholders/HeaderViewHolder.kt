@@ -4,13 +4,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import org.threeten.bp.format.DateTimeFormatter
+import tmg.flashback.formula1.utils.getFlagResourceAlpha3
+import tmg.flashback.statistics.R
+import tmg.flashback.statistics.databinding.ViewDriverSummaryHeaderBinding
 import tmg.flashback.statistics.ui.overview.driver.summary.DriverSummaryItem
 import tmg.flashback.statistics.ui.shared.pill.PillAdapter
 import tmg.flashback.statistics.ui.shared.pill.PillItem
 import tmg.flashback.ui.extensions.getColor
-import tmg.flashback.statistics.R
-import tmg.flashback.statistics.databinding.ViewDriverSummaryHeaderBinding
-import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.utilities.extensions.views.context
 
 class HeaderViewHolder(

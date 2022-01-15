@@ -2,7 +2,10 @@ package tmg.flashback.statistics.room.dao
 
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow
-import tmg.flashback.statistics.room.models.drivers.*
+import tmg.flashback.statistics.room.models.drivers.Driver
+import tmg.flashback.statistics.room.models.drivers.DriverHistory
+import tmg.flashback.statistics.room.models.drivers.DriverSeason
+import tmg.flashback.statistics.room.models.drivers.DriverSeasonRace
 
 @Dao
 interface DriverDao {

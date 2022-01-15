@@ -4,8 +4,6 @@ import android.content.Context
 import android.content.Intent
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.appcompat.app.AppCompatActivity
-import kotlin.reflect.KClass
 
 data class ShortcutInfo(
     val id: String,

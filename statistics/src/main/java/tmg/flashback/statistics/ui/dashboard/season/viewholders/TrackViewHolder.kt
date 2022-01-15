@@ -6,18 +6,14 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import org.threeten.bp.LocalDate
-import org.threeten.bp.LocalDateTime
-import org.threeten.bp.LocalTime
-import org.threeten.bp.ZoneId
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.formula1.enums.TrackLayout
-import tmg.flashback.formula1.model.Timestamp
-import tmg.flashback.statistics.R
-import tmg.flashback.statistics.ui.dashboard.season.SeasonItem
-import tmg.flashback.ui.extensions.getColor
-import tmg.flashback.statistics.databinding.ViewDashboardSeasonTrackBinding
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
+import tmg.flashback.statistics.R
+import tmg.flashback.statistics.databinding.ViewDashboardSeasonTrackBinding
+import tmg.flashback.statistics.ui.dashboard.season.SeasonItem
 import tmg.flashback.statistics.ui.shared.schedule.InlineScheduleAdapter
+import tmg.flashback.ui.extensions.getColor
 import tmg.utilities.extensions.ordinalAbbreviation
 import tmg.utilities.extensions.views.*
 

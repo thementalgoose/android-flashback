@@ -1,4 +1,3 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="tmg.flashback.statistics.repo">
+<manifest package="tmg.flashback.statistics.repo">
 
 </manifest>

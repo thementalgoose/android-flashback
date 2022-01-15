@@ -1,9 +1,9 @@
 package tmg.flashback.statistics.repo.mappers.app
 
-import tmg.flashback.formula1.model.ConstructorHistorySeasonDriver
-import tmg.flashback.formula1.model.ConstructorHistorySeason
-import tmg.flashback.formula1.model.DriverConstructor
 import tmg.flashback.formula1.model.ConstructorHistory
+import tmg.flashback.formula1.model.ConstructorHistorySeason
+import tmg.flashback.formula1.model.ConstructorHistorySeasonDriver
+import tmg.flashback.formula1.model.DriverConstructor
 import tmg.flashback.statistics.room.models.constructors.Constructor
 import tmg.flashback.statistics.room.models.constructors.ConstructorSeasonDriverWithDriver
 import tmg.flashback.statistics.room.models.constructors.ConstructorSeasonWithDrivers

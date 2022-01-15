@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import org.koin.core.component.KoinApiExtension
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import tmg.flashback.formula1.enums.RaceWeekend
@@ -19,9 +18,8 @@ import tmg.flashback.statistics.ui.shared.schedule.viewholders.DayViewHolder
 import tmg.flashback.statistics.ui.shared.schedule.viewholders.DeviceTimeViewHolder
 import tmg.flashback.statistics.ui.shared.schedule.viewholders.ItemViewHolder
 import tmg.utilities.difflist.GenericDiffCallback
-import java.lang.RuntimeException
 
-@KoinApiExtension
+
 class InlineScheduleAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>(), KoinComponent {
 
     private val notificationController: ScheduleController by inject()
@@ -81,6 +79,7 @@ class InlineScheduleAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>(), Ko
         when (val item = list[position]) {
             is InlineSchedule.Day -> (holder as DayViewHolder).bind(item)
             is InlineSchedule.Item -> (holder as ItemViewHolder).bind(item)
+            else -> { }
         }
     }
 

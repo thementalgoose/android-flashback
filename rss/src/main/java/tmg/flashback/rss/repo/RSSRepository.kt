@@ -1,10 +1,10 @@
 package tmg.flashback.rss.repo
 
 import tmg.flashback.configuration.manager.ConfigManager
-import tmg.flashback.rss.repo.json.SupportedSourcesJson
-import tmg.flashback.rss.repo.model.SupportedSource
 import tmg.flashback.prefs.manager.PreferenceManager
 import tmg.flashback.rss.repo.converters.convert
+import tmg.flashback.rss.repo.json.SupportedSourcesJson
+import tmg.flashback.rss.repo.model.SupportedSource
 
 class RSSRepository(
     private val preferenceManager: PreferenceManager,

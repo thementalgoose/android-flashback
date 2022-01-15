@@ -2,10 +2,10 @@ package tmg.flashback.common.ui.settings.notifications
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import tmg.flashback.ui.settings.SettingsModel
-import tmg.flashback.ui.settings.SettingsViewModel
 import tmg.flashback.notifications.R
 import tmg.flashback.notifications.controllers.NotificationController
+import tmg.flashback.ui.settings.SettingsModel
+import tmg.flashback.ui.settings.SettingsViewModel
 import tmg.utilities.lifecycle.DataEvent
 import tmg.utilities.lifecycle.Event
 

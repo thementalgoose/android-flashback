@@ -4,8 +4,6 @@ import tmg.flashback.statistics.network.models.constructors.Constructor
 import tmg.flashback.statistics.network.models.constructors.model
 import tmg.flashback.statistics.network.models.drivers.Driver
 import tmg.flashback.statistics.network.models.drivers.model
-import tmg.flashback.statistics.network.models.overview.Schedule
-import tmg.flashback.statistics.network.models.overview.model
 
 fun Season.Companion.model(
     season: Int = 2020,

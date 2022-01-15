@@ -4,7 +4,6 @@ import android.os.Build
 import android.util.Log
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import tmg.flashback.crash_reporting.BuildConfig
-import java.lang.Exception
 
 internal class FirebaseCrashService: CrashService {
 

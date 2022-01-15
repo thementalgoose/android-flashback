@@ -4,14 +4,14 @@ import android.content.Context
 import android.content.Intent
 import tmg.aboutthisapp.AboutThisAppActivity
 import tmg.flashback.analytics.manager.AnalyticsManager
+import tmg.flashback.constants.AboutThisAppConfig
 import tmg.flashback.device.controllers.DeviceController
 import tmg.flashback.device.managers.BuildConfigManager
-import tmg.flashback.ui.navigation.NavigationProvider
-import tmg.flashback.constants.AboutThisAppConfig
-import tmg.flashback.rss.controllers.RSSController
-import tmg.flashback.ui.sync.SyncActivity
-import tmg.flashback.ui.dashboard.HomeActivity
 import tmg.flashback.notifications.navigation.NotificationNavigationProvider
+import tmg.flashback.rss.controllers.RSSController
+import tmg.flashback.ui.dashboard.HomeActivity
+import tmg.flashback.ui.navigation.NavigationProvider
+import tmg.flashback.ui.sync.SyncActivity
 
 class AppNavigationProvider(
     private val buildConfigManager: BuildConfigManager,

@@ -1,6 +1,6 @@
 package tmg.flashback.statistics.repo.mappers.app
 
-import tmg.flashback.formula1.model.*
+import tmg.flashback.formula1.model.Season
 
 class SeasonMapper(
     private val raceMapper: RaceMapper

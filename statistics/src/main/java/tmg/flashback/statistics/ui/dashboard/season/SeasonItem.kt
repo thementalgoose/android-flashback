@@ -3,10 +3,11 @@ package tmg.flashback.statistics.ui.dashboard.season
 import androidx.annotation.LayoutRes
 import org.threeten.bp.LocalDate
 import org.threeten.bp.Month
+import tmg.flashback.formula1.model.OverviewRace
+import tmg.flashback.formula1.model.Schedule
 import tmg.flashback.statistics.R
-import tmg.flashback.ui.model.AnimationSpeed
-import tmg.flashback.formula1.model.*
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
+import tmg.flashback.ui.model.AnimationSpeed
 
 sealed class SeasonItem(
         @LayoutRes val layoutId: Int

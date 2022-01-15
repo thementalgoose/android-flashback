@@ -7,7 +7,6 @@ import tmg.flashback.ui.bottomsheet.BottomSheetItem
 import tmg.flashback.ui.controllers.ThemeController
 import tmg.flashback.ui.extensions.icon
 import tmg.flashback.ui.extensions.label
-import tmg.flashback.ui.model.NightMode
 import tmg.flashback.ui.model.Theme
 import tmg.utilities.lifecycle.DataEvent
 import tmg.utilities.models.Selected

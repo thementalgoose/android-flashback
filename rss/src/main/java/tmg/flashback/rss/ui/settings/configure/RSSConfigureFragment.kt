@@ -1,18 +1,15 @@
 package tmg.flashback.rss.ui.settings.configure
 
-import android.content.ActivityNotFoundException
 import android.content.ClipData
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
-import org.koin.android.viewmodel.ext.android.viewModel
-import tmg.flashback.ui.base.BaseFragment
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import tmg.flashback.rss.R
 import tmg.flashback.rss.databinding.FragmentRssSettingsConfigureBinding
+import tmg.flashback.ui.base.BaseFragment
 import tmg.utilities.extensions.managerClipboard
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent

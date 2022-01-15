@@ -2,7 +2,6 @@ package tmg.flashback.statistics.ui.search.viewholder
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.statistics.databinding.ViewSearchConstructorBinding
 import tmg.flashback.statistics.ui.search.SearchItem

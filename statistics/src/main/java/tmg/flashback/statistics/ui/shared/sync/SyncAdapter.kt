@@ -3,16 +3,15 @@ package tmg.flashback.statistics.ui.shared.sync
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import org.koin.core.component.KoinApiExtension
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import tmg.flashback.ui.navigation.NavigationProvider
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.controllers.HomeController
 import tmg.flashback.statistics.databinding.*
 import tmg.flashback.statistics.ui.shared.sync.viewholders.*
+import tmg.flashback.ui.navigation.NavigationProvider
 
-@KoinApiExtension
+
 abstract class SyncAdapter<T> : RecyclerView.Adapter<RecyclerView.ViewHolder>(), KoinComponent {
 
     private val navigationProvider: NavigationProvider by inject()

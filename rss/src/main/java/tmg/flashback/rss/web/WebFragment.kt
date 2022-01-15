@@ -19,8 +19,6 @@ import tmg.flashback.rss.repo.RSSRepository
 import tmg.utilities.extensions.getColor
 import tmg.utilities.extensions.viewUrl
 import tmg.utilities.extensions.views.show
-import java.lang.NullPointerException
-import java.lang.RuntimeException
 import java.net.MalformedURLException
 
 @SuppressLint("SetJavaScriptEnabled")

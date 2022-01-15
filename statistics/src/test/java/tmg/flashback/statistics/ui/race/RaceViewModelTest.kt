@@ -6,7 +6,8 @@ import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.fail
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
@@ -18,11 +19,6 @@ import tmg.flashback.statistics.controllers.RaceController
 import tmg.flashback.statistics.repo.RaceRepository
 import tmg.flashback.statistics.ui.race.RaceDisplayType.*
 import tmg.flashback.statistics.ui.race_old.*
-import tmg.flashback.statistics.ui.race_old.driver1
-import tmg.flashback.statistics.ui.race_old.driver2
-import tmg.flashback.statistics.ui.race_old.driver3
-import tmg.flashback.statistics.ui.race_old.driver4
-import tmg.flashback.statistics.ui.race_old.raceModel
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
 import tmg.flashback.ui.controllers.ThemeController

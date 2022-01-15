@@ -3,12 +3,11 @@ package tmg.flashback.common.ui.forceupgrade
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import tmg.flashback.common.databinding.FragmentLockoutBinding
 import tmg.flashback.ui.base.BaseFragment
 import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.observe
-import tmg.utilities.extensions.observeEvent
 import tmg.utilities.extensions.viewUrl
 import tmg.utilities.extensions.views.show
 

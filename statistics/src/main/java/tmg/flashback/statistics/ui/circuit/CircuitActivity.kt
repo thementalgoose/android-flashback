@@ -6,9 +6,9 @@ import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
-import tmg.flashback.ui.base.BaseActivity
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.ActivityCircuitInfoBinding
+import tmg.flashback.ui.base.BaseActivity
 
 class CircuitActivity: BaseActivity(), NavController.OnDestinationChangedListener {
 

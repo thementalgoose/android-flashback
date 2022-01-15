@@ -5,27 +5,22 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
 import com.jakewharton.threetenabp.AndroidThreeTen
 import com.linkedin.android.shaky.EmailShakeDelegate
-import com.linkedin.android.shaky.ShakeDelegate
 import com.linkedin.android.shaky.Shaky
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import tmg.flashback.ads.controller.AdsController
-import tmg.flashback.crash_reporting.controllers.CrashController
-import tmg.flashback.device.controllers.DeviceController
 import tmg.flashback.analytics.UserProperty.*
 import tmg.flashback.analytics.manager.AnalyticsManager
-import tmg.flashback.common.controllers.ForceUpgradeController
-import tmg.flashback.configuration.controllers.ConfigController
-import tmg.flashback.device.managers.BuildConfigManager
+import tmg.flashback.crash_reporting.controllers.CrashController
+import tmg.flashback.device.controllers.DeviceController
 import tmg.flashback.managers.widgets.WidgetManager
-import tmg.flashback.ui.controllers.ThemeController
-import tmg.flashback.ui.model.NightMode
-import tmg.flashback.statistics.extensions.updateAllWidgets
-import tmg.flashback.statistics.repository.models.NotificationChannel
 import tmg.flashback.notifications.controllers.NotificationController
 import tmg.flashback.statistics.controllers.ScheduleController
+import tmg.flashback.statistics.extensions.updateAllWidgets
+import tmg.flashback.statistics.repository.models.NotificationChannel
 import tmg.flashback.statistics.workmanager.WorkerProvider
+import tmg.flashback.ui.controllers.ThemeController
+import tmg.flashback.ui.model.NightMode
 import tmg.utilities.extensions.isInDayMode
 
 /**
