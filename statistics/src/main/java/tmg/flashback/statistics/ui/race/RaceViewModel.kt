@@ -147,7 +147,7 @@ class RaceViewModel(
                                         }
                                         list.add(RaceItem.RaceHeader)
                                         list.addAll(results
-                                            .filterIndexed { index, model -> index >= startIndex }
+                                            .filterIndexed { index, _ -> index >= startIndex }
                                             .map { RaceItem.RaceResult(it) }
                                         )
                                     }
@@ -234,7 +234,7 @@ class RaceViewModel(
     private fun refresh(seasonRound: SeasonRound? = this.seasonRound.value) {
         viewModelScope.launch(context = ioDispatcher) {
             seasonRound?.let { (season, _) ->
-                val result = raceRepository.fetchRaces(season)
+                raceRepository.fetchRaces(season)
                 showLoading.postValue(false)
             }
         }

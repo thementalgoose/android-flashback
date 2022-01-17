@@ -10,6 +10,7 @@ jobs:
 
   json_checker:
     runs-on: ubuntu-latest
+    timeout-minutes: 2
     steps:
       - uses: actions/checkout@v2
         with:
@@ -21,6 +22,7 @@ jobs:
 
   unit_test_diff_check:
     runs-on: ubuntu-latest
+    timeout-minutes: 2
     steps:
       # Checkout
       - name: Checkout
@@ -46,7 +48,7 @@ jobs:
           echo "::set-output name=data_room::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}             | grep -E '^data/room/' -c)"
           echo "::set-output name=data_repo::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}             | grep -E '^data/repo/' -c)"
           echo "::set-output name=data_network::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}          | grep -E '^data/network/' -c)"
-          echo "::set-output name=ads::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}              | grep -E '^core/ads/' -c)"
+          echo "::set-output name=ads::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                   | grep -E '^core/ads/' -c)"
           echo "::set-output name=core_analytics::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}        | grep -E '^core/analytics/' -c)"
           echo "::set-output name=core_appshortcuts::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}     | grep -E '^core/appshortcuts/' -c)"
           echo "::set-output name=core_configuration::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}    | grep -E '^core/configuration/' -c)"
@@ -54,8 +56,9 @@ jobs:
           echo "::set-output name=core_device::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}           | grep -E '^core/device/' -c)"
           echo "::set-output name=core_notifications::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}    | grep -E '^core/notifications/' -c)"
           echo "::set-output name=core_preferences::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}      | grep -E '^core/preferences/' -c)"
-          echo "::set-output name=presentation_style::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}            | grep -E '^core/style/' -c)"
-          echo "::set-output name=presentation_ui::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}               | grep -E '^core/ui/' -c)"
+          echo "::set-output name=presentation_style::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}    | grep -E '^core/style/' -c)"
+          echo "::set-output name=presentation_ui::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}       | grep -E '^core/ui/' -c)"
+          echo "::set-output name=gradle::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                | grep -E '**/*.gradle' -c)"
 
     outputs:
       app: ${{ steps.change.outputs.app != 0 }}
@@ -77,10 +80,52 @@ jobs:
       core_preferences: ${{ steps.change.outputs.core_preferences != 0 }}
       presentation_style: ${{ steps.change.outputs.presentation_style != 0 }}
       presentation_ui: ${{ steps.change.outputs.presentation_ui != 0 }}
+      gradle: ${{ steps.change.outputs.gradle != 0 }}
+
+  release_build:
+    runs-on: ubuntu-latest
+    needs: [unit_test_diff_check]
+    timeout-minutes: 15
+    if: ${{ needs.unit_test_diff_check.outputs.gradle == 'true' }}
+    steps:
+      # Checkout
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      # Caching gradle
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      # Environment
+      - name: Environment variables
+        run: |
+          echo ${{ secrets.ENCODED_GOOGLE_SERVICES_LIVE }} | base64 --decode >> app/src/live/google-services.json
+          echo ${{ secrets.ENCODED_KEYSTORE }} | base64 --decode >> flashback.keystore
+          echo ${{ secrets.ENCODED_DEPLOYMENT_KEY }} | base64 --decode >> deployment_private_key.json
+
+      # Assemble release build
+      - name: Assemble release build
+        env:
+          KEYSTORE: ${{ github.workspace }}/flashback.keystore
+          PRIVATE_KEY: ${{ github.workspace }}/deployment_private_key.json
+          KEYSTORE_ALIAS: ${{ secrets.KEYSTORE_ALIAS }}
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          VERSION_CODE: 1
+          VERSION_NAME: 0.0.0
+        run: |
+          ./gradlew assembleLiveRelease
 
   unit_tests:
     runs-on: ubuntu-latest
     needs: [unit_test_diff_check,json_checker]
+    timeout-minutes: 15
     steps:
       # Checkout
       - uses: actions/checkout@v2
