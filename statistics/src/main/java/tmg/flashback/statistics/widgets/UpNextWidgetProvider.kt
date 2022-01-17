@@ -14,9 +14,7 @@ import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.threeten.bp.LocalDate
@@ -52,7 +50,7 @@ class UpNextWidgetProvider : AppWidgetProvider(), KoinComponent {
         Log.i("Widgets", "Updating up next widgets ${if (BuildConfig.DEBUG) appWidgetIds.contentToString() else ""}")
 
         // Fire and forget remote config sync
-        GlobalScope.launch {
+        CoroutineScope(Dispatchers.IO).launch {
             configController.applyPending()
             configController.fetch()
         }

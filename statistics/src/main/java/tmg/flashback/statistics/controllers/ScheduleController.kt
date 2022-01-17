@@ -2,7 +2,9 @@ package tmg.flashback.statistics.controllers
 
 import android.content.Context
 import android.util.Log
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.notifications.controllers.NotificationController
@@ -83,30 +85,27 @@ class ScheduleController(
             scheduleNotifications()
         }
 
-
+    suspend fun resubscribe() {
+        when (notificationRaceNotify) {
+            true -> notificationController.subscribeToRemoteNotification("notify_race")
+            false -> notificationController.unsubscribeToRemoteNotification("notify_race")
+        }
+        when (notificationQualifyingNotify) {
+            true -> notificationController.subscribeToRemoteNotification("notify_qualifying")
+            false -> notificationController.unsubscribeToRemoteNotification("notify_qualifying")
+        }
+    }
 
     var notificationRaceNotify: Boolean
         get() = upNextRepository.notificationNotifyRace
         set(value) {
             upNextRepository.notificationNotifyRace = value
-            GlobalScope.launch {
-                when (value) {
-                    true -> notificationController.subscribeToRemoteNotification("notify_race")
-                    false -> notificationController.unsubscribeToRemoteNotification("notify_race")
-                }
-            }
         }
 
     var notificationQualifyingNotify: Boolean
         get() = upNextRepository.notificationNotifyQualifying
         set(value) {
             upNextRepository.notificationNotifyQualifying = value
-            GlobalScope.launch {
-                when (value) {
-                    true -> notificationController.subscribeToRemoteNotification("notify_qualifying")
-                    false -> notificationController.unsubscribeToRemoteNotification("notify_qualifying")
-                }
-            }
         }
 
 

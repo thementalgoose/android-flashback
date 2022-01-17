@@ -195,10 +195,10 @@ class ListViewModel(
     override fun toggleHeader(header: HeaderType, to: Boolean?) {
         when (header) {
             HeaderType.FAVOURITED -> {
-                selectionHeaderFavouited.postValue(to ?: (selectionHeaderFavouited.value != true))
+                selectionHeaderFavouited.value = to ?: (selectionHeaderFavouited.value != true)
             }
             HeaderType.ALL -> {
-                selectionHeaderAll.postValue(to ?: (selectionHeaderAll.value != true))
+                selectionHeaderAll.value = to ?: (selectionHeaderAll.value != true)
             }
             HeaderType.LINKS -> { /* Do nothing */ }
         }

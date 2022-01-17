@@ -3,6 +3,7 @@ package tmg.flashback.ui.dashboard.list
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
+import kotlinx.coroutines.test.advanceUntilIdle
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.Year
@@ -264,7 +265,7 @@ internal class ListViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `list is emitted all items toggling each section removes list`() {
+    fun `list is emitted all items toggling each section removes list`() = coroutineTest {
 
         val favourites = setOf(2017, 2012, 2010)
 
@@ -277,15 +278,19 @@ internal class ListViewModelTest: BaseTest() {
         observer.assertValue(expectedList(favourites))
 
         sut.inputs.toggleHeader(HeaderType.FAVOURITED, false)
+        advanceUntilIdle()
         observer.assertValue(expectedList(favourites, showFavourites = false))
 
         sut.inputs.toggleHeader(HeaderType.ALL, false)
+        advanceUntilIdle()
         observer.assertValue(expectedList(favourites, showFavourites = false, showAll = false))
 
         sut.inputs.toggleHeader(HeaderType.FAVOURITED, true)
+        advanceUntilIdle()
         observer.assertValue(expectedList(favourites, showAll = false))
 
         sut.inputs.toggleHeader(HeaderType.ALL, true)
+        advanceUntilIdle()
         observer.assertValue(expectedList(favourites))
     }
 
@@ -322,7 +327,7 @@ internal class ListViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `toggling a favourite calls refresh`() {
+    fun `toggling a favourite calls refresh`() = coroutineTest {
         val favourites = mutableSetOf(2020)
         every { mockHomeController.favouriteSeasons } returns favourites
         every { mockHomeController.isFavourite(2018) } returns false
@@ -334,6 +339,8 @@ internal class ListViewModelTest: BaseTest() {
         // Mock the favourite seasons update
         every { mockHomeController.favouriteSeasons } returns mutableSetOf(2020, 2018)
         sut.inputs.toggleFavourite(2018)
+        advanceUntilIdle()
+
         verify {
             mockHomeController.addFavourite(2018)
         }
@@ -372,7 +379,7 @@ internal class ListViewModelTest: BaseTest() {
     }
 
     @Test
-    fun `click feature banner enrol notifications marks onboarding seen and refreshes list`() {
+    fun `click feature banner enrol notifications marks onboarding seen and refreshes list`() = coroutineTest {
         every { mockScheduleController.shouldShowNotificationOnboarding } returns true
 
         initSUT()
@@ -380,6 +387,7 @@ internal class ListViewModelTest: BaseTest() {
         observer.assertEmittedCount(1)
 
         sut.inputs.clickFeatureBanner(ListItem.FeatureBanner.EnrolNotifications)
+        advanceUntilIdle()
 
         verify {
             mockScheduleController.seenOnboarding()

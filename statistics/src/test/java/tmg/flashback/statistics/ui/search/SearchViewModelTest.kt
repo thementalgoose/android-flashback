@@ -4,6 +4,7 @@ import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -155,10 +156,10 @@ internal class SearchViewModelTest: BaseTest() {
         val model2 = SearchItem.driverModel(name = "z fish", driverId = "driverId2")
 
         initSUT()
-        runBlockingTest {
-            sut.inputs.inputCategory(SearchCategory.DRIVER)
-            sut.inputs.inputSearch("")
-        }
+        sut.inputs.inputCategory(SearchCategory.DRIVER)
+        sut.inputs.inputSearch("")
+        advanceUntilIdle()
+
         sut.outputs.results.test {
             assertValue(listOf(
                 SearchItem.Advert,
@@ -168,6 +169,7 @@ internal class SearchViewModelTest: BaseTest() {
         }
 
         sut.inputs.inputSearch("z")
+        advanceUntilIdle()
         sut.outputs.results.test {
             assertValue(listOf(
                 SearchItem.Advert,
@@ -176,6 +178,7 @@ internal class SearchViewModelTest: BaseTest() {
         }
 
         sut.inputs.inputSearch("zz")
+        advanceUntilIdle()
         sut.outputs.results.test {
             assertValue(listOf(
                 SearchItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.NO_SEARCH_RESULTS))
@@ -183,6 +186,7 @@ internal class SearchViewModelTest: BaseTest() {
         }
 
         sut.inputs.inputSearch("last")
+        advanceUntilIdle()
         sut.outputs.results.test {
             assertValue(listOf(
                 SearchItem.Advert,
