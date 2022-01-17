@@ -1,5 +1,6 @@
 package tmg.flashback.statistics.ui.settings
 
+import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -96,6 +97,9 @@ internal class UpNextSettingsViewModelTest: BaseTest() {
         verify {
             mockScheduleController.notificationQualifyingNotify = true
         }
+        coVerify {
+            mockScheduleController.resubscribe()
+        }
     }
 
     @Test
@@ -104,6 +108,9 @@ internal class UpNextSettingsViewModelTest: BaseTest() {
         sut.clickSwitchPreference(sut.models.findSwitch(R.string.settings_up_next_results_race_title), true)
         verify {
             mockScheduleController.notificationRaceNotify = true
+        }
+        coVerify {
+            mockScheduleController.resubscribe()
         }
     }
 

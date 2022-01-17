@@ -2,6 +2,8 @@ package tmg.flashback.statistics.ui.settings.notifications
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 import tmg.flashback.statistics.BuildConfig
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.controllers.ScheduleController
@@ -84,6 +86,9 @@ class UpNextSettingsViewModel(
                 getState = { scheduleController.notificationRaceNotify },
                 saveState = {
                     scheduleController.notificationRaceNotify = it
+                    viewModelScope.launch {
+                        scheduleController.resubscribe()
+                    }
                 }
             ))
             add(SettingsModel.SwitchPref(
@@ -92,6 +97,9 @@ class UpNextSettingsViewModel(
                 getState = { scheduleController.notificationQualifyingNotify },
                 saveState = {
                     scheduleController.notificationQualifyingNotify = it
+                    viewModelScope.launch {
+                        scheduleController.resubscribe()
+                    }
                 }
             ))
         }
