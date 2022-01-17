@@ -44,7 +44,7 @@ jobs:
 
       # Running unit tests
       - name: Unit tests
-        run: ./gradlew testModules
+        run: ./gradlew testDebugUnitTest
 
   deploy:
     runs-on: ubuntu-latest

@@ -57,26 +57,3 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
-
-task testModules {
-    dependsOn ':app:testSandDebugUnitTest',
-            ':common:testDebugUnitTest',
-            ':formula1:testDebugUnitTest',
-            ':rss:testDebugUnitTest',
-            ':statistics:testDebugUnitTest',
-            ':data:repo:testDebugUnitTest',
-            ':data:room:testDebugUnitTest',
-            ':data:network:testDebugUnitTest',
-            ':ads:testDebugUnitTest',
-            ':core:analytics:testDebugUnitTest',
-            ':core:appshortcuts:testDebugUnitTest',
-            ':core:configuration:testDebugUnitTest',
-            ':core:crash-reporting:testDebugUnitTest',
-            ':core:device:testDebugUnitTest',
-            ':core:notifications:testDebugUnitTest',
-            ':core:preferences:testDebugUnitTest',
-            ':presentation:style:testDebugUnitTest',
-            ':presentation:ui:testDebugUnitTest',
-            'clean'
-    print "Tests passed successfully!"
-}
