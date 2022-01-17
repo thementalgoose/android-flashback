@@ -24,10 +24,10 @@ class ContentSyncWorker(
     override suspend fun doWork(): Result {
 
         // Remote config sync
-        val remoteConfigResult = configController.fetchAndApply()
+        configController.fetchAndApply()
 
         // Get latest season info
-        val currentOverviewResult = overviewRepository.fetchOverview(homeController.defaultSeason)
+        overviewRepository.fetchOverview(homeController.defaultSeason)
 
         // Schedule notification updating
         workerProvider.schedule()

@@ -36,6 +36,10 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    lintOptions {
+        disable "Instantiatable"
+    }
+
     kotlinOptions {
         jvmTarget = '1.8'
         freeCompilerArgs += kotlinCompilerArgs
