@@ -5,6 +5,7 @@ import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.fail
@@ -27,6 +28,7 @@ import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertDataEventValue
 import tmg.testutils.livedata.assertListMatchesItem
 import tmg.testutils.livedata.test
+import tmg.testutils.livedata.testObserve
 
 internal class RaceViewModelTest: BaseTest() {
 
@@ -336,11 +338,11 @@ internal class RaceViewModelTest: BaseTest() {
         coEvery { mockRaceRepository.shouldSyncRace(any(), any()) } returns true
 
         initSUT()
+        val observer = sut.outputs.list.testObserve()
         sut.inputs.initialise(2020, 1)
+        advanceUntilIdle()
 
-        sut.outputs.list.test {
-            assertListMatchesItem { it is RaceItem.RaceHeader }
-        }
+        observer.assertListMatchesItem(atIndex = 1) { it is RaceItem.RaceHeader }
         coVerify {
             mockRaceRepository.fetchRaces(any())
         }

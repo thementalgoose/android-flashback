@@ -79,7 +79,7 @@ class RaceViewModel(
                 if (raceRepository.shouldSyncRace(season, round)) {
                     showLoading.postValue(true)
                     emit(null)
-                    val result = raceRepository.fetchRaces(season)
+                    raceRepository.fetchRaces(season)
                     showLoading.postValue(false)
                     emit(SeasonRound(season, round))
                 }
