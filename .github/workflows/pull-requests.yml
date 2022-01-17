@@ -80,7 +80,7 @@ jobs:
       core_preferences: ${{ steps.change.outputs.core_preferences != 0 }}
       presentation_style: ${{ steps.change.outputs.presentation_style != 0 }}
       presentation_ui: ${{ steps.change.outputs.presentation_ui != 0 }}
-      gradle: ${{ steps.change.outputs.presentation_ui != 0 }}
+      gradle: ${{ steps.change.outputs.gradle != 0 }}
 
   release_build:
     runs-on: ubuntu-latest
