@@ -3,6 +3,7 @@ package tmg.flashback.rss.ui
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.test.advanceUntilIdle
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDateTime
