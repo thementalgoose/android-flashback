@@ -144,76 +144,76 @@ jobs:
 
       # Unit Tests
       - name: :app
-        run: ./gradlew :app:testSandDebugUnitTest
+        run: ./gradlew testDebugUnitTest
         if: ${{ needs.unit_test_diff_check.outputs.app == 'true' }}
 
       - name: :common
         run: ./gradlew :common:testDebugUnitTest
-        if: ${{ needs.unit_test_diff_check.outputs.common == 'true' }}
+        if: ${{ needs.unit_test_diff_check.outputs.common == 'true' && needs.unit_test_diff_check.outputs.app != 'true' }}
 
       - name: :formula1
         run: ./gradlew :formula1:testDebugUnitTest
-        if: ${{ needs.unit_test_diff_check.outputs.formula1 == 'true' }}
+        if: ${{ needs.unit_test_diff_check.outputs.formula1 == 'true' && needs.unit_test_diff_check.outputs.app != 'true' }}
 
       - name: :rss
         run: ./gradlew :rss:testDebugUnitTest
-        if: ${{ needs.unit_test_diff_check.outputs.rss == 'true' }}
+        if: ${{ needs.unit_test_diff_check.outputs.rss == 'true' && needs.unit_test_diff_check.outputs.app != 'true' }}
 
       - name: :statistics
         run: ./gradlew :statistics:testDebugUnitTest
-        if: ${{ needs.unit_test_diff_check.outputs.statistics == 'true' }}
+        if: ${{ needs.unit_test_diff_check.outputs.statistics == 'true' && needs.unit_test_diff_check.outputs.app != 'true' }}
 
       - name: :data:repo
         run: ./gradlew :data:repo:testDebugUnitTest
-        if: ${{ needs.unit_test_diff_check.outputs.data_repo == 'true' }}
+        if: ${{ needs.unit_test_diff_check.outputs.data_repo == 'true' && needs.unit_test_diff_check.outputs.app != 'true' }}
 
       - name: :data:network
         run: ./gradlew :data:network:testDebugUnitTest
-        if: ${{ needs.unit_test_diff_check.outputs.data_network == 'true' }}
+        if: ${{ needs.unit_test_diff_check.outputs.data_network == 'true' && needs.unit_test_diff_check.outputs.app != 'true' }}
 
       - name: :data:room
         run: ./gradlew :data:room:testDebugUnitTest
-        if: ${{ needs.unit_test_diff_check.outputs.data_room == 'true' }}
+        if: ${{ needs.unit_test_diff_check.outputs.data_room == 'true' && needs.unit_test_diff_check.outputs.app != 'true' }}
 
       - name: :ads
         run: ./gradlew :ads:testDebugUnitTest
-        if: ${{ needs.unit_test_diff_check.outputs.ads == 'true' }}
+        if: ${{ needs.unit_test_diff_check.outputs.ads == 'true' && needs.unit_test_diff_check.outputs.app != 'true' }}
 
       - name: :core:analytics
         run: ./gradlew :core:analytics:testDebugUnitTest
-        if: ${{ needs.unit_test_diff_check.outputs.core_analytics == 'true' }}
+        if: ${{ needs.unit_test_diff_check.outputs.core_analytics == 'true' && needs.unit_test_diff_check.outputs.app != 'true' }}
 
       - name: :core:appshortcuts
         run: ./gradlew :core:appshortcuts:testDebugUnitTest
-        if: ${{ needs.unit_test_diff_check.outputs.core_appshortcuts == 'true' }}
+        if: ${{ needs.unit_test_diff_check.outputs.core_appshortcuts == 'true' && needs.unit_test_diff_check.outputs.app != 'true' }}
 
       - name: :core:configuration
         run: ./gradlew :core:configuration:testDebugUnitTest
-        if: ${{ needs.unit_test_diff_check.outputs.core_configuration == 'true' }}
+        if: ${{ needs.unit_test_diff_check.outputs.core_configuration == 'true' && needs.unit_test_diff_check.outputs.app != 'true' }}
 
       - name: :core:crash-reporting
         run: ./gradlew :core:crash-reporting:testDebugUnitTest
-        if: ${{ needs.unit_test_diff_check.outputs.core_crash_reporting == 'true' }}
+        if: ${{ needs.unit_test_diff_check.outputs.core_crash_reporting == 'true' && needs.unit_test_diff_check.outputs.app != 'true' }}
 
       - name: :core:device
         run: ./gradlew :core:device:testDebugUnitTest
-        if: ${{ needs.unit_test_diff_check.outputs.core_device == 'true' }}
+        if: ${{ needs.unit_test_diff_check.outputs.core_device == 'true' && needs.unit_test_diff_check.outputs.app != 'true' }}
 
       - name: :core:notifications
         run: ./gradlew :core:notifications:testDebugUnitTest
-        if: ${{ needs.unit_test_diff_check.outputs.core_notifications == 'true' }}
+        if: ${{ needs.unit_test_diff_check.outputs.core_notifications == 'true' && needs.unit_test_diff_check.outputs.app != 'true' }}
 
       - name: :core:preferences
         run: ./gradlew :core:preferences:testDebugUnitTest
-        if: ${{ needs.unit_test_diff_check.outputs.core_preferences == 'true' }}
+        if: ${{ needs.unit_test_diff_check.outputs.core_preferences == 'true' && needs.unit_test_diff_check.outputs.app != 'true' }}
 
       - name: :presentation:style
         run: ./gradlew :presentation:style:testDebugUnitTest
-        if: ${{ needs.unit_test_diff_check.outputs.presentation_style == 'true' }}
+        if: ${{ needs.unit_test_diff_check.outputs.presentation_style == 'true' && needs.unit_test_diff_check.outputs.app != 'true' }}
 
       - name: :presentation:ui
         run: ./gradlew :presentation:ui:testDebugUnitTest
-        if: ${{ needs.unit_test_diff_check.outputs.presentation_ui == 'true' }}
+        if: ${{ needs.unit_test_diff_check.outputs.presentation_ui == 'true' && needs.unit_test_diff_check.outputs.app != 'true' }}
 
       # Publish test report
       - name: Publish Test Report
