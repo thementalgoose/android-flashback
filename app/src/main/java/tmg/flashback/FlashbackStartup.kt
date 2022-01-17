@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import com.jakewharton.threetenabp.AndroidThreeTen
 import com.linkedin.android.shaky.EmailShakeDelegate
 import com.linkedin.android.shaky.Shaky
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import tmg.flashback.ads.controller.AdsController
@@ -91,7 +92,7 @@ class FlashbackStartup(
         if (BuildConfig.DEBUG) {
             notificationController.createNotificationChannel("notify_race", R.string.notification_channel_race_notify)
             notificationController.createNotificationChannel("notify_qualifying", R.string.notification_channel_qualifying_notify)
-            GlobalScope.launch {
+            GlobalScope.launch(Dispatchers.IO) {
                 when (scheduleController.notificationQualifyingNotify) {
                     true -> notificationController.subscribeToRemoteNotification("notify_qualifying")
                     false -> notificationController.unsubscribeToRemoteNotification("notify_qualifying")
