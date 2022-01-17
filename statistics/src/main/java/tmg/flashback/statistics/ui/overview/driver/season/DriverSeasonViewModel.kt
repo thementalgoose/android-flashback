@@ -6,9 +6,7 @@ import androidx.annotation.StringRes
 import androidx.lifecycle.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
-import kotlinx.coroutines.flow.asFlow
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.formula1.constants.Formula1.maxPointsBySeason
@@ -65,11 +63,11 @@ class DriverSeasonViewModel(
     override val isLoading: MutableLiveData<Boolean> = MutableLiveData()
     override val showRefreshError: MutableLiveData<Event> = MutableLiveData()
 
-    private var driverId: ConflatedBroadcastChannel<String> = ConflatedBroadcastChannel()
+    private var driverId: MutableStateFlow<String?> = MutableStateFlow(null)
     private var season: Int = -1
 
     override val list: LiveData<List<DriverSeasonItem>> = driverId
-        .asFlow()
+        .filterNotNull()
         .flatMapLatest { driverRepository.getDriverOverview(it) }
         .map { overview ->
             val list: MutableList<DriverSeasonItem> = mutableListOf()
@@ -180,9 +178,9 @@ class DriverSeasonViewModel(
     //region Inputs
 
     override fun setup(driverId: String, season: Int) {
-        if (driverId != this.driverId.valueOrNull) {
+        if (driverId != this.driverId.value) {
             this.season = season
-            this.driverId.offer(driverId)
+            this.driverId.value = driverId
         }
     }
 
@@ -193,10 +191,12 @@ class DriverSeasonViewModel(
     override fun refresh() {
         isLoading.value = true
         viewModelScope.launch(context = Dispatchers.IO) {
-            val result = driverRepository.fetchDriver(driverId.value)
-            isLoading.postValue(false)
-            if (!result) {
-                showRefreshError.postValue(Event())
+            driverId.value?.let {
+                val result = driverRepository.fetchDriver(it)
+                isLoading.postValue(false)
+                if (!result) {
+                    showRefreshError.postValue(Event())
+                }
             }
         }
     }
