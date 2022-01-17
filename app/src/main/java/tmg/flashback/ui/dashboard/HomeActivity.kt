@@ -3,10 +3,15 @@ package tmg.flashback.ui.dashboard
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import tmg.flashback.BuildConfig
 import tmg.flashback.common.ui.forceupgrade.ForceUpgradeActivity
+import tmg.flashback.crash_reporting.controllers.CrashController
 import tmg.flashback.databinding.ActivityDashboardBinding
+import tmg.flashback.statistics.workmanager.WorkerProvider
 import tmg.flashback.ui.base.BaseActivity
 import tmg.flashback.ui.model.DisplayType
 import tmg.flashback.ui.sync.SyncActivity
@@ -16,6 +21,9 @@ class HomeActivity: BaseActivity() {
     private lateinit var binding: ActivityDashboardBinding
 
     private val viewModel: HomeViewModel by viewModel()
+
+    private val workerProvider: WorkerProvider by inject()
+    private val crashController: CrashController by inject()
 
     override val themeType: DisplayType = DisplayType.DEFAULT
 
@@ -46,6 +54,17 @@ class HomeActivity: BaseActivity() {
             viewModel.forceUpgrade -> {
                 startActivity(Intent(this@HomeActivity, ForceUpgradeActivity::class.java))
                 finish()
+            }
+        }
+
+        // Content sync
+        try {
+            workerProvider.contentSync()
+        } catch (e: Exception) {
+            crashController.logException(e, "Failed to synchronise content when reaching home screen")
+            if (BuildConfig.DEBUG) {
+                Log.e("Home", "Failed to schedule content sync due to unknown exception")
+                e.printStackTrace()
             }
         }
     }

@@ -115,9 +115,6 @@ class FlashbackStartup(
             NightMode.DEFAULT -> if (application.isInDayMode()) "day (default)" else "night (default)"
         })
 
-        // Content sync
-        workerProvider.contentSync()
-
         // Update Widgets
         application.updateAllWidgets()
     }
