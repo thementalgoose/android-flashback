@@ -59,7 +59,6 @@ internal class NetworkConstructorMapperTest {
         val inputConstructorId = "constructorId"
         val inputSeason = 2020
         val inputStanding = ConstructorHistoryStandingDriver.model(wins = null)
-        val expected = ConstructorSeasonDriver.model()
 
         assertEquals(0, sut.mapConstructorSeasonDriver(inputConstructorId, inputSeason, inputStanding).wins)
     }
@@ -69,7 +68,6 @@ internal class NetworkConstructorMapperTest {
         val inputConstructorId = "constructorId"
         val inputSeason = 2020
         val inputStanding = ConstructorHistoryStandingDriver.model(races = null)
-        val expected = ConstructorSeasonDriver.model()
 
         assertEquals(0, sut.mapConstructorSeasonDriver(inputConstructorId, inputSeason, inputStanding).races)
     }
@@ -79,7 +77,6 @@ internal class NetworkConstructorMapperTest {
         val inputConstructorId = "constructorId"
         val inputSeason = 2020
         val inputStanding = ConstructorHistoryStandingDriver.model(podiums = null)
-        val expected = ConstructorSeasonDriver.model()
 
         assertEquals(0, sut.mapConstructorSeasonDriver(inputConstructorId, inputSeason, inputStanding).podiums)
     }
@@ -89,7 +86,6 @@ internal class NetworkConstructorMapperTest {
         val inputConstructorId = "constructorId"
         val inputSeason = 2020
         val inputStanding = ConstructorHistoryStandingDriver.model(pointsFinishes = null)
-        val expected = ConstructorSeasonDriver.model()
 
         assertEquals(0, sut.mapConstructorSeasonDriver(inputConstructorId, inputSeason, inputStanding).pointsFinishes)
     }
@@ -99,7 +95,6 @@ internal class NetworkConstructorMapperTest {
         val inputConstructorId = "constructorId"
         val inputSeason = 2020
         val inputStanding = ConstructorHistoryStandingDriver.model(pole = null)
-        val expected = ConstructorSeasonDriver.model()
 
         assertEquals(0, sut.mapConstructorSeasonDriver(inputConstructorId, inputSeason, inputStanding).pole)
     }
