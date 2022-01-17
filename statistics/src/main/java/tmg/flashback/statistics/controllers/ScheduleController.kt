@@ -2,6 +2,7 @@ package tmg.flashback.statistics.controllers
 
 import android.content.Context
 import android.util.Log
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import tmg.flashback.formula1.model.OverviewRace
@@ -89,7 +90,7 @@ class ScheduleController(
         get() = upNextRepository.notificationNotifyRace
         set(value) {
             upNextRepository.notificationNotifyRace = value
-            GlobalScope.launch {
+            GlobalScope.launch(Dispatchers.IO) {
                 when (value) {
                     true -> notificationController.subscribeToRemoteNotification("notify_race")
                     false -> notificationController.unsubscribeToRemoteNotification("notify_race")
@@ -101,7 +102,7 @@ class ScheduleController(
         get() = upNextRepository.notificationNotifyQualifying
         set(value) {
             upNextRepository.notificationNotifyQualifying = value
-            GlobalScope.launch {
+            GlobalScope.launch(Dispatchers.IO) {
                 when (value) {
                     true -> notificationController.subscribeToRemoteNotification("notify_qualifying")
                     false -> notificationController.unsubscribeToRemoteNotification("notify_qualifying")

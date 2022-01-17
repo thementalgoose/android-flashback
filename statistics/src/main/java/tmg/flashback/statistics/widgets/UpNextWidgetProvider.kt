@@ -14,6 +14,7 @@ import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -52,7 +53,7 @@ class UpNextWidgetProvider : AppWidgetProvider(), KoinComponent {
         Log.i("Widgets", "Updating up next widgets ${if (BuildConfig.DEBUG) appWidgetIds.contentToString() else ""}")
 
         // Fire and forget remote config sync
-        GlobalScope.launch {
+        GlobalScope.launch(Dispatchers.IO) {
             configController.applyPending()
             configController.fetch()
         }
