@@ -62,7 +62,7 @@ class ConstructorViewModel(
                 if (constructorRepository.getConstructorSeasonCount(id) == 0) {
                     showLoading.postValue(true)
                     emit(null)
-                    val result = constructorRepository.fetchConstructor(id)
+                    constructorRepository.fetchConstructor(id)
                     showLoading.postValue(false)
                     emit(id)
                 }
@@ -150,7 +150,7 @@ class ConstructorViewModel(
     private fun refresh(constructorId: String? = this.constructorId.value) {
         viewModelScope.launch(context = ioDispatcher) {
             constructorId?.let {
-                val result = constructorRepository.fetchConstructor(it)
+                constructorRepository.fetchConstructor(it)
                 showLoading.postValue(false)
             }
         }
