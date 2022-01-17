@@ -2,6 +2,7 @@ package tmg.flashback.statistics.workmanager
 
 import android.content.Context
 import androidx.work.CoroutineWorker
+import androidx.work.ForegroundInfo
 import androidx.work.WorkerParameters
 import org.koin.core.component.KoinComponent
 import tmg.flashback.configuration.controllers.ConfigController

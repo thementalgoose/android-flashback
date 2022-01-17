@@ -3,7 +3,6 @@ package tmg.flashback.statistics.workmanager
 import android.content.Context
 import android.util.Log
 import androidx.work.*
-import androidx.work.OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST
 import org.threeten.bp.LocalTime
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.statistics.BuildConfig
@@ -20,7 +19,6 @@ class WorkerProvider(
             .apply {
                 addTag("NOTIFICATIONS")
                 setInputData(Data.Builder().putBoolean("force", true).build())
-                setExpedited(RUN_AS_NON_EXPEDITED_WORK_REQUEST)
             }
             .build()
         WorkManager.getInstance(applicationContext).enqueueUniqueWork("NOTIFICATIONS", ExistingWorkPolicy.REPLACE, request)
