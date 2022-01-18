@@ -1,4 +1,5 @@
 /build
+**/mapping.txt
 /src/sand/google-services.json
 /src/live/google-services.json
 live/release

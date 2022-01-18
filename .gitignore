@@ -11,6 +11,7 @@
 /.idea/assetWizardSettings.xml
 .DS_Store
 /build
+**/mapping.txt
 /captures
 .externalNativeBuild
 .cxx
