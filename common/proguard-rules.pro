@@ -23,7 +23,7 @@
 -keep class tmg.flashback.common.repository.json.*
 -keep class tmg.flashback.common.repository.model.*
 
--printmapping build/outputs/mapping/release/mapping.txt
+
 -keepattributes *Annotation*
 -keepattributes SourceFile,LineNumberTable
 -keep public class * extends java.lang.Exception
