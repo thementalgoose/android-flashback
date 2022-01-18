@@ -1,5 +1,6 @@
 package tmg.flashback.rss.network.apis.model;
 
+import androidx.annotation.Keep;
 import androidx.annotation.Nullable;
 
 import org.simpleframework.xml.Element;
@@ -10,6 +11,7 @@ import org.simpleframework.xml.Text;
 
 import java.util.List;
 
+@Keep
 @Root(name = "channel", strict = false)
 public class RssXMLModelChannel {
     @Element

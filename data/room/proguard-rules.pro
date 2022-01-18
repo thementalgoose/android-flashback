@@ -20,6 +20,8 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
+-keep class tmg.flashback.statistics.room.models.*
+
 -printmapping build/outputs/mapping/release/mapping.txt
 -keepattributes *Annotation*
 -keepattributes SourceFile,LineNumberTable
