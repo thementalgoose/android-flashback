@@ -64,6 +64,10 @@
 -keep class tmg.flashback.rss.network.*
 -keep class tmg.flashback.statistics.room.models.*
 
+-keep class tmg.flashback.formula1.model.*
+-keep class tmg.flashback.formula1.enums.*
+-keep class tmg.flashback.formula1.constants.*
+
 -printmapping build/outputs/mapping/release/mapping.txt
 -keepattributes *Annotation*
 -keepattributes SourceFile,LineNumberTable
