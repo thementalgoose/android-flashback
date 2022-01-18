@@ -10,6 +10,7 @@ import kotlinx.coroutines.launch
 import tmg.flashback.common.controllers.ReleaseNotesController
 import tmg.flashback.configuration.controllers.ConfigController
 import tmg.flashback.statistics.BuildConfig
+import tmg.flashback.statistics.controllers.HomeController
 import tmg.flashback.statistics.extensions.updateAllWidgets
 import tmg.flashback.statistics.workmanager.WorkerProvider
 import tmg.utilities.lifecycle.Event
@@ -29,6 +30,8 @@ interface DashboardViewModelOutputs {
     val openSearch: LiveData<Event>
 
     val appConfigSynced: LiveData<Event>
+
+    val defaultToSchedule: Boolean
 }
 
 //endregion
@@ -37,12 +40,15 @@ class DashboardViewModel(
     applicationContext: Context,
     private val workerProvider: WorkerProvider,
     private val configurationController: ConfigController,
+    private val homeController: HomeController,
     private val releaseNotesController: ReleaseNotesController,
 ): ViewModel(), DashboardViewModelInputs, DashboardViewModelOutputs {
 
     override val openReleaseNotes: MutableLiveData<Event> = MutableLiveData()
     override val appConfigSynced: MutableLiveData<Event> = MutableLiveData()
     override val openSearch: MutableLiveData<Event> = MutableLiveData()
+
+    override val defaultToSchedule: Boolean get() = homeController.dashboardDefaultToSchedule
 
     var inputs: DashboardViewModelInputs = this
     var outputs: DashboardViewModelOutputs = this
