@@ -28,6 +28,16 @@
 -keep class tmg.flashback.rss.repo.model.**
 -keep class tmg.flashback.statistics.repository.models.**
 
+# (2)Simple XML
+-keep public class org.simpleframework.**{ *; }
+-keep class org.simpleframework.xml.**{ *; }
+-keep class org.simpleframework.xml.core.**{ *; }
+-keep class org.simpleframework.xml.util.**{ *; }
+-keep class retrofit2.converter.simplexml.** { *; }
+# (1)Annotations and signatures
+-keepattributes *Annotation*
+-keepattributes Signature
+
 -printmapping build/outputs/mapping/release/mapping.txt
 -keepattributes *Annotation*
 -keepattributes SourceFile,LineNumberTable

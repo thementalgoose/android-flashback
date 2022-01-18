@@ -78,6 +78,16 @@
 -keep class tmg.flashback.formula1.enums.*
 -keep class tmg.flashback.formula1.constants.*
 
+# SimpleXML
+-keep public class org.simpleframework.**{ *; }
+-keep class org.simpleframework.xml.**{ *; }
+-keep class org.simpleframework.xml.core.**{ *; }
+-keep class org.simpleframework.xml.util.**{ *; }
+-keep class retrofit2.converter.simplexml.** { *; }
+# SimpleXML Annotations
+-keepattributes *Annotation*
+-keepattributes Signature
+
 -printmapping build/outputs/mapping/release/mapping.txt
 -keepattributes *Annotation*
 -keepattributes SourceFile,LineNumberTable
