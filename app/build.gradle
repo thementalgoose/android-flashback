@@ -133,9 +133,6 @@ dependencies {
     androidTestRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junit"
     androidTestImplementation "io.mockk:mockk-android:$mockk"
     androidTestImplementation "io.insert-koin:koin-test:$koin_version"
-//    androidTestImplementation('com.schibsted.spain:barista:4.0.0') {
-//        exclude group: 'org.jetbrains.kotlin' // Only if you already use Kotlin in your project
-//    }
 
     // Work Manager
     implementation deps.androidx.workmanager

@@ -19,3 +19,12 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+-keep class tmg.flashback.formula1.model.*
+-keep class tmg.flashback.formula1.enums.*
+-keep class tmg.flashback.formula1.constants.*
+
+-printmapping build/outputs/mapping/release/mapping.txt
+-keepattributes *Annotation*
+-keepattributes SourceFile,LineNumberTable
+-keep public class * extends java.lang.Exception

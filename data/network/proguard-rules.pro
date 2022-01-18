@@ -59,3 +59,10 @@
 #-keepnames class <1>$$serializer { # -keepnames suffices; class is kept when serializer() is kept.
 #    static <1>$$serializer INSTANCE;
 #}
+
+-keep class tmg.flashback.statistics.network.models.*
+
+-printmapping build/outputs/mapping/release/mapping.txt
+-keepattributes *Annotation*
+-keepattributes SourceFile,LineNumberTable
+-keep public class * extends java.lang.Exception
