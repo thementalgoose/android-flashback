@@ -66,6 +66,10 @@ android {
 
             buildConfigField "int", "ENVIRONMENT", '1'
             buildConfigField "String", "BASE_URL", '"' + project.ext.baseUrl + '"'
+
+            firebaseCrashlytics {
+                mappingFileUploadEnabled false
+            }
         }
 
         live {
@@ -73,6 +77,10 @@ android {
 
             buildConfigField "int", "ENVIRONMENT", '0'
             buildConfigField "String", "BASE_URL", '"' + project.ext.baseUrl + '"'
+
+            firebaseCrashlytics {
+                mappingFileUploadEnabled true
+            }
         }
     }
 }
