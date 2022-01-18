@@ -37,7 +37,7 @@ internal class HomeControllerTest: BaseTest() {
         initSUT()
         sut.dashboardDefaultToSchedule = true
         verify {
-            mockHomeRepository.dashboardAutoscroll = true
+            mockHomeRepository.defaultToSchedule = true
         }
     }
 
