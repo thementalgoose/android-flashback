@@ -1,7 +1,11 @@
 package tmg.flashback.statistics.network.models.circuits
 
+import androidx.annotation.Keep
+import androidx.annotation.Keep
 import kotlinx.serialization.Serializable
 
+@Keep
+@Keep
 @Serializable
 data class Location(
     val lat: String,

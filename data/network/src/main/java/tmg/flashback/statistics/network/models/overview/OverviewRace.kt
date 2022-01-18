@@ -1,10 +1,12 @@
 package tmg.flashback.statistics.network.models.overview
 
+import androidx.annotation.Keep
 import kotlinx.serialization.Serializable
 import tmg.flashback.statistics.network.models.circuits.Circuit
 
 typealias Overview = Map<String, OverviewRace>
 
+@Keep
 @Serializable
 data class OverviewRace(
     val season: Int,
