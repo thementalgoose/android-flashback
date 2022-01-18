@@ -20,7 +20,6 @@ class HomeRepository(
         private const val keyDefaultBanner: String = "banner"
         private const val keyDataProvidedBy: String = "data_provided"
         private const val keySupportedSeasons: String = "supported_seasons"
-        private const val keyDashboardCalendar: String = "dashboard_calendar"
         private const val keySearch: String = "search"
 
         // Prefs
@@ -55,13 +54,6 @@ class HomeRepository(
      */
     val dataProvidedBy: String?
         get() = configManager.getString(keyDataProvidedBy)
-
-    /**
-     * The new calendar tab in the dashboard should be enabled or not
-     */
-    val dashboardCalendar: Boolean by lazy {
-        configManager.getBoolean(keyDashboardCalendar)
-    }
 
     /**
      * Supported seasons

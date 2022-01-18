@@ -124,35 +124,6 @@ internal class HomeRepositoryTest {
 
     //endregion
 
-    //region Dashboard calendar
-
-    @Test
-    fun `dashboard calendar value is returned from config repository`() {
-        every { mockConfigManager.getBoolean(keyDashboardCalendar) } returns true
-        initSUT()
-        assertTrue(sut.dashboardCalendar)
-        verify {
-            mockConfigManager.getBoolean(keyDashboardCalendar)
-        }
-    }
-
-    @Test
-    fun `dashboard calendar value is lazy loaded`() {
-        every { mockConfigManager.getBoolean(keyDashboardCalendar) } returns true
-        initSUT()
-        assertTrue(sut.dashboardCalendar)
-        verify(exactly = 1) {
-            mockConfigManager.getBoolean(keyDashboardCalendar)
-        }
-        every { mockConfigManager.getBoolean(keyDashboardCalendar) } returns false
-        assertTrue(sut.dashboardCalendar)
-        verify(exactly = 1) {
-            mockConfigManager.getBoolean(keyDashboardCalendar)
-        }
-    }
-
-    //endregion
-
     //region Supported Seasons
 
     @Test

@@ -52,9 +52,6 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(),
 
         binding.panels.registerStartPanelStateListeners(this)
 
-        if (!homeController.dashboardCalendar) {
-            binding.navigation.menu.removeItem(R.id.nav_calendar)
-        }
         if (searchController.enabled) {
             binding.search.show()
             binding.search.setOnClickListener {
@@ -69,12 +66,8 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(),
                     true
                 }
                 R.id.nav_calendar -> {
-                    if (homeController.dashboardCalendar) {
-                        seasonFragment?.selectCalendar()
-                        true
-                    } else {
-                        false
-                    }
+                    seasonFragment?.selectCalendar()
+                    true
                 }
                 R.id.nav_drivers -> {
                     seasonFragment?.selectDrivers()
