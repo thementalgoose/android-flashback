@@ -1,5 +1,7 @@
 package tmg.flashback.rss.network.apis.model;
 
+import androidx.annotation.Keep;
+
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
@@ -9,6 +11,7 @@ import org.simpleframework.xml.Root;
  *
  * Look into converting this to a kotlin object at some point maybe
  */
+@Keep
 @Root(name = "rss", strict = false)
 public class RssXMLModel {
     @Element
