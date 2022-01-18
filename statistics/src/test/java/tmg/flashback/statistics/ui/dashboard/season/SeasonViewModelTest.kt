@@ -60,6 +60,7 @@ internal class SeasonViewModelTest: BaseTest() {
         every { mockCacheRepository.shouldSyncCurrentSeason() } returns false
         every { mockNetworkConnectivityManager.isConnected } returns true
         every { mockHomeController.banner } returns null
+        every { mockHomeController.dashboardDefaultToSchedule } returns true
         every { mockHomeController.defaultSeason } returns Year.now().value
         every { mockHomeController.serverDefaultSeason } returns Year.now().value
         every { mockThemeController.animationSpeed } returns AnimationSpeed.QUICK

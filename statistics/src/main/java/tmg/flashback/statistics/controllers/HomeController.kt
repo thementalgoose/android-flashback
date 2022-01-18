@@ -13,6 +13,10 @@ class HomeController(
 
     //region Dashboard calendar
 
+    var dashboardDefaultToSchedule: Boolean
+        get() = homeRepository.defaultToSchedule
+        set(value) { homeRepository.defaultToSchedule = value }
+
     var dashboardAutoscroll: Boolean
         get() = homeRepository.dashboardAutoscroll
         set(value) { homeRepository.dashboardAutoscroll = value }

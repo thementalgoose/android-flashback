@@ -61,6 +61,13 @@ class SettingsHomeViewModel(
             getState = { homeController.dataProvidedByAtTop },
             saveState = { homeController.dataProvidedByAtTop = it }
         ))
+        add(SettingsModel.Header(R.string.settings_dashboard_title))
+        add(SettingsModel.SwitchPref(
+            title = R.string.settings_dashboard_default_to_schedule_title,
+            description = R.string.settings_dashboard_default_to_schedule_description,
+            getState = { homeController.dashboardDefaultToSchedule },
+            saveState = { homeController.dashboardDefaultToSchedule = it }
+        ))
         add(SettingsModel.SwitchPref(
             title = R.string.settings_dashboard_autoscroll_title,
             description = R.string.settings_dashboard_autoscroll_description,

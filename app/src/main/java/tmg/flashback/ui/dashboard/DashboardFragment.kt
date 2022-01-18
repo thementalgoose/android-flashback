@@ -59,6 +59,10 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(),
             }
         }
 
+        binding.navigation.selectedItemId = when (viewModel.defaultToSchedule) {
+            true -> R.id.nav_schedule
+            false -> R.id.nav_calendar
+        }
         binding.navigation.setOnItemSelectedListener {
             return@setOnItemSelectedListener when (it.itemId) {
                 R.id.nav_schedule -> {
