@@ -1,12 +1,15 @@
 package tmg.flashback.rss.repo.json
 
+import androidx.annotation.Keep
 import kotlinx.serialization.Serializable
 
+@Keep
 @Serializable
 data class SupportedSourcesJson(
     val sources: List<SupportedSourceJson>? = null
 )
 
+@Keep
 @Serializable
 data class SupportedSourceJson(
     val rssLink: String? = null,
