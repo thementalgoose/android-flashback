@@ -137,6 +137,7 @@
         <entry key="statistics/src/main/res/layout/layout_podium.xml" value="0.184375" />
         <entry key="statistics/src/main/res/layout/layout_qualifying_time.xml" value="0.3532608695652174" />
         <entry key="statistics/src/main/res/layout/view_dashboard_season_calendar_week.xml" value="0.3532608695652174" />
+        <entry key="statistics/src/main/res/layout/view_dashboard_season_constructor.xml" value="0.1911231884057971" />
         <entry key="statistics/src/main/res/layout/view_dashboard_season_driver.xml" value="0.3532608695652174" />
         <entry key="statistics/src/main/res/layout/view_dashboard_season_track.xml" value="0.3532608695652174" />
         <entry key="statistics/src/main/res/layout/view_link_pill.xml" value="0.184375" />
