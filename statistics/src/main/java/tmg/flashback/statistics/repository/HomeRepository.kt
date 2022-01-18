@@ -20,11 +20,11 @@ class HomeRepository(
         private const val keyDefaultBanner: String = "banner"
         private const val keyDataProvidedBy: String = "data_provided"
         private const val keySupportedSeasons: String = "supported_seasons"
-        private const val keyDashboardCalendar: String = "dashboard_calendar"
         private const val keySearch: String = "search"
 
         // Prefs
         private const val keyShowQualifyingDelta: String = "SHOW_QUALIFYING_DELTA"
+        private const val keyDefaultToSchedule: String = "DASHBOARD_DEFAULT_TAB_SCHEDULE"
         private const val keyFadeDNF: String = "FADE_DNF"
         private const val keyShowListFavourited: String = "BOTTOM_SHEET_FAVOURITED"
         private const val keyShowListAll: String = "BOTTOM_SHEET_ALL"
@@ -57,13 +57,6 @@ class HomeRepository(
         get() = configManager.getString(keyDataProvidedBy)
 
     /**
-     * The new calendar tab in the dashboard should be enabled or not
-     */
-    val dashboardCalendar: Boolean by lazy {
-        configManager.getBoolean(keyDashboardCalendar)
-    }
-
-    /**
      * Supported seasons
      */
     val supportedSeasons: Set<Int>
@@ -77,6 +70,13 @@ class HomeRepository(
      */
     val searchEnabled: Boolean
         get() = configManager.getBoolean(keySearch)
+
+    /**
+     * Default to which tab
+     */
+    var defaultToSchedule: Boolean
+        get() = preferenceManager.getBoolean(keyDefaultToSchedule, true)
+        set(value) = preferenceManager.save(keyDefaultToSchedule, value)
 
     /**
      * Show the qualifying delta in the layout

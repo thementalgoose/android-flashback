@@ -75,7 +75,10 @@ class SeasonViewModel(
     var inputs: SeasonViewModelInputs = this
     var outputs: SeasonViewModelOutputs = this
 
-    private val menuItem: MutableStateFlow<SeasonNavItem> = MutableStateFlow(SeasonNavItem.SCHEDULE)
+    private val menuItem: MutableStateFlow<SeasonNavItem> = MutableStateFlow(when (homeController.dashboardDefaultToSchedule) {
+        true -> SeasonNavItem.SCHEDULE
+        false -> SeasonNavItem.CALENDAR
+    })
     private val season: MutableStateFlow<Int> = MutableStateFlow(homeController.defaultSeason)
     private val seasonWithRequest: Flow<Int?> = season
         .flatMapLatest { season ->

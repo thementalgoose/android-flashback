@@ -131,6 +131,9 @@
     <string name="settings_information_title">Information</string>
     <string name="settings_information_at_top_title">Show provided by at top</string>
     <string name="settings_information_at_top_description">Show the "Data provided by" option at the top of each screen. Otherwise it will be displayed at the bottom</string>
+    <string name="settings_dashboard_title">Dashboard</string>
+    <string name="settings_dashboard_default_to_schedule_title">Schedule tab on startup</string>
+    <string name="settings_dashboard_default_to_schedule_description">When opening the app, go to the schedule tab by default. If disabled, the calendar tab will load first</string>
     <string name="settings_dashboard_autoscroll_title">Autoscroll</string>
     <string name="settings_dashboard_autoscroll_description">Autoscroll to the next race when you load the app when you\'re viewing the current season</string>
 
