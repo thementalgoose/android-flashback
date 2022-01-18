@@ -1,7 +1,9 @@
 package tmg.flashback.statistics.network.models.constructors
 
+import androidx.annotation.Keep
 import kotlinx.serialization.Serializable
 
+@Keep
 @Serializable
 data class Constructor(
     val id: String,

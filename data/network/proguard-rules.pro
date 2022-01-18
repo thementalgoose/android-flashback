@@ -44,7 +44,7 @@
     kotlinx.serialization.KSerializer serializer(...);
 }
 
-# @Serializable and @Polymorphic are used at runtime for polymorphic serialization.
+# @Keep @Serializable and @Polymorphic are used at runtime for polymorphic serialization.
 -keepattributes RuntimeVisibleAnnotations,AnnotationDefault
 
 # Serializer for classes with named companion objects are retrieved using `getDeclaredClasses`.

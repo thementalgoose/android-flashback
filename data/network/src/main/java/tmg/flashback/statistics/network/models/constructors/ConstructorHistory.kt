@@ -1,8 +1,10 @@
 package tmg.flashback.statistics.network.models.constructors
 
+import androidx.annotation.Keep
 import kotlinx.serialization.Serializable
 import tmg.flashback.statistics.network.models.drivers.Driver
 
+@Keep
 @Serializable
 data class ConstructorHistory(
     val construct: Constructor,
@@ -11,6 +13,7 @@ data class ConstructorHistory(
     companion object
 }
 
+@Keep
 @Serializable
 data class ConstructorHistoryStanding(
     val season: Int,
@@ -23,6 +26,7 @@ data class ConstructorHistoryStanding(
     companion object
 }
 
+@Keep
 @Serializable
 data class ConstructorHistoryStandingDriver(
     val driver: Driver,

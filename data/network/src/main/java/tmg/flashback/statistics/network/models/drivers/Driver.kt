@@ -1,7 +1,9 @@
 package tmg.flashback.statistics.network.models.drivers
 
+import androidx.annotation.Keep
 import kotlinx.serialization.Serializable
 
+@Keep
 @Serializable
 data class Driver(
     val id: String,

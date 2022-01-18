@@ -1,5 +1,6 @@
 package tmg.flashback.statistics.network.api
 
+import androidx.annotation.Keep
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -14,6 +15,7 @@ import tmg.flashback.statistics.network.models.overview.Overview
 import tmg.flashback.statistics.network.models.races.Round
 import tmg.flashback.statistics.network.models.races.Season
 
+@Keep
 interface FlashbackApi {
 
     @GET("overview.json")

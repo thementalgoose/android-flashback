@@ -1,9 +1,11 @@
 package tmg.flashback.statistics.network.models.circuits
 
+import androidx.annotation.Keep
 import kotlinx.serialization.Serializable
 import tmg.flashback.statistics.network.models.constructors.Constructor
 import tmg.flashback.statistics.network.models.drivers.Driver
 
+@Keep
 @Serializable
 data class CircuitHistory(
     val data: Circuit,
@@ -12,6 +14,7 @@ data class CircuitHistory(
     companion object
 }
 
+@Keep
 @Serializable
 data class CircuitResult(
     val race: CircuitResultRace,
@@ -20,6 +23,7 @@ data class CircuitResult(
     companion object
 }
 
+@Keep
 @Serializable
 data class CircuitResultRace(
     val season: Int,
@@ -32,6 +36,7 @@ data class CircuitResultRace(
     companion object
 }
 
+@Keep
 @Serializable
 data class CircuitPreviewPosition(
     val position: Int,
