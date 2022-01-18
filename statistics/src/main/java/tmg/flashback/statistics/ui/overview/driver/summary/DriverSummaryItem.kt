@@ -19,7 +19,8 @@ sealed class DriverSummaryItem(
             val driverImg: String,
             val driverBirthday: LocalDate,
             val driverWikiUrl: String,
-            val driverNationalityISO: String
+            val driverNationalityISO: String,
+            val constructors: List<Constructor>
     ): DriverSummaryItem(
             R.layout.view_driver_summary_header
     )

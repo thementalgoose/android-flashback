@@ -34,9 +34,12 @@ class HeaderViewHolder(
                 .into(binding.imgDriver)
 
         binding.tvNumber.text = item.driverNumber?.toString() ?: ""
-        binding.tvNumber.colorHighlight = context.theme.getColor(R.attr.colorPrimary)
-        binding.driverBirthday.text = itemView.context.getString(R.string.driver_overview_stat_birthday, item.driverBirthday.format(DateTimeFormatter.ofPattern("dd MMMM yyyy")))
+        binding.tvNumber.colorHighlight = when (item.constructors.isNotEmpty()) {
+            true -> item.constructors.last().color
+            false -> context.theme.getColor(R.attr.colorPrimary)
+        }
 
+        binding.driverBirthday.text = itemView.context.getString(R.string.driver_overview_stat_birthday, item.driverBirthday.format(DateTimeFormatter.ofPattern("dd MMMM yyyy")))
         binding.imgNationality.setImageResource(context.getFlagResourceAlpha3(item.driverNationalityISO))
 
         adapter.list = mutableListOf(
