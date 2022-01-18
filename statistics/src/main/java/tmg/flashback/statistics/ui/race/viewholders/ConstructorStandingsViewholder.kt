@@ -91,7 +91,6 @@ class ConstructorStandingsViewholder(
     private fun setDriver(layout: LayoutConstructorDriverBinding, driver: Driver, points: Double, @ColorInt constructorColor: Int) {
         layout.tvName.text = driver.name
         layout.tvNumber.text = context.resources.getQuantityString(R.plurals.race_points, points.toInt(), points.pointsDisplay())
-        layout.tvNumber.colorHighlight = constructorColor
         layout.imgFlag.setImageResource(context.getFlagResourceAlpha3(driver.nationalityISO))
     }
 
