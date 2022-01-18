@@ -1,6 +1,7 @@
 package tmg.flashback.statistics.ui.dashboard.season.viewholders
 
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import tmg.flashback.formula1.extensions.pointsDisplay
@@ -44,6 +45,7 @@ class DriverViewHolder(
         binding.imgDriverFlag.setImageResource(itemView.context.getFlagResourceAlpha3(item.driver.nationalityISO))
 
         binding.tvDriverNumber.text = item.driver.number?.toString() ?: ""
+        binding.tvDriverNumber.colorHighlight = item.constructors.lastOrNull()?.color ?: context.theme.getColor(R.attr.colorPrimary)
         binding.tvConstructor.text = item.constructors.joinToString(separator = ", ") { it.name }
 
         binding.lpvProgress.backgroundColour = itemView.context.theme.getColor(R.attr.backgroundPrimary)
