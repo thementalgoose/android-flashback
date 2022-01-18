@@ -34,43 +34,43 @@ class RSS(
             Response(response)
         } catch (e: XMLStreamException) {
             if (BuildConfig.DEBUG) {
-                e.printStackTrace()
             }
+                e.printStackTrace()
             Response(null, -1)
         } catch (e: SocketTimeoutException) {
             if (BuildConfig.DEBUG) {
-                e.printStackTrace()
             }
+                e.printStackTrace()
             Response(null, -1)
         } catch (e: SSLHandshakeException) {
             if (BuildConfig.DEBUG) {
-                e.printStackTrace()
             }
+                e.printStackTrace()
             Response(null, -1)
         } catch (e: ConnectException) {
             if (BuildConfig.DEBUG) {
-                e.printStackTrace()
             }
+                e.printStackTrace()
             Response(null, -1)
         } catch (e: RuntimeException) {
             if (BuildConfig.DEBUG) {
-                e.printStackTrace()
             }
+                e.printStackTrace()
             Response(null, -1)
         } catch (e: UnknownHostException) {
             if (BuildConfig.DEBUG) {
-                e.printStackTrace()
             }
+                e.printStackTrace()
             Response(null, -1)
         } catch (e: HttpException) {
             if (BuildConfig.DEBUG) {
-                e.printStackTrace()
             }
+                e.printStackTrace()
             Response(null, e.code())
         } catch (e: NullPointerException) {
             if (BuildConfig.DEBUG) {
-                e.printStackTrace()
             }
+                e.printStackTrace()
             Response(null, -1)
         }
 
