@@ -41,6 +41,7 @@ abstract class BaseRepository(
             crashController.logException(e, msgIfFailed)
             false
         } catch (e: Exception) {
+            crashController.logException(e, msgIfFailed)
             if (BuildConfig.DEBUG) {
                 Log.d("CrashController", "NOT SENT: Other exception thrown ${e.message}")
                 e.printStackTrace()
