@@ -203,6 +203,31 @@ internal class HomeRepositoryTest {
 
     //endregion
 
+    //region Default to schedule
+
+    @Test
+    fun `default to schedule reads value from preferences repository`() {
+        every { mockPreferenceManager.getBoolean(keyDefaultToSchedule, true) } returns true
+        initSUT()
+
+        assertTrue(sut.defaultToSchedule)
+        verify {
+            mockPreferenceManager.getBoolean(keyDefaultToSchedule, true)
+        }
+    }
+
+    @Test
+    fun `default to schedule saves value to shared prefs repository`() {
+        initSUT()
+
+        sut.defaultToSchedule = true
+        verify {
+            mockPreferenceManager.save(keyDefaultToSchedule, true)
+        }
+    }
+
+    //endregion
+
     //region Show list favourited
 
     @Test
@@ -401,11 +426,11 @@ internal class HomeRepositoryTest {
         private const val keyDefaultBanner: String = "banner"
         private const val keyDataProvidedBy: String = "data_provided"
         private const val keySupportedSeasons: String = "supported_seasons"
-        private const val keyDashboardCalendar: String = "dashboard_calendar"
         private const val keySearch: String = "search"
 
         // Prefs
         private const val keyShowQualifyingDelta: String = "SHOW_QUALIFYING_DELTA"
+        private const val keyDefaultToSchedule: String = "DASHBOARD_DEFAULT_TAB_SCHEDULE"
         private const val keyFadeDNF: String = "FADE_DNF"
         private const val keyShowListFavourited: String = "BOTTOM_SHEET_FAVOURITED"
         private const val keyShowListAll: String = "BOTTOM_SHEET_ALL"
