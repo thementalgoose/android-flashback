@@ -100,7 +100,8 @@ class DriverViewModel(
                                 driverImg = it.driver.photoUrl ?: "",
                                 driverBirthday = it.driver.dateOfBirth,
                                 driverWikiUrl = it.driver.wikiUrl ?: "",
-                                driverNationalityISO = it.driver.nationalityISO
+                                driverNationalityISO = it.driver.nationalityISO,
+                                constructors = it.constructors.map { (_, constructor) -> constructor }
                             )
                         )
                     }
