@@ -23,16 +23,6 @@ internal class HomeControllerTest: BaseTest() {
     //region Dashboard calendar
 
     @Test
-    fun `dashboard calendar reads value from repository`() {
-        every { mockHomeRepository.dashboardCalendar } returns true
-        initSUT()
-        assertTrue(sut.dashboardCalendar)
-        verify {
-            mockHomeRepository.dashboardCalendar
-        }
-    }
-
-    @Test
     fun `dashboard autoscroll reads value from repository`() {
         every { mockHomeRepository.dashboardAutoscroll } returns true
         initSUT()

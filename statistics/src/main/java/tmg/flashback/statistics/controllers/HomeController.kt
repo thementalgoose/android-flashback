@@ -13,9 +13,6 @@ class HomeController(
 
     //region Dashboard calendar
 
-    val dashboardCalendar: Boolean
-        get() = homeRepository.dashboardCalendar
-
     var dashboardAutoscroll: Boolean
         get() = homeRepository.dashboardAutoscroll
         set(value) { homeRepository.dashboardAutoscroll = value }
