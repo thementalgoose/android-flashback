@@ -61,7 +61,7 @@
 #}
 
 -keep class tmg.flashback.statistics.network.models.*
--keep class tmg.flashback.rss.network.*
+-keep class tmg.flashback.rss.network.**
 -keep class tmg.flashback.statistics.room.models.*
 
 -keep class tmg.flashback.formula1.model.*

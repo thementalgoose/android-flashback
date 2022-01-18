@@ -20,7 +20,7 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
--keep class tmg.flashback.rss.network.*
+-keep class tmg.flashback.rss.network.**
 
 -printmapping build/outputs/mapping/release/mapping.txt
 -keepattributes *Annotation*
