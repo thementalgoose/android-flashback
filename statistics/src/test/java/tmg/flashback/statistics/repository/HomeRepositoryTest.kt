@@ -124,35 +124,6 @@ internal class HomeRepositoryTest {
 
     //endregion
 
-    //region Dashboard calendar
-
-    @Test
-    fun `dashboard calendar value is returned from config repository`() {
-        every { mockConfigManager.getBoolean(keyDashboardCalendar) } returns true
-        initSUT()
-        assertTrue(sut.dashboardCalendar)
-        verify {
-            mockConfigManager.getBoolean(keyDashboardCalendar)
-        }
-    }
-
-    @Test
-    fun `dashboard calendar value is lazy loaded`() {
-        every { mockConfigManager.getBoolean(keyDashboardCalendar) } returns true
-        initSUT()
-        assertTrue(sut.dashboardCalendar)
-        verify(exactly = 1) {
-            mockConfigManager.getBoolean(keyDashboardCalendar)
-        }
-        every { mockConfigManager.getBoolean(keyDashboardCalendar) } returns false
-        assertTrue(sut.dashboardCalendar)
-        verify(exactly = 1) {
-            mockConfigManager.getBoolean(keyDashboardCalendar)
-        }
-    }
-
-    //endregion
-
     //region Supported Seasons
 
     @Test
@@ -227,6 +198,31 @@ internal class HomeRepositoryTest {
         sut.fadeDNF = true
         verify {
             mockPreferenceManager.save(keyFadeDNF, true)
+        }
+    }
+
+    //endregion
+
+    //region Default to schedule
+
+    @Test
+    fun `default to schedule reads value from preferences repository`() {
+        every { mockPreferenceManager.getBoolean(keyDefaultToSchedule, true) } returns true
+        initSUT()
+
+        assertTrue(sut.defaultToSchedule)
+        verify {
+            mockPreferenceManager.getBoolean(keyDefaultToSchedule, true)
+        }
+    }
+
+    @Test
+    fun `default to schedule saves value to shared prefs repository`() {
+        initSUT()
+
+        sut.defaultToSchedule = true
+        verify {
+            mockPreferenceManager.save(keyDefaultToSchedule, true)
         }
     }
 
@@ -430,11 +426,11 @@ internal class HomeRepositoryTest {
         private const val keyDefaultBanner: String = "banner"
         private const val keyDataProvidedBy: String = "data_provided"
         private const val keySupportedSeasons: String = "supported_seasons"
-        private const val keyDashboardCalendar: String = "dashboard_calendar"
         private const val keySearch: String = "search"
 
         // Prefs
         private const val keyShowQualifyingDelta: String = "SHOW_QUALIFYING_DELTA"
+        private const val keyDefaultToSchedule: String = "DASHBOARD_DEFAULT_TAB_SCHEDULE"
         private const val keyFadeDNF: String = "FADE_DNF"
         private const val keyShowListFavourited: String = "BOTTOM_SHEET_FAVOURITED"
         private const val keyShowListAll: String = "BOTTOM_SHEET_ALL"

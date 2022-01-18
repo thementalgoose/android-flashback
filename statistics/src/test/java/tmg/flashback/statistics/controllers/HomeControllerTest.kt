@@ -20,23 +20,36 @@ internal class HomeControllerTest: BaseTest() {
         sut = HomeController(mockHomeRepository)
     }
 
-    //region Dashboard calendar
+    //region Dashboard Default to Schedule
 
     @Test
-    fun `dashboard calendar reads value from repository`() {
-        every { mockHomeRepository.dashboardCalendar } returns true
+    fun `dashboard default to schedule reads value from repository`() {
+        every { mockHomeRepository.defaultToSchedule } returns true
         initSUT()
-        assertTrue(sut.dashboardCalendar)
+        assertTrue(sut.dashboardDefaultToSchedule)
         verify {
-            mockHomeRepository.dashboardCalendar
+            mockHomeRepository.defaultToSchedule
         }
     }
+
+    @Test
+    fun `dashboard default to schedule writes value to repository`() {
+        initSUT()
+        sut.dashboardDefaultToSchedule = true
+        verify {
+            mockHomeRepository.defaultToSchedule = true
+        }
+    }
+
+    //endregion
+
+    //region Dashboard calendar
 
     @Test
     fun `dashboard autoscroll reads value from repository`() {
         every { mockHomeRepository.dashboardAutoscroll } returns true
         initSUT()
-        assertTrue(mockHomeRepository.dashboardAutoscroll)
+        assertTrue(sut.dashboardAutoscroll)
         verify {
             mockHomeRepository.dashboardAutoscroll
         }
@@ -45,7 +58,7 @@ internal class HomeControllerTest: BaseTest() {
     @Test
     fun `dashboard autoscroll writes value to repository`() {
         initSUT()
-        mockHomeRepository.dashboardAutoscroll = true
+        sut.dashboardAutoscroll = true
         verify {
             mockHomeRepository.dashboardAutoscroll = true
         }

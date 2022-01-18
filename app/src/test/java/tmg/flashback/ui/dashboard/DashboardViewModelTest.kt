@@ -6,10 +6,13 @@ import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.test.advanceUntilIdle
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.common.controllers.ReleaseNotesController
 import tmg.flashback.configuration.controllers.ConfigController
+import tmg.flashback.statistics.controllers.HomeController
 import tmg.flashback.statistics.workmanager.WorkerProvider
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertEventFired
@@ -23,6 +26,7 @@ internal class DashboardViewModelTest: BaseTest() {
     private val mockContext: Context = mockk(relaxed = true)
     private val mockWorkerProvider: WorkerProvider = mockk(relaxed = true)
     private val mockConfigurationController: ConfigController = mockk(relaxed = true)
+    private val mockHomeController: HomeController = mockk(relaxed = true)
     private val mockReleaseNotesController: ReleaseNotesController = mockk(relaxed = true)
 
     @BeforeEach
@@ -36,6 +40,7 @@ internal class DashboardViewModelTest: BaseTest() {
             mockContext,
             mockWorkerProvider,
             mockConfigurationController,
+            mockHomeController,
             mockReleaseNotesController
         )
     }
@@ -48,6 +53,20 @@ internal class DashboardViewModelTest: BaseTest() {
         sut.outputs.openSearch.test {
             assertEventFired()
         }
+    }
+
+    @Test
+    fun `default to schedule returns true value from home controller`() {
+        every { mockHomeController.dashboardDefaultToSchedule } returns true
+        initSUT()
+        assertTrue(sut.defaultToSchedule)
+    }
+
+    @Test
+    fun `default to schedule returns false value from home controller`() {
+        every { mockHomeController.dashboardDefaultToSchedule } returns false
+        initSUT()
+        assertFalse(sut.defaultToSchedule)
     }
 
     //region Remote config fetch and sync
