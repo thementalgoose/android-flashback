@@ -16,7 +16,8 @@ fun DriverSummaryItem.Companion.headerModel(
     driverImg: String = "photoUrl",
     driverBirthday: LocalDate = LocalDate.of(1995, 10, 12),
     driverWikiUrl: String = "wikiUrl",
-    driverNationalityISO: String = "nationalityISO"
+    driverNationalityISO: String = "nationalityISO",
+    constructors: List<Constructor> = listOf()
 ): DriverSummaryItem.Header = DriverSummaryItem.Header(
     driverFirstname = driverFirstname,
     driverSurname = driverSurname,
@@ -24,7 +25,8 @@ fun DriverSummaryItem.Companion.headerModel(
     driverImg = driverImg,
     driverBirthday = driverBirthday,
     driverWikiUrl = driverWikiUrl,
-    driverNationalityISO = driverNationalityISO
+    driverNationalityISO = driverNationalityISO,
+    constructors = constructors
 )
 
 fun DriverSummaryItem.Companion.statModel(
