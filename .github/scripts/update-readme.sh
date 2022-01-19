@@ -3,4 +3,4 @@
 regex="([0-9]{1,3}\.[0-9]{1,3}\.[0-9]*)"
 replacement="$1"
 sedQuery="s/$regex/$replacement/g"
-sed -i "" -E "$sedQuery" ./README.md
+sed -i "" -E "$sedQuery" README.md
