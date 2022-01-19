@@ -16,17 +16,18 @@ import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.viewUrl
 import tmg.utilities.extensions.views.gone
 import tmg.utilities.extensions.views.visible
+import tmg.utilities.lifecycle.viewInflateBinding
 
-class RSSFragment: BaseFragment<FragmentRssBinding>() {
+class RSSFragment: BaseFragment() {
 
     private val viewModel: RSSViewModel by viewModel()
+    private val binding by viewInflateBinding(FragmentRssBinding::inflate)
 
     private val repository: RSSRepository by inject()
 
     private lateinit var adapter: RSSAdapter
 
-    override fun inflateView(inflater: LayoutInflater) = FragmentRssBinding
-        .inflate(inflater)
+    override fun onCreateView() = binding.root
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

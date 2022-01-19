@@ -20,10 +20,12 @@ import tmg.flashback.ui.navigation.NavigationProvider
 import tmg.flashback.ui.settings.SettingsAllActivity
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
+import tmg.utilities.lifecycle.viewInflateBinding
 
-class ListFragment: BaseFragment<FragmentDashboardListBinding>() {
+class ListFragment: BaseFragment() {
 
     private val viewModel: ListViewModel by viewModel()
+    private val binding by viewInflateBinding(FragmentDashboardListBinding::inflate)
 
     private val navigationProvider: NavigationProvider by inject()
 
@@ -33,8 +35,7 @@ class ListFragment: BaseFragment<FragmentDashboardListBinding>() {
     private val dashboardNavigationCallback: DashboardNavigationCallback?
         get() = parentFragment as? DashboardNavigationCallback
 
-    override fun inflateView(inflater: LayoutInflater) =
-        FragmentDashboardListBinding.inflate(layoutInflater)
+    override fun onCreateView() = binding.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

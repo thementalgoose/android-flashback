@@ -12,17 +12,18 @@ import tmg.flashback.ui.base.BaseFragment
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 import tmg.utilities.extensions.viewUrl
+import tmg.utilities.lifecycle.viewInflateBinding
 
-class ConstructorFragment: BaseFragment<FragmentConstructorBinding>() {
+class ConstructorFragment: BaseFragment() {
 
     private val viewModel: ConstructorViewModel by viewModel()
+    private val binding by viewInflateBinding(FragmentConstructorBinding::inflate)
 
     private lateinit var constructorId: String
     private lateinit var constructorName: String
     private lateinit var adapter: ConstructorSummaryAdapter
 
-    override fun inflateView(inflater: LayoutInflater) =
-            FragmentConstructorBinding.inflate(inflater)
+    override fun onCreateView() = binding.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

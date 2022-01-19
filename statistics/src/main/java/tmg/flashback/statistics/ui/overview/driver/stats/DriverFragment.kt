@@ -16,14 +16,17 @@ import tmg.flashback.ui.base.BaseFragment
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 import tmg.utilities.extensions.viewUrl
+import tmg.utilities.lifecycle.viewInflateBinding
 
-class DriverFragment: BaseFragment<FragmentDriverBinding>() {
+class DriverFragment: BaseFragment() {
 
     private lateinit var adapter: DriverSummaryAdapter
 
     private lateinit var driverId: String
     private lateinit var driverName: String
+
     private val viewModel: DriverViewModel by viewModel()
+    private val binding by viewInflateBinding(FragmentDriverBinding::inflate)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,8 +37,7 @@ class DriverFragment: BaseFragment<FragmentDriverBinding>() {
         }
     }
 
-    override fun inflateView(inflater: LayoutInflater) =
-            FragmentDriverBinding.inflate(layoutInflater)
+    override fun onCreateView() = binding.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

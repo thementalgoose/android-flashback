@@ -13,10 +13,12 @@ import tmg.flashback.statistics.ui.race.RaceData
 import tmg.flashback.ui.base.BaseFragment
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
+import tmg.utilities.lifecycle.viewInflateBinding
 
-class DriverSeasonFragment: BaseFragment<FragmentDriverSeasonBinding>() {
+class DriverSeasonFragment: BaseFragment() {
 
     private val viewModel: DriverSeasonViewModel by viewModel()
+    private val binding by viewInflateBinding(FragmentDriverSeasonBinding::inflate)
 
     private lateinit var driverId: String
     private lateinit var driverName: String
@@ -34,8 +36,7 @@ class DriverSeasonFragment: BaseFragment<FragmentDriverSeasonBinding>() {
         }
     }
 
-    override fun inflateView(inflater: LayoutInflater) =
-        FragmentDriverSeasonBinding.inflate(layoutInflater)
+    override fun onCreateView() = binding.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

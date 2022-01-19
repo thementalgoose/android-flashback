@@ -1,7 +1,6 @@
 package tmg.flashback.common.ui.forceupgrade
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import tmg.flashback.common.databinding.FragmentLockoutBinding
@@ -10,13 +9,14 @@ import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.viewUrl
 import tmg.utilities.extensions.views.show
+import tmg.utilities.lifecycle.viewInflateBinding
 
-class ForceUpgradeFragment: BaseFragment<FragmentLockoutBinding>() {
+class ForceUpgradeFragment: BaseFragment() {
 
     private val viewModel: ForceUpgradeViewModel by viewModel()
+    private val binding by viewInflateBinding(FragmentLockoutBinding::inflate)
 
-    override fun inflateView(inflater: LayoutInflater) = FragmentLockoutBinding
-        .inflate(inflater)
+    override fun onCreateView() = binding.root
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

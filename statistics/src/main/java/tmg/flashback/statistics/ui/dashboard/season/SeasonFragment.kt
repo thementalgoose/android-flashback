@@ -25,10 +25,12 @@ import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 import tmg.utilities.extensions.views.invisible
 import tmg.utilities.extensions.views.visible
+import tmg.utilities.lifecycle.viewInflateBinding
 
-class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
+class SeasonFragment: BaseFragment() {
 
     private val viewModel: SeasonViewModel by viewModel()
+    private val binding by viewInflateBinding(FragmentDashboardSeasonBinding::inflate)
 
     private val homeController: HomeController by inject()
     private val analyticsData: MutableMap<String, String> = mutableMapOf(
@@ -48,8 +50,7 @@ class SeasonFragment: BaseFragment<FragmentDashboardSeasonBinding>() {
         logScreenViewed("Dashboard", analyticsData)
     }
 
-    override fun inflateView(inflater: LayoutInflater) =
-        FragmentDashboardSeasonBinding.inflate(layoutInflater)
+    override fun onCreateView() = binding.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
