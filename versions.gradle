@@ -22,8 +22,8 @@ private static def getVersionCode() {
 
 ext {
 
-    compileSdkVersion = 31
-    targetSdkVersion = 31
+    compileSdkVersion = 32
+    targetSdkVersion = 32
     minSdkVersion = 23
 
     versionName = getVersionName()
