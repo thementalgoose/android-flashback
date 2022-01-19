@@ -3,19 +3,25 @@ package tmg.flashback.ui.settings
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import tmg.flashback.ui.base.BaseFragment
 import tmg.flashback.ui.databinding.FragmentSettingsBinding
 import tmg.utilities.extensions.observe
+import tmg.utilities.lifecycle.viewInflateBinding
 
-abstract class SettingsFragment<T: SettingsViewModel>: BaseFragment<FragmentSettingsBinding>() {
+abstract class SettingsFragment<T: SettingsViewModel>: BaseFragment() {
 
     abstract val viewModel: T
+    private val binding by viewInflateBinding(FragmentSettingsBinding::inflate)
 
     lateinit var adapter: SettingsAdapter
 
-    override fun inflateView(inflater: LayoutInflater) =
-        FragmentSettingsBinding.inflate(inflater)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ) = binding.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

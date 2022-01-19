@@ -3,6 +3,7 @@ package tmg.flashback.rss.ui
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.android.ext.android.inject
@@ -16,17 +17,22 @@ import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.viewUrl
 import tmg.utilities.extensions.views.gone
 import tmg.utilities.extensions.views.visible
+import tmg.utilities.lifecycle.viewInflateBinding
 
-class RSSFragment: BaseFragment<FragmentRssBinding>() {
+class RSSFragment: BaseFragment() {
 
     private val viewModel: RSSViewModel by viewModel()
+    private val binding by viewInflateBinding(FragmentRssBinding::inflate)
 
     private val repository: RSSRepository by inject()
 
     private lateinit var adapter: RSSAdapter
 
-    override fun inflateView(inflater: LayoutInflater) = FragmentRssBinding
-        .inflate(inflater)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ) = binding.root
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
