@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.FragmentResultListener
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,10 +22,12 @@ import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 import tmg.utilities.extensions.toEnum
 import tmg.utilities.extensions.views.closeKeyboard
+import tmg.utilities.lifecycle.viewInflateBinding
 
-class SearchFragment: BaseFragment<FragmentSearchBinding>(), FragmentResultListener {
+class SearchFragment: BaseFragment(), FragmentResultListener {
 
     private val viewModel: SearchViewModel by viewModel()
+    private val binding by viewInflateBinding(FragmentSearchBinding::inflate)
 
     var isLoading: Boolean = false
         set(value) {
@@ -40,8 +43,11 @@ class SearchFragment: BaseFragment<FragmentSearchBinding>(), FragmentResultListe
 
     private lateinit var adapter: SearchAdapter
 
-    override fun inflateView(inflater: LayoutInflater) = FragmentSearchBinding
-        .inflate(layoutInflater)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ) = binding.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
