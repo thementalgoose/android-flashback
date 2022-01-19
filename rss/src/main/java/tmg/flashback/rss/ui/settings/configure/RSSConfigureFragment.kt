@@ -4,6 +4,7 @@ import android.content.ClipData
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -14,15 +15,20 @@ import tmg.utilities.extensions.managerClipboard
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 import tmg.utilities.extensions.viewUrl
+import tmg.utilities.lifecycle.viewInflateBinding
 
-class RSSConfigureFragment: BaseFragment<FragmentRssSettingsConfigureBinding>() {
+class RSSConfigureFragment: BaseFragment() {
 
     private val viewModel: RSSConfigureViewModel by viewModel()
+    private val binding by viewInflateBinding(FragmentRssSettingsConfigureBinding::inflate)
 
     private lateinit var adapter: RSSConfigureAdapter
 
-    override fun inflateView(inflater: LayoutInflater) =
-        FragmentRssSettingsConfigureBinding.inflate(inflater)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ) = binding.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
