@@ -20,17 +20,18 @@ import tmg.utilities.extensions.observeEvent
 import tmg.utilities.extensions.viewWebpage
 import tmg.utilities.extensions.views.invisible
 import tmg.utilities.extensions.views.visible
+import tmg.utilities.lifecycle.viewInflateBinding
 
-class RaceFragment: BaseFragment<FragmentRaceBinding>() {
+class RaceFragment: BaseFragment() {
 
     private val viewModel: RaceViewModel by inject()
+    private val binding by viewInflateBinding(FragmentRaceBinding::inflate)
 
     private lateinit var raceData: RaceData
 
     private lateinit var raceAdapter: RaceAdapter
 
-    override fun inflateView(inflater: LayoutInflater) = FragmentRaceBinding
-        .inflate(inflater)
+    override fun onCreateView() = binding.root
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

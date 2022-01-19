@@ -14,15 +14,16 @@ import tmg.utilities.extensions.managerClipboard
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 import tmg.utilities.extensions.viewUrl
+import tmg.utilities.lifecycle.viewInflateBinding
 
-class RSSConfigureFragment: BaseFragment<FragmentRssSettingsConfigureBinding>() {
+class RSSConfigureFragment: BaseFragment() {
 
     private val viewModel: RSSConfigureViewModel by viewModel()
+    private val binding by viewInflateBinding(FragmentRssSettingsConfigureBinding::inflate)
 
     private lateinit var adapter: RSSConfigureAdapter
 
-    override fun inflateView(inflater: LayoutInflater) =
-        FragmentRssSettingsConfigureBinding.inflate(inflater)
+    override fun onCreateView() = binding.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

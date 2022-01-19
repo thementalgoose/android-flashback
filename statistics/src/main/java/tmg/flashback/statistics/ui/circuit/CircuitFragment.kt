@@ -15,18 +15,19 @@ import tmg.flashback.ui.base.BaseFragment
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 import tmg.utilities.extensions.viewUrl
+import tmg.utilities.lifecycle.viewInflateBinding
 import tmg.utilities.utils.ClipboardUtils.Companion.copyToClipboard
 
-class CircuitFragment: BaseFragment<FragmentCircuitInfoBinding>() {
+class CircuitFragment: BaseFragment() {
 
     private val viewModel: CircuitViewModel by viewModel()
+    private val binding by viewInflateBinding(FragmentCircuitInfoBinding::inflate)
 
     private lateinit var circuitId: String
     private lateinit var circuitName: String
     private lateinit var adapter: CircuitAdapter
 
-    override fun inflateView(inflater: LayoutInflater) =
-            FragmentCircuitInfoBinding.inflate(inflater)
+    override fun onCreateView() = binding.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

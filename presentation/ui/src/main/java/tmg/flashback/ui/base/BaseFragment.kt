@@ -12,30 +12,20 @@ import org.koin.android.ext.android.inject
 import tmg.flashback.analytics.manager.AnalyticsManager
 import tmg.flashback.crash_reporting.controllers.CrashController
 
-abstract class BaseFragment<T: ViewBinding>: Fragment() {
-
-    private var _binding: T? = null
-    protected val binding: T
-        get() = _binding!!
+abstract class BaseFragment: Fragment() {
 
     protected val analyticsManager: AnalyticsManager by inject()
 
     protected val crashManager: CrashController by inject()
+
+    abstract fun onCreateView(): View
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = inflateView(inflater)
-        return binding.root
-    }
-
-    abstract fun inflateView(inflater: LayoutInflater): T
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+        return onCreateView()
     }
 
     /**
@@ -43,16 +33,5 @@ abstract class BaseFragment<T: ViewBinding>: Fragment() {
      */
     fun logScreenViewed(name: String, params: Map<String, String> = mapOf()) {
         analyticsManager.viewScreen(name, this::class.java, params)
-    }
-
-    /**
-     * Callable from the super class to get window insets
-     *  based on the binding
-     */
-    fun setInsets(callback: (insets: WindowInsetsCompat) -> Unit) {
-        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, insets ->
-            callback(insets)
-            insets
-        }
     }
 }

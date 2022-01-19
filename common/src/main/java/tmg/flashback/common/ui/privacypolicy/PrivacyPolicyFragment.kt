@@ -10,13 +10,14 @@ import tmg.flashback.common.databinding.FragmentPrivacyPolicyBinding
 import tmg.flashback.ui.base.BaseFragment
 import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.observeEvent
+import tmg.utilities.lifecycle.viewInflateBinding
 
-class PrivacyPolicyFragment: BaseFragment<FragmentPrivacyPolicyBinding>() {
+class PrivacyPolicyFragment: BaseFragment() {
 
     private val viewModel: PrivacyPolicyViewModel by viewModel()
+    private val binding by viewInflateBinding(FragmentPrivacyPolicyBinding::inflate)
 
-    override fun inflateView(inflater: LayoutInflater) = FragmentPrivacyPolicyBinding
-        .inflate(inflater)
+    override fun onCreateView() = binding.root
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

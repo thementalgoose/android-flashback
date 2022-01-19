@@ -1,7 +1,6 @@
 package tmg.flashback.ui.dashboard
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
 import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
@@ -21,12 +20,14 @@ import tmg.flashback.statistics.ui.search.SearchActivity
 import tmg.flashback.ui.base.BaseFragment
 import tmg.flashback.ui.dashboard.list.ListFragment
 import tmg.utilities.extensions.observeEvent
+import tmg.utilities.lifecycle.viewInflateBinding
 
-class DashboardFragment : BaseFragment<FragmentDashboardBinding>(),
+class DashboardFragment : BaseFragment(),
     OverlappingPanelsLayout.PanelStateListener, DashboardNavigationCallback,
     SeasonFragmentCallback {
 
     private val viewModel: DashboardViewModel by viewModel()
+    private val binding by viewInflateBinding(FragmentDashboardBinding::inflate)
 
     private val searchController: SearchController by inject()
     private val homeController: HomeController by inject()
@@ -38,8 +39,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(),
     private val listFragment: ListFragment?
         get() = childFragmentManager.findFragmentByTag(listTag) as? ListFragment
 
-    override fun inflateView(inflater: LayoutInflater) =
-        FragmentDashboardBinding.inflate(inflater)
+    override fun onCreateView(): View = binding.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
