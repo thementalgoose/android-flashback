@@ -3,6 +3,7 @@ package tmg.flashback.statistics.ui.circuit
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,7 +28,11 @@ class CircuitFragment: BaseFragment() {
     private lateinit var circuitName: String
     private lateinit var adapter: CircuitAdapter
 
-    override fun onCreateView() = binding.root
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ) = binding.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

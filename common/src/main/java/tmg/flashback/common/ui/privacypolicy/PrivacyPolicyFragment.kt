@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import tmg.flashback.common.R
 import tmg.flashback.common.databinding.FragmentPrivacyPolicyBinding
@@ -17,7 +18,11 @@ class PrivacyPolicyFragment: BaseFragment() {
     private val viewModel: PrivacyPolicyViewModel by viewModel()
     private val binding by viewInflateBinding(FragmentPrivacyPolicyBinding::inflate)
 
-    override fun onCreateView() = binding.root
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ) = binding.root
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
