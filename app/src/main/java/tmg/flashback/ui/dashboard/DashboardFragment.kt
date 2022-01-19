@@ -1,7 +1,9 @@
 package tmg.flashback.ui.dashboard
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
@@ -39,7 +41,11 @@ class DashboardFragment : BaseFragment(),
     private val listFragment: ListFragment?
         get() = childFragmentManager.findFragmentByTag(listTag) as? ListFragment
 
-    override fun onCreateView(): View = binding.root
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View = binding.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

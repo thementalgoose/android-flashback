@@ -3,6 +3,7 @@ package tmg.flashback.common.ui.releasenotes
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import tmg.flashback.common.constants.ReleaseNotes
 import tmg.flashback.common.databinding.FragmentReleaseNotesBinding
@@ -14,7 +15,11 @@ class ReleaseFragment: BaseFragment() {
     private lateinit var adapter: ReleaseAdapter
     private val binding by viewInflateBinding(FragmentReleaseNotesBinding::inflate)
 
-    override fun onCreateView() = binding.root
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ) = binding.root
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
