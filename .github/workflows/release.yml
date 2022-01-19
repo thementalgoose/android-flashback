@@ -118,6 +118,11 @@ jobs:
       - name: Output version code
         run: echo ${{ steps.get_version_code.outputs.VERSION }} > version-code.txt
 
+      # README
+      - name: README latest version
+        run: |
+          sh .github/scripts/update-readme.sh ${{ steps.get_version_name.outputs.VERSION }}
+
       # Commits changes to README
       - name: Commit and push changes
         uses: actions-js/push@master
