@@ -11,6 +11,8 @@
 
 ### Screenshots
 
+|   |   |   |   |
+|---|---|---|---|
 | <img src="res/screenshots/screenshot1.webp" width="120" /> | <img src="res/screenshots/screenshot2.webp" width="120" /> | <img src="res/screenshots/screenshot3.webp" width="120" /> | <img src="res/screenshots/screenshot4.webp" width="120" /> |
 | <img src="res/screenshots/screenshot5.webp" width="120" /> | <img src="res/screenshots/screenshot6.webp" width="120" /> | <img src="res/screenshots/screenshot7.webp" width="120" /> | <img src="res/screenshots/screenshot8.webp" width="120" /> |
 
