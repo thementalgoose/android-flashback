@@ -54,7 +54,7 @@ task generateRemoteConfigDefaults {
             }
             entry {
                 key('data_provided')
-                value('Data provided by Ergast API')
+                value('Data provided by the Flashback Team and Ergast API')
             }
             entry {
                 key('supported_seasons')
