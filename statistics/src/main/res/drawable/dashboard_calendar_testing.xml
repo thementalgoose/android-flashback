@@ -3,8 +3,8 @@
     <item>
         <shape android:shape="oval">
             <stroke
-                android:color="?attr/f1ResultsPartial"
-                android:width="4dp"/>
+                android:color="?attr/backgroundTertiary"
+                android:width="2dp"/>
         </shape>
     </item>
 </selector>

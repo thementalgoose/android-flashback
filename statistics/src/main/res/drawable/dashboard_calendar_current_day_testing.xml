@@ -4,8 +4,8 @@
         <shape android:shape="oval">
             <solid android:color="?attr/f1DeltaPositive" />
             <stroke
-                android:color="?attr/f1ResultsPartial"
-                android:width="4dp"/>
+                android:color="?attr/backgroundTertiary"
+                android:width="2dp"/>
         </shape>
     </item>
 </selector>
