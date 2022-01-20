@@ -13,7 +13,8 @@ data class Season(
     val constructorStandings: Map<String, ConstructorStandings>?,
     val drivers: Map<String, Driver>,
     val constructors: Map<String, Constructor>,
-    val races: Map<String, Race>?
+    val races: Map<String, Race>?,
+    val winterTesting: List<WinterTesting>?
 ) {
     companion object
 }

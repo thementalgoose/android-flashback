@@ -4,6 +4,7 @@ import androidx.room.*
 import org.threeten.bp.LocalDate
 import tmg.flashback.statistics.room.models.overview.OverviewWithCircuit
 import tmg.flashback.statistics.room.models.overview.Schedule
+import tmg.flashback.statistics.room.models.race.WinterTesting
 import tmg.utilities.extensions.format
 
 @Dao
@@ -42,4 +43,23 @@ interface ScheduleDao {
 
     @Query("DELETE FROM Schedule WHERE season == :season")
     fun deleteForSeason(season: Int)
+
+    //region Winter Testing
+
+    @Query("SELECT * FROM WinterTesting WHERE season == :season")
+    suspend fun getWinterTesting(season: Int): List<WinterTesting>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertWinterTesting(winterTesting: List<WinterTesting>)
+
+    @Query("DELETE FROM WinterTesting WHERE season == :season")
+    fun deleteWinterTestingForSeason(season: Int)
+
+    @Transaction
+    fun replaceWinterTestingForSeason(season: Int, testing: List<WinterTesting>) {
+        deleteWinterTestingForSeason(season)
+        insertWinterTesting(testing)
+    }
+
+    //endregion
 }
