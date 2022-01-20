@@ -76,13 +76,23 @@ class CalendarWeekViewHolder(
                 cells[x].day.alpha = 1.0f
             }
 
-            if (date == LocalDate.now()) {
-                cells[x].day.setBackgroundResource(R.drawable.dashboard_calendar_current_day)
-                cells[x].day.setTextColor(Color.WHITE)
-            }
-            else {
-                cells[x].day.setBackgroundResource(0)
-                cells[x].day.setTextColor(context.theme.getColor(R.attr.contentPrimary))
+            when {
+                date == LocalDate.now() && item.winterTesting.any { it.date == date } -> {
+                    cells[x].day.setBackgroundResource(R.drawable.dashboard_calendar_current_day_testing)
+                    cells[x].day.setTextColor(Color.WHITE)
+                }
+                date == LocalDate.now() -> {
+                    cells[x].day.setBackgroundResource(R.drawable.dashboard_calendar_current_day)
+                    cells[x].day.setTextColor(Color.WHITE)
+                }
+                item.winterTesting.any { it.date == date } -> {
+                    cells[x].day.setBackgroundResource(R.drawable.dashboard_calendar_testing)
+                    cells[x].day.setTextColor(Color.WHITE)
+                }
+                else -> {
+                    cells[x].day.setBackgroundResource(0)
+                    cells[x].day.setTextColor(context.theme.getColor(R.attr.contentPrimary))
+                }
             }
 
             lastSimulatedDay = day

@@ -2,8 +2,10 @@ package tmg.flashback.statistics.repo
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapNotNull
 import tmg.flashback.crash_reporting.controllers.CrashController
 import tmg.flashback.formula1.model.Race
+import tmg.flashback.formula1.model.WinterTesting
 import tmg.flashback.statistics.network.api.FlashbackApi
 import tmg.flashback.statistics.network.models.constructors.Constructor
 import tmg.flashback.statistics.network.models.drivers.Driver
@@ -12,6 +14,7 @@ import tmg.flashback.statistics.network.models.races.DriverStandings
 import tmg.flashback.statistics.repo.base.BaseRepository
 import tmg.flashback.statistics.repo.extensions.valueList
 import tmg.flashback.statistics.repo.mappers.app.RaceMapper
+import tmg.flashback.statistics.repo.mappers.app.WinterTestingMapper
 import tmg.flashback.statistics.repo.mappers.network.*
 import tmg.flashback.statistics.repo.repository.CacheRepository
 import tmg.flashback.statistics.room.FlashbackDatabase
@@ -29,6 +32,7 @@ class RaceRepository(
     private val networkScheduleMapper: NetworkScheduleMapper,
     private val networkWinterTestingMapper: NetworkWinterTestingMapper,
     private val raceMapper: RaceMapper,
+    private val winterTestingMapper: WinterTestingMapper,
     private val cacheRepository: CacheRepository
 ): BaseRepository(crashController) {
 
@@ -105,7 +109,6 @@ class RaceRepository(
         return@attempt true
     }
 
-
     fun getRace(season: Int, round: Int): Flow<Race?> {
         return persistence.seasonDao().getRace(season, round)
             .map { race ->
@@ -119,6 +122,14 @@ class RaceRepository(
     suspend fun shouldSyncRace(season: Int, @Suppress("UNUSED_PARAMETER") round: Int): Boolean {
         return shouldSyncRace(season)
     }
+
+
+    suspend fun getWinterTesting(season: Int): Flow<List<WinterTesting>> {
+        return persistence.scheduleDao().getWinterTesting(season)
+            .map { list -> list.mapNotNull { winterTestingMapper.mapWinterTesting(it) } }
+    }
+
+
 
     private fun saveConstructorStandings(season: Int, constructors: Map<String, ConstructorStandings>?) {
         if (constructors == null) return
