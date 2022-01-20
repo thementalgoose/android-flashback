@@ -21,6 +21,9 @@ fun Season.Companion.model(
     ),
     races: Map<String, Race>? = mapOf(
         "r1" to Race.model()
+    ),
+    winterTesting: List<WinterTesting>? = listOf(
+        WinterTesting.model()
     )
 ): Season = Season(
     season = season,
@@ -28,5 +31,6 @@ fun Season.Companion.model(
     constructorStandings = constructorStandings,
     drivers = drivers,
     constructors = constructors,
-    races = races
+    races = races,
+    winterTesting = winterTesting
 )

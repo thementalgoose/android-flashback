@@ -17,13 +17,14 @@ import tmg.flashback.statistics.room.models.overview.Schedule
 import tmg.flashback.statistics.room.models.race.QualifyingResult
 import tmg.flashback.statistics.room.models.race.RaceInfo
 import tmg.flashback.statistics.room.models.race.RaceResult
+import tmg.flashback.statistics.room.models.race.WinterTesting
 import tmg.flashback.statistics.room.models.standings.ConstructorStanding
 import tmg.flashback.statistics.room.models.standings.ConstructorStandingDriver
 import tmg.flashback.statistics.room.models.standings.DriverStanding
 import tmg.flashback.statistics.room.models.standings.DriverStandingConstructor
 
 @Database(
-    version = 2,
+    version = 3,
     entities = [
         Circuit::class,
         CircuitRound::class,
@@ -42,7 +43,8 @@ import tmg.flashback.statistics.room.models.standings.DriverStandingConstructor
         DriverStanding::class,
         DriverStandingConstructor::class,
         ConstructorStanding::class,
-        ConstructorStandingDriver::class
+        ConstructorStandingDriver::class,
+        WinterTesting::class
     ]
 )
 abstract class FlashbackDatabase: RoomDatabase() {

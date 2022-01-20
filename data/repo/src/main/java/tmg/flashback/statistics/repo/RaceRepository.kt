@@ -27,6 +27,7 @@ class RaceRepository(
     private val networkDriverStandingMapper: NetworkDriverStandingMapper,
     private val networkConstructorStandingMapper: NetworkConstructorStandingMapper,
     private val networkScheduleMapper: NetworkScheduleMapper,
+    private val networkWinterTestingMapper: NetworkWinterTestingMapper,
     private val raceMapper: RaceMapper,
     private val cacheRepository: CacheRepository
 ): BaseRepository(crashController) {
@@ -60,8 +61,12 @@ class RaceRepository(
             .map { race -> networkScheduleMapper.mapSchedules(race) }
             .flatten()
 
+        val winterTesting = (data.winterTesting ?: emptyList())
+            .mapNotNull { testing -> networkWinterTestingMapper.mapWinterTesting(data.season, testing) }
+
         persistence.seasonDao().insertRaces(raceData, qualifyingResults, raceResults)
         persistence.scheduleDao().replaceAllForSeason(season, schedules)
+        persistence.scheduleDao().replaceWinterTestingForSeason(season, winterTesting)
 
         val set = cacheRepository.seasonsSyncAtLeastOnce.toMutableSet()
         set.add(season)
