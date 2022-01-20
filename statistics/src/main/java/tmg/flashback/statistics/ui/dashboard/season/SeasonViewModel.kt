@@ -25,6 +25,7 @@ import tmg.flashback.statistics.repo.repository.CacheRepository
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable.*
 import tmg.flashback.ui.controllers.ThemeController
+import tmg.utilities.extensions.combinePair
 import tmg.utilities.lifecycle.DataEvent
 import tmg.utilities.lifecycle.Event
 
@@ -98,6 +99,8 @@ class SeasonViewModel(
             }
         }
         .flowOn(ioDispatcher)
+    private val winterTesting: Flow<List<WinterTesting>> = season
+        .flatMapLatest { raceRepository.getWinterTesting(it) }
 
     private val isConnected: Boolean
         get() = networkConnectivityManager.isConnected
@@ -186,14 +189,15 @@ class SeasonViewModel(
 
     private fun getScheduleView(season: Int, isCalendarView: Boolean): Flow<List<SeasonItem>> {
         return overviewRepository.getOverview(season)
-            .map {
+            .combinePair(winterTesting)
+            .map { (it, winterTesting) ->
                 val list = getBannerList()
                 when {
                     it.overviewRaces.isEmpty() && !isConnected -> list.addError(SyncDataItem.PullRefresh)
                     it.overviewRaces.isEmpty() && season == currentSeasonYear -> list.addError(SyncDataItem.Unavailable(SEASON_EARLY))
                     it.overviewRaces.isEmpty() && season > currentSeasonYear -> list.addError(SyncDataItem.Unavailable(SEASON_IN_FUTURE))
                     it.overviewRaces.isEmpty() -> list.addError(SyncDataItem.Unavailable(SEASON_INTERNAL_ERROR))
-                    isCalendarView -> list.addAll(it.overviewRaces.toCalendar(season))
+                    isCalendarView -> list.addAll(it.overviewRaces.toCalendar(season, winterTesting))
                     else -> list.addAll(it.overviewRaces.toScheduleList())
                 }
 
@@ -279,7 +283,7 @@ class SeasonViewModel(
     /**
      * Convert OverviewRace to a list of calendar items
      */
-    private fun List<OverviewRace>.toCalendar(season: Int): List<SeasonItem> {
+    private fun List<OverviewRace>.toCalendar(season: Int, winterTesting: List<WinterTesting>): List<SeasonItem> {
         val list = mutableListOf<SeasonItem>()
         list.add(SeasonItem.CalendarHeader)
         Month.values().forEach { month ->
@@ -294,14 +298,24 @@ class SeasonViewModel(
             }
 
             list.add(SeasonItem.CalendarMonth(month, season))
-            list.add(SeasonItem.CalendarWeek(month, start, this.firstOrNull { it.date >= start && it.date <= end }))
+            list.add(SeasonItem.CalendarWeek(
+                month,
+                start,
+                winterTesting.filter { it.date >= start && it.date <= end },
+                this.firstOrNull { it.date >= start && it.date <= end }
+            ))
             while (start.month == month) {
                 start = start.with(TemporalAdjusters.next(DayOfWeek.MONDAY))
                 end = end.plusDays(7L)
 
                 if (start.month == month) {
                     list.add(
-                        SeasonItem.CalendarWeek(month, start, this.firstOrNull { it.date >= start && it.date <= end })
+                        SeasonItem.CalendarWeek(
+                            month,
+                            start,
+                            winterTesting.filter { it.date >= start && it.date <= end },
+                            this.firstOrNull { it.date >= start && it.date <= end }
+                        )
                     )
                 }
             }

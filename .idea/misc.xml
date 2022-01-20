@@ -128,6 +128,9 @@
         <entry key="rss/src/main/res/layout/view_rss_configure_quickadd.xml" value="0.266304347826087" />
         <entry key="rss/src/main/res/layout/view_rss_sources_disabled.xml" value="0.36041666666666666" />
         <entry key="statistics/src/main/res/drawable/app_shortcut_search.xml" value="0.5" />
+        <entry key="statistics/src/main/res/drawable/dashboard_calendar_current_day.xml" value="0.199" />
+        <entry key="statistics/src/main/res/drawable/dashboard_calendar_current_day_testing.xml" value="0.199" />
+        <entry key="statistics/src/main/res/drawable/dashboard_calendar_testing.xml" value="0.199" />
         <entry key="statistics/src/main/res/drawable/ic_star_outline.xml" value="0.14375" />
         <entry key="statistics/src/main/res/drawable/ic_status_radiator.xml" value="0.14375" />
         <entry key="statistics/src/main/res/drawable/nav_search.xml" value="0.18802083333333333" />

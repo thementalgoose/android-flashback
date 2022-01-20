@@ -38,6 +38,7 @@ val repoModule = networkModule + roomModule + module {
     single { NetworkRaceDataMapper() }
     single { NetworkRaceMapper() }
     single { NetworkScheduleMapper() }
+    single { NetworkWinterTestingMapper() }
 
     // Cache tracking
     single<CacheRepository> { RepoCacheRepository(get()) }
@@ -47,7 +48,7 @@ val repoModule = networkModule + roomModule + module {
     single { ConstructorRepository(get(), get(), get(), get(), get(), get(), get(), get()) }
     single { DriverRepository(get(), get(), get(), get(), get(), get(), get(), get(), get(), get()) }
     single { OverviewRepository(get(), get(), get(), get(), get(), get(), get()) }
-    single { RaceRepository(get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get()) }
+    single { RaceRepository(get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get()) }
     single { SeasonRepository(get(), get(), get(), get(), get()) }
     single { ScheduleRepository(get(), get(), get(), get()) }
 }

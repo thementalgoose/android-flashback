@@ -1,6 +1,7 @@
 package tmg.flashback.statistics.room.dao
 
 import androidx.room.*
+import kotlinx.coroutines.flow.Flow
 import org.threeten.bp.LocalDate
 import tmg.flashback.statistics.room.models.overview.OverviewWithCircuit
 import tmg.flashback.statistics.room.models.overview.Schedule
@@ -47,7 +48,7 @@ interface ScheduleDao {
     //region Winter Testing
 
     @Query("SELECT * FROM WinterTesting WHERE season == :season")
-    suspend fun getWinterTesting(season: Int): List<WinterTesting>
+    fun getWinterTesting(season: Int): Flow<List<WinterTesting>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertWinterTesting(winterTesting: List<WinterTesting>)
