@@ -30,7 +30,7 @@ class SeasonRepository(
     fun getSeason(season: Int): Flow<Season?> {
         return combine(
             persistence.seasonDao().getRaces(season),
-            persistence.scheduleDao().getWinterTesting(season)
+            persistence.eventsDao().getEvents(season)
         ) { list, winterTesting -> Pair(list, winterTesting) }
             .map { (list, winterTesting) ->
                 seasonMapper.mapSeason(season, list, winterTesting)
