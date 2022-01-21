@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 import org.threeten.bp.LocalDate
 import tmg.flashback.statistics.room.models.overview.OverviewWithCircuit
 import tmg.flashback.statistics.room.models.overview.Schedule
-import tmg.flashback.statistics.room.models.race.WinterTesting
+import tmg.flashback.statistics.room.models.overview.WinterTesting
 import tmg.utilities.extensions.format
 
 @Dao

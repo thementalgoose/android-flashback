@@ -5,9 +5,9 @@ fun Season.Companion.model(
     races: List<Race> = listOf(
         Race.model()
     ),
-    winterTesting: List<WinterTesting> = emptyList()
+    event: List<Event> = emptyList()
 ): Season = Season(
     season = season,
     races = races,
-    winterTesting = winterTesting
+    event = event
 )

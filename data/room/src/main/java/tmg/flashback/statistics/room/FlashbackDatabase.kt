@@ -17,7 +17,7 @@ import tmg.flashback.statistics.room.models.overview.Schedule
 import tmg.flashback.statistics.room.models.race.QualifyingResult
 import tmg.flashback.statistics.room.models.race.RaceInfo
 import tmg.flashback.statistics.room.models.race.RaceResult
-import tmg.flashback.statistics.room.models.race.WinterTesting
+import tmg.flashback.statistics.room.models.overview.WinterTesting
 import tmg.flashback.statistics.room.models.standings.ConstructorStanding
 import tmg.flashback.statistics.room.models.standings.ConstructorStandingDriver
 import tmg.flashback.statistics.room.models.standings.DriverStanding

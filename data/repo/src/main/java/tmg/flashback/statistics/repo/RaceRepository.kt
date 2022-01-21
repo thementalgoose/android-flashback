@@ -2,10 +2,9 @@ package tmg.flashback.statistics.repo
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.mapNotNull
 import tmg.flashback.crash_reporting.controllers.CrashController
 import tmg.flashback.formula1.model.Race
-import tmg.flashback.formula1.model.WinterTesting
+import tmg.flashback.formula1.model.Event
 import tmg.flashback.statistics.network.api.FlashbackApi
 import tmg.flashback.statistics.network.models.constructors.Constructor
 import tmg.flashback.statistics.network.models.drivers.Driver
@@ -14,7 +13,7 @@ import tmg.flashback.statistics.network.models.races.DriverStandings
 import tmg.flashback.statistics.repo.base.BaseRepository
 import tmg.flashback.statistics.repo.extensions.valueList
 import tmg.flashback.statistics.repo.mappers.app.RaceMapper
-import tmg.flashback.statistics.repo.mappers.app.WinterTestingMapper
+import tmg.flashback.statistics.repo.mappers.app.EventMapper
 import tmg.flashback.statistics.repo.mappers.network.*
 import tmg.flashback.statistics.repo.repository.CacheRepository
 import tmg.flashback.statistics.room.FlashbackDatabase
@@ -30,9 +29,9 @@ class RaceRepository(
     private val networkDriverStandingMapper: NetworkDriverStandingMapper,
     private val networkConstructorStandingMapper: NetworkConstructorStandingMapper,
     private val networkScheduleMapper: NetworkScheduleMapper,
-    private val networkWinterTestingMapper: NetworkWinterTestingMapper,
+    private val networkEventMapper: NetworkEventMapper,
     private val raceMapper: RaceMapper,
-    private val winterTestingMapper: WinterTestingMapper,
+    private val eventMapper: EventMapper,
     private val cacheRepository: CacheRepository
 ): BaseRepository(crashController) {
 
@@ -65,8 +64,8 @@ class RaceRepository(
             .map { race -> networkScheduleMapper.mapSchedules(race) }
             .flatten()
 
-        val winterTesting = (data.winterTesting ?: emptyList())
-            .mapNotNull { testing -> networkWinterTestingMapper.mapWinterTesting(data.season, testing) }
+        val winterTesting = (data.events ?: emptyList())
+            .mapNotNull { testing -> networkEventMapper.mapWinterTesting(data.season, testing) }
 
         persistence.seasonDao().insertRaces(raceData, qualifyingResults, raceResults)
         persistence.scheduleDao().replaceAllForSeason(season, schedules)
@@ -124,9 +123,9 @@ class RaceRepository(
     }
 
 
-    suspend fun getWinterTesting(season: Int): Flow<List<WinterTesting>> {
+    fun getEvents(season: Int): Flow<List<Event>> {
         return persistence.scheduleDao().getWinterTesting(season)
-            .map { list -> list.mapNotNull { winterTestingMapper.mapWinterTesting(it) } }
+            .map { list -> list.mapNotNull { eventMapper.mapEvent(it) } }
     }
 
 

@@ -1,5 +1,7 @@
 package tmg.flashback.statistics.room.models.race
 
+import tmg.flashback.statistics.room.models.overview.model
+
 fun QualifyingResult.Companion.model(
     driverId: String = "driverId",
     season: Int = 2020,

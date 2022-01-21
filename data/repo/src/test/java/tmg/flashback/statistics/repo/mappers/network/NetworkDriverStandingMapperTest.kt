@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.statistics.network.models.races.DriverStandings
-import tmg.flashback.statistics.network.models.races.model
 import tmg.flashback.statistics.room.models.standings.DriverStanding
 import tmg.flashback.statistics.room.models.standings.DriverStandingConstructor
 import tmg.flashback.statistics.room.models.standings.model

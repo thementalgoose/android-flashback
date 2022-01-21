@@ -7,9 +7,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.RoomRace
 import tmg.flashback.formula1.model.Race
-import tmg.flashback.formula1.model.Season
-import tmg.flashback.formula1.model.model
-import tmg.flashback.statistics.room.models.race.model
+import tmg.flashback.statistics.room.models.overview.model
 
 internal class SeasonMapperTest {
 
@@ -28,7 +26,7 @@ internal class SeasonMapperTest {
     fun `mapSeason maps fields correctly`() {
         val inputSeason: Int = 2020
         val inputRaces = listOf(RoomRace.model())
-        val expected = Season.model()
+        val expected = tmg.flashback.statistics.room.models.overview.model()
 
         assertEquals(expected, sut.mapSeason(inputSeason, inputRaces))
     }
