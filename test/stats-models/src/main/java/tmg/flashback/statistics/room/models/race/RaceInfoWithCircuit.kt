@@ -1,6 +1,7 @@
 package tmg.flashback.statistics.room.models.race
 
 import tmg.flashback.statistics.room.models.circuit.Circuit
+import tmg.flashback.statistics.room.models.circuit.model
 import tmg.flashback.statistics.room.models.overview.model
 
 fun RaceInfoWithCircuit.Companion.model(
