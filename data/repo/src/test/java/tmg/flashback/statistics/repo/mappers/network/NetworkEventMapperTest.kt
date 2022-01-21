@@ -21,7 +21,7 @@ internal class NetworkEventMapperTest {
         val input = Event.model()
         val expected = tmg.flashback.statistics.room.models.overview.Event.model()
 
-        assertEquals(expected, sut.mapWinterTesting(2020, input))
+        assertEquals(expected, sut.mapEvent(2020, input))
     }
 
     @Test
@@ -30,6 +30,6 @@ internal class NetworkEventMapperTest {
             date = "invalid"
         )
 
-        assertNull(sut.mapWinterTesting(2020, input))
+        assertNull(sut.mapEvent(2020, input))
     }
 }

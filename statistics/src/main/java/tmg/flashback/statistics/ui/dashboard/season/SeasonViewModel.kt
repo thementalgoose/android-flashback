@@ -18,6 +18,7 @@ import tmg.flashback.formula1.model.*
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.controllers.HomeController
 import tmg.flashback.statistics.extensions.analyticsLabel
+import tmg.flashback.statistics.repo.EventsRepository
 import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.statistics.repo.RaceRepository
 import tmg.flashback.statistics.repo.SeasonRepository
@@ -64,6 +65,7 @@ interface SeasonViewModelOutputs {
 class SeasonViewModel(
     private val homeController: HomeController,
     private val raceRepository: RaceRepository,
+    private val eventsRepository: EventsRepository,
     private val networkConnectivityManager: NetworkConnectivityManager,
     private val overviewRepository: OverviewRepository,
     private val seasonRepository: SeasonRepository,
@@ -89,6 +91,7 @@ class SeasonViewModel(
                     emit(null)
                     overviewRepository.fetchOverview(season)
                     seasonRepository.fetchRaces(season)
+                    eventsRepository.fetchEvents(season)
                     showLoading.postValue(false)
 
                     emit(season)
@@ -100,7 +103,7 @@ class SeasonViewModel(
         }
         .flowOn(ioDispatcher)
     private val event: Flow<List<tmg.flashback.formula1.model.Event>> = season
-        .flatMapLatest { raceRepository.getEvents(it) }
+        .flatMapLatest { eventsRepository.getEvents(it) }
 
     private val isConnected: Boolean
         get() = networkConnectivityManager.isConnected
@@ -179,6 +182,7 @@ class SeasonViewModel(
         viewModelScope.launch(context = ioDispatcher) {
             overviewRepository.fetchOverview(season)
             seasonRepository.fetchRaces(season)
+            eventsRepository.fetchEvents(season)
 
             if (season == homeController.serverDefaultSeason) {
                 cacheRepository.markedCurrentSeasonSynchronised()

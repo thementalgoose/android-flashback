@@ -5,7 +5,7 @@ import tmg.utilities.utils.LocalDateUtils.Companion.fromDate
 
 class NetworkEventMapper {
 
-    fun mapWinterTesting(season: Int, model: tmg.flashback.statistics.network.models.overview.Event): Event? {
+    fun mapEvent(season: Int, model: tmg.flashback.statistics.network.models.overview.Event): Event? {
         fromDate(model.date) ?: return null
         return Event(
             season = season,
