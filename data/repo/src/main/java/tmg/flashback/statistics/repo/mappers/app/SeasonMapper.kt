@@ -1,11 +1,11 @@
 package tmg.flashback.statistics.repo.mappers.app
 
 import tmg.flashback.formula1.model.Season
-import tmg.flashback.statistics.room.models.race.WinterTesting
+import tmg.flashback.statistics.room.models.overview.WinterTesting
 
 class SeasonMapper(
     private val raceMapper: RaceMapper,
-    private val winterTestingMapper: WinterTestingMapper
+    private val winterTestingMapper: EventMapper
 ) {
     fun mapSeason(
         season: Int,
@@ -15,7 +15,7 @@ class SeasonMapper(
         return Season(
             season = season,
             races = races.mapNotNull { raceMapper.mapRace(it) },
-            winterTesting = winterTesting.mapNotNull { winterTestingMapper.mapWinterTesting(it) }
+            event = winterTesting.mapNotNull { winterTestingMapper.mapEvent(it) }
         )
     }
 }

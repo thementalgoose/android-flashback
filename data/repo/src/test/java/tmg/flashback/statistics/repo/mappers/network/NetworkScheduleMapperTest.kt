@@ -8,7 +8,6 @@ import tmg.flashback.RoomSchedule
 import tmg.flashback.statistics.network.models.overview.OverviewRace
 import tmg.flashback.statistics.network.models.overview.model
 import tmg.flashback.statistics.network.models.races.Race
-import tmg.flashback.statistics.network.models.races.model
 import tmg.flashback.statistics.room.models.overview.Schedule
 import tmg.flashback.statistics.room.models.overview.model
 

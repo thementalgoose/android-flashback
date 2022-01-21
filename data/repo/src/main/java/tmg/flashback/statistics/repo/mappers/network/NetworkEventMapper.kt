@@ -1,15 +1,16 @@
 package tmg.flashback.statistics.repo.mappers.network
 
-import tmg.flashback.statistics.room.models.race.WinterTesting
+import tmg.flashback.statistics.room.models.overview.Event
 import tmg.utilities.utils.LocalDateUtils.Companion.fromDate
 
-class NetworkWinterTestingMapper {
+class NetworkEventMapper {
 
-    fun mapWinterTesting(season: Int, model: tmg.flashback.statistics.network.models.races.WinterTesting): WinterTesting? {
+    fun mapWinterTesting(season: Int, model: tmg.flashback.statistics.network.models.overview.Event): Event? {
         fromDate(model.date) ?: return null
-        return WinterTesting(
+        return Event(
             season = season,
             label = model.label,
+            type = model.type,
             date = model.date
         )
     }

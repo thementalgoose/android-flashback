@@ -77,7 +77,7 @@ class CalendarWeekViewHolder(
             }
 
             when {
-                date == LocalDate.now() && item.winterTesting.any { it.date == date } -> {
+                date == LocalDate.now() && item.event.any { it.date == date } -> {
                     cells[x].day.setBackgroundResource(R.drawable.dashboard_calendar_current_day_testing)
                     cells[x].day.setTextColor(Color.WHITE)
                 }
@@ -85,7 +85,7 @@ class CalendarWeekViewHolder(
                     cells[x].day.setBackgroundResource(R.drawable.dashboard_calendar_current_day)
                     cells[x].day.setTextColor(Color.WHITE)
                 }
-                item.winterTesting.any { it.date == date } -> {
+                item.event.any { it.date == date } -> {
                     cells[x].day.setBackgroundResource(R.drawable.dashboard_calendar_testing)
                     cells[x].day.setTextColor(Color.WHITE)
                 }

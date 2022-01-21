@@ -3,30 +3,30 @@ package tmg.flashback.statistics.repo.mappers.network
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.flashback.statistics.network.models.races.WinterTesting
-import tmg.flashback.statistics.network.models.races.model
-import tmg.flashback.statistics.room.models.race.model
+import tmg.flashback.statistics.network.models.overview.Event
+import tmg.flashback.statistics.network.models.overview.model
+import tmg.flashback.statistics.room.models.overview.model
 
-internal class NetworkWinterTestingMapperTest {
+internal class NetworkEventMapperTest {
 
-    private lateinit var sut: NetworkWinterTestingMapper
+    private lateinit var sut: NetworkEventMapper
 
     @BeforeEach
     internal fun setUp() {
-        sut = NetworkWinterTestingMapper()
+        sut = NetworkEventMapper()
     }
 
     @Test
     fun `mapWinterTesting maps fields correctly`() {
-        val input = WinterTesting.model()
-        val expected = tmg.flashback.statistics.room.models.race.WinterTesting.model()
+        val input = Event.model()
+        val expected = tmg.flashback.statistics.room.models.overview.Event.model()
 
         assertEquals(expected, sut.mapWinterTesting(2020, input))
     }
 
     @Test
     fun `mapWinterTesting returns null if date is invalid`() {
-        val input = WinterTesting.model(
+        val input = Event.model(
             date = "invalid"
         )
 
