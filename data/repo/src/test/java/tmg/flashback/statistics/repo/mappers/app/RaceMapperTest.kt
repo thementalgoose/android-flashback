@@ -10,6 +10,7 @@ import tmg.flashback.RoomRace
 import tmg.flashback.RoomRaceInfo
 import tmg.flashback.RoomRaceInfoWithCircuit
 import tmg.flashback.formula1.model.*
+import tmg.flashback.statistics.room.models.overview.model
 import tmg.flashback.statistics.room.models.race.model
 
 internal class RaceMapperTest {

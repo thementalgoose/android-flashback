@@ -18,6 +18,7 @@ import tmg.flashback.formula1.model.*
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.controllers.HomeController
 import tmg.flashback.statistics.extensions.analyticsLabel
+import tmg.flashback.statistics.repo.EventsRepository
 import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.statistics.repo.RaceRepository
 import tmg.flashback.statistics.repo.SeasonRepository
@@ -25,6 +26,7 @@ import tmg.flashback.statistics.repo.repository.CacheRepository
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable.*
 import tmg.flashback.ui.controllers.ThemeController
+import tmg.utilities.extensions.combinePair
 import tmg.utilities.lifecycle.DataEvent
 import tmg.utilities.lifecycle.Event
 
@@ -63,6 +65,7 @@ interface SeasonViewModelOutputs {
 class SeasonViewModel(
     private val homeController: HomeController,
     private val raceRepository: RaceRepository,
+    private val eventsRepository: EventsRepository,
     private val networkConnectivityManager: NetworkConnectivityManager,
     private val overviewRepository: OverviewRepository,
     private val seasonRepository: SeasonRepository,
@@ -88,6 +91,7 @@ class SeasonViewModel(
                     emit(null)
                     overviewRepository.fetchOverview(season)
                     seasonRepository.fetchRaces(season)
+                    eventsRepository.fetchEvents(season)
                     showLoading.postValue(false)
 
                     emit(season)
@@ -98,6 +102,8 @@ class SeasonViewModel(
             }
         }
         .flowOn(ioDispatcher)
+    private val event: Flow<List<tmg.flashback.formula1.model.Event>> = season
+        .flatMapLatest { eventsRepository.getEvents(it) }
 
     private val isConnected: Boolean
         get() = networkConnectivityManager.isConnected
@@ -176,6 +182,7 @@ class SeasonViewModel(
         viewModelScope.launch(context = ioDispatcher) {
             overviewRepository.fetchOverview(season)
             seasonRepository.fetchRaces(season)
+            eventsRepository.fetchEvents(season)
 
             if (season == homeController.serverDefaultSeason) {
                 cacheRepository.markedCurrentSeasonSynchronised()
@@ -186,14 +193,15 @@ class SeasonViewModel(
 
     private fun getScheduleView(season: Int, isCalendarView: Boolean): Flow<List<SeasonItem>> {
         return overviewRepository.getOverview(season)
-            .map {
+            .combinePair(event)
+            .map { (it, events) ->
                 val list = getBannerList()
                 when {
                     it.overviewRaces.isEmpty() && !isConnected -> list.addError(SyncDataItem.PullRefresh)
                     it.overviewRaces.isEmpty() && season == currentSeasonYear -> list.addError(SyncDataItem.Unavailable(SEASON_EARLY))
                     it.overviewRaces.isEmpty() && season > currentSeasonYear -> list.addError(SyncDataItem.Unavailable(SEASON_IN_FUTURE))
                     it.overviewRaces.isEmpty() -> list.addError(SyncDataItem.Unavailable(SEASON_INTERNAL_ERROR))
-                    isCalendarView -> list.addAll(it.overviewRaces.toCalendar(season))
+                    isCalendarView -> list.addAll(it.overviewRaces.toCalendar(season, events))
                     else -> list.addAll(it.overviewRaces.toScheduleList())
                 }
 
@@ -279,7 +287,7 @@ class SeasonViewModel(
     /**
      * Convert OverviewRace to a list of calendar items
      */
-    private fun List<OverviewRace>.toCalendar(season: Int): List<SeasonItem> {
+    private fun List<OverviewRace>.toCalendar(season: Int, event: List<tmg.flashback.formula1.model.Event>): List<SeasonItem> {
         val list = mutableListOf<SeasonItem>()
         list.add(SeasonItem.CalendarHeader)
         Month.values().forEach { month ->
@@ -294,14 +302,24 @@ class SeasonViewModel(
             }
 
             list.add(SeasonItem.CalendarMonth(month, season))
-            list.add(SeasonItem.CalendarWeek(month, start, this.firstOrNull { it.date >= start && it.date <= end }))
+            list.add(SeasonItem.CalendarWeek(
+                month,
+                start,
+                event.filter { it.date >= start && it.date <= end },
+                this.firstOrNull { it.date >= start && it.date <= end }
+            ))
             while (start.month == month) {
                 start = start.with(TemporalAdjusters.next(DayOfWeek.MONDAY))
                 end = end.plusDays(7L)
 
                 if (start.month == month) {
                     list.add(
-                        SeasonItem.CalendarWeek(month, start, this.firstOrNull { it.date >= start && it.date <= end })
+                        SeasonItem.CalendarWeek(
+                            month,
+                            start,
+                            event.filter { it.date >= start && it.date <= end },
+                            this.firstOrNull { it.date >= start && it.date <= end }
+                        )
                     )
                 }
             }

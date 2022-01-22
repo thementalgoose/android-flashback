@@ -12,6 +12,7 @@ import tmg.flashback.statistics.network.models.races.DriverStandings
 import tmg.flashback.statistics.repo.base.BaseRepository
 import tmg.flashback.statistics.repo.extensions.valueList
 import tmg.flashback.statistics.repo.mappers.app.RaceMapper
+import tmg.flashback.statistics.repo.mappers.app.EventMapper
 import tmg.flashback.statistics.repo.mappers.network.*
 import tmg.flashback.statistics.repo.repository.CacheRepository
 import tmg.flashback.statistics.room.FlashbackDatabase
@@ -100,7 +101,6 @@ class RaceRepository(
         return@attempt true
     }
 
-
     fun getRace(season: Int, round: Int): Flow<Race?> {
         return persistence.seasonDao().getRace(season, round)
             .map { race ->
@@ -114,6 +114,9 @@ class RaceRepository(
     suspend fun shouldSyncRace(season: Int, @Suppress("UNUSED_PARAMETER") round: Int): Boolean {
         return shouldSyncRace(season)
     }
+
+
+
 
     private fun saveConstructorStandings(season: Int, constructors: Map<String, ConstructorStandings>?) {
         if (constructors == null) return

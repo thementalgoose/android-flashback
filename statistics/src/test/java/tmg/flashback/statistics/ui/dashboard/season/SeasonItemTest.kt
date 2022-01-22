@@ -17,11 +17,13 @@ fun SeasonItem.Companion.calendarMonthModel(
 fun SeasonItem.Companion.calendarWeekModel(
     forMonth: Month = Month.OCTOBER,
     startingDay: LocalDate = LocalDate.of(2020, 10, 12),
-    race: OverviewRace? = OverviewRace.model()
+    race: OverviewRace? = OverviewRace.model(),
+    event: List<Event> = listOf(Event.model())
 ): SeasonItem.CalendarWeek = SeasonItem.CalendarWeek(
     forMonth = forMonth,
     startingDay = startingDay,
-    race = race
+    race = race,
+    event = event
 )
 
 fun SeasonItem.Companion.trackModel(

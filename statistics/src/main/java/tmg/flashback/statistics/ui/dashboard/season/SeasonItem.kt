@@ -5,6 +5,7 @@ import org.threeten.bp.LocalDate
 import org.threeten.bp.Month
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.formula1.model.Schedule
+import tmg.flashback.formula1.model.Event
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.ui.model.AnimationSpeed
@@ -22,6 +23,7 @@ sealed class SeasonItem(
     data class CalendarWeek(
         val forMonth: Month,
         val startingDay: LocalDate,
+        val event: List<Event>,
         val race: OverviewRace?
     ): SeasonItem(R.layout.view_dashboard_season_calendar_week)
 

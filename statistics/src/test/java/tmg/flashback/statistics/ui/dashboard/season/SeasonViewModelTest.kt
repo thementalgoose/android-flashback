@@ -13,6 +13,7 @@ import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.formula1.model.*
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.controllers.HomeController
+import tmg.flashback.statistics.repo.EventsRepository
 import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.statistics.repo.RaceRepository
 import tmg.flashback.statistics.repo.SeasonRepository
@@ -32,6 +33,7 @@ internal class SeasonViewModelTest: BaseTest() {
 
     private val mockHomeController: HomeController = mockk(relaxed = true)
     private val mockRaceRepository: RaceRepository = mockk(relaxed = true)
+    private val mockEventsRepository: EventsRepository = mockk(relaxed = true)
     private val mockNetworkConnectivityManager: NetworkConnectivityManager = mockk(relaxed = true)
     private val mockOverviewRepository: OverviewRepository = mockk(relaxed = true)
     private val mockSeasonRepository: SeasonRepository = mockk(relaxed = true)
@@ -45,6 +47,7 @@ internal class SeasonViewModelTest: BaseTest() {
         sut = SeasonViewModel(
             mockHomeController,
             mockRaceRepository,
+            mockEventsRepository,
             mockNetworkConnectivityManager,
             mockOverviewRepository,
             mockSeasonRepository,
@@ -64,6 +67,7 @@ internal class SeasonViewModelTest: BaseTest() {
         every { mockHomeController.defaultSeason } returns Year.now().value
         every { mockHomeController.serverDefaultSeason } returns Year.now().value
         every { mockThemeController.animationSpeed } returns AnimationSpeed.QUICK
+        coEvery { mockEventsRepository.getEvents(any()) } returns flow { emit(listOf(Event.model())) }
         coEvery { mockRaceRepository.shouldSyncRace(any()) } returns false
         coEvery { mockOverviewRepository.fetchOverview(any()) } returns true
         coEvery { mockSeasonRepository.fetchRaces(any()) } returns true
@@ -101,6 +105,7 @@ internal class SeasonViewModelTest: BaseTest() {
         val observe = sut.outputs.showLoading.testObserve()
         coVerify { mockOverviewRepository.fetchOverview(2020) }
         coVerify { mockSeasonRepository.fetchRaces(2020) }
+        coVerify { mockEventsRepository.fetchEvents(2020) }
         verify {
             mockCacheRepository.markedCurrentSeasonSynchronised()
         }
@@ -114,6 +119,7 @@ internal class SeasonViewModelTest: BaseTest() {
         coVerify(exactly = 0) {
             mockOverviewRepository.fetchOverview(2020)
             mockRaceRepository.fetchRaces(2020)
+            mockEventsRepository.fetchEvents(2020)
         }
         verify(exactly = 0) {
             mockCacheRepository.markedCurrentSeasonSynchronised()

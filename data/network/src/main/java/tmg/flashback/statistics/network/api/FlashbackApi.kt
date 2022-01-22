@@ -11,6 +11,7 @@ import tmg.flashback.statistics.network.models.constructors.AllConstructors
 import tmg.flashback.statistics.network.models.constructors.ConstructorHistory
 import tmg.flashback.statistics.network.models.drivers.AllDrivers
 import tmg.flashback.statistics.network.models.drivers.DriverHistory
+import tmg.flashback.statistics.network.models.overview.Event
 import tmg.flashback.statistics.network.models.overview.Overview
 import tmg.flashback.statistics.network.models.races.Round
 import tmg.flashback.statistics.network.models.races.Season
@@ -23,6 +24,9 @@ interface FlashbackApi {
 
     @GET("overview/{season}.json")
     suspend fun getOverview(@Path("season") season: Int): Response<MetadataWrapper<Overview>>
+
+    @GET("overview/{season}/events.json")
+    suspend fun getOverviewEvents(@Path("season") season: Int): Response<MetadataWrapper<List<Event>>>
 
     @GET("drivers.json")
     suspend fun getDrivers(): Response<MetadataWrapper<AllDrivers>>
@@ -47,4 +51,7 @@ interface FlashbackApi {
 
     @GET("races/{season}/{round}.json")
     suspend fun getSeason(@Path("season") season: Int, @Path("round") round: Int): Response<MetadataWrapper<Round>>
+
+    @GET("races/{season}/events.json")
+    suspend fun getSeasonEvents(@Path("season") season: Int): Response<MetadataWrapper<List<Event>>>
 }

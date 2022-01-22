@@ -33,7 +33,7 @@ import tmg.flashback.statistics.workmanager.WorkerProvider
 val statisticsModule = repoModule + module {
 
     viewModel { CircuitViewModel(get(), get()) }
-    viewModel { SeasonViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
+    viewModel { SeasonViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get()) }
     viewModel { RacePreviewViewModel(get()) }
     viewModel { ConstructorViewModel(get(), get()) }
     viewModel { DriverViewModel(get(), get()) }

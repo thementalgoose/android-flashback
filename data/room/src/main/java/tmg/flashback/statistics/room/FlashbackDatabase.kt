@@ -12,6 +12,7 @@ import tmg.flashback.statistics.room.models.constructors.ConstructorSeasonDriver
 import tmg.flashback.statistics.room.models.drivers.Driver
 import tmg.flashback.statistics.room.models.drivers.DriverSeason
 import tmg.flashback.statistics.room.models.drivers.DriverSeasonRace
+import tmg.flashback.statistics.room.models.overview.Event
 import tmg.flashback.statistics.room.models.overview.Overview
 import tmg.flashback.statistics.room.models.overview.Schedule
 import tmg.flashback.statistics.room.models.race.QualifyingResult
@@ -23,7 +24,7 @@ import tmg.flashback.statistics.room.models.standings.DriverStanding
 import tmg.flashback.statistics.room.models.standings.DriverStandingConstructor
 
 @Database(
-    version = 2,
+    version = 3,
     entities = [
         Circuit::class,
         CircuitRound::class,
@@ -42,7 +43,8 @@ import tmg.flashback.statistics.room.models.standings.DriverStandingConstructor
         DriverStanding::class,
         DriverStandingConstructor::class,
         ConstructorStanding::class,
-        ConstructorStandingDriver::class
+        ConstructorStandingDriver::class,
+        Event::class
     ]
 )
 abstract class FlashbackDatabase: RoomDatabase() {
@@ -53,4 +55,5 @@ abstract class FlashbackDatabase: RoomDatabase() {
     abstract fun seasonDao(): SeasonDao
     abstract fun seasonStandingDao(): SeasonStandingsDao
     abstract fun scheduleDao(): ScheduleDao
+    abstract fun eventsDao(): EventsDao
 }
