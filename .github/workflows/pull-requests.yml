@@ -147,6 +147,10 @@ jobs:
         run: ./gradlew testDebugUnitTest
         if: ${{ needs.unit_test_diff_check.outputs.app == 'true' }}
 
+      - name: :statistics
+        run: ./gradlew :statistics:testDebugUnitTest
+        if: ${{ needs.unit_test_diff_check.outputs.statistics == 'true' && needs.unit_test_diff_check.outputs.app != 'true' }}
+
       - name: :common
         run: ./gradlew :common:testDebugUnitTest
         if: ${{ needs.unit_test_diff_check.outputs.common == 'true' && needs.unit_test_diff_check.outputs.app != 'true' }}
@@ -158,10 +162,6 @@ jobs:
       - name: :rss
         run: ./gradlew :rss:testDebugUnitTest
         if: ${{ needs.unit_test_diff_check.outputs.rss == 'true' && needs.unit_test_diff_check.outputs.app != 'true' }}
-
-      - name: :statistics
-        run: ./gradlew :statistics:testDebugUnitTest
-        if: ${{ needs.unit_test_diff_check.outputs.statistics == 'true' && needs.unit_test_diff_check.outputs.app != 'true' }}
 
       - name: :data:repo
         run: ./gradlew :data:repo:testDebugUnitTest

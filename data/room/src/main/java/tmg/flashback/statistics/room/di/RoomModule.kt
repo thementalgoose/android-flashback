@@ -10,7 +10,10 @@ import tmg.flashback.statistics.room.FlashbackDatabase
 val roomModule = module {
     single { Room
         .databaseBuilder(get(), FlashbackDatabase::class.java, "flashback-database")
-        .addMigrations(MIGRATION_1_2)
+        .addMigrations(
+            MIGRATION_1_2,
+            MIGRATION_2_3
+        )
         .build()
     }
 }
@@ -18,6 +21,18 @@ val roomModule = module {
 private val MIGRATION_1_2 = object : Migration(1,2) {
     override fun migrate(database: SupportSQLiteDatabase) {
         database.execSQL("ALTER TABLE RaceInfo ADD COLUMN youtube TEXT DEFAULT NULL")
+        Log.i("Database", "Migrated DB from version $startVersion to $endVersion")
+    }
+}
+
+private val MIGRATION_2_3 = object : Migration(2,3) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        database.execSQL("CREATE TABLE IF NOT EXISTS Event (" +
+                "label TEXT NOT NULL, " +
+                "date TEXT NOT NULL, " +
+                "type TEXT NOT NULL, " +
+                "season INTEGER NOT NULL, " +
+                "id TEXT NOT NULL PRIMARY KEY)")
         Log.i("Database", "Migrated DB from version $startVersion to $endVersion")
     }
 }
