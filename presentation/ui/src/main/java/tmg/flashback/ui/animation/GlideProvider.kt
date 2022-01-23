@@ -13,7 +13,7 @@ class GlideProvider {
         imageView: ImageView,
         img: String?,
         @DrawableRes
-        error: Int? = R.drawable.unknown_avatar
+        error: Int? = R.drawable.unknown_avatar // https://www.svgrepo.com/svg/45791/racing-helmet
     ) {
         Glide.with(imageView.context)
             .load(img)
