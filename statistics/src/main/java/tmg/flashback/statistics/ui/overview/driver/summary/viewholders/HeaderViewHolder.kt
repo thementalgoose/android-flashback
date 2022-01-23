@@ -10,8 +10,11 @@ import tmg.flashback.statistics.databinding.ViewDriverSummaryHeaderBinding
 import tmg.flashback.statistics.ui.overview.driver.summary.DriverSummaryItem
 import tmg.flashback.statistics.ui.shared.pill.PillAdapter
 import tmg.flashback.statistics.ui.shared.pill.PillItem
+import tmg.flashback.ui.animation.GlideProvider
 import tmg.flashback.ui.extensions.getColor
 import tmg.utilities.extensions.views.context
+
+private val glideProvider: GlideProvider = GlideProvider()
 
 class HeaderViewHolder(
         pillClicked: (PillItem) -> Unit,
@@ -29,9 +32,7 @@ class HeaderViewHolder(
 
     fun bind(item: DriverSummaryItem.Header) {
 
-        Glide.with(itemView.context)
-                .load(item.driverImg)
-                .into(binding.imgDriver)
+        glideProvider.load(binding.imgDriver, item.driverImg)
 
         binding.tvNumber.text = item.driverNumber?.toString() ?: ""
         binding.tvNumber.colorHighlight = when (item.constructors.isNotEmpty()) {
