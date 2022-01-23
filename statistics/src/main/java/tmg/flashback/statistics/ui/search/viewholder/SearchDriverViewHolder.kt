@@ -6,7 +6,11 @@ import com.bumptech.glide.Glide
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.statistics.databinding.ViewSearchDriverBinding
 import tmg.flashback.statistics.ui.search.SearchItem
+import tmg.flashback.ui.animation.GlideProvider
 import tmg.utilities.extensions.views.context
+
+
+private val glideProvider: GlideProvider = GlideProvider()
 
 class SearchDriverViewHolder(
     private val binding: ViewSearchDriverBinding,
@@ -28,9 +32,7 @@ class SearchDriverViewHolder(
         binding.driverISO.setImageResource(context.getFlagResourceAlpha3(item.nationalityISO))
         binding.driverNationality.text = item.nationality
 
-        Glide.with(binding.driverImage)
-            .load(item.imageUrl)
-            .into(binding.driverImage)
+        glideProvider.load(binding.driverImage, item.imageUrl)
     }
 
     override fun onClick(p0: View?) {
