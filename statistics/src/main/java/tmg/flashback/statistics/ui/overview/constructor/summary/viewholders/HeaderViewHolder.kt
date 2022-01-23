@@ -8,6 +8,7 @@ import tmg.flashback.statistics.databinding.ViewConstructorSummaryHeaderBinding
 import tmg.flashback.statistics.ui.overview.constructor.summary.ConstructorSummaryItem
 import tmg.flashback.statistics.ui.shared.pill.PillAdapter
 import tmg.flashback.statistics.ui.shared.pill.PillItem
+import tmg.flashback.ui.animation.GlideProvider
 import tmg.utilities.extensions.views.context
 
 class HeaderViewHolder(

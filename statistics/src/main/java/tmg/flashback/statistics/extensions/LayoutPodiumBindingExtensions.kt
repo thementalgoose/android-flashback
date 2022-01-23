@@ -2,17 +2,21 @@ package tmg.flashback.statistics.extensions
 
 import android.widget.TextView
 import com.bumptech.glide.Glide
+import org.koin.androidx.compose.inject
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.RaceRaceResult
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.LayoutPodiumBinding
 import tmg.flashback.statistics.ui.util.positionStarted
+import tmg.flashback.ui.animation.GlideProvider
 import tmg.flashback.ui.extensions.getColor
 import tmg.utilities.extensions.ordinalAbbreviation
 import tmg.utilities.extensions.views.gone
 import tmg.utilities.extensions.views.visible
 import kotlin.math.abs
+
+private val glideProvider: GlideProvider = GlideProvider()
 
 fun LayoutPodiumBinding.bindRaceModel(model: RaceRaceResult, position: Int, pointsLayout: TextView) {
     val context = pointsLayout.context
@@ -29,9 +33,7 @@ fun LayoutPodiumBinding.bindRaceModel(model: RaceRaceResult, position: Int, poin
     constructorColor.setBackgroundColor(model.driver.constructor.color)
 
     model.driver.driver.photoUrl?.let {
-        Glide.with(imgDriver)
-            .load(it)
-            .into(imgDriver)
+        glideProvider.load(imgDriver, it)
     }
 
     // Starting Position

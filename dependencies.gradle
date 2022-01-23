@@ -80,6 +80,7 @@ allprojects {
                         compiler                                : "androidx.room:room-compiler:$room",
                         ktx                                     : "androidx.room:room-ktx:$room"
                 ],
+                shimmer                                         : "com.facebook.shimmer:shimmer:0.5.0",
                 skeletonlayout                                  : "com.faltenreich:skeletonlayout:4.0.0",
                 threeten : [
                         threeten                                : "org.threeten:threetenbp:$threetenbp",
