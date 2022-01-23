@@ -116,7 +116,9 @@
         <entry key="formula1/src/main/res/drawable/ic_status_puncture.xml" value="0.14375" />
         <entry key="formula1/src/main/res/drawable/ic_status_radiator.xml" value="0.14375" />
         <entry key="formula1/src/main/res/drawable/ic_status_seat.xml" value="0.14375" />
+        <entry key="presentation/ui/src/main/res/drawable-night/unknown_avatar.xml" value="0.1985" />
         <entry key="presentation/ui/src/main/res/drawable/ic_menu.xml" value="0.1665" />
+        <entry key="presentation/ui/src/main/res/drawable/unknown_avatar.xml" value="0.1985" />
         <entry key="rss/src/main/res/drawable-anydpi/app_shortcut_rss_png.xml" value="0.3765625" />
         <entry key="rss/src/main/res/drawable/app_shortcut_rss.xml" value="0.5" />
         <entry key="rss/src/main/res/drawable/ic_rss.xml" value="0.18802083333333333" />
@@ -147,6 +149,9 @@
         <entry key="statistics/src/main/res/layout/view_dashboard_season_constructor.xml" value="0.1911231884057971" />
         <entry key="statistics/src/main/res/layout/view_dashboard_season_driver.xml" value="0.3532608695652174" />
         <entry key="statistics/src/main/res/layout/view_dashboard_season_track.xml" value="0.3532608695652174" />
+        <entry key="statistics/src/main/res/layout/view_driver_season_header.xml" value="0.25" />
+        <entry key="statistics/src/main/res/layout/view_driver_summary_header.xml" value="0.23143115942028986" />
+        <entry key="statistics/src/main/res/layout/view_driver_summary_history.xml" value="0.23143115942028986" />
         <entry key="statistics/src/main/res/layout/view_link_pill.xml" value="0.184375" />
         <entry key="statistics/src/main/res/layout/view_race_overview.xml" value="0.184375" />
         <entry key="statistics/src/main/res/layout/view_race_qualifying_driver.xml" value="0.184375" />
@@ -158,6 +163,9 @@
         <entry key="statistics/src/main/res/layout/view_race_race_result.xml" value="0.45" />
       </map>
     </option>
+  </component>
+  <component name="ProjectPlainTextFileTypeManager">
+    <file url="file://$PROJECT_DIR$/presentation/ui/src/main/java/tmg/flashback/ui/views/ShimmerDrawable.kt" />
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK" />
 </project>
