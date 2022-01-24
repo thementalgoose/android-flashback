@@ -21,8 +21,7 @@ import tmg.utilities.extensions.views.show
 
 class CalendarWeekViewHolder(
     private val binding: ViewDashboardSeasonCalendarWeekBinding,
-    private val calendarWeekRaceClicked: (track: SeasonItem.CalendarWeek) -> Unit,
-    private val animationSpeed: AnimationSpeed
+    private val calendarWeekRaceClicked: (track: SeasonItem.CalendarWeek) -> Unit
 ) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
 
     private val cells: List<LayoutDashboardSeasonCalendarWeekBinding> by lazy {
@@ -46,7 +45,7 @@ class CalendarWeekViewHolder(
     private var animation: AnimatorSet? = null
 
     init {
-        binding.calendar.setOnClickListener(this)
+        binding.clickTarget.setOnClickListener(this)
     }
 
     fun bind(item: SeasonItem.CalendarWeek) {
@@ -101,7 +100,7 @@ class CalendarWeekViewHolder(
                 }
                 event != null -> {
                     cells[x].day.setBackgroundResource(R.drawable.dashboard_calendar_testing)
-                    cells[x].day.setTextColor(Color.WHITE)
+                    cells[x].day.setTextColor(context.theme.getColor(R.attr.contentPrimary))
                     cells[x].container.setOnClickListener {
                         Snackbar.make(
                                 cells[x].container,
@@ -127,7 +126,10 @@ class CalendarWeekViewHolder(
             binding.highlight.alpha = alphaHighlightEnabled
             binding.highlight.show(false)
             binding.flag.show(false)
+            binding.clickTarget.show(false)
         } else {
+            binding.clickTarget.show()
+            binding.clickTarget.contentDescription = item.race.raceName
             hasExpandingContent = true
             if (item.race.date < LocalDate.now()) {
                 binding.highlight.alpha = alphaHighlightDisabled
@@ -152,7 +154,7 @@ class CalendarWeekViewHolder(
 
     override fun onClick(p0: View?) {
         when (p0) {
-            binding.calendar -> {
+            binding.clickTarget -> {
                 if (hasExpandingContent) {
                     calendarWeekRaceClicked(item)
                 }

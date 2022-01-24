@@ -20,8 +20,6 @@ class SeasonAdapter(
     private val constructorClicked: (constructor: SeasonItem.Constructor) -> Unit
 ): SyncAdapter<SeasonItem>() {
 
-    private val themeController: ThemeController by inject()
-
     override var list: List<SeasonItem> = emptyList()
         set(initialValue) {
             val value = initialValue.addDataProvidedByItem()
@@ -55,8 +53,7 @@ class SeasonAdapter(
             )
             R.layout.view_dashboard_season_calendar_week -> CalendarWeekViewHolder(
                 ViewDashboardSeasonCalendarWeekBinding.inflate(layoutInflater, parent, false),
-                calendarWeekRaceClicked,
-                themeController.animationSpeed
+                calendarWeekRaceClicked
             )
             else -> super.onCreateViewHolder(parent, viewType)
         }

@@ -118,4 +118,16 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@drawable/ca" />
 
+    <View
+        android:id="@+id/clickTarget"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/ripple_rectangle"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintBottom_toBottomOf="@id/highlight"
+        app:layout_constraintEnd_toEndOf="@id/highlight"
+        app:layout_constraintStart_toStartOf="@id/highlight"
+        app:layout_constraintTop_toTopOf="@id/highlight" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
