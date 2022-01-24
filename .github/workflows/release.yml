@@ -158,7 +158,7 @@ jobs:
 
       - name: Notify discord of failure
         uses: sarisia/actions-status-discord@v1
-        if: failure() || needs.deploy.result == 'failure'
+        if: failure() || needs.deploy.result == 'failure' || needs.update_versions.result == 'failure' || needs.unit_test.result == 'failure'
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         with:
@@ -169,7 +169,7 @@ jobs:
 
       - name: Notify discord of success
         uses: sarisia/actions-status-discord@v1
-        if: success() && needs.deploy.result != 'failure'
+        if: success() && needs.deploy.result != 'failure' && needs.update_versions.result != 'failure' && needs.unit_test.result != 'failure'
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         with:
