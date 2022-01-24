@@ -104,6 +104,11 @@ jobs:
         with:
           fetch-depth: 0
 
+      # Setup Python
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
       # Version tag
       - name: Version Name
         id: get_version_name
@@ -121,7 +126,7 @@ jobs:
       # README
       - name: README latest version
         run: |
-          sh .github/scripts/update-readme.sh ${{ steps.get_version_name.outputs.VERSION }}
+          python .github/scripts/update-readme.py ${{ steps.get_version_name.outputs.VERSION }}
 
       # Commits changes to README
       - name: Commit and push changes
