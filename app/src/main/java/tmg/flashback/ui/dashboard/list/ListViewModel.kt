@@ -1,5 +1,8 @@
 package tmg.flashback.ui.dashboard.list
 
+import android.annotation.SuppressLint
+import android.content.Context
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.*
 import kotlinx.coroutines.flow.combine
 import tmg.flashback.DebugController
@@ -8,6 +11,10 @@ import tmg.flashback.ads.controller.AdsController
 import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.statistics.controllers.HomeController
 import tmg.flashback.statistics.controllers.ScheduleController
+import tmg.flashback.ui.controllers.ThemeController
+import tmg.flashback.ui.model.NightMode
+import tmg.utilities.extensions.isInDayMode
+import tmg.utilities.extensions.isInNightMode
 import tmg.utilities.lifecycle.DataEvent
 import tmg.utilities.lifecycle.Event
 
@@ -20,6 +27,8 @@ interface ListViewModelInputs {
     fun toggleHeader(header: HeaderType, to: Boolean? = null)
     fun toggleFavourite(season: Int)
     fun clickSeason(season: Int)
+
+    fun toggleDarkMode()
 
     fun clickClearDefaultSeason()
     fun clickSetDefaultSeason(season: Int)
@@ -44,6 +53,8 @@ interface ListViewModelOutputs {
     val openRss: LiveData<Event>
     val openContact: LiveData<Event>
 
+    val themeUpdated: LiveData<DataEvent<NightMode>>
+
     val openNotificationsOnboarding: LiveData<Event>
 }
 
@@ -54,6 +65,7 @@ class ListViewModel(
     private val rssController: RSSController,
     private val debugController: DebugController,
     private val adsController: AdsController,
+    private val themeController: ThemeController,
     private val scheduleController: ScheduleController
 ) : ViewModel(), ListViewModelInputs, ListViewModelOutputs {
 
@@ -61,6 +73,8 @@ class ListViewModel(
     private var selectionHeaderAll: MutableLiveData<Boolean> = MutableLiveData(homeController.allExpanded)
     private var currentSeason: MutableLiveData<Int> = MutableLiveData(homeController.defaultSeason)
     private val refreshList: MutableLiveData<Event> = MutableLiveData(Event())
+
+    override val themeUpdated: MutableLiveData<DataEvent<NightMode>> = MutableLiveData()
 
     override val list: LiveData<List<ListItem>> = combine(
         currentSeason.asFlow(),
@@ -105,6 +119,13 @@ class ListViewModel(
             list.add(ListItem.Divider)
             list.add(ListItem.Header(type = HeaderType.LINKS, expanded = null))
             list.addAll(buttonsList)
+            list.add(ListItem.Divider)
+            list.add(ListItem.Switch(
+                itemId = "dark_mode",
+                label = R.string.dashboard_season_list_extra_dark_mode_title,
+                icon = R.drawable.ic_nightmode_dark,
+                isChecked = !themeController.isDayMode
+            ))
         }
 
         // Notifications
@@ -190,6 +211,14 @@ class ListViewModel(
 
     override fun clickRss() {
         openRss.value = Event()
+    }
+
+    override fun toggleDarkMode() {
+        themeController.nightMode = when (themeController.isDayMode) {
+            true -> NightMode.NIGHT
+            false -> NightMode.DAY
+        }
+        refreshList.postValue(Event())
     }
 
     override fun toggleHeader(header: HeaderType, to: Boolean?) {

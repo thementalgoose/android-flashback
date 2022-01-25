@@ -47,13 +47,6 @@ class NightModeBottomSheetFragment: BaseBottomSheetFragment<FragmentBottomSheetN
         }
 
         observeEvent(viewModel.outputs.nightModeUpdated) { (value, isSameSelection) ->
-            if (!isSameSelection) {
-                when (value) {
-                    NightMode.DEFAULT -> setDefaultNightMode(MODE_NIGHT_FOLLOW_SYSTEM)
-                    NightMode.DAY -> setDefaultNightMode(MODE_NIGHT_NO)
-                    NightMode.NIGHT -> setDefaultNightMode(MODE_NIGHT_YES)
-                }
-            }
             setFragmentResult(SettingsAppearanceFragment.requestKey, bundleOf(
                 SettingsAppearanceFragment.bundleKey to !isSameSelection
             ))
