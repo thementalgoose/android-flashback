@@ -8,6 +8,7 @@ import androidx.core.content.res.ResourcesCompat
 import tmg.flashback.statistics.R
 import tmg.utilities.extensions.dpToPx
 import tmg.utilities.extensions.getColor
+import tmg.utilities.utils.ColorUtils.Companion.darken
 import kotlin.math.roundToInt
 
 class RaceNumberView: androidx.appcompat.widget.AppCompatTextView {
@@ -29,8 +30,8 @@ class RaceNumberView: androidx.appcompat.widget.AppCompatTextView {
     @ColorInt
     var colorHighlight: Int = context.theme.getColor(R.attr.colorPrimary)
         set(value) {
-            field = value
-            setShadowLayer(10f, 0f, 0f, value)
+            field = darken(value, factor = 0.8f)
+            setShadowLayer(12f, 0f, 0f, field)
             invalidate()
         }
 
@@ -44,7 +45,7 @@ class RaceNumberView: androidx.appcompat.widget.AppCompatTextView {
                     recycle()
                 }
             }
-        typeface = ResourcesCompat.getFont(context, R.font.yukarimobil)
+        typeface = ResourcesCompat.getFont(context, R.font.closeness)
         setPadding(horizontalPadding, verticalPadding, horizontalPadding, verticalPadding)
         setTextColor(Color.WHITE)
     }
