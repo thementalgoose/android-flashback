@@ -56,6 +56,10 @@ class ListAdapter(
             R.layout.view_season_list_advert -> AdvertViewHolder(
                 ViewSeasonListAdvertBinding.inflate(layoutInflater, parent, false)
             )
+            R.layout.view_season_list_switch -> SwitchViewHolder(
+                buttonClicked,
+                ViewSeasonListSwitchBinding.inflate(layoutInflater, parent, false)
+            )
             else -> throw Exception("View type not implemented")
         }
     }
@@ -73,6 +77,7 @@ class ListAdapter(
             }
             is ListItem.Header -> (holder as HeaderViewHolder).bind(item)
             is ListItem.Button -> (holder as ButtonViewHolder).bind(item)
+            is ListItem.Switch -> (holder as SwitchViewHolder).bind(item)
             is ListItem.FeatureBanner -> (holder as FeatureBannerViewHolder).bind(item)
             else -> { }
         }
