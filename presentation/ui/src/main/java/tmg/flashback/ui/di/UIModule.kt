@@ -6,6 +6,6 @@ import tmg.flashback.ui.controllers.ThemeController
 
 val uiModule = module {
 
-    single { ThemeController(get(), get(), get()) }
+    single { ThemeController(get(), get(), get(), get()) }
     single { GlideProvider() }
 }

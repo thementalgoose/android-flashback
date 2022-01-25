@@ -1,7 +1,14 @@
 package tmg.flashback.ui.controllers
 
+import android.content.Context
+import android.content.res.Configuration
+import android.content.res.Configuration.UI_MODE_NIGHT_NO
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import android.content.res.Resources
+import androidx.appcompat.app.AppCompatDelegate
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.mockkStatic
 import io.mockk.verify
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
@@ -17,15 +24,25 @@ import tmg.testutils.BaseTest
 
 internal class ThemeControllerTest: BaseTest() {
 
+    private val mockContext: Context = mockk()
+    private val mockResources: Resources = mockk()
+    private val fakeConfiguration: Configuration = Configuration()
+
     private val mockPreferenceManager: PreferenceManager = mockk()
     private val mockStyleManager: StyleManager = mockk()
     private val mockConfigManager: ConfigManager = mockk()
 
     private lateinit var sut: ThemeController
 
-    private fun initSUT() {
+    private fun initSUT(defaultDayModeToo: Boolean = true) {
         every { mockPreferenceManager.save(any(), any<String>()) } returns Unit
-        sut = ThemeController(mockPreferenceManager, mockConfigManager, mockStyleManager)
+        every { mockContext.resources } returns mockResources
+        every { mockResources.configuration } returns fakeConfiguration
+        fakeConfiguration.uiMode = when (defaultDayModeToo) {
+            true -> UI_MODE_NIGHT_YES
+            false -> UI_MODE_NIGHT_NO
+        }
+        sut = ThemeController(mockContext, mockPreferenceManager, mockConfigManager, mockStyleManager)
     }
 
     @Test
@@ -61,8 +78,10 @@ internal class ThemeControllerTest: BaseTest() {
     fun `saving night mode writes correct value to preference manager`() {
         initSUT()
         sut.nightMode = NightMode.DAY
+        mockkStatic(AppCompatDelegate::class)
         verify {
             mockPreferenceManager.save(keyNightMode, NightMode.DAY.key)
+            AppCompatDelegate.setDefaultNightMode(any())
         }
     }
 
@@ -84,6 +103,23 @@ internal class ThemeControllerTest: BaseTest() {
         verify {
             mockPreferenceManager.getString(keyNightMode, null)
         }
+    }
+
+    @ParameterizedTest
+    @CsvSource(
+        "DEFAULT,true,true",
+        "DEFAULT,false,false",
+        "DAY,true,true",
+        "DAY,false,true",
+        "NIGHT,true,false",
+        "NIGHT,true,false"
+    )
+    fun `is day mode returns true when night mode is NIGHT`(nightMode: NightMode, isInDayMode: Boolean, expected: Boolean) {
+
+        every { mockPreferenceManager.getString(any()) } returns nightMode.key
+        initSUT(defaultDayModeToo = isInDayMode)
+
+        assertEquals(expected, sut.isDayMode)
     }
 
     @Test

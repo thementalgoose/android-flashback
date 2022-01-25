@@ -16,6 +16,7 @@ import tmg.flashback.databinding.FragmentDashboardListBinding
 import tmg.flashback.rss.ui.RSSActivity
 import tmg.flashback.statistics.ui.dashboard.onboarding.OnboardingNotificationBottomSheetFragment
 import tmg.flashback.ui.base.BaseFragment
+import tmg.flashback.ui.controllers.ThemeController
 import tmg.flashback.ui.dashboard.DashboardNavigationCallback
 import tmg.flashback.ui.navigation.NavigationProvider
 import tmg.flashback.ui.settings.SettingsAllActivity
@@ -29,7 +30,6 @@ class ListFragment: BaseFragment() {
     private val binding by viewInflateBinding(FragmentDashboardListBinding::inflate)
 
     private val navigationProvider: NavigationProvider by inject()
-
     private val debugController: DebugController by inject()
 
     private var adapter: ListAdapter? = null
@@ -58,6 +58,9 @@ class ListFragment: BaseFragment() {
                          "contact" -> viewModel.inputs.clickContact()
                          "debug_list_item" -> {
                              context?.let { debugController.goToDebugActivity(it) }
+                         }
+                         "dark_mode" -> {
+                            viewModel.inputs.toggleDarkMode()
                          }
                      }
                 },
