@@ -39,8 +39,8 @@ internal class ThemeControllerTest: BaseTest() {
         every { mockContext.resources } returns mockResources
         every { mockResources.configuration } returns fakeConfiguration
         fakeConfiguration.uiMode = when (defaultDayModeToo) {
-            true -> UI_MODE_NIGHT_YES
-            false -> UI_MODE_NIGHT_NO
+            true -> UI_MODE_NIGHT_NO
+            false -> UI_MODE_NIGHT_YES
         }
         sut = ThemeController(mockContext, mockPreferenceManager, mockConfigManager, mockStyleManager)
     }
@@ -81,7 +81,6 @@ internal class ThemeControllerTest: BaseTest() {
         mockkStatic(AppCompatDelegate::class)
         verify {
             mockPreferenceManager.save(keyNightMode, NightMode.DAY.key)
-            AppCompatDelegate.setDefaultNightMode(any())
         }
     }
 
@@ -105,7 +104,7 @@ internal class ThemeControllerTest: BaseTest() {
         }
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "With nightMode pref {0} and is day mode {1} then is day mode returns {2}")
     @CsvSource(
         "DEFAULT,true,true",
         "DEFAULT,false,false",
