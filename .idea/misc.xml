@@ -140,7 +140,9 @@
         <entry key="statistics/src/main/res/layout/activity_driver.xml" value="0.1" />
         <entry key="statistics/src/main/res/layout/fragment_bottom_sheet_notifications_onboarding.xml" value="0.11770833333333333" />
         <entry key="statistics/src/main/res/layout/fragment_bottom_sheet_race_preview.xml" value="0.3532608695652174" />
+        <entry key="statistics/src/main/res/layout/fragment_driver.xml" value="0.24954710144927536" />
         <entry key="statistics/src/main/res/layout/layout_constructor_driver.xml" value="0.335" />
+        <entry key="statistics/src/main/res/layout/layout_constructor_driver_label.xml" value="0.24954710144927536" />
         <entry key="statistics/src/main/res/layout/layout_dashboard_season_calendar_week.xml" value="0.20104166666666667" />
         <entry key="statistics/src/main/res/layout/layout_driver.xml" value="0.184375" />
         <entry key="statistics/src/main/res/layout/layout_podium.xml" value="0.184375" />
@@ -163,9 +165,6 @@
         <entry key="statistics/src/main/res/layout/view_race_race_result.xml" value="0.45" />
       </map>
     </option>
-  </component>
-  <component name="ProjectPlainTextFileTypeManager">
-    <file url="file://$PROJECT_DIR$/presentation/ui/src/main/java/tmg/flashback/ui/views/ShimmerDrawable.kt" />
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK" />
 </project>
