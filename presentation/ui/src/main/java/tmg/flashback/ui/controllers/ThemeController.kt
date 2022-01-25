@@ -1,15 +1,20 @@
 package tmg.flashback.ui.controllers
 
+import android.content.Context
 import androidx.annotation.StyleRes
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
 import tmg.flashback.configuration.manager.ConfigManager
 import tmg.flashback.prefs.manager.PreferenceManager
 import tmg.flashback.ui.managers.StyleManager
 import tmg.flashback.ui.model.AnimationSpeed
 import tmg.flashback.ui.model.NightMode
 import tmg.flashback.ui.model.Theme
+import tmg.utilities.extensions.isInDayMode
 import tmg.utilities.extensions.toEnum
 
 class ThemeController(
+    private val applicationContext: Context,
     private val preferenceManager: PreferenceManager,
     private val configManager: ConfigManager,
     private val styleManager: StyleManager
@@ -34,7 +39,21 @@ class ThemeController(
      */
     var nightMode: NightMode
         get() = preferenceManager.getString(keyNightMode)?.toEnum<NightMode> { it.key } ?: NightMode.DEFAULT
-        set(value) = preferenceManager.save(keyNightMode, value.key)
+        set(value) {
+            preferenceManager.save(keyNightMode, value.key)
+            when (value) {
+                NightMode.DEFAULT -> AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_FOLLOW_SYSTEM)
+                NightMode.DAY -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                NightMode.NIGHT -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            }
+        }
+
+    val isDayMode: Boolean
+        get() = when (nightMode) {
+            NightMode.DEFAULT -> applicationContext.isInDayMode()
+            NightMode.DAY -> true
+            NightMode.NIGHT -> false
+        }
 
     /**
      * Theme preference

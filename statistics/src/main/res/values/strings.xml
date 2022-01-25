@@ -26,6 +26,7 @@
     <string name="dashboard_season_list_up_next_moved">Find out what\'s coming up!</string>
     <string name="dashboard_season_list_extra_settings_title">Settings</string>
     <string name="dashboard_season_list_extra_contact_title">Contact</string>
+    <string name="dashboard_season_list_extra_dark_mode_title">Dark Mode</string>
     <string name="dashboard_season_list_default_banner_automatic">No default season set, so Flashback will manage the currently active season</string>
     <string name="dashboard_season_list_default_banner_user">Default season set to %d</string>
     <string name="dashboard_season_list_default_banner_revert">Undo</string>

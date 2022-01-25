@@ -14,6 +14,8 @@ import tmg.flashback.ads.repository.model.AdvertConfig
 import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.statistics.controllers.HomeController
 import tmg.flashback.statistics.controllers.ScheduleController
+import tmg.flashback.ui.controllers.ThemeController
+import tmg.flashback.ui.model.NightMode
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.*
 
@@ -28,6 +30,7 @@ internal class ListViewModelTest: BaseTest() {
     private val mockRssController: RSSController = mockk(relaxed = true)
     private val mockDebugController: DebugController = mockk(relaxed = true)
     private val mockAdsController: AdsController = mockk(relaxed = true)
+    private val mockThemeController: ThemeController = mockk(relaxed = true)
     private val mockScheduleController: ScheduleController = mockk(relaxed = true)
 
     @BeforeEach
@@ -44,6 +47,9 @@ internal class ListViewModelTest: BaseTest() {
         every { mockRssController.enabled } returns false
 
         every { mockDebugController.listItem } returns null
+
+        every { mockThemeController.nightMode } returns NightMode.DEFAULT
+        every { mockThemeController.isDayMode } returns true
     }
 
     private fun initSUT() {
@@ -52,6 +58,7 @@ internal class ListViewModelTest: BaseTest() {
             mockRssController,
             mockDebugController,
             mockAdsController,
+            mockThemeController,
             mockScheduleController
         )
     }
@@ -122,6 +129,46 @@ internal class ListViewModelTest: BaseTest() {
         sut.outputs.list.test {
             assertListMatchesItem {
                 it is ListItem.Season && !it.showClearDefault
+            }
+        }
+    }
+
+    //endregion
+
+    //region Night mode
+
+    @Test
+    fun `toggle night mode from default when device is true sets night mode to NIGHT`() {
+        every { mockThemeController.nightMode } returns NightMode.DEFAULT
+        every { mockThemeController.isDayMode } returns true
+
+        initSUT()
+        sut.toggleDarkMode()
+
+        verify {
+            mockThemeController.nightMode = NightMode.NIGHT
+        }
+        sut.outputs.list.test {
+            assertListMatchesItem {
+                it is ListItem.Switch && it.itemId == "dark_mode" && !it.isChecked
+            }
+        }
+    }
+
+    @Test
+    fun `toggle night mode from default when device is false sets night mode to DAY`() {
+        every { mockThemeController.nightMode } returns NightMode.DEFAULT
+        every { mockThemeController.isDayMode } returns false
+
+        initSUT()
+        sut.toggleDarkMode()
+
+        verify {
+            mockThemeController.nightMode = NightMode.DAY
+        }
+        sut.outputs.list.test {
+            assertListMatchesItem {
+                it is ListItem.Switch && it.itemId == "dark_mode" && it.isChecked
             }
         }
     }
@@ -416,13 +463,20 @@ internal class ListViewModelTest: BaseTest() {
 
     //region Mock Data - Expected list
 
-    private fun expectedList(favourites: Set<Int> = emptySet(), showFavourites: Boolean = true, showAll: Boolean = true): List<ListItem> {
+    private fun expectedList(
+        favourites: Set<Int> = emptySet(),
+        showFavourites: Boolean = true,
+        showAll: Boolean = true,
+        darkModeChecked: Boolean = true
+    ): List<ListItem> {
         val expected = mutableListOf<ListItem>()
         expected.add(ListItem.Hero)
         expected.add(ListItem.Divider)
         expected.add(headerLinks)
         expected.add(buttonSettings)
         expected.add(buttonContact)
+        expected.add(ListItem.Divider)
+        expected.add(switchDarkMode(darkModeChecked))
         expected.add(ListItem.Divider)
         if (showFavourites) {
             expected.add(headerFavouriteOpen)
@@ -458,6 +512,11 @@ internal class ListViewModelTest: BaseTest() {
     private val buttonContact = ListItem.Button("contact",
             R.string.dashboard_season_list_extra_contact_title,
             R.drawable.ic_contact
+    )
+    private fun switchDarkMode(isChecked: Boolean = true) = ListItem.Switch("dark_mode",
+            R.string.dashboard_season_list_extra_dark_mode_title,
+            R.drawable.ic_nightmode_dark,
+            isChecked = isChecked
     )
 
     //endregion
