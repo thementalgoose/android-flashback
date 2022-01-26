@@ -11,6 +11,8 @@ import org.threeten.bp.Month
 import org.threeten.bp.temporal.TemporalAdjusters
 import tmg.flashback.analytics.manager.AnalyticsManager
 import tmg.flashback.device.managers.NetworkConnectivityManager
+import tmg.flashback.formula1.constants.Formula1
+import tmg.flashback.formula1.constants.Formula1.constructorChampionshipStarts
 import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
 import tmg.flashback.formula1.extensions.getConstructorInProgressInfo
 import tmg.flashback.formula1.extensions.getDriverInProgressInfo
@@ -235,6 +237,9 @@ class SeasonViewModel(
             .map {
                 val list = getBannerList()
                 when {
+                    season < constructorChampionshipStarts -> {
+                        list.addError(SyncDataItem.ConstructorsChampionshipNotAwarded)
+                    }
                     (it == null || it.standings.isEmpty()) && !isConnected -> list.addError(SyncDataItem.PullRefresh)
                     (it == null || it.standings.isEmpty()) && season >= currentSeasonYear -> list.addError(SyncDataItem.Unavailable(STANDINGS_EARLY))
                     (it == null || it.standings.isEmpty()) -> list.addError(SyncDataItem.Unavailable(STANDINGS_INTERNAL_ERROR))
