@@ -10,11 +10,11 @@ import tmg.flashback.statistics.room.models.constructors.model
 
 internal class ConstructorDataMapperTest {
 
-    private lateinit var sut: ConstructorDataMapper
+    private lateinit var underTest: ConstructorDataMapper
 
     @BeforeEach
     internal fun setUp() {
-        sut = ConstructorDataMapper()
+        underTest = ConstructorDataMapper()
     }
 
     @Test
@@ -22,6 +22,6 @@ internal class ConstructorDataMapperTest {
         val input = RoomConstructor.model()
         val expected = Constructor.model()
 
-        assertEquals(expected, sut.mapConstructorData(input))
+        assertEquals(expected, underTest.mapConstructorData(input))
     }
 }

@@ -15,11 +15,11 @@ internal class ConstructorStandingMapperTest {
     private val mockConstructorDataMapper: ConstructorDataMapper = mockk(relaxed = true)
     private val mockDriverDataMapper: DriverDataMapper = mockk(relaxed = true)
 
-    private lateinit var sut: ConstructorStandingMapper
+    private lateinit var underTest: ConstructorStandingMapper
 
     @BeforeEach
     internal fun setUp() {
-        sut = ConstructorStandingMapper(
+        underTest = ConstructorStandingMapper(
             mockDriverDataMapper,
             mockConstructorDataMapper
         )
@@ -33,7 +33,7 @@ internal class ConstructorStandingMapperTest {
         val input = ConstructorStandingWithDrivers.model()
         val expected = SeasonConstructorStandingSeason.model()
 
-        assertEquals(expected, sut.mapConstructorStanding(input))
+        assertEquals(expected, underTest.mapConstructorStanding(input))
     }
 
     @Test
@@ -41,14 +41,14 @@ internal class ConstructorStandingMapperTest {
         val input = listOf(ConstructorStandingWithDrivers.model())
         val expected = SeasonConstructorStandings.model()
 
-        assertEquals(expected, sut.mapConstructorStanding(input))
+        assertEquals(expected, underTest.mapConstructorStanding(input))
     }
 
     @Test
     fun `mapConstructorStanding list returns null if list is empty`() {
         val input = emptyList<ConstructorStandingWithDrivers>()
 
-        assertNull(sut.mapConstructorStanding(input))
+        assertNull(underTest.mapConstructorStanding(input))
     }
 
 }

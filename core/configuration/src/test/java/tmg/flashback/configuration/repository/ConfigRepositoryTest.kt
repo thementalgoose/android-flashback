@@ -11,10 +11,10 @@ internal class ConfigRepositoryTest {
 
     private val mockPreferenceManager: PreferenceManager = mockk(relaxed = true)
 
-    private lateinit var sut: ConfigRepository
+    private lateinit var underTest: ConfigRepository
 
-    private fun initSUT() {
-        sut = ConfigRepository(mockPreferenceManager)
+    private fun initUnderTest() {
+        underTest = ConfigRepository(mockPreferenceManager)
     }
 
     //region Remote Config Sync count
@@ -22,8 +22,8 @@ internal class ConfigRepositoryTest {
     @Test
     fun `remote config sync count calls shared prefs repository`() {
         every { mockPreferenceManager.getInt(keyRemoteConfigSync, any()) } returns 3
-        initSUT()
-        assertEquals(sut.remoteConfigSync, 3)
+        initUnderTest()
+        assertEquals(underTest.remoteConfigSync, 3)
         verify {
             mockPreferenceManager.getInt(keyRemoteConfigSync, 0)
         }
@@ -31,8 +31,8 @@ internal class ConfigRepositoryTest {
 
     @Test
     fun `remote config sync count saves in shared prefs repository`() {
-        initSUT()
-        sut.remoteConfigSync = 2
+        initUnderTest()
+        underTest.remoteConfigSync = 2
         verify {
             mockPreferenceManager.save(keyRemoteConfigSync, 2)
         }
@@ -45,8 +45,8 @@ internal class ConfigRepositoryTest {
     @Test
     fun `remote config reset to migration version calls shared prefs repository`() {
         every { mockPreferenceManager.getInt(keyRemoteConfigResetCalledAtMigrationVersion, any()) } returns 3
-        initSUT()
-        assertEquals(sut.resetAtMigrationVersion, 3)
+        initUnderTest()
+        assertEquals(underTest.resetAtMigrationVersion, 3)
         verify {
             mockPreferenceManager.getInt(keyRemoteConfigResetCalledAtMigrationVersion, 0)
         }
@@ -54,8 +54,8 @@ internal class ConfigRepositoryTest {
 
     @Test
     fun `remote config reset to migration version saves in shared prefs repository`() {
-        initSUT()
-        sut.resetAtMigrationVersion = 2
+        initUnderTest()
+        underTest.resetAtMigrationVersion = 2
         verify {
             mockPreferenceManager.save(keyRemoteConfigResetCalledAtMigrationVersion, 2)
         }

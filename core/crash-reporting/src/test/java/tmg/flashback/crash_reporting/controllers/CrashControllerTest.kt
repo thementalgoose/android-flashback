@@ -15,10 +15,10 @@ internal class CrashControllerTest {
     private var mockCrashRepository: CrashRepository = mockk(relaxed = true)
     private var mockCrashService: CrashService = mockk(relaxed = true)
 
-    private lateinit var sut: CrashController
+    private lateinit var underTest: CrashController
 
-    private fun initSUT() {
-        sut = CrashController(mockCrashRepository, mockCrashService)
+    private fun initUnderTest() {
+        underTest = CrashController(mockCrashRepository, mockCrashService)
     }
 
     //region Crash reporting enabled
@@ -26,27 +26,27 @@ internal class CrashControllerTest {
     @Test
     fun `crash reporting enabled`() {
         every { mockCrashRepository.isEnabled } returns true
-        initSUT()
+        initUnderTest()
 
-        Assertions.assertTrue(sut.enabled)
+        Assertions.assertTrue(underTest.enabled)
         verify { mockCrashRepository.isEnabled }
     }
 
     @Test
     fun `crash reporting disabled`() {
         every { mockCrashRepository.isEnabled } returns false
-        initSUT()
+        initUnderTest()
 
-        Assertions.assertFalse(sut.enabled)
+        Assertions.assertFalse(underTest.enabled)
         verify { mockCrashRepository.isEnabled }
     }
 
     @Test
     fun `crash reporting update saves in prefs`() {
 
-        initSUT()
+        initUnderTest()
 
-        sut.enabled = true
+        underTest.enabled = true
         verify { mockCrashRepository.isEnabled = true }
     }
 
@@ -60,8 +60,8 @@ internal class CrashControllerTest {
         val expectedDate = LocalDate.now().format(DateTimeFormatter.ofPattern("dd MMM yyyy"))
         every { mockCrashRepository.isEnabled } returns true
 
-        initSUT()
-        sut.initialise(
+        initUnderTest()
+        underTest.initialise(
             deviceUdid = "test-udid",
             appOpenedCount = 1,
             appFirstOpened = now
@@ -80,8 +80,8 @@ internal class CrashControllerTest {
     fun `log msg forwards to firebase if toggle is enabled`() {
         every { mockCrashRepository.isEnabled } returns true
 
-        initSUT()
-        sut.log("msg")
+        initUnderTest()
+        underTest.log("msg")
 
         verify { mockCrashService.logInfo("msg") }
     }
@@ -90,8 +90,8 @@ internal class CrashControllerTest {
     fun `log msg forwards to firebase if toggle is disabled`() {
         every { mockCrashRepository.isEnabled } returns false
 
-        initSUT()
-        sut.log("msg")
+        initUnderTest()
+        underTest.log("msg")
 
         verify(exactly = 0) { mockCrashService.logInfo("msg") }
     }
@@ -100,8 +100,8 @@ internal class CrashControllerTest {
     fun `log error forwards to firebase if toggle is enabled`() {
         every { mockCrashRepository.isEnabled } returns true
 
-        initSUT()
-        sut.logError("msg")
+        initUnderTest()
+        underTest.logError("msg")
 
         verify { mockCrashService.logError("msg") }
     }
@@ -110,8 +110,8 @@ internal class CrashControllerTest {
     fun `log error forwards to firebase if toggle is disabled`() {
         every { mockCrashRepository.isEnabled } returns false
 
-        initSUT()
-        sut.logError("msg")
+        initUnderTest()
+        underTest.logError("msg")
 
         verify(exactly = 0) { mockCrashService.logError("msg") }
     }
@@ -121,8 +121,8 @@ internal class CrashControllerTest {
         every { mockCrashRepository.isEnabled } returns true
 
         val exception = RuntimeException()
-        initSUT()
-        sut.logError(exception, "msg")
+        initUnderTest()
+        underTest.logError(exception, "msg")
 
         verify { mockCrashService.logException(exception, "msg") }
     }
@@ -132,8 +132,8 @@ internal class CrashControllerTest {
         every { mockCrashRepository.isEnabled } returns false
 
         val exception = RuntimeException()
-        initSUT()
-        sut.logError(exception, "msg")
+        initUnderTest()
+        underTest.logError(exception, "msg")
 
         verify(exactly = 0) { mockCrashService.logException(exception, "msg") }
     }

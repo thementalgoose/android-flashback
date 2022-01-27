@@ -20,10 +20,10 @@ internal class RSSControllerTest: BaseTest() {
     private val mockRssRepository: RSSRepository = mockk(relaxed = true)
     private val mockAppShortcutManager: AppShortcutManager = mockk(relaxed = true)
 
-    private lateinit var sut: RSSController
+    private lateinit var underTest: RSSController
 
     private fun initSUT() {
-        sut = RSSController(mockRssRepository, mockAppShortcutManager)
+        underTest = RSSController(mockRssRepository, mockAppShortcutManager)
     }
 
     @Test
@@ -32,7 +32,7 @@ internal class RSSControllerTest: BaseTest() {
         val slot = slot<ShortcutInfo>()
 
         initSUT()
-        sut.addAppShortcut()
+        underTest.addAppShortcut()
         verify {
             mockAppShortcutManager.addDynamicShortcut(capture(slot))
         }
@@ -42,7 +42,7 @@ internal class RSSControllerTest: BaseTest() {
     @Test
     fun `remove app shortcuts removes shortcut to manager`() {
         initSUT()
-        sut.removeAppShortcut()
+        underTest.removeAppShortcut()
         verify {
             mockAppShortcutManager.removeDynamicShortcut("rss")
         }
@@ -58,7 +58,7 @@ internal class RSSControllerTest: BaseTest() {
         )
         initSUT()
 
-        assertEquals(listOf(expected), sut.sources)
+        assertEquals(listOf(expected), underTest.sources)
     }
 
     @Test
@@ -66,7 +66,7 @@ internal class RSSControllerTest: BaseTest() {
         every { mockRssRepository.supportedSources } returns emptyList()
         initSUT()
 
-        assertEquals(emptyList<SupportedArticleSource>(), sut.sources)
+        assertEquals(emptyList<SupportedArticleSource>(), underTest.sources)
     }
 
     @Test
@@ -76,9 +76,9 @@ internal class RSSControllerTest: BaseTest() {
         )
         initSUT()
 
-        assertEquals(1, sut.sources.size)
+        assertEquals(1, underTest.sources.size)
         every { mockRssRepository.supportedSources } returns emptyList()
-        assertEquals(1, sut.sources.size)
+        assertEquals(1, underTest.sources.size)
     }
 
     @Test
@@ -86,7 +86,7 @@ internal class RSSControllerTest: BaseTest() {
         every { mockRssRepository.addCustom } returns true
         initSUT()
 
-        assertTrue(sut.showAddCustomFeeds)
+        assertTrue(underTest.showAddCustomFeeds)
         verify {
             mockRssRepository.addCustom
         }
@@ -97,7 +97,7 @@ internal class RSSControllerTest: BaseTest() {
         every { mockRssRepository.supportedSources } returns listOf(primary, secondary)
         initSUT()
 
-        assertEquals(primary.sourceShort, sut.getSupportedSourceByRssUrl("https://primary.com/rss.xml")!!.sourceShort)
+        assertEquals(primary.sourceShort, underTest.getSupportedSourceByRssUrl("https://primary.com/rss.xml")!!.sourceShort)
     }
 
     @Test
@@ -105,14 +105,14 @@ internal class RSSControllerTest: BaseTest() {
         every { mockRssRepository.supportedSources } returns listOf(primary, secondary)
         initSUT()
 
-        assertNull(sut.getSupportedSourceByRssUrl("https://primary.com/rss.xmll"))
+        assertNull(underTest.getSupportedSourceByRssUrl("https://primary.com/rss.xmll"))
     }
 
     @Test
     fun `enabled reads value from repository`() {
         every { mockRssRepository.enabled } returns true
         initSUT()
-        assertTrue(sut.enabled)
+        assertTrue(underTest.enabled)
         verify {
             mockRssRepository.enabled
         }
@@ -131,7 +131,7 @@ internal class RSSControllerTest: BaseTest() {
         every { mockRssRepository.supportedSources } returns listOf(primary, secondary)
         initSUT()
 
-        assertEquals(expectedSourceShort, sut.getSupportedSourceByLink(link)?.sourceShort)
+        assertEquals(expectedSourceShort, underTest.getSupportedSourceByLink(link)?.sourceShort)
     }
 
     @Test
@@ -139,7 +139,7 @@ internal class RSSControllerTest: BaseTest() {
         every { mockRssRepository.supportedSources } returns listOf(primary, secondary)
         initSUT()
 
-        assertNull(sut.getSupportedSourceByLink("randomlink.com"))
+        assertNull(underTest.getSupportedSourceByLink("randomlink.com"))
     }
 
     @ParameterizedTest(name = "stripHost stripping prefixes {0}.stripHTTP() = {1}")
@@ -153,7 +153,7 @@ internal class RSSControllerTest: BaseTest() {
     )
     fun `stripHost strips the prefixes off of values`(input: String, expected: String) {
         initSUT()
-        assertEquals(expected, sut.stripHost(input))
+        assertEquals(expected, underTest.stripHost(input))
     }
 
     //region Test Data
