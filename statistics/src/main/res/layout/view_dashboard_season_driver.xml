@@ -43,6 +43,7 @@
         android:layout_width="@dimen/standingsDriverSize"
         android:layout_height="@dimen/standingsDriverSize"
         android:layout_marginStart="@dimen/radiusSmall"
+        app:layout_constraintVertical_bias="0.0"
         android:importantForAccessibility="no"
         app:layout_constraintBottom_toBottomOf="@id/tvPosition"
         app:layout_constraintStart_toEndOf="@id/tvPosition"
@@ -99,11 +100,10 @@
         android:importantForAccessibility="no"
         app:drawableStartCompat="@drawable/ic_small_constructor"
         app:drawableTint="?attr/contentTertiary"
-        app:layout_constraintBottom_toBottomOf="@id/tvDriverNumber"
         app:layout_constraintEnd_toStartOf="@id/guideline"
         app:layout_constraintStart_toEndOf="@id/tvDriverNumber"
         app:layout_constraintTop_toBottomOf="@id/layoutDriver"
-        tools:text="Mercedes" />
+        tools:text="Mercedes\nTesting" />
 
     <tmg.labelledprogressbar.LabelledProgressBar
         android:id="@+id/lpvProgress"
