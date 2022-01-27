@@ -11,6 +11,8 @@ import org.threeten.bp.Month
 import org.threeten.bp.temporal.TemporalAdjusters
 import tmg.flashback.analytics.manager.AnalyticsManager
 import tmg.flashback.device.managers.NetworkConnectivityManager
+import tmg.flashback.formula1.constants.Formula1
+import tmg.flashback.formula1.constants.Formula1.constructorChampionshipStarts
 import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
 import tmg.flashback.formula1.extensions.getConstructorInProgressInfo
 import tmg.flashback.formula1.extensions.getDriverInProgressInfo
@@ -235,6 +237,9 @@ class SeasonViewModel(
             .map {
                 val list = getBannerList()
                 when {
+                    season < constructorChampionshipStarts -> {
+                        list.addError(SyncDataItem.ConstructorsChampionshipNotAwarded)
+                    }
                     (it == null || it.standings.isEmpty()) && !isConnected -> list.addError(SyncDataItem.PullRefresh)
                     (it == null || it.standings.isEmpty()) && season >= currentSeasonYear -> list.addError(SyncDataItem.Unavailable(STANDINGS_EARLY))
                     (it == null || it.standings.isEmpty()) -> list.addError(SyncDataItem.Unavailable(STANDINGS_INTERNAL_ERROR))
@@ -335,7 +340,7 @@ class SeasonViewModel(
     private fun SeasonDriverStandings.toDriverList(): List<SeasonItem> {
         return this
             .standings
-            .sortedBy { it.championshipPosition }
+            .sortedBy { it.championshipPosition ?: Int.MAX_VALUE }
             .mapIndexed { index: Int, standing: SeasonDriverStandingSeason ->
                 SeasonItem.Driver(
                     season = standing.season,
@@ -356,7 +361,8 @@ class SeasonViewModel(
 
         return this
             .standings
-            .sortedBy { it.championshipPosition }
+            .sortedByDescending { it.points }
+            .sortedBy { it.championshipPosition ?: Int.MAX_VALUE }
             .mapIndexed { index: Int, item: SeasonConstructorStandingSeason ->
                 SeasonItem.Constructor(
                     season = item.season,
@@ -370,7 +376,6 @@ class SeasonViewModel(
                     barAnimation = themeController.animationSpeed
                 )
             }
-            .sortedByDescending { it.points }
     }
 
     //region Helpers
