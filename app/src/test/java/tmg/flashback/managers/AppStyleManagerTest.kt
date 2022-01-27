@@ -33,7 +33,7 @@ internal class AppStyleManagerTest {
         "MATERIAL_YOU,NIGHT"
     )
     fun `material you style resource returned`(theme: Theme, nightMode: NightMode) {
-        initSUT()
-        assertEquals(R.style.FlashbackAppTheme_MaterialYou, sut.getStyleResource(theme, nightMode))
+        initUnderTest()
+        assertEquals(R.style.FlashbackAppTheme_MaterialYou, underTest.getStyleResource(theme, nightMode))
     }
 }
