@@ -340,7 +340,7 @@ class SeasonViewModel(
     private fun SeasonDriverStandings.toDriverList(): List<SeasonItem> {
         return this
             .standings
-            .sortedBy { it.championshipPosition }
+            .sortedBy { it.championshipPosition ?: Int.MAX_VALUE }
             .mapIndexed { index: Int, standing: SeasonDriverStandingSeason ->
                 SeasonItem.Driver(
                     season = standing.season,
@@ -361,7 +361,8 @@ class SeasonViewModel(
 
         return this
             .standings
-            .sortedBy { it.championshipPosition }
+            .sortedByDescending { it.points }
+            .sortedBy { it.championshipPosition ?: Int.MAX_VALUE }
             .mapIndexed { index: Int, item: SeasonConstructorStandingSeason ->
                 SeasonItem.Constructor(
                     season = item.season,
@@ -375,7 +376,6 @@ class SeasonViewModel(
                     barAnimation = themeController.animationSpeed
                 )
             }
-            .sortedByDescending { it.points }
     }
 
     //region Helpers
