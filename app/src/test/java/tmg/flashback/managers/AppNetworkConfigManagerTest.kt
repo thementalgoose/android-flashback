@@ -11,17 +11,17 @@ internal class AppNetworkConfigManagerTest {
 
     private val mockNetworkConfigRepository: NetworkConfigRepository = mockk(relaxed = true)
 
-    private lateinit var sut: AppNetworkConfigManager
+    private lateinit var underTest: AppNetworkConfigManager
 
-    private fun initSUT() {
-        sut = AppNetworkConfigManager(mockNetworkConfigRepository)
+    private fun initUnderTest() {
+        underTest = AppNetworkConfigManager(mockNetworkConfigRepository)
     }
 
     @Test
     fun `base url calls network config repository`() {
         every { mockNetworkConfigRepository.configUrl } returns "sample"
-        initSUT()
-        assertEquals("sample", sut.baseUrl)
+        initUnderTest()
+        assertEquals("sample", underTest.baseUrl)
         verify {
             mockNetworkConfigRepository.configUrl
         }

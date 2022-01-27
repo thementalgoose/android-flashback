@@ -18,11 +18,11 @@ internal class ConstructorMapperTest {
     private val mockConstructorDataMapper: ConstructorDataMapper = mockk(relaxed = true)
     private val mockDriverDataMapper: DriverDataMapper = mockk(relaxed = true)
 
-    private lateinit var sut: ConstructorMapper
+    private lateinit var underTest: ConstructorMapper
 
     @BeforeEach
     internal fun setUp() {
-        sut = ConstructorMapper(
+        underTest = ConstructorMapper(
             mockConstructorDataMapper,
             mockDriverDataMapper
         )
@@ -36,6 +36,6 @@ internal class ConstructorMapperTest {
         val input = RoomConstructorHistory.model()
         val expected = ConstructorHistory.model()
 
-        assertEquals(expected, sut.mapConstructor(input))
+        assertEquals(expected, underTest.mapConstructor(input))
     }
 }

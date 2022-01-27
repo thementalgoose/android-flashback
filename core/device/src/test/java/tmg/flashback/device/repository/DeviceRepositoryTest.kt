@@ -14,10 +14,10 @@ internal class DeviceRepositoryTest {
 
     private val mockPreferenceManager: PreferenceManager = mockk(relaxed = true)
 
-    private lateinit var sut: DeviceRepository
+    private lateinit var underTest: DeviceRepository
 
-    private fun initSUT() {
-        sut = DeviceRepository(mockPreferenceManager)
+    private fun initUnderTest() {
+        underTest = DeviceRepository(mockPreferenceManager)
     }
 
     //region App opened count
@@ -26,9 +26,9 @@ internal class DeviceRepositoryTest {
     fun `app opened count reads from shared prefs repository and defaults to 0`() {
         every { mockPreferenceManager.getInt(any(), any()) } returns 1
 
-        initSUT()
+        initUnderTest()
 
-        assertEquals(1, sut.appOpenedCount)
+        assertEquals(1, underTest.appOpenedCount)
         verify {
             mockPreferenceManager.getInt(keyAppOpenedCount, 0)
         }
@@ -36,8 +36,8 @@ internal class DeviceRepositoryTest {
 
     @Test
     fun `app opened count update saves value to shared prefs repository`() {
-        initSUT()
-        sut.appOpenedCount = 3
+        initUnderTest()
+        underTest.appOpenedCount = 3
 
         verify {
             mockPreferenceManager.save(keyAppOpenedCount, 3)
@@ -53,8 +53,8 @@ internal class DeviceRepositoryTest {
         val todaysDateFormatted = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"))
 
         every { mockPreferenceManager.getString(keyAppFirstBoot, any()) } returns null
-        initSUT()
-        assertEquals(LocalDate.now(), sut.appFirstOpened)
+        initUnderTest()
+        assertEquals(LocalDate.now(), underTest.appFirstOpened)
 
         verify {
             mockPreferenceManager.getString(keyAppFirstBoot, null)
@@ -67,9 +67,9 @@ internal class DeviceRepositoryTest {
         val todaysDateFormatted = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"))
 
         every { mockPreferenceManager.getString(keyAppFirstBoot, any()) } returns todaysDateFormatted
-        initSUT()
+        initUnderTest()
 
-        assertEquals(LocalDate.now(), sut.appFirstOpened)
+        assertEquals(LocalDate.now(), underTest.appFirstOpened)
         verify(exactly = 0) {
             mockPreferenceManager.save(keyAppFirstBoot, any<String>())
         }
@@ -82,9 +82,9 @@ internal class DeviceRepositoryTest {
     fun `app first opened update saves value to shared prefs repository`() {
         val todaysDateFormatted = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"))
 
-        initSUT()
+        initUnderTest()
 
-        sut.appFirstOpened = LocalDate.now()
+        underTest.appFirstOpened = LocalDate.now()
         verify {
             mockPreferenceManager.save(keyAppFirstBoot, todaysDateFormatted)
         }
@@ -98,9 +98,9 @@ internal class DeviceRepositoryTest {
     fun `last app version reads from shared prefs value and defaults to 0`() {
         every { mockPreferenceManager.getInt(any(), any()) } returns 1
 
-        initSUT()
+        initUnderTest()
 
-        assertEquals(1, sut.lastAppVersion)
+        assertEquals(1, underTest.lastAppVersion)
         verify {
             mockPreferenceManager.getInt(keyAppVersion, 0)
         }
@@ -108,8 +108,8 @@ internal class DeviceRepositoryTest {
 
     @Test
     fun `last app version update saves value to shared prefs repository`() {
-        initSUT()
-        sut.lastAppVersion = 4
+        initUnderTest()
+        underTest.lastAppVersion = 4
 
         verify {
             mockPreferenceManager.save(keyAppVersion, 4)
@@ -123,9 +123,9 @@ internal class DeviceRepositoryTest {
     @Test
     fun `device udid when value is null saves a random guid to shared preferences and returns random guid`() {
         every { mockPreferenceManager.getString(keyDeviceUdid, any()) } returns ""
-        initSUT()
+        initUnderTest()
 
-        assertNotNull(sut.deviceUdid)
+        assertNotNull(underTest.deviceUdid)
         verify {
             mockPreferenceManager.getString(keyDeviceUdid, "")
             mockPreferenceManager.save(keyDeviceUdid, any<String>())
@@ -137,9 +137,9 @@ internal class DeviceRepositoryTest {
         val testGuid = "test-guid"
 
         every { mockPreferenceManager.getString(keyDeviceUdid, any()) } returns testGuid
-        initSUT()
+        initUnderTest()
 
-        assertEquals(testGuid, sut.deviceUdid)
+        assertEquals(testGuid, underTest.deviceUdid)
         verify(exactly = 0) {
             mockPreferenceManager.save(keyDeviceUdid, any<String>())
         }
@@ -152,9 +152,9 @@ internal class DeviceRepositoryTest {
     fun `device udid update saves value to shared prefs repository`() {
         val testGuid = "test-guid"
 
-        initSUT()
+        initUnderTest()
 
-        sut.deviceUdid = testGuid
+        underTest.deviceUdid = testGuid
         verify {
             mockPreferenceManager.save(keyDeviceUdid, testGuid)
         }

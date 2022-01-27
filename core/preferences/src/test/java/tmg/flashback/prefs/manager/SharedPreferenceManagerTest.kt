@@ -16,10 +16,10 @@ internal class SharedPreferenceManagerTest {
     private val mockPreferences: SharedPreferences = mockk()
     private val mockEditor: SharedPreferences.Editor = mockk()
 
-    private lateinit var sut: SharedPreferenceManager
+    private lateinit var underTest: SharedPreferenceManager
 
-    private fun initSUT() {
-        sut = object : SharedPreferenceManager(mockContext) {
+    private fun initUnderTest() {
+        underTest = object : SharedPreferenceManager(mockContext) {
             override val prefsKey: String
                 get() = "prefsKey"
         }
@@ -40,8 +40,8 @@ internal class SharedPreferenceManagerTest {
 
     @Test
     fun `save int saves to preference editor`() {
-        initSUT()
-        sut.save("my-key", 1)
+        initUnderTest()
+        underTest.save("my-key", 1)
         verify {
             mockEditor.putInt("my-key", 1)
             mockEditor.apply()
@@ -50,8 +50,8 @@ internal class SharedPreferenceManagerTest {
 
     @Test
     fun `save string saves to preference editor`() {
-        initSUT()
-        sut.save("my-key", "sup")
+        initUnderTest()
+        underTest.save("my-key", "sup")
         verify {
             mockEditor.putString("my-key", "sup")
             mockEditor.apply()
@@ -60,8 +60,8 @@ internal class SharedPreferenceManagerTest {
 
     @Test
     fun `save long saves to preference editor`() {
-        initSUT()
-        sut.save("my-key", 1L)
+        initUnderTest()
+        underTest.save("my-key", 1L)
         verify {
             mockEditor.putLong("my-key", 1L)
             mockEditor.apply()
@@ -70,8 +70,8 @@ internal class SharedPreferenceManagerTest {
 
     @Test
     fun `save float saves to preference editor`() {
-        initSUT()
-        sut.save("my-key", 1f)
+        initUnderTest()
+        underTest.save("my-key", 1f)
         verify {
             mockEditor.putFloat("my-key", 1f)
             mockEditor.apply()
@@ -80,8 +80,8 @@ internal class SharedPreferenceManagerTest {
 
     @Test
     fun `save boolean saves to preference editor`() {
-        initSUT()
-        sut.save("my-key", true)
+        initUnderTest()
+        underTest.save("my-key", true)
         verify {
             mockEditor.putBoolean("my-key", true)
             mockEditor.apply()
@@ -90,8 +90,8 @@ internal class SharedPreferenceManagerTest {
 
     @Test
     fun `save string set saves to preference editor`() {
-        initSUT()
-        sut.save("my-key", setOf("hey"))
+        initUnderTest()
+        underTest.save("my-key", setOf("hey"))
         verify {
             mockEditor.putStringSet("my-key", setOf("hey"))
             mockEditor.apply()
@@ -101,8 +101,8 @@ internal class SharedPreferenceManagerTest {
     @Test
     fun `get int pulls from preferences`() {
         every { mockPreferences.getInt(any(), any()) } returns 1
-        initSUT()
-        assertEquals(1, sut.getInt("key", 2))
+        initUnderTest()
+        assertEquals(1, underTest.getInt("key", 2))
         verify {
             mockPreferences.getInt("key", 2)
         }
@@ -111,8 +111,8 @@ internal class SharedPreferenceManagerTest {
     @Test
     fun `get string pulls from preferences`() {
         every { mockPreferences.getString(any(), any()) } returns "hey"
-        initSUT()
-        assertEquals("hey", sut.getString("key", "sup"))
+        initUnderTest()
+        assertEquals("hey", underTest.getString("key", "sup"))
         verify {
             mockPreferences.getString("key", "sup")
         }
@@ -121,8 +121,8 @@ internal class SharedPreferenceManagerTest {
     @Test
     fun `get float pulls from preferences`() {
         every { mockPreferences.getFloat(any(), any()) } returns 1f
-        initSUT()
-        assertEquals(1f, sut.getFloat("key", -1f))
+        initUnderTest()
+        assertEquals(1f, underTest.getFloat("key", -1f))
         verify {
             mockPreferences.getFloat("key", -1f)
         }
@@ -131,8 +131,8 @@ internal class SharedPreferenceManagerTest {
     @Test
     fun `get long pulls from preferences`() {
         every { mockPreferences.getLong(any(), any()) } returns 2L
-        initSUT()
-        assertEquals(2L, sut.getLong("key", 1L))
+        initUnderTest()
+        assertEquals(2L, underTest.getLong("key", 1L))
         verify {
             mockPreferences.getLong("key", 1L)
         }
@@ -141,8 +141,8 @@ internal class SharedPreferenceManagerTest {
     @Test
     fun `get boolean pulls from preferences`() {
         every { mockPreferences.getBoolean(any(), any()) } returns true
-        initSUT()
-        assertTrue(sut.getBoolean("key", false))
+        initUnderTest()
+        assertTrue(underTest.getBoolean("key", false))
         verify {
             mockPreferences.getBoolean("key", false)
         }
@@ -151,8 +151,8 @@ internal class SharedPreferenceManagerTest {
     @Test
     fun `get set pulls from preferences`() {
         every { mockPreferences.getStringSet(any(), any()) } returns setOf("hey")
-        initSUT()
-        assertEquals(setOf("hey"), sut.getSet("key", setOf("default")))
+        initUnderTest()
+        assertEquals(setOf("hey"), underTest.getSet("key", setOf("default")))
         verify {
             mockPreferences.getStringSet("key", setOf("default"))
         }
