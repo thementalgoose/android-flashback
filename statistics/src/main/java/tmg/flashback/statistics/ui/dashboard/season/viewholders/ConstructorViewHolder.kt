@@ -41,10 +41,10 @@ class ConstructorViewHolder(
 
         val maxPoints = item.maxPointsInSeason
 
-        if (item.position > 0) {
+        if (item.position != null && item.position > 0) {
             binding.tvPosition.text = item.position.toString()
         } else {
-            binding.tvPosition.text = ""
+            binding.tvPosition.text = "-"
         }
 
         binding.tvTitle.text = item.constructor.name
