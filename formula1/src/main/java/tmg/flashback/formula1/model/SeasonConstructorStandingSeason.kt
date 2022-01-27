@@ -11,5 +11,14 @@ data class SeasonConstructorStandingSeason(
     val championshipPosition: Int?,
     val drivers: List<SeasonConstructorStandingSeasonDriver>
 ) {
+
+    val hasValidChampionshipPosition: Boolean by lazy {
+        when (championshipPosition) {
+            null -> false
+            0 -> false
+            else -> true
+        }
+    }
+
     companion object
 }

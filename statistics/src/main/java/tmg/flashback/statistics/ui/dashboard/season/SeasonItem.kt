@@ -48,14 +48,14 @@ sealed class SeasonItem(
         val driver: tmg.flashback.formula1.model.Driver,
         val constructors: List<tmg.flashback.formula1.model.Constructor>,
         val driverId: String = driver.id,
-        val position: Int,
+        val position: Int?,
         val maxPointsInSeason: Double,
         val animationSpeed: AnimationSpeed
     ) : SeasonItem(R.layout.view_dashboard_season_driver)
 
     data class Constructor(
         val season: Int,
-        val position: Int,
+        val position: Int?,
         val constructor: tmg.flashback.formula1.model.Constructor,
         val constructorId: String = constructor.id,
         val driver: List<Pair<tmg.flashback.formula1.model.Driver, Double>>,
