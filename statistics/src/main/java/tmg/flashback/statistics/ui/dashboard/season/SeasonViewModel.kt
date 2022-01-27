@@ -347,7 +347,10 @@ class SeasonViewModel(
                     driver = standing.driver,
                     constructors = standing.constructors.map { it.constructor },
                     points = standing.points,
-                    position = index + 1,
+                    position = when (standing.hasValidChampionshipPosition) {
+                        true -> index + 1
+                        else -> null
+                    },
                     maxPointsInSeason = this.standings.maxByOrNull { it.points }?.points ?: 1000.0,
                     animationSpeed = themeController.animationSpeed
                 )
@@ -366,7 +369,10 @@ class SeasonViewModel(
             .mapIndexed { index: Int, item: SeasonConstructorStandingSeason ->
                 SeasonItem.Constructor(
                     season = item.season,
-                    position = index + 1,
+                    position = when (item.hasValidChampionshipPosition) {
+                        true -> index + 1
+                        else -> null
+                    },
                     constructor = item.constructor,
                     driver = item.drivers
                         .map { Pair(it.driver, it.points) }

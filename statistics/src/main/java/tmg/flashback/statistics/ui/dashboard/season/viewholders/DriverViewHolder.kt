@@ -33,7 +33,7 @@ class DriverViewHolder(
     fun bind(item: SeasonItem.Driver) {
         driver = item
 
-        binding.tvPosition.text = item.position.toString()
+        binding.tvPosition.text = item.position?.toString() ?: "-"
         binding.layoutDriver.tvName.text = item.driver.name
         binding.layoutDriver.tvNumber.show(false)
         binding.layoutDriver.imgFlag.show(false)
@@ -84,7 +84,11 @@ class DriverViewHolder(
             R.string.ab_season_driver,
             item.driver.name,
             constructors,
-            item.position,
+            when (item.position) {
+                0 -> getString(R.string.ab_season_unclassified)
+                null -> getString(R.string.ab_season_unclassified)
+                else -> "P${item.position}"
+            },
             item.points
         )
         binding.container.contentDescription = contentDescription
