@@ -215,6 +215,7 @@ internal class SeasonViewModelTest: BaseTest() {
 
         sut.outputs.list.test {
             assertValue(listOf(
+                SeasonItem.eventsModel(),
                 SeasonItem.trackModel()
             ))
         }
