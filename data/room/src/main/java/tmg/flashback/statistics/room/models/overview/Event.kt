@@ -16,7 +16,7 @@ data class Event(
     val type: String,
     @PrimaryKey
     @ColumnInfo(name = "id")
-    val id: String = "$season-$date"
+    val id: String = "$season-$type-$date"
 ) {
     companion object
 }

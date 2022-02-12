@@ -14,6 +14,7 @@ import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.formula1.constants.Formula1
 import tmg.flashback.formula1.constants.Formula1.constructorChampionshipStarts
 import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
+import tmg.flashback.formula1.enums.EventType
 import tmg.flashback.formula1.extensions.getConstructorInProgressInfo
 import tmg.flashback.formula1.extensions.getDriverInProgressInfo
 import tmg.flashback.formula1.model.*
@@ -204,7 +205,7 @@ class SeasonViewModel(
                     it.overviewRaces.isEmpty() && season > currentSeasonYear -> list.addError(SyncDataItem.Unavailable(SEASON_IN_FUTURE))
                     it.overviewRaces.isEmpty() -> list.addError(SyncDataItem.Unavailable(SEASON_INTERNAL_ERROR))
                     isCalendarView -> list.addAll(it.overviewRaces.toCalendar(season, events))
-                    else -> list.addAll(it.overviewRaces.toScheduleList())
+                    else -> list.addAll(it.overviewRaces.toScheduleList(season, events))
                 }
 
                 return@map list
@@ -261,8 +262,12 @@ class SeasonViewModel(
     /**
      * Convert OverviewRace to a list of season items
      */
-    private fun List<OverviewRace>.toScheduleList(): List<SeasonItem> {
-        return this
+    private fun List<OverviewRace>.toScheduleList(season: Int, events: List<tmg.flashback.formula1.model.Event>): List<SeasonItem> {
+        val list = mutableListOf<SeasonItem>()
+        if (events.isNotEmpty()) {
+            list.add(SeasonItem.Events(season, events.groupBy { it.type }))
+        }
+        list.addAll(this
             .sortedBy { it.round }
             .map {
                 SeasonItem.Track(
@@ -279,7 +284,8 @@ class SeasonViewModel(
                     defaultExpanded = it.round == this.getDefaultExpandedRound(),
                     schedule = it.schedule
                 )
-            }
+            })
+        return list
     }
     private fun List<OverviewRace>.getDefaultExpandedRound(): Int? {
         return this
@@ -292,7 +298,7 @@ class SeasonViewModel(
     /**
      * Convert OverviewRace to a list of calendar items
      */
-    private fun List<OverviewRace>.toCalendar(season: Int, event: List<tmg.flashback.formula1.model.Event>): List<SeasonItem> {
+    private fun List<OverviewRace>.toCalendar(season: Int, events: List<tmg.flashback.formula1.model.Event>): List<SeasonItem> {
         val list = mutableListOf<SeasonItem>()
         list.add(SeasonItem.CalendarHeader)
         Month.values().forEach { month ->
@@ -310,7 +316,7 @@ class SeasonViewModel(
             list.add(SeasonItem.CalendarWeek(
                 month,
                 start,
-                event.filter { it.date >= start && it.date <= end },
+                events.filter { it.date >= start && it.date <= end },
                 this.firstOrNull { it.date >= start && it.date <= end }
             ))
             while (start.month == month) {
@@ -322,7 +328,7 @@ class SeasonViewModel(
                         SeasonItem.CalendarWeek(
                             month,
                             start,
-                            event.filter { it.date >= start && it.date <= end },
+                            events.filter { it.date >= start && it.date <= end },
                             this.firstOrNull { it.date >= start && it.date <= end }
                         )
                     )

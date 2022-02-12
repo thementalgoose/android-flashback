@@ -39,6 +39,21 @@ sealed class PillItem(
         label = StringHolder(R.string.circuit_info_maps)
     )
 
+    object EventTypeTesting : PillItem(
+        icon = R.drawable.ic_event_type_testing,
+        label = StringHolder(R.string.dashboard_season_event_type_testing)
+    )
+
+    object EventTypeCarLaunches : PillItem(
+        icon = R.drawable.ic_event_type_car_launch,
+        label = StringHolder(R.string.dashboard_season_event_type_car_launch)
+    )
+
+    object EventTypeOther : PillItem(
+        icon = R.drawable.ic_event_type_other,
+        label = StringHolder(R.string.dashboard_season_event_type_other)
+    )
+
     data class Label(
         private val string: String,
         private val highlight: Boolean = false
