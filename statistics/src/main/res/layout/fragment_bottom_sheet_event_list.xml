@@ -57,6 +57,7 @@
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:minHeight="100dp"
         android:nestedScrollingEnabled="false"
         android:overScrollMode="never"
         tools:itemCount="4"

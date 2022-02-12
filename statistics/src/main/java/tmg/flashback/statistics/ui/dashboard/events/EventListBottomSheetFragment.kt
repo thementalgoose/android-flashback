@@ -10,6 +10,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import tmg.flashback.formula1.enums.EventType
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.FragmentBottomSheetEventListBinding
+import tmg.flashback.statistics.extensions.label
 import tmg.flashback.ui.base.BaseBottomSheetFragment
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.toEnum
@@ -32,6 +33,7 @@ class EventListBottomSheetFragment: BaseBottomSheetFragment<FragmentBottomSheetE
 
             viewModel.inputs.show(season, eventType)
 
+            binding.bottomSheetTitle.setText(eventType.label)
             binding.subtitle.text = when (eventType) {
                 EventType.TESTING -> getString(R.string.dashboard_season_event_testing)
                 EventType.CAR_LAUNCH -> getString(R.string.dashboard_season_event_car_launches)
