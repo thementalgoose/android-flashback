@@ -88,7 +88,7 @@ class CalendarWeekViewHolder(
                     cells[x].container.setOnClickListener {
                         Snackbar.make(
                                 cells[x].container,
-                                "${event.date.format(DateTimeFormatter.ofPattern("dd MMMM"))}: ${getString(event.type.label)} ${event.label}",
+                                "${event.date.format(DateTimeFormatter.ofPattern("dd MMMM"))}: ${getString(event.type.label)} - ${event.label}",
                                 Snackbar.LENGTH_LONG
                             )
                             .show()
@@ -105,7 +105,7 @@ class CalendarWeekViewHolder(
                     cells[x].container.setOnClickListener {
                         Snackbar.make(
                                 cells[x].container,
-                                "${event.date.format(DateTimeFormatter.ofPattern("dd MMMM"))}: ${getString(event.type.label)} ${event.label}",
+                                "${event.date.format(DateTimeFormatter.ofPattern("dd MMMM"))}: ${getString(event.type.label)} - ${event.label}",
                                 Snackbar.LENGTH_LONG
                             )
                             .show()
