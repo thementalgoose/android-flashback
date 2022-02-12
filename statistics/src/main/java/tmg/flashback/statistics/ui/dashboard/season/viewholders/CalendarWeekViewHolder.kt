@@ -12,6 +12,7 @@ import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.LayoutDashboardSeasonCalendarWeekBinding
 import tmg.flashback.statistics.databinding.ViewDashboardSeasonCalendarWeekBinding
+import tmg.flashback.statistics.extensions.label
 import tmg.flashback.statistics.ui.dashboard.season.SeasonItem
 import tmg.flashback.ui.model.AnimationSpeed
 import tmg.utilities.extensions.getColor
@@ -87,7 +88,7 @@ class CalendarWeekViewHolder(
                     cells[x].container.setOnClickListener {
                         Snackbar.make(
                                 cells[x].container,
-                                "${event.date.format(DateTimeFormatter.ofPattern("dd MMMM"))}: ${event.label}",
+                                "${event.date.format(DateTimeFormatter.ofPattern("dd MMMM"))}: ${getString(event.type.label)} - ${event.label}",
                                 Snackbar.LENGTH_LONG
                             )
                             .show()
@@ -104,7 +105,7 @@ class CalendarWeekViewHolder(
                     cells[x].container.setOnClickListener {
                         Snackbar.make(
                                 cells[x].container,
-                                "${event.date.format(DateTimeFormatter.ofPattern("dd MMMM"))}: ${event.label}",
+                                "${event.date.format(DateTimeFormatter.ofPattern("dd MMMM"))}: ${getString(event.type.label)} - ${event.label}",
                                 Snackbar.LENGTH_LONG
                             )
                             .show()

@@ -115,6 +115,9 @@
         <entry key="formula1/src/main/res/drawable/circuit_montjuic.xml" value="0.13854166666666667" />
         <entry key="formula1/src/main/res/drawable/circuit_tremblant.xml" value="0.5" />
         <entry key="formula1/src/main/res/drawable/circuit_watkins_glen.xml" value="0.5" />
+        <entry key="formula1/src/main/res/drawable/ic_event_type_car_launch.xml" value="0.1085" />
+        <entry key="formula1/src/main/res/drawable/ic_event_type_other.xml" value="0.1085" />
+        <entry key="formula1/src/main/res/drawable/ic_event_type_testing.xml" value="0.1085" />
         <entry key="formula1/src/main/res/drawable/ic_status_puncture.xml" value="0.14375" />
         <entry key="formula1/src/main/res/drawable/ic_status_radiator.xml" value="0.14375" />
         <entry key="formula1/src/main/res/drawable/ic_status_seat.xml" value="0.14375" />
@@ -135,11 +138,16 @@
         <entry key="statistics/src/main/res/drawable/dashboard_calendar_current_day.xml" value="0.199" />
         <entry key="statistics/src/main/res/drawable/dashboard_calendar_current_day_testing.xml" value="0.199" />
         <entry key="statistics/src/main/res/drawable/dashboard_calendar_testing.xml" value="0.199" />
+        <entry key="statistics/src/main/res/drawable/ic_event_type_car_launch.xml" value="0.212" />
+        <entry key="statistics/src/main/res/drawable/ic_event_type_other.xml" value="0.212" />
+        <entry key="statistics/src/main/res/drawable/ic_event_type_testing.xml" value="0.212" />
+        <entry key="statistics/src/main/res/drawable/ic_map.xml" value="0.212" />
         <entry key="statistics/src/main/res/drawable/ic_star_outline.xml" value="0.14375" />
         <entry key="statistics/src/main/res/drawable/ic_status_radiator.xml" value="0.14375" />
         <entry key="statistics/src/main/res/drawable/nav_search.xml" value="0.18802083333333333" />
         <entry key="statistics/src/main/res/drawable/nav_settings.xml" value="0.3765625" />
         <entry key="statistics/src/main/res/layout/activity_driver.xml" value="0.1" />
+        <entry key="statistics/src/main/res/layout/fragment_bottom_sheet_event_list.xml" value="0.22418478260869565" />
         <entry key="statistics/src/main/res/layout/fragment_bottom_sheet_notifications_onboarding.xml" value="0.11770833333333333" />
         <entry key="statistics/src/main/res/layout/fragment_bottom_sheet_race_preview.xml" value="0.3532608695652174" />
         <entry key="statistics/src/main/res/layout/fragment_driver.xml" value="0.24954710144927536" />
@@ -152,10 +160,12 @@
         <entry key="statistics/src/main/res/layout/view_dashboard_season_calendar_week.xml" value="0.3532608695652174" />
         <entry key="statistics/src/main/res/layout/view_dashboard_season_constructor.xml" value="0.1911231884057971" />
         <entry key="statistics/src/main/res/layout/view_dashboard_season_driver.xml" value="0.3532608695652174" />
+        <entry key="statistics/src/main/res/layout/view_dashboard_season_events.xml" value="0.375" />
         <entry key="statistics/src/main/res/layout/view_dashboard_season_track.xml" value="0.3532608695652174" />
         <entry key="statistics/src/main/res/layout/view_driver_season_header.xml" value="0.25" />
         <entry key="statistics/src/main/res/layout/view_driver_summary_header.xml" value="0.23143115942028986" />
         <entry key="statistics/src/main/res/layout/view_driver_summary_history.xml" value="0.23143115942028986" />
+        <entry key="statistics/src/main/res/layout/view_event_list_item.xml" value="0.2222222222222222" />
         <entry key="statistics/src/main/res/layout/view_link_pill.xml" value="0.184375" />
         <entry key="statistics/src/main/res/layout/view_race_overview.xml" value="0.184375" />
         <entry key="statistics/src/main/res/layout/view_race_qualifying_driver.xml" value="0.184375" />
@@ -163,6 +173,7 @@
         <entry key="statistics/src/main/res/layout/view_race_qualifying_q1_result.xml" value="0.184375" />
         <entry key="statistics/src/main/res/layout/view_race_qualifying_q1q2_result.xml" value="0.1752786220871327" />
         <entry key="statistics/src/main/res/layout/view_race_qualifying_q1q2q3_result.xml" value="0.2477355072463768" />
+        <entry key="statistics/src/main/res/layout/view_race_race_header.xml" value="0.2526041666666667" />
         <entry key="statistics/src/main/res/layout/view_race_race_podium.xml" value="0.184375" />
         <entry key="statistics/src/main/res/layout/view_race_race_result.xml" value="0.45" />
       </map>
