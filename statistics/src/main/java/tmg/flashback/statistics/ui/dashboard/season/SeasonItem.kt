@@ -3,6 +3,7 @@ package tmg.flashback.statistics.ui.dashboard.season
 import androidx.annotation.LayoutRes
 import org.threeten.bp.LocalDate
 import org.threeten.bp.Month
+import tmg.flashback.formula1.enums.EventType
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.formula1.model.Schedule
 import tmg.flashback.formula1.model.Event
@@ -14,6 +15,11 @@ sealed class SeasonItem(
         @LayoutRes val layoutId: Int
 ) {
     object CalendarHeader: SeasonItem(R.layout.view_dashboard_season_calendar_header)
+
+    data class Events(
+        val season: Int,
+        val events: Map<EventType, List<Event>>
+    ): SeasonItem(R.layout.view_dashboard_season_events)
 
     data class CalendarMonth(
         val month: Month,

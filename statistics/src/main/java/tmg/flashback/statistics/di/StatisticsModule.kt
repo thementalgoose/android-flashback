@@ -13,6 +13,7 @@ import tmg.flashback.statistics.repo.di.repoModule
 import tmg.flashback.statistics.repository.HomeRepository
 import tmg.flashback.statistics.repository.UpNextRepository
 import tmg.flashback.statistics.ui.circuit.CircuitViewModel
+import tmg.flashback.statistics.ui.dashboard.events.EventListViewModel
 import tmg.flashback.statistics.ui.dashboard.onboarding.OnboardingNotificationViewModel
 import tmg.flashback.statistics.ui.dashboard.racepreview.RacePreviewViewModel
 import tmg.flashback.statistics.ui.dashboard.season.SeasonViewModel
@@ -35,6 +36,7 @@ val statisticsModule = repoModule + module {
     viewModel { CircuitViewModel(get(), get()) }
     viewModel { SeasonViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get()) }
     viewModel { RacePreviewViewModel(get()) }
+    viewModel { EventListViewModel(get()) }
     viewModel { ConstructorViewModel(get(), get()) }
     viewModel { DriverViewModel(get(), get()) }
     viewModel { DriverSeasonViewModel(get(), get(), get()) }
