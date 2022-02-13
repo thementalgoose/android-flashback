@@ -24,6 +24,8 @@
 -keep class tmg.flashback.formula1.enums.*
 -keep class tmg.flashback.formula1.constants.*
 
+-keep class androidx.core.widget.NestedScrollView { *; }
+-keep class androidx.constraintlayout.motion.widget.MotionLayout { *; }
 
 -keepattributes *Annotation*
 -keepattributes SourceFile,LineNumberTable
