@@ -34,10 +34,6 @@
     <string name="dashboard_season_list_option_clear_default">Clear default</string>
     <string name="dashboard_season_list_up_next_race">Next race</string>
 
-    <string name="dashboard_season_event_type_testing">Test Sessions</string>
-    <string name="dashboard_season_event_type_car_launch">Car Launches</string>
-    <string name="dashboard_season_event_type_other">Other</string>
-
     <string name="dashboard_season_event_title">Events</string>
     <string name="dashboard_season_event_testing">Test sessions scheduled for the season</string>
     <string name="dashboard_season_event_car_launches">Car launches scheduled for the season</string>
