@@ -23,6 +23,9 @@ enum class TrackLayout(
     AMERICAS("americas", R.drawable.circuit_americas),
     BUDDH("buddh", R.drawable.circuit_buddh),
     BAHRAIN("bahrain", R.drawable.circuit_bahrain),
+    BAHRAIN_2010("bahrain", R.drawable.circuit_bahrain_2010, listOf(
+        "2010 Bahrain Grand Prix"
+    )),
     BAK("BAK", R.drawable.circuit_bak),
     BREMGARTEN("bremgarten", R.drawable.circuit_bremgarten),
     BRANDS_HATCH("brands_hatch", R.drawable.circuit_brands_hatch),
