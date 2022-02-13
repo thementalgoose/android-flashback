@@ -8,13 +8,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
+import tmg.flashback.formula1.extensions.label
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.LayoutDashboardSeasonCalendarWeekBinding
 import tmg.flashback.statistics.databinding.ViewDashboardSeasonCalendarWeekBinding
-import tmg.flashback.statistics.extensions.label
 import tmg.flashback.statistics.ui.dashboard.season.SeasonItem
-import tmg.flashback.ui.model.AnimationSpeed
 import tmg.utilities.extensions.getColor
 import tmg.utilities.extensions.views.context
 import tmg.utilities.extensions.views.getString
