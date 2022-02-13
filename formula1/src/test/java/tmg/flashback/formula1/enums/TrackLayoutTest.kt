@@ -9,6 +9,7 @@ internal class TrackLayoutTest {
     @ParameterizedTest(name = "For the {0} {1} the {2} track layout will be used")
     @CsvSource(
             "bahrain,2020,Sakhir Grand Prix,SAKHIR",
+            "bahrain,2010,Bahrain Grand Prix,BAHRAIN_2010",
             "bahrain,,Bahrain Grand Prix,BAHRAIN",
             "yas_marina,2009,Abu Dhabi Grand Prix,YAS_MARINA_2009_2020",
             "yas_marina,2010,Abu Dhabi Grand Prix,YAS_MARINA_2009_2020",
