@@ -28,6 +28,9 @@
 -keep class tmg.flashback.rss.repo.model.**
 -keep class tmg.flashback.statistics.repository.models.**
 
+-keep class androidx.core.widget.NestedScrollView { *; }
+-keep class androidx.constraintlayout.motion.widget.MotionLayout { *; }
+
 # (2)Simple XML
 -keep public class org.simpleframework.**{ *; }
 -keep class org.simpleframework.xml.**{ *; }

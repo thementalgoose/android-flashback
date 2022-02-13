@@ -23,6 +23,8 @@
 -keep class tmg.flashback.statistics.repository.json.**
 -keep class tmg.flashback.statistics.repository.models.**
 
+-keep class androidx.core.widget.NestedScrollView { *; }
+-keep class androidx.constraintlayout.motion.widget.MotionLayout { *; }
 
 -keepattributes *Annotation*
 -keepattributes SourceFile,LineNumberTable
