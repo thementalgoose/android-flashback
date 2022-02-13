@@ -5,12 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import tmg.flashback.formula1.enums.EventType
+import tmg.flashback.formula1.extensions.label
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.FragmentBottomSheetEventListBinding
-import tmg.flashback.statistics.extensions.label
 import tmg.flashback.ui.base.BaseBottomSheetFragment
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.toEnum
