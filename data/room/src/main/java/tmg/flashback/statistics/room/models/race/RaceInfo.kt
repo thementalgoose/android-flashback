@@ -16,6 +16,8 @@ data class RaceInfo(
     val date: String,
     @ColumnInfo(name = "circuit_id")
     val circuitId: String,
+    @ColumnInfo(name = "laps")
+    val laps: String?,
     @ColumnInfo(name = "time")
     val time: String?,
     @ColumnInfo(name = "wikiUrl")
