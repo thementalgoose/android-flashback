@@ -6,6 +6,7 @@ fun RaceInfo.Companion.model(
     name: String = "name",
     date: String = "2020-10-12",
     circuitId: String = "circuitId",
+    laps: String? = "12",
     time: String? = "12:34",
     wikiUrl: String? = "wikiUrl",
     youtube: String? = "youtube"
@@ -14,6 +15,7 @@ fun RaceInfo.Companion.model(
     round = round,
     name = name,
     date = date,
+    laps = laps,
     circuitId = circuitId,
     time = time,
     wikiUrl = wikiUrl,

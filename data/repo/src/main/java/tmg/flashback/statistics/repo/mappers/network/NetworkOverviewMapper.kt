@@ -12,6 +12,7 @@ class NetworkOverviewMapper {
             round = overview.round,
             name = overview.name,
             circuitId = overview.circuit.id,
+            laps = overview.laps,
             date = overview.date,
             time = overview.time,
             hasRace = overview.hasRace,
