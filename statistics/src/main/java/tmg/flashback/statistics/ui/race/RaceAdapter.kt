@@ -131,7 +131,8 @@ class RaceAdapter(
         override fun areContentsTheSame(o: Int, n: Int): Boolean = oldList[o] == newList[n] || isOverviewContents(oldList[o], newList[n])
 
         private fun isOverview(old: RaceItem, new: RaceItem) = old is RaceItem.Overview && new is RaceItem.Overview
-        private fun isOverviewContents(old: RaceItem, new: RaceItem) = old is RaceItem.Overview && new is RaceItem.Overview && old.wikipedia == new.wikipedia
+        private fun isOverviewContents(old: RaceItem, new: RaceItem) = old is RaceItem.Overview && new is RaceItem.Overview &&
+                old.wikipedia == new.wikipedia && old.laps == new.laps
     }
 
 }

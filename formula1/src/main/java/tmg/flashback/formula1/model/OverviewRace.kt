@@ -11,6 +11,7 @@ data class OverviewRace(
     val raceName: String,
     val circuitId: String,
     val circuitName: String,
+    val laps: String?,
     val country: String,
     val countryISO: String,
     val hasQualifying: Boolean,

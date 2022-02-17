@@ -13,7 +13,8 @@ val roomModule = module {
         .addMigrations(
             MIGRATION_1_2,
             MIGRATION_2_3,
-            MIGRATION_3_4
+            MIGRATION_3_4,
+            MIGRATION_4_5
         )
         .build()
     }
@@ -38,7 +39,15 @@ private val MIGRATION_2_3 = object : Migration(2,3) {
     }
 }
 
-private val MIGRATION_3_4 = object : Migration(3,4) {
+private val MIGRATION_3_4 = object : Migration(3, 4) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        database.execSQL("ALTER TABLE RaceInfo ADD COLUMN laps TEXT DEFAULT NULL")
+        database.execSQL("ALTER TABLE Overview ADD COLUMN laps TEXT DEFAULT NULL")
+        Log.i("Database", "Migrated DB from version $startVersion to $endVersion")
+    }
+}
+
+private val MIGRATION_4_5 = object : Migration(4,5) {
     override fun migrate(database: SupportSQLiteDatabase) {
         database.execSQL("ALTER TABLE RaceInfo ADD COLUMN format_qualifying TEXT DEFAULT NULL")
         database.execSQL("ALTER TABLE RaceInfo ADD COLUMN format_sprint TEXT DEFAULT NULL")

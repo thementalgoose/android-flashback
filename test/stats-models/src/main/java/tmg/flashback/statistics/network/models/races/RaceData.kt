@@ -10,6 +10,7 @@ fun RaceData.Companion.model(
     date: String = "2020-10-12",
     time: String? = "12:34",
     format: RaceFormat = RaceFormat.model(),
+    laps: String? = "12",
     circuit: Circuit = Circuit.model(),
     wikiUrl: String? = "wikiUrl",
     youtubeUrl: String? = "youtube"
@@ -19,6 +20,7 @@ fun RaceData.Companion.model(
     name = name,
     date = date,
     time = time,
+    laps = laps,
     format = format,
     circuit = circuit,
     wikiUrl = wikiUrl,

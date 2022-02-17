@@ -24,7 +24,8 @@ sealed class RaceItem(
         val raceDate: LocalDate?,
         val wikipedia: String?,
         val youtube: String?,
-        val schedule: List<Schedule>
+        val schedule: List<Schedule>,
+        val laps: String?,
     ): RaceItem(
         id = "OVERVIEW",
         layoutId = R.layout.view_race_overview

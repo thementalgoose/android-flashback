@@ -11,6 +11,7 @@ data class RaceData(
     val round: Int,
     val name: String,
     val date: String,
+    val laps: String? = null,
     val time: String? = null,
     val format: RaceFormat? = null,
     val circuit: Circuit,

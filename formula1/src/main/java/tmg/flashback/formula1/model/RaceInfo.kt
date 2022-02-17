@@ -9,6 +9,7 @@ data class RaceInfo(
     val date: LocalDate,
     val time: LocalTime?,
     val name: String,
+    val laps: String?,
     val format: RaceFormat,
     val wikipediaUrl: String?,
     val youtube: String?,

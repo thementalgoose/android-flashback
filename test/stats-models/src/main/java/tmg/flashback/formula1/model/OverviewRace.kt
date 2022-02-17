@@ -13,6 +13,7 @@ fun OverviewRace.Companion.model(
     circuitName: String = "circuitName",
     country: String = "country",
     countryISO: String = "countryISO",
+    laps: String? = "12",
     hasQualifying: Boolean = true,
     hasResults: Boolean = false,
     schedule: List<Schedule> = listOf(
@@ -26,6 +27,7 @@ fun OverviewRace.Companion.model(
     raceName = raceName,
     circuitId = circuitId,
     circuitName = circuitName,
+    laps = laps,
     country = country,
     countryISO = countryISO,
     hasQualifying = hasQualifying,
