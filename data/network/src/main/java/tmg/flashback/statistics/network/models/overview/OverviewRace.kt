@@ -14,6 +14,7 @@ data class OverviewRace(
     val name: String,
     val circuit: Circuit,
     val date: String,
+    val laps: String? = null,
     val time: String? = null,
     val hasQualifying: Boolean,
     val hasRace: Boolean,

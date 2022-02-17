@@ -463,6 +463,7 @@ internal class ScheduleControllerTest : BaseTest() {
             countryISO = "countryISO",
             hasQualifying = true,
             hasResults = true,
+            laps = "12",
             schedule = delta.map {
                 Schedule(
                     label = "Example ${it.second} ${it.first}",

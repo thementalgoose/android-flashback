@@ -93,6 +93,7 @@ class RaceFragment: BaseFragment() {
                 season = raceData.season,
                 raceDate = raceData.date,
                 wikipedia = null,
+                laps = null,
                 youtube = null,
                 schedule = emptyList()
             )

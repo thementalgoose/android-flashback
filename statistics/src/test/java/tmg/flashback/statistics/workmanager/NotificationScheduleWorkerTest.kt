@@ -140,6 +140,7 @@ internal class NotificationScheduleWorkerTest: BaseTest() {
             countryISO = "countryISO",
             hasQualifying = true,
             hasResults = true,
+            laps = "12",
             schedule = delta.map { (label, datetime) ->
                 Schedule(
                     label = label,
