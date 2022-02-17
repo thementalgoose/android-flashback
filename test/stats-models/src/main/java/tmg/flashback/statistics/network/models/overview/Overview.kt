@@ -10,6 +10,7 @@ fun OverviewRace.Companion.model(
     circuit: Circuit = Circuit.model(),
     date: String = "2020-10-12",
     time: String? = "12:34",
+    laps: String? = "12",
     hasQualifying: Boolean = true,
     hasRace: Boolean = false,
     schedule: List<Schedule>? = listOf(
@@ -21,6 +22,7 @@ fun OverviewRace.Companion.model(
     name = name,
     circuit = circuit,
     date = date,
+    laps = laps,
     time = time,
     hasQualifying = hasQualifying,
     hasRace = hasRace,

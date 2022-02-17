@@ -9,8 +9,9 @@ data class RaceInfo(
     val date: LocalDate,
     val time: LocalTime?,
     val name: String,
-    val wikipediaUrl: String?,
+    val laps: String?,
     val youtube: String?,
+    val wikipediaUrl: String?,
     val circuit: Circuit,
 ) {
     companion object

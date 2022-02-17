@@ -18,6 +18,8 @@ data class Overview(
     val date: String,
     @ColumnInfo(name = "time")
     val time: String?,
+    @ColumnInfo(name = "laps")
+    val laps: String?,
     @ColumnInfo(name = "has_race_data")
     val hasRace: Boolean,
     @ColumnInfo(name = "has_qualifying_data")

@@ -20,6 +20,7 @@ class OverviewMapper(
             circuitId = overview.overview.circuitId,
             circuitName = overview.circuit.name,
             country = overview.circuit.country,
+            laps = overview.overview.laps,
             countryISO = overview.circuit.countryISO,
             hasQualifying = overview.overview.hasQualifying,
             hasResults = overview.overview.hasRace,
