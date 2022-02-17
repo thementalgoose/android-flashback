@@ -13,6 +13,7 @@ import tmg.flashback.statistics.databinding.ViewRaceOverviewBinding
 import tmg.flashback.statistics.ui.race.RaceItem
 import tmg.flashback.statistics.ui.shared.pill.PillAdapter
 import tmg.flashback.statistics.ui.shared.pill.PillItem
+import tmg.utilities.extensions.ordinalAbbreviation
 import tmg.utilities.extensions.views.context
 import tmg.utilities.extensions.views.getString
 import tmg.utilities.extensions.views.show
@@ -40,7 +41,10 @@ class OverviewViewHolder(
         @SuppressLint("SetTextI18n")
         binding.tvCircuitName.text = "${item.circuitName}\n${item.country}"
         binding.tvRoundInfo.text = getString(R.string.race_round, item.round)
-        binding.tvDate.text = item.raceDate?.format(DateTimeFormatter.ofPattern("dd MMMM")) ?: ""
+        binding.tvDate.text = when (val date = item.raceDate) {
+            null -> ""
+            else -> "${item.raceDate.dayOfMonth.ordinalAbbreviation} ${item.raceDate.format(DateTimeFormatter.ofPattern("MMMM"))}"
+        }
 
         val track = TrackLayout.getTrack(item.circuitId, item.season, item.raceName)
         binding.trackLayout.show(track != null)
@@ -48,12 +52,20 @@ class OverviewViewHolder(
         binding.trackLayout.setOnClickListener(if (track != null) this else null)
 
         linkAdapter.list = mutableListOf<PillItem>().apply {
-            add(PillItem.Circuit(item.circuitId, item.circuitName))
+            if (item.laps != null) {
+                add(PillItem.LabelIcon(
+                    string = getString(R.string.circuit_info_laps, item.laps),
+                    _icon = R.drawable.ic_laps
+                ))
+            }
             if (item.wikipedia != null) {
                 add(PillItem.Wikipedia(item.wikipedia))
             }
             if (item.youtube != null) {
                 add(PillItem.Youtube(item.youtube))
+            }
+            if (track != null) {
+                add(PillItem.Circuit(item.circuitId, item.circuitName))
             }
 
             val date = item.raceDate ?: return@apply

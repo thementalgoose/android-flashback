@@ -254,6 +254,7 @@ class RaceViewModel(
                 season = raceInfo.season,
                 raceDate = raceInfo.date,
                 wikipedia = raceInfo.wikipediaUrl,
+                laps = raceInfo.laps,
                 youtube = raceInfo.youtube,
                 schedule = schedule
             ))

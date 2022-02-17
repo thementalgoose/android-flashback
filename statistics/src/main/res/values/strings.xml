@@ -101,6 +101,7 @@
     <string name="circuit_info_maps">Show on map</string>
     <string name="circuit_info_wikipedia">Wikipedia</string>
     <string name="circuit_info_youtube">Race Highlights</string>
+    <string name="circuit_info_laps">%s laps</string>
     <string name="no_app_copy_clipboard">Cannot find app. Coordinates have been copied to clipboard</string>
 
     <!-- Race -->
