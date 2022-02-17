@@ -13,6 +13,7 @@ fun RaceItem.Companion.overviewModel(
     circuitName: String = "circuitName",
     round: Int = 1,
     season: Int = 2020,
+    laps: String = "12",
     raceDate: LocalDate? = LocalDate.of(2020, 10, 12),
     wikipedia: String = "wikiUrl",
     youtube: String = "youtube",
@@ -26,6 +27,7 @@ fun RaceItem.Companion.overviewModel(
     round = round,
     season = season,
     raceDate = raceDate,
+    laps = laps,
     wikipedia = wikipedia,
     youtube = youtube,
     schedule = schedule
