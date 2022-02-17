@@ -117,7 +117,6 @@ class RaceRepository(
 
 
 
-
     private fun saveConstructorStandings(season: Int, constructors: Map<String, ConstructorStandings>?) {
         if (constructors == null) return
         val standings = constructors.values

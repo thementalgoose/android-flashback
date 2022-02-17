@@ -8,7 +8,10 @@ fun RaceInfo.Companion.model(
     circuitId: String = "circuitId",
     time: String? = "12:34",
     wikiUrl: String? = "wikiUrl",
-    youtube: String? = "youtube"
+    youtube: String? = "youtube",
+    formatQualifying: String? = "knockout",
+    formatSprint: String? = null,
+    formatRace: String? = "race"
 ): RaceInfo = RaceInfo(
     season = season,
     round = round,
@@ -17,5 +20,8 @@ fun RaceInfo.Companion.model(
     circuitId = circuitId,
     time = time,
     wikiUrl = wikiUrl,
-    youtube = youtube
+    youtube = youtube,
+    formatQualifying = formatQualifying,
+    formatSprint = formatSprint,
+    formatRace = formatRace
 )

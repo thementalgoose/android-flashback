@@ -13,6 +13,7 @@ class RaceMapper(
     private val circuitMapper: CircuitMapper,
     private val driverDataMapper: DriverDataMapper,
     private val constructorDataMapper: ConstructorDataMapper,
+    private val raceFormatMapper: RaceFormatMapper,
     private val scheduleMapper: ScheduleMapper
 ) {
 
@@ -25,6 +26,7 @@ class RaceMapper(
             date = requireFromDate(data.raceInfo.date),
             time = fromTime(data.raceInfo.time),
             name = data.raceInfo.name,
+            format = raceFormatMapper.mapRaceFormat(data.raceInfo),
             wikipediaUrl = data.raceInfo.wikiUrl,
             youtube = data.raceInfo.youtube,
             circuit = circuitMapper.mapCircuit(data.circuit)!!,
@@ -38,6 +40,7 @@ class RaceMapper(
             date = requireFromDate(data.raceInfo.date),
             time = fromTime(data.raceInfo.time),
             name = data.raceInfo.name,
+            format = raceFormatMapper.mapRaceFormat(data.raceInfo),
             wikipediaUrl = data.raceInfo.wikiUrl,
             youtube = data.raceInfo.youtube,
             circuit = circuitMapper.mapCircuit(data.circuit)!!,

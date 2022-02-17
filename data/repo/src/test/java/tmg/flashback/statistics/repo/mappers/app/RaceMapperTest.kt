@@ -18,6 +18,7 @@ internal class RaceMapperTest {
     private val mockCircuitMapper: CircuitMapper = mockk(relaxed = true)
     private val mockDriverDataMapper: DriverDataMapper = mockk(relaxed = true)
     private val mockConstructorDataMapper: ConstructorDataMapper = mockk(relaxed = true)
+    private val mockRaceFormatMapper: RaceFormatMapper = mockk(relaxed = true)
     private val mockScheduleMapper: ScheduleMapper = mockk(relaxed = true)
 
     private lateinit var sut: RaceMapper
@@ -28,6 +29,7 @@ internal class RaceMapperTest {
             mockCircuitMapper,
             mockDriverDataMapper,
             mockConstructorDataMapper,
+            mockRaceFormatMapper,
             mockScheduleMapper
         )
 
@@ -35,6 +37,7 @@ internal class RaceMapperTest {
         every { mockDriverDataMapper.mapDriver(any()) } returns Driver.model()
         every { mockConstructorDataMapper.mapConstructorData(any()) } returns Constructor.model()
         every { mockScheduleMapper.mapSchedule(any()) } returns Schedule.model()
+        every { mockRaceFormatMapper.mapRaceFormat(any()) } returns RaceFormat.model()
     }
 
     @Test

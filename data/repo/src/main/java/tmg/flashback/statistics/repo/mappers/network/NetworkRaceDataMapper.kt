@@ -15,7 +15,10 @@ class NetworkRaceDataMapper {
             circuitId = raceData.circuit.id,
             time = raceData.time,
             wikiUrl = raceData.wikiUrl,
-            youtube = raceData.youtubeUrl
+            youtube = raceData.youtubeUrl,
+            formatQualifying = raceData.format?.qualifying,
+            formatSprint = raceData.format?.sprint,
+            formatRace = raceData.format?.race
         )
     }
 }

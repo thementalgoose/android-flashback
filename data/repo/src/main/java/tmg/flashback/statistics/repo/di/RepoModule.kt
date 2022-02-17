@@ -21,7 +21,8 @@ val repoModule = networkModule + roomModule + module {
     single { DriverStandingMapper(get(), get()) }
     single { EventMapper() }
     single { OverviewMapper(get()) }
-    single { RaceMapper(get(), get(), get(), get()) }
+    single { RaceFormatMapper() }
+    single { RaceMapper(get(), get(), get(), get(), get()) }
     single { SeasonMapper(get(), get()) }
     single { ScheduleMapper() }
 

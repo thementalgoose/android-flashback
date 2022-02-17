@@ -24,7 +24,7 @@ import tmg.flashback.statistics.room.models.standings.DriverStanding
 import tmg.flashback.statistics.room.models.standings.DriverStandingConstructor
 
 @Database(
-    version = 3,
+    version = 4,
     entities = [
         Circuit::class,
         CircuitRound::class,

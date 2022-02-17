@@ -12,6 +12,7 @@ data class RaceData(
     val name: String,
     val date: String,
     val time: String? = null,
+    val format: RaceFormat? = null,
     val circuit: Circuit,
     val wikiUrl: String? = null,
     val youtubeUrl: String? = null

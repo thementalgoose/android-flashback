@@ -22,6 +22,12 @@ data class RaceInfo(
     val wikiUrl: String?,
     @ColumnInfo(name = "youtube")
     val youtube: String?,
+    @ColumnInfo(name = "format_qualifying")
+    val formatQualifying: String?,
+    @ColumnInfo(name = "format_sprint")
+    val formatSprint: String?,
+    @ColumnInfo(name = "format_race")
+    val formatRace: String?,
     @PrimaryKey
     @ColumnInfo(name = "id")
     val id: String = "${season}_${round}"
