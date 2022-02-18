@@ -6,4 +6,7 @@
     <item
         android:id="@+id/season_list_clear_default"
         android:title="@string/dashboard_season_list_option_clear_default" />
+    <item
+        android:id="@+id/season_list_format_info"
+        android:title="@string/dashboard_season_list_option_format_info" />
 </menu>

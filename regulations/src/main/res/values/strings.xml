@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="format_qualifying">Qualifying</string>
+    <string name="format_sprint">Sprint</string>
+    <string name="format_race">Race</string>
+
+    <!-- Stats -->
+    <string name="format_stats_race_length">Race length</string>
+    <string name="format_stats_fuel_limit">Fuel limit</string>
+    <string name="format_stats_fastest_lap_point">Fastest lap point</string>
+
+    <string name="format_stat_yes">Yes</string>
+    <string name="format_stat_no">No</string>
+
+    <!-- Points -->
+    <string name="format_points_title">Points</string>
+    <string name="format_points_subtitle">Drivers are awarded the following points for based on their finishing position</string>
+</resources>

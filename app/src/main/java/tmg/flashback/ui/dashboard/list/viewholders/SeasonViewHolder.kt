@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.databinding.ViewSeasonListSeasonBinding
 import tmg.flashback.formula1.constants.Formula1
 import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
+import tmg.flashback.regulations.extensions.hasFormatInfo
 import tmg.flashback.statistics.R
 import tmg.flashback.ui.dashboard.list.ListItem
 import tmg.utilities.extensions.getColor
@@ -18,6 +19,7 @@ class SeasonViewHolder(
     private var seasonClicked: (season: Int) -> Unit,
     private var setDefault: (season: Int) -> Unit,
     private var clearDefault: () -> Unit,
+    private var showFormatInfo: (season: Int) -> Unit,
     private val binding: ViewSeasonListSeasonBinding
 ): RecyclerView.ViewHolder(binding.root), View.OnClickListener, PopupMenu.OnMenuItemClickListener {
 
@@ -38,6 +40,7 @@ class SeasonViewHolder(
         currentSeason = season.season
         isFavourited = season.isFavourited
 
+        popupMenu.menu.findItem(R.id.season_list_format_info).isVisible = currentSeason.hasFormatInfo()
         popupMenu.menu.findItem(R.id.season_list_clear_default).isEnabled = season.showClearDefault
 
         val colour = Formula1.coloursDecade["${season.season.toString().substring(0, 3)}0"]?.toColorInt() ?: context.theme.getColor(R.attr.colorPrimary)
@@ -117,6 +120,9 @@ class SeasonViewHolder(
             }
             R.id.season_list_clear_default -> {
                 clearDefault.invoke()
+            }
+            R.id.season_list_format_info -> {
+                showFormatInfo.invoke(currentSeason)
             }
         }
         return true
