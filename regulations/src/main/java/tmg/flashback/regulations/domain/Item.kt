@@ -11,7 +11,7 @@ internal sealed class Item(
     val layoutId: Int
 ) {
     data class Tyres(
-        val tyres: Int
+        val tyreAllocation: List<TyreAllocation>
     ): Item(R.layout.view_format_tyres)
 
     data class Stat(
@@ -42,6 +42,12 @@ internal sealed class Item(
         @StringRes
         val label: Int
     ): Item(R.layout.view_format_text)
+
+    data class Collapsible(
+        @StringRes
+        val label: Int,
+        val expanded: Boolean
+    ): Item(R.layout.view_format_collapsible)
 
     data class Header(
         @StringRes

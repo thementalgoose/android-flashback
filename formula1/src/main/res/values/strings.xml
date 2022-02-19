@@ -3,4 +3,15 @@
     <string name="event_type_testing">Test Sessions</string>
     <string name="event_type_car_launch">Car Launches</string>
     <string name="event_type_other">Other</string>
+
+    <!-- Tyres -->
+    <string name="tyre_pirelli_hyper_soft">Hyper Soft</string>
+    <string name="tyre_pirelli_ultra_soft">Ultra Soft</string>
+    <string name="tyre_pirelli_super_soft">Super Soft</string>
+    <string name="tyre_pirelli_soft">Soft</string>
+    <string name="tyre_pirelli_medium">Medium Soft</string>
+    <string name="tyre_pirelli_hard">Hard</string>
+    <string name="tyre_pirelli_super_hard">Super Hard</string>
+    <string name="tyre_pirelli_intermediate">Intermediate</string>
+    <string name="tyre_pirelli_wet">Wet</string>
 </resources>

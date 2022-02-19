@@ -11,7 +11,9 @@ import tmg.flashback.regulations.ui.items.viewholders.DeterminesViewHolder
 import tmg.flashback.regulations.ui.items.viewholders.*
 import java.lang.RuntimeException
 
-internal class ItemsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+internal class ItemsAdapter(
+    private val setSection: (label: Int, isExpanded: Boolean) -> Unit
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var list: List<Item> = emptyList()
         set(value) {
@@ -47,6 +49,10 @@ internal class ItemsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             R.layout.view_format_led_to -> DeterminesViewHolder(
                 ViewFormatLedToBinding.inflate(layoutInflater, parent, false)
             )
+            R.layout.view_format_collapsible -> CollapsibleViewHolder(
+                ViewFormatCollapsibleBinding.inflate(layoutInflater, parent, false),
+                setSection
+            )
             else -> throw RuntimeException("View holder for layout file not specified")
         }
     }
@@ -60,6 +66,7 @@ internal class ItemsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             is Item.Tyres -> (holder as TyresViewHolder).bind(item)
             is Item.Stat -> (holder as StatViewHolder).bind(item)
             is Item.Determines -> (holder as DeterminesViewHolder).bind(item)
+            is Item.Collapsible -> (holder as CollapsibleViewHolder).bind(item)
         }
     }
 
@@ -79,11 +86,15 @@ internal class ItemsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
             val oldItem = oldList[oldItemPosition]
             val newItem = newList[newItemPosition]
-            return oldItem == newItem
+            return oldItem == newItem || isSameCollapsibleView(oldItem, newItem)
         }
 
         override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
             return oldList[oldItemPosition] == newList[newItemPosition]
+        }
+
+        private fun isSameCollapsibleView(oldItem: Item, newItem: Item): Boolean {
+            return oldItem is Item.Collapsible && newItem is Item.Collapsible && oldItem.label == newItem.label
         }
     }
 }

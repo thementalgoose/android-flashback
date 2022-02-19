@@ -20,10 +20,14 @@ class FormatOverviewActivity: BaseActivity() {
 
         val season: Int = intent.extras?.getInt(keySeason) ?: Year.now().value
 
-        binding.titleExpanded.text = season.toString()
-        binding.titleCollapsed.text = season.toString()
+        binding.back.setOnClickListener {
+            onBackPressed()
+        }
 
-        loadFragment(FormatOverviewFragment.instance(season), R.id.container)
+        binding.titleExpanded.text = getString(R.string.format_year_title, season)
+        binding.titleCollapsed.text = getString(R.string.format_year_title, season)
+
+        loadFragment(FormatOverviewFragment.instance(season), R.id.fragment)
     }
 
     companion object {

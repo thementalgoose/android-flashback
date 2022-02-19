@@ -86,12 +86,12 @@ enum class Tyre(
     ),
 
     // 18" WET
-    GREEN_DRY_18(
+    GREEN_WET_18(
         icon = R.drawable.tyre_pirelli_18_green_wet,
         isDry = false,
         size = 18
     ),
-    BLUE_DRY_18(
+    BLUE_WET_18(
         icon = R.drawable.tyre_pirelli_18_blue_wet,
         isDry = false,
         size = 18

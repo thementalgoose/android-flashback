@@ -18,7 +18,7 @@ internal class FormatOverviewFragment: BaseFragment() {
     private val viewModel: FormatOverviewViewModel by viewModel()
     private val binding by viewInflateBinding(FragmentFormatOverviewBinding::inflate)
 
-    private val adapter: ItemsAdapter = ItemsAdapter()
+    private lateinit var adapter: ItemsAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,6 +30,10 @@ internal class FormatOverviewFragment: BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.swipeRefresh.isEnabled = false
+
+        adapter = ItemsAdapter(
+            setSection = viewModel.inputs::setSection
+        )
         binding.dataList.adapter = adapter
         binding.dataList.layoutManager = LinearLayoutManager(context)
 
