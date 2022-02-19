@@ -205,6 +205,59 @@ internal val points_9_6 = listOf(
     )
 )
 
+internal val points_8_8 = listOf(
+    Item.SubHeader(R.string.format_points_title),
+    Item.Text(R.string.format_points_subtitle),
+    Item.ProgressBar(
+        label = StringHolder(1.ordinalAbbreviation),
+        initial = 0,
+        final = 10,
+        progress = 8
+    ),
+    Item.ProgressBar(
+        label = StringHolder(2.ordinalAbbreviation),
+        initial = 0,
+        final = 10,
+        progress = 7
+    ),
+    Item.ProgressBar(
+        label = StringHolder(3.ordinalAbbreviation),
+        initial = 0,
+        final = 10,
+        progress = 6
+    ),
+    Item.ProgressBar(
+        label = StringHolder(4.ordinalAbbreviation),
+        initial = 0,
+        final = 10,
+        progress = 5
+    ),
+    Item.ProgressBar(
+        label = StringHolder(5.ordinalAbbreviation),
+        initial = 0,
+        final = 10,
+        progress = 4
+    ),
+    Item.ProgressBar(
+        label = StringHolder(6.ordinalAbbreviation),
+        initial = 0,
+        final = 10,
+        progress = 3
+    ),
+    Item.ProgressBar(
+        label = StringHolder(7.ordinalAbbreviation),
+        initial = 0,
+        final = 10,
+        progress = 2
+    ),
+    Item.ProgressBar(
+        label = StringHolder(8.ordinalAbbreviation),
+        initial = 0,
+        final = 10,
+        progress = 1
+    )
+)
+
 internal val points_8_6 = listOf(
     Item.SubHeader(R.string.format_points_title),
     Item.Text(R.string.format_points_subtitle),
@@ -278,5 +331,28 @@ internal val points_8_5 = listOf(
         initial = 0,
         final = 10,
         progress = 2
+    )
+)
+
+internal val points_3_3 = listOf(
+    Item.SubHeader(R.string.format_points_title),
+    Item.Text(R.string.format_points_subtitle),
+    Item.ProgressBar(
+        label = StringHolder(1.ordinalAbbreviation),
+        initial = 0,
+        final = 5,
+        progress = 3
+    ),
+    Item.ProgressBar(
+        label = StringHolder(2.ordinalAbbreviation),
+        initial = 0,
+        final = 5,
+        progress = 2
+    ),
+    Item.ProgressBar(
+        label = StringHolder(3.ordinalAbbreviation),
+        initial = 0,
+        final = 5,
+        progress = 1
     )
 )

@@ -85,6 +85,7 @@
         <entry key="app/src/main/res/layout/view_season_list_advert.xml" value="0.1984375" />
         <entry key="app/src/main/res/layout/view_season_list_button.xml" value="0.1859375" />
         <entry key="app/src/main/res/layout/view_season_list_feature_banner.xml" value="0.625" />
+        <entry key="app/src/main/res/layout/view_season_list_header.xml" value="0.14492753623188406" />
         <entry key="app/src/main/res/layout/view_season_list_switch.xml" value="0.45" />
         <entry key="app/src/main/res/xml/filepaths.xml" value="0.11354166666666667" />
         <entry key="common/src/main/res/drawable/ic_close.xml" value="0.2171875" />
@@ -179,17 +180,28 @@
         <entry key="regulations/src/main/res/drawable/ic_regulation_stat_year.xml" value="0.155" />
         <entry key="regulations/src/main/res/drawable/ic_regulation_stat_year_ended.xml" value="0.155" />
         <entry key="regulations/src/main/res/drawable/ic_regulation_stat_year_introduced.xml" value="0.155" />
+        <entry key="regulations/src/main/res/drawable/ic_stat_regs_explanation.xml" value="0.182" />
         <entry key="regulations/src/main/res/drawable/ic_stat_regs_fastest_lap.xml" value="0.138" />
         <entry key="regulations/src/main/res/drawable/ic_stat_regs_fuel.xml" value="0.138" />
+        <entry key="regulations/src/main/res/drawable/ic_stat_regs_lap_count.xml" value="0.182" />
+        <entry key="regulations/src/main/res/drawable/ic_stat_regs_pitstop.xml" value="0.182" />
+        <entry key="regulations/src/main/res/drawable/ic_stat_regs_q1.xml" value="0.182" />
+        <entry key="regulations/src/main/res/drawable/ic_stat_regs_q2.xml" value="0.182" />
+        <entry key="regulations/src/main/res/drawable/ic_stat_regs_q3.xml" value="0.182" />
         <entry key="regulations/src/main/res/drawable/ic_stat_regs_race_length.xml" value="0.138" />
+        <entry key="regulations/src/main/res/drawable/ic_stat_regs_session_count.xml" value="0.182" />
         <entry key="regulations/src/main/res/layout/activity_format_overview.xml" value="0.24895833333333334" />
         <entry key="regulations/src/main/res/layout/fragment_event.xml" value="0.2526041666666667" />
         <entry key="regulations/src/main/res/layout/fragment_format_overview.xml" value="0.24895833333333334" />
         <entry key="regulations/src/main/res/layout/fragment_regulations.xml" value="0.2526041666666667" />
+        <entry key="regulations/src/main/res/layout/view_format_collapsible.xml" value="0.23333333333333334" />
         <entry key="regulations/src/main/res/layout/view_format_header.xml" value="0.245018115942029" />
         <entry key="regulations/src/main/res/layout/view_format_led_to.xml" value="0.245018115942029" />
         <entry key="regulations/src/main/res/layout/view_format_progress_bar.xml" value="0.1752786220871327" />
+        <entry key="regulations/src/main/res/layout/view_format_spacer.xml" value="0.1" />
         <entry key="regulations/src/main/res/layout/view_format_stat.xml" value="0.245018115942029" />
+        <entry key="regulations/src/main/res/layout/view_format_subheader.xml" value="0.1" />
+        <entry key="regulations/src/main/res/layout/view_format_text.xml" value="0.1" />
         <entry key="regulations/src/main/res/xml/activity_format_overview_scene.xml" value="0.24895833333333334" />
         <entry key="rss/src/main/res/drawable-anydpi/app_shortcut_rss_png.xml" value="0.3765625" />
         <entry key="rss/src/main/res/drawable/app_shortcut_rss.xml" value="0.5" />
