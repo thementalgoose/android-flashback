@@ -18,7 +18,8 @@ sealed class SeasonItem(
 
     data class Events(
         val season: Int,
-        val events: Map<EventType, List<Event>>
+        val events: Map<EventType, List<Event>>,
+        val showTyres: Boolean
     ): SeasonItem(R.layout.view_dashboard_season_events)
 
     data class CalendarMonth(

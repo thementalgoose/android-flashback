@@ -100,6 +100,7 @@
     <string name="circuit_info_circuit">Circuit</string>
     <string name="circuit_info_maps">Show on map</string>
     <string name="circuit_info_wikipedia">Wikipedia</string>
+    <string name="circuit_info_tyres">Tyre compounds</string>
     <string name="circuit_info_youtube">Race Highlights</string>
     <string name="circuit_info_laps">%s laps</string>
     <string name="no_app_copy_clipboard">Cannot find app. Coordinates have been copied to clipboard</string>
@@ -182,6 +183,13 @@
     <string name="shared_network_error">A network error occurred! Please check you are connected to the internet and try again</string>
     <string name="shared_network_internal_error">A network error occurred and we weren\'t able to find any articles. Please check your internet connection or try again later</string>
     <string name="shared_constructor_championship_not_awarded">The constructors championship did not start until 1958</string>
+
+    <!-- Tyres -->
+    <string name="tyres_list_title">%s tyres</string>
+    <string name="tyres_list_subtitle">These are the tyre compounds used in this season</string>
+    <string name="tyres_dry_compounds">Dry</string>
+    <string name="tyres_wet_compounds">Wet</string>
+    <string name="tyres_size">%d inch wheel rims</string>
 
     <!-- Data Provided -->
     <string name="shared_provided_by">Data provided by the Flashback Team and Ergast API</string>
