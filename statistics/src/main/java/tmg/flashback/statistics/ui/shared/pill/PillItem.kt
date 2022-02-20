@@ -16,6 +16,13 @@ sealed class PillItem(
         label = StringHolder(R.string.circuit_info_wikipedia)
     )
 
+    data class Tyres(
+        val year: Int
+    ) : PillItem(
+        icon = R.drawable.ic_tyre,
+        label = StringHolder(R.string.circuit_info_tyres)
+    )
+
     data class Youtube(
         val link: String
     ) : PillItem(

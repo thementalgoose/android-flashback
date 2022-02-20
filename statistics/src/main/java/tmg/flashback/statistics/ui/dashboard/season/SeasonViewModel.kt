@@ -15,6 +15,8 @@ import tmg.flashback.formula1.constants.Formula1
 import tmg.flashback.formula1.constants.Formula1.constructorChampionshipStarts
 import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
 import tmg.flashback.formula1.enums.EventType
+import tmg.flashback.formula1.enums.SeasonTyres
+import tmg.flashback.formula1.enums.getBySeason
 import tmg.flashback.formula1.extensions.getConstructorInProgressInfo
 import tmg.flashback.formula1.extensions.getDriverInProgressInfo
 import tmg.flashback.formula1.model.*
@@ -264,8 +266,13 @@ class SeasonViewModel(
      */
     private fun List<OverviewRace>.toScheduleList(season: Int, events: List<tmg.flashback.formula1.model.Event>): List<SeasonItem> {
         val list = mutableListOf<SeasonItem>()
-        if (events.isNotEmpty()) {
-            list.add(SeasonItem.Events(season, events.groupBy { it.type }))
+        val tyreSeasons = SeasonTyres.getBySeason(season)
+        if (events.isNotEmpty() || tyreSeasons != null) {
+            list.add(SeasonItem.Events(
+                season,
+                events.groupBy { it.type },
+                tyreSeasons != null
+            ))
         }
         list.addAll(this
             .sortedBy { it.round }

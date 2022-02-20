@@ -31,10 +31,12 @@ fun SeasonItem.Companion.eventsModel(
     season: Int = 2020,
     events: Map<EventType, List<Event>> = mapOf(
         EventType.TESTING to listOf(Event.model())
-    )
+    ),
+    showTyres: Boolean = true
 ): SeasonItem.Events = SeasonItem.Events(
     season = season,
-    events = events
+    events = events,
+    showTyres = showTyres
 )
 
 fun SeasonItem.Companion.trackModel(
