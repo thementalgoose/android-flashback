@@ -59,9 +59,9 @@ class OverviewViewHolder(
         binding.flag.setImageResource(context.getFlagResourceAlpha3(item.countryISO))
 
         linkAdapter.list = mutableListOf<PillItem>().apply {
-            if (SeasonTyres.getBySeason(item.season) != null) {
-                add(PillItem.Tyres(item.season))
-            }
+//            if (SeasonTyres.getBySeason(item.season) != null) {
+//                add(PillItem.Tyres(item.season))
+//            }
             if (item.wikipedia != null) {
                 add(PillItem.Wikipedia(item.wikipedia))
             }
