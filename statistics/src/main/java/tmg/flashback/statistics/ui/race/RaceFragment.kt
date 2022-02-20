@@ -18,6 +18,7 @@ import tmg.flashback.statistics.ui.overview.constructor.ConstructorActivity
 import tmg.flashback.statistics.ui.overview.driver.DriverActivity
 import tmg.flashback.statistics.ui.race.RaceDisplayType.*
 import tmg.flashback.statistics.ui.shared.pill.PillItem
+import tmg.flashback.statistics.ui.shared.tyres.TyresBottomSheetFragment
 import tmg.flashback.ui.base.BaseFragment
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
@@ -70,6 +71,12 @@ class RaceFragment: BaseFragment() {
                     }
                     is PillItem.Youtube -> {
                         viewWebpage(pillItem.link)
+                    }
+                    is PillItem.Tyres -> {
+                        context?.let {
+                            val frag = TyresBottomSheetFragment.instance(pillItem.year)
+                            frag.show(parentFragmentManager, "TYRES")
+                        }
                     }
                     else -> { /* Do nothing */ }
                 }

@@ -1,10 +1,13 @@
 package tmg.flashback.formula1.enums
 
-import org.junit.jupiter.api.Assertions.assertNotNull
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.fail
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
+import org.junit.jupiter.params.provider.EnumSource
 import org.threeten.bp.Year
+import tmg.flashback.formula1.R
 
 internal class SeasonTyresTest {
 
@@ -32,5 +35,46 @@ internal class SeasonTyresTest {
     )
     fun `season tyres have value for current year`(season: Int) {
         assertNotNull(SeasonTyres.getBySeason(season))
+    }
+
+    @ParameterizedTest
+    @EnumSource(SeasonTyres::class)
+    fun `all dry compound labels are in an order`(tyres: SeasonTyres) {
+        val order = mapOf(
+            R.string.tyre_ultra_soft to 1,
+            R.string.tyre_hyper_soft to 2,
+            R.string.tyre_super_soft to 3,
+            R.string.tyre_soft to 4,
+            R.string.tyre_medium to 5,
+            R.string.tyre_hard to 6,
+            R.string.tyre_super_hard to 7
+        )
+
+        var ref = 0
+        tyres.tyres
+            .forEach { list ->
+                if (order[list.label]!! <= ref) {
+                    assertTrue(false, "Tyre order labels are not in the correct order!")
+                }
+                ref = order[list.label]!!
+            }
+    }
+
+    @ParameterizedTest
+    @EnumSource(SeasonTyres::class)
+    fun `all wet compound labels are in an order`(tyres: SeasonTyres) {
+        val order = mapOf(
+            1 to R.string.tyre_intermediate,
+            2 to R.string.tyre_wet
+        )
+
+        var ref = 0
+        tyres.tyres
+            .forEach { list ->
+                if (order[list.label]!! <= ref) {
+                    assertTrue(false, "Tyre order labels are not in the correct order!")
+                }
+                ref = order[list.label]!!
+            }
     }
 }
