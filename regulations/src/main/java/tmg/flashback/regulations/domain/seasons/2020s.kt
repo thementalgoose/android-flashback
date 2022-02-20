@@ -20,7 +20,7 @@ internal val season2021 = listOf(
             add(statSessionLengthQ1(18))
             add(statSessionLengthQ2(15))
             add(statSessionLengthQ3(12))
-            add(statLabel(R.string.format_))
+//            add(statLabel(R.string.format_))
         }
     ),
     Section(

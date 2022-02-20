@@ -3,6 +3,7 @@ package tmg.flashback.regulations.domain
 import androidx.annotation.DrawableRes
 import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
+import tmg.flashback.formula1.enums.TyreLabel
 import tmg.flashback.regulations.R
 import tmg.utilities.models.StringHolder
 
@@ -11,7 +12,7 @@ internal sealed class Item(
     val layoutId: Int
 ) {
     data class Tyres(
-        val tyreAllocation: List<TyreAllocation>
+        val tyreAllocation: List<TyreLabel>
     ): Item(R.layout.view_format_tyres)
 
     data class Stat(
