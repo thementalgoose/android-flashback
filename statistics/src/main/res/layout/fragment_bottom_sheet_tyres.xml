@@ -1,38 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="?attr/backgroundPrimary"
-    android:orientation="vertical"
-    android:paddingTop="@dimen/paddingMedium"
-    android:paddingBottom="@dimen/paddingMedLarge">
+    android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/title"
-        style="@style/Text.Title"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/paddingMedium"
-        android:layout_marginEnd="@dimen/paddingMedium"
-        android:gravity="center"
-        android:text="@string/tyres_list_title" />
+        android:background="?attr/backgroundPrimary"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/paddingMedium"
+        android:paddingBottom="@dimen/paddingMedLarge">
 
-    <TextView
-        style="@style/Text.Body.2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/paddingMedium"
-        android:layout_marginTop="@dimen/paddingSmall"
-        android:layout_marginEnd="@dimen/paddingMedium"
-        android:layout_marginBottom="@dimen/paddingMedium"
-        android:gravity="center"
-        android:text="@string/tyres_list_subtitle" />
+        <TextView
+            android:id="@+id/title"
+            style="@style/Text.Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/paddingMedium"
+            android:layout_marginEnd="@dimen/paddingMedium"
+            android:gravity="center"
+            android:text="@string/tyres_list_title" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:nestedScrollingEnabled="false"
-        android:overScrollMode="never" />
+        <TextView
+            style="@style/Text.Body.2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/paddingMedium"
+            android:layout_marginTop="@dimen/paddingSmall"
+            android:layout_marginEnd="@dimen/paddingMedium"
+            android:layout_marginBottom="@dimen/paddingMedium"
+            android:gravity="center"
+            android:text="@string/tyres_list_subtitle" />
 
-</LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"
+            android:overScrollMode="never" />
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>
