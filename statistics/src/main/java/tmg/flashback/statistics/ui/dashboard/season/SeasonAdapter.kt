@@ -20,7 +20,8 @@ class SeasonAdapter(
     private val calendarWeekRaceClicked: (track: SeasonItem.CalendarWeek) -> Unit,
     private val driverClicked: (driver: SeasonItem.Driver) -> Unit,
     private val constructorClicked: (constructor: SeasonItem.Constructor) -> Unit,
-    private val eventTypeClicked: (season: Int, type: EventType) -> Unit
+    private val eventTypeClicked: (season: Int, type: EventType) -> Unit,
+    private val tyresClicked: (season: Int) -> Unit,
 ): SyncAdapter<SeasonItem>() {
 
     override var list: List<SeasonItem> = emptyList()
@@ -56,7 +57,8 @@ class SeasonAdapter(
             )
             R.layout.view_dashboard_season_events -> EventsViewHolder(
                 ViewDashboardSeasonEventsBinding.inflate(layoutInflater, parent, false),
-                eventTypeClicked
+                eventTypeClicked,
+                tyresClicked
             )
             R.layout.view_dashboard_season_calendar_week -> CalendarWeekViewHolder(
                 ViewDashboardSeasonCalendarWeekBinding.inflate(layoutInflater, parent, false),
