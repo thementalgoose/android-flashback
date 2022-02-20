@@ -3,4 +3,16 @@
     <string name="event_type_testing">Test Sessions</string>
     <string name="event_type_car_launch">Car Launches</string>
     <string name="event_type_other">Other</string>
+
+    <!-- Tyres -->
+    <string name="tyre_hyper_soft">Hyper Soft</string>
+    <string name="tyre_ultra_soft">Ultra Soft</string>
+    <string name="tyre_super_soft">Super Soft</string>
+    <string name="tyre_soft">Soft</string>
+    <string name="tyre_medium">Medium</string>
+    <string name="tyre_hard">Hard</string>
+    <string name="tyre_super_hard">Super Hard</string>
+    <string name="tyre_intermediate">Intermediate</string>
+    <string name="tyre_wet">Wet</string>
+
 </resources>
