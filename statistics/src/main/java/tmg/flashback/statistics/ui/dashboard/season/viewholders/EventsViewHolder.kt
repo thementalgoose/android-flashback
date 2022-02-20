@@ -16,7 +16,8 @@ import tmg.utilities.models.StringHolder
 
 class EventsViewHolder(
     private val binding: ViewDashboardSeasonEventsBinding,
-    private val eventTypeClicked: (season: Int, type: EventType) -> Unit
+    private val eventTypeClicked: (season: Int, type: EventType) -> Unit,
+    private val tyresClicked: (season: Int) -> Unit
 ): RecyclerView.ViewHolder(binding.root), (PillItem) -> Unit {
 
     private val adapter: PillAdapter = PillAdapter(
@@ -31,19 +32,25 @@ class EventsViewHolder(
 
     fun bind(model: SeasonItem.Events) {
         this.model = model
-        adapter.list = model.events.keys
-            .sortedBy { it.ordinal }
-            .map {
-                PillItem.LabelIcon(
-                    _icon = it.icon,
-                    string = getString(it.label)
-                )
-            }
+        adapter.list = mutableListOf<PillItem>().apply {
+            add(PillItem.Tyres(model.season))
+            addAll(model.events.keys
+                .sortedBy { it.ordinal }
+                .map {
+                    PillItem.LabelIcon(
+                        _icon = it.icon,
+                        string = getString(it.label)
+                    )
+                })
+        }
     }
 
     override fun invoke(item: PillItem) {
-        val pillItem = item as? PillItem.LabelIcon ?: return
-        val eventType = EventType.values().firstOrNull { it.icon == pillItem.icon } ?: return
-        eventTypeClicked(model.season, eventType)
+        if (item is PillItem.LabelIcon) {
+            val eventType = EventType.values().firstOrNull { it.icon == item.icon } ?: return
+            eventTypeClicked(model.season, eventType)
+        } else if (item is PillItem.Tyres) {
+            tyresClicked(item.year)
+        }
     }
 }
