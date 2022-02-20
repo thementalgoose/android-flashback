@@ -6,7 +6,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
+import tmg.flashback.formula1.enums.SeasonTyres
 import tmg.flashback.formula1.enums.TrackLayout
+import tmg.flashback.formula1.enums.getBySeason
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.ViewRaceOverviewBinding
@@ -57,6 +59,9 @@ class OverviewViewHolder(
         binding.flag.setImageResource(context.getFlagResourceAlpha3(item.countryISO))
 
         linkAdapter.list = mutableListOf<PillItem>().apply {
+            if (SeasonTyres.getBySeason(item.season) != null) {
+                add(PillItem.Tyres(item.season))
+            }
             if (item.wikipedia != null) {
                 add(PillItem.Wikipedia(item.wikipedia))
             }
