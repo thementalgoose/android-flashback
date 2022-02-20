@@ -41,8 +41,8 @@ internal class SeasonTyresTest {
     @EnumSource(SeasonTyres::class)
     fun `all dry compound labels are in an order`(tyres: SeasonTyres) {
         val order = mapOf(
-            R.string.tyre_ultra_soft to 1,
-            R.string.tyre_hyper_soft to 2,
+            R.string.tyre_hyper_soft to 1,
+            R.string.tyre_ultra_soft to 2,
             R.string.tyre_super_soft to 3,
             R.string.tyre_soft to 4,
             R.string.tyre_medium to 5,
@@ -52,11 +52,13 @@ internal class SeasonTyresTest {
 
         var ref = 0
         tyres.tyres
+            .filter { it.tyre.isDry }
             .forEach { list ->
-                if (order[list.label]!! <= ref) {
+                val orderVal = order[list.label]!!
+                if (orderVal <= ref) {
                     assertTrue(false, "Tyre order labels are not in the correct order!")
                 }
-                ref = order[list.label]!!
+                ref = orderVal
             }
     }
 
@@ -64,17 +66,19 @@ internal class SeasonTyresTest {
     @EnumSource(SeasonTyres::class)
     fun `all wet compound labels are in an order`(tyres: SeasonTyres) {
         val order = mapOf(
-            1 to R.string.tyre_intermediate,
-            2 to R.string.tyre_wet
+            R.string.tyre_intermediate to 1,
+            R.string.tyre_wet to 2
         )
 
         var ref = 0
         tyres.tyres
+            .filter { !it.tyre.isDry }
             .forEach { list ->
-                if (order[list.label]!! <= ref) {
+                val orderVal = order[list.label]!!
+                if (orderVal <= ref) {
                     assertTrue(false, "Tyre order labels are not in the correct order!")
                 }
-                ref = order[list.label]!!
+                ref = orderVal
             }
     }
 }
