@@ -22,6 +22,7 @@ import tmg.flashback.statistics.ui.overview.constructor.ConstructorActivity
 import tmg.flashback.statistics.ui.overview.driver.DriverActivity
 import tmg.flashback.statistics.ui.race.RaceActivity
 import tmg.flashback.statistics.ui.race.RaceData
+import tmg.flashback.statistics.ui.shared.tyres.TyresBottomSheetFragment
 import tmg.flashback.ui.base.BaseFragment
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
@@ -76,6 +77,10 @@ class SeasonFragment: BaseFragment() {
                         clickTrack(it)
                     }
                 }
+            },
+            tyresClicked = { season ->
+                val tyre = TyresBottomSheetFragment.instance(season)
+                tyre.show(parentFragmentManager, "TYRES")
             },
             eventTypeClicked = { season, type ->
                 EventListBottomSheetFragment

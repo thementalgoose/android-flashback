@@ -6,7 +6,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
+import tmg.flashback.formula1.enums.SeasonTyres
 import tmg.flashback.formula1.enums.TrackLayout
+import tmg.flashback.formula1.enums.getBySeason
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.ViewRaceOverviewBinding
@@ -16,6 +18,7 @@ import tmg.flashback.statistics.ui.shared.pill.PillItem
 import tmg.utilities.extensions.ordinalAbbreviation
 import tmg.utilities.extensions.views.context
 import tmg.utilities.extensions.views.getString
+import tmg.utilities.extensions.views.gone
 import tmg.utilities.extensions.views.show
 
 class OverviewViewHolder(
@@ -36,28 +39,29 @@ class OverviewViewHolder(
 
         this.model = item
 
-        binding.imgCountry.setImageResource(binding.imgCountry.context.getFlagResourceAlpha3(item.countryISO))
+//        binding.imgCountry.setImageResource(binding.imgCountry.context.getFlagResourceAlpha3(item.countryISO))
 
         @SuppressLint("SetTextI18n")
-        binding.tvCircuitName.text = "${item.circuitName}\n${item.country}"
-        binding.tvRoundInfo.text = getString(R.string.race_round, item.round)
-        binding.tvDate.text = when (val date = item.raceDate) {
+        binding.circuitInfo.text = "${item.circuitName}\n${item.country}"
+        binding.round.text = getString(R.string.race_round, item.round)
+        binding.date.text = when (val date = item.raceDate) {
             null -> ""
             else -> "${item.raceDate.dayOfMonth.ordinalAbbreviation} ${item.raceDate.format(DateTimeFormatter.ofPattern("MMMM"))}"
         }
 
+        if (item.laps != null) {
+            binding.laps.text = getString(R.string.circuit_info_laps, item.laps)
+        } else {
+            binding.laps.gone()
+        }
+
         val track = TrackLayout.getTrack(item.circuitId, item.season, item.raceName)
-        binding.trackLayout.show(track != null)
-        binding.trackLayout.setImageResource(track?.icon ?: 0)
-        binding.trackLayout.setOnClickListener(if (track != null) this else null)
+        binding.flag.setImageResource(context.getFlagResourceAlpha3(item.countryISO))
 
         linkAdapter.list = mutableListOf<PillItem>().apply {
-            if (item.laps != null) {
-                add(PillItem.LabelIcon(
-                    string = getString(R.string.circuit_info_laps, item.laps),
-                    _icon = R.drawable.ic_laps
-                ))
-            }
+//            if (SeasonTyres.getBySeason(item.season) != null) {
+//                add(PillItem.Tyres(item.season))
+//            }
             if (item.wikipedia != null) {
                 add(PillItem.Wikipedia(item.wikipedia))
             }
