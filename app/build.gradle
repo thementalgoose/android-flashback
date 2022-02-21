@@ -111,6 +111,7 @@ dependencies {
     implementation project(path: ":formula1")
     implementation project(path: ":rss")
     implementation project(path: ":common")
+    implementation project(path: ":regulations")
 
     // Debug module
     debugImplementation project(path: ":debug")

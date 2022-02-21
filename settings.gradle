@@ -7,13 +7,10 @@ include ':data:repo'
 include ':data:room'
 include ':data:network'
 include ':formula1'
-
 include ':rss'
-
 include ':ads'
-
+include ':regulations'
 include ':common'
-
 include ':core:analytics'
 include ':core:appshortcuts'
 include ':core:configuration'
@@ -21,10 +18,7 @@ include ':core:crash-reporting'
 include ':core:device'
 include ':core:notifications'
 include ':core:preferences'
-
 include ':presentation:ui'
 include ':presentation:style'
-
 include ':debug'
-
 include ':test:stats-models'

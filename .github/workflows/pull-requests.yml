@@ -45,6 +45,7 @@ jobs:
           echo "::set-output name=formula1::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}              | grep -E '^formula1/' -c)"
           echo "::set-output name=rss::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                   | grep -E '^rss/' -c)"
           echo "::set-output name=statistics::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}            | grep -E '^statistics/' -c)"
+          echo "::set-output name=regulations::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}           | grep -E '^regulations/' -c)"
           echo "::set-output name=data_room::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}             | grep -E '^data/room/' -c)"
           echo "::set-output name=data_repo::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}             | grep -E '^data/repo/' -c)"
           echo "::set-output name=data_network::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}          | grep -E '^data/network/' -c)"
@@ -66,6 +67,7 @@ jobs:
       formula1: ${{ steps.change.outputs.formula1 != 0 }}
       rss: ${{ steps.change.outputs.rss != 0 }}
       statistics: ${{ steps.change.outputs.statistics != 0 }}
+      regulations: ${{ steps.change.outputs.regulations != 0 }}
       learning: ${{ steps.change.outputs.learning != 0 }}
       data_room: ${{ steps.change.outputs.data_room != 0 }}
       data_repo: ${{ steps.change.outputs.data_repo != 0 }}
@@ -162,6 +164,10 @@ jobs:
       - name: :rss
         run: ./gradlew :rss:testDebugUnitTest
         if: ${{ needs.unit_test_diff_check.outputs.rss == 'true' && needs.unit_test_diff_check.outputs.app != 'true' }}
+
+      - name: :regulations
+        run: ./gradlew :regulations:testDebugUnitTest
+        if: ${{ needs.unit_test_diff_check.outputs.regulations == 'true' && needs.unit_test_diff_check.outputs.app != 'true' }}
 
       - name: :data:repo
         run: ./gradlew :data:repo:testDebugUnitTest
