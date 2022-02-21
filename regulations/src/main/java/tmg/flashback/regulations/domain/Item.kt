@@ -32,6 +32,8 @@ internal sealed class Item(
 
     object Spacer: Item(R.layout.view_format_spacer)
 
+    object QualifyingKnockout: Item(R.layout.view_format_qualifying_knockout)
+
     data class Determines(
         @StringRes
         val from: Int,
