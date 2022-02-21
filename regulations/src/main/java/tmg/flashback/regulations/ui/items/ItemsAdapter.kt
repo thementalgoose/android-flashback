@@ -53,6 +53,9 @@ internal class ItemsAdapter(
                 ViewFormatCollapsibleBinding.inflate(layoutInflater, parent, false),
                 setSection
             )
+            R.layout.view_format_qualifying_knockout -> QualifyingKnockoutViewHolder(
+                ViewFormatQualifyingKnockoutBinding.inflate(layoutInflater, parent, false)
+            )
             else -> throw RuntimeException("View holder for layout file not specified")
         }
     }

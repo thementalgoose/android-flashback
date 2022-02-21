@@ -58,14 +58,10 @@ internal class FormatOverviewViewModel: ViewModel(), FormatOverviewViewModelInpu
     }
 
     override fun setSection(label: Int, newState: Boolean) {
-        val labels = this.expandedSections.value?.toMutableSet() ?: mutableSetOf()
         if (newState) {
-//            labels.add(label)
             this.expandedSections.value = setOf(label)
         } else {
-//            labels.remove(label)
             this.expandedSections.value = emptySet()
         }
-//        this.expandedSections.value = labels
     }
 }

@@ -190,6 +190,7 @@
         <entry key="regulations/src/main/res/drawable/ic_stat_regs_q3.xml" value="0.182" />
         <entry key="regulations/src/main/res/drawable/ic_stat_regs_race_length.xml" value="0.138" />
         <entry key="regulations/src/main/res/drawable/ic_stat_regs_session_count.xml" value="0.182" />
+        <entry key="regulations/src/main/res/drawable/qualifying_knockout.xml" value="0.194" />
         <entry key="regulations/src/main/res/layout/activity_format_overview.xml" value="0.24895833333333334" />
         <entry key="regulations/src/main/res/layout/fragment_event.xml" value="0.2526041666666667" />
         <entry key="regulations/src/main/res/layout/fragment_format_overview.xml" value="0.24895833333333334" />
@@ -198,6 +199,7 @@
         <entry key="regulations/src/main/res/layout/view_format_header.xml" value="0.245018115942029" />
         <entry key="regulations/src/main/res/layout/view_format_led_to.xml" value="0.245018115942029" />
         <entry key="regulations/src/main/res/layout/view_format_progress_bar.xml" value="0.1752786220871327" />
+        <entry key="regulations/src/main/res/layout/view_format_qualifying_knockout.xml" value="0.375" />
         <entry key="regulations/src/main/res/layout/view_format_spacer.xml" value="0.1" />
         <entry key="regulations/src/main/res/layout/view_format_stat.xml" value="0.245018115942029" />
         <entry key="regulations/src/main/res/layout/view_format_subheader.xml" value="0.1" />
@@ -236,7 +238,7 @@
         <entry key="statistics/src/main/res/layout/fragment_bottom_sheet_race_preview.xml" value="0.3532608695652174" />
         <entry key="statistics/src/main/res/layout/fragment_constructor.xml" value="0.21739130434782608" />
         <entry key="statistics/src/main/res/layout/fragment_driver.xml" value="0.24954710144927536" />
-        <entry key="statistics/src/main/res/layout/fragment_race.xml" value="0.55" />
+        <entry key="statistics/src/main/res/layout/fragment_race.xml" value="0.2057335581787521" />
         <entry key="statistics/src/main/res/layout/layout_constructor_driver.xml" value="0.335" />
         <entry key="statistics/src/main/res/layout/layout_constructor_driver_label.xml" value="0.24954710144927536" />
         <entry key="statistics/src/main/res/layout/layout_dashboard_season_calendar_week.xml" value="0.20104166666666667" />

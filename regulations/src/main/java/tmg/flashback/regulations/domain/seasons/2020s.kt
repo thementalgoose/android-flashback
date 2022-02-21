@@ -16,11 +16,10 @@ internal val season2021 = listOf(
     Section(
         label = R.string.format_qualifying,
         items = mutableListOf<Item>().apply {
-            add(statQualifyingSessionCount(3))
+            add(Item.QualifyingKnockout)
             add(statSessionLengthQ1(18))
             add(statSessionLengthQ2(15))
             add(statSessionLengthQ3(12))
-//            add(statLabel(R.string.format_))
         }
     ),
     Section(
