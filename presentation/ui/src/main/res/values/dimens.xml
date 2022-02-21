@@ -10,6 +10,8 @@
     <dimen name="toolbarHeight">54dp</dimen>
     <dimen name="toolbarExpandedSpacer">24dp</dimen>
 
+    <dimen name="collapsibleIconSize">36dp</dimen>
+
     <!--===============================================================-->
 
     <!-- Bottom sheet -->

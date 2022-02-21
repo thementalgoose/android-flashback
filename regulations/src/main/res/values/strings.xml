@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="format_year_title">%d format</string>
+
+    <string name="format_qualifying">Qualifying</string>
+    <string name="format_sprint_qualifying">Sprint qualifying</string>
+    <string name="format_sprint">Sprint</string>
+    <string name="format_race">Race</string>
+
+    <!-- Stats -->
+    <string name="format_stats_race_length">Race length</string>
+    <string name="format_stats_qualifying_sessions">Number of sessions</string>
+    <string name="format_stats_session_length_q1">Q1 session length</string>
+    <string name="format_stats_session_length_q2">Q2 session length</string>
+    <string name="format_stats_session_length_q3">Q3 session length</string>
+    <string name="format_stats_max_laps">Max laps</string>
+    <string name="format_stats_fuel_limit">Fuel limit</string>
+    <string name="format_stats_mandatory_pit_stop">Mandatory Pit Stop</string>
+    <string name="format_stats_fastest_lap_point">Fastest lap point</string>
+
+    <string name="format_stat_yes">Yes</string>
+    <string name="format_stat_no">No</string>
+
+    <string name="format_qualifying_q1">Q1</string>
+    <string name="format_qualifying_q2">Q2</string>
+    <string name="format_qualifying_q3">Q3</string>
+    <string name="format_qualifying_final">Final grid order</string>
+    <string name="format_qualifying_knockout">Quailfying uses the knockout format, where drivers have to set competitive lap times in order to qualify for the next round. </string>
+
+    <!-- Points -->
+    <string name="format_points_title">Points</string>
+    <string name="format_points_subtitle">Drivers are awarded the following points for based on their finishing position</string>
+
+    <!-- Qualifying -->
+    <string name="format_qualifying_q2_rule">Drivers who make it through to Q3 must start the race on the tyre compound they qualified in Q2 from</string>
+
+    <!-- Sprint -->
+
+</resources>

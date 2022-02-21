@@ -13,6 +13,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import tmg.flashback.DebugController
 import tmg.flashback.R
 import tmg.flashback.databinding.FragmentDashboardListBinding
+import tmg.flashback.regulations.ui.FormatOverviewActivity
 import tmg.flashback.rss.ui.RSSActivity
 import tmg.flashback.statistics.ui.dashboard.onboarding.OnboardingNotificationBottomSheetFragment
 import tmg.flashback.ui.base.BaseFragment
@@ -63,6 +64,12 @@ class ListFragment: BaseFragment() {
                             viewModel.inputs.toggleDarkMode()
                          }
                      }
+                },
+                showFormatInfo = { season ->
+                    context?.let { context ->
+                        val intent = FormatOverviewActivity.intent(context, season)
+                        context.startActivity(intent)
+                    }
                 },
                 featureBannerClicked = {
                     viewModel.inputs.clickFeatureBanner(it)
