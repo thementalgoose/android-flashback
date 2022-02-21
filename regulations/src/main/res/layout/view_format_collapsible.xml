@@ -27,8 +27,8 @@
 
     <ImageView
         android:id="@+id/arrow"
-        android:layout_width="@dimen/bottomSheetIconSize"
-        android:layout_height="@dimen/bottomSheetIconSize"
+        android:layout_width="@dimen/collapsibleSectionIconSize"
+        android:layout_height="@dimen/collapsibleSectionIconSize"
         android:layout_marginEnd="@dimen/paddingNSmall"
         android:importantForAccessibility="no"
         android:paddingStart="@dimen/paddingSmall"
