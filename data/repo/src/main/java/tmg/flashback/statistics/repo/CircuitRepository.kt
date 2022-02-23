@@ -3,6 +3,7 @@ package tmg.flashback.statistics.repo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import tmg.flashback.crash_reporting.controllers.CrashController
+import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.formula1.model.Circuit
 import tmg.flashback.formula1.model.CircuitHistory
 import tmg.flashback.statistics.network.api.FlashbackApi
@@ -16,10 +17,11 @@ class CircuitRepository(
     private val api: FlashbackApi,
     private val persistence: FlashbackDatabase,
     crashController: CrashController,
+    networkConnectivityManager: NetworkConnectivityManager,
     private val networkCircuitMapper: NetworkCircuitMapper,
     private val networkCircuitDataMapper: NetworkCircuitDataMapper,
     private val circuitMapper: CircuitMapper,
-): BaseRepository(crashController) {
+): BaseRepository(crashController, networkConnectivityManager) {
 
     /**
      * circuits/{circuitId}.json
