@@ -3,6 +3,7 @@ package tmg.flashback.statistics.repo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import tmg.flashback.crash_reporting.controllers.CrashController
+import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.formula1.model.Race
 import tmg.flashback.statistics.network.api.FlashbackApi
 import tmg.flashback.statistics.network.models.constructors.Constructor
@@ -21,6 +22,7 @@ class RaceRepository(
     private val api: FlashbackApi,
     private val persistence: FlashbackDatabase,
     crashController: CrashController,
+    networkConnectivityManager: NetworkConnectivityManager,
     private val networkConstructorDataMapper: NetworkConstructorDataMapper,
     private val networkDriverDataMapper: NetworkDriverDataMapper,
     private val networkRaceDataMapper: NetworkRaceDataMapper,
@@ -30,7 +32,7 @@ class RaceRepository(
     private val networkScheduleMapper: NetworkScheduleMapper,
     private val raceMapper: RaceMapper,
     private val cacheRepository: CacheRepository
-): BaseRepository(crashController) {
+): BaseRepository(crashController, networkConnectivityManager) {
 
     /**
      * races/{season}.json

@@ -29,6 +29,7 @@ dependencies {
     // Retrofit
     implementation deps.retrofit.retrofit
     implementation project(path: ':core:preferences')
+    implementation project(path: ':core:device')
 
     // Tests
     testImplementation project(':test:stats-models')
