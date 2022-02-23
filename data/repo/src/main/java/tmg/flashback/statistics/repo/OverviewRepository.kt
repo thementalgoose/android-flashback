@@ -3,6 +3,7 @@ package tmg.flashback.statistics.repo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import tmg.flashback.crash_reporting.controllers.CrashController
+import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.formula1.model.Overview
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.statistics.network.api.FlashbackApi
@@ -17,11 +18,12 @@ class OverviewRepository(
     private val api: FlashbackApi,
     private val persistence: FlashbackDatabase,
     crashController: CrashController,
+    networkConnectivityManager: NetworkConnectivityManager,
     private val overviewMapper: OverviewMapper,
     private val networkOverviewMapper: NetworkOverviewMapper,
     private val networkCircuitDataMapper: NetworkCircuitDataMapper,
     private val networkScheduleMapper: NetworkScheduleMapper
-): BaseRepository(crashController) {
+): BaseRepository(crashController, networkConnectivityManager) {
 
     /**
      * overview.json

@@ -3,6 +3,7 @@ package tmg.flashback.statistics.repo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import tmg.flashback.crash_reporting.controllers.CrashController
+import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.formula1.model.ConstructorHistory
 import tmg.flashback.statistics.network.api.FlashbackApi
 import tmg.flashback.statistics.repo.base.BaseRepository
@@ -17,12 +18,13 @@ class ConstructorRepository(
     private val api: FlashbackApi,
     private val persistence: FlashbackDatabase,
     crashController: CrashController,
+    networkConnectivityManager: NetworkConnectivityManager,
     private val networkDriverDataMapper: NetworkDriverDataMapper,
     private val networkConstructorDataMapper: NetworkConstructorDataMapper,
     private val networkConstructorMapper: NetworkConstructorMapper,
     private val constructorMapper: ConstructorMapper,
     private val constructorDataMapper: ConstructorDataMapper,
-): BaseRepository(crashController) {
+): BaseRepository(crashController, networkConnectivityManager) {
 
     /**
      * constructors.json
