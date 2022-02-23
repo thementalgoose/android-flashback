@@ -8,6 +8,7 @@ import tmg.flashback.statistics.network.models.MetadataWrapper
 import tmg.flashback.statistics.network.utils.data
 import tmg.flashback.statistics.network.utils.hasData
 import tmg.flashback.statistics.repo.BuildConfig
+import java.io.IOException
 import java.net.UnknownHostException
 
 abstract class BaseRepository(
@@ -26,12 +27,21 @@ abstract class BaseRepository(
             val data = result.data() ?: return false
             return closure.invoke(data)
         } catch (e: UnknownHostException) {
+            crashController.log("fetch $msgIfFailed UnknownHostException")
             if (BuildConfig.DEBUG) {
                 Log.d("CrashController", "NOT SENT: Unknown host exception ${e.message}")
                 e.printStackTrace()
             }
             false
+        } catch (e: IOException) {
+            crashController.log("fetch $msgIfFailed IOException ${e.javaClass.simpleName}")
+            if (BuildConfig.DEBUG) {
+                Log.d("CrashController", "NOT SENT: IOException ${e.message}")
+                e.printStackTrace()
+            }
+            false
         } catch (e: HttpException) {
+            crashController.log("fetch $msgIfFailed HttpException")
             if (BuildConfig.DEBUG) {
                 Log.d("CrashController", "NOT SENT: HTTP Exception thrown ${e.code()} - ${e.message()}")
                 e.printStackTrace()
@@ -39,11 +49,15 @@ abstract class BaseRepository(
             false
         } catch (e: RuntimeException) {
             crashController.logException(e, msgIfFailed)
+            if (BuildConfig.DEBUG) {
+                Log.d("CrashController", "Other exception thrown ${e.message}")
+                e.printStackTrace()
+            }
             false
         } catch (e: Exception) {
             crashController.logException(e, msgIfFailed)
             if (BuildConfig.DEBUG) {
-                Log.d("CrashController", "NOT SENT: Other exception thrown ${e.message}")
+                Log.d("CrashController", "Other exception thrown ${e.message}")
                 e.printStackTrace()
             }
             false
