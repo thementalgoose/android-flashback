@@ -87,6 +87,12 @@ internal class TrackLayoutTest {
         assertEquals(trackLayout, layout)
     }
 
+    @Test
+    fun `sakhir track layout`() {
+        val layout = TrackLayout.getTrack("bahrain", 2020, "Sakhir Grand Prix")
+        assertEquals(TrackLayout.SAKHIR, layout)
+    }
+
     @ParameterizedTest(name = "yas marina track layout for {0} returns {1} layout")
     @CsvSource(
         "2009,YAS_MARINA_2009_2020",
