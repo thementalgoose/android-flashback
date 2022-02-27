@@ -8,16 +8,39 @@
     <TextView
         android:id="@+id/tvTitle"
         style="@style/Text.Section.Brand"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/paddingMedium"
         android:layout_marginTop="@dimen/paddingMedLarge"
-        android:layout_marginEnd="@dimen/paddingMedium"
+        android:layout_marginEnd="@dimen/paddingSmall"
         android:layout_marginBottom="@dimen/paddingNSmall"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/experimental"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Category" />
+
+    <TextView
+        android:id="@+id/experimental"
+        style="@style/Text.Caption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/paddingSmall"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="@dimen/paddingMedium"
+        android:background="@drawable/background_pill"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="@drawable/ripple_rounded_large"
+        android:paddingStart="@dimen/paddingSmall"
+        android:paddingTop="2dp"
+        android:paddingEnd="@dimen/paddingSmall"
+        android:paddingBottom="2dp"
+        android:text="@string/settings_experimental"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/tvTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tvTitle"
+        tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

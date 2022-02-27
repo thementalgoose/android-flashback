@@ -77,32 +77,29 @@ class UpNextSettingsViewModel(
             }
         ))
 
-        // TODO: Results available notifications - Remove
-        if (BuildConfig.DEBUG) {
-            add(SettingsModel.Header(R.string.settings_up_next_results_available_title))
-            add(SettingsModel.SwitchPref(
-                title = R.string.settings_up_next_results_race_title,
-                description = R.string.settings_up_next_results_race_descrition,
-                getState = { scheduleController.notificationRaceNotify },
-                saveState = {
-                    scheduleController.notificationRaceNotify = it
-                    viewModelScope.launch {
-                        scheduleController.resubscribe()
-                    }
+        add(SettingsModel.Header(R.string.settings_up_next_results_available_title, beta = true))
+        add(SettingsModel.SwitchPref(
+            title = R.string.settings_up_next_results_race_title,
+            description = R.string.settings_up_next_results_race_descrition,
+            getState = { scheduleController.notificationRaceNotify },
+            saveState = {
+                scheduleController.notificationRaceNotify = it
+                viewModelScope.launch {
+                    scheduleController.resubscribe()
                 }
-            ))
-            add(SettingsModel.SwitchPref(
-                title = R.string.settings_up_next_results_qualifying_title,
-                description = R.string.settings_up_next_results_qualifying_descrition,
-                getState = { scheduleController.notificationQualifyingNotify },
-                saveState = {
-                    scheduleController.notificationQualifyingNotify = it
-                    viewModelScope.launch {
-                        scheduleController.resubscribe()
-                    }
+            }
+        ))
+        add(SettingsModel.SwitchPref(
+            title = R.string.settings_up_next_results_qualifying_title,
+            description = R.string.settings_up_next_results_qualifying_descrition,
+            getState = { scheduleController.notificationQualifyingNotify },
+            saveState = {
+                scheduleController.notificationQualifyingNotify = it
+                viewModelScope.launch {
+                    scheduleController.resubscribe()
                 }
-            ))
-        }
+            }
+        ))
     }
 
     override val openTimePicker: MutableLiveData<Event> = MutableLiveData()
