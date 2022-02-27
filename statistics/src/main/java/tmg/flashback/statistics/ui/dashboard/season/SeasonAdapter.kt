@@ -5,6 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import org.koin.core.component.inject
+import tmg.flashback.formula1.enums.EventType
+import tmg.flashback.formula1.model.Event
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.*
 import tmg.flashback.statistics.ui.dashboard.season.viewholders.*
@@ -17,10 +19,10 @@ class SeasonAdapter(
     private val trackClicked: (track: SeasonItem.Track) -> Unit,
     private val calendarWeekRaceClicked: (track: SeasonItem.CalendarWeek) -> Unit,
     private val driverClicked: (driver: SeasonItem.Driver) -> Unit,
-    private val constructorClicked: (constructor: SeasonItem.Constructor) -> Unit
+    private val constructorClicked: (constructor: SeasonItem.Constructor) -> Unit,
+    private val eventTypeClicked: (season: Int, type: EventType) -> Unit,
+    private val tyresClicked: (season: Int) -> Unit,
 ): SyncAdapter<SeasonItem>() {
-
-    private val themeController: ThemeController by inject()
 
     override var list: List<SeasonItem> = emptyList()
         set(initialValue) {
@@ -53,10 +55,14 @@ class SeasonAdapter(
             R.layout.view_dashboard_season_calendar_month -> CalendarMonthViewHolder(
                 ViewDashboardSeasonCalendarMonthBinding.inflate(layoutInflater, parent, false)
             )
+            R.layout.view_dashboard_season_events -> EventsViewHolder(
+                ViewDashboardSeasonEventsBinding.inflate(layoutInflater, parent, false),
+                eventTypeClicked,
+                tyresClicked
+            )
             R.layout.view_dashboard_season_calendar_week -> CalendarWeekViewHolder(
                 ViewDashboardSeasonCalendarWeekBinding.inflate(layoutInflater, parent, false),
-                calendarWeekRaceClicked,
-                themeController.animationSpeed
+                calendarWeekRaceClicked
             )
             else -> super.onCreateViewHolder(parent, viewType)
         }
@@ -71,6 +77,7 @@ class SeasonAdapter(
             is SeasonItem.ErrorItem -> bindErrors(holder, item.item)
             is SeasonItem.CalendarMonth -> (holder as CalendarMonthViewHolder).bind(item)
             is SeasonItem.CalendarWeek -> (holder as CalendarWeekViewHolder).bind(item)
+            is SeasonItem.Events -> (holder as EventsViewHolder).bind(item)
             else -> { }
         }
     }

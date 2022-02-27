@@ -12,6 +12,7 @@ class NetworkRaceDataMapper {
             round = raceData.round,
             name = raceData.name,
             date = raceData.date,
+            laps = raceData.laps,
             circuitId = raceData.circuit.id,
             time = raceData.time,
             wikiUrl = raceData.wikiUrl,

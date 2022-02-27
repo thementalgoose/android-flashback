@@ -14,17 +14,17 @@ internal class ConfigManagerTest {
     private val mockConfigService: RemoteConfigService = mockk(relaxed = true)
     private val mockCrashController: CrashController = mockk(relaxed = true)
 
-    private lateinit var sut: ConfigManager
+    private lateinit var underTest: ConfigManager
 
-    private fun initSUT() {
-        sut = ConfigManager(mockConfigService, mockCrashController)
+    private fun initUnderTest() {
+        underTest = ConfigManager(mockConfigService, mockCrashController)
     }
 
     @Test
     fun `get boolean calls service`() {
         every { mockConfigService.getBoolean(any()) } returns true
-        initSUT()
-        assertTrue(sut.getBoolean("key"))
+        initUnderTest()
+        assertTrue(underTest.getBoolean("key"))
         verify {
             mockConfigService.getBoolean("key")
         }
@@ -33,8 +33,8 @@ internal class ConfigManagerTest {
     @Test
     fun `get string calls service`() {
         every { mockConfigService.getString(any()) } returns "hey"
-        initSUT()
-        assertEquals("hey", sut.getString("key"))
+        initUnderTest()
+        assertEquals("hey", underTest.getString("key"))
         verify {
             mockConfigService.getString("key")
         }
@@ -43,8 +43,8 @@ internal class ConfigManagerTest {
     @Test
     fun `get empty string calls service and returns null`() {
         every { mockConfigService.getString(any()) } returns ""
-        initSUT()
-        assertNull(sut.getString("key"))
+        initUnderTest()
+        assertNull(underTest.getString("key"))
         verify {
             mockConfigService.getString("key")
         }
@@ -58,8 +58,8 @@ internal class ConfigManagerTest {
     @Test
     fun `get json calls service`() {
         every { mockConfigService.getString(any()) } returns "{\"test\":\"hey\"}"
-        initSUT()
-        assertEquals(TestModel("hey"), sut.getJson("key", TestModel.serializer()))
+        initUnderTest()
+        assertEquals(TestModel("hey"), underTest.getJson("key", TestModel.serializer()))
         verify {
             mockConfigService.getString("key")
         }
@@ -71,8 +71,8 @@ internal class ConfigManagerTest {
     @Test
     fun `get json calls service with misaligned keys`() {
         every { mockConfigService.getString(any()) } returns "{'tester':'hey'}"
-        initSUT()
-        assertNull(sut.getJson("key", TestModel.serializer()))
+        initUnderTest()
+        assertNull(underTest.getJson("key", TestModel.serializer()))
         verify {
             mockConfigService.getString("key")
             mockCrashController.logException(any(), any())
@@ -82,8 +82,8 @@ internal class ConfigManagerTest {
     @Test
     fun `get json calls service with misaligned values`() {
         every { mockConfigService.getString(any()) } returns "{'test':3}"
-        initSUT()
-        assertNull(sut.getJson("key", TestModel.serializer()))
+        initUnderTest()
+        assertNull(underTest.getJson("key", TestModel.serializer()))
         verify {
             mockConfigService.getString("key")
             mockCrashController.logException(any(), any())
@@ -93,8 +93,8 @@ internal class ConfigManagerTest {
     @Test
     fun `get json calls service with invalid json`() {
         every { mockConfigService.getString(any()) } returns "true"
-        initSUT()
-        assertNull(sut.getJson("key", TestModel.serializer()))
+        initUnderTest()
+        assertNull(underTest.getJson("key", TestModel.serializer()))
         verify {
             mockConfigService.getString("key")
         }
@@ -103,8 +103,8 @@ internal class ConfigManagerTest {
     @Test
     fun `get json calls service with null`() {
         every { mockConfigService.getString(any()) } returns ""
-        initSUT()
-        assertNull(sut.getJson("key", TestModel.serializer()))
+        initUnderTest()
+        assertNull(underTest.getJson("key", TestModel.serializer()))
         verify {
             mockConfigService.getString("key")
         }

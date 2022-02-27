@@ -8,17 +8,22 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.android.ext.android.inject
+import tmg.flashback.formula1.enums.TrackLayout
+import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.FragmentRaceBinding
 import tmg.flashback.statistics.ui.circuit.CircuitActivity
+import tmg.flashback.statistics.ui.circuit.CircuitItem
 import tmg.flashback.statistics.ui.overview.constructor.ConstructorActivity
 import tmg.flashback.statistics.ui.overview.driver.DriverActivity
 import tmg.flashback.statistics.ui.race.RaceDisplayType.*
 import tmg.flashback.statistics.ui.shared.pill.PillItem
+import tmg.flashback.statistics.ui.shared.tyres.TyresBottomSheetFragment
 import tmg.flashback.ui.base.BaseFragment
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
 import tmg.utilities.extensions.viewWebpage
+import tmg.utilities.extensions.views.gone
 import tmg.utilities.extensions.views.invisible
 import tmg.utilities.extensions.views.visible
 import tmg.utilities.lifecycle.viewInflateBinding
@@ -67,6 +72,12 @@ class RaceFragment: BaseFragment() {
                     is PillItem.Youtube -> {
                         viewWebpage(pillItem.link)
                     }
+                    is PillItem.Tyres -> {
+                        context?.let {
+                            val frag = TyresBottomSheetFragment.instance(pillItem.year)
+                            frag.show(parentFragmentManager, "TYRES")
+                        }
+                    }
                     else -> { /* Do nothing */ }
                 }
             },
@@ -76,6 +87,19 @@ class RaceFragment: BaseFragment() {
         binding.dataList.adapter = raceAdapter
         binding.dataList.layoutManager = LinearLayoutManager(context)
         binding.progress.invisible()
+
+        val trackIcon = TrackLayout.getTrack(raceData.circuitId, raceData.season, raceData.raceName)
+        if (trackIcon != null && context != null) {
+            binding.trackIcon.setImageResource(trackIcon.icon)
+            binding.trackIconCollapsed.setImageResource(trackIcon.icon)
+            binding.trackIcon.setOnClickListener {
+                startActivity(CircuitActivity.intent(it.context, raceData.circuitId, raceData.trackName))
+            }
+        } else {
+            binding.trackIcon.gone()
+            binding.trackIconCollapsed.gone()
+            binding.trackIcon.gone()
+        }
 
         binding.swipeRefresh.setOnRefreshListener {
             viewModel.inputs.refresh()
@@ -93,6 +117,7 @@ class RaceFragment: BaseFragment() {
                 season = raceData.season,
                 raceDate = raceData.date,
                 wikipedia = null,
+                laps = null,
                 youtube = null,
                 schedule = emptyList()
             )

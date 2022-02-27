@@ -11,11 +11,11 @@ import tmg.flashback.statistics.room.models.circuit.model
 
 internal class CircuitMapperTest {
 
-    private lateinit var sut: CircuitMapper
+    private lateinit var underTest: CircuitMapper
 
     @BeforeEach
     internal fun setUp() {
-        sut = CircuitMapper()
+        underTest = CircuitMapper()
     }
 
     @Test
@@ -23,21 +23,21 @@ internal class CircuitMapperTest {
         val input = tmg.flashback.statistics.room.models.circuit.Circuit.model()
         val expected = Circuit.model()
 
-        assertEquals(expected, sut.mapCircuit(input))
+        assertEquals(expected, underTest.mapCircuit(input))
     }
 
     @Test
     fun `mapCircuit maps location to null if lat is null`() {
         val input = tmg.flashback.statistics.room.models.circuit.Circuit.model(locationLat = null)
 
-        assertNull(sut.mapCircuit(input)!!.location)
+        assertNull(underTest.mapCircuit(input)!!.location)
     }
 
     @Test
     fun `mapCircuit maps location to null if lng is null`() {
         val input = tmg.flashback.statistics.room.models.circuit.Circuit.model(locationLng = null)
 
-        assertNull(sut.mapCircuit(input)!!.location)
+        assertNull(underTest.mapCircuit(input)!!.location)
     }
 
     @Test
@@ -45,11 +45,11 @@ internal class CircuitMapperTest {
         val input = tmg.flashback.statistics.room.models.circuit.CircuitHistory.model()
         val expected = CircuitHistory.model()
 
-        assertEquals(expected, sut.mapCircuitHistory(input))
+        assertEquals(expected, underTest.mapCircuitHistory(input))
     }
 
     @Test
     fun `mapCircuitHistory returns null when input is null`() {
-        assertNull(sut.mapCircuitHistory(null))
+        assertNull(underTest.mapCircuitHistory(null))
     }
 }

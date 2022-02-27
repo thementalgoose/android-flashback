@@ -2,6 +2,7 @@ package tmg.flashback.statistics.ui.dashboard.season
 
 import org.threeten.bp.LocalDate
 import org.threeten.bp.Month
+import tmg.flashback.formula1.enums.EventType
 import tmg.flashback.formula1.model.*
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.ui.model.AnimationSpeed
@@ -17,11 +18,25 @@ fun SeasonItem.Companion.calendarMonthModel(
 fun SeasonItem.Companion.calendarWeekModel(
     forMonth: Month = Month.OCTOBER,
     startingDay: LocalDate = LocalDate.of(2020, 10, 12),
-    race: OverviewRace? = OverviewRace.model()
+    race: OverviewRace? = OverviewRace.model(),
+    event: List<Event> = listOf(Event.model())
 ): SeasonItem.CalendarWeek = SeasonItem.CalendarWeek(
     forMonth = forMonth,
     startingDay = startingDay,
-    race = race
+    race = race,
+    event = event
+)
+
+fun SeasonItem.Companion.eventsModel(
+    season: Int = 2020,
+    events: Map<EventType, List<Event>> = mapOf(
+        EventType.TESTING to listOf(Event.model())
+    ),
+    showTyres: Boolean = true
+): SeasonItem.Events = SeasonItem.Events(
+    season = season,
+    events = events,
+    showTyres = showTyres
 )
 
 fun SeasonItem.Companion.trackModel(

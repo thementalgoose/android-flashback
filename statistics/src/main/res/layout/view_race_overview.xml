@@ -4,67 +4,81 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="@dimen/paddingMedium">
-
-    <ImageView
-        android:id="@+id/imgCountry"
-        android:layout_width="@dimen/raceImageSize"
-        android:layout_height="@dimen/raceImageSize"
-        android:layout_marginStart="@dimen/paddingMedium"
-        android:importantForAccessibility="no"
-        app:layout_constraintBottom_toBottomOf="@id/tvDate"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/au" />
+    android:paddingBottom="@dimen/paddingSmall">
 
     <TextView
-        android:id="@+id/tvCircuitName"
+        android:id="@+id/circuitInfo"
         style="@style/Text.Body.1"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_marginStart="@dimen/paddingMedium"
-        android:layout_marginTop="@dimen/paddingMedium"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/paddingSmall"
         android:layout_marginEnd="@dimen/paddingMedium"
         android:lines="2"
-        android:minLines="2"
-        app:layout_constraintEnd_toStartOf="@id/trackLayout"
-        app:layout_constraintStart_toEndOf="@id/imgCountry"
+        android:maxLines="3"
+        app:layout_constraintEnd_toStartOf="@id/dateBarrier"
+        app:layout_constraintStart_toEndOf="@id/flag"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Albert Park Grand Prix Circuit" />
+        tools:text="Bahrain Grand Prix\nBahrain" />
 
     <ImageView
-        android:id="@+id/trackLayout"
-        android:layout_width="100dp"
+        android:id="@+id/flag"
+        android:layout_width="36dp"
         android:layout_height="0dp"
-        android:layout_marginEnd="@dimen/paddingMedium"
+        android:layout_marginStart="@dimen/paddingMedium"
+        android:layout_marginEnd="@dimen/paddingNSmall"
         android:importantForAccessibility="no"
-        app:layout_constraintBottom_toBottomOf="@id/tvDate"
+        app:layout_constraintBottom_toBottomOf="@id/date"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/round"
+        tools:src="@drawable/bh" />
+
+    <TextView
+        android:id="@+id/round"
+        style="@style/Text.Body.2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/paddingMedium"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="?attr/contentPrimary"
-        tools:layout_width="100dp"
-        tools:src="@drawable/circuit_albert_park" />
+        tools:text="Round 1" />
 
     <TextView
-        android:id="@+id/tvRoundInfo"
+        android:id="@+id/laps"
         style="@style/Text.Body.2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/paddingXSmall"
-        app:layout_constraintEnd_toEndOf="@id/tvCircuitName"
-        app:layout_constraintStart_toStartOf="@id/tvCircuitName"
-        app:layout_constraintTop_toBottomOf="@id/tvCircuitName"
-        tools:text="2019 » Round 2" />
+        android:layout_marginTop="2dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@id/circuitInfo"
+        app:layout_constraintStart_toStartOf="@id/circuitInfo"
+        app:layout_constraintTop_toBottomOf="@id/circuitInfo"
+        tools:text="57 laps" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/dateBarrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="start"
+        app:constraint_referenced_ids="date,round" />
 
     <TextView
-        android:id="@+id/tvDate"
+        android:id="@+id/date"
         style="@style/Text.Body.2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="@id/tvRoundInfo"
-        app:layout_constraintStart_toStartOf="@id/tvRoundInfo"
-        app:layout_constraintTop_toBottomOf="@id/tvRoundInfo"
-        tools:text="21st January 2020" />
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="@dimen/paddingMedium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/round"
+        tools:text="21st Jan" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/contentBarrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="date,laps" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/links"
@@ -77,7 +91,7 @@
         android:paddingEnd="@dimen/paddingMedium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvDate"
+        app:layout_constraintTop_toBottomOf="@id/contentBarrier"
         tools:itemCount="1"
         tools:listitem="@layout/view_link_pill" />
 

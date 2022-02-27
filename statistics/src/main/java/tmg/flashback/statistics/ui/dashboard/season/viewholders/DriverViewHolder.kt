@@ -9,12 +9,15 @@ import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.ViewDashboardSeasonDriverBinding
 import tmg.flashback.statistics.ui.dashboard.season.SeasonItem
+import tmg.flashback.ui.animation.GlideProvider
 import tmg.flashback.ui.extensions.getColor
 import tmg.flashback.ui.model.AnimationSpeed
 import tmg.utilities.extensions.views.context
 import tmg.utilities.extensions.views.getString
 import tmg.utilities.extensions.views.show
 import kotlin.math.roundToInt
+
+private val glideProvider: GlideProvider = GlideProvider()
 
 class DriverViewHolder(
     val driverClicked: (driver: SeasonItem.Driver) -> Unit,
@@ -30,16 +33,13 @@ class DriverViewHolder(
     fun bind(item: SeasonItem.Driver) {
         driver = item
 
-        binding.tvPosition.text = item.position.toString()
+        binding.tvPosition.text = item.position?.toString() ?: "-"
         binding.layoutDriver.tvName.text = item.driver.name
         binding.layoutDriver.tvNumber.show(false)
         binding.layoutDriver.imgFlag.show(false)
 
-        Glide.with(itemView)
-            .clear(binding.image)
-        Glide.with(itemView)
-            .load(item.driver.photoUrl)
-            .into(binding.image)
+        glideProvider.clear(binding.image)
+        glideProvider.load(binding.image, item.driver.photoUrl)
 
         binding.image.setBackgroundColor(context.theme.getColor(R.attr.contentTertiary))
         binding.imgDriverFlag.setImageResource(itemView.context.getFlagResourceAlpha3(item.driver.nationalityISO))
@@ -84,7 +84,11 @@ class DriverViewHolder(
             R.string.ab_season_driver,
             item.driver.name,
             constructors,
-            item.position,
+            when (item.position) {
+                0 -> getString(R.string.ab_season_unclassified)
+                null -> getString(R.string.ab_season_unclassified)
+                else -> "P${item.position}"
+            },
             item.points
         )
         binding.container.contentDescription = contentDescription

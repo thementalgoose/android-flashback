@@ -3,6 +3,7 @@ package tmg.flashback.statistics.repo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import tmg.flashback.crash_reporting.controllers.CrashController
+import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.formula1.model.Race
 import tmg.flashback.statistics.network.api.FlashbackApi
 import tmg.flashback.statistics.network.models.constructors.Constructor
@@ -12,6 +13,7 @@ import tmg.flashback.statistics.network.models.races.DriverStandings
 import tmg.flashback.statistics.repo.base.BaseRepository
 import tmg.flashback.statistics.repo.extensions.valueList
 import tmg.flashback.statistics.repo.mappers.app.RaceMapper
+import tmg.flashback.statistics.repo.mappers.app.EventMapper
 import tmg.flashback.statistics.repo.mappers.network.*
 import tmg.flashback.statistics.repo.repository.CacheRepository
 import tmg.flashback.statistics.room.FlashbackDatabase
@@ -20,6 +22,7 @@ class RaceRepository(
     private val api: FlashbackApi,
     private val persistence: FlashbackDatabase,
     crashController: CrashController,
+    networkConnectivityManager: NetworkConnectivityManager,
     private val networkConstructorDataMapper: NetworkConstructorDataMapper,
     private val networkDriverDataMapper: NetworkDriverDataMapper,
     private val networkRaceDataMapper: NetworkRaceDataMapper,
@@ -29,7 +32,7 @@ class RaceRepository(
     private val networkScheduleMapper: NetworkScheduleMapper,
     private val raceMapper: RaceMapper,
     private val cacheRepository: CacheRepository
-): BaseRepository(crashController) {
+): BaseRepository(crashController, networkConnectivityManager) {
 
     /**
      * races/{season}.json
@@ -100,7 +103,6 @@ class RaceRepository(
         return@attempt true
     }
 
-
     fun getRace(season: Int, round: Int): Flow<Race?> {
         return persistence.seasonDao().getRace(season, round)
             .map { race ->
@@ -114,6 +116,9 @@ class RaceRepository(
     suspend fun shouldSyncRace(season: Int, @Suppress("UNUSED_PARAMETER") round: Int): Boolean {
         return shouldSyncRace(season)
     }
+
+
+
 
     private fun saveConstructorStandings(season: Int, constructors: Map<String, ConstructorStandings>?) {
         if (constructors == null) return

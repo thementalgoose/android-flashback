@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test
 import tmg.flashback.NetworkRaceData
 import tmg.flashback.statistics.network.models.races.model
 import tmg.flashback.statistics.room.models.race.RaceInfo
+import tmg.flashback.statistics.room.models.overview.model
 import tmg.flashback.statistics.room.models.race.model
 
 internal class NetworkRaceDataMapperTest {

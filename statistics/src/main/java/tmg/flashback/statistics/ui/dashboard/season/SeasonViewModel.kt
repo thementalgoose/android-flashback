@@ -11,13 +11,19 @@ import org.threeten.bp.Month
 import org.threeten.bp.temporal.TemporalAdjusters
 import tmg.flashback.analytics.manager.AnalyticsManager
 import tmg.flashback.device.managers.NetworkConnectivityManager
+import tmg.flashback.formula1.constants.Formula1
+import tmg.flashback.formula1.constants.Formula1.constructorChampionshipStarts
 import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
+import tmg.flashback.formula1.enums.EventType
+import tmg.flashback.formula1.enums.SeasonTyres
+import tmg.flashback.formula1.enums.getBySeason
 import tmg.flashback.formula1.extensions.getConstructorInProgressInfo
 import tmg.flashback.formula1.extensions.getDriverInProgressInfo
 import tmg.flashback.formula1.model.*
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.controllers.HomeController
 import tmg.flashback.statistics.extensions.analyticsLabel
+import tmg.flashback.statistics.repo.EventsRepository
 import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.statistics.repo.RaceRepository
 import tmg.flashback.statistics.repo.SeasonRepository
@@ -25,6 +31,7 @@ import tmg.flashback.statistics.repo.repository.CacheRepository
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable.*
 import tmg.flashback.ui.controllers.ThemeController
+import tmg.utilities.extensions.combinePair
 import tmg.utilities.lifecycle.DataEvent
 import tmg.utilities.lifecycle.Event
 
@@ -63,6 +70,7 @@ interface SeasonViewModelOutputs {
 class SeasonViewModel(
     private val homeController: HomeController,
     private val raceRepository: RaceRepository,
+    private val eventsRepository: EventsRepository,
     private val networkConnectivityManager: NetworkConnectivityManager,
     private val overviewRepository: OverviewRepository,
     private val seasonRepository: SeasonRepository,
@@ -88,6 +96,7 @@ class SeasonViewModel(
                     emit(null)
                     overviewRepository.fetchOverview(season)
                     seasonRepository.fetchRaces(season)
+                    eventsRepository.fetchEvents(season)
                     showLoading.postValue(false)
 
                     emit(season)
@@ -98,6 +107,8 @@ class SeasonViewModel(
             }
         }
         .flowOn(ioDispatcher)
+    private val event: Flow<List<tmg.flashback.formula1.model.Event>> = season
+        .flatMapLatest { eventsRepository.getEvents(it) }
 
     private val isConnected: Boolean
         get() = networkConnectivityManager.isConnected
@@ -176,6 +187,7 @@ class SeasonViewModel(
         viewModelScope.launch(context = ioDispatcher) {
             overviewRepository.fetchOverview(season)
             seasonRepository.fetchRaces(season)
+            eventsRepository.fetchEvents(season)
 
             if (season == homeController.serverDefaultSeason) {
                 cacheRepository.markedCurrentSeasonSynchronised()
@@ -186,15 +198,16 @@ class SeasonViewModel(
 
     private fun getScheduleView(season: Int, isCalendarView: Boolean): Flow<List<SeasonItem>> {
         return overviewRepository.getOverview(season)
-            .map {
+            .combinePair(event)
+            .map { (it, events) ->
                 val list = getBannerList()
                 when {
                     it.overviewRaces.isEmpty() && !isConnected -> list.addError(SyncDataItem.PullRefresh)
                     it.overviewRaces.isEmpty() && season == currentSeasonYear -> list.addError(SyncDataItem.Unavailable(SEASON_EARLY))
                     it.overviewRaces.isEmpty() && season > currentSeasonYear -> list.addError(SyncDataItem.Unavailable(SEASON_IN_FUTURE))
                     it.overviewRaces.isEmpty() -> list.addError(SyncDataItem.Unavailable(SEASON_INTERNAL_ERROR))
-                    isCalendarView -> list.addAll(it.overviewRaces.toCalendar(season))
-                    else -> list.addAll(it.overviewRaces.toScheduleList())
+                    isCalendarView -> list.addAll(it.overviewRaces.toCalendar(season, events))
+                    else -> list.addAll(it.overviewRaces.toScheduleList(season, events))
                 }
 
                 return@map list
@@ -227,6 +240,9 @@ class SeasonViewModel(
             .map {
                 val list = getBannerList()
                 when {
+                    season < constructorChampionshipStarts -> {
+                        list.addError(SyncDataItem.ConstructorsChampionshipNotAwarded)
+                    }
                     (it == null || it.standings.isEmpty()) && !isConnected -> list.addError(SyncDataItem.PullRefresh)
                     (it == null || it.standings.isEmpty()) && season >= currentSeasonYear -> list.addError(SyncDataItem.Unavailable(STANDINGS_EARLY))
                     (it == null || it.standings.isEmpty()) -> list.addError(SyncDataItem.Unavailable(STANDINGS_INTERNAL_ERROR))
@@ -248,8 +264,17 @@ class SeasonViewModel(
     /**
      * Convert OverviewRace to a list of season items
      */
-    private fun List<OverviewRace>.toScheduleList(): List<SeasonItem> {
-        return this
+    private fun List<OverviewRace>.toScheduleList(season: Int, events: List<tmg.flashback.formula1.model.Event>): List<SeasonItem> {
+        val list = mutableListOf<SeasonItem>()
+        val tyreSeasons = SeasonTyres.getBySeason(season)
+        if (events.isNotEmpty() || tyreSeasons != null) {
+            list.add(SeasonItem.Events(
+                season,
+                events.groupBy { it.type },
+                tyreSeasons != null
+            ))
+        }
+        list.addAll(this
             .sortedBy { it.round }
             .map {
                 SeasonItem.Track(
@@ -266,7 +291,8 @@ class SeasonViewModel(
                     defaultExpanded = it.round == this.getDefaultExpandedRound(),
                     schedule = it.schedule
                 )
-            }
+            })
+        return list
     }
     private fun List<OverviewRace>.getDefaultExpandedRound(): Int? {
         return this
@@ -279,7 +305,7 @@ class SeasonViewModel(
     /**
      * Convert OverviewRace to a list of calendar items
      */
-    private fun List<OverviewRace>.toCalendar(season: Int): List<SeasonItem> {
+    private fun List<OverviewRace>.toCalendar(season: Int, events: List<tmg.flashback.formula1.model.Event>): List<SeasonItem> {
         val list = mutableListOf<SeasonItem>()
         list.add(SeasonItem.CalendarHeader)
         Month.values().forEach { month ->
@@ -294,14 +320,24 @@ class SeasonViewModel(
             }
 
             list.add(SeasonItem.CalendarMonth(month, season))
-            list.add(SeasonItem.CalendarWeek(month, start, this.firstOrNull { it.date >= start && it.date <= end }))
+            list.add(SeasonItem.CalendarWeek(
+                month,
+                start,
+                events.filter { it.date >= start && it.date <= end },
+                this.firstOrNull { it.date >= start && it.date <= end }
+            ))
             while (start.month == month) {
                 start = start.with(TemporalAdjusters.next(DayOfWeek.MONDAY))
                 end = end.plusDays(7L)
 
                 if (start.month == month) {
                     list.add(
-                        SeasonItem.CalendarWeek(month, start, this.firstOrNull { it.date >= start && it.date <= end })
+                        SeasonItem.CalendarWeek(
+                            month,
+                            start,
+                            events.filter { it.date >= start && it.date <= end },
+                            this.firstOrNull { it.date >= start && it.date <= end }
+                        )
                     )
                 }
             }
@@ -317,14 +353,17 @@ class SeasonViewModel(
     private fun SeasonDriverStandings.toDriverList(): List<SeasonItem> {
         return this
             .standings
-            .sortedBy { it.championshipPosition }
+            .sortedBy { it.championshipPosition ?: Int.MAX_VALUE }
             .mapIndexed { index: Int, standing: SeasonDriverStandingSeason ->
                 SeasonItem.Driver(
                     season = standing.season,
                     driver = standing.driver,
                     constructors = standing.constructors.map { it.constructor },
                     points = standing.points,
-                    position = index + 1,
+                    position = when (standing.hasValidChampionshipPosition) {
+                        true -> index + 1
+                        else -> null
+                    },
                     maxPointsInSeason = this.standings.maxByOrNull { it.points }?.points ?: 1000.0,
                     animationSpeed = themeController.animationSpeed
                 )
@@ -338,11 +377,15 @@ class SeasonViewModel(
 
         return this
             .standings
-            .sortedBy { it.championshipPosition }
+            .sortedByDescending { it.points }
+            .sortedBy { it.championshipPosition ?: Int.MAX_VALUE }
             .mapIndexed { index: Int, item: SeasonConstructorStandingSeason ->
                 SeasonItem.Constructor(
                     season = item.season,
-                    position = index + 1,
+                    position = when (item.hasValidChampionshipPosition) {
+                        true -> index + 1
+                        else -> null
+                    },
                     constructor = item.constructor,
                     driver = item.drivers
                         .map { Pair(it.driver, it.points) }
@@ -352,7 +395,6 @@ class SeasonViewModel(
                     barAnimation = themeController.animationSpeed
                 )
             }
-            .sortedByDescending { it.points }
     }
 
     //region Helpers

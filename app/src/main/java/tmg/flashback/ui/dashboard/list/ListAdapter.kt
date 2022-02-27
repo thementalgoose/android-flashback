@@ -15,6 +15,7 @@ class ListAdapter(
     private val setDefaultClicked: (season: Int) -> Unit,
     private val clearDefaultClicked: () -> Unit,
     private val buttonClicked: (String) -> Unit,
+    private var showFormatInfo: (season: Int) -> Unit,
     private val featureBannerClicked: (ListItem.FeatureBanner) -> Unit
 ): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -36,6 +37,7 @@ class ListAdapter(
                 seasonClicked,
                 setDefaultClicked,
                 clearDefaultClicked,
+                showFormatInfo,
                 ViewSeasonListSeasonBinding.inflate(layoutInflater, parent, false)
             )
             R.layout.view_season_list_header -> HeaderViewHolder(
@@ -56,6 +58,10 @@ class ListAdapter(
             R.layout.view_season_list_advert -> AdvertViewHolder(
                 ViewSeasonListAdvertBinding.inflate(layoutInflater, parent, false)
             )
+            R.layout.view_season_list_switch -> SwitchViewHolder(
+                buttonClicked,
+                ViewSeasonListSwitchBinding.inflate(layoutInflater, parent, false)
+            )
             else -> throw Exception("View type not implemented")
         }
     }
@@ -73,6 +79,7 @@ class ListAdapter(
             }
             is ListItem.Header -> (holder as HeaderViewHolder).bind(item)
             is ListItem.Button -> (holder as ButtonViewHolder).bind(item)
+            is ListItem.Switch -> (holder as SwitchViewHolder).bind(item)
             is ListItem.FeatureBanner -> (holder as FeatureBannerViewHolder).bind(item)
             else -> { }
         }

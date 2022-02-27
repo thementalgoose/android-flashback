@@ -29,8 +29,8 @@
 
         <ImageView
             android:id="@+id/back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
             android:layout_marginStart="@dimen/paddingSmall"
             android:clickable="true"
             android:contentDescription="@string/ab_back"
@@ -51,26 +51,62 @@
             android:layout_marginStart="@dimen/paddingSmall"
             android:layout_marginEnd="@dimen/paddingMedium"
             android:alpha="0.0"
+            android:ellipsize="end"
+            android:lines="1"
             app:layout_constraintBottom_toBottomOf="@id/toolbarGuideline"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/flagIcon"
             app:layout_constraintStart_toStartOf="@id/back"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="2021" />
+            tools:text="2021 Bahrain Grand Prix" />
 
         <TextView
             android:id="@+id/titleExpanded"
             style="@style/Text.Headline.1"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/toolbarExpandedSpacer"
             android:paddingStart="@dimen/paddingMedium"
             android:paddingTop="@dimen/paddingSmall"
             android:paddingEnd="@dimen/paddingMedium"
             android:paddingBottom="@dimen/paddingMedium"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/trackGuide"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/toolbarGuideline"
-            tools:text="2021" />
+            tools:text="Bahrain Grand Prix\n2021" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/trackGuide"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.7" />
+
+        <ImageView
+            android:id="@+id/trackIcon"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="@dimen/paddingMedium"
+            android:importantForAccessibility="no"
+            android:paddingTop="@dimen/paddingMedium"
+            android:paddingBottom="@dimen/paddingMedium"
+            app:layout_constraintBottom_toBottomOf="@id/titleExpanded"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/trackGuide"
+            app:layout_constraintTop_toTopOf="@id/titleExpanded"
+            app:tint="?attr/contentSecondary"
+            tools:src="@drawable/circuit_bahrain" />
+
+        <ImageView
+            android:id="@+id/trackIconCollapsed"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginEnd="44dp"
+            android:alpha="0.0"
+            android:importantForAccessibility="no"
+            app:layout_constraintBottom_toBottomOf="@id/toolbarGuideline"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="?attr/contentSecondary" />
 
         <ProgressBar
             android:id="@+id/progress"
@@ -98,9 +134,9 @@
             app:menu="@menu/menu_race" />
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefresh"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:id="@+id/swipeRefresh"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -21,10 +21,10 @@ internal class SystemNotificationManagerTest: BaseTest() {
 
     private val mockNotificationManager: NotificationManager = mockk(relaxed = true)
 
-    private lateinit var sut: SystemNotificationManager
+    private lateinit var underTest: SystemNotificationManager
 
-    private fun initSUT() {
-        sut = SystemNotificationManager(
+    private fun initUnderTest() {
+        underTest = SystemNotificationManager(
             mockApplicationContext,
             mockCrashController,
             mockNavigationProvider
@@ -46,10 +46,10 @@ internal class SystemNotificationManagerTest: BaseTest() {
     @Test
     fun `notification notify calls navigation manager`() {
 
-        initSUT()
+        initUnderTest()
         val notification: Notification = mockk()
 
-        sut.notify("tag", 1, notification)
+        underTest.notify("tag", 1, notification)
 
         verify {
             mockNotificationManager.notify("tag", 1, notification)
@@ -60,10 +60,10 @@ internal class SystemNotificationManagerTest: BaseTest() {
     fun `notification notify logs to crash controller if notification manager is null`() {
         every { mockApplicationContext.getSystemService(Context.NOTIFICATION_SERVICE) } returns null
 
-        initSUT()
+        initUnderTest()
         val notification: Notification = mockk()
 
-        sut.notify("tag", 1, notification)
+        underTest.notify("tag", 1, notification)
 
         verify {
             mockCrashController.logError(any(), "Notification Manager null when notifying (tag,1)")
@@ -76,8 +76,8 @@ internal class SystemNotificationManagerTest: BaseTest() {
         val expectedTag = "tag"
         val expectedId = 1
 
-        initSUT()
-        sut.cancel(expectedTag, expectedId)
+        initUnderTest()
+        underTest.cancel(expectedTag, expectedId)
 
         verify {
             mockNotificationManager.cancel(expectedTag, expectedId)
@@ -91,8 +91,8 @@ internal class SystemNotificationManagerTest: BaseTest() {
         val expectedTag = "tag"
         val expectedId = 1
 
-        initSUT()
-        sut.cancel(expectedTag, expectedId)
+        initUnderTest()
+        underTest.cancel(expectedTag, expectedId)
 
         verify {
             mockCrashController.logError(any(), "Notification Manager null when cancelling (tag,1)")
@@ -102,8 +102,8 @@ internal class SystemNotificationManagerTest: BaseTest() {
     @Test
     fun `notification cancel all calls navigation manager`() {
 
-        initSUT()
-        sut.cancelAll()
+        initUnderTest()
+        underTest.cancelAll()
 
         verify {
             mockNotificationManager.cancelAll()
@@ -114,8 +114,8 @@ internal class SystemNotificationManagerTest: BaseTest() {
     fun `notification cancel all logs to crash controller if notification manager is null`() {
         every { mockApplicationContext.getSystemService(Context.NOTIFICATION_SERVICE) } returns null
 
-        initSUT()
-        sut.cancelAll()
+        initUnderTest()
+        underTest.cancelAll()
 
         verify {
             mockCrashController.logError(any(), "Notification Manager null when cancelling all")

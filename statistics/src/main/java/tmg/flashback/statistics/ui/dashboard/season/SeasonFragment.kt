@@ -16,11 +16,13 @@ import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.controllers.HomeController
 import tmg.flashback.statistics.databinding.FragmentDashboardSeasonBinding
+import tmg.flashback.statistics.ui.dashboard.events.EventListBottomSheetFragment
 import tmg.flashback.statistics.ui.dashboard.racepreview.RacePreviewBottomSheetFragment
 import tmg.flashback.statistics.ui.overview.constructor.ConstructorActivity
 import tmg.flashback.statistics.ui.overview.driver.DriverActivity
 import tmg.flashback.statistics.ui.race.RaceActivity
 import tmg.flashback.statistics.ui.race.RaceData
+import tmg.flashback.statistics.ui.shared.tyres.TyresBottomSheetFragment
 import tmg.flashback.ui.base.BaseFragment
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
@@ -75,6 +77,15 @@ class SeasonFragment: BaseFragment() {
                         clickTrack(it)
                     }
                 }
+            },
+            tyresClicked = { season ->
+                val tyre = TyresBottomSheetFragment.instance(season)
+                tyre.show(parentFragmentManager, "TYRES")
+            },
+            eventTypeClicked = { season, type ->
+                EventListBottomSheetFragment
+                    .instance(season, type)
+                    .show(parentFragmentManager, "EVENT_TYPE_${season}_${type.ordinal}")
             }
         )
         binding.dataList.layoutManager = LinearLayoutManager(context)

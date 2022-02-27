@@ -3,8 +3,10 @@ package tmg.flashback.statistics.ui.dashboard.season
 import androidx.annotation.LayoutRes
 import org.threeten.bp.LocalDate
 import org.threeten.bp.Month
+import tmg.flashback.formula1.enums.EventType
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.formula1.model.Schedule
+import tmg.flashback.formula1.model.Event
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.ui.model.AnimationSpeed
@@ -14,6 +16,12 @@ sealed class SeasonItem(
 ) {
     object CalendarHeader: SeasonItem(R.layout.view_dashboard_season_calendar_header)
 
+    data class Events(
+        val season: Int,
+        val events: Map<EventType, List<Event>>,
+        val showTyres: Boolean
+    ): SeasonItem(R.layout.view_dashboard_season_events)
+
     data class CalendarMonth(
         val month: Month,
         val year: Int
@@ -22,6 +30,7 @@ sealed class SeasonItem(
     data class CalendarWeek(
         val forMonth: Month,
         val startingDay: LocalDate,
+        val event: List<Event>,
         val race: OverviewRace?
     ): SeasonItem(R.layout.view_dashboard_season_calendar_week)
 
@@ -46,14 +55,14 @@ sealed class SeasonItem(
         val driver: tmg.flashback.formula1.model.Driver,
         val constructors: List<tmg.flashback.formula1.model.Constructor>,
         val driverId: String = driver.id,
-        val position: Int,
+        val position: Int?,
         val maxPointsInSeason: Double,
         val animationSpeed: AnimationSpeed
     ) : SeasonItem(R.layout.view_dashboard_season_driver)
 
     data class Constructor(
         val season: Int,
-        val position: Int,
+        val position: Int?,
         val constructor: tmg.flashback.formula1.model.Constructor,
         val constructorId: String = constructor.id,
         val driver: List<Pair<tmg.flashback.formula1.model.Driver, Double>>,

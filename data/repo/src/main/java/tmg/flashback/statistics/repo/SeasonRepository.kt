@@ -1,6 +1,7 @@
 package tmg.flashback.statistics.repo
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import tmg.flashback.formula1.model.Season
 import tmg.flashback.formula1.model.SeasonConstructorStandings
@@ -27,9 +28,12 @@ class SeasonRepository(
     }
 
     fun getSeason(season: Int): Flow<Season?> {
-        return persistence.seasonDao().getRaces(season)
-            .map { list ->
-                seasonMapper.mapSeason(season, list)
+        return combine(
+            persistence.seasonDao().getRaces(season),
+            persistence.eventsDao().getEvents(season)
+        ) { list, winterTesting -> Pair(list, winterTesting) }
+            .map { (list, winterTesting) ->
+                seasonMapper.mapSeason(season, list, winterTesting)
             }
     }
 

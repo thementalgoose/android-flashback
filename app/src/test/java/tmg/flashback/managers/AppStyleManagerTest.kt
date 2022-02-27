@@ -9,10 +9,10 @@ import tmg.flashback.ui.model.Theme
 
 internal class AppStyleManagerTest {
 
-    private lateinit var sut: AppStyleManager
+    private lateinit var underTest: AppStyleManager
 
-    private fun initSUT() {
-        sut = AppStyleManager()
+    private fun initUnderTest() {
+        underTest = AppStyleManager()
     }
 
     @ParameterizedTest(name = "theme={0} and nightMode={1} returns default theme")
@@ -22,8 +22,8 @@ internal class AppStyleManagerTest {
         "DEFAULT,NIGHT"
     )
     fun `default style resource returned`(theme: Theme, nightMode: NightMode) {
-        initSUT()
-        assertEquals(R.style.FlashbackAppTheme_Default, sut.getStyleResource(theme, nightMode))
+        initUnderTest()
+        assertEquals(R.style.FlashbackAppTheme_Default, underTest.getStyleResource(theme, nightMode))
     }
 
     @ParameterizedTest(name = "theme={0} and nightMode={1} returns material you theme")
@@ -33,7 +33,7 @@ internal class AppStyleManagerTest {
         "MATERIAL_YOU,NIGHT"
     )
     fun `material you style resource returned`(theme: Theme, nightMode: NightMode) {
-        initSUT()
-        assertEquals(R.style.FlashbackAppTheme_MaterialYou, sut.getStyleResource(theme, nightMode))
+        initUnderTest()
+        assertEquals(R.style.FlashbackAppTheme_MaterialYou, underTest.getStyleResource(theme, nightMode))
     }
 }

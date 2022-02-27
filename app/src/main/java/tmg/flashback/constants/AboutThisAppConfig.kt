@@ -151,6 +151,14 @@ object AboutThisAppConfig {
                 ),
                 AboutThisAppDependency(
                         order = 10,
+                        dependencyName = "Shimmer",
+                        author = "Facebook",
+                        url = "http://facebook.github.io/shimmer-android/",
+                        backgroundColor = Color.TRANSPARENT,
+                        imageUrl = "https://avatars.githubusercontent.com/u/69631"
+                ),
+                AboutThisAppDependency(
+                        order = 11,
                         dependencyName = "Lottie",
                         author = "AirBnB",
                         url = "https://github.com/airbnb/lottie-android",
@@ -158,7 +166,7 @@ object AboutThisAppConfig {
                         imageUrl = "https://avatars2.githubusercontent.com/u/698437"
                 ),
                 AboutThisAppDependency(
-                        order = 11,
+                        order = 12,
                         dependencyName = "Labelled Progress Bar",
                         author = "Jordan Fisher",
                         url = "https://github.com/thementalgoose/android-labelled-progress-bar",
@@ -166,7 +174,7 @@ object AboutThisAppConfig {
                         imageUrl = "https://avatars1.githubusercontent.com/u/5982159"
                 ),
                 AboutThisAppDependency(
-                        order = 12,
+                        order = 13,
                         dependencyName = "IndicatorFastScroll",
                         author = "reddit",
                         url = "https://github.com/reddit/IndicatorFastScroll",

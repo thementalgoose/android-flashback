@@ -2,23 +2,26 @@ package tmg.flashback.statistics.ui.dashboard.season.viewholders
 
 import android.animation.AnimatorSet
 import android.graphics.Color
+import android.view.ContextMenu
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import org.threeten.bp.LocalDate
+import org.threeten.bp.format.DateTimeFormatter
+import tmg.flashback.formula1.extensions.label
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.LayoutDashboardSeasonCalendarWeekBinding
 import tmg.flashback.statistics.databinding.ViewDashboardSeasonCalendarWeekBinding
 import tmg.flashback.statistics.ui.dashboard.season.SeasonItem
-import tmg.flashback.ui.model.AnimationSpeed
 import tmg.utilities.extensions.getColor
 import tmg.utilities.extensions.views.context
+import tmg.utilities.extensions.views.getString
 import tmg.utilities.extensions.views.show
 
 class CalendarWeekViewHolder(
     private val binding: ViewDashboardSeasonCalendarWeekBinding,
-    private val calendarWeekRaceClicked: (track: SeasonItem.CalendarWeek) -> Unit,
-    private val animationSpeed: AnimationSpeed
+    private val calendarWeekRaceClicked: (track: SeasonItem.CalendarWeek) -> Unit
 ) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
 
     private val cells: List<LayoutDashboardSeasonCalendarWeekBinding> by lazy {
@@ -42,7 +45,7 @@ class CalendarWeekViewHolder(
     private var animation: AnimatorSet? = null
 
     init {
-        binding.calendar.setOnClickListener(this)
+        binding.clickTarget.setOnClickListener(this)
     }
 
     fun bind(item: SeasonItem.CalendarWeek) {
@@ -76,13 +79,42 @@ class CalendarWeekViewHolder(
                 cells[x].day.alpha = 1.0f
             }
 
-            if (date == LocalDate.now()) {
-                cells[x].day.setBackgroundResource(R.drawable.dashboard_calendar_current_day)
-                cells[x].day.setTextColor(Color.WHITE)
-            }
-            else {
-                cells[x].day.setBackgroundResource(0)
-                cells[x].day.setTextColor(context.theme.getColor(R.attr.contentPrimary))
+            val event = item.event.firstOrNull { it.date == date }
+            when {
+                date == LocalDate.now() && event != null -> {
+                    cells[x].day.setBackgroundResource(R.drawable.dashboard_calendar_current_day_testing)
+                    cells[x].day.setTextColor(Color.WHITE)
+                    cells[x].container.setOnClickListener {
+                        Snackbar.make(
+                                cells[x].container,
+                                "${event.date.format(DateTimeFormatter.ofPattern("dd MMMM"))}: ${getString(event.type.label)} - ${event.label}",
+                                Snackbar.LENGTH_LONG
+                            )
+                            .show()
+                    }
+                }
+                date == LocalDate.now() -> {
+                    cells[x].day.setBackgroundResource(R.drawable.dashboard_calendar_current_day)
+                    cells[x].day.setTextColor(Color.WHITE)
+                    cells[x].container.setOnClickListener(null)
+                }
+                event != null -> {
+                    cells[x].day.setBackgroundResource(R.drawable.dashboard_calendar_testing)
+                    cells[x].day.setTextColor(context.theme.getColor(R.attr.contentPrimary))
+                    cells[x].container.setOnClickListener {
+                        Snackbar.make(
+                                cells[x].container,
+                                "${event.date.format(DateTimeFormatter.ofPattern("dd MMMM"))}: ${getString(event.type.label)} - ${event.label}",
+                                Snackbar.LENGTH_LONG
+                            )
+                            .show()
+                    }
+                }
+                else -> {
+                    cells[x].day.setBackgroundResource(0)
+                    cells[x].day.setTextColor(context.theme.getColor(R.attr.contentPrimary))
+                    cells[x].container.setOnClickListener(null)
+                }
             }
 
             lastSimulatedDay = day
@@ -94,7 +126,10 @@ class CalendarWeekViewHolder(
             binding.highlight.alpha = alphaHighlightEnabled
             binding.highlight.show(false)
             binding.flag.show(false)
+            binding.clickTarget.show(false)
         } else {
+            binding.clickTarget.show()
+            binding.clickTarget.contentDescription = item.race.raceName
             hasExpandingContent = true
             if (item.race.date < LocalDate.now()) {
                 binding.highlight.alpha = alphaHighlightDisabled
@@ -119,7 +154,7 @@ class CalendarWeekViewHolder(
 
     override fun onClick(p0: View?) {
         when (p0) {
-            binding.calendar -> {
+            binding.clickTarget -> {
                 if (hasExpandingContent) {
                     calendarWeekRaceClicked(item)
                 }

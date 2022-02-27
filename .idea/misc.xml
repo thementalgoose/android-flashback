@@ -73,8 +73,10 @@
         <entry key="../../../../layout/compose-model-1641753543152.xml" value="0.17592592592592593" />
         <entry key="../../../../layout/compose-model-1641753543153.xml" value="0.1" />
         <entry key="../../../../layout/compose-model-1641934534704.xml" value="0.9461206896551724" />
+        <entry key="../../../../layout/compose-model-1644946553693.xml" value="0.11204013377926421" />
         <entry key="../../../../layout/custom_preview.xml" value="0.2989583333333333" />
         <entry key="../../Library/Android/sdk/platforms/android-31/data/res/drawable/progress_indeterminate_anim_large_material.xml" value="0.177" />
+        <entry key="ads/src/main/res/layout/admob_native_banner.xml" value="0.17708333333333334" />
         <entry key="app/src/main/res/drawable/app_shortcut_rss.xml" value="0.2222222222222222" />
         <entry key="app/src/main/res/drawable/app_shortcut_search.xml" value="0.2222222222222222" />
         <entry key="app/src/main/res/drawable/ic_close.xml" value="0.3765625" />
@@ -82,7 +84,10 @@
         <entry key="app/src/main/res/drawable/ic_search.xml" value="0.18802083333333333" />
         <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.17527173913043478" />
         <entry key="app/src/main/res/layout/view_season_list_advert.xml" value="0.1984375" />
+        <entry key="app/src/main/res/layout/view_season_list_button.xml" value="0.1859375" />
         <entry key="app/src/main/res/layout/view_season_list_feature_banner.xml" value="0.625" />
+        <entry key="app/src/main/res/layout/view_season_list_header.xml" value="0.14492753623188406" />
+        <entry key="app/src/main/res/layout/view_season_list_switch.xml" value="0.45" />
         <entry key="app/src/main/res/xml/filepaths.xml" value="0.11354166666666667" />
         <entry key="common/src/main/res/drawable/ic_close.xml" value="0.2171875" />
         <entry key="common/src/main/res/layout/activity_lockout.xml" value="0.23385416666666667" />
@@ -93,12 +98,30 @@
         <entry key="core/ui/src/main/res/layout/view_bottom_sheet_item.xml" value="0.20104166666666667" />
         <entry key="debug/src/main/res/layout/activity_debug.xml" value="0.165" />
         <entry key="debug/src/main/res/layout/activity_style_guide.xml" value="0.464321608040201" />
+        <entry key="format/src/main/res/drawable/ic_format_introduced.xml" value="0.1" />
+        <entry key="format/src/main/res/drawable/ic_format_race_length.xml" value="0.243" />
+        <entry key="format/src/main/res/layout/activity_format.xml" value="0.2526041666666667" />
+        <entry key="format/src/main/res/layout/bottom_sheet_events.xml" value="0.16576086956521738" />
+        <entry key="format/src/main/res/layout/fragment_event.xml" value="0.12284701114488349" />
+        <entry key="format/src/main/res/layout/fragment_format.xml" value="0.2526041666666667" />
+        <entry key="format/src/main/res/layout/view_format_header.xml" value="0.2526041666666667" />
+        <entry key="format/src/main/res/layout/view_format_progress_bar.xml" value="0.375" />
+        <entry key="format/src/main/res/layout/view_format_spacer.xml" value="0.2526041666666667" />
+        <entry key="format/src/main/res/layout/view_format_standing.xml" value="0.2526041666666667" />
+        <entry key="format/src/main/res/layout/view_format_stat.xml" value="0.375" />
+        <entry key="format/src/main/res/layout/view_format_subheader.xml" value="0.2526041666666667" />
+        <entry key="format/src/main/res/layout/view_format_text.xml" value="0.45" />
+        <entry key="format/src/main/res/layout/view_format_tyres.xml" value="0.2526041666666667" />
+        <entry key="format/src/main/res/layout/view_stat.xml" value="0.2526041666666667" />
         <entry key="formula1/src/main/res/drawable/circuit_adelaide.xml" value="0.5" />
         <entry key="formula1/src/main/res/drawable/circuit_ain_diab.xml" value="0.14375" />
         <entry key="formula1/src/main/res/drawable/circuit_aintree.xml" value="0.14375" />
         <entry key="formula1/src/main/res/drawable/circuit_albert_park.xml" value="0.14375" />
         <entry key="formula1/src/main/res/drawable/circuit_anderstorp.xml" value="0.5" />
         <entry key="formula1/src/main/res/drawable/circuit_avus.xml" value="0.5" />
+        <entry key="formula1/src/main/res/drawable/circuit_bahrain.xml" value="0.165" />
+        <entry key="formula1/src/main/res/drawable/circuit_bahrain_2010.xml" value="0.1745" />
+        <entry key="formula1/src/main/res/drawable/circuit_bahrain_endurance.xml" value="0.1745" />
         <entry key="formula1/src/main/res/drawable/circuit_bak.xml" value="0.199" />
         <entry key="formula1/src/main/res/drawable/circuit_charade.xml" value="0.5" />
         <entry key="formula1/src/main/res/drawable/circuit_dijon.xml" value="0.5" />
@@ -111,31 +134,122 @@
         <entry key="formula1/src/main/res/drawable/circuit_kyalami.xml" value="0.3765625" />
         <entry key="formula1/src/main/res/drawable/circuit_monsanto.xml" value="0.13854166666666667" />
         <entry key="formula1/src/main/res/drawable/circuit_montjuic.xml" value="0.13854166666666667" />
+        <entry key="formula1/src/main/res/drawable/circuit_silverstone.xml" value="0.1855" />
+        <entry key="formula1/src/main/res/drawable/circuit_silverstone_1950_1973.xml" value="0.1855" />
+        <entry key="formula1/src/main/res/drawable/circuit_silverstone_1975_1986.xml" value="0.1855" />
+        <entry key="formula1/src/main/res/drawable/circuit_silverstone_1987_1990.xml" value="0.1855" />
+        <entry key="formula1/src/main/res/drawable/circuit_silverstone_1991_1993.xml" value="0.1855" />
+        <entry key="formula1/src/main/res/drawable/circuit_silverstone_1994_1995.xml" value="0.1855" />
+        <entry key="formula1/src/main/res/drawable/circuit_silverstone_1996.xml" value="0.1855" />
+        <entry key="formula1/src/main/res/drawable/circuit_silverstone_1997_2009.xml" value="0.1855" />
         <entry key="formula1/src/main/res/drawable/circuit_tremblant.xml" value="0.5" />
         <entry key="formula1/src/main/res/drawable/circuit_watkins_glen.xml" value="0.5" />
+        <entry key="formula1/src/main/res/drawable/ic_event_type_car_launch.xml" value="0.1085" />
+        <entry key="formula1/src/main/res/drawable/ic_event_type_other.xml" value="0.1085" />
+        <entry key="formula1/src/main/res/drawable/ic_event_type_testing.xml" value="0.1085" />
         <entry key="formula1/src/main/res/drawable/ic_status_puncture.xml" value="0.14375" />
         <entry key="formula1/src/main/res/drawable/ic_status_radiator.xml" value="0.14375" />
         <entry key="formula1/src/main/res/drawable/ic_status_seat.xml" value="0.14375" />
+        <entry key="formula1/src/main/res/drawable/tyre_blue.xml" value="0.1" />
+        <entry key="formula1/src/main/res/drawable/tyre_gray.xml" value="0.1" />
+        <entry key="formula1/src/main/res/drawable/tyre_green.xml" value="0.1" />
+        <entry key="formula1/src/main/res/drawable/tyre_orange.xml" value="0.1" />
+        <entry key="formula1/src/main/res/drawable/tyre_pink.xml" value="0.1" />
+        <entry key="formula1/src/main/res/drawable/tyre_pirelli_13_blue_dry.xml" value="0.138" />
+        <entry key="formula1/src/main/res/drawable/tyre_pirelli_13_blue_wet.xml" value="0.1625" />
+        <entry key="formula1/src/main/res/drawable/tyre_pirelli_13_gray_dry.xml" value="0.138" />
+        <entry key="formula1/src/main/res/drawable/tyre_pirelli_13_green_wet.xml" value="0.1625" />
+        <entry key="formula1/src/main/res/drawable/tyre_pirelli_13_orange_dry.xml" value="0.5" />
+        <entry key="formula1/src/main/res/drawable/tyre_pirelli_13_orange_wet.xml" value="0.5" />
+        <entry key="formula1/src/main/res/drawable/tyre_pirelli_13_pink_dry.xml" value="0.138" />
+        <entry key="formula1/src/main/res/drawable/tyre_pirelli_13_purple_dry.xml" value="0.138" />
+        <entry key="formula1/src/main/res/drawable/tyre_pirelli_13_red_dry.xml" value="0.138" />
+        <entry key="formula1/src/main/res/drawable/tyre_pirelli_13_white_dry.xml" value="0.138" />
+        <entry key="formula1/src/main/res/drawable/tyre_pirelli_13_yellow_dry.xml" value="0.138" />
+        <entry key="formula1/src/main/res/drawable/tyre_pirelli_18_blue_wet.xml" value="0.1625" />
+        <entry key="formula1/src/main/res/drawable/tyre_pirelli_18_green_wet.xml" value="0.1625" />
+        <entry key="formula1/src/main/res/drawable/tyre_pirelli_18_red_dry.xml" value="0.1625" />
+        <entry key="formula1/src/main/res/drawable/tyre_pirelli_18_white_dry.xml" value="0.1625" />
+        <entry key="formula1/src/main/res/drawable/tyre_pirelli_18_yellow_dry.xml" value="0.1625" />
+        <entry key="formula1/src/main/res/drawable/tyre_purple.xml" value="0.1" />
+        <entry key="formula1/src/main/res/drawable/tyre_red.xml" value="0.138" />
+        <entry key="formula1/src/main/res/drawable/tyre_white.xml" value="0.138" />
+        <entry key="formula1/src/main/res/drawable/tyre_yellow.xml" value="0.138" />
+        <entry key="presentation/ui/src/main/res/drawable-night/unknown_avatar.xml" value="0.1985" />
+        <entry key="presentation/ui/src/main/res/drawable/ic_back.xml" value="0.155" />
         <entry key="presentation/ui/src/main/res/drawable/ic_menu.xml" value="0.1665" />
+        <entry key="presentation/ui/src/main/res/drawable/unknown_avatar.xml" value="0.1985" />
+        <entry key="regulations/src/main/res/drawable/ic_format_from_to_arrow.xml" value="0.155" />
+        <entry key="regulations/src/main/res/drawable/ic_format_introduced.xml" value="0.168" />
+        <entry key="regulations/src/main/res/drawable/ic_regulation_lap_count.xml" value="0.1" />
+        <entry key="regulations/src/main/res/drawable/ic_regulation_stat_fastest_lap.xml" value="0.138" />
+        <entry key="regulations/src/main/res/drawable/ic_regulation_stat_fuel.xml" value="0.1" />
+        <entry key="regulations/src/main/res/drawable/ic_regulation_stat_session_length.xml" value="0.1" />
+        <entry key="regulations/src/main/res/drawable/ic_regulation_stat_supersceded.xml" value="0.1" />
+        <entry key="regulations/src/main/res/drawable/ic_regulation_stat_year.xml" value="0.155" />
+        <entry key="regulations/src/main/res/drawable/ic_regulation_stat_year_ended.xml" value="0.155" />
+        <entry key="regulations/src/main/res/drawable/ic_regulation_stat_year_introduced.xml" value="0.155" />
+        <entry key="regulations/src/main/res/drawable/ic_stat_regs_explanation.xml" value="0.182" />
+        <entry key="regulations/src/main/res/drawable/ic_stat_regs_fastest_lap.xml" value="0.138" />
+        <entry key="regulations/src/main/res/drawable/ic_stat_regs_fuel.xml" value="0.138" />
+        <entry key="regulations/src/main/res/drawable/ic_stat_regs_lap_count.xml" value="0.182" />
+        <entry key="regulations/src/main/res/drawable/ic_stat_regs_pitstop.xml" value="0.182" />
+        <entry key="regulations/src/main/res/drawable/ic_stat_regs_q1.xml" value="0.182" />
+        <entry key="regulations/src/main/res/drawable/ic_stat_regs_q2.xml" value="0.182" />
+        <entry key="regulations/src/main/res/drawable/ic_stat_regs_q3.xml" value="0.182" />
+        <entry key="regulations/src/main/res/drawable/ic_stat_regs_race_length.xml" value="0.138" />
+        <entry key="regulations/src/main/res/drawable/ic_stat_regs_session_count.xml" value="0.182" />
+        <entry key="regulations/src/main/res/drawable/qualifying_knockout.xml" value="0.194" />
+        <entry key="regulations/src/main/res/layout/activity_format_overview.xml" value="0.24895833333333334" />
+        <entry key="regulations/src/main/res/layout/fragment_event.xml" value="0.2526041666666667" />
+        <entry key="regulations/src/main/res/layout/fragment_format_overview.xml" value="0.24895833333333334" />
+        <entry key="regulations/src/main/res/layout/fragment_regulations.xml" value="0.2526041666666667" />
+        <entry key="regulations/src/main/res/layout/view_format_collapsible.xml" value="0.23333333333333334" />
+        <entry key="regulations/src/main/res/layout/view_format_header.xml" value="0.245018115942029" />
+        <entry key="regulations/src/main/res/layout/view_format_led_to.xml" value="0.245018115942029" />
+        <entry key="regulations/src/main/res/layout/view_format_progress_bar.xml" value="0.1752786220871327" />
+        <entry key="regulations/src/main/res/layout/view_format_qualifying_knockout.xml" value="0.375" />
+        <entry key="regulations/src/main/res/layout/view_format_spacer.xml" value="0.1" />
+        <entry key="regulations/src/main/res/layout/view_format_stat.xml" value="0.245018115942029" />
+        <entry key="regulations/src/main/res/layout/view_format_subheader.xml" value="0.1" />
+        <entry key="regulations/src/main/res/layout/view_format_text.xml" value="0.1" />
+        <entry key="regulations/src/main/res/xml/activity_format_overview_scene.xml" value="0.24895833333333334" />
         <entry key="rss/src/main/res/drawable-anydpi/app_shortcut_rss_png.xml" value="0.3765625" />
         <entry key="rss/src/main/res/drawable/app_shortcut_rss.xml" value="0.5" />
         <entry key="rss/src/main/res/drawable/ic_rss.xml" value="0.18802083333333333" />
         <entry key="rss/src/main/res/drawable/ic_rss_configure_add.xml" value="0.272" />
         <entry key="rss/src/main/res/drawable/ic_rss_configure_remove.xml" value="0.1665" />
+        <entry key="rss/src/main/res/layout/fragment_rss.xml" value="0.23505434782608695" />
         <entry key="rss/src/main/res/layout/view_rss_configure_header.xml" value="0.3242753623188406" />
         <entry key="rss/src/main/res/layout/view_rss_configure_item.xml" value="0.2671875" />
         <entry key="rss/src/main/res/layout/view_rss_configure_no_items.xml" value="0.2671875" />
         <entry key="rss/src/main/res/layout/view_rss_configure_quickadd.xml" value="0.266304347826087" />
         <entry key="rss/src/main/res/layout/view_rss_sources_disabled.xml" value="0.36041666666666666" />
         <entry key="statistics/src/main/res/drawable/app_shortcut_search.xml" value="0.5" />
+        <entry key="statistics/src/main/res/drawable/dashboard_calendar_current_day.xml" value="0.199" />
+        <entry key="statistics/src/main/res/drawable/dashboard_calendar_current_day_testing.xml" value="0.199" />
+        <entry key="statistics/src/main/res/drawable/dashboard_calendar_testing.xml" value="0.199" />
+        <entry key="statistics/src/main/res/drawable/ic_event_type_car_launch.xml" value="0.212" />
+        <entry key="statistics/src/main/res/drawable/ic_event_type_other.xml" value="0.212" />
+        <entry key="statistics/src/main/res/drawable/ic_event_type_testing.xml" value="0.212" />
+        <entry key="statistics/src/main/res/drawable/ic_fastest_lap.xml" value="0.138" />
+        <entry key="statistics/src/main/res/drawable/ic_laps.xml" value="0.1775" />
+        <entry key="statistics/src/main/res/drawable/ic_map.xml" value="0.212" />
+        <entry key="statistics/src/main/res/drawable/ic_regs_info.xml" value="0.155" />
         <entry key="statistics/src/main/res/drawable/ic_star_outline.xml" value="0.14375" />
         <entry key="statistics/src/main/res/drawable/ic_status_radiator.xml" value="0.14375" />
+        <entry key="statistics/src/main/res/drawable/ic_youtube.xml" value="0.1775" />
         <entry key="statistics/src/main/res/drawable/nav_search.xml" value="0.18802083333333333" />
         <entry key="statistics/src/main/res/drawable/nav_settings.xml" value="0.3765625" />
         <entry key="statistics/src/main/res/layout/activity_driver.xml" value="0.1" />
+        <entry key="statistics/src/main/res/layout/fragment_bottom_sheet_event_list.xml" value="0.22418478260869565" />
         <entry key="statistics/src/main/res/layout/fragment_bottom_sheet_notifications_onboarding.xml" value="0.11770833333333333" />
         <entry key="statistics/src/main/res/layout/fragment_bottom_sheet_race_preview.xml" value="0.3532608695652174" />
+        <entry key="statistics/src/main/res/layout/fragment_constructor.xml" value="0.21739130434782608" />
+        <entry key="statistics/src/main/res/layout/fragment_driver.xml" value="0.24954710144927536" />
+        <entry key="statistics/src/main/res/layout/fragment_race.xml" value="0.2057335581787521" />
         <entry key="statistics/src/main/res/layout/layout_constructor_driver.xml" value="0.335" />
+        <entry key="statistics/src/main/res/layout/layout_constructor_driver_label.xml" value="0.24954710144927536" />
         <entry key="statistics/src/main/res/layout/layout_dashboard_season_calendar_week.xml" value="0.20104166666666667" />
         <entry key="statistics/src/main/res/layout/layout_driver.xml" value="0.184375" />
         <entry key="statistics/src/main/res/layout/layout_podium.xml" value="0.184375" />
@@ -143,16 +257,24 @@
         <entry key="statistics/src/main/res/layout/view_dashboard_season_calendar_week.xml" value="0.3532608695652174" />
         <entry key="statistics/src/main/res/layout/view_dashboard_season_constructor.xml" value="0.1911231884057971" />
         <entry key="statistics/src/main/res/layout/view_dashboard_season_driver.xml" value="0.3532608695652174" />
+        <entry key="statistics/src/main/res/layout/view_dashboard_season_events.xml" value="0.375" />
         <entry key="statistics/src/main/res/layout/view_dashboard_season_track.xml" value="0.3532608695652174" />
+        <entry key="statistics/src/main/res/layout/view_driver_season_header.xml" value="0.25" />
+        <entry key="statistics/src/main/res/layout/view_driver_summary_header.xml" value="0.23143115942028986" />
+        <entry key="statistics/src/main/res/layout/view_driver_summary_history.xml" value="0.23143115942028986" />
+        <entry key="statistics/src/main/res/layout/view_event_list_item.xml" value="0.2222222222222222" />
         <entry key="statistics/src/main/res/layout/view_link_pill.xml" value="0.184375" />
-        <entry key="statistics/src/main/res/layout/view_race_overview.xml" value="0.184375" />
+        <entry key="statistics/src/main/res/layout/view_overview_stat.xml" value="0.2526041666666667" />
+        <entry key="statistics/src/main/res/layout/view_race_overview.xml" value="0.55" />
         <entry key="statistics/src/main/res/layout/view_race_qualifying_driver.xml" value="0.184375" />
         <entry key="statistics/src/main/res/layout/view_race_qualifying_header.xml" value="0.184375" />
         <entry key="statistics/src/main/res/layout/view_race_qualifying_q1_result.xml" value="0.184375" />
         <entry key="statistics/src/main/res/layout/view_race_qualifying_q1q2_result.xml" value="0.1752786220871327" />
         <entry key="statistics/src/main/res/layout/view_race_qualifying_q1q2q3_result.xml" value="0.2477355072463768" />
+        <entry key="statistics/src/main/res/layout/view_race_race_header.xml" value="0.2526041666666667" />
         <entry key="statistics/src/main/res/layout/view_race_race_podium.xml" value="0.184375" />
         <entry key="statistics/src/main/res/layout/view_race_race_result.xml" value="0.45" />
+        <entry key="statistics/src/main/res/menu/season_list_item.xml" value="0.24895833333333334" />
       </map>
     </option>
   </component>

@@ -3,6 +3,7 @@ package tmg.flashback.statistics.repo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import tmg.flashback.crash_reporting.controllers.CrashController
+import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.formula1.model.DriverHistory
 import tmg.flashback.statistics.network.api.FlashbackApi
 import tmg.flashback.statistics.repo.base.BaseRepository
@@ -15,6 +16,7 @@ class DriverRepository(
     private val api: FlashbackApi,
     private val persistence: FlashbackDatabase,
     crashController: CrashController,
+    networkConnectivityManager: NetworkConnectivityManager,
     private val networkDriverMapper: NetworkDriverMapper,
     private val networkDriverDataMapper: NetworkDriverDataMapper,
     private val networkConstructorDataMapper: NetworkConstructorDataMapper,
@@ -22,7 +24,7 @@ class DriverRepository(
     private val networkRaceDataMapper: NetworkRaceDataMapper,
     private val driverMapper: DriverMapper,
     private val driverDataMapper: DriverDataMapper,
-): BaseRepository(crashController) {
+): BaseRepository(crashController, networkConnectivityManager) {
 
     /**
      * drivers.json

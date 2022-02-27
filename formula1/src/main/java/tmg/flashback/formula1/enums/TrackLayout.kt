@@ -23,6 +23,9 @@ enum class TrackLayout(
     AMERICAS("americas", R.drawable.circuit_americas),
     BUDDH("buddh", R.drawable.circuit_buddh),
     BAHRAIN("bahrain", R.drawable.circuit_bahrain),
+    BAHRAIN_2010("bahrain", R.drawable.circuit_bahrain_2010, listOf(
+        "2010 Bahrain Grand Prix"
+    )),
     BAK("BAK", R.drawable.circuit_bak),
     BREMGARTEN("bremgarten", R.drawable.circuit_bremgarten),
     BRANDS_HATCH("brands_hatch", R.drawable.circuit_brands_hatch),
@@ -87,13 +90,84 @@ enum class TrackLayout(
     RICARD("ricard", R.drawable.circuit_ricard),
     RIVERSIDE("riverside", R.drawable.circuit_riverside),
     RODRIGUEZ("rodriguez", R.drawable.circuit_rodriguez),
-    SAKHIR("sakhir", R.drawable.circuit_sakhir, listOf(
-            "2020 Sakhir Grand Prix"
-    )),
+    SAKHIR("sakhir", R.drawable.circuit_sakhir),
     SEBRING("sebring", R.drawable.circuit_sebring),
     SEPANG("sepang", R.drawable.circuit_sepang),
     SHANGHAI("shanghai", R.drawable.circuit_shanghai),
     SILVERSTONE("silverstone", R.drawable.circuit_silverstone),
+    SILVERSTONE_1997_2009("silverstone", R.drawable.circuit_silverstone, listOf(
+        "1997 British Grand Prix",
+        "1998 British Grand Prix",
+        "1999 British Grand Prix",
+        "2000 British Grand Prix",
+        "2001 British Grand Prix",
+        "2002 British Grand Prix",
+        "2003 British Grand Prix",
+        "2004 British Grand Prix",
+        "2005 British Grand Prix",
+        "2006 British Grand Prix",
+        "2007 British Grand Prix",
+        "2008 British Grand Prix",
+        "2009 British Grand Prix"
+    )),
+    SILVERSTONE_1996("silverstone", R.drawable.circuit_silverstone, listOf(
+        "1996 British Grand Prix"
+    )),
+    SILVERSTONE_1994_1995("silverstone", R.drawable.circuit_silverstone, listOf(
+        "1994 British Grand Prix",
+        "1995 British Grand Prix"
+    )),
+    SILVERSTONE_1991_1993("silverstone", R.drawable.circuit_silverstone, listOf(
+        "1991 British Grand Prix",
+        "1992 British Grand Prix",
+        "1993 British Grand Prix"
+    )),
+    SILVERSTONE_1987_1990("silverstone", R.drawable.circuit_silverstone, listOf(
+        "1987 British Grand Prix",
+        "1988 British Grand Prix",
+        "1989 British Grand Prix",
+        "1990 British Grand Prix"
+    )),
+    SILVERSTONE_1975_1986("silverstone", R.drawable.circuit_silverstone, listOf(
+        "1975 British Grand Prix",
+        "1976 British Grand Prix",
+        "1977 British Grand Prix",
+        "1978 British Grand Prix",
+        "1979 British Grand Prix",
+        "1980 British Grand Prix",
+        "1981 British Grand Prix",
+        "1982 British Grand Prix",
+        "1983 British Grand Prix",
+        "1984 British Grand Prix",
+        "1985 British Grand Prix",
+        "1986 British Grand Prix"
+    )),
+    SILVERSTONE_1950_1973("silverstone", R.drawable.circuit_silverstone, listOf(
+        "1950 British Grand Prix",
+        "1951 British Grand Prix",
+        "1952 British Grand Prix",
+        "1953 British Grand Prix",
+        "1954 British Grand Prix",
+        "1955 British Grand Prix",
+        "1956 British Grand Prix",
+        "1957 British Grand Prix",
+        "1958 British Grand Prix",
+        "1959 British Grand Prix",
+        "1960 British Grand Prix",
+        "1961 British Grand Prix",
+        "1962 British Grand Prix",
+        "1963 British Grand Prix",
+        "1964 British Grand Prix",
+        "1965 British Grand Prix",
+        "1966 British Grand Prix",
+        "1967 British Grand Prix",
+        "1968 British Grand Prix",
+        "1969 British Grand Prix",
+        "1970 British Grand Prix",
+        "1971 British Grand Prix",
+        "1972 British Grand Prix",
+        "1973 British Grand Prix"
+    )),
     SOCHI("sochi", R.drawable.circuit_sochi),
     SPA("spa", R.drawable.circuit_spa),
     SUZUKA("suzuka", R.drawable.circuit_suzuka),

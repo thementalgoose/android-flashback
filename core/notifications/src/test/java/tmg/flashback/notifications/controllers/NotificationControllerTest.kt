@@ -18,19 +18,19 @@ internal class NotificationControllerTest: BaseTest() {
     private val mockRemoteNotificationManager: RemoteNotificationManager = mockk(relaxed = true)
     private val mockAlarmManager: SystemAlarmManager = mockk(relaxed = true)
 
-    private lateinit var sut: NotificationController
+    private lateinit var underTest: NotificationController
 
-    private fun initSUT() {
-        sut = NotificationController(mockNotificationRepository, mockSystemNotificationManager, mockRemoteNotificationManager, mockAlarmManager)
+    private fun initUnderTest() {
+        underTest = NotificationController(mockNotificationRepository, mockSystemNotificationManager, mockRemoteNotificationManager, mockAlarmManager)
     }
 
     @Test
     fun `subscribe method subscribes to topics if all are set to default`() = coroutineTest {
         coEvery { mockRemoteNotificationManager.subscribeToTopic(any()) } returns true
 
-        initSUT()
+        initUnderTest()
         runBlockingTest {
-            sut.subscribeToRemoteNotification("test")
+            underTest.subscribeToRemoteNotification("test")
         }
 
         coVerify {
@@ -41,9 +41,9 @@ internal class NotificationControllerTest: BaseTest() {
 
     @Test
     fun `unsubscribe method calls notification manager`() {
-        initSUT()
+        initUnderTest()
         runBlockingTest {
-            sut.unsubscribeToRemoteNotification("test")
+            underTest.unsubscribeToRemoteNotification("test")
         }
 
         coVerify {
@@ -64,8 +64,8 @@ internal class NotificationControllerTest: BaseTest() {
         val expectedTimestamp: LocalDateTime = LocalDateTime.now()
 
         every { mockNotificationRepository.notificationIds } returns setOf(1,4)
-        initSUT()
-        sut.scheduleLocalNotification(expectedRequestCode, expectedChannelId, expectedTitle, expectedText, expectedTimestamp)
+        initUnderTest()
+        underTest.scheduleLocalNotification(expectedRequestCode, expectedChannelId, expectedTitle, expectedText, expectedTimestamp)
         verify {
             mockAlarmManager.schedule(expectedRequestCode, expectedChannelId, expectedTitle, expectedText, expectedTimestamp)
             mockNotificationRepository.notificationIds = setOf(1,4,9)
@@ -79,8 +79,8 @@ internal class NotificationControllerTest: BaseTest() {
     @Test
     fun `cancel specific notification cancels and removes from repository`() {
         every { mockNotificationRepository.notificationIds } returns setOf(1,4)
-        initSUT()
-        sut.cancelLocalNotification(1)
+        initUnderTest()
+        underTest.cancelLocalNotification(1)
         verify {
             mockAlarmManager.cancel(1)
             mockNotificationRepository.notificationIds = setOf(4)
@@ -90,8 +90,8 @@ internal class NotificationControllerTest: BaseTest() {
     @Test
     fun `cancel all notifications cancels request for all in repository and clears repository`() {
         every { mockNotificationRepository.notificationIds } returns setOf(1,4)
-        initSUT()
-        sut.cancelAllNotifications()
+        initUnderTest()
+        underTest.cancelAllNotifications()
         verify {
             mockAlarmManager.cancel(1)
             mockAlarmManager.cancel(4)
@@ -107,8 +107,8 @@ internal class NotificationControllerTest: BaseTest() {
     fun `create notification channel tells local manager to create channel`() {
         val expectedChannelId = "channelId"
         val expectedLabel = 3
-        initSUT()
-        sut.createNotificationChannel(expectedChannelId, expectedLabel)
+        initUnderTest()
+        underTest.createNotificationChannel(expectedChannelId, expectedLabel)
         verify {
             mockSystemNotificationManager.createChannel(expectedChannelId, expectedLabel)
         }
@@ -117,8 +117,8 @@ internal class NotificationControllerTest: BaseTest() {
     @Test
     fun `delete notification channel tells local manager to delete channel`() {
         val expectedChannelId = "channelId"
-        initSUT()
-        sut.deleteNotificationChannel(expectedChannelId)
+        initUnderTest()
+        underTest.deleteNotificationChannel(expectedChannelId)
         verify {
             mockSystemNotificationManager.cancelChannel(expectedChannelId)
         }
@@ -132,8 +132,8 @@ internal class NotificationControllerTest: BaseTest() {
     fun `currently scheduled notification ids returns from repository`() {
         val expected = setOf(198, 12039493)
         every { mockNotificationRepository.notificationIds } returns expected
-        initSUT()
-        assertEquals(expected, sut.notificationsCurrentlyScheduled)
+        initUnderTest()
+        assertEquals(expected, underTest.notificationsCurrentlyScheduled)
         verify {
             mockNotificationRepository.notificationIds
         }

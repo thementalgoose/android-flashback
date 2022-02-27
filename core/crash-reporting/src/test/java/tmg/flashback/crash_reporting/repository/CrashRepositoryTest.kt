@@ -11,10 +11,10 @@ internal class CrashRepositoryTest {
 
     private val mockPreferenceManager: PreferenceManager = mockk(relaxed = true)
 
-    private lateinit var sut: CrashRepository
+    private lateinit var underTest: CrashRepository
 
-    private fun initSUT() {
-        sut = CrashRepository(mockPreferenceManager)
+    private fun initUnderTest() {
+        underTest = CrashRepository(mockPreferenceManager)
     }
 
     //region Is crash reporting enabled
@@ -23,9 +23,9 @@ internal class CrashRepositoryTest {
     fun `is crash reporting enabled reads value from preferences repository with default to true`() {
         every { mockPreferenceManager.getBoolean(any(), any()) } returns true
 
-        initSUT()
+        initUnderTest()
 
-        assertTrue(sut.isEnabled)
+        assertTrue(underTest.isEnabled)
         verify {
             mockPreferenceManager.getBoolean(CRASH_REPORTING_KEY, true)
         }
@@ -33,9 +33,9 @@ internal class CrashRepositoryTest {
 
     @Test
     fun `setting crash reporting enabled saves value from preferences repository`() {
-        initSUT()
+        initUnderTest()
 
-        sut.isEnabled = true
+        underTest.isEnabled = true
         verify {
             mockPreferenceManager.save(CRASH_REPORTING_KEY, true)
         }
@@ -43,9 +43,9 @@ internal class CrashRepositoryTest {
 
     @Test
     fun `setting crash reporting disabled saves value from preferences repository`() {
-        initSUT()
+        initUnderTest()
 
-        sut.isEnabled = false
+        underTest.isEnabled = false
         verify {
             mockPreferenceManager.save(CRASH_REPORTING_KEY, false)
         }
@@ -59,9 +59,9 @@ internal class CrashRepositoryTest {
     fun `is shake to report enabled reads value from preferences repository with default to true`() {
         every { mockPreferenceManager.getBoolean(any(), any()) } returns true
 
-        initSUT()
+        initUnderTest()
 
-        assertTrue(sut.shakeToReport)
+        assertTrue(underTest.shakeToReport)
         verify {
             mockPreferenceManager.getBoolean(SHAKE_TO_REPORT_KEY, true)
         }
@@ -69,9 +69,9 @@ internal class CrashRepositoryTest {
 
     @Test
     fun `setting shake to report enabled saves value from preferences repository`() {
-        initSUT()
+        initUnderTest()
 
-        sut.shakeToReport = true
+        underTest.shakeToReport = true
         verify {
             mockPreferenceManager.save(SHAKE_TO_REPORT_KEY, true)
         }
@@ -79,9 +79,9 @@ internal class CrashRepositoryTest {
 
     @Test
     fun `setting shake to report disabled saves value from preferences repository`() {
-        initSUT()
+        initUnderTest()
 
-        sut.shakeToReport = false
+        underTest.shakeToReport = false
         verify {
             mockPreferenceManager.save(SHAKE_TO_REPORT_KEY, false)
         }

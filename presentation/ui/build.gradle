@@ -29,6 +29,13 @@ dependencies {
     implementation deps.androidx.core
     implementation deps.androidx.appcompat
 
+    // Glide
+    implementation deps.glide.glide
+    kapt deps.glide.kapt
+
+    // Shimmer
+    implementation deps.shimmer
+
     // Swipe refresh
     implementation deps.androidx.swiperefreshlayout
 

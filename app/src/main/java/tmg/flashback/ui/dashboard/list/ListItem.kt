@@ -21,6 +21,15 @@ sealed class ListItem(
         val icon: Int
     ): ListItem(R.layout.view_season_list_button)
 
+    data class Switch(
+        val itemId: String,
+        @StringRes
+        val label: Int,
+        @DrawableRes
+        val icon: Int,
+        val isChecked: Boolean
+    ): ListItem(R.layout.view_season_list_switch)
+
     data class Season(
         val season: Int,
         val isFavourited: Boolean,

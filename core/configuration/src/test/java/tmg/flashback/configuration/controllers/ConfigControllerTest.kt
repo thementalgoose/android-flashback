@@ -16,10 +16,10 @@ internal class ConfigControllerTest: BaseTest() {
     private val mockConfigService: RemoteConfigService = mockk(relaxed = true)
     private val mockConfigRepository: ConfigRepository = mockk(relaxed = true)
 
-    private lateinit var sut: ConfigController
+    private lateinit var underTest: ConfigController
 
-    private fun initSUT() {
-        sut = ConfigController(mockConfigRepository, mockConfigService)
+    private fun initUnderTest() {
+        underTest = ConfigController(mockConfigRepository, mockConfigService)
     }
 
     @BeforeEach
@@ -30,7 +30,7 @@ internal class ConfigControllerTest: BaseTest() {
     @Test
     fun `on init set defaults is called`() {
 
-        initSUT()
+        initUnderTest()
 
         verify {
             mockConfigService.initialiseRemoteConfig()
@@ -43,9 +43,9 @@ internal class ConfigControllerTest: BaseTest() {
     fun `require synchronisation reads value from remote config sync`() {
 
         every { mockConfigRepository.remoteConfigSync } returns 0
-        initSUT()
+        initUnderTest()
 
-        assertTrue(sut.requireSynchronisation)
+        assertTrue(underTest.requireSynchronisation)
         verify {
             mockConfigRepository.remoteConfigSync
         }
@@ -55,9 +55,9 @@ internal class ConfigControllerTest: BaseTest() {
     fun `require synchronisation returns false when migrations match`() {
 
         every { mockConfigRepository.remoteConfigSync } returns Migrations.configurationSyncCount
-        initSUT()
+        initUnderTest()
 
-        assertFalse(sut.requireSynchronisation)
+        assertFalse(underTest.requireSynchronisation)
         verify {
             mockConfigRepository.remoteConfigSync
         }
@@ -72,9 +72,9 @@ internal class ConfigControllerTest: BaseTest() {
 
         every { mockConfigRepository.resetAtMigrationVersion } returns Migrations.configurationSyncCount - 1
 
-        initSUT()
+        initUnderTest()
         runBlockingTest {
-            sut.ensureCacheReset()
+            underTest.ensureCacheReset()
         }
         verify { mockConfigRepository.resetAtMigrationVersion = Migrations.configurationSyncCount }
         coVerify { mockConfigService.reset() }
@@ -84,9 +84,9 @@ internal class ConfigControllerTest: BaseTest() {
     fun `ensure cache check doesnt call reset if existing version matches match migrations`() {
         every { mockConfigRepository.resetAtMigrationVersion } returns Migrations.configurationSyncCount
 
-        initSUT()
+        initUnderTest()
         runBlockingTest {
-            sut.ensureCacheReset()
+            underTest.ensureCacheReset()
         }
         verify(exactly = 0) { mockConfigRepository.resetAtMigrationVersion = Migrations.configurationSyncCount }
         coVerify(exactly = 0) { mockConfigService.reset() }
@@ -98,9 +98,9 @@ internal class ConfigControllerTest: BaseTest() {
 
     @Test
     fun `fetch calls update in manager`() {
-        initSUT()
+        initUnderTest()
         runBlockingTest {
-            sut.fetch()
+            underTest.fetch()
         }
 
         coVerify {
@@ -111,9 +111,9 @@ internal class ConfigControllerTest: BaseTest() {
     @Test
     fun `fetch and apply calls update in manager and saves remote config sync`() {
         coEvery { mockConfigService.fetch(true) } returns true
-        initSUT()
+        initUnderTest()
         runBlockingTest {
-            sut.fetchAndApply()
+            underTest.fetchAndApply()
         }
 
         coVerify {
@@ -127,9 +127,9 @@ internal class ConfigControllerTest: BaseTest() {
     @Test
     fun `fetch and apply calls update in manager but doesnt saves remote config sync if not successful fetch`() {
         coEvery { mockConfigService.fetch(true) } returns false
-        initSUT()
+        initUnderTest()
         runBlockingTest {
-            sut.fetchAndApply()
+            underTest.fetchAndApply()
         }
 
         coVerify {
@@ -142,9 +142,9 @@ internal class ConfigControllerTest: BaseTest() {
 
     @Test
     fun `apply pending calls manager`() = coroutineTest {
-        initSUT()
+        initUnderTest()
         runBlockingTest {
-            sut.applyPending()
+            underTest.applyPending()
         }
 
         coVerify {
@@ -158,9 +158,9 @@ internal class ConfigControllerTest: BaseTest() {
 
     @Test
     fun `resetting config sets require sync to 0 and calls reset`() = coroutineTest {
-        initSUT()
+        initUnderTest()
         runBlockingTest {
-            sut.reset()
+            underTest.reset()
         }
 
         coVerify {
