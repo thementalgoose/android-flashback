@@ -97,7 +97,7 @@ enum class TrackLayout(
     SEPANG("sepang", R.drawable.circuit_sepang),
     SHANGHAI("shanghai", R.drawable.circuit_shanghai),
     SILVERSTONE("silverstone", R.drawable.circuit_silverstone),
-    SILVERSTONE_1997_2009("silverstone", R.drawable.circuit_silverstone, listOf(
+    SILVERSTONE_1997_2009("silverstone", R.drawable.circuit_silverstone_1997_2009, listOf(
         "1997 British Grand Prix",
         "1998 British Grand Prix",
         "1999 British Grand Prix",
@@ -112,25 +112,25 @@ enum class TrackLayout(
         "2008 British Grand Prix",
         "2009 British Grand Prix"
     )),
-    SILVERSTONE_1996("silverstone", R.drawable.circuit_silverstone, listOf(
+    SILVERSTONE_1996("silverstone", R.drawable.circuit_silverstone_1996, listOf(
         "1996 British Grand Prix"
     )),
-    SILVERSTONE_1994_1995("silverstone", R.drawable.circuit_silverstone, listOf(
+    SILVERSTONE_1994_1995("silverstone", R.drawable.circuit_silverstone_1994_1995, listOf(
         "1994 British Grand Prix",
         "1995 British Grand Prix"
     )),
-    SILVERSTONE_1991_1993("silverstone", R.drawable.circuit_silverstone, listOf(
+    SILVERSTONE_1991_1993("silverstone", R.drawable.circuit_silverstone_1991_1993, listOf(
         "1991 British Grand Prix",
         "1992 British Grand Prix",
         "1993 British Grand Prix"
     )),
-    SILVERSTONE_1987_1990("silverstone", R.drawable.circuit_silverstone, listOf(
+    SILVERSTONE_1987_1990("silverstone", R.drawable.circuit_silverstone_1987_1990, listOf(
         "1987 British Grand Prix",
         "1988 British Grand Prix",
         "1989 British Grand Prix",
         "1990 British Grand Prix"
     )),
-    SILVERSTONE_1975_1986("silverstone", R.drawable.circuit_silverstone, listOf(
+    SILVERSTONE_1975_1986("silverstone", R.drawable.circuit_silverstone_1975_1986, listOf(
         "1975 British Grand Prix",
         "1976 British Grand Prix",
         "1977 British Grand Prix",
@@ -144,7 +144,7 @@ enum class TrackLayout(
         "1985 British Grand Prix",
         "1986 British Grand Prix"
     )),
-    SILVERSTONE_1950_1973("silverstone", R.drawable.circuit_silverstone, listOf(
+    SILVERSTONE_1950_1973("silverstone", R.drawable.circuit_silverstone_1950_1973, listOf(
         "1950 British Grand Prix",
         "1951 British Grand Prix",
         "1952 British Grand Prix",
