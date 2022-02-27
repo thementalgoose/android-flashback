@@ -76,6 +76,7 @@
         <entry key="../../../../layout/compose-model-1644946553693.xml" value="0.11204013377926421" />
         <entry key="../../../../layout/custom_preview.xml" value="0.2989583333333333" />
         <entry key="../../Library/Android/sdk/platforms/android-31/data/res/drawable/progress_indeterminate_anim_large_material.xml" value="0.177" />
+        <entry key="ads/src/main/res/layout/admob_native_banner.xml" value="0.17708333333333334" />
         <entry key="app/src/main/res/drawable/app_shortcut_rss.xml" value="0.2222222222222222" />
         <entry key="app/src/main/res/drawable/app_shortcut_search.xml" value="0.2222222222222222" />
         <entry key="app/src/main/res/drawable/ic_close.xml" value="0.3765625" />
@@ -133,6 +134,14 @@
         <entry key="formula1/src/main/res/drawable/circuit_kyalami.xml" value="0.3765625" />
         <entry key="formula1/src/main/res/drawable/circuit_monsanto.xml" value="0.13854166666666667" />
         <entry key="formula1/src/main/res/drawable/circuit_montjuic.xml" value="0.13854166666666667" />
+        <entry key="formula1/src/main/res/drawable/circuit_silverstone.xml" value="0.1855" />
+        <entry key="formula1/src/main/res/drawable/circuit_silverstone_1950_1973.xml" value="0.1855" />
+        <entry key="formula1/src/main/res/drawable/circuit_silverstone_1975_1986.xml" value="0.1855" />
+        <entry key="formula1/src/main/res/drawable/circuit_silverstone_1987_1990.xml" value="0.1855" />
+        <entry key="formula1/src/main/res/drawable/circuit_silverstone_1991_1993.xml" value="0.1855" />
+        <entry key="formula1/src/main/res/drawable/circuit_silverstone_1994_1995.xml" value="0.1855" />
+        <entry key="formula1/src/main/res/drawable/circuit_silverstone_1996.xml" value="0.1855" />
+        <entry key="formula1/src/main/res/drawable/circuit_silverstone_1997_2009.xml" value="0.1855" />
         <entry key="formula1/src/main/res/drawable/circuit_tremblant.xml" value="0.5" />
         <entry key="formula1/src/main/res/drawable/circuit_watkins_glen.xml" value="0.5" />
         <entry key="formula1/src/main/res/drawable/ic_event_type_car_launch.xml" value="0.1085" />
