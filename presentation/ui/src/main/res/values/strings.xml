@@ -20,4 +20,7 @@
     <string name="settings_animation_speed_medium">Medium</string>
     <string name="settings_animation_speed_slow">Slow</string>
 
+    <string name="settings_experimental">Experimental</string>
+    <string name="settings_experimental_description">This feature is in beta, and as such may not be working correctly.</string>
+
 </resources>
