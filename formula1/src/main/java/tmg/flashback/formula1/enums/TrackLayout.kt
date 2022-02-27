@@ -90,7 +90,9 @@ enum class TrackLayout(
     RICARD("ricard", R.drawable.circuit_ricard),
     RIVERSIDE("riverside", R.drawable.circuit_riverside),
     RODRIGUEZ("rodriguez", R.drawable.circuit_rodriguez),
-    SAKHIR("sakhir", R.drawable.circuit_sakhir),
+    SAKHIR("sakhir", R.drawable.circuit_sakhir, listOf(
+        "2020 Sakhir Grand Prix"
+    )),
     SEBRING("sebring", R.drawable.circuit_sebring),
     SEPANG("sepang", R.drawable.circuit_sepang),
     SHANGHAI("shanghai", R.drawable.circuit_shanghai),
