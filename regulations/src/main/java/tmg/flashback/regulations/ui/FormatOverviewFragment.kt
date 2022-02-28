@@ -29,6 +29,10 @@ internal class FormatOverviewFragment: BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        logScreenViewed("Format", mapOf(
+            "season" to (arguments?.getInt(keySeason)?.toString() ?: "null")
+        ))
+
         binding.swipeRefresh.isEnabled = false
 
         adapter = ItemsAdapter(

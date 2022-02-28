@@ -33,20 +33,30 @@ internal class FormatOverviewViewModel: ViewModel(), FormatOverviewViewModelInpu
     private val expandedSections: MutableStateFlow<Set<Int>?> = MutableStateFlow(null)
     private val season: MutableStateFlow<Season?> = MutableStateFlow(null)
 
-    override val items: LiveData<List<Item>> = combine(expandedSections.filterNotNull(), season.filterNotNull()) { sections, season -> Pair(sections, season) }
-        .map { (expandedSection, season) ->
+    override val items: LiveData<List<Item>> = season.filterNotNull()
+        .map { season ->
             val list = mutableListOf<Item>()
             season.sections.forEach { sect ->
-                if (expandedSection.contains(sect.label)) {
                     list.add(Item.Collapsible(sect.label, true))
                     list.addAll(sect.items)
-                } else {
-                    list.add(Item.Collapsible(sect.label, false))
-                }
             }
             return@map list
         }
         .asLiveData(viewModelScope.coroutineContext)
+//    override val items: LiveData<List<Item>> = combine(expandedSections.filterNotNull(), season.filterNotNull()) { sections, season -> Pair(sections, season) }
+//        .map { (expandedSection, season) ->
+//            val list = mutableListOf<Item>()
+//            season.sections.forEach { sect ->
+//                if (expandedSection.contains(sect.label)) {
+//                    list.add(Item.Collapsible(sect.label, true))
+//                    list.addAll(sect.items)
+//                } else {
+//                    list.add(Item.Collapsible(sect.label, false))
+//                }
+//            }
+//            return@map list
+//        }
+//        .asLiveData(viewModelScope.coroutineContext)
 
     val inputs: FormatOverviewViewModelInputs = this
     val outputs: FormatOverviewViewModelOutputs = this

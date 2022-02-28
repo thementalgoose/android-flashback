@@ -11,7 +11,7 @@
 
     <TextView
         android:id="@+id/title"
-        style="@style/Text.Headline.2"
+        style="@style/Text.Title.Strong"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:text="Headline" />
