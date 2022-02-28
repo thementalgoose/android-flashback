@@ -24,17 +24,17 @@ internal class CollapsibleViewHolder(
         this.item = item
 
         binding.title.setText(item.label)
-        binding.arrow.show(item.expanded)
+//        binding.arrow.show(item.expanded)
         when (item.expanded) {
             true -> {
                 binding.title.contentDescription = getString(R.string.ab_section_expanded, getString(item.label))
-                binding.arrow.setImageResource(R.drawable.arrow_down)
-                binding.arrow.visible()
+//                binding.arrow.setImageResource(R.drawable.arrow_down)
+//                binding.arrow.visible()
             }
             false -> {
                 binding.title.contentDescription = getString(R.string.ab_section_collapsed, getString(item.label))
-                binding.arrow.setImageResource(R.drawable.arrow_up)
-                binding.arrow.visible()
+//                binding.arrow.setImageResource(R.drawable.arrow_up)
+//                binding.arrow.visible()
             }
         }
     }

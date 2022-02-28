@@ -5,9 +5,12 @@ import tmg.flashback.regulations.domain.Item
 import tmg.utilities.extensions.ordinalAbbreviation
 import tmg.utilities.models.StringHolder
 
-internal val points_25_10 = listOf(
+internal val points_header = listOf(
     Item.SubHeader(R.string.format_points_title),
-    Item.Text(R.string.format_points_subtitle),
+    Item.Text(R.string.format_points_subtitle)
+)
+
+internal val points_25_10 = listOf(
     Item.ProgressBar(
         label = StringHolder(1.ordinalAbbreviation),
         initial = 0,
@@ -71,8 +74,6 @@ internal val points_25_10 = listOf(
 )
 
 internal val points_10_8 = listOf(
-    Item.SubHeader(R.string.format_points_title),
-    Item.Text(R.string.format_points_subtitle),
     Item.ProgressBar(
         label = StringHolder(1.ordinalAbbreviation),
         initial = 0,
@@ -124,8 +125,6 @@ internal val points_10_8 = listOf(
 )
 
 internal val points_10_6 = listOf(
-    Item.SubHeader(R.string.format_points_title),
-    Item.Text(R.string.format_points_subtitle),
     Item.ProgressBar(
         label = StringHolder(1.ordinalAbbreviation),
         initial = 0,
@@ -165,8 +164,6 @@ internal val points_10_6 = listOf(
 )
 
 internal val points_9_6 = listOf(
-    Item.SubHeader(R.string.format_points_title),
-    Item.Text(R.string.format_points_subtitle),
     Item.ProgressBar(
         label = StringHolder(1.ordinalAbbreviation),
         initial = 0,
@@ -206,8 +203,6 @@ internal val points_9_6 = listOf(
 )
 
 internal val points_8_8 = listOf(
-    Item.SubHeader(R.string.format_points_title),
-    Item.Text(R.string.format_points_subtitle),
     Item.ProgressBar(
         label = StringHolder(1.ordinalAbbreviation),
         initial = 0,
@@ -259,8 +254,6 @@ internal val points_8_8 = listOf(
 )
 
 internal val points_8_6 = listOf(
-    Item.SubHeader(R.string.format_points_title),
-    Item.Text(R.string.format_points_subtitle),
     Item.ProgressBar(
         label = StringHolder(1.ordinalAbbreviation),
         initial = 0,
@@ -300,8 +293,6 @@ internal val points_8_6 = listOf(
 )
 
 internal val points_8_5 = listOf(
-    Item.SubHeader(R.string.format_points_title),
-    Item.Text(R.string.format_points_subtitle),
     Item.ProgressBar(
         label = StringHolder(1.ordinalAbbreviation),
         initial = 0,
@@ -335,8 +326,6 @@ internal val points_8_5 = listOf(
 )
 
 internal val points_3_3 = listOf(
-    Item.SubHeader(R.string.format_points_title),
-    Item.Text(R.string.format_points_subtitle),
     Item.ProgressBar(
         label = StringHolder(1.ordinalAbbreviation),
         initial = 0,
