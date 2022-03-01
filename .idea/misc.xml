@@ -279,6 +279,7 @@
         <entry key="statistics/src/main/res/layout/view_race_race_header.xml" value="0.2526041666666667" />
         <entry key="statistics/src/main/res/layout/view_race_race_podium.xml" value="0.184375" />
         <entry key="statistics/src/main/res/layout/view_race_race_result.xml" value="0.45" />
+        <entry key="statistics/src/main/res/layout/view_shared_message.xml" value="0.26614583333333336" />
         <entry key="statistics/src/main/res/menu/season_list_item.xml" value="0.24895833333333334" />
       </map>
     </option>
