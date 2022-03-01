@@ -5,14 +5,20 @@ import android.net.Uri
 import android.util.Log
 import androidx.annotation.StringRes
 import androidx.recyclerview.widget.RecyclerView
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
+import tmg.flashback.crash_reporting.controllers.CrashController
 import tmg.flashback.statistics.BuildConfig
 import tmg.flashback.statistics.databinding.ViewSharedMessageBinding
 import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.views.getString
+import java.net.MalformedURLException
 
 class MessageViewHolder(
     private val binding: ViewSharedMessageBinding
-): RecyclerView.ViewHolder(binding.root) {
+): RecyclerView.ViewHolder(binding.root), KoinComponent {
+
+    private val crashController: CrashController by inject()
 
     private var messageUrl: String? = null
 
@@ -45,8 +51,12 @@ class MessageViewHolder(
             binding.message.setOnClickListener(null)
         } else {
             binding.message.setOnClickListener {
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(messageUrl))
-                it.context.startActivity(intent)
+                try {
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(messageUrl))
+                    it.context.startActivity(intent)
+                } catch (e: MalformedURLException) {
+                    crashController.logException(e)
+                }
             }
         }
     }
