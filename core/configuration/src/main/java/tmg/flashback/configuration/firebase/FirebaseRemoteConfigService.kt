@@ -19,7 +19,7 @@ class FirebaseRemoteConfigService: RemoteConfigService {
             minimumFetchIntervalInSeconds = if (BuildConfig.DEBUG) {
                 10L // 10s
             } else {
-                7200L // 2h
+                1800L // 30m
             }
         }
         .build()
