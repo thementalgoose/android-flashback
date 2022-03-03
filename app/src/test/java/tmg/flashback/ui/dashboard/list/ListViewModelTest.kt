@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 import org.threeten.bp.Year
 import tmg.flashback.DebugController
 import tmg.flashback.R
-import tmg.flashback.ads.controller.AdsController
+import tmg.flashback.ads.repository.AdsRepository
 import tmg.flashback.ads.repository.model.AdvertConfig
 import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.statistics.controllers.HomeController
@@ -29,7 +29,7 @@ internal class ListViewModelTest: BaseTest() {
     private val mockHomeController: HomeController = mockk(relaxed = true)
     private val mockRssController: RSSController = mockk(relaxed = true)
     private val mockDebugController: DebugController = mockk(relaxed = true)
-    private val mockAdsController: AdsController = mockk(relaxed = true)
+    private val mockAdsRepository: AdsRepository = mockk(relaxed = true)
     private val mockThemeController: ThemeController = mockk(relaxed = true)
     private val mockScheduleController: ScheduleController = mockk(relaxed = true)
 
@@ -42,7 +42,7 @@ internal class ListViewModelTest: BaseTest() {
         every { mockHomeController.defaultSeason } returns 2018
         every { mockHomeController.supportedSeasons } returns List(currentYear - 1949) { it + 1950 }.toSet()
 
-        every { mockAdsController.advertConfig } returns AdvertConfig(onHomeScreen = false)
+        every { mockAdsRepository.advertConfig } returns AdvertConfig(onHomeScreen = false)
 
         every { mockRssController.enabled } returns false
 
@@ -57,7 +57,7 @@ internal class ListViewModelTest: BaseTest() {
             mockHomeController,
             mockRssController,
             mockDebugController,
-            mockAdsController,
+            mockAdsRepository,
             mockThemeController,
             mockScheduleController
         )
@@ -451,7 +451,7 @@ internal class ListViewModelTest: BaseTest() {
 
     @Test
     fun `show ads banner if should show is true`() {
-        every { mockAdsController.advertConfig } returns AdvertConfig(onHomeScreen = true)
+        every { mockAdsRepository.advertConfig } returns AdvertConfig(onHomeScreen = true)
 
         initSUT()
         sut.outputs.list.test {
