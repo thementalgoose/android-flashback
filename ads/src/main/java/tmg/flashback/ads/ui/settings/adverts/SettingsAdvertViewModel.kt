@@ -1,7 +1,7 @@
 package tmg.flashback.ads.ui.settings.adverts
 
 import tmg.flashback.ads.R
-import tmg.flashback.ads.controller.AdsController
+import tmg.flashback.ads.repository.AdsRepository
 import tmg.flashback.ui.settings.SettingsModel
 import tmg.flashback.ui.settings.SettingsViewModel
 
@@ -23,7 +23,7 @@ interface SettingsAdvertViewModelOutputs {
 
 
 class SettingsAdvertViewModel(
-    private val advertController: AdsController
+    private val adsRepository: AdsRepository
 ): SettingsViewModel(), SettingsAdvertViewModelInputs, SettingsAdvertViewModelOutputs {
 
     override val models: List<SettingsModel> get() = mutableListOf<SettingsModel>().apply {
@@ -31,8 +31,8 @@ class SettingsAdvertViewModel(
         add(SettingsModel.SwitchPref(
             title = R.string.settings_help_adverts_title,
             description = R.string.settings_help_adverts_description,
-            getState = { advertController.userConfigAdvertsEnabled },
-            saveState = { advertController.userConfigAdvertsEnabled = it }
+            getState = { adsRepository.userPrefEnabled },
+            saveState = { adsRepository.userPrefEnabled = it }
         ))
     }
 
