@@ -11,7 +11,6 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 import tmg.flashback.configuration.manager.ConfigManager
 import tmg.flashback.prefs.manager.PreferenceManager
-import tmg.flashback.ui.controllers.ThemeControllerTest
 import tmg.flashback.ui.managers.StyleManager
 import tmg.flashback.ui.model.AnimationSpeed
 import tmg.flashback.ui.model.NightMode
