@@ -30,6 +30,7 @@ internal class InitialiseCrashReportingUseCaseTest {
         val appOpenedFirst = LocalDate.of(2021, 1, 1)
         every { mockCrashRepository.isEnabled } returns true
 
+        initUnderTest()
         underTest.initialise(
             deviceUdid = deviceUdid,
             appOpenedCount = appOpenedCount,
@@ -53,6 +54,7 @@ internal class InitialiseCrashReportingUseCaseTest {
         val appOpenedFirst = LocalDate.of(2021, 1, 1)
         every { mockCrashRepository.isEnabled } returns false
 
+        initUnderTest()
         underTest.initialise(
             deviceUdid = deviceUdid,
             appOpenedCount = appOpenedCount,
