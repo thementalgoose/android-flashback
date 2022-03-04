@@ -4,10 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import tmg.flashback.ui.bottomsheet.BottomSheetItem
-import tmg.flashback.ui.controllers.ThemeController
 import tmg.flashback.ui.extensions.icon
 import tmg.flashback.ui.extensions.label
 import tmg.flashback.ui.model.Theme
+import tmg.flashback.ui.repository.ThemeRepository
 import tmg.utilities.lifecycle.DataEvent
 import tmg.utilities.models.Selected
 import tmg.utilities.models.StringHolder
@@ -30,7 +30,7 @@ interface ThemeViewModelOutputs {
 //endregion
 
 class ThemeViewModel(
-    private val themeController: ThemeController
+    private val themeRepository: ThemeRepository
 ): ViewModel(), ThemeViewModelInputs, ThemeViewModelOutputs {
 
     var inputs: ThemeViewModelInputs = this
@@ -46,8 +46,8 @@ class ThemeViewModel(
     //region Inputs
 
     override fun selectTheme(theme: Theme) {
-        val same = themeController.theme == theme
-        themeController.theme = theme
+        val same = themeRepository.theme == theme
+        themeRepository.theme = theme
         updateThemeList()
         themeUpdated.value = DataEvent(Pair(theme, same))
     }
@@ -57,7 +57,7 @@ class ThemeViewModel(
     private fun updateThemeList() {
         themePreferences.value = Theme.values()
             .map {
-                Selected(BottomSheetItem(it.ordinal, it.icon, StringHolder(it.label)), it == themeController.theme)
+                Selected(BottomSheetItem(it.ordinal, it.icon, StringHolder(it.label)), it == themeRepository.theme)
             }
     }
 }

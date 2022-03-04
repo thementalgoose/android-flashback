@@ -12,6 +12,12 @@ class AppStyleManager(
     private val applicationContext: Context,
     private val themeRepository: ThemeRepository
 ): StyleManager {
+
+    override fun getStyleResource() = getStyleResource(
+        theme = themeRepository.theme,
+        nightMode = themeRepository.nightMode
+    )
+
     override fun getStyleResource(theme: Theme, nightMode: NightMode): Int {
         return when (theme) {
             Theme.DEFAULT -> R.style.FlashbackAppTheme_Default

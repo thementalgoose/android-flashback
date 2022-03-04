@@ -20,15 +20,13 @@ internal class ThemeRepositoryTest {
 
     private val mockPreferenceManager: PreferenceManager = mockk(relaxed = true)
     private val mockConfigManager: ConfigManager = mockk(relaxed = true)
-    private val mockStyleManager: StyleManager = mockk(relaxed = true)
 
     private lateinit var underTest: ThemeRepository
 
     private fun initUnderTest() {
         underTest = ThemeRepository(
             mockPreferenceManager,
-            mockConfigManager,
-            mockStyleManager
+            mockConfigManager
         )
     }
 
@@ -156,32 +154,7 @@ internal class ThemeRepositoryTest {
             mockConfigManager.getBoolean(keyMaterialYou)
         }
     }
-
-    @ParameterizedTest
-    @CsvSource(
-        "DEFAULT,DEFAULT",
-        "DEFAULT,DAY",
-        "DEFAULT,NIGHT",
-        "MATERIAL_YOU,DEFAULT",
-        "MATERIAL_YOU,DAY",
-        "MATERIAL_YOU,NIGHT",
-    )
-    fun `themeStyle calls style manager properly`(theme: Theme, nightMode: NightMode) {
-
-        every { mockPreferenceManager.getString(keyTheme) } returns theme.key
-        every { mockPreferenceManager.getString(keyNightMode) } returns nightMode.key
-        every { mockConfigManager.getBoolean(keyMaterialYou) } returns true
-
-        every { mockStyleManager.getStyleResource(theme, nightMode) } returns theme.ordinal * nightMode.ordinal
-
-        initUnderTest()
-        assertEquals(theme.ordinal * nightMode.ordinal, underTest.themeStyle)
-
-        verify {
-            mockStyleManager.getStyleResource(theme, nightMode)
-        }
-    }
-
+    
     //endregion
 
     companion object {

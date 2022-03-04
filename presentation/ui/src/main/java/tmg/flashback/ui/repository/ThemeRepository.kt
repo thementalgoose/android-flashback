@@ -1,11 +1,7 @@
 package tmg.flashback.ui.repository
 
-import androidx.annotation.StyleRes
-import androidx.appcompat.app.AppCompatDelegate
 import tmg.flashback.configuration.manager.ConfigManager
 import tmg.flashback.prefs.manager.PreferenceManager
-import tmg.flashback.ui.controllers.ThemeController
-import tmg.flashback.ui.managers.StyleManager
 import tmg.flashback.ui.model.AnimationSpeed
 import tmg.flashback.ui.model.NightMode
 import tmg.flashback.ui.model.Theme
@@ -13,8 +9,7 @@ import tmg.utilities.extensions.toEnum
 
 class ThemeRepository(
     private val preferenceManager: PreferenceManager,
-    private val configManager: ConfigManager,
-    private val styleManager: StyleManager
+    private val configManager: ConfigManager
 ) {
     companion object {
         private const val keyNightMode: String = "THEME" // Used to be theme pref
@@ -57,10 +52,5 @@ class ThemeRepository(
      */
     val enableThemePicker: Boolean by lazy {
         return@lazy configManager.getBoolean(keyMaterialYou)
-    }
-
-    @get:StyleRes
-    val themeStyle: Int by lazy {
-        styleManager.getStyleResource(theme, nightMode)
     }
 }
