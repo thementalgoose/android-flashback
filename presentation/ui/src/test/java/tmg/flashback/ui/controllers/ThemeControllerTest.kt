@@ -45,65 +45,6 @@ internal class ThemeControllerTest: BaseTest() {
         sut = ThemeController(mockContext, mockPreferenceManager, mockConfigManager, mockStyleManager)
     }
 
-    @Test
-    fun `saving animation speed writes correct value to preference manager`() {
-        initSUT()
-        sut.animationSpeed = AnimationSpeed.QUICK
-        verify {
-            mockPreferenceManager.save(keyAnimationSpeed, AnimationSpeed.QUICK.key)
-        }
-    }
-
-    @Test
-    fun `retrieving animation speed queries preference manager`() {
-        every { mockPreferenceManager.getString(any()) } returns AnimationSpeed.MEDIUM.key
-        initSUT()
-        assertEquals(AnimationSpeed.MEDIUM, sut.animationSpeed)
-        verify {
-            mockPreferenceManager.getString(keyAnimationSpeed, null)
-        }
-    }
-
-    @Test
-    fun `retrieving animation speed defaults to MEDIUM when no value found in shared preferences`() {
-        every { mockPreferenceManager.getString(any()) } returns null
-        initSUT()
-        assertEquals(AnimationSpeed.MEDIUM, sut.animationSpeed)
-        verify {
-            mockPreferenceManager.getString(keyAnimationSpeed, null)
-        }
-    }
-
-    @Test
-    fun `saving night mode writes correct value to preference manager`() {
-        initSUT()
-        sut.nightMode = NightMode.DAY
-        mockkStatic(AppCompatDelegate::class)
-        verify {
-            mockPreferenceManager.save(keyNightMode, NightMode.DAY.key)
-        }
-    }
-
-    @Test
-    fun `retrieving night mode queries preference manager`() {
-        every { mockPreferenceManager.getString(any()) } returns NightMode.DAY.key
-        initSUT()
-        assertEquals(NightMode.DAY, sut.nightMode)
-        verify {
-            mockPreferenceManager.getString(keyNightMode, null)
-        }
-    }
-
-    @Test
-    fun `retrieving night mode defaults to DEFAULT when no value found in shared preferences`() {
-        every { mockPreferenceManager.getString(any()) } returns null
-        initSUT()
-        assertEquals(NightMode.DEFAULT, sut.nightMode)
-        verify {
-            mockPreferenceManager.getString(keyNightMode, null)
-        }
-    }
-
     @ParameterizedTest(name = "With nightMode pref {0} and is day mode {1} then is day mode returns {2}")
     @CsvSource(
         "DEFAULT,true,true",
@@ -119,48 +60,6 @@ internal class ThemeControllerTest: BaseTest() {
         initSUT(defaultDayModeToo = isInDayMode)
 
         assertEquals(expected, sut.isDayMode)
-    }
-
-    @Test
-    fun `saving theme writes correct value to preference manager`() {
-        every { mockConfigManager.getBoolean(keyMaterialYou) } returns true
-        initSUT()
-        sut.theme = Theme.MATERIAL_YOU
-        verify {
-            mockPreferenceManager.save(keyTheme, Theme.MATERIAL_YOU.key)
-        }
-    }
-
-    @Test
-    fun `retrieving theme queries preference manager`() {
-        every { mockPreferenceManager.getString(any()) } returns Theme.MATERIAL_YOU.key
-        every { mockConfigManager.getBoolean(keyMaterialYou) } returns true
-        initSUT()
-        assertEquals(Theme.MATERIAL_YOU, sut.theme)
-        verify {
-            mockPreferenceManager.getString(keyTheme, null)
-        }
-    }
-
-    @Test
-    fun `retrieving theme defaults to DEFAULT when no value found in shared preferences`() {
-        every { mockPreferenceManager.getString(any()) } returns null
-        every { mockConfigManager.getBoolean(keyMaterialYou) } returns true
-        initSUT()
-        assertEquals(Theme.DEFAULT, sut.theme)
-        verify {
-            mockPreferenceManager.getString(keyTheme, null)
-        }
-    }
-
-    @Test
-    fun `retrieving theme with theme picker disabled just returns default`() {
-        every { mockConfigManager.getBoolean(keyMaterialYou) } returns false
-        initSUT()
-        assertEquals(Theme.DEFAULT, sut.theme)
-        verify(exactly = 0) {
-            mockPreferenceManager.getString(any())
-        }
     }
 
 

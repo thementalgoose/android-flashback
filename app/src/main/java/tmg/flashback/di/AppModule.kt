@@ -38,7 +38,7 @@ val appModule = module {
     single { DebugController() }
 
     single<PreferenceManager> { AppPreferencesManager(get()) }
-    single<StyleManager> { AppStyleManager() }
+    single<StyleManager> { AppStyleManager(get(), get()) }
 
     single<NavigationProvider> { AppNavigationProvider(get(), get(), get(), get()) }
     single<NotificationNavigationProvider> { AppNavigationProvider(get(), get(), get(), get()) }
