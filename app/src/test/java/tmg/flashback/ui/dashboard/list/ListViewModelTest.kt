@@ -42,7 +42,12 @@ internal class ListViewModelTest: BaseTest() {
         every { mockHomeController.defaultSeason } returns 2018
         every { mockHomeController.supportedSeasons } returns List(currentYear - 1949) { it + 1950 }.toSet()
 
-        every { mockAdsRepository.advertConfig } returns AdvertConfig(onHomeScreen = false)
+        every { mockAdsRepository.advertConfig } returns AdvertConfig(
+            onHomeScreen = false,
+            onRaceScreen = false,
+            onSearch = false,
+            onRss = false
+        )
 
         every { mockRssController.enabled } returns false
 
@@ -284,7 +289,6 @@ internal class ListViewModelTest: BaseTest() {
         val favourites = setOf(2017, 2012, 2015)
         val expected = expectedList(favourites)
 
-
         every { mockHomeController.favouriteSeasons } returns favourites
 
         initSUT()
@@ -467,7 +471,7 @@ internal class ListViewModelTest: BaseTest() {
         favourites: Set<Int> = emptySet(),
         showFavourites: Boolean = true,
         showAll: Boolean = true,
-        darkModeChecked: Boolean = true
+        darkModeChecked: Boolean = false
     ): List<ListItem> {
         val expected = mutableListOf<ListItem>()
         expected.add(ListItem.Hero)
