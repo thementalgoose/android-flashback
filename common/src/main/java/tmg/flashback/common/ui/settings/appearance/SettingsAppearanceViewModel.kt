@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.ui.R
-import tmg.flashback.ui.controllers.ThemeController
+import tmg.flashback.ui.repository.ThemeRepository
 import tmg.flashback.ui.settings.SettingsModel
 import tmg.flashback.ui.settings.SettingsViewModel
 import tmg.utilities.lifecycle.Event
@@ -27,7 +27,7 @@ interface SettingsAppearanceViewModelOutputs {
 //endregion
 
 class SettingsAppearanceViewModel(
-    private val themeController: ThemeController,
+    private val themeRepository: ThemeRepository,
     private val buildConfig: BuildConfigManager
 ): SettingsViewModel(), SettingsAppearanceViewModelInputs,
     SettingsAppearanceViewModelOutputs {
@@ -35,7 +35,7 @@ class SettingsAppearanceViewModel(
     override val models: List<SettingsModel> = mutableListOf<SettingsModel>().apply {
         add(SettingsModel.Header(R.string.settings_theme_title))
 
-        if (themeController.enableThemePicker && buildConfig.isMonetThemeSupported) {
+        if (themeRepository.enableThemePicker && buildConfig.isMonetThemeSupported) {
             add(SettingsModel.Pref(
                 title = R.string.settings_theme_theme_title,
                 description = R.string.settings_theme_theme_description,

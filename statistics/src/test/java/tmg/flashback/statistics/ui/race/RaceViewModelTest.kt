@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Assertions.fail
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.threeten.bp.LocalDate
-import tmg.flashback.ads.controller.AdsController
+import tmg.flashback.ads.repository.AdsRepository
 import tmg.flashback.ads.repository.model.AdvertConfig
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.formula1.model.*
@@ -22,8 +22,8 @@ import tmg.flashback.statistics.ui.race.RaceDisplayType.*
 import tmg.flashback.statistics.ui.race_old.*
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
-import tmg.flashback.ui.controllers.ThemeController
 import tmg.flashback.ui.model.AnimationSpeed
+import tmg.flashback.ui.repository.ThemeRepository
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertDataEventValue
 import tmg.testutils.livedata.assertListMatchesItem
@@ -34,8 +34,8 @@ internal class RaceViewModelTest: BaseTest() {
 
     private val mockRaceRepository: RaceRepository = mockk(relaxed = true)
     private val mockRaceController: RaceController = mockk(relaxed = true)
-    private val mockThemeController: ThemeController = mockk(relaxed = true)
-    private val mockAdsController: AdsController = mockk(relaxed = true)
+    private val mockThemeRepository: ThemeRepository = mockk(relaxed = true)
+    private val mockAdsRepository: AdsRepository = mockk(relaxed = true)
     private val mockConnectivityManager: NetworkConnectivityManager = mockk(relaxed = true)
 
     private lateinit var sut: RaceViewModel
@@ -44,9 +44,9 @@ internal class RaceViewModelTest: BaseTest() {
         sut = RaceViewModel(
             mockRaceRepository,
             mockRaceController,
-            mockThemeController,
+            mockThemeRepository,
             mockConnectivityManager,
-            mockAdsController,
+            mockAdsRepository,
             ioDispatcher = coroutineScope.testDispatcher
         )
     }
@@ -57,8 +57,8 @@ internal class RaceViewModelTest: BaseTest() {
         coEvery { mockRaceRepository.shouldSyncRace(any(), any()) } returns false
         coEvery { mockRaceRepository.getRace(any(), any()) } returns flow { emit(raceModel) }
         coEvery { mockRaceRepository.fetchRaces(any()) } returns true
-        every { mockThemeController.animationSpeed } returns AnimationSpeed.QUICK
-        every { mockAdsController.advertConfig } returns AdvertConfig(onRaceScreen = false)
+        every { mockThemeRepository.animationSpeed } returns AnimationSpeed.QUICK
+        every { mockAdsRepository.advertConfig } returns AdvertConfig(onRaceScreen = false)
     }
 
     //region Race loading states
@@ -194,7 +194,7 @@ internal class RaceViewModelTest: BaseTest() {
 
     @Test
     fun `race type with ads enabled shows ad`() = coroutineTest {
-        every { mockAdsController.advertConfig } returns AdvertConfig(onRaceScreen = true)
+        every { mockAdsRepository.advertConfig } returns AdvertConfig(onRaceScreen = true)
         initSUT()
         runBlockingTest {
             sut.inputs.initialise(2020, 1)
@@ -235,7 +235,7 @@ internal class RaceViewModelTest: BaseTest() {
 
     @Test
     fun `qualifying type with ads enabled shows ad`() = coroutineTest {
-        every { mockAdsController.advertConfig } returns AdvertConfig(onRaceScreen = true)
+        every { mockAdsRepository.advertConfig } returns AdvertConfig(onRaceScreen = true)
         initSUT()
         runBlockingTest {
             sut.inputs.initialise(2020, 1)
@@ -278,7 +278,7 @@ internal class RaceViewModelTest: BaseTest() {
 
     @Test
     fun `constructors type with ads enabled shows ad`() = coroutineTest {
-        every { mockAdsController.advertConfig } returns AdvertConfig(onRaceScreen = true)
+        every { mockAdsRepository.advertConfig } returns AdvertConfig(onRaceScreen = true)
         initSUT()
         runBlockingTest {
             sut.inputs.initialise(2020, 1)

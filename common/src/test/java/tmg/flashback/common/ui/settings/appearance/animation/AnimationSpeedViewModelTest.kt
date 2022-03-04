@@ -6,10 +6,10 @@ import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.ui.bottomsheet.BottomSheetItem
-import tmg.flashback.ui.controllers.ThemeController
 import tmg.flashback.ui.extensions.icon
 import tmg.flashback.ui.extensions.label
 import tmg.flashback.ui.model.AnimationSpeed
+import tmg.flashback.ui.repository.ThemeRepository
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertEventFired
 import tmg.testutils.livedata.test
@@ -18,17 +18,17 @@ import tmg.utilities.models.StringHolder
 
 internal class AnimationSpeedViewModelTest: BaseTest() {
 
-    private val mockAppearanceController: ThemeController = mockk(relaxed = true)
+    private val mockThemeRepository: ThemeRepository = mockk(relaxed = true)
 
     private lateinit var sut: AnimationSpeedViewModel
 
     private fun initSUT() {
-        sut = AnimationSpeedViewModel(mockAppearanceController)
+        sut = AnimationSpeedViewModel(mockThemeRepository)
     }
 
     @BeforeEach
     internal fun setUp() {
-        every { mockAppearanceController.animationSpeed } returns AnimationSpeed.MEDIUM
+        every { mockThemeRepository.animationSpeed } returns AnimationSpeed.MEDIUM
     }
 
     //region Animation Speed
@@ -51,7 +51,7 @@ internal class AnimationSpeedViewModelTest: BaseTest() {
         initSUT()
         sut.inputs.selectAnimationSpeed(AnimationSpeed.QUICK)
         verify {
-            mockAppearanceController.animationSpeed = AnimationSpeed.QUICK
+            mockThemeRepository.animationSpeed = AnimationSpeed.QUICK
         }
     }
 

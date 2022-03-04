@@ -21,8 +21,8 @@ import tmg.flashback.statistics.repo.repository.CacheRepository
 import tmg.flashback.statistics.repository.models.Banner
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
-import tmg.flashback.ui.controllers.ThemeController
 import tmg.flashback.ui.model.AnimationSpeed
+import tmg.flashback.ui.repository.ThemeRepository
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertDataEventValue
 import tmg.testutils.livedata.assertListMatchesItem
@@ -38,7 +38,7 @@ internal class SeasonViewModelTest: BaseTest() {
     private val mockOverviewRepository: OverviewRepository = mockk(relaxed = true)
     private val mockSeasonRepository: SeasonRepository = mockk(relaxed = true)
     private val mockAnalyticsManager: AnalyticsManager = mockk(relaxed = true)
-    private val mockThemeController: ThemeController = mockk(relaxed = true)
+    private val mockThemeRepository: ThemeRepository = mockk(relaxed = true)
     private val mockCacheRepository: CacheRepository = mockk(relaxed = true)
 
     private lateinit var sut: SeasonViewModel
@@ -52,7 +52,7 @@ internal class SeasonViewModelTest: BaseTest() {
             mockOverviewRepository,
             mockSeasonRepository,
             mockAnalyticsManager,
-            mockThemeController,
+            mockThemeRepository,
             mockCacheRepository,
             ioDispatcher = coroutineScope.testDispatcher
         )
@@ -66,7 +66,7 @@ internal class SeasonViewModelTest: BaseTest() {
         every { mockHomeController.dashboardDefaultToSchedule } returns true
         every { mockHomeController.defaultSeason } returns Year.now().value
         every { mockHomeController.serverDefaultSeason } returns Year.now().value
-        every { mockThemeController.animationSpeed } returns AnimationSpeed.QUICK
+        every { mockThemeRepository.animationSpeed } returns AnimationSpeed.QUICK
         coEvery { mockEventsRepository.getEvents(any()) } returns flow { emit(listOf(Event.model())) }
         coEvery { mockRaceRepository.shouldSyncRace(any()) } returns false
         coEvery { mockOverviewRepository.fetchOverview(any()) } returns true

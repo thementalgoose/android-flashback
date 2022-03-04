@@ -21,59 +21,6 @@ internal class CrashControllerTest {
         underTest = CrashController(mockCrashRepository, mockCrashService)
     }
 
-    //region Crash reporting enabled
-
-    @Test
-    fun `crash reporting enabled`() {
-        every { mockCrashRepository.isEnabled } returns true
-        initUnderTest()
-
-        Assertions.assertTrue(underTest.enabled)
-        verify { mockCrashRepository.isEnabled }
-    }
-
-    @Test
-    fun `crash reporting disabled`() {
-        every { mockCrashRepository.isEnabled } returns false
-        initUnderTest()
-
-        Assertions.assertFalse(underTest.enabled)
-        verify { mockCrashRepository.isEnabled }
-    }
-
-    @Test
-    fun `crash reporting update saves in prefs`() {
-
-        initUnderTest()
-
-        underTest.enabled = true
-        verify { mockCrashRepository.isEnabled = true }
-    }
-
-    //endregion
-
-    //region Initialisation
-
-    @Test
-    fun `initialise sends all data to firebase`() {
-        val now = LocalDate.now()
-        val expectedDate = LocalDate.now().format(DateTimeFormatter.ofPattern("dd MMM yyyy"))
-        every { mockCrashRepository.isEnabled } returns true
-
-        initUnderTest()
-        underTest.initialise(
-            deviceUdid = "test-udid",
-            appOpenedCount = 1,
-            appFirstOpened = now
-        )
-
-        verify {
-            mockCrashService.initialise(true,  "test-udid", expectedDate, 1)
-        }
-    }
-
-    //endregion
-
     //region Logging
 
     @Test
@@ -122,7 +69,7 @@ internal class CrashControllerTest {
 
         val exception = RuntimeException()
         initUnderTest()
-        underTest.logError(exception, "msg")
+        underTest.logException(exception, "msg")
 
         verify { mockCrashService.logException(exception, "msg") }
     }
@@ -133,7 +80,7 @@ internal class CrashControllerTest {
 
         val exception = RuntimeException()
         initUnderTest()
-        underTest.logError(exception, "msg")
+        underTest.logException(exception, "msg")
 
         verify(exactly = 0) { mockCrashService.logException(exception, "msg") }
     }

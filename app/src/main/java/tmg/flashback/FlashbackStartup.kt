@@ -7,10 +7,12 @@ import com.jakewharton.threetenabp.AndroidThreeTen
 import com.linkedin.android.shaky.EmailShakeDelegate
 import com.linkedin.android.shaky.Shaky
 import kotlinx.coroutines.*
-import tmg.flashback.ads.controller.AdsController
+import tmg.flashback.ads.usecases.InitialiseAdsUseCase
 import tmg.flashback.analytics.UserProperty.*
 import tmg.flashback.analytics.manager.AnalyticsManager
 import tmg.flashback.crash_reporting.controllers.CrashController
+import tmg.flashback.crash_reporting.repository.CrashRepository
+import tmg.flashback.crash_reporting.usecases.InitialiseCrashReportingUseCase
 import tmg.flashback.device.controllers.DeviceController
 import tmg.flashback.managers.widgets.WidgetManager
 import tmg.flashback.notifications.controllers.NotificationController
@@ -18,8 +20,8 @@ import tmg.flashback.statistics.controllers.ScheduleController
 import tmg.flashback.statistics.extensions.updateAllWidgets
 import tmg.flashback.statistics.repository.models.NotificationChannel
 import tmg.flashback.statistics.workmanager.WorkerProvider
-import tmg.flashback.ui.controllers.ThemeController
 import tmg.flashback.ui.model.NightMode
+import tmg.flashback.ui.repository.ThemeRepository
 import tmg.utilities.extensions.isInDayMode
 
 /**
@@ -29,14 +31,15 @@ import tmg.utilities.extensions.isInDayMode
  */
 class FlashbackStartup(
     private val deviceController: DeviceController,
-    private val crashController: CrashController,
+    private val crashRepository: CrashRepository,
+    private val initialiseCrashReportingUseCase: InitialiseCrashReportingUseCase,
     private val widgetManager: WidgetManager,
     private val scheduleController: ScheduleController,
-    private val themeController: ThemeController,
+    private val themeRepository: ThemeRepository,
     private val analyticsManager: AnalyticsManager,
     private val notificationController: NotificationController,
     private val workerProvider: WorkerProvider,
-    private val adsController: AdsController
+    private val initialiseAdsUseCase: InitialiseAdsUseCase
 ) {
     fun startup(application: FlashbackApplication) {
 
@@ -44,14 +47,14 @@ class FlashbackStartup(
         AndroidThreeTen.init(application)
 
         // Theming
-        when (themeController.nightMode) {
+        when (themeRepository.nightMode) {
             NightMode.DEFAULT -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
             NightMode.DAY -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             NightMode.NIGHT -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         }
 
         // Shake to report a bug
-        if (crashController.shakeToReport) {
+        if (crashRepository.shakeToReport) {
             Log.i("Startup", "Enabling shake to report")
 
             Shaky.with(application, object : EmailShakeDelegate("thementalgoose@gmail.com") {
@@ -64,17 +67,14 @@ class FlashbackStartup(
         deviceController.appFirstBoot
 
         // Crash Reporting
-        crashController.initialise(
+        initialiseCrashReportingUseCase.initialise(
             deviceUdid = deviceController.deviceUdid,
             appOpenedCount = deviceController.appOpenedCount,
             appFirstOpened = deviceController.appFirstBoot
         )
 
         // Adverts
-        if (adsController.areAdvertsEnabled) {
-            adsController.initialise(application)
-        }
-
+        initialiseAdsUseCase.initialise()
 
         //region Notifications Legacy: Remove these existing channels which were previously used for remote notifications
         notificationController.deleteNotificationChannel("race")
@@ -109,7 +109,7 @@ class FlashbackStartup(
         analyticsManager.setUserProperty(OS_VERSION, Build.VERSION.SDK_INT.toString())
         analyticsManager.setUserProperty(APP_VERSION, BuildConfig.VERSION_NAME)
         analyticsManager.setUserProperty(WIDGET_USAGE, if (widgetManager.hasWidgets) "true" else "false")
-        analyticsManager.setUserProperty(DEVICE_THEME, when (themeController.nightMode) {
+        analyticsManager.setUserProperty(DEVICE_THEME, when (themeRepository.nightMode) {
             NightMode.DAY -> "day"
             NightMode.NIGHT -> "night"
             NightMode.DEFAULT -> if (application.isInDayMode()) "day (default)" else "night (default)"

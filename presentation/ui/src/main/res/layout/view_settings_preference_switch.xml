@@ -6,8 +6,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:clickable="true"
+    android:clipToPadding="false"
     android:focusable="true"
-    android:foreground="?attr/selectableItemBackground">
+    android:foreground="?attr/selectableItemBackground"
+    android:paddingBottom="@dimen/paddingSmall">
 
     <TextView
         android:id="@+id/tvTitle"
@@ -30,19 +32,35 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/paddingMedium"
         android:layout_marginTop="@dimen/paddingXSmall"
-        android:layout_marginBottom="@dimen/paddingSmall"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/tvTitle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvTitle"
         tools:text="Preference" />
 
+    <TextView
+        android:id="@+id/experimental"
+        style="@style/Text.Caption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/paddingSmall"
+        android:layout_marginTop="2dp"
+        android:background="@drawable/background_pill"
+        android:paddingStart="@dimen/paddingSmall"
+        android:paddingTop="2dp"
+        android:paddingEnd="@dimen/paddingSmall"
+        android:paddingBottom="2dp"
+        android:text="@string/settings_experimental"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvDescription"
+        tools:visibility="visible" />
+
     <CheckBox
-        android:buttonTint="?attr/contentSecondary"
         android:id="@+id/checkbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
+        android:buttonTint="?attr/contentSecondary"
         android:clickable="false"
         app:layout_constraintBottom_toBottomOf="@id/tvDescription"
         app:layout_constraintEnd_toEndOf="parent"

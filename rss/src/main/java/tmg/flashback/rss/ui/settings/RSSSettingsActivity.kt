@@ -65,10 +65,6 @@ class RSSSettingsActivity : BaseActivity(), NavController.OnDestinationChangedLi
             R.id.rssSettingsFragment -> updateTitle(R.string.settings_rss_title)
             R.id.rssSettingsConfigureFragment -> updateTitle(R.string.settings_rss_configure)
         }
-        swipeDismissLock = when (initialScreen) {
-            SETTINGS -> destination.id == R.id.rssSettingsConfigureFragment
-            CONFIGURE -> false
-        }
     }
 
     //endregion

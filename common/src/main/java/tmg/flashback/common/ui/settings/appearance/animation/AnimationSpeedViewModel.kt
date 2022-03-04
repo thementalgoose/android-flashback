@@ -4,10 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import tmg.flashback.ui.bottomsheet.BottomSheetItem
-import tmg.flashback.ui.controllers.ThemeController
 import tmg.flashback.ui.extensions.icon
 import tmg.flashback.ui.extensions.label
 import tmg.flashback.ui.model.AnimationSpeed
+import tmg.flashback.ui.repository.ThemeRepository
 import tmg.utilities.lifecycle.Event
 import tmg.utilities.models.Selected
 import tmg.utilities.models.StringHolder
@@ -32,7 +32,7 @@ interface AnimationSpeedViewModelOutputs {
 
 
 class AnimationSpeedViewModel(
-        private val themeController: ThemeController
+        private val themeRepository: ThemeRepository
 ): ViewModel(), AnimationSpeedViewModelInputs, AnimationSpeedViewModelOutputs {
 
     var inputs: AnimationSpeedViewModelInputs = this
@@ -48,7 +48,7 @@ class AnimationSpeedViewModel(
     //region Inputs
 
     override fun selectAnimationSpeed(animationSpeed: AnimationSpeed) {
-        themeController.animationSpeed = animationSpeed
+        themeRepository.animationSpeed = animationSpeed
         updateAnimationList()
         animationSpeedUpdated.value = Event()
     }
@@ -58,7 +58,7 @@ class AnimationSpeedViewModel(
     private fun updateAnimationList() {
         animationSpeedPreference.value = AnimationSpeed.values()
                 .map {
-                    Selected(BottomSheetItem(it.ordinal, it.icon, StringHolder(it.label)), it == themeController.animationSpeed)
+                    Selected(BottomSheetItem(it.ordinal, it.icon, StringHolder(it.label)), it == themeRepository.animationSpeed)
                 }
     }
 }

@@ -8,7 +8,7 @@ import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import tmg.flashback.ads.controller.AdsController
+import tmg.flashback.ads.repository.AdsRepository
 import tmg.flashback.ads.repository.model.AdvertConfig
 import tmg.flashback.formula1.model.*
 import tmg.flashback.statistics.repo.CircuitRepository
@@ -29,7 +29,7 @@ internal class SearchViewModelTest: BaseTest() {
     private val mockConstructorsRepository: ConstructorRepository = mockk(relaxed = true)
     private val mockDriversRepository: DriverRepository = mockk(relaxed = true)
     private val mockOverviewRepository: OverviewRepository = mockk(relaxed = true)
-    private val mockAdsController: AdsController = mockk(relaxed = true)
+    private val mockAdsRepository: AdsRepository = mockk(relaxed = true)
 
     private lateinit var sut: SearchViewModel
 
@@ -39,14 +39,14 @@ internal class SearchViewModelTest: BaseTest() {
             mockConstructorsRepository,
             mockCircuitRepository,
             mockOverviewRepository,
-            mockAdsController,
+            mockAdsRepository,
             ioDispatcher = coroutineScope.testDispatcher
         )
     }
 
     @BeforeEach
     internal fun setUp() {
-        every { mockAdsController.advertConfig } returns AdvertConfig(onSearch = true)
+        every { mockAdsRepository.advertConfig } returns AdvertConfig(onSearch = true)
         every { mockCircuitRepository.getCircuits() } returns flow {
             emit(listOf(Circuit.model()))
         }
@@ -65,7 +65,7 @@ internal class SearchViewModelTest: BaseTest() {
 
     @Test
     fun `search hides adverts if toggle is off`() {
-        every { mockAdsController.advertConfig } returns AdvertConfig(onSearch = false)
+        every { mockAdsRepository.advertConfig } returns AdvertConfig(onSearch = false)
         initSUT()
         sut.outputs.results.test {
             assertListDoesNotMatchItem { it is SearchItem.Advert }

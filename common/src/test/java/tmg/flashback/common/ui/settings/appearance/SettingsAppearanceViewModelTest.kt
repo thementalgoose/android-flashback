@@ -8,31 +8,31 @@ import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.testutils.assertExpectedOrder
 import tmg.flashback.testutils.findPref
 import tmg.flashback.ui.R
-import tmg.flashback.ui.controllers.ThemeController
+import tmg.flashback.ui.repository.ThemeRepository
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertEventFired
 import tmg.testutils.livedata.test
 
 internal class SettingsAppearanceViewModelTest: BaseTest() {
 
-    private val mockThemeController: ThemeController = mockk()
+    private val mockThemeRepository: ThemeRepository = mockk()
     private val mockBuildConfigManager: BuildConfigManager = mockk()
 
     private lateinit var sut: SettingsAppearanceViewModel
 
     private fun initSUT() {
-        sut = SettingsAppearanceViewModel(mockThemeController, mockBuildConfigManager)
+        sut = SettingsAppearanceViewModel(mockThemeRepository, mockBuildConfigManager)
     }
 
     @BeforeEach
     internal fun setUp() {
-        every { mockThemeController.enableThemePicker } returns true
+        every { mockThemeRepository.enableThemePicker } returns true
         every { mockBuildConfigManager.isMonetThemeSupported } returns true
     }
 
     @Test
     fun `initial model list is expected`() {
-        every { mockThemeController.enableThemePicker } returns true
+        every { mockThemeRepository.enableThemePicker } returns true
         every { mockBuildConfigManager.isMonetThemeSupported } returns true
 
         initSUT()
@@ -48,7 +48,7 @@ internal class SettingsAppearanceViewModelTest: BaseTest() {
 
     @Test
     fun `initial model list is expected with enable theme picker off`() {
-        every { mockThemeController.enableThemePicker } returns false
+        every { mockThemeRepository.enableThemePicker } returns false
 
         initSUT()
         val expected = listOf(

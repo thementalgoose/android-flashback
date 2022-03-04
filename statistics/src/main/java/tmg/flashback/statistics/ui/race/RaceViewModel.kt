@@ -6,7 +6,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import org.threeten.bp.LocalDate
-import tmg.flashback.ads.controller.AdsController
+import tmg.flashback.ads.repository.AdsRepository
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.formula1.constants.Formula1
 import tmg.flashback.formula1.model.*
@@ -17,7 +17,7 @@ import tmg.flashback.statistics.repo.RaceRepository
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
 import tmg.flashback.statistics.ui.util.SeasonRound
-import tmg.flashback.ui.controllers.ThemeController
+import tmg.flashback.ui.repository.ThemeRepository
 import tmg.utilities.extensions.combinePair
 import tmg.utilities.lifecycle.DataEvent
 
@@ -52,9 +52,9 @@ interface RaceViewModelOutputs {
 class RaceViewModel(
     private val raceRepository: RaceRepository,
     private val raceController: RaceController,
-    private val themeController: ThemeController,
+    private val themeRepository: ThemeRepository,
     private val networkConnectivityManager: NetworkConnectivityManager,
-    private val adsController: AdsController,
+    private val adsRepository: AdsRepository,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), RaceViewModelInputs, RaceViewModelOutputs {
 
@@ -125,7 +125,7 @@ class RaceViewModel(
                                         .constructorStandings
                                         .map {
                                             val drivers: List<Pair<Driver, Double>> = getDriverFromConstructor(race, it.constructor.id)
-                                            RaceItem.Constructor(it.constructor, it.points, drivers, themeController.animationSpeed, race.constructorStandings.maxByOrNull { it.points }?.points ?: 50.0)
+                                            RaceItem.Constructor(it.constructor, it.points, drivers, themeRepository.animationSpeed, race.constructorStandings.maxByOrNull { it.points }?.points ?: 50.0)
                                         }
                                         .sortedByDescending {
                                             it.points
@@ -263,7 +263,7 @@ class RaceViewModel(
                     schedule = schedule
                 ))
             }
-            else if (adsController.advertConfig.onRaceScreen) {
+            else if (adsRepository.advertConfig.onRaceScreen) {
                 add(RaceItem.Advert)
             }
         }
