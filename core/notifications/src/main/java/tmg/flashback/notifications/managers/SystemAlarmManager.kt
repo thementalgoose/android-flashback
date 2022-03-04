@@ -31,7 +31,7 @@ class SystemAlarmManager(
         requestTimestamp: LocalDateTime
     ) {
         val alarmManager: AlarmManager = alarmManager ?: run {
-            crashController.logError(NullPointerException("Alarm Manager null when scheduling alarm"), "Alarm Manager null when scheduling alarm")
+            crashController.logException(NullPointerException("Alarm Manager null when scheduling alarm"), "Alarm Manager null when scheduling alarm")
             return
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
@@ -56,7 +56,7 @@ class SystemAlarmManager(
     fun cancel(requestCode: Int) {
 
         val alarmManager: AlarmManager = alarmManager ?: run {
-            crashController.logError(NullPointerException("Alarm Manager null when cancelling alarm"), "Alarm Manager null when cancelling alarm")
+            crashController.logException(NullPointerException("Alarm Manager null when cancelling alarm"), "Alarm Manager null when cancelling alarm")
             return
         }
 
