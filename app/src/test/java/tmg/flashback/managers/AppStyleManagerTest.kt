@@ -71,6 +71,26 @@ internal class AppStyleManagerTest {
         assertEquals(expected, underTest.isDayMode)
     }
 
+    @ParameterizedTest
+    @CsvSource(
+        "DEFAULT,DEFAULT",
+        "DEFAULT,DAY",
+        "DEFAULT,NIGHT",
+        "MATERIAL_YOU,DEFAULT",
+        "MATERIAL_YOU,DAY",
+        "MATERIAL_YOU,NIGHT",
+    )
+    fun `themeStyle calls style manager properly`(theme: Theme, nightMode: NightMode) {
+
+        every { mockThemeRepository.nightMode } returns nightMode
+        every { mockThemeRepository.theme } returns theme
+
+        every { mockThemeRepository.enableThemePicker } returns true
+
+        initUnderTest()
+        assertEquals(theme.ordinal * nightMode.ordinal, underTest.getStyleResource())
+    }
+
     private fun mockIsInDayMode(defaultDayModeToo: Boolean) {
         every { mockContext.resources } returns mockResources
         every { mockResources.configuration } returns fakeConfiguration

@@ -8,8 +8,10 @@ import tmg.flashback.ads.repository.AdsRepository
 import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.statistics.controllers.HomeController
 import tmg.flashback.statistics.controllers.ScheduleController
-import tmg.flashback.ui.controllers.ThemeController
+import tmg.flashback.ui.managers.StyleManager
 import tmg.flashback.ui.model.NightMode
+import tmg.flashback.ui.repository.ThemeRepository
+import tmg.flashback.ui.usecases.ChangeNightModeUseCase
 import tmg.utilities.lifecycle.DataEvent
 import tmg.utilities.lifecycle.Event
 
@@ -60,7 +62,9 @@ class ListViewModel(
     private val rssController: RSSController,
     private val debugController: DebugController,
     private val adsRepository: AdsRepository,
-    private val themeController: ThemeController,
+    private val themeRepository: ThemeRepository,
+    private val changeNightModeUseCase: ChangeNightModeUseCase,
+    private val styleManager: StyleManager,
     private val scheduleController: ScheduleController
 ) : ViewModel(), ListViewModelInputs, ListViewModelOutputs {
 
@@ -119,7 +123,7 @@ class ListViewModel(
                 itemId = "dark_mode",
                 label = R.string.dashboard_season_list_extra_dark_mode_title,
                 icon = R.drawable.ic_nightmode_dark,
-                isChecked = !themeController.isDayMode
+                isChecked = !styleManager.isDayMode
             ))
         }
 
@@ -209,10 +213,10 @@ class ListViewModel(
     }
 
     override fun toggleDarkMode() {
-        themeController.nightMode = when (themeController.isDayMode) {
+        changeNightModeUseCase.setNightMode(when (styleManager.isDayMode) {
             true -> NightMode.NIGHT
             false -> NightMode.DAY
-        }
+        })
         refreshList.postValue(Event())
     }
 

@@ -5,7 +5,6 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.lifecycle.*
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import tmg.flashback.device.managers.NetworkConnectivityManager
@@ -18,7 +17,7 @@ import tmg.flashback.statistics.ui.overview.driver.summary.PipeType
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
 import tmg.flashback.statistics.ui.util.position
-import tmg.flashback.ui.controllers.ThemeController
+import tmg.flashback.ui.repository.ThemeRepository
 import tmg.utilities.extensions.ordinalAbbreviation
 import tmg.utilities.lifecycle.DataEvent
 import tmg.utilities.lifecycle.Event
@@ -51,7 +50,7 @@ interface DriverSeasonViewModelOutputs {
 class DriverSeasonViewModel(
     private val driverRepository: DriverRepository,
     private val connectivityManager: NetworkConnectivityManager,
-    private val themeController: ThemeController
+    private val themeRepository: ThemeRepository
 ) : ViewModel(),
     DriverSeasonViewModelInputs,
     DriverSeasonViewModelOutputs {
@@ -160,7 +159,7 @@ class DriverSeasonViewModel(
                                 raceStatus = it.status,
                                 points = it.points,
                                 maxPoints = maxPointsBySeason(it.raceInfo.season),
-                                animationSpeed = themeController.animationSpeed
+                                animationSpeed = themeRepository.animationSpeed
                             )
                         }
                         .sortedBy { it.round }

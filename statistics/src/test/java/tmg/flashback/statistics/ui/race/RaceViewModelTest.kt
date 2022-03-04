@@ -22,8 +22,8 @@ import tmg.flashback.statistics.ui.race.RaceDisplayType.*
 import tmg.flashback.statistics.ui.race_old.*
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
-import tmg.flashback.ui.controllers.ThemeController
 import tmg.flashback.ui.model.AnimationSpeed
+import tmg.flashback.ui.repository.ThemeRepository
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertDataEventValue
 import tmg.testutils.livedata.assertListMatchesItem
@@ -34,7 +34,7 @@ internal class RaceViewModelTest: BaseTest() {
 
     private val mockRaceRepository: RaceRepository = mockk(relaxed = true)
     private val mockRaceController: RaceController = mockk(relaxed = true)
-    private val mockThemeController: ThemeController = mockk(relaxed = true)
+    private val mockThemeRepository: ThemeRepository = mockk(relaxed = true)
     private val mockAdsRepository: AdsRepository = mockk(relaxed = true)
     private val mockConnectivityManager: NetworkConnectivityManager = mockk(relaxed = true)
 
@@ -44,7 +44,7 @@ internal class RaceViewModelTest: BaseTest() {
         sut = RaceViewModel(
             mockRaceRepository,
             mockRaceController,
-            mockThemeController,
+            mockThemeRepository,
             mockConnectivityManager,
             mockAdsRepository,
             ioDispatcher = coroutineScope.testDispatcher
@@ -57,7 +57,7 @@ internal class RaceViewModelTest: BaseTest() {
         coEvery { mockRaceRepository.shouldSyncRace(any(), any()) } returns false
         coEvery { mockRaceRepository.getRace(any(), any()) } returns flow { emit(raceModel) }
         coEvery { mockRaceRepository.fetchRaces(any()) } returns true
-        every { mockThemeController.animationSpeed } returns AnimationSpeed.QUICK
+        every { mockThemeRepository.animationSpeed } returns AnimationSpeed.QUICK
         every { mockAdsRepository.advertConfig } returns AdvertConfig(onRaceScreen = false)
     }
 
