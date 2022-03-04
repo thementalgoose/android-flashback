@@ -16,7 +16,7 @@ class GetAdUseCase(
             return null
         }
 
-        val listOfAds = adsRepository.listOfAds
+        var listOfAds = adsRepository.listOfAds
         if (listOfAds.isNotEmpty()) {
             Log.d(
                 "Adverts",
@@ -29,15 +29,17 @@ class GetAdUseCase(
                 .firstOrNull()
         }
 
-        try {
+        listOfAds = try {
             listOfAds.forEach { it.destroy() }
-            adsRepository.listOfAds = adsManager.getNativeAd(context)
+            adsManager.getNativeAd(context)
         } catch (e: Exception) {
             if (BuildConfig.DEBUG) {
                 e.printStackTrace()
                 Log.e("Adverts", "Failed to load native ads, ${e.message}")
             }
+            emptyList()
         }
+        adsRepository.listOfAds = listOfAds
 
         if (listOfAds.isEmpty()) return null
 

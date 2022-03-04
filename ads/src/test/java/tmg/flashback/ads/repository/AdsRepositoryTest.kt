@@ -119,12 +119,13 @@ internal class AdsRepositoryTest {
     }
 
     @Test
-    fun `are adverts enabled changes if repository value does`() {
-        mockConfig(isEnabled = true)
+    fun `are adverts enabled changes if user pref value does`() {
+        mockConfig(isEnabled = true, allowUserConfig = true)
+        every { mockPreferenceManager.getBoolean(keyUserPreferences, true) } returns true
         initSUT()
         assertTrue(sut.areAdvertsEnabled)
 
-        mockConfig(isEnabled = false)
+        every { mockPreferenceManager.getBoolean(keyUserPreferences, true) } returns false
         assertFalse(sut.areAdvertsEnabled)
     }
 
