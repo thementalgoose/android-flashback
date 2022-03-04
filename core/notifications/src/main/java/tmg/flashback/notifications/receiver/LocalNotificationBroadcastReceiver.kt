@@ -22,15 +22,15 @@ class LocalNotificationBroadcastReceiver: BroadcastReceiver(), KoinComponent {
         }
 
         val title = intent?.extras?.getString(keyTitle) ?: run {
-            crashController.logError(NullPointerException("title null when trying to show notification"), "title null when trying to show notification")
+            crashController.logException(NullPointerException("title null when trying to show notification"), "title null when trying to show notification")
             return
         }
         val description = intent.extras?.getString(keyDescription) ?: run {
-            crashController.logError(NullPointerException("description null when trying to show notification"), "description null when trying to show notification")
+            crashController.logException(NullPointerException("description null when trying to show notification"), "description null when trying to show notification")
             return
         }
         val channelId = intent.extras?.getString(keyChannelId) ?: run {
-            crashController.logError(NullPointerException("Channel id null when trying to show notification"), "Channel id null when trying to show notification")
+            crashController.logException(NullPointerException("Channel id null when trying to show notification"), "Channel id null when trying to show notification")
             return
         }
         if (BuildConfig.DEBUG) {

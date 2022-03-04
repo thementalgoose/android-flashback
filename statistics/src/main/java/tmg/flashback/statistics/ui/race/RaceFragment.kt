@@ -166,13 +166,13 @@ class RaceFragment: BaseFragment() {
         observeEvent(viewModel.outputs.goToConstructor) { constructor ->
             context?.let {
                 startActivity(ConstructorActivity.intent(it, constructor.id, constructor.name))
-            } ?: crashManager.logError(RuntimeException("Context not available (race go to constructor overview)"), "RaceFragment, goToConstructorOverview")
+            } ?: crashManager.logException(RuntimeException("Context not available (race go to constructor overview)"), "RaceFragment, goToConstructorOverview")
         }
 
         observeEvent(viewModel.outputs.goToDriver) { driver ->
             context?.let {
                 startActivity(DriverActivity.intent(it, driver.id, driver.name))
-            } ?: crashManager.logError(RuntimeException("Context not available (race go to driver overview)"), "RaceFragment, goToDriverOverview")
+            } ?: crashManager.logException(RuntimeException("Context not available (race go to driver overview)"), "RaceFragment, goToDriverOverview")
         }
 
         if (raceData.defaultToRace) {
