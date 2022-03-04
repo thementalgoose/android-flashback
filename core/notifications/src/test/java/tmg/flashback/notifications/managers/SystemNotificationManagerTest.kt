@@ -66,7 +66,7 @@ internal class SystemNotificationManagerTest: BaseTest() {
         underTest.notify("tag", 1, notification)
 
         verify {
-            mockCrashController.logError(any(), "Notification Manager null when notifying (tag,1)")
+            mockCrashController.logException(any(), "Notification Manager null when notifying (tag,1)")
         }
     }
 
@@ -95,7 +95,7 @@ internal class SystemNotificationManagerTest: BaseTest() {
         underTest.cancel(expectedTag, expectedId)
 
         verify {
-            mockCrashController.logError(any(), "Notification Manager null when cancelling (tag,1)")
+            mockCrashController.logException(any(), "Notification Manager null when cancelling (tag,1)")
         }
     }
 
@@ -118,7 +118,7 @@ internal class SystemNotificationManagerTest: BaseTest() {
         underTest.cancelAll()
 
         verify {
-            mockCrashController.logError(any(), "Notification Manager null when cancelling all")
+            mockCrashController.logException(any(), "Notification Manager null when cancelling all")
         }
     }
 }

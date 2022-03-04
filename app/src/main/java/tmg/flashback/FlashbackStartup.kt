@@ -11,6 +11,8 @@ import tmg.flashback.ads.usecases.InitialiseAdsUseCase
 import tmg.flashback.analytics.UserProperty.*
 import tmg.flashback.analytics.manager.AnalyticsManager
 import tmg.flashback.crash_reporting.controllers.CrashController
+import tmg.flashback.crash_reporting.repository.CrashRepository
+import tmg.flashback.crash_reporting.usecases.InitialiseCrashReportingUseCase
 import tmg.flashback.device.repository.DeviceRepository
 import tmg.flashback.device.usecases.AppOpenedUseCase
 import tmg.flashback.managers.widgets.WidgetManager
@@ -30,7 +32,8 @@ import tmg.utilities.extensions.isInDayMode
  */
 class FlashbackStartup(
     private val deviceRepository: DeviceRepository,
-    private val crashController: CrashController,
+    private val crashRepository: CrashRepository,
+    private val initialiseCrashReportingUseCase: InitialiseCrashReportingUseCase,
     private val widgetManager: WidgetManager,
     private val scheduleController: ScheduleController,
     private val themeRepository: ThemeRepository,
@@ -53,7 +56,7 @@ class FlashbackStartup(
         }
 
         // Shake to report a bug
-        if (crashController.shakeToReport) {
+        if (crashRepository.shakeToReport) {
             Log.i("Startup", "Enabling shake to report")
 
             Shaky.with(application, object : EmailShakeDelegate("thementalgoose@gmail.com") {
@@ -66,7 +69,7 @@ class FlashbackStartup(
         appOpenedUseCase.run()
 
         // Crash Reporting
-        crashController.initialise(
+        initialiseCrashReportingUseCase.initialise(
             deviceUdid = deviceRepository.deviceUdid,
             appOpenedCount = deviceRepository.appOpenedCount,
             appFirstOpened = deviceRepository.appFirstOpened
@@ -87,8 +90,14 @@ class FlashbackStartup(
 
         // TODO: Results available notifications - Remove
         if (BuildConfig.DEBUG) {
-            notificationController.createNotificationChannel("notify_race", R.string.notification_channel_race_notify)
-            notificationController.createNotificationChannel("notify_qualifying", R.string.notification_channel_qualifying_notify)
+            notificationController.createNotificationChannel(
+                "notify_race",
+                R.string.notification_channel_race_notify
+            )
+            notificationController.createNotificationChannel(
+                "notify_qualifying",
+                R.string.notification_channel_qualifying_notify
+            )
             val applicationScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
             applicationScope.launch(Dispatchers.IO) {
                 when (scheduleController.notificationQualifyingNotify) {
@@ -107,12 +116,17 @@ class FlashbackStartup(
         analyticsManager.setUserProperty(DEVICE_MODEL, Build.MODEL)
         analyticsManager.setUserProperty(OS_VERSION, Build.VERSION.SDK_INT.toString())
         analyticsManager.setUserProperty(APP_VERSION, BuildConfig.VERSION_NAME)
-        analyticsManager.setUserProperty(WIDGET_USAGE, if (widgetManager.hasWidgets) "true" else "false")
-        analyticsManager.setUserProperty(DEVICE_THEME, when (themeRepository.nightMode) {
-            NightMode.DAY -> "day"
-            NightMode.NIGHT -> "night"
-            NightMode.DEFAULT -> if (application.isInDayMode()) "day (default)" else "night (default)"
-        })
+        analyticsManager.setUserProperty(
+            WIDGET_USAGE,
+            if (widgetManager.hasWidgets) "true" else "false"
+        )
+        analyticsManager.setUserProperty(
+            DEVICE_THEME, when (themeRepository.nightMode) {
+                NightMode.DAY -> "day"
+                NightMode.NIGHT -> "night"
+                NightMode.DEFAULT -> if (application.isInDayMode()) "day (default)" else "night (default)"
+            }
+        )
 
         // Update Widgets
         application.updateAllWidgets()
