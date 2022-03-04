@@ -11,7 +11,8 @@ import tmg.flashback.ads.usecases.InitialiseAdsUseCase
 import tmg.flashback.analytics.UserProperty.*
 import tmg.flashback.analytics.manager.AnalyticsManager
 import tmg.flashback.crash_reporting.controllers.CrashController
-import tmg.flashback.device.controllers.DeviceController
+import tmg.flashback.device.repository.DeviceRepository
+import tmg.flashback.device.usecases.AppOpenedUseCase
 import tmg.flashback.managers.widgets.WidgetManager
 import tmg.flashback.notifications.controllers.NotificationController
 import tmg.flashback.statistics.controllers.ScheduleController
@@ -28,7 +29,7 @@ import tmg.utilities.extensions.isInDayMode
  * Ran when the application is first started
  */
 class FlashbackStartup(
-    private val deviceController: DeviceController,
+    private val deviceRepository: DeviceRepository,
     private val crashController: CrashController,
     private val widgetManager: WidgetManager,
     private val scheduleController: ScheduleController,
@@ -36,6 +37,7 @@ class FlashbackStartup(
     private val analyticsManager: AnalyticsManager,
     private val notificationController: NotificationController,
     private val workerProvider: WorkerProvider,
+    private val appOpenedUseCase: AppOpenedUseCase,
     private val initialiseAdsUseCase: InitialiseAdsUseCase
 ) {
     fun startup(application: FlashbackApplication) {
@@ -61,13 +63,13 @@ class FlashbackStartup(
         }
 
         // App startup
-        deviceController.appFirstBoot
+        appOpenedUseCase.run()
 
         // Crash Reporting
         crashController.initialise(
-            deviceUdid = deviceController.deviceUdid,
-            appOpenedCount = deviceController.appOpenedCount,
-            appFirstOpened = deviceController.appFirstBoot
+            deviceUdid = deviceRepository.deviceUdid,
+            appOpenedCount = deviceRepository.appOpenedCount,
+            appFirstOpened = deviceRepository.appFirstOpened
         )
 
         // Adverts
@@ -101,7 +103,7 @@ class FlashbackStartup(
         }
 
         // Initialise user properties
-        analyticsManager.initialise(userId = deviceController.deviceUdid)
+        analyticsManager.initialise(userId = deviceRepository.deviceUdid)
         analyticsManager.setUserProperty(DEVICE_MODEL, Build.MODEL)
         analyticsManager.setUserProperty(OS_VERSION, Build.VERSION.SDK_INT.toString())
         analyticsManager.setUserProperty(APP_VERSION, BuildConfig.VERSION_NAME)
