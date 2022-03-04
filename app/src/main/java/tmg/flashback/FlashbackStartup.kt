@@ -13,7 +13,8 @@ import tmg.flashback.analytics.manager.AnalyticsManager
 import tmg.flashback.crash_reporting.controllers.CrashController
 import tmg.flashback.crash_reporting.repository.CrashRepository
 import tmg.flashback.crash_reporting.usecases.InitialiseCrashReportingUseCase
-import tmg.flashback.device.controllers.DeviceController
+import tmg.flashback.device.repository.DeviceRepository
+import tmg.flashback.device.usecases.AppOpenedUseCase
 import tmg.flashback.managers.widgets.WidgetManager
 import tmg.flashback.notifications.controllers.NotificationController
 import tmg.flashback.statistics.controllers.ScheduleController
@@ -30,7 +31,7 @@ import tmg.utilities.extensions.isInDayMode
  * Ran when the application is first started
  */
 class FlashbackStartup(
-    private val deviceController: DeviceController,
+    private val deviceRepository: DeviceRepository,
     private val crashRepository: CrashRepository,
     private val initialiseCrashReportingUseCase: InitialiseCrashReportingUseCase,
     private val widgetManager: WidgetManager,
@@ -39,6 +40,7 @@ class FlashbackStartup(
     private val analyticsManager: AnalyticsManager,
     private val notificationController: NotificationController,
     private val workerProvider: WorkerProvider,
+    private val appOpenedUseCase: AppOpenedUseCase,
     private val initialiseAdsUseCase: InitialiseAdsUseCase
 ) {
     fun startup(application: FlashbackApplication) {
@@ -64,13 +66,13 @@ class FlashbackStartup(
         }
 
         // App startup
-        deviceController.appFirstBoot
+        appOpenedUseCase.run()
 
         // Crash Reporting
         initialiseCrashReportingUseCase.initialise(
-            deviceUdid = deviceController.deviceUdid,
-            appOpenedCount = deviceController.appOpenedCount,
-            appFirstOpened = deviceController.appFirstBoot
+            deviceUdid = deviceRepository.deviceUdid,
+            appOpenedCount = deviceRepository.appOpenedCount,
+            appFirstOpened = deviceRepository.appFirstOpened
         )
 
         // Adverts
@@ -88,8 +90,14 @@ class FlashbackStartup(
 
         // TODO: Results available notifications - Remove
         if (BuildConfig.DEBUG) {
-            notificationController.createNotificationChannel("notify_race", R.string.notification_channel_race_notify)
-            notificationController.createNotificationChannel("notify_qualifying", R.string.notification_channel_qualifying_notify)
+            notificationController.createNotificationChannel(
+                "notify_race",
+                R.string.notification_channel_race_notify
+            )
+            notificationController.createNotificationChannel(
+                "notify_qualifying",
+                R.string.notification_channel_qualifying_notify
+            )
             val applicationScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
             applicationScope.launch(Dispatchers.IO) {
                 when (scheduleController.notificationQualifyingNotify) {
@@ -104,16 +112,21 @@ class FlashbackStartup(
         }
 
         // Initialise user properties
-        analyticsManager.initialise(userId = deviceController.deviceUdid)
+        analyticsManager.initialise(userId = deviceRepository.deviceUdid)
         analyticsManager.setUserProperty(DEVICE_MODEL, Build.MODEL)
         analyticsManager.setUserProperty(OS_VERSION, Build.VERSION.SDK_INT.toString())
         analyticsManager.setUserProperty(APP_VERSION, BuildConfig.VERSION_NAME)
-        analyticsManager.setUserProperty(WIDGET_USAGE, if (widgetManager.hasWidgets) "true" else "false")
-        analyticsManager.setUserProperty(DEVICE_THEME, when (themeRepository.nightMode) {
-            NightMode.DAY -> "day"
-            NightMode.NIGHT -> "night"
-            NightMode.DEFAULT -> if (application.isInDayMode()) "day (default)" else "night (default)"
-        })
+        analyticsManager.setUserProperty(
+            WIDGET_USAGE,
+            if (widgetManager.hasWidgets) "true" else "false"
+        )
+        analyticsManager.setUserProperty(
+            DEVICE_THEME, when (themeRepository.nightMode) {
+                NightMode.DAY -> "day"
+                NightMode.NIGHT -> "night"
+                NightMode.DEFAULT -> if (application.isInDayMode()) "day (default)" else "night (default)"
+            }
+        )
 
         // Update Widgets
         application.updateAllWidgets()

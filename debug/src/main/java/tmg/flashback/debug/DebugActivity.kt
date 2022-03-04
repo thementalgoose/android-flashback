@@ -19,7 +19,7 @@ import tmg.flashback.debug.adverts.AdvertsActivity
 import tmg.flashback.debug.compose.ComposeActivity
 import tmg.flashback.debug.styleguide.StyleGuideActivity
 import tmg.flashback.debug.styleguide.StyleGuideComposeActivity
-import tmg.flashback.device.controllers.DeviceController
+import tmg.flashback.device.repository.DeviceRepository
 import tmg.flashback.notifications.receiver.LocalNotificationBroadcastReceiver
 import tmg.flashback.notifications.repository.NotificationRepository
 import tmg.flashback.statistics.network.manager.BaseUrlLocalOverrideManager
@@ -42,7 +42,7 @@ class DebugActivity: BaseActivity() {
 
     private val baseUrlLocalOverrideManager: BaseUrlLocalOverrideManager by inject()
 
-    private val deviceController: DeviceController by inject()
+    private val deviceRepository: DeviceRepository by inject()
     private val adsManager: AdsManager by inject()
     private val notificationRepository: NotificationRepository by inject()
 
@@ -57,7 +57,7 @@ class DebugActivity: BaseActivity() {
                 DebugLayout(
                     adId = adsManager.getCurrentDeviceId(applicationContext) ?: "",
                     fcmId = notificationRepository.remoteNotificationToken ?: "",
-                    deviceUdid = deviceController.deviceUdid,
+                    deviceUdid = deviceRepository.deviceUdid,
                     configUrl = configUrl,
                     adIdClicked = {
                         copyToClipboard(it, it)
