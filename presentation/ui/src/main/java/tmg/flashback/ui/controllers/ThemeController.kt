@@ -13,6 +13,7 @@ import tmg.flashback.ui.model.Theme
 import tmg.utilities.extensions.isInDayMode
 import tmg.utilities.extensions.toEnum
 
+@Deprecated(message = "To be replaced with use cases and repository")
 class ThemeController(
     private val applicationContext: Context,
     private val preferenceManager: PreferenceManager,
