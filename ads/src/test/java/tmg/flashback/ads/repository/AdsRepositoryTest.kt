@@ -101,6 +101,49 @@ internal class AdsRepositoryTest {
         }
     }
 
+    //region Are Adverts Enabled
+
+    @Test
+    fun `are adverts enabled returns user pref if user config is allowed`() {
+        mockConfig(isEnabled = true, allowUserConfig = false)
+        every { mockPreferenceManager.getBoolean(keyUserPreferences, true) } returns true
+        initSUT()
+        assertTrue(sut.areAdvertsEnabled)
+    }
+
+    @Test
+    fun `are adverts enabled reads value from repository`() {
+        mockConfig(isEnabled = true, allowUserConfig = false)
+        initSUT()
+        assertTrue(sut.areAdvertsEnabled)
+    }
+
+    @Test
+    fun `are adverts enabled changes if user pref value does`() {
+        mockConfig(isEnabled = true, allowUserConfig = true)
+        every { mockPreferenceManager.getBoolean(keyUserPreferences, true) } returns true
+        initSUT()
+        assertTrue(sut.areAdvertsEnabled)
+
+        every { mockPreferenceManager.getBoolean(keyUserPreferences, true) } returns false
+        assertFalse(sut.areAdvertsEnabled)
+    }
+
+    //endregion
+
+    private fun mockConfig(isEnabled: Boolean = true, allowUserConfig: Boolean = false) {
+        val input = AdvertConfigJson(
+            locations = AdvertLocationJson(
+                home = isEnabled,
+                race = false,
+                search = false,
+                rss = false
+            ),
+            allowUserConfig = allowUserConfig
+        )
+        every { mockConfigManager.getJson(keyAdverts, AdvertConfigJson.serializer()) } returns input
+    }
+
     companion object {
         private const val keyAdverts: String = "advert_config"
         private const val keyUserPreferences: String = "ADVERT_PREF"

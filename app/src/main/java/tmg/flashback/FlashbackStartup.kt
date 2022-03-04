@@ -7,7 +7,7 @@ import com.jakewharton.threetenabp.AndroidThreeTen
 import com.linkedin.android.shaky.EmailShakeDelegate
 import com.linkedin.android.shaky.Shaky
 import kotlinx.coroutines.*
-import tmg.flashback.ads.controller.AdsController
+import tmg.flashback.ads.usecases.InitialiseAdsUseCase
 import tmg.flashback.analytics.UserProperty.*
 import tmg.flashback.analytics.manager.AnalyticsManager
 import tmg.flashback.crash_reporting.controllers.CrashController
@@ -36,7 +36,7 @@ class FlashbackStartup(
     private val analyticsManager: AnalyticsManager,
     private val notificationController: NotificationController,
     private val workerProvider: WorkerProvider,
-    private val adsController: AdsController
+    private val initialiseAdsUseCase: InitialiseAdsUseCase
 ) {
     fun startup(application: FlashbackApplication) {
 
@@ -71,10 +71,7 @@ class FlashbackStartup(
         )
 
         // Adverts
-        if (adsController.areAdvertsEnabled) {
-            adsController.initialise(application)
-        }
-
+        initialiseAdsUseCase.initialise()
 
         //region Notifications Legacy: Remove these existing channels which were previously used for remote notifications
         notificationController.deleteNotificationChannel("race")
