@@ -29,7 +29,7 @@ val commonModule = module {
     viewModel { SettingsAppearanceViewModel(get(), get()) }
     viewModel { SettingsAboutViewModel() }
     viewModel { SettingsSupportViewModel(get(), get()) }
-    viewModel { NightMoveViewModel(get()) }
+    viewModel { NightMoveViewModel(get(), get()) }
     viewModel { ThemeViewModel(get()) }
     viewModel { AnimationSpeedViewModel(get()) }
 }

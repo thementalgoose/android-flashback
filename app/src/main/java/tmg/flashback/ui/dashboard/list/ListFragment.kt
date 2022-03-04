@@ -17,7 +17,6 @@ import tmg.flashback.regulations.ui.FormatOverviewActivity
 import tmg.flashback.rss.ui.RSSActivity
 import tmg.flashback.statistics.ui.dashboard.onboarding.OnboardingNotificationBottomSheetFragment
 import tmg.flashback.ui.base.BaseFragment
-import tmg.flashback.ui.controllers.ThemeController
 import tmg.flashback.ui.dashboard.DashboardNavigationCallback
 import tmg.flashback.ui.navigation.NavigationProvider
 import tmg.flashback.ui.settings.SettingsAllActivity

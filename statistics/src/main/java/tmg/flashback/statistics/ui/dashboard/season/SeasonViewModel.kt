@@ -11,10 +11,8 @@ import org.threeten.bp.Month
 import org.threeten.bp.temporal.TemporalAdjusters
 import tmg.flashback.analytics.manager.AnalyticsManager
 import tmg.flashback.device.managers.NetworkConnectivityManager
-import tmg.flashback.formula1.constants.Formula1
 import tmg.flashback.formula1.constants.Formula1.constructorChampionshipStarts
 import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
-import tmg.flashback.formula1.enums.EventType
 import tmg.flashback.formula1.enums.SeasonTyres
 import tmg.flashback.formula1.enums.getBySeason
 import tmg.flashback.formula1.extensions.getConstructorInProgressInfo
@@ -30,7 +28,7 @@ import tmg.flashback.statistics.repo.SeasonRepository
 import tmg.flashback.statistics.repo.repository.CacheRepository
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable.*
-import tmg.flashback.ui.controllers.ThemeController
+import tmg.flashback.ui.repository.ThemeRepository
 import tmg.utilities.extensions.combinePair
 import tmg.utilities.lifecycle.DataEvent
 import tmg.utilities.lifecycle.Event
@@ -75,7 +73,7 @@ class SeasonViewModel(
     private val overviewRepository: OverviewRepository,
     private val seasonRepository: SeasonRepository,
     private val analyticsManager: AnalyticsManager,
-    private val themeController: ThemeController,
+    private val themeRepository: ThemeRepository,
     private val cacheRepository: CacheRepository,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), SeasonViewModelInputs, SeasonViewModelOutputs {
@@ -365,7 +363,7 @@ class SeasonViewModel(
                         else -> null
                     },
                     maxPointsInSeason = this.standings.maxByOrNull { it.points }?.points ?: 1000.0,
-                    animationSpeed = themeController.animationSpeed
+                    animationSpeed = themeRepository.animationSpeed
                 )
             }
     }
@@ -392,7 +390,7 @@ class SeasonViewModel(
                         .sortedByDescending { it.second },
                     points = item.points,
                     maxPointsInSeason = this.standings.maxByOrNull { it.points }?.points ?: 1000.0,
-                    barAnimation = themeController.animationSpeed
+                    barAnimation = themeRepository.animationSpeed
                 )
             }
     }
