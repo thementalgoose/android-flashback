@@ -82,7 +82,7 @@ class UpNextWidgetProvider : AppWidgetProvider(), KoinComponent {
         catch (e: Exception) {
             Log.i("Widgets", "Failed to tint icon ${e.message}")
             e.printStackTrace()
-            crashController.logError(e, "Widget Up Next provider couldn't tint bitmap")
+            crashController.logException(e, "Widget Up Next provider couldn't tint bitmap")
         }
 
         // Update all the widget ids
@@ -148,7 +148,7 @@ class UpNextWidgetProvider : AppWidgetProvider(), KoinComponent {
                 remoteView.setOnClickPendingIntent(R.id.container, getOpenAppPendingIntent(context))
                 appWidgetManager?.updateAppWidget(widgetId, remoteView)
             } catch (e: RuntimeException) {
-                crashController.logError(e, "Widget Up Next provider couldn't be set up")
+                crashController.logException(e, "Widget Up Next provider couldn't be set up")
                 remoteView.error(appWidgetManager, widgetId, context)
             }
         }
