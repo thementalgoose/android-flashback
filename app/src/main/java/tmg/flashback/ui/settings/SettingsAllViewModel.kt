@@ -3,7 +3,7 @@ package tmg.flashback.ui.settings
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import tmg.flashback.R
-import tmg.flashback.ads.controller.AdsController
+import tmg.flashback.ads.repository.AdsRepository
 import tmg.flashback.rss.controllers.RSSController
 import tmg.utilities.lifecycle.Event
 
@@ -29,10 +29,9 @@ interface SettingsAllViewModelOutputs {
 
 //endregion
 
-
 class SettingsAllViewModel(
         private val rssController: RSSController,
-        private val adsController: AdsController
+        private val adsRepository: AdsRepository
 ): SettingsViewModel(), SettingsAllViewModelInputs, SettingsAllViewModelOutputs {
 
     override val models: List<SettingsModel> = mutableListOf<SettingsModel>().apply {
@@ -74,7 +73,7 @@ class SettingsAllViewModel(
                     openSupport.value = Event()
                 }
         ))
-        if (adsController.allowUserConfig) {
+        if (adsRepository.allowUserConfig) {
             add(SettingsModel.Pref(
                 title = R.string.settings_all_ads,
                 description = R.string.settings_all_ads_subtitle,

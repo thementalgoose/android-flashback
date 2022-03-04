@@ -4,7 +4,7 @@ import androidx.lifecycle.*
 import kotlinx.coroutines.flow.*
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
-import tmg.flashback.ads.controller.AdsController
+import tmg.flashback.ads.repository.AdsRepository
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.rss.repo.RSSRepository
 import tmg.flashback.rss.repo.RssAPI
@@ -32,7 +32,7 @@ interface RSSViewModelOutputs {
 class RSSViewModel(
     private val RSSDB: RssAPI,
     private val prefRepository: RSSRepository,
-    private val adsController: AdsController,
+    private val adsRepository: AdsRepository,
     private val connectivityManager: NetworkConnectivityManager
 ): ViewModel(), RSSViewModelInputs,
     RSSViewModelOutputs {
@@ -70,7 +70,7 @@ class RSSViewModel(
             }
             return@map mutableListOf<RSSItem>().apply {
                 add(RSSItem.Message(LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"))))
-                if (adsController.advertConfig.onRss) {
+                if (adsRepository.advertConfig.onRss) {
                     add(RSSItem.Advert)
                 }
                 addAll(results)

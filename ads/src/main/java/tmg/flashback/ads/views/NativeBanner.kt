@@ -10,13 +10,15 @@ import androidx.lifecycle.lifecycleScope
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import tmg.flashback.ads.R
-import tmg.flashback.ads.controller.AdsController
 import tmg.flashback.ads.databinding.AdmobNativeBannerBinding
+import tmg.flashback.ads.repository.AdsRepository
+import tmg.flashback.ads.usecases.GetAdUseCase
 import tmg.utilities.extensions.views.gone
 
 class NativeBanner: FrameLayout, KoinComponent {
 
-    private val adsController: AdsController by inject()
+    private val adsRepository: AdsRepository by inject()
+    private val getAdUseCase: GetAdUseCase by inject()
 
     private var binding: AdmobNativeBannerBinding? = null
 
@@ -60,7 +62,7 @@ class NativeBanner: FrameLayout, KoinComponent {
                 }
             }
 
-        if (adsController.areAdvertsEnabled) {
+        if (adsRepository.areAdvertsEnabled) {
             val layoutInflater = LayoutInflater.from(context)
             binding = AdmobNativeBannerBinding.inflate(layoutInflater, this, false)
             binding?.let { binding ->
@@ -85,10 +87,10 @@ class NativeBanner: FrameLayout, KoinComponent {
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
 
-        if (adsController.areAdvertsEnabled) {
+        if (adsRepository.areAdvertsEnabled) {
 
             findViewTreeLifecycleOwner()?.lifecycleScope?.launchWhenStarted {
-                val ad = adsController.getAd(context, adIndex)
+                val ad = getAdUseCase.getAd(context, adIndex)
                 if (ad != null) {
                     binding?.let { binding ->
                         binding.skeleton.alpha = 1.0f

@@ -5,7 +5,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import tmg.flashback.ads.controller.AdsController
+import tmg.flashback.ads.repository.AdsRepository
 import tmg.flashback.formula1.model.Circuit
 import tmg.flashback.formula1.model.Constructor
 import tmg.flashback.formula1.model.Driver
@@ -55,7 +55,7 @@ class SearchViewModel(
     private val constructorRepository: ConstructorRepository,
     private val circuitRepository: CircuitRepository,
     private val overviewRepository: OverviewRepository,
-    private val adsController: AdsController,
+    private val adsRepository: AdsRepository,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), SearchViewModelInputs, SearchViewModelOutputs {
 
@@ -112,7 +112,7 @@ class SearchViewModel(
         }
         .onStart {
             emit(mutableListOf<SearchItem>().apply {
-                if (adsController.advertConfig.onSearch) {
+                if (adsRepository.advertConfig.onSearch) {
                     add(SearchItem.Advert)
                 }
                 add(SearchItem.Placeholder)
@@ -173,7 +173,7 @@ class SearchViewModel(
     private fun Flow<List<Driver>>.mapDrivers(): Flow<List<SearchItem>> {
         return this.map {
             mutableListOf<SearchItem>().apply {
-                if (adsController.advertConfig.onSearch) {
+                if (adsRepository.advertConfig.onSearch) {
                     add(SearchItem.Advert)
                 }
                 addAll(it.map {
@@ -193,7 +193,7 @@ class SearchViewModel(
     private fun Flow<List<Constructor>>.mapConstructors(): Flow<List<SearchItem>> {
         return this.map {
             mutableListOf<SearchItem>().apply {
-                if (adsController.advertConfig.onSearch) {
+                if (adsRepository.advertConfig.onSearch) {
                     add(SearchItem.Advert)
                 }
                 addAll(it.map {
@@ -213,7 +213,7 @@ class SearchViewModel(
     private fun Flow<List<Circuit>>.mapCircuits(): Flow<List<SearchItem>> {
         return this.map {
             mutableListOf<SearchItem>().apply {
-                if (adsController.advertConfig.onSearch) {
+                if (adsRepository.advertConfig.onSearch) {
                     add(SearchItem.Advert)
                 }
                 addAll(it.map {
@@ -233,7 +233,7 @@ class SearchViewModel(
     private fun Flow<List<OverviewRace>>.mapRaces(): Flow<List<SearchItem>> {
         return this.map {
             mutableListOf<SearchItem>().apply {
-                if (adsController.advertConfig.onSearch) {
+                if (adsRepository.advertConfig.onSearch) {
                     add(SearchItem.Advert)
                 }
                 addAll(it.map {
