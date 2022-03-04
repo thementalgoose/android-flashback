@@ -1,20 +1,15 @@
 package tmg.flashback.ui.dashboard.list
 
-import android.annotation.SuppressLint
-import android.content.Context
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.*
 import kotlinx.coroutines.flow.combine
 import tmg.flashback.DebugController
 import tmg.flashback.R
-import tmg.flashback.ads.controller.AdsController
+import tmg.flashback.ads.repository.AdsRepository
 import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.statistics.controllers.HomeController
 import tmg.flashback.statistics.controllers.ScheduleController
 import tmg.flashback.ui.controllers.ThemeController
 import tmg.flashback.ui.model.NightMode
-import tmg.utilities.extensions.isInDayMode
-import tmg.utilities.extensions.isInNightMode
 import tmg.utilities.lifecycle.DataEvent
 import tmg.utilities.lifecycle.Event
 
@@ -64,7 +59,7 @@ class ListViewModel(
     private val homeController: HomeController,
     private val rssController: RSSController,
     private val debugController: DebugController,
-    private val adsController: AdsController,
+    private val adsRepository: AdsRepository,
     private val themeController: ThemeController,
     private val scheduleController: ScheduleController
 ) : ViewModel(), ListViewModelInputs, ListViewModelOutputs {
@@ -134,7 +129,7 @@ class ListViewModel(
         }
 
         // Adverts
-        if (adsController.advertConfig.onHomeScreen) {
+        if (adsRepository.advertConfig.onHomeScreen) {
             list.add(ListItem.Advert)
         }
 

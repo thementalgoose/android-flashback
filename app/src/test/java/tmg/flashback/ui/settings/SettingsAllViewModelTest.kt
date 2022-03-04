@@ -5,7 +5,7 @@ import io.mockk.mockk
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.R
-import tmg.flashback.ads.controller.AdsController
+import tmg.flashback.ads.repository.AdsRepository
 import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.testutils.assertExpectedOrder
 import tmg.flashback.testutils.findPref
@@ -16,18 +16,18 @@ import tmg.testutils.livedata.test
 internal class SettingsAllViewModelTest: BaseTest() {
 
     private var mockRssController: RSSController = mockk(relaxed = true)
-    private var mockAdsController: AdsController = mockk(relaxed = true)
+    private var mockAdsRepository: AdsRepository = mockk(relaxed = true)
 
     private lateinit var sut: SettingsAllViewModel
 
     @BeforeEach
     internal fun setUp() {
         every { mockRssController.enabled } returns true
-        every { mockAdsController.allowUserConfig } returns true
+        every { mockAdsRepository.allowUserConfig } returns true
     }
 
     private fun initSUT() {
-        sut = SettingsAllViewModel(mockRssController, mockAdsController)
+        sut = SettingsAllViewModel(mockRssController, mockAdsRepository)
     }
 
     @Test
@@ -66,7 +66,7 @@ internal class SettingsAllViewModelTest: BaseTest() {
 
     @Test
     fun `init loads all categories with ads feature disabled`() {
-        every { mockAdsController.allowUserConfig } returns false
+        every { mockAdsRepository.allowUserConfig } returns false
         initSUT()
         val expected = listOf(
             Pair(R.string.settings_title, null),
