@@ -18,8 +18,8 @@ import tmg.flashback.statistics.controllers.ScheduleController
 import tmg.flashback.statistics.extensions.updateAllWidgets
 import tmg.flashback.statistics.repository.models.NotificationChannel
 import tmg.flashback.statistics.workmanager.WorkerProvider
-import tmg.flashback.ui.controllers.ThemeController
 import tmg.flashback.ui.model.NightMode
+import tmg.flashback.ui.repository.ThemeRepository
 import tmg.utilities.extensions.isInDayMode
 
 /**
@@ -32,7 +32,7 @@ class FlashbackStartup(
     private val crashController: CrashController,
     private val widgetManager: WidgetManager,
     private val scheduleController: ScheduleController,
-    private val themeController: ThemeController,
+    private val themeRepository: ThemeRepository,
     private val analyticsManager: AnalyticsManager,
     private val notificationController: NotificationController,
     private val workerProvider: WorkerProvider,
@@ -44,7 +44,7 @@ class FlashbackStartup(
         AndroidThreeTen.init(application)
 
         // Theming
-        when (themeController.nightMode) {
+        when (themeRepository.nightMode) {
             NightMode.DEFAULT -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
             NightMode.DAY -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             NightMode.NIGHT -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
@@ -106,7 +106,7 @@ class FlashbackStartup(
         analyticsManager.setUserProperty(OS_VERSION, Build.VERSION.SDK_INT.toString())
         analyticsManager.setUserProperty(APP_VERSION, BuildConfig.VERSION_NAME)
         analyticsManager.setUserProperty(WIDGET_USAGE, if (widgetManager.hasWidgets) "true" else "false")
-        analyticsManager.setUserProperty(DEVICE_THEME, when (themeController.nightMode) {
+        analyticsManager.setUserProperty(DEVICE_THEME, when (themeRepository.nightMode) {
             NightMode.DAY -> "day"
             NightMode.NIGHT -> "night"
             NightMode.DEFAULT -> if (application.isInDayMode()) "day (default)" else "night (default)"

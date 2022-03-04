@@ -6,10 +6,10 @@ import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.ui.bottomsheet.BottomSheetItem
-import tmg.flashback.ui.controllers.ThemeController
 import tmg.flashback.ui.extensions.icon
 import tmg.flashback.ui.extensions.label
 import tmg.flashback.ui.model.Theme
+import tmg.flashback.ui.repository.ThemeRepository
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.assertDataEventValue
 import tmg.testutils.livedata.test
@@ -18,17 +18,17 @@ import tmg.utilities.models.StringHolder
 
 internal class ThemeViewModelTest: BaseTest() {
 
-    private val mockThemeController: ThemeController = mockk(relaxed = true)
+    private val mockThemeRepository: ThemeRepository = mockk(relaxed = true)
 
     private lateinit var sut: ThemeViewModel
 
     private fun initSUT() {
-        sut = ThemeViewModel(mockThemeController)
+        sut = ThemeViewModel(mockThemeRepository)
     }
 
     @BeforeEach
     internal fun setUp() {
-        every { mockThemeController.theme } returns Theme.DEFAULT
+        every { mockThemeRepository.theme } returns Theme.DEFAULT
     }
 
     @Test
@@ -49,7 +49,7 @@ internal class ThemeViewModelTest: BaseTest() {
         initSUT()
         sut.inputs.selectTheme(Theme.MATERIAL_YOU)
         verify {
-            mockThemeController.theme = Theme.MATERIAL_YOU
+            mockThemeRepository.theme = Theme.MATERIAL_YOU
         }
     }
 
@@ -64,7 +64,7 @@ internal class ThemeViewModelTest: BaseTest() {
 
     @Test
     fun `selecting nightmode sends nightmode updated event with same selection`() {
-        every { mockThemeController.theme } returns Theme.MATERIAL_YOU
+        every { mockThemeRepository.theme } returns Theme.MATERIAL_YOU
         initSUT()
         sut.inputs.selectTheme(Theme.MATERIAL_YOU)
         sut.outputs.themeUpdated.test {

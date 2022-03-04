@@ -53,14 +53,6 @@ class SettingsAllActivity: BaseActivity(), NavController.OnDestinationChangedLis
             R.id.settingsSupportFragment -> updateTitle(R.string.settings_all_support)
             R.id.settingsAboutFragment -> updateTitle(R.string.settings_all_about)
         }
-        swipeDismissLock = when (destination.id) {
-            R.id.settingsFragment -> {
-                false
-            }
-            else -> {
-                true
-            }
-        }
     }
 
     //endregion

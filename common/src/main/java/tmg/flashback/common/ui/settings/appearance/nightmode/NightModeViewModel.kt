@@ -4,10 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import tmg.flashback.ui.bottomsheet.BottomSheetItem
-import tmg.flashback.ui.controllers.ThemeController
 import tmg.flashback.ui.extensions.icon
 import tmg.flashback.ui.extensions.label
 import tmg.flashback.ui.model.NightMode
+import tmg.flashback.ui.repository.ThemeRepository
+import tmg.flashback.ui.usecases.ChangeNightModeUseCase
 import tmg.utilities.lifecycle.DataEvent
 import tmg.utilities.models.Selected
 import tmg.utilities.models.StringHolder
@@ -31,7 +32,8 @@ interface NightModeViewModelOutputs {
 //endregion
 
 class NightMoveViewModel(
-        private val themeController: ThemeController
+        private val themeRepository: ThemeRepository,
+        private val changeNightModeUseCase: ChangeNightModeUseCase
 ): ViewModel(), NightModeViewModelInputs, NightModeViewModelOutputs {
 
     var inputs: NightModeViewModelInputs = this
@@ -48,8 +50,8 @@ class NightMoveViewModel(
     //region Inputs
 
     override fun selectNightMode(nightMode: NightMode) {
-        val same = themeController.nightMode == nightMode
-        themeController.nightMode = nightMode
+        val same = themeRepository.nightMode == nightMode
+        changeNightModeUseCase.setNightMode(nightMode)
         updateThemeList()
         nightModeUpdated.value = DataEvent(Pair(nightMode, same))
     }
@@ -59,7 +61,7 @@ class NightMoveViewModel(
     private fun updateThemeList() {
         themePreferences.value = NightMode.values()
                 .map {
-                    Selected(BottomSheetItem(it.ordinal, it.icon, StringHolder(it.label)), it == themeController.nightMode)
+                    Selected(BottomSheetItem(it.ordinal, it.icon, StringHolder(it.label)), it == themeRepository.nightMode)
                 }
     }
 }

@@ -14,8 +14,10 @@ import tmg.flashback.ads.repository.model.AdvertConfig
 import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.statistics.controllers.HomeController
 import tmg.flashback.statistics.controllers.ScheduleController
-import tmg.flashback.ui.controllers.ThemeController
+import tmg.flashback.ui.managers.StyleManager
 import tmg.flashback.ui.model.NightMode
+import tmg.flashback.ui.repository.ThemeRepository
+import tmg.flashback.ui.usecases.ChangeNightModeUseCase
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.*
 
@@ -30,7 +32,9 @@ internal class ListViewModelTest: BaseTest() {
     private val mockRssController: RSSController = mockk(relaxed = true)
     private val mockDebugController: DebugController = mockk(relaxed = true)
     private val mockAdsRepository: AdsRepository = mockk(relaxed = true)
-    private val mockThemeController: ThemeController = mockk(relaxed = true)
+    private val mockThemeRepository: ThemeRepository = mockk(relaxed = true)
+    private val mockChangeNightModeUseCase: ChangeNightModeUseCase = mockk(relaxed = true)
+    private val mockStyleManager: StyleManager = mockk(relaxed = true)
     private val mockScheduleController: ScheduleController = mockk(relaxed = true)
 
     @BeforeEach
@@ -53,8 +57,8 @@ internal class ListViewModelTest: BaseTest() {
 
         every { mockDebugController.listItem } returns null
 
-        every { mockThemeController.nightMode } returns NightMode.DEFAULT
-        every { mockThemeController.isDayMode } returns true
+        every { mockThemeRepository.nightMode } returns NightMode.DEFAULT
+        every { mockStyleManager.isDayMode } returns true
     }
 
     private fun initSUT() {
@@ -63,7 +67,9 @@ internal class ListViewModelTest: BaseTest() {
             mockRssController,
             mockDebugController,
             mockAdsRepository,
-            mockThemeController,
+            mockThemeRepository,
+            mockChangeNightModeUseCase,
+            mockStyleManager,
             mockScheduleController
         )
     }
@@ -144,14 +150,14 @@ internal class ListViewModelTest: BaseTest() {
 
     @Test
     fun `toggle night mode from default when device is true sets night mode to NIGHT`() {
-        every { mockThemeController.nightMode } returns NightMode.DEFAULT
-        every { mockThemeController.isDayMode } returns true
+        every { mockThemeRepository.nightMode } returns NightMode.DEFAULT
+        every { mockStyleManager.isDayMode } returns true
 
         initSUT()
         sut.toggleDarkMode()
 
         verify {
-            mockThemeController.nightMode = NightMode.NIGHT
+            mockChangeNightModeUseCase.setNightMode(NightMode.NIGHT)
         }
         sut.outputs.list.test {
             assertListMatchesItem {
@@ -162,14 +168,14 @@ internal class ListViewModelTest: BaseTest() {
 
     @Test
     fun `toggle night mode from default when device is false sets night mode to DAY`() {
-        every { mockThemeController.nightMode } returns NightMode.DEFAULT
-        every { mockThemeController.isDayMode } returns false
+        every { mockThemeRepository.nightMode } returns NightMode.DEFAULT
+        every { mockStyleManager.isDayMode } returns false
 
         initSUT()
         sut.toggleDarkMode()
 
         verify {
-            mockThemeController.nightMode = NightMode.DAY
+            mockChangeNightModeUseCase.setNightMode(NightMode.DAY)
         }
         sut.outputs.list.test {
             assertListMatchesItem {
