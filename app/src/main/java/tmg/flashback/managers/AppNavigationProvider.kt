@@ -5,8 +5,8 @@ import android.content.Intent
 import tmg.aboutthisapp.AboutThisAppActivity
 import tmg.flashback.analytics.manager.AnalyticsManager
 import tmg.flashback.constants.AboutThisAppConfig
-import tmg.flashback.device.controllers.DeviceController
 import tmg.flashback.device.managers.BuildConfigManager
+import tmg.flashback.device.repository.DeviceRepository
 import tmg.flashback.notifications.navigation.NotificationNavigationProvider
 import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.ui.dashboard.HomeActivity
@@ -15,7 +15,7 @@ import tmg.flashback.ui.sync.SyncActivity
 
 class AppNavigationProvider(
     private val buildConfigManager: BuildConfigManager,
-    private val deviceController: DeviceController,
+    private val deviceRepository: DeviceRepository,
     private val analyticsManager: AnalyticsManager,
     private val rssController: RSSController
 ): NavigationProvider, NotificationNavigationProvider {
@@ -31,7 +31,7 @@ class AppNavigationProvider(
         ))
         return AboutThisAppActivity.intent(context, AboutThisAppConfig.configuration(context,
             appVersion = buildConfigManager.versionName,
-            deviceUdid = deviceController.deviceUdid,
+            deviceUdid = deviceRepository.deviceUdid,
             rssSources = if (rssController.enabled) rssController.sources else emptyList()
         ))
     }
