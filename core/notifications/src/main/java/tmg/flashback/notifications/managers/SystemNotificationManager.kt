@@ -71,21 +71,21 @@ class SystemNotificationManager(
      * Notify a notification to the system
      */
     fun notify(tag: String, id: Int, notification: Notification) {
-        notificationManager?.notify(tag, id, notification) ?: crashController.logError(NullPointerException("Notification Manager null when notifying ($tag,$id)"), "Notification Manager null when notifying ($tag,$id)")
+        notificationManager?.notify(tag, id, notification) ?: crashController.logException(NullPointerException("Notification Manager null when notifying ($tag,$id)"), "Notification Manager null when notifying ($tag,$id)")
     }
 
     /**
      * Cancel a specific notification
      */
     fun cancel(tag: String, id: Int) {
-        notificationManager?.cancel(tag, id) ?: crashController.logError(NullPointerException("Notification Manager null when cancelling ($tag,$id)"), "Notification Manager null when cancelling ($tag,$id)")
+        notificationManager?.cancel(tag, id) ?: crashController.logException(NullPointerException("Notification Manager null when cancelling ($tag,$id)"), "Notification Manager null when cancelling ($tag,$id)")
     }
 
     /**
      * Cancel all active notifications
      */
     fun cancelAll() {
-        notificationManager?.cancelAll() ?: crashController.logError(NullPointerException("Notification Manager null when cancelling all"), "Notification Manager null when cancelling all")
+        notificationManager?.cancelAll() ?: crashController.logException(NullPointerException("Notification Manager null when cancelling all"), "Notification Manager null when cancelling all")
     }
 
     /**

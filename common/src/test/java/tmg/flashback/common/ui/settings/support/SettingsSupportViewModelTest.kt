@@ -8,25 +8,26 @@ import org.junit.jupiter.api.Test
 import tmg.flashback.analytics.manager.AnalyticsManager
 import tmg.flashback.common.R
 import tmg.flashback.crash_reporting.controllers.CrashController
+import tmg.flashback.crash_reporting.repository.CrashRepository
 import tmg.flashback.testutils.assertExpectedOrder
 import tmg.flashback.testutils.findSwitch
 import tmg.testutils.BaseTest
 
 internal class SettingsSupportViewModelTest: BaseTest() {
 
-    private val mockCrashController: CrashController = mockk(relaxed = true)
+    private val mockCrashRepository: CrashRepository = mockk(relaxed = true)
     private val mockAnalyticsManager: AnalyticsManager = mockk(relaxed = true)
 
     private lateinit var sut: SettingsSupportViewModel
 
     private fun initSUT() {
-        sut = SettingsSupportViewModel(mockCrashController, mockAnalyticsManager)
+        sut = SettingsSupportViewModel(mockCrashRepository, mockAnalyticsManager)
     }
 
     @BeforeEach
     internal fun setUp() {
-        every { mockCrashController.enabled } returns false
-        every { mockCrashController.shakeToReport } returns false
+        every { mockCrashRepository.isEnabled } returns false
+        every { mockCrashRepository.shakeToReport } returns false
     }
 
     @Test
@@ -48,7 +49,7 @@ internal class SettingsSupportViewModelTest: BaseTest() {
         initSUT()
         sut.clickSwitchPreference(sut.models.findSwitch(R.string.settings_help_crash_reporting_title), true)
         verify {
-            mockCrashController.enabled = true
+            mockCrashRepository.isEnabled = true
         }
     }
 
@@ -66,7 +67,7 @@ internal class SettingsSupportViewModelTest: BaseTest() {
         initSUT()
         sut.clickSwitchPreference(sut.models.findSwitch(R.string.settings_help_shake_to_report_title), true)
         verify {
-            mockCrashController.shakeToReport = true
+            mockCrashRepository.shakeToReport = true
         }
     }
 

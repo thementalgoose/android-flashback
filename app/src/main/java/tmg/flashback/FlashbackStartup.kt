@@ -11,6 +11,8 @@ import tmg.flashback.ads.usecases.InitialiseAdsUseCase
 import tmg.flashback.analytics.UserProperty.*
 import tmg.flashback.analytics.manager.AnalyticsManager
 import tmg.flashback.crash_reporting.controllers.CrashController
+import tmg.flashback.crash_reporting.repository.CrashRepository
+import tmg.flashback.crash_reporting.usecases.InitialiseCrashReportingUseCase
 import tmg.flashback.device.controllers.DeviceController
 import tmg.flashback.managers.widgets.WidgetManager
 import tmg.flashback.notifications.controllers.NotificationController
@@ -29,7 +31,8 @@ import tmg.utilities.extensions.isInDayMode
  */
 class FlashbackStartup(
     private val deviceController: DeviceController,
-    private val crashController: CrashController,
+    private val crashRepository: CrashRepository,
+    private val initialiseCrashReportingUseCase: InitialiseCrashReportingUseCase,
     private val widgetManager: WidgetManager,
     private val scheduleController: ScheduleController,
     private val themeRepository: ThemeRepository,
@@ -51,7 +54,7 @@ class FlashbackStartup(
         }
 
         // Shake to report a bug
-        if (crashController.shakeToReport) {
+        if (crashRepository.shakeToReport) {
             Log.i("Startup", "Enabling shake to report")
 
             Shaky.with(application, object : EmailShakeDelegate("thementalgoose@gmail.com") {
@@ -64,7 +67,7 @@ class FlashbackStartup(
         deviceController.appFirstBoot
 
         // Crash Reporting
-        crashController.initialise(
+        initialiseCrashReportingUseCase.initialise(
             deviceUdid = deviceController.deviceUdid,
             appOpenedCount = deviceController.appOpenedCount,
             appFirstOpened = deviceController.appFirstBoot
