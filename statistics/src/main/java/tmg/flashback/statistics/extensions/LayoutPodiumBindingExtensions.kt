@@ -21,8 +21,8 @@ private val glideProvider: GlideProvider = GlideProvider()
 fun LayoutPodiumBinding.bindRaceModel(model: RaceRaceResult, position: Int, pointsLayout: TextView) {
     val context = pointsLayout.context
 
-    val points = model.points.pointsDisplay() ?: ""
-    val started = model.grid?.positionStarted(context)
+    val points = model.points.pointsDisplay()
+//    val started = model.grid?.positionStarted(context)
 
     pointsLayout.text = context.getString(R.string.round_podium_points, model.points.pointsDisplay())
     tvDriver.text = model.driver.driver.name

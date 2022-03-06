@@ -10,13 +10,14 @@ import kotlinx.coroutines.*
 import tmg.flashback.ads.usecases.InitialiseAdsUseCase
 import tmg.flashback.analytics.UserProperty.*
 import tmg.flashback.analytics.manager.AnalyticsManager
-import tmg.flashback.crash_reporting.controllers.CrashController
 import tmg.flashback.crash_reporting.repository.CrashRepository
 import tmg.flashback.crash_reporting.usecases.InitialiseCrashReportingUseCase
 import tmg.flashback.device.repository.DeviceRepository
 import tmg.flashback.device.usecases.AppOpenedUseCase
 import tmg.flashback.managers.widgets.WidgetManager
-import tmg.flashback.notifications.controllers.NotificationController
+import tmg.flashback.notifications.managers.SystemNotificationManager
+import tmg.flashback.notifications.usecases.RemoteNotificationSubscribeUseCase
+import tmg.flashback.notifications.usecases.RemoteNotificationUnsubscribeUseCase
 import tmg.flashback.statistics.controllers.ScheduleController
 import tmg.flashback.statistics.extensions.updateAllWidgets
 import tmg.flashback.statistics.repository.models.NotificationChannel
@@ -38,7 +39,9 @@ class FlashbackStartup(
     private val scheduleController: ScheduleController,
     private val themeRepository: ThemeRepository,
     private val analyticsManager: AnalyticsManager,
-    private val notificationController: NotificationController,
+    private val systemNotificationManager: SystemNotificationManager,
+    private val remoteNotificationSubscribeUseCase: RemoteNotificationSubscribeUseCase,
+    private val remoteNotificationUnsubscribeUseCase: RemoteNotificationUnsubscribeUseCase,
     private val workerProvider: WorkerProvider,
     private val appOpenedUseCase: AppOpenedUseCase,
     private val initialiseAdsUseCase: InitialiseAdsUseCase
@@ -79,35 +82,32 @@ class FlashbackStartup(
         initialiseAdsUseCase.initialise()
 
         //region Notifications Legacy: Remove these existing channels which were previously used for remote notifications
-        notificationController.deleteNotificationChannel("race")
-        notificationController.deleteNotificationChannel("qualifying")
+        systemNotificationManager.cancelChannel("race")
+        systemNotificationManager.cancelChannel("qualifying")
         //endregion
 
         // Notifications
         NotificationChannel.values().forEach {
-            notificationController.createNotificationChannel(it.channelId, it.label)
+            systemNotificationManager.createChannel(it.channelId, it.label)
         }
 
-        // TODO: Results available notifications - Remove
-        if (BuildConfig.DEBUG) {
-            notificationController.createNotificationChannel(
-                "notify_race",
-                R.string.notification_channel_race_notify
-            )
-            notificationController.createNotificationChannel(
-                "notify_qualifying",
-                R.string.notification_channel_qualifying_notify
-            )
-            val applicationScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
-            applicationScope.launch(Dispatchers.IO) {
-                when (scheduleController.notificationQualifyingNotify) {
-                    true -> notificationController.subscribeToRemoteNotification("notify_qualifying")
-                    false -> notificationController.unsubscribeToRemoteNotification("notify_qualifying")
-                }
-                when (scheduleController.notificationRaceNotify) {
-                    true -> notificationController.subscribeToRemoteNotification("notify_race")
-                    false -> notificationController.unsubscribeToRemoteNotification("notify_race")
-                }
+        systemNotificationManager.createChannel(
+            "notify_race",
+            R.string.notification_channel_race_notify
+        )
+        systemNotificationManager.createChannel(
+            "notify_qualifying",
+            R.string.notification_channel_qualifying_notify
+        )
+        val applicationScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+        applicationScope.launch(Dispatchers.IO) {
+            when (scheduleController.notificationQualifyingNotify) {
+                true -> remoteNotificationSubscribeUseCase.subscribe("notify_qualifying")
+                false -> remoteNotificationUnsubscribeUseCase.unsubscribe("notify_qualifying")
+            }
+            when (scheduleController.notificationRaceNotify) {
+                true -> remoteNotificationSubscribeUseCase.subscribe("notify_race")
+                false -> remoteNotificationUnsubscribeUseCase.unsubscribe("notify_race")
             }
         }
 

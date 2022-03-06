@@ -22,7 +22,7 @@ import tmg.utilities.difflist.GenericDiffCallback
 
 class InlineScheduleAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>(), KoinComponent {
 
-    private val notificationController: ScheduleController by inject()
+    private val scheduleController: ScheduleController by inject()
 
     fun setSchedule(schedule: List<Schedule>): Boolean {
         val list = schedule
@@ -33,9 +33,9 @@ class InlineScheduleAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>(), Ko
                 list.add(InlineSchedule.Day(date))
                 list.addAll(items.map {
                     val showBellIndicator = when (NotificationUtils.getCategoryBasedOnLabel(it.label)) {
-                        RaceWeekend.FREE_PRACTICE -> notificationController.notificationFreePractice
-                        RaceWeekend.QUALIFYING -> notificationController.notificationQualifying
-                        RaceWeekend.RACE -> notificationController.notificationRace
+                        RaceWeekend.FREE_PRACTICE -> scheduleController.notificationFreePractice
+                        RaceWeekend.QUALIFYING -> scheduleController.notificationQualifying
+                        RaceWeekend.RACE -> scheduleController.notificationRace
                         null -> false
                     }
                     InlineSchedule.Item(
