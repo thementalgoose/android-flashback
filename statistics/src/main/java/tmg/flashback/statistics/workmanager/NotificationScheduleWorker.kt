@@ -8,7 +8,9 @@ import org.koin.core.component.KoinComponent
 import org.threeten.bp.LocalDateTime
 import tmg.flashback.formula1.enums.RaceWeekend
 import tmg.flashback.formula1.model.Timestamp
-import tmg.flashback.notifications.controllers.NotificationController
+import tmg.flashback.notifications.repository.NotificationRepository
+import tmg.flashback.notifications.usecases.LocalNotificationCancelUseCase
+import tmg.flashback.notifications.usecases.LocalNotificationScheduleUseCase
 import tmg.flashback.statistics.BuildConfig
 import tmg.flashback.statistics.repo.ScheduleRepository
 import tmg.flashback.statistics.repository.UpNextRepository
@@ -18,7 +20,9 @@ import tmg.flashback.statistics.utils.NotificationUtils
 @Suppress("EXPERIMENTAL_API_USAGE")
 class NotificationScheduleWorker(
     private val scheduleRepository: ScheduleRepository,
-    private val notificationController: NotificationController,
+    private val notificationRepository: NotificationRepository,
+    private val localNotificationCancelUseCase: LocalNotificationCancelUseCase,
+    private val localNotificationScheduleUseCase: LocalNotificationScheduleUseCase,
     private val upNextRepository: UpNextRepository,
     context: Context,
     parameters: WorkerParameters
@@ -69,18 +73,18 @@ class NotificationScheduleWorker(
 
 
         if (BuildConfig.DEBUG) {
-            Log.i("Notification", "WorkManager notificationsScheduled ${notificationController.notificationsCurrentlyScheduled}")
+            Log.i("Notification", "WorkManager notificationsScheduled ${notificationRepository.notificationIds}")
             Log.i("Notification", "WorkManager upNextItems to schedule ${upNextItemsToSchedule.size}")
             Log.i("Notification", "WorkManager upNextItems to schedule $upNextItemsToSchedule")
         }
-        if (upNextItemsToSchedule.map { it.requestCode }.toSet() == notificationController.notificationsCurrentlyScheduled && !force) {
+        if (upNextItemsToSchedule.map { it.requestCode }.toSet() == notificationRepository.notificationIds && !force) {
             if (BuildConfig.DEBUG) {
                 Log.d("Notification", "WorkManager - Up Next items have remained unchanged since last sync - Skipping scheduling of notifications")
             }
             return Result.success()
         }
 
-        notificationController.cancelAllNotifications()
+        localNotificationCancelUseCase.cancelAll()
 
         val reminderPeriod = upNextRepository.notificationReminderPeriod
 
@@ -97,7 +101,7 @@ class NotificationScheduleWorker(
                 reminderPeriod
             )
 
-            notificationController.scheduleLocalNotification(
+            localNotificationScheduleUseCase.schedule(
                 requestCode = it.requestCode,
                 channelId = it.label.toChannel().channelId,
                 title = title,

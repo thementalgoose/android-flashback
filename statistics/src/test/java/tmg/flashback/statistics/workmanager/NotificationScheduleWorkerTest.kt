@@ -17,7 +17,9 @@ import org.threeten.bp.LocalDateTime
 import org.threeten.bp.LocalTime
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.formula1.model.Schedule
-import tmg.flashback.notifications.controllers.NotificationController
+import tmg.flashback.notifications.repository.NotificationRepository
+import tmg.flashback.notifications.usecases.LocalNotificationCancelUseCase
+import tmg.flashback.notifications.usecases.LocalNotificationScheduleUseCase
 import tmg.flashback.statistics.repo.ScheduleRepository
 import tmg.flashback.statistics.repository.UpNextRepository
 import tmg.flashback.statistics.repository.models.NotificationReminder
@@ -27,7 +29,9 @@ import tmg.testutils.BaseTest
 internal class NotificationScheduleWorkerTest: BaseTest() {
 
     private val mockScheduleRepository: ScheduleRepository = mockk(relaxed = true)
-    private val mockNotificationController: NotificationController = mockk(relaxed = true)
+    private val mockNotificationRepository: NotificationRepository = mockk(relaxed = true)
+    private val mockLocalNotificationCancelUseCase: LocalNotificationCancelUseCase = mockk(relaxed = true)
+    private val mockLocalNotificationScheduleUseCase: LocalNotificationScheduleUseCase = mockk(relaxed = true)
     private val mockUpNextRepository: UpNextRepository = mockk(relaxed = true)
     private val mockContext: Context = mockk(relaxed = true)
     private val mockParameters: WorkerParameters = mockk(relaxed = true)
@@ -37,7 +41,9 @@ internal class NotificationScheduleWorkerTest: BaseTest() {
     private fun initSUT() {
         sut = NotificationScheduleWorker(
             mockScheduleRepository,
-            mockNotificationController,
+            mockNotificationRepository,
+            mockLocalNotificationCancelUseCase,
+            mockLocalNotificationScheduleUseCase,
             mockUpNextRepository,
             mockContext,
             mockParameters
@@ -60,7 +66,7 @@ internal class NotificationScheduleWorkerTest: BaseTest() {
     fun `when finding notifications to schedule it scheduled accurately the local notifications with the manager`() = coroutineTest {
 
         coEvery { mockScheduleRepository.getUpcomingEvents(any()) } returns exampleUpNextList
-        coEvery { mockNotificationController.notificationsCurrentlyScheduled } returns emptySet()
+        coEvery { mockNotificationRepository.notificationIds } returns emptySet()
 
         initSUT()
         runBlockingTest {
@@ -69,7 +75,7 @@ internal class NotificationScheduleWorkerTest: BaseTest() {
         }
 
         verify {
-            mockNotificationController.cancelAllNotifications()
+            mockLocalNotificationCancelUseCase.cancelAll()
         }
 
         verifyScheduleLocal(times = 0, past, 0, past.schedule[0], "flashback_qualifying")
@@ -91,7 +97,7 @@ internal class NotificationScheduleWorkerTest: BaseTest() {
         timestampUtc = timestampUtc.minusMinutes(30)
 
         verify(exactly = times) {
-            mockNotificationController.scheduleLocalNotification(
+            mockLocalNotificationScheduleUseCase.schedule(
                 requestCode = requestCode,
                 channelId = channelId,
                 title = "" /* TODO: Inject the NotificationUtils properly - This is handled there! */,

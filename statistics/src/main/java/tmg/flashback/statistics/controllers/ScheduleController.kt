@@ -2,12 +2,10 @@ package tmg.flashback.statistics.controllers
 
 import android.content.Context
 import android.util.Log
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
 import tmg.flashback.formula1.model.OverviewRace
-import tmg.flashback.notifications.controllers.NotificationController
+import tmg.flashback.notifications.repository.NotificationRepository
+import tmg.flashback.notifications.usecases.RemoteNotificationSubscribeUseCase
+import tmg.flashback.notifications.usecases.RemoteNotificationUnsubscribeUseCase
 import tmg.flashback.statistics.BuildConfig
 import tmg.flashback.statistics.repo.ScheduleRepository
 import tmg.flashback.statistics.repository.UpNextRepository
@@ -19,7 +17,8 @@ import tmg.flashback.statistics.workmanager.WorkerProvider
  */
 class ScheduleController(
     private val applicationContext: Context,
-    private val notificationController: NotificationController,
+    private val remoteNotificationSubscribeUseCase: RemoteNotificationSubscribeUseCase,
+    private val remoteNotificationUnsubscribeUseCase: RemoteNotificationUnsubscribeUseCase,
     private val upNextRepository: UpNextRepository,
     private val scheduleRepository: ScheduleRepository,
     private val workerProvider: WorkerProvider
@@ -87,12 +86,12 @@ class ScheduleController(
 
     suspend fun resubscribe() {
         when (notificationRaceNotify) {
-            true -> notificationController.subscribeToRemoteNotification("notify_race")
-            false -> notificationController.unsubscribeToRemoteNotification("notify_race")
+            true -> remoteNotificationSubscribeUseCase.subscribe("notify_race")
+            false -> remoteNotificationUnsubscribeUseCase.unsubscribe("notify_race")
         }
         when (notificationQualifyingNotify) {
-            true -> notificationController.subscribeToRemoteNotification("notify_qualifying")
-            false -> notificationController.unsubscribeToRemoteNotification("notify_qualifying")
+            true -> remoteNotificationSubscribeUseCase.subscribe("notify_qualifying")
+            false -> remoteNotificationUnsubscribeUseCase.unsubscribe("notify_qualifying")
         }
     }
 

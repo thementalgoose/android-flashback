@@ -14,9 +14,9 @@ class NotificationRepository(
 
     var remoteNotificationToken: String?
         get() = preferenceManager.getString(keyNotificationRemoteToken, null)
-        set(value) = preferenceManager.save(keyNotificationRemoteToken, value ?: "")
+        internal set(value) = preferenceManager.save(keyNotificationRemoteToken, value ?: "")
 
-    var remoteNotificationTopics: Set<String>
+    internal var remoteNotificationTopics: Set<String>
         get() = preferenceManager.getSet(keyNotificationRemoteTopics, emptySet())
         set(value) = preferenceManager.save(keyNotificationRemoteTopics, value)
 
@@ -24,6 +24,6 @@ class NotificationRepository(
         get() = preferenceManager.getSet(keyNotificationIds, setOf())
             .mapNotNull { it.toIntOrNull() }
             .toSet()
-        set(value) = preferenceManager.save(keyNotificationIds, value.map { it.toString() }.toSet())
+        internal set(value) = preferenceManager.save(keyNotificationIds, value.map { it.toString() }.toSet())
 
 }
