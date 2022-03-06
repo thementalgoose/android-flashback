@@ -37,34 +37,6 @@ internal class ConfigControllerTest: BaseTest() {
         }
     }
 
-    //region Require sync
-
-    @Test
-    fun `require synchronisation reads value from remote config sync`() {
-
-        every { mockConfigRepository.remoteConfigSync } returns 0
-        initUnderTest()
-
-        assertTrue(underTest.requireSynchronisation)
-        verify {
-            mockConfigRepository.remoteConfigSync
-        }
-    }
-
-    @Test
-    fun `require synchronisation returns false when migrations match`() {
-
-        every { mockConfigRepository.remoteConfigSync } returns Migrations.configurationSyncCount
-        initUnderTest()
-
-        assertFalse(underTest.requireSynchronisation)
-        verify {
-            mockConfigRepository.remoteConfigSync
-        }
-    }
-
-    //endregion
-
     //region ensure cache reset check
 
     @Test

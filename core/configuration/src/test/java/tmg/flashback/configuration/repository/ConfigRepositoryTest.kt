@@ -3,8 +3,10 @@ package tmg.flashback.configuration.repository
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
+import tmg.flashback.configuration.constants.Migrations
 import tmg.flashback.prefs.manager.PreferenceManager
 
 internal class ConfigRepositoryTest {
@@ -36,6 +38,28 @@ internal class ConfigRepositoryTest {
         verify {
             mockPreferenceManager.save(keyRemoteConfigSync, 2)
         }
+    }
+
+    //endregion
+
+    //region Require sync
+
+    @Test
+    fun `require synchronisation reads value from remote config sync`() {
+
+        every { mockPreferenceManager.getInt(keyRemoteConfigSync, any()) } returns Migrations.configurationSyncCount - 1
+        initUnderTest()
+
+        assertTrue(underTest.requireSynchronisation)
+    }
+
+    @Test
+    fun `require synchronisation returns false when migrations match`() {
+
+        every { mockPreferenceManager.getInt(keyRemoteConfigSync, any()) } returns Migrations.configurationSyncCount
+        initUnderTest()
+
+        assertFalse(underTest.requireSynchronisation)
     }
 
     //endregion
