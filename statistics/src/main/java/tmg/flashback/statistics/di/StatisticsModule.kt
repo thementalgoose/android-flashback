@@ -58,14 +58,16 @@ val statisticsModule = repoModule + module {
     viewModel { OnboardingNotificationViewModel(get()) }
     viewModel { UpNextReminderViewModel(get()) }
 
-    single { ScheduleController(androidContext(), get(), get(), get(), get()) }
+    single { ScheduleController(androidContext(), get(), get(), get(), get(), get()) }
     single { UpNextRepository(get()) }
 
     // Worker
     //  https://github.com/InsertKoinIO/koin/issues/992
     worker { (worker: WorkerParameters) -> NotificationScheduleWorker(
         scheduleRepository = get(),
-        notificationController = get(),
+        notificationRepository = get(),
+        localNotificationCancelUseCase = get(),
+        localNotificationScheduleUseCase = get(),
         upNextRepository = get(),
         context = androidContext(),
         parameters = worker)

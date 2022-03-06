@@ -46,7 +46,7 @@ class OverviewViewHolder(
         binding.round.text = getString(R.string.race_round, item.round)
         binding.date.text = when (val date = item.raceDate) {
             null -> ""
-            else -> "${item.raceDate.dayOfMonth.ordinalAbbreviation} ${item.raceDate.format(DateTimeFormatter.ofPattern("MMMM"))}"
+            else -> "${date.dayOfMonth.ordinalAbbreviation} ${date.format(DateTimeFormatter.ofPattern("MMMM"))}"
         }
 
         if (item.laps != null) {
