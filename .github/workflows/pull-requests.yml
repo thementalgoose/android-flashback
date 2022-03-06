@@ -20,7 +20,37 @@ jobs:
         with:
           pattern: "\\.json$"
 
-  unit_test_diff_check:
+  unit_tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      # Checkout
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      # Caching gradle
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      # Unit Tests
+      - name: :app
+        run: ./gradlew testDebugUnitTest
+
+      # Publish test report
+      - name: Publish Test Report
+        uses: mikepenz/action-junit-report@v2
+        if: always()
+        with:
+          report_paths: '**/build/test-results/**/TEST-*.xml'
+
+  release_check:
     runs-on: ubuntu-latest
     timeout-minutes: 2
     steps:
@@ -40,55 +70,16 @@ jobs:
       - name: Calculate change
         id: change
         run: |
-          echo "::set-output name=app::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                   | grep -E '^app/' -c)"
-          echo "::set-output name=common::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                | grep -E '^common/' -c)"
-          echo "::set-output name=formula1::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}              | grep -E '^formula1/' -c)"
-          echo "::set-output name=rss::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                   | grep -E '^rss/' -c)"
-          echo "::set-output name=statistics::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}            | grep -E '^statistics/' -c)"
-          echo "::set-output name=regulations::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}           | grep -E '^regulations/' -c)"
-          echo "::set-output name=data_room::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}             | grep -E '^data/room/' -c)"
-          echo "::set-output name=data_repo::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}             | grep -E '^data/repo/' -c)"
-          echo "::set-output name=data_network::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}          | grep -E '^data/network/' -c)"
-          echo "::set-output name=ads::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                   | grep -E '^core/ads/' -c)"
-          echo "::set-output name=core_analytics::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}        | grep -E '^core/analytics/' -c)"
-          echo "::set-output name=core_appshortcuts::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}     | grep -E '^core/appshortcuts/' -c)"
-          echo "::set-output name=core_configuration::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}    | grep -E '^core/configuration/' -c)"
-          echo "::set-output name=core_crash_reporting::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}  | grep -E '^core/crash-reporting/' -c)"
-          echo "::set-output name=core_device::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}           | grep -E '^core/device/' -c)"
-          echo "::set-output name=core_notifications::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}    | grep -E '^core/notifications/' -c)"
-          echo "::set-output name=core_preferences::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}      | grep -E '^core/preferences/' -c)"
-          echo "::set-output name=presentation_style::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}    | grep -E '^core/style/' -c)"
-          echo "::set-output name=presentation_ui::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}       | grep -E '^core/ui/' -c)"
           echo "::set-output name=gradle::$(git diff --name-only ${{ github.head_ref }} ^${{ github.base_ref }}                | grep -E '**/*.gradle' -c)"
 
     outputs:
-      app: ${{ steps.change.outputs.app != 0 }}
-      common: ${{ steps.change.outputs.common != 0 }}
-      formula1: ${{ steps.change.outputs.formula1 != 0 }}
-      rss: ${{ steps.change.outputs.rss != 0 }}
-      statistics: ${{ steps.change.outputs.statistics != 0 }}
-      regulations: ${{ steps.change.outputs.regulations != 0 }}
-      learning: ${{ steps.change.outputs.learning != 0 }}
-      data_room: ${{ steps.change.outputs.data_room != 0 }}
-      data_repo: ${{ steps.change.outputs.data_repo != 0 }}
-      data_network: ${{ steps.change.outputs.data_network != 0 }}
-      ads: ${{ steps.change.outputs.ads != 0 }}
-      core_analytics: ${{ steps.change.outputs.core_analytics != 0 }}
-      core_appshortcuts: ${{ steps.change.outputs.core_appshortcuts != 0 }}
-      core_configuration: ${{ steps.change.outputs.core_configuration != 0 }}
-      core_crash_reporting: ${{ steps.change.outputs.core_crash_reporting != 0 }}
-      core_device: ${{ steps.change.outputs.core_device != 0 }}
-      core_notifications: ${{ steps.change.outputs.core_notifications != 0 }}
-      core_preferences: ${{ steps.change.outputs.core_preferences != 0 }}
-      presentation_style: ${{ steps.change.outputs.presentation_style != 0 }}
-      presentation_ui: ${{ steps.change.outputs.presentation_ui != 0 }}
       gradle: ${{ steps.change.outputs.gradle != 0 }}
 
   release_build:
     runs-on: ubuntu-latest
-    needs: [unit_test_diff_check]
+    needs: [release_check]
     timeout-minutes: 15
-    if: ${{ needs.unit_test_diff_check.outputs.gradle == 'true' }}
+    if: ${{ needs.release_check.outputs.gradle == 'true' }}
     steps:
       # Checkout
       - uses: actions/checkout@v2
@@ -123,107 +114,3 @@ jobs:
           VERSION_NAME: 0.0.0
         run: |
           ./gradlew assembleLiveRelease
-
-  unit_tests:
-    runs-on: ubuntu-latest
-    needs: [unit_test_diff_check,json_checker]
-    timeout-minutes: 15
-    steps:
-      # Checkout
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-
-      # Caching gradle
-      - uses: actions/cache@v2
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
-
-      # Unit Tests
-      - name: :app
-        run: ./gradlew testDebugUnitTest
-        if: ${{ needs.unit_test_diff_check.outputs.app == 'true' }}
-
-      - name: :statistics
-        run: ./gradlew :statistics:testDebugUnitTest
-        if: ${{ needs.unit_test_diff_check.outputs.statistics == 'true' && needs.unit_test_diff_check.outputs.app != 'true' }}
-
-      - name: :common
-        run: ./gradlew :common:testDebugUnitTest
-        if: ${{ needs.unit_test_diff_check.outputs.common == 'true' && needs.unit_test_diff_check.outputs.app != 'true' }}
-
-      - name: :formula1
-        run: ./gradlew :formula1:testDebugUnitTest
-        if: ${{ needs.unit_test_diff_check.outputs.formula1 == 'true' && needs.unit_test_diff_check.outputs.app != 'true' }}
-
-      - name: :rss
-        run: ./gradlew :rss:testDebugUnitTest
-        if: ${{ needs.unit_test_diff_check.outputs.rss == 'true' && needs.unit_test_diff_check.outputs.app != 'true' }}
-
-      - name: :regulations
-        run: ./gradlew :regulations:testDebugUnitTest
-        if: ${{ needs.unit_test_diff_check.outputs.regulations == 'true' && needs.unit_test_diff_check.outputs.app != 'true' }}
-
-      - name: :data:repo
-        run: ./gradlew :data:repo:testDebugUnitTest
-        if: ${{ needs.unit_test_diff_check.outputs.data_repo == 'true' && needs.unit_test_diff_check.outputs.app != 'true' }}
-
-      - name: :data:network
-        run: ./gradlew :data:network:testDebugUnitTest
-        if: ${{ needs.unit_test_diff_check.outputs.data_network == 'true' && needs.unit_test_diff_check.outputs.app != 'true' }}
-
-      - name: :data:room
-        run: ./gradlew :data:room:testDebugUnitTest
-        if: ${{ needs.unit_test_diff_check.outputs.data_room == 'true' && needs.unit_test_diff_check.outputs.app != 'true' }}
-
-      - name: :ads
-        run: ./gradlew :ads:testDebugUnitTest
-        if: ${{ needs.unit_test_diff_check.outputs.ads == 'true' && needs.unit_test_diff_check.outputs.app != 'true' }}
-
-      - name: :core:analytics
-        run: ./gradlew :core:analytics:testDebugUnitTest
-        if: ${{ needs.unit_test_diff_check.outputs.core_analytics == 'true' && needs.unit_test_diff_check.outputs.app != 'true' }}
-
-      - name: :core:appshortcuts
-        run: ./gradlew :core:appshortcuts:testDebugUnitTest
-        if: ${{ needs.unit_test_diff_check.outputs.core_appshortcuts == 'true' && needs.unit_test_diff_check.outputs.app != 'true' }}
-
-      - name: :core:configuration
-        run: ./gradlew :core:configuration:testDebugUnitTest
-        if: ${{ needs.unit_test_diff_check.outputs.core_configuration == 'true' && needs.unit_test_diff_check.outputs.app != 'true' }}
-
-      - name: :core:crash-reporting
-        run: ./gradlew :core:crash-reporting:testDebugUnitTest
-        if: ${{ needs.unit_test_diff_check.outputs.core_crash_reporting == 'true' && needs.unit_test_diff_check.outputs.app != 'true' }}
-
-      - name: :core:device
-        run: ./gradlew :core:device:testDebugUnitTest
-        if: ${{ needs.unit_test_diff_check.outputs.core_device == 'true' && needs.unit_test_diff_check.outputs.app != 'true' }}
-
-      - name: :core:notifications
-        run: ./gradlew :core:notifications:testDebugUnitTest
-        if: ${{ needs.unit_test_diff_check.outputs.core_notifications == 'true' && needs.unit_test_diff_check.outputs.app != 'true' }}
-
-      - name: :core:preferences
-        run: ./gradlew :core:preferences:testDebugUnitTest
-        if: ${{ needs.unit_test_diff_check.outputs.core_preferences == 'true' && needs.unit_test_diff_check.outputs.app != 'true' }}
-
-      - name: :presentation:style
-        run: ./gradlew :presentation:style:testDebugUnitTest
-        if: ${{ needs.unit_test_diff_check.outputs.presentation_style == 'true' && needs.unit_test_diff_check.outputs.app != 'true' }}
-
-      - name: :presentation:ui
-        run: ./gradlew :presentation:ui:testDebugUnitTest
-        if: ${{ needs.unit_test_diff_check.outputs.presentation_ui == 'true' && needs.unit_test_diff_check.outputs.app != 'true' }}
-
-      # Publish test report
-      - name: Publish Test Report
-        uses: mikepenz/action-junit-report@v2
-        if: always()
-        with:
-          report_paths: '**/build/test-results/**/TEST-*.xml'
