@@ -14,7 +14,8 @@ import org.threeten.bp.LocalTime
 import org.threeten.bp.format.DateTimeFormatter
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.formula1.model.Schedule
-import tmg.flashback.notifications.controllers.NotificationController
+import tmg.flashback.notifications.usecases.RemoteNotificationSubscribeUseCase
+import tmg.flashback.notifications.usecases.RemoteNotificationUnsubscribeUseCase
 import tmg.flashback.statistics.repo.ScheduleRepository
 import tmg.flashback.statistics.repository.UpNextRepository
 import tmg.flashback.statistics.repository.models.NotificationReminder
@@ -23,7 +24,8 @@ import tmg.testutils.BaseTest
 
 internal class ScheduleControllerTest : BaseTest() {
 
-    private var mockNotificationController: NotificationController = mockk(relaxed = true)
+    private var mockRemoteNotificationSubscribeUseCase: RemoteNotificationSubscribeUseCase = mockk(relaxed = true)
+    private var mockRemoteNotificationUnsubscribeUseCase: RemoteNotificationUnsubscribeUseCase = mockk(relaxed = true)
     private var mockUpNextRepository: UpNextRepository = mockk(relaxed = true)
     private var mockApplicationContext: Context = mockk(relaxed = true)
     private var mockScheduleRepository: ScheduleRepository = mockk(relaxed = true)
@@ -42,7 +44,14 @@ internal class ScheduleControllerTest : BaseTest() {
     }
 
     private fun initSUT() {
-        sut = ScheduleController(mockApplicationContext, mockNotificationController, mockUpNextRepository, mockScheduleRepository, mockWorkerProvider)
+        sut = ScheduleController(
+            mockApplicationContext,
+            mockRemoteNotificationSubscribeUseCase,
+            mockRemoteNotificationUnsubscribeUseCase,
+            mockUpNextRepository,
+            mockScheduleRepository,
+            mockWorkerProvider
+        )
     }
 
     @Test

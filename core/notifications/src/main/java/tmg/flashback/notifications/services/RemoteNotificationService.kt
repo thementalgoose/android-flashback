@@ -31,7 +31,6 @@ class RemoteNotificationService : FirebaseMessagingService() {
                 )
             }
         }
-
     }
 
     override fun onNewToken(token: String) {
