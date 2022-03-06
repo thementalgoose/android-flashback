@@ -37,7 +37,6 @@ class ConfigController(
 
     /**
      * Fetch the latest configuration setup for the app.
-     *  This will not be applied until [fetchAndApply] or [applyPending] is called
      */
     suspend fun fetch(): Boolean {
         return configService.fetch(false)
