@@ -7,6 +7,8 @@ import kotlinx.coroutines.launch
 import tmg.flashback.BuildConfig
 import tmg.flashback.common.controllers.ForceUpgradeController
 import tmg.flashback.configuration.controllers.ConfigController
+import tmg.flashback.configuration.repository.ConfigRepository
+import tmg.flashback.configuration.usecases.ApplyConfigUseCase
 import tmg.flashback.crash_reporting.controllers.CrashController
 import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.statistics.controllers.ScheduleController
@@ -34,7 +36,8 @@ interface HomeViewModelOutputs {
 
 
 class HomeViewModel(
-    private val configurationController: ConfigController,
+    private val configRepository: ConfigRepository,
+    private val applyConfigUseCase: ApplyConfigUseCase,
     private val rssController: RSSController,
     private val crashController: CrashController,
     private val forceUpgradeController: ForceUpgradeController,
@@ -51,7 +54,7 @@ class HomeViewModel(
 
     override fun initialise() {
         when {
-            configurationController.requireSynchronisation || !cacheRepository.initialSync -> {
+            configRepository.requireSynchronisation || !cacheRepository.initialSync -> {
                 requiresSync = true
             }
             forceUpgradeController.shouldForceUpgrade -> {
@@ -60,7 +63,7 @@ class HomeViewModel(
             else -> {
                 viewModelScope.launch {
                     try {
-                        val result = configurationController.applyPending()
+                        val result = applyConfigUseCase.apply()
                         if (BuildConfig.DEBUG) {
                             Log.i("Home", "Pending configuration applied $result")
                         }
