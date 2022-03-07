@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import tmg.flashback.common.BuildConfig
 import tmg.flashback.common.controllers.ForceUpgradeController
-import tmg.flashback.configuration.controllers.ConfigController
+import tmg.flashback.configuration.usecases.ResetConfigUseCase
 
 //region Inputs
 
@@ -28,7 +28,7 @@ interface ForceUpgradeViewModelOutputs {
 
 class ForceUpgradeViewModel(
     private val forceUpgradeController: ForceUpgradeController,
-    private val configController: ConfigController
+    private val resetConfigUseCase: ResetConfigUseCase
 ): ViewModel(), ForceUpgradeViewModelInputs, ForceUpgradeViewModelOutputs {
 
     var inputs: ForceUpgradeViewModelInputs = this
@@ -48,7 +48,7 @@ class ForceUpgradeViewModel(
         }
 
         viewModelScope.launch {
-            configController.reset()
+            resetConfigUseCase.reset()
             if (BuildConfig.DEBUG) {
                 Log.i("Force Upgrade", "Force Upgrade reset")
             }
