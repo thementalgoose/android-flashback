@@ -128,8 +128,7 @@ class RaceRepository(
             .map { networkConstructorStandingMapper.mapConstructorStandingDriver(season, it) }
             .flatten()
 
-        persistence.seasonStandingDao().insertConstructorStandingDrivers(driverStandings)
-        persistence.seasonStandingDao().insertConstructorStandings(standings)
+        persistence.seasonStandingDao().insertConstructorStandings(standings, driverStandings)
     }
 
     private fun saveDriverStandings(season: Int, drivers: Map<String, DriverStandings>?) {
@@ -140,8 +139,7 @@ class RaceRepository(
             .map { networkDriverStandingMapper.mapDriverStandingConstructor(season, it) }
             .flatten()
 
-        persistence.seasonStandingDao().insertDriverStandingConstructors(driverStandings)
-        persistence.seasonStandingDao().insertDriverStandings(standings)
+        persistence.seasonStandingDao().insertDriverStandings(standings, driverStandings)
     }
 
     private fun saveConstructors(constructors: Map<String, Constructor>?) {
