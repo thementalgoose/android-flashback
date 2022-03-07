@@ -7,19 +7,19 @@ import io.mockk.verify
 import org.junit.jupiter.api.Test
 import tmg.flashback.common.controllers.ForceUpgradeController
 import tmg.flashback.common.repository.model.ForceUpgrade
-import tmg.flashback.configuration.controllers.ConfigController
+import tmg.flashback.configuration.usecases.ResetConfigUseCase
 import tmg.testutils.BaseTest
 import tmg.testutils.livedata.test
 
 internal class ForceUpgradeViewModelTest: BaseTest() {
 
-    private val mockConfigurationController: ConfigController = mockk(relaxed = true)
+    private val mockResetConfigUseCase: ResetConfigUseCase = mockk(relaxed = true)
     private val mockForceUpgradeController: ForceUpgradeController = mockk(relaxed = true)
 
     private lateinit var sut: ForceUpgradeViewModel
 
     private fun initSUT() {
-        sut = ForceUpgradeViewModel(mockForceUpgradeController, mockConfigurationController)
+        sut = ForceUpgradeViewModel(mockForceUpgradeController, mockResetConfigUseCase)
     }
 
     @Test
@@ -27,7 +27,7 @@ internal class ForceUpgradeViewModelTest: BaseTest() {
 
         initSUT()
         coVerify {
-            mockConfigurationController.reset()
+            mockResetConfigUseCase.reset()
         }
     }
 
@@ -66,7 +66,7 @@ internal class ForceUpgradeViewModelTest: BaseTest() {
             mockForceUpgradeController.forceUpgrade
         }
         coVerify {
-            mockConfigurationController.reset()
+            mockResetConfigUseCase.reset()
         }
     }
 
@@ -91,7 +91,7 @@ internal class ForceUpgradeViewModelTest: BaseTest() {
             mockForceUpgradeController.forceUpgrade
         }
         coVerify {
-            mockConfigurationController.reset()
+            mockResetConfigUseCase.reset()
         }
     }
 }

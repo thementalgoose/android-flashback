@@ -11,7 +11,8 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.common.controllers.ReleaseNotesController
-import tmg.flashback.configuration.controllers.ConfigController
+import tmg.flashback.configuration.usecases.ApplyConfigUseCase
+import tmg.flashback.configuration.usecases.FetchConfigUseCase
 import tmg.flashback.statistics.controllers.HomeController
 import tmg.flashback.statistics.workmanager.WorkerProvider
 import tmg.testutils.BaseTest
@@ -25,13 +26,14 @@ internal class DashboardViewModelTest: BaseTest() {
 
     private val mockContext: Context = mockk(relaxed = true)
     private val mockWorkerProvider: WorkerProvider = mockk(relaxed = true)
-    private val mockConfigurationController: ConfigController = mockk(relaxed = true)
+    private val mockApplyConfigUseCase: ApplyConfigUseCase = mockk(relaxed = true)
+    private val mockFetchConfigUseCase: FetchConfigUseCase = mockk(relaxed = true)
     private val mockHomeController: HomeController = mockk(relaxed = true)
     private val mockReleaseNotesController: ReleaseNotesController = mockk(relaxed = true)
 
     @BeforeEach
     internal fun setUp() {
-        coEvery { mockConfigurationController.applyPending() } returns false
+        coEvery { mockApplyConfigUseCase.apply() } returns false
         every { mockReleaseNotesController.pendingReleaseNotes } returns false
     }
 
@@ -39,7 +41,8 @@ internal class DashboardViewModelTest: BaseTest() {
         sut = DashboardViewModel(
             mockContext,
             mockWorkerProvider,
-            mockConfigurationController,
+            mockFetchConfigUseCase,
+            mockApplyConfigUseCase,
             mockHomeController,
             mockReleaseNotesController
         )
@@ -74,7 +77,7 @@ internal class DashboardViewModelTest: BaseTest() {
     @Test
     fun `init if update returns changes and activate fails nothing happens`() = coroutineTest {
 
-        coEvery { mockConfigurationController.applyPending() } returns false
+        coEvery { mockApplyConfigUseCase.apply() } returns false
 
         initSUT()
         advanceUntilIdle()
@@ -87,7 +90,7 @@ internal class DashboardViewModelTest: BaseTest() {
     @Test
     fun `init if update returns changes and activate successfully then notify app config synced event`() = coroutineTest {
 
-        coEvery { mockConfigurationController.applyPending() } returns true
+        coEvery { mockApplyConfigUseCase.apply() } returns true
 
         initSUT()
         advanceUntilIdle()
