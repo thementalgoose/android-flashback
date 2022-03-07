@@ -10,6 +10,7 @@ import kotlinx.coroutines.*
 import tmg.flashback.ads.usecases.InitialiseAdsUseCase
 import tmg.flashback.analytics.UserProperty.*
 import tmg.flashback.analytics.manager.AnalyticsManager
+import tmg.flashback.configuration.usecases.InitialiseConfigUseCase
 import tmg.flashback.crash_reporting.repository.CrashRepository
 import tmg.flashback.crash_reporting.usecases.InitialiseCrashReportingUseCase
 import tmg.flashback.device.repository.DeviceRepository
@@ -39,6 +40,7 @@ class FlashbackStartup(
     private val scheduleController: ScheduleController,
     private val themeRepository: ThemeRepository,
     private val analyticsManager: AnalyticsManager,
+    private val initialiseConfigUseCase: InitialiseConfigUseCase,
     private val systemNotificationManager: SystemNotificationManager,
     private val remoteNotificationSubscribeUseCase: RemoteNotificationSubscribeUseCase,
     private val remoteNotificationUnsubscribeUseCase: RemoteNotificationUnsubscribeUseCase,
@@ -57,6 +59,9 @@ class FlashbackStartup(
             NightMode.DAY -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             NightMode.NIGHT -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         }
+
+        // Remote config
+        initialiseConfigUseCase.initialise()
 
         // Shake to report a bug
         if (crashRepository.shakeToReport) {
