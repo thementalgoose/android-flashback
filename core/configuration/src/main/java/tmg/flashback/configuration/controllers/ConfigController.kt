@@ -13,10 +13,6 @@ class ConfigController(
     private val configService: RemoteConfigService
 ) {
 
-    init {
-        configService.initialiseRemoteConfig()
-    }
-
     /**
      * Does the on device configuration require a synchronisation
      */

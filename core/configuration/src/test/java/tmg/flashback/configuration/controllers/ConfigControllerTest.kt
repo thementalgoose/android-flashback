@@ -27,16 +27,6 @@ internal class ConfigControllerTest: BaseTest() {
         coEvery { mockConfigService.activate() } returns true
     }
 
-    @Test
-    fun `on init set defaults is called`() {
-
-        initUnderTest()
-
-        verify {
-            mockConfigService.initialiseRemoteConfig()
-        }
-    }
-
     //region ensure cache reset check
 
     @Test

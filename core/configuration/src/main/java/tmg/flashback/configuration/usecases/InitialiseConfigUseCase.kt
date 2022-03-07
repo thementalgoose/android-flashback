@@ -1,6 +1,5 @@
 package tmg.flashback.configuration.usecases
 
-import tmg.flashback.configuration.repository.ConfigRepository
 import tmg.flashback.configuration.services.RemoteConfigService
 
 class InitialiseConfigUseCase(
