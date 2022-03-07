@@ -14,12 +14,6 @@ class ConfigController(
 ) {
 
     /**
-     * Does the on device configuration require a synchronisation
-     */
-    val requireSynchronisation: Boolean
-        get() = Migrations.configurationSyncCount != configRepository.remoteConfigSync
-
-    /**
      * Reset the cache if it hasn't been refreshed
      */
     suspend fun ensureCacheReset(): Boolean {
