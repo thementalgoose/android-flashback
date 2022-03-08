@@ -6,7 +6,6 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.androidx.workmanager.dsl.worker
 import org.koin.dsl.module
 import tmg.flashback.statistics.controllers.HomeController
-import tmg.flashback.statistics.controllers.RaceController
 import tmg.flashback.statistics.controllers.ScheduleController
 import tmg.flashback.statistics.repo.di.repoModule
 import tmg.flashback.statistics.repository.HomeRepository
@@ -47,7 +46,6 @@ val statisticsModule = repoModule + module {
     viewModel { SettingsHomeViewModel(get()) }
     viewModel { SettingsStatisticsViewModel() }
 
-    single { RaceController(get()) }
     single { HomeController(get()) }
 
     // App
