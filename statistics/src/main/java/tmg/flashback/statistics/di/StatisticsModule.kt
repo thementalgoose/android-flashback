@@ -8,7 +8,6 @@ import org.koin.dsl.module
 import tmg.flashback.statistics.controllers.HomeController
 import tmg.flashback.statistics.controllers.RaceController
 import tmg.flashback.statistics.controllers.ScheduleController
-import tmg.flashback.statistics.controllers.SearchController
 import tmg.flashback.statistics.repo.di.repoModule
 import tmg.flashback.statistics.repository.HomeRepository
 import tmg.flashback.statistics.repository.UpNextRepository
@@ -27,6 +26,7 @@ import tmg.flashback.statistics.ui.settings.home.SettingsHomeViewModel
 import tmg.flashback.statistics.ui.settings.notifications.UpNextSettingsViewModel
 import tmg.flashback.statistics.ui.settings.notifications.reminder.UpNextReminderViewModel
 import tmg.flashback.statistics.ui.settings.statistics.SettingsStatisticsViewModel
+import tmg.flashback.statistics.usecases.SearchAppShortcutUseCase
 import tmg.flashback.statistics.workmanager.ContentSyncWorker
 import tmg.flashback.statistics.workmanager.NotificationScheduleWorker
 import tmg.flashback.statistics.workmanager.WorkerProvider
@@ -60,6 +60,9 @@ val statisticsModule = repoModule + module {
 
     single { ScheduleController(androidContext(), get(), get(), get(), get(), get()) }
     single { UpNextRepository(get()) }
+
+    // Use Cases
+    factory { SearchAppShortcutUseCase(get()) }
 
     // Worker
     //  https://github.com/InsertKoinIO/koin/issues/992
