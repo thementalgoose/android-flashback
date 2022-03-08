@@ -153,56 +153,6 @@ internal class HomeRepositoryTest {
 
 
 
-    //region Show Qualifying Delta
-
-    @Test
-    fun `show qualifying delta reads value from preferences repository`() {
-        every { mockPreferenceManager.getBoolean(keyShowQualifyingDelta, false) } returns true
-        initSUT()
-
-        assertTrue(sut.showQualifyingDelta)
-        verify {
-            mockPreferenceManager.getBoolean(keyShowQualifyingDelta, false)
-        }
-    }
-
-    @Test
-    fun `show qualifying delta saves value to shared prefs repository`() {
-        initSUT()
-
-        sut.showQualifyingDelta = true
-        verify {
-            mockPreferenceManager.save(keyShowQualifyingDelta, true)
-        }
-    }
-
-    //endregion
-
-    //region Fade DNF
-
-    @Test
-    fun `fade dnf reads value from preferences repository`() {
-        every { mockPreferenceManager.getBoolean(keyFadeDNF, true) } returns true
-        initSUT()
-
-        assertTrue(sut.fadeDNF)
-        verify {
-            mockPreferenceManager.getBoolean(keyFadeDNF, true)
-        }
-    }
-
-    @Test
-    fun `fade dnf saves value to shared prefs repository`() {
-        initSUT()
-
-        sut.fadeDNF = true
-        verify {
-            mockPreferenceManager.save(keyFadeDNF, true)
-        }
-    }
-
-    //endregion
-
     //region Default to schedule
 
     @Test
@@ -273,31 +223,6 @@ internal class HomeRepositoryTest {
         sut.showListAll = true
         verify {
             mockPreferenceManager.save(keyShowListAll, true)
-        }
-    }
-
-    //endregion
-
-    //region Show Grid Penalties in Qualifying
-
-    @Test
-    fun `show grid penalties in qualifying reads value from preferences repository`() {
-        every { mockPreferenceManager.getBoolean(keyShowGridPenaltiesInQualifying, true) } returns true
-        initSUT()
-
-        assertTrue(sut.showGridPenaltiesInQualifying)
-        verify {
-            mockPreferenceManager.getBoolean(keyShowGridPenaltiesInQualifying, true)
-        }
-    }
-
-    @Test
-    fun `show grid penalties in qualifying saves value to shared prefs repository`() {
-        initSUT()
-
-        sut.showGridPenaltiesInQualifying = true
-        verify {
-            mockPreferenceManager.save(keyShowGridPenaltiesInQualifying, true)
         }
     }
 
@@ -429,12 +354,9 @@ internal class HomeRepositoryTest {
         private const val keySearch: String = "search"
 
         // Prefs
-        private const val keyShowQualifyingDelta: String = "SHOW_QUALIFYING_DELTA"
         private const val keyDefaultToSchedule: String = "DASHBOARD_DEFAULT_TAB_SCHEDULE"
-        private const val keyFadeDNF: String = "FADE_DNF"
         private const val keyShowListFavourited: String = "BOTTOM_SHEET_FAVOURITED"
         private const val keyShowListAll: String = "BOTTOM_SHEET_ALL"
-        private const val keyShowGridPenaltiesInQualifying: String = "SHOW_GRID_PENALTIES_IN_QUALIFYING"
         private const val keyDashboardAutoscroll: String = "DASHBOARD_AUTOSCROLL"
         private const val keyFavouriteSeasons: String = "FAVOURITE_SEASONS"
         private const val keyDefaultSeason: String = "DEFAULT_SEASON"
