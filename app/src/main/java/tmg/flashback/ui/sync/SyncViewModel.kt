@@ -8,7 +8,9 @@ import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import tmg.flashback.common.controllers.ForceUpgradeController
-import tmg.flashback.configuration.controllers.ConfigController
+import tmg.flashback.configuration.repository.ConfigRepository
+import tmg.flashback.configuration.usecases.FetchConfigUseCase
+import tmg.flashback.configuration.usecases.ResetConfigUseCase
 import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.statistics.controllers.ScheduleController
 import tmg.flashback.statistics.controllers.SearchController
@@ -46,7 +48,9 @@ class SyncViewModel(
     private val constructorRepository: ConstructorRepository,
     private val driverRepository: DriverRepository,
     private val overviewRepository: OverviewRepository,
-    private val configurationController: ConfigController,
+    private val configRepository: ConfigRepository,
+    private val resetConfigUseCase: ResetConfigUseCase,
+    private val fetchConfigUseCase: FetchConfigUseCase,
     private val forceUpgradeController: ForceUpgradeController,
     private val cacheRepository: CacheRepository,
     private val scheduleController: ScheduleController,
@@ -115,16 +119,16 @@ class SyncViewModel(
 
     private fun startRemoteConfig() {
 
-        if (!configurationController.requireSynchronisation) {
+        if (!configRepository.requireSynchronisation) {
             configState.value = DONE
             return
         }
 
         configState.value = LOADING
         viewModelScope.launch(ioDispatcher) {
-            configurationController.ensureCacheReset()
+            resetConfigUseCase.ensureReset()
 
-            val result = configurationController.fetchAndApply()
+            val result = fetchConfigUseCase.fetchAndApply()
 
             performConfigUpdates()
             if (result) {

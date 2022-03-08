@@ -4,7 +4,9 @@ import io.mockk.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import tmg.flashback.common.controllers.ForceUpgradeController
-import tmg.flashback.configuration.controllers.ConfigController
+import tmg.flashback.configuration.repository.ConfigRepository
+import tmg.flashback.configuration.usecases.FetchConfigUseCase
+import tmg.flashback.configuration.usecases.ResetConfigUseCase
 import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.statistics.controllers.ScheduleController
 import tmg.flashback.statistics.controllers.SearchController
@@ -29,7 +31,9 @@ internal class SyncViewModelTest: BaseTest() {
     private var mockConstructorRepository: ConstructorRepository = mockk(relaxed = true)
     private var mockDriverRepository: DriverRepository = mockk(relaxed = true)
     private var mockOverviewRepository: OverviewRepository = mockk(relaxed = true)
-    private var mockConfigurationManager: ConfigController = mockk(relaxed = true)
+    private var mockConfigRepository: ConfigRepository = mockk(relaxed = true)
+    private var mockResetConfigUseCase: ResetConfigUseCase = mockk(relaxed = true)
+    private var mockFetchConfigUseCase: FetchConfigUseCase = mockk(relaxed = true)
     private var mockCacheRepository: CacheRepository = mockk(relaxed = true)
     private var mockForceUpgradeController: ForceUpgradeController = mockk(relaxed = true)
     private var mockScheduleController: ScheduleController = mockk(relaxed = true)
@@ -42,7 +46,7 @@ internal class SyncViewModelTest: BaseTest() {
         every { mockForceUpgradeController.shouldForceUpgrade } returns false
         every { mockRssController.enabled } returns false
         every { mockSearchController.enabled } returns false
-        coEvery { mockConfigurationManager.fetchAndApply() } returns true
+        coEvery { mockFetchConfigUseCase.fetchAndApply() } returns true
 
         coEvery { mockCircuitRepository.fetchCircuits() } returns true
         coEvery { mockConstructorRepository.fetchConstructors() } returns true
@@ -57,7 +61,9 @@ internal class SyncViewModelTest: BaseTest() {
             mockConstructorRepository,
             mockDriverRepository,
             mockOverviewRepository,
-            mockConfigurationManager,
+            mockConfigRepository,
+            mockResetConfigUseCase,
+            mockFetchConfigUseCase,
             mockForceUpgradeController,
             mockCacheRepository,
             mockScheduleController,
@@ -68,14 +74,14 @@ internal class SyncViewModelTest: BaseTest() {
 
     @Test
     fun `start loading with config not synced sends go to home event`() = coroutineTest {
-        every { mockConfigurationManager.requireSynchronisation } returns true
+        every { mockConfigRepository.requireSynchronisation } returns true
 
         initSUT()
         sut.inputs.startLoading()
 
         coVerify {
-            mockConfigurationManager.ensureCacheReset()
-            mockConfigurationManager.fetchAndApply()
+            mockResetConfigUseCase.ensureReset()
+            mockFetchConfigUseCase.fetchAndApply()
         }
         sut.outputs.loadingState.test {
             assertValue(SyncState.DONE)
@@ -93,15 +99,15 @@ internal class SyncViewModelTest: BaseTest() {
 
     @Test
     fun `start loading with config not synced sends go to force upgrade event`() = coroutineTest {
-        every { mockConfigurationManager.requireSynchronisation } returns true
+        every { mockConfigRepository.requireSynchronisation } returns true
         every { mockForceUpgradeController.shouldForceUpgrade } returns true
 
         initSUT()
         sut.inputs.startLoading()
 
         coVerify {
-            mockConfigurationManager.ensureCacheReset()
-            mockConfigurationManager.fetchAndApply()
+            mockResetConfigUseCase.ensureReset()
+            mockFetchConfigUseCase.fetchAndApply()
         }
         sut.outputs.loadingState.test {
             assertValue(SyncState.DONE)
@@ -119,14 +125,14 @@ internal class SyncViewModelTest: BaseTest() {
 
     @Test
     fun `start loading with config previously synced sends go to home event`() = coroutineTest {
-        every { mockConfigurationManager.requireSynchronisation } returns false
+        every { mockConfigRepository.requireSynchronisation } returns false
 
         initSUT()
         sut.inputs.startLoading()
 
         coVerify(exactly = 0) {
-            mockConfigurationManager.ensureCacheReset()
-            mockConfigurationManager.fetchAndApply()
+            mockResetConfigUseCase.ensureReset()
+            mockFetchConfigUseCase.fetchAndApply()
         }
         sut.outputs.loadingState.test {
             assertValue(SyncState.DONE)
@@ -152,15 +158,15 @@ internal class SyncViewModelTest: BaseTest() {
 
     @Test
     fun `start loading with config failed changes state to failed`() = coroutineTest {
-        every { mockConfigurationManager.requireSynchronisation } returns true
-        coEvery { mockConfigurationManager.fetchAndApply() } returns false
+        every { mockConfigRepository.requireSynchronisation } returns true
+        coEvery { mockFetchConfigUseCase.fetchAndApply() } returns false
 
         initSUT()
         sut.inputs.startLoading()
 
         coVerify {
-            mockConfigurationManager.ensureCacheReset()
-            mockConfigurationManager.fetchAndApply()
+            mockResetConfigUseCase.ensureReset()
+            mockFetchConfigUseCase.fetchAndApply()
         }
         sut.outputs.loadingState.test {
             assertValue(SyncState.FAILED)
@@ -178,15 +184,15 @@ internal class SyncViewModelTest: BaseTest() {
 
     @Test
     fun `start loading with circuits failing changes state to failed`() = coroutineTest {
-        every { mockConfigurationManager.requireSynchronisation } returns false
+        every { mockConfigRepository.requireSynchronisation } returns false
         coEvery { mockCircuitRepository.fetchCircuits() } returns false
 
         initSUT()
         sut.inputs.startLoading()
 
         coVerify(exactly = 0) {
-            mockConfigurationManager.ensureCacheReset()
-            mockConfigurationManager.fetchAndApply()
+            mockResetConfigUseCase.ensureReset()
+            mockFetchConfigUseCase.fetchAndApply()
         }
         sut.outputs.loadingState.test {
             assertValue(SyncState.FAILED)
@@ -204,15 +210,15 @@ internal class SyncViewModelTest: BaseTest() {
 
     @Test
     fun `start loading with races failing changes state to failed`() = coroutineTest {
-        every { mockConfigurationManager.requireSynchronisation } returns false
+        every { mockConfigRepository.requireSynchronisation } returns false
         coEvery { mockOverviewRepository.fetchOverview() } returns false
 
         initSUT()
         sut.inputs.startLoading()
 
         coVerify(exactly = 0) {
-            mockConfigurationManager.ensureCacheReset()
-            mockConfigurationManager.fetchAndApply()
+            mockResetConfigUseCase.ensureReset()
+            mockFetchConfigUseCase.fetchAndApply()
         }
         sut.outputs.loadingState.test {
             assertValue(SyncState.FAILED)
@@ -230,15 +236,15 @@ internal class SyncViewModelTest: BaseTest() {
 
     @Test
     fun `start loading with constructors failing changes state to failed`() = coroutineTest {
-        every { mockConfigurationManager.requireSynchronisation } returns false
+        every { mockConfigRepository.requireSynchronisation } returns false
         coEvery { mockConstructorRepository.fetchConstructors() } returns false
 
         initSUT()
         sut.inputs.startLoading()
 
         coVerify(exactly = 0) {
-            mockConfigurationManager.ensureCacheReset()
-            mockConfigurationManager.fetchAndApply()
+            mockResetConfigUseCase.ensureReset()
+            mockFetchConfigUseCase.fetchAndApply()
         }
         sut.outputs.loadingState.test {
             assertValue(SyncState.FAILED)
@@ -256,15 +262,15 @@ internal class SyncViewModelTest: BaseTest() {
 
     @Test
     fun `start loading with drivers failing changes state to failed`() = coroutineTest {
-        every { mockConfigurationManager.requireSynchronisation } returns false
+        every { mockConfigRepository.requireSynchronisation } returns false
         coEvery { mockDriverRepository.fetchDrivers() } returns false
 
         initSUT()
         sut.inputs.startLoading()
 
         coVerify(exactly = 0) {
-            mockConfigurationManager.ensureCacheReset()
-            mockConfigurationManager.fetchAndApply()
+            mockResetConfigUseCase.ensureReset()
+            mockFetchConfigUseCase.fetchAndApply()
         }
         sut.outputs.loadingState.test {
             assertValue(SyncState.FAILED)

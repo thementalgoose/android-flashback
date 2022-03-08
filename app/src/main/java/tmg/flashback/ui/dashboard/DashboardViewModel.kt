@@ -8,7 +8,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import tmg.flashback.common.controllers.ReleaseNotesController
-import tmg.flashback.configuration.controllers.ConfigController
+import tmg.flashback.configuration.usecases.ApplyConfigUseCase
+import tmg.flashback.configuration.usecases.FetchConfigUseCase
 import tmg.flashback.statistics.BuildConfig
 import tmg.flashback.statistics.controllers.HomeController
 import tmg.flashback.statistics.extensions.updateAllWidgets
@@ -39,7 +40,8 @@ interface DashboardViewModelOutputs {
 class DashboardViewModel(
     applicationContext: Context,
     private val workerProvider: WorkerProvider,
-    private val configurationController: ConfigController,
+    private val fetchConfigUseCase: FetchConfigUseCase,
+    private val applyConfigUseCase: ApplyConfigUseCase,
     private val homeController: HomeController,
     private val releaseNotesController: ReleaseNotesController,
 ): ViewModel(), DashboardViewModelInputs, DashboardViewModelOutputs {
@@ -55,8 +57,8 @@ class DashboardViewModel(
 
     init {
         viewModelScope.launch {
-            configurationController.fetch()
-            val activate = configurationController.applyPending()
+            fetchConfigUseCase.fetch()
+            val activate = applyConfigUseCase.apply()
             if (BuildConfig.DEBUG) {
                 Log.i("Dashboard", "Remote config change detected $activate")
             }
