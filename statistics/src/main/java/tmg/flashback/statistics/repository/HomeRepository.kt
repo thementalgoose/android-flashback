@@ -79,20 +79,6 @@ class HomeRepository(
         set(value) = preferenceManager.save(keyDefaultToSchedule, value)
 
     /**
-     * Show the qualifying delta in the layout
-     */
-    var showQualifyingDelta: Boolean
-        get() = preferenceManager.getBoolean(keyShowQualifyingDelta, false)
-        set(value) = preferenceManager.save(keyShowQualifyingDelta, value)
-
-    /**
-     * Fade the race results where the driver results in DNF
-     */
-    var fadeDNF: Boolean
-        get() = preferenceManager.getBoolean(keyFadeDNF, true)
-        set(value) = preferenceManager.save(keyFadeDNF, value)
-
-    /**
      * Show the favourited bottom sheet section expanded by default
      */
     var showListFavourited: Boolean
@@ -105,13 +91,6 @@ class HomeRepository(
     var showListAll: Boolean
         get() = preferenceManager.getBoolean(keyShowListAll, true)
         set(value) = preferenceManager.save(keyShowListAll, value)
-
-    /**
-     * Show grid penalties in qualifying
-     */
-    var showGridPenaltiesInQualifying: Boolean
-        get() = preferenceManager.getBoolean(keyShowGridPenaltiesInQualifying, true)
-        set(value) = preferenceManager.save(keyShowGridPenaltiesInQualifying, value)
 
     /**
      * When loading the dashboard, should the app autoscroll to the current season if it's applicable
