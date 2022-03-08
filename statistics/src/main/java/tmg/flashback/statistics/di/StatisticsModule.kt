@@ -49,7 +49,6 @@ val statisticsModule = repoModule + module {
 
     single { RaceController(get()) }
     single { HomeController(get()) }
-    single { SearchController(get(), get()) }
 
     // App
     single { HomeRepository(get(), get()) }
@@ -62,7 +61,7 @@ val statisticsModule = repoModule + module {
     single { UpNextRepository(get()) }
 
     // Use Cases
-    factory { SearchAppShortcutUseCase(get()) }
+    factory { SearchAppShortcutUseCase(get(), get()) }
 
     // Worker
     //  https://github.com/InsertKoinIO/koin/issues/992
