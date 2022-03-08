@@ -16,7 +16,6 @@ import tmg.flashback.ads.repository.AdsRepository
 import tmg.flashback.ads.repository.model.AdvertConfig
 import tmg.flashback.device.managers.NetworkConnectivityManager
 import tmg.flashback.formula1.model.*
-import tmg.flashback.statistics.controllers.RaceController
 import tmg.flashback.statistics.repo.RaceRepository
 import tmg.flashback.statistics.ui.race.RaceDisplayType.*
 import tmg.flashback.statistics.ui.race_old.*
@@ -33,7 +32,6 @@ import tmg.testutils.livedata.testObserve
 internal class RaceViewModelTest: BaseTest() {
 
     private val mockRaceRepository: RaceRepository = mockk(relaxed = true)
-    private val mockRaceController: RaceController = mockk(relaxed = true)
     private val mockThemeRepository: ThemeRepository = mockk(relaxed = true)
     private val mockAdsRepository: AdsRepository = mockk(relaxed = true)
     private val mockConnectivityManager: NetworkConnectivityManager = mockk(relaxed = true)
@@ -43,7 +41,6 @@ internal class RaceViewModelTest: BaseTest() {
     private fun initSUT() {
         sut = RaceViewModel(
             mockRaceRepository,
-            mockRaceController,
             mockThemeRepository,
             mockConnectivityManager,
             mockAdsRepository,
