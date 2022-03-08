@@ -354,12 +354,9 @@ internal class HomeRepositoryTest {
         private const val keySearch: String = "search"
 
         // Prefs
-        private const val keyShowQualifyingDelta: String = "SHOW_QUALIFYING_DELTA"
         private const val keyDefaultToSchedule: String = "DASHBOARD_DEFAULT_TAB_SCHEDULE"
-        private const val keyFadeDNF: String = "FADE_DNF"
         private const val keyShowListFavourited: String = "BOTTOM_SHEET_FAVOURITED"
         private const val keyShowListAll: String = "BOTTOM_SHEET_ALL"
-        private const val keyShowGridPenaltiesInQualifying: String = "SHOW_GRID_PENALTIES_IN_QUALIFYING"
         private const val keyDashboardAutoscroll: String = "DASHBOARD_AUTOSCROLL"
         private const val keyFavouriteSeasons: String = "FAVOURITE_SEASONS"
         private const val keyDefaultSeason: String = "DEFAULT_SEASON"
