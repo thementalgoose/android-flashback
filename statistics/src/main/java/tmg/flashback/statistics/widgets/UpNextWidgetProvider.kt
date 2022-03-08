@@ -19,7 +19,8 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
-import tmg.flashback.configuration.controllers.ConfigController
+import tmg.flashback.configuration.usecases.ApplyConfigUseCase
+import tmg.flashback.configuration.usecases.FetchConfigUseCase
 import tmg.flashback.crash_reporting.controllers.CrashController
 import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.formula1.enums.TrackLayout
@@ -40,7 +41,8 @@ class UpNextWidgetProvider : AppWidgetProvider(), KoinComponent {
     private val buildConfigManager: BuildConfigManager by inject()
     private val navigationProvider: NavigationProvider by inject()
 
-    private val configController: ConfigController by inject()
+    private val applyConfigUseCase: ApplyConfigUseCase by inject()
+    private val fetchConfigUseCase: FetchConfigUseCase by inject()
 
     override fun onReceive(context: Context?, intent: Intent?) {
         super.onReceive(context, intent)
@@ -51,8 +53,8 @@ class UpNextWidgetProvider : AppWidgetProvider(), KoinComponent {
 
         // Fire and forget remote config sync
         CoroutineScope(Dispatchers.IO).launch {
-            configController.applyPending()
-            configController.fetch()
+            applyConfigUseCase.apply()
+            fetchConfigUseCase.fetch()
         }
 
         // Pre app checks

@@ -1,5 +1,6 @@
 package tmg.flashback.configuration.repository
 
+import tmg.flashback.configuration.constants.Migrations
 import tmg.flashback.prefs.manager.PreferenceManager
 
 class ConfigRepository(
@@ -13,11 +14,14 @@ class ConfigRepository(
 
     //region Shared Prefs
 
-    var remoteConfigSync: Int
+    val requireSynchronisation: Boolean
+        get() = Migrations.configurationSyncCount != remoteConfigSync
+
+    internal var remoteConfigSync: Int
         get() = preferenceManager.getInt(keyRemoteConfigSync, 0)
         set(value) = preferenceManager.save(keyRemoteConfigSync, value)
 
-    var resetAtMigrationVersion: Int
+    internal var resetAtMigrationVersion: Int
         get() = preferenceManager.getInt(keyRemoteConfigResetCalledAtMigrationVersion, 0)
         set(value) = preferenceManager.save(keyRemoteConfigResetCalledAtMigrationVersion, value)
 
