@@ -23,12 +23,9 @@ class HomeRepository(
         private const val keySearch: String = "search"
 
         // Prefs
-        private const val keyShowQualifyingDelta: String = "SHOW_QUALIFYING_DELTA"
         private const val keyDefaultToSchedule: String = "DASHBOARD_DEFAULT_TAB_SCHEDULE"
-        private const val keyFadeDNF: String = "FADE_DNF"
         private const val keyShowListFavourited: String = "BOTTOM_SHEET_FAVOURITED"
         private const val keyShowListAll: String = "BOTTOM_SHEET_ALL"
-        private const val keyShowGridPenaltiesInQualifying: String = "SHOW_GRID_PENALTIES_IN_QUALIFYING"
         private const val keyDashboardAutoscroll: String = "DASHBOARD_AUTOSCROLL"
         private const val keyFavouriteSeasons: String = "FAVOURITE_SEASONS"
         private const val keyDefaultSeason: String = "DEFAULT_SEASON"
@@ -79,20 +76,6 @@ class HomeRepository(
         set(value) = preferenceManager.save(keyDefaultToSchedule, value)
 
     /**
-     * Show the qualifying delta in the layout
-     */
-    var showQualifyingDelta: Boolean
-        get() = preferenceManager.getBoolean(keyShowQualifyingDelta, false)
-        set(value) = preferenceManager.save(keyShowQualifyingDelta, value)
-
-    /**
-     * Fade the race results where the driver results in DNF
-     */
-    var fadeDNF: Boolean
-        get() = preferenceManager.getBoolean(keyFadeDNF, true)
-        set(value) = preferenceManager.save(keyFadeDNF, value)
-
-    /**
      * Show the favourited bottom sheet section expanded by default
      */
     var showListFavourited: Boolean
@@ -105,13 +88,6 @@ class HomeRepository(
     var showListAll: Boolean
         get() = preferenceManager.getBoolean(keyShowListAll, true)
         set(value) = preferenceManager.save(keyShowListAll, value)
-
-    /**
-     * Show grid penalties in qualifying
-     */
-    var showGridPenaltiesInQualifying: Boolean
-        get() = preferenceManager.getBoolean(keyShowGridPenaltiesInQualifying, true)
-        set(value) = preferenceManager.save(keyShowGridPenaltiesInQualifying, value)
 
     /**
      * When loading the dashboard, should the app autoscroll to the current season if it's applicable

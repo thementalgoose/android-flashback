@@ -12,7 +12,6 @@ import tmg.flashback.formula1.constants.Formula1
 import tmg.flashback.formula1.model.*
 import tmg.flashback.formula1.model.RaceQualifyingType.*
 import tmg.flashback.statistics.R
-import tmg.flashback.statistics.controllers.RaceController
 import tmg.flashback.statistics.repo.RaceRepository
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
@@ -51,7 +50,6 @@ interface RaceViewModelOutputs {
 
 class RaceViewModel(
     private val raceRepository: RaceRepository,
-    private val raceController: RaceController,
     private val themeRepository: ThemeRepository,
     private val networkConnectivityManager: NetworkConnectivityManager,
     private val adsRepository: AdsRepository,
@@ -283,9 +281,9 @@ class RaceViewModel(
                 q1 = overview?.q1,
                 q2 = overview?.q2,
                 q3 = overview?.q3,
-                q1Delta = if (raceController.showQualifyingDelta) q1FastestLap?.deltaTo(overview?.q1?.lapTime) else null,
-                q2Delta = if (raceController.showQualifyingDelta) q2FastestLap?.deltaTo(overview?.q2?.lapTime) else null,
-                q3Delta = if (raceController.showQualifyingDelta) q3FastestLap?.deltaTo(overview?.q3?.lapTime) else null,
+                q1Delta = null, // q1FastestLap?.deltaTo(overview?.q1?.lapTime)
+                q2Delta = null, // q2FastestLap?.deltaTo(overview?.q2?.lapTime)
+                q3Delta = null  // q3FastestLap?.deltaTo(overview?.q3?.lapTime)
             )
         }
     }
@@ -300,8 +298,8 @@ class RaceViewModel(
                     finalQualifyingPosition = overview?.qualified,
                     q1 = overview?.q1,
                     q2 = overview?.q2,
-                    q1Delta = if (raceController.showQualifyingDelta) q1FastestLap?.deltaTo(overview?.q1?.lapTime) else null,
-                    q2Delta = if (raceController.showQualifyingDelta) q2FastestLap?.deltaTo(overview?.q2?.lapTime) else null,
+                    q1Delta = null, // q1FastestLap?.deltaTo(overview?.q1?.lapTime)
+                    q2Delta = null  // q2FastestLap?.deltaTo(overview?.q2?.lapTime)
                 )
             }
             ?.sortedBy { it.qualified }
@@ -317,7 +315,7 @@ class RaceViewModel(
                     driver = it.driver,
                     finalQualifyingPosition = overview?.qualified,
                     q1 = overview?.q1,
-                    q1Delta = if (raceController.showQualifyingDelta) q1FastestLap?.deltaTo(overview?.q1?.lapTime) else null,
+                    q1Delta = null // q1FastestLap?.deltaTo(overview?.q1?.lapTime)
                 )
             }
             ?.sortedBy { it.qualified }
