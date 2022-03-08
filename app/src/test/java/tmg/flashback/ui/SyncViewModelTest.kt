@@ -9,12 +9,12 @@ import tmg.flashback.configuration.usecases.FetchConfigUseCase
 import tmg.flashback.configuration.usecases.ResetConfigUseCase
 import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.statistics.controllers.ScheduleController
-import tmg.flashback.statistics.controllers.SearchController
 import tmg.flashback.statistics.repo.CircuitRepository
 import tmg.flashback.statistics.repo.ConstructorRepository
 import tmg.flashback.statistics.repo.DriverRepository
 import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.statistics.repo.repository.CacheRepository
+import tmg.flashback.statistics.usecases.SearchAppShortcutUseCase
 import tmg.flashback.ui.sync.SyncNavTarget.DASHBOARD
 import tmg.flashback.ui.sync.SyncNavTarget.FORCE_UPGRADE
 import tmg.flashback.ui.sync.SyncState
@@ -37,7 +37,7 @@ internal class SyncViewModelTest: BaseTest() {
     private var mockCacheRepository: CacheRepository = mockk(relaxed = true)
     private var mockForceUpgradeController: ForceUpgradeController = mockk(relaxed = true)
     private var mockScheduleController: ScheduleController = mockk(relaxed = true)
-    private var mockSearchController: SearchController = mockk(relaxed = true)
+    private var mockSearchAppShortcutUseCase: SearchAppShortcutUseCase = mockk(relaxed = true)
 
     private lateinit var sut: SyncViewModel
 
@@ -45,7 +45,6 @@ internal class SyncViewModelTest: BaseTest() {
     internal fun setUp() {
         every { mockForceUpgradeController.shouldForceUpgrade } returns false
         every { mockRssController.enabled } returns false
-        every { mockSearchController.enabled } returns false
         coEvery { mockFetchConfigUseCase.fetchAndApply() } returns true
 
         coEvery { mockCircuitRepository.fetchCircuits() } returns true
@@ -67,7 +66,7 @@ internal class SyncViewModelTest: BaseTest() {
             mockForceUpgradeController,
             mockCacheRepository,
             mockScheduleController,
-            mockSearchController,
+            mockSearchAppShortcutUseCase,
             ioDispatcher = coroutineScope.testDispatcher
         )
     }
@@ -94,6 +93,7 @@ internal class SyncViewModelTest: BaseTest() {
         }
         verify {
             mockCacheRepository.initialSync = true
+            mockSearchAppShortcutUseCase.setup()
         }
     }
 
@@ -120,6 +120,7 @@ internal class SyncViewModelTest: BaseTest() {
         }
         verify {
             mockCacheRepository.initialSync = true
+            mockSearchAppShortcutUseCase.setup()
         }
     }
 
@@ -145,6 +146,7 @@ internal class SyncViewModelTest: BaseTest() {
         }
         verify {
             mockCacheRepository.initialSync = true
+            mockSearchAppShortcutUseCase.setup()
         }
     }
 
@@ -179,6 +181,7 @@ internal class SyncViewModelTest: BaseTest() {
         }
         verify(exactly = 0) {
             mockCacheRepository.initialSync = true
+            mockSearchAppShortcutUseCase.setup()
         }
     }
 

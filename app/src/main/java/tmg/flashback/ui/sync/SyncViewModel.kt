@@ -13,12 +13,12 @@ import tmg.flashback.configuration.usecases.FetchConfigUseCase
 import tmg.flashback.configuration.usecases.ResetConfigUseCase
 import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.statistics.controllers.ScheduleController
-import tmg.flashback.statistics.controllers.SearchController
 import tmg.flashback.statistics.repo.CircuitRepository
 import tmg.flashback.statistics.repo.ConstructorRepository
 import tmg.flashback.statistics.repo.DriverRepository
 import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.flashback.statistics.repo.repository.CacheRepository
+import tmg.flashback.statistics.usecases.SearchAppShortcutUseCase
 import tmg.flashback.ui.sync.SyncState.*
 import tmg.utilities.lifecycle.DataEvent
 
@@ -54,7 +54,7 @@ class SyncViewModel(
     private val forceUpgradeController: ForceUpgradeController,
     private val cacheRepository: CacheRepository,
     private val scheduleController: ScheduleController,
-    private val searchController: SearchController,
+    private val searchAppShortcutUseCase: SearchAppShortcutUseCase,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ): ViewModel(), SyncViewModelInputs, SyncViewModelOutputs {
 
@@ -192,10 +192,7 @@ class SyncViewModel(
         }
 
         // Shortcuts for Search
-        when (searchController.enabled) {
-            true -> searchController.addAppShortcut()
-            false -> searchController.removeAppShortcut()
-        }
+        searchAppShortcutUseCase.setup()
 
         // Schedule notifications
         scheduleController.scheduleNotifications()

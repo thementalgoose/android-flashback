@@ -14,8 +14,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import tmg.flashback.R
 import tmg.flashback.common.ui.releasenotes.ReleaseBottomSheetFragment
 import tmg.flashback.databinding.FragmentDashboardBinding
-import tmg.flashback.statistics.controllers.HomeController
-import tmg.flashback.statistics.controllers.SearchController
+import tmg.flashback.statistics.repository.HomeRepository
 import tmg.flashback.statistics.ui.dashboard.season.SeasonFragment
 import tmg.flashback.statistics.ui.dashboard.season.SeasonFragmentCallback
 import tmg.flashback.statistics.ui.search.SearchActivity
@@ -31,8 +30,7 @@ class DashboardFragment : BaseFragment(),
     private val viewModel: DashboardViewModel by viewModel()
     private val binding by viewInflateBinding(FragmentDashboardBinding::inflate)
 
-    private val searchController: SearchController by inject()
-    private val homeController: HomeController by inject()
+    private val homeRepository: HomeRepository by inject()
 
     private val seasonTag: String = "season"
     private val seasonFragment: SeasonFragment?
@@ -58,7 +56,7 @@ class DashboardFragment : BaseFragment(),
 
         binding.panels.registerStartPanelStateListeners(this)
 
-        if (searchController.enabled) {
+        if (homeRepository.searchEnabled) {
             binding.search.show()
             binding.search.setOnClickListener {
                 viewModel.inputs.clickSearch()
@@ -126,7 +124,7 @@ class DashboardFragment : BaseFragment(),
                 .translationY(0.0f)
                 .setDuration(250L)
                 .start()
-            if (searchController.enabled) {
+            if (homeRepository.searchEnabled) {
                 binding.search.animate()
                     .translationY(0.0f)
                     .setDuration(250L)
@@ -137,7 +135,7 @@ class DashboardFragment : BaseFragment(),
                 .translationY(binding.navigation.height.toFloat())
                 .setDuration(250L)
                 .start()
-            if (searchController.enabled) {
+            if (homeRepository.searchEnabled) {
                 binding.search.animate()
                     .translationY(binding.navigation.height.toFloat())
                     .setDuration(250L)
@@ -184,13 +182,13 @@ class DashboardFragment : BaseFragment(),
     }
 
     override fun scrollUp() {
-        if (searchController.enabled) {
+        if (homeRepository.searchEnabled) {
             binding.search.extend()
         }
     }
 
     override fun scrollDown() {
-        if (searchController.enabled) {
+        if (homeRepository.searchEnabled) {
             binding.search.shrink()
         }
     }

@@ -11,8 +11,8 @@ import tmg.flashback.configuration.usecases.ApplyConfigUseCase
 import tmg.flashback.crash_reporting.controllers.CrashController
 import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.statistics.controllers.ScheduleController
-import tmg.flashback.statistics.controllers.SearchController
 import tmg.flashback.statistics.repo.repository.CacheRepository
+import tmg.flashback.statistics.usecases.SearchAppShortcutUseCase
 
 //region Inputs
 
@@ -41,7 +41,7 @@ class HomeViewModel(
     private val crashController: CrashController,
     private val forceUpgradeController: ForceUpgradeController,
     private val cacheRepository: CacheRepository,
-    private val searchController: SearchController,
+    private val searchAppShortcutUseCase: SearchAppShortcutUseCase,
     private val scheduleController: ScheduleController
 ): ViewModel(), HomeViewModelInputs, HomeViewModelOutputs {
 
@@ -85,10 +85,7 @@ class HomeViewModel(
         }
 
         // Shortcuts for Search
-        when (searchController.enabled) {
-            true -> searchController.addAppShortcut()
-            false -> searchController.removeAppShortcut()
-        }
+        searchAppShortcutUseCase.setup()
 
         // Schedule notifications
         scheduleController.scheduleNotifications()
