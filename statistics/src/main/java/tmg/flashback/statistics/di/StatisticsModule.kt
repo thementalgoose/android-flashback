@@ -73,12 +73,12 @@ val statisticsModule = repoModule + module {
         parameters = worker)
     }
     worker { (worker: WorkerParameters) -> ContentSyncWorker(
-        configController = get(),
         homeController = get(),
+        fetchConfigUseCase = get(),
         overviewRepository = get(),
         workerProvider = get(),
         context = androidContext(),
-        parameters = worker)
-    }
+        parameters = worker
+    ) }
     single { WorkerProvider(androidContext()) }
 }
