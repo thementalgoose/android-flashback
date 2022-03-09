@@ -37,8 +37,11 @@ internal class ForceUpgradeViewModelTest: BaseTest() {
         every { mockForceUpgradeController.forceUpgrade } returns null
         initSUT()
 
-        sut.outputs.data.test {
-            assertValue(Pair("Error :(", "Please restart the app"))
+        sut.outputs.title.test {
+            assertValue("Error :(")
+        }
+        sut.outputs.message.test {
+            assertValue("Please restart the app")
         }
         sut.outputs.showLink.test {
             assertValue(null)
@@ -55,8 +58,11 @@ internal class ForceUpgradeViewModelTest: BaseTest() {
         )
         initSUT()
 
-        sut.outputs.data.test {
-            assertValue(Pair("title", "message"))
+        sut.outputs.title.test {
+            assertValue("title")
+        }
+        sut.outputs.message.test {
+            assertValue("message")
         }
         sut.outputs.showLink.test {
             assertValue(Pair("text", "https://www.google.com"))
@@ -80,8 +86,11 @@ internal class ForceUpgradeViewModelTest: BaseTest() {
         )
         initSUT()
 
-        sut.outputs.data.test {
-            assertValue(Pair("title", "message"))
+        sut.outputs.title.test {
+            assertValue("title")
+        }
+        sut.outputs.message.test {
+            assertValue("message")
         }
         sut.outputs.showLink.test {
             assertValue(null)

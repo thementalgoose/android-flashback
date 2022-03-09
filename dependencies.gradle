@@ -24,6 +24,7 @@ allprojects {
                         material                                : "androidx.compose.material:material:$android_compose",
                         animation                               : "androidx.compose.animation:animation:$android_compose",
                         tooling                                 : "androidx.compose.ui:ui-tooling:$android_compose",
+                        runtime                                 : "androidx.compose.runtime:runtime-livedata:$android_compose",
                         viewmodel                               : "androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha07",
                         theme_adapter                           : "com.google.android.material:compose-theme-adapter:1.0.5",
                 ],
