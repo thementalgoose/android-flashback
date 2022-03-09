@@ -29,6 +29,7 @@ fun ForceUpgradeLayout(
             TextHeadline1(
                 text = title,
                 modifier = Modifier
+                    .fillMaxWidth()
                     .padding(
                         start = AppTheme.dimensions.paddingMedium,
                         end = AppTheme.dimensions.paddingMedium,
