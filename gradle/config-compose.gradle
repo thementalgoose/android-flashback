@@ -15,6 +15,7 @@ dependencies {
     implementation deps.compose.material
     implementation deps.compose.animation
     implementation deps.compose.tooling
+    implementation deps.compose.runtime
     implementation deps.compose.viewmodel
     implementation deps.compose.theme_adapter
 }
