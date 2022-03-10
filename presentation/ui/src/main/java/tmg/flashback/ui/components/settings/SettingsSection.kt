@@ -10,7 +10,7 @@ import tmg.flashback.ui.R
 import tmg.flashback.ui.settings.SettingsModel
 
 @Composable
-fun SettingsScreen(
+fun SettingsSection(
     models: List<SettingsModel>,
     modifier: Modifier = Modifier
 ) {
@@ -48,7 +48,7 @@ fun SettingsScreen(
 @Composable
 private fun PreviewLight() {
     AppThemePreview(isLight = true) {
-        SettingsScreen(models = fakeSettings)
+        SettingsSection(models = fakeSettings)
     }
 }
 
@@ -56,7 +56,7 @@ private fun PreviewLight() {
 @Composable
 private fun PreviewDark() {
     AppThemePreview(isLight = false) {
-        SettingsScreen(models = fakeSettings)
+        SettingsSection(models = fakeSettings)
     }
 }
 
