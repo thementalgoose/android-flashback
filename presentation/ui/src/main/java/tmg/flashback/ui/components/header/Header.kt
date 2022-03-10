@@ -10,28 +10,33 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.text.TextHeadline1
+import tmg.flashback.ui.R
 
 @Composable
 fun Header(
     text: String,
-    icon: ImageVector,
+    icon: Painter,
     iconContentDescription: String,
     actionUpClicked: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(top = AppTheme.dimensions.paddingXSmall)
     ) {
         IconButton(
             onClick = actionUpClicked
         ) {
             Icon(
-                imageVector = icon,
+                painter = icon,
                 contentDescription = iconContentDescription,
                 tint = AppTheme.colors.contentPrimary
             )
@@ -56,7 +61,7 @@ private fun PreviewLight() {
     AppThemePreview(isLight = true) {
         Header(
             text = "2022",
-            icon = Icons.Default.Menu,
+            icon = painterResource(id = R.drawable.ic_menu),
             iconContentDescription = "Menu",
             actionUpClicked = { }
         )
@@ -69,7 +74,7 @@ private fun PreviewDark() {
     AppThemePreview(isLight = false) {
         Header(
             text = "Daniel Ricciardo\n2022",
-            icon = Icons.Default.ArrowBack,
+            icon = painterResource(id = R.drawable.ic_back),
             iconContentDescription = "Menu",
             actionUpClicked = { }
         )

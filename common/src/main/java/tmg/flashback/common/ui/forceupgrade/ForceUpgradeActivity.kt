@@ -30,7 +30,7 @@ class ForceUpgradeActivity: BaseActivity() {
                         val message = viewModel.outputs.message.observeAsState("")
                         val showLink = viewModel.outputs.showLink.observeAsState(null)
 
-                        ForceUpgradeLayout(
+                        ForceUpgradeScreen(
                             title = title.value,
                             description = message.value,
                             link = showLink.value,
