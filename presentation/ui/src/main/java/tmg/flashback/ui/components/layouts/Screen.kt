@@ -1,4 +1,4 @@
-package tmg.flashback.ui.layout
+package tmg.flashback.ui.components.layouts
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
@@ -192,7 +192,7 @@ private fun PreviewDark() {
         Screen(
             title = "2021"
         ) {
-            items(3) { index ->
+            items(25) { index ->
                 TextBody1(
                     text = "Lazy Content $index",
                     modifier = Modifier.padding(16.dp)
