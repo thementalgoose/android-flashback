@@ -12,26 +12,37 @@ import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 
 @Composable
-fun Preference(
+internal fun Preference(
     title: String,
     subtitle: String,
     preferenceClicked: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    beta: Boolean = false
 ) {
     Column(
         modifier = modifier
             .fillMaxWidth()
             .clickable(onClick = preferenceClicked)
             .padding(
-                start = AppTheme.dimensions.paddingMedium,
+                AppTheme.dimensions.paddingSmall, // Experimental label
                 end = AppTheme.dimensions.paddingMedium,
                 top = AppTheme.dimensions.paddingNSmall,
                 bottom = AppTheme.dimensions.paddingNSmall
             )
     ) {
-        TextBody1(text = title)
+        TextBody1(
+            text = title,
+            modifier = Modifier.padding(start = AppTheme.dimensions.paddingSmall)
+        )
         Spacer(modifier = Modifier.height(4.dp))
-        TextBody2(text = subtitle)
+        TextBody2(
+            text = subtitle,
+            modifier = Modifier.padding(start = AppTheme.dimensions.paddingSmall)
+        )
+        if (beta) {
+            Spacer(modifier = Modifier.height(4.dp))
+            ExperimentalLabel()
+        }
     }
 }
 
@@ -42,6 +53,7 @@ private fun PreviewLight() {
         Preference(
             title = "App theme",
             subtitle = "Pick your app colour scheme",
+            beta = true,
             preferenceClicked = { }
         )
     }
