@@ -17,12 +17,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import tmg.flashback.common.R
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.ui.components.header.Header
 import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.getColor
+import tmg.utilities.lifecycle.Event
 
 @Composable
 fun PrivacyPolicyScreen(
@@ -60,6 +63,8 @@ fun PrivacyPolicyScreen(
 @Composable
 private fun Preview() {
     AppThemePreview(isLight = true) {
-        PrivacyPolicyScreen(clickBack = {})
+        PrivacyPolicyScreen(
+            clickBack = {}
+        )
     }
 }
