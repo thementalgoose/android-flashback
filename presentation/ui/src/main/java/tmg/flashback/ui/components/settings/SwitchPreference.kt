@@ -14,12 +14,13 @@ import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextBody2
 
 @Composable
-fun SwitchPreference(
+internal fun SwitchPreference(
     title: String,
     subtitle: String,
     isChecked: Boolean,
     preferenceClicked: (newState: Boolean) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    beta: Boolean = false
 ) {
     Row(
         modifier = modifier
@@ -28,18 +29,29 @@ fun SwitchPreference(
                 preferenceClicked(isChecked)
             })
             .padding(
-                start = AppTheme.dimensions.paddingMedium,
+                start = AppTheme.dimensions.paddingSmall, // Experimental label
                 end = AppTheme.dimensions.paddingMedium,
                 top = AppTheme.dimensions.paddingNSmall,
                 bottom = AppTheme.dimensions.paddingNSmall
             )
     ) {
-        Column(modifier = Modifier
-            .weight(1f)
+        Column(
+            modifier = Modifier
+                .weight(1f)
         ) {
-            TextBody1(text = title)
+            TextBody1(
+                text = title,
+                modifier = Modifier.padding(start = AppTheme.dimensions.paddingSmall)
+            )
             Spacer(modifier = Modifier.height(4.dp))
-            TextBody2(text = subtitle)
+            TextBody2(
+                text = subtitle,
+                modifier = Modifier.padding(start = AppTheme.dimensions.paddingSmall)
+            )
+            if (beta) {
+                Spacer(modifier = Modifier.height(4.dp))
+                ExperimentalLabel()
+            }
         }
         Spacer(modifier = Modifier.width(4.dp))
         Checkbox(
@@ -71,6 +83,7 @@ private fun PreviewDark() {
             title = "Show description",
             subtitle = "Show the article description alongside the rss source if it has one",
             isChecked = true,
+            beta = true,
             preferenceClicked = { }
         )
     }
