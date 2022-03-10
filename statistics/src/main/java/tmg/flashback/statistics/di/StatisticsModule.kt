@@ -39,7 +39,7 @@ val statisticsModule = repoModule + module {
     viewModel { ConstructorViewModel(get(), get()) }
     viewModel { DriverViewModel(get(), get()) }
     viewModel { DriverSeasonViewModel(get(), get(), get()) }
-    viewModel { RaceViewModel(get(), get(), get(), get(), get()) }
+    viewModel { RaceViewModel(get(), get(), get(), get()) }
     viewModel { SearchViewModel(get(), get(), get(), get(), get()) }
     viewModel { CategoryViewModel() }
 
