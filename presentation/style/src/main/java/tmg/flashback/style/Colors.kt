@@ -28,6 +28,7 @@ class AppColors(
     val backgroundSecondaryInverse: Color,
     val backgroundTertiaryInverse: Color,
     val backgroundNav: Color,
+    val backgroundSplash: Color,
     // F1
     val f1Podium1: Color,
     val f1Podium2: Color,
@@ -88,6 +89,7 @@ val lightColours = AppColors(
     backgroundSecondaryInverse = Color(0xFF383838),
     backgroundTertiaryInverse = Color(0xFF484848),
     backgroundNav = Color(0xFFFCFCFC),
+    backgroundSplash = Color(0xFF01A5D9),
     f1Podium1 = Color(0xFFD3BC4D),
     f1Podium2 = Color(0xFFC2C2C2),
     f1Podium3 = Color(0xFFD29342),
@@ -126,6 +128,7 @@ val darkColours = AppColors(
     backgroundSecondaryInverse = Color(0xFFF2F2F2),
     backgroundTertiaryInverse = Color(0xFFEEEEEE),
     backgroundNav = Color(0xFF383838),
+    backgroundSplash = Color(0xFF01A5D9),
     f1Podium1 = Color(0xFFD3BC4D),
     f1Podium2 = Color(0xFFC2C2C2),
     f1Podium3 = Color(0xFFD29342),

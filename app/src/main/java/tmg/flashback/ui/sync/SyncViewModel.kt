@@ -110,6 +110,7 @@ class SyncViewModel(
         .asLiveData(viewModelScope.coroutineContext)
 
     override fun startLoading() {
+        showRetry.value = false
         startRemoteConfig()
         startSyncDrivers()
         startSyncConstructors()
