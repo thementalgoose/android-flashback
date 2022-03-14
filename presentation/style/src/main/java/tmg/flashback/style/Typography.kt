@@ -14,12 +14,12 @@ private val montserrat = FontFamily(
 data class AppTypography(
     val h1: TextStyle = TextStyle(
         fontFamily = montserrat,
-        fontWeight = FontWeight.Normal,
-        fontSize = 32.sp
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 30.sp
     ),
     val h2: TextStyle = TextStyle(
         fontFamily = montserrat,
-        fontWeight = FontWeight.Normal,
+        fontWeight = FontWeight.SemiBold,
         fontSize = 18.sp
     ),
     val title: TextStyle = TextStyle(

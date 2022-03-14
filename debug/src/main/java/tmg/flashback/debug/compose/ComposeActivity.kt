@@ -8,7 +8,7 @@ import androidx.compose.ui.unit.dp
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.text.TextBody1
 import tmg.flashback.ui.base.BaseActivity
-import tmg.flashback.ui.layout.Screen
+import tmg.flashback.ui.components.layouts.Screen
 
 class ComposeActivity : BaseActivity() {
 

@@ -36,6 +36,8 @@ object AppTheme {
     val dimensions: AppDimensions = AppDimensions()
 }
 
+val Dimensions = AppTheme.dimensions
+
 @Composable
 fun AppTheme(
     isLight: Boolean = !isSystemInDarkTheme(),
@@ -55,10 +57,12 @@ fun AppTheme(
 @Composable
 fun AppThemePreview(
     isLight: Boolean = true,
+    theme: SupportedTheme = DEFAULT,
     content: @Composable () -> Unit
 ) {
     return AppTheme(
         isLight = isLight,
+        theme = theme,
         content = {
             Box(
                 modifier = Modifier
@@ -83,5 +87,9 @@ enum class SupportedTheme(
     DEFAULT(
         lightColors = lightColours,
         darkColors = darkColours
-    );
+    )
+//    MATERIAL_YOU(
+//        lightColors = lightColours,
+//        darkColors = darkColours
+//    );
 }
