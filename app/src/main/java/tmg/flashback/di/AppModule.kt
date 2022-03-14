@@ -35,7 +35,7 @@ val appModule = module {
 
     single { FlashbackStartup(get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get()) }
 
-    single { DebugController() }
+    single { DebugController(get()) }
 
     single<PreferenceManager> { AppPreferencesManager(get()) }
     single<StyleManager> { AppStyleManager(get(), get()) }
