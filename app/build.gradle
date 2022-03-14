@@ -4,7 +4,7 @@ apply plugin: 'com.android.application'
 apply from: rootDir.absolutePath + "/gradle/config-android.gradle"
 apply from: rootDir.absolutePath + "/gradle/config-util.gradle"
 apply from: rootDir.absolutePath + "/gradle/config-junit5.gradle"
-
+apply from: rootDir.absolutePath + "/gradle/config-compose.gradle"
 apply from: rootDir.absolutePath + "/gradle/config-koin.gradle"
 
 apply plugin: 'com.google.firebase.crashlytics'
@@ -124,8 +124,10 @@ dependencies {
     implementation project(path: ":core:crash-reporting")
     implementation project(path: ":core:device")
     implementation project(path: ":core:notifications")
-    implementation project(path: ":presentation:ui")
     implementation project(path: ":core:preferences")
+
+    implementation project(path: ":presentation:ui")
+    implementation project(path: ":presentation:style")
 
     // Android Test
     androidTestImplementation "androidx.test:rules:1.4.0"

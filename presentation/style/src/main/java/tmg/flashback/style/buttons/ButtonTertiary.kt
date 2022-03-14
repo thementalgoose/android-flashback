@@ -20,8 +20,8 @@ import tmg.flashback.style.AppThemePreview
 @Composable
 fun ButtonTertiary(
     text: String,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    onClick: () -> Unit = { }
 ) {
     Button(
         modifier = modifier
@@ -56,7 +56,7 @@ private fun PreviewLight() {
     AppThemePreview(isLight = true) {
         ButtonTertiary(
             text = "Tertiary Button",
-            modifier = Modifier
+            onClick = { }
         )
     }
 }
@@ -67,7 +67,7 @@ private fun PreviewDark() {
     AppThemePreview(isLight = false) {
         ButtonTertiary(
             text = "Tertiary Button",
-            modifier = Modifier
+            onClick = { }
         )
     }
 }
