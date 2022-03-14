@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
@@ -50,7 +51,11 @@ fun AppTheme(
     CompositionLocalProvider(
         LocalColors provides colors
     ) {
-        content()
+        MaterialTheme(
+            colors = colors.appColors
+        ) {
+            content()
+        }
     }
 }
 

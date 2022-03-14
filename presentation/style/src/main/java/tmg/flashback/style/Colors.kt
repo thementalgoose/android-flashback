@@ -1,5 +1,6 @@
 package tmg.flashback.style
 
+import androidx.compose.material.Colors
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 
@@ -47,6 +48,22 @@ class AppColors(
     val rssNewsBar: Color = backgroundSecondary,
     val isLight: Boolean
 ) {
+
+    val appColors: Colors = Colors(
+        primary = primary,
+        primaryVariant = primary,
+        secondary = accent,
+        secondaryVariant = accent,
+        background = backgroundPrimary,
+        surface = backgroundSecondary,
+        error = Color(0xFFCC0000),
+        onPrimary = Color(0xFFF8F8F8),
+        onSecondary = Color(0xFFF8F8F8),
+        onBackground = contentPrimary,
+        onSurface = contentSecondary,
+        onError = Color(0xFFF8F8F8),
+        isLight = isLight
+    )
 }
 
 internal val textDark: Color = Color(0xFF181818)
