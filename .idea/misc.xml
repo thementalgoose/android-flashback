@@ -77,6 +77,24 @@
         <entry key="../../../../layout/compose-model-1646863533721.xml" value="0.10576923076923077" />
         <entry key="../../../../layout/compose-model-1646863541215.xml" value="0.1" />
         <entry key="../../../../layout/compose-model-1646863924441.xml" value="0.21368243243243243" />
+        <entry key="../../../../layout/compose-model-1646915693001.xml" value="0.45" />
+        <entry key="../../../../layout/compose-model-1646930946931.xml" value="0.165" />
+        <entry key="../../../../layout/compose-model-1646931810513.xml" value="0.27326839826839827" />
+        <entry key="../../../../layout/compose-model-1646933235086.xml" value="0.55" />
+        <entry key="../../../../layout/compose-model-1646933696817.xml" value="0.45" />
+        <entry key="../../../../layout/compose-model-1646933843318.xml" value="0.10556020066889632" />
+        <entry key="../../../../layout/compose-model-1646933870262.xml" value="0.375" />
+        <entry key="../../../../layout/compose-model-1646934613746.xml" value="0.21368243243243243" />
+        <entry key="../../../../layout/compose-model-1646936052303.xml" value="1.0" />
+        <entry key="../../../../layout/compose-model-1646936239735.xml" value="0.625" />
+        <entry key="../../../../layout/compose-model-1646941212458.xml" value="0.21368243243243243" />
+        <entry key="../../../../layout/compose-model-1646941242508.xml" value="1.5" />
+        <entry key="../../../../layout/compose-model-1646941663250.xml" value="0.1" />
+        <entry key="../../../../layout/compose-model-1646941748644.xml" value="0.2972222222222222" />
+        <entry key="../../../../layout/compose-model-1646942469481.xml" value="0.2972222222222222" />
+        <entry key="../../../../layout/compose-model-1646943828491.xml" value="0.21283783783783783" />
+        <entry key="../../../../layout/compose-model-1646944665091.xml" value="0.21283783783783783" />
+        <entry key="../../../../layout/compose-model-1646947907151.xml" value="0.1" />
         <entry key="../../../../layout/custom_preview.xml" value="0.2989583333333333" />
         <entry key="../../Library/Android/sdk/platforms/android-31/data/res/drawable/progress_indeterminate_anim_large_material.xml" value="0.177" />
         <entry key="ads/src/main/res/layout/admob_native_banner.xml" value="0.17708333333333334" />
@@ -94,6 +112,7 @@
         <entry key="app/src/main/res/xml/filepaths.xml" value="0.11354166666666667" />
         <entry key="common/src/main/res/drawable/ic_close.xml" value="0.2171875" />
         <entry key="common/src/main/res/layout/activity_lockout.xml" value="0.23385416666666667" />
+        <entry key="common/src/main/res/layout/activity_privacy_policy.xml" value="0.23697916666666666" />
         <entry key="common/src/main/res/layout/activity_release_notes.xml" value="0.360054347826087" />
         <entry key="common/src/main/res/layout/fragment_bottom_sheet_release_notes.xml" value="0.335" />
         <entry key="common/src/main/res/layout/view_release_note.xml" value="0.360054347826087" />

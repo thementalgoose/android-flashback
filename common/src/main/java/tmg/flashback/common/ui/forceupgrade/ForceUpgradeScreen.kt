@@ -2,6 +2,7 @@ package tmg.flashback.common.ui.forceupgrade
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import tmg.flashback.style.AppTheme
@@ -11,7 +12,7 @@ import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.text.TextHeadline1
 
 @Composable
-fun ForceUpgradeLayout(
+fun ForceUpgradeScreen(
     title: String,
     description: String,
     link: Pair<String, String>?, // linkText, link
@@ -75,7 +76,7 @@ fun ForceUpgradeLayout(
 @Composable
 private fun PreviewLight() {
     AppThemePreview(isLight = true) {
-        ForceUpgradeLayout(
+        ForceUpgradeScreen(
             title = "Force Upgrade",
             description = "Please update the app!",
             link = Pair("Google Play", "this is a url"),
@@ -88,7 +89,7 @@ private fun PreviewLight() {
 @Composable
 private fun PreviewDark() {
     AppThemePreview(isLight = false) {
-        ForceUpgradeLayout(
+        ForceUpgradeScreen(
             title = "Force Upgrade",
             description = "Please update the app!",
             link = null,
