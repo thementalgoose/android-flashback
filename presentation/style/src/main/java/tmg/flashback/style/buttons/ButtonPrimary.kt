@@ -18,8 +18,8 @@ import tmg.flashback.style.FlashbackTheme
 @Composable
 fun ButtonPrimary(
     text: String,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    onClick: () -> Unit = { }
 ) {
     return Button(
         modifier = modifier
@@ -51,7 +51,7 @@ private fun PreviewLight() {
     AppThemePreview(isLight = true) {
         ButtonPrimary(
             text = "Primary Button",
-            modifier = Modifier
+            onClick = { }
         )
     }
 }
@@ -62,7 +62,7 @@ private fun PreviewDark() {
     AppThemePreview(isLight = false) {
         ButtonPrimary(
             text = "Primary Button",
-            modifier = Modifier
+            onClick = { }
         )
     }
 }
