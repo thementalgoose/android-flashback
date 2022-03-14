@@ -66,7 +66,7 @@ private fun ReleaseNote(
 @Preview
 @Composable
 private fun Preview() {
-    AppThemePreview {
+    AppThemePreview(isLight = true) {
         ReleaseScreen(
             clickBack = {}
         )
