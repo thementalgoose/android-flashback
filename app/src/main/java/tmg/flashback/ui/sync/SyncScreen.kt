@@ -2,13 +2,11 @@ package tmg.flashback.ui.sync
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Button
 import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -16,10 +14,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import tmg.flashback.R
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
-import tmg.flashback.style.buttons.ButtonPrimary
 import tmg.flashback.style.buttons.ButtonSecondary
 import tmg.flashback.style.text.TextBody2
-import tmg.flashback.style.text.TextHeadline2
 
 @Composable
 fun SyncScreen(
@@ -28,7 +24,7 @@ fun SyncScreen(
 ) {
     Column(modifier = Modifier
         .fillMaxSize()
-        .background(AppTheme.colors.primary)
+        .background(AppTheme.colors.backgroundSplash)
     ) {
         Text(
             style = AppTheme.typography.h1.copy(
@@ -49,7 +45,8 @@ fun SyncScreen(
 
         if (showLoading) {
             LinearProgressIndicator(
-                color = White
+                color = White,
+                modifier = Modifier.fillMaxWidth()
             )
         } else {
             TextBody2(
@@ -87,7 +84,18 @@ private fun PreviewLoading() {
 @Preview
 @Composable
 private fun PreviewFailed() {
-    AppThemePreview {
+    AppThemePreview(isLight = true) {
+        SyncScreen(
+            showLoading = false,
+            tryAgainClicked = { }
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun PreviewFailedDark() {
+    AppThemePreview(isLight = false) {
         SyncScreen(
             showLoading = false,
             tryAgainClicked = { }
