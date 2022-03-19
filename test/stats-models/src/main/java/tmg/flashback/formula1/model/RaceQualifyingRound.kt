@@ -4,7 +4,7 @@ fun RaceQualifyingRound.Companion.model(
     label: RaceQualifyingType = RaceQualifyingType.Q1,
     order: Int = 1,
     results: List<RaceQualifyingRoundDriver> = listOf(
-        RaceQualifyingRoundDriver.Qualifying.model()
+        RaceQualifyingRoundDriver.model()
     )
 ): RaceQualifyingRound = RaceQualifyingRound(
     label = label,
