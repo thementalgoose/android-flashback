@@ -2,7 +2,6 @@ package tmg.flashback.statistics.repo.mappers.network
 
 import tmg.flashback.statistics.room.models.race.FastestLap
 import tmg.flashback.statistics.room.models.race.QualifyingResult
-import tmg.flashback.statistics.room.models.race.QualifyingSprintResult
 import tmg.flashback.statistics.room.models.race.RaceResult
 
 class NetworkRaceMapper {
