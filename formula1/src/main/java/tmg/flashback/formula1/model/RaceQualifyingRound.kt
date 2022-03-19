@@ -5,9 +5,5 @@ data class RaceQualifyingRound(
     val order: Int,
     val results: List<RaceQualifyingResult>
 ) {
-    val isSprintQualifying: Boolean by lazy {
-        results.any { it is RaceQualifyingResult.SprintQualifying }
-    }
-
     companion object
 }

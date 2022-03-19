@@ -2,8 +2,10 @@ package tmg.flashback.statistics.room.models.race
 
 import androidx.room.ColumnInfo
 import androidx.room.Embedded
+import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+@Entity
 data class SprintResult(
     @ColumnInfo(name = "driver_id")
     val driverId: String,

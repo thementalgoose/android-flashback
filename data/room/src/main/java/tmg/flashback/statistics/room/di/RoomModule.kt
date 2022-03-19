@@ -79,6 +79,7 @@ private val MIGRATION_4_5 = object : Migration(4, 5) {
                 "grid_pos INTEGER, " +
                 "finished INTEGER NOT NULL, " +
                 "status TEXT NOT NULL," +
+                "time TEXT, " +
                 "id TEXT NOT NULL PRIMARY KEY," +
                 "season_round_id TEXT NOT NULL)")
     }

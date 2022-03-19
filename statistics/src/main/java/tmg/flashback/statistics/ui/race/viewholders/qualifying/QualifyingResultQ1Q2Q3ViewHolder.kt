@@ -36,7 +36,7 @@ class QualifyingResultQ1Q2Q3ViewHolder(
     }
 
     private fun bind(
-        result: RaceQualifyingResult.Qualifying?,
+        result: RaceQualifyingResult?,
         layout: LayoutQualifyingTimeBinding?,
         delta: String?,
         qualifyingRound: String,

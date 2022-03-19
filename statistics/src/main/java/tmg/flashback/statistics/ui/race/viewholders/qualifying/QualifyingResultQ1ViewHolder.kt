@@ -33,7 +33,7 @@ class QualifyingResultQ1ViewHolder(
         }
     }
 
-    private fun bind(result: RaceQualifyingResult.Qualifying?, layout: LayoutQualifyingTimeBinding?, delta: String?, showDelta: Boolean = false): Boolean {
+    private fun bind(result: RaceQualifyingResult?, layout: LayoutQualifyingTimeBinding?, delta: String?, showDelta: Boolean = false): Boolean {
         if (layout == null) return false
         val label = result?.lapTime?.toString() ?: ""
         layout.tvQualifyingTime.text = label
