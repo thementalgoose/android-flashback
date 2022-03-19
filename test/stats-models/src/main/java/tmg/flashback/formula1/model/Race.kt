@@ -6,16 +6,16 @@ fun Race.Companion.model(
     raceInfo: RaceInfo = RaceInfo.model(),
     qualifying: List<RaceQualifyingRound> = listOf(
         RaceQualifyingRound.model(label = Q1, order = 1, results = listOf(
-            RaceQualifyingRoundDriver.Qualifying.model(lapTime = LapTime.model(0, 1, 2, 1))
+            RaceQualifyingResult.Qualifying.model(lapTime = LapTime.model(0, 1, 2, 1))
         )),
         RaceQualifyingRound.model(label = Q2, order = 2, results = listOf(
-            RaceQualifyingRoundDriver.Qualifying.model(lapTime = LapTime.model(0, 1, 2, 2))
+            RaceQualifyingResult.Qualifying.model(lapTime = LapTime.model(0, 1, 2, 2))
         )),
         RaceQualifyingRound.model(label = Q3, order = 3, results = listOf(
-            RaceQualifyingRoundDriver.Qualifying.model(lapTime = LapTime.model(0, 1, 2, 3))
+            RaceQualifyingResult.Qualifying.model(lapTime = LapTime.model(0, 1, 2, 3))
         )),
         RaceQualifyingRound.model(label = SPRINT, order = 4, results = listOf(
-            RaceQualifyingRoundDriver.SprintQualifying.model(lapTime = LapTime.model(0, 1, 2, 5))
+            RaceQualifyingResult.SprintQualifying.model(lapTime = LapTime.model(0, 1, 2, 5))
         ))
     ),
     race: List<RaceRaceResult> = listOf(

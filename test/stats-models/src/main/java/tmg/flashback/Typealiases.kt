@@ -38,6 +38,8 @@ typealias NetworkRaceResult = tmg.flashback.statistics.network.models.races.Race
 
 typealias NetworkQualifyingResult = tmg.flashback.statistics.network.models.races.QualifyingResult
 
+typealias NetworkSprintResult = tmg.flashback.statistics.network.models.races.SprintResult
+
 typealias NetworkSchedule = tmg.flashback.statistics.network.models.overview.Schedule
 
 //endregion

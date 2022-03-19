@@ -5,6 +5,7 @@ import tmg.flashback.formula1.model.RaceQualifyingType.*
 data class Race(
     val raceInfo: RaceInfo,
     val qualifying: List<RaceQualifyingRound>,
+    val sprint: List<RaceSprintResult>,
     val race: List<RaceRaceResult>,
     val schedule: List<Schedule>
 ) {
@@ -33,15 +34,15 @@ data class Race(
         val driver = drivers.firstOrNull { it.driver.id == driverId } ?: return null
         return RaceDriverOverview(
             driver = driver,
-            q1 = qualifying.firstOrNull { it.label == Q1 }?.results?.firstOrNull { it.driver.driver.id == driverId } as? RaceQualifyingRoundDriver.Qualifying,
-            q2 = qualifying.firstOrNull { it.label == Q2 }?.results?.firstOrNull { it.driver.driver.id == driverId } as? RaceQualifyingRoundDriver.Qualifying,
-            q3 = qualifying.firstOrNull { it.label == Q3 }?.results?.firstOrNull { it.driver.driver.id == driverId } as? RaceQualifyingRoundDriver.Qualifying,
-            qSprint = qualifying.firstOrNull { it.label == SPRINT}?.results?.firstOrNull { it.driver.driver.id == driverId } as? RaceQualifyingRoundDriver.SprintQualifying,
+            q1 = qualifying.firstOrNull { it.label == Q1 }?.results?.firstOrNull { it.driver.driver.id == driverId },
+            q2 = qualifying.firstOrNull { it.label == Q2 }?.results?.firstOrNull { it.driver.driver.id == driverId },
+            q3 = qualifying.firstOrNull { it.label == Q3 }?.results?.firstOrNull { it.driver.driver.id == driverId },
+            qSprint = sprint.firstOrNull { it.driver.driver.id == driverId },
             race = race.firstOrNull { it.driver.driver.id == driverId }
         )
     }
 
-    val hasSprintQualifying: Boolean = has(SPRINT)
+    val hasSprintQualifying: Boolean = sprint.isNotEmpty()
 
     fun has(raceQualifyingType: RaceQualifyingType): Boolean {
         return qualifying.any { it.label == raceQualifyingType}
@@ -79,13 +80,10 @@ data class Race(
                 standings[raceResult.driver.constructor.id] = previousPoints
             }
             if (hasSprintQualifying) {
-                val list = qualifying.firstOrNull { it.isSprintQualifying }?.results ?: emptyList()
-                list.forEach {
-                    if (it is RaceQualifyingRoundDriver.SprintQualifying) {
-                        var previousPoints = standings.getOrPut(it.driver.constructor.id) { 0.0 }
-                        previousPoints += it.points
-                        standings[it.driver.constructor.id] = previousPoints
-                    }
+                sprint.forEach {
+                    var previousPoints = standings.getOrPut(it.driver.constructor.id) { 0.0 }
+                    previousPoints += it.points
+                    standings[it.driver.constructor.id] = previousPoints
                 }
             }
             return constructors

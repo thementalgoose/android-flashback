@@ -161,7 +161,7 @@ class RaceViewModel(
                                     if (results != null) {
                                         list.addAll(results.map {
                                             RaceItem.SprintQualifyingResult(
-                                                qSprint = it as RaceQualifyingRoundDriver.SprintQualifying
+                                                qSprint = it as RaceQualifyingResult.SprintQualifying
                                             )
                                         })
                                     } else {
@@ -326,7 +326,7 @@ class RaceViewModel(
         return race.race
             .mapNotNull { raceResult ->
                 if (raceResult.driver.constructor.id != constructorId) return@mapNotNull null
-                val sprintQualifying = race.qualifying.firstOrNull { it.isSprintQualifying }?.results?.firstOrNull { it.driver.driver.id == raceResult.driver.driver.id } as? RaceQualifyingRoundDriver.SprintQualifying
+                val sprintQualifying = race.qualifying.firstOrNull { it.isSprintQualifying }?.results?.firstOrNull { it.driver.driver.id == raceResult.driver.driver.id } as? RaceQualifyingResult.SprintQualifying
                 return@mapNotNull Pair(raceResult.driver.driver, raceResult.points + (sprintQualifying?.points ?: 0.0))
             }
             .sortedByDescending { it.second }
