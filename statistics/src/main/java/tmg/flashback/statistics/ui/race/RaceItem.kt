@@ -48,18 +48,18 @@ sealed class RaceItem(
     )
 
     data class SprintQualifyingResult(
-        val qSprint: RaceQualifyingResult.SprintQualifying
+        val sprint: RaceSprintResult
     ): RaceItem(
-        id = qSprint.driver.driver.id,
+        id = sprint.driver.driver.id,
         layoutId = R.layout.view_race_sprint_qualifying_result
     )
 
     data class QualifyingResultQ1Q2Q3(
         val driver: DriverConstructor,
         private val finalQualifyingPosition: Int?,
-        val q1: RaceQualifyingResult.Qualifying?,
-        val q2: RaceQualifyingResult.Qualifying?,
-        val q3: RaceQualifyingResult.Qualifying?,
+        val q1: RaceQualifyingResult?,
+        val q2: RaceQualifyingResult?,
+        val q3: RaceQualifyingResult?,
         val q1Delta: String?,
         val q2Delta: String?,
         val q3Delta: String?,
@@ -72,8 +72,8 @@ sealed class RaceItem(
     data class QualifyingResultQ1Q2(
         val driver: DriverConstructor,
         private val finalQualifyingPosition: Int?,
-        val q1: RaceQualifyingResult.Qualifying?,
-        val q2: RaceQualifyingResult.Qualifying?,
+        val q1: RaceQualifyingResult?,
+        val q2: RaceQualifyingResult?,
         val q1Delta: String?,
         val q2Delta: String?,
         val qualified: Int? = finalQualifyingPosition
@@ -85,7 +85,7 @@ sealed class RaceItem(
     data class QualifyingResultQ1(
         val driver: DriverConstructor,
         private val finalQualifyingPosition: Int?,
-        val q1: RaceQualifyingResult.Qualifying?,
+        val q1: RaceQualifyingResult?,
         val q1Delta: String?,
         val qualified: Int? = q1?.position ?: finalQualifyingPosition
     ): RaceItem(
