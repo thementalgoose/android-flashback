@@ -18,13 +18,14 @@ import tmg.flashback.statistics.room.models.overview.Schedule
 import tmg.flashback.statistics.room.models.race.QualifyingResult
 import tmg.flashback.statistics.room.models.race.RaceInfo
 import tmg.flashback.statistics.room.models.race.RaceResult
+import tmg.flashback.statistics.room.models.race.SprintResult
 import tmg.flashback.statistics.room.models.standings.ConstructorStanding
 import tmg.flashback.statistics.room.models.standings.ConstructorStandingDriver
 import tmg.flashback.statistics.room.models.standings.DriverStanding
 import tmg.flashback.statistics.room.models.standings.DriverStandingConstructor
 
 @Database(
-    version = 4,
+    version = 5,
     entities = [
         Circuit::class,
         CircuitRound::class,
@@ -40,6 +41,7 @@ import tmg.flashback.statistics.room.models.standings.DriverStandingConstructor
         RaceInfo::class,
         RaceResult::class,
         QualifyingResult::class,
+        SprintResult::class,
         DriverStanding::class,
         DriverStandingConstructor::class,
         ConstructorStanding::class,
