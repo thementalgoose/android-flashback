@@ -22,22 +22,22 @@ internal val raceModel: Race = Race.model(
             label = RaceQualifyingType.Q1,
             order = 1,
             results = listOf(
-                RaceQualifyingRoundDriver.Qualifying.model(
+                RaceQualifyingResult.Qualifying.model(
                     driver = driver1,
                     lapTime = LapTime.model(0, 1, 1, 0),
                     position = 2
                 ),
-                RaceQualifyingRoundDriver.Qualifying.model(
+                RaceQualifyingResult.Qualifying.model(
                     driver = driver2,
                     lapTime = LapTime.model(0, 1, 3, 0),
                     position = 1
                 ),
-                RaceQualifyingRoundDriver.Qualifying.model(
+                RaceQualifyingResult.Qualifying.model(
                     driver = driver3,
                     lapTime = LapTime.model(0, 1, 2, 0),
                     position = 3
                 ),
-                RaceQualifyingRoundDriver.Qualifying.model(
+                RaceQualifyingResult.Qualifying.model(
                     driver = driver4,
                     lapTime = LapTime.model(0, 1, 4, 0),
                     position = 4
@@ -48,22 +48,22 @@ internal val raceModel: Race = Race.model(
             label = RaceQualifyingType.Q2,
             order = 2,
             results = listOf(
-                RaceQualifyingRoundDriver.Qualifying.model(
+                RaceQualifyingResult.Qualifying.model(
                     driver = driver1,
                     lapTime = LapTime.model(0, 1, 1, 0),
                     position = 2
                 ),
-                RaceQualifyingRoundDriver.Qualifying.model(
+                RaceQualifyingResult.Qualifying.model(
                     driver = driver2,
                     lapTime = LapTime.model(0, 1, 2, 0),
                     position = 1
                 ),
-                RaceQualifyingRoundDriver.Qualifying.model(
+                RaceQualifyingResult.Qualifying.model(
                     driver = driver3,
                     lapTime = LapTime.model(0, 1, 3, 0),
                     position = 3
                 ),
-                RaceQualifyingRoundDriver.Qualifying.model(
+                RaceQualifyingResult.Qualifying.model(
                     driver = driver4,
                     lapTime = null,
                     position = 4
@@ -74,22 +74,22 @@ internal val raceModel: Race = Race.model(
             label = RaceQualifyingType.Q3,
             order = 3,
             results = listOf(
-                RaceQualifyingRoundDriver.Qualifying.model(
+                RaceQualifyingResult.Qualifying.model(
                     driver = driver1,
                     lapTime = LapTime.model(0, 1, 1, 0),
                     position = 2
                 ),
-                RaceQualifyingRoundDriver.Qualifying.model(
+                RaceQualifyingResult.Qualifying.model(
                     driver = driver2,
                     lapTime = LapTime.model(0, 1, 1, 0),
                     position = 1
                 ),
-                RaceQualifyingRoundDriver.Qualifying.model(
+                RaceQualifyingResult.Qualifying.model(
                     driver = driver3,
                     lapTime = null,
                     position = 3
                 ),
-                RaceQualifyingRoundDriver.Qualifying.model(
+                RaceQualifyingResult.Qualifying.model(
                     driver = driver4,
                     lapTime = null,
                     position = 4

@@ -9,7 +9,7 @@ internal class RaceQualifyingRoundTest {
     @Test
     fun `is sprint qualifying returns true if models have sprint qualifying`() {
         val model = RaceQualifyingRound.model(
-            results = listOf(RaceQualifyingRoundDriver.SprintQualifying.model())
+            results = listOf(RaceQualifyingResult.SprintQualifying.model())
         )
 
         assertTrue(model.isSprintQualifying)
@@ -18,7 +18,7 @@ internal class RaceQualifyingRoundTest {
     @Test
     fun `is sprint qualifying returns false if models dont have sprint qualifying`() {
         val model = RaceQualifyingRound.model(
-            results = listOf(RaceQualifyingRoundDriver.Qualifying.model())
+            results = listOf(RaceQualifyingResult.Qualifying.model())
         )
 
         assertFalse(model.isSprintQualifying)

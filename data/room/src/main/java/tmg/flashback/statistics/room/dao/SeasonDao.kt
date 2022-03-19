@@ -2,10 +2,7 @@ package tmg.flashback.statistics.room.dao
 
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow
-import tmg.flashback.statistics.room.models.race.QualifyingResult
-import tmg.flashback.statistics.room.models.race.Race
-import tmg.flashback.statistics.room.models.race.RaceInfo
-import tmg.flashback.statistics.room.models.race.RaceResult
+import tmg.flashback.statistics.room.models.race.*
 
 @Dao
 interface SeasonDao {
@@ -30,21 +27,36 @@ interface SeasonDao {
     fun insertRaceData(list: RaceInfo)
 
     @Transaction
-    fun insertRace(race: RaceInfo, qualifyingResults: List<QualifyingResult>, raceResults: List<RaceResult>) {
+    fun insertRace(
+        race: RaceInfo,
+        qualifyingResults: List<QualifyingResult>,
+        sprintResults: List<SprintResult>,
+        raceResults: List<RaceResult>
+    ) {
         insertQualifyingResults(qualifyingResults)
+        insertSprintResults(sprintResults)
         insertRaceResult(raceResults)
         insertRaceData(race)
     }
 
     @Transaction
-    fun insertRaces(races: List<RaceInfo>, qualifyingResults: List<QualifyingResult>, raceResults: List<RaceResult>) {
+    fun insertRaces(
+        races: List<RaceInfo>,
+        qualifyingResults: List<QualifyingResult>,
+        sprintResults: List<SprintResult>,
+        raceResults: List<RaceResult>,
+    ) {
         insertQualifyingResults(qualifyingResults)
+        insertSprintResults(sprintResults)
         insertRaceResult(raceResults)
         insertRaceData(races)
     }
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertQualifyingResults(results: List<QualifyingResult>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertSprintResults(results: List<SprintResult>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertRaceResult(results: List<RaceResult>)

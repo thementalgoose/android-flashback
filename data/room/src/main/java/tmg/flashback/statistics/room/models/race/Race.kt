@@ -26,6 +26,12 @@ data class Race(
     )
     val race: List<RaceDriverResult>,
     @Relation(
+        entity = SprintResult::class,
+        parentColumn = "id",
+        entityColumn = "season_round_id"
+    )
+    val sprint: List<SprintDriverResult>,
+    @Relation(
         parentColumn = "id",
         entityColumn = "season_round_id"
     )

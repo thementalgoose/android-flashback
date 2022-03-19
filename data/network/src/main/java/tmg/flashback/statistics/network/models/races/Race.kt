@@ -9,6 +9,7 @@ import tmg.flashback.statistics.network.models.overview.Schedule
 data class Race(
     val data: RaceData,
     val race: Map<String, RaceResult>,
+    val sprint: Map<String, SprintResult>,
     val qualifying: Map<String, QualifyingResult>,
     val schedule: List<Schedule>? = null,
 ) {

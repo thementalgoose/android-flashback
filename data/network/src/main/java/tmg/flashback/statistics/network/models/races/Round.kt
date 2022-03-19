@@ -13,8 +13,9 @@ data class Round(
     val constructors: Map<String, Constructor>,
     val data: RaceData,
     val race: Map<String, RaceResult>?,
+    val sprint: Map<String, SprintResult>? = null,
     val qualifying: Map<String, QualifyingResult>?,
-    val schedule: List<Schedule>?
+    val schedule: List<Schedule>? = null
 ) {
     companion object
 }

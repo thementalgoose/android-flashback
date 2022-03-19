@@ -7,7 +7,6 @@ data class RaceSprintResult(
     val time: LapTime?,
     val points: Double,
     val grid: Int?,
-    val qualified: Int?,
     val finish: Int,
     val status: RaceStatus
 ) {

@@ -4,7 +4,7 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.formula1.model.Driver
 import tmg.flashback.formula1.model.DriverConstructor
-import tmg.flashback.formula1.model.RaceQualifyingRoundDriver
+import tmg.flashback.formula1.model.RaceQualifyingResult
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.LayoutQualifyingTimeBinding
 import tmg.flashback.statistics.databinding.ViewRaceQualifyingQ1q2q3ResultBinding
@@ -36,7 +36,7 @@ class QualifyingResultQ1Q2Q3ViewHolder(
     }
 
     private fun bind(
-        result: RaceQualifyingRoundDriver.Qualifying?,
+        result: RaceQualifyingResult.Qualifying?,
         layout: LayoutQualifyingTimeBinding?,
         delta: String?,
         qualifyingRound: String,

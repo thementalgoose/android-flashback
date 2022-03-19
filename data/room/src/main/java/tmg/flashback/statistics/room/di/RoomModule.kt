@@ -69,14 +69,13 @@ private val MIGRATION_4_5 = object : Migration(4, 5) {
         database.execSQL("DROP TABLE QualifyingResult");
         database.execSQL("ALTER TABLE QualifyingResult_Temp RENAME TO QualifyingResult")
 
-
         // Add SprintResult
         database.execSQL("CREATE TABLE IF NOT EXISTS SprintResult (" +
                 "driver_id TEXT NOT NULL, " +
                 "season INTEGER NOT NULL, " +
                 "round INTEGER NOT NULL, " +
                 "constructor_id TEXT NOT NULL, " +
-                "points DOUBLE NOT NULL, " +
+                "points REAL NOT NULL, " +
                 "grid_pos INTEGER, " +
                 "finished INTEGER NOT NULL, " +
                 "status TEXT NOT NULL," +
