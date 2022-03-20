@@ -235,9 +235,9 @@
     <!-- Settings -->
     <string name="settings_up_next_category_title">Categories</string>
     <string name="settings_up_next_category_race_title">Race</string>
-    <string name="settings_up_next_category_race_descrition">Get notified before race starts </string>
+    <string name="settings_up_next_category_race_descrition">Get notified before race or sprints starts</string>
     <string name="settings_up_next_category_qualifying_title">Qualifying</string>
-    <string name="settings_up_next_category_qualifying_descrition">Get notified before qualifying and sprint qualifying starts</string>
+    <string name="settings_up_next_category_qualifying_descrition">Get notified before qualifying starts</string>
     <string name="settings_up_next_category_free_practice_title">Free Practice</string>
     <string name="settings_up_next_category_free_practice_descrition">Get notified before free practice starts</string>
     <string name="settings_up_next_category_other_title">Other</string>

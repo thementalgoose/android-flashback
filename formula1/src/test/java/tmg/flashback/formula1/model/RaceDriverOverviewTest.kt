@@ -6,37 +6,37 @@ import org.junit.jupiter.api.Test
 internal class RaceDriverOverviewTest {
 
     @Test
-    fun `qualified uses race value when all fields available`() {
+    fun `official qualifying position uses race value when all fields available`() {
         val model = RaceDriverOverview.model(
-            q1 = RaceQualifyingResult.Qualifying.model(position = 11),
-            q2 = RaceQualifyingResult.Qualifying.model(position = 12),
-            q3 = RaceQualifyingResult.Qualifying.model(position = 13),
-            qSprint = RaceQualifyingResult.SprintQualifying.model(finished = 14),
+            q1 = RaceQualifyingResult.model(position = 11),
+            q2 = RaceQualifyingResult.model(position = 12),
+            q3 = RaceQualifyingResult.model(position = 13),
+            qSprint = RaceSprintResult.model(finish = 14),
             race = RaceRaceResult.model(qualified = 2)
         )
 
-        assertEquals(2, model.qualified)
+        assertEquals(2, model.officialQualifyingPosition)
     }
 
     @Test
-    fun `qualified uses sprint value when race unavailable`() {
+    fun `official qualifying position uses sprint value when race missing`() {
         val model = RaceDriverOverview.model(
-            q1 = RaceQualifyingResult.Qualifying.model(position = 11),
-            q2 = RaceQualifyingResult.Qualifying.model(position = 12),
-            q3 = RaceQualifyingResult.Qualifying.model(position = 13),
-            qSprint = RaceQualifyingResult.SprintQualifying.model(finished = 14),
-            race = null
+            q1 = RaceQualifyingResult.model(position = 11),
+            q2 = RaceQualifyingResult.model(position = 12),
+            q3 = RaceQualifyingResult.model(position = 13),
+            qSprint = RaceSprintResult.model(finish = 14),
+            race = RaceRaceResult.model(qualified = null)
         )
 
-        assertEquals(14, model.qualified)
+        assertEquals(14, model.officialQualifyingPosition)
     }
 
     @Test
     fun `qualified uses q3 when race unavailable`() {
         val model = RaceDriverOverview.model(
-            q1 = RaceQualifyingResult.Qualifying.model(position = 11),
-            q2 = RaceQualifyingResult.Qualifying.model(position = 12),
-            q3 = RaceQualifyingResult.Qualifying.model(position = 13),
+            q1 = RaceQualifyingResult.model(position = 11),
+            q2 = RaceQualifyingResult.model(position = 12),
+            q3 = RaceQualifyingResult.model(position = 13),
             qSprint = null,
             race = null
         )
@@ -47,8 +47,8 @@ internal class RaceDriverOverviewTest {
     @Test
     fun `qualified uses q2 when race unavailable`() {
         val model = RaceDriverOverview.model(
-            q1 = RaceQualifyingResult.Qualifying.model(position = 11),
-            q2 = RaceQualifyingResult.Qualifying.model(position = 12),
+            q1 = RaceQualifyingResult.model(position = 11),
+            q2 = RaceQualifyingResult.model(position = 12),
             q3 = null,
             qSprint = null,
             race = null
@@ -60,7 +60,7 @@ internal class RaceDriverOverviewTest {
     @Test
     fun `qualified uses q1 when race unavailable`() {
         val model = RaceDriverOverview.model(
-            q1 = RaceQualifyingResult.Qualifying.model(position = 11),
+            q1 = RaceQualifyingResult.model(position = 11),
             q2 = null,
             q3 = null,
             qSprint = null,
