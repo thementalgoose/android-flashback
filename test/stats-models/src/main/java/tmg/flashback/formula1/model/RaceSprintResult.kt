@@ -7,7 +7,6 @@ fun RaceSprintResult.Companion.model(
     time: LapTime? = LapTime.model(),
     points: Double = 1.0,
     grid: Int? = 1,
-    qualified: Int? = 1,
     finish: Int = 1,
     status: RaceStatus = "status"
 ): RaceSprintResult = RaceSprintResult(
@@ -15,7 +14,6 @@ fun RaceSprintResult.Companion.model(
     time = time,
     points = points,
     grid = grid,
-    qualified = qualified,
     finish = finish,
     status = status
 )

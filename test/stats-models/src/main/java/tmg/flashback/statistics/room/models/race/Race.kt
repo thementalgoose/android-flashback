@@ -11,6 +11,9 @@ fun Race.Companion.model(
     qualifying: List<QualifyingDriverResult> = listOf(
         QualifyingDriverResult.model()
     ),
+    sprint: List<SprintDriverResult> = listOf(
+        SprintDriverResult.model()
+    ),
     race: List<RaceDriverResult> = listOf(
         RaceDriverResult.model()
     ),
@@ -21,6 +24,7 @@ fun Race.Companion.model(
     raceInfo = raceInfo,
     circuit = circuit,
     qualifying = qualifying,
+    sprint = sprint,
     race = race,
     schedule = schedule
 )
