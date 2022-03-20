@@ -89,6 +89,10 @@ class ScheduleController(
             true -> remoteNotificationSubscribeUseCase.subscribe("notify_race")
             false -> remoteNotificationUnsubscribeUseCase.unsubscribe("notify_race")
         }
+        when (notificationSprintNotify) {
+            true -> remoteNotificationSubscribeUseCase.subscribe("notify_sprint")
+            false -> remoteNotificationUnsubscribeUseCase.unsubscribe("notify_sprint")
+        }
         when (notificationQualifyingNotify) {
             true -> remoteNotificationSubscribeUseCase.subscribe("notify_qualifying")
             false -> remoteNotificationUnsubscribeUseCase.unsubscribe("notify_qualifying")
@@ -99,6 +103,12 @@ class ScheduleController(
         get() = upNextRepository.notificationNotifyRace
         set(value) {
             upNextRepository.notificationNotifyRace = value
+        }
+
+    var notificationSprintNotify: Boolean
+        get() = upNextRepository.notificationNotifySprint
+        set(value) {
+            upNextRepository.notificationNotifySprint = value
         }
 
     var notificationQualifyingNotify: Boolean

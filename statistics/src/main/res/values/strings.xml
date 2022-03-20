@@ -245,6 +245,8 @@
     <string name="settings_up_next_results_available_title">Results available</string>
     <string name="settings_up_next_results_qualifying_title">Qualifying</string>
     <string name="settings_up_next_results_qualifying_descrition">Get notified when qualifying results are available</string>
+    <string name="settings_up_next_results_sprint_title">Sprint</string>
+    <string name="settings_up_next_results_sprint_descrition">Get notified when sprint results are available</string>
     <string name="settings_up_next_results_race_title">Race</string>
     <string name="settings_up_next_results_race_descrition">Get notified when race results are available</string>
 

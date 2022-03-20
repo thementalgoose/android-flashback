@@ -238,6 +238,42 @@ internal class UpNextRepositoryTest {
 
     //endregion
 
+    //region Notification preferences - Sprint Notify
+
+    @Test
+    fun `is notification sprint notify reads value from preferences repository with default to false`() {
+        every { mockPreferenceManager.getBoolean(any(), any()) } returns true
+
+        initSUT()
+
+        Assertions.assertTrue(sut.notificationNotifySprint)
+        verify {
+            mockPreferenceManager.getBoolean(keyNotificationSprintNotify, false)
+        }
+    }
+
+    @Test
+    fun `setting notification sprint notify enabled saves value from preferences repository`() {
+        initSUT()
+
+        sut.notificationNotifySprint = true
+        verify {
+            mockPreferenceManager.save(keyNotificationSprintNotify, true)
+        }
+    }
+
+    @Test
+    fun `setting notification sprint notify disabled saves value from preferences repository`() {
+        initSUT()
+
+        sut.notificationNotifySprint = false
+        verify {
+            mockPreferenceManager.save(keyNotificationSprintNotify, false)
+        }
+    }
+
+    //endregion
+
     //region Notification preferences - Qualifying Notify
 
     @Test
@@ -322,6 +358,7 @@ internal class UpNextRepositoryTest {
         private const val keyNotificationReminder: String = "UP_NEXT_NOTIFICATION_REMINDER"
 
         private const val keyNotificationRaceNotify: String = "UP_NEXT_NOTIFICATION_RACE_NOTIFY"
+        private const val keyNotificationSprintNotify: String = "UP_NEXT_NOTIFICATION_SPRINT_NOTIFY"
         private const val keyNotificationQualifyingNotify: String = "UP_NEXT_NOTIFICATION_QUALIFYING_NOTIFY"
 
         private const val keyNotificationOnboarding: String = "UP_NEXT_NOTIFICATION_ONBOARDING"

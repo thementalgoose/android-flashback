@@ -110,6 +110,10 @@ class FlashbackStartup(
                 true -> remoteNotificationSubscribeUseCase.subscribe("notify_qualifying")
                 false -> remoteNotificationUnsubscribeUseCase.unsubscribe("notify_qualifying")
             }
+            when (scheduleController.notificationSprintNotify) {
+                true -> remoteNotificationSubscribeUseCase.subscribe("notify_sprint")
+                false -> remoteNotificationUnsubscribeUseCase.unsubscribe("notify_sprint")
+            }
             when (scheduleController.notificationRaceNotify) {
                 true -> remoteNotificationSubscribeUseCase.subscribe("notify_race")
                 false -> remoteNotificationUnsubscribeUseCase.unsubscribe("notify_race")

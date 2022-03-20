@@ -103,6 +103,18 @@ internal class UpNextSettingsViewModelTest: BaseTest() {
     }
 
     @Test
+    fun `clicking toggle for sprint notify updates toggle`() {
+        initSUT()
+        sut.clickSwitchPreference(sut.models.findSwitch(R.string.settings_up_next_results_sprint_title), true)
+        verify {
+            mockScheduleController.notificationSprintNotify = true
+        }
+        coVerify {
+            mockScheduleController.resubscribe()
+        }
+    }
+
+    @Test
     fun `clicking toggle for qualifying notify updates toggle`() {
         initSUT()
         sut.clickSwitchPreference(sut.models.findSwitch(R.string.settings_up_next_results_race_title), true)
