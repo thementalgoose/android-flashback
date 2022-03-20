@@ -90,6 +90,17 @@ class UpNextSettingsViewModel(
             }
         ))
         add(SettingsModel.SwitchPref(
+            title = R.string.settings_up_next_results_sprint_title,
+            description = R.string.settings_up_next_results_sprint_descrition,
+            getState = { scheduleController.notificationSprintNotify },
+            saveState = {
+                scheduleController.notificationSprintNotify = it
+                viewModelScope.launch {
+                    scheduleController.resubscribe()
+                }
+            }
+        ))
+        add(SettingsModel.SwitchPref(
             title = R.string.settings_up_next_results_qualifying_title,
             description = R.string.settings_up_next_results_qualifying_descrition,
             getState = { scheduleController.notificationQualifyingNotify },
