@@ -3,6 +3,7 @@ package tmg.flashback.statistics.ui.race.viewholders
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import tmg.flashback.formula1.enums.isStatusFinished
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.Driver
@@ -112,7 +113,7 @@ class RaceSprintQualifyingViewHolder(
         when (p0) {
             binding.layoutTime -> {
                 if (status.isNotEmpty() && !status.isStatusFinished()) {
-                    Toast.makeText(itemView.context, getString(R.string.race_dnf_cause, status), Toast.LENGTH_SHORT).show()
+                    Snackbar.make(itemView, getString(R.string.race_dnf_cause, driver.name, status), 4000).show()
                 }
             }
             binding.clickTarget -> {
