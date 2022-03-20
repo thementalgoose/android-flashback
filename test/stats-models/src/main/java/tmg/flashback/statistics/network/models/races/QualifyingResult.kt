@@ -8,8 +8,7 @@ fun QualifyingResult.Companion.model(
     qualified: Int? = 1,
     q1: String? = "1:02.001",
     q2: String? = "1:02.002",
-    q3: String? = "1:02.003",
-    qSprint: SprintQualifyingResult? = SprintQualifyingResult.model(),
+    q3: String? = "1:02.003"
 ): QualifyingResult = QualifyingResult(
     driverId = driverId,
     driverNumber = driverNumber,
@@ -18,6 +17,5 @@ fun QualifyingResult.Companion.model(
     qualified = qualified,
     q1 = q1,
     q2 = q2,
-    q3 = q3,
-    qSprint = qSprint
+    q3 = q3
 )

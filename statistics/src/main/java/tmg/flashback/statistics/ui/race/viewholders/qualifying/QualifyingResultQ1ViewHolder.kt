@@ -4,7 +4,7 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import tmg.flashback.formula1.model.Driver
 import tmg.flashback.formula1.model.DriverConstructor
-import tmg.flashback.formula1.model.RaceQualifyingRoundDriver
+import tmg.flashback.formula1.model.RaceQualifyingResult
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.databinding.LayoutQualifyingTimeBinding
 import tmg.flashback.statistics.databinding.ViewRaceQualifyingQ1ResultBinding
@@ -33,7 +33,7 @@ class QualifyingResultQ1ViewHolder(
         }
     }
 
-    private fun bind(result: RaceQualifyingRoundDriver.Qualifying?, layout: LayoutQualifyingTimeBinding?, delta: String?, showDelta: Boolean = false): Boolean {
+    private fun bind(result: RaceQualifyingResult?, layout: LayoutQualifyingTimeBinding?, delta: String?, showDelta: Boolean = false): Boolean {
         if (layout == null) return false
         val label = result?.lapTime?.toString() ?: ""
         layout.tvQualifyingTime.text = label

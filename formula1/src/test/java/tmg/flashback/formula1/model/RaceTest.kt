@@ -21,16 +21,16 @@ internal class RaceTest {
 
         val model = Race.model(
             qualifying = listOf(RaceQualifyingRound.model(results = listOf(
-                RaceQualifyingRoundDriver.Qualifying.model(
+                RaceQualifyingResult.model(
                     driver = driver1
                 ),
-                RaceQualifyingRoundDriver.Qualifying.model(
+                RaceQualifyingResult.model(
                     driver = driver2
                 ),
-                RaceQualifyingRoundDriver.Qualifying.model(
+                RaceQualifyingResult.model(
                     driver = driver1
                 ),
-                RaceQualifyingRoundDriver.Qualifying.model(
+                RaceQualifyingResult.model(
                     driver = driver3
                 )
             ))),
@@ -45,18 +45,15 @@ internal class RaceTest {
 
     @ParameterizedTest(name = "has({1}) with data containing {0} returns {1}")
     @CsvSource(
-        "Q1|Q2|Q3|SPRINT,Q1,true",
-        "Q1|Q2|Q3|SPRINT,Q2,true",
-        "Q1|Q2|Q3|SPRINT,Q3,true",
-        "Q1|Q2|Q3|SPRINT,SPRINT,true",
-        "Q1|Q2|Q3,SPRINT,false",
+        "Q1|Q2|Q3,Q1,true",
+        "Q1|Q2|Q3,Q2,true",
+        "Q1|Q2|Q3,Q3,true",
         "Q1|Q2|Q3,Q1,true",
         "Q1|Q2|Q3,Q2,true",
         "Q1|Q2|Q3,Q3,true",
         "Q1,Q1,true",
         "Q1,Q2,false",
-        "Q1,Q3,false",
-        "Q1,SPRINT,false",
+        "Q1,Q3,false"
     )
     fun `has qualifying type with data loaded returns true`(input: String, query: RaceQualifyingType, expectedResult: Boolean) {
         val inputQualifying = input.split("|").map { it.toEnum<RaceQualifyingType>()!! }
@@ -116,11 +113,11 @@ internal class RaceTest {
         val model = Race.model(qualifying = listOf(
             RaceQualifyingRound(
                 Q1, 1, listOf(
-                RaceQualifyingRoundDriver.Qualifying.model(
+                RaceQualifyingResult.model(
                     driver = DriverConstructor.model(driver = driver1),
                     lapTime = fastest
                 ),
-                RaceQualifyingRoundDriver.Qualifying.model(
+                RaceQualifyingResult.model(
                     driver = DriverConstructor.model(driver = driver2),
                     lapTime = LapTime.model(hours = 1, mins = 2, seconds = 3, milliseconds = 102)
                 )
@@ -139,11 +136,11 @@ internal class RaceTest {
         val model = Race.model(qualifying = listOf(
             RaceQualifyingRound(
                 Q2, 1, listOf(
-                RaceQualifyingRoundDriver.Qualifying.model(
+                RaceQualifyingResult.model(
                     driver = DriverConstructor.model(driver = driver1),
                     lapTime = fastest
                 ),
-                RaceQualifyingRoundDriver.Qualifying.model(
+                RaceQualifyingResult.model(
                     driver = DriverConstructor.model(driver = driver2),
                     lapTime = LapTime.model(hours = 1, mins = 2, seconds = 3, milliseconds = 102)
                 )
@@ -161,11 +158,11 @@ internal class RaceTest {
         val driver2 = Driver.model(id = "2")
         val model = Race.model(qualifying = listOf(
             RaceQualifyingRound(Q3, 1, listOf(
-                RaceQualifyingRoundDriver.Qualifying.model(
+                RaceQualifyingResult.model(
                     driver = DriverConstructor.model(driver = driver1),
                     lapTime = fastest
                 ),
-                RaceQualifyingRoundDriver.Qualifying.model(
+                RaceQualifyingResult.model(
                     driver = DriverConstructor.model(driver = driver2),
                     lapTime = LapTime.model(hours = 1, mins = 2, seconds = 3, milliseconds = 102)
                 )
@@ -178,19 +175,19 @@ internal class RaceTest {
     @Test
     fun `driver overview with all driver values`() {
         val driver = Driver.model(id = "mDriver")
-        val q1 = RaceQualifyingRoundDriver.Qualifying.model(
+        val q1 = RaceQualifyingResult.model(
             driver = DriverConstructor.model(driver = driver),
             position = 2
         )
-        val q2 = RaceQualifyingRoundDriver.Qualifying.model(
+        val q2 = RaceQualifyingResult.model(
             driver = DriverConstructor.model(driver = driver),
             position = 3
         )
-        val q3 = RaceQualifyingRoundDriver.Qualifying.model(
+        val q3 = RaceQualifyingResult.model(
             driver = DriverConstructor.model(driver = driver),
             position = 4
         )
-        val qSprint = RaceQualifyingRoundDriver.SprintQualifying.model(
+        val qSprint = RaceSprintResult.model(
             driver = DriverConstructor.model(driver = driver),
         )
         val race = RaceRaceResult.model(
@@ -202,8 +199,8 @@ internal class RaceTest {
                 RaceQualifyingRound.model(Q1, 1, listOf(q1)),
                 RaceQualifyingRound.model(Q2, 2, listOf(q2)),
                 RaceQualifyingRound.model(Q3, 3, listOf(q3)),
-                RaceQualifyingRound.model(SPRINT, 4, listOf(qSprint))
             ),
+            sprint = listOf(qSprint),
             race = listOf(
                 race
             )
@@ -224,19 +221,19 @@ internal class RaceTest {
     @Test
     fun `driver overview with unknown driver id returns null`() {
         val driver = Driver.model(id = "mDriver")
-        val q1 = RaceQualifyingRoundDriver.Qualifying.model(
+        val q1 = RaceQualifyingResult.model(
             driver = DriverConstructor.model(driver = driver),
             position = 2
         )
-        val q2 = RaceQualifyingRoundDriver.Qualifying.model(
+        val q2 = RaceQualifyingResult.model(
             driver = DriverConstructor.model(driver = driver),
             position = 3
         )
-        val q3 = RaceQualifyingRoundDriver.Qualifying.model(
+        val q3 = RaceQualifyingResult.model(
             driver = DriverConstructor.model(driver = driver),
             position = 4
         )
-        val qSprint = RaceQualifyingRoundDriver.SprintQualifying.model(
+        val qSprint = RaceSprintResult.model(
             driver = DriverConstructor.model(driver = driver),
         )
         val race = RaceRaceResult.model(
@@ -248,8 +245,8 @@ internal class RaceTest {
                 RaceQualifyingRound.model(Q1, 1, listOf(q1)),
                 RaceQualifyingRound.model(Q2, 2, listOf(q2)),
                 RaceQualifyingRound.model(Q3, 3, listOf(q3)),
-                RaceQualifyingRound.model(SPRINT, 4, listOf(qSprint))
             ),
+            sprint = listOf(qSprint),
             race = listOf(
                 race
             )
@@ -261,19 +258,19 @@ internal class RaceTest {
     @Test
     fun `driver overview with all no sprint driver`() {
         val driver = Driver.model(id = "mDriver")
-        val q1 = RaceQualifyingRoundDriver.Qualifying.model(
+        val q1 = RaceQualifyingResult.model(
             driver = DriverConstructor.model(driver = driver),
             position = 2
         )
-        val q2 = RaceQualifyingRoundDriver.Qualifying.model(
+        val q2 = RaceQualifyingResult.model(
             driver = DriverConstructor.model(driver = driver),
             position = 3
         )
-        val q3 = RaceQualifyingRoundDriver.Qualifying.model(
+        val q3 = RaceQualifyingResult.model(
             driver = DriverConstructor.model(driver = driver),
             position = 4
         )
-        val qSprint = RaceQualifyingRoundDriver.SprintQualifying.model(
+        val qSprint = RaceSprintResult.model(
             driver = DriverConstructor.model(driver = Driver.model()),
         )
         val race = RaceRaceResult.model(
@@ -284,8 +281,10 @@ internal class RaceTest {
             qualifying = listOf(
                 RaceQualifyingRound.model(Q1, 1, listOf(q1)),
                 RaceQualifyingRound.model(Q2, 2, listOf(q2)),
-                RaceQualifyingRound.model(Q3, 3, listOf(q3)),
-                RaceQualifyingRound.model(SPRINT, 4, listOf(qSprint))
+                RaceQualifyingRound.model(Q3, 3, listOf(q3))
+            ),
+            sprint = listOf(
+                qSprint
             ),
             race = listOf(
                 race
@@ -346,15 +345,11 @@ internal class RaceTest {
         val constructor2 = Constructor.model(id = "2")
 
         val model = Race.model(
-            qualifying = listOf(
-                RaceQualifyingRound.model(
-                    label = RaceQualifyingType.SPRINT,
-                    results = listOf(
-                        RaceQualifyingRoundDriver.SprintQualifying.model(
-                            driver = DriverConstructor.model(constructor = constructor1),
-                            points = 2.0
-                        )
-                    )
+            qualifying = emptyList(),
+            sprint = listOf(
+                RaceSprintResult.model(
+                    driver = DriverConstructor.model(constructor = constructor1),
+                    points = 2.0
                 )
             ),
             race = listOf(

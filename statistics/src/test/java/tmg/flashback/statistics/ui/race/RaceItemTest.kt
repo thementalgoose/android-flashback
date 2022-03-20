@@ -56,17 +56,17 @@ fun RaceItem.Companion.raceResultModel(
 )
 
 fun RaceItem.Companion.sprintQualifyingResultModel(
-    qSprint: RaceQualifyingRoundDriver.SprintQualifying = RaceQualifyingRoundDriver.SprintQualifying.model()
+    sprint: RaceSprintResult = RaceSprintResult.model()
 ): RaceItem.SprintQualifyingResult = RaceItem.SprintQualifyingResult(
-    qSprint = qSprint
+    sprint = sprint
 )
 
 fun RaceItem.Companion.qualifyingQ1Q2Q3ResultModel(
     driver: DriverConstructor = DriverConstructor.model(),
     finalQualifyingPosition: Int? = 1,
-    q1: RaceQualifyingRoundDriver.Qualifying? = RaceQualifyingRoundDriver.Qualifying.model(),
-    q2: RaceQualifyingRoundDriver.Qualifying? = RaceQualifyingRoundDriver.Qualifying.model(),
-    q3: RaceQualifyingRoundDriver.Qualifying? = RaceQualifyingRoundDriver.Qualifying.model(),
+    q1: RaceQualifyingResult? = RaceQualifyingResult.model(),
+    q2: RaceQualifyingResult? = RaceQualifyingResult.model(),
+    q3: RaceQualifyingResult? = RaceQualifyingResult.model(),
     q1Delta: String? = null,
     q2Delta: String? = null,
     q3Delta: String? = null,
@@ -84,8 +84,8 @@ fun RaceItem.Companion.qualifyingQ1Q2Q3ResultModel(
 fun RaceItem.Companion.qualifyingQ1Q2ResultModel(
     driver: DriverConstructor = DriverConstructor.model(),
     finalQualifyingPosition: Int? = 1,
-    q1: RaceQualifyingRoundDriver.Qualifying? = RaceQualifyingRoundDriver.Qualifying.model(),
-    q2: RaceQualifyingRoundDriver.Qualifying? = RaceQualifyingRoundDriver.Qualifying.model(),
+    q1: RaceQualifyingResult? = RaceQualifyingResult.model(),
+    q2: RaceQualifyingResult? = RaceQualifyingResult.model(),
     q1Delta: String? = null,
     q2Delta: String? = null,
 ): RaceItem.QualifyingResultQ1Q2 = RaceItem.QualifyingResultQ1Q2(
@@ -100,7 +100,7 @@ fun RaceItem.Companion.qualifyingQ1Q2ResultModel(
 fun RaceItem.Companion.qualifyingQ1ResultModel(
     driver: DriverConstructor = DriverConstructor.model(),
     finalQualifyingPosition: Int? = 1,
-    q1: RaceQualifyingRoundDriver.Qualifying? = RaceQualifyingRoundDriver.Qualifying.model(),
+    q1: RaceQualifyingResult? = RaceQualifyingResult.model(),
     q1Delta: String? = null,
 ): RaceItem.QualifyingResultQ1 = RaceItem.QualifyingResultQ1(
     driver = driver,

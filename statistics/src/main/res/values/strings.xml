@@ -121,7 +121,8 @@
     <string name="race_dnf">DNF</string>
     <string name="race_cause">%s</string>
 
-    <string name="race_sprint_qualifying_message">The positions listed here are the official qualifying result, which due to the sprint qualifying may be different than their Q1 Q2 Q3 finishing order</string>
+    <string name="race_sprint_qualifying_message">The positions listed here are the finishing order from the qualifying session. The race start order is set by the finishing order in the Sprint</string>
+    <string name="race_sprint_message">This is the official qualifying order for the race</string>
 
     <!-- Race Status -->
     <string name="race_status_retired">DNF</string>
@@ -234,9 +235,9 @@
     <!-- Settings -->
     <string name="settings_up_next_category_title">Categories</string>
     <string name="settings_up_next_category_race_title">Race</string>
-    <string name="settings_up_next_category_race_descrition">Get notified before race starts </string>
+    <string name="settings_up_next_category_race_descrition">Get notified before race or sprints starts</string>
     <string name="settings_up_next_category_qualifying_title">Qualifying</string>
-    <string name="settings_up_next_category_qualifying_descrition">Get notified before qualifying and sprint qualifying starts</string>
+    <string name="settings_up_next_category_qualifying_descrition">Get notified before qualifying starts</string>
     <string name="settings_up_next_category_free_practice_title">Free Practice</string>
     <string name="settings_up_next_category_free_practice_descrition">Get notified before free practice starts</string>
     <string name="settings_up_next_category_other_title">Other</string>
