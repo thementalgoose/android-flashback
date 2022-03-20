@@ -16,6 +16,7 @@ class UpNextRepository(
         private const val keyNotificationReminder: String = "UP_NEXT_NOTIFICATION_REMINDER"
 
         private const val keyNotificationRaceNotify: String = "UP_NEXT_NOTIFICATION_RACE_NOTIFY"
+        private const val keyNotificationSprintNotify: String = "UP_NEXT_NOTIFICATION_SPRINT_NOTIFY"
         private const val keyNotificationQualifyingNotify: String = "UP_NEXT_NOTIFICATION_QUALIFYING_NOTIFY"
 
         private const val keyNotificationOnboarding: String = "UP_NEXT_NOTIFICATION_ONBOARDING"
@@ -42,6 +43,10 @@ class UpNextRepository(
     var notificationNotifyRace: Boolean
         get() = preferenceManager.getBoolean(keyNotificationRaceNotify, false)
         set(value) = preferenceManager.save(keyNotificationRaceNotify, value)
+
+    var notificationNotifySprint: Boolean
+        get() = preferenceManager.getBoolean(keyNotificationSprintNotify, false)
+        set(value) = preferenceManager.save(keyNotificationSprintNotify, value)
 
     var notificationNotifyQualifying: Boolean
         get() = preferenceManager.getBoolean(keyNotificationQualifyingNotify, false)
