@@ -104,6 +104,10 @@ class FlashbackStartup(
             "notify_qualifying",
             R.string.notification_channel_qualifying_notify
         )
+        systemNotificationManager.createChannel(
+            "notify_sprint",
+            R.string.notification_channel_sprint_notify
+        )
         val applicationScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
         applicationScope.launch(Dispatchers.IO) {
             when (scheduleController.notificationQualifyingNotify) {
