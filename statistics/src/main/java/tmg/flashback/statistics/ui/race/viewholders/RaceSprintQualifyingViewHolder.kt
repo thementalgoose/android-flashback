@@ -3,6 +3,7 @@ package tmg.flashback.statistics.ui.race.viewholders
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import tmg.flashback.formula1.enums.isStatusFinished
 import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.Driver
@@ -35,27 +36,27 @@ class RaceSprintQualifyingViewHolder(
 
     fun bind(model: RaceItem.SprintQualifyingResult) {
 
-        this.driver = model.qSprint.driver.driver
-        this.status = model.qSprint.status
+        this.driver = model.sprint.driver.driver
+        this.status = model.sprint.status
 
         binding.apply {
-            tvPosition.text = model.qSprint.finished.toString()
+            tvPosition.text = model.sprint.finish.toString()
             layoutDriver.tvName.text = driver.name
             layoutDriver.tvNumber.gone()
             layoutDriver.imgFlag.gone()
             tvDriverNumber.text = driver.number?.toString() ?: ""
-            tvDriverNumber.colorHighlight = darken(model.qSprint.driver.constructor.color)
-            imgDriverFlag.setImageResource(context.getFlagResourceAlpha3(model.qSprint.driver.driver.nationalityISO))
-            tvConstructor.text = model.qSprint.driver.constructor.name
+            tvDriverNumber.colorHighlight = darken(model.sprint.driver.constructor.color)
+            imgDriverFlag.setImageResource(context.getFlagResourceAlpha3(model.sprint.driver.driver.nationalityISO))
+            tvConstructor.text = model.sprint.driver.constructor.name
 
-            constructorColor.setBackgroundColor(model.qSprint.driver.constructor.color)
+            constructorColor.setBackgroundColor(model.sprint.driver.constructor.color)
 
-            tvPoints.text = model.qSprint.points.pointsDisplay().let {
+            tvPoints.text = model.sprint.points.pointsDisplay().let {
                 if (it == "0") "" else it
             }
 
-            tvStartedAbsolute.text = model.qSprint.gridPos?.position() ?: ""
-            val diff = (model.qSprint.gridPos ?: 0) - (model.qSprint.finished)
+            tvStartedAbsolute.text = model.sprint.grid?.position() ?: ""
+            val diff = (model.sprint.grid ?: 0) - (model.sprint.finish)
             tvStartedRelative.text = abs(diff).toString()
             when {
                 diff == 0 -> { // Equal
@@ -75,24 +76,24 @@ class RaceSprintQualifyingViewHolder(
                 }
             }
 
-            tvTime.text = model.qSprint.lapTime?.toString() ?: model.qSprint.status
-            status = model.qSprint.status
+            tvTime.text = model.sprint.time?.toString() ?: model.sprint.status
+            status = model.sprint.status
             when {
-                model.qSprint.lapTime?.noTime == false -> {
-                    tvTime.text = context.getString(R.string.race_time_delta, model.qSprint.lapTime)
+                model.sprint.time?.noTime == false -> {
+                    tvTime.text = context.getString(R.string.race_time_delta, model.sprint.time)
                 }
-                model.qSprint.status.isStatusFinished() -> {
-                    tvTime.text = model.qSprint.status
+                model.sprint.status.isStatusFinished() -> {
+                    tvTime.text = model.sprint.status
                 }
                 else -> {
                     tvTime.text = context.getString(R.string.race_status_retired)
-                    model.qSprint.status.let {
+                    model.sprint.status.let {
                         imgStatus.setImageResource(it.iconRes)
                     }
                 }
             }
 
-            if (model.qSprint.status.isStatusFinished()) {
+            if (model.sprint.status.isStatusFinished()) {
                 imgStatus.gone()
             } else {
                 imgStatus.visible()
@@ -112,7 +113,7 @@ class RaceSprintQualifyingViewHolder(
         when (p0) {
             binding.layoutTime -> {
                 if (status.isNotEmpty() && !status.isStatusFinished()) {
-                    Toast.makeText(itemView.context, getString(R.string.race_dnf_cause, status), Toast.LENGTH_SHORT).show()
+                    Snackbar.make(itemView, getString(R.string.race_dnf_cause, driver.name, status), 4000).show()
                 }
             }
             binding.clickTarget -> {

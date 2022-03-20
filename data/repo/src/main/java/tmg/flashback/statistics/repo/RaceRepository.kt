@@ -52,18 +52,22 @@ class RaceRepository(
 
         val raceData = data.races.valueList().map { networkRaceDataMapper.mapRaceData(it.data) }
         val qualifyingResults = data.races.valueList()
-            .map { race -> race.qualifying.values.map { Pair(race.data, it) } }
+            .map { race -> race.qualifying?.values?.map { Pair(race.data, it) } ?: emptyList() }
             .flatten()
-            .map { (raceData, race) -> networkRaceMapper.mapQualifyingResults(raceData.season, raceData.round, race) }
+            .map { (raceData, qualifying) -> networkRaceMapper.mapQualifyingResults(raceData.season, raceData.round, qualifying) }
+        val sprintResults = data.races.valueList()
+            .map { race -> race.sprint?.values?.map { Pair(race.data, it) } ?: emptyList() }
+            .flatten()
+            .map { (raceData, sprint) -> networkRaceMapper.mapSprintResults(raceData.season, raceData.round, sprint)}
         val raceResults = data.races.valueList()
-            .map { race -> race.race.values.map { Pair(race.data, it) } }
+            .map { race -> race.race?.values?.map { Pair(race.data, it) } ?: emptyList() }
             .flatten()
             .map { (raceData, race) -> networkRaceMapper.mapRaceResults(raceData.season, raceData.round, race) }
         val schedules = data.races.valueList()
             .map { race -> networkScheduleMapper.mapSchedules(race) }
             .flatten()
 
-        persistence.seasonDao().insertRaces(raceData, qualifyingResults, raceResults)
+        persistence.seasonDao().insertRaces(raceData, qualifyingResults, sprintResults, raceResults)
         persistence.scheduleDao().replaceAllForSeason(season, schedules)
 
         val set = cacheRepository.seasonsSyncAtLeastOnce.toMutableSet()
@@ -91,6 +95,9 @@ class RaceRepository(
         val qualifyingResults = data.qualifying
             .valueList()
             .map { networkRaceMapper.mapQualifyingResults(data.data.season, data.data.round, it) }
+        val sprintResults = data.sprint
+            .valueList()
+            .map { networkRaceMapper.mapSprintResults(data.data.season, data.data.round, it) }
         val raceResults = data.race
             .valueList()
             .map { networkRaceMapper.mapRaceResults(data.data.season, data.data.round, it) }
@@ -98,7 +105,7 @@ class RaceRepository(
             ?.map { schedule -> networkScheduleMapper.mapSchedule(data.data.season, data.data.round, schedule) } ?: emptyList()
 
         persistence.scheduleDao().replaceAllForRace(data.data.season, data.data.round, schedules)
-        persistence.seasonDao().insertRace(raceData, qualifyingResults, raceResults)
+        persistence.seasonDao().insertRace(raceData, qualifyingResults, sprintResults, raceResults)
 
         return@attempt true
     }

@@ -14,6 +14,7 @@ val roomModule = module {
             MIGRATION_1_2,
             MIGRATION_2_3,
             MIGRATION_3_4,
+            MIGRATION_4_5
         )
         .build()
     }
@@ -43,5 +44,43 @@ private val MIGRATION_3_4 = object : Migration(3, 4) {
         database.execSQL("ALTER TABLE RaceInfo ADD COLUMN laps TEXT DEFAULT NULL")
         database.execSQL("ALTER TABLE Overview ADD COLUMN laps TEXT DEFAULT NULL")
         Log.i("Database", "Migrated DB from version $startVersion to $endVersion")
+    }
+}
+
+private val MIGRATION_4_5 = object : Migration(4, 5) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+
+        // Remove the Sprint Qualifying fields from QualifyingResult
+        database.execSQL("CREATE TABLE QualifyingResult_Temp (" +
+                "driver_id TEXT NOT NULL," +
+                "season INTEGER NOT NULL," +
+                "round INTEGER NOT NULL," +
+                "constructor_id TEXT NOT NULL," +
+                "qualified INTEGER," +
+                "q1 TEXT," +
+                "q2 TEXT," +
+                "q3 TEXT," +
+                "id TEXT NOT NULL PRIMARY KEY," +
+                "season_round_id TEXT NOT NULL)")
+        database.execSQL("INSERT INTO QualifyingResult_Temp " +
+                "(driver_id, season, round, constructor_id, qualified, q1, q2, q3, id, season_round_id) " +
+                "SELECT driver_id, season, round, constructor_id, qualified, q1, q2, q3, id, season_round_id " +
+                "FROM QualifyingResult")
+        database.execSQL("DROP TABLE QualifyingResult");
+        database.execSQL("ALTER TABLE QualifyingResult_Temp RENAME TO QualifyingResult")
+
+        // Add SprintResult
+        database.execSQL("CREATE TABLE IF NOT EXISTS SprintResult (" +
+                "driver_id TEXT NOT NULL, " +
+                "season INTEGER NOT NULL, " +
+                "round INTEGER NOT NULL, " +
+                "constructor_id TEXT NOT NULL, " +
+                "points REAL NOT NULL, " +
+                "grid_position INTEGER, " +
+                "finished INTEGER NOT NULL, " +
+                "status TEXT NOT NULL," +
+                "time TEXT, " +
+                "id TEXT NOT NULL PRIMARY KEY," +
+                "season_round_id TEXT NOT NULL)")
     }
 }

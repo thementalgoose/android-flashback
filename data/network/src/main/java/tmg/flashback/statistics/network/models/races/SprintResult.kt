@@ -5,12 +5,15 @@ import kotlinx.serialization.Serializable
 
 @Keep
 @Serializable
-data class SprintQualifyingResult(
+data class SprintResult(
+    val driverId: String,
+    val driverNumber: String,
+    val constructorId: String,
     val points: Double,
-    val gridPos: Int?,
+    val gridPos: Int? = null,
     val finished: Int,
     val status: String,
-    val time: String?
+    val time: String? = null
 ) {
     companion object
 }
