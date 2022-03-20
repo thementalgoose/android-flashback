@@ -48,6 +48,7 @@ internal class UpNextSettingsViewModelTest: BaseTest() {
             Pair(R.string.settings_up_next_time_before_title, R.string.settings_up_next_time_before_description),
             Pair(R.string.settings_up_next_results_available_title, null),
             Pair(R.string.settings_up_next_results_race_title, R.string.settings_up_next_results_race_descrition),
+            Pair(R.string.settings_up_next_results_sprint_title, R.string.settings_up_next_results_sprint_descrition),
             Pair(R.string.settings_up_next_results_qualifying_title, R.string.settings_up_next_results_qualifying_descrition)
         )
 
@@ -96,6 +97,18 @@ internal class UpNextSettingsViewModelTest: BaseTest() {
         sut.clickSwitchPreference(sut.models.findSwitch(R.string.settings_up_next_results_qualifying_title), true)
         verify {
             mockScheduleController.notificationQualifyingNotify = true
+        }
+        coVerify {
+            mockScheduleController.resubscribe()
+        }
+    }
+
+    @Test
+    fun `clicking toggle for sprint notify updates toggle`() {
+        initSUT()
+        sut.clickSwitchPreference(sut.models.findSwitch(R.string.settings_up_next_results_sprint_title), true)
+        verify {
+            mockScheduleController.notificationSprintNotify = true
         }
         coVerify {
             mockScheduleController.resubscribe()

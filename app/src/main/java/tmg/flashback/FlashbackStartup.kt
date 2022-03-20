@@ -104,11 +104,19 @@ class FlashbackStartup(
             "notify_qualifying",
             R.string.notification_channel_qualifying_notify
         )
+        systemNotificationManager.createChannel(
+            "notify_sprint",
+            R.string.notification_channel_sprint_notify
+        )
         val applicationScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
         applicationScope.launch(Dispatchers.IO) {
             when (scheduleController.notificationQualifyingNotify) {
                 true -> remoteNotificationSubscribeUseCase.subscribe("notify_qualifying")
                 false -> remoteNotificationUnsubscribeUseCase.unsubscribe("notify_qualifying")
+            }
+            when (scheduleController.notificationSprintNotify) {
+                true -> remoteNotificationSubscribeUseCase.subscribe("notify_sprint")
+                false -> remoteNotificationUnsubscribeUseCase.unsubscribe("notify_sprint")
             }
             when (scheduleController.notificationRaceNotify) {
                 true -> remoteNotificationSubscribeUseCase.subscribe("notify_race")
