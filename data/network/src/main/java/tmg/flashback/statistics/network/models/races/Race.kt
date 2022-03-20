@@ -8,9 +8,9 @@ import tmg.flashback.statistics.network.models.overview.Schedule
 @Serializable
 data class Race(
     val data: RaceData,
-    val race: Map<String, RaceResult>,
-    val sprint: Map<String, SprintResult>,
-    val qualifying: Map<String, QualifyingResult>,
+    val race: Map<String, RaceResult>? = null,
+    val sprint: Map<String, SprintResult>? = null,
+    val qualifying: Map<String, QualifyingResult>? = null,
     val schedule: List<Schedule>? = null,
 ) {
     companion object

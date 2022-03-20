@@ -76,7 +76,7 @@ private val MIGRATION_4_5 = object : Migration(4, 5) {
                 "round INTEGER NOT NULL, " +
                 "constructor_id TEXT NOT NULL, " +
                 "points REAL NOT NULL, " +
-                "grid_pos INTEGER, " +
+                "grid_position INTEGER, " +
                 "finished INTEGER NOT NULL, " +
                 "status TEXT NOT NULL," +
                 "time TEXT, " +

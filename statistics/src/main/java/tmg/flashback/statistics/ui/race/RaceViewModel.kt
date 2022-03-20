@@ -157,12 +157,15 @@ class RaceViewModel(
                                     }
                                 }
                                 RaceDisplayType.QUALIFYING_SPRINT -> {
+                                    list.add(RaceItem.ErrorItem(SyncDataItem.MessageRes(R.string.race_sprint_message)))
                                     if (race.sprint.isNotEmpty()) {
-                                        list.addAll(race.sprint.map {
-                                            RaceItem.SprintQualifyingResult(
-                                                sprint = it
-                                            )
-                                        })
+                                        list.addAll(race.sprint
+                                            .sortedBy { it.finish }
+                                            .map {
+                                                RaceItem.SprintQualifyingResult(
+                                                    sprint = it
+                                                )
+                                            })
                                     } else {
                                         when {
                                             race.raceInfo.date > LocalDate.now() -> list.add(RaceItem.ErrorItem(SyncDataItem.Unavailable(DataUnavailable.RACE_IN_FUTURE)))

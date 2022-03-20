@@ -52,15 +52,15 @@ class RaceRepository(
 
         val raceData = data.races.valueList().map { networkRaceDataMapper.mapRaceData(it.data) }
         val qualifyingResults = data.races.valueList()
-            .map { race -> race.qualifying.values.map { Pair(race.data, it) } }
+            .map { race -> race.qualifying?.values?.map { Pair(race.data, it) } ?: emptyList() }
             .flatten()
             .map { (raceData, qualifying) -> networkRaceMapper.mapQualifyingResults(raceData.season, raceData.round, qualifying) }
         val sprintResults = data.races.valueList()
-            .map { race -> race.sprint.values.map { Pair(race.data, it) } }
+            .map { race -> race.sprint?.values?.map { Pair(race.data, it) } ?: emptyList() }
             .flatten()
             .map { (raceData, sprint) -> networkRaceMapper.mapSprintResults(raceData.season, raceData.round, sprint)}
         val raceResults = data.races.valueList()
-            .map { race -> race.race.values.map { Pair(race.data, it) } }
+            .map { race -> race.race?.values?.map { Pair(race.data, it) } ?: emptyList() }
             .flatten()
             .map { (raceData, race) -> networkRaceMapper.mapRaceResults(raceData.season, raceData.round, race) }
         val schedules = data.races.valueList()
