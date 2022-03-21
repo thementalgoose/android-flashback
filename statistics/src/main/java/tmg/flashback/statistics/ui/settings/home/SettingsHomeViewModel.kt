@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.controllers.HomeController
+import tmg.flashback.statistics.usecases.DefaultSeasonUseCase
 import tmg.flashback.ui.settings.SettingsModel
 import tmg.flashback.ui.settings.SettingsViewModel
 import tmg.utilities.lifecycle.Event
@@ -26,18 +27,19 @@ interface SettingsHomeViewModelOutputs {
 
 
 class SettingsHomeViewModel(
-    private val homeController: HomeController
+    private val defaultSeasonUseCase: DefaultSeasonUseCase,
+    private val homeController: HomeController,
 ): SettingsViewModel(), SettingsHomeViewModelInputs, SettingsHomeViewModelOutputs {
 
     override val models: List<SettingsModel> get() = mutableListOf<SettingsModel>().apply {
 
         add(SettingsModel.Header(R.string.settings_home))
-        if (homeController.isUserDefinedValueSet) {
+        if (defaultSeasonUseCase.isUserDefinedValueSet) {
             add(SettingsModel.Pref(
                 title = R.string.settings_default_season_title,
                 description = R.string.settings_default_season_description,
                 onClick = {
-                    homeController.clearDefault()
+                    defaultSeasonUseCase.clearDefault()
                     defaultSeasonChanged.value = Event()
                 }
             ))

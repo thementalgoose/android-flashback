@@ -23,6 +23,7 @@ import tmg.flashback.statistics.ui.overview.driver.DriverActivity
 import tmg.flashback.statistics.ui.race.RaceActivity
 import tmg.flashback.statistics.ui.race.RaceData
 import tmg.flashback.statistics.ui.shared.tyres.TyresBottomSheetFragment
+import tmg.flashback.statistics.usecases.DefaultSeasonUseCase
 import tmg.flashback.ui.base.BaseFragment
 import tmg.utilities.extensions.observe
 import tmg.utilities.extensions.observeEvent
@@ -36,8 +37,9 @@ class SeasonFragment: BaseFragment() {
     private val binding by viewInflateBinding(FragmentDashboardSeasonBinding::inflate)
 
     private val homeController: HomeController by inject()
+    private val defaultSeasonUseCase: DefaultSeasonUseCase by inject()
     private val analyticsData: MutableMap<String, String> = mutableMapOf(
-        "extra_season_id" to homeController.defaultSeason.toString(),
+        "extra_season_id" to defaultSeasonUseCase.defaultSeason.toString(),
         "extra_view_type" to SeasonNavItem.SCHEDULE.name
     )
 

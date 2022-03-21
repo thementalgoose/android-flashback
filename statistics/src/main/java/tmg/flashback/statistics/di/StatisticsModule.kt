@@ -25,6 +25,7 @@ import tmg.flashback.statistics.ui.settings.home.SettingsHomeViewModel
 import tmg.flashback.statistics.ui.settings.notifications.UpNextSettingsViewModel
 import tmg.flashback.statistics.ui.settings.notifications.reminder.UpNextReminderViewModel
 import tmg.flashback.statistics.ui.settings.statistics.SettingsStatisticsViewModel
+import tmg.flashback.statistics.usecases.DefaultSeasonUseCase
 import tmg.flashback.statistics.usecases.SearchAppShortcutUseCase
 import tmg.flashback.statistics.workmanager.ContentSyncWorker
 import tmg.flashback.statistics.workmanager.NotificationScheduleWorker
@@ -33,7 +34,7 @@ import tmg.flashback.statistics.workmanager.WorkerProvider
 val statisticsModule = repoModule + module {
 
     viewModel { CircuitViewModel(get(), get()) }
-    viewModel { SeasonViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get()) }
+    viewModel { SeasonViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get(), get()) }
     viewModel { RacePreviewViewModel(get()) }
     viewModel { EventListViewModel(get()) }
     viewModel { ConstructorViewModel(get(), get()) }
@@ -43,7 +44,7 @@ val statisticsModule = repoModule + module {
     viewModel { SearchViewModel(get(), get(), get(), get(), get()) }
     viewModel { CategoryViewModel() }
 
-    viewModel { SettingsHomeViewModel(get()) }
+    viewModel { SettingsHomeViewModel(get(), get()) }
     viewModel { SettingsStatisticsViewModel() }
 
     single { HomeController(get()) }
@@ -60,6 +61,7 @@ val statisticsModule = repoModule + module {
 
     // Use Cases
     factory { SearchAppShortcutUseCase(get(), get()) }
+    factory { DefaultSeasonUseCase(get()) }
 
     // Worker
     //  https://github.com/InsertKoinIO/koin/issues/992
@@ -73,7 +75,7 @@ val statisticsModule = repoModule + module {
         parameters = worker)
     }
     worker { (worker: WorkerParameters) -> ContentSyncWorker(
-        homeController = get(),
+        defaultSeasonUseCase = get(),
         fetchConfigUseCase = get(),
         overviewRepository = get(),
         workerProvider = get(),
