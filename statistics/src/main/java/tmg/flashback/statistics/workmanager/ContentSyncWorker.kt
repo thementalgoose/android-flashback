@@ -7,11 +7,12 @@ import org.koin.core.component.KoinComponent
 import tmg.flashback.configuration.usecases.FetchConfigUseCase
 import tmg.flashback.statistics.controllers.HomeController
 import tmg.flashback.statistics.repo.OverviewRepository
+import tmg.flashback.statistics.usecases.DefaultSeasonUseCase
 
 @Suppress("EXPERIMENTAL_API_USAGE")
 class ContentSyncWorker(
     private val fetchConfigUseCase: FetchConfigUseCase,
-    private val homeController: HomeController,
+    private val defaultSeasonUseCase: DefaultSeasonUseCase,
     private val overviewRepository: OverviewRepository,
     private val workerProvider: WorkerProvider,
     context: Context,
@@ -27,7 +28,7 @@ class ContentSyncWorker(
         fetchConfigUseCase.fetchAndApply()
 
         // Get latest season info
-        overviewRepository.fetchOverview(homeController.defaultSeason)
+        overviewRepository.fetchOverview(defaultSeasonUseCase.defaultSeason)
 
         // Schedule notification updating
         workerProvider.schedule()
