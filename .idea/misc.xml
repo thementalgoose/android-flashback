@@ -113,6 +113,14 @@
         <entry key="../../../../layout/compose-model-1647344164391.xml" value="1.0" />
         <entry key="../../../../layout/compose-model-1647344204834.xml" value="0.55" />
         <entry key="../../../../layout/compose-model-1647714553216.xml" value="0.1" />
+        <entry key="../../../../layout/compose-model-1647817251429.xml" value="0.1" />
+        <entry key="../../../../layout/compose-model-1647818306131.xml" value="0.5" />
+        <entry key="../../../../layout/compose-model-1647863335731.xml" value="0.10828729281767956" />
+        <entry key="../../../../layout/compose-model-1647863427616.xml" value="0.1" />
+        <entry key="../../../../layout/compose-model-1647863428883.xml" value="0.1" />
+        <entry key="../../../../layout/compose-model-1647870419918.xml" value="0.165" />
+        <entry key="../../../../layout/compose-model-1647886288708.xml" value="0.4703703703703704" />
+        <entry key="../../../../layout/compose-model-1647886288720.xml" value="0.1" />
         <entry key="../../../../layout/custom_preview.xml" value="0.2989583333333333" />
         <entry key="../../Library/Android/sdk/platforms/android-31/data/res/drawable/progress_indeterminate_anim_large_material.xml" value="0.177" />
         <entry key="ads/src/main/res/layout/admob_native_banner.xml" value="0.17708333333333334" />
@@ -223,6 +231,7 @@
         <entry key="presentation/ui/src/main/res/drawable/background_pill.xml" value="0.3615" />
         <entry key="presentation/ui/src/main/res/drawable/ic_back.xml" value="0.155" />
         <entry key="presentation/ui/src/main/res/drawable/ic_menu.xml" value="0.1665" />
+        <entry key="presentation/ui/src/main/res/drawable/ic_more.xml" value="0.284" />
         <entry key="presentation/ui/src/main/res/drawable/unknown_avatar.xml" value="0.1985" />
         <entry key="presentation/ui/src/main/res/layout/view_settings_category.xml" value="0.55" />
         <entry key="presentation/ui/src/main/res/layout/view_settings_preference.xml" value="0.36041666666666666" />

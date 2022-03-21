@@ -18,4 +18,6 @@ dependencies {
     implementation deps.compose.runtime
     implementation deps.compose.viewmodel
     implementation deps.compose.theme_adapter
+
+    implementation deps.androidx.windowmanager
 }
