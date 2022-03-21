@@ -23,7 +23,7 @@ import tmg.flashback.style.text.TextSection
 
 @Composable
 fun MenuScreen(
-    seasonSelected: Int,
+    seasonSelected: Int?,
     seasonClicked: (season: Int) -> Unit
 ) {
 //    val viewModel by viewModel<MenuViewModel>()

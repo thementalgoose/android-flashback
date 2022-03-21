@@ -10,6 +10,7 @@ import androidx.compose.ui.graphics.Color
 import org.koin.androidx.compose.viewModel
 import tmg.flashback.style.utils.WindowSize
 import tmg.flashback.ui.components.layouts.Dashboard
+import tmg.flashback.ui.dashboard.menu.MenuScreen
 import tmg.utilities.extensions.toEnum
 
 data class DashboardScreenState(
@@ -33,13 +34,20 @@ fun DashboardScreen(
             }
         },
         menuContent = {
-            Box(modifier = Modifier.fillMaxSize().background(Color.Red))
+            MenuScreen(
+                seasonSelected = state.value?.season,
+                seasonClicked = viewModel.inputs::clickSeason
+            )
         },
         content = {
-            Box(modifier = Modifier.fillMaxSize().background(Color.Green))
+            Box(modifier = Modifier
+                .fillMaxSize()
+                .background(Color.Green))
         },
         subContent = {
-            Box(modifier = Modifier.fillMaxSize().background(Color.Blue))
+            Box(modifier = Modifier
+                .fillMaxSize()
+                .background(Color.Blue))
         }
     )
 }
