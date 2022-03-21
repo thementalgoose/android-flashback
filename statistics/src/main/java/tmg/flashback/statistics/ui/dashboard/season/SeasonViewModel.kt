@@ -28,6 +28,7 @@ import tmg.flashback.statistics.repo.SeasonRepository
 import tmg.flashback.statistics.repo.repository.CacheRepository
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable.*
+import tmg.flashback.statistics.usecases.DefaultSeasonUseCase
 import tmg.flashback.ui.repository.ThemeRepository
 import tmg.utilities.extensions.combinePair
 import tmg.utilities.lifecycle.DataEvent
@@ -67,6 +68,7 @@ interface SeasonViewModelOutputs {
 
 class SeasonViewModel(
     private val homeController: HomeController,
+    private val defaultSeasonUseCase: DefaultSeasonUseCase,
     private val raceRepository: RaceRepository,
     private val eventsRepository: EventsRepository,
     private val networkConnectivityManager: NetworkConnectivityManager,
@@ -85,7 +87,7 @@ class SeasonViewModel(
         true -> SeasonNavItem.SCHEDULE
         false -> SeasonNavItem.CALENDAR
     })
-    private val season: MutableStateFlow<Int> = MutableStateFlow(homeController.defaultSeason)
+    private val season: MutableStateFlow<Int> = MutableStateFlow(defaultSeasonUseCase.defaultSeason)
     private val seasonWithRequest: Flow<Int?> = season
         .flatMapLatest { season ->
             return@flatMapLatest flow {
@@ -146,7 +148,7 @@ class SeasonViewModel(
 
     init {
         if (cacheRepository.shouldSyncCurrentSeason()) {
-            refresh(homeController.serverDefaultSeason)
+            refresh(defaultSeasonUseCase.serverDefaultSeason)
         }
     }
 
@@ -187,7 +189,7 @@ class SeasonViewModel(
             seasonRepository.fetchRaces(season)
             eventsRepository.fetchEvents(season)
 
-            if (season == homeController.serverDefaultSeason) {
+            if (season == defaultSeasonUseCase.serverDefaultSeason) {
                 cacheRepository.markedCurrentSeasonSynchronised()
             }
             showLoading.postValue(false)

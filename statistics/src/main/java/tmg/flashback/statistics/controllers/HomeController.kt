@@ -1,6 +1,5 @@
 package tmg.flashback.statistics.controllers
 
-import tmg.flashback.formula1.constants.Formula1.currentSeasonYear
 import tmg.flashback.statistics.repository.HomeRepository
 import tmg.flashback.statistics.repository.models.Banner
 
@@ -44,51 +43,6 @@ class HomeController(
         set(value) {
             homeRepository.dataProvidedByAtTop = value
         }
-
-    //endregion
-
-    //region Default season shown
-
-    fun clearDefault() {
-        homeRepository.defaultSeason = null
-    }
-
-    fun setUserDefaultSeason(season: Int) {
-        defaultSeason = season
-    }
-
-    var defaultSeason: Int
-        get() {
-            val supportedSeasons = homeRepository.supportedSeasons
-            val userPrefSeason = homeRepository.defaultSeason
-            val serverSeason = homeRepository.serverDefaultYear
-
-            if (supportedSeasons.isEmpty()) {
-                return currentSeasonYear
-            }
-            if (userPrefSeason != null) {
-                if (supportedSeasons.contains(userPrefSeason)) {
-                    return userPrefSeason
-                }
-                else {
-                    clearDefault()
-                }
-            }
-            return if (!supportedSeasons.contains(serverSeason)) {
-                supportedSeasons.maxOrNull()!!
-            } else {
-                serverSeason
-            }
-        }
-        private set(value) {
-            homeRepository.defaultSeason = value
-        }
-
-    val serverDefaultSeason: Int
-        get() = homeRepository.serverDefaultYear
-
-    val isUserDefinedValueSet: Boolean
-        get() = homeRepository.defaultSeason != null
 
     //endregion
 
