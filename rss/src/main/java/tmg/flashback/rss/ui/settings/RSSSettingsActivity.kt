@@ -11,7 +11,6 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import tmg.flashback.rss.R
 import tmg.flashback.rss.databinding.ActivityRssSettingsBinding
-import tmg.flashback.rss.ui.settings.InitialScreen.CONFIGURE
 import tmg.flashback.rss.ui.settings.InitialScreen.SETTINGS
 import tmg.flashback.ui.base.BaseActivity
 import tmg.utilities.extensions.toEnum

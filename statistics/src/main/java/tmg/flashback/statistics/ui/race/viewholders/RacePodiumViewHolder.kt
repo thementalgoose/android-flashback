@@ -2,13 +2,11 @@ package tmg.flashback.statistics.ui.race.viewholders
 
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import org.koin.androidx.compose.inject
 import tmg.flashback.formula1.model.Driver
 import tmg.flashback.formula1.model.RaceRaceResult
 import tmg.flashback.statistics.databinding.LayoutPodiumBinding
 import tmg.flashback.statistics.databinding.ViewRaceRacePodiumBinding
 import tmg.flashback.statistics.extensions.bindRaceModel
-import tmg.flashback.ui.animation.GlideProvider
 
 class RacePodiumViewHolder(
         val driverClicked: (driver: Driver) -> Unit,
