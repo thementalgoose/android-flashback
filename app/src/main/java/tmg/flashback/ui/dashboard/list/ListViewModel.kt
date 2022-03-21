@@ -8,6 +8,7 @@ import tmg.flashback.ads.repository.AdsRepository
 import tmg.flashback.rss.controllers.RSSController
 import tmg.flashback.statistics.controllers.HomeController
 import tmg.flashback.statistics.controllers.ScheduleController
+import tmg.flashback.statistics.usecases.DefaultSeasonUseCase
 import tmg.flashback.ui.managers.StyleManager
 import tmg.flashback.ui.model.NightMode
 import tmg.flashback.ui.repository.ThemeRepository
@@ -59,6 +60,7 @@ interface ListViewModelOutputs {
 
 class ListViewModel(
     private val homeController: HomeController,
+    private val defaultSeasonUseCase: DefaultSeasonUseCase,
     private val rssController: RSSController,
     private val debugController: DebugController,
     private val adsRepository: AdsRepository,
@@ -70,7 +72,7 @@ class ListViewModel(
 
     private var selectionHeaderFavouited: MutableLiveData<Boolean> = MutableLiveData(homeController.favouritesExpanded)
     private var selectionHeaderAll: MutableLiveData<Boolean> = MutableLiveData(homeController.allExpanded)
-    private var currentSeason: MutableLiveData<Int> = MutableLiveData(homeController.defaultSeason)
+    private var currentSeason: MutableLiveData<Int> = MutableLiveData(defaultSeasonUseCase.defaultSeason)
     private val refreshList: MutableLiveData<Event> = MutableLiveData(Event())
 
     override val themeUpdated: MutableLiveData<DataEvent<NightMode>> = MutableLiveData()
@@ -139,8 +141,8 @@ class ListViewModel(
 
         // Season breakdown
         val supportedSeasons = homeController.supportedSeasons
-        val defaultSeason = homeController.defaultSeason
-        val isUserDefinedValueSet = homeController.isUserDefinedValueSet
+        val defaultSeason = defaultSeasonUseCase.defaultSeason
+        val isUserDefinedValueSet = defaultSeasonUseCase.isUserDefinedValueSet
         val favouritedSeasons = homeController.favouriteSeasons
 
         // Favourites
@@ -247,13 +249,13 @@ class ListViewModel(
     }
 
     override fun clickSetDefaultSeason(season: Int) {
-        homeController.setUserDefaultSeason(season)
+        defaultSeasonUseCase.setUserDefaultSeason(season)
         defaultSeasonUpdated.value = DataEvent(season)
         refreshList.postValue(Event())
     }
 
     override fun clickClearDefaultSeason() {
-        homeController.clearDefault()
+        defaultSeasonUseCase.clearDefault()
         defaultSeasonUpdated.value = DataEvent(null)
         refreshList.postValue(Event())
     }

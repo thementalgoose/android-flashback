@@ -21,6 +21,7 @@ import tmg.flashback.statistics.repo.repository.CacheRepository
 import tmg.flashback.statistics.repository.models.Banner
 import tmg.flashback.statistics.ui.shared.sync.SyncDataItem
 import tmg.flashback.statistics.ui.shared.sync.viewholders.DataUnavailable
+import tmg.flashback.statistics.usecases.DefaultSeasonUseCase
 import tmg.flashback.ui.model.AnimationSpeed
 import tmg.flashback.ui.repository.ThemeRepository
 import tmg.testutils.BaseTest
@@ -32,6 +33,7 @@ import tmg.testutils.livedata.testObserve
 internal class SeasonViewModelTest: BaseTest() {
 
     private val mockHomeController: HomeController = mockk(relaxed = true)
+    private val mockDefaultSeasonUseCase: DefaultSeasonUseCase = mockk(relaxed = true)
     private val mockRaceRepository: RaceRepository = mockk(relaxed = true)
     private val mockEventsRepository: EventsRepository = mockk(relaxed = true)
     private val mockNetworkConnectivityManager: NetworkConnectivityManager = mockk(relaxed = true)
@@ -46,6 +48,7 @@ internal class SeasonViewModelTest: BaseTest() {
     private fun initSUT() {
         sut = SeasonViewModel(
             mockHomeController,
+            mockDefaultSeasonUseCase,
             mockRaceRepository,
             mockEventsRepository,
             mockNetworkConnectivityManager,
@@ -64,8 +67,8 @@ internal class SeasonViewModelTest: BaseTest() {
         every { mockNetworkConnectivityManager.isConnected } returns true
         every { mockHomeController.banner } returns null
         every { mockHomeController.dashboardDefaultToSchedule } returns true
-        every { mockHomeController.defaultSeason } returns Year.now().value
-        every { mockHomeController.serverDefaultSeason } returns Year.now().value
+        every { mockDefaultSeasonUseCase.defaultSeason } returns Year.now().value
+        every { mockDefaultSeasonUseCase.serverDefaultSeason } returns Year.now().value
         every { mockThemeRepository.animationSpeed } returns AnimationSpeed.QUICK
         coEvery { mockEventsRepository.getEvents(any()) } returns flow { emit(listOf(Event.model())) }
         coEvery { mockRaceRepository.shouldSyncRace(any()) } returns false
@@ -97,7 +100,7 @@ internal class SeasonViewModelTest: BaseTest() {
     @Test
     fun `refresh is called immediately if cache is marked out of date`() = coroutineTest {
         every { mockCacheRepository.shouldSyncCurrentSeason() } returns true
-        every { mockHomeController.serverDefaultSeason } returns 2020
+        every { mockDefaultSeasonUseCase.serverDefaultSeason } returns 2020
         runBlockingTest {
             initSUT()
         }
@@ -114,7 +117,7 @@ internal class SeasonViewModelTest: BaseTest() {
     @Test
     fun `refresh is not called immediately if cache is valid`() = coroutineTest {
         every { mockCacheRepository.shouldSyncCurrentSeason() } returns false
-        every { mockHomeController.serverDefaultSeason } returns 2020
+        every { mockDefaultSeasonUseCase.serverDefaultSeason } returns 2020
         initSUT()
         coVerify(exactly = 0) {
             mockOverviewRepository.fetchOverview(2020)
