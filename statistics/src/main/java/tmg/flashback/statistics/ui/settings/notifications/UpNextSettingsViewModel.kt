@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import tmg.flashback.statistics.BuildConfig
 import tmg.flashback.statistics.R
 import tmg.flashback.statistics.controllers.ScheduleController
 import tmg.flashback.ui.settings.SettingsModel

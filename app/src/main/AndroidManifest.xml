@@ -20,7 +20,7 @@
             android:value="false" />
 
         <activity
-            android:name=".ui.dashboard.HomeActivity"
+            android:name=".ui.HomeActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Launcher">
@@ -39,7 +39,7 @@
             android:theme="@style/FlashbackAppTheme.Sync" />
 
         <activity
-            android:name=".ui.settings.SettingsAllActivity"
+            android:name=".ui2.settings.SettingsAllActivity"
             android:exported="false"
             android:label=""
             android:theme="@style/Translucent" />

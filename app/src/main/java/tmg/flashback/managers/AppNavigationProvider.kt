@@ -9,7 +9,7 @@ import tmg.flashback.device.managers.BuildConfigManager
 import tmg.flashback.device.repository.DeviceRepository
 import tmg.flashback.notifications.navigation.NotificationNavigationProvider
 import tmg.flashback.rss.controllers.RSSController
-import tmg.flashback.ui.dashboard.HomeActivity
+import tmg.flashback.ui.HomeActivity
 import tmg.flashback.ui.navigation.NavigationProvider
 import tmg.flashback.ui.sync.SyncActivity
 

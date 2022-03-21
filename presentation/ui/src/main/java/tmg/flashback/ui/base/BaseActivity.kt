@@ -7,7 +7,6 @@ import org.koin.android.ext.android.inject
 import tmg.flashback.analytics.manager.AnalyticsManager
 import tmg.flashback.ui.managers.StyleManager
 import tmg.flashback.ui.model.DisplayType
-import tmg.flashback.ui.repository.ThemeRepository
 
 abstract class BaseActivity : AppCompatActivity() {
 

@@ -1,7 +1,6 @@
 package tmg.flashback.statistics.ui.race.viewholders
 
 import android.view.View
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import tmg.flashback.formula1.enums.isStatusFinished

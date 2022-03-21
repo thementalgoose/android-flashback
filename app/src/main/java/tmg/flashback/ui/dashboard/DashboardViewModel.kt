@@ -1,25 +1,15 @@
 package tmg.flashback.ui.dashboard
 
-import android.content.Context
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.launch
-import tmg.flashback.common.controllers.ReleaseNotesController
-import tmg.flashback.configuration.usecases.ApplyConfigUseCase
-import tmg.flashback.configuration.usecases.FetchConfigUseCase
-import tmg.flashback.statistics.BuildConfig
-import tmg.flashback.statistics.controllers.HomeController
-import tmg.flashback.statistics.extensions.updateAllWidgets
-import tmg.flashback.statistics.workmanager.WorkerProvider
-import tmg.utilities.lifecycle.Event
+import tmg.flashback.statistics.usecases.DefaultSeasonUseCase
 
 //region Inputs
 
 interface DashboardViewModelInputs {
-    fun clickSearch()
+    fun clickTab(tab: DashboardNavItem)
+    fun clickSeason(season: Int)
 }
 
 //endregion
@@ -27,62 +17,36 @@ interface DashboardViewModelInputs {
 //region Outputs
 
 interface DashboardViewModelOutputs {
-    val openReleaseNotes: LiveData<Event>
-    val openSearch: LiveData<Event>
-
-    val appConfigSynced: LiveData<Event>
-
-    val defaultToSchedule: Boolean
+    val currentTab: LiveData<DashboardScreenState>
 }
 
 //endregion
 
 class DashboardViewModel(
-    applicationContext: Context,
-    private val workerProvider: WorkerProvider,
-    private val fetchConfigUseCase: FetchConfigUseCase,
-    private val applyConfigUseCase: ApplyConfigUseCase,
-    private val homeController: HomeController,
-    private val releaseNotesController: ReleaseNotesController,
+    private val defaultSeasonUseCase: DefaultSeasonUseCase
 ): ViewModel(), DashboardViewModelInputs, DashboardViewModelOutputs {
 
-    override val openReleaseNotes: MutableLiveData<Event> = MutableLiveData()
-    override val appConfigSynced: MutableLiveData<Event> = MutableLiveData()
-    override val openSearch: MutableLiveData<Event> = MutableLiveData()
+    val inputs: DashboardViewModelInputs = this
+    val outputs: DashboardViewModelOutputs = this
 
-    override val defaultToSchedule: Boolean get() = homeController.dashboardDefaultToSchedule
+    private val defaultTab: DashboardNavItem = DashboardNavItem.CALENDAR
 
-    var inputs: DashboardViewModelInputs = this
-    var outputs: DashboardViewModelOutputs = this
+    override val currentTab: MutableLiveData<DashboardScreenState> = MutableLiveData(DashboardScreenState(
+        tab = defaultTab,
+        season = defaultSeasonUseCase.defaultSeason
+    ))
 
-    init {
-        viewModelScope.launch {
-            fetchConfigUseCase.fetch()
-            val activate = applyConfigUseCase.apply()
-            if (BuildConfig.DEBUG) {
-                Log.i("Dashboard", "Remote config change detected $activate")
-            }
-            if (activate) {
-                appConfigSynced.value = Event()
-                workerProvider.schedule()
-                applicationContext.updateAllWidgets()
-            }
-        }
-
-        if (releaseNotesController.pendingReleaseNotes) {
-            openReleaseNotes.value = Event()
-        }
+    override fun clickSeason(season: Int) {
+        currentTab.postValue(DashboardScreenState(
+            tab = currentTab.value?.tab ?: defaultTab,
+            season = season
+        ))
     }
 
-    //region Inputs
-
-    override fun clickSearch() {
-        openSearch.value = Event()
+    override fun clickTab(tab: DashboardNavItem) {
+        currentTab.postValue(DashboardScreenState(
+            tab = tab,
+            season = currentTab.value?.season ?: defaultSeasonUseCase.defaultSeason
+        ))
     }
-
-    //endregion
-
-    //region Outputs
-
-    //endregion
 }

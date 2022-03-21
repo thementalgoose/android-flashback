@@ -2,30 +2,22 @@ package tmg.flashback.common.ui.privacypolicy
 
 import android.text.method.LinkMovementMethod
 import android.widget.TextView
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.viewinterop.AndroidView
-import androidx.core.content.ContextCompat
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import tmg.flashback.common.R
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.ui.components.header.Header
 import tmg.utilities.extensions.fromHtml
 import tmg.utilities.extensions.getColor
-import tmg.utilities.lifecycle.Event
 
 @Composable
 fun PrivacyPolicyScreen(

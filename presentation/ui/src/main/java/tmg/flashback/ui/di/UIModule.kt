@@ -8,7 +8,7 @@ import tmg.flashback.ui.usecases.ChangeNightModeUseCase
 val uiModule = module {
 
     single { ThemeRepository(get(), get()) }
-    single { GlideProvider() }
+    single { tmg.flashback.ui.animation.GlideProvider() }
 
     factory { ChangeNightModeUseCase(get()) }
 

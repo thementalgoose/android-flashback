@@ -11,7 +11,7 @@ import tmg.flashback.R
 import tmg.flashback.common.ui.forceupgrade.ForceUpgradeActivity
 import tmg.flashback.style.AppTheme
 import tmg.flashback.ui.base.BaseActivity
-import tmg.flashback.ui.dashboard.HomeActivity
+import tmg.flashback.ui.HomeActivity
 import tmg.utilities.extensions.observeEvent
 import tmg.utilities.extensions.setStatusBarColor
 
