@@ -174,6 +174,7 @@ private fun Toggle(
     ) {
         Icon(
             painter = painterResource(id = icon),
+            tint = AppTheme.colors.contentPrimary,
             contentDescription = null
         )
         Spacer(Modifier.width(AppTheme.dimensions.paddingSmall))
