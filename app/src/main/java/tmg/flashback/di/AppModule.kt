@@ -19,6 +19,7 @@ import tmg.flashback.repositories.NetworkConfigRepository
 import tmg.flashback.statistics.network.NetworkConfigManager
 import tmg.flashback.ui.dashboard.DashboardViewModel
 import tmg.flashback.ui.HomeViewModel
+import tmg.flashback.ui.dashboard.menu.MenuViewModel
 import tmg.flashback.ui2.dashboard.list.ListViewModel
 import tmg.flashback.ui.managers.StyleManager
 import tmg.flashback.ui.navigation.NavigationProvider
@@ -34,6 +35,7 @@ val appModule = module {
     viewModel { SyncViewModel(get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get()) }
 
     viewModel { DashboardViewModel(get()) }
+    viewModel { MenuViewModel(get(), get()) }
 
     single { FlashbackStartup(get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get()) }
 

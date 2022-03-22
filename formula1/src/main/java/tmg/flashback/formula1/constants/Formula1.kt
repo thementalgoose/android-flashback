@@ -1,5 +1,6 @@
 package tmg.flashback.formula1.constants
 
+import androidx.compose.ui.graphics.Color
 import org.threeten.bp.Year
 
 object Formula1 {
@@ -43,9 +44,28 @@ object Formula1 {
         }
     }
 
+    val decadeColours: Map<String, Color> = mapOf(
+        "1950" to Color(0xFF9fa8da),
+        "1960" to Color(0xFF80deea),
+        "1970" to Color(0xFFef9a9a),
+        "1980" to Color(0xFF90caf9),
+        "1990" to Color(0xFFa5d6a7),
+        "2000" to Color(0xFF81d4fa),
+        "2010" to Color(0xFFce93d8),
+        "2020" to Color(0xFFf48fb1),
+        "2030" to Color(0xFFb39ddb),
+        "2040" to Color(0xFFc5e1a5),
+        "2050" to Color(0xFF80cbc4),
+        "2060" to Color(0xFFb0bec5),
+        "2070" to Color(0xFFffcc80),
+        "2080" to Color(0xFFffab91),
+        "2090" to Color(0xFFb0bec5)
+    )
+
     /**
      * Colours for the decades for the menu
      */
+    @Deprecated("Please use decadeColours")
     val coloursDecade: Map<String, String> = mapOf(
         "1950" to "#9fa8da",
         "1960" to "#80deea",

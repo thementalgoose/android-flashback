@@ -34,10 +34,7 @@ fun DashboardScreen(
             }
         },
         menuContent = {
-            MenuScreen(
-                seasonSelected = state.value?.season,
-                seasonClicked = viewModel.inputs::clickSeason
-            )
+            MenuScreen()
         },
         content = {
             Box(modifier = Modifier
