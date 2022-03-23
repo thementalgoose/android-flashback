@@ -126,6 +126,19 @@
         <entry key="../../../../layout/compose-model-1647893736760.xml" value="0.15468227424749165" />
         <entry key="../../../../layout/compose-model-1647893860056.xml" value="0.1" />
         <entry key="../../../../layout/compose-model-1647897126163.xml" value="0.45" />
+        <entry key="../../../../layout/compose-model-1647954099657.xml" value="0.25" />
+        <entry key="../../../../layout/compose-model-1647954099664.xml" value="0.375" />
+        <entry key="../../../../layout/compose-model-1647964172520.xml" value="0.11875" />
+        <entry key="../../../../layout/compose-model-1647964843638.xml" value="0.11875" />
+        <entry key="../../../../layout/compose-model-1647966148390.xml" value="0.13214285714285715" />
+        <entry key="../../../../layout/compose-model-1647969839331.xml" value="0.375" />
+        <entry key="../../../../layout/compose-model-1647973050273.xml" value="0.45" />
+        <entry key="../../../../layout/compose-model-1647973479899.xml" value="0.12479096989966555" />
+        <entry key="../../../../layout/compose-model-1647974363117.xml" value="0.375" />
+        <entry key="../../../../layout/compose-model-1647977003546.xml" value="0.125" />
+        <entry key="../../../../layout/compose-model-1647979286756.xml" value="0.12922297297297297" />
+        <entry key="../../../../layout/compose-model-1647983817190.xml" value="0.3137668918918919" />
+        <entry key="../../../../layout/compose-model-1647984095886.xml" value="0.11350334448160534" />
         <entry key="../../../../layout/custom_preview.xml" value="0.2989583333333333" />
         <entry key="../../Library/Android/sdk/platforms/android-31/data/res/drawable/progress_indeterminate_anim_large_material.xml" value="0.177" />
         <entry key="ads/src/main/res/layout/admob_native_banner.xml" value="0.17708333333333334" />
@@ -143,6 +156,7 @@
         <entry key="app/src/main/res/layout/view_season_list_button.xml" value="0.1859375" />
         <entry key="app/src/main/res/layout/view_season_list_feature_banner.xml" value="0.625" />
         <entry key="app/src/main/res/layout/view_season_list_header.xml" value="0.14492753623188406" />
+        <entry key="app/src/main/res/layout/view_season_list_season.xml" value="0.5429362880886427" />
         <entry key="app/src/main/res/layout/view_season_list_switch.xml" value="0.45" />
         <entry key="app/src/main/res/xml/filepaths.xml" value="0.11354166666666667" />
         <entry key="common/src/main/res/drawable/ic_close.xml" value="0.2171875" />
@@ -338,6 +352,7 @@
         <entry key="statistics/src/main/res/layout/view_race_race_podium.xml" value="0.184375" />
         <entry key="statistics/src/main/res/layout/view_race_race_result.xml" value="0.45" />
         <entry key="statistics/src/main/res/layout/view_search_driver.xml" value="0.25" />
+        <entry key="statistics/src/main/res/layout/view_search_race.xml" value="0.2859375" />
         <entry key="statistics/src/main/res/layout/view_shared_message.xml" value="0.26614583333333336" />
         <entry key="statistics/src/main/res/menu/season_list_item.xml" value="0.24895833333333334" />
       </map>

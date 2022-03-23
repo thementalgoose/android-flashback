@@ -6,6 +6,7 @@ import tmg.flashback.statistics.repository.models.Banner
 /**
  * All the preferences surrounding the season, list of all seasons
  */
+@Deprecated("This class will be replaced with use cases")
 class HomeController(
     private val homeRepository: HomeRepository
 ) {

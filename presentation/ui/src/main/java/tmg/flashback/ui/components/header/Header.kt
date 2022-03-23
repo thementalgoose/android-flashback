@@ -1,8 +1,6 @@
 package tmg.flashback.ui.components.header
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.runtime.Composable
@@ -18,8 +16,8 @@ import tmg.flashback.ui.R
 @Composable
 fun Header(
     text: String,
-    icon: Painter,
-    iconContentDescription: String,
+    icon: Painter?,
+    iconContentDescription: String?,
     actionUpClicked: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -28,14 +26,18 @@ fun Header(
             .fillMaxWidth()
             .padding(top = AppTheme.dimensions.paddingXSmall)
     ) {
-        IconButton(
-            onClick = actionUpClicked
-        ) {
-            Icon(
-                painter = icon,
-                contentDescription = iconContentDescription,
-                tint = AppTheme.colors.contentPrimary
-            )
+        if (icon != null) {
+            IconButton(
+                onClick = actionUpClicked
+            ) {
+                Icon(
+                    painter = icon,
+                    contentDescription = iconContentDescription,
+                    tint = AppTheme.colors.contentPrimary
+                )
+            }
+        } else {
+            Spacer(modifier = Modifier.height(AppTheme.dimensions.paddingLarge))
         }
         TextHeadline1(
             text = text,
@@ -58,6 +60,19 @@ private fun PreviewLight() {
         Header(
             text = "2022",
             icon = painterResource(id = R.drawable.ic_menu),
+            iconContentDescription = "Menu",
+            actionUpClicked = { }
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun PreviewNoIcon() {
+    AppThemePreview(isLight = true) {
+        Header(
+            text = "2022",
+            icon = null,
             iconContentDescription = "Menu",
             actionUpClicked = { }
         )

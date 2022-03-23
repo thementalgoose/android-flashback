@@ -71,7 +71,7 @@ internal class SeasonViewModelTest: BaseTest() {
         every { mockDefaultSeasonUseCase.serverDefaultSeason } returns Year.now().value
         every { mockThemeRepository.animationSpeed } returns AnimationSpeed.QUICK
         coEvery { mockEventsRepository.getEvents(any()) } returns flow { emit(listOf(Event.model())) }
-        coEvery { mockRaceRepository.shouldSyncRace(any()) } returns false
+        coEvery { mockRaceRepository.hasntPreviouslySynced(any()) } returns false
         coEvery { mockOverviewRepository.fetchOverview(any()) } returns true
         coEvery { mockSeasonRepository.fetchRaces(any()) } returns true
         coEvery { mockSeasonRepository.getDriverStandings(any()) } returns flow { emit(
@@ -404,7 +404,7 @@ internal class SeasonViewModelTest: BaseTest() {
 
     @Test
     fun `season and overview request is not made when should refresh is false`() = coroutineTest {
-        coEvery { mockRaceRepository.shouldSyncRace(any()) } returns false
+        coEvery { mockRaceRepository.hasntPreviouslySynced(any()) } returns false
 
         initSUT()
         runBlockingTest {
@@ -420,7 +420,7 @@ internal class SeasonViewModelTest: BaseTest() {
 
     @Test
     fun `season and overview request is made when should refresh is true`() = coroutineTest {
-        coEvery { mockRaceRepository.shouldSyncRace(any()) } returns true
+        coEvery { mockRaceRepository.hasntPreviouslySynced(any()) } returns true
 
         initSUT()
         runBlockingTest {

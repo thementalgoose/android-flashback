@@ -74,7 +74,7 @@ class RaceViewModel(
         .filterNotNull()
         .flatMapLatest { (season, round) ->
             return@flatMapLatest flow {
-                if (raceRepository.shouldSyncRace(season, round)) {
+                if (raceRepository.hasntPreviouslySynced(season)) {
                     showLoading.postValue(true)
                     emit(null)
                     raceRepository.fetchRaces(season)
