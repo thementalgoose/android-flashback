@@ -13,7 +13,6 @@ import tmg.flashback.statistics.network.models.races.DriverStandings
 import tmg.flashback.statistics.repo.base.BaseRepository
 import tmg.flashback.statistics.repo.extensions.valueList
 import tmg.flashback.statistics.repo.mappers.app.RaceMapper
-import tmg.flashback.statistics.repo.mappers.app.EventMapper
 import tmg.flashback.statistics.repo.mappers.network.*
 import tmg.flashback.statistics.repo.repository.CacheRepository
 import tmg.flashback.statistics.room.FlashbackDatabase
@@ -117,11 +116,8 @@ class RaceRepository(
             }
     }
 
-    suspend fun shouldSyncRace(season: Int): Boolean {
+    suspend fun hasntPreviouslySynced(season: Int): Boolean {
         return !cacheRepository.seasonsSyncAtLeastOnce.contains(season)
-    }
-    suspend fun shouldSyncRace(season: Int, @Suppress("UNUSED_PARAMETER") round: Int): Boolean {
-        return shouldSyncRace(season)
     }
 
 

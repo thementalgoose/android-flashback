@@ -39,6 +39,7 @@ class AppColors(
     val f1ResultsFull: Color,
     val f1ResultsNeutral: Color = contentSecondary,
     val f1ResultsPartial: Color,
+    val f1ResultsUpcoming: Color = primary,
     val f1FastestSector: Color,
     val f1FavouriteSeason: Color,
     val f1Championship: Color,

@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -72,13 +73,18 @@ private fun MenuScreenImpl(
             ) }
             item { Divider() }
             item { SubHeader(text = stringResource(id = R.string.home_season_header_All))}
-            items(season) {
+            items(season, key = { it.season }) {
                 Season(
                     season = it.season,
                     isSelected = it.isSelected,
                     colour = it.colour,
-                    clickSeason = seasonClicked
+                    clickSeason = seasonClicked,
+                    showTop = !it.isFirst,
+                    showBottom = !it.isLast
                 )
+            }
+            item {
+                Spacer(modifier = Modifier.height(AppTheme.dimensions.paddingXXLarge))
             }
         }
     )
@@ -104,12 +110,14 @@ private fun SubHeader(
 ) {
     TextSection(
         text = text,
-        modifier = modifier.padding(
-            start = AppTheme.dimensions.paddingMedium,
-            end = AppTheme.dimensions.paddingMedium,
-            top = AppTheme.dimensions.paddingNSmall,
-            bottom = AppTheme.dimensions.paddingSmall
-        )
+        modifier = modifier
+            .padding(
+                start = AppTheme.dimensions.paddingMedium,
+                end = AppTheme.dimensions.paddingMedium,
+                top = AppTheme.dimensions.paddingNSmall,
+                bottom = AppTheme.dimensions.paddingSmall
+            )
+            .alpha(0.8f)
     )
 }
 
@@ -121,6 +129,7 @@ private fun Divider(
         .fillMaxWidth()
         .padding(vertical = AppTheme.dimensions.paddingXSmall)
         .height(2.dp)
+        .alpha(0.3f)
         .background(AppTheme.colors.backgroundSecondary)
     )
 }
@@ -137,18 +146,20 @@ private fun Button(
         .fillMaxWidth()
         .clickable(onClick = {})
         .padding(
-            vertical = AppTheme.dimensions.paddingSmall,
+            vertical = AppTheme.dimensions.paddingNSmall,
             horizontal = AppTheme.dimensions.paddingMedium
         )
     ) {
         Icon(
             painter = painterResource(id = icon),
+            modifier = Modifier.size(20.dp),
             tint = AppTheme.colors.contentPrimary,
             contentDescription = null
         )
-        Spacer(Modifier.width(AppTheme.dimensions.paddingSmall))
+        Spacer(Modifier.width(AppTheme.dimensions.paddingMedium))
         TextBody1(
             text = stringResource(id = label),
+            bold = true,
             modifier = Modifier
                 .weight(1f)
                 .align(Alignment.CenterVertically)
@@ -168,18 +179,20 @@ private fun Toggle(
         .fillMaxWidth()
         .clickable(onClick = {})
         .padding(
-            vertical = AppTheme.dimensions.paddingSmall,
+            vertical = AppTheme.dimensions.paddingNSmall,
             horizontal = AppTheme.dimensions.paddingMedium
         )
     ) {
         Icon(
+            modifier = Modifier.size(20.dp),
             painter = painterResource(id = icon),
             tint = AppTheme.colors.contentPrimary,
             contentDescription = null
         )
-        Spacer(Modifier.width(AppTheme.dimensions.paddingSmall))
+        Spacer(Modifier.width(AppTheme.dimensions.paddingMedium))
         TextBody1(
             text = stringResource(id = label),
+            bold = true,
             modifier = Modifier
                 .weight(1f)
                 .align(Alignment.CenterVertically)
@@ -192,8 +205,8 @@ private fun Toggle(
 }
 
 private val pipeCircumference = 20.dp
-private val pipeCircumferenceInner = 12.dp
-private val pipeWidth = 12.dp
+private val pipeCircumferenceInner = 10.dp
+private val pipeWidth = 6.dp
 
 @Composable
 private fun Season(
@@ -207,19 +220,37 @@ private fun Season(
 ) {
     Row(modifier = modifier
         .clickable(onClick = { clickSeason(season) })
-        .padding(
-            horizontal = AppTheme.dimensions.paddingMedium
-        )
     ) {
         Box(
             Modifier
-                .width(pipeCircumference)
-                .padding(start = 2.dp)
-                .defaultMinSize(
-                    minWidth = 24.dp,
-                    minHeight = pipeCircumference + pipeWidth
+                .align(Alignment.CenterVertically)
+                .padding(
+                    start = AppTheme.dimensions.paddingMedium,
+                    end = AppTheme.dimensions.paddingMedium
                 )
+                .fillMaxHeight()
+                .height(IntrinsicSize.Max)
         ) {
+            Column(
+                modifier = Modifier
+                    .width(pipeWidth)
+                    .height(IntrinsicSize.Max)
+                    .fillMaxHeight()
+                    .offset(x = (pipeCircumference / 2f) - (pipeWidth / 2f))
+            ) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f)
+                        .background(if (showTop) colour else Color.Transparent)
+                )
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f)
+                        .background(if (showBottom) colour else Color.Transparent)
+                )
+            }
             Box(modifier = Modifier
                 .align(Alignment.Center)
                 .size(pipeCircumference)
@@ -229,12 +260,12 @@ private fun Season(
                 .align(Alignment.Center)
                 .size(pipeCircumferenceInner)
                 .clip(CircleShape)
-                .background(if (!isSelected) AppTheme.colors.backgroundSecondary else colour))
+                .background(if (!isSelected) AppTheme.colors.backgroundPrimary else colour))
         }
-        Spacer(modifier = Modifier.width(AppTheme.dimensions.paddingSmall + 2.dp))
         TextBody1(
             modifier = Modifier
                 .align(Alignment.CenterVertically)
+                .padding(vertical = AppTheme.dimensions.paddingNSmall)
                 .weight(1f),
             bold = true,
             text = season.toString()

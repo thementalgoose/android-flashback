@@ -210,17 +210,12 @@ fun OverlappingPanels(
                 onStartPanel = { Alignment.CenterStart },
                 onNeither = { Alignment.Center }
             )
-            val sidePanelContent = organizeSidePanel(
-                panelsState,
-                onStartPanel = { panelStart },
-                onNeither = { {} }
-            )
             Box(
                 modifier = Modifier
                     .fillMaxHeight()
                     .fillMaxWidth(fraction)
                     .align(sidePanelAlignment),
-                content = sidePanelContent
+                content = panelStart
             )
             Box(
                 modifier = Modifier
@@ -360,7 +355,7 @@ private fun PreviewCenter() {
                 Box(modifier = Modifier.fillMaxSize().background(Color.Blue))
             },
             panelCenter = {
-                Box(modifier = Modifier.fillMaxSize().background(Color.Red))
+                Box(modifier = Modifier.fillMaxSize().background(Color.Red).alpha(0.5f))
             }
         )
     }

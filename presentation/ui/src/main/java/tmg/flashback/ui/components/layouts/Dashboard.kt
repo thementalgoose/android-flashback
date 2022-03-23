@@ -1,26 +1,44 @@
 package tmg.flashback.ui.components.layouts
 
+import android.graphics.RectF
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.slideIn
+import androidx.compose.animation.slideInHorizontally
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Outline
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Density
+import androidx.compose.ui.unit.LayoutDirection
+import androidx.compose.ui.unit.constrainWidth
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import kotlinx.coroutines.launch
 import tmg.flashback.style.AppTheme
+import tmg.flashback.style.text.TextBody1
 import tmg.flashback.style.utils.WindowSize
 import tmg.flashback.ui.R
 
-private val sideMenuWidth = 96.dp
+private val sideMenuWidth = 72.dp
 private val expandedContentWidth = 400.dp
 
 @Composable
@@ -33,95 +51,129 @@ fun Dashboard(
     subContent: @Composable () -> Unit,
 ) {
     val panelsState = rememberOverlappingPanelsState(OverlappingPanelsValue.Closed)
-    Scaffold(
-        bottomBar = {
-            if (windowSize == WindowSize.Compact) {
-                BottomAppBar(backgroundColor = AppTheme.colors.backgroundNav) {
-                    menuItems.forEach {
-                        BottomNavigationItem(
-                            selected = true,
-                            onClick = { clickMenuItem(it) },
-                            icon = { Icon(
-                                painter = painterResource(id = it.icon),
-                                contentDescription = stringResource(id = it.label)
-                            ) }
-                        )
-                    }
-                }
-            }
-        },
-        content = {
-            when (windowSize) {
-                WindowSize.Compact -> {
-                    OverlappingPanels(
-                        panelsState = panelsState,
-                        panelStart = { menuContent() },
-                        panelCenter = {
-                            val coroutineScope = rememberCoroutineScope()
-                            content(menuClicked = {
-                                coroutineScope.launch {
-                                    panelsState.openStartPanel()
+    AppTheme {
+        Scaffold(
+            bottomBar = {
+                if (windowSize == WindowSize.Compact) {
+                    BottomAppBar(backgroundColor = AppTheme.colors.backgroundNav) {
+                        menuItems.forEach {
+                            BottomNavigationItem(
+                                selected = true,
+                                onClick = { clickMenuItem(it) },
+                                icon = {
+                                    Icon(
+                                        painter = painterResource(id = it.icon),
+                                        contentDescription = stringResource(id = it.label)
+                                    )
+                                },
+                                alwaysShowLabel = true,
+                                label = {
+                                    TextBody1(text = stringResource(id = it.label))
                                 }
-                            })
-                        }
-                    )
-                }
-                WindowSize.Medium -> {
-                    Row(modifier = Modifier.fillMaxSize()) {
-                        Box(modifier = Modifier
-                            .width(sideMenuWidth)
-                            .fillMaxHeight()
-                            .background(AppTheme.colors.backgroundNav)
-                        ) {
-                            VerticalMenuBar(
-                                menuItems = menuItems,
-                                modifier = Modifier.align(Alignment.Center)
                             )
                         }
-                        Box(
-                            modifier = Modifier
-                                .weight(1f)
-                                .fillMaxHeight(),
-                            content = {
-                                content(null)
+                    }
+                }
+            },
+            content = {
+                when (windowSize) {
+                    WindowSize.Compact -> {
+                        OverlappingPanels(
+                            panelsState = panelsState,
+                            panelStart = { menuContent() },
+                            panelCenter = {
+                                val coroutineScope = rememberCoroutineScope()
+                                content(
+                                    menuClicked = {
+                                        coroutineScope.launch {
+                                            panelsState.openStartPanel()
+                                        }
+                                    }
+                                )
                             }
                         )
                     }
-                }
-                WindowSize.Expanded -> {
-                    Row(modifier = Modifier.fillMaxSize()) {
-                        Box(modifier = Modifier
-                            .fillMaxHeight()
-                            .width(sideMenuWidth)
-                            .background(AppTheme.colors.backgroundNav)
+                    WindowSize.Medium -> {
+                        val showMenu = remember { mutableStateOf(false) }
+                        Row(modifier = Modifier
+                            .fillMaxSize()
                         ) {
-                            VerticalMenuBar(
-                                menuItems = menuItems,
-                                modifier = Modifier.align(Alignment.Center)
+                            Box(modifier = Modifier
+                                .width(sideMenuWidth)
+                                .fillMaxHeight()
+                                .background(AppTheme.colors.backgroundNav)
+                            ) {
+                                VerticalMenuBar(
+                                    menuItems = menuItems,
+                                    menuClicked = { showMenu.value = true },
+                                    menuItemClicked = clickMenuItem,
+                                    modifier = Modifier.align(Alignment.Center)
+                                )
+                            }
+                            Box(
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .fillMaxHeight(),
+                                content = {
+                                    content(null)
+                                }
                             )
                         }
-                        Box(modifier = Modifier
-                            .fillMaxHeight()
-                            .width(expandedContentWidth)
-                        ) {
-                            content(null)
-                        }
-                        Box(modifier = Modifier
-                            .weight(1f)
-                            .fillMaxHeight()
-                        ) {
-                            subContent()
+                    }
+                    WindowSize.Expanded -> {
+                        val showMenu = remember { mutableStateOf(false) }
+                        Row(modifier = Modifier.fillMaxSize()) {
+                            Box(modifier = Modifier
+                                .fillMaxHeight()
+                                .width(sideMenuWidth)
+                                .background(AppTheme.colors.backgroundNav)
+                            ) {
+                                VerticalMenuBar(
+                                    menuItems = menuItems,
+                                    menuClicked = { showMenu.value = true },
+                                    menuItemClicked = clickMenuItem,
+                                    modifier = Modifier.align(Alignment.Center)
+                                )
+                            }
+                            Box(modifier = Modifier
+                                .fillMaxHeight()
+                                .width(expandedContentWidth)
+                            ) {
+                                content(null)
+                            }
+                            Box(modifier = Modifier
+                                .weight(1f)
+                                .fillMaxHeight()
+                            ) {
+                                subContent()
+                            }
                         }
                     }
                 }
             }
-        }
-    )
+        )
+    }
 }
+
+private object DrawerShape: Shape {
+    override fun createOutline(
+        size: Size,
+        layoutDirection: LayoutDirection,
+        density: Density
+    ): Outline {
+        val leftSpaceWidth = size.width * 1 / 3
+        return Outline.Rectangle(Rect(left = 0f, top = 0f, right = size.width * 2 / 3, bottom = size.height))
+    }
+}
+
+private val menuItemClickWidth = 48.dp
+private val menuItemIconWidth = 24.dp
 
 @Composable
 private fun VerticalMenuBar(
     menuItems: List<DashboardMenuItem>,
+    menuClicked: () -> Unit,
+    menuItemClicked: (DashboardMenuItem) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -136,11 +188,14 @@ private fun VerticalMenuBar(
                 icon = R.drawable.ic_menu,
                 isSelected = false
             ),
+            onClick = menuClicked,
             backgroundColor = Color.Transparent
         )
         Spacer(modifier = Modifier.height(AppTheme.dimensions.paddingMedium))
         menuItems.forEach {
-            MenuIcon(it)
+            MenuIcon(it, onClick = {
+                menuItemClicked(it)
+            })
             Spacer(modifier = Modifier.height(AppTheme.dimensions.paddingMedium))
         }
     }
@@ -150,16 +205,18 @@ private fun VerticalMenuBar(
 private fun MenuIcon(
     item: DashboardMenuItem,
     modifier: Modifier = Modifier,
+    onClick: () -> Unit = { },
     backgroundColor: Color = AppTheme.colors.backgroundSecondary
 ) {
     Box(modifier = modifier
-        .size(64.dp)
+        .size(menuItemClickWidth)
         .clip(CircleShape)
         .background(backgroundColor)
+        .clickable(onClick = onClick)
     ) {
         Icon(
             modifier = Modifier
-                .size(32.dp)
+                .size(menuItemIconWidth)
                 .align(Alignment.Center),
             painter = painterResource(id = item.icon),
             contentDescription = stringResource(id = item.label)

@@ -58,11 +58,13 @@ class MenuViewModel(
             homeRepository
                 .supportedSeasons
                 .sortedDescending()
-                .map {
+                .mapIndexed { index, it ->
                     MenuSeasonItem(
                         colour = decadeColours["${it.toString().substring(0, 3)}0"] ?: Color.Gray,
                         season = it,
-                        isSelected = selectedSeason == it
+                        isSelected = selectedSeason == it,
+                        isFirst = index == 0,
+                        isLast = index == (homeRepository.supportedSeasons.size - 1)
                     )
                 }
         }

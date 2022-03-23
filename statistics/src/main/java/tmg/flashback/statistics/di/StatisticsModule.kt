@@ -11,6 +11,9 @@ import tmg.flashback.statistics.repo.di.repoModule
 import tmg.flashback.statistics.repository.HomeRepository
 import tmg.flashback.statistics.repository.UpNextRepository
 import tmg.flashback.statistics.ui.circuit.CircuitViewModel
+import tmg.flashback.statistics.ui.dashboard.calendar.CalendarViewModel
+import tmg.flashback.statistics.ui.dashboard.constructors.ConstructorsStandingViewModel
+import tmg.flashback.statistics.ui.dashboard.drivers.DriversStandingViewModel
 import tmg.flashback.statistics.ui.dashboard.events.EventListViewModel
 import tmg.flashback.statistics.ui.dashboard.onboarding.OnboardingNotificationViewModel
 import tmg.flashback.statistics.ui.dashboard.racepreview.RacePreviewViewModel
@@ -25,8 +28,8 @@ import tmg.flashback.statistics.ui.settings.home.SettingsHomeViewModel
 import tmg.flashback.statistics.ui.settings.notifications.UpNextSettingsViewModel
 import tmg.flashback.statistics.ui.settings.notifications.reminder.UpNextReminderViewModel
 import tmg.flashback.statistics.ui.settings.statistics.SettingsStatisticsViewModel
-import tmg.flashback.statistics.usecases.DefaultSeasonUseCase
-import tmg.flashback.statistics.usecases.SearchAppShortcutUseCase
+import tmg.flashback.statistics.ui.weekend.WeekendViewModel
+import tmg.flashback.statistics.usecases.*
 import tmg.flashback.statistics.workmanager.ContentSyncWorker
 import tmg.flashback.statistics.workmanager.NotificationScheduleWorker
 import tmg.flashback.statistics.workmanager.WorkerProvider
@@ -44,24 +47,30 @@ val statisticsModule = repoModule + module {
     viewModel { SearchViewModel(get(), get(), get(), get(), get()) }
     viewModel { CategoryViewModel() }
 
-    viewModel { SettingsHomeViewModel(get(), get()) }
-    viewModel { SettingsStatisticsViewModel() }
-
-    single { HomeController(get()) }
-
-    // App
-    single { HomeRepository(get(), get()) }
+    viewModel { CalendarViewModel(get(), get()) }
+    viewModel { DriversStandingViewModel() }
+    viewModel { ConstructorsStandingViewModel() }
+    viewModel { WeekendViewModel() }
 
     viewModel { UpNextSettingsViewModel(get()) }
     viewModel { OnboardingNotificationViewModel(get()) }
     viewModel { UpNextReminderViewModel(get()) }
+    viewModel { SettingsHomeViewModel(get(), get()) }
+    viewModel { SettingsStatisticsViewModel() }
 
+    single { HomeController(get()) }
     single { ScheduleController(androidContext(), get(), get(), get(), get(), get()) }
+
+    single { HomeRepository(get(), get()) }
     single { UpNextRepository(get()) }
 
     // Use Cases
     factory { SearchAppShortcutUseCase(get(), get()) }
     factory { DefaultSeasonUseCase(get()) }
+    factory { WeekendOverviewUseCase(get(), get()) }
+    factory { FetchSeasonUseCase(get(), get(), get()) }
+    factory { StandingsConstructorUseCase() }
+    factory { StandingsDriverUseCase() }
 
     // Worker
     //  https://github.com/InsertKoinIO/koin/issues/992

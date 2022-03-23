@@ -12,6 +12,9 @@
     <string name="nav_qualifying">Qualifying</string>
     <string name="nav_sprint_qualifying">Sprint</string>
 
+    <string name="dashboard_standings_driver">%s\nDriver Standings</string>
+    <string name="dashboard_standings_constructor">%s\nConstructor Standings</string>
+
     <!-- Dashboard -->
     <string name="home_season_header_current">Now</string>
     <string name="home_season_header_favourited">Favourites</string>
