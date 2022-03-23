@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.text.TextHeadline1
@@ -37,7 +38,7 @@ fun Header(
                 )
             }
         } else {
-            Spacer(modifier = Modifier.height(AppTheme.dimensions.paddingLarge))
+            Spacer(modifier = Modifier.height(AppTheme.dimensions.paddingLarge + 16.dp))
         }
         TextHeadline1(
             text = text,
