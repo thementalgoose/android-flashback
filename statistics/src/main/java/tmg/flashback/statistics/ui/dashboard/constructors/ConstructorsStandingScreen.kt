@@ -11,9 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.statistics.R
-import tmg.flashback.statistics.models.WeekendOverview
-import tmg.flashback.statistics.models.model
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.ui.components.header.Header
@@ -33,7 +32,7 @@ fun ConstructorsStandingScreen(
 @Composable
 private fun ConstructorsStandingScreenImpl(
     season: Int,
-    list: List<WeekendOverview>,
+    list: List<OverviewRace>,
     menuClicked: (() -> Unit)?
 ) {
 
@@ -52,7 +51,7 @@ private fun ConstructorsStandingScreenImpl(
                     }
                 )
             }
-            items(list, key = { it.key }) {
+            items(list, key = { "${it.season}r${it.round}" }) {
                 ConstructorView()
             }
             item {
@@ -78,7 +77,7 @@ private fun PreviewLight() {
         ConstructorsStandingScreenImpl(
             season = 2022,
             list = listOf(
-                WeekendOverview.model()
+//                WeekendOverview.model()
             ),
             menuClicked = {}
         )
@@ -92,7 +91,7 @@ private fun PreviewDark() {
         ConstructorsStandingScreenImpl(
             season = 2022,
             list = listOf(
-                WeekendOverview.model()
+//                WeekendOverview.model()
             ),
             menuClicked = {}
         )

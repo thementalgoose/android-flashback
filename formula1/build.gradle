@@ -28,7 +28,7 @@ dependencies {
 
     // Flagkit
     api deps.flagkit
+    testImplementation project(path: ':test:models')
 
     // Test
-    testImplementation project(path: ':test:stats-models')
 }

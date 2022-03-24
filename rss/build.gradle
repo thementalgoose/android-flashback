@@ -43,7 +43,7 @@ dependencies {
 
     // Lottie
     implementation deps.lottie
+    testImplementation project(path: ':test:models')
 
     // Test models and methods
-    testImplementation project(path: ':test:stats-models')
 }

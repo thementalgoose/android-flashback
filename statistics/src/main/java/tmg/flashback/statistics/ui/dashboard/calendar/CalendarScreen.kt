@@ -14,12 +14,15 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import org.koin.androidx.compose.viewModel
+import org.threeten.bp.LocalDate
+import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.formula1.utils.getFlagResourceAlpha3
+import tmg.flashback.providers.DriverProvider
+import tmg.flashback.providers.OverviewRaceProvider
 import tmg.flashback.statistics.R
-import tmg.flashback.statistics.models.WeekendOverview
-import tmg.flashback.statistics.models.model
 import tmg.flashback.style.AppTheme
 import tmg.flashback.style.AppThemePreview
 import tmg.flashback.style.text.TextBody1
@@ -47,7 +50,7 @@ fun CalendarScreen(
 @Composable
 private fun CalendarScreenImpl(
     season: Int,
-    list: List<WeekendOverview>,
+    list: List<OverviewRace>,
     menuClicked: (() -> Unit)?,
 ) {
     LazyColumn(
@@ -65,7 +68,7 @@ private fun CalendarScreenImpl(
                     }
                 )
             }
-            items(list, key = { it.key }) {
+            items(list, key = { "s${it.season}r${it.round}" }) {
                 ScheduleView(
                     weekendOverview = it,
                     itemClicked = { }
@@ -80,8 +83,8 @@ private fun CalendarScreenImpl(
 
 @Composable
 private fun ScheduleView(
-    weekendOverview: WeekendOverview,
-    itemClicked: (model: WeekendOverview) -> Unit,
+    weekendOverview: OverviewRace,
+    itemClicked: (model: OverviewRace) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row(modifier = modifier
@@ -111,7 +114,7 @@ private fun ScheduleView(
         ) {
             val resourceId = when (isInPreview()) {
                 true -> R.drawable.gb
-                false -> LocalContext.current.getFlagResourceAlpha3(weekendOverview.raceCountryISO)
+                false -> LocalContext.current.getFlagResourceAlpha3(weekendOverview.countryISO)
             }
             Image(
                 painter = painterResource(id = resourceId),
@@ -153,12 +156,14 @@ private fun ScheduleView(
 
 @Preview
 @Composable
-private fun PreviewLight() {
+private fun PreviewLight(
+    @PreviewParameter(OverviewRaceProvider::class) overviewRace: OverviewRace
+) {
     AppThemePreview(isLight = true) {
         CalendarScreenImpl(
             season = 2022,
             list = listOf(
-                WeekendOverview.model()
+                overviewRace
             ),
             menuClicked = {}
         )
@@ -167,12 +172,14 @@ private fun PreviewLight() {
 
 @Preview
 @Composable
-private fun PreviewDark() {
+private fun PreviewDark(
+    @PreviewParameter(OverviewRaceProvider::class) overviewRace: OverviewRace
+) {
     AppThemePreview(isLight = false) {
         CalendarScreenImpl(
             season = 2022,
             list = listOf(
-                WeekendOverview.model()
+                overviewRace
             ),
             menuClicked = {}
         )

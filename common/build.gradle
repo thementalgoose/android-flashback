@@ -33,7 +33,7 @@ dependencies {
 
     // CircleImageView
     implementation deps.circleimageview
+    testImplementation project(path: ':test:models')
 
-    testImplementation project(path: ':test:stats-models')
 
 }

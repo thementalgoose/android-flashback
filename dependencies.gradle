@@ -29,6 +29,7 @@ allprojects {
                         viewmodel                               : "androidx.lifecycle:lifecycle-viewmodel-compose:$android_lifecycle",
                         theme_adapter                           : "com.google.android.material:compose-theme-adapter:1.1.5",
                 ],
+                coil                                            : "io.coil-kt:coil-compose:2.0.0-rc02",
                 shakey                                          : "com.linkedin.shaky:shaky:3.0.4",
                 falcon                                          : 'com.jraska:falcon:2.2.0',
                 circleimageview                                 : "de.hdodenhof:circleimageview:$circleimageview",

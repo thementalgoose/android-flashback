@@ -30,7 +30,7 @@ dependencies {
     implementation deps.retrofit.retrofit
     implementation project(path: ':core:preferences')
     implementation project(path: ':core:device')
+    testImplementation project(':test:models')
 
     // Tests
-    testImplementation project(':test:stats-models')
 }
