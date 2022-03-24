@@ -33,6 +33,9 @@ dependencies {
     implementation project(path: ':presentation:ui')
     implementation project(path: ':ads')
 
+    debugImplementation project(path: ':test:providers')
+    releaseImplementation project(path: ':test:providers-noop')
+
     // WorkManager
     implementation deps.androidx.workmanager
     implementation deps.androidx.workmanager_ktx
@@ -60,6 +63,7 @@ dependencies {
     // Skeleton Layout
     implementation deps.skeletonlayout
 
-    // Tests
-    testImplementation project(':test:stats-models')
+    testImplementation project(':test:models')
+    debugImplementation project(path: ':test:providers')
+    releaseImplementation project(path: ':test:providers-noop')
 }

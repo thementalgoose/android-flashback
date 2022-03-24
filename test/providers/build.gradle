@@ -2,7 +2,7 @@ apply plugin:  'com.android.library'
 apply from: rootDir.absolutePath + "/gradle/config-android.gradle"
 apply from: rootDir.absolutePath + "/gradle/config-util.gradle"
 apply from: rootDir.absolutePath + "/gradle/config-junit5.gradle"
-apply from: rootDir.absolutePath + "/gradle/config-koin.gradle"
+apply from: rootDir.absolutePath + "/gradle/config-compose.gradle"
 
 android {
     compileSdkVersion project.ext.compileSdkVersion
@@ -17,16 +17,6 @@ android {
 
 dependencies {
 
-    implementation project(path: ':core:configuration')
-    implementation project(path: ':core:preferences')
-    implementation project(path: ':presentation:style')
-    implementation project(path: ':presentation:ui')
-
-    implementation deps.play.ads
-    implementation deps.androidx.workmanager
-
-    // Skeleton Layout
-    implementation deps.skeletonlayout
-    testImplementation project(path: ':test:models')
-
+    implementation project(path: ':formula1')
+    implementation project(path: ':test:models')
 }

@@ -3,16 +3,14 @@ package tmg.flashback.statistics.usecases
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.verify
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import tmg.flashback.formula1.model.Overview
+import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.formula1.model.model
-import tmg.flashback.statistics.models.WeekendOverview
-import tmg.flashback.statistics.models.model
 import tmg.flashback.statistics.repo.OverviewRepository
 import tmg.testutils.BaseTest
 
@@ -42,7 +40,7 @@ internal class WeekendOverviewUseCaseTest: BaseTest() {
         every { mockFetchSeasonUseCase.fetch(2020) } returns flow { emit(true) }
 
         initUnderTest()
-        val flowCollector = TestFlowCollector<List<WeekendOverview>?>()
+        val flowCollector = TestFlowCollector<List<OverviewRace>?>()
         runBlocking {
             underTest.get(2020).collect(flowCollector)
         }
@@ -56,7 +54,7 @@ internal class WeekendOverviewUseCaseTest: BaseTest() {
         every { mockOverviewRepository.getOverview(2020) } returns flow { emit(Overview.model()) }
 
         initUnderTest()
-        val flowCollector = TestFlowCollector<List<WeekendOverview>?>()
+        val flowCollector = TestFlowCollector<List<OverviewRace>?>()
         runBlocking {
             underTest.get(2020).collect(flowCollector)
         }
@@ -71,12 +69,12 @@ internal class WeekendOverviewUseCaseTest: BaseTest() {
         every { mockOverviewRepository.getOverview(2020) } returns flow { emit(Overview.model()) }
 
         initUnderTest()
-        val flowCollector = TestFlowCollector<List<WeekendOverview>?>()
+        val flowCollector = TestFlowCollector<List<OverviewRace>?>()
         runBlocking {
             underTest.get(2020).collect(flowCollector)
         }
 
         coVerify { mockFetchSeasonUseCase.fetch(2020) }
-        assertEquals(listOf(WeekendOverview.model()), flowCollector.values[0])
+        assertEquals(listOf(Overview.model()), flowCollector.values[0])
     }
 }

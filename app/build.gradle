@@ -193,7 +193,9 @@ dependencies {
     implementation deps.kotlin.playservices
 
     // Test Utils
-    testImplementation project(':test:stats-models')
+    testImplementation project(':test:models')
+    debugImplementation project(path: ':test:providers')
+    releaseImplementation project(path: ':test:providers-noop')
 }
 
 apply plugin: 'com.google.gms.google-services'

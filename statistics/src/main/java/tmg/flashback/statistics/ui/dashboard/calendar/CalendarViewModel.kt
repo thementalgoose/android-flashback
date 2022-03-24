@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import tmg.flashback.statistics.models.WeekendOverview
+import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.statistics.repository.HomeRepository
 import tmg.flashback.statistics.usecases.DefaultSeasonUseCase
 import tmg.flashback.statistics.usecases.WeekendOverviewUseCase
@@ -18,7 +18,7 @@ interface CalendarViewModelInputs {
 }
 
 interface CalendarViewModelOutputs {
-    val items: LiveData<List<WeekendOverview>>
+    val items: LiveData<List<OverviewRace>>
 }
 
 class CalendarViewModel(
@@ -31,7 +31,7 @@ class CalendarViewModel(
 
     private val season: MutableStateFlow<Int> = MutableStateFlow(defaultSeasonUseCase.defaultSeason)
 
-    override val items: LiveData<List<WeekendOverview>> = season
+    override val items: LiveData<List<OverviewRace>> = season
         .flatMapLatest { weekendOverviewUseCase.get(it) }
         .filterNotNull()
         .asLiveData(viewModelScope.coroutineContext)
