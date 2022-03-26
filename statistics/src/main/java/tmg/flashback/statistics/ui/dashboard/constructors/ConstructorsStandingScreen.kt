@@ -61,7 +61,8 @@ private fun ConstructorsStandingScreenImpl(
     list: List<SeasonConstructorStandingSeason>,
     isRefreshing: Boolean,
     onRefresh: () -> Unit,
-    menuClicked: (() -> Unit)?
+    menuClicked: (() -> Unit)?,
+    maxPoints: Double = list.maxByOrNull { it.points }?.points ?: 625.0,
 ) {
     SwipeRefresh(
         state = rememberSwipeRefreshState(isRefreshing = isRefreshing),
@@ -85,6 +86,7 @@ private fun ConstructorsStandingScreenImpl(
                 items(list, key = { it.constructor.id }) {
                     ConstructorView(
                         model = it,
+                        maxPoints = maxPoints,
                         itemClicked = { }
                     )
                 }
@@ -100,7 +102,8 @@ private fun ConstructorsStandingScreenImpl(
 private fun ConstructorView(
     model: SeasonConstructorStandingSeason,
     itemClicked: (SeasonConstructorStandingSeason) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    maxPoints: Double = 625.0,
 ) {
     Row(
         modifier = modifier.clickable(onClick = {
@@ -132,13 +135,19 @@ private fun ConstructorView(
                 }
             }
             Spacer(Modifier.width(AppTheme.dimensions.paddingSmall))
+            val progress = (model.points / maxPoints).toFloat().coerceIn(0f, 1f)
             ProgressBar(
                 modifier = Modifier
                     .weight(2f)
                     .fillMaxHeight(),
-                endProgress = 0.8f,
+                endProgress = progress,
                 barColor = model.constructor.colour,
-                label = { (it * model.points).roundToInt().toString() }
+                label = {
+                    when (it) {
+                        progress -> model.points.pointsDisplay()
+                        else -> (it * maxPoints).pointsDisplay()
+                    }
+                }
             )
         }
     }

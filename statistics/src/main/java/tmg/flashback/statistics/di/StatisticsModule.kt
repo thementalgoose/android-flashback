@@ -70,10 +70,7 @@ val statisticsModule = repoModule + module {
     // Use Cases
     factory { SearchAppShortcutUseCase(get(), get()) }
     factory { DefaultSeasonUseCase(get()) }
-    factory { WeekendOverviewUseCase(get(), get()) }
     factory { FetchSeasonUseCase(get(), get(), get()) }
-    factory { StandingsConstructorUseCase() }
-    factory { StandingsDriverUseCase() }
 
     // Worker
     //  https://github.com/InsertKoinIO/koin/issues/992
