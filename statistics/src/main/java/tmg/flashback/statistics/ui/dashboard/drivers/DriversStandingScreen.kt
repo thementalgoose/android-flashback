@@ -22,6 +22,7 @@ import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import org.koin.androidx.compose.viewModel
 import org.threeten.bp.LocalDate
+import tmg.flashback.formula1.extensions.pointsDisplay
 import tmg.flashback.formula1.model.Driver
 import tmg.flashback.formula1.model.OverviewRace
 import tmg.flashback.formula1.model.SeasonDriverStandingSeason
@@ -61,6 +62,7 @@ private fun DriversStandingScreenImpl(
     season: Int,
     list: List<SeasonDriverStandingSeason>,
     isRefreshing: Boolean,
+    maxPoints: Double = list.maxByOrNull { it.points }?.points ?: 625.0,
     onRefresh: () -> Unit,
     menuClicked: (() -> Unit)?
 ) {
@@ -86,6 +88,7 @@ private fun DriversStandingScreenImpl(
                 items(list, key = { it.driver.id }) {
                     DriverView(
                         model = it,
+                        maxPoints = maxPoints,
                         itemClicked = { }
                     )
                 }
@@ -101,7 +104,8 @@ private fun DriversStandingScreenImpl(
 private fun DriverView(
     model: SeasonDriverStandingSeason,
     itemClicked: (SeasonDriverStandingSeason) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    maxPoints: Double = 625.0,
 ) {
     Row(
         modifier = modifier.clickable(onClick = {
@@ -140,16 +144,21 @@ private fun DriverView(
                 )
             }
             Spacer(Modifier.width(AppTheme.dimensions.paddingSmall))
+            val progress = (model.points / maxPoints).toFloat().coerceIn(0f, 1f)
             ProgressBar(
                 modifier = Modifier.weight(2f),
-                endProgress = 0.6f,
+                endProgress = progress,
                 barColor = model.constructors.lastOrNull()?.constructor?.colour ?: AppTheme.colors.primary,
-                label = { it.roundToInt().toString() }
+                label = {
+                    when (it) {
+                        progress -> model.points.pointsDisplay()
+                        else -> (it * maxPoints).pointsDisplay()
+                    }
+                }
             )
         }
     }
 }
-
 
 
 @Preview
