@@ -16,6 +16,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import org.koin.androidx.compose.viewModel
 import org.threeten.bp.LocalDate
 import tmg.flashback.formula1.model.OverviewRace
@@ -40,9 +42,12 @@ fun CalendarScreen(
     val viewModel by viewModel<CalendarViewModel>()
 
     val list = viewModel.outputs.items.observeAsState()
+    val isRefreshing = viewModel.outputs.isRefreshing.observeAsState(false)
     CalendarScreenImpl(
         season = season,
         menuClicked = menuClicked,
+        isRefreshing = isRefreshing.value,
+        onRefresh = viewModel.inputs::refresh,
         list = list.value ?: emptyList()
     )
 }
@@ -51,34 +56,41 @@ fun CalendarScreen(
 private fun CalendarScreenImpl(
     season: Int,
     list: List<OverviewRace>,
+    isRefreshing: Boolean,
+    onRefresh: () -> Unit,
     menuClicked: (() -> Unit)?,
 ) {
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(AppTheme.colors.backgroundPrimary),
-        content = {
-            item {
-                Header(
-                    text = season.toString(),
-                    icon = menuClicked?.let { painterResource(id = R.drawable.ic_menu)},
-                    iconContentDescription = stringResource(id = R.string.ab_menu),
-                    actionUpClicked = {
-                        menuClicked?.invoke()
-                    }
-                )
+    SwipeRefresh(
+        state = rememberSwipeRefreshState(isRefreshing = isRefreshing),
+        onRefresh = onRefresh
+    ) {
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(AppTheme.colors.backgroundPrimary),
+            content = {
+                item {
+                    Header(
+                        text = season.toString(),
+                        icon = menuClicked?.let { painterResource(id = R.drawable.ic_menu)},
+                        iconContentDescription = stringResource(id = R.string.ab_menu),
+                        actionUpClicked = {
+                            menuClicked?.invoke()
+                        }
+                    )
+                }
+                items(list, key = { "s${it.season}r${it.round}" }) {
+                    ScheduleView(
+                        weekendOverview = it,
+                        itemClicked = { }
+                    )
+                }
+                item {
+                    Spacer(Modifier.height(AppTheme.dimensions.paddingXLarge))
+                }
             }
-            items(list, key = { "s${it.season}r${it.round}" }) {
-                ScheduleView(
-                    weekendOverview = it,
-                    itemClicked = { }
-                )
-            }
-            item {
-                Spacer(Modifier.height(AppTheme.dimensions.paddingXLarge))
-            }
-        }
-    )
+        )
+    }
 }
 
 @Composable
@@ -162,9 +174,9 @@ private fun PreviewLight(
     AppThemePreview(isLight = true) {
         CalendarScreenImpl(
             season = 2022,
-            list = listOf(
-                overviewRace
-            ),
+            list = listOf(overviewRace),
+            isRefreshing = false,
+            onRefresh = {},
             menuClicked = {}
         )
     }
@@ -178,9 +190,9 @@ private fun PreviewDark(
     AppThemePreview(isLight = false) {
         CalendarScreenImpl(
             season = 2022,
-            list = listOf(
-                overviewRace
-            ),
+            list = listOf(overviewRace),
+            isRefreshing = false,
+            onRefresh = {},
             menuClicked = {}
         )
     }
